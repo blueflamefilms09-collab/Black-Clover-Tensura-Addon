@@ -1,4 +1,4 @@
-"""The effect tables of the God worn relics: assets/nusmp/visual_upgrade/<id>.json (read by relics/upgrade/UpgradeFxData.java, played by client/relics/fx/UpgradeFxClient.java for the
+"""The effect tables of the God worn relics: assets/anime_multiverse/visual_upgrade/<id>.json (read by relics/upgrade/UpgradeFxData.java, played by client/relics/fx/UpgradeFxClient.java for the
 ambient layers and by relics/upgrade/UpgradeActFx.java for the acts).
 
 Positions are the wearer's local frame in blocks: x to the wearer's left, y up from the feet, z behind. Every relic has at least eight ambient layers (idle motes, a halo ring, an

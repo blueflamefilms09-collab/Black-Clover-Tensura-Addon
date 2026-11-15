@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Why: the effect spec of one upgraded weapon (assets/nusmp/visual_upgrade/&lt;id&gt;.json, written by tools/visual_upgrade/god_melee_a/specs.py): which skins its mesh uses, the passes drawn on
+ * Why: the effect spec of one upgraded weapon (assets/anime_multiverse/visual_upgrade/&lt;id&gt;.json, written by tools/visual_upgrade/god_melee_a/specs.py): which skins its mesh uses, the passes drawn on
  * top of the skin (core glow, flowing veins, halo shell), its idle animations, its ambient effect layers, its swing trail, and one recipe of effect components per act. Pure data (Gson only,
  * no Minecraft types) so the numbers can be checked headlessly; {@link UpgradeSpecs} loads them, {@code WeaponUpgrade} draws the passes, {@link UpgradeFx} runs the layers and the
  * trail, {@code UpgradeSignatureLayer} draws the recipes.

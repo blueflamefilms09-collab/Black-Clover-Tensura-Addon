@@ -2,7 +2,7 @@
 """
 Language keys for the dialogue of the characters of the arcs (arc/dialogue/DialogueBook.java).
 
-Why: every character's words live in data/nusmp/arc/dialogue/<character_id>.json and hold the English text, so a datapack can replace them. A line that
+Why: every character's words live in data/anime_multiverse/arc/dialogue/<character_id>.json and hold the English text, so a datapack can replace them. A line that
 should be TRANSLATABLE also carries a language key (arc.dialogue.<id>.<n>) and the same English sits in the language file; the game asks the language
 file first and falls back to the JSON. This tool keeps the three in step so nobody numbers keys by hand:
 
@@ -22,7 +22,7 @@ import sys
 from collections import OrderedDict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DIR = os.path.join(HERE, "..", "src", "main", "resources", "data", "nusmp", "arc", "dialogue")
+DEFAULT_DIR = os.path.join(HERE, "..", "src", "main", "resources", "data", "anime_multiverse", "arc", "dialogue")
 CONTEXTS = ["greeting", "hint", "shop", "quest_offer", "quest_done", "farewell"]
 
 

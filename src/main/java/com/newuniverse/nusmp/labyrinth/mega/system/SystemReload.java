@@ -23,7 +23,7 @@ import java.util.Map;
  * a quest or switch one off without a mod update, and a data reload ({@code /reload}, a world load) must rebuild them. A plain
  * {@code ResourceManagerReloadListener} (the pattern of the avatar races and the faction loader) reads every such file in every namespace, hands the parsed
  * tree to the pure {@link QuestParser} / {@link StatParser}, logs each problem once with the file it came from, and installs both results in one step. One bad
- * file or row never stops the others. The shipped {@code nusmp} files are read FIRST, so a datapack's file of the same name (or another namespace) overrides a
+ * file or row never stops the others. The shipped {@code anime_multiverse} files are read FIRST, so a datapack's file of the same name (or another namespace) overrides a
  * quest or a stat by id, because later entries replace earlier ones. The Gson tree is converted to plain maps and lists here, and only here, so the parsers
  * stay library-free and testable.
  */
@@ -40,31 +40,31 @@ public final class SystemReload implements ResourceManagerReloadListener {
                 Object tree = read(e);
                 if (!(tree instanceof Map<?, ?>)) continue;
                 @SuppressWarnings("unchecked") QuestParser.Result r = QuestParser.parse((Map<String, Object>) tree);
-                for (String p : r.problems()) LOG.warn("[nusmp] System quest file {}: {}", e.getKey(), p);
+                for (String p : r.problems()) LOG.warn("[anime_multiverse] System quest file {}: {}", e.getKey(), p);
                 quests.addAll(r.templates());
             }
             for (Map.Entry<ResourceLocation, net.minecraft.server.packs.resources.Resource> e : sorted(manager.listResources(DIR, rl -> rl.getPath().endsWith("/stats.json")))) {
                 Object tree = read(e);
                 if (!(tree instanceof Map<?, ?>)) continue;
                 @SuppressWarnings("unchecked") StatParser.Result r = StatParser.parse((Map<String, Object>) tree);
-                for (String p : r.problems()) LOG.warn("[nusmp] System stat file {}: {}", e.getKey(), p);
+                for (String p : r.problems()) LOG.warn("[anime_multiverse] System stat file {}: {}", e.getKey(), p);
                 stats.addAll(r.defs());
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The System could not scan its data folder", ex);
+            LOG.warn("[anime_multiverse] The System could not scan its data folder", ex);
         }
         QuestCatalog catalog = new QuestCatalog(quests);
         StatTable table = new StatTable(stats);
         SystemData.install(catalog, table);
-        if (catalog.isEmpty()) LOG.warn("[nusmp] The System has no quest templates: floors will have no quests (data/<namespace>/mega/system/quests.json)");
-        if (table.isEmpty()) LOG.warn("[nusmp] The System has no stat table: stat points will do nothing (data/<namespace>/mega/system/stats.json)");
-        LOG.info("[nusmp] Loaded {} System quest templates and {} stats", catalog.size(), table.size());
+        if (catalog.isEmpty()) LOG.warn("[anime_multiverse] The System has no quest templates: floors will have no quests (data/<namespace>/mega/system/quests.json)");
+        if (table.isEmpty()) LOG.warn("[anime_multiverse] The System has no stat table: stat points will do nothing (data/<namespace>/mega/system/stats.json)");
+        LOG.info("[anime_multiverse] Loaded {} System quest templates and {} stats", catalog.size(), table.size());
     }
 
     /** The files in the order they are applied: the mod's own namespace first, then the others alphabetically, so a datapack overrides the shipped rows. */
     private static List<Map.Entry<ResourceLocation, net.minecraft.server.packs.resources.Resource>> sorted(Map<ResourceLocation, net.minecraft.server.packs.resources.Resource> found) {
         List<Map.Entry<ResourceLocation, net.minecraft.server.packs.resources.Resource>> list = new ArrayList<>(found.entrySet());
-        list.sort(Comparator.comparing((Map.Entry<ResourceLocation, net.minecraft.server.packs.resources.Resource> e) -> !"nusmp".equals(e.getKey().getNamespace()))
+        list.sort(Comparator.comparing((Map.Entry<ResourceLocation, net.minecraft.server.packs.resources.Resource> e) -> !"anime_multiverse".equals(e.getKey().getNamespace()))
                 .thenComparing(e -> e.getKey().getNamespace())
                 .thenComparing(e -> e.getKey().getPath()));
         return list;
@@ -75,7 +75,7 @@ public final class SystemReload implements ResourceManagerReloadListener {
             JsonElement root = JsonParser.parseReader(reader);
             return root.isJsonObject() ? toTree(root.getAsJsonObject()) : null;
         } catch (Exception ex) {
-            LOG.warn("[nusmp] System data file {} skipped: {}", e.getKey(), ex.toString());
+            LOG.warn("[anime_multiverse] System data file {} skipped: {}", e.getKey(), ex.toString());
             return null;
         }
     }

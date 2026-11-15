@@ -65,18 +65,18 @@ class SaiyanTechSourceScanTest {
 
     @Test
     void everyMessageAndKeyNameHasItsText() throws IOException {
-        String lang = read("src/main/resources/assets/nusmp/lang/en_us.json");
+        String lang = read("src/main/resources/assets/anime_multiverse/lang/en_us.json");
         Matcher m = Pattern.compile("say\\((?:p|v), \"([a-z_]+)\"\\)").matcher(read(SAIYAN + "SaiyanTechniques.java"));
         int seen = 0;
         while (m.find()) {
             seen++;
             String k = m.group(1);
             if (k.equals("no_ki") || k.equals("not_awakened") || k.equals("goku_locked")) continue;       // shared with the older techniques
-            assertTrue(lang.contains("\"nusmp.saiyan.msg." + k + "\""), "missing text for " + k);
+            assertTrue(lang.contains("\"anime_multiverse.saiyan.msg." + k + "\""), "missing text for " + k);
         }
         assertTrue(seen >= 8, "the scan must see the messages");
         String c = read("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java");
-        Matcher key = Pattern.compile("\"(key\\.nusmp\\.saiyan_[a-z_]+)\"").matcher(c);
+        Matcher key = Pattern.compile("\"(key\\.anime_multiverse\\.saiyan_[a-z_]+)\"").matcher(c);
         int keys = 0;
         while (key.find()) {
             keys++;

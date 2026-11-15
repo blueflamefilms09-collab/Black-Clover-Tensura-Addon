@@ -12,10 +12,10 @@ import java.util.function.Predicate;
 
 /**
  * Why: vanilla triggers cannot see most of what this mod does (a grimoire ceremony, a spell cast, a squad founded, a boss phase). Instead of
- * one trigger per feature, ONE trigger {@code nusmp:event} carries a string key, and the game code reports events with
+ * one trigger per feature, ONE trigger {@code anime_multiverse:event} carries a string key, and the game code reports events with
  * {@link NusmpEvents#fire}. Advancements and the FTB questline then ask for keys in plain JSON.
  *
- * <p>JSON form: {@code {"trigger":"nusmp:event","conditions":{"key":"spell.cast","arg":"thread","count":10}}}. {@code arg} and
+ * <p>JSON form: {@code {"trigger":"anime_multiverse:event","conditions":{"key":"spell.cast","arg":"thread","count":10}}}. {@code arg} and
  * {@code count} are optional (any argument, count 1); the matching rule is {@link TriggerRule#matches}.
  */
 public class NusmpEventTrigger extends SimpleCriterionTrigger<NusmpEventTrigger.TriggerInstance> {

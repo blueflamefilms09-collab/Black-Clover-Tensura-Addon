@@ -1,4 +1,4 @@
-"""Why: the painted giant of Painting Magic (entity nusmp:painted_construct, kind GIANT: "a hulking painted giant whose blows fling foes", sneaking Living Illustration; hitbox 1.2 x 3.9). It
+"""Why: the painted giant of Painting Magic (entity anime_multiverse:painted_construct, kind GIANT: "a hulking painted giant whose blows fling foes", sneaking Living Illustration; hitbox 1.2 x 3.9). It
 was the knight's body at twice the size; the art kit's version is a huge broad body on the player's rig, painted once in pale paint and tinted by the paint's colour
 (tools/remodel/painted.py): a heavy brow, a bare chest of broad brush strokes with a loincloth and a rope belt, boulder fists, a glowing white eye. See docs/arc/remodel.md.
 """

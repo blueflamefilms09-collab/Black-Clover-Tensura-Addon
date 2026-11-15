@@ -44,7 +44,7 @@ public final class Display39SelfTests {
 
     static SelfTests.Result x3() {
         int listed = 0, quads = 0;
-        try (InputStream in = Display39SelfTests.class.getResourceAsStream("/assets/nusmp/relic_worn_x3/index.txt")) {
+        try (InputStream in = Display39SelfTests.class.getResourceAsStream("/assets/anime_multiverse/relic_worn_x3/index.txt")) {
             if (in == null) return SelfTests.Result.fail("relic_worn_x3/index.txt is missing");
             BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             String line;
@@ -54,7 +54,7 @@ public final class Display39SelfTests {
                 listed++;
                 if (line.matches("(?i).*(cape|cloak|mantle|shawl).*")) return SelfTests.Result.fail("a cape is listed: " + line);
                 if (listed % 4 != 0) continue;                                                // every eighth file is read in full: bounded work at boot
-                try (InputStream mf = Display39SelfTests.class.getResourceAsStream("/assets/nusmp/relic_worn_x3/" + line + ".txt")) {
+                try (InputStream mf = Display39SelfTests.class.getResourceAsStream("/assets/anime_multiverse/relic_worn_x3/" + line + ".txt")) {
                     if (mf == null) return SelfTests.Result.fail(line + " is listed but missing");
                     BufferedReader mr = new BufferedReader(new InputStreamReader(mf, StandardCharsets.UTF_8));
                     int q = 0, emit = 0;

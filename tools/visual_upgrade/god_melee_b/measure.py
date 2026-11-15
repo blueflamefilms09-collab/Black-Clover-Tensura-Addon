@@ -4,8 +4,8 @@
     python3 -B tools/visual_upgrade/god_melee_b/measure.py after         writes docs/visual_upgrade/god_melee_b_after.json (+ the ratio table, and the V score)
 
 What is measured per weapon (all read from the shipped assets; nothing is guessed except the runtime constants below, which are read off the source and named):
-  mesh        quads per layer of assets/nusmp/weapon_meshes/<mesh>.txt (0 body, 1 void, 2 glow copy), vertices (4 per quad, as WeaponRenderer emits them), welded vertices,
-              plus the instances of the orbiting pieces (data table assets/nusmp/visual_upgrade/<id>.json) drawn at full detail
+  mesh        quads per layer of assets/anime_multiverse/weapon_meshes/<mesh>.txt (0 body, 1 void, 2 glow copy), vertices (4 per quad, as WeaponRenderer emits them), welded vertices,
+              plus the instances of the orbiting pieces (data table assets/anime_multiverse/visual_upgrade/<id>.json) drawn at full detail
   texture     skin size and PAINTED texels (alpha > 0) of the skin and of every emissive map
   passes      draw passes of the item: body, the additive core glow, the void (if the mesh has void quads), and the upgraded item's extra passes (veins, halo, orbiters)
   ambient     ambient effect layers that run while the weapon is held (baseline: the grade shimmer of client/relics/RelicGradeFx, the only one a God weapon had)
@@ -24,7 +24,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 DOCS = os.path.join(ROOT, "docs", "visual_upgrade")
 
 SLICE = "god_melee_b"

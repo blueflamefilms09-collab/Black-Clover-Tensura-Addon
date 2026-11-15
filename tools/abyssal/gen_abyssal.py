@@ -6,13 +6,13 @@
     python3 -B tools/abyssal/gen_abyssal.py --check         # model checks only (bones linked, uv inside the sheet, animation bones exist, texture + glow exist)
 
 For each look and each of the three phases it writes
-    assets/nusmp/geo/entity/abyssal_<id>_p<n>.geo.json            the model the boss renderer draws today (a humanoid is the PLAYER body with its skin plus the extras on it)
-    assets/nusmp/textures/entity/abyssal_<id>_p<n>[_glow].png      its atlas (a humanoid's skin sits in the top-left 64x64)
-and, once per look, assets/nusmp/animations/entity/abyssal_<id>.animation.json (the three phases share the clips).
+    assets/anime_multiverse/geo/entity/abyssal_<id>_p<n>.geo.json            the model the boss renderer draws today (a humanoid is the PLAYER body with its skin plus the extras on it)
+    assets/anime_multiverse/textures/entity/abyssal_<id>_p<n>[_glow].png      its atlas (a humanoid's skin sits in the top-left 64x64)
+and, once per look, assets/anime_multiverse/animations/entity/abyssal_<id>.animation.json (the three phases share the clips).
 A HUMANOID additionally writes the parts the player-model renderer will take over:
     textures/entity/abyssal/skin_<id>_p<n>[_glow].png             a real 64x64 player skin (classic arms unless the table says slim) and its glow skin
     geo/entity/abyssal_<id>_extras_p<n>.geo.json (+ png, _glow)   only the extras (crown, phylactery, wings ...) on anchor bones named after the player's parts
-The one table that lists all of it is assets/nusmp/abyssal/looks.json (look id -> kind, models, skin, slim flag, extras with their anchors, glow, sizes), read by the game's AbyssalLooks.
+The one table that lists all of it is assets/anime_multiverse/abyssal/looks.json (look id -> kind, models, skin, slim flag, extras with their anchors, glow, sizes), read by the game's AbyssalLooks.
 Preview scenes go to tools/render_preview/scenes.d/abyssal_<id>.json (python3 -B tools/render_preview/preview.py abyssal_<id>_front ...).
 """
 import importlib
@@ -30,13 +30,13 @@ REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 ASSETS = lib.ROOT
 SCENES = os.path.join(REPO, "tools", "render_preview", "scenes.d")
 TABLE = os.path.join(ASSETS, "abyssal", "looks.json")
-KIT_TABLE = os.path.join(ASSETS, "playermodel", "looks_abyssal.json")     # the humanoids, in the format of the player-model kit (assets/nusmp/playermodel/looks.json)
+KIT_TABLE = os.path.join(ASSETS, "playermodel", "looks_abyssal.json")     # the humanoids, in the format of the player-model kit (assets/anime_multiverse/playermodel/looks.json)
 LANG = os.path.join(REPO, "tools", "lang", "abyssal_bosses.json")        # a flat fragment of the lang keys (the lead merges it into en_us.json): look names and the caption of each phase change
 ORDER = ["lich", "acererak", "vecna", "strahd", "zariel", "asmodeus", "orcus", "lich_king", "solar",
          "demogorgon", "beholder", "elder_brain", "kraken", "tiamat", "bahamut", "dracolich", "tarrasque", "lolth",
          "quasit", "vrock", "hezrou", "balor"]
 CLIPS = ["idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "death"]
-# an evil boss of a sector whose profile names no look wears the demon of its tier on the sectors where the demon faction rules (data/nusmp/mega/factions/demon.json weights abyss, blood, flame and
+# an evil boss of a sector whose profile names no look wears the demon of its tier on the sectors where the demon faction rules (data/anime_multiverse/mega/factions/demon.json weights abyss, blood, flame and
 # infernal_foundry at 5, the highest): the Abyssal road's own bosses, as the Abyss encounter tables' demons are its mobs
 _DEMONS = ["quasit", "vrock", "hezrou", "balor", "balor"]
 THEME_DEFAULTS = {t: {"evil": _DEMONS} for t in ("abyss", "blood", "flame", "infernal_foundry")}
@@ -246,10 +246,10 @@ def main(argv):
     if "--check" not in argv:
         lang = {}
         for k, row in table["looks"].items():
-            lang["entity.nusmp.abyssal." + k] = row["name"]
+            lang["entity.anime_multiverse.abyssal." + k] = row["name"]
             for i, ph in enumerate(row["phases"], start=1):
                 if ph.get("caption"):
-                    lang["message.nusmp.mega.dnd.look.%s.p%d" % (k, i)] = ph["caption"]
+                    lang["message.anime_multiverse.mega.dnd.look.%s.p%d" % (k, i)] = ph["caption"]
         os.makedirs(os.path.dirname(LANG), exist_ok=True)
         with open(LANG, "w") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False)

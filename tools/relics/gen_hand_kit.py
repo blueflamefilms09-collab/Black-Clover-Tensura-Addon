@@ -1,7 +1,7 @@
 """gen_hand_kit: the shared kit of the hand-model generators (gen_hand_sig.py, gen_hand_trinkets.py, gen_hand_consumables.py).
 
 A hand model is a relic seen as an OBJECT: a spoon, a flask, a lyre. It is written in exactly the file format of the worn relic models (tools/relics/gen_worn_lib.py,
-class WModel and write_model: quads with a colour slot, a tile of the shared atlas, flags and an animation group), into assets/nusmp/relic_hand/<name>.txt, and drawn by the
+class WModel and write_model: quads with a colour slot, a tile of the shared atlas, flags and an animation group), into assets/anime_multiverse/relic_hand/<name>.txt, and drawn by the
 same code (WornLibDraw.drawItem), tinted by the relic's own palette. The atlas is the worn one, so nothing new is painted.
 
 Authoring frame (as the worn models): Y UP, the FRONT of the object is -Z (the side the onlooker sees), 1 unit = 1 model pixel. The origin is anywhere near the middle of the

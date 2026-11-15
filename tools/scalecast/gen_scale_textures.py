@@ -2,7 +2,7 @@
 
     python3 -B tools/scalecast/gen_scale_textures.py
 
-Writes assets/nusmp/textures/entity/scalecast/{gold,enamel,chain,gem,glow_runes,glow_halo,glow_ring}.png deterministically (fixed seed, no clock).
+Writes assets/anime_multiverse/textures/entity/scalecast/{gold,enamel,chain,gem,glow_runes,glow_halo,glow_ring}.png deterministically (fixed seed, no clock).
 The solid textures (gold, enamel, chain, gem) are drawn with the lighting of the game, so they carry colour and fine structure only. The additive textures (glow_*) have no colour
 under a fully transparent texel (SafeAdditiveTextureScanTest). Palette: the mod's Scale colour (teal 63BDB5) against gold.
 """
@@ -16,7 +16,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "entity", "scalecast")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "scalecast")
 
 GOLD = np.array([224, 178, 70], np.float32)
 GOLD_HI = np.array([255, 232, 150], np.float32)

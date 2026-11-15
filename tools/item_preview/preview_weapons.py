@@ -3,7 +3,7 @@ Headless preview of the 0.50 3D weapons (the mesh files WeaponRenderer draws, fr
 
     python tools/item_preview/preview_weapons.py [ids...]
 
-Reads assets/nusmp/weapon_meshes/<id>.txt, places it the way the renderer does (onto the old sprite's diagonal), and rasterises
+Reads assets/anime_multiverse/weapon_meshes/<id>.txt, places it the way the renderer does (onto the old sprite's diagonal), and rasterises
 it with a z-buffer: nearest-texel skin, cutout alpha, item-style lighting, the glow layer additive, the void as a crimson star
 field (in game: the Demon-Slayer's parallax shader). Each row: the old icon, front, three-quarter, edge-on, back.
 Output: build/item_preview/weapons.png
@@ -17,7 +17,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ROOT, "build", "item_preview")
 W = H = 220
 

@@ -535,13 +535,13 @@ def write_item_models(item_id):
     """models/item/<id>.json (builtin/entity, drawn by WeaponRenderer from the mesh; the long-weapon first-person preset of display_presets.py is applied so a long
     weapon never goes through the camera) and models/item/<id>_icon.json (the flat handheld model of the sprite, the inventory icon). Returns the mesh length in blocks."""
     os.makedirs(MODEL_DIR, exist_ok=True)
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": json.loads(json.dumps(BASE_DISPLAY))}
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": json.loads(json.dumps(BASE_DISPLAY))}
     mesh = dp.read_mesh(os.path.join(MESH_DIR, item_id + ".txt"))
     plan = dp.plan_for(item_id, model, mesh)
     model = dp.apply_plan(model, plan)
     with open(os.path.join(MODEL_DIR, item_id + ".json"), "w", newline="\n") as f:
         json.dump(model, f, indent=2)
-    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}
+    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
     with open(os.path.join(MODEL_DIR, item_id + "_icon.json"), "w", newline="\n") as f:
         json.dump(icon, f, indent=2)
     return plan.get("length", mesh.length), plan

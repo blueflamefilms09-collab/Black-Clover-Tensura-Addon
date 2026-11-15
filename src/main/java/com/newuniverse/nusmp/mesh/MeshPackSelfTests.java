@@ -26,7 +26,7 @@ public final class MeshPackSelfTests {
     }
 
     private static byte[] resource(String path) throws Exception {
-        try (InputStream in = MeshPackSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) {
+        try (InputStream in = MeshPackSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path)) {
             return in == null ? null : in.readAllBytes();
         }
     }

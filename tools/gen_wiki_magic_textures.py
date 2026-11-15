@@ -1,6 +1,6 @@
 """Textures for the 30 wiki magics (WikiMagicLayer, WikiAura; docs/wiki_magic_vfx.md). Deterministic, no fonts, no external images.
 
-    python tools/gen_wiki_magic_textures.py                 -> src/main/resources/assets/nusmp/textures/particle/wiki_*.png
+    python tools/gen_wiki_magic_textures.py                 -> src/main/resources/assets/anime_multiverse/textures/particle/wiki_*.png
     python tools/gen_wiki_magic_textures.py --preview OUT   -> also writes a contact sheet (PNG) to OUT
 
 Three families, all greyscale + alpha like the rest of textures/particle (one vertex colour tints a quad):
@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_arcane_vfx_textures import fbm, grey, noise  # noqa: E402
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 N = 128
 TAU = math.tau

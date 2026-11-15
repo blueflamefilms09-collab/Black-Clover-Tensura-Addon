@@ -27,10 +27,10 @@ class UnifiedTooltipRulesTest {
 
     @Test
     void whoGetsTheTooltip() {
-        assertTrue(UnifiedTooltipRules.applies("nusmp", false, false));
+        assertTrue(UnifiedTooltipRules.applies("anime_multiverse", false, false));
         assertFalse(UnifiedTooltipRules.applies("minecraft", false, false), "other mods' items are untouched");
-        assertFalse(UnifiedTooltipRules.applies("nusmp", true, false), "spawn eggs are excluded");
-        assertFalse(UnifiedTooltipRules.applies("nusmp", false, true), "relics keep their own tooltip");
+        assertFalse(UnifiedTooltipRules.applies("anime_multiverse", true, false), "spawn eggs are excluded");
+        assertFalse(UnifiedTooltipRules.applies("anime_multiverse", false, true), "relics keep their own tooltip");
     }
 
     @Test
@@ -81,7 +81,7 @@ class UnifiedTooltipRulesTest {
     void everyCategoryHasALabelAndAKey() {
         for (Category c : Category.values()) {
             assertFalse(c.label().isBlank());
-            assertTrue(c.langKey().startsWith("tooltip.nusmp.unified.cat."));
+            assertTrue(c.langKey().startsWith("tooltip.anime_multiverse.unified.cat."));
         }
     }
 
@@ -91,7 +91,7 @@ class UnifiedTooltipRulesTest {
         assertEquals(UnifiedTooltipRules.COLOUR_STAT_PLUS, UnifiedTooltipRules.statColour("attribute.modifier.equals.0"));
         assertEquals(UnifiedTooltipRules.COLOUR_STAT_MINUS, UnifiedTooltipRules.statColour("attribute.modifier.take.1"));
         assertEquals(UnifiedTooltipRules.COLOUR_STAT_HEAD, UnifiedTooltipRules.statColour("item.modifiers.mainhand"));
-        assertEquals(0, UnifiedTooltipRules.statColour("item.nusmp.something"));
+        assertEquals(0, UnifiedTooltipRules.statColour("item.anime_multiverse.something"));
         assertEquals(0, UnifiedTooltipRules.statColour(null));
     }
 

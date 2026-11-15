@@ -83,7 +83,7 @@ public final class SpiritDiveForm {
         };
         if (text == null) return;
         try {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.spiritdive.tier." + g.name().toLowerCase(java.util.Locale.ROOT), text).withStyle(ChatFormatting.GOLD), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spiritdive.tier." + g.name().toLowerCase(java.util.Locale.ROOT), text).withStyle(ChatFormatting.GOLD), true);
         } catch (NullPointerException noConnection) { /* a stand-in player without a connection */ }
     }
 
@@ -129,7 +129,7 @@ public final class SpiritDiveForm {
         ArmourState.putOn(p, withoutAura(e), h == null ? 0 : h.style(), true, 1f);
         SpiritDivePieces.Element upEl = SpiritDivePieces.elementOf(e.magic());
         if (upEl != null) SpiritDiveSound.play(p, upEl, SpiritDivePieces.Stage.UPGRADE, SpiritDiveTier.character(upEl, gradeOf(p, upEl)), SpiritDiveForge.Kind.UPGRADE);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.dive.upgrade", "The spirit's other half joins you: the full dive.").withStyle(ChatFormatting.AQUA), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.dive.upgrade", "The spirit's other half joins you: the full dive.").withStyle(ChatFormatting.AQUA), true);
     }
 
     /** The dive has ended (recast, the gauge ran dry, the spirit let go). */
@@ -154,7 +154,7 @@ public final class SpiritDiveForm {
             ModeArmor.Mode overlay = book.diveArmor();
             if (overlay != null) ModeArmor.stop(p, overlay);
         } catch (RuntimeException | LinkageError ex) {
-            org.slf4j.LoggerFactory.getLogger("nusmp").warn("[nusmp] spirit dive: could not end the dive of {}", magic, ex);
+            org.slf4j.LoggerFactory.getLogger("anime_multiverse").warn("[anime_multiverse] spirit dive: could not end the dive of {}", magic, ex);
         }
     }
 
@@ -178,7 +178,7 @@ public final class SpiritDiveForm {
         try {
             secondChecked(p, b, i, now);
         } catch (RuntimeException ex) {
-            org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] spirit dive: the once-a-second step failed", ex);      // the upkeep is already paid: never break the player tick
+            org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] spirit dive: the once-a-second step failed", ex);      // the upkeep is already paid: never break the player tick
         }
     }
 

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/wayfaring_pedlars_wagon_cape"
-  }
-}

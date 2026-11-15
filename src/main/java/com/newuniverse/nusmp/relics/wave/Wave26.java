@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 /**
  * Relics of Many Worlds, part 4, wave 26: twelve relics for the head (Frank, the Goggles of Dwarvenkin, the Helm of Whispers, the Helmet of
  * Headbutting, the Jellyfish Cap, the Lens of Straight Creepin', the Masks of Difference, Indifference, Mind Melting, the Raven Queen's Disciple
- * and the Witchdoctor, and the Mind stone). The long card text of each, as game rules, is in the lang keys {@code item.nusmp.<id>.card}; the
+ * and the Witchdoctor, and the Mind stone). The long card text of each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the
  * numbers are in {@link Wave26Rules} (pure), the mind spells in {@link Wave26Mind}, Frank in {@link Wave26Frank}, the physical acts in
  * {@link Wave26Acts}, what is done while worn in {@link Wave26Wear}, the handlers in {@link Wave26Events}.
  * <p>

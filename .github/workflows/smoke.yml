@@ -46,7 +46,7 @@ jobs:
         if: always()
         run: |
           mkdir -p run/smoke
-          grep -hE "nusmp|Mega|MEGA|multiverse" run/smoke/server_*.log 2>/dev/null | grep -E "ERROR|WARN|Exception|MEGA" | head -80 || true
+          grep -hE "anime_multiverse|Mega|MEGA|multiverse" run/smoke/server_*.log 2>/dev/null | grep -E "ERROR|WARN|Exception|MEGA" | head -80 || true
 
       - uses: actions/upload-artifact@v4
         if: always()

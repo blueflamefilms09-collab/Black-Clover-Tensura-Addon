@@ -15,7 +15,7 @@ public class QuestGiverNPC extends HubNpcBase {
     @Override
     protected void open(ServerPlayer player) {
         if (!QuestService.on()) {
-            player.sendSystemMessage(Component.translatableWithFallback("message.nusmp.hub.quest.off", "The Quest Giver has nothing for you today."));
+            player.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.hub.quest.off", "The Quest Giver has nothing for you today."));
             return;
         }
         QuestService.fresh(player);

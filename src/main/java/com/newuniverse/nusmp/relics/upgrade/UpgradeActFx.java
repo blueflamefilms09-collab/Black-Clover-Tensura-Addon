@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * The visuals of the acts of the upgraded relics (1.102.0): each act of an upgraded God relic has an effect of its own (an effect shape of the VFX system plus a burst of particles, in the
- * relic's colours), listed in its table {@code assets/nusmp/visual_upgrade/<id>.json}. {@code RelicEngine} calls {@link #after} once an act has run. Server side, purely visual: it
+ * relic's colours), listed in its table {@code assets/anime_multiverse/visual_upgrade/<id>.json}. {@code RelicEngine} calls {@link #after} once an act has run. Server side, purely visual: it
  * changes no damage, effect or cost, goes out through the effect packet budget of {@link VfxSpawn} and the particle budget of {@link PerfParticles}, and never throws into the act.
  */
 public final class UpgradeActFx {
@@ -54,7 +54,7 @@ public final class UpgradeActFx {
                 }
             }
         } catch (RuntimeException | LinkageError failed) {
-            org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] the act visuals of {} failed", def.id(), failed);
+            org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] the act visuals of {} failed", def.id(), failed);
         }
     }
 

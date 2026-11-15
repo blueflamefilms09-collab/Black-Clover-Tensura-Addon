@@ -18,7 +18,7 @@ import gen_anime_hound as G  # noqa: E402  (only for SCRATCH / PREVIEW_OUT)
 
 SRC = G.PREVIEW_OUT
 OUT = os.path.join(REPO, "docs", "mobs", "phaseE")
-GEO = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp", "geo", "entity")
+GEO = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse", "geo", "entity")
 BG = (24, 24, 30)
 NEW_C, OLD_C = (120, 230, 140), (240, 130, 110)
 

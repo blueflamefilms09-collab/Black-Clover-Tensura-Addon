@@ -17,7 +17,7 @@ import java.util.List;
 public final class LabyrinthCreative {
     private LabyrinthCreative() {}
 
-    /** Registry ids (namespace nusmp) in display order. Only appended, never reordered. */
+    /** Registry ids (namespace anime_multiverse) in display order. Only appended, never reordered. */
     public static final List<String> IDS = List.of(
             "labyrinth_gate", "labyrinth_exit",
             "labyrinth_bricks", "labyrinth_tiles", "labyrinth_pillar", "labyrinth_glyph", "labyrinth_lantern", "magicule_vein",
@@ -33,7 +33,7 @@ public final class LabyrinthCreative {
     /** Adds every registered Labyrinth item to the tab, in order; unknown ids are skipped. */
     public static void addTo(CreativeModeTab.Output output) {
         for (String id : IDS) {
-            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("nusmp", id));
+            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("anime_multiverse", id));
             if (item != null && item != Items.AIR) output.accept(item);
         }
     }

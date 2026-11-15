@@ -70,7 +70,7 @@ public final class CarriageLogic implements HeroLogic {
             try {
                 if (e.getEntity() instanceof ServerPlayer p) sendAway(p.getServer(), p.getUUID());
             } catch (RuntimeException ex) {
-                LogUtils.getLogger().warn("[nusmp] the carriage of a wielder who left could not be sent away cleanly", ex);
+                LogUtils.getLogger().warn("[anime_multiverse] the carriage of a wielder who left could not be sent away cleanly", ex);
             }
         });
         SelfTests.register("hero.weapon.carriage", CarriageLogic::selfTest);

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BeastCoreLookTest {
     @Test
     void everyShippedWillHasItsOwnFileTint() throws Exception {
-        File[] files = Path.of("src/main/resources/data/nusmp/beast_will").toFile().listFiles((d, n) -> n.endsWith(".json"));
+        File[] files = Path.of("src/main/resources/data/anime_multiverse/beast_will").toFile().listFiles((d, n) -> n.endsWith(".json"));
         assertTrue(files != null && files.length >= 27);
         Set<Integer> seen = new HashSet<>();
         for (File f : files) {

@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Why: every system has to ask the same three things about a player: does a hero weapon belong to them, which, and how far has it come. The bond lives in a
- * NeoForge attachment {@code nusmp:hero_bond} (saved with the player, copied to the new body on death and the End return, empty for anyone who never bound a
+ * NeoForge attachment {@code anime_multiverse:hero_bond} (saved with the player, copied to the new body on death and the End return, empty for anyone who never bound a
  * weapon so their save file stays clean; it is also how the story, the alignment and the discovery list are stored). This class is the one door to it, and
  * the one place that BINDS and RELEASES a weapon, so the rules that must hold for both (at most {@code maxBonds}, one holder for a Holy Weapon, the listeners of
  * the loan, the forms and the curse) cannot be skipped by a caller. Gates veto a bind (the core registers the limit and the uniqueness rule); listeners react
@@ -29,7 +29,7 @@ public final class HeroBonds {
 
     private static final Codec<HeroBond> CODEC = CompoundTag.CODEC.xmap(HeroBond::fromTag, HeroBond::toTag);
 
-    /** {@code nusmp:hero_bond}. */
+    /** {@code anime_multiverse:hero_bond}. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<HeroBond>> BOND = ATTACHMENTS.register("hero_bond",
             () -> AttachmentType.builder(() -> new HeroBond()).serialize(CODEC, b -> !b.isEmpty()).copyOnDeath().build());
 

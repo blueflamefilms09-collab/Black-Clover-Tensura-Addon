@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: the three gates of Floor 0 are the SAME block ({@code nusmp:labyrinth_gate}); what a player who steps into one gets (home, up, down, or a polite
+ * Why: the three gates of Floor 0 are the SAME block ({@code anime_multiverse:labyrinth_gate}); what a player who steps into one gets (home, up, down, or a polite
  * refusal) is decided by {@link HubLayout#gateNear} from the block's position alone. If a gate plane cell fell outside the reach of its own centre, or
  * the reach of one gate touched another, the wrong road would open, so this test walks every cell of every gate plane the Hub can have (the home gate
  * the template writes, the two planes the terrain generator writes at the same layout constants), proves each classifies as itself, that the three

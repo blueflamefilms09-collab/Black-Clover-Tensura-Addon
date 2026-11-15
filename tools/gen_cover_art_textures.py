@@ -22,7 +22,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 SRC = os.path.join(os.path.dirname(__file__), "art", "covers")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item", "grimoire_book")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "grimoire_book")
 PREVIEW = os.path.join(ROOT, "build", "cover_art")
 W, H = 64, 80
 SETS = ["three_leaf", "four_leaf", "five_leaf", "spade", "triple_spade", "heart", "two_heart", "diamond", "black_magic", "god_tier"]

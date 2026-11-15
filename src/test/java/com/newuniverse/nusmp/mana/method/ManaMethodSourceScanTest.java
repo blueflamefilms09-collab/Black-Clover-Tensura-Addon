@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ManaMethodSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Path METHOD = SRC.resolve("mana/method"), CLIENT = SRC.resolve("client/manamethod");
-    private static final Pattern CLIENT_CLASS = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
+    private static final Pattern CLIENT_CLASS = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 
@@ -208,7 +208,7 @@ class ManaMethodSourceScanTest {
         assertTrue(storm > 0 && rune > storm, "the shape is appended after the older entries (ordinals never move)");
         for (String tex : new String[]{"rune_stroke_gold", "rune_stroke_flame", "rune_stroke_water", "rune_stroke_wind", "rune_stroke_earth", "rune_stroke_lightning", "rune_stroke_plant", "rune_line_ring", "rune_arc_strip"}) {
             assertTrue(l.contains("\"" + tex + "\""), "the layer uses " + tex);
-            assertTrue(Files.exists(Path.of("src/main/resources/assets/nusmp/textures/particle/" + tex + ".png")), tex + " ships");
+            assertTrue(Files.exists(Path.of("src/main/resources/assets/anime_multiverse/textures/particle/" + tex + ".png")), tex + " ships");
         }
     }
 
@@ -525,15 +525,15 @@ class ManaMethodSourceScanTest {
         for (String must : new String[]{"exists", "partly", "missing", "NEW", "REPLACED", "KEPT"}) assertTrue(audit.contains(must), "the audit lacks: " + must);
         String lang = read(Path.of("tools/lang/mana_method.json"));
         for (String id : new String[]{"mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true"})
-            assertTrue(lang.contains("\"nusmp.mana_method.page." + id + ".desc\""), "a description for " + id);
-        assertTrue(lang.contains("\"nusmp.mana_method.cast\""));
-        for (String k : new String[]{"nusmp.mana_method.page.mana_method_air_step.desc", "nusmp.mana_method.page.mana_method_dash.desc", "nusmp.mana_method.air_step", "nusmp.mana_method.air_step_end"})
+            assertTrue(lang.contains("\"anime_multiverse.mana_method.page." + id + ".desc\""), "a description for " + id);
+        assertTrue(lang.contains("\"anime_multiverse.mana_method.cast\""));
+        for (String k : new String[]{"anime_multiverse.mana_method.page.mana_method_air_step.desc", "anime_multiverse.mana_method.page.mana_method_dash.desc", "anime_multiverse.mana_method.air_step", "anime_multiverse.mana_method.air_step_end"})
             assertTrue(lang.contains("\"" + k + "\""), "lang key " + k);
-        for (String k : new String[]{"nusmp.mana_method.page.mana_method_body.desc", "nusmp.mana_method.page.mana_method_brush.desc", "nusmp.mana_method.body", "nusmp.mana_method.body_end", "nusmp.mana_method.brush"})
+        for (String k : new String[]{"anime_multiverse.mana_method.page.mana_method_body.desc", "anime_multiverse.mana_method.page.mana_method_brush.desc", "anime_multiverse.mana_method.body", "anime_multiverse.mana_method.body_end", "anime_multiverse.mana_method.brush"})
             assertTrue(lang.contains("\"" + k + "\""), "3.6.0 lang key " + k);
         for (String must : new String[]{"3.6.0", "Body Rune", "Brush Rune", "Gadjah", "Rill", "costScalesWithCharge", "lightningChargeScale", "bodyRunes", "brushRunes", "magic.mana_method.body", "magic.mana_method.brush", "ENOTFOUND", "Owner decisions (3.6.0)"})
             assertTrue(doc.contains(must), "the doc lacks " + must + " (3.6.0)");
-        assertTrue(read(METHOD.resolve("ManaMethodPages.java")).contains("\"nusmp.mana_method.cast\""));
+        assertTrue(read(METHOD.resolve("ManaMethodPages.java")).contains("\"anime_multiverse.mana_method.cast\""));
         for (String png : new String[]{"rune_ingame.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png", "rune_hold_tap.png", "rune_hold_half.png", "rune_hold_full.png", "rune_hold_compare.png",
                 "rune_lightning_rune.png", "rune_lightning_strike.png", "rune_body.png", "rune_brush_floor.png", "rune_brush_surfaces.png"})
             assertTrue(Files.exists(Path.of("docs/previews/mana_method/" + png)), "preview " + png);
@@ -618,7 +618,7 @@ class ManaMethodSourceScanTest {
         for (String must : new String[]{"## 3.8.0", "manaMethod.access", "PASSIVE", "TIMED", "MANA_ZONE_GATE", "passiveMastery", "timedSeconds", "timedCooldownSeconds", "ownElementOnly", "mana_method_state", "magic.mana_method.access", "magic.mana_method.element", "Owner decisions (3.8.0)"})
             assertTrue(doc.contains(must), "the doc lacks " + must + " (3.8.0)");
         String lang = read(Path.of("tools/lang/mana_method.json"));
-        for (String k : new String[]{"nusmp.mana_method.page.mana_method_state.desc", "nusmp.mana_method.state.start", "nusmp.mana_method.state.warn", "nusmp.mana_method.state.end", "nusmp.mana_method.state.cooling", "nusmp.mana_method.state.already", "nusmp.mana_method.state.cut"})
+        for (String k : new String[]{"anime_multiverse.mana_method.page.mana_method_state.desc", "anime_multiverse.mana_method.state.start", "anime_multiverse.mana_method.state.warn", "anime_multiverse.mana_method.state.end", "anime_multiverse.mana_method.state.cooling", "anime_multiverse.mana_method.state.already", "anime_multiverse.mana_method.state.cut"})
             assertTrue(lang.contains("\"" + k + "\""), "lang key " + k);
     }
 }

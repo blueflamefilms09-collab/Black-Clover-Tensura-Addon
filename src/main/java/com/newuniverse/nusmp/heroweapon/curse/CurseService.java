@@ -69,7 +69,7 @@ final class CurseService {
         try {
             NusmpEvents.fire(p, key, arg);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The quest hook {} failed and was ignored", key, e);
+            LOG.warn("[anime_multiverse] The quest hook {} failed and was ignored", key, e);
         }
     }
 
@@ -256,7 +256,7 @@ final class CurseService {
             HeroCtx c = HeroCtx.of(p);
             if (c != null) HeroLogics.of(b.kind()).onFormChanged(c, from, HeroForms.active(b));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The weapon logic of {} failed in onFormChanged after the curse form ended", b.kind(), e);
+            LOG.warn("[anime_multiverse] The weapon logic of {} failed in onFormChanged after the curse form ended", b.kind(), e);
         }
     }
 
@@ -266,7 +266,7 @@ final class CurseService {
         try {
             return Boolean.TRUE.equals(FORCE_ACTIVE.invoke(null, p, HeroForm.BASE_ID));
         } catch (ReflectiveOperationException | RuntimeException e) {
-            LOG.warn("[nusmp] The forms system could not put the base form back for the curse, the curse does it itself: {}", e.toString());
+            LOG.warn("[anime_multiverse] The forms system could not put the base form back for the curse, the curse does it itself: {}", e.toString());
             return false;
         }
     }
@@ -278,7 +278,7 @@ final class CurseService {
         Component whisper = Component.translatableWithFallback(CurseText.whisperKey(sin, lineNo), CurseText.whispers(sin).get(lineNo));
         CurseMessages.bar(p, CurseMessages.colored(sin, CurseMessages.tr(CurseText.OFFER_BAR, kind.display(), whisper)));
         int hearts = CurseMachine.taxFor(s.series.size(), t);
-        CurseMessages.chat(p, CurseMessages.colored(sin, CurseMessages.tr(CurseText.OFFER_CHAT, kind.display(), sin.label(), hearts, Component.keybind("key.nusmp.hero_embrace"), t.offerSeconds)));
+        CurseMessages.chat(p, CurseMessages.colored(sin, CurseMessages.tr(CurseText.OFFER_CHAT, kind.display(), sin.label(), hearts, Component.keybind("key.anime_multiverse.hero_embrace"), t.offerSeconds)));
         if (KeyThree.available()) CurseMessages.chat(p, CurseMessages.colored(sin, CurseMessages.tr(CurseText.OFFER_KEY3)));
         sound(p, SoundEvents.ELDER_GUARDIAN_CURSE, 0.7f, 0.6f);
         Vec3 at = p.position().add(0.0, 1.0, 0.0);
@@ -390,7 +390,7 @@ final class CurseService {
             try {
                 HeroSummon.summon(p);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] The weapon could not be summoned for an Overrun and the Overrun went on without it: {}", e.toString());
+                LOG.warn("[anime_multiverse] The weapon could not be summoned for an Overrun and the Overrun went on without it: {}", e.toString());
             }
         }
         Sin shown = sin != null ? sin : Sin.WRATH;

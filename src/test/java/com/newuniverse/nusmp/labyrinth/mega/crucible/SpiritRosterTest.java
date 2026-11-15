@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The Cursed Spirit roster: the shipped file parses clean, the draw is weighted, deterministic and skips entities that do not exist. */
 class SpiritRosterTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/mega/cursed_spirits.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/mega/cursed_spirits.json");
 
     private static SpiritRoster.Parsed parse(String json) { return SpiritRoster.parse(MiniJson.parse(json)); }
 

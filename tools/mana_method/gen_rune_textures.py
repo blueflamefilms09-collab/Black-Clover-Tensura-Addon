@@ -1,5 +1,5 @@
 """
-Generates the textures of the written Mana Method rune (assets/nusmp/textures/particle/):
+Generates the textures of the written Mana Method rune (assets/anime_multiverse/textures/particle/):
 
   rune_stroke_<tint>.png   32 x 48: ONE stroke segment, across the stroke (x) and along it (y: the start of the stroke at the bottom, as the vertex buffer maps a quad's texture). A bright core
                            and an orange-red edge in the colours of the tint (gold = True Magic and the reference look, flame, water, wind, earth, lightning, plant), soft round ends. Straight colour
@@ -17,7 +17,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 # tint -> (core colour, edge colour); the same table as gen_rune_glyphs.py
 TINTS = {

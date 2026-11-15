@@ -11,8 +11,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Why: the stack of a hero weapon in the hand is only a PROJECTION of the bond (the bond is the truth), so what the stack must carry is little and must reach
- * other players' clients: which look to draw ({@code nusmp:hero_look}: {@code base} or {@code curse}, set by the forms system when the form changes, read by the
- * renderer so that no draw call looks up a bond) and whose weapon it is ({@code nusmp:hero_owner}, the player's uuid: a projection in anyone else's hands
+ * other players' clients: which look to draw ({@code anime_multiverse:hero_look}: {@code base} or {@code curse}, set by the forms system when the form changes, read by the
+ * renderer so that no draw call looks up a bond) and whose weapon it is ({@code anime_multiverse:hero_owner}, the player's uuid: a projection in anyone else's hands
  * dissolves). Both are persistent and network-synchronised like the arc spawn egg's character component.
  */
 public final class HeroComponents {

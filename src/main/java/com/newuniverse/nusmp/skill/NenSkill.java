@@ -31,7 +31,7 @@ import java.util.List;
  * electricity, gum or rubber by stance, Conjuration chains, Manipulation a needle, Specialization a field that steals buffs; Vow and Limitation trades your defences (no Ten, Zetsu or Ken, a quarter
  * more damage taken) for hatsu that hit three quarters harder. Windows are the game time they end at, kept in the skill tag of the one player who owns them; what runs after a press is bounded and
  * expires by game time ({@link NenHatsu}). A press looks at no more than 24 creatures. Switch: server setting {@code nenEnabled}; looks: {@code nenVfx} and {@code nenVfxV2}.
- * Obtain: {@code /tensura edit <player> ability grant nusmp:nen}.
+ * Obtain: {@code /tensura edit <player> ability grant anime_multiverse:nen}.
  */
 public class NenSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("nen", "Nen",

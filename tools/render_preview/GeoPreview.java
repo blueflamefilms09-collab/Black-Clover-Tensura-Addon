@@ -29,13 +29,13 @@ import java.util.Map;
 final class GeoPreview {
     private GeoPreview() {}
 
-    /** assets/nusmp/&lt;path&gt; of the mod, then this tool's assets / examples folders (the test models live in examples/). */
+    /** assets/anime_multiverse/&lt;path&gt; of the mod, then this tool's assets / examples folders (the test models live in examples/). */
     static Reader source(ResourceLocation id) {
         List<File> dirs = new ArrayList<>();
         String ns = id.getNamespace();
-        if (ns.equals("nusmp")) {
-            dirs.add(new File(Preview.modAssets, "nusmp"));
-            dirs.add(new File(Preview.previewDir, "assets/nusmp"));
+        if (ns.equals("anime_multiverse")) {
+            dirs.add(new File(Preview.modAssets, "anime_multiverse"));
+            dirs.add(new File(Preview.previewDir, "assets/anime_multiverse"));
             dirs.add(new File(Preview.previewDir, "assets"));
             dirs.add(new File(Preview.previewDir, "examples"));
         } else {
@@ -61,7 +61,7 @@ final class GeoPreview {
         }
         ResourceLocation model = ResourceLocation.parse(Preview.str(sc, "modelRl", ""));
         String anim = Preview.str(sc, "animationsRl", null), tex = Preview.str(sc, "textureRl", null), glow = Preview.str(sc, "glowRl", null);
-        return new GeoSpec(model, anim == null ? null : ResourceLocation.parse(anim), tex == null ? ResourceLocation.fromNamespaceAndPath("nusmp", "textures/missing.png") : ResourceLocation.parse(tex),
+        return new GeoSpec(model, anim == null ? null : ResourceLocation.parse(anim), tex == null ? ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/missing.png") : ResourceLocation.parse(tex),
                 glow == null ? null : ResourceLocation.parse(glow));
     }
 

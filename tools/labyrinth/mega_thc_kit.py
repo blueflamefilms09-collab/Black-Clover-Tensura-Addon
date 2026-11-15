@@ -45,7 +45,7 @@ D._STRICT[0:0] = [
 # doorway with a rune in its floor "is not three wide" and the shell "leaks" under every glyph. They are plain full cubes you walk on (see WardRuneBlock and
 # SpawnGlyphBlock: "a plain, ordinary block on purpose"), so the kit's two tables are told so here, in this module, instead of being edited. (The pit tiles and
 # the sigil plates stay obstacles to the kit: a spawn marker must never be put on a trap.)
-_FLOOR_BLOCKS = ("nusmp:ward_rune", "nusmp:spawn_glyph")
+_FLOOR_BLOCKS = ("anime_multiverse:ward_rune", "anime_multiverse:spawn_glyph")
 _classify_original = D.classify
 
 
@@ -84,7 +84,7 @@ class Registry:
         return deco
 
     def path(self, name):
-        return os.path.join(L.RES, "data", "nusmp", "structure", "mega", self.folder[name], name + ".nbt")
+        return os.path.join(L.RES, "data", "anime_multiverse", "structure", "mega", self.folder[name], name + ".nbt")
 
 
 def _same(h, path):

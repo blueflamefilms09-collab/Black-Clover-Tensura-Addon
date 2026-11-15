@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * the right body part (the painted layer under it is covered by ArmorPainterV2Test); a robe or dungeon piece needs library models whose files exist (or a layer_1 / layer_2 pair).
  */
 class ArmorSlotRenderCoverageTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path ARMOR = ASSETS.resolve("textures/models/armor");
 
     static WornAnchor anchorOf(String model) {

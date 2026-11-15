@@ -30,7 +30,7 @@ import java.util.Optional;
  * Refurbished sofas, tables and storage in place of stair-chairs and wool beds, when those mods are installed, and plain vanilla otherwise, from
  * ONE set of templates. A {@code StructureProcessor} sees every block at placement time, so the swap costs nothing at runtime and leaves nothing
  * in the world file but the final block. The templates mark what a block is with a data marker in the cell above it
- * ({@code nusmp:seat;as=chair}, {@code nusmp:hearth;as=stove}, {@code nusmp:bed;as=bed}, {@code nusmp:furniture;as=table}); the generator hands
+ * ({@code anime_multiverse:seat;as=chair}, {@code anime_multiverse:hearth;as=stove}, {@code anime_multiverse:bed;as=bed}, {@code anime_multiverse:furniture;as=table}); the generator hands
  * the markers of the sector it is building to {@link RegionContext}, and this processor looks for one above each block it is given. If the
  * {@link CompatTable} has a candidate for that hint whose mod is loaded and whose block exists, the block is replaced and keeps its
  * {@code facing}, {@code half}, {@code part}, {@code lit} ... by name ({@link StateCarry#carryProperties}, which never throws on a
@@ -42,7 +42,7 @@ import java.util.Optional;
  * different block); the templates only mark decorative blocks.
  */
 public final class ModCompatProcessor extends StructureProcessor {
-    /** The processor has no fields: what to swap is data ({@code data/nusmp/mega/compat}) and markers. */
+    /** The processor has no fields: what to swap is data ({@code data/anime_multiverse/mega/compat}) and markers. */
     public static final MapCodec<ModCompatProcessor> CODEC = MapCodec.unit(ModCompatProcessor::new);
 
     public ModCompatProcessor() {}

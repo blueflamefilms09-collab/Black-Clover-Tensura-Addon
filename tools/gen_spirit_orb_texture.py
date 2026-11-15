@@ -1,6 +1,6 @@
 """Generates the Spirit Lord orb texture (white, tinted by the spirit's colour in SpiritOrbRenderer).
 
-    python tools/gen_spirit_orb_texture.py   ->  src/main/resources/assets/nusmp/textures/entity/spirit_orb.png
+    python tools/gen_spirit_orb_texture.py   ->  src/main/resources/assets/anime_multiverse/textures/entity/spirit_orb.png
 """
 import math
 import os
@@ -8,7 +8,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "spirit_orb.png")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "spirit_orb.png")
 
 
 def main(size=64):

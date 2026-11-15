@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 /**
  * Relics of Many Worlds, wave 2: five charms (the pouch of sand, the tome, the holy chains, the pact deck, the phantom boots) and seven
- * cloaks, capes and mantles worn on the back. The long card text of each, as game rules, is in the lang keys {@code item.nusmp.<id>.card};
+ * cloaks, capes and mantles worn on the back. The long card text of each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card};
  * the rules live in Wave2Rules / Wave2Deck / Wave2Tome / Wave2Lives (pure), the abilities in Wave2Acts and the handlers in Wave2Events.
  * <p>
  * Tabletop became Minecraft: one block is three feet, a long rest is a Minecraft day, a saving throw is a chance read off the target's size,

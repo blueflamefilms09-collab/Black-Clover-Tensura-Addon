@@ -65,8 +65,8 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
 public final class GrimoireFloatClient {
     private static ItemStack zagredBook = ItemStack.EMPTY;
 
-    private static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf.png");
-    private static final ResourceLocation LEAF_TATTERED = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/page_leaf_tattered.png");
+    private static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/item/grimoire_book/page_leaf.png");
+    private static final ResourceLocation LEAF_TATTERED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/item/grimoire_book/page_leaf_tattered.png");
     /**
      * 1.99.0 (performance pass): the rune texture of each magic, found once per resource reload. It used to be worked out for every floating grimoire on every frame: a lower-cased name, two string
      * concatenations, a location, and a question to the resource manager ("is there a _rune_ring file?"), which walks the resource packs.
@@ -84,9 +84,9 @@ public final class GrimoireFloatClient {
         ResourceLocation cached = RUNE_TEXTURES[magic.ordinal()];
         if (cached != null) return cached;
         String id = magic.name().toLowerCase(java.util.Locale.ROOT);
-        ResourceLocation ring = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + "_rune_ring.png");
+        ResourceLocation ring = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/magic_runes/" + id + "_rune_ring.png");
         ResourceLocation found = Minecraft.getInstance().getResourceManager().getResource(ring).isPresent() ? ring
-                : ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/magic_runes/" + id + ".png");
+                : ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/magic_runes/" + id + ".png");
         RUNE_TEXTURES[magic.ordinal()] = found;
         return found;
     }
@@ -337,8 +337,8 @@ public final class GrimoireFloatClient {
     }
 
     // ---------------------------------------------------------------- 0.35: Julius's coverless grimoire, the holster harness
-    private static final ResourceLocation HARNESS_LEATHER = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_leather.png");
-    private static final ResourceLocation HARNESS_BRASS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/grimoire_harness_brass.png");
+    private static final ResourceLocation HARNESS_LEATHER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/grimoire_harness_leather.png");
+    private static final ResourceLocation HARNESS_BRASS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/grimoire_harness_brass.png");
 
     /**
      * Julius Novachrono's canon Time grimoire is drawn as the coverless page drum of the anime (the only grimoire in the Clover
@@ -350,7 +350,7 @@ public final class GrimoireFloatClient {
         return "julius".equalsIgnoreCase(d.getString("Canon"));         // 0.38: Julius's book only again; other Time grimoires are books
     }
 
-    private static final ResourceLocation DRUM_EDGE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/item/grimoire_book/drum_edge.png");
+    private static final ResourceLocation DRUM_EDGE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/item/grimoire_book/drum_edge.png");
 
     /**
      * The Time grimoire's page drum (0.37, after the owner's screenshot): a solid cylinder of cream pages packed edge to edge from

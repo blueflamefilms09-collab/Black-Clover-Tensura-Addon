@@ -9,9 +9,9 @@ PUZZLE-ROOMS of the Mega-Dungeon (1.94.0): two open "galleries" in the `puzzle/`
 
 Why: every puzzle room the Mega-Dungeon had before 1.94.0 is built around its own blocks (four sigil plates, a Riddle Stone, a puzzle door), so a room of that kind can only ever hold THAT puzzle. The
 twenty-nine puzzles of `labyrinth/mega/puzzle` lay themselves out in an empty floor at run time (floor tiles, pillars, chests, a lectern), so they need rooms that are empty on purpose: a wide, flat,
-well lit hall with three doors, a clear floor, banners and braziers along the walls, and ONE `nusmp:puzzle` marker in the middle that tells the puzzle director where the layout goes. These are those rooms.
+well lit hall with three doors, a clear floor, banners and braziers along the walls, and ONE `anime_multiverse:puzzle` marker in the middle that tells the puzzle director where the layout goes. These are those rooms.
 The folder is `puzzle/`, so the room kind is PUZZLE and the pools, the factions and the audit treat them like every other puzzle room; the template name starts with `gallery`, which the weights file
-(`data/nusmp/mega/puzzles/weights.json`, key `openRooms`) lists as "no apparatus of its own: the director chooses the puzzle by theme and depth, or leaves the room to the library's puzzle mechanics".
+(`data/anime_multiverse/mega/puzzles/weights.json`, key `openRooms`) lists as "no apparatus of its own: the director chooses the puzzle by theme and depth, or leaves the room to the library's puzzle mechanics".
 Same footprint and doorways as the Soldiers' Quarters (`gen_mega_rooms3.py`): doors north, south and east, so a gallery fits wherever a hall fits. No spawn markers (a puzzle is not a fight).
 """
 import argparse

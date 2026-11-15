@@ -1,7 +1,7 @@
 """Generates the Veldanava "Jibril, Lord of Rigor" VFX textures (vfx.client.layer.JibrilLayer).
 
 Deterministic and font-free (every machine writes the same pixels). Written from scratch for this mod; shares no code or asset with any other mod.
-Output: src/main/resources/assets/nusmp/textures/particle/jibril_*.png  (the same names as the 3.15 set are redrawn; the new ones are added)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/jibril_*.png  (the same names as the 3.15 set are redrawn; the new ones are added)
 
     python tools/gen_jibril_vfx_textures.py            # all
     python tools/gen_jibril_vfx_textures.py wing glyph # only these
@@ -45,7 +45,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 PEARL = (255, 250, 244)
 PEACH = (255, 214, 192)

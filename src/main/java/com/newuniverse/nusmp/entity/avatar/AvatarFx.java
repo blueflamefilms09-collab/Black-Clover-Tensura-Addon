@@ -55,7 +55,7 @@ final class AvatarFx {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] The Devil Avatar's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] The Devil Avatar's {} stopped: {}", what, t.toString());
             }
         };
     }

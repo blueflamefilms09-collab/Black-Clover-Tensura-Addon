@@ -42,19 +42,19 @@ public final class FactionReload implements ResourceManagerReloadListener {
                     JsonElement root = JsonParser.parseReader(reader);
                     Object tree = root.isJsonObject() ? toTree(root.getAsJsonObject()) : null;
                     @SuppressWarnings("unchecked") FactionParser.Result r = FactionParser.parse(id, (Map<String, Object>) tree);
-                    for (String p : r.problems()) LOG.warn("[nusmp] Mega faction file {}: {}", e.getKey(), p);
+                    for (String p : r.problems()) LOG.warn("[anime_multiverse] Mega faction file {}: {}", e.getKey(), p);
                     if (r.def() != null) loaded.put(r.def().id(), r.def());
                 } catch (Exception ex) {
-                    LOG.warn("[nusmp] Mega faction file {} skipped: {}", e.getKey(), ex.toString());
+                    LOG.warn("[anime_multiverse] Mega faction file {} skipped: {}", e.getKey(), ex.toString());
                 }
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] Mega factions could not scan their data folder", ex);
+            LOG.warn("[anime_multiverse] Mega factions could not scan their data folder", ex);
         }
         FactionGraph graph = FactionGraph.of(new ArrayList<>(loaded.values()));
-        for (String p : graph.problems()) LOG.warn("[nusmp] Mega factions: {}", p);
+        for (String p : graph.problems()) LOG.warn("[anime_multiverse] Mega factions: {}", p);
         FactionRegistry.install(graph);
-        LOG.info("[nusmp] Loaded {} Mega-Dungeon factions: {}", graph.size(), graph.ids());
+        LOG.info("[anime_multiverse] Loaded {} Mega-Dungeon factions: {}", graph.size(), graph.ids());
     }
 
     /** A Gson element as plain Java: objects to insertion-ordered maps, arrays to lists, numbers to Double, booleans, strings, null. */

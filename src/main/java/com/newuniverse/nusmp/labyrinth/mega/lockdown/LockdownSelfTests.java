@@ -67,9 +67,9 @@ public final class LockdownSelfTests {
         if (text == null) return fail(LockdownRooms.FILE + " is missing from the data pack");
         LockdownTable.Parsed parsed = LockdownTable.parse(LockdownRooms.FILE, text);
         if (!parsed.clean()) return fail("the room data has problems: " + parsed.problems());
-        LockdownRule treasure = parsed.table().ruleFor("nusmp:mega/treasure/holy_church_reliquary", RoomKind.TREASURE);
-        LockdownRule trial = parsed.table().ruleFor("nusmp:mega/trial/trial_hall_a", RoomKind.TRIAL);
-        LockdownRule puzzle = parsed.table().ruleFor("nusmp:mega/puzzle/sigil_hall_a", RoomKind.PUZZLE);
+        LockdownRule treasure = parsed.table().ruleFor("anime_multiverse:mega/treasure/holy_church_reliquary", RoomKind.TREASURE);
+        LockdownRule trial = parsed.table().ruleFor("anime_multiverse:mega/trial/trial_hall_a", RoomKind.TRIAL);
+        LockdownRule puzzle = parsed.table().ruleFor("anime_multiverse:mega/puzzle/sigil_hall_a", RoomKind.PUZZLE);
         if (!treasure.lock()) return fail("a treasure room should lock");
         if (trial.lock() || puzzle.lock()) return fail("a trial hall and a puzzle room lock themselves and must not be locked twice");
         done.append("room data clean (").append(parsed.table().kinds().size()).append(" kinds, ").append(parsed.table().patterns().size()).append(" patterns); ");
@@ -105,7 +105,7 @@ public final class LockdownSelfTests {
 
     private static String readData(MinecraftServer server, String path) {
         try {
-            var res = server.getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", path));
+            var res = server.getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", path));
             if (res.isEmpty()) return null;
             try (InputStream in = res.get().open()) {
                 return new String(in.readAllBytes(), StandardCharsets.UTF_8);

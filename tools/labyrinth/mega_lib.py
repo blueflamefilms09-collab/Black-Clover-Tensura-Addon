@@ -12,7 +12,7 @@ room builder cannot forget the hole or put a pillar in it. `MT.set()` also check
 blocks really have (the type-check we have instead of a game: `facing=forward` on a stair raises here, not as a purple-and-black cube in game).
 
 Vanilla Block Primacy Rule: architecture, traps and decoration use VANILLA blocks only. The few custom blocks (the Gatekeeper door, the relic
-pedestal, the exit gate, trap blocks of 1.36.0 ...) are named in `CUSTOM` below; `mega_check.py` rejects any other `nusmp:` block.
+pedestal, the exit gate, trap blocks of 1.36.0 ...) are named in `CUSTOM` below; `mega_check.py` rejects any other `anime_multiverse:` block.
 
 Architecture uses ONLY the palette constants (the deepslate family and the dark-oak family): the Region Theme processor swaps those families
 for another vanilla family (blackstone, nether brick, end stone ...) so one template looks different in every sector. Anything that is not in
@@ -42,21 +42,21 @@ DOOR_W = 3
 DOOR_H = 4
 DOOR_ROW = FLOOR_ROW + 1
 FLOOR_Y = 64
-DOOR = "nusmp:mega_door"
-CHAIN = "nusmp:mega_chain"
-VAULT = "nusmp:mega_vault"
-ONWARD = "nusmp:mega_onward"
-P_SIDE = "nusmp:mega/side"
-P_CAP = "nusmp:mega/cap"
-P_LANDING = "nusmp:mega/landing"
-P_ARENA = "nusmp:mega/arena"
-P_ANTECHAMBER = "nusmp:mega/antechamber"
-P_VAULT = "nusmp:mega/vault"
-P_ONWARD = "nusmp:mega/onward"
-P_SAFE = "nusmp:mega/safe"
-P_LINK = "nusmp:mega/link"
+DOOR = "anime_multiverse:mega_door"
+CHAIN = "anime_multiverse:mega_chain"
+VAULT = "anime_multiverse:mega_vault"
+ONWARD = "anime_multiverse:mega_onward"
+P_SIDE = "anime_multiverse:mega/side"
+P_CAP = "anime_multiverse:mega/cap"
+P_LANDING = "anime_multiverse:mega/landing"
+P_ARENA = "anime_multiverse:mega/arena"
+P_ANTECHAMBER = "anime_multiverse:mega/antechamber"
+P_VAULT = "anime_multiverse:mega/vault"
+P_ONWARD = "anime_multiverse:mega/onward"
+P_SAFE = "anime_multiverse:mega/safe"
+P_LINK = "anime_multiverse:mega/link"
 P_EMPTY = "minecraft:empty"
-PROCESSORS = "nusmp:mega_interior"
+PROCESSORS = "anime_multiverse:mega_interior"
 
 SIDES = ("n", "e", "s", "w")
 FACING = {"n": "north", "e": "east", "s": "south", "w": "west"}
@@ -65,13 +65,13 @@ STEP = {"north": (0, -1), "south": (0, 1), "west": (-1, 0), "east": (1, 0)}
 RIGHT_OF = {"north": "east", "east": "south", "south": "west", "west": "north"}
 LEFT_OF = {v: k for k, v in RIGHT_OF.items()}
 
-#: custom (nusmp:) blocks templates may use; everything else must be vanilla. Add to this list ONLY for a block that is mechanically necessary.
+#: custom (anime_multiverse:) blocks templates may use; everything else must be vanilla. Add to this list ONLY for a block that is mechanically necessary.
 CUSTOM = {
-    "nusmp:gatekeeper_door", "nusmp:peak_altar", "nusmp:relic_pedestal", "nusmp:labyrinth_exit", "nusmp:labyrinth_gate",
-    "nusmp:sealed_archway", "nusmp:magic_barrier", "nusmp:ward_rune", "nusmp:spawn_glyph",
-    "nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:sigil_plate", "nusmp:riddle_stone",
-    "nusmp:labyrinth_bricks", "nusmp:labyrinth_tiles", "nusmp:labyrinth_pillar", "nusmp:labyrinth_glyph", "nusmp:labyrinth_lantern", "nusmp:magicule_vein",
-    "nusmp:guardian_altar",
+    "anime_multiverse:gatekeeper_door", "anime_multiverse:peak_altar", "anime_multiverse:relic_pedestal", "anime_multiverse:labyrinth_exit", "anime_multiverse:labyrinth_gate",
+    "anime_multiverse:sealed_archway", "anime_multiverse:magic_barrier", "anime_multiverse:ward_rune", "anime_multiverse:spawn_glyph",
+    "anime_multiverse:pitfall_tile", "anime_multiverse:snuffer_glyph", "anime_multiverse:sigil_plate", "anime_multiverse:riddle_stone",
+    "anime_multiverse:labyrinth_bricks", "anime_multiverse:labyrinth_tiles", "anime_multiverse:labyrinth_pillar", "anime_multiverse:labyrinth_glyph", "anime_multiverse:labyrinth_lantern", "anime_multiverse:magicule_vein",
+    "anime_multiverse:guardian_altar",
 }
 
 # ------------------------------------------------------------------ the palette (the theme processor swaps these families)
@@ -129,7 +129,7 @@ _H6 = _H4 + ("up", "down")
 _SIDE3 = ("none", "low", "tall")
 _SCHEMA = [  # (regex of the block path, {property: allowed values or None for any})
     # first on purpose: a mod block (the Gatekeeper door ends in "_door", the pressure plates in "_plate") is never judged by a vanilla rule
-    (r"nusmp:.*", None),
+    (r"anime_multiverse:.*", None),
     (r"chiseled_bookshelf", {"facing": _H4, "slot_0_occupied": _B, "slot_1_occupied": _B, "slot_2_occupied": _B, "slot_3_occupied": _B,
                               "slot_4_occupied": _B, "slot_5_occupied": _B}),
     (r".*_stairs",{"facing": _H4, "half": ("top", "bottom"), "shape": ("straight", "inner_left", "inner_right", "outer_left", "outer_right"), "waterlogged": _B}),
@@ -180,7 +180,7 @@ _SCHEMA = [  # (regex of the block path, {property: allowed values or None for a
     (r"moss_carpet|pale_moss_carpet", {"bottom": _B}),
     (r"structure_block", {"mode": ("save", "load", "corner", "data")}),
     (r"jigsaw", {"orientation": ORIENTATIONS}),
-    (r"nusmp:.*", None),
+    (r"anime_multiverse:.*", None),
     (r"cobweb|bookshelf|chiseled_bookshelf|crafting_table|smithing_table|cartography_table|fletching_table|enchanting_table|glass|tinted_glass|"
      r"sea_lantern|glowstone|shroomlight|magma_block|obsidian|crying_obsidian|bedrock|barrier|air|cave_air|void_air|soul_sand|soul_soil|netherrack|"
      r"gold_block|iron_block|copper_block|diamond_block|amethyst_block|budding_amethyst|bone_block|coal_block|redstone_block|redstone_lamp|"
@@ -440,7 +440,7 @@ class MT:
         self.name = name
         self.W, self.D = mx * MODULE, mz * MODULE
         self.mx, self.mz = mx, mz
-        self.rng = random.Random("nusmp:mega:" + name)
+        self.rng = random.Random("anime_multiverse:mega:" + name)
         self.sockets = []        # (side, offset, kwargs)
         self.reserved = set()    # cells that must stay clear (the doorway holes)
         self.finished = False
@@ -455,7 +455,7 @@ class MT:
         err = check_state(block, props)
         if err:
             raise ValueError("%s: bad block state at (%d,%d,%d): %s" % (self.name, x, y, z, err))
-        if block.startswith("nusmp:") and block not in CUSTOM:
+        if block.startswith("anime_multiverse:") and block not in CUSTOM:
             raise ValueError("%s: %s is not a custom block a Mega template may use (Vanilla Block Primacy Rule; see mega_lib.CUSTOM)" % (self.name, block))
         if (x, y, z) in self.reserved and block != AIR:
             raise ValueError("%s: (%d,%d,%d) is inside a doorway hole and must stay clear (%s)" % (self.name, x, y, z, block))
@@ -617,7 +617,7 @@ class MT:
         `;key=value` (a `facing` is rotated with the piece). Stands in the AIR cell above what it describes (see MarkerKind.java)."""
         if kind not in MARKER_KINDS:
             raise ValueError("unknown marker kind %r (one of %s)" % (kind, ", ".join(sorted(MARKER_KINDS))))
-        meta = "nusmp:" + kind + "".join(";%s=%s" % (k, v) for k, v in args.items())
+        meta = "anime_multiverse:" + kind + "".join(";%s=%s" % (k, v) for k, v in args.items())
         data = nbt.Compound({"id": "minecraft:structure_block", "mode": "DATA", "metadata": meta, "name": "", "author": "",
                              "posX": nbt.Int(0), "posY": nbt.Int(1), "posZ": nbt.Int(0), "sizeX": nbt.Int(0), "sizeY": nbt.Int(0), "sizeZ": nbt.Int(0),
                              "rotation": "NONE", "mirror": "NONE", "integrity": nbt.Float(1.0), "seed": nbt.Long(0),

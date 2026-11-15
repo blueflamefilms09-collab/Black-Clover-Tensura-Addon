@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Every dialogue file the mod ships parses with no problem, belongs to a snake_case id, and its language keys follow the numbering the generator uses. */
 class DialogueFilesTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/arc/dialogue");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/arc/dialogue");
 
     private static List<Path> files() throws IOException {
         assertTrue(Files.isDirectory(DIR), "the dialogue folder exists: " + DIR.toAbsolutePath());

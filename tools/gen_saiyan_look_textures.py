@@ -2,7 +2,7 @@
 Great-Ape-free "golden fur" skin map (Super Saiyan 4 forms) and the tail ribbon. Deterministic, no fonts, no external images
 (every shape is drawn by code; web pictures were only ever references for colours, never copied).
 
-    python3 -B tools/gen_saiyan_look_textures.py   ->  src/main/resources/assets/nusmp/textures/particle/saiyan_*.png
+    python3 -B tools/gen_saiyan_look_textures.py   ->  src/main/resources/assets/anime_multiverse/textures/particle/saiyan_*.png
 
 Convention (same as the rest of textures/particle): white / greyscale, one vertex colour tints each quad. The additive sprites carry
 their colour only where they are opaque (black under the transparent texels, so RenderType.eyes can never draw a square).
@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 def save(arr, name):

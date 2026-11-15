@@ -205,7 +205,7 @@ public final class AvatarDelve {
             AvatarEntity moved = creator != null ? BetrayalDimensionHandler.teleportNear(a, creator) : home(a, t);
             if (moved != null) back = moved;
         } catch (RuntimeException soft) {
-            LOG.warn("[nusmp] An Avatar could not come back from the dungeon: {}", soft.toString());
+            LOG.warn("[anime_multiverse] An Avatar could not come back from the dungeon: {}", soft.toString());
         }
         int handed = 0;
         if (creator != null && AvatarAiConfig.lootShareWithCreator() && back.level() == creator.level() && back.distanceToSqr(creator) < 24.0 * 24.0) handed = AvatarGear.handOver(back, creator);

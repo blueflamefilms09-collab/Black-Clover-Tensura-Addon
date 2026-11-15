@@ -1,4 +1,4 @@
-"""Why: the greater Grimoire Daemon (entity nusmp:grimoire_daemon, tier GREATER: dark and fire, artillery with horns and a three-leaf grimoire emitting glowing text, a blow to its back
+"""Why: the greater Grimoire Daemon (entity anime_multiverse:grimoire_daemon, tier GREATER: dark and fire, artillery with horns and a three-leaf grimoire emitting glowing text, a blow to its back
 takes double). Crimson robe, devil horns, an ember-orange glow; the shared design is in tools/remodel/daemons.py (docs/arc/remodel.md).
 """
 from remodel import daemons

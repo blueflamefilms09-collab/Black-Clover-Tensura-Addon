@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image
 
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity")
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity")
 
 SHEEP = {
     "leg": (0, 0, 6, 8, 6), "arm": (30, 0, 6, 12, 6), "hips": (0, 18, 13, 8, 9), "belly": (0, 36, 15, 8, 10), "chest": (0, 55, 14, 7, 9),

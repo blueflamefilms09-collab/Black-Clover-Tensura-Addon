@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The armour meshes of the Djinn (assets/nusmp/djinn/&lt;set&gt;/&lt;piece&gt;.txt, written by tools/relics/gen_djinn_art.py and gen_djinn_unique.py with
+ * The armour meshes of the Djinn (assets/anime_multiverse/djinn/&lt;set&gt;/&lt;piece&gt;.txt, written by tools/relics/gen_djinn_art.py and gen_djinn_unique.py with
  * mesh_lib): one file per piece, lines {@code qn <layer> (x y z u v nx ny nz) x4}, UV in 128 units. Parsed once per resource reload into flat float
  * arrays (8 floats a vertex, 4 vertices a quad); layer 0 is drawn lit, layer 2 additive. A missing or broken file is logged once and draws nothing,
  * never an exception on the render thread.
@@ -65,7 +65,7 @@ public final class DjinnMeshes {
 
     static { clearSets(); }
 
-    public static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    public static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     private static void clearSets() { for (int[] row : SET) java.util.Arrays.fill(row, -1); }
 
@@ -178,7 +178,7 @@ public final class DjinnMeshes {
             }
             return new Data(flatten(body), flatten(glow), kind);
         } catch (Exception ex) {
-            if (WARNED.put(key, Boolean.TRUE) == null) LogUtils.getLogger().error("[nusmp] Djinn armour piece {} failed to load; it is not drawn", key, ex);
+            if (WARNED.put(key, Boolean.TRUE) == null) LogUtils.getLogger().error("[anime_multiverse] Djinn armour piece {} failed to load; it is not drawn", key, ex);
             return Data.EMPTY;
         }
     }

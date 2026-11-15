@@ -27,7 +27,7 @@ import java.util.Set;
 public final class VuSelfTests {
     private VuSelfTests() {}
 
-    private static final String ASSETS = "/assets/nusmp/";
+    private static final String ASSETS = "/assets/anime_multiverse/";
 
     public static void register() { SelfTests.register("visual.charms_genesis_worn", server -> run()); }
 
@@ -45,11 +45,11 @@ public final class VuSelfTests {
 
     static SelfTests.Result run() throws IOException {
         List<String> ov = lines(ASSETS + "visual_upgrade/overrides.txt");
-        if (ov == null) return SelfTests.Result.fail("assets/nusmp/visual_upgrade/overrides.txt is not in the jar");
+        if (ov == null) return SelfTests.Result.fail("assets/anime_multiverse/visual_upgrade/overrides.txt is not in the jar");
         VuOverrides table = VuOverrides.parse(ov);
         if (!table.problems().isEmpty()) return SelfTests.Result.fail("overrides.txt: " + table.problems().get(0));
-        List<String> acts = lines("/data/nusmp/visual_upgrade/act_vfx.txt");
-        if (acts == null) return SelfTests.Result.fail("data/nusmp/visual_upgrade/act_vfx.txt is not in the jar");
+        List<String> acts = lines("/data/anime_multiverse/visual_upgrade/act_vfx.txt");
+        if (acts == null) return SelfTests.Result.fail("data/anime_multiverse/visual_upgrade/act_vfx.txt is not in the jar");
         VuActTable actTable = VuActTable.parse(acts);
         if (!actTable.problems().isEmpty()) return SelfTests.Result.fail("act_vfx.txt: " + actTable.problems().get(0));
         Set<String> known = new HashSet<>();

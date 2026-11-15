@@ -37,7 +37,7 @@ public final class CurseClient {
     private CurseClient() {}
 
     /** The mod's Controls category (the same string the other keys of the mod use). */
-    public static final String CATEGORY = "key.categories.nusmp";
+    public static final String CATEGORY = "key.categories.anime_multiverse";
 
     /** Hold Sneak and this key for three seconds while the weapon's offer is open to accept it (default O). */
     public static final KeyMapping EMBRACE = new KeyMapping(CurseText.KEY_EMBRACE, InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_O, CATEGORY);
@@ -54,7 +54,7 @@ public final class CurseClient {
         ModContainer container = HeroWeaponSystem.modContainer();
         if (container != null) container.registerConfig(ModConfig.Type.CLIENT, CurseClientConfig.SPEC, "nusmp-heroweapon-curse-client.toml");
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(EMBRACE));
-        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_overlay"), CurseOverlay::render));
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_overlay"), CurseOverlay::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> reset());
     }

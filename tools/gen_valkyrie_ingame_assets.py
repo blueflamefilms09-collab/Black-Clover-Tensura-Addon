@@ -5,11 +5,11 @@ VALKYRIE ARMOUR v2 + drill lance AB, IN-GAME ASSETS (docs/vfx_remake/valkyrie_in
 Takes the finished preview data of docs/previews/vfx_remake/valkyrie/ (meshes written by tools/gen_valkyrie_armor_v2.py and tools/gen_valkyrie_lance.py, the 11 procedural 64 x 64 textures) and writes what the
 game loads:
 
-    src/main/resources/assets/nusmp/valkyrie_meshes/valk2_<piece>[_mid|_lo].txt   the armour pieces, three levels of detail each (verbatim copies; the loader bakes them into player-part space)
-    src/main/resources/assets/nusmp/valkyrie_meshes/lance_AB[_mid|_lo].txt        the merged drill lance, three levels (weapon frame: +y axis, butt at 0)
-    src/main/resources/assets/nusmp/valkyrie_meshes/pieces.json                  the piece table of the preview (bones, copies, looks, textures per layer, quads) + the AB lance row
-    src/main/resources/assets/nusmp/textures/entity/mode/valk2_atlas.png          256 x 256: ten 64 x 64 sheets and a white cell (the flat plates sample it), cell i at column i % 4, row i // 4
-    src/main/resources/assets/nusmp/textures/entity/mode/valk2_scales.png         the tail's scale sheet (it repeats, so it cannot live in the atlas)
+    src/main/resources/assets/anime_multiverse/valkyrie_meshes/valk2_<piece>[_mid|_lo].txt   the armour pieces, three levels of detail each (verbatim copies; the loader bakes them into player-part space)
+    src/main/resources/assets/anime_multiverse/valkyrie_meshes/lance_AB[_mid|_lo].txt        the merged drill lance, three levels (weapon frame: +y axis, butt at 0)
+    src/main/resources/assets/anime_multiverse/valkyrie_meshes/pieces.json                  the piece table of the preview (bones, copies, looks, textures per layer, quads) + the AB lance row
+    src/main/resources/assets/anime_multiverse/textures/entity/mode/valk2_atlas.png          256 x 256: ten 64 x 64 sheets and a white cell (the flat plates sample it), cell i at column i % 4, row i // 4
+    src/main/resources/assets/anime_multiverse/textures/entity/mode/valk2_scales.png         the tail's scale sheet (it repeats, so it cannot live in the atlas)
 
     python tools/gen_valkyrie_armor_v2.py ; python tools/gen_valkyrie_lance.py ; python tools/gen_valkyrie_ingame_assets.py
 
@@ -24,7 +24,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
 PREVIEW = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie")
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MESH_OUT = os.path.join(ASSETS, "valkyrie_meshes")
 TEX_OUT = os.path.join(ASSETS, "textures", "entity", "mode")
 

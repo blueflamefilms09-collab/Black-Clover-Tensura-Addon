@@ -19,7 +19,7 @@ import java.util.zip.GZIPInputStream;
  */
 final class TemplateFile {
     /** The root of the shipped templates. */
-    static final Path ROOT = Path.of("src/main/resources/data/nusmp/structure");
+    static final Path ROOT = Path.of("src/main/resources/data/anime_multiverse/structure");
 
     record Block(int x, int y, int z, String id, Map<String, String> props, Map<String, Object> nbt) {
         String cell() { return x + "," + y + "," + z; }
@@ -37,7 +37,7 @@ final class TemplateFile {
         this.sz = sz;
     }
 
-    /** {@code mega/hall/x} (with or without {@code nusmp:}) read from disk, or null when the file does not exist. */
+    /** {@code mega/hall/x} (with or without {@code anime_multiverse:}) read from disk, or null when the file does not exist. */
     static TemplateFile load(String id) throws IOException {
         String p = id.contains(":") ? id.substring(id.indexOf(':') + 1) : id;
         Path f = ROOT.resolve(p + ".nbt");

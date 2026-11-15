@@ -82,7 +82,7 @@ public class LootWeaponItem extends Item implements LootGear {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         GearTooltip.gear(stack, this, tip);
     }
 }

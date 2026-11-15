@@ -19,7 +19,7 @@ class UpgradeFxPurgeScopeTest {
     private static final String[] FILES = {"client/relics/fx/UpgradeFxClient.java", "relics/upgrade/UpgradeActFx.java"};
     // the two patterns of the scan, as RukhPurgeScopeTest has them
     private static final java.util.regex.Pattern BAD = java.util.regex.Pattern.compile("ParticleTypes\\.|DustParticleOptions|new\\s+DustColorTransitionOptions|ItemParticleOption|BlockParticleOption");
-    private static final java.util.regex.Pattern CALL = java.util.regex.Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.nusmp\\.particle\\.rukh\\.)?RukhParticles\\.))");
+    private static final java.util.regex.Pattern CALL = java.util.regex.Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.anime_multiverse\\.particle\\.rukh\\.)?RukhParticles\\.))");
 
     @Test
     void theTwoFilesAreInThePurgeScopeAgain() throws IOException {

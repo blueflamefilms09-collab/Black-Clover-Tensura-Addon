@@ -30,7 +30,7 @@ import com.newuniverse.nusmp.particle.fx.UpgradeParticleOptions;
 
 /**
  * Why: the ambient effect layers of an upgraded relic that are particles (idle motes, sparks, embers, arcs, drips, wisps) are spawned here, from the data of
- * assets/nusmp/visual_upgrade/fx/&lt;relic id&gt;.json ({@link VuFx}), while the relic is held (the main hand, the off hand) or worn (Curios or armour slot) by a player near the camera.
+ * assets/anime_multiverse/visual_upgrade/fx/&lt;relic id&gt;.json ({@link VuFx}), while the relic is held (the main hand, the off hand) or worn (Curios or armour slot) by a player near the camera.
  * Bounded like the other relic particles: only players within 24 blocks (at most six, those in front of the camera first past 4 blocks), the layer's own rate thinned by the quality
  * options ({@code relicfx.quality}, the performance pass's vfx quality) and at most {@link FxQuality#particlesPerTick} particles in one client tick over all wearers (and under the
  * performance pass's client allowance). Nothing runs when {@code visual.upgrade} or {@code relicfx.particles} is off. It also keeps the draw (equip) animation clock of the local
@@ -68,14 +68,14 @@ public final class VuFxClient {
         if (f == null) {
             VuFx parsed = null;
             try {
-                Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/fx/" + id + ".json"));
+                Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/fx/" + id + ".json"));
                 if (res.isPresent()) {
                     try (BufferedReader in = res.get().openAsReader()) {
                         parsed = VuFx.parse(String.join("\n", in.lines().toList()));
                     }
                 }
             } catch (Exception ex) {
-                LogUtils.getLogger().error("[nusmp] visual_upgrade/fx/{}.json could not be read", id, ex);
+                LogUtils.getLogger().error("[anime_multiverse] visual_upgrade/fx/{}.json could not be read", id, ex);
             }
             f = Optional.ofNullable(parsed);
             FX.put(id, f);

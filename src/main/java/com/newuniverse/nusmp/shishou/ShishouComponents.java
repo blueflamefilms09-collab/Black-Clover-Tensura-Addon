@@ -12,9 +12,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.UUID;
 
 /**
- * Why: in 1.21.1 an item carries DATA COMPONENTS, not NBT. The stack of Shishou carries three small, new components (the ids are new, nothing old is touched): the wielder ({@code nusmp:shishou_owner}, a UUID
- * as text), the token that makes this stack THE stack ({@code nusmp:shishou_token}, see {@link ShishouCap}: a copy or an old stack has a token that is not the current one and dissolves), and a mirror of
- * the sword's level for the tooltip and the attributes ({@code nusmp:shishou_level}). The truth (level, experience, mana, skills, the storage) is NOT here: it is the world's single record
+ * Why: in 1.21.1 an item carries DATA COMPONENTS, not NBT. The stack of Shishou carries three small, new components (the ids are new, nothing old is touched): the wielder ({@code anime_multiverse:shishou_owner}, a UUID
+ * as text), the token that makes this stack THE stack ({@code anime_multiverse:shishou_token}, see {@link ShishouCap}: a copy or an old stack has a token that is not the current one and dissolves), and a mirror of
+ * the sword's level for the tooltip and the attributes ({@code anime_multiverse:shishou_level}). The truth (level, experience, mana, skills, the storage) is NOT here: it is the world's single record
  * ({@link ShishouData}), so a copied stack cannot carry a second copy of the sword's strength. All three are persistent and network synchronised like the hero weapons' components.
  */
 public final class ShishouComponents {

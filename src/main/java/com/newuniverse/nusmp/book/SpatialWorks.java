@@ -67,7 +67,7 @@ public final class SpatialWorks {
                 e.setCanceled(true);
                 fx(p.serverLevel(), VfxShape.SPATIAL_FX3, p.position().add(0, 1, 0), p.position().add(0, 1, 1), 14, 0.7f);
                 p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.6f, 1.6f);
-                SpatialArmourCast.say(p, "nusmp.spatial.fell_through", "The blow falls through a gate.");
+                SpatialArmourCast.say(p, "anime_multiverse.spatial.fell_through", "The blow falls through a gate.");
             } else e.setAmount(e.getAmount() * 0.8f);
         });
         AttributeEvents.logout(p -> p.getPersistentData().remove(K_GARB));
@@ -174,7 +174,7 @@ public final class SpatialWorks {
         gateProp(sl, c, a, 24, 0.6f, p);
         if (BalanceLaw.isBoss(t)) {
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
-            SpatialArmourCast.say(p, "nusmp.spatial.too_heavy", "It is too heavy for a gate: it is only shaken.");
+            SpatialArmourCast.say(p, "anime_multiverse.spatial.too_heavy", "It is too heavy for a gate: it is only shaken.");
             return true;
         }
         p.teleportTo(c.x, c.y, c.z);

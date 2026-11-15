@@ -74,7 +74,7 @@ public final class AnimatedIcons {
         try {
             apply(mc.getTextureManager(), mc.getResourceManager(), AnimatedIconOptions.style());
         } catch (RuntimeException | LinkageError failed) {
-            LOG.warn("[nusmp] the Ultimate icon check failed", failed);
+            LOG.warn("[anime_multiverse] the Ultimate icon check failed", failed);
         }
     }
 
@@ -129,10 +129,10 @@ public final class AnimatedIcons {
         }
         try (InputStream in = png.get().open()) {
             AnimatedIconTexture t = AnimatedIconTexture.of(NativeImage.read(in), frameTime, linear);
-            if (t == null) LOG.warn("[nusmp] {} is not a strip of square frames; the icon stays still", at);
+            if (t == null) LOG.warn("[anime_multiverse] {} is not a strip of square frames; the icon stays still", at);
             return t;
         } catch (IOException | RuntimeException unreadable) {
-            LOG.warn("[nusmp] could not read {}", at, unreadable);
+            LOG.warn("[anime_multiverse] could not read {}", at, unreadable);
             return null;
         }
     }
@@ -143,7 +143,7 @@ public final class AnimatedIcons {
         try (InputStream in = png.get().open()) {
             return new ClassicTexture(NativeImage.read(in));
         } catch (IOException | RuntimeException unreadable) {
-            LOG.warn("[nusmp] could not read {}", at, unreadable);
+            LOG.warn("[anime_multiverse] could not read {}", at, unreadable);
             return null;
         }
     }

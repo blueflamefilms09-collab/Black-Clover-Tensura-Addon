@@ -2,7 +2,7 @@
 
     python3 tools/ultimate_anim_preview.py        ->  docs/previews/ultimate/anim_<kingdom>.png (6 frames of start, 6 of loop, 4 of release) + anim_kingdoms.png (overview)
 
-A block-figure stand-in of the vanilla player is posed from the REAL keyframes in assets/nusmp/animations/player/cast.animation.json with the same rules as
+A block-figure stand-in of the vanilla player is posed from the REAL keyframes in assets/anime_multiverse/animations/player/cast.animation.json with the same rules as
 client/CastAnimClient.pose: the ARMS are replaced by the clip, the LEGS add to the standing pose, the body and head are not driven; rotations use the model's
 own order (Z * Y * X, degrees), linear interpolation between keys, loops wrap. No lighting, no skin, no robe, no blending between clips (each frame shows its clip at full
 weight): it shows the SHAPE of the poses, not how the game looks. Needs numpy-free Pillow only.
@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
-FILE = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "animations", "player", "cast.animation.json")
+FILE = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "animations", "player", "cast.animation.json")
 OUT = os.path.join(ROOT, "docs", "previews", "ultimate")
 KINGDOMS = {"clover": ((60, 140, 70), "Clover: defiant, arms thrown wide"), "diamond": ((70, 110, 190), "Diamond: disciplined, hands joined and slowly lifted"),
             "spade": ((95, 60, 130), "Spade: cold, arms crossed then thrust like blades"), "heart": ((200, 80, 110), "Heart: calm, one hand on the heart, the other opens")}

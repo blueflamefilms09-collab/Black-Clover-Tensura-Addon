@@ -174,9 +174,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 12, "flash": "FFB04A", "groups": ["embers", "falna"], "note": "the hearth flares as the knife is drawn and the embers spiral out"}
     it.swing = {"trail": "hearth_fire", "rgb": "FFB04A", "rgb2": "FF5A20", "length": 0.6, "width": 0.25, "life": 7, "particles": "ember"}
-    it.sound = "nusmp:item.genesis.hearth_blade.fire_loop"
+    it.sound = "anime_multiverse:item.genesis.hearth_blade.fire_loop"
     it.acts = {
-        "falna_flurry": {"burst": "falna_flurry", "pattern": "cone", "rgb": "FFB04A", "ring": 3.5, "particles": 32, "sound": "nusmp:item.genesis.hearth_blade.flurry"},
-        "hearth_dash": {"burst": "hearth_dash", "pattern": "line", "rgb": "FF8A30", "ring": 5.0, "particles": 30, "sound": "nusmp:item.genesis.hearth_blade.dash"},
-        "goddess_blessing": {"burst": "goddess_blessing", "pattern": "column", "rgb": "FFD070", "ring": 3.5, "particles": 40, "sound": "nusmp:item.genesis.hearth_blade.blessing"},
+        "falna_flurry": {"burst": "falna_flurry", "pattern": "cone", "rgb": "FFB04A", "ring": 3.5, "particles": 32, "sound": "anime_multiverse:item.genesis.hearth_blade.flurry"},
+        "hearth_dash": {"burst": "hearth_dash", "pattern": "line", "rgb": "FF8A30", "ring": 5.0, "particles": 30, "sound": "anime_multiverse:item.genesis.hearth_blade.dash"},
+        "goddess_blessing": {"burst": "goddess_blessing", "pattern": "column", "rgb": "FFD070", "ring": 3.5, "particles": 40, "sound": "anime_multiverse:item.genesis.hearth_blade.blessing"},
     }

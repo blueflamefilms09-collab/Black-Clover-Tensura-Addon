@@ -16,12 +16,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Why: every act of an upgraded relic has a signature effect, named in data/nusmp/visual_upgrade/act_vfx.txt. A typo in a shape or an act key would be an effect that silently never plays,
+ * Why: every act of an upgraded relic has a signature effect, named in data/anime_multiverse/visual_upgrade/act_vfx.txt. A typo in a shape or an act key would be an effect that silently never plays,
  * and a Time Magic shape or a zone shape that needs another protocol would be wrong. The table is parsed with the real parser, every shape is a real {@link VfxShape}, none is a Time
  * Magic one, and every act key the table names is an act some relic of the waves really has.
  */
 class VuActTableTest {
-    static final Path TABLE = Path.of("src/main/resources/data/nusmp/visual_upgrade/act_vfx.txt");
+    static final Path TABLE = Path.of("src/main/resources/data/anime_multiverse/visual_upgrade/act_vfx.txt");
     static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
 
     @Test

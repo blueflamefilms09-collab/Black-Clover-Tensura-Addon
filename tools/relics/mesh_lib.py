@@ -1,6 +1,6 @@
 """mesh_lib: the owner's model method as a library (pure Python 3 + numpy + PIL, no Blender).
 
-It builds the baked meshes that client/WeaponRenderer draws (assets/nusmp/weapon_meshes/<id>.txt) from real cross-sections
+It builds the baked meshes that client/WeaponRenderer draws (assets/anime_multiverse/weapon_meshes/<id>.txt) from real cross-sections
 instead of boxes, in the order of the method: silhouette, sections and bevels, raised parts, texture.
 
     from mesh_lib import *
@@ -31,7 +31,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 TS = 128
 
 __all__ = ["Part", "Mesh", "Atlas", "Ring", "Loft", "UVGroup", "Ruler", "ASSETS", "ROOT", "TS", "RENDERER_PATCH", "MATERIALS",

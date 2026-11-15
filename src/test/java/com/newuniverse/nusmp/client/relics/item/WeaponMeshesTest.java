@@ -16,12 +16,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The shipped meshes (src/main/resources/assets/nusmp/weapon_meshes) against the class table of assets/nusmp/weapon_classes.json: after
+ * The shipped meshes (src/main/resources/assets/anime_multiverse/weapon_meshes) against the class table of assets/anime_multiverse/weapon_classes.json: after
  * tools/relics/weapon_fixes.json the runtime normaliser has nothing to do on any of them, and the sorrows_edge crescent faces forward.
  * (Meshes other agents were rebuilding in the same release are skipped by prefix.)
  */
 class WeaponMeshesTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     static final String[] SKIP = {"djinn_weapon"};                      // 1.34.0: Elsdocia and the pairs are checked now; the Djinn temporary weapons belong to another release
 
     static boolean skipped(String id) {

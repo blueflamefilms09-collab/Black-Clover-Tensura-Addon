@@ -130,7 +130,7 @@ public class GuardianAltarBlockEntity extends BlockEntity {
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
         sl.playSound(null, worldPosition, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0f, 0.6f);
-        broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        broadcast(sl, 48, Component.translatable("message.anime_multiverse.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         boss = g.getUUID();
         lastBossPos = at;
         bossDied = false;
@@ -146,7 +146,7 @@ public class GuardianAltarBlockEntity extends BlockEntity {
      * level): the same state machine follows its death, so the Mana Core is forged and {@code guardianDefeated} runs exactly as for the Guardian.
      */
     private void adopt(ServerLevel sl, Entity foreign, long now) {
-        broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        broadcast(sl, 48, Component.translatable("message.anime_multiverse.mega.mgd.altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         boss = foreign.getUUID();
         lastBossPos = worldPosition.above();
         bossDied = false;
@@ -164,9 +164,9 @@ public class GuardianAltarBlockEntity extends BlockEntity {
         if (sector != null) {
             forge(sl, sector, now);
             MegaDungeon.guardianDefeated(sl, sector.id);                                   // ACTIVE -> GUARDIAN_DEAD (a no-op for any other state)
-            broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.core_forged", sector.id).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+            broadcast(sl, 48, Component.translatable("message.anime_multiverse.mega.mgd.altar.core_forged", sector.id).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
         } else {
-            broadcast(sl, 48, Component.translatable("message.nusmp.mega.mgd.altar.no_sector").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            broadcast(sl, 48, Component.translatable("message.anime_multiverse.mega.mgd.altar.no_sector").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         sl.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.5f, 1.0f);
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
@@ -219,8 +219,8 @@ public class GuardianAltarBlockEntity extends BlockEntity {
     public void interact(ServerLevel sl, ServerPlayer player) {
         try {
             switch (state) {
-                case IDLE -> say(player, "message.nusmp.mega.mgd.altar.idle");
-                case ACTIVE -> say(player, "message.nusmp.mega.mgd.altar.active");
+                case IDLE -> say(player, "message.anime_multiverse.mega.mgd.altar.idle");
+                case ACTIVE -> say(player, "message.anime_multiverse.mega.mgd.altar.active");
                 case DONE -> reforge(sl, player);
             }
         } catch (RuntimeException e) {
@@ -230,21 +230,21 @@ public class GuardianAltarBlockEntity extends BlockEntity {
 
     private void reforge(ServerLevel sl, ServerPlayer player) {
         Sector sector = MegaDungeon.sectorAt(sl, worldPosition);
-        if (sector == null) { say(player, "message.nusmp.mega.mgd.altar.no_sector"); return; }
-        if (!player.getMainHandItem().isEmpty() || player.isCreative()) { say(player, "message.nusmp.mega.mgd.altar.done"); return; }
+        if (sector == null) { say(player, "message.anime_multiverse.mega.mgd.altar.no_sector"); return; }
+        if (!player.getMainHandItem().isEmpty() || player.isCreative()) { say(player, "message.anime_multiverse.mega.mgd.altar.done"); return; }
         boolean sealed = sector.state == Sector.State.GUARDIAN_DEAD;
-        if (!sealed) { say(player, "message.nusmp.mega.mgd.altar.done"); return; }
+        if (!sealed) { say(player, "message.anime_multiverse.mega.mgd.altar.done"); return; }
         boolean exists = coreExists(sl, sector.id);
         long now = sl.getGameTime();
         int minutes = GuardConfig.get(GuardConfig.REFORGE_MINUTES);
         if (GuardianScaling.canReforge(true, true, exists, lastForge, now, minutes)) {
             forge(sl, sector, now);
-            say(player, "message.nusmp.mega.mgd.altar.reforged");
+            say(player, "message.anime_multiverse.mega.mgd.altar.reforged");
         } else if (exists) {
-            say(player, "message.nusmp.mega.mgd.altar.core_exists");
+            say(player, "message.anime_multiverse.mega.mgd.altar.core_exists");
         } else {
             long seconds = (GuardianScaling.reforgeWaitTicks(lastForge, now, minutes) + 19) / 20;
-            player.displayClientMessage(Component.translatable("message.nusmp.mega.mgd.altar.wait", seconds).withStyle(ChatFormatting.DARK_PURPLE), true);
+            player.displayClientMessage(Component.translatable("message.anime_multiverse.mega.mgd.altar.wait", seconds).withStyle(ChatFormatting.DARK_PURPLE), true);
         }
     }
 

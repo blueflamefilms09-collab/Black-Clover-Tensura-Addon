@@ -37,7 +37,7 @@ final class ClawSkills {
     /** The amber of the gem (and of the beast effects), and the crimson of the cursed beam. */
     private static final int AMBER = 0xFFA030, CRIMSON = 0xD01830;
     private static final String COMBO = "nusmp_cl_combo", EXTRA = "claw";
-    private static final ResourceLocation SHRED = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_claw_shred");
+    private static final ResourceLocation SHRED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_claw_shred");
 
     static List<HeroSkill> all() {
         return List.of(airStrikeSlash(), secondSlash(), hemorrhage(), pounce(), shreddingRush(), predatorInstinct(), dragonRend(), wahnsinnClaw());

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The data table of one upgraded weapon (release 1.102.0, slice god_melee_b): assets/nusmp/visual_upgrade/&lt;item id&gt;.json, written by tools/visual_upgrade/god_melee_b/build.py.
+ * The data table of one upgraded weapon (release 1.102.0, slice god_melee_b): assets/anime_multiverse/visual_upgrade/&lt;item id&gt;.json, written by tools/visual_upgrade/god_melee_b/build.py.
  * Pure data and parsing (no Minecraft classes), so it is tested without the game. It says which meshes the weapon uses (the full-detail one, its level-of-detail twin, the one
  * orbiting piece), the colours of its passes, how its energy veins flow, how its halo shell breathes, which pieces orbit it and how, how its swing smears, and which ambient
  * particle layers run while it is held. The renderer ({@code client/GodMeleeBRender}) and the particle tick ({@link UpgradeFx}) only read this record.

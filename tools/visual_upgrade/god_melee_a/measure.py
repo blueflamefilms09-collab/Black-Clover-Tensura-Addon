@@ -4,7 +4,7 @@
     python3 -B tools/visual_upgrade/god_melee_a/measure.py after        writes docs/visual_upgrade/god_melee_a_after.json (the upgraded state + the ratio table)
 
 The baseline reads the old mesh weapon_meshes/<id>.txt and its skins. The after state reads weapon_meshes/up/<id>.txt, textures/entity/weapon/up/<id>*.png and the effect
-spec assets/nusmp/visual_upgrade/<id>.json. What a number means is in docs/visual_upgrade/god_melee_a.md (section 2); nothing here has been seen in a game.
+spec assets/anime_multiverse/visual_upgrade/<id>.json. What a number means is in docs/visual_upgrade/god_melee_a.md (section 2); nothing here has been seen in a game.
 """
 import json
 import os

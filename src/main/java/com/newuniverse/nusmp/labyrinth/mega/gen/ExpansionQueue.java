@@ -108,14 +108,14 @@ public final class ExpansionQueue implements Expander {
     @Override
     public boolean requestFirst(MinecraftServer server, Polarity polarity, int party) {
         String why = tryFirst(server, polarity, party);
-        if (why != null) LOG.info("[nusmp] Mega first sector of the {} road of party {} refused: {}", polarity == null ? "?" : polarity.id(), party, why);
+        if (why != null) LOG.info("[anime_multiverse] Mega first sector of the {} road of party {} refused: {}", polarity == null ? "?" : polarity.id(), party, why);
         return why == null;
     }
 
     @Override
     public boolean requestNext(ServerLevel level, Sector from) {
         String why = tryNext(level, from);
-        if (why != null) LOG.info("[nusmp] Mega expansion off sector {} refused: {}", from == null ? -1 : from.id, why);
+        if (why != null) LOG.info("[anime_multiverse] Mega expansion off sector {} refused: {}", from == null ? -1 : from.id, why);
         return why == null;
     }
 
@@ -171,7 +171,7 @@ public final class ExpansionQueue implements Expander {
         s.forward = SectorGenerator.dir(plan.forward());
         data.add(s);
         queue.add(new Job(id, false, null));
-        LOG.info("[nusmp] Mega sector {} queued: the first of the {} road {}(floors {}..{}, theme {}, seed {}).", id, road.id(), ofParty(party), FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()),
+        LOG.info("[anime_multiverse] Mega sector {} queued: the first of the {} road {}(floors {}..{}, theme {}, seed {}).", id, road.id(), ofParty(party), FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()),
                 s.theme.id(), s.seed);
         return null;
     }
@@ -195,7 +195,7 @@ public final class ExpansionQueue implements Expander {
         from.nextId = id;
         data.add(s);
         queue.add(new Job(id, false, null));
-        LOG.info("[nusmp] Mega sector {} queued behind sector {} on the {} road {}(floors {}..{}, theme {}, {} tunnel segments, seed {}).", id, from.id, s.polarity.id(), ofParty(s.party),
+        LOG.info("[anime_multiverse] Mega sector {} queued behind sector {} on the {} road {}(floors {}..{}, theme {}, {} tunnel segments, seed {}).", id, from.id, s.polarity.id(), ofParty(s.party),
                 FloorMap.label(s.firstFloor()), FloorMap.label(s.lastFloor()), s.theme.id(), n.linkModules(), s.seed);
         return null;
     }
@@ -214,7 +214,7 @@ public final class ExpansionQueue implements Expander {
         from.nextId = s.id;
         data.add(s);
         queue.add(new Job(s.id, false, null));
-        LOG.info("[nusmp] Mega floor {} queued after sector {} on the {} road {}(floor {}{}, theme {}, seed {}).", s.id, from.id, s.polarity.id(), ofParty(s.party), FloorMap.label(s.firstFloor()),
+        LOG.info("[anime_multiverse] Mega floor {} queued after sector {} on the {} road {}(floor {}{}, theme {}, seed {}).", s.id, from.id, s.polarity.id(), ofParty(s.party), FloorMap.label(s.firstFloor()),
                 s.isBossFloor() ? ", a boss floor" : "", s.theme.id(), s.seed);
         return null;
     }
@@ -250,7 +250,7 @@ public final class ExpansionQueue implements Expander {
         if (s.nextId >= 0 || working(s.id) || !SectorGenerator.playable(s)) return false;
         if (!MegaConfig.get(MegaConfig.EXPANSION)) return false;
         String why = tryNextFloor(level, s);
-        if (why != null) LOG.info("[nusmp] Mega floor after {} not queued: {}", s.id, why);
+        if (why != null) LOG.info("[anime_multiverse] Mega floor after {} not queued: {}", s.id, why);
         return why == null;
     }
 
@@ -309,7 +309,7 @@ public final class ExpansionQueue implements Expander {
         s.state = Sector.State.GENERATING;
         data.setDirty();
         queue.add(new Job(sectorId, true, before));
-        LOG.info("[nusmp] Mega sector {} queued for {}.", sectorId, repair ? "repair" : "regeneration");
+        LOG.info("[anime_multiverse] Mega sector {} queued for {}.", sectorId, repair ? "repair" : "regeneration");
         return null;
     }
 
@@ -335,7 +335,7 @@ public final class ExpansionQueue implements Expander {
         for (Sector s : data.sectors()) if (s.state == Sector.State.GENERATING && !working(s.id)) unfinished.add(s);
         for (Sector s : unfinished) {
             queue.add(new Job(s.id, true, null));
-            LOG.info("[nusmp] Mega sector {} was not finished when the server stopped; it is generated again from its saved seed.", s.id);
+            LOG.info("[anime_multiverse] Mega sector {} was not finished when the server stopped; it is generated again from its saved seed.", s.id);
         }
     }
 
@@ -366,7 +366,7 @@ public final class ExpansionQueue implements Expander {
             MegaData data = MegaData.get(server);
             Sector s = data.sector(current.sectorId);
             if (level == null || s == null) {
-                LOG.error("[nusmp] Mega job for sector {} dropped: {}", current.sectorId, level == null ? "the dimension is not loaded" : "the sector no longer exists");
+                LOG.error("[anime_multiverse] Mega job for sector {} dropped: {}", current.sectorId, level == null ? "the dimension is not loaded" : "the sector no longer exists");
                 if (s != null) fail(data, s, "the Mega-Dungeon dimension is not loaded");
                 current = null;
                 return;
@@ -378,7 +378,7 @@ public final class ExpansionQueue implements Expander {
             }
             if (current != null && ticks % ANNOUNCE_EVERY == 0) announce(level, s.party, current.progress());
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon generator failed: {}", t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon generator failed: {}", t.toString(), t);
             try {
                 if (current != null) {
                     MegaData data = MegaData.get(server);
@@ -407,7 +407,7 @@ public final class ExpansionQueue implements Expander {
         replans.put(s.id, done + 1);
         s.seed = Rng.mix(s.seed, 0xA17E0000L + done + 1);
         data.setDirty();
-        LOG.warn("[nusmp] Mega sector {} is planned again with a new seed (try {}): {}", s.id, done + 1, why);
+        LOG.warn("[anime_multiverse] Mega sector {} is planned again with a new seed (try {}): {}", s.id, done + 1, why);
         return true;
     }
 
@@ -458,7 +458,7 @@ public final class ExpansionQueue implements Expander {
         try {
             MegaDungeon.generated(level, s);
         } catch (Throwable t) {
-            LOG.error("[nusmp] A listener failed while sector {} was announced as generated: {}", s.id, t.toString(), t);
+            LOG.error("[anime_multiverse] A listener failed while sector {} was announced as generated: {}", s.id, t.toString(), t);
         }
         data.setDirty();                                       // the listeners band the floors and assign the factions into the saved sector: make sure what they wrote is saved
         if (prev != null) tellWayOpen(level, prev, opened);
@@ -490,7 +490,7 @@ public final class ExpansionQueue implements Expander {
      */
     private static void announce(ServerLevel level, int party, float progress) {
         int pct = Math.round(progress * 100f);
-        Component line = Component.translatable("message.nusmp.mega.core.shifting", pct);
+        Component line = Component.translatable("message.anime_multiverse.mega.core.shifting", pct);
         for (ServerPlayer p : level.players()) {
             Sector at = MegaDungeon.sectorAt(level, p.blockPosition());
             if (at != null && at.party != party) continue;
@@ -500,7 +500,7 @@ public final class ExpansionQueue implements Expander {
 
     /** Tells the players who stand in the old sector's antechamber or Way Onward that the way is open. */
     private static void tellWayOpen(ServerLevel level, Sector prev, int opened) {
-        Component msg = Component.translatable("message.nusmp.mega.core.way_open");
+        Component msg = Component.translatable("message.anime_multiverse.mega.core.way_open");
         for (ServerPlayer p : level.players()) {
             BlockPos at = p.blockPosition();
             if (!prev.containsRegion(at)) continue;
@@ -509,7 +509,7 @@ public final class ExpansionQueue implements Expander {
             if (!near && prev.expansionPos != null) near = at.distSqr(prev.expansionPos) < 48.0 * 48.0;
             if (near) p.sendSystemMessage(msg);
         }
-        if (opened > 0) LOG.info("[nusmp] Mega sector {}'s rubble seal was opened ({} blocks).", prev.id, opened);
+        if (opened > 0) LOG.info("[anime_multiverse] Mega sector {}'s rubble seal was opened ({} blocks).", prev.id, opened);
     }
 
     /** One line about a facing, for logs and commands. */

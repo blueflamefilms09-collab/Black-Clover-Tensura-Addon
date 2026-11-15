@@ -29,7 +29,7 @@ import org.joml.Matrix4f;
  * aura particles are Light and Dark Rukh, spawned by the block entity's client tick (the only particles the mod may use). No per-frame allocation except the pose stack's own.
  */
 public final class DimensionalRiftRenderer implements BlockEntityRenderer<DimensionalRiftBlockEntity> {
-    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png");
+    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png");
     private static final float HEIGHT = 2.6f, WIDTH = 0.65f;
     private static final int SEGMENTS = 14;
 

@@ -97,7 +97,7 @@ public final class SystemEditScreen extends Screen {
             button(g, b[1], tr(PointsText.EDIT_STATS), b[1].contains(mx, my));
             button(g, b[2], tr(PointsText.EDIT_DONE), b[2].contains(mx, my));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The window edit screen failed to draw and is closed", e);
+            LOG.warn("[anime_multiverse] The window edit screen failed to draw and is closed", e);
             onClose();
         }
     }

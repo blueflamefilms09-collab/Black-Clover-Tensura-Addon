@@ -13,7 +13,7 @@ tools/tier_bosses/remake/<id>.py (64x64 by hand), the generic anime painter (64x
 HD module (a smooth 256 upscale with outlines and material detail, no character art); without it those ids stay 64x64, which the kit accepts (a skin and its glow map may be 64, 128 or 256 square).
 
 Reads the sheets of tier_specs.py (the art kit's vocabulary), paints each with tools/playermodel/gen_skins.paint_character, writes
-assets/nusmp/textures/entity/playermodel/<id>.png (+ _glow.png) and assets/nusmp/playermodel/looks_tier.json (same format as looks.json; merged add-only by PlayerLookTables).
+assets/anime_multiverse/textures/entity/playermodel/<id>.png (+ _glow.png) and assets/anime_multiverse/playermodel/looks_tier.json (same format as looks.json; merged add-only by PlayerLookTables).
 Ids that are not listed here are never touched. Needs numpy and Pillow.
 """
 import json

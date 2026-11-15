@@ -192,7 +192,7 @@ class Pages15Batch1Test {
         for (Page p : pages()) batchIds.add(p.book() + "/" + p.id());
         Set<String> older = olderIds();
         for (var ch : CHARACTERS.entrySet()) {
-            JsonObject set = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/" + ch.getKey() + ".json"))).getAsJsonObject();
+            JsonObject set = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/" + ch.getKey() + ".json"))).getAsJsonObject();
             assertEquals(ch.getKey(), set.get("canon").getAsString());
             assertEquals(ch.getValue(), set.get("book").getAsString());
             JsonArray spells = set.getAsJsonArray("spells");

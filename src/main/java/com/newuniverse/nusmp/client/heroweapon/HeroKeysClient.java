@@ -19,15 +19,15 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public final class HeroKeysClient {
     private HeroKeysClient() {}
 
-    private static final String CATEGORY = "key.categories.nusmp";
+    private static final String CATEGORY = "key.categories.anime_multiverse";
 
-    public static final KeyMapping SKILL_1 = new KeyMapping("key.nusmp.hero_skill_1", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_Z, CATEGORY);
-    public static final KeyMapping SKILL_2 = new KeyMapping("key.nusmp.hero_skill_2", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_X, CATEGORY);
-    public static final KeyMapping SKILL_3 = new KeyMapping("key.nusmp.hero_skill_3", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_C, CATEGORY);
+    public static final KeyMapping SKILL_1 = new KeyMapping("key.anime_multiverse.hero_skill_1", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_Z, CATEGORY);
+    public static final KeyMapping SKILL_2 = new KeyMapping("key.anime_multiverse.hero_skill_2", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_X, CATEGORY);
+    public static final KeyMapping SKILL_3 = new KeyMapping("key.anime_multiverse.hero_skill_3", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_C, CATEGORY);
     /** Summon the weapon, or put it away. */
-    public static final KeyMapping SUMMON = new KeyMapping("key.nusmp.hero_summon", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_B, CATEGORY);
+    public static final KeyMapping SUMMON = new KeyMapping("key.anime_multiverse.hero_summon", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_B, CATEGORY);
     /** Change to the next learned form. */
-    public static final KeyMapping CYCLE = new KeyMapping("key.nusmp.hero_cycle", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_N, CATEGORY);
+    public static final KeyMapping CYCLE = new KeyMapping("key.anime_multiverse.hero_cycle", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_N, CATEGORY);
 
     private static final KeyMapping[] SKILLS = {SKILL_1, SKILL_2, SKILL_3};
     private static final KeyMapping[] ALL = {SKILL_1, SKILL_2, SKILL_3, SUMMON, CYCLE};

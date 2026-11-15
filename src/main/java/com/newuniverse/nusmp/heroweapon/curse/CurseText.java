@@ -69,13 +69,13 @@ public final class CurseText {
     public static final String HUD_OVERRUN = put("hero.curse.hud.overrun", "OVERRUN");
     public static final String HUD_OFFER = put("hero.curse.hud.offer", "The weapon offers the Curse of %s");
     public static final String HUD_HOLD = put("hero.curse.hud.hold", "Hold Sneak + %s");
-    public static final String KEY_EMBRACE = put("key.nusmp.hero_embrace", "Embrace the Curse (hold with Sneak)");
+    public static final String KEY_EMBRACE = put("key.anime_multiverse.hero_embrace", "Embrace the Curse (hold with Sneak)");
 
     // ---- the Purification Charm
-    public static final String CHARM_NAME = put("item.nusmp.purification_charm", "Purification Charm");
-    public static final String CHARM_TIP_1 = put("tooltip.nusmp.purification_charm.1", "Clears the corruption of a hero weapon's curse.");
-    public static final String CHARM_TIP_2 = put("tooltip.nusmp.purification_charm.2", "The first use also gives back some of the hearts the curse took.");
-    public static final String CHARM_TIP_3 = put("tooltip.nusmp.purification_charm.3", "A stand-in for the Bless Series.");
+    public static final String CHARM_NAME = put("item.anime_multiverse.purification_charm", "Purification Charm");
+    public static final String CHARM_TIP_1 = put("tooltip.anime_multiverse.purification_charm.1", "Clears the corruption of a hero weapon's curse.");
+    public static final String CHARM_TIP_2 = put("tooltip.anime_multiverse.purification_charm.2", "The first use also gives back some of the hearts the curse took.");
+    public static final String CHARM_TIP_3 = put("tooltip.anime_multiverse.purification_charm.3", "A stand-in for the Bless Series.");
 
     /** Whisper lines per sin, four each; a sin appended to the enum later without lines of its own falls back to {@link #FALLBACK_WHISPERS}. */
     private static final Map<Sin, String[]> WHISPERS = new EnumMap<>(Sin.class);

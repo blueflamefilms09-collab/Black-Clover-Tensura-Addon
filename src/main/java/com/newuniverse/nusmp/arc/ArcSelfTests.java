@@ -92,7 +92,7 @@ public final class ArcSelfTests {
             EntityType<? extends ArcBoss> t = ArcSpawner.typeOf(c.id());
             if (t == null) { bad.add(c.id() + " has no entity type"); continue; }
             ResourceLocation key = BuiltInRegistries.ENTITY_TYPE.getKey(t);
-            if (key == null || !key.equals(ResourceLocation.fromNamespaceAndPath("nusmp", c.id()))) bad.add(c.id() + " is registered as " + key);
+            if (key == null || !key.equals(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.id()))) bad.add(c.id() + " is registered as " + key);
             if (!DefaultAttributes.hasSupplier(t)) bad.add(c.id() + " has no attributes");
             ArcBoss probe = t.create(level);
             if (probe == null) bad.add(c.id() + " could not be created");
@@ -106,11 +106,11 @@ public final class ArcSelfTests {
     // ================================================================ dialogue
     private static SelfTests.Result dialogue(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (!DialogueLoader.has(DialogueLoader.FALLBACK_ID)) bad.add("data/nusmp/arc/dialogue/" + DialogueLoader.FALLBACK_ID + ".json is missing or unreadable");
+        if (!DialogueLoader.has(DialogueLoader.FALLBACK_ID)) bad.add("data/anime_multiverse/arc/dialogue/" + DialogueLoader.FALLBACK_ID + ".json is missing or unreadable");
         int warnings = 0;
         for (ArcCharacter c : ArcRoster.npcs()) {
             DialogueBook b = DialogueLoader.book(c.id());
-            if (b == null) { bad.add(c.id() + " has no dialogue file (data/nusmp/arc/dialogue/" + c.id() + ".json)" + problemsOf(c.id())); continue; }
+            if (b == null) { bad.add(c.id() + " has no dialogue file (data/anime_multiverse/arc/dialogue/" + c.id() + ".json)" + problemsOf(c.id())); continue; }
             warnings += DialogueLoader.problems().getOrDefault(c.id(), List.of()).size();
             DialogueSituation newcomer = DialogueSituation.of(0, ArcSaga.ELF_REINCARNATION.id(), List.of(), 0, true);
             if (TalkPlan.next(true, 0, ctx -> b.has(ctx, newcomer)) == null) bad.add(c.id() + " has no line for a newcomer at stage 0");
@@ -181,7 +181,7 @@ public final class ArcSelfTests {
             n++;
             CharterTable.Boss b = CharterTable.byId(c.charterId());
             if (b == null) { bad.add(c.id() + " has no Canon row"); continue; }
-            if (CharterTable.byEntity("nusmp", c.id()) != b) bad.add(c.id() + ": the entity does not resolve to its grimoire");
+            if (CharterTable.byEntity("anime_multiverse", c.id()) != b) bad.add(c.id() + ": the entity does not resolve to its grimoire");
             if (CharterItems.item(b.id()) == null) bad.add(c.id() + " has no grimoire item");
             if (!BossRegistry.known(c.id()) || BossBuffTable.profile(c.id()) == null) bad.add(c.id() + " has no buff row");
             for (String d : ArcCharterRules.dropped(c.charterSkills())) bad.add(c.id() + " lists the skill '" + d + "', which the Canon laws drop");
@@ -265,7 +265,7 @@ public final class ArcSelfTests {
                 boss = r.boss();
                 if (!c.equals(boss.character())) return fail("the summoned boss is not " + c.id());
                 if (!c.id().equals(BossEntities.bossId(boss))) return fail(c.id() + " is not recognised as a boss by the boss registry");
-                if (CharterTable.byEntity("nusmp", c.id()) == null && c.hasCharter()) return fail(c.id() + " is not recognised by the Canon table");
+                if (CharterTable.byEntity("anime_multiverse", c.id()) == null && c.hasCharter()) return fail(c.id() + " is not recognised by the Canon table");
                 if (ArcSpawner.standing(level, c.id(), where).isEmpty()) return fail("a summoned " + c.id() + " is not found standing");
                 done.add(c.id() + " summoned and recognised");
             }

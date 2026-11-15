@@ -24,7 +24,7 @@ public final class ArcDialogue {
         if (!ArcConfig.enabled()) return false;
         ArcCharacter c = npc.character();
         if (c == null) {
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.blank", "This one has nothing to say yet."));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.blank", "This one has nothing to say yet."));
             return false;
         }
         DialogueSituation s = ArcStory.situation(p, c);

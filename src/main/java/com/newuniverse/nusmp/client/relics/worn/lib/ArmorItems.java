@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The armour items of this mod that are NOT relics (the Magic Knight robe sets and any future {@code ArmorItem} of the {@code nusmp} namespace) as worn models: which
+ * The armour items of this mod that are NOT relics (the Magic Knight robe sets and any future {@code ArmorItem} of the {@code anime_multiverse} namespace) as worn models: which
  * ensemble a stack on a player stands for, whether the 3D model replaces the item's older renderer, and the empty model that makes the older renderer draw nothing.
  * The relic armour ({@code RelicArmorItem}) keeps its own path (the relic list of the layer). Client thread only.
  */
@@ -45,7 +45,7 @@ public final class ArmorItems {
     public static boolean isLibraryArmor(Item item) {
         if (!(item instanceof ArmorItem) || item instanceof RelicArmorItem) return false;
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-        return id != null && "nusmp".equals(id.getNamespace());
+        return id != null && "anime_multiverse".equals(id.getNamespace());
     }
 
     /** The ensemble of the stack worn in {@code slot}, or null (not a library armour item, the wrong slot, or no model at all). */
@@ -87,7 +87,7 @@ public final class ArmorItems {
                 Item item = f.stack().getItem();
                 if (item instanceof RelicBearer) continue;                                 // a relic: the relic list of the layer draws it
                 ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-                if (!"nusmp".equals(id.getNamespace())) continue;
+                if (!"anime_multiverse".equals(id.getNamespace())) continue;
                 WornLibrary.Ensemble e = WornLibrary.ofCurio(id.getPath());
                 if (e == null && !isWeapon(item)) e = WornLibrary.fallbackCharm(id.getPath());       // a worn item with no model of its own: a small floating charm, never nothing
                 if (e != null) sets.add(e);

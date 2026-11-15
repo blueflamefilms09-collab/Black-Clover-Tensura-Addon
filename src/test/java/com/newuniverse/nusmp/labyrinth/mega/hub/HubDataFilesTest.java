@@ -43,15 +43,15 @@ class HubDataFilesTest {
     void theDimensionNamesItsTypeItsGeneratorAndItsOneBiome() throws IOException {
         Map<String, Object> d = HubTestIo.obj(HubTestIo.json(DIM));
         assertEquals(Set.of("type", "generator"), d.keySet());
-        assertEquals("nusmp:sanctuary", d.get("type"), "the dimension type id of the contract");
+        assertEquals("anime_multiverse:sanctuary", d.get("type"), "the dimension type id of the contract");
         assertTrue(Files.exists(TYPE), "the type exists as a file");
         Map<String, Object> g = HubTestIo.obj(d.get("generator"));
         assertEquals(Set.of("type", "biome_source"), g.keySet(), "the chunk generator codec has exactly one field, biome_source");
-        assertEquals("nusmp:sanctuary", g.get("type"), "the chunk generator type id of the contract");
+        assertEquals("anime_multiverse:sanctuary", g.get("type"), "the chunk generator type id of the contract");
         Map<String, Object> src = HubTestIo.obj(g.get("biome_source"));
         assertEquals(Set.of("type", "biome"), src.keySet());
         assertEquals("minecraft:fixed", src.get("type"));
-        assertEquals("nusmp:sanctuary_plains", src.get("biome"));
+        assertEquals("anime_multiverse:sanctuary_plains", src.get("biome"));
         assertTrue(Files.exists(BIOME), "the biome exists as a file");
     }
 
@@ -156,8 +156,8 @@ class HubDataFilesTest {
     void theBiomeModifierNamesItsSerializerAndTheSanctuaryBiomeOnly() throws IOException {
         Map<String, Object> m = HubTestIo.obj(HubTestIo.json(MODIFIER));
         assertEquals(Set.of("type", "biomes", "keep_namespaces"), m.keySet());
-        assertEquals("nusmp:sanctuary_peace", m.get("type"), "the id SanctuaryPeaceModifier registers");
-        assertEquals("nusmp:sanctuary_plains", m.get("biomes"), "this biome and no other: a modifier on every biome would strip the Overworld");
+        assertEquals("anime_multiverse:sanctuary_peace", m.get("type"), "the id SanctuaryPeaceModifier registers");
+        assertEquals("anime_multiverse:sanctuary_plains", m.get("biomes"), "this biome and no other: a modifier on every biome would strip the Overworld");
         assertEquals(List.of("minecraft"), m.get("keep_namespaces"));
     }
 

@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.labyrinth.loot;
 import java.util.List;
 
 /**
- * Why: this is the whole of what the data component {@code nusmp:gear_roll} carries, and the component is what makes an item a PRE-ROLLED piece of dungeon gear: its rarity,
+ * Why: this is the whole of what the data component {@code anime_multiverse:gear_roll} carries, and the component is what makes an item a PRE-ROLLED piece of dungeon gear: its rarity,
  * the seed and the floor it was rolled from (so the same drop can be re-rolled identically for a test or an admin command), and its two to four stat lines. It is a plain
  * record of values with value equality, so two stacks rolled alike stack alike. It sits in the pure part (no Minecraft import) because the roll maths are tested without a
  * server; the codecs that save and sync it are in {@link LootComponents}. The stat lines are ALSO written into the stack's vanilla attribute-modifier component when the

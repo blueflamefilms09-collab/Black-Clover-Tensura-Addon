@@ -97,7 +97,7 @@ class SystemStateTest {
         assertTrue(SystemText.all().size() >= 40, "found " + SystemText.all().size());
         for (var e : SystemText.all().entrySet()) {
             assertFalse(e.getValue().isBlank(), e.getKey());
-            assertTrue(e.getKey().startsWith("message.nusmp.mega.system.") || e.getKey().startsWith("key.nusmp.system_") || e.getKey().equals(SystemText.KEY_CATEGORY)
+            assertTrue(e.getKey().startsWith("message.anime_multiverse.mega.system.") || e.getKey().startsWith("key.anime_multiverse.system_") || e.getKey().equals(SystemText.KEY_CATEGORY)
                     || e.getKey().equals(SystemText.ITEM_NAME), e.getKey());
             assertEquals(e.getValue(), SystemText.english(e.getKey()));
         }

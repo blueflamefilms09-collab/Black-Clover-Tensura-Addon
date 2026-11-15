@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.UUID;
 
 /**
- * Why: the one item of the Beast Will system (3.45.0): {@code nusmp:beast_will_core}, the rare core that holds a beast's will. It has its own register (attached to the mod bus by {@link BeastWillBoot}), a flat
+ * Why: the one item of the Beast Will system (3.45.0): {@code anime_multiverse:beast_will_core}, the rare core that holds a beast's will. It has its own register (attached to the mod bus by {@link BeastWillBoot}), a flat
  * icon (and, since the solid cores change, a 3D orb in hand), and no recipe: it only comes from a beast's drop or a command. The look is a flat generated icon (see {@code tools/beastwill/gen_core_icon.py}); a 3D hand model is not part of 3.45.0.
  */
 public final class BeastWillItems {

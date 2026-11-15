@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * file is clean under the same strict parser the main file is held to, so a typo in it shows up here and not as a warning in a log nobody reads.
  */
 class WandererRosterMergeTest {
-    private static final Path ARC = Path.of("src/main/resources/data/nusmp/mega/wanderers_arc.json");
-    private static final Path MAIN = Path.of("src/main/resources/data/nusmp/mega/wanderers.json");
+    private static final Path ARC = Path.of("src/main/resources/data/anime_multiverse/mega/wanderers_arc.json");
+    private static final Path MAIN = Path.of("src/main/resources/data/anime_multiverse/mega/wanderers.json");
 
     private static WandererRoster of(String... entityWeight) {
         StringBuilder b = new StringBuilder("{\"entries\":[");
@@ -34,19 +34,19 @@ class WandererRosterMergeTest {
 
     @Test
     void theExtraFileAddsKindsAfterTheMainOnesAndNeverChangesAMainEntry() {
-        WandererRoster main = of("nusmp:floor_warden", "5", "minecraft:ravager", "4");
-        WandererRoster extra = of("nusmp:vetto", "1", "minecraft:ravager", "99");
+        WandererRoster main = of("anime_multiverse:floor_warden", "5", "minecraft:ravager", "4");
+        WandererRoster extra = of("anime_multiverse:vetto", "1", "minecraft:ravager", "99");
         WandererRoster merged = WandererRoster.merge(main, extra);
         assertEquals(3, merged.entries().size());
-        assertEquals("nusmp:floor_warden", merged.entries().get(0).entity());
+        assertEquals("anime_multiverse:floor_warden", merged.entries().get(0).entity());
         assertEquals("minecraft:ravager", merged.entries().get(1).entity());
         assertEquals(4, merged.entries().get(1).weight(), "the main file's tuning wins");
-        assertEquals("nusmp:vetto", merged.entries().get(2).entity());
+        assertEquals("anime_multiverse:vetto", merged.entries().get(2).entity());
     }
 
     @Test
     void aMissingSideIsEmptyAndNothingIsLost() {
-        WandererRoster main = of("nusmp:floor_warden", "5");
+        WandererRoster main = of("anime_multiverse:floor_warden", "5");
         assertEquals(main.entries(), WandererRoster.merge(main, null).entries());
         assertEquals(main.entries(), WandererRoster.merge(null, main).entries());
         assertEquals(main.entries(), WandererRoster.merge(main, WandererRoster.EMPTY).entries());
@@ -55,15 +55,15 @@ class WandererRosterMergeTest {
 
     @Test
     void mergingTwiceGivesTheSameRoster() {
-        WandererRoster main = of("nusmp:floor_warden", "5");
-        WandererRoster extra = of("nusmp:vetto", "1");
+        WandererRoster main = of("anime_multiverse:floor_warden", "5");
+        WandererRoster extra = of("anime_multiverse:vetto", "1");
         WandererRoster once = WandererRoster.merge(main, extra);
         assertEquals(once.entries(), WandererRoster.merge(once, extra).entries());
     }
 
     @Test
     void theMergedRosterCanBeDrawnFromByThreat() {
-        WandererRoster merged = WandererRoster.merge(of("nusmp:floor_warden", "5"), of("nusmp:vetto", "1"));
+        WandererRoster merged = WandererRoster.merge(of("anime_multiverse:floor_warden", "5"), of("anime_multiverse:vetto", "1"));
         Random r = new Random(7);
         Set<String> seen = new HashSet<>();
         for (int i = 0; i < 200; i++) {
@@ -71,7 +71,7 @@ class WandererRosterMergeTest {
             assertNotNull(e);
             seen.add(e.entity());
         }
-        assertEquals(Set.of("nusmp:floor_warden", "nusmp:vetto"), seen);
+        assertEquals(Set.of("anime_multiverse:floor_warden", "anime_multiverse:vetto"), seen);
     }
 
     @Test
@@ -83,7 +83,7 @@ class WandererRosterMergeTest {
         assertTrue(main.clean(), String.valueOf(main.problems()));
         List<String> mainIds = main.roster().entries().stream().map(WandererRoster.Entry::entity).toList();
         for (WandererRoster.Entry e : p.roster().entries()) {
-            assertTrue(e.entity().startsWith("nusmp:"), e.entity() + " is not one of this mod's characters");
+            assertTrue(e.entity().startsWith("anime_multiverse:"), e.entity() + " is not one of this mod's characters");
             assertFalse(mainIds.contains(e.entity()), e.entity() + " is already in the main file: the extra entry would never be used");
             assertTrue(e.minThreat() >= 1 && e.maxThreat() > e.minThreat(), e.entity() + " has a bad threat window");
             assertTrue(e.weight() >= 1 && e.weight() <= 5, e.entity() + " is too common for an elite: weight " + e.weight());

@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.challenges.corpses_10.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.challenges.corpses_10.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_corpse_raised_10": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "corpse.raised",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_corpse_raised_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

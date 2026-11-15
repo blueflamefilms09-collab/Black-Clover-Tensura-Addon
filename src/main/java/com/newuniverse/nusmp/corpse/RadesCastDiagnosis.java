@@ -43,12 +43,12 @@ public final class RadesCastDiagnosis {
 
     /** The server-log line of a refused numbered cast. */
     public static String refusedLine(String player, String kindId, Refusal why) {
-        return "[nusmp] numbered undead: the cast of " + kindId + " by " + player + " made no body: " + why.why();
+        return "[anime_multiverse] numbered undead: the cast of " + kindId + " by " + player + " made no body: " + why.why();
     }
 
     /** The server-log line of a numbered body that left the world early. */
     public static String vanishedLine(String kindId, String ownerId, int ageTicks, String reason) {
-        return "[nusmp] numbered undead: " + kindId + " of " + ownerId + " left the world after " + ageTicks + " ticks (" + ageTicks / 20.0 + " s): " + reason;
+        return "[anime_multiverse] numbered undead: " + kindId + " of " + ownerId + " left the world after " + ageTicks + " ticks (" + ageTicks / 20.0 + " s): " + reason;
     }
 
     /** True when a body that is removed 'ageTicks' after it appeared (of a removal that is not a normal end) is worth a line. */

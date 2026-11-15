@@ -108,7 +108,7 @@ public final class RestEvents {
                 e.setCancellationResult(InteractionResult.SUCCESS);
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] A rest click failed and was ignored", ex);
+            LOG.warn("[anime_multiverse] A rest click failed and was ignored", ex);
         }
     }
 
@@ -215,7 +215,7 @@ public final class RestEvents {
             return step(p, st, ch, now);
         } catch (RuntimeException ex) {
             st.channel = null;
-            LOG.warn("[nusmp] A rest failed and was ended", ex);
+            LOG.warn("[anime_multiverse] A rest failed and was ended", ex);
             return new Step(Step.Phase.BROKEN, RestRules.Interrupt.STATE);
         }
     }
@@ -241,7 +241,7 @@ public final class RestEvents {
             complete(p, st, ch, level, now);
             return Step.DONE;
         }
-        p.displayClientMessage(Component.translatable("message.nusmp.mega.safe.progress", RestRules.progressPercent(elapsed, ch.total)), true);
+        p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.safe.progress", RestRules.progressPercent(elapsed, ch.total)), true);
         com.newuniverse.nusmp.perf.PerfParticles.send(level, Fx.options(FxThemes.DUNGEON_SAFE, FxOld.END_ROD), p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.3, 0.4, 0.3, 0.01);   // 1.99.0: per-tick trail: budgeted (perf.PerfParticles)
         return Step.RESTING;
     }
@@ -251,7 +251,7 @@ public final class RestEvents {
         try {
             if (e.getEntity() instanceof ServerPlayer p && e.getNewDamage() > 0f) interruptByDamage(p);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] A rest damage check failed and was ignored", ex);
+            LOG.warn("[anime_multiverse] A rest damage check failed and was ignored", ex);
         }
     }
 
@@ -311,7 +311,7 @@ public final class RestEvents {
         try {
             NusmpEvents.fire(p, QUEST_RESTED, kind.id());
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The quest hook {} failed and was ignored", QUEST_RESTED, ex);       // a quest hiccup must never undo a rest
+            LOG.warn("[anime_multiverse] The quest hook {} failed and was ignored", QUEST_RESTED, ex);       // a quest hiccup must never undo a rest
         }
     }
 
@@ -323,7 +323,7 @@ public final class RestEvents {
             try {
                 handled |= l.onAmbush(p, sector, Math.max(sector.threat, MegaDungeon.threatAt(level, p.blockPosition())));
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] A rest ambush listener failed and was ignored", ex);
+                LOG.warn("[anime_multiverse] A rest ambush listener failed and was ignored", ex);
             }
         }
         if (handled) say(p, "ambush");
@@ -355,6 +355,6 @@ public final class RestEvents {
 
     // ---------------------------------------------------------------- small helpers
     private static void say(ServerPlayer p, String key, Object... args) {
-        p.displayClientMessage(Component.translatable("message.nusmp.mega.safe." + key, args), true);
+        p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.safe." + key, args), true);
     }
 }

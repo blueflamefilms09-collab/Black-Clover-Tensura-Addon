@@ -91,7 +91,7 @@ public final class ModeArmorValkyrieV2 {
     // ================================================================ the textures and render types
     private static final ResourceLocation ATLAS = tex("valk2_atlas"), SCALES = tex("valk2_scales");
 
-    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/mode/" + n + ".png"); }
+    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/mode/" + n + ".png"); }
 
     private static VertexConsumer buffer(MultiBufferSource b, int pass) {
         return switch (pass) {

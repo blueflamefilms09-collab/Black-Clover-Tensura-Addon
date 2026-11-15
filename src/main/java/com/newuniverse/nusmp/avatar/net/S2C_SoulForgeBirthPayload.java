@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * shake (strength falls off with distance, so only people near the forge feel it).
  */
 public record S2C_SoulForgeBirthPayload(double x, double y, double z, float power, int ticks) implements CustomPacketPayload {
-    public static final Type<S2C_SoulForgeBirthPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_birth"));
+    public static final Type<S2C_SoulForgeBirthPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_birth"));
     public static final StreamCodec<RegistryFriendlyByteBuf, S2C_SoulForgeBirthPayload> CODEC = StreamCodec.of(
             (b, p) -> { b.writeDouble(p.x); b.writeDouble(p.y); b.writeDouble(p.z); b.writeFloat(p.power); b.writeVarInt(p.ticks); },
             b -> new S2C_SoulForgeBirthPayload(b.readDouble(), b.readDouble(), b.readDouble(), b.readFloat(), b.readVarInt()));

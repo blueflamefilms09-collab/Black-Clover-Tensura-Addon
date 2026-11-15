@@ -1,0 +1,17 @@
+{
+  "theme": "haunted_manor",
+  "templates": [
+    "anime_multiverse:mega/hall/haunted_manor_",
+    "anime_multiverse:mega/set/haunted_manor_",
+    "anime_multiverse:mega/trial/haunted_manor_",
+    "anime_multiverse:mega/safe/haunted_manor_",
+    "anime_multiverse:mega/trap/haunted_manor_"
+  ],
+  "relative": {
+    "mega/hall/haunted_manor_": 30,
+    "mega/set/haunted_manor_": 20,
+    "mega/trial/haunted_manor_": 20,
+    "mega/safe/haunted_manor_": 20,
+    "mega/trap/haunted_manor_": 20
+  }
+}

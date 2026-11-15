@@ -32,7 +32,7 @@ class SpiritDiveDjinnScanTest {
     private static String code(String src) { return src.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\n]*", ""); }
 
     // ------------------------------------------------------------------ 1. server safety
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
     private static final String[] COMMON = {"book/SpiritDiveDjinnPieces.java", "book/SpiritDiveForge.java", "book/SpiritDiveSound.java"};
 
     @Test
@@ -137,8 +137,8 @@ class SpiritDiveDjinnScanTest {
         assertTrue(aura.contains("private static void remadeLod(") && aura.contains("private static void extras(") && aura.contains("shell(c, el, st, pulse, false, false, false)"), "the V2 and classic passes are still in the painter");
         assertTrue(aura.contains("SpiritDiveLook.classic()") && aura.contains("SpiritDiveDjinn.paint("), "the painter chooses between the three looks");
         assertTrue(Files.isRegularFile(JAVA.resolve("client/aura/SpiritDiveFx.java")), "the effects of the remake");
-        for (Path p : new Path[]{ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_wind_halo.geo.json"), ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_fire_mane.geo.json"),
-                ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_saint_halo.geo.json"), ROOT.resolve("src/main/resources/assets/nusmp/geo/entity/spiritdive_arm_fire_claws_r.geo.json")})
+        for (Path p : new Path[]{ROOT.resolve("src/main/resources/assets/anime_multiverse/geo/entity/spiritdive_arm_wind_halo.geo.json"), ROOT.resolve("src/main/resources/assets/anime_multiverse/geo/entity/spiritdive_arm_fire_mane.geo.json"),
+                ROOT.resolve("src/main/resources/assets/anime_multiverse/geo/entity/spiritdive_arm_saint_halo.geo.json"), ROOT.resolve("src/main/resources/assets/anime_multiverse/geo/entity/spiritdive_arm_fire_claws_r.geo.json")})
             assertTrue(Files.isRegularFile(p), "the model of an old look is gone: " + p);
         assertEquals(5, SpiritDiveDjinnPieces.Look.values().length, "DJINN, V2, CLASSIC and the appended ANIME and REEL");
     }

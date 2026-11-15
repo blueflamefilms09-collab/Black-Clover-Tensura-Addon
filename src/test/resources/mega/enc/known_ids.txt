@@ -1,10 +1,10 @@
-# Registry ids that the shipped data of the Dungeon Master (data/nusmp/mega/) is allowed to name, one per line: the registry, a space, the id.
+# Registry ids that the shipped data of the Dungeon Master (data/anime_multiverse/mega/) is allowed to name, one per line: the registry, a space, the id.
 # Why: a typo in an entity id or a sound id is silent in game (the entry is skipped, the cue plays nothing), and nothing here can be run, so the test
 # EncounterDataTest checks every id of the shipped files against this list. The vanilla entity types and the simple particle types are the complete lists of
 # Minecraft 1.21.1 (from its API dump); the sounds are the ones the cues use, each checked against the SoundEvents class of the same dump; the Tensura entity
 # types are the entities of Tensura Reincarnated 2.0.1.3 (its id list; projectiles and spell entities included, the test only wants to know an id exists).
 # The sound ids bell.use and sculk.spread / sculk.charge / sculk_sensor.clicking were matched by hand to the fields BELL_BLOCK, SCULK_BLOCK_SPREAD, SCULK_BLOCK_CHARGE and SCULK_CLICKING.
-# nusmp entities are not listed: the test reads them from the entity registrations in the source tree. To use a new id, check it, then add a line.
+# anime_multiverse entities are not listed: the test reads them from the entity registrations in the source tree. To use a new id, check it, then add a line.
 entity minecraft:allay
 entity minecraft:area_effect_cloud
 entity minecraft:armadillo

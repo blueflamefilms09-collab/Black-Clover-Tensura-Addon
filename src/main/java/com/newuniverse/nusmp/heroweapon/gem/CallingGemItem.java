@@ -40,7 +40,7 @@ public class CallingGemItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        return GemText.msg("item.nusmp." + (kind == null ? GemCatalog.HOLY_ID : GemCatalog.sealId(kind)));
+        return GemText.msg("item.anime_multiverse." + (kind == null ? GemCatalog.HOLY_ID : GemCatalog.sealId(kind)));
     }
 
     // ---------------------------------------------------------------- the hold

@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * {@code hero.forms} self-test; this test cannot see the registries.
  */
 class FormsDataTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/hero/forms");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/hero/forms");
 
     @Test
     void everyShippedFileBelongsToAWeaponAndIsClean() throws IOException {

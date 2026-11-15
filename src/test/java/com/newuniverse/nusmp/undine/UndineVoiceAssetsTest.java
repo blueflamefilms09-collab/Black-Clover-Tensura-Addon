@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * what {@code tools/audio/undine_voice_convert.py} keeps true. The set stays far under 3 MB.
  */
 class UndineVoiceAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path VOICE = ASSETS.resolve("sounds/voice/undine");
     private static final Path MANIFEST = Path.of("tools/audio/undine_lines.json"), REPORT = Path.of("tools/audio/undine_voice_report.json"), LANG = Path.of("tools/lang/undine.json");
     private static final long BUDGET = 3L * 1024 * 1024;
@@ -81,12 +81,12 @@ class UndineVoiceAssetsTest {
             assertEquals("voice/undine/" + id, VoiceCatalog.filePath(id));
             JsonObject e = doc.getAsJsonObject(VoiceCatalog.eventId(id));
             if (e == null) { bad.add("no sounds.json entry for " + id); continue; }
-            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.nusmp.voice." + id)) bad.add(id + ": subtitle key");
-            if (!lang.has("subtitles.nusmp.voice." + id) || !lang.get("subtitles.nusmp.voice." + id).getAsString().startsWith("Undine:")) bad.add(id + ": no subtitle text in tools/lang/undine.json");
+            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.anime_multiverse.voice." + id)) bad.add(id + ": subtitle key");
+            if (!lang.has("subtitles.anime_multiverse.voice." + id) || !lang.get("subtitles.anime_multiverse.voice." + id).getAsString().startsWith("Undine:")) bad.add(id + ": no subtitle text in tools/lang/undine.json");
             JsonArray s = e.getAsJsonArray("sounds");
             JsonElement first = s.get(0);
             String name = first.isJsonObject() ? first.getAsJsonObject().get("name").getAsString() : first.getAsString();
-            if (s.size() != 1 || !name.equals("nusmp:voice/undine/" + id)) bad.add(id + ": names " + name);
+            if (s.size() != 1 || !name.equals("anime_multiverse:voice/undine/" + id)) bad.add(id + ": names " + name);
             Path f = VOICE.resolve(id + ".ogg");
             if (!Files.exists(f)) { bad.add("missing file " + f); continue; }
             long size = Files.size(f);
@@ -108,7 +108,7 @@ class UndineVoiceAssetsTest {
         List<String> bad = new ArrayList<>();
         for (String key : sounds().keySet()) if (key.startsWith("voice.undine_") && !registered.contains(key.substring("voice.".length()))) bad.add("sounds.json " + key + " names a line that is not registered");
         JsonObject lang = JsonParser.parseString(Files.readString(LANG)).getAsJsonObject();
-        for (String key : lang.keySet()) if (key.startsWith("subtitles.nusmp.voice.undine_") && !registered.contains(key.substring("subtitles.nusmp.voice.".length()))) bad.add("lang " + key + " is an orphan");
+        for (String key : lang.keySet()) if (key.startsWith("subtitles.anime_multiverse.voice.undine_") && !registered.contains(key.substring("subtitles.anime_multiverse.voice.".length()))) bad.add("lang " + key + " is an orphan");
         if (Files.isDirectory(VOICE)) try (Stream<Path> files = Files.list(VOICE)) {
             files.forEach(f -> { String n = f.getFileName().toString(); if (!n.endsWith(".ogg") || !registered.contains(n.substring(0, n.length() - 4))) bad.add("file " + n + " is not registered"); });
         }

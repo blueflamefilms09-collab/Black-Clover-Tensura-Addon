@@ -5,7 +5,7 @@
   bwform_<stem>_body.png Integrate: the full armoured beast-humanoid with its signature weapon (shaded, rim-lit),
   bwform_<stem>_acc.png  Integrate accent: a rim halo + the emissive parts (eyes, core gem, flames); for the four wills whose heads multiply it is ONE head, drawn several times.
 192 x 192, rgb = 0 under every fully transparent pixel (SafeAdditiveTextureScanTest). Fixed seeds: the output is the same every run.
-Run from the repo root: python3 tools/beastwill/remake/gen_form_textures.py [will_id ...]   (writes into src/main/resources/assets/nusmp/textures/particle; --sheet PATH writes a tinted contact sheet)"""
+Run from the repo root: python3 tools/beastwill/remake/gen_form_textures.py [will_id ...]   (writes into src/main/resources/assets/anime_multiverse/textures/particle; --sheet PATH writes a tinted contact sheet)"""
 import json, math, os, random, sys
 import numpy as np
 from PIL import Image, ImageFilter
@@ -15,7 +15,7 @@ import render3d as R
 from render_preview import SPEC, PIECE, hx, mix, shade, lum
 
 ROOT = os.path.join(HERE, "..", "..", "..")
-OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 N = 192; SS = 3
 HEAD_KIND = {"dragon": "dragon", "snake": "snake", "wolf": "wolf"}
 STEM = {"shadow_panther": "panther", "elderwood_guardian": "elder", "wind_skimmer": "raptor", "flame_serpent": "serpent", "ridge_wolf": "wolf", "crested_boar": "boar", "thunder_fang_chimera": "chimera"}

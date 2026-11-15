@@ -1,9 +1,9 @@
 """Reproducible hi-res textures of the mega-rare tear (1.99.0): python3 -B tools/gen_rift_textures.py
 
-  assets/nusmp/textures/misc/rift/core.png     1024 x 1024  a tileable nebula with veins (the skybox-style core; tinted in game by the pocket's sky colour)
-  assets/nusmp/textures/misc/rift/crack.png    1024 x 1024  tileable bright cracks (Voronoi edges) on transparent
-  assets/nusmp/textures/misc/rift/shimmer.png   512 x  512  tileable soft ripples (the haze round the tear)
-  assets/nusmp/textures/misc/rift/spark.png     128 x  128  a soft round glow with a four-point star (the strands and the rim)
+  assets/anime_multiverse/textures/misc/rift/core.png     1024 x 1024  a tileable nebula with veins (the skybox-style core; tinted in game by the pocket's sky colour)
+  assets/anime_multiverse/textures/misc/rift/crack.png    1024 x 1024  tileable bright cracks (Voronoi edges) on transparent
+  assets/anime_multiverse/textures/misc/rift/shimmer.png   512 x  512  tileable soft ripples (the haze round the tear)
+  assets/anime_multiverse/textures/misc/rift/spark.png     128 x  128  a soft round glow with a four-point star (the strands and the rim)
 
 Fixed seeds, numpy FFT noise (periodic, so every texture tiles by construction), no time or machine dependence: the same bytes every run.
 """
@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "misc", "rift")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "misc", "rift")
 
 
 def fractal(n, seed, beta=2.2):

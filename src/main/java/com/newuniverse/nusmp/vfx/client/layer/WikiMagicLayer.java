@@ -142,7 +142,7 @@ public final class WikiMagicLayer extends AbstractVfxLayer {
         } catch (RuntimeException e) {
             if (!warned) {
                 warned = true;
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] WikiMagicLayer skipped a frame", e);
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] WikiMagicLayer skipped a frame", e);
             }
         }
     }

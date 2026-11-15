@@ -11,8 +11,8 @@ from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item", "grimoire_book")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "grimoire_book")
 OUT = os.path.join(ROOT, "build", "grimoire_preview")
 
 LOOKS = [

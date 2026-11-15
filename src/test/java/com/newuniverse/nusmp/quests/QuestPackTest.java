@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class QuestPackTest {
     private static final Path PACK = Path.of("src/main/resources/quest_pack");
-    private static final Path ADV = Path.of("src/main/resources/data/nusmp/advancement");
+    private static final Path ADV = Path.of("src/main/resources/data/anime_multiverse/advancement");
     private static final Pattern HEX = Pattern.compile("[0-9A-F]{16}");
     private static final Pattern AMP = Pattern.compile("&(?![0-9a-fk-or])");
     private static final Set<String> TASK_TYPES = Set.of("item", "custom", "xp", "dimension", "stat", "kill", "location", "checkmark",
@@ -223,7 +223,7 @@ class QuestPackTest {
                     if (!"advancement".equals(t.get("type"))) continue;
                     adv++;
                     String a = (String) t.get("advancement");
-                    assertTrue(a != null && a.startsWith("nusmp:"), p.getFileName() + ": advancement " + a);
+                    assertTrue(a != null && a.startsWith("anime_multiverse:"), p.getFileName() + ": advancement " + a);
                     String path = a.substring(6);
                     assertTrue(Files.exists(ADV.resolve(path + ".json")), p.getFileName() + ": advancement file " + a + " does not exist");
                     used.add(path);

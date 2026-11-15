@@ -111,7 +111,7 @@ def build_eye(vm, info):
 add(Item("millennium_eye", build_eye_canon, dict(style="void", dark=(0, 6, 22), mid=(20, 110, 160), hot=(190, 255, 250)), hand_size=0.9, hand_style="brim", seed=102, worn="pieces",
          pieces=[("", "head", False)], anchor="head",
          layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
-                 PL("eye glint", "glints", "nusmp:gem_sparkle", 0x58F0E8, count=1, every=12, radius=0.4, rise=0.01)],
+                 PL("eye glint", "glints", "anime_multiverse:gem_sparkle", 0x58F0E8, count=1, every=12, radius=0.4, rise=0.01)],
          acts={"mind_read": [ST("MIRROR_ARRAY", 0x58F0E8, 3.6, 70, "self"), ST("DIVINE_SIGIL", 0xE8B040, 3.0, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
                "truth_gaze": [ST("LIGHT_BLADE", 0x58F0E8, 3.4, 40, "front"), ST("DIVINE_RAY", 0xE8B040, 3.0, 50, "front")],
                "seal_in_card": [ST("SEAL_TRINITY", 0x58F0E8, 3.4, 60, "front"), ST("MIRROR_FRAME", 0xE8B040, 3.0, 50, "front")],
@@ -193,7 +193,7 @@ def build_ring(vm, info):
 add(Item("millennium_ring", build_ring_canon, dict(style="swirl", dark=(8, 6, 0), mid=(150, 112, 24), hot=(255, 236, 170)), hand_size=0.95, hand_style="cuff", seed=103, worn="pieces",
          pieces=[("", "larm", True)], anchor="rarm",
          layers=[GL("ring glow", "aura_shell", "ring_glow"),
-                 PL("needle glints", "glints", "nusmp:gem_sparkle", 0xF2C860, count=1, every=10, radius=0.4, rise=0.01)],
+                 PL("needle glints", "glints", "anime_multiverse:gem_sparkle", 0xF2C860, count=1, every=10, radius=0.4, rise=0.01)],
          acts={"dowsing_needles": [ST("COMPASS_ARRAY", 0xFFD870, 3.4, 70, "ground"), ST("SPIRIT_AURA", 0xF2C860, 2.4, 40, "self")],
                "draw_power": [ST("MANA_CHARGE", 0xFFD870, 3.4, 60, "self"), ST("GRAVITY_WELL", 0xF2C860, 3.2, 70, "ground")],
                "seal_a_soul": [ST("SOUL_VORTEX", 0xFFD870, 3.2, 60, "front"), ST("SEAL_CHAINS", 0xF2C860, 3.0, 60, "front")]}))

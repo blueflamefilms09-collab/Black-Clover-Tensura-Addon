@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * its weapons and armour on it (see {@link RackPlacement#pack}) and cancels the stand: it never exists. What counts as the mod's own building is the sector generator's {@link RegionContext} (set
  * while a piece is placed) or an {@code internal} span in a Labyrinth world; and the stand must carry the template's signature (invulnerable, no gravity), so a stand a player puts down, a stand
  * loaded from disk (an old world keeps the stands it already has) and a stand made by another system are left alone. Where the rack cannot go (the block at the stand's feet is solid and the one
- * above it too) the stand stays: nothing is lost. A share of the racks (config {@code props.rackLootChance}) are the loot variant: themed gear from {@code nusmp:racks/<family>}, takeable; a stand
+ * above it too) the stand stays: nothing is lost. A share of the racks (config {@code props.rackLootChance}) are the loot variant: themed gear from {@code anime_multiverse:racks/<family>}, takeable; a stand
  * with nothing on it gets the themed gear for show. With the flag off none of this runs and the templates give their armour stands as before.
  */
 public final class RackConverter {

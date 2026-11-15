@@ -35,19 +35,19 @@ public final class SpiritSpaceSelfTests {
         if (PropKind.valueOf("SPIRITSPACE_1") == null || PropKind.valueOf("SPIRITSPACE_2") == null) return Result.fail("a spirit space prop kind is missing");
         for (SoundGate.Kind k : SoundGate.Kind.values()) {
             if (k == SoundGate.Kind.VOICE) continue;
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", SpiritSpaceSounds.id(k)))) return Result.fail("sound event " + SpiritSpaceSounds.id(k) + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", SpiritSpaceSounds.id(k)))) return Result.fail("sound event " + SpiritSpaceSounds.id(k) + " is not registered");
         }
         for (SpaceMoodRules.Voice v : SpaceMoodRules.Voice.values()) {
             if (v == SpaceMoodRules.Voice.NONE) continue;
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", SpiritSpaceSounds.voiceId(v)))) return Result.fail("voice event " + SpiritSpaceSounds.voiceId(v) + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", SpiritSpaceSounds.voiceId(v)))) return Result.fail("voice event " + SpiritSpaceSounds.voiceId(v) + " is not registered");
         }
-        try (InputStream in = SpiritSpaceSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json")) {
+        try (InputStream in = SpiritSpaceSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json")) {
             if (in == null) return Result.fail("sounds.json is missing");
             String text = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             if (!text.contains("\"spirit_space.hum\"") || !text.contains("\"spirit_space.voice_whisper\"")) return Result.fail("sounds.json has no spirit_space entries");
         }
         for (String f : new String[]{"geo/entity/spirit_space_orb.geo.json", "geo/entity/spirit_space_wisp.geo.json", "textures/entity/spirit_space/stars_far.png", "textures/entity/spirit_space/stars_mid.png", "textures/entity/spirit_space/stars_near.png"})
-            try (InputStream in = SpiritSpaceSelfTests.class.getResourceAsStream("/assets/nusmp/" + f)) {
+            try (InputStream in = SpiritSpaceSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + f)) {
                 if (in == null) return Result.fail("asset " + f + " is missing");
             }
 

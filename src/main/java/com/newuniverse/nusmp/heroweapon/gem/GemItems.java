@@ -29,14 +29,14 @@ public final class GemItems {
 
     private static final Map<HeroKind, DeferredItem<CallingGemItem>> SEALS = new EnumMap<>(HeroKind.class);
 
-    /** {@code nusmp:calling_gem}: the Holy Calling Gem, which makes one of the four Legendary Weapons choose its holder. */
+    /** {@code anime_multiverse:calling_gem}: the Holy Calling Gem, which makes one of the four Legendary Weapons choose its holder. */
     public static final DeferredItem<CallingGemItem> CALLING_GEM;
-    /** {@code nusmp:gem_fragment}: the shard every Vassal Seal is made from. */
+    /** {@code anime_multiverse:gem_fragment}: the shard every Vassal Seal is made from. */
     public static final DeferredItem<GemFragmentItem> GEM_FRAGMENT;
 
-    /** {@code nusmp:gneiss_crystal} (3.73.0): the banded stone crystal that sits in the middle of a Crystal of Release. */
+    /** {@code anime_multiverse:gneiss_crystal} (3.73.0): the banded stone crystal that sits in the middle of a Crystal of Release. */
     public static final DeferredItem<Item> GNEISS_CRYSTAL;
-    /** {@code nusmp:release_crystal} (3.73.0): releases the holder's hero or vassal weapon (asks first). */
+    /** {@code anime_multiverse:release_crystal} (3.73.0): releases the holder's hero or vassal weapon (asks first). */
     public static final DeferredItem<ReleaseCrystalItem> RELEASE_CRYSTAL;
 
     static {

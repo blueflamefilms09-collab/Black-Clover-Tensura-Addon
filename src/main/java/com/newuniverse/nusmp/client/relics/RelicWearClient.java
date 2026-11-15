@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
  * The client half of "relics are worn and shown all the time unless the player switches them off" (relics_wear), registered from {@link RelicClient#init}:
  * <ul>
  *   <li><b>The all-relics switch</b> {@code relicfx.showWorn} (default on; the contract is {@code WornVisibility}): the command {@code /multiverse relic show <on|off|toggle>} (a SERVER command that only
- *       tells the player's own client what to do, see {@link #apply}; a client command with the root word {@code multiverse} would swallow the server's subcommands), {@code /nusmp relic show ...} (the same as a
+ *       tells the player's own client what to do, see {@link #apply}; a client command with the root word {@code multiverse} would swallow the server's subcommands), {@code /anime_multiverse relic show ...} (the same as a
  *       client command, no round trip), and the key "Show or hide all worn relics" (unbound by default, {@link RelicActKeys}). It comes on top of the Curios eye icon of one slot and
  *       {@code relicfx.hideArmourRelics}.</li>
  *   <li><b>A fresh look while a screen is open</b>: the cached look at the local player lives {@link WornSyncRules#FAST_TTL} ticks while any screen is open and for
@@ -61,8 +61,8 @@ public final class RelicWearClient {
 
     /** The action-bar / chat line after the switch changed. */
     public static Component stateLine(boolean on) {
-        return on ? Component.translatableWithFallback("message.nusmp.relic_wear.show_on", "Worn relics are shown on every player.").withStyle(ChatFormatting.GREEN)
-                : Component.translatableWithFallback("message.nusmp.relic_wear.show_off", "Worn relics are hidden on every player (turn them back on with /multiverse relic show on).").withStyle(ChatFormatting.GRAY);
+        return on ? Component.translatableWithFallback("message.anime_multiverse.relic_wear.show_on", "Worn relics are shown on every player.").withStyle(ChatFormatting.GREEN)
+                : Component.translatableWithFallback("message.anime_multiverse.relic_wear.show_off", "Worn relics are hidden on every player (turn them back on with /multiverse relic show on).").withStyle(ChatFormatting.GRAY);
     }
 
     // ---------------------------------------------------------------- the switch
@@ -91,10 +91,10 @@ public final class RelicWearClient {
     }
 
     /**
-     * Game bus: {@code RegisterClientCommandsEvent}. {@code /nusmp relic show <on|off|toggle>} under the mod's own client root (the same switch without a server round trip; the root word
+     * Game bus: {@code RegisterClientCommandsEvent}. {@code /anime_multiverse relic show <on|off|toggle>} under the mod's own client root (the same switch without a server round trip; the root word
      * {@code multiverse} belongs to the server's command tree and is not used by a client command).
      */
     public static void registerCommands(RegisterClientCommandsEvent e) {
-        e.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("relic").then(show())));
+        e.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("relic").then(show())));
     }
 }

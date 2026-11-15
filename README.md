@@ -1,51 +1,51 @@
 # Anime Multiverse (Multiverse of Anime in Tensura)
 
-(internal mod id: `nusmp` - kept so existing skills and saves keep working)
+(mod id: `anime_multiverse`; up to 3.83.9 it was `nusmp` - old worlds, skills and commands still work, see CHANGELOG 3.84.0)
 
 Custom Tensura: Reincarnated skills for NeoForge 1.21.1.
 
 | Skill | ID | Modes |
 |---|---|---|
-| Summoner (Allen / Hell Mode) | `nusmp:summoner` | Beast Card, Stone Card, Recall |
-| Faith (skill bestowal) | `nusmp:faith` | Bestow, Pray, Check Faith |
-| Firebolt (Bell, DanMachi) | `nusmp:firebolt` | Instant lightning-fire bolt |
-| Argonaut (Bell, DanMachi) | `nusmp:argonaut` | HOLD to charge (bell chimes, up to 5), release to strike |
-| Liaris Freese (Bell, DanMachi) | `nusmp:liaris_freese` | Passive: kills can raise mastery of all your skills |
-| Airiel (Ais, DanMachi) | `nusmp:airiel` | Tempest (wind buff), Wind Dash |
-| Hestia (god) | `nusmp:hestia` | Heal + bless nearby allies |
-| Freya (god) | `nusmp:freya` | Charm: mobs drop aggro, enemies dazed |
-| Hephaestus (god) | `nusmp:hephaestus` | Repair held item (+ armor when mastered) |
-| Loki (god) | `nusmp:loki` | Vanish + blink forward |
-| Wynn Fimbulvetr (magic) | `nusmp:wynn_fimbulvetr` | Instant ice blizzard at target |
-| Rea Laevateinn (magic) | `nusmp:rea_laevateinn` | Chanted: flame pillars around you |
-| Arcs Ray (magic) | `nusmp:arcs_ray` | Chanted: piercing light beam |
-| Futsunomitama (magic) | `nusmp:futsunomitama` | Chanted: gravity field |
-| Uchide no Kozuchi (magic) | `nusmp:uchide_no_kozuchi` | Chanted: Level Boost on an ally |
+| Summoner (Allen / Hell Mode) | `anime_multiverse:summoner` | Beast Card, Stone Card, Recall |
+| Faith (skill bestowal) | `anime_multiverse:faith` | Bestow, Pray, Check Faith |
+| Firebolt (Bell, DanMachi) | `anime_multiverse:firebolt` | Instant lightning-fire bolt |
+| Argonaut (Bell, DanMachi) | `anime_multiverse:argonaut` | HOLD to charge (bell chimes, up to 5), release to strike |
+| Liaris Freese (Bell, DanMachi) | `anime_multiverse:liaris_freese` | Passive: kills can raise mastery of all your skills |
+| Airiel (Ais, DanMachi) | `anime_multiverse:airiel` | Tempest (wind buff), Wind Dash |
+| Hestia (god) | `anime_multiverse:hestia` | Heal + bless nearby allies |
+| Freya (god) | `anime_multiverse:freya` | Charm: mobs drop aggro, enemies dazed |
+| Hephaestus (god) | `anime_multiverse:hephaestus` | Repair held item (+ armor when mastered) |
+| Loki (god) | `anime_multiverse:loki` | Vanish + blink forward |
+| Wynn Fimbulvetr (magic) | `anime_multiverse:wynn_fimbulvetr` | Instant ice blizzard at target |
+| Rea Laevateinn (magic) | `anime_multiverse:rea_laevateinn` | Chanted: flame pillars around you |
+| Arcs Ray (magic) | `anime_multiverse:arcs_ray` | Chanted: piercing light beam |
+| Futsunomitama (magic) | `anime_multiverse:futsunomitama` | Chanted: gravity field |
+| Uchide no Kozuchi (magic) | `anime_multiverse:uchide_no_kozuchi` | Chanted: Level Boost on an ally |
 
-| Hell Walker | `nusmp:hell_walker` | Toggle: more damage the lower your health |
-| Hawk Eye (Allen) | `nusmp:hawk_eye` | Toggle: night vision + hostile mobs glow |
-| Spirit Card (Allen) | `nusmp:spirit_card` | Toggle: healing aura for nearby players |
-| Unbreakable Will | `nusmp:unbreakable_will` | Passive: survive a killing blow (long cooldown) |
-| Hati (Bete, DanMachi) | `nusmp:hati` | Passive: absorb fire/lightning/magic into Strength |
+| Hell Walker | `anime_multiverse:hell_walker` | Toggle: more damage the lower your health |
+| Hawk Eye (Allen) | `anime_multiverse:hawk_eye` | Toggle: night vision + hostile mobs glow |
+| Spirit Card (Allen) | `anime_multiverse:spirit_card` | Toggle: healing aura for nearby players |
+| Unbreakable Will | `anime_multiverse:unbreakable_will` | Passive: survive a killing blow (long cooldown) |
+| Hati (Bete, DanMachi) | `anime_multiverse:hati` | Passive: absorb fire/lightning/magic into Strength |
 
 ## Ultimate evolutions
 Master the Unique skill and it evolves automatically (checked every 5 seconds). Faith points carry over.
 
 | Unique | Evolves into | Ultimate ID |
 |---|---|---|
-| Summoner | Lord of Summons | `nusmp:lord_of_summons` |
-| Faith | Goddess of Faith | `nusmp:goddess_of_faith` |
-| Argonaut | Hero's Argonaut | `nusmp:heros_argonaut` |
-| Hell Walker | Hell Conqueror | `nusmp:hell_conqueror` |
-| Unbreakable Will | Immortal Will | `nusmp:immortal_will` |
-| Devil's Footprints (Fire Force) | Adolla Burst | `nusmp:adolla_burst` |
-| Book Maker (Medaka Box) | All Fiction | `nusmp:all_fiction` |
+| Summoner | Lord of Summons | `anime_multiverse:lord_of_summons` |
+| Faith | Goddess of Faith | `anime_multiverse:goddess_of_faith` |
+| Argonaut | Hero's Argonaut | `anime_multiverse:heros_argonaut` |
+| Hell Walker | Hell Conqueror | `anime_multiverse:hell_conqueror` |
+| Unbreakable Will | Immortal Will | `anime_multiverse:immortal_will` |
+| Devil's Footprints (Fire Force) | Adolla Burst | `anime_multiverse:adolla_burst` |
+| Book Maker (Medaka Box) | All Fiction | `anime_multiverse:all_fiction` |
 
-Standalone Ultimates (grant only): `nusmp:black_wings`, `nusmp:the_almighty`, `nusmp:the_visionary`. (3.44.0 removed Six Eyes / Limitless, Gold Experience / Requiem, Vector Manipulation and Instant Death; Black Wings stays as a grant-only skill.)
+Standalone Ultimates (grant only): `anime_multiverse:black_wings`, `anime_multiverse:the_almighty`, `anime_multiverse:the_visionary`. (3.44.0 removed Six Eyes / Limitless, Gold Experience / Requiem, Vector Manipulation and Instant Death; Black Wings stays as a grant-only skill.)
 God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, almightyDodgeChance).
-Beast Will (3.45.0): `nusmp:beast_will_core` (rare drop of rank A+ beasts, or a beast's own offer) binds a Dragon, Shadow Panther, Elderwood Guardian or Lion Will; keys `[` `]` `;` `\` `=`; commands `/beastwill ...`; server config `nusmp-beastwill-server.toml`; see `docs/beastwill.md`.
-Nen (3.46.0): Hunter x Hunter Ultimate with ten modes (Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission, Vow and Limitation); grant with `/tensura edit <player> ability grant nusmp:nen`; server setting `ultimates_3_46.nenEnabled`. All Fiction was rebuilt to ten modes (Undo, Fiction, Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); `ultimates_3_46.allFictionRebuilt = false` brings back the old two. Docs: `docs/skills/nen_allfiction.md`.
-Gate of Babylon (3.47.0): Fate Ultimate with ten modes (Gate, Volley, Rain, Chains of Heaven, Golden Armour, Vimana, King's Aura, Gae Bolg, Ea, Elixir); grant with `/tensura edit <player> ability grant nusmp:gate_of_babylon`; server setting `ultimates_3_47.gateEnabled`. Ki (3.47.0): Dragon Ball Ultimate with ten modes (Ki Blast, Kamehameha, Instant Transmission, Solar Flare, Afterimage, Super Saiyan, Spirit Bomb, Kaioken, Ultra Instinct, Ki Sense); grant with `/tensura edit <player> ability grant nusmp:ki`; server setting `ultimates_3_47.kiEnabled`. Docs: `docs/skills/gate_ki.md`.
+Beast Will (3.45.0): `anime_multiverse:beast_will_core` (rare drop of rank A+ beasts, or a beast's own offer) binds a Dragon, Shadow Panther, Elderwood Guardian or Lion Will; keys `[` `]` `;` `\` `=`; commands `/beastwill ...`; server config `nusmp-beastwill-server.toml`; see `docs/beastwill.md`.
+Nen (3.46.0): Hunter x Hunter Ultimate with ten modes (Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission, Vow and Limitation); grant with `/tensura edit <player> ability grant anime_multiverse:nen`; server setting `ultimates_3_46.nenEnabled`. All Fiction was rebuilt to ten modes (Undo, Fiction, Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); `ultimates_3_46.allFictionRebuilt = false` brings back the old two. Docs: `docs/skills/nen_allfiction.md`.
+Gate of Babylon (3.47.0): Fate Ultimate with ten modes (Gate, Volley, Rain, Chains of Heaven, Golden Armour, Vimana, King's Aura, Gae Bolg, Ea, Elixir); grant with `/tensura edit <player> ability grant anime_multiverse:gate_of_babylon`; server setting `ultimates_3_47.gateEnabled`. Ki (3.47.0): Dragon Ball Ultimate with ten modes (Ki Blast, Kamehameha, Instant Transmission, Solar Flare, Afterimage, Super Saiyan, Spirit Bomb, Kaioken, Ultra Instinct, Ki Sense); grant with `/tensura edit <player> ability grant anime_multiverse:ki`; server setting `ultimates_3_47.kiEnabled`. Docs: `docs/skills/gate_ki.md`.
 
 Devil Contract (3.48.0): tiers from the contract price (`/devilpact accept tax|seal|maxhp|eye_left|eye_right|half`), the key `N` lets the devil in or pushes it back (assimilation 0 to 100 %, scaling magicule drain, horns from 20 %, wings and flight from 50 %), a strict five minute Devil Union at 100 % with a 24 in-game hour lock, lasting sacrifices (half the maximum health, a lost eye); `/devil status`, server setting file `nusmp-devil-server.toml`. Docs: `docs/devil_contract.md`.
 
@@ -62,14 +62,14 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-3.83.9.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-3.84.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
 
 ## Use
-- Give skills: `/tensura edit <player> ability grant nusmp:summoner` (or `nusmp:faith`)
-- Faith admin: `/nusmp faith get|set|add <player> [amount]`
+- Give skills: `/tensura edit <player> ability grant anime_multiverse:summoner` (or `anime_multiverse:faith`)
+- Faith admin: `/anime_multiverse faith get|set|add <player> [amount]`
 - Settings: `world/serverconfig/nusmp-server.toml` (costs, cooldowns, max summons, bestowable skill list)
 
 ## Notes
@@ -83,7 +83,7 @@ Put the jar in the `mods` folder of the **server and every player's client**.
 - The grimoire is bound to its owner; if lost, using Grimoire Magic summons it back.
 - Skill modes: Bullet, Burst, Ward, Cataclysm (four-leaf or mastered), Devil Union (five-leaf).
 - Despair: a four-leaf owner has a small chance on death for their grimoire to darken into a five-leaf.
-- Admin: `/nusmp grimoire info|roll|give|reset <player>` (give takes 3, 4 or 5 leaves).
+- Admin: `/anime_multiverse grimoire info|roll|give|reset <player>` (give takes 3, 4 or 5 leaves).
 
 ## Look & creative tab
 - Grimoires use Tensura's 3D grimoire model in your hand, and a custom icon (cover color per magic type, clover per leaf count) in inventories, on the ground and in item frames.
@@ -94,8 +94,8 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - Server: `VfxSpawn.send(level, VfxShape.X, from, to, color, duration, power)` (or `sendFollowing` to stick to an entity).
 - Client: `VfxManager` + one layer per magic family (`MagicCircleLayer`, `FlameMagicLayer`, `WindMagicLayer`).
 - Max 400 vertices per effect. Particles: All = full, Decreased = half detail, Minimal = vanilla dust only.
-- Defaults per effect: `assets/nusmp/vfx/effects.json`. Textures: `assets/nusmp/textures/vfx/`.
-- Test: `/nusmp vfx <shape> [power]` (ops).
+- Defaults per effect: `assets/anime_multiverse/vfx/effects.json`. Textures: `assets/anime_multiverse/textures/vfx/`.
+- Test: `/anime_multiverse vfx <shape> [power]` (ops).
 - Adding a magic type: add a shape at the END of VfxShape, write a layer extending AbstractVfxLayer, register it in VfxManager.
 
 ## Grimoires: kingdoms, covers, pages (0.11)
@@ -103,19 +103,19 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - Covers: three/four/five-leaf, spade/double/triple spade, heart/two-heart/cracked heart, diamond/five-sided/cracked diamond. Each changes spell power and cost.
 - Pages open by mastery only (0.24: the old kill rolls are gone; see "0.24" below).
 - Time Magic pages: Chrono Stasis (starter), Chrono Stasis Grigora, Time Acceleration, Time Reversal, Stolen Time, Chrono Anastasis, Hourglass Step, Borrowed Future, Pendulum Ward, Age Breaker, Moment Reprise and Hourglass Storm.
-- Admin: `/multiverse grimoire ...` (the old `/nusmp grimoire setcover|page|info|give|roll|reset` stays as a hidden admin alias).
+- Admin: `/multiverse grimoire ...` (the old `/anime_multiverse grimoire setcover|page|info|give|roll|reset` stays as a hidden admin alias).
 
 ## Grimoires as Tensura Unique skills (0.13)
-- Every ported family is ONE Unique skill (`nusmp:book_<family>`), pages are modes. Summon the grimoire (0.24: it must be out), hold the skill key to chant (1 s, 0.4 s mastered), release to cast.
+- Every ported family is ONE Unique skill (`anime_multiverse:book_<family>`), pages are modes. Summon the grimoire (0.24: it must be out), hold the skill key to chant (1 s, 0.4 s mastered), release to cast.
 - Families: time, fire, water, wind, earth, light, dark, spatial, lightning, steel, mirror, thread, plant, sealing, gravity, ice, mercury.
 - Cooldown tiers: starter 4 s, mid 8 s, zone 15 s, signature 30 s, daily one in-game day. Cooldown shows in the mode name.
 - Spirit Dive (fire/water/wind/earth, Tensura Spirit Lord + free spirit slot), Devil Union (five-leaf/triple spade).
-- Admin: `/nusmp grimoire spirit release <Salamander|Undine|Sylph|Gnome>`.
+- Admin: `/anime_multiverse grimoire spirit release <Salamander|Undine|Sylph|Gnome>`.
 - Unported magic types (explosion, magma, mist, star, storm, sand, sword, shadow, poison, reinforcement, beast, bone, blood, creation, copy, illusion, dream, anti-magic) still use the legacy grimoire skill.
 
 ## 0.14
 - Cooldowns are in SECONDS (ManasCore ticks them once per second) - everything was 20x too long before; fixed.
-- Learning any grimoire book (acceptance, /nusmp, /tensura grant) now hands over the matching grimoire; if another mod deletes the book skill while you own the grimoire, it is re-taught.
+- Learning any grimoire book (acceptance, /anime_multiverse, /tensura grant) now hands over the matching grimoire; if another mod deletes the book skill while you own the grimoire, it is re-taught.
 - All 35 magic types are Unique books now. Mana rules: Mana Zone (chant twice as long), Mana Skin, exhaustion at low mana, Magic Stages, mana sensing for wind-derived mages, Mana Method for Heart.
 - New VFX: Spirit Dive aura, mana charge, spell cards, weapon constructs.
 - Magic gear: 11 robes, 10 relics, magic tool sword/spear/bow. Forbidden Magic via the Devil Contract (`/devilpact accept <maxhp|seal|tax>`).
@@ -124,22 +124,22 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - Robes are real 3D GeckoLib armor (my own models): robe / mantle / coat / simple / devil shapes with hoods, hats, horns, robe skirts and a swaying cape. Each set is 4 pieces (hood, robe, leggings, boots); the robe carries the bonus, the full set adds +50%.
 - Iron's-style shaded icons for all gear.
 - Swords: Demon Slasher Katana, Miasma-Infused Katana, Spell-Forged Rapier, Severing Greatsword (right-click techniques).
-- Anti-Magic Spirit Lord (Unique): AMP pool, physique, Black Form; Demon-Slayer / Dweller / Destroyer swords bound to the owner. Awakened by mastering the Anti-Magic grimoire or `/nusmp grimoire awaken_anti <player>`.
+- Anti-Magic Spirit Lord (Unique): AMP pool, physique, Black Form; Demon-Slayer / Dweller / Destroyer swords bound to the owner. Awakened by mastering the Anti-Magic grimoire or `/anime_multiverse grimoire awaken_anti <player>`.
 
 ## Spirit Lord companions
 - Once a spirit chooses you (Spirit Dive), sneak-use a Spirit Charm to call your Spirit Lord: Salamander, Undine, Sylph or Gnome. Anti-Magic Spirit Lords call the Black Devil.
 - Uses Tensura's own spirit models/animations by reference (`tensura:geo/entity/...`); nothing from Tensura is copied into this jar.
-- Admin: `/nusmp grimoire spirit_lord <player> <salamander|undine|sylph|gnome|black_devil>` (run again to dismiss).
+- Admin: `/anime_multiverse grimoire spirit_lord <player> <salamander|undine|sylph|gnome|black_devil>` (run again to dismiss).
 
 ## 0.17
 - Grimoire Altar block; super-rare Grimoire Towers (altar + loot chest at the top) and rare Library Ruins in the overworld.
 - Spirit bond: 50 personality traits, Trust 0-100 from what you do, daily Over-Pull strain, Incarnation at 100 Trust (rename a Spirit Charm = True Name).
 - Spirit Channeling page on Fire/Water/Wind/Earth books (hold: 25% Overdrive, 50% Spirit Nova, 100% Cataclysm).
 - Updated 3D demon sword models.
-- Admin: `/nusmp grimoire spirit_info <player>`, `/nusmp grimoire spirit_trust <player> <amount>`.
+- Admin: `/anime_multiverse grimoire spirit_info <player>`, `/anime_multiverse grimoire spirit_trust <player> <amount>`.
 
 ## 0.18 - spec-driven VFX (vfx.fx)
-- Effects are pure-Java specs (phases in ticks, pieces, 3-6 colour palette, cues), built once and animated; rendered with the nusmp:fx shader.
+- Effects are pure-Java specs (phases in ticks, pieces, 3-6 colour palette, cues), built once and animated; rendered with the anime_multiverse:fx shader.
 - `gradle build` runs `EffectRulesTest`: budget 400/200 vertices, whole quads, life/phase containment, soft in/out, palette, vocabulary, jitter/stagger, 3D bursts, <=64 draws, flash<=1.8, flicker<=0.35, light shake, cues on phase starts. A failing effect blocks the jar.
 - First batch: lightning_arc (Chain Lightning), fire_eruption (Calderos), water_crash (Sea Dragon's Roar), wind_gust (Gust Lane), earth_spikes (Earth Spikes).
 
@@ -148,7 +148,7 @@ Custom immediate-mode renderer (no vanilla particles): `com.newuniverse.nusmp.vf
 - New Grimoire Altar pedestal model and top texture.
 
 ## 0.20 - procedural 3D grimoires
-Replaced in 0.21 by the art-based grimoire below (the procedural look, its 33 textures, the 420 old 2D variant models and the `/nusmp grimoire look` / `lookseed` commands were removed at the owner's request). Old worlds still load: the old `nusmp:appearance` data is accepted and dropped the first time the server sees the stack.
+Replaced in 0.21 by the art-based grimoire below (the procedural look, its 33 textures, the 420 old 2D variant models and the `/anime_multiverse grimoire look` / `lookseed` commands were removed at the owner's request). Old worlds still load: the old `anime_multiverse:appearance` data is accepted and dropped the first time the server sees the stack.
 
 ## 0.21 - grimoires after the Black Clover art
 Every grimoire is a 3D book built after the reference art: thick leather boards, a cream page block, a banded spine, a raised double gold frame, a corner / border ornament stamped on both covers, a raised medallion with the emblem (clover or suit) on the front and a rosette on the back. Pages and emblem glow only while the book is held.
@@ -172,7 +172,7 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - **Chrono Anastasis** (new page, appended after Stolen Time so the other pages keep their numbers): a blue-violet clock face 12 blocks wide (16 mastered) opens over the spot you look at, with its hands sweeping backwards and gold light raining down. Under it, broken blocks from the last minute are rewound, you and your allies (every player when nobody is on a team) heal 25% of max health and are put out if burning, and enemy projectiles in the air are uncast. Cooldown 60 s.
 - **Time Acceleration**: a dial at your feet with racing hands and two numeral ribbons whirling forwards. **Time Reversal**: a dial whose hands and ribbon run backwards.
 - **Passive, Time Sense** (always on with the Time book): enemy projectiles within 4 blocks (6 mastered) that are flying at you get caught in a small stasis bubble and lose 60% of their speed, once each, at most 3 every 2 ticks. 3 s after you are hurt, 20% (35% mastered) of the damage taken in that window is rewound (healed, at most 4 hearts), shown by a rewinding dial at your feet; then it rests for 10 s.
-- Test: `/nusmp vfx time_stasis|time_clock|time_rewind|time_accel [power]`.
+- Test: `/anime_multiverse vfx time_stasis|time_clock|time_rewind|time_accel [power]`.
 
 ## Summon Grimoire (base ability of every grimoire)
 - Every grimoire book has a new last mode, **Summon Grimoire**: free, instant (no chant). Press the ability key while your grimoire is in its **Grimoire Slot**: it floats up from your right hip to the front of your right hand (12-tick ease, a small arc), glows, and starts its idle bob. It counts as held, so you cast with your hands free.
@@ -226,23 +226,23 @@ Drawn after the anime by `vfx/client/layer/TimeMagicLayer.java` (textures from `
 - Signature casts now layer a dark arc-rune ground tell with Riven's violet-tinted Zagred-aura shader pass; signature hits use the Dark Slash shader and Barrier impact layer. Maw of the Rift uses the existing Demon Void shader on a floor disk, with the existing textured vortex fallback when that optional shader is unavailable.
 - Soul Note now records damage actually removed from Riven's health/absorption, rather than the pre-mitigation incoming amount.
 - Partial resistance bypass remains blocked: Tensura 2.0.1.0's `ResistSkill.isResistanceBypass` treats `tensura$getResistanceBypassLevel()` as a boolean threshold (`>= 1.0`), while `onTakenDamage` applies the configured resistance multiplier as a binary result. No supported partial reduction hook was found; using full bypass would violate the null/resistance rules.
-- `nusmp:story_rift` is not registered in the worktree or reachable history, so the existing arena-local pull is retained. Rewrite Round still replays Riven's last cast because this combat path does not expose dependable player codex-skill attribution. Riven's current Bard relic drop remains; the historical `RivenPassives` implementation is not compatible with the current boss architecture.
+- `anime_multiverse:story_rift` is not registered in the worktree or reachable history, so the existing arena-local pull is retained. Rewrite Round still replays Riven's last cast because this combat path does not expose dependable player codex-skill attribution. Riven's current Bard relic drop remains; the historical `RivenPassives` implementation is not compatible with the current boss architecture.
 
 ## 0.98.0 - Marquis Remake v2 foundation
 
-- Rebranded the existing `nusmp:riven_remake` entity in-game as Marquis Remake without changing its save ID, 1,200 + 400-per-player health scaling, 300-million Tensura EP setup, no-plunder tag, or boredom portal.
+- Rebranded the existing `anime_multiverse:riven_remake` entity in-game as Marquis Remake without changing its save ID, 1,200 + 400-per-player health scaling, 300-million Tensura EP setup, no-plunder tag, or boredom portal.
 - Phase II now begins at 20 seconds or 75% HP, phase III at 60 seconds, and phase IV at 25% HP. Phase transitions remain sequential and retain the 1.5-second phase-change window. Phase-II/III combat-type rolls use the requested 12s/8s cadence and show their type and selected page on the custom bar.
 - Combat rolls draw from validated Black Clover Anime Skill Codex pages; anti-magic/Nihility burns the selected page. Added the phase-I New Order weapon-speed effect, Gearshift Low/Top, Fa Jin charge/release, arena-bounded Compress for players, and an Evil Eye healing block on its marked target.
 - Added one 12-second, boss-owned story-avatar construct per unlocked phase; The Creator is one-use in phase IV and suppresses healing for eight seconds among nearby arena entities. Anti-magic breaks an active avatar.
-- Still incomplete: the sheet/skin overlay model and exact supplied Minecraft skin, full distinct movesets for all ten avatars, arbitrary-block/construct Compress with restoration, warmup orders for mod/Tensura spells, a random registered grimoire *book* cast through a boss-safe SpellRuntime path, and the requested loot table/cosmetic items. `nusmp:story_rift` is not registered; the existing 60-second arena-local pull remains. No in-game render/combat session was available for verification.
+- Still incomplete: the sheet/skin overlay model and exact supplied Minecraft skin, full distinct movesets for all ten avatars, arbitrary-block/construct Compress with restoration, warmup orders for mod/Tensura spells, a random registered grimoire *book* cast through a boss-safe SpellRuntime path, and the requested loot table/cosmetic items. `anime_multiverse:story_rift` is not registered; the existing 60-second arena-local pull remains. No in-game render/combat session was available for verification.
 
 ## 0.99.0 - Marquis visual, book draw, avatars, and loot
 
 - Replaced the phase-I body with original Minecraft-scale pixel geometry/textures reflecting the supplied skin reference (brown hair, blue sweatshirt, white crest, gray trousers, white shoes). Phase II fades the coat overlay in during the existing phase clip; phase III adds gold-ring/electric particles; phase IV keeps the skin and coat and layers the existing page wings/crown over them.
 - Combat-type rolls now select an actual registered `CanonBook` cover for the floating grimoire and show its owner on the boss bar, while the existing validated Black Clover codex skill remains the boss's cast. This is a visual book draw, not player-grimoire SpellRuntime casting.
 - Avatar selection now branches on tank/healer/flyer/caster/nullification reads. Zeus has a geared punch, Beerus a bounded damaging burst, Madoka removes one harmful boss effect and one beneficial target effect, Anti-Spiral fires a line hit, Lord of Nightmares creates a bounded healing-denial field, Arceus accelerates Marquis, and Zeno can dismiss one nearby owned construct. Each special has a short VFX tell; the existing 12-second/one-avatar ownership limit remains. Truth and Kami Tenchi are not implemented as distinct mechanics.
-- Added entity loot tables at both the requested Marquis name and the preserved `nusmp:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
-- Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `nusmp:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
+- Added entity loot tables at both the requested Marquis name and the preserved `anime_multiverse:riven_remake` registry key. Real entity death drops the existing bard relic, a story page, and a crest-cape token; a cracked crown vanity has an 8% roll. The cape is currently an inventory cosmetic token, not a wearable/rendered cape.
+- Still incomplete: Page Edge/Bull Brand engravings and a single-use rift key are absent because those enchantments and `anime_multiverse:story_rift` are not registered. A boss-safe arbitrary book spell path is also unavailable: SpellRuntime's projectile owner is a `ServerPlayer`; the boss continues to cast its validated codex skill. New Order still implements weapon slowdown and Gearshift only; there is no reliable cast-warmup event hook for the two-cast slow rule. Ground-is-stone is not implemented. Only six avatar translations have special mechanics; Truth, Kami Tenchi, the Creator's distinct visual, and several requested combat interactions remain incomplete. No in-game client render/combat verification was run.
 
 ## 1.30.0 - Weapon size and orientation, pairs, worn relic models, tiers, sockets, boss DPS cap, Elsdocia
 See `CHANGELOG.md` (1.30.0) and `docs/weapon_scale_orientation.md`, `docs/relic_pairs.md`, `docs/relic_visuals.md`, `docs/relic_tiers_and_scaling.md`, `docs/relic_sockets_and_evolution.md`, `docs/boss_dps_budget.md`, `docs/elsdocia_rebuild.md`.
@@ -354,21 +354,21 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
 
 ## 1.0.0 - Marquis New Order and avatar mechanics
 
-- New Order now chooses one bounded rule from target analysis: halve a melee weapon's attack speed for six seconds, apply Gearshift Low to a kiter, delay the next two nusmp grimoire release warmups by 50% for a caster, or give Marquis Gearshift Top. Slow-page state lasts eight seconds and expires/clears after two grimoire casts. The cast hook is `GrimoireBook.onRelease`; this does not affect Tensura skill casts.
+- New Order now chooses one bounded rule from target analysis: halve a melee weapon's attack speed for six seconds, apply Gearshift Low to a kiter, delay the next two anime_multiverse grimoire release warmups by 50% for a caster, or give Marquis Gearshift Top. Slow-page state lasts eight seconds and expires/clears after two grimoire casts. The cast hook is `GrimoireBook.onRelease`; this does not affect Tensura skill casts.
 - Avatar selection now uses the phase tier and ThreatScan: Zeus/Truth/Beerus/Madoka in phase II; Anti-Spiral/Arceus/Grand Zeno/Lord of Nightmares/Kami Tenchi in phase III; The Creator remains the once-only phase-IV summon. Truth mirrors capped damage to the last player who hit Marquis, Zeno removes one owned construct or safely compresses an Evil-Eye-marked player for three seconds, and Kami Tenchi suppresses elytra flight nearby and prevents the next phase-change i-frames while present. Avatar tints and Creator's book-shaped body distinguish them visually.
-- Still incomplete: Ground-is-stone, New Order slow for Tensura casts, the full requested native combat translations for every avatar (especially Arceus's weakest-element judgment), and exact custom equipment cosmetics/engraving rewards. The rift key and `nusmp:story_rift` cannot be implemented safely because that dimension is not registered. Random CanonBook covers are displayed, but the boss's actual cast remains a separate validated codex skill; no player-owned grimoire cast has been fabricated.
+- Still incomplete: Ground-is-stone, New Order slow for Tensura casts, the full requested native combat translations for every avatar (especially Arceus's weakest-element judgment), and exact custom equipment cosmetics/engraving rewards. The rift key and `anime_multiverse:story_rift` cannot be implemented safely because that dimension is not registered. Random CanonBook covers are displayed, but the boss's actual cast remains a separate validated codex skill; no player-owned grimoire cast has been fabricated.
 
 ## 0.96.0 - Riven attack roster continuation
 
 - Added executable native attacks for Bull Ward (absorption shield and break shockwave), Soul Note (returns damage dealt by its marked player after five seconds), Legion Knight (construct spawn and position swap), Discord (42 damage plus two-second silence if its tell completes), Gold Ring (three-second magic null and delayed arena strike), Two Moons (second sky strike delayed ten ticks), Doom Gate (pull then close slash), Unwritten Ending (1.5-second untargetable window and 85-damage reappearance strike), Audience Collapse (25 story charge and 48 + 8 per additional living player), Crown Break (four non-tracking, block-occluded normal-damage shard rays), and one-use Rewrite Round.
 - Phase II's Discord unlock is phase-gated. Phase IV signatures are separated by 80 ticks; Audience Collapse and Final Page are separated by 120 ticks. Anti-magic can shorten/cancel active invulnerability and cancels a pending Rewrite Round startup. Rewrite use persists when the boss is saved and reloaded.
 - Fixed an Audience Collapse charge double-spend and kept Crown Break shards on the normal damage band. Added focused checks for the attack roster, phase unlocks, party damage formula, signature spacing, and normal Crown Break classification.
-- Incomplete/unverified: Rewrite Round currently replays Riven's last cast, not a player spell that hit him; the damage-source API does not expose a reliable codex skill identity in this combat path. The 60-second pull is centered on the local arena, not an actual `nusmp:story_rift` dimension (no such dimension is registered in the current repo/history). The historical `RivenPassives` suite from commit `848f9de` is not integrated in this newer boss architecture; current boss-bound Tensura marker skills are granted and stripped on death, but are not themselves active passives. Signature resistance bypass and shader-specific boss VFX remain unimplemented; resistance bypass was not added without a safe Tensura API path. Runtime/in-game behavior has not been exercised.
+- Incomplete/unverified: Rewrite Round currently replays Riven's last cast, not a player spell that hit him; the damage-source API does not expose a reliable codex skill identity in this combat path. The 60-second pull is centered on the local arena, not an actual `anime_multiverse:story_rift` dimension (no such dimension is registered in the current repo/history). The historical `RivenPassives` suite from commit `848f9de` is not integrated in this newer boss architecture; current boss-bound Tensura marker skills are granted and stripped on death, but are not themselves active passives. Signature resistance bypass and shader-specific boss VFX remain unimplemented; resistance bypass was not added without a safe Tensura API path. Runtime/in-game behavior has not been exercised.
 
 ## 0.94.0 - Riven Remake, the Black Bulls' Bard; generated grimoire designs; wiki VFX scale fixes
 
-- **New boss: Riven Remake** (`/nusmp riven summon`, op level 2; spawn egg in the creative tab). An adaptive bard boss: every `replanTicks` (40) he scans his target (gear, armour, anti-magic / Nihility, grimoire magic, Tensura barrier and immunity skills, flying, mounted) and scores every skill of the Anime Skill Codex against it, commits to the best plan for up to four seconds and replans at once when the target changes gear, raises a barrier or pops anti-magic. Damage that does nothing teaches him to stop using that kind. Plans are logged at debug. Phases: I The Black Bulls' Bard, II Fictional Remake (70%, Story Manifestation constructs), III Final Form (30%, lethal skills x1.5, a tier up, two-skill chains). The quirk: a player with anti-magic, Nihility or a raised guard resists his rewrite (silence, slow, soul bond, song debuffs) unless he spends story charge. Health scales with players (`baseHealth` 600, `perPlayerHealth` 200), constructs +1 per extra player up to 4.
-- **Anime Skill Codex** (`data/nusmp/skills/codex/*.json`, 38 skills: his own bard kit plus Black Clover, Tensura, DanMachi, Fire Force, Jujutsu Kaisen, JoJo and a generic pool). A skill is data only: a name, numbers and sandbox primitives (`SkillSandbox`); anything unknown is rejected at load. `/nusmp riven research <anime> <ability>` (off by default, `enableResearch`) runs off-thread against a configured https endpoint, never a private address, and only writes a candidate JSON into `config/nusmp/codex-inbox/`; `/nusmp riven accept <file>` moves it into the live codex. With no endpoint it just tells the op to drop a JSON file in the inbox. `config/nusmp-riven.toml` holds the settings.
+- **New boss: Riven Remake** (`/anime_multiverse riven summon`, op level 2; spawn egg in the creative tab). An adaptive bard boss: every `replanTicks` (40) he scans his target (gear, armour, anti-magic / Nihility, grimoire magic, Tensura barrier and immunity skills, flying, mounted) and scores every skill of the Anime Skill Codex against it, commits to the best plan for up to four seconds and replans at once when the target changes gear, raises a barrier or pops anti-magic. Damage that does nothing teaches him to stop using that kind. Plans are logged at debug. Phases: I The Black Bulls' Bard, II Fictional Remake (70%, Story Manifestation constructs), III Final Form (30%, lethal skills x1.5, a tier up, two-skill chains). The quirk: a player with anti-magic, Nihility or a raised guard resists his rewrite (silence, slow, soul bond, song debuffs) unless he spends story charge. Health scales with players (`baseHealth` 600, `perPlayerHealth` 200), constructs +1 per extra player up to 4.
+- **Anime Skill Codex** (`data/anime_multiverse/skills/codex/*.json`, 38 skills: his own bard kit plus Black Clover, Tensura, DanMachi, Fire Force, Jujutsu Kaisen, JoJo and a generic pool). A skill is data only: a name, numbers and sandbox primitives (`SkillSandbox`); anything unknown is rejected at load. `/anime_multiverse riven research <anime> <ability>` (off by default, `enableResearch`) runs off-thread against a configured https endpoint, never a private address, and only writes a candidate JSON into `config/anime_multiverse/codex-inbox/`; `/anime_multiverse riven accept <file>` moves it into the live codex. With no endpoint it just tells the op to drop a JSON file in the inbox. `config/nusmp-riven.toml` holds the settings.
 - **Model, animations and boss bar.** A player-proportioned geo model (messy black hair, violet-blue eyes, black high-collar coat with silver filigree and the Black Bull skull, coat tails) with 18 clips (idle, walk, talk, cast_grimoire, cast_song, eldritch_blast, shadow_step, manifest weapon / shield, soul_bond, three sword combos, hit, stagger, phase2, final_form, death); Final Form swaps to a model of the same entity with page-wings and a bull-skull crown. His five-leaf-styled grimoire floats on his left. The boss bar is a custom overlay (crown, name, phase subtitle, violet-blue fill with a travelling lightning shimmer, a Black Bull skull that cracks at 70% and 30%, the casting skill typing on, a story-charge pip row from phase II, HP number and phase numeral); vanilla's bar for him is hidden. Assets come from `java tools/GenRiven.java`.
 - **Generated grimoire designs.** Magics without a hand-made palette (all 30 wiki attributes fell back to one brown cover, gold trim and white glow) now get a cover, glow, metal and frame-stud pattern generated from their name (`GrimoireDesignGenerator`): stable per magic, visibly distinct, hand-made books unchanged.
 - **Wiki-magic VFX fixes.** Fields and bursts were drawn at a third of their real radius (callers pass radius / 3); bolts drew a beam from the caster to the tip instead of a short tail and never finished for short effects; the guard aura was sized for the old scale. Bone and Sand no longer auto-spawn the shared construct wall props on every construct-shaped spell (Recombination keeps its walls).
@@ -390,10 +390,10 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
 - **Starter attributes**: a grimoire chooses Fire, Water, Wind or Earth (config `starterMagics`, narrowed to your soul family when it can be); Anti-Magic comes with the Black Magic cover or an empty soul. Every other magic stays in the mod (canon books, admin grants).
 - **Grimoire Slot only.** A bound grimoire always lives in the Grimoire Slot (anything bound in your inventory, hotbar or offhand moves in by itself); it hangs dormant at your hip. Holding it or selecting it on the hotbar does nothing.
 - **Cast only when summoned.** Press **G** ("Summon / Stow Grimoire", rebindable) or use the Summon Grimoire page: the book floats from your hip to your right hand and bobs; **shift + G** stows it. Every page needs the book out. *Anti-Magic exception:* the Anti-Magic Lord's Black Form toggle and the demon swords work without a summoned book (they are the swords drawn from it); the Anti-Magic book's own pages still need it out.
-- **Pages by mastery only.** Kill rolls, the kill counter, `/nusmp grimoire addkills` and their configs were removed; Liaris Freese no longer feeds grimoire mastery from kills. A page opens when mastery >= its cost (the larger of its place in the book and its spell cost: cost% / 35), its rank / race gate passes and a slot is free (slots 6 -> 12, +4 with a spirit or devil contract, cap 16).
+- **Pages by mastery only.** Kill rolls, the kill counter, `/anime_multiverse grimoire addkills` and their configs were removed; Liaris Freese no longer feeds grimoire mastery from kills. A page opens when mastery >= its cost (the larger of its place in the book and its spell cost: cost% / 35), its rank / race gate passes and a slot is free (slots 6 -> 12, +4 with a spirit or devil contract, cap 16).
 - **Anti-Magic kit**: new pages **Black Hurricane** (a whirling field that drags foes in and strips their magic) and **Black Form** (30 s of strength, speed, resistance and jump, with an anti-magic burst); mastering the Anti-Magic Lord now also grants the **Demon-Slasher** katana next to Demon-Dweller and Demon-Destroyer.
 - **Altar**: a bound mage prays or trains with the grimoire in their slot (no need to hold it). A player who is not eligible no longer gets the old random roll there.
-- **Player text**: no message tells players to use `/nusmp`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
+- **Player text**: no message tells players to use `/anime_multiverse`, none names another mod; the creative tab is called "Multiverse". Squads without the team mod say so plainly ("team support is not installed").
 
 ## 0.62.0 - Instant casting, identity VFX, and stored Key Magic
 
@@ -581,7 +581,7 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
   - Old Lords migrate automatically.
   - Anti-Magic is now event only: an op gives it with `/multiverse event antimagic <player>`.
   - **New:** a new Anti-Magic icon.
-- **New: gamerules** for the per-world switches: `/gamerule nusmp...`. Examples: `nusmpZagredBoss`, `nusmpAntiMagicEventOnly`, `nusmpPvpHitCapPercent`, `nusmpSpellCooldownPercent`.
+- **New: gamerules** for the per-world switches: `/gamerule anime_multiverse...`. Examples: `nusmpZagredBoss`, `nusmpAntiMagicEventOnly`, `nusmpPvpHitCapPercent`, `nusmpSpellCooldownPercent`.
 - **Fixes:**
   - Charmy's Cotton/Food pages no longer stay sealed.
   - World Tree trees are taken back fully, even after a restart.
@@ -657,7 +657,7 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
 - **Shaders and Blender:** labPBR specular maps let Photon shine the wet paint. A Blender builder for the palette & brush (`tools/blender/build_palette_brush.py`) has a preview at `docs/blender/previews/palette_brush.png`.
 
 ## 0.43 - Better Combat compatibility
-- **New: Better Combat support.** With [Better Combat](https://modrinth.com/mod/better-combat) installed, every Black Clover sword gets combo swings, attack hitboxes and dual wielding. The files are in `data/nusmp/weapon_attributes`. Without Better Combat nothing changes: the files are just ignored, and the dependency is optional.
+- **New: Better Combat support.** With [Better Combat](https://modrinth.com/mod/better-combat) installed, every Black Clover sword gets combo swings, attack hitboxes and dual wielding. The files are in `data/anime_multiverse/weapon_attributes`. Without Better Combat nothing changes: the files are just ignored, and the dependency is optional.
   - **Asta's and Licht's blades** (Demon-Slasher, Demon-Slayer, Demon-Dweller, Demon-Destroyer and Licht's two) are one-handed, so you can dual-wield them as in canon. The big blades reach further.
   - **Rimeheart Runeblade** is one-handed, so its "second magic sword in the off hand" bonus works with Better Combat's dual wielding.
   - **Other weapons:** the Miasma-Infused Katana uses the two-handed katana set (Yami's style), the Spell-Forged Rapier the rapier set, the Severing Greatsword the claymore set, and the magic tool sword and spear the sword and spear sets.
@@ -666,7 +666,7 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
 ## 0.42 - Mirror Magic overhaul (Gauche Adlai)
 - **Real mirrors:** every Mirror spell now summons an ornate silver mirror. Frames come in five shapes (oval, arch, round, gothic crest and diamond), with glass, a flickering violet mana corona, distortion ripples and an edge glow.
 - **Replacements:** Reflect Refrain, Real Double, Reflect Ray and Full Reflection (page ids are kept).
-  - **Real Double:** doubles are now real, living mirror clones (`nusmp:mirror_double`). Each wears your mirrored skin and holds your weapon.
+  - **Real Double:** doubles are now real, living mirror clones (`anime_multiverse:mirror_double`). Each wears your mirrored skin and holds your weapon.
     - **Cost:** each double costs a tenth of your max magicules, with aura making up any shortfall.
     - **Combat:** doubles fight beside you, echo every spell you cast and pull enemies off you. 35% of the blows aimed at you land on a double.
     - **Trading places:** sneak-cast to swap places with a double.
@@ -679,7 +679,7 @@ Ported onto the 1.0.0 line from the 0.100-0.102 work. **Nothing in this version 
 - Guide with Blender and shader notes: `docs/mirror_spec.md`.
 
 ## 0.41 - Dream Magic's pocket dimension, Painting Magic
-- **Replacement: Dream World and Glamour World** no longer only debuff a field. They pull their targets into a real pocket dimension, `nusmp:dream`: a pastel arena under an iridescent dome with a starry sky.
+- **Replacement: Dream World and Glamour World** no longer only debuff a field. They pull their targets into a real pocket dimension, `anime_multiverse:dream`: a pastel arena under an iridescent dome with a starry sky.
   - **Manifestation:** inside, the caster's words become solid (bear, feast, fire, ice, cage, stars, wall, sleep). Dorothy also reads minds: what dreamers say can be turned against them.
   - **Exhaustion:** a dream load wears each dreamer's mind down until it breaks.
   - **Breakout:** heavy combined damage, teleporting, or casting Spatial, Time, Anti-Magic or Dream Magic shatters the dream.
@@ -808,7 +808,7 @@ New pages (appended; Time Magic VFX untouched, new effects built to the same sta
 - Page ids are unchanged where a page was replaced, so unlocked pages and mastery carry over. Concept spec for every weapon (classification, visuals, abilities, Blender breakdown): `docs/weapons_spec.md`.
 
 ## Creative grimoires no longer overwrite yours
-- Right-clicking an unbound (creative-tab) grimoire when you already have one now does nothing and keeps the item; reset first with `/nusmp grimoire reset <player>`. Binding also keeps the clicked book's cover (it used to fall back to the default cover).
+- Right-clicking an unbound (creative-tab) grimoire when you already have one now does nothing and keeps the item; reset first with `/anime_multiverse grimoire reset <player>`. Binding also keeps the clicked book's cover (it used to fall back to the default cover).
 
 ## Fire, Water, Wind and Earth spell visuals (after the anime / wiki)
 Layers in `vfx/client/layer/` (`FireSpellLayer`, `WaterSpellLayer`, `WindSpellLayer`, `EarthSpellLayer`, shared `ElementFx`), textures from `tools/gen_element_vfx_textures.py`. Old effects are kept; these books now use the new ones:
@@ -816,11 +816,11 @@ Layers in `vfx/client/layer/` (`FireSpellLayer`, `WaterSpellLayer`, `WindSpellLa
 - **Water**: Sea Dragon's Roar = a water dragon with a sinuous body flying to the target, splash crown on impact; Sea Dragon's Cradle = a whirling water sphere ringed by watery globs that follows you.
 - **Wind**: Gust Lane = Swallow's Gale (swallows made of wind, streaks, rolling rings); Spirit Storm = a green-white tornado around you.
 - **Earth**: Earth Spikes = 3D stone spikes erupting one after another; Earth Wall = cracks, dust and rubble along the wall; Mother Earth Split = a racing crack with stone slabs heaving up.
-- Test any of them: `/nusmp vfx fire_lion|fire_spear|fire_pillar|fire_burst|water_dragon|water_cradle|water_burst|wind_tornado|wind_gale|stone_spikes|earth_rise|earth_fissure [power]`.
+- Test any of them: `/anime_multiverse vfx fire_lion|fire_spear|fire_pillar|fire_burst|water_dragon|water_cradle|water_burst|wind_tornado|wind_gale|stone_spikes|earth_rise|earth_fissure [power]`.
 - Preview without the game: `python tools/vfx_preview/preview.py [scene...]` compiles the real layer code against small stubs and renders the frames to `build/vfx_preview/` (scenes in `tools/vfx_preview/scenes.json`).
 
 ## Multiverse systems (commands under `/multiverse`)
-Server config: `world/serverconfig/nusmp-multiverse-server.toml`; client config: `config/nusmp-multiverse-client.toml`. The old `/nusmp` commands still work.
+Server config: `world/serverconfig/nusmp-multiverse-server.toml`; client config: `config/nusmp-multiverse-client.toml`. The old `/anime_multiverse` commands still work.
 
 **Grimoire Acceptance Ceremony**
 - Once a year (real-world March by default, or `/multiverse ceremony start|stop`) grimoires choose every eligible player who comes within 48 blocks of a Grimoire Tower. Eligible = no grimoire yet.

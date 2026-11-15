@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Why: the haircuts of the kit are data (assets/nusmp/playermodel/hair_styles.json, written with their painted sheets by tools/playermodel/gen_hair.py), and the Java side has to read them without
+ * Why: the haircuts of the kit are data (assets/anime_multiverse/playermodel/hair_styles.json, written with their painted sheets by tools/playermodel/gen_hair.py), and the Java side has to read them without
  * a game class so the table can be tested (every style resolves, every box has a UV region inside its 64x64 sheet, every chain has 1 to 4 segments, the cap sits on the hat layer's UV).
  * Coordinates are the player model's own, in pixels: y DOWN, the head box spans x -4..4, y -8..0, z -4..4 and the neck line is y 0; a box with a {@code part} of {@code head} or {@code body} is
  * posed with that part (both pivots are at the neck, so one set of numbers serves both).

@@ -37,9 +37,9 @@ public final class AvatarSoulForgeConfig {
         REACH = b.comment("How far (blocks) from the Soul Forge the creator may stray before the ritual is cancelled.").defineInRange("reach", 6.0, 2.0, 16.0);
         START_GAP_SECONDS = b.comment("Least seconds between two ritual starts of one player.").defineInRange("startGapSeconds", 3, 0, 120);
         BIRTH_TICKS = b.comment("Length in ticks of the birth spectacle (beam, Avatar steps out, first ability).").defineInRange("birthTicks", 50, 24, 240);
-        APTITUDE_TAX_SCALE = b.comment("Multiplier on the permanent magicule tax of a hand-picked aptitude (1.0 = the numbers in data/nusmp/avatar_aptitudes).")
+        APTITUDE_TAX_SCALE = b.comment("Multiplier on the permanent magicule tax of a hand-picked aptitude (1.0 = the numbers in data/anime_multiverse/avatar_aptitudes).")
                 .defineInRange("aptitudeTaxScale", 1.0, 0.0, 10.0);
-        SKILL_TAX_SCALE = b.comment("Multiplier on the EP tax of a chosen Unique / Ultimate skill (the numbers in data/nusmp/avatar_skills).").defineInRange("skillTaxScale", 1.0, 0.0, 10.0);
+        SKILL_TAX_SCALE = b.comment("Multiplier on the EP tax of a chosen Unique / Ultimate skill (the numbers in data/anime_multiverse/avatar_skills).").defineInRange("skillTaxScale", 1.0, 0.0, 10.0);
         MAX_TOTAL_TAX_PERCENT = b.comment("The most permanent tax (percent of maximum magicule, all of a creator's Avatars together) a creation may leave the creator with.")
                 .defineInRange("maxTotalTaxPercent", 60.0, 0.0, 90.0);
         UPFRONT_FACTOR = b.comment("Magicule paid at once = the permanent tax fraction x this x the creator's maximum magicule (0 = nothing up front).").defineInRange("upfrontFactor", 1.0, 0.0, 10.0);

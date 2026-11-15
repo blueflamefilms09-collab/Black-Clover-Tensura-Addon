@@ -17,21 +17,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the list of the mod's custom particles is data, not code: {@code data/nusmp/particle_catalog.json} is written by {@code tools/gen_custom_particles.py} together with the textures, so the
+ * Why: the list of the mod's custom particles is data, not code: {@code data/anime_multiverse/particle_catalog.json} is written by {@code tools/gen_custom_particles.py} together with the textures, so the
  * ids, the number of animation frames and the physics of every particle can never drift away from its art. The registry ({@link FxTypes}), the client providers, the theme table, the command
  * and the tests all read this one list. Pure (Gson only, no game classes): the unit tests parse the real file. The list is read once, on first use, and is immutable afterwards.
  */
 public final class FxCatalog {
     private FxCatalog() {}
 
-    public static final String RESOURCE = "/data/nusmp/particle_catalog.json";
+    public static final String RESOURCE = "/data/anime_multiverse/particle_catalog.json";
 
     /** One particle of the library. {@code tint}: its texture is neutral light so the theme colour may dye it; {@code px}: the texture size (16 or 32). */
     public record Def(String id, String family, String group, int frames, int px, boolean tint, String behaviour, FxProfile profile) {
-        /** The sprite ids of the frames, as the particle json lists them: {@code nusmp:<id>_<n>}. */
+        /** The sprite ids of the frames, as the particle json lists them: {@code anime_multiverse:<id>_<n>}. */
         public List<String> sprites() {
             List<String> out = new ArrayList<>(frames);
-            for (int i = 0; i < frames; i++) out.add("nusmp:" + id + "_" + i);
+            for (int i = 0; i < frames; i++) out.add("anime_multiverse:" + id + "_" + i);
             return out;
         }
 

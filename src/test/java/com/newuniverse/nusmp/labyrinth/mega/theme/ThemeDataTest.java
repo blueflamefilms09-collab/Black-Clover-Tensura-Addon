@@ -29,13 +29,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * Gradle's test task), no Minecraft, no JSON library.
  */
 class ThemeDataTest {
-    private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/themes");
+    private static final Path THEMES = Path.of("src/main/resources/data/anime_multiverse/mega/themes");
     private static final Path VANILLA = Path.of("tools/labyrinth/vanilla_blocks_1_21_1.txt");
     /** Particles that are a SimpleParticleType in 1.21.1 (checked against ParticleTypes in the API dump): the only kind a plain sendParticles can draw. */
     private static final Set<String> SIMPLE_PARTICLES = Set.of("minecraft:ash", "minecraft:crimson_spore", "minecraft:warped_spore", "minecraft:portal", "minecraft:reverse_portal",
             "minecraft:flame", "minecraft:small_flame", "minecraft:snowflake", "minecraft:spore_blossom_air", "minecraft:electric_spark", "minecraft:sculk_soul", "minecraft:soul",
             "minecraft:end_rod", "minecraft:glow", "minecraft:enchant", "minecraft:white_ash", "minecraft:witch", "minecraft:cloud", "minecraft:smoke", "minecraft:soul_fire_flame",
-            "nusmp:light_rukh",
+            "anime_multiverse:light_rukh",
             // 1.59.0 (THEME-B): the petals of the Feywild and the drops of the Sunken Temple (both SimpleParticleType in ParticleTypes)
             "minecraft:cherry_leaves", "minecraft:falling_water",
             // 1.59.0 (THEME-D): the drip of a crypt vault and the falling bits of a spider's web
@@ -87,7 +87,7 @@ class ThemeDataTest {
     @Test
     void everyRegionThemeHasAFileAndEveryFileIsAShippedTheme() throws IOException {
         Set<String> files = themes().keySet();
-        for (RegionTheme t : RegionTheme.values()) assertTrue(files.contains(t.id()), "RegionTheme " + t + " has no data/nusmp/mega/themes/" + t.id() + ".json");
+        for (RegionTheme t : RegionTheme.values()) assertTrue(files.contains(t.id()), "RegionTheme " + t + " has no data/anime_multiverse/mega/themes/" + t.id() + ".json");
         for (String f : files) assertTrue(SHIPPED.contains(f), "themes/" + f + ".json is not a shipped theme: add it to RegionTheme (appended last) and to SHIPPED here");
         assertEquals(new TreeSet<>(SHIPPED), new TreeSet<>(files), "one file per shipped theme");
         assertEquals(SHIPPED.size(), files.size());
@@ -104,8 +104,8 @@ class ThemeDataTest {
     @Test
     void theLightRukhAmbientNamesAParticleTheModRegisters() throws IOException {
         String src = Files.readString(RUKH, StandardCharsets.UTF_8);
-        assertTrue(src.contains("PARTICLES.register(\"light_rukh\", () -> new SimpleParticleType("), "nusmp:light_rukh must be a SimpleParticleType registered by RukhParticles");
-        assertEquals("nusmp:light_rukh", themes().get("radiant").ambient(), "the Holy road is thick with Light Rukh");
+        assertTrue(src.contains("PARTICLES.register(\"light_rukh\", () -> new SimpleParticleType("), "anime_multiverse:light_rukh must be a SimpleParticleType registered by RukhParticles");
+        assertEquals("anime_multiverse:light_rukh", themes().get("radiant").ambient(), "the Holy road is thick with Light Rukh");
     }
 
     @Test

@@ -4,7 +4,7 @@ finish the voice set when the connector used in the build session was rate limit
 
     ELEVENLABS_API_KEY=<your key> python3 -B tools/audio/sylph_voice_fetch.py <raw_dir> && python3 -B tools/audio/sylph_voice_convert.py <raw_dir>
 
-It skips every line that already has <raw_dir>/<id>.mp3 or a converted file under assets/nusmp/sounds/voice/sylph/, so it can be run again and again. Options: --model <id> (default eleven_v4, the model
+It skips every line that already has <raw_dir>/<id>.mp3 or a converted file under assets/anime_multiverse/sounds/voice/sylph/, so it can be run again and again. Options: --model <id> (default eleven_v4, the model
 the other voice lines were made with; eleven_v3 also understands the audio tags), --only <group,group> (just those groups), --dry-run (print what would be asked, no network). The voice is the manifest's
 (an ElevenLabs library voice: check its licence for commercial use, see the doc). Standard library only. Each line costs about 50 credits.
 """
@@ -18,7 +18,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "voice", "sylph")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice", "sylph")
 
 
 def request(voice, text, model, key):

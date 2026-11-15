@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The files the Spirit of Darkness needs: models with their sheets (three levels of detail and a glow-only model per form, the face models with seven mood sheets), the clips, the sounds, the lang text, the previews. */
 class SpiritDarkAssetsTest {
-    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/nusmp");
+    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/anime_multiverse");
     private static final String[] FORMS = {"companion", "powered"};
     private static final String[] MOODS = {"smug", "grin", "angry", "bored", "surprised", "sinister", "amused"};
 
@@ -131,14 +131,14 @@ class SpiritDarkAssetsTest {
         for (Cue c : Cue.values()) {
             assertTrue(sounds.has(c.eventPath()), c.eventPath());
             JsonObject e = sounds.getAsJsonObject(c.eventPath());
-            assertEquals("subtitles.nusmp." + c.eventPath(), e.get("subtitle").getAsString());
-            assertTrue(lang.has("subtitles.nusmp." + c.eventPath()), "subtitle line for " + c.id);
+            assertEquals("subtitles.anime_multiverse." + c.eventPath(), e.get("subtitle").getAsString());
+            assertTrue(lang.has("subtitles.anime_multiverse." + c.eventPath()), "subtitle line for " + c.id);
             var arr = e.getAsJsonArray("sounds");
             assertTrue(arr.size() >= 2, c.id + " has variants");
             for (JsonElement s : arr) {
                 JsonObject so = s.getAsJsonObject();
                 assertEquals(c.range, so.get("attenuation_distance").getAsInt(), c.id + " carries as far as the rules say");
-                Path f = ASSETS.resolve("sounds/" + so.get("name").getAsString().substring("nusmp:".length()) + ".ogg");
+                Path f = ASSETS.resolve("sounds/" + so.get("name").getAsString().substring("anime_multiverse:".length()) + ".ogg");
                 assertTrue(Files.exists(f), "file " + f);
                 byte[] d = Files.readAllBytes(f);
                 total += d.length;
@@ -168,8 +168,8 @@ class SpiritDarkAssetsTest {
     @Test
     void theLangFragmentHasEveryStringAndNothingAboutHunger() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "spirit_dark.json"));
-        for (String k : new String[]{"key.nusmp.spirit_dark_link", "key.nusmp.spirit_dark_step", "key.nusmp.spirit_dark_power", "nusmp.spirit_dark.linked", "nusmp.spirit_dark.unlinked", "nusmp.spirit_dark.full",
-                "nusmp.spirit_dark.needlink", "nusmp.spirit_dark.recharging", "nusmp.spirit_dark.steprecharging", "nusmp.spirit_dark.nostep", "nusmp.spirit_dark.poweredfull"})
+        for (String k : new String[]{"key.anime_multiverse.spirit_dark_link", "key.anime_multiverse.spirit_dark_step", "key.anime_multiverse.spirit_dark_power", "anime_multiverse.spirit_dark.linked", "anime_multiverse.spirit_dark.unlinked", "anime_multiverse.spirit_dark.full",
+                "anime_multiverse.spirit_dark.needlink", "anime_multiverse.spirit_dark.recharging", "anime_multiverse.spirit_dark.steprecharging", "anime_multiverse.spirit_dark.nostep", "anime_multiverse.spirit_dark.poweredfull"})
             assertTrue(lang.has(k), k);
         for (var e : lang.entrySet()) {
             String v = e.getValue().getAsString().toLowerCase();

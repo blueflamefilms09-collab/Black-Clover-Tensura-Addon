@@ -50,7 +50,7 @@ public final class PlayerModelRegistry {
         try {                                                          // 1.99.0: config/nusmp-playermodel-client.toml (the fallback flag and the level-of-detail distances)
             net.neoforged.fml.ModLoadingContext.get().getActiveContainer().registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, PlayerModelOptions.SPEC, "nusmp-playermodel-client.toml");
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the player-model client config could not be registered: {}", ex.toString());
+            LOG.error("[anime_multiverse] the player-model client config could not be registered: {}", ex.toString());
         }
         modBus.addListener(EventPriority.LOWEST, PlayerModelRegistry::register);
     }
@@ -74,7 +74,7 @@ public final class PlayerModelRegistry {
         try {
             r.run();
         } catch (RuntimeException | LinkageError ex) {
-            LOG.error("[nusmp] the player-model renderer of {} could not be registered: {}", what, ex.toString());
+            LOG.error("[anime_multiverse] the player-model renderer of {} could not be registered: {}", what, ex.toString());
         }
     }
 

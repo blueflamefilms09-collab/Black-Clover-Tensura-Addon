@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * 0.48: the Genesis Demon-Slayer in hand, on the ground and in frames; the inventory keeps the old 32x32 icon (the model
- * nusmp:item/demon_slayer_sword_icon, the old item model unchanged).
+ * anime_multiverse:item/demon_slayer_sword_icon, the old item model unchanged).
  * <ul>
  *   <li><b>Body:</b> {@link DemonSlayerMesh}, a hand-built pixel model (textures/entity/demon_slayer_sword.png from
  *       tools/gen_demon_slayer_textures.py): a broad, chipped, slightly tapering blade with a slanted tip, a riveted crossguard,
@@ -45,7 +45,7 @@ import java.util.List;
  * Preview without the game: python tools/item_preview/preview_demon_slayer.py.
  */
 public class DemonSlayerRenderer extends BlockEntityWithoutLevelRenderer {
-    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     public static final ResourceLocation TEX = rl("textures/entity/demon_slayer_sword.png"), CLOVER = rl("textures/entity/demon_slayer_bloom.png"),
             BLOOM_GLOW = rl("textures/entity/demon_slayer_bloom_glow.png"), GLOW = rl("textures/particle/glow.png");

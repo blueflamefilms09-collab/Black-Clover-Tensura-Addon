@@ -76,14 +76,14 @@ final class CurseLink {
         } catch (NoSuchMethodException | ClassNotFoundException absent) {
             // the curse system has no such method (yet): use the command, which the design promises
         } catch (ReflectiveOperationException | RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: CurseSystem.embrace failed", e);
+            LOG.warn("[anime_multiverse] hero forms: CurseSystem.embrace failed", e);
             return false;
         }
         try {
             player.getServer().getCommands().performPrefixedCommand(player.createCommandSourceStack(), "multiverse hero curse embrace");
             return true;
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: the embrace command failed", e);
+            LOG.warn("[anime_multiverse] hero forms: the embrace command failed", e);
             return false;
         }
     }

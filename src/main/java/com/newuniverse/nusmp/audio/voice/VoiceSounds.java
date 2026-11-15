@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: one {@code SoundEvent} per spoken line ({@code nusmp:voice.system_floor_enter} and so on, 120 in all), registered in a loop from {@link VoiceCatalog} so the registry, the
+ * Why: one {@code SoundEvent} per spoken line ({@code anime_multiverse:voice.system_floor_enter} and so on, 120 in all), registered in a loop from {@link VoiceCatalog} so the registry, the
  * catalogue, {@code sounds.json} and the files cannot drift apart (the tests and the self-test {@code audio.voices} compare them). It is a fourth register next to
  * {@link com.newuniverse.nusmp.sound.NUSounds}, {@link com.newuniverse.nusmp.audio.ModSounds} and {@link com.newuniverse.nusmp.audio.music.MusicSounds}, so none of the files that other
  * builders append to is touched. The client plays the events with the VOICE category ({@code client/voice/VoiceClient}); a server never plays them.

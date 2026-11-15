@@ -11,7 +11,7 @@ Both modes use the same functions on the same fields, so the ratios are like for
     the glow skin the same;
   * effects: ambient layers (names), idle animations (names), draw animation, swing trail, signature act VFX, looped sound id.
 The "before" effects are what the code does today (read from the sources, listed in BASELINE_EFFECTS); the "after" effects are read from the item's
-assets/nusmp/visual_upgrade/<id>.json, which the client reads at run time.
+assets/anime_multiverse/visual_upgrade/<id>.json, which the client reads at run time.
 
 V (the visual score) is defined in score.py; the weights are documented there and in docs/visual_upgrade/genesis_weapons.md.
 """
@@ -35,7 +35,7 @@ BASELINE_EFFECTS = {
 ELSDOCIA_EXTRA_AMBIENT = ["held_glitter (ElsdociaGlitterClient)"]
 ELSDOCIA_EXTRA_PASS = ["elsdocia_halo (a wider, fainter copy of the glow that breathes against the main pulse)"]
 
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
 
 
 def act_shapes(item_id):

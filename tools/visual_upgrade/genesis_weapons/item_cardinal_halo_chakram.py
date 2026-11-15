@@ -218,9 +218,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "8AE8FF", "groups": ["halo", "verdict"], "note": "the halo drops over the ring from above, the rune disc unfolds"}
     it.swing = {"trail": "halo_arc", "rgb": "E8D8A0", "rgb2": "2AA8D8", "length": 1.1, "width": 0.4, "life": 10, "particles": "gold_glint"}
-    it.sound = "nusmp:item.genesis.cardinal_halo.ring_loop"
+    it.sound = "anime_multiverse:item.genesis.cardinal_halo.ring_loop"
     it.acts = {
-        "halo_throw": {"burst": "halo_ring_out", "pattern": "ring", "rgb": "E8D8A0", "ring": 3.5, "particles": 28, "sound": "nusmp:item.genesis.cardinal_halo.throw"},
-        "judgement_ring": {"burst": "verdict_circle", "pattern": "nova", "rgb": "8AE8FF", "ring": 5.0, "particles": 40, "sound": "nusmp:item.genesis.cardinal_halo.judgement"},
-        "cardinal_descent": {"burst": "light_fall", "pattern": "column", "rgb": "FFF2C0", "ring": 5.0, "particles": 44, "sound": "nusmp:item.genesis.cardinal_halo.descent"},
+        "halo_throw": {"burst": "halo_ring_out", "pattern": "ring", "rgb": "E8D8A0", "ring": 3.5, "particles": 28, "sound": "anime_multiverse:item.genesis.cardinal_halo.throw"},
+        "judgement_ring": {"burst": "verdict_circle", "pattern": "nova", "rgb": "8AE8FF", "ring": 5.0, "particles": 40, "sound": "anime_multiverse:item.genesis.cardinal_halo.judgement"},
+        "cardinal_descent": {"burst": "light_fall", "pattern": "column", "rgb": "FFF2C0", "ring": 5.0, "particles": 44, "sound": "anime_multiverse:item.genesis.cardinal_halo.descent"},
     }

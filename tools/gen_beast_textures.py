@@ -3,7 +3,7 @@
     python3 -B tools/gen_beast_textures.py            # all textures
     python3 -B tools/gen_beast_textures.py flame claw  # only the named ones
 
-Output: src/main/resources/assets/nusmp/textures/particle/beast_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/beast_*.png
 
 Look (owner's art reference, an anime still): a translucent orange beast-fire streaming off a clawed arm, drawn like cel-shaded
 flame: ragged licks, a hot yellow core, orange body, darker red-orange edges with thin dark linework, and fur-like streaks. It reads as
@@ -25,7 +25,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 # the palette of the still: hot core, body, edge, linework
 C_HOT = np.array([1.00, 0.97, 0.70], np.float32)

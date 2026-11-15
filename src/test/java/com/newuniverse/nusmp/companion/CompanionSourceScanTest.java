@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class CompanionSourceScanTest {
     private static final Path MAIN = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)|Dist\\.CLIENT");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)|Dist\\.CLIENT");
 
     /** The source of a file with its comments and string contents removed (so a word in a comment or a message never counts). */
     private static String code(String rel) throws IOException {

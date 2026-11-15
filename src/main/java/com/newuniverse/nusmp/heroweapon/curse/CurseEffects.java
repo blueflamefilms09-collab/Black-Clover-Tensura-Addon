@@ -54,10 +54,10 @@ import java.util.UUID;
 final class CurseEffects {
     private CurseEffects() {}
 
-    static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_tax");
-    static final ResourceLocation BURDEN_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_burden");
-    static final ResourceLocation TORPOR_SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_torpor_speed");
-    static final ResourceLocation TORPOR_ATTACK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_torpor_attack");
+    static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_tax");
+    static final ResourceLocation BURDEN_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_burden");
+    static final ResourceLocation TORPOR_SPEED_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_torpor_speed");
+    static final ResourceLocation TORPOR_ATTACK_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_torpor_attack");
 
     /** What Envy took and until when, and when it takes again. */
     private static final class Envy {

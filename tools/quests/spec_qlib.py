@@ -19,7 +19,7 @@ class T:
     """Task constructors (FTB Quests task types: advancement, item, kill, dimension, checkmark, xp)."""
     @staticmethod
     def adv(path, criterion=""):
-        return Task("advancement", advancement="nusmp:" + path if ":" not in path else path, criterion=criterion)
+        return Task("advancement", advancement="anime_multiverse:" + path if ":" not in path else path, criterion=criterion)
 
     @staticmethod
     def vadv(path):

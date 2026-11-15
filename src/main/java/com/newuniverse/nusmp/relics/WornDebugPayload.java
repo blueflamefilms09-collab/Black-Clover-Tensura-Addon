@@ -17,7 +17,7 @@ import java.util.UUID;
  * sees that it does not.
  */
 public record WornDebugPayload(UUID target, List<String> serverLines) implements CustomPacketPayload {
-    public static final Type<WornDebugPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_worn_debug"));
+    public static final Type<WornDebugPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_worn_debug"));
     public static final int MAX_LINES = 64;
 
     public static final StreamCodec<RegistryFriendlyByteBuf, WornDebugPayload> STREAM_CODEC = StreamCodec.of(

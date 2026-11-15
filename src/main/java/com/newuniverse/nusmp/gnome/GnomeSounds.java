@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: one {@code SoundEvent} per cue of the Gnome's own sound set ({@code nusmp:gnome.rise} and so on, {@link GnomeSoundRules#CUES}), registered in a loop from the catalogue so the registry, the catalogue,
+ * Why: one {@code SoundEvent} per cue of the Gnome's own sound set ({@code anime_multiverse:gnome.rise} and so on, {@link GnomeSoundRules#CUES}), registered in a loop from the catalogue so the registry, the catalogue,
  * {@code sounds.json} and the files cannot drift apart ({@code GnomeSoundsTest}, the self-test {@code magic.gnome}). A register of its own, next to the mob, voice and music ones, so none of the files other
  * builders append to is touched. The events are variable range: the distance each carries is the {@code attenuation_distance} that {@code sounds.json} gives it. Played by {@link GnomeVoice}.
  */

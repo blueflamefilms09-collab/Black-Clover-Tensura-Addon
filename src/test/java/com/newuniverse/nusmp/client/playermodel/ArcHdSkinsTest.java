@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * rectangle, its second layer is a clean cutout, its hair is a kit style; and {@code looks.json} equals the merge of the fragments of {@code tools/arc_hd/looks} (so the two generators never disagree).
  */
 class ArcHdSkinsTest {
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path SKINS = RES.resolve("textures/entity/playermodel");
     private static final Path FRAGMENTS = Path.of("tools/arc_hd/looks");
 

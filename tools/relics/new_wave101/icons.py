@@ -106,8 +106,8 @@ def sprite(rid, anchor, big=384):
 
 def write_models(rid):
     os.makedirs(MODELS, exist_ok=True)
-    icon = {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}
-    main = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + rid}}
+    icon = {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}
+    main = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + rid}}
     for name, obj in ((rid + "_icon.json", icon), (rid + ".json", main)):
         with open(os.path.join(MODELS, name), "w", newline="\n") as fh:
             json.dump(obj, fh, indent=2)

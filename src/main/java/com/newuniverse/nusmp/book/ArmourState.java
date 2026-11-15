@@ -44,9 +44,9 @@ public final class ArmourState {
     private ArmourState() {}
 
     static final String KEY = "nusmp_armour";
-    private static final ResourceLocation M_SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "armour_speed"),
-            M_ATTACK = ResourceLocation.fromNamespaceAndPath("nusmp", "armour_attack"),
-            M_KNOCKBACK = ResourceLocation.fromNamespaceAndPath("nusmp", "armour_knockback");
+    private static final ResourceLocation M_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_speed"),
+            M_ATTACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_attack"),
+            M_KNOCKBACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_knockback");
     private static boolean registered;
 
     /** Registers the damage, tick, death and session hooks once (called from NUSMP). */
@@ -112,7 +112,7 @@ public final class ArmourState {
         p.getPersistentData().put(KEY, a);
         applyBonus(p, e, form, stage);
         sync(p, held(p));
-        say(p, form ? "nusmp.armour.form_on" : "nusmp.armour.on", form ? "%s." : "%s forged.", form ? e.shownFormName() : e.name().isEmpty() ? e.magic() : e.name());
+        say(p, form ? "anime_multiverse.armour.form_on" : "anime_multiverse.armour.on", form ? "%s." : "%s forged.", form ? e.shownFormName() : e.name().isEmpty() ? e.magic() : e.name());
     }
 
     /** Takes the player's armour off (the pieces shatter out); no-op when nothing is worn. */
@@ -137,10 +137,10 @@ public final class ArmourState {
         ArmourPolicy.Entry e = ArmourPolicy.get().entry(h.magic());
         String name = e == null ? h.magic() : h.form() ? e.shownFormName() : e.name().isEmpty() ? h.magic() : e.name();
         switch (why) {
-            case NO_MANA -> say(p, "nusmp.armour.dry", "Your mana gives out. The %s falls away.", name);
-            case KNOCKED_OUT -> say(p, "nusmp.armour.knocked", "Knocked out. The %s shatters.", name);
-            case UNKNOWN_MAGIC -> say(p, "nusmp.armour.lost", "The %s answers to nothing and falls away.", name);
-            default -> say(p, h.form() ? "nusmp.armour.form_off" : "nusmp.armour.off", h.form() ? "%s ends." : "%s taken off.", name);
+            case NO_MANA -> say(p, "anime_multiverse.armour.dry", "Your mana gives out. The %s falls away.", name);
+            case KNOCKED_OUT -> say(p, "anime_multiverse.armour.knocked", "Knocked out. The %s shatters.", name);
+            case UNKNOWN_MAGIC -> say(p, "anime_multiverse.armour.lost", "The %s answers to nothing and falls away.", name);
+            default -> say(p, h.form() ? "anime_multiverse.armour.form_off" : "anime_multiverse.armour.off", h.form() ? "%s ends." : "%s taken off.", name);
         }
     }
 

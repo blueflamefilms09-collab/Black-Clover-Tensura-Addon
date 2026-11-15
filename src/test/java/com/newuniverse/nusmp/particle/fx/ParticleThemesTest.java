@@ -28,7 +28,7 @@ class ParticleThemesTest {
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
 
     private static ParticleThemes.Table real() throws IOException {
-        return ParticleThemes.parse(JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/nusmp/particle_themes.json"), StandardCharsets.UTF_8)));
+        return ParticleThemes.parse(JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/anime_multiverse/particle_themes.json"), StandardCharsets.UTF_8)));
     }
 
     private static List<String> enumNames(String file, String regex) throws IOException {

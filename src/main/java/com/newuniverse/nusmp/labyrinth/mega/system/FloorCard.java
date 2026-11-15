@@ -7,7 +7,7 @@ import java.util.List;
  * depth), the network carries it ({@link FloorInfoNet}), and two consumers turn it into words, the client's window and the chat lines of {@code /dungeon floor}. A plain
  * record with no Minecraft type in it means the words are composed by ONE pure class ({@link FloorCardLines}) that a test can drive, and the wire format is a few
  * bounded strings and numbers. It carries ids and English fallbacks, never translated text: every player reads the card in their own language, because the reader
- * asks the lang file for {@code mechanic.nusmp.<id>.name} and friends and falls back to the English the server sent when a key has no text (a datapack mechanic, a
+ * asks the lang file for {@code mechanic.anime_multiverse.<id>.name} and friends and falls back to the English the server sent when a key has no text (a datapack mechanic, a
  * lang file not merged yet).
  *
  * @param reason      {@link FloorInfoRules.Reason#code()}
@@ -17,7 +17,7 @@ import java.util.List;
  * @param depth       the floor's distance from the Hub
  * @param boss        a boss floor
  * @param themeId     the theme id ({@code holy_church}), "" when the floor has no theme (a gap between sectors)
- * @param themeName   the English name of the theme (the lang key is {@code message.nusmp.mega.mgd.theme.<id>})
+ * @param themeName   the English name of the theme (the lang key is {@code message.anime_multiverse.mega.mgd.theme.<id>})
  * @param themeDesc   the English one-line description (the lang key is {@link FloorInfoText#themeDescKey})
  * @param align       {@code holy}, {@code abyssal} or {@code any}, with {@code _only} for a theme drawn on its own road only
  * @param dangerHundredths the theme's danger multiplier times 100
@@ -40,11 +40,11 @@ public record FloorCard(int reason, int floor, int previous, boolean up, int dep
     /**
      * One mechanic.
      *
-     * @param id          {@code floor.rim_curse}: the lang keys are {@code mechanic.nusmp.<id>.name / .desc}
+     * @param id          {@code floor.rim_curse}: the lang keys are {@code mechanic.anime_multiverse.<id>.name / .desc}
      * @param name        English fallback of the name
      * @param desc        English fallback of the description
      * @param counterKind the counter kind ({@code kill_all} ...) or {@code none}
-     * @param hint        the English hint of the counter (the lang key is {@code message.nusmp.mega.mech.hint.<kind>}); "" when the mechanic has no counter
+     * @param hint        the English hint of the counter (the lang key is {@code message.anime_multiverse.mega.mech.hint.<kind>}); "" when the mechanic has no counter
      * @param scope       {@code floor}, {@code room}, {@code zone} or {@code boss}
      * @param state       {@code armed}, {@code waiting} or {@code solved}
      */

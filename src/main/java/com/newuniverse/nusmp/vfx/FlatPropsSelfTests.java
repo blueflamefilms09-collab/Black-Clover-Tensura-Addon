@@ -33,7 +33,7 @@ public final class FlatPropsSelfTests {
         if (!FlatProps.shouldDraw("textures/particle/glow.png", false) || !FlatProps.shouldDraw("textures/flatprops/solid.png", false)) return SelfTests.Result.fail("an ordinary texture is refused");
         if (FlatProps.isFlat("textures/entity/construct_sword.png")) return SelfTests.Result.fail("a texture outside textures/particle was taken for a cut-out");
         BufferedImage img;
-        try (InputStream in = FlatPropsSelfTests.class.getResourceAsStream("/assets/nusmp/textures/flatprops/solid.png")) {
+        try (InputStream in = FlatPropsSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/flatprops/solid.png")) {
             if (in == null) return SelfTests.Result.fail("the solid material sheet is missing");
             img = ImageIO.read(in);
         }

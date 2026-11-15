@@ -31,8 +31,8 @@ public final class EngravingCodexSelfTests {
     }
 
     private static SelfTests.Result run(MinecraftServer server) {
-        Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", "engraving_codex"));
-        if (item.isEmpty()) return SelfTests.Result.fail("nusmp:engraving_codex is not registered");
+        Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "engraving_codex"));
+        if (item.isEmpty()) return SelfTests.Result.fail("anime_multiverse:engraving_codex is not registered");
         ItemStack stack = new ItemStack(item.get());
         if (stack.isEmpty() || !UnifiedTooltipItems.applies(stack)) return SelfTests.Result.fail("the codex gets no unified tooltip");
         if (!"engravings".equals(EngravingCodexCommand.node().getLiteral())) return SelfTests.Result.fail("the command node is not 'engravings'");
@@ -54,8 +54,8 @@ public final class EngravingCodexSelfTests {
             }
         }
         if (franchise != table.engravings().size()) return SelfTests.Result.fail("franchise entries " + franchise + " but the table has " + table.engravings().size());
-        for (String id : table.engravings().keySet()) if (!keys.contains("nusmp:" + id)) return SelfTests.Result.fail(id + " is missing from the book");
-        if (!keys.contains("nusmp:anti_magic") || !keys.contains("nusmp:legacy_of_the_wizard_kings")) return SelfTests.Result.fail("the mod's own enchantments are missing");
+        for (String id : table.engravings().keySet()) if (!keys.contains("anime_multiverse:" + id)) return SelfTests.Result.fail(id + " is missing from the book");
+        if (!keys.contains("anime_multiverse:anti_magic") || !keys.contains("anime_multiverse:legacy_of_the_wizard_kings")) return SelfTests.Result.fail("the mod's own enchantments are missing");
         if (tensura < 10) return SelfTests.Result.fail("only " + tensura + " Tensura engravings");
         int groupTotal = 0;
         for (CodexEntries.Group g : book.groups()) groupTotal += g.count();
@@ -65,7 +65,7 @@ public final class EngravingCodexSelfTests {
         int[] all = CodexFilter.select(book.entries(), null, "");
         if (all.length != book.entries().size()) return SelfTests.Result.fail("the empty search hides entries");
         int[] one = CodexFilter.select(book.entries(), null, "Falna");
-        if (one.length == 0 || !book.entries().get(one[0]).key().equals("nusmp:fr_falna")) return SelfTests.Result.fail("the search for Falna does not lead with Falna");
+        if (one.length == 0 || !book.entries().get(one[0]).key().equals("anime_multiverse:fr_falna")) return SelfTests.Result.fail("the search for Falna does not lead with Falna");
         int[] inGroup = CodexFilter.select(book.entries(), "danmachi", "");
         if (inGroup.length != table.of("danmachi").size()) return SelfTests.Result.fail("the danmachi group has " + inGroup.length + " entries");
         int[] heights = new int[all.length];

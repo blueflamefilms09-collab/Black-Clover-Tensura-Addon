@@ -28,7 +28,7 @@ public final class DjinnLook {
     /** The piece every set has, tested for the set's existence. */
     public static final String MARKER_PIECE = "chest";
 
-    /** The mesh directory under assets/nusmp/djinn/. */
+    /** The mesh directory under assets/anime_multiverse/djinn/. */
     public static String dir(String id, int kind) { return kind == DARK ? "d_" + id : kind == UNIQUE ? "u_" + id : id; }
 
     /** The armour skin (and with {@code glow} its additive twin) of a set: textures/entity/djinn/&lt;id&gt;[_u|_d]_armor[_glow].png. */

@@ -10,9 +10,9 @@ import java.util.Locale;
 public final class SkinPath {
     private SkinPath() {}
 
-    /** The folder every kit skin lives in, under {@code assets/nusmp/}. */
+    /** The folder every kit skin lives in, under {@code assets/anime_multiverse/}. */
     public static final String DIR = "textures/entity/playermodel/";
-    public static final String NAMESPACE = "nusmp";
+    public static final String NAMESPACE = "anime_multiverse";
     /** The default skin every look falls back to. */
     public static final String DEFAULT_ID = "npc_default";
 

@@ -1,4 +1,4 @@
-"""Why: the Tower Wizard (entity nusmp:tower_wizard, wizard/TowerWizardEntity), the keeper of a Grimoire Tower who sets the questionnaire that decides a player's magic. It was a hand-built
+"""Why: the Tower Wizard (entity anime_multiverse:tower_wizard, wizard/TowerWizardEntity), the keeper of a Grimoire Tower who sets the questionnaire that decides a player's magic. It was a hand-built
 cube model of the owner's own design (docs/attributes/art_reference/tower_wizard_design.png) and the Old Witch's cousin in spirit, so it moves to the art kit as the same design: an old
 wizard in a very wide-brimmed, tall, floppy-tipped brown hat, a long grey-white beard and bushy brows over tired, kind eyes, a brown-mauve robe with wide sleeves and a belt, and a
 glowing green orb held in the palm at chest height. It is an NPC (the `cast` clip is its talking clip). Colours follow the owner's design image as the old generator read it.

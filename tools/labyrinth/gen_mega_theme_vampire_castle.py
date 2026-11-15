@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 THEME-C, theme 3 of 4 (1.59.0, docs/labyrinth/mega_v2_thc.md): the signature rooms of the VAMPIRE CASTLE, the evil road's Ravenloft. Every room is named
-`vampire_castle_<room>.nbt` so that `data/nusmp/mega/template_themes/vampire_castle.json` can reserve it for sectors of that theme.
+`vampire_castle_<room>.nbt` so that `data/anime_multiverse/mega/template_themes/vampire_castle.json` can reserve it for sectors of that theme.
 
     python3 tools/labyrinth/gen_mega_theme_vampire_castle.py                      # (re)writes every template
     python3 tools/labyrinth/gen_mega_theme_vampire_castle.py vampire_castle_great_hall   # only this one
@@ -29,7 +29,7 @@ room = REG.room
 CALM = ("vampire_castle_mirror_gallery", "vampire_castle_blood_court")        # a treasure gallery and a trial hall carry no spawn markers of their own
 SOUL = False
 RED_GLASS = ("minecraft:red_stained_glass", "minecraft:red_stained_glass", "minecraft:purple_stained_glass", "minecraft:red_stained_glass", "minecraft:black_stained_glass")
-LOOT = "nusmp:chests/labyrinth_trial"
+LOOT = "anime_multiverse:chests/labyrinth_trial"
 
 
 def opposite(facing):
@@ -538,7 +538,7 @@ def blood_court():
                 h.try_set(x, GROUND, z, "minecraft:red_carpet")
     # 2. the trial: ward runes in the doorways, glyphs on a ring (none under the throne dais, two more on the south axis), the keystone over the middle
     glyphs = [g for g in D2.around(c, c, 8, 8, 22.5) if not (9 <= g[0] <= 17 and g[1] <= 6)] + [(13, 19), (13, 21)]
-    K.trial_core(h, doors, glyphs, [("minecraft:zombie", 3), ("nusmp:dungeon_direwolf", 2)])
+    K.trial_core(h, doors, glyphs, [("minecraft:zombie", 3), ("anime_multiverse:dungeon_direwolf", 2)])
     # 3. the throne: a dais at the north end, the throne under a banner, the tribute, braziers, the great window over it
     D.dais(h, 9, 2, 17, 6, rows=1, top=L.POLISHED, step=L.POLISHED_STAIRS, corner=L.CHISELED, y=GROUND)
     h.set(13, GROUND + 1, 3, L.POLISHED)

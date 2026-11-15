@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 
 /**
  * Why: the way home of Floor 0 must ALWAYS exist, or a player who walks in through the Gateway is stranded in a safe, buildable dimension with no door.
- * So the plaza is built by the one class that owns that promise. It stamps the authored template ({@code nusmp:hub/plaza}, 33 x 33, fountain, stalls,
+ * So the plaza is built by the one class that owns that promise. It stamps the authored template ({@code anime_multiverse:hub/plaza}, 33 x 33, fountain, stalls,
  * signposts, the gatehouse round the home gate) with {@code StructureTemplate.placeInWorld} exactly the way {@code /place template} does (flag 2, default
  * settings, so the game itself recomputes stair corners and fence, wall and pane connections once the blocks are in), with its corner at
  * {@link HubPlazaLayout#originX()} so the home gate lands on {@link HubLayout#HOME_GATE_X}. If the template is missing, unreadable or of another size,

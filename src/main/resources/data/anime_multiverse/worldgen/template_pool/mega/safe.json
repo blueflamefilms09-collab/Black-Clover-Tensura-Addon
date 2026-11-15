@@ -1,0 +1,140 @@
+{
+  "fallback": "anime_multiverse:mega/cap",
+  "elements": [
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/celestial_court_fountain_court",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/chapel",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/cursed_archive_librarians_study",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/drowned_crypt_air_bell",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/fungal_underdark_myconid_garden",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/haunted_manor_master_bedroom",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/hearth_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/hearth_hall_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/holy_church_baptistery",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/infernal_foundry_smelters_rest",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/mountain_monastery_hot_springs",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/refectory",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/spider_warrens_silk_nook",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/workshop_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/safe/workshop_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

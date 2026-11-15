@@ -1,0 +1,48 @@
+{
+  "why": "Spirits of fire, wind and water ignore the flesh-and-blood quarrels and fight only the constructs that bind them. They have no flesh, so they leave no meat. They favour the flame and storm regions.",
+  "id": "elemental",
+  "name": "Elemental Wilds",
+  "color": "#E0803A",
+  "tag": "anime_multiverse:mega/elemental",
+  "rivals": [
+    "construct"
+  ],
+  "allies": [],
+  "aggro": {
+    "range": 12,
+    "nativeBonus": 6
+  },
+  "themeWeights": {
+    "gravity": 1,
+    "blood": 0,
+    "spatial": 3,
+    "flame": 5,
+    "frost": 3,
+    "verdant": 1,
+    "storm": 5,
+    "shadow": 0,
+    "cursed_archive": 1,
+    "necropolis": 0,
+    "vampire_castle": 1,
+    "haunted_manor": 0,
+    "astral": 3,
+    "radiant": 4,
+    "abyss": 1,
+    "feywild_grove": 3,
+    "dwarven_forgehold": 4,
+    "crystal_geode": 4,
+    "sunken_temple": 3,
+    "holy_church": 2,
+    "celestial_court": 4,
+    "sky_citadel": 5,
+    "mountain_monastery": 1,
+    "fungal_underdark": 1,
+    "infernal_foundry": 3,
+    "drowned_crypt": 1,
+    "spider_warrens": 0
+  },
+  "drops": {
+    "meat": "raw_monster_meat",
+    "meatChance": 0.0
+  }
+}

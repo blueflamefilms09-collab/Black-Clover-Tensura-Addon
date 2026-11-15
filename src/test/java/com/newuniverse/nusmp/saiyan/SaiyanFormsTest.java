@@ -30,7 +30,7 @@ class SaiyanFormsTest {
         for (SaiyanForms.Form f : SaiyanForms.ALL) {
             assertFalse(f.id().contains("ape") || f.id().contains("oozaru"), "the owner said no ape forms: " + f.id());
             assertNotNull(SaiyanForms.byId(f.id()));
-            assertEquals("nusmp.saiyan.form." + f.id(), f.key());
+            assertEquals("anime_multiverse.saiyan.form." + f.id(), f.key());
         }
     }
 

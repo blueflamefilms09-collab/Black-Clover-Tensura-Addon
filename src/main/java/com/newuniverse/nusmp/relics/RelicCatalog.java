@@ -37,7 +37,7 @@ import java.util.function.Supplier;
 public final class RelicCatalog {
     private RelicCatalog() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static final Map<String, DeferredItem<Item>> ITEMS = new LinkedHashMap<>();
     private static List<RelicDef> defs = List.of();
     private static boolean inited;
@@ -69,7 +69,7 @@ public final class RelicCatalog {
         Set<String> taken = new HashSet<>();
         for (DeferredHolder<Item, ? extends Item> h : NUItems.ITEMS.getEntries()) taken.add(h.getId().getPath());
         RelicChecks.Checked c = RelicChecks.check(raw, taken);
-        for (String problem : c.problems()) LOG.error("[nusmp] relics: {}", problem);
+        for (String problem : c.problems()) LOG.error("[anime_multiverse] relics: {}", problem);
         defs = c.defs();
         for (RelicDef d : defs) {
             if (d.isAdopted()) continue;
@@ -77,7 +77,7 @@ public final class RelicCatalog {
             ITEMS.put(d.id(), NUItems.ITEMS.register(d.id(), () -> make(d, material)));
         }
         Relics.bind(defs);
-        LOG.info("[nusmp] relics: {} defs, {} new items, {} adopted", defs.size(), ITEMS.size(), defs.size() - ITEMS.size());
+        LOG.info("[anime_multiverse] relics: {} defs, {} new items, {} adopted", defs.size(), ITEMS.size(), defs.size() - ITEMS.size());
     }
 
     private static Item make(RelicDef d, Holder<ArmorMaterial> material) {
@@ -97,7 +97,7 @@ public final class RelicCatalog {
         try {
             r.run();
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] relics: {} could not give its defs; its relics are missing", wave, failed);
+            LOG.error("[anime_multiverse] relics: {} could not give its defs; its relics are missing", wave, failed);
         }
     }
 
@@ -157,8 +157,8 @@ public final class RelicCatalog {
         Map<String, String> m = new LinkedHashMap<>();
         for (RelicDef d : defs) {
             if (d.isAdopted()) continue;
-            m.put("item.nusmp." + d.id(), d.cardName());
-            m.put("item.nusmp." + d.id() + ".desc", d.desc());
+            m.put("item.anime_multiverse." + d.id(), d.cardName());
+            m.put("item.anime_multiverse." + d.id() + ".desc", d.desc());
         }
         return m;
     }

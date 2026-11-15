@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * with a clear reason instead of being half-read.
  */
 class AptitudeDataTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/avatar_aptitudes");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/avatar_aptitudes");
     private static final Path IDS = Path.of("src/test/resources/com/newuniverse/nusmp/charter/tensura_skill_ids.txt");
     private static final Path MAGIC = Path.of("src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
 
@@ -108,8 +108,8 @@ class AptitudeDataTest {
     void everyShippedAptitudeHasItsIconAndALook() throws Exception {
         for (AptitudeParser.Parsed p : shipped()) {
             String icon = p.look().icon();
-            assertTrue(icon.startsWith("nusmp:textures/gui/soulforge/apt/"), p.aptitude().id() + " icon " + icon);
-            File f = new File("src/main/resources/assets/nusmp/" + icon.substring("nusmp:".length()));
+            assertTrue(icon.startsWith("anime_multiverse:textures/gui/soulforge/apt/"), p.aptitude().id() + " icon " + icon);
+            File f = new File("src/main/resources/assets/anime_multiverse/" + icon.substring("anime_multiverse:".length()));
             assertTrue(f.isFile(), "missing icon file " + f);
             assertTrue(p.look().tint() >= 0 && p.look().tint() <= 0xFFFFFF);
             assertFalse(p.look().description().isEmpty(), p.aptitude().id() + " has no flavour line");
@@ -125,7 +125,7 @@ class AptitudeDataTest {
         assertEquals("", p.aptitude().magic());
         assertEquals(List.of(), p.aptitude().skills());
         assertEquals(AptitudeLook.rarityColour(Aptitude.Rarity.COMMON), p.look().tint());
-        assertEquals("nusmp:textures/gui/soulforge/apt/plain.png", p.look().icon());
+        assertEquals("anime_multiverse:textures/gui/soulforge/apt/plain.png", p.look().icon());
     }
 
     @Test
@@ -157,6 +157,6 @@ class AptitudeDataTest {
         Aptitude a = new Aptitude("unseen", "Unseen", Aptitude.Rarity.EPIC, 5, "", List.of());
         AptitudeLook.replaceAll(null);
         assertEquals(AptitudeLook.rarityColour(Aptitude.Rarity.EPIC), AptitudeLook.of(a).tint());
-        assertEquals("nusmp:textures/gui/soulforge/apt/unseen.png", AptitudeLook.of(a).icon());
+        assertEquals("anime_multiverse:textures/gui/soulforge/apt/unseen.png", AptitudeLook.of(a).icon());
     }
 }

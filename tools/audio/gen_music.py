@@ -41,8 +41,8 @@ import numpy as np
 
 SR = 22050
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-MUSIC_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds', 'music')
-SOUNDS_JSON = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds.json')
+MUSIC_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds', 'music')
+SOUNDS_JSON = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds.json')
 BUDGET_BYTES = 25 * 1024 * 1024
 MIN_SECONDS, MAX_SECONDS = 60.0, 90.0
 TARGET_SECONDS = 78.0
@@ -871,7 +871,7 @@ def manifest_entries():
         path = os.path.join(MUSIC_DIR, name + '.ogg')
         if not os.path.exists(path):
             raise SystemExit('missing %s (run the generator first)' % path)
-        entries[event_id(name)] = {'sounds': [{'name': 'nusmp:music/' + name, 'stream': True}]}
+        entries[event_id(name)] = {'sounds': [{'name': 'anime_multiverse:music/' + name, 'stream': True}]}
     return entries
 
 

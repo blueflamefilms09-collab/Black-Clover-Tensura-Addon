@@ -12,10 +12,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 /**
- * /nusmp grimoire info <player>
- * /nusmp grimoire roll <player>          (rolls again, normal odds)
- * /nusmp grimoire give <player> <3|4|5>  (guaranteed grimoire)
- * /nusmp grimoire reset <player>         (removes it; they roll again automatically)
+ * /anime_multiverse grimoire info <player>
+ * /anime_multiverse grimoire roll <player>          (rolls again, normal odds)
+ * /anime_multiverse grimoire give <player> <3|4|5>  (guaranteed grimoire)
+ * /anime_multiverse grimoire reset <player>         (removes it; they roll again automatically)
  */
 public final class GrimoireCommand {
     private GrimoireCommand() {}
@@ -35,7 +35,7 @@ public final class GrimoireCommand {
                             held.shrink(1);
                             return 1;
                         }))));
-        event.getDispatcher().register(Commands.literal("nusmp").requires(s -> s.hasPermission(2))
+        event.getDispatcher().register(Commands.literal("anime_multiverse").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("grimoire")
                         .then(Commands.literal("info").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                             ServerPlayer p = EntityArgument.getPlayer(ctx, "player");

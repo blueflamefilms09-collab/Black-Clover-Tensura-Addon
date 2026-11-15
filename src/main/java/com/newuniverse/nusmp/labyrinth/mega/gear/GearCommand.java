@@ -31,7 +31,7 @@ import java.util.Random;
  * {@code gear roll [count]} runs the real roller {@code count} times at YOUR floor and prints the grade and slot histogram, which is how the table is
  * tuned (it is the same code the monsters use, with the config's rates and the data file's curves, not a copy); {@code gear status} prints the chance table
  * at your floor: the configured bases, what the depth curves and Looting make of them, the total, the caps and the switches. All text goes through lang
- * keys {@code message.nusmp.mega.mgr.cmd.*} with an English fallback, so the command reads fine before the lang fragment is merged. Outside a sector (or from
+ * keys {@code message.anime_multiverse.mega.mgr.cmd.*} with an English fallback, so the command reads fine before the lang fragment is merged. Outside a sector (or from
  * the console) the floor is 1.
  */
 public final class GearCommand {
@@ -78,7 +78,7 @@ public final class GearCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.mgr.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.mgr.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {
@@ -212,7 +212,7 @@ public final class GearCommand {
         GearRates chest = GearConfig.chestRates();
         double factor = GearConfig.get(GearConfig.CHEST_TREASURE_FACTOR);
         double[] std = ChestGear.chances(ChestRules.Kind.STANDARD, chest, factor, tables, floor, 0), trs = ChestGear.chances(ChestRules.Kind.TREASURE, chest, factor, tables, floor, 0);
-        ok(src, text("status.chest", "Chests (the loot modifier nusmp:gear_chests, one piece at most): standard %s normal / %s special / %s rare = %s; treasure (x%s on special and rare) %s / %s / %s = %s.",
+        ok(src, text("status.chest", "Chests (the loot modifier anime_multiverse:gear_chests, one piece at most): standard %s normal / %s special / %s rare = %s; treasure (x%s on special and rare) %s / %s / %s = %s.",
                 pct(std[0]), pct(std[1]), pct(std[2]), pct(GearRoller.total(std)), String.format(Locale.ROOT, "%.1f", factor),
                 pct(trs[0]), pct(trs[1]), pct(trs[2]), pct(GearRoller.total(trs))));
         int problems = GearTablesReload.problems().size();

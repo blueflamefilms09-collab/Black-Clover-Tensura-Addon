@@ -85,7 +85,7 @@ public final class OrderDirector {
             try {
                 tickCase(server, active, now);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The Order's visit failed and was ended: {}", ex.toString());
+                LOG.warn("[anime_multiverse] The Order's visit failed and was ended: {}", ex.toString());
                 finish(server, active);
             }
         } else if (BOOK.size() > 0 && now % 10 == 0) {
@@ -107,7 +107,7 @@ public final class OrderDirector {
         }
         if (now % 1200 == 0) {
             for (String id : ledger.sweep(server, now)) {
-                LOG.info("[nusmp] The Order declares {} lost (not seen)", OrderText.titleCase(id));
+                LOG.info("[anime_multiverse] The Order declares {} lost (not seen)", OrderText.titleCase(id));
                 BOOK.forget(id);
             }
         }
@@ -141,7 +141,7 @@ public final class OrderDirector {
         active = c;
         announce(server, c, bearer);
         OrderFx.telegraphStart(level, c.godSpot);
-        LOG.info("[nusmp] The Order comes for a second {} {}", OrderText.titleCase(s.relicId()), s.spot().describe());
+        LOG.info("[anime_multiverse] The Order comes for a second {} {}", OrderText.titleCase(s.relicId()), s.spot().describe());
         return true;
     }
 

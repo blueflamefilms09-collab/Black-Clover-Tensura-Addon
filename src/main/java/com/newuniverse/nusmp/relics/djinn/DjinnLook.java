@@ -34,7 +34,7 @@ public final class DjinnLook {
         row(Affinity.LIGHT, "magic.LIGHT", "DIVINE_RAY", "DIVINE_SIGIL", "LIGHT_FLARE", "DIVINE_PILLAR");                      // a ray, a sigil of light, a flare, a pillar of light
     }
 
-    /** The particle theme of an element ({@code data/nusmp/particle_themes.json}). */
+    /** The particle theme of an element ({@code data/anime_multiverse/particle_themes.json}). */
     public static String theme(Affinity a) { return THEME[a.ordinal()]; }
 
     /** The name of the {@code VfxShape} an element uses at a moment. */

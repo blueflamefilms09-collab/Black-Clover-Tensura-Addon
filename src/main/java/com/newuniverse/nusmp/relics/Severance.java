@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
  * Why: the god-tier Lucius can sever a player from their Djinn and their Black Clover spirits for twelve seconds. The Djinn engine, the
  * Spirit Lord skill, the spirit bond and the spirit companion are in different packages, so each asks this one function. Nothing is
  * destroyed or lost: a severed player keeps the bond, the trust, the spirit and the skill; they simply do not answer until the mob
- * effect {@code nusmp:severed} ends (by itself, on death, with milk, or when the boss clears it).
+ * effect {@code anime_multiverse:severed} ends (by itself, on death, with milk, or when the boss clears it).
  */
 public final class Severance {
     private Severance() {}

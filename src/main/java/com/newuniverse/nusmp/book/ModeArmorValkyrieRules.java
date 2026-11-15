@@ -119,7 +119,7 @@ public final class ModeArmorValkyrieRules {
     private static final int V = 1, S = 2, M = 4;
 
     /**
-     * The pieces of the armour (tools/gen_valkyrie_armor_v2.py PIECES, the table in {@code assets/nusmp/valkyrie_meshes/pieces.json}): bone, copies (2 = a mirror copy), the looks that wear it, the sheet of
+     * The pieces of the armour (tools/gen_valkyrie_armor_v2.py PIECES, the table in {@code assets/anime_multiverse/valkyrie_meshes/pieces.json}): bone, copies (2 = a mirror copy), the looks that wear it, the sheet of
      * the mesh layers 3, 4 and 5 and the quads of one copy at NEAR, MID and FAR. {@code ModeArmorValkyrieAssetTest} pins this table to the json and to the real mesh files.
      */
     public enum Piece {

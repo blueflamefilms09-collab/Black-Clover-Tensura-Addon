@@ -10,7 +10,7 @@ assets/textures/aura/preview_*.png                       textures of the aura ex
 assets/minecraft/textures/misc/white.png                 vanilla's white square (some painters use it)
 assets/textures/entity/preview_*.png (+ geo/ json)       the geo test models: face-labelled cube, bone / animation test, see gen_geo_assets()
 
-Textures are looked up in src/main/resources/assets/nusmp first, then here (assets/<namespace>/<path>, and assets/<path> for nusmp).
+Textures are looked up in src/main/resources/assets/anime_multiverse first, then here (assets/<namespace>/<path>, and assets/<path> for anime_multiverse).
 """
 import math
 import os

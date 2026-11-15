@@ -50,7 +50,7 @@ public class CompatCodexScreen extends Screen {
     private String footer = "", status = "";
 
     public CompatCodexScreen(Screen parent) {
-        super(Component.translatable("nusmp.compat.codex.title"));
+        super(Component.translatable("anime_multiverse.compat.codex.title"));
         this.parent = parent;
         for (var e : com.newuniverse.nusmp.compat.CompatCatalog.entries()) loaded.put(e.modId(), CompatBookItem.isLoaded(e.modId()));
     }
@@ -67,11 +67,11 @@ public class CompatCodexScreen extends Screen {
         layout();
         prevBtn = addRenderableWidget(new ThemedButton(bx + 4, by + bh + 4, 22, 16, Component.literal("<"), b -> go(spread - 1)));
         nextBtn = addRenderableWidget(new ThemedButton(bx + 30, by + bh + 4, 22, 16, Component.literal(">"), b -> go(spread + 1)));
-        addRenderableWidget(new ThemedButton(bx + bw - 64, by + bh + 4, 60, 16, Component.translatable("nusmp.compat.codex.close"), b -> onClose()));
+        addRenderableWidget(new ThemedButton(bx + bw - 64, by + bh + 4, 60, 16, Component.translatable("anime_multiverse.compat.codex.close"), b -> onClose()));
         spread = Mth.clamp(spread, 0, CompatCodexModel.spreads(pages.size()) - 1);
         int n = CompatCodexModel.loadedCount(this::isLoaded), total = com.newuniverse.nusmp.compat.CompatCatalog.entries().size();
-        status = Component.translatable("nusmp.compat.codex.count", n, total).getString();
-        footer = Component.translatable("nusmp.compat.codex.footer").getString();
+        status = Component.translatable("anime_multiverse.compat.codex.count", n, total).getString();
+        footer = Component.translatable("anime_multiverse.compat.codex.footer").getString();
     }
 
     @Override public boolean isPauseScreen() { return false; }

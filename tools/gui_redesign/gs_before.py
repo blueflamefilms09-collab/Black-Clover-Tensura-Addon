@@ -10,8 +10,8 @@ from PIL import Image, ImageDraw
 
 from gs_kit import Canvas, ROOT, font, mixc, world_backdrop
 
-SKILL = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill")
-GUI = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui")
+SKILL = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
+GUI = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui")
 BUILD = os.path.join(ROOT, "build", "gui_redesign")
 
 

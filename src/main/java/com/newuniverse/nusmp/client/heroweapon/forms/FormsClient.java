@@ -27,8 +27,8 @@ public final class FormsClient {
 
     private static final Logger LOG = LogUtils.getLogger();
 
-    /** The Weapon Book key ({@code key.nusmp.hero_book}), default M. */
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.hero_book", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, "key.categories.nusmp");
+    /** The Weapon Book key ({@code key.anime_multiverse.hero_book}), default M. */
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.hero_book", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, "key.categories.anime_multiverse");
 
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(KEY));
@@ -46,7 +46,7 @@ public final class FormsClient {
             try {
                 PacketDistributor.sendToServer(FormsNet.openRequest());
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] could not ask the server for the Weapon Book", e);
+                LOG.warn("[anime_multiverse] could not ask the server for the Weapon Book", e);
             }
         }
     }

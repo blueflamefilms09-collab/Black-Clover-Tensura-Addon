@@ -32,7 +32,7 @@ public final class RuneNet {
 
     /** x, y, z of the rune's centre, the caster's look (a unit vector), the packed spec, the ticks of drawing, the entity id of the caster (the own rune is drawn at full detail). */
     public record RunePayload(float x, float y, float z, float lx, float ly, float lz, int spec, int charge, int ownerId) implements CustomPacketPayload {
-        public static final Type<RunePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_rune"));
+        public static final Type<RunePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_method_rune"));
         public static final StreamCodec<FriendlyByteBuf, RunePayload> CODEC = CustomPacketPayload.codec(RunePayload::write, RunePayload::read);
 
         private void write(FriendlyByteBuf b) {
@@ -58,7 +58,7 @@ public final class RuneNet {
 
     /** The hold of a page: who (the entity id of the caster), what happened, the packed spec (HOLD), the ticks held (RELEASE), and the two hold limits the client times the rings by. */
     public record HoldPayload(int ownerId, int phase, int spec, int held, int minHold, int maxHold) implements CustomPacketPayload {
-        public static final Type<HoldPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_hold"));
+        public static final Type<HoldPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_method_hold"));
         public static final StreamCodec<FriendlyByteBuf, HoldPayload> CODEC = CustomPacketPayload.codec(HoldPayload::write, HoldPayload::read);
 
         private void write(FriendlyByteBuf b) {
@@ -101,7 +101,7 @@ public final class RuneNet {
 
     /** The Body Rune of a player: who (entity id), START / END, the packed spec to draw, the ring tier (how many rune pictures), the ticks it lasts. About 7 bytes. */
     public record BodyPayload(int ownerId, int phase, int spec, int tier, int ticks) implements CustomPacketPayload {
-        public static final Type<BodyPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_body"));
+        public static final Type<BodyPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_method_body"));
         public static final StreamCodec<FriendlyByteBuf, BodyPayload> CODEC = CustomPacketPayload.codec(BodyPayload::write, BodyPayload::read);
 
         private void write(FriendlyByteBuf b) {
@@ -121,7 +121,7 @@ public final class RuneNet {
 
     /** A painted rune (Brush Rune): its id, APPEAR / FIRED / GONE, the face it is on (0..5), its centre, the caster's yaw (a byte), the trigger radius in tenths, the packed spec and the life in ticks. About 30 bytes. */
     public record BrushPayload(int id, int phase, int face, float x, float y, float z, int yaw, int radiusTenths, int spec, int ticks) implements CustomPacketPayload {
-        public static final Type<BrushPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_brush"));
+        public static final Type<BrushPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_method_brush"));
         public static final StreamCodec<FriendlyByteBuf, BrushPayload> CODEC = CustomPacketPayload.codec(BrushPayload::write, BrushPayload::read);
 
         private void write(FriendlyByteBuf b) {
@@ -146,7 +146,7 @@ public final class RuneNet {
 
     /** 3.8.0: the TIMED rune state of the receiving player: on / off and the seconds left (0..3600). Sent to that player only, at most twice per ON period. About 3 bytes. */
     public record StatePayload(boolean on, int secondsLeft) implements CustomPacketPayload {
-        public static final Type<StatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_state"));
+        public static final Type<StatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_method_state"));
         public static final StreamCodec<FriendlyByteBuf, StatePayload> CODEC = CustomPacketPayload.codec(StatePayload::write, StatePayload::read);
 
         private void write(FriendlyByteBuf b) {

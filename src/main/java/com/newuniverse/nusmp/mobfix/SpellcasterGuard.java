@@ -120,6 +120,6 @@ public final class SpellcasterGuard {
     private static void note(NullPointerException gone) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] A spellcaster's spell goal lost its target while casting; the cast was stopped instead of crashing the server (logged once)", gone);
+        LOG.warn("[anime_multiverse] A spellcaster's spell goal lost its target while casting; the cast was stopped instead of crashing the server (logged once)", gone);
     }
 }

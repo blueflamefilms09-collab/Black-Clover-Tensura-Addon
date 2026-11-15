@@ -1,7 +1,7 @@
 """Textures for the 0.44 Painting Magic remake (palette & brush): glossy wet-paint ribbons, a specular streak, paint droplets,
 pooled paint, the palette silhouette and a pigment swirl. Deterministic, no fonts, no external images.
 
-    python tools/gen_paint_studio_textures.py  ->  src/main/resources/assets/nusmp/textures/particle/paint_*.png
+    python tools/gen_paint_studio_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/particle/paint_*.png
 
 Convention (as the rest of textures/particle): greyscale + alpha, tinted per quad by the vertex colour.
 """

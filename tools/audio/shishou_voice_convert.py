@@ -5,11 +5,11 @@ usage: python3 -B tools/audio/shishou_voice_convert.py <raw_dir> [--no-json]
 
 For every line of tools/audio/shishou_lines.json that has <raw_dir>/<id>.mp3:
   * ffmpeg: mono, 32 kHz, trim leading / trailing silence, loudnorm (about -16 LUFS, true peak <= -1.5 dB), Ogg Vorbis q3
-    -> src/main/resources/assets/nusmp/sounds/voice/shishou/<id>.ogg   (the project's voice format, the same chain as tools/audio/undine_voice_convert.py)
+    -> src/main/resources/assets/anime_multiverse/sounds/voice/shishou/<id>.ogg   (the project's voice format, the same chain as tools/audio/undine_voice_convert.py)
   * ffprobe: the duration; written with the size to tools/audio/shishou_voice_report.json (converted ids, missing ids, bytes)
 Then it keeps four things in step, so a line is registered if and only if its file exists:
-  * assets/nusmp/sounds.json gets 'voice.<id>' (appended as text, the rest of the file is not reformatted; an existing entry is kept) with a subtitle key
-  * tools/lang/shishou_voice.json gets 'subtitles.nusmp.voice.<id>' = 'Shishou: "<words>"' (the owner merges the fragment into en_us.json)
+  * assets/anime_multiverse/sounds.json gets 'voice.<id>' (appended as text, the rest of the file is not reformatted; an existing entry is kept) with a subtitle key
+  * tools/lang/shishou_voice.json gets 'subtitles.anime_multiverse.voice.<id>' = 'Shishou: "<words>"' (the owner merges the fragment into en_us.json)
   * src/main/java/com/newuniverse/nusmp/shishou/ShishouVoiceLines.java: the REGISTERED array between its two marker comments is rewritten
 A line with no take and no file is simply not registered (its moment stays Thought Communication text only); a file made by an earlier run stays registered even when its take is not in <raw_dir>; the raw takes
 stay outside the repository. Run with no takes at all it writes an empty report (nothing is registered). Needs ffmpeg and ffprobe on the path (only when there is something to convert)."""
@@ -17,11 +17,11 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ASSETS, "sounds", "voice", "shishou")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 LANG = os.path.join(ROOT, "tools", "lang", "shishou_voice.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "shishou", "ShishouVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "shishou", "ShishouVoiceLines.java")
 REPORT = os.path.join(HERE, "shishou_voice_report.json")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"
@@ -40,7 +40,7 @@ def seconds(path):
 
 
 def sounds_entry(i):
-    return ('  "voice.%s": {\n    "subtitle": "subtitles.nusmp.voice.%s",\n    "sounds": [\n      { "name": "nusmp:voice/shishou/%s", "stream": false }\n    ]\n  }' % (i, i, i))
+    return ('  "voice.%s": {\n    "subtitle": "subtitles.anime_multiverse.voice.%s",\n    "sounds": [\n      { "name": "anime_multiverse:voice/shishou/%s", "stream": false }\n    ]\n  }' % (i, i, i))
 
 
 def main():
@@ -80,9 +80,9 @@ def main():
             with open(SOUNDS_JSON, "w", encoding="utf-8", newline="\n") as f:
                 f.write(text)
         lang = json.load(open(LANG, encoding="utf-8")) if os.path.exists(LANG) else {}
-        lang = {k: v for k, v in lang.items() if not k.startswith("subtitles.nusmp.voice.shishou_")}
+        lang = {k: v for k, v in lang.items() if not k.startswith("subtitles.anime_multiverse.voice.shishou_")}
         for i in done:
-            lang["subtitles.nusmp.voice." + i] = "Shishou: “%s”" % report[i]["text"]
+            lang["subtitles.anime_multiverse.voice." + i] = "Shishou: “%s”" % report[i]["text"]
         with open(LANG, "w", encoding="utf-8", newline="\n") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False)
             f.write("\n")

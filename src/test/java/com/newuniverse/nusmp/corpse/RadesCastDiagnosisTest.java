@@ -24,7 +24,7 @@ class RadesCastDiagnosisTest {
     void refusedLineNamesThePlayerTheKindAndTheReason() {
         String s = RadesCastDiagnosis.refusedLine("Steve", "jimmy", RadesCastDiagnosis.Refusal.WORLD_REFUSED);
         assertTrue(s.contains("Steve") && s.contains("jimmy") && s.contains("addFreshEntity"), s);
-        assertTrue(s.startsWith("[nusmp]"));
+        assertTrue(s.startsWith("[anime_multiverse]"));
     }
 
     @Test

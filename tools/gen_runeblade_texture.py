@@ -17,7 +17,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
 PREVIEW = os.path.join(ROOT, "build", "weapons")
 N = 32
 

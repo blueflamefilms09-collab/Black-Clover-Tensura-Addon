@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Why: the Rukh flow has to know whether a cast was Light or Dark, and the mod has 105 magic families, 500-odd spell pages, a Tensura skill list and
  * relics, written by many hands over many versions; no switch statement over any of them would survive the next update. So the answer is DATA
- * ({@code data/nusmp/mega/flow/alignments.json}) and this is the pure reader of it: a table of three things, applied in a fixed order that the
+ * ({@code data/anime_multiverse/mega/flow/alignments.json}) and this is the pure reader of it: a table of three things, applied in a fixed order that the
  * owner can read in one breath. (1) {@code exact}: an id with a deliberate entry (a family such as {@code lightning}, a page such as
  * {@code devil_union}, a Tensura skill) is exactly what the file says, and it beats every keyword, because only a person can know that Curse-Warding
  * is a ward and not a curse. (2) Keywords: the id is cut into whole words ({@code demon_light} is {@code demon}, {@code light}), and a word in

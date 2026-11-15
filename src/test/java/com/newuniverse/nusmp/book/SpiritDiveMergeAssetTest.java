@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * a texture that carries colour under alpha 0 (the additive blend would show it as a box: SafeAdditive) would only show up in a running game. This test reads the real files.
  */
 class SpiritDiveMergeAssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     @Test
     void everyMeshFileExistsParsesAndIsAllAdditiveWithinItsFrame() throws IOException {

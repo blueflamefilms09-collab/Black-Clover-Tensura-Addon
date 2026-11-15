@@ -7,7 +7,7 @@
     python3 -B tools/gen_spirit_dive_djinn.py --fit                 # re-fit the panel thinning of every set to the vertex cap (writes tools/sdj_fit.json), then build
     python3 -B tools/gen_spirit_dive_djinn.py --report              # only the numbers of the files already written (faces, vertices, budget)
 
-Files (assets/nusmp): geo/entity/sdj_<element>_<tier>_arm_<piece>.geo.json, textures/entity/sdj_<element>_<tier>_arm_<piece>(.png|_glow.png), animations/entity/<id>.animation.json for the pieces that
+Files (assets/anime_multiverse): geo/entity/sdj_<element>_<tier>_arm_<piece>.geo.json, textures/entity/sdj_<element>_<tier>_arm_<piece>(.png|_glow.png), animations/entity/<id>.animation.json for the pieces that
 move. The piece names of each set are the table book/SpiritDiveDjinnPieces.java (the unit tests compare the files with it).
 
 How it is made: the same geometry kit and painter as the Djinn-quality Requip armours (tools/erza_armour_kit.py, erza_armour_paint.py, gen_erza_armour_core.py: curved plates on lofted surfaces, shingled
@@ -30,7 +30,7 @@ from gen_erza_armour_core import Ctx  # noqa: E402
 import sdj_sets as SETS  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.environ.get("SDJ_ROOT") or os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.environ.get("SDJ_ROOT") or os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 # texels per model pixel of a tier (the Djinn atlas is 5.4 to 7.3: the standard tier stays near it, the character tier above it) and the panel thinning (1 = as the Requip armours)
 DENSITY = {"s": float(os.environ.get("SDJ_DS", "7")), "c": float(os.environ.get("SDJ_DC", "10"))}

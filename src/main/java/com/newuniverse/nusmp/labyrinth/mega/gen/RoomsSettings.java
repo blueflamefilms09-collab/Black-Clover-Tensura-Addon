@@ -52,7 +52,7 @@ public final class RoomsSettings {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-rooms-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The rebuilt rooms config could not be registered ({}); the defaults apply (gen.roomsRebuilt = true)", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The rebuilt rooms config could not be registered ({}); the defaults apply (gen.roomsRebuilt = true)", e.toString());
         }
     }
 }

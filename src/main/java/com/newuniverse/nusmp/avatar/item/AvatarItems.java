@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public final class AvatarItems {
     private AvatarItems() {}
 
-    /** {@code nusmp:genesis_core}: the key to creating an Avatar. */
+    /** {@code anime_multiverse:genesis_core}: the key to creating an Avatar. */
     public static final DeferredItem<GenesisCoreItem> GENESIS_CORE = NUItems.ITEMS.register("genesis_core",
             () -> new GenesisCoreItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
 

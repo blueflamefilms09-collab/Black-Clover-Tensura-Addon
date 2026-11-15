@@ -25,23 +25,23 @@ public final class GemMessages {
     }
 
     // ------------------------------------------------------------------ items
-    public static final String ITEM_HOLY = put("item.nusmp." + GemCatalog.HOLY_ID, "Calling Gem");
-    public static final String ITEM_FRAGMENT = put("item.nusmp." + GemCatalog.FRAGMENT_ID, "Gem Fragment");
+    public static final String ITEM_HOLY = put("item.anime_multiverse." + GemCatalog.HOLY_ID, "Calling Gem");
+    public static final String ITEM_FRAGMENT = put("item.anime_multiverse." + GemCatalog.FRAGMENT_ID, "Gem Fragment");
 
     static {
-        for (HeroKind k : GemCatalog.sealKinds()) put("item.nusmp." + GemCatalog.sealId(k), GemCatalog.sealName(k));
+        for (HeroKind k : GemCatalog.sealKinds()) put("item.anime_multiverse." + GemCatalog.sealId(k), GemCatalog.sealName(k));
     }
 
     // ------------------------------------------------------------------ tooltips
-    public static final String TIP_HOLY_KIND = put("tooltip.nusmp.hero.gem.holy.kind", "Holy Calling Gem");
-    public static final String TIP_HOLY_LORE = put("tooltip.nusmp.hero.gem.holy.lore", "One of the four Legendary Weapons will choose you.");
-    public static final String TIP_HOLY_RULE = put("tooltip.nusmp.hero.gem.holy.rule", "Only a Legendary Weapon nobody holds can answer. The gem is spent when one does.");
-    public static final String TIP_SEAL_KIND = put("tooltip.nusmp.hero.gem.seal.kind", "Seal of a %s");
-    public static final String TIP_SEAL_LORE = put("tooltip.nusmp.hero.gem.seal.lore", "The %s chooses those who prove worthy.");
-    public static final String TIP_SEAL_HOLDER = put("tooltip.nusmp.hero.gem.seal.holder", "Before you it served %s.");
-    public static final String TIP_SEAL_RULE = put("tooltip.nusmp.hero.gem.seal.rule", "The weapon binds to you at once. The seal is spent.");
-    public static final String TIP_USE = put("tooltip.nusmp.hero.gem.use", "Hold right click for %s seconds, standing still in the open.");
-    public static final String TIP_FRAGMENT = put("tooltip.nusmp.hero.gem.fragment", "A shard of a calling gem. Every Vassal Seal is made from one.");
+    public static final String TIP_HOLY_KIND = put("tooltip.anime_multiverse.hero.gem.holy.kind", "Holy Calling Gem");
+    public static final String TIP_HOLY_LORE = put("tooltip.anime_multiverse.hero.gem.holy.lore", "One of the four Legendary Weapons will choose you.");
+    public static final String TIP_HOLY_RULE = put("tooltip.anime_multiverse.hero.gem.holy.rule", "Only a Legendary Weapon nobody holds can answer. The gem is spent when one does.");
+    public static final String TIP_SEAL_KIND = put("tooltip.anime_multiverse.hero.gem.seal.kind", "Seal of a %s");
+    public static final String TIP_SEAL_LORE = put("tooltip.anime_multiverse.hero.gem.seal.lore", "The %s chooses those who prove worthy.");
+    public static final String TIP_SEAL_HOLDER = put("tooltip.anime_multiverse.hero.gem.seal.holder", "Before you it served %s.");
+    public static final String TIP_SEAL_RULE = put("tooltip.anime_multiverse.hero.gem.seal.rule", "The weapon binds to you at once. The seal is spent.");
+    public static final String TIP_USE = put("tooltip.anime_multiverse.hero.gem.use", "Hold right click for %s seconds, standing still in the open.");
+    public static final String TIP_FRAGMENT = put("tooltip.anime_multiverse.hero.gem.fragment", "A shard of a calling gem. Every Vassal Seal is made from one.");
 
     // ------------------------------------------------------------------ why a ritual cannot start
     public static final String CLOSED = put("hero.msg.gem.closed", "The gem is silent. This server has closed the Choosing (gem config: recipes = false).");

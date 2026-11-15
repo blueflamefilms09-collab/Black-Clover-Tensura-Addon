@@ -5,7 +5,7 @@ package com.newuniverse.nusmp.labyrinth.mega.macro;
  * PNG slices and walked by a BFS without a game, and the part that needs Minecraft ({@link MacroBlocks}) is a single lookup table from this enum to
  * block states. Keeping the vocabulary a small CLOSED set also forces every landmark to use the same few vanilla blocks (the Vanilla Block Primacy
  * Rule) and makes the two tilesets plain data. Pure: no Minecraft import. The only block of the mod in the list is {@link #GATE}, which maps to the
- * existing {@code nusmp:labyrinth_gate}.
+ * existing {@code anime_multiverse:labyrinth_gate}.
  *
  * <p>{@link #NATIVE} is a pseudo kind: inside a tile pattern it means "whatever rock the model puts here" (stone, deepslate, blackstone by depth),
  * and {@link HubModel#kindAt} resolves it, so it is never returned to a caller.

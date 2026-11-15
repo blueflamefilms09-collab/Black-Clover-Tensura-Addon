@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "anime_multiverse:item/vanirs_mask_of_devilish_luck"
+  }
+}

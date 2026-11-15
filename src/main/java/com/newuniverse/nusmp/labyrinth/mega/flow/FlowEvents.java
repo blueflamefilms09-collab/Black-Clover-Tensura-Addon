@@ -137,7 +137,7 @@ public final class FlowEvents {
         if (FlowTracker.shared().effectDue(attacker.getUUID(), now, EFFECT_GAP)) RukhFx.burst(level, target, Rejection.rukh(flow), 4);
         if (FlowTracker.shared().noticeDue(attacker.getUUID(), now, NOTICE_GAP)) {
             String word = flow == Alignment.DARK ? "Dark" : "Light";
-            attacker.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.mfw.boost." + flow.id(),
+            attacker.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.mfw.boost." + flow.id(),
                     "The " + word + " Rukh answer your spell: x%s damage.", String.format(Locale.ROOT, "%.2f", factor).replaceAll("\\.?0+$", "")), true);
         }
     }
@@ -153,6 +153,6 @@ public final class FlowEvents {
     static void warn(RuntimeException ex) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] Rukh flow handler failed (further failures are not logged)", ex);
+        LOG.warn("[anime_multiverse] Rukh flow handler failed (further failures are not logged)", ex);
     }
 }

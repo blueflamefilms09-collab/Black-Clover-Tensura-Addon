@@ -6,10 +6,10 @@ import java.util.Locale;
 
 /**
  * Why: each Region (one sector of the Mega-Dungeon) has ONE "Relic Theme", and the theme is what makes two sectors feel different without a
- * second set of templates: the block palette (a vanilla family swapped for another by {@code nusmp:region_theme}), the ecology (which
+ * second set of templates: the block palette (a vanilla family swapped for another by {@code anime_multiverse:region_theme}), the ecology (which
  * factions and encounter tables dominate), the catastrophe the Crucible prefers and the pool of relics its pedestals may offer all read the
  * same id. The enum only NAMES the themes (it must exist at class-load time everywhere, in saved data, in processors, in JUnit); what a
- * theme MEANS is data ({@code data/nusmp/mega/themes/<id>.json}, read by {@code mega.theme.ThemeDefs}), so a datapack can retune a theme
+ * theme MEANS is data ({@code data/anime_multiverse/mega/themes/<id>.json}, read by {@code mega.theme.ThemeDefs}), so a datapack can retune a theme
  * without a mod update. Entries are only ever APPENDED (the ordinal is never saved: saved data and JSON use {@link #id()}).
  */
 public enum RegionTheme {

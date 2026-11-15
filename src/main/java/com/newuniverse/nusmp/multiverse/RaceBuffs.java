@@ -57,7 +57,7 @@ public final class RaceBuffs {
 
     private static ResourceLocation id(Holder<Attribute> a) {
         String path = a.unwrapKey().map(k -> k.location().getPath()).orElse("attr").replace('.', '_');
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "race_buff_" + path);
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "race_buff_" + path);
     }
 
     /** The player's Tensura race instance, if Tensura / ManasCore report one. */

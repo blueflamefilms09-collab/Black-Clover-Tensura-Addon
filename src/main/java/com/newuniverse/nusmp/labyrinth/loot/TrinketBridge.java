@@ -18,7 +18,7 @@ import java.util.List;
  * Why: a ring in a Curios slot has no vanilla equipment slot, so no vanilla rule applies its modifiers; the mod reads the Curios inventory by reflection ({@link CuriosLink},
  * the build cannot reach Curios' maven) the way it already carries the sheathed weapons' bonuses, and this applies the rolled lines of the worn trinkets as transient attribute
  * modifiers. Once a second (the reads are reflective) it collects the trinkets worn, adds up the lines per stat, and sets one modifier per stat with a fixed id
- * ({@code nusmp:loot_trinket/<stat>}), replacing it when the number changed and removing it when the trinket came off, so taking a ring off ends its effect within a second and
+ * ({@code anime_multiverse:loot_trinket/<stat>}), replacing it when the number changed and removing it when the trinket came off, so taking a ring off ends its effect within a second and
  * logging in again re-applies it (transient modifiers are not saved). Without Curios the off hand stands in for the slot. Two worn trinkets of the same stat add up, each at
  * its own value, because the sum is what is applied. The critical-chance lines are read by {@link CritHandler}, not here. No hunger or exhaustion anywhere.
  */
@@ -75,7 +75,7 @@ public final class TrinketBridge {
         }
     }
 
-    static ResourceLocation id(StatKind k) { return ResourceLocation.fromNamespaceAndPath("nusmp", "loot_trinket/" + k.id()); }
+    static ResourceLocation id(StatKind k) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "loot_trinket/" + k.id()); }
 
     /** Removes every trinket modifier from the player (a self-test cleans up with it). */
     public static void clear(Player p) {

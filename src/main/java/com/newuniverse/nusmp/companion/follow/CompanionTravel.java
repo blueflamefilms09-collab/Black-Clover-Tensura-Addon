@@ -131,7 +131,7 @@ public final class CompanionTravel {
                 moved++;
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] carrying followers through a dimension change failed: {}", ex.toString());
+            LOG.warn("[anime_multiverse] carrying followers through a dimension change failed: {}", ex.toString());
         }
         return moved;
     }

@@ -3,9 +3,9 @@
 
     python3 -B tools/gen_light_bone_ja_textures.py
 
-assets/nusmp/textures/prop/bone_ja_bone.png     ivory bone with grain, pits and a marrow tint (the fangs, the bullets, the grip of the sword)
-assets/nusmp/textures/prop/bone_ja_space.png    near-black violet with thin glowing veins (the blade of the Demon Sword Dainsleif: bone coated in cut space)
-assets/nusmp/textures/prop/light_ja_plate.png   pale gold plate with panel lines (the swords of light, the golden giant)
+assets/anime_multiverse/textures/prop/bone_ja_bone.png     ivory bone with grain, pits and a marrow tint (the fangs, the bullets, the grip of the sword)
+assets/anime_multiverse/textures/prop/bone_ja_space.png    near-black violet with thin glowing veins (the blade of the Demon Sword Dainsleif: bone coated in cut space)
+assets/anime_multiverse/textures/prop/light_ja_plate.png   pale gold plate with panel lines (the swords of light, the golden giant)
 
 They are plain opaque textures for the cutout render type (no glow card, nothing additive), so the safe-additive scan does not apply to them. Deterministic (fixed seed): running it again
 writes the same files. Needs: numpy, pillow.
@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.abspath(os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "prop"))
+OUT = os.path.abspath(os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "prop"))
 
 
 def save(arr, name):

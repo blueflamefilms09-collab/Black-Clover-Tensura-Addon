@@ -31,7 +31,7 @@ final class AddKinds {
 
     /** The tag every add carries (the events and the counts look for it), the servant tag the turf wars respect, and the persistent key that holds the boss's id. */
     static final String TAG = "nusmp_dec_add", SERVANT = "nusmp_servant", BOSS_KEY = "nusmp_dec_boss";
-    private static final ResourceLocation HP = ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_add_hp"), DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_add_damage");
+    private static final ResourceLocation HP = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_add_hp"), DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_add_damage");
 
     static EntityType<? extends Mob> typeOf(String kind) {
         return switch (kind) {

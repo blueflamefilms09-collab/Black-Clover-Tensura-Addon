@@ -30,8 +30,8 @@ public final class MissionStarsSelfTests {
         if (MissionStarRules.stars("TASK", 1, 2, 5) != 1 || MissionStarRules.stars("goal", 1, 2, 5) != 2 || MissionStarRules.stars("CHALLENGE", 1, 2, 5) != 5 || MissionStarRules.stars("weird", 1, 2, 5) != 1
                 || MissionStarRules.stars("challenge", 1, 2, 5000) != MissionStarRules.MAX_STARS || MissionStarRules.stars("task", -3, 2, 5) != 0) return Result.fail("the mission star numbers moved");
         List<String> ex = List.of("root", "magic/");
-        if (!MissionStarRules.counts("nusmp", "bosses/x", true, ex) || MissionStarRules.counts("minecraft", "story/root", true, ex) || MissionStarRules.counts("nusmp", "root", true, ex)
-                || MissionStarRules.counts("nusmp", "magic/cast", true, ex) || MissionStarRules.counts("nusmp", "bosses/x", false, ex)) return Result.fail("the mission filter moved");
+        if (!MissionStarRules.counts("anime_multiverse", "bosses/x", true, ex) || MissionStarRules.counts("minecraft", "story/root", true, ex) || MissionStarRules.counts("anime_multiverse", "root", true, ex)
+                || MissionStarRules.counts("anime_multiverse", "magic/cast", true, ex) || MissionStarRules.counts("anime_multiverse", "bosses/x", false, ex)) return Result.fail("the mission filter moved");
         if (MultiverseConfig.get(MultiverseConfig.MISSION_CHALLENGE) > MissionStarRules.MAX_STARS) return Result.fail("a mission setting passed its hard bound");
         return Result.ok("stars per type, the bound and the filter hold");
     }
@@ -42,7 +42,7 @@ public final class MissionStarsSelfTests {
         ServerPlayer p = SelfTests.standIn(level, "mission1", at.x, at.y, at.z);
         try {
             if (!MultiverseConfig.get(MultiverseConfig.MISSION_STARS)) return Result.ok("mission stars are switched off in this config; not exercised");
-            String a = "nusmp:selftest/a" + server.getTickCount(), b = "nusmp:selftest/b" + server.getTickCount();
+            String a = "anime_multiverse:selftest/a" + server.getTickCount(), b = "anime_multiverse:selftest/b" + server.getTickCount();
             int g0 = MultiverseProfile.goldStars(p);
             int first = MissionStars.award(p, a, "task", Component.literal("test"));
             if (MultiverseConfig.get(MultiverseConfig.MISSION_TASK) > 0 && (first <= 0 || MultiverseProfile.goldStars(p) != g0 + first)) return Result.fail("a finished mission paid no gold stars");

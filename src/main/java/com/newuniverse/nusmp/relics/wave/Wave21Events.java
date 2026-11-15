@@ -48,7 +48,7 @@ final class Wave21Events {
     private static boolean hooked;
     private static final int MAX_ZONES = 8;
     private static final List<Zone> ZONES = new ArrayList<>();
-    private static final ResourceLocation WITHER_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "w21_horseman_wither");
+    private static final ResourceLocation WITHER_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w21_horseman_wither");
     private static final String K_WITHER_HITS = "nusmp_w21_wither_hits", K_WITHER_UNTIL = "nusmp_w21_wither_until", K_SEASON_AT = "nusmp_w21_season_at";
 
     /** An open Escape Rift: the level it is in, its centre, its end. */

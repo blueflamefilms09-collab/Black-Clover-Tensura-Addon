@@ -88,7 +88,7 @@ public final class AttributeEvents {
             try {
                 hooks.get(i).accept(event);
             } catch (Throwable t) {
-                LOG.error("[nusmp] attribute hook '{}' #{} failed", what, i, t);
+                LOG.error("[anime_multiverse] attribute hook '{}' #{} failed", what, i, t);
             }
         }
     }

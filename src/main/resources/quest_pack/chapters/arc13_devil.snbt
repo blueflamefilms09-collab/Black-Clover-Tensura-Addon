@@ -4,7 +4,7 @@
 	order_index: 18
 	filename: "arc13_devil"
 	icon: {
-		id: "nusmp:devil_horn"
+		id: "anime_multiverse:devil_horn"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["1BA26443D9623F20", "6B4E1318125129C6"]
 			tasks: [
@@ -38,14 +38,14 @@
 			x: 1.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:devil_contract"
+				id: "anime_multiverse:devil_contract"
 			}
 			dependencies: ["5A6CFCE0D9770B2B"]
 			tasks: [
 				{
 					id: "739CD4127A2959A5"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_contract"
+					advancement: "anime_multiverse:spirits/devil_contract"
 					criterion: ""
 				}
 			]
@@ -65,20 +65,20 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["603A695A183F74E7"]
 			tasks: [
 				{
 					id: "4E31104F70159122"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_union"
+					advancement: "anime_multiverse:spirits/devil_union"
 					criterion: ""
 				}
 				{
 					id: "005B0794200D5871"
 					type: "advancement"
-					advancement: "nusmp:arcs/devil_arc"
+					advancement: "anime_multiverse:arcs/devil_arc"
 					criterion: ""
 				}
 			]
@@ -101,14 +101,14 @@
 			x: 4.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:devils_core"
+				id: "anime_multiverse:devils_core"
 			}
 			dependencies: ["694C2E9F6DAB28A3"]
 			tasks: [
 				{
 					id: "4C52583B33C03995"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_core"
+					advancement: "anime_multiverse:spirits/devil_core"
 					criterion: ""
 				}
 			]
@@ -128,14 +128,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:last_word"
+				id: "anime_multiverse:last_word"
 			}
 			dependencies: ["48BC6A97E8D35F62"]
 			tasks: [
 				{
 					id: "53A1268D5CC4EA7F"
 					type: "advancement"
-					advancement: "nusmp:bosses/zagred"
+					advancement: "anime_multiverse:bosses/zagred"
 					criterion: ""
 				}
 			]
@@ -158,7 +158,7 @@
 			x: 7.5d
 			y: 0.0d
 			icon: {
-				id: "nusmp:last_word"
+				id: "anime_multiverse:last_word"
 			}
 			dependencies: ["03CAED70D2019BE8"]
 			optional: true
@@ -166,7 +166,7 @@
 				{
 					id: "4408D688790DB859"
 					type: "advancement"
-					advancement: "nusmp:bosses/zagred_phase2"
+					advancement: "anime_multiverse:bosses/zagred_phase2"
 					criterion: ""
 				}
 			]
@@ -186,14 +186,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["48BC6A97E8D35F62"]
 			tasks: [
 				{
 					id: "18C2E1C2B48C9723"
 					type: "advancement"
-					advancement: "nusmp:bosses/devil_avatar"
+					advancement: "anime_multiverse:bosses/devil_avatar"
 					criterion: ""
 				}
 			]
@@ -225,7 +225,7 @@
 				{
 					id: "01826F1825882AC8"
 					type: "advancement"
-					advancement: "nusmp:future/devil_arc_megicula"
+					advancement: "anime_multiverse:future/devil_arc_megicula"
 					criterion: ""
 				}
 			]
@@ -257,7 +257,7 @@
 				{
 					id: "6ACFFC152EC123B5"
 					type: "advancement"
-					advancement: "nusmp:future/devil_arc_lucifero"
+					advancement: "anime_multiverse:future/devil_arc_lucifero"
 					criterion: ""
 				}
 			]
@@ -289,7 +289,7 @@
 				{
 					id: "71A64B872D54DDAB"
 					type: "advancement"
-					advancement: "nusmp:future/devil_arc_astaroth"
+					advancement: "anime_multiverse:future/devil_arc_astaroth"
 					criterion: ""
 				}
 			]
@@ -314,14 +314,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_core_zagred"
+				id: "anime_multiverse:devil_core_zagred"
 			}
 			dependencies: ["03CAED70D2019BE8", "6827079BC0B8F1DF"]
 			tasks: [
 				{
 					id: "53AD67C030B8BF06"
 					type: "advancement"
-					advancement: "nusmp:bosses/devil_avatar"
+					advancement: "anime_multiverse:bosses/devil_avatar"
 					criterion: ""
 				}
 			]

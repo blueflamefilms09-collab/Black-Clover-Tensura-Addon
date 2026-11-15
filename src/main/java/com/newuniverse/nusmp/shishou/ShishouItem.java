@@ -44,13 +44,13 @@ public class ShishouItem extends Item {
         ItemAttributeModifiers.Builder mods = ItemAttributeModifiers.builder()
                 .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"), ShishouRules.BASE_ATTACK - 1.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_speed"), -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_reach"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+                .add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_reach"), 0.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         return new Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant().component(DataComponents.UNBREAKABLE, new Unbreakable(false)).attributes(mods.build());
     }
 
     @Override
     public Component getName(ItemStack stack) {
-        return Component.translatableWithFallback("item.nusmp.shishou", "Shishou").withStyle(Style.EMPTY.withColor(NAME_RGB));
+        return Component.translatableWithFallback("item.anime_multiverse.shishou", "Shishou").withStyle(Style.EMPTY.withColor(NAME_RGB));
     }
 
     // ---------------------------------------------------------------- the tick in an inventory

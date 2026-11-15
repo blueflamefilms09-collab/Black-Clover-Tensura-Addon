@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Why: the custom particle library is data plus art, and every link of the chain must hold or the game shows a purple-black square: each catalog entry has a sprite json in
- * {@code assets/nusmp/particles}, the json lists exactly its frames, every frame is a PNG of the catalog's size that is not empty, the type is registered through the catalog loop and
+ * {@code assets/anime_multiverse/particles}, the json lists exactly its frames, every frame is a PNG of the catalog's size that is not empty, the type is registered through the catalog loop and
  * a provider is registered for it, and no sprite json is left without a catalog entry (the two Rukh jsons excepted). It also pins the families the owner asked for, so a regenerated
  * library cannot quietly lose one.
  */
 class FxLibraryAssetsTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
 
     @Test
@@ -94,9 +94,9 @@ class FxLibraryAssetsTest {
         assertTrue(types.contains("FxCatalog.all()") && types.contains("PARTICLES.register(d.id()"), "FxTypes no longer registers one type per catalog entry");
         String client = Files.readString(SRC.resolve("client/particle/fx/FxClient.java"), StandardCharsets.UTF_8);
         assertTrue(client.contains("FxCatalog.all()") && client.contains("registerSpriteSet(type"), "FxClient no longer registers a provider for every catalog entry");
-        String nusmp = Files.readString(SRC.resolve("NUSMP.java"), StandardCharsets.UTF_8);
-        assertTrue(nusmp.contains("particle.fx.FxBoot.init(modEventBus, modContainer)"), "NUSMP does not call FxBoot.init");
-        assertTrue(nusmp.contains("client.particle.fx.FxClient.init(modEventBus, modContainer)"), "NUSMP does not call FxClient.init");
+        String anime_multiverse = Files.readString(SRC.resolve("NUSMP.java"), StandardCharsets.UTF_8);
+        assertTrue(anime_multiverse.contains("particle.fx.FxBoot.init(modEventBus, modContainer)"), "NUSMP does not call FxBoot.init");
+        assertTrue(anime_multiverse.contains("client.particle.fx.FxClient.init(modEventBus, modContainer)"), "NUSMP does not call FxClient.init");
     }
 
     @Test

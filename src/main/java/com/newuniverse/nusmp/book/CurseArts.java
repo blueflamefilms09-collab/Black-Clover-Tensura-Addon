@@ -39,7 +39,7 @@ public final class CurseArts {
     private static final int MAX_MARKS = 5;
     private static final String MARKS = "nusmp_curse_marks", MARK_UNTIL = "nusmp_curse_until", BY = "nusmp_curse_by";
     private static final String AEGIS = "nusmp_curse_aegis", LASH = "nusmp_curse_lash", HP_UNTIL = "nusmp_curse_hp_until";
-    private static final ResourceLocation HP_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "curse_hex_hp");
+    private static final ResourceLocation HP_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "curse_hex_hp");
     private static boolean hooked;
 
     /** Registers the damage and death hooks (Hex Mark amplification, Hex Aegis, the curse that spreads on death). Called once from CurseProps.init(). */

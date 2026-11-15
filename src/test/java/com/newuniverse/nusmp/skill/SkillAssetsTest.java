@@ -53,7 +53,7 @@ class SkillAssetsTest {
         for (String id : REMOVED) {
             assertFalse(registry.contains("register(\"" + id + "\""), id + " must not be a live skill any more");
             assertTrue(legacy.contains("\"" + id + "\""), id + " must stay registered as an inert stub (LegacyIds.REMOVED_SKILLS) so old worlds load");
-            assertTrue(new File("src/main/resources/assets/nusmp/textures/skill/" + id + ".png").isFile(), id + ": the icon stays (rule 2)");
+            assertTrue(new File("src/main/resources/assets/anime_multiverse/textures/skill/" + id + ".png").isFile(), id + ": the icon stays (rule 2)");
         }
         for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules"})
             assertFalse(new File("src/main/java/com/newuniverse/nusmp/skill/" + gone + ".java").exists() || new File("src/main/java/com/newuniverse/nusmp/skill/rules/" + gone + ".java").exists(), gone + " is deleted");
@@ -83,7 +83,7 @@ class SkillAssetsTest {
     void everySkillHasItsOwn32pxIcon() throws Exception {
         Map<String, String> seen = new HashMap<>();
         for (String id : IDS) {
-            File f = new File("src/main/resources/assets/nusmp/textures/skill/" + id + ".png");
+            File f = new File("src/main/resources/assets/anime_multiverse/textures/skill/" + id + ".png");
             assertTrue(f.isFile(), "icon missing: " + f);
             BufferedImage img = ImageIO.read(f);
             assertNotNull(img, "icon unreadable: " + id);
@@ -102,7 +102,7 @@ class SkillAssetsTest {
     void everySkillNameAndDescriptionIsInTheLangFragment() throws Exception {
         JsonObject frag = JsonParser.parseString(read("tools/skills/lang_fragment.json")).getAsJsonObject();
         for (String id : IDS) {
-            String name = "nusmp.skill." + id;
+            String name = "anime_multiverse.skill." + id;
             assertTrue(frag.has(name) && !frag.get(name).getAsString().isBlank(), "name key missing: " + name);
             assertTrue(frag.has(name + ".description") && frag.get(name + ".description").getAsString().length() > 20,
                     "description key missing or too short: " + name);
@@ -111,7 +111,7 @@ class SkillAssetsTest {
         int[][] lines = {{3}, {3}, {1}, {2}, {3}};
         String[] spells = {"wynn_fimbulvetr", "rea_laevateinn", "arcs_ray", "futsunomitama", "uchide_no_kozuchi"};
         for (int s = 0; s < spells.length; s++)
-            for (int n = 1; n <= lines[s][0]; n++) assertTrue(frag.has("nusmp.skill.chant." + spells[s] + "." + n), spells[s] + " line " + n);
+            for (int n = 1; n <= lines[s][0]; n++) assertTrue(frag.has("anime_multiverse.skill.chant." + spells[s] + "." + n), spells[s] + " line " + n);
         // no value is empty
         for (var e : frag.entrySet()) assertFalse(e.getValue().getAsString().isBlank(), "empty text for " + e.getKey());
     }
@@ -119,8 +119,8 @@ class SkillAssetsTest {
     @Test
     void skillTextDerivesItsKeys() {
         SkillText t = SkillText.of("hati", "Hati", "A passive.");
-        assertEquals("nusmp.skill.hati", t.nameKey());
-        assertEquals("nusmp.skill.hati.description", t.descriptionKey());
+        assertEquals("anime_multiverse.skill.hati", t.nameKey());
+        assertEquals("anime_multiverse.skill.hati.description", t.descriptionKey());
         assertEquals("Hati", t.name());
     }
 

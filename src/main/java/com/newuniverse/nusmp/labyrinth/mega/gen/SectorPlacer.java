@@ -101,7 +101,7 @@ final class SectorPlacer {
             clearance(index);
         } catch (Throwable t) {
             failed++;
-            LOG.error("[nusmp] Mega sector {}: piece {} at {} failed to place: {}", sector.id, piece.getElement(), piece.getPosition(), t.toString());
+            LOG.error("[anime_multiverse] Mega sector {}: piece {} at {} failed to place: {}", sector.id, piece.getElement(), piece.getPosition(), t.toString());
         }
     }
 
@@ -119,7 +119,7 @@ final class SectorPlacer {
             final boolean[] conn = connected[index];
             DungeonGuard.internal(() -> ClearanceCarver.carve(level, placed, conn));
         } catch (Throwable t) {
-            LOG.error("[nusmp] Mega sector {}: the 7 x 7 clearance of piece {} failed: {}", sector.id, index, t.toString());
+            LOG.error("[anime_multiverse] Mega sector {}: the 7 x 7 clearance of piece {} failed: {}", sector.id, index, t.toString());
         }
     }
 
@@ -163,7 +163,7 @@ final class SectorPlacer {
                     Box wide = Clearance7.sealCut(SectorGenerator.vec(from.expansionPos), SectorGenerator.facing(from.expansionFacing), from.sealD);
                     removed[0] += ClearanceCarver.carveSeal(level, wide).cleared();
                 } catch (Throwable t) {
-                    LOG.error("[nusmp] Mega sector {}: the 7 x 7 opening of the Way Onward failed: {}", from.id, t.toString());
+                    LOG.error("[anime_multiverse] Mega sector {}: the 7 x 7 opening of the Way Onward failed: {}", from.id, t.toString());
                 }
             }
         });

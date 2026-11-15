@@ -39,7 +39,7 @@ final class CurseOverlay {
             draw(g, mc, now, delta.getGameTimeDeltaPartialTick(false));
         } catch (RuntimeException | LinkageError e) {
             broken = true;
-            LOG.warn("[nusmp] The Curse Series overlay failed to draw and is switched off until the game is restarted", e);
+            LOG.warn("[anime_multiverse] The Curse Series overlay failed to draw and is switched off until the game is restarted", e);
         }
     }
 

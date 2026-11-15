@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: a theme's signature rooms are tied to it by NAME (a file prefix in {@code data/nusmp/mega/template_themes/<theme>.json}), and a name is the kind of
+ * Why: a theme's signature rooms are tied to it by NAME (a file prefix in {@code data/anime_multiverse/mega/template_themes/<theme>.json}), and a name is the kind of
  * link nobody notices breaking: a room renamed in its generator, a prefix with a typo, a theme file for a theme that has no palette, a room that no pool
  * lists (so it is never drawn at all) or one that two themes both claim would all be silent in the game and wrong. This test reads the files that ship, from
  * the source tree, and holds them to the rules of {@code docs/labyrinth/mega_v2.md} section 5.1 and the builders' brief: every theme file belongs to a theme
@@ -33,11 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * reads files from the project directory and uses no game class.
  */
 class TemplateThemesFilesTest {
-    private static final Path THEME_FILES = Path.of("src/main/resources/data/nusmp/mega/template_themes");
-    private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/themes");
-    private static final Path STRUCTURE = Path.of("src/main/resources/data/nusmp/structure/mega");
-    private static final Path POOLS = Path.of("src/main/resources/data/nusmp/worldgen/template_pool/mega");
-    private static final String NAMESPACE = "nusmp:";
+    private static final Path THEME_FILES = Path.of("src/main/resources/data/anime_multiverse/mega/template_themes");
+    private static final Path THEMES = Path.of("src/main/resources/data/anime_multiverse/mega/themes");
+    private static final Path STRUCTURE = Path.of("src/main/resources/data/anime_multiverse/structure/mega");
+    private static final Path POOLS = Path.of("src/main/resources/data/anime_multiverse/worldgen/template_pool/mega");
+    private static final String NAMESPACE = "anime_multiverse:";
     private static final String PREFIX = NAMESPACE + "mega/";
 
     private static String read(Path p) {
@@ -120,11 +120,11 @@ class TemplateThemesFilesTest {
             JsonObject o = e.getValue();
             String id = e.getKey();
             assertEquals(id, o.get("theme").getAsString(), id + ": the 'theme' field must be the file name");
-            assertTrue(Files.exists(THEMES.resolve(id + ".json")), id + ": there is no data/nusmp/mega/themes/" + id + ".json for this theme");
+            assertTrue(Files.exists(THEMES.resolve(id + ".json")), id + ": there is no data/anime_multiverse/mega/themes/" + id + ".json for this theme");
             assertTrue(o.has("templates") && o.get("templates").isJsonArray() && !o.getAsJsonArray("templates").isEmpty(), id + ": 'templates' must list prefixes");
             for (String p : prefixes(o)) {
                 assertTrue(p.startsWith(PREFIX), id + ": prefix '" + p + "' must start with " + PREFIX);
-                assertTrue(p.endsWith("/" + id + "_"), id + ": prefix '" + p + "' must be the room name of this theme: nusmp:mega/<folder>/" + id + "_");
+                assertTrue(p.endsWith("/" + id + "_"), id + ": prefix '" + p + "' must be the room name of this theme: anime_multiverse:mega/<folder>/" + id + "_");
             }
             assertTrue(o.has("relative") && o.get("relative").isJsonObject(), id + ": 'relative' (the weights) is missing");
         }

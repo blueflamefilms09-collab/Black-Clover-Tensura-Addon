@@ -56,7 +56,7 @@ class MusicCatalogTest {
         assertEquals("music.boss.abyssal", MusicCatalog.eventId("boss_abyssal"));
         assertEquals("music.safe", MusicCatalog.eventId("safe"));
         assertEquals("music/hub.ogg", MusicCatalog.filePath("hub"));
-        assertEquals("music.nusmp.track.rift", MusicCatalog.titleKey("rift"));
+        assertEquals("music.anime_multiverse.track.rift", MusicCatalog.titleKey("rift"));
     }
 
     @Test

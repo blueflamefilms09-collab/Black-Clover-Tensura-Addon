@@ -85,7 +85,7 @@ public final class BlockLedger {
                     level.setBlock(p, e.old(), 3);
                     restored[0]++;
                 } catch (RuntimeException failed) {
-                    LogUtils.getLogger().warn("[nusmp] a Zogratis block could not be put back at {}: {}", BlockPos.of(e.key()), failed.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] a Zogratis block could not be put back at {}: {}", BlockPos.of(e.key()), failed.toString());
                 }
             }
         });

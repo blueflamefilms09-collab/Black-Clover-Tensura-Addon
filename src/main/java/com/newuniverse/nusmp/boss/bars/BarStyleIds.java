@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the ids of the custom boss bar styles, in one pure list the server can use without reading a single asset (a dedicated server has no
- * {@code assets/}): the resolver answers with one of these and the client loads the matching {@code assets/nusmp/boss_bars/<id>.json}. A JUnit test
+ * {@code assets/}): the resolver answers with one of these and the client loads the matching {@code assets/anime_multiverse/boss_bars/<id>.json}. A JUnit test
  * checks the list against the generated {@code _index.json}, so a style cannot exist in only one of the two places. Ids are APPENDED only (a server
  * and a client of different versions may meet).
  */

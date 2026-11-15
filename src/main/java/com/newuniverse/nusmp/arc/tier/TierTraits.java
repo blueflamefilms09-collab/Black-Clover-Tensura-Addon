@@ -40,7 +40,7 @@ import java.util.UUID;
 public final class TierTraits {
     private TierTraits() {}
 
-    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "tier_trait_speed");
+    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "tier_trait_speed");
 
     private static boolean active(TierBoss b) {
         return !b.level().isClientSide && ArcConfig.tierPowers() && !b.row().traits().isEmpty();

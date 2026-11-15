@@ -1,6 +1,6 @@
 """Generates the Demon Fire Magic VFX textures (the "inverted" fire: a pitch-black flame body with a violet-white light along its edge).
 
-Deterministic (fixed seeds), no fonts, no external images. Output: src/main/resources/assets/nusmp/textures/particle/demon_fire_*.png
+Deterministic (fixed seeds), no fonts, no external images. Output: src/main/resources/assets/anime_multiverse/textures/particle/demon_fire_*.png
 
     python3 -B tools/gen_demon_fire_textures.py
 
@@ -32,7 +32,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for drawn shapes
 
 

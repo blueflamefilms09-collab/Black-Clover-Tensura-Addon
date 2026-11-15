@@ -37,7 +37,7 @@ public final class Squad {
     /** The scoreboard tag and the persistent-data keys of a squad member. */
     public static final String TAG = "nusmp_squad";
     public static final String ID = "nusmp_squad_id", ROLE = "nusmp_squad_role", SLOT = "nusmp_squad_slot", SEED = "nusmp_squad_seed", SIZE = "nusmp_squad_size";
-    static final ResourceLocation ENRAGE_SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "squad_enrage_speed"), ENRAGE_DAMAGE = ResourceLocation.fromNamespaceAndPath("nusmp", "squad_enrage_damage");
+    static final ResourceLocation ENRAGE_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "squad_enrage_speed"), ENRAGE_DAMAGE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "squad_enrage_damage");
     /** A target is dropped from the picture when it is farther than this from the squad's centre. */
     static final double THREAT_RANGE = 32.0;
     /** Ticks without a tank near the target before the engagement counts as over. */

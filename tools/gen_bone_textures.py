@@ -1,6 +1,6 @@
 """Generates the Bone Magic VFX textures (bone_*.png) for BoneLayer.
 
-Deterministic (fixed seeds), Pillow + numpy only. Output: src/main/resources/assets/nusmp/textures/particle/bone_*.png
+Deterministic (fixed seeds), Pillow + numpy only. Output: src/main/resources/assets/anime_multiverse/textures/particle/bone_*.png
 
     python3 -B tools/gen_bone_textures.py
 
@@ -14,7 +14,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 OUTLINE = 0.50
 
 

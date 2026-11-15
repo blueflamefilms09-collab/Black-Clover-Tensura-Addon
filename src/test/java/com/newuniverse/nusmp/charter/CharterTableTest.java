@@ -71,22 +71,22 @@ class CharterTableTest {
     @Test
     void onlyEntitiesOfThisModsNamespaceAreBosses() {
         for (CharterTable.Boss b : CharterTable.all()) {
-            assertSame(b, CharterTable.byEntity("nusmp", b.entityPath()), b.id());
+            assertSame(b, CharterTable.byEntity("anime_multiverse", b.entityPath()), b.id());
             assertNull(CharterTable.byEntity("minecraft", b.entityPath()), "vanilla " + b.entityPath());
             assertNull(CharterTable.byEntity("tensura", b.entityPath()), "base Tensura " + b.entityPath());
             assertNull(CharterTable.byEntity("NUSMP", b.entityPath()));
             assertNull(CharterTable.byEntity(null, b.entityPath()));
         }
-        assertNull(CharterTable.byEntity("nusmp", "zombie"));
-        assertNull(CharterTable.byEntity("nusmp", null));
+        assertNull(CharterTable.byEntity("anime_multiverse", "zombie"));
+        assertNull(CharterTable.byEntity("anime_multiverse", null));
         assertNull(CharterTable.byEntity("tensura", "goblin"));
         // the four Zogratis entity paths and the three floor bosses map one to one
-        assertEquals("zenon", CharterTable.byEntity("nusmp", "zenon_zogratis").id());
-        assertEquals("charybdis_spawn", CharterTable.byEntity("nusmp", "charybdis_spawn").id());
-        assertEquals("devil_avatar", CharterTable.byEntity("nusmp", "devil_avatar").id());
+        assertEquals("zenon", CharterTable.byEntity("anime_multiverse", "zenon_zogratis").id());
+        assertEquals("charybdis_spawn", CharterTable.byEntity("anime_multiverse", "charybdis_spawn").id());
+        assertEquals("devil_avatar", CharterTable.byEntity("anime_multiverse", "devil_avatar").id());
         // the dark disciples and clones are not bosses
-        assertNull(CharterTable.byEntity("nusmp", "dark_disciple"));
-        assertNull(CharterTable.byEntity("nusmp", "zogratis_clone"));
+        assertNull(CharterTable.byEntity("anime_multiverse", "dark_disciple"));
+        assertNull(CharterTable.byEntity("anime_multiverse", "zogratis_clone"));
     }
 
     @Test

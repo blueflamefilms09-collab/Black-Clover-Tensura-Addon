@@ -30,7 +30,7 @@ class ZagredWordTest {
         for (ZagredWord w : ZagredWord.values()) {
             assertTrue(w.rgb() >= 0 && w.rgb() <= 0xFFFFFF);
             assertEquals(0xFF000000 | w.rgb(), w.argb());
-            assertEquals("message.nusmp.zagred.word." + w.id(), w.titleKey());
+            assertEquals("message.anime_multiverse.zagred.word." + w.id(), w.titleKey());
             assertEquals(w.titleKey() + ".hint", w.hintKey());
         }
     }

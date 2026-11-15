@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Why: the Salamander does not speak, so its sounds are creature sounds with no words: a soft growl, a trill and a chirp, a hiss, a small flame whoosh, a content purr-rumble, a yawn, a whimper, the
  * flap of small wings, and for the big form a roar and the heavy beat of its wings. This is the CATALOGUE, pure data with no Minecraft type so JUnit can pin it: the cues, how many variants each has,
- * their loudness, pitch range and cooldown per listener, and the id of the sound event ({@code nusmp:salamander.<cue>}), which {@link SalamanderSounds} registers one by one.
+ * their loudness, pitch range and cooldown per listener, and the id of the sound event ({@code anime_multiverse:salamander.<cue>}), which {@link SalamanderSounds} registers one by one.
  * {@code tools/gen_salamander_sounds.py} synthesises the {@code .ogg} files and writes the {@code sounds.json} entries from the same table; {@code SalamanderSoundsTest} keeps the three in step.
  *
  * <p>{@link Gate} is the per listener rule, built on the same {@link VoiceLimiter} the spoken lines use: a listener hears at most one Salamander sound every {@link #LISTENER_GAP} ticks (3 seconds), and a
@@ -21,7 +21,7 @@ public final class SalamanderSoundSet {
     public record Cue(String id, String what, int variants, float volume, float pitch, float spread, int cooldown) {
         public String event() { return eventId(id); }
 
-        public String subtitleKey() { return "subtitles.nusmp.salamander." + id; }
+        public String subtitleKey() { return "subtitles.anime_multiverse.salamander." + id; }
 
         /** The variant file path inside the sounds folder: {@code salamander/trill_1}. */
         public String file(int variant) { return "salamander/" + id + "_" + variant; }

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The Dark Rukh Shard's art (tools/relics/dark_item_icon.py): a 16x16 sprite with some opaque pixels, and a plain generated model that points at it. */
 class DarkAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     @Test
     void theShardHasASixteenBySixteenSpriteAndAPlainModel() throws IOException {
@@ -28,6 +28,6 @@ class DarkAssetsTest {
         assertTrue(Files.exists(model), "missing " + model);
         String json = Files.readString(model);
         assertTrue(json.contains("minecraft:item/generated"));
-        assertTrue(json.contains("nusmp:item/dark_rukh_shard"));
+        assertTrue(json.contains("anime_multiverse:item/dark_rukh_shard"));
     }
 }

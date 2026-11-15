@@ -123,7 +123,7 @@ class SectorAuditTest {
         assertTrue(has(SectorAudit.audit(good, q, true), "inside another sector's territory"));
     }
 
-    private static Shape cell() { return CAT.shape("nusmp:mega/hall/cell_1x1"); }
+    private static Shape cell() { return CAT.shape("anime_multiverse:mega/hall/cell_1x1"); }
 
     private static Result handmade(List<Placed> ps) {
         return new Result(new Box(0, 56, 0, 170, 103, 170), ps, List.of(), null, null, List.of(), 1, false, 0, java.util.Map.of());
@@ -132,7 +132,7 @@ class SectorAuditTest {
     @Test
     void overlappingPiecesAreReported() {
         ensureGood();
-        Placed a = new Placed(0, CAT.shape("nusmp:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
+        Placed a = new Placed(0, CAT.shape("anime_multiverse:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Placed b = new Placed(1, cell(), "p", 0, new Vec(9, 56, 9), 1, 0, 0, 0, false);
         List<String> audit = SectorAudit.audit(handmade(List.of(a, b)), req, false);
         assertTrue(has(audit, "overlap"), audit.toString());
@@ -141,7 +141,7 @@ class SectorAuditTest {
     @Test
     void aRoomNobodyCanWalkToIsReported() {
         ensureGood();
-        Placed a = new Placed(0, CAT.shape("nusmp:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
+        Placed a = new Placed(0, CAT.shape("anime_multiverse:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Placed island = new Placed(1, cell(), "p", 0, new Vec(90, 56, 90), 1, -1, -1, -1, false);
         List<String> audit = SectorAudit.audit(handmade(List.of(a, island)), req, false);
         assertTrue(has(audit, "1 room(s) cannot be reached from the Landing"), audit.toString());
@@ -150,10 +150,10 @@ class SectorAuditTest {
     @Test
     void theBossChainMustExistOnce() {
         ensureGood();
-        Placed a = new Placed(0, CAT.shape("nusmp:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
+        Placed a = new Placed(0, CAT.shape("anime_multiverse:mega/landing/foyer_a"), "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         List<String> audit = SectorAudit.audit(handmade(List.of(a)), req, false);
         assertTrue(has(audit, "expected exactly one arena, found 0"), audit.toString());
-        Shape arena = CAT.shape("nusmp:mega/arena/pit_5x5");
+        Shape arena = CAT.shape("anime_multiverse:mega/arena/pit_5x5");
         Placed a1 = new Placed(1, arena, "p", 0, new Vec(40, 56, 0), 1, 0, 3, 0, false);
         Placed a2 = new Placed(2, arena, "p", 0, new Vec(100, 56, 0), 1, 0, 3, 0, false);
         audit = SectorAudit.audit(handmade(List.of(a, a1, a2)), req, false);
@@ -166,7 +166,7 @@ class SectorAuditTest {
     @Test
     void landmarkMarkersAreDemandedUnlessTheRecipeSaysOtherwise() {
         SyntheticCatalog c = SyntheticCatalog.standard();
-        Shape arena = c.shape("nusmp:mega/arena/pit_5x5");
+        Shape arena = c.shape("anime_multiverse:mega/arena/pit_5x5");
         List<ShapeMarker> noSpawn = new ArrayList<>();
         for (ShapeMarker m : arena.markers) if (m.spec().kind() != MarkerKind.GUARDIAN_SPAWN) noSpawn.add(m);
         c.add(new Shape(arena.id, arena.sx, arena.sy, arena.sz, arena.kind, arena.sockets, noSpawn, 0));

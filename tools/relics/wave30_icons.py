@@ -5,7 +5,7 @@ the Deck of Many Things, the Infinity Gauntlet, the six Infinity Stones, Paradox
 
     python3 tools/relics/wave30_icons.py [--preview out.png]
 
-Writes under src/main/resources/assets/nusmp/
+Writes under src/main/resources/assets/anime_multiverse/
   textures/item/<id>.png   the sprite: a dark outline, shades of the main material and the trim lit from the upper left, a few glow pixels and one
                            outline pixel in the grade's colour (the grade rim)
   models/item/<id>.json    the flat item model (parent item/generated) for every id but Paradox
@@ -21,7 +21,7 @@ import sys
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -385,18 +385,18 @@ def write_models():
         if item_id == "paradox":
             continue
         with open(os.path.join(MODELS, item_id + ".json"), "w") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + item_id}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + item_id}}, f, indent=2)
     # Paradox: the 3D staff (builtin/entity, the display set of a staff; the lead's display-preset tool refits it) and the sprite as its inventory icon
     src = os.path.join(MODELS, "staff_of_moonlight.json")
     if os.path.exists(src):
         with open(src) as f:
             d = json.load(f)
-        d["textures"] = {"particle": "nusmp:item/paradox"}
+        d["textures"] = {"particle": "anime_multiverse:item/paradox"}
         d.pop("nusmp_display_preset", None)
         with open(os.path.join(MODELS, "paradox.json"), "w") as f:
             json.dump(d, f, indent=2)
     with open(os.path.join(MODELS, "paradox_icon.json"), "w") as f:
-        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/paradox"}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/paradox"}}, f, indent=2)
 
 
 def main():

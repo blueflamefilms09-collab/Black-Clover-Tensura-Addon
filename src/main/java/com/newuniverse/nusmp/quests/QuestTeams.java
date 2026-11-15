@@ -44,7 +44,7 @@ public final class QuestTeams {
             try { getTeamForPlayerId = mgr.getMethod("getTeamForPlayerID", UUID.class); } catch (ReflectiveOperationException absent) { getTeamForPlayerId = null; }
             try { teamOwner = team.getMethod("getOwner"); } catch (ReflectiveOperationException absent) { teamOwner = null; }
         } catch (ReflectiveOperationException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] FTB Teams found but its API could not be reached; squad credit sharing disabled", e);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] FTB Teams found but its API could not be reached; squad credit sharing disabled", e);
         }
         return ok;
     }

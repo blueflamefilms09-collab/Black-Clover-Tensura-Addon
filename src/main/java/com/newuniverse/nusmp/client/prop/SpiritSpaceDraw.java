@@ -34,8 +34,8 @@ public final class SpiritSpaceDraw {
             PORTAL_RING = AuraRender.tex("entity/spirit_space/portal_ring"), PORTAL_DISC = AuraRender.tex("entity/spirit_space/portal_disc"), HALO = AuraRender.tex("entity/spirit_space/halo");
 
     private static GeoSpec lod(GeoSpec base, String modelId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + modelId + ".png"), null);
     }
 
     private static final GeoSpec ORB = GeoSpec.of("spirit_space", "orb"), WISP = GeoSpec.of("spirit_space", "wisp");

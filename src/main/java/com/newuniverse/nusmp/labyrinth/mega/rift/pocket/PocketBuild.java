@@ -200,7 +200,7 @@ public final class PocketBuild {
                     placed++;
                 }
             } catch (RuntimeException ex) {                                         // 1.101.0: one fill that throws is skipped (logged once), so the job always finishes and the rest of the tomb stands; the watchdog puts the gap right
-                if (errors++ < 3) LOG.warn("[nusmp] A fill of the tomb {} threw at op {} ({}) and was skipped: {}", rt.pocketId, opIdx, f, ex.toString());
+                if (errors++ < 3) LOG.warn("[anime_multiverse] A fill of the tomb {} threw at op {} ({}) and was skipped: {}", rt.pocketId, opIdx, f, ex.toString());
                 placed += vol - cursor;
                 cursor = vol;
             }
@@ -270,7 +270,7 @@ public final class PocketBuild {
                     default -> { }
                 }
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The {} of the tomb {} could not be placed at {}: {}", f.type(), id, at.toShortString(), ex.toString());
+                LOG.warn("[anime_multiverse] The {} of the tomb {} could not be placed at {}: {}", f.type(), id, at.toShortString(), ex.toString());
             }
         }
     }
@@ -290,7 +290,7 @@ public final class PocketBuild {
         BlockEntity be = level.getBlockEntity(at);
         if (be instanceof RelicPedestalBlockEntity ped) {
             CompoundTag t = new CompoundTag();
-            t.putString("LootTable", "nusmp:pocket/" + rt.pocketId + "/" + table);
+            t.putString("LootTable", "anime_multiverse:pocket/" + rt.pocketId + "/" + table);
             t.putLong("LootTableSeed", seed);
             ped.loadCustomOnly(t, level.registryAccess());
             ped.setChanged();
@@ -308,7 +308,7 @@ public final class PocketBuild {
         level.setBlock(at, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, face), FLAGS);
         BlockEntity be = level.getBlockEntity(at);
         if (be instanceof ChestBlockEntity chest) {
-            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", "pocket/" + rt.pocketId + "/" + table));
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket/" + rt.pocketId + "/" + table));
             chest.setLootTable(key, seed);
         }
     }

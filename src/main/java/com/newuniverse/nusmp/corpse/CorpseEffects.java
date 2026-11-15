@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Why: the Frankenstein look of a Soul Corpse has to appear on ANY creature (a zombie, a wolf, a player) and strengthen as it rots,
  * and the client must learn that without an extra packet. A mob effect is the one piece of state vanilla already syncs to every client
- * that tracks the entity, so the marker is {@code nusmp:soul_corpse}: infinite duration, and its AMPLIFIER is the decay stage 0..3
+ * that tracks the entity, so the marker is {@code anime_multiverse:soul_corpse}: infinite duration, and its AMPLIFIER is the decay stage 0..3
  * ({@link CorpseDecay#amplifier}), refreshed by the server every five seconds. The effect itself does nothing (no attribute, no tick);
  * the rendering lives in client.corpse.CorpseDecayLayer and the rules in {@link Corpses}. It is neutral and shows no icon or particles.
  * <p>

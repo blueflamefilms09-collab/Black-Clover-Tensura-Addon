@@ -20,7 +20,7 @@ import java.util.List;
 public final class SagaRewards {
     private SagaRewards() {}
 
-    /** One stack of the reward: an item id ({@code nusmp:magic_stone}) and a count. */
+    /** One stack of the reward: an item id ({@code anime_multiverse:magic_stone}) and a count. */
     public record Stack(String item, int count) {}
 
     /** The key under which the story remembers that a saga's reward was paid; the stage is {@link #PAID}. */
@@ -59,13 +59,13 @@ public final class SagaRewards {
     /** What a cleared saga pays: Magic Stones, experience and a few fine things, more for the later sagas. Empty for a saga that has no bosses by design. */
     public static List<Stack> reward(ArcSaga saga) {
         return switch (saga) {
-            case ELF_REINCARNATION -> List.of(new Stack("nusmp:magic_stone", 12), new Stack("minecraft:experience_bottle", 16), new Stack("minecraft:golden_apple", 2));
-            case SPADE_RAID -> List.of(new Stack("nusmp:magic_stone", 16), new Stack("minecraft:experience_bottle", 24), new Stack("minecraft:golden_apple", 4), new Stack("minecraft:diamond", 4));
-            case WIZARD_KING -> List.of(new Stack("nusmp:magic_stone", 32), new Stack("minecraft:experience_bottle", 48), new Stack("minecraft:enchanted_golden_apple", 1), new Stack("minecraft:nether_star", 1));
-            case SEVEN_DEADLY_SINS -> List.of(new Stack("nusmp:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4), new Stack("minecraft:diamond", 6));
-            case DANMACHI -> List.of(new Stack("nusmp:magic_stone", 16), new Stack("minecraft:experience_bottle", 24), new Stack("minecraft:golden_apple", 3), new Stack("minecraft:emerald", 12));
+            case ELF_REINCARNATION -> List.of(new Stack("anime_multiverse:magic_stone", 12), new Stack("minecraft:experience_bottle", 16), new Stack("minecraft:golden_apple", 2));
+            case SPADE_RAID -> List.of(new Stack("anime_multiverse:magic_stone", 16), new Stack("minecraft:experience_bottle", 24), new Stack("minecraft:golden_apple", 4), new Stack("minecraft:diamond", 4));
+            case WIZARD_KING -> List.of(new Stack("anime_multiverse:magic_stone", 32), new Stack("minecraft:experience_bottle", 48), new Stack("minecraft:enchanted_golden_apple", 1), new Stack("minecraft:nether_star", 1));
+            case SEVEN_DEADLY_SINS -> List.of(new Stack("anime_multiverse:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4), new Stack("minecraft:diamond", 6));
+            case DANMACHI -> List.of(new Stack("anime_multiverse:magic_stone", 16), new Stack("minecraft:experience_bottle", 24), new Stack("minecraft:golden_apple", 3), new Stack("minecraft:emerald", 12));
             case ALLIES -> List.of();
-            case TIER_LIST -> List.of(new Stack("nusmp:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4));
+            case TIER_LIST -> List.of(new Stack("anime_multiverse:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4));
         };
     }
 

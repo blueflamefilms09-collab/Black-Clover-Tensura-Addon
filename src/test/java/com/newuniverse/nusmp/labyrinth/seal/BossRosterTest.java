@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The Peak Altar's weighted draw. */
 class BossRosterTest {
     private static final List<BossRoster.Entry> ROSTER = List.of(
-            new BossRoster.Entry("nusmp:dante_zogratis", 3), new BossRoster.Entry("nusmp:vanica_zogratis", 3),
-            new BossRoster.Entry("nusmp:zenon_zogratis", 3), new BossRoster.Entry("nusmp:floor_warden", 2));
+            new BossRoster.Entry("anime_multiverse:dante_zogratis", 3), new BossRoster.Entry("anime_multiverse:vanica_zogratis", 3),
+            new BossRoster.Entry("anime_multiverse:zenon_zogratis", 3), new BossRoster.Entry("anime_multiverse:floor_warden", 2));
 
     @Test
     void theSameSeedDrawsTheSameBoss() {
@@ -35,10 +35,10 @@ class BossRosterTest {
 
     @Test
     void unknownIdsAndZeroWeightsAreSkipped() {
-        List<BossRoster.Entry> roster = List.of(new BossRoster.Entry("othermod:dragon", 100), new BossRoster.Entry("nusmp:floor_warden", 1),
-                new BossRoster.Entry("nusmp:dante_zogratis", 0), new BossRoster.Entry(null, 5));
+        List<BossRoster.Entry> roster = List.of(new BossRoster.Entry("othermod:dragon", 100), new BossRoster.Entry("anime_multiverse:floor_warden", 1),
+                new BossRoster.Entry("anime_multiverse:dante_zogratis", 0), new BossRoster.Entry(null, 5));
         for (int i = 0; i < 200; i++) {
-            assertEquals("nusmp:floor_warden", BossRoster.pick(roster, BossRoster.seed(i, 99), id -> id.startsWith("nusmp:")));
+            assertEquals("anime_multiverse:floor_warden", BossRoster.pick(roster, BossRoster.seed(i, 99), id -> id.startsWith("anime_multiverse:")));
         }
     }
 
@@ -46,9 +46,9 @@ class BossRosterTest {
     void nothingDrawableFallsBackToTheWarden() {
         assertNull(BossRoster.pick(List.of(), 5L, id -> true));
         assertNull(BossRoster.pick(List.of(new BossRoster.Entry("othermod:dragon", 9)), 5L, id -> false));
-        assertNull(BossRoster.pick(List.of(new BossRoster.Entry("nusmp:floor_warden", 0)), 5L, id -> true));
+        assertNull(BossRoster.pick(List.of(new BossRoster.Entry("anime_multiverse:floor_warden", 0)), 5L, id -> true));
         assertEquals(BossRoster.FALLBACK, BossRoster.pickOrFallback(List.of(), 5L, id -> true));
-        assertEquals("nusmp:floor_warden", BossRoster.FALLBACK);
+        assertEquals("anime_multiverse:floor_warden", BossRoster.FALLBACK);
     }
 
     @Test

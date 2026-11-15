@@ -67,14 +67,14 @@ public final class PlayerAssets {
         try {
             Optional<Resource> r = Minecraft.getInstance().getResourceManager().getResource(rl(path));
             if (r.isEmpty()) {
-                if (!optional) warnOnce("missing:" + path, "[nusmp] player-model data file {} not found: characters use the default look", path);
+                if (!optional) warnOnce("missing:" + path, "[anime_multiverse] player-model data file {} not found: characters use the default look", path);
                 return null;
             }
             try (Reader in = r.get().openAsReader()) {
                 return JsonParser.parseReader(in).getAsJsonObject();
             }
         } catch (Exception ex) {
-            warnOnce("broken:" + path, "[nusmp] player-model data file {} could not be read ({}): characters use the default look", path, ex.toString());
+            warnOnce("broken:" + path, "[anime_multiverse] player-model data file {} could not be read ({}): characters use the default look", path, ex.toString());
             return null;
         }
     }
@@ -92,9 +92,9 @@ public final class PlayerAssets {
             try {
                 List<String> problems = new ArrayList<>();
                 PlayerLookTables.merge(LOOKS_BY_ID, PlayerLook.parseTable(o), path, problems);
-                for (String p : problems) warnOnce("dup:" + p, "[nusmp] {}", p);
+                for (String p : problems) warnOnce("dup:" + p, "[anime_multiverse] {}", p);
             } catch (RuntimeException ex) {
-                warnOnce("looks-parse:" + path, "[nusmp] {} is malformed ({}): its characters use the default look", path, ex.toString());
+                warnOnce("looks-parse:" + path, "[anime_multiverse] {} is malformed ({}): its characters use the default look", path, ex.toString());
             }
         }
     }
@@ -106,7 +106,7 @@ public final class PlayerAssets {
         try {
             HAIR_BY_ID.putAll(HairStyleData.parse(o));
         } catch (RuntimeException ex) {
-            warnOnce("hair-parse", "[nusmp] hair_styles.json is malformed ({}): characters are drawn bald", ex.toString());
+            warnOnce("hair-parse", "[anime_multiverse] hair_styles.json is malformed ({}): characters are drawn bald", ex.toString());
         }
     }
 
@@ -118,7 +118,7 @@ public final class PlayerAssets {
         if (!loadedLooks) loadLooks();
         PlayerLook l = id == null ? null : LOOKS_BY_ID.get(id);
         if (l != null) return l;
-        if (id != null && !id.isEmpty()) warnOnce("nolook:" + id, "[nusmp] no player-model look '{}': drawn with the default look", id);
+        if (id != null && !id.isEmpty()) warnOnce("nolook:" + id, "[anime_multiverse] no player-model look '{}': drawn with the default look", id);
         PlayerLook d = LOOKS_BY_ID.get(SkinPath.DEFAULT_ID);
         return d != null ? d : EMPTY;
     }
@@ -140,7 +140,7 @@ public final class PlayerAssets {
         if (id == null || id.isEmpty() || id.equals("bald")) return null;
         if (!loadedHair) loadHair();
         HairStyleData.Style s = HAIR_BY_ID.get(id);
-        if (s == null) warnOnce("nohair:" + id, "[nusmp] no hair style '{}': drawn bald", id);
+        if (s == null) warnOnce("nohair:" + id, "[anime_multiverse] no hair style '{}': drawn bald", id);
         return s;
     }
 

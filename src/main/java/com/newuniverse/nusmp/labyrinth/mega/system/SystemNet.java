@@ -45,7 +45,7 @@ public final class SystemNet {
      */
     public record Sync(boolean active, int floor, String polarity, int threat, boolean boss, int questState, int questFloor, String kind, String titleKey,
                        String titleFallback, int progress, int target, int timeLeft, boolean clockRunning, List<Integer> stats) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> CODEC = StreamCodec.of(Sync::write, Sync::read);
 
         /** A packet that hides the window. */
@@ -115,7 +115,7 @@ public final class SystemNet {
      * @param args its arguments; an argument that starts with {@code @} is itself a lang key that the client translates (an entity name), anything else is shown as it is
      */
     public record Toast(int kind, String key, List<String> args) implements CustomPacketPayload {
-        public static final Type<Toast> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_toast"));
+        public static final Type<Toast> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_toast"));
         public static final StreamCodec<FriendlyByteBuf, Toast> CODEC = StreamCodec.of(Toast::write, Toast::read);
         /** The most arguments a toast carries. */
         public static final int MAX_ARGS = 4;

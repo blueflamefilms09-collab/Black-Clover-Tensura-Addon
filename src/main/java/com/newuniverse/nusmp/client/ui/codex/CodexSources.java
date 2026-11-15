@@ -21,15 +21,15 @@ import java.util.Locale;
 
 /**
  * Why: the registry-driven catalogues of the Codex (Blocks, Entities, Magic, Effects) and the bridge from a data section to rows. Nothing here is a
- * list of names: each source walks a registry (every {@code nusmp:} block, entity type, mob effect, every {@link MagicType}) at the moment the
+ * list of names: each source walks a registry (every {@code anime_multiverse:} block, entity type, mob effect, every {@link MagicType}) at the moment the
  * Codex opens, so content added to the mod appears in the book without anyone editing a list. Each row's text is a lang line when one exists
- * ({@code nusmp.codex.<kind>.<path>}, {@code nusmp.magic.<id>.desc}), otherwise a line generated from what the registry knows. Entities and
+ * ({@code anime_multiverse.codex.<kind>.<path>}, {@code anime_multiverse.magic.<id>.desc}), otherwise a line generated from what the registry knows. Entities and
  * magics carry their discovery key, so a creature or magic the player has not met stays "???".
  */
 public final class CodexSources {
     private CodexSources() {}
 
-    private static final String NS = "nusmp";
+    private static final String NS = "anime_multiverse";
 
     private static String lang(String key, String fallback) { return I18n.exists(key) ? I18n.get(key) : fallback; }
 
@@ -51,7 +51,7 @@ public final class CodexSources {
             ItemStack icon = item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
             float hardness = b.defaultDestroyTime();
             String generated = hardness < 0f ? "A block of this mod. It cannot be broken." : "A block of this mod. Hardness " + CodexRuleValue.trim(hardness) + ".";
-            rows.add(new CodexRow(b.getName().getString(), lang("nusmp.codex.block." + id.getPath(), generated), "", icon, id.toString()));
+            rows.add(new CodexRow(b.getName().getString(), lang("anime_multiverse.codex.block." + id.getPath(), generated), "", icon, id.toString()));
         }
         return singles(rows);
     }
@@ -66,7 +66,7 @@ public final class CodexSources {
             EntityType<?> t = BuiltInRegistries.ENTITY_TYPE.get(id);
             SpawnEggItem egg = SpawnEggItem.byId(t);
             ItemStack icon = egg == null ? ItemStack.EMPTY : new ItemStack(egg);
-            rows.add(new CodexRow(t.getDescription().getString(), lang("nusmp.codex.entity." + id.getPath(), id.toString()), nullToEmpty(DiscoveryKeys.mob(t)), icon, ""));
+            rows.add(new CodexRow(t.getDescription().getString(), lang("anime_multiverse.codex.entity." + id.getPath(), id.toString()), nullToEmpty(DiscoveryKeys.mob(t)), icon, ""));
         }
         return singles(rows);
     }
@@ -79,7 +79,7 @@ public final class CodexSources {
             String soul = CodexData.prettify(m.soulType().toLowerCase(Locale.ROOT)), hit = CodexData.prettify(m.hitEffect().name().toLowerCase(Locale.ROOT));
             String generated = m.displayName() + " belongs to the " + soul + " soul. Its spells hit with " + hit.toLowerCase(Locale.ROOT) + ".";
             String note = "Soul: " + soul + "   Hit: " + hit + (m.restricted() ? "   Never rolled for a soul" : "");
-            rows.add(new CodexRow(m.displayName(), lang("nusmp.magic." + id + ".desc", generated), DiscoveryRules.magicKey(m.name()), ItemStack.EMPTY, note));
+            rows.add(new CodexRow(m.displayName(), lang("anime_multiverse.magic." + id + ".desc", generated), DiscoveryRules.magicKey(m.name()), ItemStack.EMPTY, note));
         }
         return singles(rows);
     }
@@ -93,7 +93,7 @@ public final class CodexSources {
         for (ResourceLocation id : ids) {
             MobEffect e = BuiltInRegistries.MOB_EFFECT.get(id);
             String kind = switch (e.getCategory()) { case BENEFICIAL -> "beneficial"; case HARMFUL -> "harmful"; default -> "neutral"; };
-            rows.add(new CodexRow(e.getDisplayName().getString(), lang("nusmp.codex.effect." + id.getPath(), "A " + kind + " status effect of this mod."), "", ItemStack.EMPTY, id.toString()));
+            rows.add(new CodexRow(e.getDisplayName().getString(), lang("anime_multiverse.codex.effect." + id.getPath(), "A " + kind + " status effect of this mod."), "", ItemStack.EMPTY, id.toString()));
         }
         return singles(rows);
     }
@@ -115,7 +115,7 @@ public final class CodexSources {
         return singles(rows);
     }
 
-    /** The tab title of a section: the lang key {@code nusmp.codex.section.<dir>} when translated, else the prettified directory name. */
+    /** The tab title of a section: the lang key {@code anime_multiverse.codex.section.<dir>} when translated, else the prettified directory name. */
     public static String sectionTitle(String section) { return lang(CodexData.sectionKey(section), CodexData.prettify(section)); }
 
     private static String nullToEmpty(String s) { return s == null ? "" : s; }

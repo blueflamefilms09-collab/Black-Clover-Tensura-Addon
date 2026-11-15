@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Why: this is where Rare gear does the thing the owner named it for, "high-grade items providing magic resistance". When any creature is about to take
- * damage, the pieces it WEARS in the four armour positions and the weapon and shield it HOLDS are read for their {@code nusmp:gear_grade} component, their
+ * damage, the pieces it WEARS in the four armour positions and the weapon and shield it HOLDS are read for their {@code anime_multiverse:gear_grade} component, their
  * percentages are summed (pure {@link ResistMath}), held to the configured ceiling ({@code maxResist}, 40 by default, never above 90) and, if the damage is
  * magic ({@link #isMagicDamage}), the amount is cut by that share. It is an EVENT and not an attribute for three reasons: vanilla armour does not reduce magic
  * damage at all, so there is no vanilla attribute to lean on; Tensura's own magic-resistance attribute has a scale and a formula that live in its code and
@@ -117,7 +117,7 @@ public final class GearEvents {
             float out = reduced(e.getEntity(), e.getSource(), in, ceiling);
             if (out != in) e.setAmount(out);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon gear resistance failed once and is skipped for that hit", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon gear resistance failed once and is skipped for that hit", ex);
         }
     }
 
@@ -129,7 +129,7 @@ public final class GearEvents {
             GearInfo info = e.getOriginalStack().get(GearComponents.GEAR.get());
             if (info != null) NusmpEvents.fireOnce(player, QUEST_KEY, info.gradeId());
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon gear quest hook failed once", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon gear quest hook failed once", ex);
         }
     }
 }

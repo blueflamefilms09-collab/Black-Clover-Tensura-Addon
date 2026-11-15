@@ -13,8 +13,8 @@ import java.util.Map;
 
 /**
  * Why: the "IPlayerQuestData capability" of the brief is, in NeoForge 1.21, a DATA ATTACHMENT (the replacement for capabilities that holds saved per-player data), and the mod already does it this
- * way for the System ({@code SystemAttachments}). {@code nusmp:hub_quests} holds the {@link PlayerQuestData} (accepted quests, done quests, the day book-keeping, the deepest floor reached and
- * the shop's per-day counters) and {@code nusmp:hub_map} holds the {@link MapMemory} (the rooms seen, the floors mapped). Both are saved with the player, follow the player through dimensions and
+ * way for the System ({@code SystemAttachments}). {@code anime_multiverse:hub_quests} holds the {@link PlayerQuestData} (accepted quests, done quests, the day book-keeping, the deepest floor reached and
+ * the shop's per-day counters) and {@code anime_multiverse:hub_map} holds the {@link MapMemory} (the rooms seen, the floors mapped). Both are saved with the player, follow the player through dimensions and
  * restarts and are copied on death (a quest chain or a map must not be lost by dying). Each is serialised with a {@link Codec} built from the plain pure {@code Data} record, with
  * {@code optionalFieldOf} on every field so a save from before a field existed, a hand-edited file or a damaged value still loads (the pure classes clamp what they read); an empty value is not
  * written at all. Neither is synced by NeoForge: the client gets {@link HubNet} packets, which also carry things that are not in the attachment. Register {@link #ATTACHMENTS} on the mod bus.
@@ -53,11 +53,11 @@ public final class HubAttachments {
 
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, NUSMP.MODID);
 
-    /** {@code nusmp:hub_quests}: the player's quests, their done list and the shop counters. */
+    /** {@code anime_multiverse:hub_quests}: the player's quests, their done list and the shop counters. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerQuestData>> QUESTS = ATTACHMENTS.register("hub_quests",
             () -> AttachmentType.builder(() -> new PlayerQuestData()).serialize(QUEST_CODEC, PlayerQuestData::hasContent).copyOnDeath().build());
 
-    /** {@code nusmp:hub_map}: the rooms the player has seen and the floors they have mapped. */
+    /** {@code anime_multiverse:hub_map}: the rooms the player has seen and the floors they have mapped. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<MapMemory>> MAP = ATTACHMENTS.register("hub_map",
             () -> AttachmentType.builder(() -> new MapMemory()).serialize(MAP_CODEC, MapMemory::hasContent).copyOnDeath().build());
 }

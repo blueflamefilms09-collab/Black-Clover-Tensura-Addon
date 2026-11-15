@@ -22,7 +22,7 @@ public final class DjinnNet {
 
     /** A key press: 0 = up one phase (or the Extreme Magic from a Full Equip), 1 = down one, 2 = back to none, 3 = draw the Rukh. */
     public record Act(int action) implements CustomPacketPayload {
-        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_act"));
+        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "djinn_act"));
         public static final StreamCodec<FriendlyByteBuf, Act> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> buf.writeByte(p.action()),
                 buf -> new Act(buf.readByte()));
@@ -39,7 +39,7 @@ public final class DjinnNet {
      */
     public record Sync(int entity, int phase, int djinn, int left, int magoi, int assim, int trust, int lock, int cooldown, int pulse, int flags)
             implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "djinn_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeVarInt(p.entity());
@@ -65,7 +65,7 @@ public final class DjinnNet {
      * 16 ticks before the bolt lands ({@link TinyDjinnCue}), so the little figure can point, dash and arrive with it. Purely visual: it changes nothing on the server.
      */
     public record Cue(int owner, int foe) implements CustomPacketPayload {
-        public static final Type<Cue> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_cue"));
+        public static final Type<Cue> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "djinn_cue"));
         public static final StreamCodec<FriendlyByteBuf, Cue> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeVarInt(p.owner()); buf.writeVarInt(p.foe()); },
                 buf -> new Cue(buf.readVarInt(), buf.readVarInt()));

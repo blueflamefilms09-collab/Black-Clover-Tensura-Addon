@@ -65,10 +65,10 @@ class RareStandSetTest {
 
     @Test
     void everyItemIsOneOfTheDungeonsOwnArmourOrVanillaIron() throws IOException {
-        JsonObject roster = JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/nusmp/loot/roster.json"), StandardCharsets.UTF_8)).getAsJsonObject();
+        JsonObject roster = JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/anime_multiverse/loot/roster.json"), StandardCharsets.UTF_8)).getAsJsonObject();
         Set<String> loot = new HashSet<>();
         JsonArray armour = roster.getAsJsonArray("armour");
-        for (JsonElement e : armour) loot.add("nusmp:" + e.getAsJsonObject().get("id").getAsString());
+        for (JsonElement e : armour) loot.add("anime_multiverse:" + e.getAsJsonObject().get("id").getAsString());
         Set<String> iron = Set.of("minecraft:iron_helmet", "minecraft:iron_chestplate", "minecraft:iron_leggings", "minecraft:iron_boots");
         for (int depth : new int[] {0, 12, 35, 150, 500}) {
             for (long seed = 0; seed < 300; seed++) {

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Why: 1.96.0 removed the Fairy Tail magics from the skill book system, and the Skill Books with all their unique skills were removed later ({@link #RETIRED_LINES}); but a world saved before that may still hold their registry ids: a player whose skill list names {@code nusmp:ft_fire_dragons_roar}
- * or {@code nusmp:line_celestial_spirit_magic}, a chest or inventory that holds a {@code nusmp:skill_book} whose id component names one of the removed books. A registry entry that disappears can make such a
+ * Why: 1.96.0 removed the Fairy Tail magics from the skill book system, and the Skill Books with all their unique skills were removed later ({@link #RETIRED_LINES}); but a world saved before that may still hold their registry ids: a player whose skill list names {@code anime_multiverse:ft_fire_dragons_roar}
+ * or {@code anime_multiverse:line_celestial_spirit_magic}, a chest or inventory that holds a {@code anime_multiverse:skill_book} whose id component names one of the removed books. A registry entry that disappears can make such a
  * save fail to load, so the ids are kept here, as plain strings (no Minecraft type, so a unit test can read them), and {@link LegacySkills} registers one INERT, hidden stub skill under each of them (they do
  * nothing, cannot be used, and are forgotten from the player at the next login by {@link LegacyMigration}). The data, the lang, the loot and the shop never mention them again: the test that scans those
  * for the removed magics exempts nothing except this class. The book ids are what an old book stack carries; reading one converts it into a random book the player does not know yet.
@@ -15,7 +15,7 @@ public final class LegacyIds {
 
     /**
      * The line ids of the 284 unique skills the Skill Books taught, retired together with the books (the books and the skills they alone taught were removed at the owner's request, see
-     * {@code docs/skill_books_removed.md}). Each id was the registry id {@code nusmp:line_<id>}; it stays registered as an inert, hidden stub so a player's saved skill list that names it still loads, and the
+     * {@code docs/skill_books_removed.md}). Each id was the registry id {@code anime_multiverse:line_<id>}; it stays registered as an inert, hidden stub so a player's saved skill list that names it still loads, and the
      * stub is forgotten at the next login ({@link LegacyMigration}). Registered FIRST by {@link LegacySkills}, in this (id) order, which is the order the live skills had.
      */
     public static final List<String> RETIRED_LINES = List.of(
@@ -65,7 +65,7 @@ public final class LegacyIds {
             "way_of_the_wind", "wendy_sky_dragon", "werewolf_gale_kick", "white_flame_sovereign", "white_tiger_baek", "wizard_king_sovereign",
             "wynn_fimbulvetr");
 
-    /** The paths of the twelve Heavy Knight technique skills ({@code nusmp:hk_*}) that ran as modes of four of the retired skills; they were never learned, their ids stay as inert stubs. */
+    /** The paths of the twelve Heavy Knight technique skills ({@code anime_multiverse:hk_*}) that ran as modes of four of the retired skills; they were never learned, their ids stay as inert stubs. */
     public static final List<String> RETIRED_TECHNIQUES = List.of(
             "hk_provoke", "hk_shield_wall", "hk_shield_bash", "hk_power_strike", "hk_swift_step", "hk_crescent_cut", "hk_gamblers_coin", "hk_jackpot", "hk_ember_bite", "hk_insanity",
             "hk_howl_of_ruin", "hk_fang_of_insanity");
@@ -87,7 +87,7 @@ public final class LegacyIds {
             "ft_ice_make_lance", "ft_ice_make_floor", "ft_ice_make_shield", "ft_ice_make_cannon", "ft_ice_make_saucer", "ft_ice_make_eagle", "ft_ice_make_hammer", "ft_ice_make_excalibur");
 
     /**
-     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death). The ids {@code nusmp:<path>}
+     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death). The ids {@code anime_multiverse:<path>}
      * stay registered as inert stubs so a world that saved one of them still loads; the stub is forgotten at the next login or respawn ({@link LegacyMigration}). Their 32x32 icons stay in the jar.
      */
     public static final List<String> REMOVED_SKILLS = List.of(
@@ -95,10 +95,10 @@ public final class LegacyIds {
 
     private static final Set<String> LINE_SET = Set.copyOf(REMOVED_LINES);
 
-    /** The book id a removed line's Skill Book carries ({@code nusmp:<line>_book}). */
-    public static String bookId(String line) { return "nusmp:" + line + "_book"; }
+    /** The book id a removed line's Skill Book carries ({@code anime_multiverse:<line>_book}). */
+    public static String bookId(String line) { return "anime_multiverse:" + line + "_book"; }
 
-    /** True when the bare line id (or {@code nusmp:<line>}) is one of the removed magics. */
+    /** True when the bare line id (or {@code anime_multiverse:<line>}) is one of the removed magics. */
     public static boolean isRemovedLine(String lineOrRouteId) {
         if (lineOrRouteId == null) return false;
         int c = lineOrRouteId.indexOf(':');
@@ -107,7 +107,7 @@ public final class LegacyIds {
 
     /** True when the book id (the {@code skill_book_id} of a stack) names a removed magic's book. */
     public static boolean isRemovedBook(String bookId) {
-        if (bookId == null || !bookId.startsWith("nusmp:") || !bookId.endsWith("_book")) return false;
-        return LINE_SET.contains(bookId.substring("nusmp:".length(), bookId.length() - "_book".length()));
+        if (bookId == null || !bookId.startsWith("anime_multiverse:") || !bookId.endsWith("_book")) return false;
+        return LINE_SET.contains(bookId.substring("anime_multiverse:".length(), bookId.length() - "_book".length()));
     }
 }

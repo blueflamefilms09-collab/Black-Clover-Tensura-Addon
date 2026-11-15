@@ -39,7 +39,7 @@ COLOUR_SLOTS = [GLOW, ACCENT, TRIM, MAIN]
 
 
 def seed_of(rid):
-    return int.from_bytes(hashlib.sha256(("nusmp:uq:" + rid).encode()).digest()[:8], "big")
+    return int.from_bytes(hashlib.sha256(("anime_multiverse:uq:" + rid).encode()).digest()[:8], "big")
 
 
 def _basis(d):

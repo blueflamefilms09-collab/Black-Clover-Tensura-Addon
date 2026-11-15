@@ -98,12 +98,12 @@ public final class RuneState {
                 write(p, c.stamps());
                 ACTIVE.put(p.getUUID(), c.stamps().onUntil());
                 WARNED.remove(p.getUUID());
-                tell(p, Component.translatableWithFallback("nusmp.mana_method.state.start", "Rune State: ON for %s. The runes answer your call.", RuneAccess.clock(c.stamps().onUntil() - now)).withStyle(ChatFormatting.LIGHT_PURPLE));
+                tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.start", "Rune State: ON for %s. The runes answer your call.", RuneAccess.clock(c.stamps().onUntil() - now)).withStyle(ChatFormatting.LIGHT_PURPLE));
                 sendState(p, true, (int) Math.min(RuneAccess.MAX_SECONDS, (c.stamps().onUntil() - now + 19) / 20));
                 return true;
             }
-            case ALREADY_ON -> tell(p, Component.translatableWithFallback("nusmp.mana_method.state.already", "Rune State: already ON (%s left).", RuneAccess.clock(RuneAccess.onLeft(s, now))).withStyle(ChatFormatting.GRAY));
-            default -> tell(p, Component.translatableWithFallback("nusmp.mana_method.state.cooling", "Rune State: the runes have not settled yet (%s left).", RuneAccess.clock(RuneAccess.cooldownLeft(s, now))).withStyle(ChatFormatting.RED));
+            case ALREADY_ON -> tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.already", "Rune State: already ON (%s left).", RuneAccess.clock(RuneAccess.onLeft(s, now))).withStyle(ChatFormatting.GRAY));
+            default -> tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.cooling", "Rune State: the runes have not settled yet (%s left).", RuneAccess.clock(RuneAccess.cooldownLeft(s, now))).withStyle(ChatFormatting.RED));
         }
         return false;
     }
@@ -136,11 +136,11 @@ public final class RuneState {
             if (now >= en.getValue()) {                                                  // the natural end: the cooldown was stamped at the start
                 it.remove();
                 WARNED.remove(en.getKey());
-                tell(p, Component.translatableWithFallback("nusmp.mana_method.state.end", "Rune State: OFF. It can be called again in %s.", RuneAccess.clock(RuneAccess.cooldownLeft(s, now))).withStyle(ChatFormatting.GRAY));
+                tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.end", "Rune State: OFF. It can be called again in %s.", RuneAccess.clock(RuneAccess.cooldownLeft(s, now))).withStyle(ChatFormatting.GRAY));
                 sendState(p, false, 0);
             } else if (RuneAccess.warnDue(new Stamps(en.getValue(), s.cooldownUntil()), now, WARNED.contains(en.getKey()))) {
                 WARNED.add(en.getKey());
-                tell(p, Component.translatableWithFallback("nusmp.mana_method.state.warn", "Rune State: the runes fade in %s.", RuneAccess.clock(en.getValue() - now)).withStyle(ChatFormatting.YELLOW));
+                tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.warn", "Rune State: the runes fade in %s.", RuneAccess.clock(en.getValue() - now)).withStyle(ChatFormatting.YELLOW));
             }
         }
     }
@@ -155,7 +155,7 @@ public final class RuneState {
         Stamps ended = RuneAccess.endNow(new Stamps(until, read(p).cooldownUntil()), now, ManaMethodConfig.timedCooldownSeconds());
         write(p, ended);
         if (tellPlayer) {
-            tell(p, Component.translatableWithFallback("nusmp.mana_method.state.cut", "Rune State: the runes fade early. It can be called again in %s.", RuneAccess.clock(RuneAccess.cooldownLeft(ended, now))).withStyle(ChatFormatting.GRAY));
+            tell(p, Component.translatableWithFallback("anime_multiverse.mana_method.state.cut", "Rune State: the runes fade early. It can be called again in %s.", RuneAccess.clock(RuneAccess.cooldownLeft(ended, now))).withStyle(ChatFormatting.GRAY));
             sendState(p, false, 0);
         }
         return true;

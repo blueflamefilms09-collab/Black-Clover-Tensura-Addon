@@ -30,7 +30,7 @@ class SectorFillTest {
 
     @Test
     void theArrivalCellIsTheLandingsMarkerTurnedWithThePiece() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 18, RoomKind.LANDING, List.of(marker("nusmp:arrival", 2, 9, 3)));
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 18, RoomKind.LANDING, List.of(marker("anime_multiverse:arrival", 2, 9, 3)));
         for (int rot = 0; rot < 4; rot++) {
             Placed p = new Placed(0, landing, "p", rot, new Vec(100, 56, 200), 0, -1, -1, -1, false);
             SectorFill f = SectorFill.of(result(REGION, List.of(p), null), REGION);
@@ -41,7 +41,7 @@ class SectorFillTest {
 
     @Test
     void aLandingWithoutAnArrivalMarkerFallsBackToTheMiddleOneAboveTheFloor() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of());
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of());
         Placed p = new Placed(0, landing, "p", 0, new Vec(90, 56, 90), 0, -1, -1, -1, false);
         SectorFill f = SectorFill.of(result(REGION, List.of(p), null), REGION);
         assertEquals(new Vec(94, MegaGrid.FLOOR_Y + 1, 94), f.arrival);
@@ -49,10 +49,10 @@ class SectorFillTest {
 
     @Test
     void theFirstMarkerOfAKindWinsInPieceOrderThenMarkerOrder() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("nusmp:arrival", 4, 9, 4)));
-        Shape arena = shape("nusmp:mega/arena/pit", 18, 18, RoomKind.ARENA,
-                List.of(marker("nusmp:guardian_spawn", 5, 9, 5), marker("nusmp:guardian_spawn", 6, 9, 6), marker("nusmp:gatekeeper", 1, 10, 8)));
-        Shape vault = shape("nusmp:mega/vault/one", 9, 9, RoomKind.VAULT, List.of(marker("nusmp:vault_center", 4, 9, 4), marker("nusmp:guardian_spawn", 2, 9, 2)));
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("anime_multiverse:arrival", 4, 9, 4)));
+        Shape arena = shape("anime_multiverse:mega/arena/pit", 18, 18, RoomKind.ARENA,
+                List.of(marker("anime_multiverse:guardian_spawn", 5, 9, 5), marker("anime_multiverse:guardian_spawn", 6, 9, 6), marker("anime_multiverse:gatekeeper", 1, 10, 8)));
+        Shape vault = shape("anime_multiverse:mega/vault/one", 9, 9, RoomKind.VAULT, List.of(marker("anime_multiverse:vault_center", 4, 9, 4), marker("anime_multiverse:guardian_spawn", 2, 9, 2)));
         Placed a = new Placed(0, landing, "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Placed b = new Placed(1, arena, "p", 0, new Vec(20, 56, 0), 1, 0, 0, 0, false);
         Placed c = new Placed(2, vault, "p", 0, new Vec(50, 56, 0), 2, 1, 0, 0, false);
@@ -65,8 +65,8 @@ class SectorFillTest {
 
     @Test
     void pedestalsAreOneCellBelowTheirMarkersAndKeepTheirOrder() {
-        Shape vault = shape("nusmp:mega/vault/three", 9, 9, RoomKind.VAULT,
-                List.of(marker("nusmp:pedestal;slot=0", 2, 10, 4), marker("nusmp:pedestal;slot=1", 4, 10, 4), marker("nusmp:pedestal;slot=2", 6, 10, 4)));
+        Shape vault = shape("anime_multiverse:mega/vault/three", 9, 9, RoomKind.VAULT,
+                List.of(marker("anime_multiverse:pedestal;slot=0", 2, 10, 4), marker("anime_multiverse:pedestal;slot=1", 4, 10, 4), marker("anime_multiverse:pedestal;slot=2", 6, 10, 4)));
         Placed p = new Placed(0, vault, "p", 2, new Vec(30, 56, 30), 0, -1, -1, -1, false);
         SectorFill f = SectorFill.of(result(REGION, List.of(p), null), REGION);
         assertEquals(3, f.pedestals.size());
@@ -78,8 +78,8 @@ class SectorFillTest {
 
     @Test
     void doorCapsAreNeverRoomsButTheirMarkersAreKept() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("nusmp:arrival", 4, 9, 4)));
-        Shape cap = new Shape("nusmp:mega/cap/niche", 3, 6, 4, RoomKind.CAP, List.of(), List.of(marker("nusmp:furniture;as=table", 1, 1, 2)), 0);
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("anime_multiverse:arrival", 4, 9, 4)));
+        Shape cap = new Shape("anime_multiverse:mega/cap/niche", 3, 6, 4, RoomKind.CAP, List.of(), List.of(marker("anime_multiverse:furniture;as=table", 1, 1, 2)), 0);
         Placed a = new Placed(0, landing, "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Placed b = new Placed(1, cap, "p", 0, new Vec(20, 56, 0), 1, 0, 0, 0, false);
         Placed c = new Placed(2, landing, "p", 0, new Vec(60, 56, 0), 1, 0, 0, 0, false);
@@ -95,7 +95,7 @@ class SectorFillTest {
 
     @Test
     void theBoundsAreTheUnionOfAllPiecesAndTheRegionForAnEmptyPlan() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of());
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of());
         Placed a = new Placed(0, landing, "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Placed b = new Placed(1, landing, "p", 0, new Vec(50, 56, 20), 1, 0, 0, 0, false);
         SectorFill f = SectorFill.of(result(REGION, List.of(a, b), null), REGION);
@@ -107,7 +107,7 @@ class SectorFillTest {
 
     @Test
     void theViewCarriesTheSealTheNextIdAndTheState() {
-        Shape landing = shape("nusmp:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("nusmp:arrival", 4, 9, 4)));
+        Shape landing = shape("anime_multiverse:mega/landing/hall", 9, 9, RoomKind.LANDING, List.of(marker("anime_multiverse:arrival", 4, 9, 4)));
         Placed a = new Placed(0, landing, "p", 0, new Vec(0, 56, 0), 0, -1, -1, -1, false);
         Result.Expansion e = new Result.Expansion(0, new Vec(4, 65, 0), Facing.NORTH, 3, 4, 2, new Box(0, 56, -40, 8, 103, -1), 1);
         SectorFill f = SectorFill.of(result(REGION, List.of(a), e), REGION);

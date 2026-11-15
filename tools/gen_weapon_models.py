@@ -3,9 +3,9 @@
     python tools/gen_weapon_models.py            (then: python tools/item_preview/preview_weapons.py)
 
 For each weapon in SPECS this writes
-  assets/nusmp/weapon_meshes/<id>.txt        the mesh WeaponRenderer draws (header lines + one line per quad)
-  assets/nusmp/textures/entity/weapon/<id>.png        its 128x128 skin
-  assets/nusmp/textures/entity/weapon/<id>_glow.png   its emissive layer (drawn additive, full bright), if it has one
+  assets/anime_multiverse/weapon_meshes/<id>.txt        the mesh WeaponRenderer draws (header lines + one line per quad)
+  assets/anime_multiverse/textures/entity/weapon/<id>.png        its 128x128 skin
+  assets/anime_multiverse/textures/entity/weapon/<id>_glow.png   its emissive layer (drawn additive, full bright), if it has one
 The inventory icons stay the old sprites (textures/item/<id>.png, untouched); each mesh is placed on its sprite's diagonal
 (measured here from the sprite), so the old display transforms still fit.
 
@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_arcane_vfx_textures import fbm  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 TS = 128
 
 
@@ -2508,7 +2508,7 @@ RELICS += [("zogratis_hourglass", zogratis_hourglass)]               # 1.46.0: u
 
 
 def chronicle_sigil(m, a):
-    """1.61.0, the Chronicle Sigil (nusmp:chronicle_sigil, docs/arc/world.md): a round seal of lapis in a heavy gold rim, an open book raised on each face with a
+    """1.61.0, the Chronicle Sigil (anime_multiverse:chronicle_sigil, docs/arc/world.md): a round seal of lapis in a heavy gold rim, an open book raised on each face with a
     spark above it, four gold studs round the rim and a bail with a ring above, all with a soft gold glow. Upright, placed on its icon's box like a relic
     (tools/gen_chronicle_assets.py makes the icon, so run that first)."""
     gold, gold_hi, gold_lo = (222, 170, 52), (255, 226, 130), (120, 78, 22)
@@ -3223,9 +3223,9 @@ def _bc_write_icon():
         with open(os.path.join(models, name + ".json"), "w", newline="\n") as f:
             json.dump(data, f, indent=2)
             f.write("\n")
-    dump("butcher_cleaver_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/butcher_cleaver"}})
+    dump("butcher_cleaver_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/butcher_cleaver"}})
     src = json.load(open(os.path.join(models, "magebane_longsword.json")))
-    src["textures"] = {"particle": "nusmp:item/butcher_cleaver"}
+    src["textures"] = {"particle": "anime_multiverse:item/butcher_cleaver"}
     # In hand the standard transforms hold (the mesh is placed so the middle of its grip is where the hand takes the icon's diagonal). The cleaver is
     # only a third of the icon's length and sits low on the diagonal, so on the ground and in a frame it is moved to the middle of the model
     # space (its box is centred at 0.325, 0.351 of the 0.5, 0.5 the transforms turn about; a frame turns the model 180 degrees about y, so x flips).

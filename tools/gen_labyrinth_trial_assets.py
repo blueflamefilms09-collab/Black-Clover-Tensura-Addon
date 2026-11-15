@@ -17,7 +17,7 @@ import sys
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 N = 16
 
 CYAN, CYAN_DIM, CYAN_HALO = (150, 245, 255), (40, 95, 110), (50, 150, 175)
@@ -204,24 +204,24 @@ def build():
     files[tx + "spawn_glyph_side.png"] = png_bytes(rune_side(1935106, (40, 34, 52), (22, 18, 30), VIOLET))
 
     def bottom_top(top, bottom, side, extra=None):
-        m = {"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "nusmp:block/" + top, "bottom": "nusmp:block/" + bottom, "side": "nusmp:block/" + side}}
+        m = {"parent": "minecraft:block/cube_bottom_top", "textures": {"top": "anime_multiverse:block/" + top, "bottom": "anime_multiverse:block/" + bottom, "side": "anime_multiverse:block/" + side}}
         if extra:
             m.update(extra)
         return m
 
     for mode in ("idle", "active", "cleared"):
         files["models/block/sealed_archway_%s.json" % mode] = json_bytes(bottom_top("sealed_archway_top", "sealed_archway_top", "sealed_archway_eye_" + mode))
-    files["models/block/magic_barrier.json"] = json_bytes({"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "nusmp:block/magic_barrier"}})
+    files["models/block/magic_barrier.json"] = json_bytes({"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "anime_multiverse:block/magic_barrier"}})
     files["models/block/ward_rune.json"] = json_bytes(bottom_top("ward_rune_top", "ward_rune_side", "ward_rune_side"))
     files["models/block/spawn_glyph.json"] = json_bytes(bottom_top("spawn_glyph_top", "spawn_glyph_side", "spawn_glyph_side"))
 
-    files["blockstates/sealed_archway.json"] = json_bytes({"variants": {"phase=%s" % m: {"model": "nusmp:block/sealed_archway_%s" % m} for m in ("idle", "active", "cleared")}})
+    files["blockstates/sealed_archway.json"] = json_bytes({"variants": {"phase=%s" % m: {"model": "anime_multiverse:block/sealed_archway_%s" % m} for m in ("idle", "active", "cleared")}})
     for b in ("magic_barrier", "ward_rune", "spawn_glyph"):
-        files["blockstates/%s.json" % b] = json_bytes({"variants": {"": {"model": "nusmp:block/" + b}}})
+        files["blockstates/%s.json" % b] = json_bytes({"variants": {"": {"model": "anime_multiverse:block/" + b}}})
 
-    files["models/item/sealed_archway.json"] = json_bytes({"parent": "nusmp:block/sealed_archway_idle"})
+    files["models/item/sealed_archway.json"] = json_bytes({"parent": "anime_multiverse:block/sealed_archway_idle"})
     for b in ("magic_barrier", "ward_rune", "spawn_glyph"):
-        files["models/item/%s.json" % b] = json_bytes({"parent": "nusmp:block/" + b})
+        files["models/item/%s.json" % b] = json_bytes({"parent": "anime_multiverse:block/" + b})
     return files
 
 

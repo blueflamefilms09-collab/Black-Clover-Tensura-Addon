@@ -57,7 +57,7 @@ final class GoliathMoves {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] The Goliath's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] The Goliath's {} stopped: {}", what, t.toString());
             }
         };
     }

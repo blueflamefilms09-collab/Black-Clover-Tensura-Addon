@@ -56,7 +56,7 @@ final class BossBarPainter {
     }
 
     private static ResourceLocation tex(String name) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/bossbar/" + name + ".png");
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/bossbar/" + name + ".png");
     }
 
     // ================================================================ vanilla look

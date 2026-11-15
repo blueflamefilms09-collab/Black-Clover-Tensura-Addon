@@ -9,7 +9,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "item", "grimoire_book", "page_runes.png")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "grimoire_book", "page_runes.png")
 N, SS = 64, 4
 
 

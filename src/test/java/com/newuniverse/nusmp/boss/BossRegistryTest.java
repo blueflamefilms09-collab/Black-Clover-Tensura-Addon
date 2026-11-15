@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class BossRegistryTest {
     @Test
     void theSevenBossesAreRecognisedByNamespaceAndPath() {
-        assertEquals("dante", BossRegistry.idOf("nusmp", "dante_zogratis").orElseThrow());
-        assertEquals("vanica", BossRegistry.idOf("nusmp", "vanica_zogratis").orElseThrow());
-        assertEquals("zenon", BossRegistry.idOf("nusmp", "zenon_zogratis").orElseThrow());
-        assertEquals("lucius", BossRegistry.idOf("nusmp", "lucius_zogratis").orElseThrow());
-        assertEquals("devil_avatar", BossRegistry.idOf("nusmp", "devil_avatar").orElseThrow());
-        assertEquals("goliath", BossRegistry.idOf("nusmp", "goliath").orElseThrow());
-        assertEquals("charybdis_spawn", BossRegistry.idOf("nusmp", "charybdis_spawn").orElseThrow());
+        assertEquals("dante", BossRegistry.idOf("anime_multiverse", "dante_zogratis").orElseThrow());
+        assertEquals("vanica", BossRegistry.idOf("anime_multiverse", "vanica_zogratis").orElseThrow());
+        assertEquals("zenon", BossRegistry.idOf("anime_multiverse", "zenon_zogratis").orElseThrow());
+        assertEquals("lucius", BossRegistry.idOf("anime_multiverse", "lucius_zogratis").orElseThrow());
+        assertEquals("devil_avatar", BossRegistry.idOf("anime_multiverse", "devil_avatar").orElseThrow());
+        assertEquals("goliath", BossRegistry.idOf("anime_multiverse", "goliath").orElseThrow());
+        assertEquals("charybdis_spawn", BossRegistry.idOf("anime_multiverse", "charybdis_spawn").orElseThrow());
         assertEquals(7, BossRegistry.ids().size());
         assertEquals(7, new HashSet<>(BossRegistry.ids()).size(), "ids are unique");
     }
@@ -26,7 +26,7 @@ class BossRegistryTest {
     @Test
     void vanillaAndTensuraEntitiesAreNeverBosses() {
         // the same paths in another namespace, and ordinary mobs: all refused
-        for (String ns : new String[]{"minecraft", "tensura", "manascore", "curios", "", "NUSMP", "nusmp "})
+        for (String ns : new String[]{"minecraft", "tensura", "manascore", "curios", "", "NUSMP", "anime_multiverse "})
             for (String path : BossRegistry.paths())
                 assertTrue(BossRegistry.idOf(ns, path).isEmpty(), ns + ":" + path);
         for (String path : new String[]{"zombie", "ender_dragon", "wither", "warden", "slime", "goblin", "orc_lord", "charybdis", "hound_dog", "lucius", "goliath_boss"})
@@ -39,8 +39,8 @@ class BossRegistryTest {
     void theOrderTheFollowersAndOtherModEntitiesAreExcluded() {
         for (String path : new String[]{"god_of_order", "dark_disciple", "blood_beast", "zogratis_clone", "spirit_lord", "zagred", "gatekeeper",
                 "magicule_scale", "dungeon_slime", "tower_wizard"})
-            assertTrue(BossRegistry.idOf("nusmp", path).isEmpty(), path);
-        assertTrue(BossRegistry.idOf("nusmp", null).isEmpty());
+            assertTrue(BossRegistry.idOf("anime_multiverse", path).isEmpty(), path);
+        assertTrue(BossRegistry.idOf("anime_multiverse", null).isEmpty());
         assertTrue(BossRegistry.idOf(null, "goliath").isEmpty());
     }
 

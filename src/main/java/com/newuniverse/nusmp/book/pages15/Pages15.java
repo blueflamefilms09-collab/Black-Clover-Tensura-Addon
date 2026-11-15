@@ -22,7 +22,7 @@ import java.util.Set;
 public final class Pages15 {
     private Pages15() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp/pages15");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse/pages15");
     private static final Set<Integer> BROKEN = new HashSet<>();
 
     /** Is the project switched on (server setting {@code magic.pagesFifteen}, default true)? */
@@ -46,7 +46,7 @@ public final class Pages15 {
             };
             return com.newuniverse.nusmp.star.StarPages.extend(bookPath, l == null ? List.of() : l);      // Star nodes: the seven new Star pages follow the nine of Batch1 (docs/vfx_remake/star_ingame.md)
         } catch (RuntimeException | LinkageError e) {
-            if (BROKEN.add(batch)) LOG.error("[nusmp] pages15 batch {} failed for {}; its books keep their old pages", batch, bookPath, e);
+            if (BROKEN.add(batch)) LOG.error("[anime_multiverse] pages15 batch {} failed for {}; its books keep their old pages", batch, bookPath, e);
             return List.of();
         }
     }

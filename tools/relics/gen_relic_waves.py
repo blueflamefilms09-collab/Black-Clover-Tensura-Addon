@@ -6,7 +6,7 @@
 
 For each batch module `relic_rows_<name>.py` (BATCHES below) it writes `relics/wave/Wave<N>.java` (a def list with the same shape as the older waves, so RelicRenderCoverageTest, relic_inventory.py and
 gen_curios_tags.py read it unchanged), `textures/item/<id>.png`, `models/item/<id>.json` (builtin/entity, the hand renderer draws it) and `<id>_icon.json` (the flat sprite for the inventory), and
-a marked block of lang lines in en_us.json (`item.nusmp.<id>`, `.card`, `.desc`). Run gen_curios_tags.py afterwards. Why generated: hundreds of relics from one table of names, colours,
+a marked block of lang lines in en_us.json (`item.anime_multiverse.<id>`, `.card`, `.desc`). Run gen_curios_tags.py afterwards. Why generated: hundreds of relics from one table of names, colours,
 passives and ability shapes (Wave31Acts) cannot sensibly be hand-written Java, and this keeps every one of them in the same, tested form."""
 import importlib
 import json
@@ -19,8 +19,8 @@ import relic_icon_lib as ICONS  # noqa: E402
 import relic_rows_lib as RL  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-WAVE_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
+WAVE_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
 LANG = os.path.join(RES, "lang", "en_us.json")
 BEGIN, END = "_generated.relic_waves.begin", "_generated.relic_waves.end"
 
@@ -186,9 +186,9 @@ def main(check):
             raise SystemExit("no distinct sprite for " + r["id"])
         taken.add(icon)
         bad += write(os.path.join(RES, "textures", "item", r["id"] + ".png"), icon, check, binary=True)
-        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         bad += write(os.path.join(RES, "models", "item", r["id"] + ".json"), model, check)
-        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         bad += write(os.path.join(RES, "models", "item", r["id"] + "_icon.json"), icon_model, check)
     bad += write_lang(all_rows, check)
     print("%d generated relics in %d waves" % (len(all_rows), len(BATCHES)))
@@ -201,8 +201,8 @@ def write_lang(rows, check):
     block = ['  "%s": "",\n' % BEGIN]
     for r in rows:
         d = json.dumps(r["desc"], ensure_ascii=False)
-        block.append('  %s: %s,\n  %s: %s,\n  %s: %s,\n' % (json.dumps("item.nusmp." + r["id"]), json.dumps(r["name"], ensure_ascii=False), json.dumps("item.nusmp." + r["id"] + ".card"),
-                                                          json.dumps("%s Grade. %s" % (r["grade"].title(), r["desc"]), ensure_ascii=False), json.dumps("item.nusmp." + r["id"] + ".desc"), d))
+        block.append('  %s: %s,\n  %s: %s,\n  %s: %s,\n' % (json.dumps("item.anime_multiverse." + r["id"]), json.dumps(r["name"], ensure_ascii=False), json.dumps("item.anime_multiverse." + r["id"] + ".card"),
+                                                          json.dumps("%s Grade. %s" % (r["grade"].title(), r["desc"]), ensure_ascii=False), json.dumps("item.anime_multiverse." + r["id"] + ".desc"), d))
     block.append('  "%s": ""' % END)
     block = "".join(block)
     if '"%s"' % BEGIN in text:

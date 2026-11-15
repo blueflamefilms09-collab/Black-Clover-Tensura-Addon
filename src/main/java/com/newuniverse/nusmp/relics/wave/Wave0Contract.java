@@ -84,7 +84,7 @@ final class Wave0Contract {
     private static final ResourceLocation M_HP = id("w0_blood_hp"), M_STR = id("w0_blood_str"), M_DEX = id("w0_blood_dex"),
             M_LUCK = id("w0_knowledge_luck"), M_DAMNED = id("w0_damned_hp"), M_AURA = id("w0_blood_aura"), M_POOL = id("w0_power_pool");
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** The contract this player has signed ("blood", "riches", "knowledge", "power"), or "". */
     static String signed(net.minecraft.world.entity.player.Player p) { return Wave0Util.persisted(p).getString(K_CONTRACT); }

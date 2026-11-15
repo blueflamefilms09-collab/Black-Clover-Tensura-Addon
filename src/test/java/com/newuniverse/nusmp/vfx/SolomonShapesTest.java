@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SolomonShapesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYER = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer/SolomonLayer.java");
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
 
     private static final List<String> NINE = List.of("SOLOMON_COPY", "SOLOMON_CONVERGENCE", "SOLOMON_REALM", "SOLOMON_CHAIN", "SOLOMON_ERASURE", "SOLOMON_MARK", "SOLOMON_PILLAR", "SOLOMON_SKIN", "SOLOMON_ABSORB");
 

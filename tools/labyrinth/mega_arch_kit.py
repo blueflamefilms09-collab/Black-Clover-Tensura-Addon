@@ -122,7 +122,7 @@ def put_if_free(mt, x, y, z, block, props=None):
 
 
 def seeded(mt, tag=""):
-    return random.Random("nusmp:mega:arch:" + mt.name + ":" + tag)
+    return random.Random("anime_multiverse:mega:arch:" + mt.name + ":" + tag)
 
 
 def clear(mt, x, y, z):

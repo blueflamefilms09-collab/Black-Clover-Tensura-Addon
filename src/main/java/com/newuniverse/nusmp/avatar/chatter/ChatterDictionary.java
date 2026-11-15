@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Why: the "massive dictionary" of Avatar speech is data, not code, so packs can add or replace voices. A file
- * {@code data/nusmp/avatar_chatter/<personality>.json} looks like
+ * {@code data/anime_multiverse/avatar_chatter/<personality>.json} looks like
  * {@code {"personality":"TSUNDERE","events":{"COMBAT_START":["line", ...], ...}}}. This class parses and holds the result as an immutable snapshot
  * (swapped atomically on every reload), and has NO Minecraft imports so the schema test can read the shipped files directly.
  */

@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class RelicExclusivityRulesTest {
     @Test
     void exclusiveAllowsOnlyTheTwoLabyrinthTables() {
-        assertTrue(RelicExclusivity.allowsChest("nusmp", "chests/dungeon_relic_vault", true));
-        assertTrue(RelicExclusivity.allowsChest("nusmp", "chests/labyrinth_pedestal", true));
-        assertFalse(RelicExclusivity.allowsChest("nusmp", "chests/labyrinth_trial", true), "the trial chests are mundane");
-        assertFalse(RelicExclusivity.allowsChest("nusmp", "chests/library_ruins", true));
+        assertTrue(RelicExclusivity.allowsChest("anime_multiverse", "chests/dungeon_relic_vault", true));
+        assertTrue(RelicExclusivity.allowsChest("anime_multiverse", "chests/labyrinth_pedestal", true));
+        assertFalse(RelicExclusivity.allowsChest("anime_multiverse", "chests/labyrinth_trial", true), "the trial chests are mundane");
+        assertFalse(RelicExclusivity.allowsChest("anime_multiverse", "chests/library_ruins", true));
         assertFalse(RelicExclusivity.allowsChest("minecraft", "chests/simple_dungeon", true));
         assertFalse(RelicExclusivity.allowsChest("minecraft", "chests/ancient_city", true));
         assertFalse(RelicExclusivity.allowsChest("minecraft", "chests/trial_chambers/reward", true));
         assertFalse(RelicExclusivity.allowsChest("othermod", "chests/dungeon_relic_vault", true), "same path, another namespace");
-        assertFalse(RelicExclusivity.allowsChest("nusmp", "dungeon_relic_vault", true), "the folder is part of the id");
-        assertFalse(RelicExclusivity.allowsChest("nusmp", null, true));
+        assertFalse(RelicExclusivity.allowsChest("anime_multiverse", "dungeon_relic_vault", true), "the folder is part of the id");
+        assertFalse(RelicExclusivity.allowsChest("anime_multiverse", null, true));
         assertFalse(RelicExclusivity.allowsChest(null, "chests/dungeon_relic_vault", true));
     }
 
@@ -25,7 +25,7 @@ class RelicExclusivityRulesTest {
     void notExclusiveIsTheOldBehaviour() {
         assertTrue(RelicExclusivity.allowsChest("minecraft", "chests/simple_dungeon", false));
         assertTrue(RelicExclusivity.allowsChest("minecraft", "chests/ancient_city", false));
-        assertTrue(RelicExclusivity.allowsChest("nusmp", "chests/labyrinth_trial", false));
+        assertTrue(RelicExclusivity.allowsChest("anime_multiverse", "chests/labyrinth_trial", false));
         assertTrue(RelicExclusivity.allowsChest("x", null, false), "the old modifier decided by the path words, not here");
     }
 
@@ -40,6 +40,6 @@ class RelicExclusivityRulesTest {
     @Test
     void theAllowedTablesAreExactlyTheVaultAndThePedestal() {
         assertEquals(2, RelicExclusivity.VAULT_TABLES.size());
-        assertEquals("nusmp", RelicExclusivity.NAMESPACE);
+        assertEquals("anime_multiverse", RelicExclusivity.NAMESPACE);
     }
 }

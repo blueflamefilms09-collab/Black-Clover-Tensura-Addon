@@ -100,7 +100,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
 
     /**
      * Dimensional Labyrinth: the creature in the line of sight is pulled into a pocket dimension, an ever-shifting maze ({@link PocketLabyrinth}); with the skill mastered, up to two creatures next to it
-     * come too. A boss, a server whose setting {@code pocketDimension} is off, or a server without the {@code nusmp:trial} dimension gets the old cage instead ({@link Cage}).
+     * come too. A boss, a server whose setting {@code pocketDimension} is off, or a server without the {@code anime_multiverse:trial} dimension gets the old cage instead ({@link Cage}).
      */
     private static boolean labyrinth(ServerPlayer p, boolean mastered) {
         LivingEntity t = JudgmentState.first(p, IsrafilRules.LABYRINTH_RANGE, 1.0);

@@ -18,7 +18,7 @@ public final class SongNet {
 
     /** The Sing key went down (true) or up (false). */
     public record Key(boolean down) implements CustomPacketPayload {
-        public static final Type<Key> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "song_key"));
+        public static final Type<Key> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "song_key"));
         public static final StreamCodec<FriendlyByteBuf, Key> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> buf.writeBoolean(p.down()), buf -> new Key(buf.readBoolean()));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
@@ -26,7 +26,7 @@ public final class SongNet {
 
     /** Level 0..100, mode id, Crescendo charge 0..100 (255 = not armed). */
     public record Meter(int level, int mode, int charge) implements CustomPacketPayload {
-        public static final Type<Meter> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "song_meter"));
+        public static final Type<Meter> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "song_meter"));
         public static final StreamCodec<FriendlyByteBuf, Meter> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeByte(p.level()); buf.writeByte(p.mode()); buf.writeByte(p.charge()); },
                 buf -> new Meter(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()));

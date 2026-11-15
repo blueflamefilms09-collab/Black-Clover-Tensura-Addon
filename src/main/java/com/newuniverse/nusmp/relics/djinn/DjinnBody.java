@@ -16,16 +16,16 @@ import net.minecraft.world.entity.player.Player;
  * copy as a fallback if the attribute is missing.
  * <ul>
  *   <li><b>Trust</b> = the Djinn's lesson in magic: a persistent {@code +0.2% ability mastery gain per point} on
- *       {@link TensuraAttributes#ABILITY_MASTERY_GAIN} (id {@code nusmp:djinn_trust}); 100 trust is +20% mastery gain.</li>
+ *       {@link TensuraAttributes#ABILITY_MASTERY_GAIN} (id {@code anime_multiverse:djinn_trust}); 100 trust is +20% mastery gain.</li>
  *   <li><b>Assimilation</b> = the body turning into the Djinn's kind: a persistent {@code -0.5% ability learning gain per point} on
- *       {@link TensuraAttributes#ABILITY_LEARNING_GAIN} (id {@code nusmp:djinn_assimilation}; a mind that is less its own learns less), plus,
+ *       {@link TensuraAttributes#ABILITY_LEARNING_GAIN} (id {@code anime_multiverse:djinn_assimilation}; a mind that is less its own learns less), plus,
  *       re-applied while it lasts, a flat resistance of the Djinn's element (up to +0.3) and, from the mark, +5% of its element boost.</li>
  * </ul>
  */
 final class DjinnBody {
     private DjinnBody() {}
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     static final ResourceLocation TRUST = id("djinn_trust"), ASSIM = id("djinn_assimilation"), RESIST = id("djinn_assim_resist"), MARK = id("djinn_mark");
     static final double TRUST_PER_POINT = 0.002, ASSIM_PER_POINT = 0.005, RESIST_AT_FULL = 0.3;

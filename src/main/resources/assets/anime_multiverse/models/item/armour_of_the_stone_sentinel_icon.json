@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "anime_multiverse:item/armour_of_the_stone_sentinel"
+  }
+}

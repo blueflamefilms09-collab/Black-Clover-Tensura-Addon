@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * character file, a family has no renderer case or an entity has no look or probe in {@code RemodelRenderers}, or a mob that is meant to look like the player was remodelled.
  */
 class RemodelTableTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
     private static final String MAIN = "src/main/java/com/newuniverse/nusmp/";
     /** The clips the pose clock plays for every model (ZogratisPose). */
     private static final List<String> CLIPS = List.of("idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "transform", "death");
@@ -45,7 +45,7 @@ class RemodelTableTest {
         for (RemodelTable.Entry en : RemodelTable.ENTRIES) {
             assertTrue(seen.add(en.entityId()), "entity listed twice: " + en.entityId());
             assertFalse(en.models().isEmpty(), en.entityId() + " has no model");
-            assertTrue(sources.contains("register(\"" + en.entityId() + "\""), "nusmp:" + en.entityId() + " is not registered anywhere in src/main/java (a stale id in RemodelTable?)");
+            assertTrue(sources.contains("register(\"" + en.entityId() + "\""), "anime_multiverse:" + en.entityId() + " is not registered anywhere in src/main/java (a stale id in RemodelTable?)");
         }
     }
 
@@ -138,8 +138,8 @@ class RemodelTableTest {
             if (en.family() == RemodelTable.Family.BOSS || en.family() == RemodelTable.Family.MOB)
                 assertTrue(src.contains("\"" + en.entityId() + "\""), "RemodelRenderers draws nothing for " + en.entityId() + " (no look or probe case)");
         }
-        String nusmp = Files.readString(Path.of(MAIN + "NUSMP.java"));
-        assertTrue(nusmp.contains("RemodelRenderers.init(modEventBus)"), "NUSMP does not call RemodelRenderers.init: the old renderers would stay in use");
+        String anime_multiverse = Files.readString(Path.of(MAIN + "NUSMP.java"));
+        assertTrue(anime_multiverse.contains("RemodelRenderers.init(modEventBus)"), "NUSMP does not call RemodelRenderers.init: the old renderers would stay in use");
     }
 
     @Test

@@ -67,7 +67,7 @@ public final class HubSelfTests {
     // ------------------------------------------------------------------------------------------------ the dimension
     private static SelfTests.Result dimension(MinecraftServer server) {
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension (data/nusmp/dimension/sanctuary.json did not load)");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension (data/anime_multiverse/dimension/sanctuary.json did not load)");
         BlockPos spawn = HubTravel.arrivalPos();
         hub.getChunk(spawn.getX() >> 4, spawn.getZ() >> 4);
         BlockPos ground = new BlockPos(spawn.getX(), HubLayout.SURFACE_Y - 1, spawn.getZ());
@@ -85,7 +85,7 @@ public final class HubSelfTests {
     // ------------------------------------------------------------------------------------------------ the plaza
     private static SelfTests.Result plaza(MinecraftServer server) {
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension");
         if (!HubTravel.ensurePlaza(hub)) return fail("ensurePlaza could not guarantee the home gate (see the log)");
         List<String> missing = new ArrayList<>();
         for (int x = HubLayout.HOME_GATE_X - HubPlazaLayout.GATE_HALF_WIDTH; x <= HubLayout.HOME_GATE_X + HubPlazaLayout.GATE_HALF_WIDTH; x++) {
@@ -110,7 +110,7 @@ public final class HubSelfTests {
     // ------------------------------------------------------------------------------------------------ passive mobs only
     private static SelfTests.Result noHostile(MinecraftServer server) {
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension");
         if (!HubConfig.get(HubConfig.PASSIVE_ONLY)) return ok("skipped: hub.passiveOnly is false in the config");
         BlockPos spawn = HubTravel.arrivalPos();
         hub.getChunk(spawn.getX() >> 4, spawn.getZ() >> 4);
@@ -177,7 +177,7 @@ public final class HubSelfTests {
     // ------------------------------------------------------------------------------------------------ no foreign structures
     private static SelfTests.Result noStructures(MinecraftServer server) {
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension");
         int cx0 = HubLayout.PLAZA_X >> 4, cz0 = HubLayout.PLAZA_Z >> 4, chunks = 0;
         List<String> bad = new ArrayList<>();
         for (int dx = -2; dx <= 2; dx++) {
@@ -202,7 +202,7 @@ public final class HubSelfTests {
         if (HubRules.refuses(home) != (!build || protect)) return fail("the home gate's protection does not follow the config (build " + build + ", protect " + protect + ")");
         if (HubRules.refuses(open) != !build) return fail("open ground's protection does not follow hub.buildEnabled");
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension");
         FakePlayer p = SelfTests.player(hub, PLAYER, HubLayout.SPAWN_X + 0.5, HubLayout.SPAWN_Y, HubLayout.SPAWN_Z + 0.5);
         net.minecraft.world.level.Level before = p.level();
         boolean left = HubTravel.useGate(p, open);
@@ -215,10 +215,10 @@ public final class HubSelfTests {
     // ------------------------------------------------------------------------------------------------ the live biome
     private static SelfTests.Result biome(MinecraftServer server) {
         ServerLevel hub = HubTravel.level(server);
-        if (hub == null) return fail("no nusmp:sanctuary dimension");
+        if (hub == null) return fail("no anime_multiverse:sanctuary dimension");
         BlockPos spawn = HubTravel.arrivalPos();
         Holder<Biome> holder = hub.getBiome(spawn);
-        ResourceLocation want = ResourceLocation.fromNamespaceAndPath("nusmp", "sanctuary_plains");
+        ResourceLocation want = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "sanctuary_plains");
         if (!holder.is(want)) return fail("the biome at the arrival cell is " + holder.unwrapKey().map(k -> k.location().toString()).orElse("?") + ", not " + want);
         Biome biome = holder.value();
         List<String> problems = new ArrayList<>();

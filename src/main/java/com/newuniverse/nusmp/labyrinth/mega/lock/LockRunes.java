@@ -74,7 +74,7 @@ public final class LockRunes {
             }
             glow(level, pos, exit);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The release rune for {} could not be placed: {}", key, e.toString());
+            LOG.warn("[anime_multiverse] The release rune for {} could not be placed: {}", key, e.toString());
         }
     }
 
@@ -104,7 +104,7 @@ public final class LockRunes {
             }
             RUNES.keySet().removeIf(k -> !live.contains(k));
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] rune sweep: {}", e.toString());
+            LOG.debug("[anime_multiverse] rune sweep: {}", e.toString());
         }
     }
 
@@ -116,7 +116,7 @@ public final class LockRunes {
                 for (Entity e : level.getEntities((Entity) null, box, x -> x.getTags().contains(tag))) e.discard();
             }
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] rune sweep: {}", e.toString());
+            LOG.debug("[anime_multiverse] rune sweep: {}", e.toString());
         }
     }
 
@@ -159,7 +159,7 @@ public final class LockRunes {
         JsonObject root = new JsonObject();
         root.addProperty("text", "");
         JsonArray extra = new JsonArray();
-        extra.add(translatable("message.nusmp.mega.system.ui.header", "[ SYSTEM ]", "aqua", false));
+        extra.add(translatable("message.anime_multiverse.mega.system.ui.header", "[ SYSTEM ]", "aqua", false));
         extra.add(plain("\n"));
         String nameKey = exit ? LockText.RUNE_EXIT : LockText.RUNE_RELEASE;
         extra.add(translatable(nameKey, LockText.english(nameKey), "gold", true));

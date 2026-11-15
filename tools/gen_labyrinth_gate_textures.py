@@ -2,14 +2,14 @@
 """
 1.35.0: the assets of the Labyrinth's two portal blocks (docs/labyrinth/c_gate.md):
 
-  Labyrinth Gate       nusmp:labyrinth_gate   a translucent full cube whose texture is an animated swirl, deep blue and violet with white
+  Labyrinth Gate       anime_multiverse:labyrinth_gate   a translucent full cube whose texture is an animated swirl, deep blue and violet with white
                                               sparks winding inward (the floating gate of the Overworld arch; walk into it)
-  Labyrinth Exit Gate  nusmp:labyrinth_exit   the same swirl in golden-white, winding outward (the way back, on the arrival pad)
+  Labyrinth Exit Gate  anime_multiverse:labyrinth_exit   the same swirl in golden-white, winding outward (the way back, on the arrival pad)
 
     python3 tools/gen_labyrinth_gate_textures.py            writes everything
     python3 tools/gen_labyrinth_gate_textures.py --check    verifies the written files (sizes, frame count, JSON) and exits 1 on a problem
 
-Writes assets/nusmp/textures/block/{labyrinth_gate,labyrinth_exit}.png (16 x 128: eight 16x16 frames) with their .png.mcmeta (frametime 3,
+Writes assets/anime_multiverse/textures/block/{labyrinth_gate,labyrinth_exit}.png (16 x 128: eight 16x16 frames) with their .png.mcmeta (frametime 3,
 interpolated), the blockstates, the block models (cube_all with render_type translucent) and the item models (the block model is the icon).
 Only Pillow and the standard library. Idempotent: running it again rewrites the same bytes (the sparks are seeded).
 """
@@ -24,7 +24,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "src", "main", "resources")
-ASSETS = os.path.join(RES, "assets", "nusmp")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
 SIZE, FRAMES, ARMS = 16, 8, 3
 
 GATES = {
@@ -85,10 +85,10 @@ def write_all():
     for name, (core, mid, rim, spark, seed, direction) in GATES.items():
         swirl_sheet(core, mid, rim, spark, seed, direction).save(os.path.join(tex, name + ".png"), optimize=True)
         write_json(os.path.join(tex, name + ".png.mcmeta"), {"animation": {"frametime": 3, "interpolate": True}})
-        write_json(os.path.join(ASSETS, "blockstates", name + ".json"), {"variants": {"": {"model": "nusmp:block/" + name}}})
+        write_json(os.path.join(ASSETS, "blockstates", name + ".json"), {"variants": {"": {"model": "anime_multiverse:block/" + name}}})
         write_json(os.path.join(ASSETS, "models", "block", name + ".json"),
-                   {"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "nusmp:block/" + name}})
-        write_json(os.path.join(ASSETS, "models", "item", name + ".json"), {"parent": "nusmp:block/" + name})
+                   {"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "anime_multiverse:block/" + name}})
+        write_json(os.path.join(ASSETS, "models", "item", name + ".json"), {"parent": "anime_multiverse:block/" + name})
     print("wrote the Labyrinth gate assets:", ", ".join(GATES))
 
 

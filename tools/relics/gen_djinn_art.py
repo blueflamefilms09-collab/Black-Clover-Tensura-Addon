@@ -6,7 +6,7 @@
     python3 tools/relics/gen_djinn_art.py --djinn baal      one Djinn
     python3 tools/relics/gen_djinn_art.py --preview out_dir render the armour on a mannequin (front / three-quarter / side / back) into out_dir
 
-What it writes (assets/nusmp):
+What it writes (assets/anime_multiverse):
     textures/item/djinn_seal_<id>.png + models/item/djinn_seal_<id>.json    the twelve Seals (16x16, parent item/generated)
     textures/entity/djinn/<id>_rune.png        64x64 skin overlay: the body-art, drawn as a second additive pass over the player model
     textures/entity/djinn/djinn_silhouette.png   one white 64x64 mask of the skin's UV islands (the fresnel aura pass is drawn through it)
@@ -32,8 +32,8 @@ import mesh_lib as ml                      # noqa: E402
 import djinn_parts as dp                   # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-DJINN_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "djinn", "Djinn.java")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
+DJINN_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "djinn", "Djinn.java")
 
 ROW = re.compile(r'(\w+)\("(\w+)", "([^"]+)", Affinity\.(\w+), 0x([0-9A-Fa-f]+), 0x([0-9A-Fa-f]+), "([^"]+)",\s*'
                  r'new Look\(Look\.Horns\.(\w+), Look\.Wings\.(\w+), Look\.Tail\.(\w+), Look\.Halo\.(\w+), (true|false)\)')

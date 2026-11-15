@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * variants of one room really differ. Reads the real files; nothing here needs Minecraft.
  */
 class RoomsRebuiltFilesTest {
-    private static final Path MANIFEST = Path.of("src/main/resources/data/nusmp/mega/rooms_rebuilt.json");
+    private static final Path MANIFEST = Path.of("src/main/resources/data/anime_multiverse/mega/rooms_rebuilt.json");
 
     private record Entry(String shipped, int variants) {}
 
@@ -56,9 +56,9 @@ class RoomsRebuiltFilesTest {
     }
 
     /** The mod's own blocks a template may use (mega_lib.CUSTOM). */
-    private static final Set<String> CUSTOM = Set.of("nusmp:gatekeeper_door", "nusmp:peak_altar", "nusmp:relic_pedestal", "nusmp:labyrinth_exit", "nusmp:labyrinth_gate", "nusmp:sealed_archway",
-            "nusmp:magic_barrier", "nusmp:ward_rune", "nusmp:spawn_glyph", "nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:sigil_plate", "nusmp:riddle_stone", "nusmp:labyrinth_bricks",
-            "nusmp:labyrinth_tiles", "nusmp:labyrinth_pillar", "nusmp:labyrinth_glyph", "nusmp:labyrinth_lantern", "nusmp:magicule_vein", "nusmp:guardian_altar");
+    private static final Set<String> CUSTOM = Set.of("anime_multiverse:gatekeeper_door", "anime_multiverse:peak_altar", "anime_multiverse:relic_pedestal", "anime_multiverse:labyrinth_exit", "anime_multiverse:labyrinth_gate", "anime_multiverse:sealed_archway",
+            "anime_multiverse:magic_barrier", "anime_multiverse:ward_rune", "anime_multiverse:spawn_glyph", "anime_multiverse:pitfall_tile", "anime_multiverse:snuffer_glyph", "anime_multiverse:sigil_plate", "anime_multiverse:riddle_stone", "anime_multiverse:labyrinth_bricks",
+            "anime_multiverse:labyrinth_tiles", "anime_multiverse:labyrinth_pillar", "anime_multiverse:labyrinth_glyph", "anime_multiverse:labyrinth_lantern", "anime_multiverse:magicule_vein", "anime_multiverse:guardian_altar");
 
     private static final Set<String> FUNCTIONAL = Set.of("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault",
             "minecraft:ender_chest", "minecraft:shulker_box", "minecraft:hopper", "minecraft:dispenser", "minecraft:dropper", "minecraft:crafter", "minecraft:brewing_stand", "minecraft:furnace",
@@ -126,10 +126,10 @@ class RoomsRebuiltFilesTest {
                 TemplateFile v = TemplateFile.load(RoomVariants.variantId(e.shipped(), k));
                 boolean corridor = shipped.sx == 9 && shipped.sz % 9 == 0 || shipped.sz == 9 && shipped.sx % 9 == 0;
                 for (TemplateFile.Block b : shipped.blocks.values()) {
-                    boolean functional = b.id().startsWith("nusmp:") || FUNCTIONAL.contains(b.id());
+                    boolean functional = b.id().startsWith("anime_multiverse:") || FUNCTIONAL.contains(b.id());
                     if (!functional) continue;
                     TemplateFile.Block n = v.blocks.get(b.cell());
-                    if (corridor && !b.id().startsWith("nusmp:") && !b.id().equals("minecraft:chest") && !b.id().equals("minecraft:barrel") && n == null) continue;   // furniture in a corridor lane: the 7 x 7 cut removes it anyway
+                    if (corridor && !b.id().startsWith("anime_multiverse:") && !b.id().equals("minecraft:chest") && !b.id().equals("minecraft:barrel") && n == null) continue;   // furniture in a corridor lane: the 7 x 7 cut removes it anyway
                     assertNotNull(n, RoomVariants.variantId(e.shipped(), k) + ": " + b.id() + " at " + b.cell() + " is gone");
                     assertEquals(b.id(), n.id(), RoomVariants.variantId(e.shipped(), k) + " at " + b.cell());
                     assertEquals(b.props(), n.props(), RoomVariants.variantId(e.shipped(), k) + " at " + b.cell());
@@ -156,7 +156,7 @@ class RoomsRebuiltFilesTest {
                     if (b.id().startsWith("minecraft:") ? !vanilla.contains(b.id()) : !CUSTOM.contains(b.id())) bad.add(b.id());
                 }
                 assertTrue(bad.isEmpty(), id + " uses blocks that are not vanilla and not an allowed mod block: " + bad);
-                assertFalse(v.blocks.values().stream().anyMatch(b -> b.id().equals("nusmp:weapon_rack")), id + " places a weapon rack");
+                assertFalse(v.blocks.values().stream().anyMatch(b -> b.id().equals("anime_multiverse:weapon_rack")), id + " places a weapon rack");
                 assertTrue(v.maxRow() <= 46, id + " reaches row " + v.maxRow() + ": the roof stays inside the 48-block envelope");
                 assertTrue(v.stands() <= 1, id + " carries " + v.stands() + " armour stands");
                 if (v.stands() == 1) {

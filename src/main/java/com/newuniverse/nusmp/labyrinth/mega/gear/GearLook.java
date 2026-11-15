@@ -24,7 +24,7 @@ import java.util.List;
 final class GearLook {
     private GearLook() {}
 
-    private static final String P = "message.nusmp.mega.mgr.";
+    private static final String P = "message.anime_multiverse.mega.mgr.";
 
     /** Sets the custom name and the lore of a finished stack. */
     static void apply(ItemStack stack, GearSpec spec) {

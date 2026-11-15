@@ -103,7 +103,7 @@ public final class MegaTravel {
         try {
             return enterNow(p, from, road);
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon entry failed for {}: {}", p == null ? "?" : p.getGameProfile().getName(), t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon entry failed for {}: {}", p == null ? "?" : p.getGameProfile().getName(), t.toString(), t);
             if (p != null) tell(p, "The Labyrinth does not answer.");
             return false;
         }
@@ -142,7 +142,7 @@ public final class MegaTravel {
             }
         }
         WAITING.put(p.getUUID(), new Waiting(p.getUUID(), p.level().dimension(), p.blockPosition(), server.getTickCount(), road, party));
-        p.displayClientMessage(Component.translatable("message.nusmp.mega.core.waking", percent()), true);
+        p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.core.waking", percent()), true);
         p.sendSystemMessage(Component.literal("The Labyrinth stirs. Stay by the gate: it will take you in when it is ready.").withStyle(ChatFormatting.DARK_PURPLE));
         return true;
     }
@@ -231,7 +231,7 @@ public final class MegaTravel {
                 if (inside >= 2) NusmpEvents.fire(p, "mega.party", Integer.toString(inside));
             }
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] The party line of the gate failed: {}", e.toString());
+            LOG.debug("[anime_multiverse] The party line of the gate failed: {}", e.toString());
         }
     }
 
@@ -274,10 +274,10 @@ public final class MegaTravel {
                     p.sendSystemMessage(Component.literal("The Labyrinth is taking too long to wake. Try the gate again later.").withStyle(ChatFormatting.GRAY));
                     continue;
                 }
-                if (now % TELL_EVERY == 0) p.displayClientMessage(Component.translatable("message.nusmp.mega.core.waking", percent()), true);
+                if (now % TELL_EVERY == 0) p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.core.waking", percent()), true);
             }
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon waiting list failed: {}", t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon waiting list failed: {}", t.toString(), t);
             WAITING.clear();
         }
     }
@@ -303,7 +303,7 @@ public final class MegaTravel {
             if (r == null || (r.kind != RoomKind.LANDING && r.kind != RoomKind.STAIRWELL)) return;
             remember(p, s);
         } catch (Throwable t) {
-            LOG.debug("[nusmp] Landing check failed: {}", t.toString());
+            LOG.debug("[anime_multiverse] Landing check failed: {}", t.toString());
         }
     }
 

@@ -34,10 +34,10 @@ public final class ForgeSkillLoader implements ResourceManagerReloadListener {
                 JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
                 list.add(ForgeSkillParser.parse(file, root));
             } catch (Exception ex) {
-                LOG.warn("[nusmp] Skipping avatar skill {}: {}", e.getKey(), ex.toString());
+                LOG.warn("[anime_multiverse] Skipping avatar skill {}: {}", e.getKey(), ex.toString());
             }
         }
         ForgeSkills.replaceAll(list);
-        LOG.info("[nusmp] Loaded {} Soul Forge skills", ForgeSkills.size());
+        LOG.info("[anime_multiverse] Loaded {} Soul Forge skills", ForgeSkills.size());
     }
 }

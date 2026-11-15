@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Why: every sealed door of a hidden realm or a tomb needs a sentence next to it that says what opens it and where the way is (1.101.0, docs/labyrinth/pocket_fix.md): a glowing, waxed wall sign
- * (nobody can rewrite it) whose four lines are lang keys {@code sign.nusmp.pocket.<key>.<n>} with an English fallback, so it reads in any language the lang file has. The texts live here, in one table, so the
+ * (nobody can rewrite it) whose four lines are lang keys {@code sign.anime_multiverse.pocket.<key>.<n>} with an English fallback, so it reads in any language the lang file has. The texts live here, in one table, so the
  * builders of the realm and of the tombs and the tests agree on them. Server side only.
  */
 public final class PocketSigns {
@@ -26,7 +26,7 @@ public final class PocketSigns {
     public static Component line(String key, int n) {
         String[] l = lines(key);
         String text = n < l.length ? l[n] : "";
-        return text.isEmpty() ? Component.empty() : Component.translatableWithFallback("sign.nusmp.pocket." + key + "." + n, text);
+        return text.isEmpty() ? Component.empty() : Component.translatableWithFallback("sign.anime_multiverse.pocket." + key + "." + n, text);
     }
 
     /** The direction a letter N, E, S, W names (the way a wall sign or lever FACES, out of its wall). */

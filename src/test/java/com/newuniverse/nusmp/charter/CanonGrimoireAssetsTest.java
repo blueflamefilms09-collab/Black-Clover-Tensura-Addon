@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * "Charter Grimoire" for the player. Docs: docs/canon/canon_grimoire.md. The in-game look is previewed only by tools/canon/preview_canon.py.
  */
 class CanonGrimoireAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
     private static final List<String> CONTEXTS = List.of("thirdperson_righthand", "thirdperson_lefthand", "firstperson_righthand", "firstperson_lefthand", "ground", "gui", "head", "fixed");
     private static final Pattern MODEL = Pattern.compile("charter_grimoire_([a-z0-9_]+)\\.json");
 
@@ -44,7 +44,7 @@ class CanonGrimoireAssetsTest {
     }
 
     private static String local(String ref) {
-        assertTrue(ref.startsWith("nusmp:"), "this mod's namespace: " + ref);
+        assertTrue(ref.startsWith("anime_multiverse:"), "this mod's namespace: " + ref);
         return ref.substring(6);
     }
 
@@ -76,7 +76,7 @@ class CanonGrimoireAssetsTest {
             JsonObject top = json(ASSETS + "models/item/charter_grimoire_" + id + ".json");
             assertEquals("neoforge:separate_transforms", top.get("loader").getAsString(), id);
             assertEquals("front", top.get("gui_light").getAsString(), id + ": the flat icon must be lit from the front");
-            assertEquals("nusmp:item/charter_grimoire_" + id + "_icon", top.getAsJsonObject("textures").get("particle").getAsString(), id);
+            assertEquals("anime_multiverse:item/charter_grimoire_" + id + "_icon", top.getAsJsonObject("textures").get("particle").getAsString(), id);
             String body = local(top.getAsJsonObject("base").get("parent").getAsString());
             assertEquals("item/charter_grimoire_" + id + "_3d", body, id);
             assertTrue(new File(ASSETS + "models/" + body + ".json").isFile(), id + ": the body model is missing");
@@ -175,7 +175,7 @@ class CanonGrimoireAssetsTest {
             assertTrue(new File(ASSETS + "models/item/charter_grimoire_" + id + "_v1.json").isFile(), id + ": the old model is kept as _v1");
             assertTrue(new File(ASSETS + "textures/item/charter_grimoire_" + id + "_v1.png").isFile(), id + ": the old texture is kept as _v1");
             JsonObject old = json(ASSETS + "models/item/charter_grimoire_" + id + "_v1.json");
-            assertEquals("nusmp:item/charter_grimoire_" + id + "_v1", old.getAsJsonObject("textures").get("0").getAsString(), id + ": v1 points at the v1 texture");
+            assertEquals("anime_multiverse:item/charter_grimoire_" + id + "_v1", old.getAsJsonObject("textures").get("0").getAsString(), id + ": v1 points at the v1 texture");
             assertTrue(old.getAsJsonArray("elements").size() >= 5, id);
         }
     }

@@ -2,7 +2,7 @@
 
 Deterministic and font-free (every machine writes the same pixels). Written for this mod, same palette as tools/gen_hercules_vfx_textures.py (burnished bronze, bright gold, warm ivory marble,
 ember orange, a little deep crimson). It only ADDS two files; the 17 flat sprites of gen_hercules_vfx_textures.py stay and are still drawn when the setting `herculesModels` is off.
-Output: src/main/resources/assets/nusmp/textures/particle/hercules_model_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/hercules_model_*.png
 
     python tools/gen_hercules_model_textures.py            # all
     python tools/gen_hercules_model_textures.py atlas      # only the atlas

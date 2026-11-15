@@ -171,7 +171,7 @@ public final class ShadowMinions {
             level.playSound(null, mob.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 1.0f, 0.6f);
             return mob;
         } catch (RuntimeException | LinkageError failed) {
-            LOG.warn("[nusmp] A shadow of {} could not be raised: {}", f.type(), failed.toString());
+            LOG.warn("[anime_multiverse] A shadow of {} could not be raised: {}", f.type(), failed.toString());
             if (m != null && !m.isRemoved()) {
                 ROSTER.remove(m.getUUID());
                 m.discard();

@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.labyrinth.mega.enc.Band;
 
 /**
  * Why: "which rooms lock, and how hard is the wave inside" is a taste the owner will keep tuning, so it is one small value per room in a data file
- * ({@code data/nusmp/mega/lockdown/rooms.json}) instead of a constant in code. {@code lock} says whether a room that matches closes at all (a puzzle room, a
+ * ({@code data/anime_multiverse/mega/lockdown/rooms.json}) instead of a constant in code. {@code lock} says whether a room that matches closes at all (a puzzle room, a
  * trap room and a cavern deliberately do not: their own mechanics or their open shape are the challenge), {@code chance} lets a common kind (the halls) lock
  * for a share of its rooms only (the share is decided once per room from the sector's seed, so a room is either a challenge room or not, always), {@code band}
  * is the size of trouble the wave brings (the same bands as the Dungeon Master's dice), {@code waves} how many waves must be beaten one after the other,

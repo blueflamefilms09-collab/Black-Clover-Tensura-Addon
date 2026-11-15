@@ -129,7 +129,7 @@ public class OtherworldTridentItem extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatable("item.nusmp.otherworld_trident.desc").withStyle(ChatFormatting.DARK_PURPLE));
+        tip.add(Component.translatable("item.anime_multiverse.otherworld_trident.desc").withStyle(ChatFormatting.DARK_PURPLE));
     }
 
     public static UUID ownerOf(ItemStack s) { CompoundTag t = data(s); return t.hasUUID(OWNER) ? t.getUUID(OWNER) : null; }

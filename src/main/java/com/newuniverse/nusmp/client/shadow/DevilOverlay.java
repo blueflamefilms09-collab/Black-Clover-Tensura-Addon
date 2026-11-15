@@ -26,7 +26,7 @@ public final class DevilOverlay {
                 rl("textures/entity/devils/devil_" + id + ".png"), rl("textures/entity/devils/devil_" + id + "_glow.png"));
     }
 
-    private static ResourceLocation rl(String p) { return ResourceLocation.fromNamespaceAndPath("nusmp", p); }
+    private static ResourceLocation rl(String p) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", p); }
 
     private static final GeoSpec EQ_HEAD = spec("equus_head"), EQ_BODY = spec("equus_body"), EQ_ARM_R = spec("equus_arm_r"), EQ_ARM_L = spec("equus_arm_l"),
             EQ_LEG_R = spec("equus_leg_r"), EQ_LEG_L = spec("equus_leg_l");

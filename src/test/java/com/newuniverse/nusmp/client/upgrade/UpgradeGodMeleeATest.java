@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * effect that carries it. Reads the files (no game needed).
  */
 class UpgradeGodMeleeATest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final int GOD_UNIQUE_VERTEX_CAP = 2500;
     static final double LOD_SHARE = 0.15;
 

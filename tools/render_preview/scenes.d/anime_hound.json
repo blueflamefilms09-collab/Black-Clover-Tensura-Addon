@@ -856,7 +856,7 @@
  },
  "hound_lod1": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/anime_hound_lod1.geo.json",
+  "model": "anime_multiverse:geo/entity/anime_hound_lod1.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -896,12 +896,12 @@
     "dist": 5.9799999999999995
    }
   ],
-  "texture": "nusmp:textures/entity/anime_hound.png",
-  "animations": "nusmp:animations/entity/anime_hound.animation.json"
+  "texture": "anime_multiverse:textures/entity/anime_hound.png",
+  "animations": "anime_multiverse:animations/entity/anime_hound.animation.json"
  },
  "hound_lod2": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/anime_hound_lod2.geo.json",
+  "model": "anime_multiverse:geo/entity/anime_hound_lod2.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -941,7 +941,7 @@
     "dist": 5.9799999999999995
    }
   ],
-  "texture": "nusmp:textures/entity/anime_hound.png",
-  "animations": "nusmp:animations/entity/anime_hound.animation.json"
+  "texture": "anime_multiverse:textures/entity/anime_hound.png",
+  "animations": "anime_multiverse:animations/entity/anime_hound.animation.json"
  }
 }

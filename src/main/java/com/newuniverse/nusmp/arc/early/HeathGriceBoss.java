@@ -145,7 +145,7 @@ public class HeathGriceBoss extends EarlyBoss {
             int cage = moveIndex(HeathTable.CAGE);
             if (cage >= 0 && cage < bk.size() && table.due(level().getGameTime()) && moveEligible(bk.get(cage), s)) return cage;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Heath's timetable failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Heath's timetable failed: {}", e.toString());
         }
         return super.chooseMove(bk, s, t);
     }
@@ -168,12 +168,12 @@ public class HeathGriceBoss extends EarlyBoss {
                 EarlyMoves.sound(sl, position(), SoundEvents.GLASS_BREAK, 1.8f, 1.1f);
             } else if (r.through() < amount && attacker instanceof LivingEntity who && now - lastShieldNote > 30) {
                 lastShieldNote = now;
-                EarlyMoves.tell(who, "message.nusmp.arc.early.heath.shielded");
+                EarlyMoves.tell(who, "message.anime_multiverse.arc.early.heath.shielded");
                 EarlyMoves.sound(sl, position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 1.4f);
             }
             return (float) r.through();
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Heath's shield failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Heath's shield failed: {}", e.toString());
             return amount;
         }
     }

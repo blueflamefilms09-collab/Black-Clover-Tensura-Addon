@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Which franchise an item of the mod comes from: {@code data/nusmp/relics/franchise_map.json}, written by {@code tools/relics/franchise_map.py} from the relic waves, the weapon
+ * Which franchise an item of the mod comes from: {@code data/anime_multiverse/relics/franchise_map.json}, written by {@code tools/relics/franchise_map.py} from the relic waves, the weapon
  * rosters and the manual overrides. An id that is not there has no franchise. Pure (unit-tested).
  * <p>
  * Lookup: the exact item path, then the left half of a pair ({@code x_left} follows {@code x}), then the longest id prefix of the file's {@code prefixes}.
@@ -42,7 +42,7 @@ public final class FranchiseMap {
         }
     }
 
-    private static final String RESOURCE = "/data/nusmp/relics/franchise_map.json";
+    private static final String RESOURCE = "/data/anime_multiverse/relics/franchise_map.json";
     private static volatile Map2 map;
 
     public static Map2 map() {

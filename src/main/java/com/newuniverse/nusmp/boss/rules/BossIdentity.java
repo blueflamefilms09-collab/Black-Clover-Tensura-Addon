@@ -15,13 +15,13 @@ import net.minecraft.world.entity.EntityType;
  * vanilla-typed mob with a persistent tag), and the Labyrinth Floor Warden. One place
  * answers "is this a boss" so the heal guard, the skill sweep and the activation veto cannot disagree. Strictly this mod's bosses: a
  * Tensura or vanilla boss is never touched (the same isolation rule as the buff engine); an addon can opt a type in by adding it to the
- * entity type tag {@code nusmp:boss}.
+ * entity type tag {@code anime_multiverse:boss}.
  */
 public final class BossIdentity {
     private BossIdentity() {}
 
-    /** Entity types that are bosses by data: add an id to data/nusmp/tags/entity_type/boss.json to opt one in. */
-    public static final TagKey<EntityType<?>> BOSS_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "boss"));
+    /** Entity types that are bosses by data: add an id to data/anime_multiverse/tags/entity_type/boss.json to opt one in. */
+    public static final TagKey<EntityType<?>> BOSS_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss"));
 
     /** The persistent entity tags the dungeon directors put on their bosses (floor boss, Juggernaut, Charybdis). */
     private static final String[] TAGS = {"nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis"};

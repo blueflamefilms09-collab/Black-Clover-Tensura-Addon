@@ -5,12 +5,12 @@ Synthesises the voice of the Spirit of Space (docs/magic/spirit_space.md): a dee
 no words (whispers, chimes, soft murmurs, a curious chirp, a distress warble, a happy trill, a sigh). numpy only (scipy is not needed), then ffmpeg encodes mono Vorbis, like tools/gen_mob_sounds.py.
 Every variant is seeded from its own name, so a re-run writes the same audio.
 
-  python3 -B tools/gen_spirit_space_sounds.py                 write every file under assets/nusmp/sounds/spirit_space/ and the "spirit_space.*" entries of sounds.json
+  python3 -B tools/gen_spirit_space_sounds.py                 write every file under assets/anime_multiverse/sounds/spirit_space/ and the "spirit_space.*" entries of sounds.json
                                                                (the other entries of sounds.json are not touched)
   python3 -B tools/gen_spirit_space_sounds.py --preview DIR   also write a .wav and a spectrogram .png of every file into DIR
   python3 -B tools/gen_spirit_space_sounds.py --check         verify that every file the entries name exists, is a valid mono Ogg and short
 
-Events (one sound event each, nusmp:spirit_space.<id>, the same ids as spiritspace.SoundGate.Kind and spiritspace.SpaceMoodRules.Voice):
+Events (one sound event each, anime_multiverse:spirit_space.<id>, the same ids as spiritspace.SoundGate.Kind and spiritspace.SpaceMoodRules.Voice):
   hum ping unlink tear swell open gravity wisp deny          the cue sounds of the abilities (2 variants each)
   voice_whisper voice_chime voice_murmur voice_chirp voice_warble voice_trill voice_sigh     the creature cues (2 to 3 variants each)
 """
@@ -31,7 +31,7 @@ import numpy as np
 
 sys.dont_write_bytecode = True
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 SOUND_DIR = os.path.join(ASSETS, "sounds", "spirit_space")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 SR = 44100
@@ -357,8 +357,8 @@ def encode(wav, ogg):
 
 
 def entry_text(cue, variants, att):
-    names = ",\n".join('      { "name": "nusmp:spirit_space/%s_%d", "attenuation_distance": %d }' % (cue, v + 1, att) for v in range(variants))
-    return '  "spirit_space.%s": {\n    "subtitle": "subtitles.nusmp.spirit_space.%s",\n    "sounds": [\n%s\n    ]\n  }' % (cue, cue, names)
+    names = ",\n".join('      { "name": "anime_multiverse:spirit_space/%s_%d", "attenuation_distance": %d }' % (cue, v + 1, att) for v in range(variants))
+    return '  "spirit_space.%s": {\n    "subtitle": "subtitles.anime_multiverse.spirit_space.%s",\n    "sounds": [\n%s\n    ]\n  }' % (cue, cue, names)
 
 
 def write_sounds_json():

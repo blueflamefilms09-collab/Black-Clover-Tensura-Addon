@@ -69,7 +69,7 @@ public final class SocketCommands {
     private static int list(CommandSourceStack src, ServerPlayer p) {
         ItemStack held = p.getMainHandItem();
         RelicDef d = Relics.defOf(held);
-        if (d == null) return fail(src, "socket.nusmp.cmd.hold_relic");
+        if (d == null) return fail(src, "socket.anime_multiverse.cmd.hold_relic");
         SocketData cur = SocketComponents.get(held);
         int slots = SocketService.slotsOf(held);
         StringBuilder b = new StringBuilder();
@@ -77,7 +77,7 @@ public final class SocketCommands {
             SocketDef sd = SocketCatalog.byId(e.id());
             b.append("  ").append(sd == null ? e.id() : sd.name()).append(sd == null ? "" : " (" + sd.act().name() + ")").append('\n');
         }
-        return ok(src, Component.translatable("socket.nusmp.cmd.list", d.cardName(), cur.size(), slots).append(Component.literal("\n" + b.toString().stripTrailing())));
+        return ok(src, Component.translatable("socket.anime_multiverse.cmd.list", d.cardName(), cur.size(), slots).append(Component.literal("\n" + b.toString().stripTrailing())));
     }
 
     private static int cast(CommandSourceStack src, ServerPlayer p, int n) {
@@ -86,17 +86,17 @@ public final class SocketCommands {
 
     private static int add(CommandSourceStack src, ServerPlayer p, String key) {
         ItemStack held = p.getMainHandItem();
-        if (Relics.defOf(held) == null) return fail(src, "socket.nusmp.cmd.hold_relic");
+        if (Relics.defOf(held) == null) return fail(src, "socket.anime_multiverse.cmd.hold_relic");
         SocketDef d = SocketCatalog.byKey(key);
-        if (d == null) return fail(src, "socket.nusmp.cmd.unknown", key);
+        if (d == null) return fail(src, "socket.anime_multiverse.cmd.unknown", key);
         return SocketService.socket(p, held, d, true) == SocketRules.Outcome.OK ? 1 : 0;      // the player was told why if not
     }
 
     private static int remove(CommandSourceStack src, ServerPlayer p, int n) {
         ItemStack held = p.getMainHandItem();
-        if (Relics.defOf(held) == null) return fail(src, "socket.nusmp.cmd.hold_relic");
+        if (Relics.defOf(held) == null) return fail(src, "socket.anime_multiverse.cmd.hold_relic");
         SocketData cur = SocketComponents.get(held);
-        if (cur.isEmpty()) return fail(src, "socket.nusmp.msg.empty_socket");
+        if (cur.isEmpty()) return fail(src, "socket.anime_multiverse.msg.empty_socket");
         ItemStack back = SocketService.unsocket(p, held, n <= 0 ? cur.size() - 1 : n - 1);
         SocketService.give(p, back);
         return back.isEmpty() ? 0 : 1;
@@ -104,8 +104,8 @@ public final class SocketCommands {
 
     private static int core(CommandSourceStack src, ServerPlayer to, String key) {
         SocketDef d = SocketCatalog.byKey(key);
-        if (d == null) return fail(src, "socket.nusmp.cmd.unknown", key);
+        if (d == null) return fail(src, "socket.anime_multiverse.cmd.unknown", key);
         SocketService.give(to, SocketItems.stack(d.id()));
-        return ok(src, Component.translatable("socket.nusmp.cmd.gave", Component.translatable(d.nameKey()), to.getName()));
+        return ok(src, Component.translatable("socket.anime_multiverse.cmd.gave", Component.translatable(d.nameKey()), to.getName()));
     }
 }

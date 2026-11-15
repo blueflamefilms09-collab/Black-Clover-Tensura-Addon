@@ -37,7 +37,7 @@ final class RestMana {
         } catch (Throwable t) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] A rest could not restore mana (Tensura storage unavailable); resting still heals. {}", t.toString());
+                LOG.warn("[anime_multiverse] A rest could not restore mana (Tensura storage unavailable); resting still heals. {}", t.toString());
             }
         }
     }

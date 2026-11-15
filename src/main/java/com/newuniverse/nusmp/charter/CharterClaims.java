@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * What this client knows about the world's drop lock (filled by the {@code nusmp:charter_sync} packet, read by the tooltips). A tiny static: it
+ * What this client knows about the world's drop lock (filled by the {@code anime_multiverse:charter_sync} packet, read by the tooltips). A tiny static: it
  * is only ever replaced as a whole, so a reader sees either the old or the new picture. Nothing here is saved; the server sends it again at login.
  */
 public final class CharterClaims {

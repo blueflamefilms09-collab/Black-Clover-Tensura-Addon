@@ -50,7 +50,7 @@ public final class PocketDefs extends SimpleJsonResourceReloadListener {
                 bosses.put(id, DndProfile.parse(id, o));
                 extras.put(id, PocketBossExtra.parse(id, o));
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] pocket boss profile {} skipped: {}", e.getKey(), ex.getMessage());
+                LOG.warn("[anime_multiverse] pocket boss profile {} skipped: {}", e.getKey(), ex.getMessage());
             }
         }
         List<PocketDef> parsed = new ArrayList<>();
@@ -60,12 +60,12 @@ public final class PocketDefs extends SimpleJsonResourceReloadListener {
             try {
                 PocketDef d = PocketDef.parse(path, e.getValue().getAsJsonObject());
                 if (!bosses.containsKey(d.boss())) {
-                    LOG.warn("[nusmp] pocket {} skipped: its boss profile '{}' is missing or unreadable", d.id(), d.boss());
+                    LOG.warn("[anime_multiverse] pocket {} skipped: its boss profile '{}' is missing or unreadable", d.id(), d.boss());
                     continue;
                 }
                 parsed.add(d);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] pocket {} skipped: {}", e.getKey(), ex.getMessage());
+                LOG.warn("[anime_multiverse] pocket {} skipped: {}", e.getKey(), ex.getMessage());
             }
         }
         parsed.sort(Comparator.comparing(PocketDef::id));
@@ -75,7 +75,7 @@ public final class PocketDefs extends SimpleJsonResourceReloadListener {
         Map<String, String> relics = new LinkedHashMap<>();
         for (PocketDef d : defs.values()) for (String r : d.relics().all()) relics.put(r, d.id());
         PocketRelics.loaded(relics);
-        LOG.info("[nusmp] exclusive pockets: {} loaded, {} boss profiles", defs.size(), bosses.size());
+        LOG.info("[anime_multiverse] exclusive pockets: {} loaded, {} boss profiles", defs.size(), bosses.size());
     }
 
     // ---------------------------------------------------------------- queries

@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Why: the twelve worn / held models of wave 101 (the six non-weapon Millennium Items and six artifacts of other worlds) are Genesis grade upgrade models made with the kit of the 27 upgraded charms
  * (tools/relics/new_wave101, tools/visual_upgrade/charms_genesis_worn), and the same guard as {@link VuCharmsBudgetTest} must hold for them without touching that test (it counts the 27 lines of overrides.txt):
- * the table assets/nusmp/visual_upgrade/overrides_genesis_new.txt parses without problems, every relic is held and worn, the vertex caps of the Genesis grade hold (6000 mesh, 6000 drawn, a lod of at most 15 percent),
+ * the table assets/anime_multiverse/visual_upgrade/overrides_genesis_new.txt parses without problems, every relic is held and worn, the vertex caps of the Genesis grade hold (6000 mesh, 6000 drawn, a lod of at most 15 percent),
  * every model has its own 1024 skin, glow map and lod, at least ten animation groups and three passes, no vertex far away and every uv on the skin, the fx file names real groups, the act effects name real shapes, and
  * the older tables and models were not touched.
  */
 class Wave101ModelsTest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final Path VU = ASSETS.resolve("visual_upgrade");
     static final List<String> IDS = List.of("millennium_puzzle", "millennium_eye", "millennium_ring", "millennium_key", "millennium_scale", "millennium_necklace", "truth_seeking_orbs_of_the_sage",
             "hogyoku_of_the_crystal_dissolution", "seven_dragon_balls_of_shenron", "straw_hat_of_joy_boy", "law_of_cycles_gown", "greed_island_original_binder");
@@ -156,7 +156,7 @@ class Wave101ModelsTest {
                     assertTrue(groups.contains(l.group), id + " layer " + l.name + " names the group " + l.group + " that no model has");
                 } else {
                     particles++;
-                    assertTrue(l.particle.equals("fx") || l.particle.startsWith("nusmp:"), id + " layer " + l.name + " uses the vanilla particle " + l.particle);
+                    assertTrue(l.particle.equals("fx") || l.particle.startsWith("anime_multiverse:"), id + " layer " + l.name + " uses the vanilla particle " + l.particle);
                 }
             }
             boolean canon = com.newuniverse.nusmp.relics.wave.Wave101Rules.inSet(id);   // the plain-gold canon models glow only at the Eye: one glow layer and one glint are enough
@@ -166,7 +166,7 @@ class Wave101ModelsTest {
 
     @Test
     void theActEffectsAreValidAndEveryActOfTheTwelveRelicsHasOne() throws IOException {
-        List<String> lines = Files.readAllLines(Path.of("src/main/resources/data/nusmp/visual_upgrade/act_vfx.txt"));
+        List<String> lines = Files.readAllLines(Path.of("src/main/resources/data/anime_multiverse/visual_upgrade/act_vfx.txt"));
         VuActTable table = VuActTable.parse(lines);
         assertTrue(table.problems().isEmpty(), table.problems().toString());
         String wave = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/relics/wave/Wave101.java"));

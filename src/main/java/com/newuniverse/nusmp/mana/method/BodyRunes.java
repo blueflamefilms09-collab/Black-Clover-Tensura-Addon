@@ -71,7 +71,7 @@ public final class BodyRunes {
         return s == null ? -1L : s.until;
     }
 
-    private static ResourceLocation id(int i) { return ResourceLocation.fromNamespaceAndPath("nusmp", BodyRuneRules.IDS[i]); }
+    private static ResourceLocation id(int i) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", BodyRuneRules.IDS[i]); }
 
     private static Holder<Attribute> attribute(int i) {
         return switch (i) {
@@ -115,7 +115,7 @@ public final class BodyRunes {
         if (m.glideTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, m.glideTicks(), 0, false, false, true));
         p.level().playSound(null, p.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.9f, 0.8f);
         RuneNet.sendBody(p, RuneNet.PHASE_START, spec.pack(), m.tier(), m.ticks());
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.body", "Body Rune: the runes settle on your body for %s s", Math.round(m.ticks() / 20.0)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.body", "Body Rune: the runes settle on your body for %s s", Math.round(m.ticks() / 20.0)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         return true;
     }
 
@@ -174,7 +174,7 @@ public final class BodyRunes {
         strip(s.player);
         if (!playerGone) {
             RuneNet.sendBody(s.player, RuneNet.PHASE_END, 0, 0, 0);
-            if (message) s.player.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.body_end", "The Body Rune fades.").withStyle(ChatFormatting.GRAY), true);
+            if (message) s.player.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.body_end", "The Body Rune fades.").withStyle(ChatFormatting.GRAY), true);
         }
     }
 

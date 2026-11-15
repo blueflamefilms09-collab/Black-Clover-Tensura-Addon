@@ -78,6 +78,6 @@ public final class Passivity {
     private static void warn(String what, Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The dungeon passivity failed once in {} and goes on: {}", what, t.toString(), t);
+        LOG.warn("[anime_multiverse] The dungeon passivity failed once in {} and goes on: {}", what, t.toString(), t);
     }
 }

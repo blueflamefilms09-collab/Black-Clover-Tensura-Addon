@@ -23,14 +23,14 @@ public final class SpiritDarkDraw {
 
     /** A level of detail (or the glow-only model): its own model and its own copy of the sheet (a lower level reads a smaller one), the animation file of the full model, no glow pass. */
     private static GeoSpec lod(GeoSpec base, String modelId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + modelId + ".png"), null);
     }
 
     /** The face model of a form with the sheet of a mood: the model is the same for all moods, only the texture differs. */
     private static GeoSpec face(GeoSpec base, String form, String model, String sheet, String mood) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/spirit_dark_" + form + "_" + model + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/spirit_dark_" + form + "_" + sheet + "_" + mood + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/spirit_dark_" + form + "_" + model + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/spirit_dark_" + form + "_" + sheet + "_" + mood + ".png"), null);
     }
 
     private static final GeoSpec COMPANION = GeoSpec.of("spirit_dark", "companion"), POWERED = GeoSpec.of("spirit_dark", "powered");

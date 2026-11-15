@@ -7,7 +7,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 S, N = 256, 12
 yy, xx = np.mgrid[0:S, 0:S].astype(np.float32) + 0.5
 u, v = xx / S, yy / S

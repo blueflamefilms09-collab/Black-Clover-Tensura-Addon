@@ -40,7 +40,7 @@ public final class DungeonRenderers {
         try {
             r.run();
         } catch (RuntimeException | LinkageError ex) {
-            LOG.error("[nusmp] the player-model renderer of {} could not be registered: {}", what, ex.toString());
+            LOG.error("[anime_multiverse] the player-model renderer of {} could not be registered: {}", what, ex.toString());
         }
     }
 

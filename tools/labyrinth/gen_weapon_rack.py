@@ -3,13 +3,13 @@
     python3 -B tools/labyrinth/gen_weapon_rack.py
 
 Writes (all under src/main/resources, plus the lang fragment):
-  assets/nusmp/textures/block/weapon_rack.png      16x16: wood on the top half, riveted iron on the bottom half (a fixed seed)
-  assets/nusmp/models/block/weapon_rack.json       the frame: two posts and feet, a top rail with three hooks, a lower plank, a back brace (26 pixels tall)
-  assets/nusmp/models/item/weapon_rack.json        the inventory model (the block model)
-  assets/nusmp/blockstates/weapon_rack.json        the four facings
-  data/nusmp/loot_table/blocks/weapon_rack.json    the block drops itself
-  data/nusmp/loot_table/racks/<family>.json        the six themed loot tables of the loot-filled racks (family -> RackFamilies)
-  data/nusmp/recipe/weapon_rack.json               the crafting recipe
+  assets/anime_multiverse/textures/block/weapon_rack.png      16x16: wood on the top half, riveted iron on the bottom half (a fixed seed)
+  assets/anime_multiverse/models/block/weapon_rack.json       the frame: two posts and feet, a top rail with three hooks, a lower plank, a back brace (26 pixels tall)
+  assets/anime_multiverse/models/item/weapon_rack.json        the inventory model (the block model)
+  assets/anime_multiverse/blockstates/weapon_rack.json        the four facings
+  data/anime_multiverse/loot_table/blocks/weapon_rack.json    the block drops itself
+  data/anime_multiverse/loot_table/racks/<family>.json        the six themed loot tables of the loot-filled racks (family -> RackFamilies)
+  data/anime_multiverse/recipe/weapon_rack.json               the crafting recipe
   data/minecraft/tags/block/mineable/axe.json      the rack is mined with an axe
   tools/lang/weapon_racks.json                     the lang fragment
 """
@@ -59,7 +59,7 @@ def make_texture():
     for (x, y) in ((2, 11), (13, 11), (7, 12)):           # rivets
         px[x, y] = (170, 172, 180, 255)
         px[x + 1 if x < 15 else x, y] = (70, 71, 78, 255)
-    path = os.path.join(RES, "assets", "nusmp", "textures", "block", "weapon_rack.png")
+    path = os.path.join(RES, "assets", "anime_multiverse", "textures", "block", "weapon_rack.png")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     img.save(path)
 
@@ -96,22 +96,22 @@ def make_model():
         element((7.5, 20, 8.6), (8.5, 20 + 3, 9.4), IRON),
         element((12.3, 20, 8.6), (13.3, 23, 9.4), IRON),
     ]
-    model = {"textures": {"t": "nusmp:block/weapon_rack", "particle": "nusmp:block/weapon_rack"},
+    model = {"textures": {"t": "anime_multiverse:block/weapon_rack", "particle": "anime_multiverse:block/weapon_rack"},
              "elements": els}
-    write_json(os.path.join(RES, "assets", "nusmp", "models", "block", "weapon_rack.json"), model)
-    write_json(os.path.join(RES, "assets", "nusmp", "models", "item", "weapon_rack.json"),
-               {"parent": "nusmp:block/weapon_rack",
+    write_json(os.path.join(RES, "assets", "anime_multiverse", "models", "block", "weapon_rack.json"), model)
+    write_json(os.path.join(RES, "assets", "anime_multiverse", "models", "item", "weapon_rack.json"),
+               {"parent": "anime_multiverse:block/weapon_rack",
                 "display": {"gui": {"rotation": [30, 225, 0], "translation": [0, -2, 0], "scale": [0.45, 0.45, 0.45]},
                             "ground": {"translation": [0, 3, 0], "scale": [0.3, 0.3, 0.3]},
                             "fixed": {"rotation": [0, 180, 0], "translation": [0, -3, 0], "scale": [0.5, 0.5, 0.5]},
                             "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.3, 0.3, 0.3]},
                             "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 0, 0], "scale": [0.35, 0.35, 0.35]}}})
-    write_json(os.path.join(RES, "assets", "nusmp", "blockstates", "weapon_rack.json"),
+    write_json(os.path.join(RES, "assets", "anime_multiverse", "blockstates", "weapon_rack.json"),
                {"variants": {
-                   "facing=south": {"model": "nusmp:block/weapon_rack"},
-                   "facing=west": {"model": "nusmp:block/weapon_rack", "y": 90},
-                   "facing=north": {"model": "nusmp:block/weapon_rack", "y": 180},
-                   "facing=east": {"model": "nusmp:block/weapon_rack", "y": 270}}})
+                   "facing=south": {"model": "anime_multiverse:block/weapon_rack"},
+                   "facing=west": {"model": "anime_multiverse:block/weapon_rack", "y": 90},
+                   "facing=north": {"model": "anime_multiverse:block/weapon_rack", "y": 180},
+                   "facing=east": {"model": "anime_multiverse:block/weapon_rack", "y": 270}}})
 
 
 # ---------------------------------------------------------------- the loot
@@ -154,25 +154,25 @@ FAMILIES = {
 
 def make_loot():
     for fam, entries in FAMILIES.items():
-        write_json(os.path.join(RES, "data", "nusmp", "loot_table", "racks", fam + ".json"),
+        write_json(os.path.join(RES, "data", "anime_multiverse", "loot_table", "racks", fam + ".json"),
                    {"type": "minecraft:chest",
                     "pools": [{"rolls": {"type": "minecraft:uniform", "min": 2, "max": 5}, "bonus_rolls": 0, "entries": entries}]})
-    write_json(os.path.join(RES, "data", "nusmp", "loot_table", "blocks", "weapon_rack.json"),
+    write_json(os.path.join(RES, "data", "anime_multiverse", "loot_table", "blocks", "weapon_rack.json"),
                {"type": "minecraft:block",
-                "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": "nusmp:weapon_rack"}],
+                "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": "anime_multiverse:weapon_rack"}],
                            "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
 
 
 def make_recipe_tags_lang():
-    write_json(os.path.join(RES, "data", "nusmp", "recipe", "weapon_rack.json"),
+    write_json(os.path.join(RES, "data", "anime_multiverse", "recipe", "weapon_rack.json"),
                {"type": "minecraft:crafting_shaped", "category": "misc",
                 "key": {"S": {"item": "minecraft:stick"}, "I": {"item": "minecraft:iron_ingot"}, "P": {"tag": "minecraft:planks"}},
                 "pattern": ["SIS", "SPS", "PPP"],
-                "result": {"id": "nusmp:weapon_rack", "count": 1}})
-    write_json(os.path.join(RES, "data", "minecraft", "tags", "block", "mineable", "axe.json"), {"values": ["nusmp:weapon_rack"]})
+                "result": {"id": "anime_multiverse:weapon_rack", "count": 1}})
+    write_json(os.path.join(RES, "data", "minecraft", "tags", "block", "mineable", "axe.json"), {"values": ["anime_multiverse:weapon_rack"]})
     write_json(os.path.join(ROOT, "tools", "lang", "weapon_racks.json"), {
-        "block.nusmp.weapon_rack": "Weapon Rack",
-        "nusmp.weapon_rack.decor": "These are only for show.",
+        "block.anime_multiverse.weapon_rack": "Weapon Rack",
+        "anime_multiverse.weapon_rack.decor": "These are only for show.",
     })
 
 

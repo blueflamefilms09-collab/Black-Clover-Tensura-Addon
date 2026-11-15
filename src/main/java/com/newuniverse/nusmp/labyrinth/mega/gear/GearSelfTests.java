@@ -160,7 +160,7 @@ public final class GearSelfTests {
             if (stack.isEmpty()) return fail(what + "the factory returned nothing");
             made++;
             GearInfo info = stack.get(GearComponents.GEAR.get());
-            if (info == null) return fail(what + "the stack has no nusmp:gear_grade component");
+            if (info == null) return fail(what + "the stack has no anime_multiverse:gear_grade component");
             if (info.grade() != grade || !info.equals(spec.info())) return fail(what + "the component says " + info + " but the spec says " + spec.info());
             if (stack.has(RelicComponents2.SERIAL.get()) || stack.has(RelicComponents2.ATTUNED.get()) || stack.has(RelicComponents2.USES.get()) || stack.has(RelicComponents2.STATE.get()))
                 return fail(what + "carries a relic component: standard gear must never be a relic");
@@ -208,7 +208,7 @@ public final class GearSelfTests {
 
     private static boolean hasLine(ItemLore lore, String suffix) {
         for (Component c : lore.lines()) {
-            if (c.getContents() instanceof TranslatableContents tc && tc.getKey().equals("message.nusmp.mega.mgr." + suffix)) return true;
+            if (c.getContents() instanceof TranslatableContents tc && tc.getKey().equals("message.anime_multiverse.mega.mgr." + suffix)) return true;
         }
         return false;
     }

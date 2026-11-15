@@ -25,16 +25,16 @@ import org.joml.Matrix4f;
  * SHIMMER: a faint haze of scrolling ripple texture a little wider than the tear; honestly an additive-looking ripple, not a screen-space refraction (that needs a shader pass, listed in the docs). The tear is
  * drawn with one render type (translucent emissive, double sided, full bright) so every layer is lit the same and seen from both sides. THE BUDGET: {@link TearGeometry#BUDGET} vertices in a frame, fewer
  * with distance ({@link TearGeometry#lod}: full under 18 blocks, middle under 40, far under 84, nothing beyond), the mesh is cached by seed, and nothing is allocated per frame but the pose stack's own.
- * The textures are made by tools/gen_rift_textures.py (reproducible: a fixed seed, tileable by construction). The ambient crackle is played by the rift's client tick (sound id {@code nusmp:rift.crackle}).
+ * The textures are made by tools/gen_rift_textures.py (reproducible: a fixed seed, tileable by construction). The ambient crackle is played by the rift's client tick (sound id {@code anime_multiverse:rift.crackle}).
  */
 public final class MegaRiftRenderer {
     private MegaRiftRenderer() {}
 
-    public static final ResourceLocation CORE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/misc/rift/core.png");
-    public static final ResourceLocation CRACK = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/misc/rift/crack.png");
-    public static final ResourceLocation SHIMMER = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/misc/rift/shimmer.png");
-    public static final ResourceLocation SPARK = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/misc/rift/spark.png");
-    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png");
+    public static final ResourceLocation CORE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/misc/rift/core.png");
+    public static final ResourceLocation CRACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/misc/rift/crack.png");
+    public static final ResourceLocation SHIMMER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/misc/rift/shimmer.png");
+    public static final ResourceLocation SPARK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/misc/rift/spark.png");
+    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png");
 
     /** Depth behind the plane (blocks), texture tile size (blocks) and brightness of the three core layers. */
     private static final float[] DEPTH = {0.20f, 0.55f, 1.10f}, TILE = {3.2f, 4.6f, 6.8f}, LIGHT = {1.0f, 0.72f, 0.5f};

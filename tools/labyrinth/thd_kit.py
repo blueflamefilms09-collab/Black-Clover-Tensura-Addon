@@ -28,7 +28,7 @@ from mega_lib import MT, Frame  # noqa: E402
 
 FR = L.FLOOR_ROW
 GROUND = FR + 1
-LOOT = "nusmp:chests/labyrinth_trial"
+LOOT = "anime_multiverse:chests/labyrinth_trial"
 DIRS4 = (("north", 0, -1), ("east", 1, 0), ("south", 0, 1), ("west", -1, 0))
 
 

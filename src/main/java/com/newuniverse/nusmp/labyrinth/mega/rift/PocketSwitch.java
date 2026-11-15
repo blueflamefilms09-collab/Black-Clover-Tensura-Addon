@@ -82,13 +82,13 @@ public final class PocketSwitch {
         switch (st) {
             case SPENT -> {
                 level.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.6f, 0.6f);
-                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.spent", "The lever is down. The vault is open already.").withStyle(ChatFormatting.GRAY), true);
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.lever.spent", "The lever is down. The vault is open already.").withStyle(ChatFormatting.GRAY), true);
                 return "spent";
             }
             case LOCKED -> {
                 level.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.7f, 0.4f);
                 level.playSound(null, at, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.7f, 0.5f);
-                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.locked", "The lever is stiff: the vault answers to the guardian's fall or the plates. It gives in %s s.",
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.lever.locked", "The lever is stiff: the vault answers to the guardian's fall or the plates. It gives in %s s.",
                         PocketSwitchRules.secondsToUnlock(false, age, unlockTicks())).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 return "locked";
             }
@@ -98,7 +98,7 @@ public final class PocketSwitch {
                 Fx.spray(level, FxThemes.DUNGEON_RIFT, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 12, 0.3, 0.3, 0.3, 0.05);
                 if (realm.clear(level, pk, "lever")) {
                     for (ServerPlayer m : PocketRealm.playersIn(level, pk.slot))
-                        m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.pulled", "A lever clicks somewhere in the realm... iron grinds: the bars of the vault lift.").withStyle(ChatFormatting.GOLD), true);
+                        m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.lever.pulled", "A lever clicks somewhere in the realm... iron grinds: the bars of the vault lift.").withStyle(ChatFormatting.GOLD), true);
                 }
                 return "opened";
             }
@@ -109,8 +109,8 @@ public final class PocketSwitch {
     public static void welcome(ServerLevel level, ServerPlayer m, PocketRealm.Pocket pk) {
         long age = level.getGameTime() - pk.createdAt;
         boolean boss = pk.variantKind() == RiftRules.Variant.BOSS;
-        m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.welcome", "[Realm] The vault behind the Hall is barred. %s Or pull the RELEASE LEVER in the small chamber north of the Hall: it gives in %s s, and the bars lift by themselves in %s s. The exit rift is behind you.",
-                Component.translatableWithFallback(boss ? "message.nusmp.mega.rift.welcome.boss" : "message.nusmp.mega.rift.welcome.puzzle", boss ? "The guardian in the Hall holds it: beat it." : "Press the four plates in the order the east wall shows."),
+        m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.welcome", "[Realm] The vault behind the Hall is barred. %s Or pull the RELEASE LEVER in the small chamber north of the Hall: it gives in %s s, and the bars lift by themselves in %s s. The exit rift is behind you.",
+                Component.translatableWithFallback(boss ? "message.anime_multiverse.mega.rift.welcome.boss" : "message.anime_multiverse.mega.rift.welcome.puzzle", boss ? "The guardian in the Hall holds it: beat it." : "Press the four plates in the order the east wall shows."),
                 Math.max(0, PocketSwitchRules.secondsToUnlock(false, age, unlockTicks())), Math.max(0, PocketSwitchRules.secondsToAuto(age, unlockTicks(), autoTicks(pk)))).withStyle(ChatFormatting.AQUA), false);
     }
 
@@ -128,7 +128,7 @@ public final class PocketSwitch {
             if (st == PocketSwitchRules.State.READY && !TOLD.contains(pk.slot * 31L + pk.seed)) {
                 TOLD.add(pk.slot * 31L + pk.seed);
                 for (ServerPlayer m : in) {
-                    m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.ready", "A lever clicks somewhere in the realm: the release lever north of the Hall gives way now.").withStyle(ChatFormatting.AQUA), true);
+                    m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.lever.ready", "A lever clicks somewhere in the realm: the release lever north of the Hall gives way now.").withStyle(ChatFormatting.AQUA), true);
                     level.playSound(null, m.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5f, 1.2f);
                 }
             }
@@ -136,7 +136,7 @@ public final class PocketSwitch {
         if (PocketSwitchRules.autoOpens(false, age, unlockTicks(), autoTicks(pk), true)) {
             boolean did = realm.clear(level, pk, "auto");
             if (did) for (ServerPlayer m : in)
-                m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.lever.auto", "The old mechanism gives way by itself: the bars of the vault lift.").withStyle(ChatFormatting.GOLD), true);
+                m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.lever.auto", "The old mechanism gives way by itself: the bars of the vault lift.").withStyle(ChatFormatting.GOLD), true);
             return did;
         }
         return false;

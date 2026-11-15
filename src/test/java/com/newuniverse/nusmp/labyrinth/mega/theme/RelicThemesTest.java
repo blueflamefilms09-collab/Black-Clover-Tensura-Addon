@@ -245,7 +245,7 @@ class RelicThemesTest {
 
     @Test
     void parseReadsTheTableAndNormalisesIt() {
-        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"_why\": \"x\", \"explicit\": {\"Frostfang\": \"FROST\", \"nusmp:the_reaver\": \"blood\", \"dante_gravity_crown\": \"gravity\"}}"));
+        RelicThemes.Parsed p = RelicThemes.parse(MiniJson.parse("{\"_why\": \"x\", \"explicit\": {\"Frostfang\": \"FROST\", \"anime_multiverse:the_reaver\": \"blood\", \"dante_gravity_crown\": \"gravity\"}}"));
         assertEquals(List.of(), p.warnings());
         assertEquals("frost", p.explicit().get("frostfang"));
         assertEquals("blood", p.explicit().get("the_reaver"));

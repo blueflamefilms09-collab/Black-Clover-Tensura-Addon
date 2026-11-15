@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.SplittableRandom;
 
 /**
- * Why: a mechanic says "a band of undead" or "a swarm", not "three zombies": which monsters stand for a group at which depth is DATA ({@code data/nusmp/mega/mechanic_groups.json}),
+ * Why: a mechanic says "a band of undead" or "a swarm", not "three zombies": which monsters stand for a group at which depth is DATA ({@code data/anime_multiverse/mega/mechanic_groups.json}),
  * so the owner (or the foundry's 400 mobs, which may be named there by id behind a presence check) can change the cast without touching code. A roster entry has an entity id, a
  * minimum tier, a weight and optionally a variant (written into the monster's data when the entity type is the foundry's) and an {@code optional} flag (skipped silently when the
  * entity type does not exist). This class is the pure part: parsing and the weighted pick for a tier. The built-in default is used when the file is missing or broken. Pure.

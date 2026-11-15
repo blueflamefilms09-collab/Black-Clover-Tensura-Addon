@@ -212,7 +212,7 @@ public class LightYagamiBoss extends TierBoss {
                 if (r == LightDeathNote.Result.SAVED_BY_TOTEM) announce(p.getName().getString() + "'s Totem of Undying shattered the Death Note.");
                 else if (r == LightDeathNote.Result.RESISTED) announce("The Death Note refused to work on " + p.getName().getString() + ".");
             } else {
-                p.displayClientMessage(Component.translatable("nusmp.light_yagami.joke"), true);
+                p.displayClientMessage(Component.translatable("anime_multiverse.light_yagami.joke"), true);
             }
         }
         clear(sl, s);
@@ -277,11 +277,11 @@ public class LightYagamiBoss extends TierBoss {
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHit) {
         super.dropCustomDeathLoot(level, source, recentlyHit);
         ItemStack chips = new ItemStack(Items.BAKED_POTATO, 2 + getRandom().nextInt(3));
-        chips.set(DataComponents.CUSTOM_NAME, Component.translatable("item.nusmp.light_potato_chip").withStyle(ChatFormatting.YELLOW));
+        chips.set(DataComponents.CUSTOM_NAME, Component.translatable("item.anime_multiverse.light_potato_chip").withStyle(ChatFormatting.YELLOW));
         spawnAtLocation(chips);
         if (diedMidScene) {
             ItemStack apple = new ItemStack(Items.APPLE);
-            apple.set(DataComponents.CUSTOM_NAME, Component.translatable("item.nusmp.light_ryuk_apple").withStyle(ChatFormatting.DARK_RED));
+            apple.set(DataComponents.CUSTOM_NAME, Component.translatable("item.anime_multiverse.light_ryuk_apple").withStyle(ChatFormatting.DARK_RED));
             spawnAtLocation(apple);
         }
     }

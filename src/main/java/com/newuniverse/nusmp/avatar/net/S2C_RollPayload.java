@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Why: the server's answer to the dice button: the six rolled stats (STR DEX CON INT WIS CHA), whether the lucky 5d6 was used, the creator's total luck and the next reroll's price. */
 public record S2C_RollPayload(int[] stats, boolean fiveDice, double luck, long token, int rerollCost) implements CustomPacketPayload {
-    public static final Type<S2C_RollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_roll"));
+    public static final Type<S2C_RollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_roll"));
     public static final StreamCodec<RegistryFriendlyByteBuf, S2C_RollPayload> CODEC = StreamCodec.of(S2C_RollPayload::write, S2C_RollPayload::read);
 
     private static void write(RegistryFriendlyByteBuf b, S2C_RollPayload p) {

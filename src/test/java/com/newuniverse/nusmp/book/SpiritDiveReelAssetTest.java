@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * it as a box: SafeAdditive), a mosaic whose levels do not grow or a wing without its quill would only show up in a running game. This test reads the real files.
  */
 class SpiritDiveReelAssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage png(String tex) throws IOException {
         return ImageIO.read(ASSETS.resolve("textures/" + tex + ".png").toFile());

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "anime_multiverse:gneiss_crystal",
+    { "id": "tensura:gneiss_crystal", "required": false },
+    { "id": "tensura_lower:gneiss_crystal", "required": false }
+  ]
+}

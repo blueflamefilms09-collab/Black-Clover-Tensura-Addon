@@ -26,7 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 final class AvatarPreview {
     private AvatarPreview() {}
 
-    private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/avatar/eyes_glow.png");
+    private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/avatar/eyes_glow.png");
     private static PlayerModel<LivingEntity> model;
     private static EntityModelSet baked;
     /** The preview's hair keeps its own springs (no entity moves it: it sways on the clock). */

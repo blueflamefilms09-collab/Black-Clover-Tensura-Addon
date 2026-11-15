@@ -147,7 +147,7 @@ public class RevchiSalikBoss extends EarlyBoss {
                 if (e instanceof Player && e.getPersistentData().getLong(SEALED) < binds.until(id)) e.getPersistentData().putLong(SEALED, binds.until(id));
             }
         } catch (RuntimeException ex) {
-            LogUtils.getLogger().warn("[nusmp] Revchi's chains failed: {}", ex.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Revchi's chains failed: {}", ex.toString());
         }
     }
 
@@ -169,19 +169,19 @@ public class RevchiSalikBoss extends EarlyBoss {
                 if (antiMagic(source)) {
                     unseal(who, binds.until(id));
                     binds.free(id);
-                    EarlyMoves.tell(who, "message.nusmp.arc.early.revchi.cut");
+                    EarlyMoves.tell(who, "message.anime_multiverse.arc.early.revchi.cut");
                     VfxSpawn.send(sl, VfxShape.CHAIN_FX3, who.position().add(0, 1, 0), who.position().add(0, 1, 0), ARGB_ACCENT, 20, 0.9f);
                     EarlyMoves.sound(sl, who.position(), SoundEvents.CHAIN_BREAK, 1.5f, 1.2f);
                 } else {
                     long until = binds.until(id);
                     switch (binds.struggle(id, sl.getGameTime(), landed(source, amount))) {
                         case LINK -> {
-                            EarlyMoves.tell(who, "message.nusmp.arc.early.revchi.link", binds.linksLeft(id));
+                            EarlyMoves.tell(who, "message.anime_multiverse.arc.early.revchi.link", binds.linksLeft(id));
                             EarlyMoves.sound(sl, who.position(), SoundEvents.CHAIN_HIT, 1.2f, 1.0f);
                         }
                         case FREE -> {
                             unseal(who, until);
-                            EarlyMoves.tell(who, "message.nusmp.arc.early.revchi.free");
+                            EarlyMoves.tell(who, "message.anime_multiverse.arc.early.revchi.free");
                             VfxSpawn.send(sl, VfxShape.CHAIN_FX3, who.position().add(0, 1, 0), who.position().add(0, 1, 0), ARGB_ACCENT, 20, 0.9f);
                             EarlyMoves.sound(sl, who.position(), SoundEvents.CHAIN_BREAK, 1.5f, 1.0f);
                         }
@@ -190,7 +190,7 @@ public class RevchiSalikBoss extends EarlyBoss {
                 }
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Revchi's binding failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Revchi's binding failed: {}", e.toString());
         }
         return super.filterDamage(source, amount);
     }
@@ -204,7 +204,7 @@ public class RevchiSalikBoss extends EarlyBoss {
     /** Chains a foe: refused by anti-magic, shortened by the balance law's repeat rule, never added to a bind that is still on. Returns whether it held. */
     private boolean bind(ServerLevel sl, LivingEntity victim, int baseTicks) {
         if (carriesAntiMagic(victim)) {
-            EarlyMoves.tell(victim, "message.nusmp.arc.early.revchi.cut");
+            EarlyMoves.tell(victim, "message.anime_multiverse.arc.early.revchi.cut");
             VfxSpawn.send(sl, VfxShape.CHAIN_FX3, victim.position().add(0, 1, 0), victim.position().add(0, 1, 0), ARGB_ACCENT, 20, 0.9f);
             return false;
         }
@@ -215,7 +215,7 @@ public class RevchiSalikBoss extends EarlyBoss {
         if (victim instanceof Player) victim.getPersistentData().putLong(SEALED, until);
         EarlyMoves.slow(victim, ticks, 2);
         VfxSpawn.sendFollowing(sl, VfxShape.SEAL_CHAINS, victim, victim.position(), ARGB, ticks, 1.0f);
-        EarlyMoves.tell(victim, "message.nusmp.arc.early.revchi.bound", String.valueOf(Math.max(1, ticks / 20)));
+        EarlyMoves.tell(victim, "message.anime_multiverse.arc.early.revchi.bound", String.valueOf(Math.max(1, ticks / 20)));
         return true;
     }
 

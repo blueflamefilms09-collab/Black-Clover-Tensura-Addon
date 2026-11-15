@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * per-tick piece of work goes through a budget, the scan interval of the performance pass and a probe, and the render methods of the layer allocate nothing.
  */
 class StormSourceScanTest {
-    private static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "nusmp");
+    private static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse");
     private static final Path STORM = SRC.resolve("fairytail/storm");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }

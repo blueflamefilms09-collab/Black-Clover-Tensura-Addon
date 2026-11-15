@@ -177,7 +177,7 @@ public final class FormsFileCheck {
         String what = item ? q.get("item").getAsString() : q.get("tag").getAsString();
         if (!what.matches("[a-z0-9_]+:[a-z0-9_/]+")) bad.add(id + ": bad id '" + what + "'");
         if (item && what.startsWith("tensura:") && !r.tensuraItems().contains(what)) bad.add(id + ": the Tensura item " + what + " was not verified against the id reference");
-        if (!what.startsWith("minecraft:") && !what.startsWith("tensura:") && !what.startsWith("nusmp:") && !what.startsWith("c:")) bad.add(id + ": unknown namespace in " + what);
+        if (!what.startsWith("minecraft:") && !what.startsWith("tensura:") && !what.startsWith("anime_multiverse:") && !what.startsWith("c:")) bad.add(id + ": unknown namespace in " + what);
     }
 
     private static void checkStats(List<String> bad, String id, JsonObject s, boolean bonus) {

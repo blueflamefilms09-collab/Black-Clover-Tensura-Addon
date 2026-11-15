@@ -32,7 +32,7 @@ import java.util.Map;
  * routine, {@link #refresh}, that computes what SHOULD be there from the bond and makes the player and the stack match it, changing nothing that already matches:
  * calling it twice, or every tick, is harmless. The plan of which stat goes where is {@link FormStats}; this class only maps a key to an attribute.
  *
- * <p>Ids: {@code nusmp:hero_bonus_<key>} for the permanent bonuses (added as PERMANENT modifiers so the extra health survives a restart), {@code nusmp:hero_form_<key>}
+ * <p>Ids: {@code anime_multiverse:hero_bonus_<key>} for the permanent bonuses (added as PERMANENT modifiers so the extra health survives a restart), {@code anime_multiverse:hero_form_<key>}
  * for the active form (TRANSIENT, so they never outlive the weapon in the hand). The active form's attack damage and attack speed go on the weapon stack itself
  * (main hand only) beside whatever the core's item already carries; everything else is a player attribute. Movement speed is a share of the base.
  */
@@ -58,7 +58,7 @@ final class FormLoadout {
         };
     }
 
-    static ResourceLocation id(String prefix, String key) { return ResourceLocation.fromNamespaceAndPath("nusmp", FormStats.path(prefix, key)); }
+    static ResourceLocation id(String prefix, String key) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", FormStats.path(prefix, key)); }
 
     /** Makes the player and the weapon stacks match the bond. Never throws. */
     static void refresh(ServerPlayer player) {
@@ -67,7 +67,7 @@ final class FormLoadout {
         } catch (RuntimeException e) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] hero forms: refresh failed once (shown no more)", e);
+                LOG.warn("[anime_multiverse] hero forms: refresh failed once (shown no more)", e);
             }
         }
     }
@@ -126,7 +126,7 @@ final class FormLoadout {
     /** True for an item modifier this system added (so it is replaced, never doubled, and the core's own are kept). */
     private static boolean mine(AttributeModifier m) {
         ResourceLocation id = m.id();
-        return "nusmp".equals(id.getNamespace()) && id.getPath().startsWith(FormStats.FORM_PREFIX);
+        return "anime_multiverse".equals(id.getNamespace()) && id.getPath().startsWith(FormStats.FORM_PREFIX);
     }
 
     /** The weapon stack: the active form's attack damage and speed (main hand only) and the look. */

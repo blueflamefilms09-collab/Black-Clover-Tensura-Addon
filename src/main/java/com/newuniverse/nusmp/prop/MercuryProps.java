@@ -93,7 +93,7 @@ public final class MercuryProps {
         for (PropKind k : new PropKind[]{PropKind.MERCURY_1, PropKind.MERCURY_2, PropKind.MERCURY_3})
             if (MagicProps.behavior(k) == null) return SelfTests.Result.fail("no behaviour for " + k);
         for (String n : new String[]{"helm", "chest", "tasset", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "greave_r", "greave_l", "back", "halo", "blade", "eagle", "spear", "cage"})
-            if (MercuryProps.class.getResource("/assets/nusmp/geo/entity/mercury_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
+            if (MercuryProps.class.getResource("/assets/anime_multiverse/geo/entity/mercury_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
         if (MercuryRules.selfHarmAllowed(MercuryRules.SELF_HARM_FLOOR, false)) return SelfTests.Result.fail("the toxin would hurt at the floor");
         return SelfTests.Result.ok(total + " pages in order, 3 behaviours, 15 geo models, the toxin respects its floor");
     }

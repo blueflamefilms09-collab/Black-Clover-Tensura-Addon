@@ -67,14 +67,14 @@ final class DecennialRewards {
                 drop.setGlowingTag(true);
                 sl.addFreshEntity(drop);
                 data.claimLoot(memory);
-                Component line = Component.translatableWithFallback("message.nusmp.mega.decennial.loot", "%1$s lets go of %2$s.", g.getName(), stack.getHoverName()).withStyle(ChatFormatting.GOLD);
+                Component line = Component.translatableWithFallback("message.anime_multiverse.mega.decennial.loot", "%1$s lets go of %2$s.", g.getName(), stack.getHoverName()).withStyle(ChatFormatting.GOLD);
                 for (ServerPlayer q : sl.players()) if (q.distanceToSqr(g) <= 64.0 * 64.0) q.sendSystemMessage(line);
                 return;
             }
-            killer.sendSystemMessage(Component.translatableWithFallback("message.nusmp.mega.decennial.loot_none", "The boss has no %1$s item left to give: every one is already in the world.", p.loot().grade())
+            killer.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.mega.decennial.loot_none", "The boss has no %1$s item left to give: every one is already in the world.", p.loot().grade())
                     .withStyle(ChatFormatting.GRAY));
         } catch (RuntimeException e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The loot of a Decennial boss could not be paid: {}", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The loot of a Decennial boss could not be paid: {}", e.toString());
         }
     }
 

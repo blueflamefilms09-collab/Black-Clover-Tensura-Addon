@@ -41,13 +41,13 @@ public final class ArcArenaTravel {
         }
         ServerLevel arena = server.getLevel(ArcArena.DIMENSION);
         if (arena == null) {
-            user.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.no_dimension", "The arena does not answer: its dimension is not loaded.").withStyle(ChatFormatting.GRAY));
+            user.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.no_dimension", "The arena does not answer: its dimension is not loaded.").withStyle(ChatFormatting.GRAY));
             return false;
         }
         ArcArenaSave save = ArcArenaSave.get(server);
         int slot = save.slotFor(boss.id());
         if (slot < 0) {
-            user.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.no_room", "Every site of the arenas is taken. An operator can free one with /multiverse arc arena status.").withStyle(ChatFormatting.GRAY));
+            user.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.no_room", "Every site of the arenas is taken. An operator can free one with /multiverse arc arena status.").withStyle(ChatFormatting.GRAY));
             return false;
         }
         ArenaShape shape = ArenaShapes.forCharacter(boss);
@@ -64,7 +64,7 @@ public final class ArcArenaTravel {
             var at = ArcArena.arrivalStand(shape, slot, s);
             p.teleportTo(arena, at.x, at.y, at.z, ArcArena.yawTowardsBoss(shape, s), 0f);
             p.fallDistance = 0;
-            p.sendSystemMessage(Component.translatableWithFallback(p == user ? "message.nusmp.arc.arena.entered" : "message.nusmp.arc.arena.carried",
+            p.sendSystemMessage(Component.translatableWithFallback(p == user ? "message.anime_multiverse.arc.arena.entered" : "message.anime_multiverse.arc.arena.carried",
                     p == user ? "You step into %s." : "%s carried you into %s.", p == user ? new Object[] {shape.title()} : new Object[] {user.getName().getString(), shape.title()}).withStyle(ChatFormatting.GOLD));
             ArcArenaDirector.welcome(server, arena, p, slot, boss);
             NusmpEvents.fire(p, ARENA_KEY, boss.id());
@@ -123,7 +123,7 @@ public final class ArcArenaTravel {
         }
         p.teleportTo(to, x, y, z, yaw, pitch);
         p.fallDistance = 0;
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.home", "You are carried home from the arena.").withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.home", "You are carried home from the arena.").withStyle(ChatFormatting.GOLD));
         return true;
     }
 }

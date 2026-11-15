@@ -8,7 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 
 /**
- * Why: the Labyrinth's sky. The dimension type names its effects {@code nusmp:labyrinth}, and a {@link DimensionSpecialEffects} registered under
+ * Why: the Labyrinth's sky. The dimension type names its effects {@code anime_multiverse:labyrinth}, and a {@link DimensionSpecialEffects} registered under
  * that id in {@link RegisterDimensionSpecialEffectsEvent} (the NeoForge hook; the pattern of {@code client/dungeon/DungeonSky}) is what the
  * renderer uses for clouds, horizon and fog colour. The look is a sea of clouds under a floating island: {@code SkyType.NORMAL} keeps the sun,
  * moon, stars and sunrise band; the cloud layer is put at y = 24, UNDER the Spire's base (built at y = 40), so from the arrival pad the clouds

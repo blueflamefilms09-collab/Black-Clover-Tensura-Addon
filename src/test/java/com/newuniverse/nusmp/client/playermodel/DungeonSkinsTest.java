@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * well-formed geo models with a texture of the same name, and the generator's report of the creatures that keep their model adds up to the Foundry's 400.
  */
 class DungeonSkinsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
 
     private static Map<String, PlayerLook> dungeon() throws Exception {
         try (Reader r = new FileReader(ASSETS + "playermodel/looks_dungeon.json")) {

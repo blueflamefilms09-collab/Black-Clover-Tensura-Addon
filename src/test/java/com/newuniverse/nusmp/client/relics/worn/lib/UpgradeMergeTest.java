@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * the ones documented in docs/visual_upgrade/worn_merge.md.
  */
 class UpgradeMergeTest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final Path UPG = ASSETS.resolve("visual_upgrade");
     static final Path TOOLS = Path.of("tools/visual_upgrade");
     static final String[] FLAGS = {"EMIT", "SHELL", "HOT", "GLOWMAP", "STAR", "HALO", "LIT", "ADD"};
@@ -179,7 +179,7 @@ class UpgradeMergeTest {
 
     @Test
     void theCapsLookupMatchesTheTwoTableFiles() throws IOException {
-        // Charms / Genesis: assets/nusmp/visual_upgrade/caps_charms_genesis_worn.txt, rows "GRADE mesh drawn lod_percent"
+        // Charms / Genesis: assets/anime_multiverse/visual_upgrade/caps_charms_genesis_worn.txt, rows "GRADE mesh drawn lod_percent"
         int rows = 0;
         for (String l : Files.readAllLines(UPG.resolve("caps_charms_genesis_worn.txt"))) {
             if (l.isBlank() || l.startsWith("#")) continue;

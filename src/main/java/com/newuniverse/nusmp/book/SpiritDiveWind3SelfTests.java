@@ -29,7 +29,7 @@ public final class SpiritDiveWind3SelfTests {
     }
 
     private static boolean asset(String path) {
-        return SpiritDiveWind3SelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null;
+        return SpiritDiveWind3SelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null;
     }
 
     private static Result wind3(MinecraftServer server) {

@@ -1,0 +1,10 @@
+{
+  "type": "anime_multiverse:sanctuary",
+  "generator": {
+    "type": "anime_multiverse:sanctuary",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "anime_multiverse:sanctuary_plains"
+    }
+  }
+}

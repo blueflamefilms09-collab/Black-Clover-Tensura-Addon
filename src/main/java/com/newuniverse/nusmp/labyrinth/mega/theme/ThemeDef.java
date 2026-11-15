@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Why: what a Region Theme MEANS is data ({@code data/nusmp/mega/themes/<id>.json}), not code, so the owner or a datapack can retune a sector's look,
+ * Why: what a Region Theme MEANS is data ({@code data/anime_multiverse/mega/themes/<id>.json}), not code, so the owner or a datapack can retune a sector's look,
  * its relic pool and its catastrophes without a mod update; {@code RegionTheme} only names the nine themes (it must exist at class-load time in saved
- * data and in tests). This record is that data after parsing: the block families the {@code nusmp:region_theme} processor swaps in
+ * data and in tests). This record is that data after parsing: the block families the {@code anime_multiverse:region_theme} processor swaps in
  * ({@link ThemeSwap}), the per-block overrides, the keywords that say which relics belong to the theme ({@link RelicThemes} reads them to decide the
  * theme of the NEXT region from the relic that was chosen), the weights of the three catastrophes and the ambient particle. It is parsed from a plain tree of maps, lists, strings and numbers ({@link #parse}) instead of from Gson's
  * {@code JsonObject} so the parser, and the nine shipped files with it, are tested without Minecraft or a JSON library on the class path: the game

@@ -1,4 +1,4 @@
-"""Why: Vanica Zogratis, the middle of the Dark Triad (entity nusmp:vanica_zogratis, entity/zogratis/VanicaBoss), the crowned blood-mage with the eyepatch. Remodelled from the old
+"""Why: Vanica Zogratis, the middle of the Dark Triad (entity anime_multiverse:vanica_zogratis, entity/zogratis/VanicaBoss), the crowned blood-mage with the eyepatch. Remodelled from the old
 hand-built model into the art kit's player-proportioned character (docs/arc/remodel.md): slim, a black bob under a crown, one red eye and a black eyepatch with a gold emblem,
 an open smile, a belted short dress with a ring buckle, black sleeves and long black boots. `form2` is the hybrid of the Gates (100% Megicula): curse sigils burning
 on the skin, horns, long red claws, and the ring of floating blood drops that the old model had as a halo. Colours are the game's reading of the design, not a trace.

@@ -20,7 +20,7 @@ import java.util.List;
 public final class RelicWornSelfTests {
     private RelicWornSelfTests() {}
 
-    private static final String BASE = "/assets/nusmp/relic_worn/";
+    private static final String BASE = "/assets/anime_multiverse/relic_worn/";
 
     public static void register() { SelfTests.register("relic.worn_render", server -> run()); }
 

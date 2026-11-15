@@ -36,7 +36,7 @@ public final class SaiyanForms {
     public record Form(String id, Branch branch, boolean goku, String parent, double parentMastery, String parent2, double minBp, int breakthroughs, String flag,
                        SaiyanTraining.Cat trainCat, double trainNeed, double kiCost, double drain, double staminaDrain, double damage, double defense, double speed, double attackSpeed,
                        int cooldown, int masterySeconds, Aura aura, int rgb) {
-        public String key() { return "nusmp.saiyan.form." + id; }
+        public String key() { return "anime_multiverse.saiyan.form." + id; }
     }
 
     private static Form f(String id, Branch br, boolean goku, String parent, double pm, String parent2, double minBp, int bt, String flag, SaiyanTraining.Cat tc, double tn,

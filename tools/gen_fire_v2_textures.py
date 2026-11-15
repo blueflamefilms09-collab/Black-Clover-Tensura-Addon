@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fire VFX V2 (in the game, docs/vfx_remake/fire_ingame.md): writes the game textures `fnw_*.png` into src/main/resources/assets/nusmp/textures/particle.
+Fire VFX V2 (in the game, docs/vfx_remake/fire_ingame.md): writes the game textures `fnw_*.png` into src/main/resources/assets/anime_multiverse/textures/particle.
 
     python tools/gen_fire_v2_textures.py            # Pillow + numpy only, deterministic (fixed seeds)
 
@@ -28,7 +28,7 @@ sys.path.insert(0, HERE)
 import gen_fire_new_textures as g                                                  # noqa: E402
 
 ROOT = g.ROOT
-GAME = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+GAME = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 PREFIX = "fnw_"
 DROP = {"a_spark", "b_smoke", "b_spark", "b_tongue_a", "b_tongue_b"}                          # preview-only textures that no in-game effect draws (no dead assets)
 NO_TWIN = {"a_smoke_a", "a_smoke_b"}                                    # smoke stays the same dark brown-grey whatever the colour of the spell

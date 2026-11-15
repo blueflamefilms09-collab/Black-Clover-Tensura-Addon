@@ -153,7 +153,7 @@ public final class HeroRegistry extends SavedData {
         int n = r.data.clearWeapon(kind.itemId());
         if (n > 0) {
             r.setDirty();
-            LOG.warn("[nusmp] hero registry: the claims of {} were cleared by an operator ({} holder(s))", kind.itemId(), n);
+            LOG.warn("[anime_multiverse] hero registry: the claims of {} were cleared by an operator ({} holder(s))", kind.itemId(), n);
         }
         return n;
     }

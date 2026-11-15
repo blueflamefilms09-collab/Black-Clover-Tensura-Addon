@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "anime_multiverse:dante_zogratis", "required": false },
+    { "id": "anime_multiverse:vanica_zogratis", "required": false },
+    { "id": "anime_multiverse:zenon_zogratis", "required": false },
+    { "id": "anime_multiverse:lucius_zogratis", "required": false },
+    { "id": "anime_multiverse:devil_avatar", "required": false },
+    { "id": "anime_multiverse:goliath", "required": false },
+    { "id": "anime_multiverse:charybdis_spawn", "required": false },
+    { "id": "anime_multiverse:zagred", "required": false },
+    { "id": "anime_multiverse:zagred_legacy", "required": false },
+    { "id": "anime_multiverse:floor_warden", "required": false }
+  ]
+}

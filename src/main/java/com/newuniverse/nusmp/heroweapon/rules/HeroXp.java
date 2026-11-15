@@ -54,7 +54,7 @@ public final class HeroXp {
 
     private static void levelUp(ServerPlayer p, HeroKind kind, int from, int to) {
         if (HeroConfig.showMessages())
-            p.displayClientMessage(Component.translatable("hero.msg.level", Component.translatable("item.nusmp." + kind.itemId()), to).withStyle(ChatFormatting.GOLD), true);
+            p.displayClientMessage(Component.translatable("hero.msg.level", Component.translatable("item.anime_multiverse." + kind.itemId()), to).withStyle(ChatFormatting.GOLD), true);
         p.level().playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.3f);
         for (int l = from + 1; l <= to; l++) NusmpEvents.fire(p, "hero.level", kind.itemId());
     }

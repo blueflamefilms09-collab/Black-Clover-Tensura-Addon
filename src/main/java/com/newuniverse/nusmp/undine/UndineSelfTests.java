@@ -35,14 +35,14 @@ public final class UndineSelfTests {
     private static Result run(MinecraftServer server) throws Exception {
         if (PropKind.valueOf("UNDINE_1") == null) return Result.fail("the UNDINE_1 prop kind is missing");
         for (UndineSoundSet.Cue c : UndineSoundSet.Cue.values()) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.event()))) return Result.fail("the sound event " + c.event() + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.event()))) return Result.fail("the sound event " + c.event() + " is not registered");
             for (int i = 1; i <= c.variants(); i++) {
-                try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/undine/" + c.id() + "_" + i + ".ogg")) {
+                try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds/undine/" + c.id() + "_" + i + ".ogg")) {
                     if (in == null) return Result.fail("the sound file " + c.id() + "_" + i + ".ogg is missing");
                 }
             }
         }
-        try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/animations/entity/undine_body.animation.json")) {
+        try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/anime_multiverse/animations/entity/undine_body.animation.json")) {
             if (in == null) return Result.fail("undine_body.animation.json is missing");
             String text = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             for (String clip : new String[]{"idle", "full_idle", "cast", "open"}) if (!text.contains("\"" + clip + "\"")) return Result.fail("clip " + clip + " is missing");
@@ -50,10 +50,10 @@ public final class UndineSelfTests {
         }
         for (UndineFace f : UndineFace.values()) {
             if (!f.hasOverlay()) continue;
-            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/geo/entity/undine_face_" + f.key() + ".geo.json")) {
+            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/anime_multiverse/geo/entity/undine_face_" + f.key() + ".geo.json")) {
                 if (in == null) return Result.fail("the face model of " + f + " is missing");
             }
-            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/nusmp/textures/entity/undine_face_" + f.key() + ".png")) {
+            try (InputStream in = UndineSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/entity/undine_face_" + f.key() + ".png")) {
                 if (in == null) return Result.fail("the face texture of " + f + " is missing");
             }
         }

@@ -25,14 +25,14 @@ public final class ArenaSystem {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(NUSMP.MODID);
 
-    /** {@code nusmp:arena_return_sigil}: right click sends you home. Unbreakable, lit, no drops. */
+    /** {@code anime_multiverse:arena_return_sigil}: right click sends you home. Unbreakable, lit, no drops. */
     public static final DeferredBlock<ReturnSigilBlock> RETURN_SIGIL = BLOCKS.register("arena_return_sigil", () -> new ReturnSigilBlock(
             BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.COLOR_LIGHT_BLUE).strength(-1.0f, 3600000.0f).noLootTable().sound(SoundType.AMETHYST).lightLevel(s -> 12)));
 
     public static final DeferredItem<BlockItem> RETURN_SIGIL_ITEM = NUItems.ITEMS.register("arena_return_sigil",
             () -> new BlockItem(RETURN_SIGIL.get(), new Item.Properties().rarity(Rarity.EPIC)));
 
-    /** {@code nusmp:zogratis_hourglass}: the Hourglass of the Final Hour. Epic, one at a time. */
+    /** {@code anime_multiverse:zogratis_hourglass}: the Hourglass of the Final Hour. Epic, one at a time. */
     public static final DeferredItem<ZogratisHourglassItem> HOURGLASS = NUItems.ITEMS.register("zogratis_hourglass",
             () -> new ZogratisHourglassItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 

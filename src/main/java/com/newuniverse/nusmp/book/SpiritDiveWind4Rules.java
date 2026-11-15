@@ -9,7 +9,7 @@ import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
  * <ul>
  *   <li><b>The 3D crown</b>: a real mesh (a thin ring with tall arrow-tip bars, 14 of them and a second lower ring for the character tier, 8 bars and one ring for the standard tier, each with a glow
  *       shell) floating {@link #HOVER} px above the head, turning slowly ({@link #SPIN} rad a tick), following the head's pitch only half ({@link #PITCH_FOLLOW}) so it floats instead of wobbling. Four
- *       meshes in {@code assets/nusmp/sdw4_meshes} (full and left half for the first dive), made by {@code tools/gen_sdw4_models.py}, read by {@link SpiritDiveWind3Mesh#getIn}.</li>
+ *       meshes in {@code assets/anime_multiverse/sdw4_meshes} (full and left half for the first dive), made by {@code tools/gen_sdw4_models.py}, read by {@link SpiritDiveWind3Mesh#getIn}.</li>
  *   <li><b>The calm steady state</b>: after the 22-tick entry the loud effects fade out and a quiet set stays (body light, crown, wings, wrist circle with a low pulse, sword at the hip, bow on the back,
  *       two sparkles, the ground ring dimmed). The loud effects (steady ribbons, the extra sparkles, the circle of crosses behind the back, the wrist sprite, a full strength ground ring) come back at full
  *       strength during the entry, the exit and for {@link #CAST_HOLD} ticks after a cast. {@link #energy} is that 1 (loud) .. 0 (calm) number; {@link #calmSpec} the quiet set.</li>

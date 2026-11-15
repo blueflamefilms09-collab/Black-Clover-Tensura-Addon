@@ -39,7 +39,7 @@ public final class AvatarNetServer {
         if (!AvatarConfig.enabled() || !hasBuilderOpen(p)) return;
         if (!ROLL_LIMIT.allow(p.getUUID(), System.currentTimeMillis(), AvatarNetConfig.rollGapMillis())) return;
         AvatarCreation.Roll r = AvatarCreation.rollStats(p);
-        if (r == null || !r.ok()) { reply(p, false, "roll", "nusmp.avatar.gui.err.roll_refused"); return; }
+        if (r == null || !r.ok()) { reply(p, false, "roll", "anime_multiverse.avatar.gui.err.roll_refused"); return; }
         PacketDistributor.sendToPlayer(p, new S2C_RollPayload(r.stats(), r.fiveDice(), r.luck(), r.token(), AvatarConfig.rerollCostMagicule()));
     }
 
@@ -49,13 +49,13 @@ public final class AvatarNetServer {
         AvatarRace race = AvatarRaces.get(raceId);
         AvatarPersonality primary = AvatarPersonality.byName(NetText.clean(m.primary(), NetText.ID_MAX));
         AvatarPersonality secondary = AvatarPersonality.byName(NetText.clean(m.secondary(), NetText.ID_MAX));
-        if (race == null) { reply(p, false, "create", "nusmp.avatar.gui.err.race"); return; }
-        if (primary == null) { reply(p, false, "create", "nusmp.avatar.gui.err.primary"); return; }
+        if (race == null) { reply(p, false, "create", "anime_multiverse.avatar.gui.err.race"); return; }
+        if (primary == null) { reply(p, false, "create", "anime_multiverse.avatar.gui.err.primary"); return; }
         if (secondary == primary) secondary = null;
         AppearanceData look = DynamicAppearanceEngine.sanitize(AppearanceData.fromTag(m.appearance()), race);
         String name = NetText.clean(m.name(), NetText.NAME_MAX).strip();
         AvatarCreation.Result res = AvatarCreation.finalizeAvatar(p, new AvatarCreation.CreationRequest(raceId, primary, secondary, look.toTag(), name), m.token());
-        if (res == null) { reply(p, false, "create", "nusmp.avatar.gui.err.create"); return; }
+        if (res == null) { reply(p, false, "create", "anime_multiverse.avatar.gui.err.create"); return; }
         reply(p, res.ok(), "create", res.message() == null ? "" : res.message());
         if (res.ok()) p.closeContainer();
     }
@@ -65,11 +65,11 @@ public final class AvatarNetServer {
         if (!NAME_LIMIT.allow(p.getUUID(), System.currentTimeMillis(), AvatarNetConfig.nameGapMillis())) return;
         Entity e = p.serverLevel().getEntity(m.avatarId());
         if (!(e instanceof AvatarEntity a) || !p.getUUID().equals(a.creatorUuid()) || a.distanceToSqr(p) > (double) AvatarNetConfig.nameReach() * AvatarNetConfig.nameReach()) {
-            reply(p, false, "name", "nusmp.avatar.gui.err.name_target");
+            reply(p, false, "name", "anime_multiverse.avatar.gui.err.name_target");
             return;
         }
         AvatarCreation.Result res = AvatarCreation.nameAvatar(p, m.avatarId(), NetText.clean(m.name(), NetText.NAME_MAX).strip());
-        if (res == null) { reply(p, false, "name", "nusmp.avatar.gui.err.name"); return; }
+        if (res == null) { reply(p, false, "name", "anime_multiverse.avatar.gui.err.name"); return; }
         reply(p, res.ok(), "name", res.message() == null ? "" : res.message());
     }
 

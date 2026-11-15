@@ -23,7 +23,7 @@ class GradeDamageDataTest {
     private static String read(String rel) throws IOException { return Files.readString(SRC.resolve(rel)); }
 
     @Test void everyWeaponClassHasAFactor() throws IOException {
-        JsonObject o = JsonParser.parseString(Files.readString(Paths.get("src/main/resources/assets/nusmp/weapon_classes.json"))).getAsJsonObject();
+        JsonObject o = JsonParser.parseString(Files.readString(Paths.get("src/main/resources/assets/anime_multiverse/weapon_classes.json"))).getAsJsonObject();
         for (String c : o.getAsJsonObject("classes").keySet()) {
             // an unknown name would fall back to the middle silently: every class must be listed on purpose
             assertTrue(knownType(c), "weapon class without a damage factor: " + c);

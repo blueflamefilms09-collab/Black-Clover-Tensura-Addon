@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * Why: the vocabulary of the mechanics (every primitive, trigger and counter, with its arguments, ranges, default values and the exclusive CHANNEL it occupies) is written once, in
- * {@code tools/mechanics/tables/ops.py}, and shipped as {@code data/nusmp/mega/mechanics/ops.json}. This pure class reads that catalogue so the parser can reject a typo
+ * {@code tools/mechanics/tables/ops.py}, and shipped as {@code data/anime_multiverse/mega/mechanics/ops.json}. This pure class reads that catalogue so the parser can reject a typo
  * ("unknown argument secs2 of damage") instead of the engine ignoring it silently, the signature guard can merge defaults, the conflict table knows which primitive blocks
  * which channel, and the in-game self-test can demand an executor for every id. A datapack that adds a primitive ships its own ops entry and the Java executor registry.
  */

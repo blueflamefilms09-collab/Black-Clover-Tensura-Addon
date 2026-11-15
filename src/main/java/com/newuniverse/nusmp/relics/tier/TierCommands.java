@@ -42,18 +42,18 @@ public final class TierCommands {
     private static int up(CommandSourceStack src, ServerPlayer p) {
         ItemStack held = p.getMainHandItem();
         RelicDef d = Relics.defOf(held);
-        if (d == null) return fail(src, "nusmp.tier.cmd.no_relic");
+        if (d == null) return fail(src, "anime_multiverse.tier.cmd.no_relic");
         int next = TierRules.nextTarget(Tiers.effectiveGrade(held, d).ordinal());
-        if (next < 0) return fail(src, "nusmp.tier.top");
+        if (next < 0) return fail(src, "anime_multiverse.tier.top");
         return apply(src, p, held, d, next);
     }
 
     private static int set(CommandSourceStack src, ServerPlayer p, String gradeName) {
         ItemStack held = p.getMainHandItem();
         RelicDef d = Relics.defOf(held);
-        if (d == null) return fail(src, "nusmp.tier.cmd.no_relic");
+        if (d == null) return fail(src, "anime_multiverse.tier.cmd.no_relic");
         Grade g = Grade.byName(gradeName);
-        if (g == null) return fail(src, "nusmp.tier.cmd.bad_grade");
+        if (g == null) return fail(src, "anime_multiverse.tier.cmd.bad_grade");
         return apply(src, p, held, d, g.ordinal());
     }
 
@@ -61,7 +61,7 @@ public final class TierCommands {
         Tiers.setTier(held, tier);
         Relics.invalidate(p);
         Grade now = Tiers.effectiveGrade(held, d);
-        src.sendSuccess(() -> Component.translatable("nusmp.tier.cmd.done", held.getHoverName(), now.label()), true);
+        src.sendSuccess(() -> Component.translatable("anime_multiverse.tier.cmd.done", held.getHoverName(), now.label()), true);
         return 1;
     }
 }

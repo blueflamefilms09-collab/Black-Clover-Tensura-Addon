@@ -77,7 +77,7 @@ final class LootSelfTests {
         for (String id : r.ids()) {
             Item item = LootItems.get(id);
             if (item == null) return id + " is not registered";
-            if (!item.getDescriptionId().equals("item.nusmp." + id)) return id + " has the description id " + item.getDescriptionId();
+            if (!item.getDescriptionId().equals("item.anime_multiverse." + id)) return id + " has the description id " + item.getDescriptionId();
         }
         if (r.materials().size() < 24) return "fewer than 24 monster parts";
         return null;
@@ -238,7 +238,7 @@ final class LootSelfTests {
         for (RecipeHolder<?> h : server.getRecipeManager().getRecipes()) {
             ItemStack out = h.value().getResultItem(server.registryAccess());
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(out.getItem());
-            if (id != null && "nusmp".equals(id.getNamespace()) && LootItems.isLoot(id.getPath())) results.add(id.getPath());
+            if (id != null && "anime_multiverse".equals(id.getNamespace()) && LootItems.isLoot(id.getPath())) results.add(id.getPath());
         }
         List<String> missing = new ArrayList<>();
         for (String want : new String[]{"goblin_ear_ward", "shadowsteel_ingot", "bone_arrow", "drakescale_vest", "mana_elixir", "orc_tusk_ring", "bone_lance", "slime_jelly_pudding"}) if (!results.contains(want)) missing.add(want);

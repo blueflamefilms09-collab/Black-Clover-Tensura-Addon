@@ -68,7 +68,7 @@ public class LootFoodItem extends Item {
     /** The effect holder of an id of the roster; never the hunger effect; null if the effect does not exist. */
     static Holder<MobEffect> effect(String id) {
         boolean refuses = id.equals("minecraft:hunger"); if (refuses) return null;
-        if (id.equals("nusmp:mana_surge")) return LootEffects.MANA_SURGE;
+        if (id.equals("anime_multiverse:mana_surge")) return LootEffects.MANA_SURGE;
         ResourceLocation rl = ResourceLocation.tryParse(id);
         return rl == null ? null : BuiltInRegistries.MOB_EFFECT.getHolder(rl).orElse(null);
     }
@@ -90,17 +90,17 @@ public class LootFoodItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, net.minecraft.world.item.TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        if (def.mana() > 0) tip.add(LootText.text("tooltip.nusmp.loot.restores_mana", def.mana()).withStyle(ChatFormatting.AQUA));
-        if (def.aura() > 0) tip.add(LootText.text("tooltip.nusmp.loot.restores_aura", def.aura()).withStyle(ChatFormatting.GOLD));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        if (def.mana() > 0) tip.add(LootText.text("tooltip.anime_multiverse.loot.restores_mana", def.mana()).withStyle(ChatFormatting.AQUA));
+        if (def.aura() > 0) tip.add(LootText.text("tooltip.anime_multiverse.loot.restores_aura", def.aura()).withStyle(ChatFormatting.GOLD));
         for (LootRoster.EffectDef e : def.effects()) {
             Holder<MobEffect> h = effect(e.effect());
             if (h == null) continue;
             MobEffectInstance inst = new MobEffectInstance(h, Math.max(1, e.seconds()) * 20, Math.max(0, e.amp()));
             Component name = Component.translatable(inst.getDescriptionId());
             if (e.amp() > 0) name = Component.translatable("potion.withAmplifier", name, Component.translatable("potion.potency." + e.amp()));
-            tip.add(LootText.text("tooltip.nusmp.loot.effect", name, MobEffectUtil.formatDuration(inst, 1.0F, 20.0F)).withStyle(ChatFormatting.BLUE));
+            tip.add(LootText.text("tooltip.anime_multiverse.loot.effect", name, MobEffectUtil.formatDuration(inst, 1.0F, 20.0F)).withStyle(ChatFormatting.BLUE));
         }
-        tip.add(LootText.text("tooltip.nusmp.loot.value", CoinMath.describe(def.value())).withStyle(ChatFormatting.DARK_GRAY));
+        tip.add(LootText.text("tooltip.anime_multiverse.loot.value", CoinMath.describe(def.value())).withStyle(ChatFormatting.DARK_GRAY));
     }
 }

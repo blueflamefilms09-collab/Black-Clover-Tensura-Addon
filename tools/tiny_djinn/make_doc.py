@@ -9,7 +9,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, ".."))
 import tdparts  # noqa: E402
 ROOT = os.path.join(HERE, "..", "..")
-GEO = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "geo", "entity")
+GEO = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "geo", "entity")
 
 HEAD = {
     "bolt_crown": "three forked bolts for a crown", "flame_crown": "a flame crown", "fin_tiara": "a fin tiara", "wind_plume": "a swept wind plume and temple wings",

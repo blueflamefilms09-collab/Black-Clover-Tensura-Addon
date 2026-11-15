@@ -60,7 +60,7 @@ public final class DjinnWeaponBridge {
 
     public static void column(ServerLevel l, double x, double y0, double y1, double z, ParticleOptions o, int count) { DjinnFx.column(l, x, y0, y1, z, o, count); }
 
-    /** A mob effect by id (or the pseudo id "nusmp:burn"); an id the game does not know is skipped. */
+    /** A mob effect by id (or the pseudo id "anime_multiverse:burn"); an id the game does not know is skipped. */
     public static void effect(LivingEntity t, String id, int ticks, int amp) { DjinnFx.effect(t, id, ticks, amp); }
 
     public static boolean dark(ServerPlayer p) { return DarkDjinn.active(DjinnState.of(p)); }

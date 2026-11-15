@@ -101,7 +101,7 @@ def after():
     lq = {}
     for (ly, _g, _P, _uv, _n) in lp["quads"]:
         lq[ly] = lq.get(ly, 0) + 1
-    blk["lod"] = {"file": "src/main/resources/assets/nusmp/weapon_meshes_vu/%s_lod.txt" % ID,
+    blk["lod"] = {"file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/%s_lod.txt" % ID,
                   "quads": {"body": lq.get(0, 0), "void": lq.get(1, 0), "glow": lq.get(2, 0), "veins": lq.get(3, 0), "halo": lq.get(4, 0), "total": sum(lq.values())},
                   "welded_vertices_body": welded_vertices(lp["quads"], {0})}
     passes = ["body_cutout"]

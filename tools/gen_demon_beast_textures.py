@@ -1,4 +1,4 @@
-"""Generates the Demon Beast Magic VFX textures: src/main/resources/assets/nusmp/textures/particle/demon_beast_*.png
+"""Generates the Demon Beast Magic VFX textures: src/main/resources/assets/anime_multiverse/textures/particle/demon_beast_*.png
 
 Look reference (owner art, docs/attributes/art_reference/pack_demon_beast.webp): a ragged, grainy, stippled crimson beast-shaped aura with
 horn / ear spikes standing behind the caster, and white double rings of glowing rune glyphs in front of the outstretched hand.
@@ -10,7 +10,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 3
 
 

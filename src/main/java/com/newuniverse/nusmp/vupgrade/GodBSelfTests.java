@@ -38,20 +38,20 @@ public final class GodBSelfTests {
     private static SelfTests.Result run(MinecraftServer server) throws IOException {
         StringBuilder sb = new StringBuilder();
         for (String id : IDS) {
-            String table = text("/assets/nusmp/visual_upgrade/" + id + ".json");
+            String table = text("/assets/anime_multiverse/visual_upgrade/" + id + ".json");
             if (table == null) return SelfTests.Result.fail(id + ": the data table is not in the jar");
             UpgradeSpec s = UpgradeSpec.parse(JsonParser.parseString(table).getAsJsonObject());
             if (!s.item().equals(id)) return SelfTests.Result.fail(id + ": the table names " + s.item());
-            int body = quads("/assets/nusmp/" + "weapon_meshes/" + s.mesh() + ".txt");
-            int lod = quads("/assets/nusmp/weapon_meshes/" + s.lodMesh() + ".txt");
-            int orbit = quads("/assets/nusmp/weapon_meshes/" + s.orbitMesh() + ".txt");
+            int body = quads("/assets/anime_multiverse/" + "weapon_meshes/" + s.mesh() + ".txt");
+            int lod = quads("/assets/anime_multiverse/weapon_meshes/" + s.lodMesh() + ".txt");
+            int orbit = quads("/assets/anime_multiverse/weapon_meshes/" + s.orbitMesh() + ".txt");
             if (body < 600) return SelfTests.Result.fail(id + ": the upgraded mesh has only " + body + " quads");
             if (lod <= 0 || lod > 0.15 * body) return SelfTests.Result.fail(id + ": the level-of-detail mesh has " + lod + " of " + body + " quads");
             if (orbit <= 0 && s.orbitPieces() > 0) return SelfTests.Result.fail(id + ": the orbiting piece is empty");
             for (String t : new String[]{"", "_glow", "_glow2"}) {
-                if (!exists("/assets/nusmp/textures/entity/weapon/" + s.mesh() + t + ".png")) return SelfTests.Result.fail(id + ": the skin " + s.mesh() + t + ".png is missing");
+                if (!exists("/assets/anime_multiverse/textures/entity/weapon/" + s.mesh() + t + ".png")) return SelfTests.Result.fail(id + ": the skin " + s.mesh() + t + ".png is missing");
             }
-            if (!exists("/assets/nusmp/weapon_meshes/" + id + ".txt") || !exists("/assets/nusmp/textures/entity/weapon/" + id + ".png")) return SelfTests.Result.fail(id + ": the old mesh or skin (the fallback) is gone");
+            if (!exists("/assets/anime_multiverse/weapon_meshes/" + id + ".txt") || !exists("/assets/anime_multiverse/textures/entity/weapon/" + id + ".png")) return SelfTests.Result.fail(id + ": the old mesh or skin (the fallback) is gone");
             // the switch
             if (!UpgradeMath.meshFor(true, true, true, id, s.mesh()).equals(s.mesh())) return SelfTests.Result.fail(id + ": the switch does not pick the upgraded mesh");
             if (!UpgradeMath.meshFor(false, true, true, id, s.mesh()).equals(id)) return SelfTests.Result.fail(id + ": visual.upgrade=false does not fall back to the old mesh");

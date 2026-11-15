@@ -36,7 +36,7 @@ final class Salamander {
     static boolean link(ServerPlayer p, FireCasting.State s) {
         ServerLevel sl = p.serverLevel();
         if (!FireCasting.SPIRITS.acquire(p.getUUID(), FireCastRules.SPIRITS_PER_PLAYER, FireCastConfig.maxSpirits())) {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.firecast.spirit.full", "The Salamander cannot answer: too many spirits are out.").withStyle(ChatFormatting.RED), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.firecast.spirit.full", "The Salamander cannot answer: too many spirits are out.").withStyle(ChatFormatting.RED), true);
             return false;
         }
         double[] a = FireCastRules.shoulder(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -47,7 +47,7 @@ final class Salamander {
         FireCasting.markLive(p);
         VfxSpawn.send(sl, VfxShape.FLAMEFX_BURST, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.3, a[2]), FIRE_COLOR, 16, 0.5f);
         sl.playSound(null, p.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.8f, 0.8f);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.firecast.spirit.linked", "The Salamander takes your shoulder.").withStyle(ChatFormatting.GOLD), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.firecast.spirit.linked", "The Salamander takes your shoulder.").withStyle(ChatFormatting.GOLD), true);
         SalamanderMood.linked(p, s);
         return true;
     }
@@ -59,7 +59,7 @@ final class Salamander {
         if (e != null) e.discard();
         if (s.spirit != null) FireCasting.SPIRITS.release(p.getUUID());
         s.spirit = null;
-        if (say) p.displayClientMessage(Component.translatableWithFallback("nusmp.firecast.spirit.unlinked", "The Salamander returns to its flames.").withStyle(ChatFormatting.GRAY), true);
+        if (say) p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.firecast.spirit.unlinked", "The Salamander returns to its flames.").withStyle(ChatFormatting.GRAY), true);
     }
 
     /** The cast of one of Fuegoleon's Fire pages: the spell leaves the Salamander's mouth (the big form's, for the big pages). */

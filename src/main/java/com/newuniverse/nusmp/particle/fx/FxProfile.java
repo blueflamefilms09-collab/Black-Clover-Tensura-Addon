@@ -9,7 +9,7 @@ import java.util.Locale;
 /**
  * Why: every custom particle of the library behaves differently (an ember rises and flickers, a leaf tumbles, a ring just widens), but they all run through ONE particle class, so the
  * difference lives in this immutable record: gravity, drag, spin, swirl, sway, jitter, the size and alpha curves, the lifetime range, whether it glows (full-bright) and blends additively,
- * and how its animation frames advance. The numbers are authored next to the textures in {@code tools/particles} and shipped as {@code data/nusmp/particle_catalog.json}; this class only
+ * and how its animation frames advance. The numbers are authored next to the textures in {@code tools/particles} and shipped as {@code data/anime_multiverse/particle_catalog.json}; this class only
  * reads them. Pure (no game classes), so the parsing and the clamps are unit-tested. A record is created once per particle type, never per particle.
  *
  * <ul>

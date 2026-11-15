@@ -52,7 +52,7 @@ public final class RadesUndeadSelfTests {
             // 1. registered, undead, with their rows' health
             for (NamedCorpses k : NamedCorpses.values()) {
                 EntityType<NamedCorpseEntity> t = CorpseEntities.type(k);
-                if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", k.id))) return Result.fail(k.id + " is not registered");
+                if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", k.id))) return Result.fail(k.id + " is not registered");
                 if (!t.is(EntityTypeTags.UNDEAD)) return Result.fail(k.id + " is not flagged undead (minecraft:undead)");
                 NamedCorpseEntity e = t.create(level);
                 if (e == null) return Result.fail(k.id + " could not be created");

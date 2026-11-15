@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * The 3D cores of the water hybrid as plain arrays, parsed once from {@code assets/nusmp/wbc_meshes/bc_<piece>[_lo].txt} (written by {@code tools/gen_water_bc_meshes.py}, the mesh pipeline of the weapon
+ * The 3D cores of the water hybrid as plain arrays, parsed once from {@code assets/anime_multiverse/wbc_meshes/bc_<piece>[_lo].txt} (written by {@code tools/gen_water_bc_meshes.py}, the mesh pipeline of the weapon
  * models; the file format is the one of {@code SpiritDiveWind3Mesh}: {@code q <layer> (x y z u v) x4 nx ny nz r g b}, units 1/16 block, y along the piece). Pure and server safe: no Minecraft class, so
  * the budgets, the self-test and the tests count the real quads. Shared instances: every effect reads the same arrays, nothing is copied per frame.
  *
@@ -70,13 +70,13 @@ public final class WaterBcMeshes {
     public static boolean exists(String file) { return read(file) != null; }
 
     private static List<String> read(String file) {
-        try (InputStream in = WaterBcMeshes.class.getResourceAsStream("/assets/nusmp/" + WaterBc.MESH_FOLDER + "/" + file + ".txt")) {
+        try (InputStream in = WaterBcMeshes.class.getResourceAsStream("/assets/anime_multiverse/" + WaterBc.MESH_FOLDER + "/" + file + ".txt")) {
             if (in != null) {
                 try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) { return r.lines().toList(); }
             }
         } catch (IOException ignored) { }
         try {
-            Path p = Path.of("src", "main", "resources", "assets", "nusmp", WaterBc.MESH_FOLDER, file + ".txt");
+            Path p = Path.of("src", "main", "resources", "assets", "anime_multiverse", WaterBc.MESH_FOLDER, file + ".txt");
             if (Files.isRegularFile(p)) return Files.readAllLines(p, StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException ignored) { }
         return null;

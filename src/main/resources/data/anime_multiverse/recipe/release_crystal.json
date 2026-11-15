@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "anime_multiverse:gneiss_crystals"
+    },
+    "H": {
+      "item": "tensura:high_quality_magic_crystal"
+    },
+    "M": {
+      "item": "tensura:medium_quality_magic_crystal"
+    }
+  },
+  "pattern": [
+    "HMH",
+    "MGM",
+    "HMH"
+  ],
+  "result": {
+    "id": "anime_multiverse:release_crystal",
+    "count": 1
+  }
+}

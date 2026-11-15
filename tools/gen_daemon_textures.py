@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image
 
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity")
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity")
 S = 128
 
 # name: (u, v, w, h, d), the same numbers as the model's texOffs / addBox sizes

@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Why: the drop tables are data ({@code data/nusmp/mega/gear/tables.json}) so the owner or a pack can retune what drops and how the grades shift with
+ * Why: the drop tables are data ({@code data/anime_multiverse/mega/gear/tables.json}) so the owner or a pack can retune what drops and how the grades shift with
  * depth without a mod update, and a data reload ({@code /reload}, a world load) must pick the change up. A plain {@code ResourceManagerReloadListener}
  * (the pattern of the faction files and the avatar races) reads the file through the resource manager, so a data pack's file of the same path replaces
  * the shipped one, hands the parsed tree to the pure {@link GearTablesParser}, logs every problem once with the file it came from, and installs the
@@ -37,10 +37,10 @@ import java.util.Optional;
 public final class GearTablesReload implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
 
-    /** The data file (namespace nusmp, path under data/nusmp/). */
-    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/gear/tables.json");
+    /** The data file (namespace anime_multiverse, path under data/anime_multiverse/). */
+    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/gear/tables.json");
     /** The same file inside the mod jar, for the fallbacks. */
-    private static final String CLASSPATH = "data/nusmp/mega/gear/tables.json";
+    private static final String CLASSPATH = "data/anime_multiverse/mega/gear/tables.json";
 
     /** Where the tables in force came from: {@link #FROM_DATA} (a data reload read the file through the resource manager), {@link #FROM_JAR} (the reload gave nothing usable) or {@link #BEFORE_RELOAD} (asked before any reload ran). */
     public static final String FROM_DATA = "data", FROM_JAR = "mod jar (the pack file was unusable)", BEFORE_RELOAD = "mod jar (before the first data reload)";
@@ -56,7 +56,7 @@ public final class GearTablesReload implements ResourceManagerReloadListener {
         synchronized (GearTablesReload.class) {
             if (current == null) {
                 GearTablesParser.Result r = fromClassPath();
-                for (String p : r.problems()) LOG.warn("[nusmp] Gear tables (mod file): {}", p);
+                for (String p : r.problems()) LOG.warn("[anime_multiverse] Gear tables (mod file): {}", p);
                 install(r, BEFORE_RELOAD);
             }
             return current;
@@ -91,34 +91,34 @@ public final class GearTablesReload implements ResourceManagerReloadListener {
                 try (Reader reader = res.get().openAsReader()) {
                     result = parse(reader);
                 }
-                for (String p : result.problems()) LOG.warn("[nusmp] Gear tables file {}: {}", FILE, p);
+                for (String p : result.problems()) LOG.warn("[anime_multiverse] Gear tables file {}: {}", FILE, p);
             } else {
-                LOG.warn("[nusmp] Gear tables file {} is missing from the loaded packs", FILE);
+                LOG.warn("[anime_multiverse] Gear tables file {} is missing from the loaded packs", FILE);
             }
         } catch (IOException | RuntimeException e) {
-            LOG.warn("[nusmp] Gear tables file {} could not be read: {}", FILE, e.toString());
+            LOG.warn("[anime_multiverse] Gear tables file {} could not be read: {}", FILE, e.toString());
             result = null;
         }
         if (result == null || !result.tables().isUsable()) {
-            LOG.warn("[nusmp] Gear tables: the pack file gave nothing usable, using the one inside the mod jar instead");
+            LOG.warn("[anime_multiverse] Gear tables: the pack file gave nothing usable, using the one inside the mod jar instead");
             result = fromClassPath();
             from = FROM_JAR;
-            for (String p : result.problems()) LOG.warn("[nusmp] Gear tables (mod file): {}", p);
+            for (String p : result.problems()) LOG.warn("[anime_multiverse] Gear tables (mod file): {}", p);
         }
         install(result, from);
-        LOG.info("[nusmp] Loaded the Mega-Dungeon gear tables: {}", GearTablesParser.summary(result.tables()));
+        LOG.info("[anime_multiverse] Loaded the Mega-Dungeon gear tables: {}", GearTablesParser.summary(result.tables()));
     }
 
     // ---------------------------------------------------------------- reading
     private static GearTablesParser.Result fromClassPath() {
         try (InputStream in = GearTablesReload.class.getClassLoader().getResourceAsStream(CLASSPATH)) {
             if (in == null) {
-                LOG.error("[nusmp] Gear tables: {} is not inside the mod jar; no standard gear will drop", CLASSPATH);
+                LOG.error("[anime_multiverse] Gear tables: {} is not inside the mod jar; no standard gear will drop", CLASSPATH);
                 return new GearTablesParser.Result(GearTables.EMPTY, List.of("the mod jar has no " + CLASSPATH));
             }
             return parse(new InputStreamReader(in, StandardCharsets.UTF_8));
         } catch (IOException | RuntimeException e) {
-            LOG.error("[nusmp] Gear tables: the copy inside the mod jar could not be read; no standard gear will drop", e);
+            LOG.error("[anime_multiverse] Gear tables: the copy inside the mod jar could not be read; no standard gear will drop", e);
             return new GearTablesParser.Result(GearTables.EMPTY, List.of("the mod jar's table could not be read: " + e));
         }
     }

@@ -35,15 +35,15 @@ public final class WeaponEngravings {
 
     static Engraving e(String id, int level) { return new Engraving(id, level); }
 
-    /** Item id (nusmp:) -> its engravings. */
+    /** Item id (anime_multiverse:) -> its engravings. */
     static final Map<String, List<Engraving>> ENGRAVINGS = Map.ofEntries(
-            Map.entry("demon_slasher_katana", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 2), e("swift", 1))), // Asta's: cuts through magic
+            Map.entry("demon_slasher_katana", List.of(e("anime_multiverse:anti_magic", 1), e("barrier_piercing", 2), e("swift", 1))), // Asta's: cuts through magic
             Map.entry("miasma_infused_katana", List.of(e("severance", 2), e("enervation", 1))),             // Yami: dimension-cutting darkness
             Map.entry("spell_forged_rapier", List.of(e("swift", 2), e("magic_weapon", 1))),                 // spatial edge, spell-forged
             Map.entry("severing_greatsword", List.of(e("severance", 2), e("crushing", 1))),                 // Sword Rain, a heavy cleaver
-            Map.entry("demon_slayer_sword", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 3), e("magic_interference", 1))), // the Genesis anti-magic blade
-            Map.entry("demon_dweller_sword", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 2), e("energy_steal", 1))), // drinks the magic it cuts
-            Map.entry("demon_destroyer_sword", List.of(e("nusmp:anti_magic", 1), e("magic_interference", 1), e("sturdy", 2))), // undoes spell effects
+            Map.entry("demon_slayer_sword", List.of(e("anime_multiverse:anti_magic", 1), e("barrier_piercing", 3), e("magic_interference", 1))), // the Genesis anti-magic blade
+            Map.entry("demon_dweller_sword", List.of(e("anime_multiverse:anti_magic", 1), e("barrier_piercing", 2), e("energy_steal", 1))), // drinks the magic it cuts
+            Map.entry("demon_destroyer_sword", List.of(e("anime_multiverse:anti_magic", 1), e("magic_interference", 1), e("sturdy", 2))), // undoes spell effects
             Map.entry("licht_dweller_sword", List.of(e("holy_weapon", 2), e("elemental_boost", 1))),        // Licht's white blades
             Map.entry("licht_destroyer_sword", List.of(e("holy_weapon", 2), e("barrier_piercing", 1))),
             Map.entry("rimeheart_runeblade", List.of(e("elemental_boost", 2), e("magicule_absorption", 1))), // a cryo mana lattice
@@ -52,7 +52,7 @@ public final class WeaponEngravings {
             Map.entry("magic_tool_spear", List.of(e("magic_weapon", 1))),
             Map.entry("magic_tool_bow", List.of(e("magic_weapon", 1))),
             Map.entry("last_word", List.of(e("barrier_piercing", 2), e("severance", 1))),                   // 0.52: Zagred's quill-blade
-            Map.entry("elsdocia", List.of(e("nusmp:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1))),
+            Map.entry("elsdocia", List.of(e("anime_multiverse:legacy_of_the_wizard_kings", 1), e("magic_interference", 2), e("magicule_absorption", 2), e("barrier_piercing", 1))),
             // the two crossbows of the "Magic Item Compendium I" sheet
             Map.entry("bolt_thrower", List.of(e("barrier_piercing", 2), e("severance", 1), e("elemental_boost", 1), e("magic_weapon", 1))), // bolts of force that go through wards and cut cleanly
             Map.entry("crossbow_of_swift_death", List.of(e("severance", 2), e("barrier_piercing", 1), e("enervation", 1), e("soul_eater", 1))), // a quick death: cuts, saps, takes the soul
@@ -117,7 +117,7 @@ public final class WeaponEngravings {
 
     static final String FLAG = "NUEngraved";
 
-    /** Read-only view for the Engravement Codex (engraving/codex/CodexGather): item path -> its engravings as "id@level" ("nusmp:anti_magic@1"). Built on first use. */
+    /** Read-only view for the Engravement Codex (engraving/codex/CodexGather): item path -> its engravings as "id@level" ("anime_multiverse:anti_magic@1"). Built on first use. */
     public static Map<String, List<String>> codexTable() {
         Map<String, List<String>> t = CODEX_TABLE;
         if (t == null) {
@@ -138,7 +138,7 @@ public final class WeaponEngravings {
     public static boolean engrave(ItemStack stack, HolderLookup.Provider registries) {
         if (stack.isEmpty()) return false;
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        if (!"nusmp".equals(key.getNamespace())) return false;
+        if (!"anime_multiverse".equals(key.getNamespace())) return false;
         List<Engraving> list = ENGRAVINGS.get(key.getPath());
         if (list == null) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);

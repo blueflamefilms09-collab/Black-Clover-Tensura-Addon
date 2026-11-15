@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * {@code types.json}, with no problem, a shelf of a sensible size, only tags and items that make sense for a general store.
  */
 class StockItemSchemaTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/black_market");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/black_market");
 
     private static String shop(String type, String... entries) {
         return "{" + (type == null ? "" : "\"type\":\"" + type + "\",") + "\"entries\":[" + String.join(",", entries) + "]}";
@@ -100,7 +100,7 @@ class StockItemSchemaTest {
     @Test
     void softMistakesWarnAndKeepTheLine() {
         StockSchema.Parsed p = StockSchema.parse(shop(null, item("a", "minecraft:diamond", "\"exclude\":\"minecraft:dirt\""), item("b", "minecraft:diamond", "\"exclude\":[\"Bad\", 5, \"minecraft:dirt\"]"),
-                item("c", "minecraft:diamond", "\"route\":\"nusmp:x\"")));
+                item("c", "minecraft:diamond", "\"route\":\"anime_multiverse:x\"")));
         assertEquals(3, p.entries().size(), "a bad exclude entry or a stray key only warns");
         assertEquals(List.of("minecraft:dirt"), p.entries().get(1).exclude());
         assertTrue(mentions(p.problems(), "\"exclude\" must be an array"));

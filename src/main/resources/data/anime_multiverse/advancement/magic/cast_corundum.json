@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:magic/soul_earth",
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_sapling"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.magic.cast_corundum.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.magic.cast_corundum.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_corundum": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "corundum"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_corundum"
+    ]
+  ],
+  "rewards": {
+    "experience": 8
+  }
+}

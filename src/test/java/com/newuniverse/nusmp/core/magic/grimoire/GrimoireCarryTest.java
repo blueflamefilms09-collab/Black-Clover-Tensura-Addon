@@ -104,7 +104,7 @@ class GrimoireCarryTest {
             int seed = SpellArchetype.packSeed(35, a);
             assertEquals(35, SpellArchetype.magicOf(seed));
             assertEquals(a, SpellArchetype.archetypeOf(seed));
-            assertTrue(new File("src/main/resources/assets/nusmp/" + a.texture()).isFile(), "badge texture " + a);
+            assertTrue(new File("src/main/resources/assets/anime_multiverse/" + a.texture()).isFile(), "badge texture " + a);
         }
         assertNull(SpellArchetype.archetypeOf(7), "old cards carry no badge");
         int ult = SpellArchetype.packSeed(12, SpellArchetype.DEBUFF, true);
@@ -121,7 +121,7 @@ class GrimoireCarryTest {
         for (String m : magics) {
             for (int seed : new int[]{SpellArchetype.packSeed(0, SpellArchetype.OFFENSE), SpellArchetype.packSeed(0, SpellArchetype.BUFF), ult}) {
                 String path = SpellArchetype.iconPath(m.toUpperCase(), seed);
-                assertTrue(new File("src/main/resources/assets/nusmp/" + path).isFile(), "icon " + path);
+                assertTrue(new File("src/main/resources/assets/anime_multiverse/" + path).isFile(), "icon " + path);
             }
         }
         assertEquals("textures/skill/icons/water_buff.png", SpellArchetype.iconPath("WATER", SpellArchetype.packSeed(3, SpellArchetype.DEFENSE)));

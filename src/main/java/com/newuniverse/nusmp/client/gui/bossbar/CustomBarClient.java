@@ -26,7 +26,7 @@ import java.util.UUID;
 
 /**
  * Why: the client's hub of the custom boss bars: it receives the states and clears from the server, owns the per-bar {@link CustomBarState}, loads the styles on resource reload, wires the overlay
- * and the client command {@code /nusmp bossbar preview <style> [hp%] [phase]} (no operator rights needed: it only draws on this machine). The vanilla boss event of a bar (name, progress,
+ * and the client command {@code /anime_multiverse bossbar preview <style> [hp%] [phase]} (no operator rights needed: it only draws on this machine). The vanilla boss event of a bar (name, progress,
  * visibility) is still what makes a bar exist; a state without a vanilla event is only kept briefly (it may arrive a moment before the add packet), and a bar that dies keeps its state
  * for the death animation. Client thread only.
  */
@@ -34,7 +34,7 @@ public final class CustomBarClient {
     private CustomBarClient() {}
 
     /** The id of the one preview bar. */
-    static final UUID PREVIEW_ID = UUID.nameUUIDFromBytes("nusmp:boss_bar_preview".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+    static final UUID PREVIEW_ID = UUID.nameUUIDFromBytes("anime_multiverse:boss_bar_preview".getBytes(java.nio.charset.StandardCharsets.UTF_8));
     private static final int PREVIEW_TICKS = 240;
     private static final Map<UUID, CustomBarState> BARS = new HashMap<>();
 
@@ -85,8 +85,8 @@ public final class CustomBarClient {
         List<Integer> th = p >= 3 ? List.of(66, 33) : p == 2 ? List.of(50) : List.of();
         int ph = phase > 0 ? Math.min(phase, th.size() + 1) : 1 + (hp <= 33 && th.size() > 1 ? 2 : hp <= 66 && th.size() > 0 ? 1 : 0);
         int flags = BossBarState.PREVIEW;
-        BossBarState s = new BossBarState(PREVIEW_ID, -1, "@nusmp.bossbar.preview.name", style, "@nusmp.bossbar.preview.title", "@nusmp.bossbar.preview.phase", ph, th.size() + 1, th, 30, flags,
-                "falling_stars", 120, BossBarState.LAIR_WARNING_TICKS, 3, "@nusmp.bossbar.preview.cast", 60, 3);
+        BossBarState s = new BossBarState(PREVIEW_ID, -1, "@anime_multiverse.bossbar.preview.name", style, "@anime_multiverse.bossbar.preview.title", "@anime_multiverse.bossbar.preview.phase", ph, th.size() + 1, th, 30, flags,
+                "falling_stars", 120, BossBarState.LAIR_WARNING_TICKS, 3, "@anime_multiverse.bossbar.preview.cast", 60, 3);
         long now = mc.level.getGameTime();
         CustomBarState st = new CustomBarState(PREVIEW_ID, s, now);
         st.preview = true;
@@ -96,9 +96,9 @@ public final class CustomBarClient {
     }
 
     private static void registerCommands(RegisterClientCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("bossbar")
+        event.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("bossbar")
                 .then(Commands.literal("styles").executes(ctx -> {
-                    say(ctx, Component.translatableWithFallback("nusmp.bossbar.cmd.styles", "Boss bar styles: %s", String.join(", ", BarStyleIds.ALL)));
+                    say(ctx, Component.translatableWithFallback("anime_multiverse.bossbar.cmd.styles", "Boss bar styles: %s", String.join(", ", BarStyleIds.ALL)));
                     return BarStyleIds.ALL.size();
                 }))
                 .then(Commands.literal("preview").then(Commands.argument("style", StringArgumentType.word())
@@ -113,11 +113,11 @@ public final class CustomBarClient {
     private static int show(CommandContext<CommandSourceStack> ctx, int hp, int phase) {
         String style = StringArgumentType.getString(ctx, "style");
         if (!BarStyleIds.known(style) || BarStyles.get(style) == null) {
-            ctx.getSource().sendFailure(Component.translatableWithFallback("nusmp.bossbar.cmd.unknown", "No boss bar style '%s'. Try /nusmp bossbar styles.", style));
+            ctx.getSource().sendFailure(Component.translatableWithFallback("anime_multiverse.bossbar.cmd.unknown", "No boss bar style '%s'. Try /anime_multiverse bossbar styles.", style));
             return 0;
         }
         preview(style, hp, phase, 3);
-        say(ctx, Component.translatableWithFallback("nusmp.bossbar.cmd.preview", "Showing the '%s' boss bar for twelve seconds.", style));
+        say(ctx, Component.translatableWithFallback("anime_multiverse.bossbar.cmd.preview", "Showing the '%s' boss bar for twelve seconds.", style));
         return 1;
     }
 

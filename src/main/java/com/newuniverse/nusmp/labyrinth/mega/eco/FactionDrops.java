@@ -75,7 +75,7 @@ public final class FactionDrops {
             add(out, HIGH, extra.stones().high());
             for (ItemStack s : out) e.getDrops().add(new ItemEntity(level, mob.getX(), mob.getY() + 0.3, mob.getZ(), s));
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon faction drops failed once and are skipped for that death", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon faction drops failed once and are skipped for that death", ex);
         }
     }
 

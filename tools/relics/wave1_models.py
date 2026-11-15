@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave1_models.py staff_of_moonlight      (also renders the preview beside the card)
 
 Run tools/relics/wave1_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png.
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png.
 
 The method, in order, for every weapon (each module below follows it):
   0 target decided: the card's art and the printed text.

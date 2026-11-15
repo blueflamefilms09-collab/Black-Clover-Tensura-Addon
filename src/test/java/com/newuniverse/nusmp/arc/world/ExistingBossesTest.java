@@ -48,7 +48,7 @@ class ExistingBossesTest {
             assertTrue(ExistingBosses.owns(c.id()), c.id());
             String path = ExistingBosses.entityPath(c.id());
             assertNotNull(path, c.id());
-            assertEquals(c.id(), BossRegistry.idOf("nusmp", path).orElse(null), c.id() + ": the boss registry knows its entity under another id");
+            assertEquals(c.id(), BossRegistry.idOf("anime_multiverse", path).orElse(null), c.id() + ": the boss registry knows its entity under another id");
             assertEquals(c.id(), ExistingBosses.idOfPath(path));
         }
         assertFalse(ExistingBosses.owns("zagred"), "Zagred is the ZAG builder's");

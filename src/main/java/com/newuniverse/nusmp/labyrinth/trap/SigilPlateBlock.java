@@ -49,13 +49,13 @@ public final class SigilPlateBlock extends Block {
         if (player.isCreative() && player.isShiftKeyDown()) {                                 // the builder's colour cycle
             int next = (state.getValue(COLOR) + 1) % PuzzleState.COLOURS;
             level.setBlock(pos, state.setValue(COLOR, next).setValue(LIT, false), 3);
-            player.displayClientMessage(Component.translatable("label.nusmp.sigil." + PuzzleState.COLOUR_NAMES[next]), true);
+            player.displayClientMessage(Component.translatable("label.anime_multiverse.sigil." + PuzzleState.COLOUR_NAMES[next]), true);
             return InteractionResult.CONSUME;
         }
         if (!(player instanceof ServerPlayer sp) || !(level instanceof ServerLevel sl)) return InteractionResult.CONSUME;
         RiddleStoneBlockEntity stone = RiddleStones.nearest(sl, pos);
         if (stone == null) {
-            sp.displayClientMessage(Component.translatable("message.nusmp.puzzle.no_stone").withStyle(ChatFormatting.GRAY), true);
+            sp.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.no_stone").withStyle(ChatFormatting.GRAY), true);
             return InteractionResult.CONSUME;
         }
         stone.press(sp, state.getValue(COLOR), pos);

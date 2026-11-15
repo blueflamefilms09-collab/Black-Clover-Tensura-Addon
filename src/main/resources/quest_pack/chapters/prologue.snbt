@@ -4,7 +4,7 @@
 	order_index: 0
 	filename: "prologue"
 	icon: {
-		id: "nusmp:grimoire"
+		id: "anime_multiverse:grimoire"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:grimoire"
+				id: "anime_multiverse:grimoire"
 			}
 			tasks: [
 				{
@@ -62,14 +62,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:grimoire"
+				id: "anime_multiverse:grimoire"
 			}
 			dependencies: ["685ED5C47D5DB75E"]
 			tasks: [
 				{
 					id: "2CF6028062B6FC03"
 					type: "advancement"
-					advancement: "nusmp:start/first_grimoire"
+					advancement: "anime_multiverse:start/first_grimoire"
 					criterion: ""
 				}
 			]
@@ -92,14 +92,14 @@
 			x: 4.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:grimoire_summons"
+				id: "anime_multiverse:grimoire_summons"
 			}
 			dependencies: ["206A73C4859A6CD8"]
 			tasks: [
 				{
 					id: "3CC0AAE34F54D262"
 					type: "advancement"
-					advancement: "nusmp:start/open_book"
+					advancement: "anime_multiverse:start/open_book"
 					criterion: ""
 				}
 			]
@@ -119,14 +119,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:grimoire_altar"
+				id: "anime_multiverse:grimoire_altar"
 			}
 			dependencies: ["206A73C4859A6CD8"]
 			tasks: [
 				{
 					id: "64F98DDDF686F95B"
 					type: "advancement"
-					advancement: "nusmp:start/ceremony"
+					advancement: "anime_multiverse:start/ceremony"
 					criterion: ""
 				}
 			]
@@ -158,7 +158,7 @@
 				{
 					id: "7CDD9781071FC23F"
 					type: "advancement"
-					advancement: "nusmp:start/five_grimoires"
+					advancement: "anime_multiverse:start/five_grimoires"
 					criterion: ""
 				}
 			]
@@ -188,7 +188,7 @@
 				{
 					id: "78F35236C108920B"
 					type: "advancement"
-					advancement: "nusmp:start/meet_wizard"
+					advancement: "anime_multiverse:start/meet_wizard"
 					criterion: ""
 				}
 			]
@@ -213,7 +213,7 @@
 				{
 					id: "42734F8061BABE2C"
 					type: "advancement"
-					advancement: "nusmp:start/questionnaire"
+					advancement: "anime_multiverse:start/questionnaire"
 					criterion: ""
 				}
 			]
@@ -236,14 +236,14 @@
 			x: 3.0d
 			y: 4.5d
 			icon: {
-				id: "nusmp:magic_stone"
+				id: "anime_multiverse:magic_stone"
 			}
 			dependencies: ["206A73C4859A6CD8"]
 			tasks: [
 				{
 					id: "637F86635556D870"
 					type: "advancement"
-					advancement: "nusmp:start/magic_stone"
+					advancement: "anime_multiverse:start/magic_stone"
 					criterion: ""
 				}
 			]
@@ -261,7 +261,7 @@
 			x: 4.5d
 			y: 4.5d
 			icon: {
-				id: "nusmp:magic_stone"
+				id: "anime_multiverse:magic_stone"
 			}
 			dependencies: ["3C8209E3F30C4F43"]
 			tasks: [
@@ -269,7 +269,7 @@
 					id: "6E54E69B86439F2C"
 					type: "item"
 					item: {
-						id: "nusmp:magic_stone"
+						id: "anime_multiverse:magic_stone"
 					}
 					count: 8L
 					consume_items: false
@@ -306,7 +306,7 @@
 				{
 					id: "42F2060A4DD0C485"
 					type: "advancement"
-					advancement: "nusmp:start/first_spell"
+					advancement: "anime_multiverse:start/first_spell"
 					criterion: ""
 				}
 			]
@@ -336,7 +336,7 @@
 				{
 					id: "30584770927BA858"
 					type: "advancement"
-					advancement: "nusmp:start/mana_use"
+					advancement: "anime_multiverse:start/mana_use"
 					criterion: ""
 				}
 			]
@@ -361,7 +361,7 @@
 				{
 					id: "3C83B2EF39249244"
 					type: "advancement"
-					advancement: "nusmp:start/casts_50"
+					advancement: "anime_multiverse:start/casts_50"
 					criterion: ""
 				}
 			]
@@ -388,7 +388,7 @@
 				{
 					id: "63CFEAAB1B2F30E2"
 					type: "advancement"
-					advancement: "nusmp:start/casts_500"
+					advancement: "anime_multiverse:start/casts_500"
 					criterion: ""
 				}
 			]
@@ -411,7 +411,7 @@
 			x: 7.5d
 			y: 3.0d
 			icon: {
-				id: "nusmp:compat_codex"
+				id: "anime_multiverse:compat_codex"
 			}
 			dependencies: ["3221096C64E51734"]
 			tasks: [
@@ -466,7 +466,7 @@
 				{
 					id: "06E62A8CBC3933E3"
 					type: "advancement"
-					advancement: "nusmp:start/first_page"
+					advancement: "anime_multiverse:start/first_page"
 					criterion: ""
 				}
 			]
@@ -491,7 +491,7 @@
 				{
 					id: "604618688A2D806B"
 					type: "advancement"
-					advancement: "nusmp:start/pages_5"
+					advancement: "anime_multiverse:start/pages_5"
 					criterion: ""
 				}
 			]
@@ -518,7 +518,7 @@
 				{
 					id: "53108AD1B9031AEA"
 					type: "advancement"
-					advancement: "nusmp:start/pages_10"
+					advancement: "anime_multiverse:start/pages_10"
 					criterion: ""
 				}
 			]
@@ -550,7 +550,7 @@
 				{
 					id: "252D11BE0C691FF5"
 					type: "advancement"
-					advancement: "nusmp:start/mastery"
+					advancement: "anime_multiverse:start/mastery"
 					criterion: ""
 				}
 			]

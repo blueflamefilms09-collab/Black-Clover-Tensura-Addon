@@ -40,7 +40,7 @@ public final class WornLibDraw {
     private WornLibDraw() {}
 
     public static final ResourceLocation ATLAS = WornModels.rl("textures/relic_worn/atlas.png"), SHIMMER = WornModels.rl("textures/relic_worn/shimmer.png");
-    /** The shared soft-light texture of the visual upgrade's halo, light shaft and portal quads (HALO flag): assets/nusmp/textures/visual_upgrade/vu_fx.png. */
+    /** The shared soft-light texture of the visual upgrade's halo, light shaft and portal quads (HALO flag): assets/anime_multiverse/textures/visual_upgrade/vu_fx.png. */
     public static final ResourceLocation FX = WornModels.rl("textures/visual_upgrade/vu_fx.png");
     /**
      * Visual upgrade models (both slices, one rule, see {@link UpgradeCaps}): beyond 12 blocks (and at the low quality) the lod model is drawn, beyond 24 blocks the additive passes are
@@ -188,7 +188,7 @@ public final class WornLibDraw {
         for (int i = 0; i < n; i++) {                                                         // 3.9.0: one line per armour relic the first time it is drawn, so a log shows what the library did
             WornLibrary.Ensemble e = sets.get(i);
             if (DRAWN[i] && e.def != null && e.def.slot().isArmor() && REPORTED_ARMOUR.size() < 256 && REPORTED_ARMOUR.add(e.id)) {
-                com.mojang.logging.LogUtils.getLogger().info("[nusmp] armour relic {} ({}): {} model piece(s), {} vertices, contactFit {}, detail {}", e.id, e.slotKey, e.pieces.size(), e.baseVerts,
+                com.mojang.logging.LogUtils.getLogger().info("[anime_multiverse] armour relic {} ({}): {} model piece(s), {} vertices, contactFit {}, detail {}", e.id, e.slotKey, e.pieces.size(), e.baseVerts,
                         RelicFxOptions.contactFit(), RelicFxOptions.detailX3() ? "x3" : "classic");
             }
         }

@@ -16,8 +16,8 @@ import net.minecraft.server.level.ServerPlayer;
 final class SquadAnnounce {
     private SquadAnnounce() {}
 
-    static final String KEY_FORMED = "message.nusmp.squad.formed";
-    static final String KEY_LEADER = "message.nusmp.squad.broken.leader", KEY_LOSSES = "message.nusmp.squad.broken.losses", KEY_LAST = "message.nusmp.squad.broken.last";
+    static final String KEY_FORMED = "message.anime_multiverse.squad.formed";
+    static final String KEY_LEADER = "message.anime_multiverse.squad.broken.leader", KEY_LOSSES = "message.anime_multiverse.squad.broken.losses", KEY_LAST = "message.anime_multiverse.squad.broken.last";
 
     /** "Squad: N: roles" for the players near the squad's mobs. */
     static void formed(ServerLevel level, Squad squad, V2 at) {

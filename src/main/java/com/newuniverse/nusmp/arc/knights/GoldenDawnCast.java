@@ -10,7 +10,7 @@ import com.newuniverse.nusmp.arc.ArcSaga;
  * records live together because they share a squad, a palette (the mod's own canon grimoires of the same people, {@code grimoire/CanonBook}, supply the
  * colours; a cover that is too dark to read as a name in chat is lightened) and a gate rule.
  *
- * <p>Each record is pure data ({@link ArcCharacter#npc}); the words they speak are {@code data/nusmp/arc/dialogue/<id>.json}.
+ * <p>Each record is pure data ({@link ArcCharacter#npc}); the words they speak are {@code data/anime_multiverse/arc/dialogue/<id>.json}.
  */
 public final class GoldenDawnCast {
     private GoldenDawnCast() {}

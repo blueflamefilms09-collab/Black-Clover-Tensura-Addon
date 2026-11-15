@@ -242,7 +242,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             WornExec.draw(ENSEMBLES, pose, buffers, light, model, crouching, distSq, age, limb, armInset);
         } catch (RuntimeException | LinkageError failed) {
             for (int i = 0; i < 32 && pose.last() != before; i++) pose.popPose();
-            if (DRAW_FAILED.add(failed.getClass().getName())) LogUtils.getLogger().error("[nusmp] the worn model library threw while drawing a player; the armour relics fall back to their painted boxes", failed);
+            if (DRAW_FAILED.add(failed.getClass().getName())) LogUtils.getLogger().error("[anime_multiverse] the worn model library threw while drawing a player; the armour relics fall back to their painted boxes", failed);
         }
     }
 
@@ -286,10 +286,10 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
                 r.failsafeDrawn = true;
                 rescued++;
             } catch (RuntimeException | LinkageError failed) {
-                LogUtils.getLogger().error("[nusmp] even the plain boxes of armour relic {} could not be drawn", d.id(), failed);
+                LogUtils.getLogger().error("[anime_multiverse] even the plain boxes of armour relic {} could not be drawn", d.id(), failed);
             }
             if (ArmorTrace.firstWarning(d.id()))
-                LogUtils.getLogger().warn("[nusmp] armour relic {} ({}) was worn but nothing of it was drawn (model pieces {}, own renderer {}, vanilla layer asked {}, painted texture {}; plan {} / {}): its plain painted boxes are drawn instead",
+                LogUtils.getLogger().warn("[anime_multiverse] armour relic {} ({}) was worn but nothing of it was drawn (model pieces {}, own renderer {}, vanilla layer asked {}, painted texture {}; plan {} / {}): its plain painted boxes are drawn instead",
                         d.id(), slot, pieces, ran, asked, tex, it.kind(), it.why());
         }
         return rescued;
@@ -374,7 +374,7 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             CUSTOM_FAILED.add(id);
             for (int i = 0; i < 16 && pose.last() != before; i++) pose.popPose();
             WornRenderers.register(id, c -> { });                                      // draw nothing for this relic from now on
-            LogUtils.getLogger().error("[nusmp] worn renderer of {} failed and is switched off", id, failed);
+            LogUtils.getLogger().error("[anime_multiverse] worn renderer of {} failed and is switched off", id, failed);
         }
     }
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "anime_multiverse:item/novice_magic_knights_cap"
+  }
+}

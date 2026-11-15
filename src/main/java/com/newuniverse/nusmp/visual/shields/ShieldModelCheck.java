@@ -32,10 +32,10 @@ public final class ShieldModelCheck {
                 if (!e.isJsonObject()) continue;
                 JsonObject o = e.getAsJsonObject();
                 JsonObject pred = o.has("predicate") && o.get("predicate").isJsonObject() ? o.getAsJsonObject("predicate") : null;
-                if (pred != null && pred.has("blocking") && pred.get("blocking").getAsDouble() == 1.0 && ("nusmp:item/" + id + "_blocking").equals(str(o, "model"))) override = true;
+                if (pred != null && pred.has("blocking") && pred.get("blocking").getAsDouble() == 1.0 && ("anime_multiverse:item/" + id + "_blocking").equals(str(o, "model"))) override = true;
             }
         }
-        if (!override) bad.add(id + ": no {\"predicate\": {\"blocking\": 1}} override to nusmp:item/" + id + "_blocking");
+        if (!override) bad.add(id + ": no {\"predicate\": {\"blocking\": 1}} override to anime_multiverse:item/" + id + "_blocking");
         return bad;
     }
 

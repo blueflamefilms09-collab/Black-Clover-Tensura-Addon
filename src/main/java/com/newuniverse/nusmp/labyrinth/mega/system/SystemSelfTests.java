@@ -99,8 +99,8 @@ public final class SystemSelfTests {
                 if (!there && e.attribute().startsWith("minecraft:")) bad.add("the vanilla attribute " + e.attribute() + " of " + s + " does not exist");
             }
         }
-        if (BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", "shadow_core")).isEmpty()) bad.add("the item nusmp:shadow_core is not registered");
-        if (!NeoForgeRegistries.ATTACHMENT_TYPES.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "system_state"))) bad.add("the attachment nusmp:system_state is not registered");
+        if (BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shadow_core")).isEmpty()) bad.add("the item anime_multiverse:shadow_core is not registered");
+        if (!NeoForgeRegistries.ATTACHMENT_TYPES.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_state"))) bad.add("the attachment anime_multiverse:system_state is not registered");
         ServerLevel level = SelfTests.mega(server);
         if (level != null) {
             if (!SystemQuests.isMagicDamage(level.damageSources().magic())) bad.add("vanilla magic damage is not recognised as magic");
@@ -114,12 +114,12 @@ public final class SystemSelfTests {
 
     // ------------------------------------------------------------------------------------------------ sync
     private static SelfTests.Result sync(MinecraftServer server) {
-        SystemNet.Sync a = new SystemNet.Sync(true, -17, "abyssal", 17, false, SystemNet.Q_ACTIVE, -16, "speed", "message.nusmp.mega.system.quest.swift_ascent",
+        SystemNet.Sync a = new SystemNet.Sync(true, -17, "abyssal", 17, false, SystemNet.Q_ACTIVE, -16, "speed", "message.anime_multiverse.mega.system.quest.swift_ascent",
                 "Reach the next floor within 266 seconds", 3, 266, 4210, true, List.of(1, 2, 3, 4, 5));
         SystemNet.Sync back = roundTrip(a);
         if (!a.equals(back)) return fail("the sync payload changed in a round trip: " + a + " became " + back);
         String longTitle = "x".repeat(400);
-        SystemNet.Sync wordy = new SystemNet.Sync(true, 3, "holy", 3, false, SystemNet.Q_ACTIVE, 3, "kill_n", "message.nusmp.mega.system.quest.long", longTitle, 0, 5, -1, false, List.of(0, 0, 0, 0, 0));
+        SystemNet.Sync wordy = new SystemNet.Sync(true, 3, "holy", 3, false, SystemNet.Q_ACTIVE, 3, "kill_n", "message.anime_multiverse.mega.system.quest.long", longTitle, 0, 5, -1, false, List.of(0, 0, 0, 0, 0));
         if (roundTrip(wordy).titleFallback().length() != 256) return fail("a quest title over the wire limit was not cut to 256 characters (it would kick the player)");
         SystemNet.Sync hidden = roundTrip(SystemNet.Sync.hidden());
         if (hidden.active() || hidden.stats().size() != Stat.COUNT) return fail("the hidden payload is not hidden or has " + hidden.stats().size() + " stats");

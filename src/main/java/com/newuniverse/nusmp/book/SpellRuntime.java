@@ -23,7 +23,7 @@ import java.util.function.IntConsumer;
 /**
  * Server-side spell objects with real hitboxes, ticked every server tick:
  * bolts (moving hit volumes, optional homing/piercing), zones, delayed strikes, temporary blocks.
- * No entity registration needed; visuals come from the nusmp VFX payloads.
+ * No entity registration needed; visuals come from the anime_multiverse VFX payloads.
  */
 public final class SpellRuntime {
     private SpellRuntime() {}

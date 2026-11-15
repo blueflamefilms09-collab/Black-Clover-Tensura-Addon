@@ -80,7 +80,7 @@ final class Wave30Deck {
                 play(p, level, card, seed, first + i);
                 Wave30Summon.send(p, level, card, i);
             } catch (RuntimeException | LinkageError failed) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] deck card {} failed", card, failed);
+                org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] deck card {} failed", card, failed);
                 Wave30Kit.say(p, "The card flickers and goes out.");
             }
         }

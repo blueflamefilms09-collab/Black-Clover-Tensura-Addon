@@ -103,7 +103,7 @@ public final class LuciusCapabilities {
     }
 
     // ================================================================ sabotage
-    /** De-attunes every relic of the player for 'ticks' (the effect {@code nusmp:relic_nullified}); nothing is unequipped. */
+    /** De-attunes every relic of the player for 'ticks' (the effect {@code anime_multiverse:relic_nullified}); nothing is unequipped. */
     public static void nullifyRelics(ServerPlayer p, int ticks) {
         if (!LuciusGodEffects.mark(p, LuciusGodEffects.RELIC_NULLIFIED, ticks)) return;
         Relics.invalidate(p);
@@ -112,7 +112,7 @@ public final class LuciusCapabilities {
                 .withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), true);
     }
 
-    /** Severs the player from their Djinn and spirits for 'ticks' (the effect {@code nusmp:severed}); the handler suspends the Djinn on the next tick. */
+    /** Severs the player from their Djinn and spirits for 'ticks' (the effect {@code anime_multiverse:severed}); the handler suspends the Djinn on the next tick. */
     public static void sever(ServerPlayer p, int ticks) {
         if (!LuciusGodEffects.mark(p, LuciusGodEffects.SEVERED, ticks)) return;
         p.displayClientMessage(Component.literal("Severance: your Djinn and your spirits do not answer for " + ticks / 20 + " seconds. Nothing is lost.")

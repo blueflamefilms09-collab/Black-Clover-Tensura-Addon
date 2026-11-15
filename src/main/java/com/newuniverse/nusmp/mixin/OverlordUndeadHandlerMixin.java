@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 @Mixin(targets = "com.github.wal_bos.moreoverlord.handler.OverlordUndeadHandler", remap = false)
 public abstract class OverlordUndeadHandlerMixin {
     @WrapMethod(method = "isOverlordUndead", remap = false)
-    private static boolean nusmp$safeUndeadCheck(LivingEntity entity, Operation<Boolean> original) {
+    private static boolean anime_multiverse$safeUndeadCheck(LivingEntity entity, Operation<Boolean> original) {
         try {
             return original.call(entity);
         } catch (RuntimeException e) {

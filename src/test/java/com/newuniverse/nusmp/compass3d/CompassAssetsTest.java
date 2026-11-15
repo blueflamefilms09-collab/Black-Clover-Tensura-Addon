@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * ones are fully opaque inside their cutout, the renderer names only textures that exist, and the lang fragment has no model or assistant names.
  */
 class CompassAssetsTest {
-    private static final Path TEX = Path.of("src/main/resources/assets/nusmp/textures/entity/compass3d");
+    private static final Path TEX = Path.of("src/main/resources/assets/anime_multiverse/textures/entity/compass3d");
     private static final Map<String, String> NAME = Map.of("rim", "rim", "face", "face", "faceGlow", "face_glow", "star", "star", "needle", "needle", "glass", "glass", "aura", "aura", "glint", "glint",
             "sealRing", "seal_ring");
 

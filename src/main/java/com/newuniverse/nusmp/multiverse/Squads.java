@@ -58,7 +58,7 @@ public final class Squads {
                 members = team.getMethod("getMembers");
                 ok = true;
             } catch (ReflectiveOperationException e) {
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] FTB Teams found but its API could not be reached; squads disabled", e);
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] FTB Teams found but its API could not be reached; squads disabled", e);
             }
             return ok;
         }

@@ -1,0 +1,129 @@
+{
+ "type": "minecraft:chest",
+ "pools": [
+  {
+   "rolls": {
+    "type": "minecraft:uniform",
+    "min": 3,
+    "max": 5
+   },
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:spirit_charm",
+     "weight": 6
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:mana_method_rune_stone",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:recovery_salve",
+     "weight": 6
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:fortune_die",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:bond_thread",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:communication_magic_device",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:magic_tool_sword",
+     "weight": 4
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:magic_tool_bow",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:magic_knight_robe_senior",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:magic_knight_robe_senior_hood",
+     "weight": 3
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:book",
+     "weight": 10,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 6
+       }
+      }
+     ]
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:experience_bottle",
+     "weight": 8,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 5
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:spell_forged_rapier",
+     "weight": 2
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:demon_slasher_katana",
+     "weight": 2
+    },
+    {
+     "type": "minecraft:item",
+     "name": "anime_multiverse:severing_greatsword",
+     "weight": 1
+    },
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:air",
+     "weight": 10
+    }
+   ]
+  }
+ ]
+}

@@ -99,7 +99,7 @@ public final class LockBook {
         try {
             tick(level, level.getGameTime());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The escape rules failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] The escape rules failed: {}", e.toString());
         }
     }
 
@@ -120,7 +120,7 @@ public final class LockBook {
             try {
                 evaluate(level, e, now);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The escape rules failed for {}: {}", e.lock.lockKey(), ex.toString());
+                LOG.warn("[anime_multiverse] The escape rules failed for {}: {}", e.lock.lockKey(), ex.toString());
             }
         }
         if (now % 100 < 20) LockRunes.sweep(level, LIVE.keySet());
@@ -193,14 +193,14 @@ public final class LockBook {
         try {
             l.open(by, why);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] Opening {} failed: {}", l.lockKey(), ex.toString());
+            LOG.warn("[anime_multiverse] Opening {} failed: {}", l.lockKey(), ex.toString());
         }
         Component msg = whyText(why, by);
         for (ServerPlayer p : told) {
             LockMsg.tell(p, msg.copy().withStyle(ChatFormatting.GREEN));
             SystemSync.toast(p, ToastKind.SUCCESS, LockText.TOAST_OPEN);
         }
-        LOG.info("[nusmp] Lock {} opened ({}){}", l.lockKey(), why, by == null ? "" : " by " + by.getGameProfile().getName());
+        LOG.info("[anime_multiverse] Lock {} opened ({}){}", l.lockKey(), why, by == null ? "" : " by " + by.getGameProfile().getName());
     }
 
     private static Component whyText(EscapeRules.Why why, ServerPlayer by) {

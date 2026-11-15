@@ -112,7 +112,7 @@ class SylphSourceScanTest {
         assertTrue(r.contains("SylphConfig.enabled()") && r.contains("GreatSpiritModels.sylph("), "the switch falls back to the older fairy, which is still drawn");
         String kinds = code(SRC.resolve("prop/PropKind.java"));
         assertTrue(kinds.indexOf("FIRECAST_2") < kinds.indexOf("SYLPH_1"), "the new prop kind is appended at the end");
-        assertTrue(Files.exists(Path.of("src/main/resources/assets/nusmp/geo/entity/spirit_sylph_fairy.geo.json")) && Files.exists(Path.of("src/main/resources/assets/nusmp/geo/entity/spirit_sylph.geo.json")), "the older models stay");
+        assertTrue(Files.exists(Path.of("src/main/resources/assets/anime_multiverse/geo/entity/spirit_sylph_fairy.geo.json")) && Files.exists(Path.of("src/main/resources/assets/anime_multiverse/geo/entity/spirit_sylph.geo.json")), "the older models stay");
     }
 
     @Test

@@ -237,8 +237,8 @@ public final class PocketRealm extends SavedData {
             mega.getChunk(e.getX() >> 4, e.getZ() >> 4);
             move(m, mega, e.getX() + 0.5, e.getY(), e.getZ() + 0.5, -90f, 0f);
             m.resetFallDistance();
-            RiftService.title(m, Component.translatableWithFallback("message.nusmp.mega.rift.pocket.title", "A hidden realm"),
-                    Component.translatableWithFallback("message.nusmp.mega.rift.pocket." + pocket.variant, pocket.variant.equals("boss") ? "Something old guards what is behind it." : "Press the plates in the order the wall shows."));
+            RiftService.title(m, Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket.title", "A hidden realm"),
+                    Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket." + pocket.variant, pocket.variant.equals("boss") ? "Something old guards what is behind it." : "Press the plates in the order the wall shows."));
             mega.playSound(null, e, SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 0.4f, 1.4f);
             NusmpEvents.fire(m, "mega.pocket", pocket.variant);
             PocketSwitch.welcome(mega, m, pocket);                                               // 1.101.0: where the lever is and when it works
@@ -269,12 +269,12 @@ public final class PocketRealm extends SavedData {
             gaps = PocketBuilder.verify(mega, p);
             if (gaps.isEmpty()) return gaps;
             int fixed = PocketBuilder.repair(mega, p, theme);
-            LOG.warn("[nusmp] The realm in slot {} was missing {} thing(s), e.g. '{}'; {} block(s) were put back.", p.slot, gaps.size(), gaps.get(0), fixed);
+            LOG.warn("[anime_multiverse] The realm in slot {} was missing {} thing(s), e.g. '{}'; {} block(s) were put back.", p.slot, gaps.size(), gaps.get(0), fixed);
             setDirty();
             java.util.List<String> still = PocketBuilder.verify(mega, p);
-            if (!still.isEmpty()) LOG.warn("[nusmp] The realm in slot {} is still missing: {}", p.slot, still);
+            if (!still.isEmpty()) LOG.warn("[anime_multiverse] The realm in slot {} is still missing: {}", p.slot, still);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The check of the realm in slot {} failed: {}", p.slot, ex.toString());
+            LOG.warn("[anime_multiverse] The check of the realm in slot {} failed: {}", p.slot, ex.toString());
             return java.util.List.of();
         }
         return gaps;
@@ -374,12 +374,12 @@ public final class PocketRealm extends SavedData {
         com.newuniverse.nusmp.relics.djinn.DjinnSources.riftCleared(level, playersIn(level, pocket.slot), RiftConfig.DJINN_SEAL_CHANCE.get());   // 3.50.0: a way to find a Djinn Seal
         com.newuniverse.nusmp.manacore.ManaCoreDrops.riftCleared(level, playersIn(level, pocket.slot), 0.03);   // 3.51.0: a small chance of an ancient rank Mana Core
         for (ServerPlayer m : playersIn(level, pocket.slot)) {
-            m.displayClientMessage(Component.translatableWithFallback(boss ? "message.nusmp.mega.rift.boss.dead" : "message.nusmp.mega.rift.puzzle.solved",
+            m.displayClientMessage(Component.translatableWithFallback(boss ? "message.anime_multiverse.mega.rift.boss.dead" : "message.anime_multiverse.mega.rift.puzzle.solved",
                     boss ? "The guardian falls. The bars lift. The vault is open." : "The bars lift. The vault is open.").withStyle(ChatFormatting.GOLD), true);
             SystemSync.toast(m, ToastKind.REWARD, SystemText.TOAST_RIFT_CLEARED);
             NusmpEvents.fire(m, "mega.pocket_cleared", pocket.variant);
         }
-        LOG.debug("[nusmp] The pocket in slot {} was cleared ({}).", pocket.slot, how);
+        LOG.debug("[anime_multiverse] The pocket in slot {} was cleared ({}).", pocket.slot, how);
         return true;
     }
 
@@ -397,12 +397,12 @@ public final class PocketRealm extends SavedData {
                 try {
                     if (com.newuniverse.nusmp.labyrinth.mega.rift.pocket.ExclusivePockets.tick(mega, this, p, in, now, warn)) gone.add(p);
                 } catch (RuntimeException ex) {
-                    LOG.warn("[nusmp] The exclusive pocket in slot {} failed its tick (further detail at debug): {}", p.slot, ex.toString());
+                    LOG.warn("[anime_multiverse] The exclusive pocket in slot {} failed its tick (further detail at debug): {}", p.slot, ex.toString());
                     LOG.debug("exclusive pocket tick", ex);
                 }
                 continue;
             }
-            if (warn > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn)
+            if (warn > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn)
                     .withStyle(warn <= 10 ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE), true);
             if (!in.isEmpty()) {
                 watchBoss(mega, p, now);
@@ -437,7 +437,7 @@ public final class PocketRealm extends SavedData {
             return;
         }
         for (ServerPlayer m : playersIn(mega, p.slot)) {
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.gone", "The realm folds shut behind you.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket.gone", "The realm folds shut behind you.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
             leave(mega, m);
         }
         AABB box = PocketBuilder.bounds(p.slot);

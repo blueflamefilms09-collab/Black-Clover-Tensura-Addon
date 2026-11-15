@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
  * {@code EntityType<? extends LivingArmorEntity>}.
  */
 public class FloorWardenRenderer extends LivingArmorRenderer {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/floor_warden.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/floor_warden.png");
     private static final float SCALE = 1.75f;
 
     public FloorWardenRenderer(EntityRendererProvider.Context ctx) {

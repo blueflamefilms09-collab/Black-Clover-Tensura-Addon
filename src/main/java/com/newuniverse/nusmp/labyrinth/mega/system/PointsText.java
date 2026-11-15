@@ -81,7 +81,7 @@ public final class PointsText {
     public static final String EDIT_SAVED = put("points.edit.saved", "System window: place and size saved");
 
     // ---- keys
-    public static final String KEY_POINTS = "key.nusmp.system_points";
+    public static final String KEY_POINTS = "key.anime_multiverse.system_points";
 
     static {
         EN.put(KEY_POINTS, "Open the stat point screen");

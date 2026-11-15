@@ -17,7 +17,7 @@ import org.joml.Vector3f;
 
 /**
  * Why: the one door every effect uses to spawn the mod's custom particles. A call names a THEME ({@link ThemeKey}: {@code magic.FLAME}, {@code relic.grade.GOD}, {@code boss.zenon}, ...) and what
- * it wants of it (a slot, a tone, or the old vanilla particle it replaces), and the facade picks the theme's particle and colour from {@code data/nusmp/particle_themes.json}, goes through the
+ * it wants of it (a slot, a tone, or the old vanilla particle it replaces), and the facade picks the theme's particle and colour from {@code data/anime_multiverse/particle_themes.json}, goes through the
  * performance budgets ({@code PerfBudgets}: the server particle allowance per tick, the client one) and the quality level ({@code vfxQuality}: fewer particles on a weak machine, fewer far from
  * the camera), and sends it: on the server as one particle packet, on the client straight into the particle engine. Everything is allocation-free per call (the particle options of a theme are
  * built once and cached on its {@link ThemeKey}). With {@code particles.custom} switched off (server file for the server, client file for the client) the facade spawns the old vanilla

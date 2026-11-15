@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
 /**
- * Why: Shishou's body in the world is drawn with the very same 3D mesh as the sword in the hand ({@code assets/nusmp/weapon_meshes/shishou.txt}, built by tools/gen_shishou_assets.py), so the flying sword,
+ * Why: Shishou's body in the world is drawn with the very same 3D mesh as the sword in the hand ({@code assets/anime_multiverse/weapon_meshes/shishou.txt}, built by tools/gen_shishou_assets.py), so the flying sword,
  * the dormant sword in the ground and the item in the hand cannot look different. The mesh store and the quad emitter of {@link WeaponRenderer} are package private, so this thin bridge lives next to it;
  * the entity renderer ({@code client.shishou.ShishouRenderer}) only asks it to draw. The mesh is drawn upright (blade along +y, centred on its middle), and the caller turns it. Worst case per body per
  * frame: the quads of the mesh twice (body, glow), the glow pass dropped beyond {@link #GLOW_RANGE} blocks; EX-Singularity adds the blade veil (about 450 quads) and 32 shard quads within 24 blocks ({@link ExSingularityFx}).

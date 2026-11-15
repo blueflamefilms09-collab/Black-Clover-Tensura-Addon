@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SaiyanLookSourceScanTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final String MAIN = "src/main/java/com/newuniverse/nusmp/";
-    private static final String RES = "src/main/resources/assets/nusmp/";
+    private static final String RES = "src/main/resources/assets/anime_multiverse/";
 
     private static String read(String rel) throws IOException { return Files.readString(ROOT.resolve(rel), StandardCharsets.UTF_8); }
 

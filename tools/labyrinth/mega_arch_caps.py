@@ -42,7 +42,7 @@ class CapT:
         self.name = name
         self.depth = depth
         self.t = Template(name, 3, 6, depth)
-        self.rng = random.Random("nusmp:mega:arch:" + name)
+        self.rng = random.Random("anime_multiverse:mega:arch:" + name)
 
     def set(self, x, y, z, block, props=None, nbt_=None):
         if not (0 <= x < 3 and 0 <= y < 6 and 0 <= z < self.depth):
@@ -52,7 +52,7 @@ class CapT:
         err = L.check_state(block, props)
         if err:
             raise ValueError("%s: bad block state at (%d,%d,%d): %s" % (self.name, x, y, z, err))
-        if block.startswith("nusmp:") and block not in L.CUSTOM:
+        if block.startswith("anime_multiverse:") and block not in L.CUSTOM:
             raise ValueError("%s: %s is not allowed (Vanilla Block Primacy Rule)" % (self.name, block))
         self.t.set(x, y, z, block, props, nbt_)
         return self
@@ -136,7 +136,7 @@ def lantern(variant):
 def chest():
     """A closet with a loot chest (the trial table: iron, gold, arrows, bread, experience, magic stones) under a hanging lantern, a cobweb in the corner."""
     c = CapT("mega/cap/alcove_chest", 3).shell().back_band()
-    c.t.chest(1, 1, 1, "nusmp:chests/labyrinth_trial", facing="north")
+    c.t.chest(1, 1, 1, "anime_multiverse:chests/labyrinth_trial", facing="north")
     c.set(1, 4, 0, L.LANTERN, {"hanging": "true"})
     c.set(1, 4, 1, "minecraft:cobweb")
     return c.finish()

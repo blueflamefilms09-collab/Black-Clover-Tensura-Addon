@@ -13,7 +13,7 @@ import relic_icon_lib as ICONS  # noqa: E402
 from roster102 import GEAR  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 
 def write(path, data, binary=False):
@@ -33,9 +33,9 @@ def main():
             raise SystemExit("no distinct sprite for " + r["id"])
         taken.add(icon)
         write(os.path.join(RES, "textures", "item", r["id"] + ".png"), icon, binary=True)
-        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         write(os.path.join(RES, "models", "item", r["id"] + ".json"), model)
-        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         write(os.path.join(RES, "models", "item", r["id"] + "_icon.json"), icon_model)
     print("wrote %d sprites and item models" % len(GEAR))
 

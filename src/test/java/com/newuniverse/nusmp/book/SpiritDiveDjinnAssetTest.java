@@ -29,11 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Why: the Djinn-style dive is made of about 250 generated model files; a missing file, a face outside its texture, a glow map with colour under a zero alpha (the additive blend would show it as a box) or a
  * set that costs more than the Djinn Full Equip it is modelled on would only show up in a running game. This test reads the real files: every piece of every set exists (model, texture, glow map, clip), the
  * models are valid GeoLite (identifiers, faces inside the texture), the textures match the size the model declares, the glow maps are clean (SafeAdditive: no colour where alpha is 0), no file is left over
- * that no list names, and the vertices of every set stay under the Djinn's own numbers, which are counted here from the Djinn's mesh files (assets/nusmp/djinn).
+ * that no list names, and the vertices of every set stay under the Djinn's own numbers, which are counted here from the Djinn's mesh files (assets/anime_multiverse/djinn).
  */
 class SpiritDiveDjinnAssetTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
 
     private static Set<String> sets() {
         Set<String> out = new LinkedHashSet<>();

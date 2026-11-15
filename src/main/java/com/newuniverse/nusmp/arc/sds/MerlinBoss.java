@@ -190,7 +190,7 @@ public class MerlinBoss extends ArcBoss {
             }
             if (coffinFocus && castingMoveOrNull() == null) coffinFocus = false;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Merlin's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Merlin's tick failed: {}", e.toString());
         }
     }
 
@@ -241,7 +241,7 @@ public class MerlinBoss extends ArcBoss {
             noteBurst(sl, now, a, anti);
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Merlin's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Merlin's defence failed: {}", e.toString());
             return amount;
         }
     }

@@ -100,7 +100,7 @@ public final class PocketSelfTests {
         if (PocketBiomes.holder(mega, d.biomeId()) == null) return fail(k + "the biome " + d.biomeId() + " is not in the registry");
         if (PocketDefs.boss(d) == null) return fail(k + "no boss profile " + d.boss());
         for (String t : new String[]{"boss", "treasury", "secondary", "chest", "minor"}) {
-            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", "pocket/" + d.id() + "/" + t));
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket/" + d.id() + "/" + t));
             LootTable table = server.reloadableRegistries().getLootTable(key);
             if (table == LootTable.EMPTY) return fail(k + "the loot table " + key.location() + " is missing");
         }
@@ -197,7 +197,7 @@ public final class PocketSelfTests {
             if (!pk.bossDead) return fail(k + "the death of the boss did not register");
             if (!PocketGate.allows(mega, at, p, def.id(), PocketRules.Stage.BOSS)) return fail(k + "the boss gate stayed shut after the boss died");
             if (!PocketGate.allows(mega, at, p, def.id(), PocketRules.Stage.TREASURY)) return fail(k + "the treasury gate stayed shut after the seal opened");
-            ResourceKey<LootTable> tk = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", "pocket/" + def.id() + "/treasury"));
+            ResourceKey<LootTable> tk = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket/" + def.id() + "/treasury"));
             LootTable table = server.reloadableRegistries().getLootTable(tk);
             LootParams inside = new LootParams.Builder(mega).withParameter(LootContextParams.ORIGIN, at).withOptionalParameter(LootContextParams.THIS_ENTITY, p).create(LootContextParamSets.CHEST);
             LootParams outside = new LootParams.Builder(mega).withParameter(LootContextParams.ORIGIN, new Vec3(0, 70, 0)).withOptionalParameter(LootContextParams.THIS_ENTITY, p).create(LootContextParamSets.CHEST);

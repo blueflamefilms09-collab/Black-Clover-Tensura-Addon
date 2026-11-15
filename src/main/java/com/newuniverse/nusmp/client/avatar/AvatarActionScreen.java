@@ -31,7 +31,7 @@ public class AvatarActionScreen extends Screen {
     private boolean noteOk;
 
     public AvatarActionScreen(S2C_OpenActionMenuPayload data) {
-        super(Component.translatable("nusmp.avatar.action.title"));
+        super(Component.translatable("anime_multiverse.avatar.action.title"));
         this.data = data;
         this.seenResult = AvatarClientData.resultVersion;
     }
@@ -41,24 +41,24 @@ public class AvatarActionScreen extends Screen {
         int x = (width - W) / 2, y = (height - H) / 2;
         box = null;
         if (naming) {
-            box = new EditBox(font, x + 14, y + 66, W - 28, 16, Component.translatable("nusmp.avatar.action.name_hint"));
+            box = new EditBox(font, x + 14, y + 66, W - 28, 16, Component.translatable("anime_multiverse.avatar.action.name_hint"));
             box.setMaxLength(BuilderState.NAME_MAX);
-            box.setHint(Component.translatable("nusmp.avatar.action.name_hint"));
+            box.setHint(Component.translatable("anime_multiverse.avatar.action.name_hint"));
             addRenderableWidget(box);
             setInitialFocus(box);
-            addRenderableWidget(new ThemedButton(x + 14, y + H - 28, 100, 16, Component.translatable("nusmp.avatar.action.bestow"), b -> {
+            addRenderableWidget(new ThemedButton(x + 14, y + H - 28, 100, 16, Component.translatable("anime_multiverse.avatar.action.bestow"), b -> {
                 String n = box.getValue().strip();
-                if (!BuilderState.nameOk(n) || n.isEmpty()) { note = Component.translatable("nusmp.avatar.gui.confirm.name_bad"); noteOk = false; return; }
+                if (!BuilderState.nameOk(n) || n.isEmpty()) { note = Component.translatable("anime_multiverse.avatar.gui.confirm.name_bad"); noteOk = false; return; }
                 PacketDistributor.sendToServer(new C2S_NameAvatarPayload(data.avatarId(), n));
-                note = Component.translatable("nusmp.avatar.action.sent");
+                note = Component.translatable("anime_multiverse.avatar.action.sent");
                 noteOk = true;
             }));
-            addRenderableWidget(new ThemedButton(x + W - 114, y + H - 28, 100, 16, Component.translatable("nusmp.avatar.gui.back"), b -> { naming = false; rebuildWidgets(); }));
+            addRenderableWidget(new ThemedButton(x + W - 114, y + H - 28, 100, 16, Component.translatable("anime_multiverse.avatar.gui.back"), b -> { naming = false; rebuildWidgets(); }));
         } else {
-            ThemedButton name = new ThemedButton(x + 14, y + H - 28, 100, 16, Component.translatable("nusmp.avatar.action.name"), b -> { naming = true; rebuildWidgets(); });
+            ThemedButton name = new ThemedButton(x + 14, y + H - 28, 100, 16, Component.translatable("anime_multiverse.avatar.action.name"), b -> { naming = true; rebuildWidgets(); });
             name.active = !data.named();
             addRenderableWidget(name);
-            addRenderableWidget(new ThemedButton(x + W - 114, y + H - 28, 100, 16, Component.translatable("nusmp.avatar.action.close"), b -> onClose()));
+            addRenderableWidget(new ThemedButton(x + W - 114, y + H - 28, 100, 16, Component.translatable("anime_multiverse.avatar.action.close"), b -> onClose()));
         }
     }
 
@@ -99,17 +99,17 @@ public class AvatarActionScreen extends Screen {
         String nm = data.name().isEmpty() ? "?" : data.name();
         g.drawString(font, Component.literal(nm), x + 14, y + 12, UiTheme.GOLD);
         if (naming) {
-            g.drawString(font, Component.translatable("nusmp.avatar.action.name_title"), x + 14, y + 30, UiTheme.TEXT);
-            g.drawString(font, Component.translatable("nusmp.avatar.action.name_warn"), x + 14, y + 44, UiTheme.TEXT_DIM);
-            g.drawString(font, Component.translatable("nusmp.avatar.action.name_warn2"), x + 14, y + 55, UiTheme.TEXT_DIM);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.name_title"), x + 14, y + 30, UiTheme.TEXT);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.name_warn"), x + 14, y + 44, UiTheme.TEXT_DIM);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.name_warn2"), x + 14, y + 55, UiTheme.TEXT_DIM);
         } else {
             int ly = y + 30;
-            g.drawString(font, Component.translatable(data.named() ? "nusmp.avatar.action.named" : "nusmp.avatar.action.unnamed"), x + 14, ly, data.named() ? UiTheme.GREEN : UiTheme.TEXT_DIM); ly += 13;
-            g.drawString(font, Component.translatable("nusmp.avatar.action.race", data.race().isEmpty() ? "?" : data.race()), x + 14, ly, UiTheme.TEXT); ly += 12;
+            g.drawString(font, Component.translatable(data.named() ? "anime_multiverse.avatar.action.named" : "anime_multiverse.avatar.action.unnamed"), x + 14, ly, data.named() ? UiTheme.GREEN : UiTheme.TEXT_DIM); ly += 13;
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.race", data.race().isEmpty() ? "?" : data.race()), x + 14, ly, UiTheme.TEXT); ly += 12;
             AvatarPersonality p = AvatarPersonality.byName(data.primary()), s = AvatarPersonality.byName(data.secondary());
-            g.drawString(font, Component.translatable("nusmp.avatar.action.persona", p == null ? "?" : p.displayName, s == null ? "-" : s.displayName), x + 14, ly, UiTheme.TEXT); ly += 12;
-            g.drawString(font, Component.translatable("nusmp.avatar.action.luck", String.format(Locale.ROOT, "%.1f", data.luck())), x + 14, ly, UiTheme.VIOLET); ly += 12;
-            g.drawString(font, Component.translatable("nusmp.avatar.action.size", String.format(Locale.ROOT, "%.2f", data.scale())), x + 14, ly, UiTheme.TEXT); ly += 12;
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.persona", p == null ? "?" : p.displayName, s == null ? "-" : s.displayName), x + 14, ly, UiTheme.TEXT); ly += 12;
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.luck", String.format(Locale.ROOT, "%.1f", data.luck())), x + 14, ly, UiTheme.VIOLET); ly += 12;
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.action.size", String.format(Locale.ROOT, "%.2f", data.scale())), x + 14, ly, UiTheme.TEXT); ly += 12;
             // the fixed lines above already show the name, race, personality and luck: only the extra lines are listed, and never past the buttons
             String nameLine = data.name();
             for (String line : data.info()) {

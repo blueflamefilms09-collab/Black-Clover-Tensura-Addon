@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** The visibility rules of the registry and the five shipped pilot files (Yuno, Noelle, Fuegoleon, Asta, Yami). */
 class CharacterSetRegistryTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
 
     private static CharacterSetRegistry shipped() {
         CharacterSetRegistry r = CharacterSetRegistry.load(CharacterSetRegistry.SHIPPED, id -> {

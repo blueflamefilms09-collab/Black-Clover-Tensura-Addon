@@ -33,7 +33,7 @@ public final class FtbChunksGuard {
     /** The ids of the mod's dimensions, as FTB Chunks sees them. */
     public static List<String> ourDimensions() {
         List<String> out = new ArrayList<>();
-        for (String n : DimensionAudit.NAMES) out.add("nusmp:" + n);
+        for (String n : DimensionAudit.NAMES) out.add("anime_multiverse:" + n);
         return out;
     }
 
@@ -57,7 +57,7 @@ public final class FtbChunksGuard {
                 r = FtbChunksCheck.check(world, FMLPaths.GAMEDIR.get(), ourDimensions());
             }
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] FTB Chunks claim check failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] FTB Chunks claim check failed (ignored)", ex);
         }
         cached = r;
         checkedAt = now;
@@ -71,14 +71,14 @@ public final class FtbChunksGuard {
             checkedAt = 0L;
             FtbChunksCheck.Result r = evaluate(e.getServer());
             switch (r.status()) {
-                case OPEN -> LOG.warn("[nusmp] FTB Chunks is installed and players can still claim chunks in this mod's dimensions {} (read from {}). Add to FTB Chunks' world config: {}",
+                case OPEN -> LOG.warn("[anime_multiverse] FTB Chunks is installed and players can still claim chunks in this mod's dimensions {} (read from {}). Add to FTB Chunks' world config: {}",
                         r.uncovered(), r.source(), FtbChunksCheck.suggestion(r.uncovered()));
-                case UNKNOWN -> LOG.info("[nusmp] FTB Chunks is installed but its world config ({}) was not found, so it is unknown whether claims are blocked in this mod's dimensions. "
+                case UNKNOWN -> LOG.info("[anime_multiverse] FTB Chunks is installed but its world config ({}) was not found, so it is unknown whether claims are blocked in this mod's dimensions. "
                         + "Make sure claim_dimension_blacklist covers them: {}", FtbChunksCheck.FILE, FtbChunksCheck.suggestion(ourDimensions()));
-                case COVERED -> LOG.info("[nusmp] FTB Chunks claims are blocked in this mod's dimensions (read from {}).", r.source());
+                case COVERED -> LOG.info("[anime_multiverse] FTB Chunks claims are blocked in this mod's dimensions (read from {}).", r.source());
             }
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] FTB Chunks start-up check failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] FTB Chunks start-up check failed (ignored)", ex);
         }
     }
 
@@ -88,11 +88,11 @@ public final class FtbChunksGuard {
             if (FtbClaimBlock.active() && MapsConfig.get(MapsConfig.BLOCK_FTB_CLAIMS)) return;
             FtbChunksCheck.Result r = evaluate(p.getServer());
             if (r.status() != FtbChunksCheck.Status.OPEN) return;
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.maps.ftb_warn",
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.maps.ftb_warn",
                     "FTB Chunks lets players claim chunks in this mod's dimensions (%1$s). Add to its world config: %2$s. Details: /multiverse compat maps",
                     String.join(", ", r.uncovered()), FtbChunksCheck.suggestion(r.uncovered())).withStyle(ChatFormatting.GOLD));
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] FTB Chunks login warning failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] FTB Chunks login warning failed (ignored)", ex);
         }
     }
 }

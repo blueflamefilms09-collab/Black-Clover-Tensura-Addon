@@ -58,7 +58,7 @@ public final class FictionRules {
     // ---- All Fiction rebuilt (3.46.0): ten modes. Undo (0) and Fiction (1) keep their places and numbers; the passive that refuses a death is unchanged. ----
     public static final int ANNUL = 2, REWIND = 3, UNPICK = 4, NULLIFY = 5, UNMAKE = 6, SHARE = 7, STAND_UP = 8, WORLD = 9;
     public static final int ALL_MODES = 10;
-    /** The ids of the ten modes (lang keys nusmp.skill.mode.&lt;id&gt;; the first two are the old ones). */
+    /** The ids of the ten modes (lang keys anime_multiverse.skill.mode.&lt;id&gt;; the first two are the old ones). */
     public static final String[] ALL_IDS = {"fiction.undo", "fiction.erase", "fiction.annul", "fiction.rewind", "fiction.unpick", "fiction.nullify", "fiction.unmake", "fiction.share", "fiction.standup", "fiction.world"};
 
     /** The number of modes on the wheel: ten when the rebuild is on (setting allFictionRebuilt), the old two when it is off. */

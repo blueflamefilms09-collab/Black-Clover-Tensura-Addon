@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** The Dungeon slime: the game's own slime body in a teal gel of its own (tools/gen_dungeon_assets.py), three sizes by growth. */
 public class DungeonSlimeRenderer extends MobRenderer<DungeonSlimeEntity, SlimeModel<DungeonSlimeEntity>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/dungeon_slime.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/dungeon_slime.png");
 
     public DungeonSlimeRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new SlimeModel<>(ctx.bakeLayer(ModelLayers.SLIME)), 0.25f);

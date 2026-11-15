@@ -55,7 +55,7 @@ COLORS = [  # (regex on the block path, rgb, emissive)
     (r".*copper.*", (190, 110, 70), False),
     (r"pointed_dripstone|dripstone_block", (118, 96, 80), False),
     (r"cobweb", (225, 225, 225), False),
-    (r"nusmp:relic_pedestal|relic_pedestal", (40, 38, 50), False),
+    (r"anime_multiverse:relic_pedestal|relic_pedestal", (40, 38, 50), False),
     (r".*dark_oak.*|.*planks.*|.*log.*", (74, 54, 36), False),
     (r".*quartz.*|calcite|.*diorite.*|snow_block|.*white.*", (226, 224, 218), False),
     (r".*blackstone.*|.*basalt.*|obsidian", (44, 40, 52), False),
@@ -402,7 +402,7 @@ def main(argv):
         args.remove("--views")
     name, out = args[0], args[1]
     width, height = [int(v) for v in size.split("x")]
-    t = load(os.path.join(L.RES, "data", "nusmp", "structure", name + ".nbt"), name)
+    t = load(os.path.join(L.RES, "data", "anime_multiverse", "structure", name + ".nbt"), name)
     scene = Scene(t, cut_y=int(cut) if cut else None)
     if views:
         os.makedirs(out, exist_ok=True)

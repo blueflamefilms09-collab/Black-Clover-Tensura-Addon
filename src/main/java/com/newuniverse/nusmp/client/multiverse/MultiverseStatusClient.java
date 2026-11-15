@@ -27,8 +27,8 @@ import java.util.WeakHashMap;
  * rectangle always wins. The "Multiverse Status" key (unbound by default) opens the full screen anywhere.
  */
 public final class MultiverseStatusClient {
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.multiverse_status", InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.multiverse_status", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.anime_multiverse");
 
     private static CompoundTag status = new CompoundTag();
     /** Where the compact panel goes on each open screen. */
@@ -101,7 +101,7 @@ public final class MultiverseStatusClient {
     private static void warnOnce(RuntimeException e) {
         if (warned) return;
         warned = true;
-        com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Multiverse status panel skipped a screen it could not read", e);
+        com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] Multiverse status panel skipped a screen it could not read", e);
     }
 
     private static void onScreenInit(ScreenEvent.Init.Post event) {

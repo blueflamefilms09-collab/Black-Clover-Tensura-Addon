@@ -42,7 +42,7 @@ public final class DjinnWeaponClient {
     private static void registerModels(ModelEvent.RegisterAdditional e) {
         for (DeferredItem<Item> item : DjinnWeaponItems.all()) {
             String path = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
-            e.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("nusmp", "item/" + path + "_icon")));
+            e.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "item/" + path + "_icon")));
         }
     }
 }

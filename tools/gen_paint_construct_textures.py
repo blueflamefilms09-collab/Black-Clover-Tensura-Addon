@@ -1,6 +1,6 @@
 """Skins for Painting Magic's living illustrations (0.44): bodies of wet paint in each paint colour.
 
-    python tools/gen_paint_construct_textures.py  ->  src/main/resources/assets/nusmp/textures/entity/painted/{beast,humanoid}_<paint>.png
+    python tools/gen_paint_construct_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/entity/painted/{beast,humanoid}_<paint>.png
 
 Every texel is painted with overlapping brushstrokes (lighter and darker tones of the paint, a glossy streak here and there),
 so any UV layout reads as a body of paint. The face gets two bright eyes; the humanoid gets an ink-dark visor band.
@@ -11,7 +11,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "painted")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "painted")
 PAINTS = {  # name -> rgb (PaintStudio.Paint order)
     "ink": (0x3A, 0x7B, 0xFF), "fire": (0xFF, 0x5A, 0x3A), "water": (0x4A, 0xA8, 0xFF), "ice": (0x8A, 0xE6, 0xFF),
     "wind": (0x7C, 0xF0, 0xB0), "earth": (0xB0, 0x86, 0x4A), "lightning": (0xFF, 0xE6, 0x5A),

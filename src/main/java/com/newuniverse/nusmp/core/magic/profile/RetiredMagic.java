@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Why: until 1.92.0 a player who held the grimoires of two attributes that have no hybrid of their own was automatically given a third, "custom" (merged) magic made of the two. The owner removed that
  * feature (1.93.0): two attributes now simply stay two attributes, each with its own grimoire, pages, effects and armour. What cannot simply vanish is what old worlds saved: the 64 skills that
- * cast the merged magics ({@code nusmp:merged_00} .. {@code merged_63}) may sit in a player's saved skill list, and a skill id the registry no longer knows is dropped (or logged) by the skill
+ * cast the merged magics ({@code anime_multiverse:merged_00} .. {@code merged_63}) may sit in a player's saved skill list, and a skill id the registry no longer knows is dropped (or logged) by the skill
  * system on load. So the 64 ids stay registered, as inert {@link RetiredBook}s with no pages, and a player who still holds one has it forgotten at login. The merge generator itself (definitions,
  * commands, syncing, the combined armour and effects) is gone. Nothing of any parent magic was ever altered by it.
  */
@@ -63,7 +63,7 @@ public final class RetiredMagic {
 
     /** The inert skill that holds one retired id: no pages, no grimoire, no cast. */
     public static final class RetiredBook extends GrimoireBook {
-        public static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/merged.png");
+        public static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/merged.png");
 
         public RetiredBook() { super(MagicType.FLAME, 0xFFB8D8FF, ICON); }
 
@@ -75,9 +75,9 @@ public final class RetiredMagic {
 
         @Override public String magicLabel() { return "Retired magic"; }
 
-        @Override public MutableComponent getName() { return Component.translatable("nusmp.merge.retired"); }
+        @Override public MutableComponent getName() { return Component.translatable("anime_multiverse.merge.retired"); }
 
-        @Override public MutableComponent getSkillDescription() { return Component.translatable("nusmp.merge.retired.description"); }
+        @Override public MutableComponent getSkillDescription() { return Component.translatable("anime_multiverse.merge.retired.description"); }
 
         @Override protected boolean holdingBook(ServerPlayer p) { return false; }
 

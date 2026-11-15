@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generates the 200 Decennial bosses (docs/labyrinth/decennial_bosses.md).
 
-    python3 -B tools/gen_decennial_roster.py            # (re)writes data/nusmp/mega/decennial/bosses/*.json, tools/lang/decennial.json, docs/labyrinth/decennial_roster.md
+    python3 -B tools/gen_decennial_roster.py            # (re)writes data/anime_multiverse/mega/decennial/bosses/*.json, tools/lang/decennial.json, docs/labyrinth/decennial_roster.md
     python3 -B tools/gen_decennial_roster.py --check    # exit 1 when a file on disk differs from what this script builds (CI-safe)
 
 Deterministic: no random numbers, no clock. Every choice is a function of the level and the hand-written tables in tools/decennial (60 archetypes, the given names, the lair pools of the halls):
@@ -24,10 +24,10 @@ import names as NAMES  # noqa: E402
 from evil import EVIL  # noqa: E402
 from holy import HOLY  # noqa: E402
 
-OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "decennial", "bosses")
-LAIRS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "decennial", "lairs.json")
-SIGS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "decennial", "signatures.json")
-FAMOUS_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "dnd_bosses", "famous")
+OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "bosses")
+LAIRS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "lairs.json")
+SIGS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "signatures.json")
+FAMOUS_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "dnd_bosses", "famous")
 LANG_OUT = os.path.join(ROOT, "tools", "lang", "decennial.json")
 DOC_OUT = os.path.join(ROOT, "docs", "labyrinth", "decennial_roster.md")
 
@@ -504,22 +504,22 @@ def lang_fragment(bosses):
         if not sid.startswith("_"):
             out["decennial.signature.%s" % sid] = s["text"]
     out.update({
-        "message.nusmp.mega.decennial.phase": "%1$s shifts into its next form: %2$s!",
-        "message.nusmp.mega.decennial.sealed": "The doors of the hall seal behind you.",
-        "message.nusmp.mega.decennial.unsealed": "The seal of the hall breaks.",
-        "message.nusmp.mega.decennial.gate_open": "The great gate groans open. Take the Mana Core to the Gatekeeper.",
-        "message.nusmp.mega.decennial.reset": "The hall resets. The fallen are forgotten, and the seals are restored.",
-        "message.nusmp.mega.decennial.adds": "Something stirs in the ground!",
-        "message.nusmp.mega.decennial.element.tombstone": "The tombstone cracks, and something answers.",
-        "message.nusmp.mega.decennial.element.pillar": "The pillar breaks, and falls!",
-        "message.nusmp.mega.decennial.element.root_node": "The root node bursts: lesser devils pour out!",
-        "message.nusmp.mega.decennial.weak_point": "A weak point breaks: %1$s staggers.",
-        "message.nusmp.mega.decennial.loot": "%1$s lets go of %2$s.",
-        "message.nusmp.mega.decennial.describe": "Level %1$s (floor %2$s): %3$s, %4$s. Hall: %5$s. Phases: %6$s.",
-        "message.nusmp.mega.decennial.band": "Gate band %1$s of the Underworld Root.",
-        "message.nusmp.mega.decennial.core": "Core of %1$s",
-        "message.nusmp.mega.decennial.loot_none": "The boss has no %1$s item left to give: every one is already in the world.",
-        "message.nusmp.mega.decennial.signature.enrage": "%1$s is enraged!",
+        "message.anime_multiverse.mega.decennial.phase": "%1$s shifts into its next form: %2$s!",
+        "message.anime_multiverse.mega.decennial.sealed": "The doors of the hall seal behind you.",
+        "message.anime_multiverse.mega.decennial.unsealed": "The seal of the hall breaks.",
+        "message.anime_multiverse.mega.decennial.gate_open": "The great gate groans open. Take the Mana Core to the Gatekeeper.",
+        "message.anime_multiverse.mega.decennial.reset": "The hall resets. The fallen are forgotten, and the seals are restored.",
+        "message.anime_multiverse.mega.decennial.adds": "Something stirs in the ground!",
+        "message.anime_multiverse.mega.decennial.element.tombstone": "The tombstone cracks, and something answers.",
+        "message.anime_multiverse.mega.decennial.element.pillar": "The pillar breaks, and falls!",
+        "message.anime_multiverse.mega.decennial.element.root_node": "The root node bursts: lesser devils pour out!",
+        "message.anime_multiverse.mega.decennial.weak_point": "A weak point breaks: %1$s staggers.",
+        "message.anime_multiverse.mega.decennial.loot": "%1$s lets go of %2$s.",
+        "message.anime_multiverse.mega.decennial.describe": "Level %1$s (floor %2$s): %3$s, %4$s. Hall: %5$s. Phases: %6$s.",
+        "message.anime_multiverse.mega.decennial.band": "Gate band %1$s of the Underworld Root.",
+        "message.anime_multiverse.mega.decennial.core": "Core of %1$s",
+        "message.anime_multiverse.mega.decennial.loot_none": "The boss has no %1$s item left to give: every one is already in the world.",
+        "message.anime_multiverse.mega.decennial.signature.enrage": "%1$s is enraged!",
     })
     return out
 

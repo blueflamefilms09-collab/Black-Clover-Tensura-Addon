@@ -260,7 +260,7 @@ public class ZogratisCloneEntity extends Monster {
         try {
             arcFire(sl, boss, tg);
         } catch (RuntimeException e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] a Lucius copy's spell failed: {}", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] a Lucius copy's spell failed: {}", e.toString());
         }
     }
 

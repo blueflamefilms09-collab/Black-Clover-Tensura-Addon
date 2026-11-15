@@ -23,7 +23,7 @@ import java.util.zip.GZIPInputStream;
 final class HubTestIo {
     private HubTestIo() {}
 
-    static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
 
     static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 

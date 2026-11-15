@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * the lance item has its model, mesh with a rigid and a turning part, skins, icon, class, grip, engravings, Better Combat row, franchise row and lang text, and nothing hands it out.
  */
 class ModeArmorValkyrieAssetTest {
-    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/nusmp"), MESHES = ASSETS.resolve("valkyrie_meshes");
+    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/anime_multiverse"), MESHES = ASSETS.resolve("valkyrie_meshes");
     private static final String ID = "valkyrie_drill_lance";
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
@@ -157,7 +157,7 @@ class ModeArmorValkyrieAssetTest {
             if (!Files.exists(ASSETS.resolve(f))) missing.add(f);
         assertTrue(missing.isEmpty(), "missing " + missing);
         assertEquals("minecraft:builtin/entity", json(ASSETS.resolve("models/item/" + ID + ".json")).get("parent").getAsString(), "the 3D model draws through the weapon renderer");
-        assertEquals("nusmp:item/" + ID, json(ASSETS.resolve("models/item/" + ID + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the sprite is the inventory icon");
+        assertEquals("anime_multiverse:item/" + ID, json(ASSETS.resolve("models/item/" + ID + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the sprite is the inventory icon");
         BufferedImage icon = javax.imageio.ImageIO.read(ASSETS.resolve("textures/item/" + ID + ".png").toFile());
         assertEquals(16, icon.getWidth());
         assertEquals(16, icon.getHeight());
@@ -210,10 +210,10 @@ class ModeArmorValkyrieAssetTest {
         assertTrue(read(Path.of("tools", "relics", "weapon_classes.json")).contains("\"" + ID + "\": {"), "class row (tools copy)");
         assertEquals(0.25, json(ASSETS.resolve("weapon_grips.json")).getAsJsonObject("fractions").get(ID).getAsDouble(), 1e-9, "grip fraction 0.25");
         assertTrue(read(Path.of("tools", "weapon_grip", "grip_golden.json")).contains("\"" + ID + "\""), "the grip golden knows the lance");
-        assertEquals("bettercombat:spear", json(RES.resolve("data/nusmp/weapon_attributes/" + ID + ".json")).get("parent").getAsString());
+        assertEquals("bettercombat:spear", json(RES.resolve("data/anime_multiverse/weapon_attributes/" + ID + ".json")).get("parent").getAsString());
         assertTrue(read(Path.of("tools", "bettercombat", "manifest.json")).contains("\"" + ID + "\": {"), "the lance is in the Better Combat inventory");
-        assertEquals("black_clover", json(RES.resolve("data/nusmp/relics/franchise_map.json")).getAsJsonObject("items").get(ID).getAsString());
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
+        assertEquals("black_clover", json(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).getAsJsonObject("items").get(ID).getAsString());
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + ID + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -221,13 +221,13 @@ class ModeArmorValkyrieAssetTest {
         List<String> tensura = Files.readAllLines(Path.of("src", "test", "resources", "mega", "gear", "tensura_enchantments.txt"));
         for (String e : new String[]{"barrier_piercing", "elemental_boost", "crushing", "magic_weapon"}) assertTrue(tensura.contains("tensura:" + e), e + " is a real Tensura engraving id");
         JsonObject lang = json(Path.of("tools", "lang", "valkyrie_armor.json"));
-        assertEquals("Valkyrie Drill Lance", lang.get("item.nusmp." + ID).getAsString());
-        assertTrue(lang.has("item.nusmp." + ID + ".lore"));
+        assertEquals("Valkyrie Drill Lance", lang.get("item.anime_multiverse." + ID).getAsString());
+        assertTrue(lang.has("item.anime_multiverse." + ID + ".lore"));
     }
 
     @Test
     void theLanceIsCreativeOnlyNothingHandsItOut() throws IOException {
-        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "NUCreativeTab.java"));
+        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "NUCreativeTab.java"));
         assertTrue(tab.contains("ValkyrieLanceBoot.creativeItems()"), "in the creative tab");
         List<String> hits = new ArrayList<>();
         try (var s = Files.walk(Path.of("src", "main", "resources", "data"))) {
@@ -239,7 +239,7 @@ class ModeArmorValkyrieAssetTest {
             });
         }
         assertTrue(hits.isEmpty(), "the lance appears in a loot table, recipe or trade: " + hits);
-        String boot = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "valkyrielance", "ValkyrieLanceBoot.java"));
+        String boot = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "valkyrielance", "ValkyrieLanceBoot.java"));
         assertFalse(boot.toLowerCase().contains("loot") && boot.contains("LootTable"), "no loot");
     }
 }

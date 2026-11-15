@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: three things must say the same: the catalogue ({@link MusicCatalog}, from which {@link MusicSounds} registers one event per track), the {@code music.*} entries of
- * {@code assets/nusmp/sounds.json} and the {@code .ogg} loops that {@code tools/audio/gen_music.py} synthesises. An event without an entry plays nothing, an entry without a file
+ * {@code assets/anime_multiverse/sounds.json} and the {@code .ogg} loops that {@code tools/audio/gen_music.py} synthesises. An event without an entry plays nothing, an entry without a file
  * logs an error in the game, a file nothing names is dead weight. This walks all of it: each track has an entry that streams one existing mono Ogg Vorbis file of 60 to 90 seconds,
  * no music entry or file is an orphan, the whole set is within the 25 MB budget, the older entries (the mob voices, the Zagred voice lines) are still there, and none of the music
  * leaked into the mob voice folder the other audio test guards.
  */
 class MusicAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path MUSIC = ASSETS.resolve("sounds/music");
     private static final long BUDGET = 25L * 1024 * 1024;
 
@@ -87,7 +87,7 @@ class MusicAssetsTest {
                 continue;
             }
             JsonElement s = sounds.get(0);
-            if (!("nusmp:music/" + track).equals(nameOf(s))) bad.add(id + ": names " + nameOf(s));
+            if (!("anime_multiverse:music/" + track).equals(nameOf(s))) bad.add(id + ": names " + nameOf(s));
             if (!s.isJsonObject() || !s.getAsJsonObject().has("stream") || !s.getAsJsonObject().get("stream").getAsBoolean()) bad.add(id + ": a loop this long must be streamed");
             Path f = MUSIC.resolve(track + ".ogg");
             if (!Files.exists(f)) {

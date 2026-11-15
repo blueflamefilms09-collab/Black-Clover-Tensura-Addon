@@ -221,12 +221,12 @@ def cube_model(parent, textures):
 
 
 def plate_model(c, lit):
-    tex = "nusmp:block/sigil_plate_%d%s" % (c, "_lit" if lit else "")
+    tex = "anime_multiverse:block/sigil_plate_%d%s" % (c, "_lit" if lit else "")
     face = lambda t: {"texture": t, "uv": [1, 1, 15, 15]}  # noqa: E731
     side = lambda t: {"texture": t}  # noqa: E731
     return {
         "parent": "minecraft:block/block",
-        "textures": {"particle": "nusmp:block/sigil_plate_side", "top": tex, "side": "nusmp:block/sigil_plate_side"},
+        "textures": {"particle": "anime_multiverse:block/sigil_plate_side", "top": tex, "side": "anime_multiverse:block/sigil_plate_side"},
         "elements": [{"from": [1, 0, 1], "to": [15, 2, 15],
                       "faces": {"up": {"texture": "#top", "uv": [1, 1, 15, 15]}, "down": {"texture": "#side", "uv": [1, 1, 15, 15]},
                                 "north": {"texture": "#side", "uv": [1, 14, 15, 16]}, "south": {"texture": "#side", "uv": [1, 14, 15, 16]},
@@ -240,21 +240,21 @@ def open_pit_model():
     def el(a, b):
         return {"from": a, "to": b, "faces": {f: {"texture": t} for f in ("north", "south", "east", "west", "up", "down")}}
     return {"parent": "minecraft:block/block",
-            "textures": {"particle": "nusmp:block/labyrinth_tiles", "tile": "nusmp:block/labyrinth_tiles"},
+            "textures": {"particle": "anime_multiverse:block/labyrinth_tiles", "tile": "anime_multiverse:block/labyrinth_tiles"},
             "elements": [el([0, 13, 0], [16, 16, 2]), el([0, 13, 14], [16, 16, 16]), el([0, 13, 2], [2, 16, 14]), el([14, 13, 2], [16, 16, 14])]}
 
 
 def loot_block(block_id):
     return {"type": "minecraft:block",
-            "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": "nusmp:" + block_id}],
+            "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": "anime_multiverse:" + block_id}],
                        "conditions": [{"condition": "minecraft:survives_explosion"}]}],
-            "random_sequence": "nusmp:blocks/" + block_id}
+            "random_sequence": "anime_multiverse:blocks/" + block_id}
 
 
 def build():
     """published relative path (under src/main/resources) -> bytes, for every file this script owns outright."""
     out = {}
-    a = "assets/nusmp/"
+    a = "assets/anime_multiverse/"
     t = a + "textures/block/"
     out[t + "snuffer_glyph_top.png"] = png_bytes(snuffer_top())
     out[t + "snuffer_glyph_top.png.mcmeta"] = js({"animation": {"frametime": 10, "interpolate": True}})
@@ -269,40 +269,40 @@ def build():
     out[t + "gatekeeper_door_puzzle_bottom.png.mcmeta"] = js({"animation": {"frametime": 6}})
     out[t + "gatekeeper_door_puzzle_top.png"] = png_bytes(puzzle_door_top())
     m = a + "models/block/"
-    out[m + "pitfall_tile.json"] = js(cube_model("minecraft:block/cube_all", {"all": "nusmp:block/labyrinth_tiles"}))
+    out[m + "pitfall_tile.json"] = js(cube_model("minecraft:block/cube_all", {"all": "anime_multiverse:block/labyrinth_tiles"}))
     out[m + "pitfall_tile_open.json"] = js(open_pit_model())
-    out[m + "snuffer_glyph.json"] = js(cube_model("minecraft:block/cube_bottom_top", {"top": "nusmp:block/snuffer_glyph_top", "bottom": "nusmp:block/snuffer_glyph_side", "side": "nusmp:block/snuffer_glyph_side"}))
+    out[m + "snuffer_glyph.json"] = js(cube_model("minecraft:block/cube_bottom_top", {"top": "anime_multiverse:block/snuffer_glyph_top", "bottom": "anime_multiverse:block/snuffer_glyph_side", "side": "anime_multiverse:block/snuffer_glyph_side"}))
     for c in range(4):
         out[m + "sigil_plate_%d.json" % c] = js(plate_model(c, False))
         out[m + "sigil_plate_%d_lit.json" % c] = js(plate_model(c, True))
-    out[m + "riddle_stone.json"] = js(cube_model("minecraft:block/cube_bottom_top", {"top": "nusmp:block/riddle_stone_top", "bottom": "nusmp:block/riddle_stone_top", "side": "nusmp:block/riddle_stone_side"}))
+    out[m + "riddle_stone.json"] = js(cube_model("minecraft:block/cube_bottom_top", {"top": "anime_multiverse:block/riddle_stone_top", "bottom": "anime_multiverse:block/riddle_stone_top", "side": "anime_multiverse:block/riddle_stone_side"}))
     for half, tex in (("lower", "gatekeeper_door_puzzle_bottom"), ("upper", "gatekeeper_door_puzzle_top")):
         out[m + "gatekeeper_door_puzzle_%s.json" % half] = js({"parent": "minecraft:block/cube", "textures": {
-            "particle": "nusmp:block/" + tex, "down": "nusmp:block/gatekeeper_door_end", "up": "nusmp:block/gatekeeper_door_end",
-            "north": "nusmp:block/" + tex, "south": "nusmp:block/" + tex, "east": "nusmp:block/" + tex, "west": "nusmp:block/" + tex}})
+            "particle": "anime_multiverse:block/" + tex, "down": "anime_multiverse:block/gatekeeper_door_end", "up": "anime_multiverse:block/gatekeeper_door_end",
+            "north": "anime_multiverse:block/" + tex, "south": "anime_multiverse:block/" + tex, "east": "anime_multiverse:block/" + tex, "west": "anime_multiverse:block/" + tex}})
     s = a + "blockstates/"
     out[s + "pitfall_tile.json"] = js({"variants": {
-        "safe=false,open=false": {"model": "nusmp:block/pitfall_tile"}, "safe=true,open=false": {"model": "nusmp:block/pitfall_tile"},
-        "safe=false,open=true": {"model": "nusmp:block/pitfall_tile_open"}, "safe=true,open=true": {"model": "nusmp:block/pitfall_tile_open"}}})
-    out[s + "snuffer_glyph.json"] = js({"variants": {"active=false": {"model": "nusmp:block/snuffer_glyph"}, "active=true": {"model": "nusmp:block/snuffer_glyph"}}})
-    out[s + "sigil_plate.json"] = js({"variants": {"color=%d,lit=%s" % (c, "true" if lit else "false"): {"model": "nusmp:block/sigil_plate_%d%s" % (c, "_lit" if lit else "")}
+        "safe=false,open=false": {"model": "anime_multiverse:block/pitfall_tile"}, "safe=true,open=false": {"model": "anime_multiverse:block/pitfall_tile"},
+        "safe=false,open=true": {"model": "anime_multiverse:block/pitfall_tile_open"}, "safe=true,open=true": {"model": "anime_multiverse:block/pitfall_tile_open"}}})
+    out[s + "snuffer_glyph.json"] = js({"variants": {"active=false": {"model": "anime_multiverse:block/snuffer_glyph"}, "active=true": {"model": "anime_multiverse:block/snuffer_glyph"}}})
+    out[s + "sigil_plate.json"] = js({"variants": {"color=%d,lit=%s" % (c, "true" if lit else "false"): {"model": "anime_multiverse:block/sigil_plate_%d%s" % (c, "_lit" if lit else "")}
                                                    for c in range(4) for lit in (False, True)}})
-    out[s + "riddle_stone.json"] = js({"variants": {"": {"model": "nusmp:block/riddle_stone"}}})
+    out[s + "riddle_stone.json"] = js({"variants": {"": {"model": "anime_multiverse:block/riddle_stone"}}})
     i = a + "models/item/"
-    out[i + "pitfall_tile.json"] = js({"parent": "nusmp:block/pitfall_tile"})
-    out[i + "snuffer_glyph.json"] = js({"parent": "nusmp:block/snuffer_glyph"})
-    out[i + "sigil_plate.json"] = js({"parent": "nusmp:block/sigil_plate_0"})
-    out[i + "riddle_stone.json"] = js({"parent": "nusmp:block/riddle_stone"})
+    out[i + "pitfall_tile.json"] = js({"parent": "anime_multiverse:block/pitfall_tile"})
+    out[i + "snuffer_glyph.json"] = js({"parent": "anime_multiverse:block/snuffer_glyph"})
+    out[i + "sigil_plate.json"] = js({"parent": "anime_multiverse:block/sigil_plate_0"})
+    out[i + "riddle_stone.json"] = js({"parent": "anime_multiverse:block/riddle_stone"})
     for b in ("pitfall_tile", "snuffer_glyph", "sigil_plate", "riddle_stone"):
-        out["data/nusmp/loot_table/blocks/%s.json" % b] = js(loot_block(b))
+        out["data/anime_multiverse/loot_table/blocks/%s.json" % b] = js(loot_block(b))
     return out
 
 
-NEW_PICKAXE = ["nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:sigil_plate", "nusmp:riddle_stone"]
-DOOR_STATES = {"kind=puzzle,open=false,half=lower": {"model": "nusmp:block/gatekeeper_door_puzzle_lower"},
-               "kind=puzzle,open=true,half=lower": {"model": "nusmp:block/gatekeeper_door_open"},
-               "kind=puzzle,open=false,half=upper": {"model": "nusmp:block/gatekeeper_door_puzzle_upper"},
-               "kind=puzzle,open=true,half=upper": {"model": "nusmp:block/gatekeeper_door_open"}}
+NEW_PICKAXE = ["anime_multiverse:pitfall_tile", "anime_multiverse:snuffer_glyph", "anime_multiverse:sigil_plate", "anime_multiverse:riddle_stone"]
+DOOR_STATES = {"kind=puzzle,open=false,half=lower": {"model": "anime_multiverse:block/gatekeeper_door_puzzle_lower"},
+               "kind=puzzle,open=true,half=lower": {"model": "anime_multiverse:block/gatekeeper_door_open"},
+               "kind=puzzle,open=false,half=upper": {"model": "anime_multiverse:block/gatekeeper_door_puzzle_upper"},
+               "kind=puzzle,open=true,half=upper": {"model": "anime_multiverse:block/gatekeeper_door_open"}}
 
 
 def shared_files():
@@ -314,11 +314,11 @@ def shared_files():
         if v not in tag["values"]:
             tag["values"].append(v)
     out["data/minecraft/tags/block/mineable/pickaxe.json"] = js(tag)
-    p = os.path.join(RES, "assets", "nusmp", "blockstates", "gatekeeper_door.json")
+    p = os.path.join(RES, "assets", "anime_multiverse", "blockstates", "gatekeeper_door.json")
     st = json.load(open(p))
     for k, v in DOOR_STATES.items():
         st["variants"].setdefault(k, v)
-    out["assets/nusmp/blockstates/gatekeeper_door.json"] = js(st)
+    out["assets/anime_multiverse/blockstates/gatekeeper_door.json"] = js(st)
     return out
 
 

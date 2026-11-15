@@ -1,0 +1,7 @@
+{
+  "type": "anime_multiverse:sanctuary_peace",
+  "biomes": "anime_multiverse:sanctuary_plains",
+  "keep_namespaces": [
+    "minecraft"
+  ]
+}

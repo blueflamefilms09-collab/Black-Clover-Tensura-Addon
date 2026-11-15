@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 0.54: the player-side half of the spell-casting body animations (docs/cast_animation_guide.md). The server ({@code anim.CastAnim})
  * says which clip a player plays; this class plays it on the vanilla player model from {@code mixin.client.PlayerModelMixin}.
- * The clips are Blockbench keyframes (assets/nusmp/animations/player/cast.animation.json, bones body / left_arm / right_arm /
+ * The clips are Blockbench keyframes (assets/anime_multiverse/animations/player/cast.animation.json, bones body / left_arm / right_arm /
  * left_leg / right_leg, degrees in the model's own rotation convention, position y in pixels, up positive):
  * <ul>
  *   <li>arms are <b>replaced</b> by the clip (so the hand really goes out, up or to the side);</li>
@@ -29,7 +29,7 @@ import java.util.Map;
 public final class CastAnimClient {
     private CastAnimClient() {}
 
-    public static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "animations/player/cast.animation.json");
+    public static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "animations/player/cast.animation.json");
     private static final float FADE_IN = 3f, FADE_OUT = 6f, HOLD_AFTER_END = 0.25f * 20f;
 
     private static final class State {

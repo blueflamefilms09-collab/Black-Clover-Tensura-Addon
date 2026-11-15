@@ -22,7 +22,7 @@ public final class GnomeSoundRules {
         public int range() { return Math.round(16f * Math.max(1f, volume)); }
 
         public String event() { return "gnome." + id; }
-        public String subtitleKey() { return "subtitles.nusmp.gnome." + id; }
+        public String subtitleKey() { return "subtitles.anime_multiverse.gnome." + id; }
         public float pitch(double unit) { return (float) (pitchLow + (pitchHigh - pitchLow) * Math.max(0.0, Math.min(1.0, unit))); }
     }
 

@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:dungeon/seal",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:peak_altar"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.peak_altar.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.peak_altar.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_peak_altar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:peak_altar"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_peak_altar"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

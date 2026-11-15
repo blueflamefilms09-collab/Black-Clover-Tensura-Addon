@@ -1,7 +1,7 @@
 """apply_weapon_fixes: the per-id size and orientation corrections of the baked weapon meshes (docs/weapon_scale_orientation.md).
 
     python tools/relics/apply_weapon_fixes.py             dry run: what each fix would change (apparent length before -> after)
-    python tools/relics/apply_weapon_fixes.py --apply     rewrite assets/nusmp/weapon_meshes/<id>.txt
+    python tools/relics/apply_weapon_fixes.py --apply     rewrite assets/anime_multiverse/weapon_meshes/<id>.txt
     python tools/relics/apply_weapon_fixes.py --check     exit 1 if --apply would change anything (CI)
     python tools/relics/apply_weapon_fixes.py --suggest   print a proposed tools/relics/weapon_fixes.json for every weapon below its class minimum,
                                                           every head too small and every head on the wrong side (--write merges the missing ids in)
@@ -38,7 +38,7 @@ import weapon_classes as wc          # noqa: E402
 import weapon_orientation as wo      # noqa: E402
 
 ROOT = wc.ROOT
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MESHES = os.path.join(ASSETS, "weapon_meshes")
 FIXES_JSON = os.path.join(HERE, "weapon_fixes.json")
 MARK = "# nusmp_fix "

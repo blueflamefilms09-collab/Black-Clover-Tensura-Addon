@@ -6,10 +6,10 @@ The spirit speaks in a smooth, mocking, aristocratic voice (ElevenLabs library v
 licence note). 47 short lines in 12 groups; the group is what the game asks for (spiritdark/DarkMoodRules: link, cast, step, hurt, feast, idle, low, kill, died, unlink, power, power_end).
 
     python3 -B tools/audio/spirit_dark_voice.py manifest          writes tools/audio/spirit_dark_lines.json (the plan: id, group, text, prompt, voice)
-    python3 -B tools/audio/spirit_dark_voice.py missing           lists the ids that have no recording yet (assets/nusmp/sounds/spirit/dark/voice/<id>.ogg)
+    python3 -B tools/audio/spirit_dark_voice.py missing           lists the ids that have no recording yet (assets/anime_multiverse/sounds/spirit/dark/voice/<id>.ogg)
     python3 -B tools/audio/spirit_dark_voice.py convert <raw_dir> converts <raw_dir>/<id>.mp3 (or .wav) of every planned line that has one: mono 32 kHz, silence trimmed, loudnorm about -16 LUFS,
-                                                                  true peak <= -1.5 dB, Ogg Vorbis q3 -> assets/nusmp/sounds/spirit/dark/voice/<id>.ogg; then runs `sync`
-    python3 -B tools/audio/spirit_dark_voice.py sync              rewrites the two files the game reads from the recordings that exist: assets/nusmp/spirit_dark_voice.json (id -> text, only
+                                                                  true peak <= -1.5 dB, Ogg Vorbis q3 -> assets/anime_multiverse/sounds/spirit/dark/voice/<id>.ogg; then runs `sync`
+    python3 -B tools/audio/spirit_dark_voice.py sync              rewrites the two files the game reads from the recordings that exist: assets/anime_multiverse/spirit_dark_voice.json (id -> text, only
                                                                   lines whose ogg exists) and the spirit.dark.voice.<id> entries of sounds.json; also tools/audio/spirit_dark_voice_report.json
     python3 -B tools/audio/spirit_dark_voice.py check             verifies files, entries and the 3 MB budget
 
@@ -23,7 +23,7 @@ import sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ASSETS, "sounds", "spirit", "dark", "voice")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 DATA = os.path.join(ASSETS, "spirit_dark_voice.json")
@@ -178,7 +178,7 @@ def sync():
     end = at
     while not kept[end].startswith("  },"):
         end += 1
-    block = ['  "spirit.dark.voice.%s": { "sounds": [ { "name": "nusmp:spirit/dark/voice/%s", "stream": false, "attenuation_distance": %d } ] },' % (i, i, RANGE) for i, g, t in have]
+    block = ['  "spirit.dark.voice.%s": { "sounds": [ { "name": "anime_multiverse:spirit/dark/voice/%s", "stream": false, "attenuation_distance": %d } ] },' % (i, i, RANGE) for i, g, t in have]
     out = "\n".join(kept[:end + 1] + block + kept[end + 1:])
     json.loads(out)
     with open(SOUNDS_JSON, "w", encoding="utf-8", newline="\n") as f:

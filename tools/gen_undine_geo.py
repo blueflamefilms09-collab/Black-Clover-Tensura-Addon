@@ -1,7 +1,7 @@
 """The Undine, Noelle Silva's water Spirit Lord (docs/magic/undine.md): a tall woman of water. Models (Bedrock geo, 1/16 block units, y up, front -z), hand-painted sheets (tools/gen_undine_art.py),
 one animation file, three levels of detail, a translucent water pass, an additive foam pass and the wave base of the full form:
 
-    python3 -B tools/gen_undine_geo.py              writes assets/nusmp/{geo,animations,textures}/entity/undine_*
+    python3 -B tools/gen_undine_geo.py              writes assets/anime_multiverse/{geo,animations,textures}/entity/undine_*
     python3 -B tools/gen_undine_geo.py --count      prints the quads of every model
 
     undine_body       LOD 0 (cutout: skin, face, hair, the gown)     undine_body_lod1   LOD 1      undine_body_lod2   LOD 2 (low poly)

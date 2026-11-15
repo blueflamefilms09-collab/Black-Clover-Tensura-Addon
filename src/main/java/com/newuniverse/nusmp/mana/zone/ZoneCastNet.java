@@ -17,7 +17,7 @@ public final class ZoneCastNet {
 
     /** The aimed point (the crosshair's block hit, or the foe's centre) and the foe's entity id, -1 for none. */
     public record AimPayload(double x, double y, double z, int entityId) implements CustomPacketPayload {
-        public static final Type<AimPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "zone_aim"));
+        public static final Type<AimPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "zone_aim"));
         public static final StreamCodec<FriendlyByteBuf, AimPayload> CODEC = CustomPacketPayload.codec(AimPayload::write, AimPayload::read);
 
         private void write(FriendlyByteBuf b) {

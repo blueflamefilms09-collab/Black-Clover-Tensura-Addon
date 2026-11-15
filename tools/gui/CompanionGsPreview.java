@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 public final class CompanionGsPreview {
     static final int S = 3;
     static final File ROOT = new File(".");
-    static final File RES = new File("src/main/resources/assets/nusmp");
+    static final File RES = new File("src/main/resources/assets/anime_multiverse");
 
     // ================================================================ the lang fragment (real texts)
     static final Map<String, String> LANG = new HashMap<>();
@@ -305,41 +305,41 @@ public final class CompanionGsPreview {
         f.time = sc.time;
         f.tab = sc.tab;
         f.name = "Charmy Pappitson";
-        f.sub = t("nusmp.companion.charmy.sub");
+        f.sub = t("anime_multiverse.companion.charmy.sub");
         f.color = 0xF4EAD0;
         String[] tabs = {"talk", "interact", "bond", "pouch"};
-        for (int i = 0; i < 4; i++) f.tabNames[i] = t("nusmp.companion.tab." + tabs[i]);
+        for (int i = 0; i < 4; i++) f.tabNames[i] = t("anime_multiverse.companion.tab." + tabs[i]);
         String[] lb = f.labels;
-        lb[GsTalkFrame.L_CLOSE] = t("nusmp.companion.close");
-        lb[GsTalkFrame.L_GIVE] = t("nusmp.companion.gs.give");
-        lb[GsTalkFrame.L_LIKES] = t("nusmp.companion.gs.likes");
-        lb[GsTalkFrame.L_FIVE] = t("nusmp.companion.bond.five");
-        lb[GsTalkFrame.L_FOLLOW] = t("nusmp.companion.gs.follow");
-        lb[GsTalkFrame.L_WAIT] = t("nusmp.companion.gs.wait");
-        lb[GsTalkFrame.L_PANEL] = t("nusmp.companion.gs.panel");
-        lb[GsTalkFrame.L_USE_ON] = t("nusmp.companion.gs.use_on");
-        lb[GsTalkFrame.L_USE_OFF] = t("nusmp.companion.gs.use_off");
-        lb[GsTalkFrame.L_PUT] = t("nusmp.companion.gs.put");
-        lb[GsTalkFrame.L_TAKE_ALL] = t("nusmp.companion.gs.take_all");
-        lb[GsTalkFrame.L_TASTES] = t("nusmp.companion.gs.tastes");
-        lb[GsTalkFrame.L_STORY] = t("nusmp.companion.gs.story");
-        lb[GsTalkFrame.L_PICKER] = t("nusmp.companion.gs.picker");
-        lb[GsTalkFrame.L_GIFT_HINT] = t("nusmp.companion.gs.gift_hint");
-        lb[GsTalkFrame.L_HAND] = t("nusmp.companion.gs.hand");
-        lb[GsTalkFrame.L_NO_STORY] = t("nusmp.companion.gs.story.none");
-        lb[GsTalkFrame.L_RING_READY] = t("nusmp.companion.gs.ring.ready");
-        lb[GsTalkFrame.L_RING_EMPTY] = t("nusmp.companion.gs.ring.empty");
-        lb[GsTalkFrame.L_RING_OFF] = t("nusmp.companion.gs.ring.off");
-        lb[GsTalkFrame.L_RING_LOCKED] = t("nusmp.companion.gs.ring.locked");
+        lb[GsTalkFrame.L_CLOSE] = t("anime_multiverse.companion.close");
+        lb[GsTalkFrame.L_GIVE] = t("anime_multiverse.companion.gs.give");
+        lb[GsTalkFrame.L_LIKES] = t("anime_multiverse.companion.gs.likes");
+        lb[GsTalkFrame.L_FIVE] = t("anime_multiverse.companion.bond.five");
+        lb[GsTalkFrame.L_FOLLOW] = t("anime_multiverse.companion.gs.follow");
+        lb[GsTalkFrame.L_WAIT] = t("anime_multiverse.companion.gs.wait");
+        lb[GsTalkFrame.L_PANEL] = t("anime_multiverse.companion.gs.panel");
+        lb[GsTalkFrame.L_USE_ON] = t("anime_multiverse.companion.gs.use_on");
+        lb[GsTalkFrame.L_USE_OFF] = t("anime_multiverse.companion.gs.use_off");
+        lb[GsTalkFrame.L_PUT] = t("anime_multiverse.companion.gs.put");
+        lb[GsTalkFrame.L_TAKE_ALL] = t("anime_multiverse.companion.gs.take_all");
+        lb[GsTalkFrame.L_TASTES] = t("anime_multiverse.companion.gs.tastes");
+        lb[GsTalkFrame.L_STORY] = t("anime_multiverse.companion.gs.story");
+        lb[GsTalkFrame.L_PICKER] = t("anime_multiverse.companion.gs.picker");
+        lb[GsTalkFrame.L_GIFT_HINT] = t("anime_multiverse.companion.gs.gift_hint");
+        lb[GsTalkFrame.L_HAND] = t("anime_multiverse.companion.gs.hand");
+        lb[GsTalkFrame.L_NO_STORY] = t("anime_multiverse.companion.gs.story.none");
+        lb[GsTalkFrame.L_RING_READY] = t("anime_multiverse.companion.gs.ring.ready");
+        lb[GsTalkFrame.L_RING_EMPTY] = t("anime_multiverse.companion.gs.ring.empty");
+        lb[GsTalkFrame.L_RING_OFF] = t("anime_multiverse.companion.gs.ring.off");
+        lb[GsTalkFrame.L_RING_LOCKED] = t("anime_multiverse.companion.gs.ring.locked");
         String[] st = {"guard", "aggressive", "passive"};
-        for (int i = 0; i < 3; i++) lb[GsTalkFrame.L_STANCE0 + i] = t("nusmp.companion.stance." + st[i]);
-        lb[GsTalkFrame.L_MOOD] = t("nusmp.companion.gs.mood");
-        lb[GsTalkFrame.L_NO_TASTES] = t("nusmp.companion.gs.tastes.none");
-        lb[GsTalkFrame.L_FOLLOWING] = t("nusmp.companion.gs.state.following");
-        lb[GsTalkFrame.L_WAITING] = t("nusmp.companion.gs.state.waiting");
-        lb[GsTalkFrame.L_PUT_HINT] = t("nusmp.companion.gs.put_hint");
+        for (int i = 0; i < 3; i++) lb[GsTalkFrame.L_STANCE0 + i] = t("anime_multiverse.companion.stance." + st[i]);
+        lb[GsTalkFrame.L_MOOD] = t("anime_multiverse.companion.gs.mood");
+        lb[GsTalkFrame.L_NO_TASTES] = t("anime_multiverse.companion.gs.tastes.none");
+        lb[GsTalkFrame.L_FOLLOWING] = t("anime_multiverse.companion.gs.state.following");
+        lb[GsTalkFrame.L_WAITING] = t("anime_multiverse.companion.gs.state.waiting");
+        lb[GsTalkFrame.L_PUT_HINT] = t("anime_multiverse.companion.gs.put_hint");
         String[] moods = {"neutral", "happy", "shy", "angry", "hungry"};
-        f.moodName = t("nusmp.companion.gs.mood." + moods[sc.mood.ordinal()]);
+        f.moodName = t("anime_multiverse.companion.gs.mood." + moods[sc.mood.ordinal()]);
 
         f.face = faceInfo;
         f.mood = sc.mood;
@@ -351,7 +351,7 @@ public final class CompanionGsPreview {
         f.rapportGlow = sc.rise < 48 ? (1f - sc.rise / 48f) * (1f - sc.rise / 48f) : 0f;
         f.sinceRise = sc.rise;
         f.litLeaf = -1;
-        f.tierName = t("nusmp.companion.tier." + tn[tier]);
+        f.tierName = t("anime_multiverse.companion.tier." + tn[tier]);
         f.tierLine = f.tierName;
         f.rapportText = Integer.toString(sc.rapport);
         int[] at = {3, 10, 25};
@@ -363,10 +363,10 @@ public final class CompanionGsPreview {
         f.nextText = f.toNext > 0 ? "+" + f.toNext : "";
 
         String text = switch (sc.tab) {
-            case 0 -> t("nusmp.companion.charmy.greet", "Steve");
-            case 1 -> t("nusmp.companion.charmy.a.join");
-            case 2 -> t("nusmp.companion.charmy.gift.love", "Cake");
-            default -> t("nusmp.companion.bond.pouch.put", "Bread", 3);
+            case 0 -> t("anime_multiverse.companion.charmy.greet", "Steve");
+            case 1 -> t("anime_multiverse.companion.charmy.a.join");
+            case 2 -> t("anime_multiverse.companion.charmy.gift.love", "Cake");
+            default -> t("anime_multiverse.companion.bond.pouch.put", "Bread", 3);
         };
         List<String> wrapped = TalkPainter.wrap(canvas, text, L.dialogue[2] - 18, L.dialogueLines);
         f.dialogue = wrapped.toArray(new String[0]);
@@ -386,9 +386,9 @@ public final class CompanionGsPreview {
 
         // rows
         if (sc.tab == 0) {
-            f.rows.add(new GsTalkFrame.Row(t("nusmp.companion.charmy.q.self"), false));
-            f.rows.add(new GsTalkFrame.Row(t("nusmp.companion.charmy.q.food"), false));
-            f.rows.add(new GsTalkFrame.Row(t("nusmp.companion.charmy.q.magic"), false));
+            f.rows.add(new GsTalkFrame.Row(t("anime_multiverse.companion.charmy.q.self"), false));
+            f.rows.add(new GsTalkFrame.Row(t("anime_multiverse.companion.charmy.q.food"), false));
+            f.rows.add(new GsTalkFrame.Row(t("anime_multiverse.companion.charmy.q.magic"), false));
         }
         // interact / bond widgets
         f.hasFive = f.hasPanel = f.hasFollow = true;
@@ -413,14 +413,14 @@ public final class CompanionGsPreview {
         f.inventoryReactions[2] = GiftMemory.Reaction.LIKED;
         f.inventoryReactions[14] = GiftMemory.Reaction.LOVED;
         f.pickerOpen = sc.picker;
-        f.story = new String[]{t("nusmp.companion.gs.ev.loved", "Cake"), t("nusmp.companion.gs.ev.rapport", 2), t("nusmp.companion.gs.ev.five"), t("nusmp.companion.gs.ev.hated", "Spider Eye"), t("nusmp.companion.gs.ev.joined")};
+        f.story = new String[]{t("anime_multiverse.companion.gs.ev.loved", "Cake"), t("anime_multiverse.companion.gs.ev.rapport", 2), t("anime_multiverse.companion.gs.ev.five"), t("anime_multiverse.companion.gs.ev.hated", "Spider Eye"), t("anime_multiverse.companion.gs.ev.joined")};
         f.storyKinds = new BondStory.Kind[]{BondStory.Kind.LOVED, BondStory.Kind.RAPPORT, BondStory.Kind.FIVE, BondStory.Kind.HATED, BondStory.Kind.JOINED};
         f.storyAge = sc.storyAge;
         for (int i = 0; i < 9; i++) f.pouchCounts[i] = i == 0 || i == 1 || i == 4 ? "x" : "";
         f.ring = sc.locked ? PouchRing.State.LOCKED : PouchRing.State.READY;
         f.ringSlot = sc.locked ? -1 : 4;
         if (sc.locked) f.useIt = -1;
-        f.hint = sc.tab == 2 ? t("nusmp.companion.gs.hint.bond") : "";
+        f.hint = sc.tab == 2 ? t("anime_multiverse.companion.gs.hint.bond") : "";
         return f;
     }
 
@@ -445,7 +445,7 @@ public final class CompanionGsPreview {
         BufferedImage img = world(w, h);
         Canvas c = new Canvas(img, portraitSkin, ITEMS);
         Graphics2D g = c.g;
-        String line = t("nusmp.companion.charmy.gift.love", "Cake");
+        String line = t("anime_multiverse.companion.charmy.gift.love", "Cake");
         int[] cx = {50, 125, 200, 275};
         float[] age = {2f, 20f, 20f, 20f}, left = {100f, 100f, 4f, 100f};
         boolean[] far = {false, false, false, true};
@@ -456,7 +456,7 @@ public final class CompanionGsPreview {
             g.setColor(new Color(0x6A4A8A));
             g.fillRect((cx[k] - 11) * S, 98 * S, 22 * S, 20 * S);
             float sc = BubbleStyle.pop(age[k]), op = BubbleStyle.fade(left[k]);
-            List<String> ls = TalkPainter.wrap(c, line + " " + t("nusmp.companion.charmy.a.food"), 110 * 2 / 3, 4);
+            List<String> ls = TalkPainter.wrap(c, line + " " + t("anime_multiverse.companion.charmy.a.food"), 110 * 2 / 3, 4);
             int n = BubbleStyle.lines(far[k] ? 20 * 20 : 100, ls.size());
             g.translate(cx[k] * S, 80 * S);
             g.scale(sc, sc);

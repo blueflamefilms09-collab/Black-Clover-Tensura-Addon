@@ -1,6 +1,6 @@
 """Generates the Gel Magic VFX textures (Sally's gel salamander, glossy cel-shaded violet gel).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/gel_cel_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/gel_cel_*.png
 
     python3 -B tools/gen_gel_ref_textures.py
 
@@ -15,7 +15,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

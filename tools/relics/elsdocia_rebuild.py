@@ -4,7 +4,7 @@
     python tools/relics/elsdocia_rebuild.py                 # mesh + skin + glow skin
     ELSDOCIA_PREVIEW=out_dir python tools/relics/elsdocia_rebuild.py     # also the preview beside the reference (silhouette, facets, textured)
 
-0  Target: a baked mesh (assets/nusmp/weapon_meshes/elsdocia.txt, per-vertex normals) drawn by client/WeaponRenderer, skin 1024 px + glow skin.
+0  Target: a baked mesh (assets/anime_multiverse/weapon_meshes/elsdocia.txt, per-vertex normals) drawn by client/WeaponRenderer, skin 1024 px + glow skin.
 1  Measure the reference in px, convert with ONE known length (the whole sword is a 1.25 m longsword = 477 px from the pommel top to the tip):
    K = 125 cm / 477 px = 0.262 cm per px. Every number below is a measured px value times K (the table is in docs/elsdocia_rebuild.md).
 2  Lofted sections (tools/relics/mesh_lib.py): ricasso (bevelled flats), crystal core (8-point section with a central ridge), crossguard bar,

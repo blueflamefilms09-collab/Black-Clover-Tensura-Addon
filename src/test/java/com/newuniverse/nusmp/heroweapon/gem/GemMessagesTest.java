@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * text is the one in the code (before the merge the file simply lacks the keys, which is not an error).
  */
 class GemMessagesTest {
-    private static final Path LANG = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
+    private static final Path LANG = Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json");
 
     private static int placeholders(String text) {
         int n = 0;
@@ -82,8 +82,8 @@ class GemMessagesTest {
 
     @Test
     void everyItemHasAName() {
-        for (String id : GemCatalog.allItemIds()) assertTrue(GemMessages.all().containsKey("item.nusmp." + id), "no name for " + id);
-        for (HeroKind k : GemCatalog.sealKinds()) assertEquals(GemCatalog.sealName(k), GemMessages.en("item.nusmp." + GemCatalog.sealId(k)));
+        for (String id : GemCatalog.allItemIds()) assertTrue(GemMessages.all().containsKey("item.anime_multiverse." + id), "no name for " + id);
+        for (HeroKind k : GemCatalog.sealKinds()) assertEquals(GemCatalog.sealName(k), GemMessages.en("item.anime_multiverse." + GemCatalog.sealId(k)));
         assertEquals("Calling Gem", GemMessages.en(GemMessages.ITEM_HOLY));
     }
 

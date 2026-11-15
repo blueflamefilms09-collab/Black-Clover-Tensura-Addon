@@ -39,21 +39,21 @@ public final class SpiritDarkSelfTests {
     private static Result run(MinecraftServer server) throws Exception {
         if (PropKind.valueOf("SPIRITDARK_1") == null) return Result.fail("the prop kind is missing");
         for (Cue c : Cue.values()) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.eventPath()))) return Result.fail("sound event " + c.eventPath() + " is not registered");
-            if (!resource("/assets/nusmp/sounds/spirit/dark/" + c.id + "_1.ogg")) return Result.fail("sound file " + c.id + "_1.ogg is missing");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.eventPath()))) return Result.fail("sound event " + c.eventPath() + " is not registered");
+            if (!resource("/assets/anime_multiverse/sounds/spirit/dark/" + c.id + "_1.ogg")) return Result.fail("sound file " + c.id + "_1.ogg is missing");
         }
         for (String id : SpiritDarkVoiceCatalog.ids()) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", SpiritDarkSounds.voicePath(id)))) return Result.fail("voice line " + id + " is not registered");
-            if (!resource("/assets/nusmp/sounds/spirit/dark/voice/" + id + ".ogg")) return Result.fail("voice file " + id + ".ogg is missing");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", SpiritDarkSounds.voicePath(id)))) return Result.fail("voice line " + id + " is not registered");
+            if (!resource("/assets/anime_multiverse/sounds/spirit/dark/voice/" + id + ".ogg")) return Result.fail("voice file " + id + ".ogg is missing");
         }
         for (String form : new String[]{"companion", "powered"}) {
             for (String suffix : new String[]{"", "_lod1", "_lod2", "_fx"}) {
                 String id = "spirit_dark_" + form + suffix;
-                if (!resource("/assets/nusmp/geo/entity/" + id + ".geo.json") || !resource("/assets/nusmp/textures/entity/" + id + ".png")) return Result.fail("model or sheet " + id + " is missing");
+                if (!resource("/assets/anime_multiverse/geo/entity/" + id + ".geo.json") || !resource("/assets/anime_multiverse/textures/entity/" + id + ".png")) return Result.fail("model or sheet " + id + " is missing");
             }
-            if (!resource("/assets/nusmp/animations/entity/spirit_dark_" + form + ".animation.json")) return Result.fail("animations of " + form + " are missing");
+            if (!resource("/assets/anime_multiverse/animations/entity/spirit_dark_" + form + ".animation.json")) return Result.fail("animations of " + form + " are missing");
             for (DarkMoodRules.Face f : DarkMoodRules.Face.values()) {
-                if (!resource("/assets/nusmp/textures/entity/spirit_dark_" + form + "_face_" + f.id + ".png") || !resource("/assets/nusmp/textures/entity/spirit_dark_" + form + "_faceglow_" + f.id + ".png"))
+                if (!resource("/assets/anime_multiverse/textures/entity/spirit_dark_" + form + "_face_" + f.id + ".png") || !resource("/assets/anime_multiverse/textures/entity/spirit_dark_" + form + "_faceglow_" + f.id + ".png"))
                     return Result.fail("face sheet " + form + " " + f.id + " is missing");
             }
         }

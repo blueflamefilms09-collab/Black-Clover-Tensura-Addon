@@ -62,19 +62,19 @@ class SaiyanTech3SourceScanTest {
 
     @Test
     void everyMessageAndKeyNameHasItsText() throws IOException {
-        String lang = read("src/main/resources/assets/nusmp/lang/en_us.json");
+        String lang = read("src/main/resources/assets/anime_multiverse/lang/en_us.json");
         Matcher m = Pattern.compile("say\\((?:p|to), \"([a-z_]+)\"\\)").matcher(read(SAIYAN + "SaiyanTechniques3.java"));
         int seen = 0;
         while (m.find()) {
             seen++;
             String k = m.group(1);
             if (k.equals("no_ki") || k.equals("not_awakened") || k.equals("goku_locked")) continue;
-            assertTrue(lang.contains("\"nusmp.saiyan.msg." + k + "\""), "missing text for " + k);
+            assertTrue(lang.contains("\"anime_multiverse.saiyan.msg." + k + "\""), "missing text for " + k);
         }
         assertTrue(seen >= 10, "the scan must see the messages");
         for (String key : new String[] {"saiyan_dragon_fist", "saiyan_god_bind", "saiyan_ki_deflection", "saiyan_energy_transfer"}) {
-            assertTrue(lang.contains("\"key.nusmp." + key + "\""), "missing key name " + key);
-            assertTrue(read("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java").contains("\"key.nusmp." + key + "\""), "key not mapped: " + key);
+            assertTrue(lang.contains("\"key.anime_multiverse." + key + "\""), "missing key name " + key);
+            assertTrue(read("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java").contains("\"key.anime_multiverse." + key + "\""), "key not mapped: " + key);
         }
     }
 

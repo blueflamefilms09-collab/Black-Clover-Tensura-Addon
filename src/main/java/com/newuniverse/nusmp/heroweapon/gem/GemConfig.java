@@ -22,7 +22,7 @@ public final class GemConfig {
                 .defineInRange("ritualSeconds", 5, 1, 60);
         RECIPES = b.comment("The survival route: when true anyone can use a gem. When false the gems still exist but only operators and creative players can use them, so a",
                 "crafted gem does nothing for survival players. The crafting recipes themselves cannot read this setting (a recipe is loaded before the server config is),",
-                "so to remove them as well, override data/nusmp/recipe/calling_gem.json, gem_fragment.json and vassal_seal_*.json in a data pack.")
+                "so to remove them as well, override data/anime_multiverse/recipe/calling_gem.json, gem_fragment.json and vassal_seal_*.json in a data pack.")
                 .define("recipes", true);
         MOVE_TOLERANCE = b.comment("How far, in blocks, the player may drift from the spot where the ritual began before it breaks.")
                 .defineInRange("moveTolerance", 1.5, 0.0, 16.0);

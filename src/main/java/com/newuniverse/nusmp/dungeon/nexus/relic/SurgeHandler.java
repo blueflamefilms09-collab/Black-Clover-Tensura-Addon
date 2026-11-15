@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 final class SurgeHandler {
     private SurgeHandler() {}
 
-    private static final ResourceLocation PENALTY_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_wild_surge");
+    private static final ResourceLocation PENALTY_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_wild_surge");
     private static final String UNTIL = "SurgeUntil";
 
     /** The game time the player's penalty ends, or 0 if they have none. */

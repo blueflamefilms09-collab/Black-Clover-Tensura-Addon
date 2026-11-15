@@ -8,7 +8,7 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** Why: the entity type of Shishou's body ({@code nusmp:shishou}): one type for the wild sword, the dormant sword and the thrown minion. Its own register, attached to the mod bus by {@link ShishouBoot}. */
+/** Why: the entity type of Shishou's body ({@code anime_multiverse:shishou}): one type for the wild sword, the dormant sword and the thrown minion. Its own register, attached to the mod bus by {@link ShishouBoot}. */
 public final class ShishouEntities {
     private ShishouEntities() {}
 

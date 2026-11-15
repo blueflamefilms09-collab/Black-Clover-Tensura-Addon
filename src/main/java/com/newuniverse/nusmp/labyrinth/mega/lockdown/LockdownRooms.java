@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Why: the holder of the room data that flags a challenge room ({@code data/nusmp/mega/lockdown/rooms.json}, parsed by {@link LockdownTable}) and the reload listener
+ * Why: the holder of the room data that flags a challenge room ({@code data/anime_multiverse/mega/lockdown/rooms.json}, parsed by {@link LockdownTable}) and the reload listener
  * that reads it again whenever data reloads and never crashes on a bad file (the problems go to the log with the file's name, the snapshot keeps what was good). The
  * snapshot is swapped whole through a volatile field, so the server thread never sees a half-read table. With {@code lockdown.roomData = false}, or when the file is
  * missing or empty, {@link #MINIMUM} answers instead: treasure and set-piece rooms lock, nothing else, so the feature never silently does nothing. A datapack overrides
@@ -61,29 +61,29 @@ public final class LockdownRooms {
         public void onResourceManagerReload(ResourceManager manager) {
             LockdownTable found = LockdownTable.EMPTY;
             try {
-                Optional<Resource> res = manager.getResource(ResourceLocation.fromNamespaceAndPath("nusmp", FILE));
+                Optional<Resource> res = manager.getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", FILE));
                 if (res.isPresent()) {
                     String text = read(res.get());
                     if (text != null) {
                         LockdownTable.Parsed p = LockdownTable.parse(FILE, text);
-                        for (String problem : p.problems()) LOG.warn("[nusmp] {}", problem);
+                        for (String problem : p.problems()) LOG.warn("[anime_multiverse] {}", problem);
                         found = p.table();
                     }
                 } else {
-                    LOG.warn("[nusmp] {} is missing: the built-in minimum applies (treasure and set-piece rooms lock)", FILE);
+                    LOG.warn("[anime_multiverse] {} is missing: the built-in minimum applies (treasure and set-piece rooms lock)", FILE);
                 }
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] The lockdown room data could not be read: {}", e.toString());
+                LOG.warn("[anime_multiverse] The lockdown room data could not be read: {}", e.toString());
             }
             install(found);
-            LOG.info("[nusmp] Lockdown: {} kind rules, {} template rules, {} name patterns", found.kinds().size(), found.templates().size(), found.patterns().size());
+            LOG.info("[anime_multiverse] Lockdown: {} kind rules, {} template rules, {} name patterns", found.kinds().size(), found.templates().size(), found.patterns().size());
         }
 
         private static String read(Resource res) {
             try (InputStream in = res.open()) {
                 return new String(in.readAllBytes(), StandardCharsets.UTF_8);
             } catch (IOException | RuntimeException e) {
-                LOG.warn("[nusmp] {} could not be read: {}", FILE, e.toString());
+                LOG.warn("[anime_multiverse] {} could not be read: {}", FILE, e.toString());
                 return null;
             }
         }

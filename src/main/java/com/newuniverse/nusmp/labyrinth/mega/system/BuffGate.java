@@ -12,10 +12,10 @@ package com.newuniverse.nusmp.labyrinth.mega.system;
 public final class BuffGate {
     private BuffGate() {}
 
-    /** {@code nusmp:mega_dungeon}: both roads of the Mega-Dungeon. */
-    public static final String MEGA = "nusmp:mega_dungeon";
-    /** {@code nusmp:sanctuary}: Floor 0, the Hub. */
-    public static final String HUB = "nusmp:sanctuary";
+    /** {@code anime_multiverse:mega_dungeon}: both roads of the Mega-Dungeon. */
+    public static final String MEGA = "anime_multiverse:mega_dungeon";
+    /** {@code anime_multiverse:sanctuary}: Floor 0, the Hub. */
+    public static final String HUB = "anime_multiverse:sanctuary";
 
     /** Is this one of the dungeon dimensions (the Mega-Dungeon or the Hub)? A null or unknown id is not. */
     public static boolean isDungeonDimension(String dimensionId) {

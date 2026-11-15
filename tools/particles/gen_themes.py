@@ -1,4 +1,4 @@
-"""Writes src/main/resources/data/nusmp/particle_themes.json: the particle identity of every magic, relic grade, relic element, skill family and boss.
+"""Writes src/main/resources/data/anime_multiverse/particle_themes.json: the particle identity of every magic, relic grade, relic element, skill family and boss.
 
 A theme is [mote, accent, spark, ambient] (the four slots of particle.fx.FxSlot: the signature mote, the glyph or shape, the hard bright one, the soft one), a colour for the
 tintable particles, and a dark flavour (the shadowed twin the old Dark Rukh calls map to). Run:  python3 -B tools/particles/gen_themes.py
@@ -259,12 +259,12 @@ def add_waves():
 
 
 def catalog_ids():
-    with open(os.path.join(RES, "data", "nusmp", "particle_catalog.json"), encoding="utf-8") as fh:
+    with open(os.path.join(RES, "data", "anime_multiverse", "particle_catalog.json"), encoding="utf-8") as fh:
         return {p["id"] for p in json.load(fh)["particles"]}
 
 
 def magic_names():
-    src = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "blackclover", "MagicType.java")
+    src = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "blackclover", "MagicType.java")
     names = re.findall(r"^    ([A-Z_0-9]+)\(\"", open(src, encoding="utf-8").read(), re.M)
     return names
 
@@ -307,7 +307,7 @@ def build():
 
 def main():
     doc = build()
-    out = os.path.join(RES, "data", "nusmp", "particle_themes.json")
+    out = os.path.join(RES, "data", "anime_multiverse", "particle_themes.json")
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(doc, fh, indent=1)
         fh.write("\n")

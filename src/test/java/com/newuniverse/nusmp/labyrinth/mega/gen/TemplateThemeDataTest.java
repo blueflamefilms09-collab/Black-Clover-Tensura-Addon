@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: the rooms that belong to a theme are named by PREFIXES in {@code data/nusmp/mega/template_themes/<theme>.json}, and a prefix with a typo claims nothing and fails silently
+ * Why: the rooms that belong to a theme are named by PREFIXES in {@code data/anime_multiverse/mega/template_themes/<theme>.json}, and a prefix with a typo claims nothing and fails silently
  * in the game: the theme's own rooms would simply never be drawn (or, worse, a room would stay free for every theme because its file name does not start with the claimed
  * prefix). This test reads the files that ship, from the source tree, and checks them against the templates that ship: every file names a theme of the enum and says so in its own
  * name, every prefix names a kind folder and matches at least one real template, every template whose file name starts with a theme's id is claimed by that theme's file (no
@@ -31,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * catalog the assembler tests run on (so the catalog is not stale). Pure: reads files from the project root, no game types.
  */
 class TemplateThemeDataTest {
-    private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/template_themes");
-    private static final Path STRUCT = Path.of("src/main/resources/data/nusmp/structure");
+    private static final Path THEMES = Path.of("src/main/resources/data/anime_multiverse/mega/template_themes");
+    private static final Path STRUCT = Path.of("src/main/resources/data/anime_multiverse/structure");
     private static final Path CATALOG = Path.of("src/test/resources/mega/catalog.json");
     private static final Set<String> FOLDERS = Set.of("corridor", "junction", "hall", "cavern", "set", "trial", "puzzle", "trap", "treasure", "safe");
 
@@ -52,14 +52,14 @@ class TemplateThemeDataTest {
         return out;
     }
 
-    /** Every template id on disk ("nusmp:mega/hall/crypt_a") under structure/mega/<folder>/. */
+    /** Every template id on disk ("anime_multiverse:mega/hall/crypt_a") under structure/mega/<folder>/. */
     private static List<String> templatesOnDisk() throws IOException {
         List<String> out = new ArrayList<>();
         Path root = STRUCT.resolve("mega");
         try (var walk = Files.walk(root)) {
             for (Path p : walk.filter(f -> f.toString().endsWith(".nbt")).sorted().toList()) {
                 String rel = STRUCT.relativize(p).toString().replace('\\', '/');
-                out.add("nusmp:" + rel.substring(0, rel.length() - 4));
+                out.add("anime_multiverse:" + rel.substring(0, rel.length() - 4));
             }
         }
         return out;
@@ -90,7 +90,7 @@ class TemplateThemeDataTest {
             for (String prefix : prefixes(e.getValue())) {
                 assertTrue(seen.add(prefix), e.getKey() + ": prefix listed twice: " + prefix);
                 String[] parts = prefix.split("/");
-                assertTrue(parts.length == 3 && parts[0].equals("nusmp:mega"), e.getKey() + ": '" + prefix + "' must look like nusmp:mega/<folder>/<theme>_");
+                assertTrue(parts.length == 3 && parts[0].equals("anime_multiverse:mega"), e.getKey() + ": '" + prefix + "' must look like anime_multiverse:mega/<folder>/<theme>_");
                 assertTrue(FOLDERS.contains(parts[1]), e.getKey() + ": '" + parts[1] + "' is not a kind folder a theme may fill");
                 assertTrue(parts[2].startsWith(e.getKey() + "_"), e.getKey() + ": the prefix '" + prefix + "' must start with the theme id and an underscore");
                 int hits = 0;
@@ -121,7 +121,7 @@ class TemplateThemeDataTest {
         for (Map.Entry<String, JsonObject> e : files().entrySet()) {
             JsonObject rel = e.getValue().has("relative") ? e.getValue().getAsJsonObject("relative") : new JsonObject();
             Set<String> claimed = new HashSet<>();
-            for (String prefix : prefixes(e.getValue())) claimed.add(prefix.replace("nusmp:", ""));
+            for (String prefix : prefixes(e.getValue())) claimed.add(prefix.replace("anime_multiverse:", ""));
             for (Map.Entry<String, JsonElement> w : rel.entrySet()) {
                 assertTrue(claimed.contains(w.getKey()), e.getKey() + ": the weight of '" + w.getKey() + "' names no claimed prefix (the keys have no namespace: mega/hall/<theme>_)");
                 int v = w.getValue().getAsInt();

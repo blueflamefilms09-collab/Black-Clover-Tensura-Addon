@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * the same parser the game uses, checks the budget the worn models keep (2600 vertices for everything one relic is drawn with), and checks the catalog parser on sample text.
  */
 class HandCatalogTest {
-    static final Path HAND = Path.of("src/main/resources/assets/nusmp/relic_hand");
-    static final Path WORN = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path HAND = Path.of("src/main/resources/assets/anime_multiverse/relic_hand");
+    static final Path WORN = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
     static final int BUDGET = 2600;
 
     @Test

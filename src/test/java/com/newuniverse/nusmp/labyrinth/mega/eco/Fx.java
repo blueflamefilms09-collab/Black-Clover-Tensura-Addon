@@ -25,29 +25,29 @@ final class Fx {
 
     /** A faction with the given relations, no aggro numbers of its own (so the server config applies) and no theme weights. */
     static FactionDef def(String id, List<String> rivals, List<String> allies) {
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, rivals, allies, FactionDef.UNSET, FactionDef.UNSET, false, false, Map.of(), "raw_monster_meat", 0.5);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, rivals, allies, FactionDef.UNSET, FactionDef.UNSET, false, false, Map.of(), "raw_monster_meat", 0.5);
     }
 
     static FactionDef oneWay(String id, List<String> rivals) {
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, rivals, List.of(), FactionDef.UNSET, FactionDef.UNSET, false, true, Map.of(), "raw_monster_meat", 0.5);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, rivals, List.of(), FactionDef.UNSET, FactionDef.UNSET, false, true, Map.of(), "raw_monster_meat", 0.5);
     }
 
     static FactionDef territorial(String id, List<String> rivals, int range, int bonus) {
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, rivals, List.of(), range, bonus, true, false, Map.of(), "raw_armor_flank", 0.25);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, rivals, List.of(), range, bonus, true, false, Map.of(), "raw_armor_flank", 0.25);
     }
 
     static FactionDef withRange(String id, List<String> rivals, int range, int bonus) {
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, rivals, List.of(), range, bonus, false, false, Map.of(), "raw_monster_meat", 0.5);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, rivals, List.of(), range, bonus, false, false, Map.of(), "raw_monster_meat", 0.5);
     }
 
     /** Alternating key/weight pairs: {@code weights("gravity", 3, "blood", 1)}. */
     static FactionDef weighted(String id, Object... themeAndWeight) {
         Map<String, Double> w = new LinkedHashMap<>();
         for (int i = 0; i < themeAndWeight.length; i += 2) w.put((String) themeAndWeight[i], ((Number) themeAndWeight[i + 1]).doubleValue());
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, List.of(), List.of(), FactionDef.UNSET, FactionDef.UNSET, false, false, w, "raw_monster_meat", 0.5);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, List.of(), List.of(), FactionDef.UNSET, FactionDef.UNSET, false, false, w, "raw_monster_meat", 0.5);
     }
 
     static FactionDef dropper(String id, String cut, double chance) {
-        return new FactionDef(id, id, 0xFFFFFF, "nusmp:mega/" + id, List.of(), List.of(), FactionDef.UNSET, FactionDef.UNSET, false, false, Map.of(), cut, chance);
+        return new FactionDef(id, id, 0xFFFFFF, "anime_multiverse:mega/" + id, List.of(), List.of(), FactionDef.UNSET, FactionDef.UNSET, false, false, Map.of(), cut, chance);
     }
 }

@@ -11,7 +11,7 @@ that also write the emissive glow map, and keyframe helpers. Written so every te
 File frame (tools/geo_builder.py): pixels, y up, feet at the origin, front on -z, +x = the model's left. A humanoid armour piece is authored in the
 static pose of the player (head y 24..32, shoulders y 24, arms x -8..-4 and 4..8, legs x -4..4); the aura painter moves it with the limb it is
 anchored on. In this renderer a positive x rotation swings a hanging limb FORWARD, a positive z rotation swings it toward +x.
-Run python as `python3 -B`. Everything is written under src/main/resources/assets/nusmp/ (geo_builder.ROOT).
+Run python as `python3 -B`. Everything is written under src/main/resources/assets/anime_multiverse/ (geo_builder.ROOT).
 """
 import math
 import os
@@ -338,7 +338,7 @@ PARTS = {
 
 def skin_texture(path, painter, seed=1):
     """Writes a 64x64 texture laid out like a player skin. painter(part, layer, face, W, H, rng) -> (rgb HxWx3, alpha HxW, glow HxWx3 or None).
-    'path' is relative to assets/nusmp/textures/ without extension; <path>_glow.png is written when any painter returns a glow."""
+    'path' is relative to assets/anime_multiverse/textures/ without extension; <path>_glow.png is written when any painter returns a glow."""
     rng = np.random.default_rng(seed)
     img = np.zeros((64, 64, 4))
     glow = np.zeros((64, 64, 4))

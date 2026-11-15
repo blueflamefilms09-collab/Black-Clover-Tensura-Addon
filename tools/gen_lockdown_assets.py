@@ -17,7 +17,7 @@ import sys
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 N = 16
 FRAMES = 4
 AMBER = (255, 176, 40)
@@ -71,9 +71,9 @@ def build():
     files = {}
     files["textures/block/lockdown_barrier.png"] = png_bytes(sheet_frames())
     files["textures/block/lockdown_barrier.png.mcmeta"] = json_bytes({"animation": {"frametime": 6}})
-    files["models/block/lockdown_barrier.json"] = json_bytes({"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "nusmp:block/lockdown_barrier"}})
-    files["blockstates/lockdown_barrier.json"] = json_bytes({"variants": {"": {"model": "nusmp:block/lockdown_barrier"}}})
-    files["models/item/lockdown_barrier.json"] = json_bytes({"parent": "nusmp:block/lockdown_barrier"})
+    files["models/block/lockdown_barrier.json"] = json_bytes({"parent": "minecraft:block/cube_all", "render_type": "minecraft:translucent", "textures": {"all": "anime_multiverse:block/lockdown_barrier"}})
+    files["blockstates/lockdown_barrier.json"] = json_bytes({"variants": {"": {"model": "anime_multiverse:block/lockdown_barrier"}}})
+    files["models/item/lockdown_barrier.json"] = json_bytes({"parent": "anime_multiverse:block/lockdown_barrier"})
     return files
 
 

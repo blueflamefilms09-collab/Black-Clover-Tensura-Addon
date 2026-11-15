@@ -102,7 +102,7 @@ public final class WeaponRackBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof WeaponRackBlockEntity be)) return InteractionResult.PASS;
         if (!be.mode().canTake()) {
-            if (!level.isClientSide && be.count() > 0) player.displayClientMessage(Component.translatableWithFallback("nusmp.weapon_rack.decor", "These are only for show."), true);
+            if (!level.isClientSide && be.count() > 0) player.displayClientMessage(Component.translatableWithFallback("anime_multiverse.weapon_rack.decor", "These are only for show."), true);
             return InteractionResult.PASS;
         }
         if (be.count() == 0) return InteractionResult.PASS;

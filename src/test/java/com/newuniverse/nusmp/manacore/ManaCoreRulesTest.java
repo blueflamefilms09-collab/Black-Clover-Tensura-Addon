@@ -34,7 +34,7 @@ class ManaCoreRulesTest {
             ManaCoreRules.Core c = ManaCoreRules.of(rank, 1);
             assertNotNull(c.will(), c.id());
             assertTrue(c.beastForm(), c.id());
-            assertTrue(new File("src/main/resources/data/nusmp/beast_will/" + c.will() + ".json").isFile(), c.will());
+            assertTrue(new File("src/main/resources/data/anime_multiverse/beast_will/" + c.will() + ".json").isFile(), c.will());
         }
     }
 
@@ -94,11 +94,11 @@ class ManaCoreRulesTest {
 
     @Test
     void everyItemAndTooltipLangKeyExists() throws Exception {
-        JsonObject lang = JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"))).getAsJsonObject();
+        JsonObject lang = JsonParser.parseString(Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"))).getAsJsonObject();
         for (ManaCoreRules.Core c : ManaCoreRules.all()) {
-            for (String k : new String[]{"item.nusmp." + c.id(), "manacore." + c.id() + ".passive", "manacore." + c.id() + ".a1", "manacore." + c.id() + ".a2"})
+            for (String k : new String[]{"item.anime_multiverse." + c.id(), "manacore." + c.id() + ".passive", "manacore." + c.id() + ".a1", "manacore." + c.id() + ".a2"})
                 assertTrue(lang.has(k), "missing lang key " + k);
-            assertFalse(lang.get("item.nusmp." + c.id()).getAsString().toLowerCase().contains("istaroth"));
+            assertFalse(lang.get("item.anime_multiverse." + c.id()).getAsString().toLowerCase().contains("istaroth"));
         }
         for (String v : ManaCoreRules.VARIANTS) assertTrue(lang.has("manacore.variant." + v));
         for (String k : new String[]{"too_weak", "cooldown", "no_mp", "control_cd", "no_target", "no_history", "busy", "safeguard", "last_second", "countdown", "will_swap", "dropped"})

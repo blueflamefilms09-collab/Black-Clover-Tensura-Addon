@@ -19,8 +19,8 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RES = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
-TABLE = os.path.join(HERE, "..", "src", "main", "java", "com", "newuniverse", "nusmp", "charter", "CharterTable.java")
+RES = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
+TABLE = os.path.join(HERE, "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "charter", "CharterTable.java")
 
 # ---- the book, in model units (a 16 unit cube space; the book stands upright, front toward +z)
 X0, X1 = 2.5, 13.5          # width 11: from the spine to the fore-edge
@@ -220,7 +220,7 @@ def model(boss):
         "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
         "gui": {"rotation": [18, -32, 0], "translation": [0, 0, 0], "scale": [0.82, 0.82, 0.82]},
     }
-    return {"texture_size": [32, 32], "textures": {"0": "nusmp:item/charter_grimoire_" + boss, "particle": "nusmp:item/charter_grimoire_%s_icon" % boss},
+    return {"texture_size": [32, 32], "textures": {"0": "anime_multiverse:item/charter_grimoire_" + boss, "particle": "anime_multiverse:item/charter_grimoire_%s_icon" % boss},
             "elements": els, "display": disp}
 
 
@@ -303,7 +303,7 @@ def main():
         mdl = model(boss)
         write_json(os.path.join(RES, "models", "item", "charter_grimoire_%s.json" % boss), mdl)
         write_json(os.path.join(RES, "models", "item", "charter_grimoire_%s_icon.json" % boss),
-                   {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/charter_grimoire_%s_icon" % boss}})
+                   {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/charter_grimoire_%s_icon" % boss}})
         if "--preview" in sys.argv:
             if sheet is None:
                 sheet = Image.new("RGBA", (240 * 7, 240 + 16 * 4 + 8), (30, 30, 36, 255))

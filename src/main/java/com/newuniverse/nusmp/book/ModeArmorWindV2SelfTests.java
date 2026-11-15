@@ -51,7 +51,7 @@ public final class ModeArmorWindV2SelfTests {
         if (ModeArmorWindV2Rules.vertices(Lod.CULLED) != 0) bad.add("something is drawn beyond 64 blocks");
         int combined = ModeArmorWindV2Rules.yunoCombinedSteady();
         if (combined > ModeArmorWindV2Rules.CAP_COMBINED_STEADY) bad.add("the combined calm Yuno dive draws " + combined + " vertices, over " + ModeArmorWindV2Rules.CAP_COMBINED_STEADY);
-        for (String t : ModeArmorWindV2Rules.allTextures()) if (ModeArmorWindV2SelfTests.class.getClassLoader().getResource("assets/nusmp/" + t) == null) bad.add("missing texture " + t);
+        for (String t : ModeArmorWindV2Rules.allTextures()) if (ModeArmorWindV2SelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + t) == null) bad.add("missing texture " + t);
         if (ModeArmor.wire(ModeArmor.Mode.WIND_SPIRIT_DIVE, true) != ModeArmor.Mode.WIND_SPIRIT_DIVE_YUNO || ModeArmor.wire(ModeArmor.Mode.WIND_SPIRIT_DIVE, false) != ModeArmor.Mode.WIND_SPIRIT_DIVE
                 || ModeArmor.wire(ModeArmor.Mode.FIRE_SPIRIT_DIVE, true) != ModeArmor.Mode.FIRE_SPIRIT_DIVE || ModeArmor.wire(ModeArmor.Mode.DEMON, true) != ModeArmor.Mode.DEMON)
             bad.add("the mode wire is wrong");

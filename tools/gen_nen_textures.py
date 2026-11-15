@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_nen_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/nen_*.png   (white + alpha, the vertex colour tints them; RGB is 0 under a transparent pixel)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/nen_*.png   (white + alpha, the vertex colour tints them; RGB is 0 under a transparent pixel)
 
 Look: aura in the anime is not a puff, it is tongues of light that leave the skin and lick upwards, a hot white core inside a coloured body, and thin streamers that
 curl away. So the set is built from flame tongues, ribbons, a few crisp sigils and one hex lattice (the Nen type wheel):
@@ -29,7 +29,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 2
 
 

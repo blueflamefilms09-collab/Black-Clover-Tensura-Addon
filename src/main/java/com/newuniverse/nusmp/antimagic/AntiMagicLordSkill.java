@@ -30,10 +30,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * Grants the Demon-Slayer sword; mastering it grants Demon-Dweller and Demon-Destroyer.
  */
 public class AntiMagicLordSkill extends Skill {
-    private static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/anti_magic.png");
-    private static final ResourceLocation PHYS_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_physique");
-    private static final ResourceLocation PHYS_KB = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_knockback");
-    private static final ResourceLocation FORM_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "black_form");
+    private static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/anti_magic.png");
+    private static final ResourceLocation PHYS_DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "anti_magic_physique");
+    private static final ResourceLocation PHYS_KB = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "anti_magic_knockback");
+    private static final ResourceLocation FORM_DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_form");
 
     public AntiMagicLordSkill() { super(SkillType.UNIQUE); }
 

@@ -24,9 +24,9 @@ import java.util.TreeSet;
  * Why: the encounter tables and the roster of wandering bosses are data packs' business (the owner will keep tuning what lives in which region),
  * so the game must read them again whenever data reloads and must never crash on a bad file. This class owns the two immutable snapshots the
  * rest of the package reads ({@link #table} for a theme, {@link #roster}) and the reload listener that replaces them. The files are
- * {@code data/nusmp/mega/encounters/<name>.json} (one per theme plus {@code default}; a theme file REPLACES the default for sectors of that
+ * {@code data/anime_multiverse/mega/encounters/<name>.json} (one per theme plus {@code default}; a theme file REPLACES the default for sectors of that
  * theme, a theme without a file borrows the table of its road, {@code radiant} or {@code abyss}, and only then the default answers) and
- * {@code data/nusmp/mega/wanderers.json}. Only the {@code nusmp} namespace is
+ * {@code data/anime_multiverse/mega/wanderers.json}. Only the {@code anime_multiverse} namespace is
  * read, so a datapack overrides a file by shipping the same path. When several packs ship a file the highest-priority one wins, as for any data
  * file. Every problem the pure parsers report is written to the log with the file's name; a file that is not JSON at all is skipped, and the
  * snapshot keeps working with what is left. Snapshots are swapped as a whole (volatile fields), so the server thread never sees a half-read table.
@@ -81,7 +81,7 @@ public final class EncData {
             Map<String, EncounterTable> found = new LinkedHashMap<>();
             WandererRoster wanderers = WandererRoster.EMPTY, extra = WandererRoster.EMPTY;
             try {
-                Map<ResourceLocation, List<Resource>> files = manager.listResourceStacks("mega", rl -> rl.getNamespace().equals("nusmp")
+                Map<ResourceLocation, List<Resource>> files = manager.listResourceStacks("mega", rl -> rl.getNamespace().equals("anime_multiverse")
                         && (rl.getPath().equals(WANDERERS) || rl.getPath().equals(WANDERERS_ARC) || (rl.getPath().startsWith(ENCOUNTERS) && rl.getPath().endsWith(".json") && rl.getPath().indexOf('/', ENCOUNTERS.length()) < 0)));
                 List<ResourceLocation> keys = new ArrayList<>(files.keySet());
                 keys.sort(Comparator.comparing(ResourceLocation::toString));
@@ -92,7 +92,7 @@ public final class EncData {
                     if (text == null) continue;
                     if (key.getPath().equals(WANDERERS) || key.getPath().equals(WANDERERS_ARC)) {
                         WandererRoster.Parsed p = WandererRoster.parse(text);
-                        for (String problem : p.problems()) LOG.warn("[nusmp] {} ({})", problem, key.getPath());
+                        for (String problem : p.problems()) LOG.warn("[anime_multiverse] {} ({})", problem, key.getPath());
                         if (p.roster() != null) {
                             if (key.getPath().equals(WANDERERS)) wanderers = p.roster();
                             else extra = p.roster();
@@ -100,22 +100,22 @@ public final class EncData {
                     } else {
                         String name = key.getPath().substring(ENCOUNTERS.length(), key.getPath().length() - 5);
                         EncounterTableParser.Parsed p = EncounterTableParser.parse(name, text);
-                        for (String problem : p.problems()) LOG.warn("[nusmp] {}", problem);
+                        for (String problem : p.problems()) LOG.warn("[anime_multiverse] {}", problem);
                         if (p.table() != null) found.put(name, p.table());
                     }
                 }
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] The Dungeon Master's data could not be listed: {}", e.toString());
+                LOG.warn("[anime_multiverse] The Dungeon Master's data could not be listed: {}", e.toString());
             }
             install(found, WandererRoster.merge(wanderers, extra));
-            LOG.info("[nusmp] Dungeon Master: {} encounter tables ({}), {} wandering boss kinds", found.size(), String.join(", ", new TreeSet<>(found.keySet())), roster.entries().size());
+            LOG.info("[anime_multiverse] Dungeon Master: {} encounter tables ({}), {} wandering boss kinds", found.size(), String.join(", ", new TreeSet<>(found.keySet())), roster.entries().size());
         }
 
         private static String read(Resource res, ResourceLocation key) {
             try (InputStream in = res.open()) {
                 return new String(in.readAllBytes(), StandardCharsets.UTF_8);
             } catch (IOException | RuntimeException e) {
-                LOG.warn("[nusmp] {} could not be read: {}", key, e.toString());
+                LOG.warn("[anime_multiverse] {} could not be read: {}", key, e.toString());
                 return null;
             }
         }

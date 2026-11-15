@@ -20,7 +20,7 @@ import java.util.List;
 public record C2S_FinalizeSoulForgePayload(String raceId, String primary, String secondary, CompoundTag appearance, String name, long statToken,
                                            String unique, String ultimate, List<String> aptitudes, long rollToken, boolean paidAwakening) implements CustomPacketPayload {
     public static final int MAX_APTITUDES = 8;
-    public static final Type<C2S_FinalizeSoulForgePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_finalize"));
+    public static final Type<C2S_FinalizeSoulForgePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_finalize"));
     public static final StreamCodec<RegistryFriendlyByteBuf, C2S_FinalizeSoulForgePayload> CODEC = StreamCodec.of(C2S_FinalizeSoulForgePayload::write, C2S_FinalizeSoulForgePayload::read);
 
     private static void write(RegistryFriendlyByteBuf b, C2S_FinalizeSoulForgePayload p) {

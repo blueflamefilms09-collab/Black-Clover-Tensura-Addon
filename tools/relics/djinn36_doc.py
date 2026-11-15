@@ -25,9 +25,9 @@ def lang():
     for n in R.NAMES:
         i = n.lower()
         _, light, dark, _ = W.KINDS[i]
-        out["item.nusmp.djinn_seal_" + i] = "Seal of " + R.row(n)[1]
-        out["item.nusmp.djinn_weapon_" + i] = light
-        out["item.nusmp.djinn_weapon_" + i + "_dark"] = dark
+        out["item.anime_multiverse.djinn_seal_" + i] = "Seal of " + R.row(n)[1]
+        out["item.anime_multiverse.djinn_weapon_" + i] = light
+        out["item.anime_multiverse.djinn_weapon_" + i + "_dark"] = dark
     return out
 
 
@@ -79,7 +79,7 @@ DESIGN = {
 
 def write_doc():
     def frame(pre, i):
-        d = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "djinn", f"{pre}_{i}")
+        d = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "djinn", f"{pre}_{i}")
         t = 0
         for f in os.listdir(d):
             q = sum(1 for ln in open(os.path.join(d, f)) if ln.startswith("qn"))

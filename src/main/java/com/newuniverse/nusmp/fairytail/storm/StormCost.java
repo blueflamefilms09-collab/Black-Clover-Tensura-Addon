@@ -29,8 +29,8 @@ final class StormCost {
         if (ex.getAura() >= cost) ex.setAura(ex.getAura() - cost);
         else if (ex.getMagicule() >= cost) ex.setMagicule(ex.getMagicule() - cost);
         else {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.storm.no_energy", "Not enough Aura or magicules for %s (need %s).",
-                    Component.translatableWithFallback("nusmp.storm.spell." + s.id, s.displayName), (long) cost).withStyle(ChatFormatting.RED), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.storm.no_energy", "Not enough Aura or magicules for %s (need %s).",
+                    Component.translatableWithFallback("anime_multiverse.storm.spell." + s.id, s.displayName), (long) cost).withStyle(ChatFormatting.RED), true);
             return false;
         }
         ex.markDirty();

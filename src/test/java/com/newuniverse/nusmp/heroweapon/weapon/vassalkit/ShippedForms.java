@@ -15,7 +15,7 @@ public final class ShippedForms {
     private ShippedForms() {}
 
     public static JsonObject load(String itemId) {
-        String rel = "data/nusmp/hero/forms/" + itemId + ".json";
+        String rel = "data/anime_multiverse/hero/forms/" + itemId + ".json";
         try (InputStream in = ShippedForms.class.getResourceAsStream("/" + rel)) {
             if (in != null) return JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (IOException ignored) {

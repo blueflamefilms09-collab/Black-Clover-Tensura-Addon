@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:relics/stone_any",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:the_infinity_gauntlet"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.relics.gauntlet.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.relics.gauntlet.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_the_infinity_gauntlet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:the_infinity_gauntlet"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_the_infinity_gauntlet"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

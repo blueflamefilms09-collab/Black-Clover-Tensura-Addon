@@ -17,9 +17,9 @@ The checks that need a feature that is not in the build yet are SKIPPED (a comma
 What it checks, in order:
   1. the server reaches "Done" (the whole mod loads, every datapack registry decodes);
   2. no mod-related ERROR or exception in the boot log;
-  3. the dimension `nusmp:mega_dungeon` exists and takes blocks;
-  4. `/locate structure nusmp:mega_gateway` (the singular Gateway, the only structure of the dungeon in the Overworld) answers;
-  5. the vanilla Jigsaw machinery places our pools and processors (`/place jigsaw nusmp:mega/<pool> nusmp:mega_door 3 x 64 z` in the dimension);
+  3. the dimension `anime_multiverse:mega_dungeon` exists and takes blocks;
+  4. `/locate structure anime_multiverse:mega_gateway` (the singular Gateway, the only structure of the dungeon in the Overworld) answers;
+  5. the vanilla Jigsaw machinery places our pools and processors (`/place jigsaw anime_multiverse:mega/<pool> anime_multiverse:mega_door 3 x 64 z` in the dimension);
   6. the Mega-Dungeon generator: `/multiverse mega expand` creates sector 0, `status` reaches ACTIVE, `audit 0` is OK; `unseal k` grows sector k+1 up to
      `--sectors`, every audit is OK, regions never closer than the 12-block gap; `regen 0` reproduces the same plan (determinism);
   6b. the floor model (1.58.0, one floor per sector, joined by stairs): the stairwell pools go through Jigsaw, `expand holy` and `expand abyssal` add a floor
@@ -52,7 +52,7 @@ RUN = os.path.join(ROOT, "run", "server")
 OUT = os.path.join(ROOT, "run", "smoke")
 RCON_PORT = 25575
 RCON_PASSWORD = "smoke"
-MOD_RE = re.compile(r"(nusmp|multiverse|labyrinth|mega_dungeon|[. ]Mega[A-Z]|megadungeon)", re.I)
+MOD_RE = re.compile(r"(anime_multiverse|multiverse|labyrinth|mega_dungeon|[. ]Mega[A-Z]|megadungeon)", re.I)
 NOISE_RE = re.compile(r"(Tensura|tensura|manascore|ManasCore|geckolib|GeckoLib|terrablender|TerraBlender|architectury|smartbrainlib)", re.I)
 
 
@@ -320,7 +320,7 @@ class Smoke:
         bad = []
         for ln in self.server.snapshot():
             if re.search(r"\b(ERROR|FATAL)\b", ln) or re.search(r"Exception|Crash|crash report", ln):
-                if MOD_RE.search(ln) and not (NOISE_RE.search(ln) and not re.search(r"nusmp", ln, re.I)):
+                if MOD_RE.search(ln) and not (NOISE_RE.search(ln) and not re.search(r"anime_multiverse", ln, re.I)):
                     bad.append(ln)
         if bad:
             self.fail("log-" + label, "%d mod-related error lines, first: %s" % (len(bad), bad[0][:300]))
@@ -358,20 +358,20 @@ class Smoke:
                 (self.fail if self.args.strict else self.skip)("selftests-" + prefix, "no self-test with the prefix '%s.' was reported: the registry is not wired" % prefix)
 
     def phase_dimension(self):
-        r = self.run("execute in nusmp:mega_dungeon run forceload add 0 0")
+        r = self.run("execute in anime_multiverse:mega_dungeon run forceload add 0 0")
         if re.search(r"[Mm]arked", r):
-            self.ok("dimension", "nusmp:mega_dungeon exists and loads")
+            self.ok("dimension", "anime_multiverse:mega_dungeon exists and loads")
         elif "Unknown dimension" in r or "dimension" in r.lower() and "unknown" in r.lower():
-            self.fail("dimension", "nusmp:mega_dungeon is not a dimension of this server: " + r.strip()[:200])
+            self.fail("dimension", "anime_multiverse:mega_dungeon is not a dimension of this server: " + r.strip()[:200])
             return
         else:
             self.fail("dimension", r.strip()[:200])
-        r = self.run("execute in nusmp:mega_dungeon run setblock 0 70 0 minecraft:stone")
+        r = self.run("execute in anime_multiverse:mega_dungeon run setblock 0 70 0 minecraft:stone")
         (self.ok if "Changed" in r else self.fail)("dimension-setblock", r.strip()[:120])
-        self.run("execute in nusmp:mega_dungeon run forceload remove all")
+        self.run("execute in anime_multiverse:mega_dungeon run forceload remove all")
 
     def phase_locate(self):
-        r = self.run("locate structure nusmp:mega_gateway")
+        r = self.run("locate structure anime_multiverse:mega_gateway")
         if "nearest" in r.lower():
             self.ok("locate-gateway", r.strip()[:200])
         elif self.missing(r) or "not a valid" in r.lower() or "Invalid" in r:
@@ -383,17 +383,17 @@ class Smoke:
         # The test pieces go to z=150000: between the Holy chain (z=0) and the Abyssal chain (z=300000), so they never touch a real sector. The command
         # needs the origin chunk loaded ("That position is not loaded" otherwise), so the area is forceloaded first and released afterwards.
         x, z = 300, 150000
-        # The start jigsaw is named by the pool's own entry socket: most rooms enter through nusmp:mega_door, the antechamber through nusmp:mega_onward and a vault through nusmp:mega_vault.
-        start = {"antechamber": "nusmp:mega_onward", "vault_1": "nusmp:mega_vault"}
+        # The start jigsaw is named by the pool's own entry socket: most rooms enter through anime_multiverse:mega_door, the antechamber through anime_multiverse:mega_onward and a vault through anime_multiverse:mega_vault.
+        start = {"antechamber": "anime_multiverse:mega_onward", "vault_1": "anime_multiverse:mega_vault"}
         for pool in ("landing", "side", "safe", "arena", "antechamber", "vault_1", "onward_straight"):
-            self.run("execute in nusmp:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            self.run("execute in anime_multiverse:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             r = ""
             for _ in range(4):
                 time.sleep(2)
-                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s %s 3 %d 64 %d" % (pool, start.get(pool, "nusmp:mega_door"), x, z))
+                r = self.run("execute in anime_multiverse:mega_dungeon run place jigsaw anime_multiverse:mega/%s %s 3 %d 64 %d" % (pool, start.get(pool, "anime_multiverse:mega_door"), x, z))
                 if "not loaded" not in r:
                     break
-            self.run("execute in nusmp:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            self.run("execute in anime_multiverse:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             x += 300
             if "Generated jigsaw" in r or "generated jigsaw" in r.lower():
                 self.ok("jigsaw-" + pool, "vanilla Jigsaw placed our pool with its processors")
@@ -550,14 +550,14 @@ class Smoke:
         """The new stairwell pools through vanilla Jigsaw, exactly as phase_jigsaw does for the old ones: the templates load in the real game, the pools resolve, the processors run."""
         x, z = 300, 160000
         for pool in ("stairwell_up", "stairwell_down", "stairwell_grand_up", "stairwell_grand_down", "stair_door"):
-            self.run("execute in nusmp:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            self.run("execute in anime_multiverse:mega_dungeon run forceload add %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             r = ""
             for _ in range(4):
                 time.sleep(2)
-                r = self.run("execute in nusmp:mega_dungeon run place jigsaw nusmp:mega/%s nusmp:mega_door 3 %d 64 %d" % (pool, x, z))
+                r = self.run("execute in anime_multiverse:mega_dungeon run place jigsaw anime_multiverse:mega/%s anime_multiverse:mega_door 3 %d 64 %d" % (pool, x, z))
                 if "not loaded" not in r:
                     break
-            self.run("execute in nusmp:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
+            self.run("execute in anime_multiverse:mega_dungeon run forceload remove %d %d %d %d" % (x - 48, z - 48, x + 48, z + 48))
             x += 300
             if "generated jigsaw" in r.lower():
                 self.ok("floor-pool-" + pool, "vanilla Jigsaw placed our pool with its processors")

@@ -15,9 +15,9 @@ import java.util.Map;
 public final class FormStats {
     private FormStats() {}
 
-    /** Id path prefix of the modifiers of the active form ({@code nusmp:hero_form_<key>}), applied only while the weapon is summoned. */
+    /** Id path prefix of the modifiers of the active form ({@code anime_multiverse:hero_form_<key>}), applied only while the weapon is summoned. */
     public static final String FORM_PREFIX = "hero_form_";
-    /** Id path prefix of the permanent bonuses of finished forms ({@code nusmp:hero_bonus_<key>}), applied while the bond exists. */
+    /** Id path prefix of the permanent bonuses of finished forms ({@code anime_multiverse:hero_bonus_<key>}), applied while the bond exists. */
     public static final String BONUS_PREFIX = "hero_bonus_";
 
     /** Where a modifier goes. */

@@ -1,7 +1,7 @@
 """display_presets: the oversized-weapon rule (MAS phase 1, docs/asset_pipeline.md "Oversized weapons").
 
-A hand-held 3D weapon is drawn by client/WeaponRenderer from assets/nusmp/weapon_meshes/<id>.txt under the display transforms of
-assets/nusmp/models/item/<id>.json (parent minecraft:builtin/entity). The old transforms are vanilla's `handheld` ones (scale 0.68 about the
+A hand-held 3D weapon is drawn by client/WeaponRenderer from assets/anime_multiverse/weapon_meshes/<id>.txt under the display transforms of
+assets/anime_multiverse/models/item/<id>.json (parent minecraft:builtin/entity). The old transforms are vanilla's `handheld` ones (scale 0.68 about the
 model centre), which suit a one-block sprite sword. A longer mesh (a polearm, a greatsword, a staff) then rises toward the camera and through the near
 plane in first person. This tool
 
@@ -63,7 +63,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MESHES = os.path.join(ASSETS, "weapon_meshes")
 MODELS = os.path.join(ASSETS, "models", "item")
 MANIFEST = os.path.join(HERE, "display_presets_manifest.json")

@@ -44,8 +44,8 @@ public final class SpawnFilterEvents {
     /** Persistent-data mark left on a creature an operator spawned, so the join net can tell it apart. */
     public static final String ADMIN_KEY = "nusmp_spawn_admin";
     /** The tag of creature types that never exist in a dungeon dimension (datapacks add to it; the config list adds to it too). */
-    public static final TagKey<EntityType<?>> BANNED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "dungeon/banned"));
-    private static final TagKey<EntityType<?>> BOSS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "boss"));
+    public static final TagKey<EntityType<?>> BANNED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "dungeon/banned"));
+    private static final TagKey<EntityType<?>> BOSS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss"));
 
     private static boolean warned;
     private static List<? extends String> parsedFrom;
@@ -180,6 +180,6 @@ public final class SpawnFilterEvents {
     private static void failed(String where, RuntimeException ex) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] the dungeon spawn filter ({}) hit a fault and lets the creature through (logged once): {}", where, ex.toString());
+        LOG.warn("[anime_multiverse] the dungeon spawn filter ({}) hit a fault and lets the creature through (logged once): {}", where, ex.toString());
     }
 }

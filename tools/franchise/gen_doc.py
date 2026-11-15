@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Writes docs/items/franchise_engravings.md from the engraving table (tools/franchise/gen_engravings.py) and the item map
-(src/main/resources/data/nusmp/relics/franchise_map.json). Re-run it after either changes: python3 -B tools/franchise/gen_doc.py"""
+(src/main/resources/data/anime_multiverse/relics/franchise_map.json). Re-run it after either changes: python3 -B tools/franchise/gen_doc.py"""
 import glob
 import importlib.util
 import json
@@ -12,12 +12,12 @@ spec = importlib.util.spec_from_file_location("gen_engravings", ROOT / "tools/fr
 G = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(G)
 
-fmap = json.loads((ROOT / "src/main/resources/data/nusmp/relics/franchise_map.json").read_text(encoding="utf-8"))
+fmap = json.loads((ROOT / "src/main/resources/data/anime_multiverse/relics/franchise_map.json").read_text(encoding="utf-8"))
 counts = fmap["franchises"]
 
 # the mobs of the labyrinth foundry name their source work: a second place the franchises show up
 foundry = Counter()
-for f in glob.glob(str(ROOT / "src/main/resources/data/nusmp/mega/foundry/*.json")):
+for f in glob.glob(str(ROOT / "src/main/resources/data/anime_multiverse/mega/foundry/*.json")):
     try:
         d = json.loads(Path(f).read_text(encoding="utf-8"))
     except ValueError:
@@ -46,15 +46,15 @@ w("**Nothing here has been seen in a game.** It was written without a running ga
 w("")
 w("## What it is")
 w("")
-w("Tensura Reincarnated's engravings are enchantments (the tag `#tensura:engraving`: severance, barrier piercing, holy weapon ...). This release adds the mod's OWN engravings, themed by franchise: **%d franchises, %d engravings** (2 or 3 each). Every one is a real 1.21.1 datapack enchantment `nusmp:fr_<name>` (`data/nusmp/enchantment/`), listed in `data/tensura/tags/enchantment/engraving.json` (an additions tag, `replace: false`; the two older entries stay) so Tensura's engraving screens and the grindstone rules treat them like its own." % (len(G.FRANCHISES), len(G.ENGRAVINGS)))
+w("Tensura Reincarnated's engravings are enchantments (the tag `#tensura:engraving`: severance, barrier piercing, holy weapon ...). This release adds the mod's OWN engravings, themed by franchise: **%d franchises, %d engravings** (2 or 3 each). Every one is a real 1.21.1 datapack enchantment `anime_multiverse:fr_<name>` (`data/anime_multiverse/enchantment/`), listed in `data/tensura/tags/enchantment/engraving.json` (an additions tag, `replace: false`; the two older entries stay) so Tensura's engraving screens and the grindstone rules treat them like its own." % (len(G.FRANCHISES), len(G.ENGRAVINGS)))
 w("")
-w("What an engraving DOES is code, driven by the numbers of `data/nusmp/franchise/engravings.json`: the datapack `effects` of each enchantment are `{}` (the same shape as the two older `nusmp:` engravings). Vanilla enchantment effect components were not used on purpose: the effects are stateful (cooldowns, stacks, charges, per-player memory), cannot be tested offline, and a malformed component would fail the whole datapack load; the code path is capped, tested and cannot break a world.")
+w("What an engraving DOES is code, driven by the numbers of `data/anime_multiverse/franchise/engravings.json`: the datapack `effects` of each enchantment are `{}` (the same shape as the two older `anime_multiverse:` engravings). Vanilla enchantment effect components were not used on purpose: the effects are stateful (cooldowns, stacks, charges, per-player memory), cannot be tested offline, and a malformed component would fail the whole datapack load; the code path is capped, tested and cannot break a world.")
 w("")
 w("An item of the mod that has a franchise carries that franchise's engravings, put on once by `franchise/FranchiseEngravings` (called from the once-a-second pass of `WeaponEngravings`; own marker `NUFranchise`, so the older marker `NUEngraved` and the older engravings are untouched). Level: a relic's grade (1 up to rare, 2 unique and legend, 3 god and genesis), level 1 for every other item. Food, potions and spawn eggs are never engraved. The unified tooltip shows a line `Franchise: <name>` (in the franchise colour) under the engraving list.")
 w("")
 w("## The franchises, with counts")
 w("")
-w("Derived from: the relic waves (the class comment of a generated wave says what it is inspired by; waves 0 to 30 are the Dungeons and Dragons magic-item cards; wave 71 and the weapon rosters name a source per weapon), the item groups of the mod (Black Clover robes, grimoires and swords, the Magi Djinn, the Fairy Tail keys and Requip, the Shield Hero weapons), the labyrinth foundry (mob roster; it names a work per mob), the loot roster (`data/nusmp/loot/roster.json`: dungeon materials and food, no franchise) and the magic enum (all 105 `MagicType` entries are Black Clover attributes).")
+w("Derived from: the relic waves (the class comment of a generated wave says what it is inspired by; waves 0 to 30 are the Dungeons and Dragons magic-item cards; wave 71 and the weapon rosters name a source per weapon), the item groups of the mod (Black Clover robes, grimoires and swords, the Magi Djinn, the Fairy Tail keys and Requip, the Shield Hero weapons), the labyrinth foundry (mob roster; it names a work per mob), the loot roster (`data/anime_multiverse/loot/roster.json`: dungeon materials and food, no franchise) and the magic enum (all 105 `MagicType` entries are Black Clover attributes).")
 w("")
 w("| franchise | mapped items | foundry mobs | engravings |")
 w("|---|---:|---:|---|")
@@ -66,7 +66,7 @@ for f in G.FRANCHISES:
     engs = ", ".join(e["name"] for e in G.ENGRAVINGS if e["franchise"] == f["id"])
     w("| %s | %d | %d | %s |" % (f["name"], n, fm, engs))
 w("")
-w("Total mapped items: %d in %d franchises (the map is `data/nusmp/relics/franchise_map.json`)." % (len(fmap["items"]), len(counts)))
+w("Total mapped items: %d in %d franchises (the map is `data/anime_multiverse/relics/franchise_map.json`)." % (len(fmap["items"]), len(counts)))
 none = [f for f in G.FRANCHISES if counts.get(f["id"], 0) == 0]
 w("")
 w("**Franchises with engravings but no mapped item yet (%d):** %s. They appear in the owner's list and in skills / the labyrinth foundry, but no relic, weapon or armour of the mod comes from them today, so their engravings exist (anvil, Tensura's engraving screen, commands) and are put on automatically the day an item is mapped (add it to `tools/relics/franchise_overrides.json` or a wave that says `inspired by <work>`, then re-run the tool)." % (len(none), ", ".join(f["name"] for f in none)))
@@ -88,7 +88,7 @@ for f in G.FRANCHISES:
         if e["franchise"] != f["id"]:
             continue
         fx = " ".join(G.effect_text(x) for x in e["effects"])
-        w("| **%s** (`nusmp:%s`) | %s | %s %s |" % (e["name"], e["id"], e["scope"], e["flavour"], fx))
+        w("| **%s** (`anime_multiverse:%s`) | %s | %s %s |" % (e["name"], e["id"], e["scope"], e["flavour"], fx))
     w("")
 w("## Balance")
 w("")
@@ -128,9 +128,9 @@ w("")
 w("## Files")
 w("")
 w("* `src/main/java/com/newuniverse/nusmp/franchise/`: `FranchiseData` (table, pure), `FranchiseMap` (item map, pure), `FranchiseRules` (the numbers and caps, pure), `FranchiseEngravings` (puts them on, tooltip line), `FranchiseEvents` (handlers, per-player state keyed by UUID, cleared on logout and server stop), `FranchiseMana`, `FranchiseConfig` (SERVER config `nusmp-franchise-server.toml`: `enabled`, `allies`, `aura`, `attackCapPercent`), `FranchiseBoot`, `FranchiseSelfTests`.")
-w("* data: `data/nusmp/enchantment/fr_*.json` (%d), `data/tensura/tags/enchantment/engraving.json` (additions appended), `data/nusmp/franchise/engravings.json`, `data/nusmp/relics/franchise_map.json`." % len(G.ENGRAVINGS))
+w("* data: `data/anime_multiverse/enchantment/fr_*.json` (%d), `data/tensura/tags/enchantment/engraving.json` (additions appended), `data/anime_multiverse/franchise/engravings.json`, `data/anime_multiverse/relics/franchise_map.json`." % len(G.ENGRAVINGS))
 w("* tools: `tools/franchise/gen_engravings.py` (the table; writes the enchantments, the tag additions, the data file and the lang fragment), `tools/franchise/gen_doc.py` (this page), `tools/relics/franchise_map.py` and `tools/relics/franchise_overrides.json`.")
-w("* lang fragment: `tools/lang/franchise_engravings.json` (names, descriptions `.desc`, `franchise.nusmp.<id>`, `tooltip.nusmp.franchise`).")
+w("* lang fragment: `tools/lang/franchise_engravings.json` (names, descriptions `.desc`, `franchise.anime_multiverse.<id>`, `tooltip.anime_multiverse.franchise`).")
 w("* tests: `FranchiseRulesTest` (every effect with its caps), `FranchiseDataTest` (every json parses with the fields 1.21.1 requires, lang name and description, in the tag, every franchise of the map has 2 or 3 engravings, the numbers are inside their caps, nothing mentions hunger, the older `WeaponEngravings` entries are unchanged against a baseline taken before this release), CI self-test `item.franchise_engravings`.")
 w("")
 w("Append-only edits to shared files: `NUSMP.java` (one line: `FranchiseBoot.init`), `item/WeaponEngravings.java` (one line in the once-a-second pass: `FranchiseEngravings.engrave`), `book/GrimoireBook.java` (one line after `ManaLaw.onCast`: `FranchiseEvents.onSpellCast`), `client/ui/tooltip/UnifiedTooltip.java` (two lines: the franchise line), `data/tensura/tags/enchantment/engraving.json` (values appended).")
@@ -139,16 +139,16 @@ w("## NEW / REPLACED / KEPT")
 w("")
 w("| part | status |")
 w("|---|---|")
-w("| %d franchise engravings and their enchantments, tag entries, lang | **NEW** (nothing like them existed; the two older `nusmp:` engravings are a different thing) |" % len(G.ENGRAVINGS))
+w("| %d franchise engravings and their enchantments, tag entries, lang | **NEW** (nothing like them existed; the two older `anime_multiverse:` engravings are a different thing) |" % len(G.ENGRAVINGS))
 w("| franchise item map, its tool and overrides | **NEW** |")
 w("| franchise tooltip line | **NEW** (added under the engraving list) |")
-w("| `WeaponEngravings` table, `RelicEngravings`, `ArmorEngravings`, the `NUEngraved` marker, `nusmp:anti_magic`, `nusmp:legacy_of_the_wizard_kings`, every Tensura engraving on every weapon | **KEPT** unchanged |")
+w("| `WeaponEngravings` table, `RelicEngravings`, `ArmorEngravings`, the `NUEngraved` marker, `anime_multiverse:anti_magic`, `anime_multiverse:legacy_of_the_wizard_kings`, every Tensura engraving on every weapon | **KEPT** unchanged |")
 w("| REPLACED | nothing |")
 w("")
 w("## What could not be verified")
 w("")
 w("* Nothing was seen or felt in a game. The handlers were type-checked against API stubs and the CI self-test was not run here; the rules and the data are unit-tested only.")
-w("* The datapack enchantments follow the shape of the two older `nusmp:` enchantments (known to load); the `supported_items` tag `#minecraft:enchantable/durability` and `slots: [\"any\"]` were not loaded by a real server here. If a version rejects them the fix is in `enchantment_json` of the generator.")
+w("* The datapack enchantments follow the shape of the two older `anime_multiverse:` enchantments (known to load); the `supported_items` tag `#minecraft:enchantable/durability` and `slots: [\"any\"]` were not loaded by a real server here. If a version rejects them the fix is in `enchantment_json` of the generator.")
 w("* `LivingIncomingDamageEvent` / `LivingDamageEvent.Post` are used as in NeoForge 1.21.1; whether other mods' handlers at normal priority change the amount before or after the engraving was not checked. Better Combat's attacks are assumed to arrive as `player_attack` damage; a weapon whose hits arrive as another damage type gets no melee bonus.")
 w("* Day / night uses `Level.isDay()`: in a dimension with a fixed time (the Nether, perhaps the mega dimensions) it reads as night, so Sunshine never works there and Cloak of Night always does.")
 w("* `Fx.summon` allies are vanilla skeletons driven by the relic-summon sweep; their behaviour was not watched.")

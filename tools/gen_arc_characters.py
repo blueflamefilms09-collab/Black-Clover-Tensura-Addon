@@ -1,10 +1,10 @@
 """Why: builds every character of the arcs from its spec file. A character is one file tools/arc/char_<id>.py (a dict SPEC, optionally a function extra(kit, rig));
 this driver discovers them all, builds each one with tools/gen_arc_kit.py into
 
-    src/main/resources/assets/nusmp/geo/entity/arc_<id>.geo.json              the model
-    src/main/resources/assets/nusmp/animations/entity/arc_<id>.animation.json  the clips (idle walk run attack cast cast_big hurt transform death [spawn] [chest_gem_reveal])
-    src/main/resources/assets/nusmp/textures/entity/arc_<id>.png               the texture
-    src/main/resources/assets/nusmp/textures/entity/arc_<id>_glow.png          the glow layer (additive, full bright)
+    src/main/resources/assets/anime_multiverse/geo/entity/arc_<id>.geo.json              the model
+    src/main/resources/assets/anime_multiverse/animations/entity/arc_<id>.animation.json  the clips (idle walk run attack cast cast_big hurt transform death [spawn] [chest_gem_reveal])
+    src/main/resources/assets/anime_multiverse/textures/entity/arc_<id>.png               the texture
+    src/main/resources/assets/anime_multiverse/textures/entity/arc_<id>_glow.png          the glow layer (additive, full bright)
     tools/render_preview/scenes.d/arc_<id>.json                                the preview scenes (python3 -B tools/render_preview/preview.py arc_<id>_front ...)
     tools/arc/manifest.json                                                    facts of every model (size, hitbox, stride, clips, bones): what ArcLook and the entity need
 
@@ -222,7 +222,7 @@ def check():
         return 1
     tmp = tempfile.mkdtemp(prefix="arc_check_")
     try:
-        root = os.path.join(tmp, "assets", "nusmp")
+        root = os.path.join(tmp, "assets", "anime_multiverse")
         sc = os.path.join(tmp, "scenes")
         man = os.path.join(tmp, "manifest.json")
         problems = run((), root, sc, man, quiet=True)

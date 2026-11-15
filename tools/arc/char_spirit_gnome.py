@@ -1,4 +1,4 @@
-"""Why: Gnome, the earth Spirit Lord of Black Clover (entities nusmp:elemental_spirit_lord kind GNOME and nusmp:spirit_lord kind GNOME). The old model was a hunched stone giant: cracked plates,
+"""Why: Gnome, the earth Spirit Lord of Black Clover (entities anime_multiverse:elemental_spirit_lord kind GNOME and anime_multiverse:spirit_lord kind GNOME). The old model was a hunched stone giant: cracked plates,
 a dark hollow face with glowing eyes (tools/gen_spirit_lords.py). The kit's version on the player's rig keeps that: a huge, wide, slouching body of brown-grey stone, plates of rough
 rock strapped over it with moss in the seams, no face but a hollow with two amber eyes, fists like boulders. It stands on the ground. The colours are the old model's.
 See docs/arc/remodel.md.

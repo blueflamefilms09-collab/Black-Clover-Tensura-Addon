@@ -48,7 +48,7 @@ public class PeakAltarBlock extends Block implements EntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof PeakAltarBlockEntity altar) {
-            player.displayClientMessage(Component.translatable("message.nusmp.peak_altar." + altar.state().name().toLowerCase()).withStyle(ChatFormatting.DARK_PURPLE), true);
+            player.displayClientMessage(Component.translatable("message.anime_multiverse.peak_altar." + altar.state().name().toLowerCase()).withStyle(ChatFormatting.DARK_PURPLE), true);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

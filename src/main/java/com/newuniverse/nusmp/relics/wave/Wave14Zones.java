@@ -98,7 +98,7 @@ final class Wave14Zones {
                 else if (p.kind() == KIND_PLANE) Wave14Feet.finishPlane(player, p.arg());
                 else if (p.kind() == KIND_CONJURE) Wave14Head.finishConjure(player, p.arg());
             } catch (RuntimeException | LinkageError failed) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] wave 14 timer {} failed", p.kind(), failed);
+                org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] wave 14 timer {} failed", p.kind(), failed);
             }
         }
     }

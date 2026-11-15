@@ -75,7 +75,7 @@ public final class PerfConfig {
                 .defineInRange("clientParticlesPerTick", PerfSettings.DEFAULT_CLIENT_PARTICLES_PER_TICK, 0, 100000);
         c.pop();
         c.push("probe");
-        CLIENT_PROBE = c.comment("Switch the client performance probe on from the start (/nusmp perf report prints the ten most expensive client sections). Off by default.")
+        CLIENT_PROBE = c.comment("Switch the client performance probe on from the start (/anime_multiverse perf report prints the ten most expensive client sections). Off by default.")
                 .define("enabled", false);
         c.pop();
         CLIENT = c.build();

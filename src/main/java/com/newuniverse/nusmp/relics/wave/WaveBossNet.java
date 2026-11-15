@@ -24,7 +24,7 @@ public final class WaveBossNet {
 
     /** {@code entity} is the id of the player who fires, {@code which} one of the WHICH_ values, {@code kind} one of the KIND_ values. */
     public record Cue(int entity, int which, int kind) implements CustomPacketPayload {
-        public static final Type<Cue> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "worn_cue"));
+        public static final Type<Cue> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "worn_cue"));
         public static final StreamCodec<FriendlyByteBuf, Cue> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeVarInt(p.entity());

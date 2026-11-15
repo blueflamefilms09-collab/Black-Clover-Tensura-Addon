@@ -311,7 +311,7 @@ public class GoliathBoss extends ZogratisBoss {
         try {
             fall(sl);
         } catch (RuntimeException | LinkageError failure) {
-            LogUtils.getLogger().warn("[nusmp] The fall of the Goliath could not be announced: {}", failure.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] The fall of the Goliath could not be announced: {}", failure.toString());
         }
     }
 
@@ -351,7 +351,7 @@ public class GoliathBoss extends ZogratisBoss {
         } catch (RuntimeException | LinkageError failure) {
             if (!warned) {
                 warned = true;
-                LogUtils.getLogger().warn("[nusmp] The Goliath's tick failed: {}", failure.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] The Goliath's tick failed: {}", failure.toString());
             }
         }
     }

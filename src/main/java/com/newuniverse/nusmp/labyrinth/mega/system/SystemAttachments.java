@@ -13,7 +13,7 @@ import java.util.Optional;
 
 /**
  * Why: the System's per-player memory is a NeoForge DATA ATTACHMENT (the 1.21 form of the "capability" the owner's brief asks for: a permanent stat boost
- * capability), registered under the contract's id {@code nusmp:system_state}. An attachment, not a world table or the player's persistent NBT, because it is
+ * capability), registered under the contract's id {@code anime_multiverse:system_state}. An attachment, not a world table or the player's persistent NBT, because it is
  * saved with the player and follows the player for free through dimensions, restarts and death ({@code copyOnDeath()}: the stat points must survive dying, or
  * the reward would be a joke). It is serialised with a {@link Codec} built from the plain {@link SystemState.Data}, with an {@code optionalFieldOf} for every
  * field so a save from before a field existed, a hand-edited file or a damaged value still loads (the state class clamps what it reads). It is not synced by
@@ -54,7 +54,7 @@ public final class SystemAttachments {
 
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, NUSMP.MODID);
 
-    /** {@code nusmp:system_state}: the player's quest, stat points and counters. */
+    /** {@code anime_multiverse:system_state}: the player's quest, stat points and counters. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SystemState>> STATE = ATTACHMENTS.register("system_state",
             () -> AttachmentType.builder(() -> new SystemState()).serialize(CODEC, SystemState::hasContent).copyOnDeath().build());
 }

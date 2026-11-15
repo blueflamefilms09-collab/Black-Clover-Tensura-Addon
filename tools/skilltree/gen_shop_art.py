@@ -2,9 +2,9 @@
 """Why: the Black Market screen has two pictures that are not drawn with rectangles: the old witch's portrait and the cobwebs in the corners of her panel (the owner asked for a
 "hidden, dusty shop run by an old witch", and the screen's whole look is that room). Both are generated, not hand-painted, so they can be rebuilt and checked:
 
-  * assets/nusmp/textures/gui/black_market/cobwebs.png   96x96, four 48x48 corner webs (top-left, top-right, bottom-left, bottom-right), pale threads at low alpha, drawn
+  * assets/anime_multiverse/textures/gui/black_market/cobwebs.png   96x96, four 48x48 corner webs (top-left, top-right, bottom-left, bottom-right), pale threads at low alpha, drawn
     deterministically (radial threads and sagging rings, a few loose strands); no randomness except a fixed seed;
-  * assets/nusmp/textures/gui/black_market/witch.png     40x42, the witch's bust: her REAL model (tools/arc/char_black_market_witch.py, built by tools/gen_arc_characters.py)
+  * assets/anime_multiverse/textures/gui/black_market/witch.png     40x42, the witch's bust: her REAL model (tools/arc/char_black_market_witch.py, built by tools/gen_arc_characters.py)
     drawn by the repo's own headless renderer (tools/render_preview, the same code the game's GeoDraw runs), cut out of the renderer's sky by a flood fill of the smooth gradient, and
     reduced to the size the screen draws it at. Using the model keeps the portrait in step with the 3D figure by construction: change her look and run this again.
 
@@ -29,7 +29,7 @@ from PIL import Image
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "black_market")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "black_market")
 RENDER = os.path.join(ROOT, "tools", "render_preview", "preview.py")
 
 PORTRAIT_W, PORTRAIT_H = 40, 42

@@ -16,7 +16,7 @@ What is different from the C pieces (the weak spots listed in docs/vfx_remake/wa
 Same file format and layers as the C pieces: q <layer> (x y z u v) x4 nx ny nz r g b ;  layer 0 body, 1 emissive, 2 foam.  Units are 1/16 block, y along the piece.
 
     python tools/gen_water_bc_meshes.py   ->  docs/previews/vfx_remake/water_new/meshes/bc_*.txt  +  counts_bc.txt
-                                          ->  src/main/resources/assets/nusmp/wbc_meshes/bc_*.txt   (the game set, read by vfx/WaterBcMeshes; the two Valkyrie wing files are NOT shipped: the wings are deferred)
+                                          ->  src/main/resources/assets/anime_multiverse/wbc_meshes/bc_*.txt   (the game set, read by vfx/WaterBcMeshes; the two Valkyrie wing files are NOT shipped: the wings are deferred)
 """
 import math
 import os
@@ -27,7 +27,7 @@ sys.path.insert(0, HERE)
 from gen_sdw3_models import Mesh                                                    # noqa: E402
 from gen_water_new_meshes import sec, pt, W, loft, OUT                              # noqa: E402  (same vocabulary as C)
 
-GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "nusmp", "wbc_meshes")
+GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "anime_multiverse", "wbc_meshes")
 NOT_SHIPPED = ("wing_r", "wing_l")                                                  # the Valkyrie wings are remade separately (owner decision), so no wing mesh goes into the game
 
 

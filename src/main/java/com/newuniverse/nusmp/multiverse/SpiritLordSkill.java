@@ -128,7 +128,7 @@ public class SpiritLordSkill extends Skill {
 
     // ---------------------------------------------------------------- skill plumbing
     @Override public ResourceLocation getSkillIcon() {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/storm.png");
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/storm.png");
     }
     @Override public int getModes(ManasSkillInstance instance) { return 3; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), 3); }      // 3.0.0: Spirit Burst, Call Spirit, then Combat Mode

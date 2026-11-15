@@ -18,7 +18,7 @@ Parts (model units are centimetres, y runs from the pommel (0) to the tip, x acr
   gem          the yellow gem under the head (a glowing orb)
   blade        the long flat blade with ground edges, from the image's row extents
   inlay        the three cyan lines of the fuller, traced and raised a hair above the blade, glowing
-It writes: assets/nusmp/weapon_meshes/shishou.txt, textures/entity/weapon/shishou.png + _glow.png, models/item/shishou.json + shishou_icon.json (through new197_lib.finish), textures/item/shishou.png (the inventory icon,
+It writes: assets/anime_multiverse/weapon_meshes/shishou.txt, textures/entity/weapon/shishou.png + _glow.png, models/item/shishou.json + shishou_icon.json (through new197_lib.finish), textures/item/shishou.png (the inventory icon,
 made from the reference), animations/entity/shishou_sword.animation.json (the four states), the class row in weapon_classes.json (both copies), the display preset and the Better Combat attribute file.
 """
 import json
@@ -39,7 +39,7 @@ from new197_kit import P, lathe_y, orb, spike, ml, new_mesh, new_atlas, lay_and_
 import shishou_geom as G                                                   # noqa: E402
 
 REPO = os.path.abspath(os.path.join(TOOLS, ".."))
-GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 REF_PATH = os.path.join(TOOLS, "shishou", "shishou_reference.webp")
 ITEM_ID = "shishou"
 REAL_M = 1.45                                                              # the sword is about 1.45 blocks of sword length (the placement adds the hilt: 1.7 as drawn) long in hand (a long sword)
@@ -339,7 +339,7 @@ def write_animation():
 
 # ================================================================ the far proxy: a few cubes in the mod's own geo.json format (the level of detail beyond 48 blocks, and the model the animation file moves)
 def write_proxy():
-    """assets/nusmp/geo/entity/shishou_sword.geo.json (one bone 'sword', eight cubes: pommel, grip, collar, guard, ornament, blade, point, the cyan line) + textures/entity/shishou_sword.png and _glow.png
+    """assets/anime_multiverse/geo/entity/shishou_sword.geo.json (one bone 'sword', eight cubes: pommel, grip, collar, guard, ornament, blade, point, the cyan line) + textures/entity/shishou_sword.png and _glow.png
     (32 x 32: flat swatches, every face of a cube points at the swatch of its colour). The body draws this beyond 48 blocks instead of the mesh of about five thousand quads; the animation file's bone is this bone."""
     sw = {"silver": (0, 0), "gold": (8, 0), "white": (16, 0), "dark": (24, 0), "cyan": (0, 8), "grey": (8, 8)}
     cols = {"silver": (190, 205, 216), "gold": (234, 206, 100), "white": (232, 238, 246), "dark": (52, 54, 62), "cyan": (80, 214, 255), "grey": (150, 160, 174)}

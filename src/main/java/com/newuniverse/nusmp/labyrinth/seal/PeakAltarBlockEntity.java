@@ -105,7 +105,7 @@ public class PeakAltarBlockEntity extends BlockEntity {
         Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, at.getX() + 0.5, at.getY() + 1.0, at.getZ() + 0.5, 80, 1.5, 2.0, 1.5, 0.05);
         Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.REVERSE_PORTAL, at.getX() + 0.5, at.getY() + 0.5, at.getZ() + 0.5, 60, 1.0, 1.5, 1.0, 0.1);
         sl.playSound(null, worldPosition, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 2.0f, 0.6f);
-        broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.nusmp.peak_altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.anime_multiverse.peak_altar.answers").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         boss = e.getUUID();
         lastBossPos = at;
         state = State.ACTIVE;
@@ -137,7 +137,7 @@ public class PeakAltarBlockEntity extends BlockEntity {
         openBossDoors(sl);
         sl.playSound(null, worldPosition, SoundEvents.END_PORTAL_SPAWN, SoundSource.BLOCKS, 1.5f, 1.0f);
         Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, worldPosition.getX() + 0.5, worldPosition.getY() + 1.5, worldPosition.getZ() + 0.5, 60, 0.8, 1.2, 0.8, 0.08);
-        broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.nusmp.peak_altar.unseals").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+        broadcast(sl, ANNOUNCE_RANGE, Component.translatable("message.anime_multiverse.peak_altar.unseals").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
         setChanged();
     }
 

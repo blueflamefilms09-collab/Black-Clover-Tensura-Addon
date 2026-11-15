@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "anime_multiverse:item/hakurou_school_practice_katana"
+  }
+}

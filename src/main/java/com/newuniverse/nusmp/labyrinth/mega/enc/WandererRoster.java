@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 /**
  * Why: which big things walk the halls is the most flavourful and the most tweakable part of the Dungeon Master, so it is a list in a data file
- * ({@code data/nusmp/mega/wanderers.json}), not a switch in Java: an entity id, how likely it is, from which threat level it may appear, the
+ * ({@code data/anime_multiverse/mega/wanderers.json}), not a switch in Java: an entity id, how likely it is, from which threat level it may appear, the
  * name the party will use for it, and two multipliers that make the same body a different animal (a Floor Warden with more health, a Ravager
  * that is a little slower). The file is read with the same strictness as the encounter tables: every problem is a line of text that the loader
  * logs and the shipped-file test fails on, and an entity that is not installed is simply never drawn (the game passes a {@code usable}
@@ -105,7 +105,7 @@ public record WandererRoster(List<Entry> entries) {
             String entity = string(o, "entity", "");
             String where = "wanderers entry " + (entity.isEmpty() ? "#" + i : "'" + entity + "'");
             if (!ENTITY_ID.matcher(entity).matches()) {
-                problems.add(where + ": 'entity' must be an entity id such as nusmp:floor_warden");
+                problems.add(where + ": 'entity' must be an entity id such as anime_multiverse:floor_warden");
                 continue;
             }
             if (!seen.add(entity)) {

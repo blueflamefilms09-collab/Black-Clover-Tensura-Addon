@@ -139,7 +139,7 @@ public final class PuzzleDirector {
         try {
             tick(e.getServer());
         } catch (Throwable t) {
-            LOG.warn("[nusmp] puzzle tick failed: {}", t.toString());
+            LOG.warn("[anime_multiverse] puzzle tick failed: {}", t.toString());
         }
     }
 
@@ -149,7 +149,7 @@ public final class PuzzleDirector {
         if (!recovered) {
             recovered = true;
             int n = PuzzleData.get(server).recover(level);
-            if (n > 0) LOG.info("[nusmp] puzzles: restored {} journals left over from the last run", n);
+            if (n > 0) LOG.info("[anime_multiverse] puzzles: restored {} journals left over from the last run", n);
         }
         long now = level.getGameTime();
         if (!PuzzleWeights.get().enabled) {
@@ -169,7 +169,7 @@ public final class PuzzleDirector {
                 boolean over = in.state == PuzzleInstance.State.ENDED || in.solvedLongEnough(now) || (inside.isEmpty() && now - last > GRACE && !in.admin) || in.errors > 40;
                 if (over) end(in, now);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] puzzle {} failed and was ended: {}", in.type, ex.toString());
+                LOG.warn("[anime_multiverse] puzzle {} failed and was ended: {}", in.type, ex.toString());
                 end(in, now);
             }
         }
@@ -212,11 +212,11 @@ public final class PuzzleDirector {
                     if (in.arm(inside, now)) start(in);
                     else {
                         COOLDOWN.put(k, now + 1200);
-                        LOG.debug("[nusmp] puzzle {} does not fit in room {} of sector {}", slot.type(), here.id, s.id);
+                        LOG.debug("[anime_multiverse] puzzle {} does not fit in room {} of sector {}", slot.type(), here.id, s.id);
                     }
                 } catch (RuntimeException ex) {
                     COOLDOWN.put(k, now + 1200);
-                    LOG.warn("[nusmp] puzzle {} could not start: {}", slot.type(), ex.toString());
+                    LOG.warn("[anime_multiverse] puzzle {} could not start: {}", slot.type(), ex.toString());
                 }
             }
         }
@@ -240,7 +240,7 @@ public final class PuzzleDirector {
         try {
             in.end();
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] puzzle {} did not end cleanly: {}", in.type, e.toString());
+            LOG.warn("[anime_multiverse] puzzle {} did not end cleanly: {}", in.type, e.toString());
         }
         ACTIVE.remove(in.key);
         LAST_INSIDE.remove(in.id);

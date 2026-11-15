@@ -2,7 +2,7 @@
 wings that hangs over the caster while a big wind page is cast. Real 3D models (Bedrock geo, 1/16 block units, y up, front -z), hand-painted sheets (tools/sylph_art.py), animations, three levels
 of detail per form and a glow-only model:
 
-    python3 -B tools/gen_sylph_geo.py                 writes assets/nusmp/{geo,animations,textures}/entity/sylph_{small,powered}[_lod1|_lod2|_wings|_fx]*
+    python3 -B tools/gen_sylph_geo.py                 writes assets/anime_multiverse/{geo,animations,textures}/entity/sylph_{small,powered}[_lod1|_lod2|_wings|_fx]*
     python3 -B tools/gen_sylph_geo.py --count         prints the quads of every model
     python3 -B tools/gen_sylph_geo.py small           one form
 

@@ -1,7 +1,7 @@
 """Generates the Mana Zone and Grand Magic Zone VFX textures (vfx/client/layer/ManaZoneLayer).
 
 Deterministic (fixed seeds, no fonts): every machine writes the same pixels.
-Output: src/main/resources/assets/nusmp/textures/particle/mana_zone_*.png and grand_zone_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/mana_zone_*.png and grand_zone_*.png
 
     python3 -B tools/gen_mana_zone_textures.py
 
@@ -16,7 +16,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

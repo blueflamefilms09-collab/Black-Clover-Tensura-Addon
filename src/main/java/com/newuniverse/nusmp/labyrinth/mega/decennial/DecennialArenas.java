@@ -204,7 +204,7 @@ public final class DecennialArenas {
                     s.built = true;                                        // a hall whose theme no longer exists is given up (the old hall stays)
                     pendingBuilds--;
                     d.setDirty();
-                    LOG.warn("[nusmp] The hall of {} names the unknown arena theme '{}': the old hall stays.", s.key, s.theme);
+                    LOG.warn("[anime_multiverse] The hall of {} names the unknown arena theme '{}': the old hall stays.", s.key, s.theme);
                 }
                 continue;
             }
@@ -214,11 +214,11 @@ public final class DecennialArenas {
                 if (s.cursor >= ArenaPlacer.total(plan)) {
                     s.built = true;
                     pendingBuilds--;
-                    LOG.info("[nusmp] The hall '{}' of level {} is built for {} at ({}, {}, {}) turned {}.", s.theme, s.level, s.key, s.cx, s.y0, s.cz, s.rot);
+                    LOG.info("[anime_multiverse] The hall '{}' of level {} is built for {} at ({}, {}, {}) turned {}.", s.theme, s.level, s.key, s.cx, s.y0, s.cz, s.rot);
                 }
                 d.setDirty();
             } catch (RuntimeException e) {
-                LOG.error("[nusmp] A hall could not be built ({}): {}", s.key, e.toString());
+                LOG.error("[anime_multiverse] A hall could not be built ({}): {}", s.key, e.toString());
                 s.built = true;
                 pendingBuilds--;
             }
@@ -366,7 +366,7 @@ public final class DecennialArenas {
         data(sl.getServer()).setDirty();
         sl.playSound(null, BlockPos.containing(l.middle()[0], l.middle()[1], l.middle()[2]), SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.4f, 0.7f);
         say(sl, l, "unsealed", "The seal of the hall breaks.", ChatFormatting.GRAY);
-        LOG.info("[nusmp] The seal of {} opened ({}).", l.site.key, why);
+        LOG.info("[anime_multiverse] The seal of {} opened ({}).", l.site.key, why);
     }
 
     // ================================================================ breaking elements
@@ -532,7 +532,7 @@ public final class DecennialArenas {
 
     // ================================================================ messages
     static void say(ServerLevel sl, Live l, String key, String fallback, ChatFormatting colour, Object... args) {
-        Component line = Component.translatableWithFallback("message.nusmp.mega.decennial." + key, fallback, args).withStyle(colour);
+        Component line = Component.translatableWithFallback("message.anime_multiverse.mega.decennial." + key, fallback, args).withStyle(colour);
         for (Player p : DecennialFx.inHall(sl, l.frame, l.plan.height)) p.displayClientMessage(line, true);
     }
 

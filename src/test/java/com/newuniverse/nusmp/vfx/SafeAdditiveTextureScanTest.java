@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * and the card sheet halo.png has transparent card borders and no solid white card (the white rectangles of the upgraded weapons). Time Magic textures (time_*) are never looked at.
  */
 class SafeAdditiveTextureScanTest {
-    private static final Path TEX = Path.of("src/main/resources/assets/nusmp/textures");
+    private static final Path TEX = Path.of("src/main/resources/assets/anime_multiverse/textures");
     private static final String[][] SCOPE = {
             {"entity/weapon_vu", ""}, {"visual_upgrade", "vu_fx|halo|glow|veins|nebula|star"}, {"entity/weapon", "_glow|veins|halo|nebula|star"}, {"entity/weapon/up", "_glow|veins|halo|nebula|star"},
             {"entity/djinn", "glow|rune|nebula|star|halo"}, {"relic_worn", "glow|nebula|star|halo|atlas|shimmer|fx"}, {"aura", "glow"}, {"entity/scalecast", "glow"},

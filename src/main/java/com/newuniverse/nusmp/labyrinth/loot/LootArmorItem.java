@@ -18,7 +18,7 @@ import java.util.List;
  * Why: a piece of dungeon armour is an ordinary {@code ArmorItem} (so it equips, shows its armour bar, takes damage, mends at an anvil and is drawn by the worn-model library
  * like every other armour of the mod) that also carries a {@link GearRoll}. Its material gives the base armour, toughness and knockback resistance; the roll adds two to four
  * lines (armour first) as vanilla modifiers of its own slot group. Like the weapons it is rolled on the first tick it sits in an inventory if it came from a recipe or a
- * command. Its worn look is the library's (the mod's armour renderer draws any armour of the {@code nusmp} namespace), and the vanilla layer texture is a plain pattern in the set's
+ * command. Its worn look is the library's (the mod's armour renderer draws any armour of the {@code anime_multiverse} namespace), and the vanilla layer texture is a plain pattern in the set's
  * colours for the places the library does not draw (a mob, an armour stand).
  */
 public class LootArmorItem extends ArmorItem implements LootGear {
@@ -67,7 +67,7 @@ public class LootArmorItem extends ArmorItem implements LootGear {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         GearTooltip.gear(stack, this, tip);
     }
 }

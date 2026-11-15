@@ -57,11 +57,11 @@ public final class CodexData {
 
     private static final Pattern LANG_KEY = Pattern.compile("[a-z0-9_-]+(\\.[a-z0-9_/-]+)+");
 
-    /** Does this text look like a lang key ("nusmp.codex.rule.x.title": lower case, dots, no spaces)? The caller still checks that the key exists. */
+    /** Does this text look like a lang key ("anime_multiverse.codex.rule.x.title": lower case, dots, no spaces)? The caller still checks that the key exists. */
     public static boolean looksLikeLangKey(String s) { return s != null && LANG_KEY.matcher(s).matches(); }
 
     /** The lang key of a section's tab title. */
-    public static String sectionKey(String section) { return "nusmp.codex.section." + section; }
+    public static String sectionKey(String section) { return "anime_multiverse.codex.section." + section; }
 
     /**
      * The discovery rule: an entry with no keys is always shown; one with keys is shown only if the asker says any one of them is visible.
@@ -71,7 +71,7 @@ public final class CodexData {
         return keys == null || keys.isBlank() || visibleAny.test(keys);
     }
 
-    /** "item:nusmp:foo" -> "nusmp:foo"; anything else (or an empty icon) -> null. */
+    /** "item:anime_multiverse:foo" -> "anime_multiverse:foo"; anything else (or an empty icon) -> null. */
     public static String iconItemId(String icon) {
         if (icon == null || !icon.toLowerCase(Locale.ROOT).startsWith("item:")) return null;
         String id = icon.substring(5).trim();

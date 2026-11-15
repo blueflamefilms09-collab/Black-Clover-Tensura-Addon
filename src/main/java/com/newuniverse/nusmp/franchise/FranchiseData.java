@@ -15,10 +15,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The table of the franchise engravings: which franchises there are and the numbers of every engraving's effects. Read from {@code data/nusmp/franchise/engravings.json}, which
+ * The table of the franchise engravings: which franchises there are and the numbers of every engraving's effects. Read from {@code data/anime_multiverse/franchise/engravings.json}, which
  * {@code tools/franchise/gen_engravings.py} writes (so the numbers, the lang text and the datapack enchantments cannot drift apart). Pure: no Minecraft types, unit-tested.
  * <p>
- * An engraving is a datapack enchantment {@code nusmp:fr_<name>}; here it is the same id without the namespace. Its {@link Effect}s are what the code does with it
+ * An engraving is a datapack enchantment {@code anime_multiverse:fr_<name>}; here it is the same id without the namespace. Its {@link Effect}s are what the code does with it
  * ({@link FranchiseRules} decides, {@link FranchiseEvents} acts).
  */
 public final class FranchiseData {
@@ -62,7 +62,7 @@ public final class FranchiseData {
         }
     }
 
-    private static final String RESOURCE = "/data/nusmp/franchise/engravings.json";
+    private static final String RESOURCE = "/data/anime_multiverse/franchise/engravings.json";
     private static volatile Table table;
 
     /** The table (loaded once; an unreadable file gives an empty table so that nothing breaks, the self-test and the unit test catch it). */

@@ -343,7 +343,7 @@ class RuneGlyphLayoutTest {
 
     @Test
     void theTexturesOfTheWritingExistAndCannotDrawAsSquares() throws IOException {
-        Path dir = Path.of("src/main/resources/assets/nusmp/textures/particle");
+        Path dir = Path.of("src/main/resources/assets/anime_multiverse/textures/particle");
         for (String tint : new String[]{"gold", "flame", "water", "wind", "earth", "lightning", "plant"}) {
             BufferedImage im = ImageIO.read(dir.resolve("rune_stroke_" + tint + ".png").toFile());
             assertEquals(32, im.getWidth(), "across the stroke");

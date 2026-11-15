@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * the player really wears that relic, that it works for them, and every cost and cooldown. Nothing in it is trusted.
  */
 public record RelicActPayload(String relicId, String actKey, int chargeTicks) implements CustomPacketPayload {
-    public static final Type<RelicActPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_act"));
+    public static final Type<RelicActPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_act"));
     public static final StreamCodec<RegistryFriendlyByteBuf, RelicActPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, RelicActPayload::relicId,
             ByteBufCodecs.STRING_UTF8, RelicActPayload::actKey,

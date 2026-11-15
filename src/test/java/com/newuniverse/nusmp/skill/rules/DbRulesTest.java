@@ -58,6 +58,6 @@ class DbRulesTest {
 
     @Test void everySkillHasItsIcon() {
         for (Spec s : DbRules.SPECS) for (String id : new String[] {s.id(), s.uniqueId()})
-            assertTrue(new File("src/main/resources/assets/nusmp/textures/skill/" + id + ".png").isFile(), "icon " + id);
+            assertTrue(new File("src/main/resources/assets/anime_multiverse/textures/skill/" + id + ".png").isFile(), "icon " + id);
     }
 }

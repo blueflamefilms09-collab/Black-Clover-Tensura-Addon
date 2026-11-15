@@ -9,11 +9,11 @@ Schema subset written (from memory of Better Combat 2.x; the mod could not be lo
   {"parent": "bettercombat:<builtin>",
    "attributes": {"range_bonus": <number>, "two_handed": true,                       # two_handed only where a class is two-handed
                   "attacks": [{"hitbox": "HORIZONTAL_PLANE|VERTICAL_PLANE|FORWARD_BOX", "damage_multiplier": n,
-                               "angle": n, "upswing": 0..1, "animation": "nusmp:<name>"}]}}   # attacks only where we ship our own combo
+                               "angle": n, "upswing": 0..1, "animation": "anime_multiverse:<name>"}]}}   # attacks only where we ship our own combo
 No `pose`, `off_hand_pose`, `swing_sound` or `category` keys are written: their value spaces (animation / sound ids) are not certain offline, and
 Better Combat falls back to the parent's for anything we do not set.
 
-1.46.0: the default output uses ONLY Better Combat's own presets and animations (no `attacks`, no `nusmp:` animation): the file is a `parent`
+1.46.0: the default output uses ONLY Better Combat's own presets and animations (no `attacks`, no `anime_multiverse:` animation): the file is a `parent`
 plus `range_bonus` / `two_handed`. `--custom` writes the 1.39.0 files with our own animations instead (kept, not used; see docs/better_combat.md).
 
 Usage:  python tools/bettercombat/gen_attributes.py [--check] [--list] [--custom]
@@ -32,8 +32,8 @@ import inventory as INV  # noqa: E402
 import profiles as PR  # noqa: E402
 
 ROOT = INV.ROOT
-OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "weapon_attributes")
-ANIM_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "player_animations")
+OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "weapon_attributes")
+ANIM_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "player_animations")
 BUILTIN = json.load(open(os.path.join(HERE, "builtin_animations.json"), encoding="utf-8"))
 PRESETS = BUILTIN["presets"]
 CUSTOM = False        # set by --custom: the 1.39.0 profiles with our own animations
@@ -99,7 +99,7 @@ def problems_of(weapons):
             if CUSTOM:
                 name = a["animation"].split(":", 1)[1]
                 if not os.path.exists(os.path.join(ANIM_DIR, name + ".json")):
-                    out.append("%s: animation %s has no file under assets/nusmp/player_animations" % (wid, a["animation"]))
+                    out.append("%s: animation %s has no file under assets/anime_multiverse/player_animations" % (wid, a["animation"]))
             elif a["animation"] not in BUILTIN["animations"]:
                 out.append("%s: animation %s is not one Better Combat ships" % (wid, a["animation"]))
     return out

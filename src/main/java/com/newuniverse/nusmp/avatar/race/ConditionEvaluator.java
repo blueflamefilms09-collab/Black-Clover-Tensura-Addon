@@ -8,7 +8,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
 /**
- * Why: the race files name their requirements as strings ("has_item:nusmp:genesis_core", "black_clover:devil_contract") and the checker must turn each into a
+ * Why: the race files name their requirements as strings ("has_item:anime_multiverse:genesis_core", "black_clover:devil_contract") and the checker must turn each into a
  * yes or no for one player. The mapping from tag to predicate is a registry map (the owner asked for exactly that); this class is its pure core, working on a
  * small {@link Ctx} instead of a ServerPlayer, so the parsing, the negation and the fail-closed rule for unknown tags are unit tested with a fake context.
  *

@@ -28,7 +28,7 @@ public final class LockdownConfig {
                 .define("enabled", true);
         FOR_CREATIVE = b.comment("true = players in Creative mode also lock a room (a tester wants this). false = Creative and Spectator players never do.")
                 .define("forCreative", false);
-        ROOM_DATA = b.comment("Which rooms lock is read from data/nusmp/mega/lockdown/rooms.json. false = only the built-in minimum applies: treasure and set-piece rooms lock, nothing else.")
+        ROOM_DATA = b.comment("Which rooms lock is read from data/anime_multiverse/mega/lockdown/rooms.json. false = only the built-in minimum applies: treasure and set-piece rooms lock, nothing else.")
                 .define("roomData", true);
         ENTRY_INSET = b.comment("How many blocks inside the room's box a player must stand before it closes (the wall layers are two thick, so 4 is two blocks into the room proper).")
                 .defineInRange("entryInset", 4, 2, 12);
@@ -108,7 +108,7 @@ public final class LockdownConfig {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-lockdown-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The lockdown config could not be registered ({}); the defaults apply", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The lockdown config could not be registered ({}); the defaults apply", e.toString());
         }
     }
 }

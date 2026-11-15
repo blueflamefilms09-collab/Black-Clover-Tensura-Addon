@@ -11,7 +11,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OLD_MESH = os.path.join(ASSETS, "weapon_meshes")
 VU_MESH = os.path.join(ASSETS, "weapon_meshes_vu")
 OLD_TEX = os.path.join(ASSETS, "textures", "entity", "weapon")

@@ -25,7 +25,7 @@ public final class TinyDjinnPortrait {
     private static final float RADIUS = 23f, HEAD_SCALE = 40f, HEAD_CENTRE_BLOCKS = 0.70f;
     private static final GeoModelData[] SOURCE = new GeoModelData[Djinn.values().length], VIEW = new GeoModelData[Djinn.values().length];
 
-    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** The head-only view of a Djinn's model (the head bone and everything on it), rebuilt when the resources are reloaded. */
     private static GeoModelData head(Djinn d) {

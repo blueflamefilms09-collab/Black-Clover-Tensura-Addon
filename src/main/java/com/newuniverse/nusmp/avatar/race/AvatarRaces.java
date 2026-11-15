@@ -59,13 +59,13 @@ public final class AvatarRaces implements ResourceManagerReloadListener {
                 JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
                 loaded.put(id, AvatarRaceParser.parse(id, root));
             } catch (Exception ex) {
-                LOG.warn("[nusmp] Skipping avatar race {}: {}", e.getKey(), ex.toString());
+                LOG.warn("[anime_multiverse] Skipping avatar race {}: {}", e.getKey(), ex.toString());
             }
         }
         for (AvatarRace r : loaded.values()) {
-            if (r.evolves() && !loaded.containsKey(r.evolvesTo())) LOG.warn("[nusmp] Avatar race {} evolves into '{}' which does not exist", r.id(), r.evolvesTo());
+            if (r.evolves() && !loaded.containsKey(r.evolvesTo())) LOG.warn("[anime_multiverse] Avatar race {} evolves into '{}' which does not exist", r.id(), r.evolvesTo());
         }
         replace(loaded);
-        LOG.info("[nusmp] Loaded {} avatar races", loaded.size());
+        LOG.info("[anime_multiverse] Loaded {} avatar races", loaded.size());
     }
 }

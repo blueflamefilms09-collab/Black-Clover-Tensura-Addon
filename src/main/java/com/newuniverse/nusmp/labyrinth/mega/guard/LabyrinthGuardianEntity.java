@@ -50,8 +50,8 @@ import com.newuniverse.nusmp.particle.fx.FxThemes;
  * arena is carried back to its altar, because a boss that can be kited through the sector is a different, broken fight. (5) It drops
  * NOTHING: no loot table and none of the Warden's Shadow Keys; the Mana Core is forged by its altar when the death is confirmed, so the
  * progression has exactly one owner ({@link GuardianAltarBlockEntity}) and a Guardian spawned by an admin for a test cannot unseal a
- * sector. Its boss-bar title carries the theme ({@code entity.nusmp.labyrinth_guardian.bar}) and, when the sector can say which floor it
- * gates, that floor ({@code entity.nusmp.labyrinth_guardian.bar_floor}, "Floor +10 Warden (Frost)"), through the custom name the Warden's bar
+ * sector. Its boss-bar title carries the theme ({@code entity.anime_multiverse.labyrinth_guardian.bar}) and, when the sector can say which floor it
+ * gates, that floor ({@code entity.anime_multiverse.labyrinth_guardian.bar_floor}, "Floor +10 Warden (Frost)"), through the custom name the Warden's bar
  * already shows. (6) It is COLOSSAL (1.55.0: "the colossal boss that gates every tenth floor"): the SCALE attribute starts at
  * {@code GuardConfig.guardianScale} (1.8) and grows a little with the threat; the hitbox follows by itself ({@code LivingEntity.getDimensions}
  * scales the type's size by the attribute) and so does the model, because {@code LivingEntityRenderer.render} applies the attribute before
@@ -237,9 +237,9 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         if (trait == Trait.BLOOD) put(Attributes.MAX_ABSORPTION, hp * GuardianScaling.spec(Trait.BLOOD, true).count() / 100.0);
         if (dnd.profile.absorbMagic() || dnd.profile.legendary().contains("life_drain")) put(Attributes.MAX_ABSORPTION, Math.max(getAttributeValue(Attributes.MAX_ABSORPTION), hp * 0.1));      // room for the shield that eaten magic becomes
         dpsBudget.bypass(() -> setHealth((float) hp));                                      // a fresh boss starts full; that is not a heal
-        Component themeName = Component.translatable("message.nusmp.mega.mgd.theme." + theme.id());
-        setCustomName(floorLabel == null ? Component.translatable("entity.nusmp.labyrinth_guardian.bar", themeName)
-                : Component.translatable("entity.nusmp.labyrinth_guardian.bar_floor", floorLabel, themeName));
+        Component themeName = Component.translatable("message.anime_multiverse.mega.mgd.theme." + theme.id());
+        setCustomName(floorLabel == null ? Component.translatable("entity.anime_multiverse.labyrinth_guardian.bar", themeName)
+                : Component.translatable("entity.anime_multiverse.labyrinth_guardian.bar_floor", floorLabel, themeName));
         setCustomNameVisible(false);
         decennial.afterScaling(this);                                                         // 1.99.0: the Decennial boss's size, room for its shield, tint and sound set
         refreshDimensions();
@@ -318,7 +318,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.SONIC_BOOM, getX(), getY() + getBbHeight() * 0.5, getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, getX(), getY() + getBbHeight() * 0.5, getZ(), 60, 1.2, 1.6, 1.2, 0.12);
         for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) {
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.mgd.phase_two").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.mgd.phase_two").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC), true);
         }
     }
 
@@ -454,7 +454,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
             AbyssalLooks.Look l = AbyssalLooks.get(look);
             String caption = l == null ? "" : l.phase(now).caption();
             if (!caption.isEmpty()) {
-                Component line = Component.translatableWithFallback("message.nusmp.mega.dnd.look." + look + ".p" + now, caption).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC);
+                Component line = Component.translatableWithFallback("message.anime_multiverse.mega.dnd.look." + look + ".p" + now, caption).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC);
                 for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) p.displayClientMessage(line, true);
             }
         }

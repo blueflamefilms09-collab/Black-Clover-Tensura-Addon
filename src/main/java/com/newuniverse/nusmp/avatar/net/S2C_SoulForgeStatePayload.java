@@ -19,7 +19,7 @@ import java.util.List;
  */
 public record S2C_SoulForgeStatePayload(ForgeRules rules, ForgeContext reserves, int rollsLeft, List<ForgeAptitudeRow> aptitudes, List<ForgeSkillRow> skills)
         implements CustomPacketPayload {
-    public static final Type<S2C_SoulForgeStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_state"));
+    public static final Type<S2C_SoulForgeStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_state"));
     public static final StreamCodec<RegistryFriendlyByteBuf, S2C_SoulForgeStatePayload> CODEC = StreamCodec.of(S2C_SoulForgeStatePayload::write, S2C_SoulForgeStatePayload::read);
 
     private static void write(RegistryFriendlyByteBuf b, S2C_SoulForgeStatePayload p) {

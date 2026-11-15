@@ -43,7 +43,7 @@ def main():
     raw = sys.argv[1]
     os.makedirs(raw, exist_ok=True)
     lines = json.load(open(os.path.join(HERE, "undine_lines.json"), encoding="utf-8"))
-    done_dir = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp", "sounds", "voice", "undine")
+    done_dir = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice", "undine")
     again = "--force" in sys.argv
     todo = [ln for ln in lines if again or not (os.path.exists(os.path.join(raw, ln["id"] + ".mp3")) or os.path.exists(os.path.join(done_dir, ln["id"] + ".ogg")))]
     print("%d of %d lines still need a take" % (len(todo), len(lines)))

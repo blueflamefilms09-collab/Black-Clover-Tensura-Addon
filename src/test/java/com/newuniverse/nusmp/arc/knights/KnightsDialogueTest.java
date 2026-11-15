@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * to say at EVERY point of the story (never silent), points at each saga, only names champions that exist, and promises no quest or shop.
  */
 class KnightsDialogueTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/arc/dialogue");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/arc/dialogue");
 
     /** The champions a line may name: the five openers (fixed by the Saga 1 briefs), Zagred (his entity id is kept), the Triad and Lucius (existing bosses). */
     private static final Set<String> KNOWN_CHAMPIONS = Set.of(KnightsGates.REVCHI, KnightsGates.HEATH, KnightsGates.LOTUS, KnightsGates.MARS, KnightsGates.VETTO,

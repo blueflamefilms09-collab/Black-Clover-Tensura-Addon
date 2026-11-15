@@ -31,7 +31,7 @@ public final class BodyRuneRules {
     /** At most this many bodies carry runes at once on the server (one per player; the ceiling only guards a runaway). */
     public static final int MAX_SESSIONS = 64;
 
-    /** The fixed ids (paths in the {@code nusmp} namespace) of the six modifiers, in the order of {@link Mods}. */
+    /** The fixed ids (paths in the {@code anime_multiverse} namespace) of the six modifiers, in the order of {@link Mods}. */
     public static final String[] IDS = {"mana_method_body_speed", "mana_method_body_attack", "mana_method_body_jump", "mana_method_body_step", "mana_method_body_fall", "mana_method_body_knockback"};
 
     public static final double SPEED_MAX = 0.25, ATTACK_MAX = 0.25, JUMP_MAX = 0.15, STEP_MAX = 0.4, FALL_MAX = 5.0, KNOCKBACK_MAX = 0.4;

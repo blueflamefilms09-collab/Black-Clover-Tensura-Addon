@@ -4,10 +4,10 @@
     python3 -B tools/relics/wave23_icons.py [id ...] [--sheet PATH]       (idempotent)
 
 Writes, per id,
-  assets/nusmp/textures/item/<id>.png        the sprite (the inventory icon; the nine hand-held relics are 3D in hand)
-  assets/nusmp/models/item/<id>.json         MAIN_HAND relics: builtin/entity (drawn by client/WeaponRenderer from weapon_meshes/<id>.txt), the display
+  assets/anime_multiverse/textures/item/<id>.png        the sprite (the inventory icon; the nine hand-held relics are 3D in hand)
+  assets/anime_multiverse/models/item/<id>.json         MAIN_HAND relics: builtin/entity (drawn by client/WeaponRenderer from weapon_meshes/<id>.txt), the display
                                              transforms of the existing diagonal / upright weapons; the three charms: item/generated
-  assets/nusmp/models/item/<id>_icon.json    MAIN_HAND relics: the flat inventory model of the sprite
+  assets/anime_multiverse/models/item/<id>_icon.json    MAIN_HAND relics: the flat inventory model of the sprite
 Every icon is drawn from primitives on a 16 x 16 canvas, then given a one pixel dark outline; the grade shows as one coloured pixel and the glow as
 bright pixels at gems, runes and tips. With --sheet an enlarged contact sheet is written for looking at them.
 """
@@ -265,7 +265,7 @@ ICONS_DEF = [
 
 def flat_model(item_id):
     with open(os.path.join(MODELS, item_id + ".json"), "w", newline="\n") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + item_id}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + item_id}}, f, indent=2)
 
 
 def main(argv):

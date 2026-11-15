@@ -1,4 +1,4 @@
-"""The effect spec of an upgraded item: assets/nusmp/visual_upgrade/<id>.json (read by client/upgrade/UpgradeSpecs at start-up and by the data tests).
+"""The effect spec of an upgraded item: assets/anime_multiverse/visual_upgrade/<id>.json (read by client/upgrade/UpgradeSpecs at start-up and by the data tests).
 
 One file per item. The generators fill it from a short dict (see items_*.py); this module only completes and writes it. The signature id of an act is crc32("<item>:<act>") & 0x7FFFFFFF:
 the server sends it in the seed of the effect packet (relics/wave/UpgradeSignatures), the client layer looks the recipe up by it.
@@ -36,7 +36,7 @@ def build(item_id, *, rgb, rgb2, ambient, swing, acts, length, tilt, veins_cfg=N
         "hand": {"length": length, "tilt": tilt},
         "swing": swing,
         "acts": [{"act": a, "id": sig_id(item_id, a), "recipe": r} for a, r in acts],
-        "ambient_sound": sound or ("nusmp:item.upgrade.%s.hum" % item_id),
+        "ambient_sound": sound or ("anime_multiverse:item.upgrade.%s.hum" % item_id),
         "note": note,
     }
     if glow:

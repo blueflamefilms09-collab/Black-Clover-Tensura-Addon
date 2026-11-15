@@ -103,7 +103,7 @@ public abstract class MidnightBoss extends ArcBoss {
         try {
             a = onIncoming(source, amount);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] {} could not judge a hit: {}", bossName(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} could not judge a hit: {}", bossName(), e.toString());
             a = amount;
         }
         if (a <= 0f) return a;
@@ -116,7 +116,7 @@ public abstract class MidnightBoss extends ArcBoss {
         try {
             return guard(source, amount);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] {} could not guard a hit: {}", bossName(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} could not guard a hit: {}", bossName(), e.toString());
             return amount;
         }
     }
@@ -172,7 +172,7 @@ public abstract class MidnightBoss extends ArcBoss {
         try {
             tickMidnight();
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] {} tick failed: {}", bossName(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} tick failed: {}", bossName(), e.toString());
         }
     }
 
@@ -184,7 +184,7 @@ public abstract class MidnightBoss extends ArcBoss {
         try {
             fightBegins();
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] {} could not begin its fight: {}", bossName(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} could not begin its fight: {}", bossName(), e.toString());
         }
     }
 
@@ -197,7 +197,7 @@ public abstract class MidnightBoss extends ArcBoss {
         try {
             fightEnds(won);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] {} could not end its fight: {}", bossName(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} could not end its fight: {}", bossName(), e.toString());
         }
     }
 

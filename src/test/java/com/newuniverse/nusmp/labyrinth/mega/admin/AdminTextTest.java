@@ -29,8 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class AdminTextTest {
     private static final Path FRAGMENT = Path.of("tools", "lang", "dungeon_admin.json");
-    private static final Path MAIN = Path.of("src", "main", "resources", "assets", "nusmp", "lang", "en_us.json");
-    private static final Path SOURCES = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "admin");
+    private static final Path MAIN = Path.of("src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json");
+    private static final Path SOURCES = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "admin");
     private static final Pattern PLACEHOLDER = Pattern.compile("%(\\d+)\\$s");
 
     private static JsonObject read(Path p) throws IOException { return JsonParser.parseString(Files.readString(p, StandardCharsets.UTF_8)).getAsJsonObject(); }
@@ -55,7 +55,7 @@ public class AdminTextTest {
             assertEquals(e.getValue(), AdminText.english(e.getKey()));
             assertEquals(e.getValue(), AdminText.englishOrNull(e.getKey()));
         }
-        assertNull(AdminText.englishOrNull("message.nusmp.dungeon.admin.no_such_key"));
+        assertNull(AdminText.englishOrNull("message.anime_multiverse.dungeon.admin.no_such_key"));
         assertEquals("some.other.key", AdminText.english("some.other.key"), "an unknown key reads as itself, never null");
     }
 

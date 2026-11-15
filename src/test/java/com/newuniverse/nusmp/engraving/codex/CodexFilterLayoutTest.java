@@ -45,7 +45,7 @@ class CodexFilterLayoutTest {
         CodexEntries.Book b = book();
         int[] falna = CodexFilter.select(b.entries(), null, "FALNA");
         assertTrue(falna.length >= 1);
-        assertEquals("nusmp:fr_falna", b.entries().get(falna[0]).key(), "the engraving named Falna comes first");
+        assertEquals("anime_multiverse:fr_falna", b.entries().get(falna[0]).key(), "the engraving named Falna comes first");
         int[] both = CodexFilter.select(b.entries(), null, "falna danmachi");
         assertTrue(both.length >= 1 && both.length <= falna.length);
         assertEquals(0, CodexFilter.select(b.entries(), null, "falna bleach").length, "an AND search: Falna is not a Bleach engraving");
@@ -61,7 +61,7 @@ class CodexFilterLayoutTest {
         assertTrue(cap.length > 3, "the facts are searched");
         int[] item = CodexFilter.select(b.entries(), null, "demon_slayer_sword");
         boolean anti = false;
-        for (int i : item) anti |= b.entries().get(i).key().equals("nusmp:anti_magic");
+        for (int i : item) anti |= b.entries().get(i).key().equals("anime_multiverse:anti_magic");
         assertTrue(anti, "the items that carry an engraving are searched");
     }
 
@@ -177,7 +177,7 @@ class CodexFilterLayoutTest {
     @Test
     void aCutBlockEndsWithTheEllipsisAndBulletsIndentTheirContinuation() throws Exception {
         CodexEntries.Book b = book();
-        CodexEntries.Entry e = b.entries().stream().filter(x -> x.key().equals("nusmp:fr_grimoire_surge")).findFirst().orElseThrow();
+        CodexEntries.Entry e = b.entries().stream().filter(x -> x.key().equals("anime_multiverse:fr_grimoire_surge")).findFirst().orElseThrow();
         CodexLayout.Laid roomy = CodexLayout.lay(0, e, 300, 400, 6, null, CodexFilterLayoutTest::len);
         assertFalse(roomy.cut(), "nothing is cut when there is room");
         for (String f : roomy.facts()) assertTrue(f.startsWith("- ") || f.startsWith("  "), f);

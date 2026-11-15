@@ -13,7 +13,7 @@ import argparse, glob, os, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
-SRC = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'newuniverse', 'nusmp', 'vfx', 'client')
+SRC = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'newuniverse', 'anime_multiverse', 'vfx', 'client')
 BUF = 'src/main/java/com/newuniverse/nusmp/vfx/client/VfxVertexBuffer.java'
 SHARED = ['VfxBlend.java', 'VfxPose.java', 'VfxRenderContext.java']
 

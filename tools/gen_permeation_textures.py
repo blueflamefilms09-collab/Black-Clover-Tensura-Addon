@@ -1,7 +1,7 @@
 """Permeation Magic textures (1.93.0 rebuild): the sprites of the PERMEATION_FX1..3 layer, the Phase Shroud's ground ring and glints, and the props. The wiki
 magic layers' own wiki_permeation / wiki_* textures stay where they are.
 
-    python3 -B tools/gen_permeation_textures.py  # -> src/main/resources/assets/nusmp/textures/particle/permeation_*.png
+    python3 -B tools/gen_permeation_textures.py  # -> src/main/resources/assets/anime_multiverse/textures/particle/permeation_*.png
 
 White (tinted by the effect colour, pale cyan 0x65D7E8):
   permeation_ripple   concentric rings made of dashes that shift against each other (a surface that things pass through)

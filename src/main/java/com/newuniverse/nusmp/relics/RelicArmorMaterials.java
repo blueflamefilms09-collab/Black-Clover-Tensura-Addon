@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * One armour material per HEAD, CHEST or FEET relic, in a register of the relics' own (register {@link #MATERIALS} on the mod bus). The layer is named
- * {@code nusmp:relic_<id>}: the client paints its texture at run time ({@code client.relics.RelicTextures}) unless a resource pack ships a PNG for it.
+ * {@code anime_multiverse:relic_<id>}: the client paints its texture at run time ({@code client.relics.RelicTextures}) unless a resource pack ships a PNG for it.
  */
 public final class RelicArmorMaterials {
     private RelicArmorMaterials() {}

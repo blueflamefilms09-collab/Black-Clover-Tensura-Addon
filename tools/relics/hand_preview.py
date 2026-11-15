@@ -22,7 +22,7 @@ import preview_worn as P  # noqa: E402
 import relic_inventory as RI  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 HAND = os.path.join(ASSETS, "relic_hand")
 WORN = os.path.join(ASSETS, "relic_worn")
 ITEM_TEX = os.path.join(ASSETS, "textures", "item")

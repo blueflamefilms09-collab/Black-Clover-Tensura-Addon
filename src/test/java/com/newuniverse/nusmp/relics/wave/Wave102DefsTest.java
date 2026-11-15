@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class Wave102DefsTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DATA = Path.of("src/main/resources/data");
     private static final Path LANG = Path.of("tools/lang/god_special_new.json");
     private static final Set<String> TENSURA_ENGRAVINGS = Set.of("barrier_piercing", "breathing_support", "crushing", "dead_end_rainbow", "elemental_boost", "elemental_resistance",
@@ -203,9 +203,9 @@ class Wave102DefsTest {
         String lang = Files.readString(LANG);
         assertTrue(lang.startsWith("{"));
         for (Def d : defs()) {
-            for (String k : new String[]{"item.nusmp." + d.id(), "item.nusmp." + d.id() + ".desc", "item.nusmp." + d.id() + ".card"})
+            for (String k : new String[]{"item.anime_multiverse." + d.id(), "item.anime_multiverse." + d.id() + ".desc", "item.anime_multiverse." + d.id() + ".card"})
                 assertTrue(lang.contains("\"" + k + "\": \""), "no lang key " + k);
-            assertTrue(lang.contains("\"item.nusmp." + d.id() + "\": \"" + d.name().replace("\\\"", "\\\"") + "\""), "the lang name of " + d.id() + " is " + d.name());
+            assertTrue(lang.contains("\"item.anime_multiverse." + d.id() + "\": \"" + d.name().replace("\\\"", "\\\"") + "\""), "the lang name of " + d.id() + " is " + d.name());
         }
         for (int i = 0; i < lang.length(); i++) assertTrue(lang.charAt(i) < 128, "ASCII only: char " + (int) lang.charAt(i) + " at " + i);
         assertFalse(lang.toLowerCase().contains("claude") || lang.toLowerCase().contains("anthropic"), "no assistant names in text");
@@ -270,7 +270,7 @@ class Wave102DefsTest {
     void theGodGearHasEffectTablesWithCustomParticlesAndAnActEffectForEveryAct() throws IOException {
         Pattern tok = Pattern.compile("\"particle\":\\s*\"([^\"]+)\"");
         Set<String> catalogIds = new HashSet<>();
-        Matcher ci = Pattern.compile("\"id\":\\s*\"([a-z0-9_]+)\"").matcher(Files.readString(DATA.resolve("nusmp/particle_catalog.json")));
+        Matcher ci = Pattern.compile("\"id\":\\s*\"([a-z0-9_]+)\"").matcher(Files.readString(DATA.resolve("anime_multiverse/particle_catalog.json")));
         while (ci.find()) catalogIds.add(ci.group(1));
         int tables = 0;
         for (Def d : defs()) {
@@ -279,7 +279,7 @@ class Wave102DefsTest {
             String t = Files.readString(ASSETS.resolve("visual_upgrade/" + d.id() + ".json"));
             assertTrue(t.split("\"kind\":", -1).length - 1 >= 8, d.id() + " has at least eight ambient layers");
             Matcher m = tok.matcher(t);
-            while (m.find()) assertTrue(m.group(1).equals("fx") || (m.group(1).startsWith("nusmp:") && catalogIds.contains(m.group(1).substring(6))), d.id() + " particle " + m.group(1) + " is not one of the mod's own");
+            while (m.find()) assertTrue(m.group(1).equals("fx") || (m.group(1).startsWith("anime_multiverse:") && catalogIds.contains(m.group(1).substring(6))), d.id() + " particle " + m.group(1) + " is not one of the mod's own");
             Matcher acts = Pattern.compile("Act\\.of\\(\"([a-z_]+)\"").matcher(d.block());
             while (acts.find()) assertTrue(t.contains("\"" + acts.group(1) + "\": ["), d.id() + " has no effect for the act " + acts.group(1));
         }
@@ -289,7 +289,7 @@ class Wave102DefsTest {
     @Test
     void theWeaponsHaveClassRowsBetterCombatFilesTheShieldSetAndTheGodRoads() throws IOException {
         String classesA = Files.readString(ASSETS.resolve("weapon_classes.json")), classesB = Files.readString(Path.of("tools/relics/weapon_classes.json"));
-        String themes = Files.readString(DATA.resolve("nusmp/mega/relic_themes.json"));
+        String themes = Files.readString(DATA.resolve("anime_multiverse/mega/relic_themes.json"));
         String shields = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/visual/shields/ShieldSet.java"));
         String shieldTool = Files.readString(Path.of("tools/gen_shield_models.py"));
         List<String> bad = new ArrayList<>();
@@ -298,7 +298,7 @@ class Wave102DefsTest {
                 if (!classesA.contains("\"" + d.id() + "\"")) bad.add(d.id() + " class row (assets)");
                 if (!classesB.contains("\"" + d.id() + "\"")) bad.add(d.id() + " class row (tools)");
                 boolean shield = d.block().contains("Look.SHIELD"), bow = d.block().contains(".bow()");
-                boolean bc = Files.exists(DATA.resolve("nusmp/weapon_attributes/" + d.id() + ".json"));
+                boolean bc = Files.exists(DATA.resolve("anime_multiverse/weapon_attributes/" + d.id() + ".json"));
                 if (shield || bow) {
                     if (bc) bad.add(d.id() + " is a shield or a bow: no Better Combat file");
                 } else if (!bc) bad.add(d.id() + " has no Better Combat file");
@@ -319,7 +319,7 @@ class Wave102DefsTest {
         for (Def d : defs()) {
             String t = tag.get(d.slot());
             if (t == null) continue;
-            assertTrue(Files.readString(DATA.resolve("curios/tags/item/" + t + ".json")).contains("\"nusmp:" + d.id() + "\""), d.id() + " is not wearable: not in " + t);
+            assertTrue(Files.readString(DATA.resolve("curios/tags/item/" + t + ".json")).contains("\"anime_multiverse:" + d.id() + "\""), d.id() + " is not wearable: not in " + t);
         }
     }
 

@@ -25,7 +25,7 @@ public final class HandModels {
     private static HandCatalog catalog;
     private static HandTransforms transforms;
 
-    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     private static List<String> lines(String path) {
         try {
@@ -35,9 +35,9 @@ public final class HandModels {
                     return in.lines().toList();
                 }
             }
-            LogUtils.getLogger().warn("[nusmp] hand library file {} is missing", path);
+            LogUtils.getLogger().warn("[anime_multiverse] hand library file {} is missing", path);
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] hand library file {} could not be read", path, ex);
+            LogUtils.getLogger().error("[anime_multiverse] hand library file {} could not be read", path, ex);
         }
         return List.of();
     }
@@ -52,14 +52,14 @@ public final class HandModels {
     public static HandTransforms transforms() {
         if (transforms == null) {
             transforms = HandTransforms.parse(lines("relic_hand/transforms.txt"));
-            for (String p : transforms.problems()) LogUtils.getLogger().error("[nusmp] relic_hand/transforms.txt: {}", p);
-            if (!transforms.complete()) LogUtils.getLogger().error("[nusmp] relic_hand/transforms.txt has no complete default and sprite style; relics are held as sprites");
+            for (String p : transforms.problems()) LogUtils.getLogger().error("[anime_multiverse] relic_hand/transforms.txt: {}", p);
+            if (!transforms.complete()) LogUtils.getLogger().error("[anime_multiverse] relic_hand/transforms.txt has no complete default and sprite style; relics are held as sprites");
         }
         return transforms;
     }
 
     /**
-     * The model of this name: the hand model of the same name first (assets/nusmp/relic_hand/&lt;name&gt;.txt), else the worn model (relic_worn/&lt;name&gt;.txt), so a hand
+     * The model of this name: the hand model of the same name first (assets/anime_multiverse/relic_hand/&lt;name&gt;.txt), else the worn model (relic_worn/&lt;name&gt;.txt), so a hand
      * form may reuse a worn model by name. Null if neither exists or it cannot be parsed.
      */
     public static WornMesh mesh(String name) {
@@ -76,7 +76,7 @@ public final class HandModels {
                 mesh = WornModels.mesh(name);
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] hand model {} failed to load", name, ex);
+            LogUtils.getLogger().error("[anime_multiverse] hand model {} failed to load", name, ex);
             mesh = null;
         }
         MESHES.put(name, Optional.ofNullable(mesh));

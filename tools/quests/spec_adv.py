@@ -13,8 +13,8 @@ from spec_magic import MAGICS, RESTRICTED, BRANCHES
 S = Spec()
 add = S.add
 
-# 3.44.0: the tab has its own seamless background (tools/quests/gen_tab_background.py); the old altar tile was "nusmp:textures/block/grimoire_altar_top.png"
-ROOT_BG = "nusmp:textures/gui/advancements/multiverse_weave.png"
+# 3.44.0: the tab has its own seamless background (tools/quests/gen_tab_background.py); the old altar tile was "anime_multiverse:textures/block/grimoire_altar_top.png"
+ROOT_BG = "anime_multiverse:textures/gui/advancements/multiverse_weave.png"
 
 
 def AND(*crits):
@@ -45,22 +45,22 @@ def anyof(*crits):
 # ================================================================================================================= root
 add("root", None, "Multiverse of Anime",
     "Grimoires, relics and dungeons of many worlds. Every spell you cast and every foe you fell is written down here.",
-    "nusmp:grimoire", tick(), frame="task", toast=False, chat=False, background=ROOT_BG)
+    "anime_multiverse:grimoire", tick(), frame="task", toast=False, chat=False, background=ROOT_BG)
 
 # ================================================================================================================ start
 st = "start/"
 add(st + "first_grimoire", "root", "A Grimoire of Your Own", "Receive your grimoire, the book that will carry your magic.",
-    "nusmp:grimoire", ev("grimoire.received"), xp=10)
+    "anime_multiverse:grimoire", ev("grimoire.received"), xp=10)
 add(st + "open_book", st + "first_grimoire", "Open the Cover", "Open your grimoire and read its first pages.",
-    "nusmp:grimoire_summons", ev("grimoire.opened"), xp=5)
+    "anime_multiverse:grimoire_summons", ev("grimoire.opened"), xp=5)
 add(st + "ceremony", st + "first_grimoire", "The Acceptance Ceremony",
     "Take part in the Grimoire Acceptance Ceremony and let a grimoire choose you.",
-    "nusmp:grimoire_altar", ev("ceremony.completed"), frame="goal", xp=30)
+    "anime_multiverse:grimoire_altar", ev("ceremony.completed"), frame="goal", xp=30)
 add(st + "questionnaire", st + "first_grimoire", "The Wizard's Questions",
     "Answer every question of the Tower Wizard and learn which magic is born in you.",
     "minecraft:enchanted_book", ev("wizard.questionnaire"), xp=15)
 add(st + "meet_wizard", st + "first_grimoire", "A Word with the Wizard", "Speak with the wizard of a Grimoire Tower.",
-    "minecraft:book", talk("nusmp:tower_wizard"), xp=5)
+    "minecraft:book", talk("anime_multiverse:tower_wizard"), xp=5)
 add(st + "first_spell", st + "open_book", "First Spell", "Cast a spell from your grimoire.",
     "minecraft:blaze_powder", ev("spell.cast"), xp=10)
 add(st + "mana_use", st + "first_spell", "Spending Mana", "Cast twenty-five spells. Every spell costs mana, and mana refills slowly.",
@@ -78,7 +78,7 @@ add(st + "pages_10", st + "pages_5", "A Full Grimoire", "Unlock ten pages: a gri
 add(st + "mastery", st + "pages_10", "Mastery", "Fill the mastery bar of a grimoire completely.", "minecraft:nether_star",
     ev("mastery.max"), frame="challenge", xp=200)
 add(st + "magic_stone", st + "first_grimoire", "Crystallised Mana", "Pick up a magic stone, the dungeon's currency.",
-    "nusmp:magic_stone", have("nusmp:magic_stone"), xp=5)
+    "anime_multiverse:magic_stone", have("anime_multiverse:magic_stone"), xp=5)
 add(st + "five_grimoires", st + "first_grimoire", "Collector of Covers", "Receive five grimoires over your journeys.",
     "minecraft:lectern", ev("grimoire.received", 5), frame="goal", xp=40)
 
@@ -103,7 +103,7 @@ for mid, name, grp in MAGICS:
     FAM.setdefault(grp, []).append((mid, name))
 
 add("magic/awakening", "root", "The Awakening of Magic", "Cast three spells and let the world learn your name.",
-    "nusmp:grimoire", ev("spell.cast", 3), frame="goal", xp=15)
+    "anime_multiverse:grimoire", ev("spell.cast", 3), frame="goal", xp=15)
 for gid, gname, gicon, blurb in GROUPS:
     fams = FAM[gid]
     add("magic/soul_" + gid, "magic/awakening", gname,
@@ -208,34 +208,34 @@ add(sp + "unite_all", sp + "special", "Four Forms of the Shadow", "Take all four
 bo = "bosses/"
 BOSSES = [
     # entity path, title, desc, icon, frame, xp, kind ('event' = boss_kill, 'kill' = vanilla kill only is not used)
-    ("dante_zogratis", "Dante, Gravity Incarnate", "Defeat Dante Zogratis, the gravity of the Dark Triad.", "nusmp:dante_gravity_crown", "goal", 150),
+    ("dante_zogratis", "Dante, Gravity Incarnate", "Defeat Dante Zogratis, the gravity of the Dark Triad.", "anime_multiverse:dante_gravity_crown", "goal", 150),
     ("vanica_zogratis", "Vanica, Mistress of Curses", "Defeat Vanica Zogratis, the curse-weaver.", "minecraft:ender_eye", "goal", 150),
-    ("zenon_zogratis", "Zenon, the Spatial Hunter", "Defeat Zenon Zogratis, who walks between the gates.", "nusmp:zenon_spatial_ring", "goal", 150),
-    ("lucius_zogratis", "Lucius, the Final Hour", "Defeat Lucius Zogratis in his arena.", "nusmp:zogratis_hourglass", "challenge", 600),
-    ("zagred", "Zagred, the Devil of the Word", "Defeat Zagred.", "nusmp:last_word", "challenge", 500),
-    ("devil_avatar", "The Devil's Avatar", "Defeat the Devil Avatar.", "nusmp:devil_horn", "challenge", 400),
+    ("zenon_zogratis", "Zenon, the Spatial Hunter", "Defeat Zenon Zogratis, who walks between the gates.", "anime_multiverse:zenon_spatial_ring", "goal", 150),
+    ("lucius_zogratis", "Lucius, the Final Hour", "Defeat Lucius Zogratis in his arena.", "anime_multiverse:zogratis_hourglass", "challenge", 600),
+    ("zagred", "Zagred, the Devil of the Word", "Defeat Zagred.", "anime_multiverse:last_word", "challenge", 500),
+    ("devil_avatar", "The Devil's Avatar", "Defeat the Devil Avatar.", "anime_multiverse:devil_horn", "challenge", 400),
     ("goliath", "Goliath", "Defeat Goliath, the stone giant that guards a floor of the dungeon.", "minecraft:heavy_core", "goal", 200),
     ("charybdis_spawn", "Spawn of Charybdis", "Defeat the Spawn of Charybdis in its basin.", "minecraft:nautilus_shell", "goal", 200),
     ("floor_warden", "The Floor Warden", "Defeat a Warden of the Labyrinth.", "minecraft:iron_bars", "goal", 120),
-    ("god_of_order", "The God of Order", "Defeat the God of Order, judge of the relic ledger.", "nusmp:notice_of_order", "challenge", 600),
+    ("god_of_order", "The God of Order", "Defeat the God of Order, judge of the relic ledger.", "anime_multiverse:notice_of_order", "challenge", 600),
     ("wind_spirit_lord", "Lord of the Gale", "Defeat the Wind Spirit Lord.", "minecraft:feather", "goal", 120),
     ("grimoire_daemon", "Daemon of the Grimoire", "Defeat a Grimoire Daemon.", "minecraft:wither_skeleton_skull", "goal", 80),
 ]
 add(bo + "first", "root", "First Blood", "Defeat any boss of the Multiverse.", "minecraft:iron_sword", ev("boss.defeated"), xp=40)
 for path, ttl, desc, icon, fr, xp in BOSSES:
     add(bo + path, bo + "first", ttl, desc, icon, boss_kill(path), frame=fr, xp=xp)
-add(bo + "triad", bo + "dante_zogratis", "The Dark Triad Falls", "Defeat Dante, Vanica and Zenon.", "nusmp:charter_grimoire_dante",
+add(bo + "triad", bo + "dante_zogratis", "The Dark Triad Falls", "Defeat Dante, Vanica and Zenon.", "anime_multiverse:charter_grimoire_dante",
     AND(boss_kill("dante_zogratis"), boss_kill("vanica_zogratis"), boss_kill("zenon_zogratis")), frame="challenge", xp=400)
 add(bo + "count_3", bo + "first", "Bounty Hunter", "Defeat three bosses.", "minecraft:crossbow", ev("boss.defeated", 3), xp=60)
 add(bo + "count_10", bo + "count_3", "Slayer of Legends", "Defeat ten bosses.", "minecraft:netherite_sword", ev("boss.defeated", 10),
     frame="goal", xp=150)
 add(bo + "count_25", bo + "count_10", "Calamity", "Defeat twenty-five bosses.", "minecraft:wither_skeleton_skull", ev("boss.defeated", 25),
     frame="challenge", xp=400)
-add(bo + "lucius_stage2", bo + "lucius_zogratis", "The Second Stage", "Push Lucius into his second stage.", "nusmp:zogratis_hourglass",
+add(bo + "lucius_stage2", bo + "lucius_zogratis", "The Second Stage", "Push Lucius into his second stage.", "anime_multiverse:zogratis_hourglass",
     ev("boss.phase", 1, "lucius:2"), xp=100)
 add(bo + "lucius_stage3", bo + "lucius_stage2", "The Third Stage", "Push Lucius into his third and final stage.",
-    "nusmp:zogratis_hourglass", ev("boss.phase", 1, "lucius:3"), frame="goal", xp=200)
-add(bo + "zagred_phase2", bo + "zagred", "Zagred Unbound", "Push Zagred into his second phase.", "nusmp:last_word",
+    "anime_multiverse:zogratis_hourglass", ev("boss.phase", 1, "lucius:3"), frame="goal", xp=200)
+add(bo + "zagred_phase2", bo + "zagred", "Zagred Unbound", "Push Zagred into his second phase.", "anime_multiverse:last_word",
     ev("boss.phase", 1, "zagred:2"), xp=80)
 add(bo + "all", bo + "count_25", "No Boss Left Standing", "Defeat every boss the Multiverse has: all twelve of them.",
     "minecraft:dragon_egg",
@@ -244,84 +244,84 @@ add(bo + "all", bo + "count_25", "No Boss Left Standing", "Defeat every boss the
 # =============================================================================================================== relics
 re_ = "relics/"
 add(re_ + "first", "root", "Relic of Many Worlds", "Obtain a relic. They are rare: each one exists only once in the whole world.",
-    "nusmp:bag_of_holding", ev("relic.obtained"), frame="goal", xp=50)
-add(re_ + "equipped", re_ + "first", "Attuned", "Wear or wield a relic and let it answer you.", "nusmp:ring_of_power",
+    "anime_multiverse:bag_of_holding", ev("relic.obtained"), frame="goal", xp=50)
+add(re_ + "equipped", re_ + "first", "Attuned", "Wear or wield a relic and let it answer you.", "anime_multiverse:ring_of_power",
     ev("relic.equipped"), xp=20)
 GR = [("normal", "Normal Grade"), ("special", "Special Grade"), ("rare", "Rare Grade"), ("unique", "Unique Grade"),
       ("legend", "Legend Grade"), ("god", "God Grade"), ("genesis", "Genesis Grade")]
 prev = re_ + "first"
 for i, (g, ttl) in enumerate(GR):
-    add(re_ + "grade_" + g, prev, ttl, "Hold a relic of %s." % ttl, "nusmp:ring_of_power" if i < 3 else "minecraft:nether_star",
+    add(re_ + "grade_" + g, prev, ttl, "Hold a relic of %s." % ttl, "anime_multiverse:ring_of_power" if i < 3 else "minecraft:nether_star",
         ev("relic.grade", 1, g), frame="task" if i < 4 else ("goal" if i < 6 else "challenge"), xp=10 + 30 * i * i // 2)
     prev = re_ + "grade_" + g
-add(re_ + "count_10", re_ + "first", "A Small Hoard", "Obtain ten relics over time.", "nusmp:bag_of_holding", ev("relic.obtained", 10), xp=60)
-add(re_ + "count_30", re_ + "count_10", "A Museum of Many Worlds", "Obtain thirty relics over time.", "nusmp:bag_of_holding",
+add(re_ + "count_10", re_ + "first", "A Small Hoard", "Obtain ten relics over time.", "anime_multiverse:bag_of_holding", ev("relic.obtained", 10), xp=60)
+add(re_ + "count_30", re_ + "count_10", "A Museum of Many Worlds", "Obtain thirty relics over time.", "anime_multiverse:bag_of_holding",
     ev("relic.obtained", 30), frame="goal", xp=150)
-add(re_ + "forge_block", re_ + "first", "The Relic Forge", "Carry a Relic Forge.", "nusmp:relic_forge", have("nusmp:relic_forge"), xp=15)
+add(re_ + "forge_block", re_ + "first", "The Relic Forge", "Carry a Relic Forge.", "anime_multiverse:relic_forge", have("anime_multiverse:relic_forge"), xp=15)
 add(re_ + "forged", re_ + "forge_block", "Reforged", "Use the forge to engrave or reforge a relic.", "minecraft:anvil",
     ev("relic.forged"), frame="goal", xp=40)
 add(re_ + "socketed", re_ + "forged", "Socketed", "Set a socket core into a relic.", "minecraft:amethyst_shard",
     ev("relic.socketed"), xp=40)
 add(re_ + "tier", re_ + "socketed", "Tier Ritual", "Raise a relic through a tier ritual.", "minecraft:beacon", ev("relic.tier"),
     frame="goal", xp=80)
-add(re_ + "djinn", re_ + "grade_legend", "A Djinn Answers", "Bind a Djinn to a metal vessel.", "nusmp:djinn_seal_baal",
+add(re_ + "djinn", re_ + "grade_legend", "A Djinn Answers", "Bind a Djinn to a metal vessel.", "anime_multiverse:djinn_seal_baal",
     ev("relic.djinn_bound"), frame="goal", xp=100)
 SEALS = ["amon", "baal", "bifron", "focalor", "furfur", "marchosias", "paimon", "sitri", "vassago", "vinea", "zagan", "zepar"]
-add(re_ + "djinn_seals", re_ + "djinn", "Twelve Seals of the Djinn", "Carry all twelve Djinn seals.", "nusmp:djinn_seal_paimon",
-    have(*["nusmp:djinn_seal_" + x for x in SEALS], mode="all"), frame="challenge", xp=400)
-add(re_ + "pedestal", re_ + "first", "On a Pedestal", "Carry a Relic Pedestal.", "nusmp:relic_pedestal", have("nusmp:relic_pedestal"), xp=15)
-add(re_ + "ledger", re_ + "first", "In the Ledger", "Be entered in the Unique Ledger of the God of Order.", "nusmp:notice_of_order",
+add(re_ + "djinn_seals", re_ + "djinn", "Twelve Seals of the Djinn", "Carry all twelve Djinn seals.", "anime_multiverse:djinn_seal_paimon",
+    have(*["anime_multiverse:djinn_seal_" + x for x in SEALS], mode="all"), frame="challenge", xp=400)
+add(re_ + "pedestal", re_ + "first", "On a Pedestal", "Carry a Relic Pedestal.", "anime_multiverse:relic_pedestal", have("anime_multiverse:relic_pedestal"), xp=15)
+add(re_ + "ledger", re_ + "first", "In the Ledger", "Be entered in the Unique Ledger of the God of Order.", "anime_multiverse:notice_of_order",
     ev("relic.unique_ledger"), xp=40)
 add(re_ + "pair", re_ + "equipped", "A Matched Pair", "Carry both halves of a relic pair: the Twin Hook Swords, right and left.",
-    "nusmp:twin_hook_swords", have("nusmp:twin_hook_swords", "nusmp:twin_hook_swords_left", mode="all"), frame="goal", xp=60)
+    "anime_multiverse:twin_hook_swords", have("anime_multiverse:twin_hook_swords", "anime_multiverse:twin_hook_swords_left", mode="all"), frame="goal", xp=60)
 add(re_ + "pairs_all", re_ + "pair", "Three Pairs", "Carry both halves of the Twin Hook Swords, the Whirling Blades and the Twin Swords of Deflection.",
-    "nusmp:whirling_blades",
-    have("nusmp:twin_hook_swords", "nusmp:twin_hook_swords_left", "nusmp:whirling_blades", "nusmp:whirling_blades_left",
-         "nusmp:twin_swords_of_deflection", "nusmp:twin_swords_of_deflection_left", mode="all"), frame="challenge", xp=200)
-add(re_ + "vecna", re_ + "equipped", "The Pair of Vecna", "Carry both the Hand and the Eye of Vecna, a bonded pair with a set bonus.", "nusmp:hand_of_vecna",
-    have("nusmp:hand_of_vecna", "nusmp:eye_of_vecna", mode="all"), frame="challenge", xp=300)
+    "anime_multiverse:whirling_blades",
+    have("anime_multiverse:twin_hook_swords", "anime_multiverse:twin_hook_swords_left", "anime_multiverse:whirling_blades", "anime_multiverse:whirling_blades_left",
+         "anime_multiverse:twin_swords_of_deflection", "anime_multiverse:twin_swords_of_deflection_left", mode="all"), frame="challenge", xp=200)
+add(re_ + "vecna", re_ + "equipped", "The Pair of Vecna", "Carry both the Hand and the Eye of Vecna, a bonded pair with a set bonus.", "anime_multiverse:hand_of_vecna",
+    have("anime_multiverse:hand_of_vecna", "anime_multiverse:eye_of_vecna", mode="all"), frame="challenge", xp=300)
 STONES = ["the_mind_stone", "the_power_stone", "the_reality_stone", "the_soul_stone", "the_space_stone_or_the_tesseract",
           "the_time_stone_or_the_eye_of_agamotto"]
-add(re_ + "stone_any", re_ + "grade_genesis", "A Stone of Infinity", "Carry any Infinity Stone.", "nusmp:the_power_stone",
-    have(*["nusmp:" + s for s in STONES], mode="any"), frame="goal", xp=200)
-add(re_ + "gauntlet", re_ + "stone_any", "The Infinity Gauntlet", "Carry the Infinity Gauntlet.", "nusmp:the_infinity_gauntlet",
-    have("nusmp:the_infinity_gauntlet"), frame="goal", xp=300)
+add(re_ + "stone_any", re_ + "grade_genesis", "A Stone of Infinity", "Carry any Infinity Stone.", "anime_multiverse:the_power_stone",
+    have(*["anime_multiverse:" + s for s in STONES], mode="any"), frame="goal", xp=200)
+add(re_ + "gauntlet", re_ + "stone_any", "The Infinity Gauntlet", "Carry the Infinity Gauntlet.", "anime_multiverse:the_infinity_gauntlet",
+    have("anime_multiverse:the_infinity_gauntlet"), frame="goal", xp=300)
 add(re_ + "stones_all", re_ + "gauntlet", "All Six Stones", "Carry all six Infinity Stones and the Gauntlet at once.",
-    "nusmp:the_infinity_gauntlet", have(*["nusmp:" + s for s in STONES], "nusmp:the_infinity_gauntlet", mode="all"),
+    "anime_multiverse:the_infinity_gauntlet", have(*["anime_multiverse:" + s for s in STONES], "anime_multiverse:the_infinity_gauntlet", mode="all"),
     frame="challenge", xp=2000)
 
 # ============================================================================================================== weapons
 we = "weapons/"
-add(we + "first", "root", "Arms of Many Worlds", "Pick up one of the mod's named weapons.", "nusmp:magic_tool_sword",
-    have("nusmp:magic_tool_sword", "nusmp:magic_tool_spear", "nusmp:magic_tool_bow", "nusmp:demon_slayer_sword", "nusmp:demon_slasher_katana",
-         "nusmp:elsdocia", "nusmp:rimeheart_runeblade", "nusmp:otherworld_trident", "nusmp:last_word", mode="any"), xp=15)
-add(we + "mana_tools", we + "first", "Forged of Mana", "Carry the mana-forged sword, spear and bow.", "nusmp:magic_tool_bow",
-    have("nusmp:magic_tool_sword", "nusmp:magic_tool_spear", "nusmp:magic_tool_bow", mode="all"), xp=20)
+add(we + "first", "root", "Arms of Many Worlds", "Pick up one of the mod's named weapons.", "anime_multiverse:magic_tool_sword",
+    have("anime_multiverse:magic_tool_sword", "anime_multiverse:magic_tool_spear", "anime_multiverse:magic_tool_bow", "anime_multiverse:demon_slayer_sword", "anime_multiverse:demon_slasher_katana",
+         "anime_multiverse:elsdocia", "anime_multiverse:rimeheart_runeblade", "anime_multiverse:otherworld_trident", "anime_multiverse:last_word", mode="any"), xp=15)
+add(we + "mana_tools", we + "first", "Forged of Mana", "Carry the mana-forged sword, spear and bow.", "anime_multiverse:magic_tool_bow",
+    have("anime_multiverse:magic_tool_sword", "anime_multiverse:magic_tool_spear", "anime_multiverse:magic_tool_bow", mode="all"), xp=20)
 add(we + "demon_slayer", we + "first", "The Demon-Slayer", "Carry the Demon-Slayer Sword, the Genesis anti-magic blade.",
-    "nusmp:demon_slayer_sword", have("nusmp:demon_slayer_sword"), frame="goal", xp=80)
-add(we + "genesis", we + "demon_slayer", "Genesis Edge", "Strike with the Genesis Demon-Slayer and feel its edge.", "nusmp:demon_slayer_sword",
+    "anime_multiverse:demon_slayer_sword", have("anime_multiverse:demon_slayer_sword"), frame="goal", xp=80)
+add(we + "genesis", we + "demon_slayer", "Genesis Edge", "Strike with the Genesis Demon-Slayer and feel its edge.", "anime_multiverse:demon_slayer_sword",
     ev("weapon.genesis"), frame="challenge", xp=300)
 add(we + "anti_magic_trio", we + "demon_slayer", "Three Anti-Magic Blades", "Carry the Demon-Slayer, the Demon-Dweller and the Demon-Destroyer.",
-    "nusmp:demon_dweller_sword", have("nusmp:demon_slayer_sword", "nusmp:demon_dweller_sword", "nusmp:demon_destroyer_sword", mode="all"),
+    "anime_multiverse:demon_dweller_sword", have("anime_multiverse:demon_slayer_sword", "anime_multiverse:demon_dweller_sword", "anime_multiverse:demon_destroyer_sword", mode="all"),
     frame="goal", xp=120)
-add(we + "licht", we + "anti_magic_trio", "Blades of Light", "Carry the Licht Dweller and the Licht Destroyer.", "nusmp:licht_dweller_sword",
-    have("nusmp:licht_dweller_sword", "nusmp:licht_destroyer_sword", mode="all"), xp=60)
-add(we + "katana", we + "first", "A Cut Through Magic", "Carry the Demon Slasher Katana.", "nusmp:demon_slasher_katana",
-    have("nusmp:demon_slasher_katana"), xp=30)
-add(we + "miasma", we + "katana", "Miasma Katana", "Carry the Miasma-Infused Katana.", "nusmp:miasma_infused_katana",
-    have("nusmp:miasma_infused_katana"), xp=30)
-add(we + "elsdocia", we + "first", "Elsdocia", "Carry Elsdocia, the blade of the wizard kings.", "nusmp:elsdocia", have("nusmp:elsdocia"),
+add(we + "licht", we + "anti_magic_trio", "Blades of Light", "Carry the Licht Dweller and the Licht Destroyer.", "anime_multiverse:licht_dweller_sword",
+    have("anime_multiverse:licht_dweller_sword", "anime_multiverse:licht_destroyer_sword", mode="all"), xp=60)
+add(we + "katana", we + "first", "A Cut Through Magic", "Carry the Demon Slasher Katana.", "anime_multiverse:demon_slasher_katana",
+    have("anime_multiverse:demon_slasher_katana"), xp=30)
+add(we + "miasma", we + "katana", "Miasma Katana", "Carry the Miasma-Infused Katana.", "anime_multiverse:miasma_infused_katana",
+    have("anime_multiverse:miasma_infused_katana"), xp=30)
+add(we + "elsdocia", we + "first", "Elsdocia", "Carry Elsdocia, the blade of the wizard kings.", "anime_multiverse:elsdocia", have("anime_multiverse:elsdocia"),
     frame="goal", xp=100)
-add(we + "runeblade", we + "first", "Rimeheart Runeblade", "Carry the Rimeheart Runeblade.", "nusmp:rimeheart_runeblade",
-    have("nusmp:rimeheart_runeblade"), xp=40)
-add(we + "trident", we + "first", "Otherworld Trident", "Carry the Otherworld Trident of Zagred.", "nusmp:otherworld_trident",
-    have("nusmp:otherworld_trident"), xp=60)
-add(we + "last_word", we + "trident", "The Last Word", "Carry the quill-blade Last Word.", "nusmp:last_word", have("nusmp:last_word"), xp=60)
-add(we + "rapier", we + "first", "Spell-Forged Rapier", "Carry the Spell-Forged Rapier.", "nusmp:spell_forged_rapier",
-    have("nusmp:spell_forged_rapier"), xp=30)
-add(we + "greatsword", we + "first", "Sword Rain", "Carry the Severing Greatsword.", "nusmp:severing_greatsword",
-    have("nusmp:severing_greatsword"), xp=30)
-add(we + "null_blade", we + "first", "Null Blade", "Carry the Null Blade.", "nusmp:null_blade", have("nusmp:null_blade"), xp=30)
+add(we + "runeblade", we + "first", "Rimeheart Runeblade", "Carry the Rimeheart Runeblade.", "anime_multiverse:rimeheart_runeblade",
+    have("anime_multiverse:rimeheart_runeblade"), xp=40)
+add(we + "trident", we + "first", "Otherworld Trident", "Carry the Otherworld Trident of Zagred.", "anime_multiverse:otherworld_trident",
+    have("anime_multiverse:otherworld_trident"), xp=60)
+add(we + "last_word", we + "trident", "The Last Word", "Carry the quill-blade Last Word.", "anime_multiverse:last_word", have("anime_multiverse:last_word"), xp=60)
+add(we + "rapier", we + "first", "Spell-Forged Rapier", "Carry the Spell-Forged Rapier.", "anime_multiverse:spell_forged_rapier",
+    have("anime_multiverse:spell_forged_rapier"), xp=30)
+add(we + "greatsword", we + "first", "Sword Rain", "Carry the Severing Greatsword.", "anime_multiverse:severing_greatsword",
+    have("anime_multiverse:severing_greatsword"), xp=30)
+add(we + "null_blade", we + "first", "Null Blade", "Carry the Null Blade.", "anime_multiverse:null_blade", have("anime_multiverse:null_blade"), xp=30)
 add(we + "armory", we + "elsdocia", "Ten Engravings", "Engrave ten weapons at the Relic Forge.",
     "minecraft:netherite_sword", ev("weapon.engraved", 10), frame="challenge", xp=250)
 
@@ -331,8 +331,8 @@ du = "dungeon/"
 # Dungeon", "The Maw", "Dungeon Maw" and "Descent Gate" went with them, and so did the Spire's "The Labyrinth" (its children hang off the
 # Mega-Dungeon now). The criteria of "Dungeon Delver" below keep their old doors (names a0_..d3_) so saved progress still counts.
 # the Mega-Dungeon alternatives are appended LAST so the criterion names of the older doors (a0_..d3_) never change for saved progress
-DUNGEON_ENTER = anyof(ev("dungeon.entered"), ev("labyrinth.entered"), dimension("nusmp:living_dungeon"), dimension("nusmp:labyrinth"),
-                      ev("mega.entered"), dimension("nusmp:mega_dungeon"))
+DUNGEON_ENTER = anyof(ev("dungeon.entered"), ev("labyrinth.entered"), dimension("anime_multiverse:living_dungeon"), dimension("anime_multiverse:labyrinth"),
+                      ev("mega.entered"), dimension("anime_multiverse:mega_dungeon"))
 add(du + "entered", "root", "Dungeon Delver", "Enter the dungeon of the Multiverse: step through the Gateway into the Mega-Dungeon.",
     "minecraft:lantern", DUNGEON_ENTER, xp=10)
 add(du + "goliath", du + "entered", "Pit Guardian", "Defeat Goliath, the stone giant that guards a floor.", "minecraft:heavy_core",
@@ -342,29 +342,29 @@ add(du + "charybdis", du + "entered", "The Whirlpool", "Defeat the Spawn of Char
 add(du + "both_floors", du + "goliath", "Both Floors Clear", "Defeat both floor bosses, Goliath and Charybdis.", "minecraft:beacon",
     AND(ev("dungeon.floor_boss", 1, "goliath"), ev("dungeon.floor_boss", 1, "charybdis")), frame="challenge", xp=300)
 add(du + "meat", du + "entered", "Delicious in Dungeon", "Eat cooked monster meat. The dungeon feeds those who cook it.",
-    "nusmp:purified_monster_meat", consume("nusmp:purified_monster_meat"), xp=20)
-add(du + "basilisk", du + "meat", "Basilisk Fillet", "Eat a roast basilisk fillet.", "nusmp:roast_basilisk_fillet",
-    consume("nusmp:roast_basilisk_fillet"), xp=20)
-add(du + "direwolf", du + "meat", "Direwolf Haunch", "Eat a roast direwolf haunch.", "nusmp:roast_direwolf_haunch",
-    consume("nusmp:roast_direwolf_haunch"), xp=20)
-add(du + "labyrinth_event", du + "mega", "Gate of the Labyrinth", "Pass the Gate of the Labyrinth.", "nusmp:labyrinth_gate",
+    "anime_multiverse:purified_monster_meat", consume("anime_multiverse:purified_monster_meat"), xp=20)
+add(du + "basilisk", du + "meat", "Basilisk Fillet", "Eat a roast basilisk fillet.", "anime_multiverse:roast_basilisk_fillet",
+    consume("anime_multiverse:roast_basilisk_fillet"), xp=20)
+add(du + "direwolf", du + "meat", "Direwolf Haunch", "Eat a roast direwolf haunch.", "anime_multiverse:roast_direwolf_haunch",
+    consume("anime_multiverse:roast_direwolf_haunch"), xp=20)
+add(du + "labyrinth_event", du + "mega", "Gate of the Labyrinth", "Pass the Gate of the Labyrinth.", "anime_multiverse:labyrinth_gate",
     ev("labyrinth.entered"), xp=10)
-add(du + "archway", du + "mega", "Sealed Archway", "Carry a Sealed Archway.", "nusmp:sealed_archway", have("nusmp:sealed_archway"), xp=10)
+add(du + "archway", du + "mega", "Sealed Archway", "Carry a Sealed Archway.", "anime_multiverse:sealed_archway", have("anime_multiverse:sealed_archway"), xp=10)
 add(du + "warden", du + "mega", "Warden Down", "Defeat the Warden of a floor.", "minecraft:iron_bars",
     ev("labyrinth.warden_defeated"), frame="goal", xp=100)
-add(du + "shadow_key", du + "warden", "The Shadow Key", "Carry a Shadow Key.", "nusmp:shadow_key", have("nusmp:shadow_key"), xp=30)
+add(du + "shadow_key", du + "warden", "The Shadow Key", "Carry a Shadow Key.", "anime_multiverse:shadow_key", have("anime_multiverse:shadow_key"), xp=30)
 add(du + "seal", du + "shadow_key", "A Seal Opens", "Open a seal of the Labyrinth with the key.", "minecraft:tripwire_hook",
     ev("labyrinth.seal_opened"), frame="goal", xp=80)
-add(du + "peak_altar", du + "seal", "Peak Altar", "Carry a Peak Altar.", "nusmp:peak_altar", have("nusmp:peak_altar"), xp=20)
-add(du + "vault", du + "seal", "The Vault", "Open the vault at the top of the Labyrinth.", "nusmp:relic_pedestal",
+add(du + "peak_altar", du + "seal", "Peak Altar", "Carry a Peak Altar.", "anime_multiverse:peak_altar", have("anime_multiverse:peak_altar"), xp=20)
+add(du + "vault", du + "seal", "The Vault", "Open the vault at the top of the Labyrinth.", "anime_multiverse:relic_pedestal",
     ev("labyrinth.vault_opened"), frame="challenge", xp=300)
-add(du + "traps", du + "mega", "Tabletop Traps", "Carry a pitfall tile, a snuffer glyph or a riddle stone.", "nusmp:pitfall_tile",
-    have("nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:riddle_stone", mode="any"), xp=15)
+add(du + "traps", du + "mega", "Tabletop Traps", "Carry a pitfall tile, a snuffer glyph or a riddle stone.", "anime_multiverse:pitfall_tile",
+    have("anime_multiverse:pitfall_tile", "anime_multiverse:snuffer_glyph", "anime_multiverse:riddle_stone", mode="any"), xp=15)
 
 # The Mega-Dungeon (1.54.0): one dimension that grows a sector at a time. Its branch hangs off the root like the Labyrinth's, so the older
 # dungeons keep their own branches.
 add(du + "mega", "root", "The Mega-Dungeon", "Enter the Mega-Dungeon, one endless dungeon that grows every time a sector guardian falls.",
-    "nusmp:labyrinth_gate", dimension("nusmp:mega_dungeon"), frame="goal", xp=60)
+    "anime_multiverse:labyrinth_gate", dimension("anime_multiverse:mega_dungeon"), frame="goal", xp=60)
 add(du + "mega_gateway", du + "mega", "Through the Gateway", "Step through a Gateway into the Mega-Dungeon.", "minecraft:lantern",
     ev("mega.entered"), xp=10)
 add(du + "mega_rest", du + "mega", "A Safe Seat", "Rest at a seat, a hearth or a bed in a safe zone. Nothing else heals you down here.",
@@ -376,7 +376,7 @@ add(du + "mega_sector", du + "mega", "Sector Cleared", "Defeat the Labyrinth Gua
 add(du + "mega_sector_3", du + "mega_sector", "Three Sectors Deep", "Clear three sectors of the Mega-Dungeon.", "minecraft:beacon",
     ev("mega.sector_cleared", 3), frame="challenge", xp=300)
 add(du + "mega_crucible", du + "mega_sector", "The Crucible of Choice", "Take a relic from a Crucible. Only one can be taken, and the dungeon answers.",
-    "nusmp:relic_pedestal", ev("mega.crucible_choice"), frame="challenge", xp=300)
+    "anime_multiverse:relic_pedestal", ev("mega.crucible_choice"), frame="challenge", xp=300)
 # 1.55.0: the bidirectional Mega-Dungeon (Floor 0, the two roads, the System, standard gear); appended after the older ones so nothing existing changes
 add(du + "mega_hub", du + "mega", "Floor 0", "Arrive in the Sanctuary Hub: a safe place to build, and the start of both roads.",
     "minecraft:grass_block", ev("mega.hub"), xp=15)
@@ -397,33 +397,33 @@ add(du + "mega_gear_rare", du + "mega_gear", "Rare Grade", "Find a Rare-grade pi
 
 # ============================================================================================================== spirits
 spi = "spirits/"
-add(spi + "charm", "root", "Spirit Charm", "Carry a Spirit Charm, the key to the spirits.", "nusmp:spirit_charm", have("nusmp:spirit_charm"),
+add(spi + "charm", "root", "Spirit Charm", "Carry a Spirit Charm, the key to the spirits.", "anime_multiverse:spirit_charm", have("anime_multiverse:spirit_charm"),
     xp=15)
-add(spi + "lord_skill", spi + "charm", "Spirit Lord", "Carry the Spirit Lord skill.", "nusmp:spirit_lord_skill", have("nusmp:spirit_lord_skill"),
+add(spi + "lord_skill", spi + "charm", "Spirit Lord", "Carry the Spirit Lord skill.", "anime_multiverse:spirit_lord_skill", have("anime_multiverse:spirit_lord_skill"),
     frame="goal", xp=60)
 add(spi + "contract", spi + "charm", "A Spirit Answers", "Sign a contract with a spirit.", "minecraft:soul_lantern",
     ev("spirit.contract", 1, "spirit"), frame="goal", xp=80)
 add(spi + "meet_elemental", spi + "charm", "True Body of an Element", "Meet one of the four elemental Spirit Lords.",
-    "nusmp:spirit_core_fire", talk("nusmp:elemental_spirit_lord"), xp=30)
+    "anime_multiverse:spirit_core_fire", talk("anime_multiverse:elemental_spirit_lord"), xp=30)
 add(spi + "cores", spi + "meet_elemental", "Four Spirit Cores", "Carry the fire, water, wind and earth spirit cores.",
-    "nusmp:spirit_core_earth", have("nusmp:spirit_core_fire", "nusmp:spirit_core_water", "nusmp:spirit_core_wind", "nusmp:spirit_core_earth",
+    "anime_multiverse:spirit_core_earth", have("anime_multiverse:spirit_core_fire", "anime_multiverse:spirit_core_water", "anime_multiverse:spirit_core_wind", "anime_multiverse:spirit_core_earth",
                                     mode="all"), frame="goal", xp=100)
-add(spi + "devil_contract", "root", "A Devil's Contract", "Carry a devil contract. The price is always read last.", "nusmp:devil_contract",
-    have("nusmp:devil_contract"), xp=30)
-add(spi + "devil_union", spi + "devil_contract", "Devil Union", "Unite with a devil.", "nusmp:devil_horn", ev("devil.union"), frame="challenge",
+add(spi + "devil_contract", "root", "A Devil's Contract", "Carry a devil contract. The price is always read last.", "anime_multiverse:devil_contract",
+    have("anime_multiverse:devil_contract"), xp=30)
+add(spi + "devil_union", spi + "devil_contract", "Devil Union", "Unite with a devil.", "anime_multiverse:devil_horn", ev("devil.union"), frame="challenge",
     xp=300)
-add(spi + "devil_core", spi + "devil_contract", "A Devil's Core", "Carry a devil core.", "nusmp:devils_core",
-    have("nusmp:devil_core_zagred", "nusmp:devil_core_megicula", "nusmp:devil_core_lucifero", "nusmp:devil_core_astaroth",
-         "nusmp:devil_core_liebe", "nusmp:devil_core_lilith", "nusmp:devil_core_nahamah", "nusmp:devil_core_walgner",
-         "nusmp:devil_core_beelzebub", mode="any"), frame="goal", xp=100)
-add(spi + "devil_cores_all", spi + "devil_core", "Nine Devil Cores", "Carry all nine devil cores.", "nusmp:devil_core_beelzebub",
-    have("nusmp:devil_core_zagred", "nusmp:devil_core_megicula", "nusmp:devil_core_lucifero", "nusmp:devil_core_astaroth",
-         "nusmp:devil_core_liebe", "nusmp:devil_core_lilith", "nusmp:devil_core_nahamah", "nusmp:devil_core_walgner",
-         "nusmp:devil_core_beelzebub", mode="all"), frame="challenge", xp=1000)
+add(spi + "devil_core", spi + "devil_contract", "A Devil's Core", "Carry a devil core.", "anime_multiverse:devils_core",
+    have("anime_multiverse:devil_core_zagred", "anime_multiverse:devil_core_megicula", "anime_multiverse:devil_core_lucifero", "anime_multiverse:devil_core_astaroth",
+         "anime_multiverse:devil_core_liebe", "anime_multiverse:devil_core_lilith", "anime_multiverse:devil_core_nahamah", "anime_multiverse:devil_core_walgner",
+         "anime_multiverse:devil_core_beelzebub", mode="any"), frame="goal", xp=100)
+add(spi + "devil_cores_all", spi + "devil_core", "Nine Devil Cores", "Carry all nine devil cores.", "anime_multiverse:devil_core_beelzebub",
+    have("anime_multiverse:devil_core_zagred", "anime_multiverse:devil_core_megicula", "anime_multiverse:devil_core_lucifero", "anime_multiverse:devil_core_astaroth",
+         "anime_multiverse:devil_core_liebe", "anime_multiverse:devil_core_lilith", "anime_multiverse:devil_core_nahamah", "anime_multiverse:devil_core_walgner",
+         "anime_multiverse:devil_core_beelzebub", mode="all"), frame="challenge", xp=1000)
 add(spi + "soul_corruption", spi + "devil_union", "Soul Corruption", "Feel your soul corrode.", "minecraft:wither_skeleton_skull",
-    effect("nusmp:soul_corruption"), xp=40)
+    effect("anime_multiverse:soul_corruption"), xp=40)
 add(spi + "paladin", spi + "devil_contract", "Soul Paladin", "Be marked a paladin.", "minecraft:totem_of_undying",
-    effect("nusmp:paladin"), xp=40)
+    effect("anime_multiverse:paladin"), xp=40)
 
 # ============================================================================================================== squads
 sq = "squads/"
@@ -433,13 +433,13 @@ add(sq + "joined", sq + "created", "Join the Ranks", "Join a Magic Knight squad.
 add(sq + "captain", sq + "created", "Captain", "Be named the captain of a squad.", "minecraft:black_banner", ev("squad.captain"), frame="goal",
     xp=60)
 add(sq + "vice", sq + "captain", "Vice-Captain", "Name or become a vice-captain.", "minecraft:shield", ev("squad.vice"), xp=40)
-add(sq + "charter", sq + "created", "A Written Canon", "Carry a canon grimoire for a boss.", "nusmp:charter_grimoire_goliath",
-    have("nusmp:charter_grimoire_dante", "nusmp:charter_grimoire_vanica", "nusmp:charter_grimoire_zenon", "nusmp:charter_grimoire_lucius",
-         "nusmp:charter_grimoire_devil_avatar", "nusmp:charter_grimoire_goliath", "nusmp:charter_grimoire_charybdis_spawn", mode="any"),
+add(sq + "charter", sq + "created", "A Written Canon", "Carry a canon grimoire for a boss.", "anime_multiverse:charter_grimoire_goliath",
+    have("anime_multiverse:charter_grimoire_dante", "anime_multiverse:charter_grimoire_vanica", "anime_multiverse:charter_grimoire_zenon", "anime_multiverse:charter_grimoire_lucius",
+         "anime_multiverse:charter_grimoire_devil_avatar", "anime_multiverse:charter_grimoire_goliath", "anime_multiverse:charter_grimoire_charybdis_spawn", mode="any"),
     xp=30)
-add(sq + "charter_all", sq + "charter", "The Complete Canon", "Carry all seven boss canon grimoires.", "nusmp:charter_grimoire_lucius",
-    have("nusmp:charter_grimoire_dante", "nusmp:charter_grimoire_vanica", "nusmp:charter_grimoire_zenon", "nusmp:charter_grimoire_lucius",
-         "nusmp:charter_grimoire_devil_avatar", "nusmp:charter_grimoire_goliath", "nusmp:charter_grimoire_charybdis_spawn", mode="all"),
+add(sq + "charter_all", sq + "charter", "The Complete Canon", "Carry all seven boss canon grimoires.", "anime_multiverse:charter_grimoire_lucius",
+    have("anime_multiverse:charter_grimoire_dante", "anime_multiverse:charter_grimoire_vanica", "anime_multiverse:charter_grimoire_zenon", "anime_multiverse:charter_grimoire_lucius",
+         "anime_multiverse:charter_grimoire_devil_avatar", "anime_multiverse:charter_grimoire_goliath", "anime_multiverse:charter_grimoire_charybdis_spawn", mode="all"),
     frame="challenge", xp=300)
 
 # =============================================================================================================== world
@@ -453,22 +453,22 @@ for k, ttl, icon in KINGS:
 add(wo + "all_kingdoms", wo + "kingdoms", "Citizen of All Four", "Receive a grimoire from each of the four kingdoms.", "minecraft:beacon",
     ev_all(*[("grimoire.kingdom", k) for k, _, _ in KINGS]), frame="challenge", xp=300)
 add(wo + "library", wo + "kingdoms", "Grimoire Library", "Enter the Grimoire Library dimension.", "minecraft:lectern",
-    dimension("nusmp:grimoire_library"), xp=20)
+    dimension("anime_multiverse:grimoire_library"), xp=20)
 add(wo + "dream", wo + "kingdoms", "The Dream World", "Enter the Dream dimension.", "minecraft:glow_ink_sac",
-    dimension("nusmp:dream"), xp=20)
-add(wo + "arena", "root", "The Final Hour", "Enter the arena of Lucius Zogratis.", "nusmp:zogratis_hourglass", ev("arena.entered"),
+    dimension("anime_multiverse:dream"), xp=20)
+add(wo + "arena", "root", "The Final Hour", "Enter the arena of Lucius Zogratis.", "anime_multiverse:zogratis_hourglass", ev("arena.entered"),
     frame="goal", xp=100)
-add(wo + "arena_dim", wo + "arena", "The Arena Dimension", "Arrive in the Zogratis Arena dimension.", "nusmp:arena_return_sigil",
-    dimension("nusmp:zogratis_arena"), xp=20)
-add(wo + "hourglass_item", wo + "arena", "Hourglass of the Final Hour", "Carry the Hourglass of the Final Hour.", "nusmp:zogratis_hourglass",
-    have("nusmp:zogratis_hourglass"), xp=30)
+add(wo + "arena_dim", wo + "arena", "The Arena Dimension", "Arrive in the Zogratis Arena dimension.", "anime_multiverse:arena_return_sigil",
+    dimension("anime_multiverse:zogratis_arena"), xp=20)
+add(wo + "hourglass_item", wo + "arena", "Hourglass of the Final Hour", "Carry the Hourglass of the Final Hour.", "anime_multiverse:zogratis_hourglass",
+    have("anime_multiverse:zogratis_hourglass"), xp=30)
 add(wo + "hourglass_used", wo + "hourglass_item", "Turn the Glass", "Use the Hourglass and let the final hour begin.",
-    "nusmp:zogratis_hourglass", ev("arena.hourglass_used"), xp=40)
-add(wo + "sigil", wo + "arena", "Return Sigil", "Carry an Arena Return Sigil.", "nusmp:arena_return_sigil", have("nusmp:arena_return_sigil"), xp=15)
+    "anime_multiverse:zogratis_hourglass", ev("arena.hourglass_used"), xp=40)
+add(wo + "sigil", wo + "arena", "Return Sigil", "Carry an Arena Return Sigil.", "anime_multiverse:arena_return_sigil", have("anime_multiverse:arena_return_sigil"), xp=15)
 add(wo + "arena_victory", wo + "hourglass_used", "Hour's End", "Win in the arena.", "minecraft:totem_of_undying", ev("arena.victory"),
     frame="challenge", xp=500)
-add(wo + "codex", wo + "kingdoms", "Compat Codex", "Carry the Compat Codex, the book of cross-mod arts.", "nusmp:compat_codex",
-    have("nusmp:compat_codex"), xp=15)
+add(wo + "codex", wo + "kingdoms", "Compat Codex", "Carry the Compat Codex, the book of cross-mod arts.", "anime_multiverse:compat_codex",
+    have("anime_multiverse:compat_codex"), xp=15)
 
 # ========================================================================================================= challenges
 ch = "challenges/"
@@ -476,10 +476,10 @@ add(ch + "root", "root", "Trials of the Multiverse", "Harder deeds, for those wh
     ev("boss.defeated", 1), frame="goal", xp=20)
 add(ch + "norelic", ch + "root", "With Bare Hands", "Win in the arena of Lucius carrying no relic at all.", "minecraft:iron_sword",
     ev("arena.victory", 1, "norelic"), frame="challenge", xp=1500)
-add(ch + "time_decay", ch + "root", "Time Decay", "Feel the passing hour ravage you.", "minecraft:clock", effect("nusmp:time_decay"),
+add(ch + "time_decay", ch + "root", "Time Decay", "Feel the passing hour ravage you.", "minecraft:clock", effect("anime_multiverse:time_decay"),
     frame="goal", xp=50)
-add(ch + "severed", ch + "root", "Severed", "Be struck by a severing blow.", "minecraft:iron_sword", effect("nusmp:severed"), xp=40)
-add(ch + "nullified", ch + "root", "Nullified", "Have your relics nullified.", "minecraft:barrier", effect("nusmp:relic_nullified"), xp=40)
+add(ch + "severed", ch + "root", "Severed", "Be struck by a severing blow.", "minecraft:iron_sword", effect("anime_multiverse:severed"), xp=40)
+add(ch + "nullified", ch + "root", "Nullified", "Have your relics nullified.", "minecraft:barrier", effect("anime_multiverse:relic_nullified"), xp=40)
 add(ch + "paladins_5", ch + "root", "An Army of Souls", "Convert five souls into paladins.", "minecraft:totem_of_undying",
     ev("paladin.converted", 5), frame="goal", xp=100)
 add(ch + "corpses_10", ch + "root", "Necromancer", "Raise ten soul corpses.", "minecraft:wither_skeleton_skull", ev("corpse.raised", 10),
@@ -490,29 +490,29 @@ add(ch + "genesis_relic", ch + "root", "Genesis in Hand", "Hold a relic of Genes
     frame="challenge", xp=500)
 add(ch + "ten_pages_boss", ch + "root", "Armed and Ready", "Unlock ten pages and defeat three bosses.", "minecraft:enchanted_golden_apple",
     AND(ev("page.unlocked", 10), ev("boss.defeated", 3)), frame="goal", xp=150)
-add(ch + "lucius_all_stages", ch + "root", "Three Stages, One Life", "Push Lucius through all three stages.", "nusmp:zogratis_hourglass",
+add(ch + "lucius_all_stages", ch + "root", "Three Stages, One Life", "Push Lucius through all three stages.", "anime_multiverse:zogratis_hourglass",
     AND(ev("boss.phase", 1, "lucius:2"), ev("boss.phase", 1, "lucius:3")), frame="challenge", xp=400)
 
 # ================================================================================================= arcs and future
 ar = "arcs/"
 # (key, title, milestone desc, icon, milestone crit)
 ARCS = [
-    ("hage_village", "Hage Village", "Be chosen by a grimoire, as Asta and Yuno were at the edge of the world.", "nusmp:grimoire",
+    ("hage_village", "Hage Village", "Be chosen by a grimoire, as Asta and Yuno were at the edge of the world.", "anime_multiverse:grimoire",
      ev("ceremony.completed")),
     ("entrance_exam", "Magic Knights Entrance Exam", "Take the tower's exam and learn what magic is born in you.", "minecraft:enchanted_book",
      ev("wizard.questionnaire")),
-    ("dungeon_arc", "The Dungeon Arc", "Enter a dungeon of the Multiverse.", "nusmp:labyrinth_gate", DUNGEON_ENTER),
+    ("dungeon_arc", "The Dungeon Arc", "Enter a dungeon of the Multiverse.", "anime_multiverse:labyrinth_gate", DUNGEON_ENTER),
     ("dark_triad", "Dark Triad: Royal Capital", "Call on a signature spell and stand with the Royal Capital.", "minecraft:nether_star",
      ev("spell.cast.signature")),
-    ("eye_midnight", "Eye of the Midnight Sun", "Wear a relic of a lost age.", "nusmp:ring_of_power", ev("relic.equipped")),
+    ("eye_midnight", "Eye of the Midnight Sun", "Wear a relic of a lost age.", "anime_multiverse:ring_of_power", ev("relic.equipped")),
     ("witches_forest", "The Witches' Forest", "Save Rouge, the witch's cat.", "minecraft:string", ev("rouge.saved")),
     ("underwater_temple", "The Underwater Temple", "Cast the magic of water.", "minecraft:water_bucket", ev("spell.cast", 1, "water")),
-    ("royal_knights", "Royal Knights Selection Exam", "Pass the gate of the Labyrinth.", "nusmp:labyrinth_gate", ev("labyrinth.entered")),
+    ("royal_knights", "Royal Knights Selection Exam", "Pass the gate of the Labyrinth.", "anime_multiverse:labyrinth_gate", ev("labyrinth.entered")),
     ("spade_raid", "Spade Kingdom Raid", "Defeat any boss of the Multiverse.", "minecraft:black_banner", ev("boss.defeated")),
     ("heart_elf", "Heart Kingdom: Elf Reincarnation", "Sign a contract with a spirit.", "minecraft:red_banner", ev("spirit.contract", 1, "spirit")),
     ("diamond_kingdom", "The Diamond Kingdom", "Merge two magics into one.", "minecraft:diamond", ev("magic.merged")),
-    ("spade_final", "Spade Kingdom: the Final Arc", "Enter the arena of the Final Hour.", "nusmp:zogratis_hourglass", ev("arena.entered")),
-    ("devil_arc", "The Devil Arc", "Unite with a devil.", "nusmp:devil_horn", ev("devil.union")),
+    ("spade_final", "Spade Kingdom: the Final Arc", "Enter the arena of the Final Hour.", "anime_multiverse:zogratis_hourglass", ev("arena.entered")),
+    ("devil_arc", "The Devil Arc", "Unite with a devil.", "anime_multiverse:devil_horn", ev("devil.union")),
 ]
 prev = "root"
 for key, ttl, desc, icon, crit in ARCS:

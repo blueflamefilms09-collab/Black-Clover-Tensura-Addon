@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class BasicGrimoiresTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     /** The books that got generic pages, and the least generic pages a basic book of them shows afterwards. */
     private static final Map<String, Integer> TOPPED_UP = Map.of("book_fire", 6, "book_water", 6, "book_wind", 6, "book_ice", 6, "book_beast", 6, "book_dark", 5);
 
@@ -65,7 +65,7 @@ class BasicGrimoiresTest {
     /** book registry path -> (class, ElementBooks method) from NUSkills. */
     private static Map<String, String[]> bookClasses() throws IOException {
         Map<String, String[]> out = new LinkedHashMap<>();
-        Matcher m = Pattern.compile("book\\(\"(book_[a-z_]+)\",\\s*com\\.newuniverse\\.nusmp\\.book\\.([A-Za-z]+)(?:::|\\.)?([A-Za-z]*)").matcher(read(SRC.resolve("skill/NUSkills.java")));
+        Matcher m = Pattern.compile("book\\(\"(book_[a-z_]+)\",\\s*com\\.newuniverse\\.anime_multiverse\\.book\\.([A-Za-z]+)(?:::|\\.)?([A-Za-z]*)").matcher(read(SRC.resolve("skill/NUSkills.java")));
         while (m.find()) out.put(m.group(1), new String[]{m.group(2), m.group(3)});
         return out;
     }
@@ -290,13 +290,13 @@ class BasicGrimoiresTest {
     @Test
     void everyGenericPageHasTextAndAPolicyLine() throws IOException {
         JsonObject lang = JsonParser.parseString(read(Path.of("tools/lang/basic_spells.json"))).getAsJsonObject();
-        JsonObject policy = JsonParser.parseString(read(Path.of("src/main/resources/data/nusmp/armour_policy.json"))).getAsJsonObject().getAsJsonObject("magics");
+        JsonObject policy = JsonParser.parseString(read(Path.of("src/main/resources/data/anime_multiverse/armour_policy.json"))).getAsJsonObject().getAsJsonObject("magics");
         Set<String> listed = new HashSet<>();
         for (var e : policy.entrySet()) if (e.getValue().getAsJsonObject().has("new_pages")) for (var x : e.getValue().getAsJsonObject().getAsJsonArray("new_pages")) listed.add(x.getAsString());
         int n = 0;
         for (var e : basicAdded().entrySet()) for (String id : e.getValue()) {
             n++;
-            String key = "nusmp.page." + e.getKey() + "." + id;
+            String key = "anime_multiverse.page." + e.getKey() + "." + id;
             assertTrue(lang.has(key) && lang.get(key).getAsString().length() > 60, "lang: " + key);
             assertTrue(listed.contains(id), id + " is not in the armour policy's new_pages");
         }

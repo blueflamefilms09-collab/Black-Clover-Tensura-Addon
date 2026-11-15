@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:spirits/devil_contract",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:devil_horn"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spirits.devil_union.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spirits.devil_union.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_devil_union": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "devil.union"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_devil_union"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

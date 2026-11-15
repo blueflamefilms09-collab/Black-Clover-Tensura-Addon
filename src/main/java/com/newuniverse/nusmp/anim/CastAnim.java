@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /**
  * 0.54: the spell-casting body animations (docs/cast_animation_guide.md). The server selects one-shot release poses and
  * looping idle poses; every client that sees the player plays them
- * ({@code client.CastAnimClient}, keyframes in assets/nusmp/animations/player/cast.animation.json made by tools/gen_cast_animations.py).
+ * ({@code client.CastAnimClient}, keyframes in assets/anime_multiverse/animations/player/cast.animation.json made by tools/gen_cast_animations.py).
  * Nothing here delays or changes a spell: the clips attach to moments that already exist.
  */
 public final class CastAnim {

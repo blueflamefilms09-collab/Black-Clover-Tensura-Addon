@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 /**
- * Why: the loot pool entry type {@code nusmp:relic}: {@code {"type":"nusmp:relic","min_grade":"rare","max_grade":"legend","weight":10}}.
+ * Why: the loot pool entry type {@code anime_multiverse:relic}: {@code {"type":"anime_multiverse:relic","min_grade":"rare","max_grade":"legend","weight":10}}.
  * A relic is not a fixed item in a JSON list: it is "one relic of these grades that nobody in this world has yet", decided by the God of
  * Order's ledger. Naming relic items in a loot table would break that in three ways: every wave of new relics would need the JSON edited,
  * a table could hand out a relic that already lives (the ledger would then hunt the duplicate), and a pair would need two entries that

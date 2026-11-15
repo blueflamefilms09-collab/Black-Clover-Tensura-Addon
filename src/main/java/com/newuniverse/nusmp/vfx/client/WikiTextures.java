@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 
 /**
- * The textures of the wiki magics (assets/nusmp/textures/particle/wiki_*.png, tools/gen_wiki_magic_textures.py), with a safe fallback.
+ * The textures of the wiki magics (assets/anime_multiverse/textures/particle/wiki_*.png, tools/gen_wiki_magic_textures.py), with a safe fallback.
  *
  * <p>Whether each file exists is checked ONCE, when resources load ({@link #reload}, called from {@link VfxDefinitions}) or on first
  * use, and cached in arrays; the render path only reads the arrays, it never asks the resource manager. A texture that is missing

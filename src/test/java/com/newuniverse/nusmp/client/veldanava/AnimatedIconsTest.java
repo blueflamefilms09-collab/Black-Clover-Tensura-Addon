@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * an icon with a missing file, a tinted pixel hiding under transparency (a dark fringe once the game filters the texture), or a tick that allocates would only show up in a game, so they are checked here.
  */
 class AnimatedIconsTest {
-    private static final Path ASSETS = Paths.get("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Paths.get("src/main/resources/assets/anime_multiverse");
     private static final Path SRC = Paths.get("src/main/java/com/newuniverse/nusmp");
 
     @Test

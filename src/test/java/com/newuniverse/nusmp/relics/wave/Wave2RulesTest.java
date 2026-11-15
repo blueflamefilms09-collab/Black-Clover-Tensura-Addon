@@ -94,7 +94,7 @@ class Wave2RulesTest {
         assertEquals(Wave2Rules.Hit.SPELL, Wave2Rules.classify("minecraft:magic", false));
         assertEquals(Wave2Rules.Hit.SPELL, Wave2Rules.classify("minecraft:indirect_magic", false));
         assertEquals(Wave2Rules.Hit.SPELL, Wave2Rules.classify("tensura:fire_ball", false));
-        assertEquals(Wave2Rules.Hit.SPELL, Wave2Rules.classify("nusmp:grimoire", false));
+        assertEquals(Wave2Rules.Hit.SPELL, Wave2Rules.classify("anime_multiverse:grimoire", false));
         assertEquals(Wave2Rules.Hit.OTHER, Wave2Rules.classify("minecraft:arrow", false));
         assertEquals(Wave2Rules.Hit.OTHER, Wave2Rules.classify("minecraft:fall", false));
         assertEquals(Wave2Rules.Hit.OTHER, Wave2Rules.classify(null, true));

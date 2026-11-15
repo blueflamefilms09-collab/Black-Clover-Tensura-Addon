@@ -12,7 +12,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 
 
 def write_json(path, obj):
@@ -91,7 +91,7 @@ def save(name, px):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     img.save(path)
     write_json(os.path.join(ASSETS, "models", "item", name + ".json"),
-               {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + name}})
+               {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + name}})
 
 
 if __name__ == "__main__":

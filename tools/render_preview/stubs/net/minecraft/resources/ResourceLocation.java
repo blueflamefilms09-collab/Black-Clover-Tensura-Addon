@@ -4,7 +4,7 @@ import java.util.function.UnaryOperator;
 
 /**
  * Preview stub of Minecraft 1.21.1's ResourceLocation: immutable namespace + path, built only through the factories (the constructor is
- * private in 1.21, like here). The preview maps "nusmp:textures/aura/x.png" to src/main/resources/assets/nusmp/textures/aura/x.png.
+ * private in 1.21, like here). The preview maps "anime_multiverse:textures/aura/x.png" to src/main/resources/assets/anime_multiverse/textures/aura/x.png.
  */
 public final class ResourceLocation implements Comparable<ResourceLocation> {
     public static final char NAMESPACE_SEPARATOR = ':';

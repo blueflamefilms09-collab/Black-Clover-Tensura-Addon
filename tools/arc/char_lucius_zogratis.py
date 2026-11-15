@@ -1,4 +1,4 @@
-"""Why: Lucius Zogratis, the Wizard King's other soul and the mod's main Zogratis antagonist (entity nusmp:lucius_zogratis, entity/zogratis/LuciusBoss, and the clones of
+"""Why: Lucius Zogratis, the Wizard King's other soul and the mod's main Zogratis antagonist (entity anime_multiverse:lucius_zogratis, entity/zogratis/LuciusBoss, and the clones of
 entity/zogratis/ZogratisCloneEntity, which wear the same bodies). The hand-built model was the quality bar the art kit was copied from (tools/gen_zogratis_lucius.py); the owner
 now wants every mob on the player's proportions with the kit, so this is the same man again as a kit character. From the old design: the human form is a pale man with a short
 spiky black head of hair, red eyes, a small sigil on the left of the forehead, a faint smile, a huge white fur mantle over a tall dark collar and a choker, a long black cloak with a

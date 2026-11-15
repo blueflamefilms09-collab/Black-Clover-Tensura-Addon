@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 
 /**
  * Why: a client decides alone whether it may start cracking a block, so it has to be told which blocks of the hall it stands in are the interactive elements. The server sends one small packet,
- * {@code nusmp:decennial_breakables}, with the cells of the elements of the hall the player is in (and an empty one when the player leaves), and the handler fills {@link BreakableCells}, which is
+ * {@code anime_multiverse:decennial_breakables}, with the cells of the elements of the hall the player is in (and an empty one when the player leaves), and the handler fills {@link BreakableCells}, which is
  * side-neutral. It is the registration pattern of the alignment packet ({@code StreamCodec.of}, a {@code RegisterPayloadHandlersEvent} listener on the mod bus, {@code optional()} so a client without
  * the mod still joins; such a client simply cannot start the crack, and the server still refuses it correctly). A hall has at most a few thousand element cells, so the list is bounded.
  */
@@ -26,7 +26,7 @@ public final class DecennialNet {
 
     /** The cells (packed block positions) the receiving client may break. */
     public record Breakables(long[] cells) implements CustomPacketPayload {
-        public static final Type<Breakables> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_breakables"));
+        public static final Type<Breakables> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_breakables"));
         public static final StreamCodec<FriendlyByteBuf, Breakables> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> buf.writeLongArray(p.cells().length > MAX_CELLS ? java.util.Arrays.copyOf(p.cells(), MAX_CELLS) : p.cells()),
                 buf -> new Breakables(buf.readLongArray(null, MAX_CELLS)));
@@ -46,7 +46,7 @@ public final class DecennialNet {
         try {
             PacketDistributor.sendToPlayer(player, new Breakables(cells));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The breakable cells of a hall could not be sent to {}: {}", player.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] The breakable cells of a hall could not be sent to {}: {}", player.getGameProfile().getName(), e.toString());
         }
     }
 }

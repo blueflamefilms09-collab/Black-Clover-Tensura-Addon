@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 VIEWS = {"profile": (0, 0), "three_quarter": (35, 22), "edge": (-90, 0), "top": (0, 90), "back": (180, 0)}
 

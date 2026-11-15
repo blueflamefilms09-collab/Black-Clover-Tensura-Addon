@@ -33,8 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CyclicAssemblerTest {
     private static CatalogSource catalog() throws IOException {
         CatalogSource cat = CatalogSource.load(CatalogSource.DEFAULT);
-        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "nusmp:mega/side", "nusmp:mega/cap", "nusmp:mega/arena",
-                "nusmp:mega/antechamber", "nusmp:mega/vault_3", "nusmp:mega/onward", "nusmp:mega/link"}) {
+        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "anime_multiverse:mega/side", "anime_multiverse:mega/cap", "anime_multiverse:mega/arena",
+                "anime_multiverse:mega/antechamber", "anime_multiverse:mega/vault_3", "anime_multiverse:mega/onward", "anime_multiverse:mega/link"}) {
             PoolDef p = cat.pool(id);
             boolean stocked = false;
             if (p != null) for (PoolEntry e : p.entries()) if (cat.shape(e.shape()) != null) stocked = true;

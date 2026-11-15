@@ -4,7 +4,7 @@ import os
 
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "item", "magic_stone.png")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "magic_stone.png")
 im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
 px = im.load()
 cx, cy = 7.5, 7.5

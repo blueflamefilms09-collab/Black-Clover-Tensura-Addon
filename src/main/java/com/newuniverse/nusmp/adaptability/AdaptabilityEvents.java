@@ -64,7 +64,7 @@ public final class AdaptabilityEvents {
                     tag.putBoolean(AdaptabilitySkill.SEVERANCE_IMMUNE, true);
                     AdaptabilityTensura.clearSeverance(p);
                     inst.addMasteryPoint(p, AdaptabilityConfig.selfMastery(mastered));
-                    p.sendSystemMessage(Component.translatableWithFallback("nusmp.skill.msg.adaptability.severance", "You adapted: Severance Immunity.").withStyle(ChatFormatting.GOLD));
+                    p.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.skill.msg.adaptability.severance", "You adapted: Severance Immunity.").withStyle(ChatFormatting.GOLD));
                 }
             }
         }
@@ -117,12 +117,12 @@ public final class AdaptabilityEvents {
             Event event = (Event) events.getField("SKILL_LEARNING").get(null);
             InvocationHandler handler = (proxy, method, args) -> {
                 if (method.getDeclaringClass() == Object.class) return objectMethod(proxy, method, args);
-                try { onLearning(args); } catch (RuntimeException ex) { LOG.warn("[nusmp] Adaptability learning hook failed: {}", ex.toString()); }
+                try { onLearning(args); } catch (RuntimeException ex) { LOG.warn("[anime_multiverse] Adaptability learning hook failed: {}", ex.toString()); }
                 return EventResult.pass();
             };
             event.register(Proxy.newProxyInstance(listener.getClassLoader(), new Class<?>[] {listener}, handler));
         } catch (ReflectiveOperationException | LinkageError | RuntimeException ex) {
-            LOG.warn("[nusmp] Adaptability: Tensura's skill-learning event was not found ({}); resistances are not learned faster", ex.toString());
+            LOG.warn("[anime_multiverse] Adaptability: Tensura's skill-learning event was not found ({}); resistances are not learned faster", ex.toString());
         }
     }
 

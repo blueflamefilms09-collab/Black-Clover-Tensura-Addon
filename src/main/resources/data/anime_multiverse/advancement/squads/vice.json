@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:squads/captain",
+  "display": {
+    "icon": {
+      "id": "minecraft:shield"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.squads.vice.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.squads.vice.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_squad_vice": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "squad.vice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_squad_vice"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

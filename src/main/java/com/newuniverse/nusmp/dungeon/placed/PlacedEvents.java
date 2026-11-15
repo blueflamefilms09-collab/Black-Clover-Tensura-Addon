@@ -98,6 +98,6 @@ public final class PlacedEvents {
     private static void failed(RuntimeException ex) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] the player-placed block exemption hit a fault and carries on (logged once): {}", ex.toString());
+        LOG.warn("[anime_multiverse] the player-placed block exemption hit a fault and carries on (logged once): {}", ex.toString());
     }
 }

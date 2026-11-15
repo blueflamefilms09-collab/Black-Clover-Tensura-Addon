@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/mastery_violet_sword_belt"
-  }
-}

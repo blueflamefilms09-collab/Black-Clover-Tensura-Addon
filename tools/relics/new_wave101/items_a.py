@@ -97,7 +97,7 @@ def build_puzzle(vm, info):
 add(Item("millennium_puzzle", build_puzzle_canon, dict(style="void", dark=(2, 4, 24), mid=(40, 70, 170), hot=(255, 232, 150)), hand_size=0.95, hand_style="hang", seed=101, worn="pieces",
          pieces=[("", "body", False)], anchor="body",
          layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
-                 PL("eye glint", "glints", "nusmp:gem_sparkle", 0xFFE890, count=1, every=12, radius=0.4, rise=0.01)],
+                 PL("eye glint", "glints", "anime_multiverse:gem_sparkle", 0xFFE890, count=1, every=12, radius=0.4, rise=0.01)],
          acts={"other_me": [ST("SHADOW_UNITE", 0x2A4FC0, 3.2, 70, "self"), ST("DIVINE_HALO", 0xFFE890, 3.0, 60, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
                "shadow_game": [ST("SHADOW_POOL", 0x2A4FC0, 5.0, 90, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF0C050, 4.6, 60, "ground"), ST("DIVINE_SIGIL", 0xFFE890, 3.0, 50, "sky")],
                "summon_duel_monster": [ST("MAGIC_CIRCLE", 0xF0C050, 4.4, 60, "front"), ST("SHADOW_UNITE", 0x2A4FC0, 3.0, 50, "front"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 14, "front")]}))

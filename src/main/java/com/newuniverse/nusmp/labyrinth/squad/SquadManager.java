@@ -116,7 +116,7 @@ public final class SquadManager {
         } catch (Throwable t) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The squad handler failed once and goes on: {}", t.toString(), t);
+                LOG.warn("[anime_multiverse] The squad handler failed once and goes on: {}", t.toString(), t);
             }
         }
     }
@@ -140,7 +140,7 @@ public final class SquadManager {
             } catch (RuntimeException | LinkageError fault) {
                 if (!warned) {
                     warned = true;
-                    LOG.warn("[nusmp] A squad failed once and was dropped: {}", fault.toString(), fault);
+                    LOG.warn("[anime_multiverse] A squad failed once and was dropped: {}", fault.toString(), fault);
                 }
                 it.remove();
             }

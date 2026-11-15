@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 /** 0.53: "this player has this aura for this long" (ticks 0 = it ends). Sent to everyone who can see the player. */
 public record PlayerAuraPayload(int entity, int aura, int ticks, int style) implements CustomPacketPayload {
-    public static final Type<PlayerAuraPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "player_aura"));
+    public static final Type<PlayerAuraPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "player_aura"));
     public static final StreamCodec<FriendlyByteBuf, PlayerAuraPayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.aura()); buf.writeVarInt(p.ticks()); buf.writeVarInt(p.style()); },   // the style is a VarInt since the Equip Magic: Partial Armour carries a piece mask above the armour number (values under 128 are the same single byte as before)
             buf -> new PlayerAuraPayload(buf.readVarInt(), buf.readByte(), buf.readVarInt(), buf.readVarInt()));

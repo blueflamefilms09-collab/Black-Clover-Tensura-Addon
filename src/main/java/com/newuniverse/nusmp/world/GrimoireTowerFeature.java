@@ -24,7 +24,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
  */
 public class GrimoireTowerFeature extends Feature<NoneFeatureConfiguration> {
     static final ResourceKey<LootTable> LOOT = ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath("nusmp", "chests/grimoire_tower"));
+            ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/grimoire_tower"));
 
     public GrimoireTowerFeature() { super(NoneFeatureConfiguration.CODEC); }
 

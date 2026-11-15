@@ -223,7 +223,7 @@ def main(argv):
     flags = {f for f in ("--lightless",) if f in args}
     args = [a for a in args if a not in flags]
     name = args[0]
-    path = os.path.join(opts.get("--root", L.RES), "data", "nusmp", "structure", name + ".nbt")
+    path = os.path.join(opts.get("--root", L.RES), "data", "anime_multiverse", "structure", name + ".nbt")
     t = load(path, name)
     res = int(opts.get("--res", 4))
     w, h = (int(v) for v in opts.get("--size", "640x360").split("x"))

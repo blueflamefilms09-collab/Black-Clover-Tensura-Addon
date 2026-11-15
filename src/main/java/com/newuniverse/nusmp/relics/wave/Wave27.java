@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  * Why: Relics of Many Worlds, part 4, wave 27: four headpieces (Soul Searchers, the Mad King's Crown, the Orb of Ancient Sight, the Trickster Mask)
  * and eight gloves and gauntlets (Arcane Trickster's Glove, Bear's Grip, Dragon's Fire Gauntlet, Gauntlet Mimic, Gauntlet of the Stormcaller,
  * Glove of Appreciation, Gloves of Opportunity, Goristro Charger). The long card text of each, as game rules, is in the lang keys
- * {@code item.nusmp.<id>.card}; the numbers are in {@link Wave27Rules} (pure), the abilities in {@link Wave27Head} and {@link Wave27Hands}, the
+ * {@code item.anime_multiverse.<id>.card}; the numbers are in {@link Wave27Rules} (pure), the abilities in {@link Wave27Head} and {@link Wave27Hands}, the
  * handlers in {@link Wave27Events}.
  * <p>
  * Tabletop became Minecraft: a long rest is a Minecraft day (uses and charges come back at dawn), five feet are one block, a saving throw is the

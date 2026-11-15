@@ -28,10 +28,10 @@ public final class PocketSigil {
         t.putString(KEY, def.id());
         t.putLong(SEED, seed);
         s.set(DataComponents.CUSTOM_DATA, CustomData.of(t));
-        s.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("pocket.nusmp." + def.id() + ".sigil", def.seal().sigil()).withStyle(net.minecraft.network.chat.Style.EMPTY.withColor(def.accent()).withItalic(false)));
+        s.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".sigil", def.seal().sigil()).withStyle(net.minecraft.network.chat.Style.EMPTY.withColor(def.accent()).withItalic(false)));
         s.set(DataComponents.LORE, new ItemLore(List.of(
-                Component.translatableWithFallback("message.nusmp.mega.pocket.sigil.lore1", "Cut for the seal of %s.", Component.translatableWithFallback("pocket.nusmp." + def.id() + ".name", def.name())).withStyle(ChatFormatting.GRAY),
-                Component.translatableWithFallback("message.nusmp.mega.pocket.sigil.lore2", "Press it to the seal. It is spent when the seal opens.").withStyle(ChatFormatting.DARK_GRAY))));
+                Component.translatableWithFallback("message.anime_multiverse.mega.pocket.sigil.lore1", "Cut for the seal of %s.", Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".name", def.name())).withStyle(ChatFormatting.GRAY),
+                Component.translatableWithFallback("message.anime_multiverse.mega.pocket.sigil.lore2", "Press it to the seal. It is spent when the seal opens.").withStyle(ChatFormatting.DARK_GRAY))));
         s.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, Boolean.TRUE);
         return s;
     }

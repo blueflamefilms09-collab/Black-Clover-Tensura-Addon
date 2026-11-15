@@ -4,7 +4,7 @@ Relics of Many Worlds, wave 4: the 16x16 inventory sprites and flat item models 
 
     python3 tools/relics/wave4_icons.py [--preview out.png]
 
-Writes under src/main/resources/assets/nusmp/
+Writes under src/main/resources/assets/anime_multiverse/
   textures/item/<id>.png      the sprite: a dark outline, three or four shades per material lit from the upper left, a few glow pixels
                               in the relic's glow colour, and one outline pixel in the grade's colour (the grade rim)
   models/item/<id>.json       the flat item model (parent item/generated, layer0 = the sprite): neck relics are worn, not held, so
@@ -25,7 +25,7 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -426,7 +426,7 @@ SPRITES = [
 
 
 def model_json(rid):
-    return {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}
+    return {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}
 
 
 def main():

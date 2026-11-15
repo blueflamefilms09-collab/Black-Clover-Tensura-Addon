@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * formulas the drawing used to run on every frame (copied here), over EVERY model and animation file of the mod.
  */
 class GeoDrawCacheTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
 
     private static JsonObject json(File f) throws Exception {
         try (Reader r = new FileReader(f)) { return JsonParser.parseReader(r).getAsJsonObject(); }

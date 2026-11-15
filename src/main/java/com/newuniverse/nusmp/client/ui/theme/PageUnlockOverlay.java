@@ -49,7 +49,7 @@ public final class PageUnlockOverlay {
     /** Mod bus. */
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterGuiLayersEvent e) ->
-                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "page_unlock"), PageUnlockOverlay::render));
+                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "page_unlock"), PageUnlockOverlay::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
     }
@@ -119,8 +119,8 @@ public final class PageUnlockOverlay {
         float alpha = ToastTimeline.alpha(age);
         float anim = UiTheme.now();
         int tx0 = 72, tw = W - 80;
-        String result = UiLang.get(UiLang.RESULT, t.cooldown() > 0 ? UiLang.get("nusmp.ui.toast.cost", t.cost(), t.cooldown()) : UiLang.get("nusmp.ui.toast.cost_nocd", t.cost()));
-        SAGE.set(font, UiLang.get("nusmp.ui.toast.page_open"), descShown, result, tw, anim + ToastTimeline.TEXT_START);
+        String result = UiLang.get(UiLang.RESULT, t.cooldown() > 0 ? UiLang.get("anime_multiverse.ui.toast.cost", t.cost(), t.cooldown()) : UiLang.get("anime_multiverse.ui.toast.cost_nocd", t.cost()));
+        SAGE.set(font, UiLang.get("anime_multiverse.ui.toast.page_open"), descShown, result, tw, anim + ToastTimeline.TEXT_START);
         int h = Math.max(62, SAGE.height(font) + 35);                       // name, the text, the bar: the panel is as tall as its text
         int x = (g.guiWidth() - W) / 2;
         int y = 8 - Math.round((1f - ToastTimeline.slide(age)) * (h + 16));
@@ -135,7 +135,7 @@ public final class PageUnlockOverlay {
         SAGE.draw(g, font, tx, y + 19, anim, alpha);
 
         BAR.update(t.mastery() / 100f, anim, true);
-        String label = UiLang.get("nusmp.ui.toast.mastery", t.mastery(), t.unlocked(), t.pages());
+        String label = UiLang.get("anime_multiverse.ui.toast.mastery", t.mastery(), t.unlocked(), t.pages());
         int lw = font.width(label);
         BAR.draw(g, tx, y + h - 11, tw - lw - 6, 4, UiTheme.VIOLET, anim, alpha);
         if (((UiMath.scaleAlpha(UiTheme.TEXT_DIM, alpha)) >>> 24) >= 8)

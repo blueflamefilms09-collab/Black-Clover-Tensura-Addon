@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * relies on: inheritance, the lookup order id, look, slot, the overrides of a use line, and that every use line names a style that exists.
  */
 class HandTransformsTest {
-    static final Path FILE = Path.of("src/main/resources/assets/nusmp/relic_hand/transforms.txt");
+    static final Path FILE = Path.of("src/main/resources/assets/anime_multiverse/relic_hand/transforms.txt");
 
     static final List<String> SAMPLE = List.of(
             "# a sample", "",

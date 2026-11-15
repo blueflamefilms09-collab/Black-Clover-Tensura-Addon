@@ -1,6 +1,6 @@
 """Generates the grimoire item textures (the 0.21 look, built after the Black Clover wiki grimoire art).
 
-    python tools/gen_grimoire_book_textures.py   ->  src/main/resources/assets/nusmp/textures/item/grimoire_book/*.png
+    python tools/gen_grimoire_book_textures.py   ->  src/main/resources/assets/anime_multiverse/textures/item/grimoire_book/*.png
 
 Deterministic, no fonts or images. Everything the item colour handler tints is greyscale:
   tint 0 (cover colour): cover_leather, cover_tattered, spine
@@ -16,7 +16,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "item", "grimoire_book")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "grimoire_book")
 SS = 4
 
 

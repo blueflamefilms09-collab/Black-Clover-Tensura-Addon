@@ -3,10 +3,10 @@
     python tools/gen_zogratis_arena_assets.py
 
 Writes
-  assets/nusmp/textures/item/zogratis_hourglass.png          the Hourglass of the Final Hour (the inventory icon; the in-hand 3D model is
+  assets/anime_multiverse/textures/item/zogratis_hourglass.png          the Hourglass of the Final Hour (the inventory icon; the in-hand 3D model is
                                                               built from it by tools/gen_weapon_models.py, which places the mesh on this sprite's box)
-  assets/nusmp/textures/block/arena_return_sigil_top.png     the Return Sigil, top face: a gold ring and a rune on black stone
-  assets/nusmp/textures/block/arena_return_sigil_side.png    its sides: black bricks with a gold seam
+  assets/anime_multiverse/textures/block/arena_return_sigil_top.png     the Return Sigil, top face: a gold ring and a rune on black stone
+  assets/anime_multiverse/textures/block/arena_return_sigil_side.png    its sides: black bricks with a gold seam
 Run this BEFORE `python tools/gen_weapon_models.py zogratis_hourglass`.
 """
 import math
@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures")
 
 GOLD = (222, 170, 52)
 GOLD_HI = (255, 226, 130)

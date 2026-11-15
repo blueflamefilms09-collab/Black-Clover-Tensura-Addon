@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:arc/saga_seven_deadly_sins",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.arc.defeated_merlin.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.arc.defeated_merlin.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_defeated_merlin": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "arc.defeated",
+        "arg": "merlin"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_defeated_merlin"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

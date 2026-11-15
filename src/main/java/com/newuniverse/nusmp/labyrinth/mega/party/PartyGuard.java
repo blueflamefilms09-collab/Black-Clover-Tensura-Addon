@@ -68,7 +68,7 @@ public final class PartyGuard {
         } catch (RuntimeException e) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The party guard failed for {} (further failures are not logged): {}", p == null ? "?" : p.getGameProfile().getName(), e.toString());
+                LOG.warn("[anime_multiverse] The party guard failed for {} (further failures are not logged): {}", p == null ? "?" : p.getGameProfile().getName(), e.toString());
             }
             return false;
         }
@@ -96,7 +96,7 @@ public final class PartyGuard {
         } catch (RuntimeException ex) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The party guard failed (further failures are not logged): {}", ex.toString());
+                LOG.warn("[anime_multiverse] The party guard failed (further failures are not logged): {}", ex.toString());
             }
         }
     }

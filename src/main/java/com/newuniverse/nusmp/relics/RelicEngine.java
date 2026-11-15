@@ -69,7 +69,7 @@ public final class RelicEngine {
     private RelicEngine() {}
 
     private static final String ROOT = "nusmp_relics2", CD = "cd", ON = "on";
-    private static final String MOD_NS = "nusmp";
+    private static final String MOD_NS = "anime_multiverse";
     /** Per player: the attribute modifiers the engine put on them (id -> attribute), so the ones that no longer apply are taken off. */
     private static final Map<UUID, Map<ResourceLocation, Holder<Attribute>>> APPLIED = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> LAST_PACKET = new ConcurrentHashMap<>();
@@ -438,11 +438,11 @@ public final class RelicEngine {
             com.newuniverse.nusmp.relics.upgrade.UpgradeSignatures.afterAct(p, def, act);               // 1.102.0: the signature effect of an upgraded weapon's act
             com.newuniverse.nusmp.relics.upgrade.UpgradeActFx.after(p, def, act);          // 1.102.0: the act's own visual of an upgraded God relic (visual only)
         } catch (RuntimeException | LinkageError failed) {
-            org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] relic {} act {} failed", def.id(), act.key(), failed);
+            org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] relic {} act {} failed", def.id(), act.key(), failed);
         } finally {
             ActPower.end(previousPower);
         }
-        com.newuniverse.nusmp.relics.vu.VuActVfx.fire(p, def, act);                    // visual upgrade: the signature effect of an upgraded relic's act (data/nusmp/visual_upgrade/act_vfx.txt)
+        com.newuniverse.nusmp.relics.vu.VuActVfx.fire(p, def, act);                    // visual upgrade: the signature effect of an upgraded relic's act (data/anime_multiverse/visual_upgrade/act_vfx.txt)
         return true;
     }
 

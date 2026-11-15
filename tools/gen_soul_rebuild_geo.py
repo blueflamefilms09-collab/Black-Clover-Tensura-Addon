@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_soul_rebuild_geo.py        # writes every model, animation and texture, runs tools/geo_check.py
 
-Models (assets/nusmp/geo/entity/soul_<name>.geo.json, animations/entity/..., textures/entity/soul_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/soul_<name>.geo.json, animations/entity/..., textures/entity/soul_<name>.png + _glow.png):
   armour    (Space.PLAYER, one root bone per piece, drawn piece by piece by client/aura/SongArmourKit with the Djinn equip animation)
             hood (a spectral hood with a bone mask, hollow glowing eyes and two flames for horns), ribs (a ribcage of bone bars round a soul core),
             wing_r / wing_l (wings of soul fire that beat), wisps (three small souls orbiting the torso), tail (a tail of soul fire), pauldron_r/l

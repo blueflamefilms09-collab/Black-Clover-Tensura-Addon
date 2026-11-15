@@ -50,7 +50,7 @@ final class LuckLootSelfTests {
 
     private static SelfTests.Result fail(String detail) { return SelfTests.Result.fail(detail); }
 
-    private static final ResourceLocation TABLE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/selftest_luck_loot");
+    private static final ResourceLocation TABLE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/selftest_luck_loot");
 
     /** A chest table that is in no registry: four rotten flesh per roll, the chest parameter set, and an id of its own (NeoForge hands the id to the modifiers). */
     private static LootTable madeUp() {
@@ -68,12 +68,12 @@ final class LuckLootSelfTests {
 
     // ---------------------------------------------------------------- counts
     private static SelfTests.Result counts(MinecraftServer server) {
-        if (!LuckLootModifier.TYPE.isBound()) return fail("the modifier type nusmp:luck_loot is not registered");
+        if (!LuckLootModifier.TYPE.isBound()) return fail("the modifier type anime_multiverse:luck_loot is not registered");
         try {
             var res = server.getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("neoforge", "loot_modifiers/global_loot_modifiers.json"));
             if (res.isPresent()) {
                 String text = new String(res.get().open().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-                if (!text.contains("nusmp:luck_loot")) return fail("global_loot_modifiers.json does not list nusmp:luck_loot");
+                if (!text.contains("anime_multiverse:luck_loot")) return fail("global_loot_modifiers.json does not list anime_multiverse:luck_loot");
             }
         } catch (java.io.IOException | RuntimeException ex) {
             return fail("could not read the global loot modifier list: " + ex.getMessage());

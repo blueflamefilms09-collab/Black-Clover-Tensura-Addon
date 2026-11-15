@@ -1,6 +1,6 @@
 """Why: the catalogue of the effect PRIMITIVES, TRIGGERS and COUNTERS of the dungeon mechanics library, the one place that says which words a mechanic may use,
 what arguments each takes (name, type, default, range, allowed values) and which exclusive CHANNEL of the dungeon it occupies (two mechanics that need the same channel are
-never stacked: the conflict table). gen_mechanics.py writes it out as data/nusmp/mega/mechanics/ops.json; the Java side (mega/mechanics/OpCatalog) reads that file, validates every
+never stacked: the conflict table). gen_mechanics.py writes it out as data/anime_multiverse/mega/mechanics/ops.json; the Java side (mega/mechanics/OpCatalog) reads that file, validates every
 mechanic against it and the in-game self-test checks that every id here has an executor. Add a primitive HERE first, then give it an executor in PrimsPlayer / PrimsWorld / PrimsMob /
 PrimsEnv (the self-test fails until both exist)."""
 
@@ -55,7 +55,7 @@ op("item_cooldown", "creature", [a("secs", N, 6, 0.5, 60)], doc="every item on c
 op("curse_hand", "creature", [a("secs", N, 20, 1, 300), a("dmg", N, 1.0, 0, 20)], channels=["curse"], sustained=True, doc="attacking hurts the attacker")
 op("take_item", "creature", [a("item", S, "minecraft:gold_nugget"), a("count", N, 1, 1, 64)], doc="remove items from the inventory")
 op("give_item", "creature", [a("item", S, "minecraft:gold_nugget"), a("count", N, 1, 1, 64)], doc="give items")
-op("give_loot", "creature", [a("table", S, "nusmp:chests/labyrinth_trial"), a("rolls", N, 1, 1, 4)], doc="roll a loot table into the inventory")
+op("give_loot", "creature", [a("table", S, "anime_multiverse:chests/labyrinth_trial"), a("rolls", N, 1, 1, 4)], doc="roll a loot table into the inventory")
 op("xp_orbs", "creature", [a("amount", N, 20, 1, 2000)], doc="drop experience")
 op("burden", "creature", [a("secs", N, 6, 1, 120), a("per", N, 6, 1, 36)], channels=["movement"], sustained=True, doc="slowness by how full the inventory is")
 op("speed", "creature", [a("factor", N, -0.4, -0.9, 2.0), a("secs", N, 6, 1, 120), a("who", S, "players", enum=WHO)], channels=["time"], sustained=True, doc="walk speed modifier (time dilation)")
@@ -88,7 +88,7 @@ op("spawn_ambush", "mob", [a("group", S, "undead", enum=GROUPS), a("count", N, 3
 op("spawn_guard", "mob", [a("group", S, "construct", enum=GROUPS), a("count", N, 2, 1, 12), a("still", B, True), a("hp", N, 1.5, 0.5, 8)], channels=["summon"], doc="guards that hold their post")
 op("spawn_swarm", "mob", [a("kind", S, "silverfish", enum=["silverfish", "endermite", "vex", "bee", "cave_spider"]), a("count", N, 6, 1, 30)], channels=["summon"], doc="a swarm of small things")
 op("spawn_elite", "mob", [a("group", S, "knight", enum=GROUPS), a("hp", N, 3.0, 1, 12)], channels=["summon"], doc="one big monster")
-op("spawn_chest", "world", [a("loot", S, "nusmp:chests/labyrinth_trial"), a("mimic", N, 0.3, 0, 1), a("cursed", B, False), a("at", S, "auto", enum=AT)], doc="a chest, maybe a mimic, maybe cursed")
+op("spawn_chest", "world", [a("loot", S, "anime_multiverse:chests/labyrinth_trial"), a("mimic", N, 0.3, 0, 1), a("cursed", B, False), a("at", S, "auto", enum=AT)], doc="a chest, maybe a mimic, maybe cursed")
 op("buff_mobs", "mob", [a("id", S, "minecraft:strength"), a("secs", N, 10, 1, 300), a("amp", N, 0, 0, 5)], doc="effect on the monsters of the area")
 op("shield_mobs", "mob", [a("secs", N, 0, 0, 600)], channels=["shield"], doc="monsters take no damage until unshielded")
 op("unshield", "mob", [], doc="lift the shield")

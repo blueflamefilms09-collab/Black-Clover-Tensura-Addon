@@ -1,4 +1,4 @@
-"""Spirit Dive, WIND (the owner's reference pack: Yuno's Spirit Dive stills): writes the textures of the PACK wind look to src/main/resources/assets/nusmp/textures/aura/ (all deterministic:
+"""Spirit Dive, WIND (the owner's reference pack: Yuno's Spirit Dive stills): writes the textures of the PACK wind look to src/main/resources/assets/anime_multiverse/textures/aura/ (all deterministic:
 `python3 -B tools/gen_spirit_dive_wind_textures.py`).
 
 The look the pack shows: pale green-white light over the whole body, a crown of tall vertical bars with arrow-tip tops on a thin ring, ONE huge smooth leaf-shaped wing with an ornate cross at its tip,
@@ -29,7 +29,7 @@ import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
 SS = 4                                                                  # supersampling of every drawing
 
 CORE = np.array([246, 255, 246], np.float32)                             # white with a green breath

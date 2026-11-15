@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: this is everything the System remembers about ONE player, in one object that is the data attachment {@code nusmp:system_state}: the quest they are on, the
+ * Why: this is everything the System remembers about ONE player, in one object that is the data attachment {@code anime_multiverse:system_state}: the quest they are on, the
  * permanent stat points they have earned (the "permanent stat boost capability" of the brief), how many Shadow Cores they were handed (statistics), the deepest
  * floor they have reached (so that coming back to an old floor never starts a quest again) and the kind of their last quest (so that two quests in a row are
  * never the same kind). It lives on the player, not in a world table, because it must follow the player through death (the attachment is copied on death),

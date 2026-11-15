@@ -30,7 +30,7 @@ public final class SpiritDiveAnimeSelfTests {
     }
 
     private static boolean asset(String path) {
-        return SpiritDiveAnimeSelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null;
+        return SpiritDiveAnimeSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null;
     }
 
     private static Result anime(MinecraftServer server) {

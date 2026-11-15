@@ -27,7 +27,7 @@ public final class GuiMoveOptions {
                 .define("showAll", true);
         SHOW_PANELS = b.comment("Edit mode: let Tab pick the panels of the mod's screens (codex, forge, ...) so they can be placed; the panel you pick takes its place when its screen opens.")
                 .define("showPanels", false);
-        b.comment("One entry per movable GUI: empty = never moved (it draws where it always did). Set by dragging in edit mode (the GUI Move key, or /nusmp gui move), not by hand: "
+        b.comment("One entry per movable GUI: empty = never moved (it draws where it always did). Set by dragging in edit mode (the GUI Move key, or /anime_multiverse gui move), not by hand: "
                 + "p=1 placed; a=corner 0..3 (top-left, top-right, bottom-left, bottom-right); cx/cy=1 measured from the middle of the screen; ox/oy=offset in the element's own pixels; "
                 + "s=size 0.5..2.5; h=1 hidden. The ids are listed in docs/ui/gui_move.md.").push("elements");
         for (Element e : GuiMoveRegistry.all()) VALUES.put(e.id, b.define(e.id, ""));

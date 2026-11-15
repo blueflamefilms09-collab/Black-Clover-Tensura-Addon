@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Why: the forms file of a weapon ({@code data/nusmp/hero/forms/<itemId>.json}) is data the game loads and the owner reads, and nothing can open it in a game
+ * Why: the forms file of a weapon ({@code data/anime_multiverse/hero/forms/<itemId>.json}) is data the game loads and the owner reads, and nothing can open it in a game
  * here, so its rules (docs/heroweapon/design.md section 6) are checked as code: the first form is the base form, every form has the fields the loader needs, the
  * tree is a tree, the requirements are small and well-formed, the stats stay inside the budget and the ability bonus inside a quarter of it, the slots are real
  * inputs, the skills and passives named are the ones the weapon's logic implements, a form carries at most one ultimate, and no skill or passive the weapon has
@@ -28,7 +28,7 @@ public final class FormsRules {
 
     private static final Pattern ID = Pattern.compile("[a-z][a-z0-9_]*");
     private static final Pattern REGISTRY = Pattern.compile("[a-z0-9_.-]+:[a-z0-9_./-]+");
-    private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp", "c");
+    private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "anime_multiverse", "c");
 
     /** The most a form's own stat may give (design.md section 6); attack speed is checked as a range. */
     private static final Map<String, Double> STAT_MAX = Map.of("armor", 8.0, "armor_toughness", 4.0, "max_health", 12.0, "attack_damage", 14.0,

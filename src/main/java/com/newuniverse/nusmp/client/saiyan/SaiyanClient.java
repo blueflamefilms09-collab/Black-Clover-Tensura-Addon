@@ -51,31 +51,31 @@ public final class SaiyanClient {
 
     private static final Logger LOG = LogUtils.getLogger();
 
-    public static final String CATEGORY = "key.categories.nusmp";
-    public static final KeyMapping BLAST = new KeyMapping("key.nusmp.saiyan_blast", InputConstants.Type.KEYSYM, InputConstants.KEY_COMMA, CATEGORY);
-    public static final KeyMapping BARRAGE = new KeyMapping("key.nusmp.saiyan_barrage", InputConstants.Type.KEYSYM, InputConstants.KEY_MINUS, CATEGORY);
+    public static final String CATEGORY = "key.categories.anime_multiverse";
+    public static final KeyMapping BLAST = new KeyMapping("key.anime_multiverse.saiyan_blast", InputConstants.Type.KEYSYM, InputConstants.KEY_COMMA, CATEGORY);
+    public static final KeyMapping BARRAGE = new KeyMapping("key.anime_multiverse.saiyan_barrage", InputConstants.Type.KEYSYM, InputConstants.KEY_MINUS, CATEGORY);
 
-    public static final KeyMapping FLIGHT = new KeyMapping("key.nusmp.saiyan_flight", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
-    public static final KeyMapping BURST = new KeyMapping("key.nusmp.saiyan_burst", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
-    public static final KeyMapping SENSE = new KeyMapping("key.nusmp.saiyan_sense", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_INSERT, CATEGORY);
-    public static final KeyMapping SUPPRESS = new KeyMapping("key.nusmp.saiyan_suppress", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, CATEGORY);
-    public static final KeyMapping COMBO = new KeyMapping("key.nusmp.saiyan_combo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, CATEGORY);
-    public static final KeyMapping KAME = new KeyMapping("key.nusmp.saiyan_kamehameha", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_DELETE, CATEGORY);
+    public static final KeyMapping FLIGHT = new KeyMapping("key.anime_multiverse.saiyan_flight", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY);
+    public static final KeyMapping BURST = new KeyMapping("key.anime_multiverse.saiyan_burst", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
+    public static final KeyMapping SENSE = new KeyMapping("key.anime_multiverse.saiyan_sense", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_INSERT, CATEGORY);
+    public static final KeyMapping SUPPRESS = new KeyMapping("key.anime_multiverse.saiyan_suppress", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, CATEGORY);
+    public static final KeyMapping COMBO = new KeyMapping("key.anime_multiverse.saiyan_combo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, CATEGORY);
+    public static final KeyMapping KAME = new KeyMapping("key.anime_multiverse.saiyan_kamehameha", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_DELETE, CATEGORY);
     // 3.66.0: the four new techniques (keys the rest of the mod does not use; all rebindable)
-    public static final KeyMapping TRANSMIT = new KeyMapping("key.nusmp.saiyan_transmit", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_BACKSLASH, CATEGORY);
-    public static final KeyMapping BARRIER = new KeyMapping("key.nusmp.saiyan_barrier", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, CATEGORY);
-    public static final KeyMapping SPIRIT = new KeyMapping("key.nusmp.saiyan_spirit_bomb", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET, CATEGORY);
-    public static final KeyMapping METEOR = new KeyMapping("key.nusmp.saiyan_meteor", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_SEMICOLON, CATEGORY);
+    public static final KeyMapping TRANSMIT = new KeyMapping("key.anime_multiverse.saiyan_transmit", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_BACKSLASH, CATEGORY);
+    public static final KeyMapping BARRIER = new KeyMapping("key.anime_multiverse.saiyan_barrier", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, CATEGORY);
+    public static final KeyMapping SPIRIT = new KeyMapping("key.anime_multiverse.saiyan_spirit_bomb", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET, CATEGORY);
+    public static final KeyMapping METEOR = new KeyMapping("key.anime_multiverse.saiyan_meteor", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_SEMICOLON, CATEGORY);
     // 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer (numpad keys, all rebindable)
-    public static final KeyMapping DRAGON = new KeyMapping("key.nusmp.saiyan_dragon_fist", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_1, CATEGORY);
-    public static final KeyMapping BIND = new KeyMapping("key.nusmp.saiyan_god_bind", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_2, CATEGORY);
-    public static final KeyMapping DEFLECT = new KeyMapping("key.nusmp.saiyan_ki_deflection", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_3, CATEGORY);
-    public static final KeyMapping ENERGY = new KeyMapping("key.nusmp.saiyan_energy_transfer", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_4, CATEGORY);
-    public static final KeyMapping FORM = new KeyMapping("key.nusmp.saiyan_form", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_GRAVE_ACCENT, CATEGORY);
-    public static final KeyMapping FORM_NEXT = new KeyMapping("key.nusmp.saiyan_form_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, CATEGORY);
-    public static final KeyMapping FORM_PREV = new KeyMapping("key.nusmp.saiyan_form_prev", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN, CATEGORY);
+    public static final KeyMapping DRAGON = new KeyMapping("key.anime_multiverse.saiyan_dragon_fist", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_1, CATEGORY);
+    public static final KeyMapping BIND = new KeyMapping("key.anime_multiverse.saiyan_god_bind", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_2, CATEGORY);
+    public static final KeyMapping DEFLECT = new KeyMapping("key.anime_multiverse.saiyan_ki_deflection", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_3, CATEGORY);
+    public static final KeyMapping ENERGY = new KeyMapping("key.anime_multiverse.saiyan_energy_transfer", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_4, CATEGORY);
+    public static final KeyMapping FORM = new KeyMapping("key.anime_multiverse.saiyan_form", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_GRAVE_ACCENT, CATEGORY);
+    public static final KeyMapping FORM_NEXT = new KeyMapping("key.anime_multiverse.saiyan_form_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, CATEGORY);
+    public static final KeyMapping FORM_PREV = new KeyMapping("key.anime_multiverse.saiyan_form_prev", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN, CATEGORY);
 
-    static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan_hud");
+    static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "saiyan_hud");
 
     private static volatile SaiyanNet.Sync sync;
     private static long syncAt, lastAsk = -100;
@@ -149,7 +149,7 @@ public final class SaiyanClient {
     private static void onLayer(RenderGuiLayerEvent.Pre e) {
         ResourceLocation n = e.getName();
         if (sync == null || !"tensura".equals(n.getNamespace())) return;
-        if (SEEN.add(n.getPath())) LOG.info("[nusmp] Saiyan: Tensura HUD layer '{}' {}", n, n.getPath().toLowerCase(Locale.ROOT).contains("magicule") ? "hidden (Ki replaces the magicule bar)" : "kept");
+        if (SEEN.add(n.getPath())) LOG.info("[anime_multiverse] Saiyan: Tensura HUD layer '{}' {}", n, n.getPath().toLowerCase(Locale.ROOT).contains("magicule") ? "hidden (Ki replaces the magicule bar)" : "kept");
         if (n.getPath().toLowerCase(Locale.ROOT).contains("magicule")) e.setCanceled(true);
     }
 
@@ -219,7 +219,7 @@ public final class SaiyanClient {
     }
 
     // ---------------------------------------------------------------- text
-    static String t(String key, Object... args) { return Component.translatable("nusmp.saiyan.hud." + key, args).getString(); }
+    static String t(String key, Object... args) { return Component.translatable("anime_multiverse.saiyan.hud." + key, args).getString(); }
 
     private static String num(double v) { return String.format(Locale.ROOT, "%,d", Math.round(v)); }
 

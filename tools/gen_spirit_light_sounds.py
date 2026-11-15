@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(HERE, "audio"))
 import sl_sounds_json as SJ  # noqa: E402
 
 ROOT = SJ.ROOT
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "spirit_light")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "spirit_light")
 LANG = os.path.join(ROOT, "tools", "lang", "spirit_light_sounds.json")
 SR = 44100
 PEAK = 0.80
@@ -313,10 +313,10 @@ def main():
             path = os.path.join(OUT, "%s_%d.ogg" % (name, v + 1))
             encode(x, path, args.preview)
             total += os.path.getsize(path)
-            names.append({"name": "nusmp:spirit_light/%s_%d" % (name, v + 1)})
+            names.append({"name": "anime_multiverse:spirit_light/%s_%d" % (name, v + 1)})
         key = "spirit_light." + name
-        sfx[key] = {"subtitle": "subtitles.nusmp." + key, "sounds": names}
-        lang["subtitles.nusmp." + key] = subtitle
+        sfx[key] = {"subtitle": "subtitles.anime_multiverse." + key, "sounds": names}
+        lang["subtitles.anime_multiverse." + key] = subtitle
     SJ.write_block({**sfx, **voice})
     with open(LANG, "w", encoding="utf-8", newline="\n") as f:
         json.dump(lang, f, indent=1, ensure_ascii=False)

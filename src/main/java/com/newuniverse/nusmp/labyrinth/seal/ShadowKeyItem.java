@@ -25,6 +25,6 @@ public class ShadowKeyItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.nusmp.shadow_key.tooltip").withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.add(Component.translatable("item.anime_multiverse.shadow_key.tooltip").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

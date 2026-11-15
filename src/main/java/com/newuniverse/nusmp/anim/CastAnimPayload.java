@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 /** 0.54: "this player plays this casting body animation" (an empty clip name = stop), sent to everyone who sees them. */
 public record CastAnimPayload(int entity, String clip) implements CustomPacketPayload {
-    public static final Type<CastAnimPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "cast_anim"));
+    public static final Type<CastAnimPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cast_anim"));
     public static final StreamCodec<FriendlyByteBuf, CastAnimPayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeUtf(p.clip(), 48); },
             buf -> new CastAnimPayload(buf.readVarInt(), buf.readUtf(48)));

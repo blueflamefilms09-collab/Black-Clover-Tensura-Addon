@@ -28,7 +28,7 @@ public abstract class NUSkill extends Skill {
         super(type);
         this.text = text;
         this.ultimate = ultimate;
-        this.icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/" + text.id() + ".png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/" + text.id() + ".png");
     }
 
     public SkillText text() { return text; }

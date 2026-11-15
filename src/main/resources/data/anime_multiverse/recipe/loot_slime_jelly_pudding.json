@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:slime_gel"
+    },
+    {
+      "item": "anime_multiverse:slime_gel"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:slime_jelly_pudding",
+    "count": 2
+  }
+}

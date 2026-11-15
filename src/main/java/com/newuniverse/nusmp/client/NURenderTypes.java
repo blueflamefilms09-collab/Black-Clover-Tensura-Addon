@@ -71,7 +71,7 @@ public final class NURenderTypes extends RenderType {
     /** The alpha-weighted additive render type for a sprite or glow map (see {@link #ALPHA_ADDITIVE}). */
     public static RenderType additiveAlpha(ResourceLocation tex) { return ADDITIVE_ALPHA.apply(tex); }
 
-    /** nusmp's crimson void, or vanilla's end portal if the shader did not load. Vertex format POSITION either way. */
+    /** anime_multiverse's crimson void, or vanilla's end portal if the shader did not load. Vertex format POSITION either way. */
     public static RenderType demonVoid() { return NUShaders.demonVoid() != null ? DEMON_VOID : RenderType.endPortal(); }
 
     /**

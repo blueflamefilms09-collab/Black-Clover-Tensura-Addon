@@ -11,14 +11,14 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * The Mana Zone's numbers in force: {@code data/nusmp/mana_zone.json}, read at server start and at every {@code /reload} (so a datapack may retune them).
+ * The Mana Zone's numbers in force: {@code data/anime_multiverse/mana_zone.json}, read at server start and at every {@code /reload} (so a datapack may retune them).
  * Until a file is read, and when it is broken, the in-code defaults (identical to the shipped file, a test checks it) are in force.
  */
 public final class ManaZoneData {
     private ManaZoneData() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    public static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone.json");
+    public static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone.json");
     private static volatile ManaZoneRules rules = ManaZoneRules.defaults();
 
     public static ManaZoneRules rules() { return rules; }
@@ -36,7 +36,7 @@ public final class ManaZoneData {
             try (InputStream in = res.get().open()) {
                 return ManaZoneRules.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
             } catch (Exception e) {
-                LOG.warn("[nusmp] {} could not be read, the defaults stay in force: {}", FILE, e.toString());
+                LOG.warn("[anime_multiverse] {} could not be read, the defaults stay in force: {}", FILE, e.toString());
                 return ManaZoneRules.defaults();
             }
         }
@@ -44,7 +44,7 @@ public final class ManaZoneData {
         @Override
         protected void apply(ManaZoneRules loaded, ResourceManager manager, ProfilerFiller profiler) {
             rules = loaded;
-            LOG.info("[nusmp] Mana Zone rules loaded: gate {} EP, step {}, {} boss kills, floor {}, attunement {} s; radius {}..{}", (long) loaded.gate().minEp(), loaded.gate().minKnightStep(),
+            LOG.info("[anime_multiverse] Mana Zone rules loaded: gate {} EP, step {}, {} boss kills, floor {}, attunement {} s; radius {}..{}", (long) loaded.gate().minEp(), loaded.gate().minKnightStep(),
                     loaded.gate().minBossKills(), loaded.gate().minDeepestFloor(), loaded.gate().attuneSeconds(), loaded.zone().baseRadius(), loaded.zone().maxRadius());
         }
     }

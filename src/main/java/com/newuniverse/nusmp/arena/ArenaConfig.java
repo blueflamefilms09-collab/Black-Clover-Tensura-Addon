@@ -16,7 +16,7 @@ public final class ArenaConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("luciusArena");
-        ARENA_ONLY = b.comment("Lucius Zogratis (and his clones) can exist only in the dimension nusmp:zogratis_arena. A spawn egg, /summon, a structure or a portal anywhere else is refused",
+        ARENA_ONLY = b.comment("Lucius Zogratis (and his clones) can exist only in the dimension anime_multiverse:zogratis_arena. A spawn egg, /summon, a structure or a portal anywhere else is refused",
                         "with a message; operators may still /summon him inside the arena. false = the old behaviour (he can be spawned anywhere); the arena and the Hourglass of the Final Hour still work.")
                 .define("luciusArenaOnly", true);
         COOLDOWN_MINUTES = b.comment("Minutes the arena rests after Lucius is defeated: no new boss spawns until it is over.")

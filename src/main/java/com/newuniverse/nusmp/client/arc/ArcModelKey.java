@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 /**
  * Why: which model a character is drawn with is decided in one pure place, so the boss renderer, the NPC renderer and the tests agree. The art kit
- * (tools/gen_arc_kit.py) writes every character as {@code assets/nusmp/geo/entity/arc_<id>.geo.json} (and {@code arc_<id>_form2} for a second form), so the
+ * (tools/gen_arc_kit.py) writes every character as {@code assets/anime_multiverse/geo/entity/arc_<id>.geo.json} (and {@code arc_<id>_form2} for a second form), so the
  * {@code GeoSpec} key is {@value #KEY} and the name is the cleaned character id. An id that is not a plain snake_case name (a bad save, a typo, a path) never reaches a
  * resource path, and an NPC whose own model is missing falls back to {@value #FALLBACK} (a plain villager) before drawing nothing at all.
  */

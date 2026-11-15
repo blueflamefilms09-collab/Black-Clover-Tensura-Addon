@@ -41,9 +41,9 @@ public final class CreateTrapDirector implements SectorListener {
         if (!active()) return;
         try {
             int n = planSector(level.getServer(), sector);
-            if (n > 0) LOG.info("[nusmp] Create compat: sector {} planned {} trap(s)", sector.id, n);
+            if (n > 0) LOG.info("[anime_multiverse] Create compat: sector {} planned {} trap(s)", sector.id, n);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Create compat: planning sector {} failed: {}", sector.id, e.toString());
+            LOG.warn("[anime_multiverse] Create compat: planning sector {} failed: {}", sector.id, e.toString());
         }
     }
 
@@ -134,13 +134,13 @@ public final class CreateTrapDirector implements SectorListener {
             boolean ok = tryArm(level, site, room.box.minX(), room.box.maxX(), room.box.minZ(), room.box.maxZ(), MegaGrid.FLOOR_Y);
             if (ok) {
                 data.setDirty();
-                LOG.info("[nusmp] Create compat: armed {} {} in sector {} room {} at {} facing {}", site.family.id(), site.trigger.id(), site.sector, site.room, site.origin.toShortString(), site.forward);
+                LOG.info("[anime_multiverse] Create compat: armed {} {} in sector {} room {} at {} facing {}", site.family.id(), site.trigger.id(), site.sector, site.room, site.origin.toShortString(), site.forward);
                 return;                                                                  // one build per look
             }
             if (!LOADING.equals(site.note)) {
                 site.state = TrapSite.State.DROPPED;
                 data.setDirty();
-                LOG.debug("[nusmp] Create compat: dropped {}: {}", site.id, site.note);
+                LOG.debug("[anime_multiverse] Create compat: dropped {}: {}", site.id, site.note);
             }
         }
     }

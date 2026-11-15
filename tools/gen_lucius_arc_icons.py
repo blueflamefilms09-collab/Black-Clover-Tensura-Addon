@@ -7,7 +7,7 @@ the palette in one place, the same as the other mod icons. Run from the reposito
 from pathlib import Path
 from PIL import Image
 
-OUT = Path("src/main/resources/assets/nusmp/textures/mob_effect/soul_corruption.png")
+OUT = Path("src/main/resources/assets/anime_multiverse/textures/mob_effect/soul_corruption.png")
 
 HEART = [
     "..................",

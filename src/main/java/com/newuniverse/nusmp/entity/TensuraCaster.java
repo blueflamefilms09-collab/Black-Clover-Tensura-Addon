@@ -58,7 +58,7 @@ public final class TensuraCaster {
             }
             skills.markDirty();
         } catch (Throwable t) {
-            LogUtils.getLogger().warn("[nusmp] could not teach Tensura skills to {}: {}", e.getName().getString(), t.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] could not teach Tensura skills to {}: {}", e.getName().getString(), t.toString());
         }
         return out;
     }
@@ -118,7 +118,7 @@ public final class TensuraCaster {
     static boolean guard(ResourceLocation id, Runnable call) {
         try { call.run(); return true; }
         catch (Throwable t) {
-            if (BROKEN.add(id)) LogUtils.getLogger().warn("[nusmp] Tensura skill {} can't be cast by a mob, dropped: {}", id, t.toString());
+            if (BROKEN.add(id)) LogUtils.getLogger().warn("[anime_multiverse] Tensura skill {} can't be cast by a mob, dropped: {}", id, t.toString());
             return false;
         }
     }

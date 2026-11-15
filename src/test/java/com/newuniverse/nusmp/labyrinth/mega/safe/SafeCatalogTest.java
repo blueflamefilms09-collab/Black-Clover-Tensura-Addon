@@ -39,8 +39,8 @@ class SafeCatalogTest {
     private static final Set<String> HEARTH_HINTS = Set.of("stove", "brazier");
     private static final Set<String> FURNITURE_HINTS = Set.of("table", "counter", "cutting_board", "storage", "skillet", "cooking_pot");
     private static final int[] CENTRES = {4, 13, 22};
-    private static final String SIDE_POOL = "nusmp:mega/side";
-    private static final String DOOR = "nusmp:mega_door";
+    private static final String SIDE_POOL = "anime_multiverse:mega/side";
+    private static final String DOOR = "anime_multiverse:mega_door";
 
     /** Template name (without the namespace) to its catalog entry, for the rooms of this builder that the catalog holds. */
     private static Map<String, JsonObject> rooms() throws IOException {
@@ -50,7 +50,7 @@ class SafeCatalogTest {
             JsonObject all = root.getAsJsonObject("templates");
             Map<String, JsonObject> out = new LinkedHashMap<>();
             for (String name : MINE) {
-                JsonElement e = all.get("nusmp:mega/" + name);
+                JsonElement e = all.get("anime_multiverse:mega/" + name);
                 if (e != null) out.put(name, e.getAsJsonObject());
             }
             return out;

@@ -31,9 +31,9 @@ public final class SpatialRebuildChecks {
             for (String n : propKinds) if (!enumHas(PropKind.values(), n)) bad.add("no PropKind." + n);
             for (String n : shapes) if (!enumHas(VfxShape.values(), n)) bad.add("no VfxShape." + n);
             for (String m : models) for (String suffix : new String[]{".png", "_glow.png"}) {
-                if (SpatialRebuildChecks.class.getResource("/assets/nusmp/textures/entity/" + m + suffix) == null) bad.add("missing texture " + m + suffix);
+                if (SpatialRebuildChecks.class.getResource("/assets/anime_multiverse/textures/entity/" + m + suffix) == null) bad.add("missing texture " + m + suffix);
             }
-            for (String m : models) if (SpatialRebuildChecks.class.getResource("/assets/nusmp/geo/entity/" + m + ".geo.json") == null) bad.add("missing geo " + m);
+            for (String m : models) if (SpatialRebuildChecks.class.getResource("/assets/anime_multiverse/geo/entity/" + m + ".geo.json") == null) bad.add("missing geo " + m);
             return bad.isEmpty() ? SelfTests.Result.ok(key + ": " + ids.size() + " pages, " + models.size() + " models") : SelfTests.Result.fail(String.join("; ", bad));
         });
     }

@@ -165,8 +165,8 @@ public final class ManaMethodSelfTests {
                 }
         if (RuneGlyphLayout.MAX_QUADS * 4 > 1200) return Result.fail("a rune may draw " + RuneGlyphLayout.MAX_QUADS * 4 + " vertices, over the 1200 its layer asks for");
         String[] tints = {"gold", "flame", "water", "wind", "earth", "lightning", "plant"};
-        for (String tint : tints) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/rune_stroke_" + tint + ".png") == null) return Result.fail("the stroke texture of " + tint + " is not in the jar");
-        for (String tex : new String[]{"rune_line_ring", "rune_arc_strip"}) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/" + tex + ".png") == null) return Result.fail("the texture " + tex + " is not in the jar");
+        for (String tint : tints) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/particle/rune_stroke_" + tint + ".png") == null) return Result.fail("the stroke texture of " + tint + " is not in the jar");
+        for (String tex : new String[]{"rune_line_ring", "rune_arc_strip"}) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/particle/" + tex + ".png") == null) return Result.fail("the texture " + tex + " is not in the jar");
         try { com.newuniverse.nusmp.vfx.VfxShape.valueOf("RUNE_WRITING"); } catch (IllegalArgumentException missing) { return Result.fail("the shape RUNE_WRITING is missing"); }
         return Result.ok(books + " grimoires carry the 5 pages last; closed for a fresh player; casts capped at " + per + " per caster, despawn after " + ticks + " ticks of flight and charge; Homing struck a target off its line (" + before + " -> " + after + "); NBT round trip for "
                 + (RuneElement.values().length * (RuneMods.ALL + 1) * 2) + " specs; the written rune fills at most " + worst + " of " + RuneGlyphLayout.MAX_QUADS + " quads, its 9 textures ship");

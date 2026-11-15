@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Why: the glue between Shishou and the Tensura skill system (2.1.0). It gives the wielder the Ultimate skill {@code nusmp:shishou} when he claims the sword, takes it away when the sword is no longer theirs
+ * Why: the glue between Shishou and the Tensura skill system (2.1.0). It gives the wielder the Ultimate skill {@code anime_multiverse:shishou} when he claims the sword, takes it away when the sword is no longer theirs
  * (checked at login, at a claim, and every {@link ShishouGrant#CHECK_PERIOD} ticks from the player tick: one map lookup), and runs a press of the skill key in one of its modes ({@link ShishouModes}): the
  * modes only ROUTE to the existing, server-decided abilities of {@link ShishouService} (the sword's mana, the per-ability cooldowns, the caps). The pick inside a mode is stored in the skill instance's tag (so it
  * syncs to the client's skill screen) and mirrored on the world's record for the HUD. Every decision is on the server and keyed by the player's UUID; nothing here is a static "current player".

@@ -81,7 +81,7 @@ import java.util.UUID;
  * type id, every NBT key and the {@link OwnableEntity} behaviour are unchanged, so old Avatars load as before. The parts of {@code Animal} that make no sense for
  * a person (feeding, breeding, love mode) are switched off below.
  *
- * <p>The entity type is {@code nusmp:player_avatar}; the Devil Avatar boss ({@code nusmp:devil_avatar}) is a different thing.
+ * <p>The entity type is {@code anime_multiverse:player_avatar}; the Devil Avatar boss ({@code anime_multiverse:devil_avatar}) is a different thing.
  */
 public class AvatarEntity extends TamableAnimal implements OwnableEntity, HasDndStats {
     public static final EntityDataAccessor<Boolean> IS_FRENZIED = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.BOOLEAN);
@@ -101,9 +101,9 @@ public class AvatarEntity extends TamableAnimal implements OwnableEntity, HasDnd
     public static final EntityDataAccessor<Boolean> SPECIAL = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> STANCE = SynchedEntityData.defineId(AvatarEntity.class, EntityDataSerializers.INT);
 
-    private static final ResourceLocation RACE_PREFIX = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_race");
-    private static final ResourceLocation PERK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_perk");
-    private static final ResourceLocation TIER_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_ordinary_tier");
+    private static final ResourceLocation RACE_PREFIX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_race");
+    private static final ResourceLocation PERK_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_perk");
+    private static final ResourceLocation TIER_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_ordinary_tier");
 
     // ---- saved state. Field initialisers run after the Mob constructor (which already called registerGoals), so every read of these in
     // buildGoals() goes through an accessor that tolerates the not-yet-initialised value.
@@ -569,7 +569,7 @@ public class AvatarEntity extends TamableAnimal implements OwnableEntity, HasDnd
         return super.mobInteract(player, hand);
     }
 
-    /** A few plain lines about this Avatar for the info tab and the {@code /nusmp avatar info} command. */
+    /** A few plain lines about this Avatar for the info tab and the {@code /anime_multiverse avatar info} command. */
     public List<String> infoLines() {
         AvatarRace r = race();
         List<String> out = new ArrayList<>();

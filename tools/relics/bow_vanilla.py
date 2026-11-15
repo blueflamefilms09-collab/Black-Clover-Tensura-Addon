@@ -16,7 +16,7 @@ import os
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 BOW_ANGLE = 225.0     # 1.91.0 (owner screenshots, bow still wrong in first person): measured on the vanilla bow.png itself: its wood arc runs from the top right tip round the upper LEFT to the bottom left tip (chord on the up-right diagonal), its grey string lies on the lower right side, and the arrow flies up and to the LEFT. The mesh has its limbs along y and its belly and arrow along +x, so rotZ(angle - 90) with angle 225 puts the limbs on the same diagonal and the belly and arrow toward the upper left. 45 (1.63.0) had the limbs right but the bow shooting backwards; 135 (1.84.0) turned the limbs a quarter turn off.
 BOW_LENGTH = 1.2      # blocks from tip to tip: vanilla's bow sprite spans about 18 pixels along its diagonal (1.15 blocks)

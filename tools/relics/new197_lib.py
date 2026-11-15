@@ -33,7 +33,7 @@ ICON_DIR = os.path.join(ASSETS, "textures", "item")
 MODEL_DIR = os.path.join(ASSETS, "models", "item")
 PREVIEW_DIR = os.environ.get("N197_PREVIEW", "")
 
-# the apparent length (blocks) each weapon class is built to: the upper middle of the class range of assets/nusmp/weapon_classes.json
+# the apparent length (blocks) each weapon class is built to: the upper middle of the class range of assets/anime_multiverse/weapon_classes.json
 REAL_M = {"dagger": 0.60, "shortsword": 1.20, "longsword": 1.62, "rapier": 1.22, "katana": 1.62, "sabre": 1.22, "greatsword": 2.65, "handaxe": 1.25, "battleaxe": 1.85,
           "greataxe": 2.75, "scythe": 2.35, "spear": 3.2, "glaive": 3.2, "trident": 3.2, "staff": 2.3, "whip": 2.0, "crossbow": 1.1, "bow": 1.2, "hammer": 1.6,
           "wand": 1.0, "shield": 1.05, "club": 1.5}
@@ -448,14 +448,14 @@ def _template_display():
 
 def write_models(item_id, display=None):
     base = _template_display()
-    base["textures"] = {"particle": "nusmp:item/" + item_id}
+    base["textures"] = {"particle": "anime_multiverse:item/" + item_id}
     if display:
         base["display"] = display
         base["nusmp_display_preset"] = "manual"
     with open(os.path.join(MODEL_DIR, item_id + ".json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(base, f, indent=2)
     with open(os.path.join(MODEL_DIR, item_id + "_icon.json"), "w", encoding="utf-8", newline="\n") as f:
-        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}, f, indent=2)
 
 
 # ================================================================ finish

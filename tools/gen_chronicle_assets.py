@@ -1,12 +1,12 @@
-"""1.61.0: the 16x16 art of the Chronicle Sigil (nusmp:chronicle_sigil). Deterministic.
+"""1.61.0: the 16x16 art of the Chronicle Sigil (anime_multiverse:chronicle_sigil). Deterministic.
 
     python tools/gen_chronicle_assets.py
 
 Writes
-  assets/nusmp/textures/item/chronicle_sigil.png      the inventory icon: a gold-rimmed seal of lapis with an open book and a spark above it, hung from a bail
+  assets/anime_multiverse/textures/item/chronicle_sigil.png      the inventory icon: a gold-rimmed seal of lapis with an open book and a spark above it, hung from a bail
                                                       (the in-hand 3D model is built from it by tools/gen_weapon_models.py, which places the mesh on this sprite's box)
-  assets/nusmp/models/item/chronicle_sigil.json       the in-hand model: builtin/entity (the mesh is drawn by client/WeaponRenderer) with the hand-item display transforms
-  assets/nusmp/models/item/chronicle_sigil_icon.json  the flat model the inventory, the tab and a frame use (the sprite above)
+  assets/anime_multiverse/models/item/chronicle_sigil.json       the in-hand model: builtin/entity (the mesh is drawn by client/WeaponRenderer) with the hand-item display transforms
+  assets/anime_multiverse/models/item/chronicle_sigil_icon.json  the flat model the inventory, the tab and a frame use (the sprite above)
 Run this BEFORE `python tools/gen_weapon_models.py chronicle_sigil`.
 """
 import json
@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 GOLD = (222, 170, 52)
 GOLD_HI = (255, 226, 130)
@@ -88,8 +88,8 @@ def models():
         "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
         "gui": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
     }
-    hand = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/chronicle_sigil"}, "display": display}
-    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/chronicle_sigil"}}
+    hand = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/chronicle_sigil"}, "display": display}
+    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/chronicle_sigil"}}
     for name, body in (("chronicle_sigil", hand), ("chronicle_sigil_icon", icon)):
         path = os.path.join(ASSETS, "models", "item", name + ".json")
         os.makedirs(os.path.dirname(path), exist_ok=True)

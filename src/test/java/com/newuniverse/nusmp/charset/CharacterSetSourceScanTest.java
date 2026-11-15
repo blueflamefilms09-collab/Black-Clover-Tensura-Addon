@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class CharacterSetSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     private static final Map<String, String> BOOK_FILES = Map.of("book_wind", "WindBook.java", "book_water", "WaterBook.java", "book_fire", "FireBook.java", "book_dark", "DarkBook.java", "book_anti_magic", "AntiMagicBook.java");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
@@ -149,7 +149,7 @@ class CharacterSetSourceScanTest {
     void everyAddedPageHasItsText() throws IOException {
         JsonObject lang = JsonParser.parseString(read(Path.of("tools/lang/character_spells.json"))).getAsJsonObject();
         for (String book : new String[]{"book_wind", "book_water", "book_fire", "book_dark"})
-            for (String id : added(book)) assertTrue(lang.has("nusmp.page." + book + "." + id), "lang fragment: nusmp.page." + book + "." + id);
+            for (String id : added(book)) assertTrue(lang.has("anime_multiverse.page." + book + "." + id), "lang fragment: anime_multiverse.page." + book + "." + id);
     }
 
     @Test

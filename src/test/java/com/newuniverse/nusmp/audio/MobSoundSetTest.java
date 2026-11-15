@@ -50,7 +50,7 @@ class MobSoundSetTest {
             assertTrue(f.pitchMax(Cue.STEP) - f.pitchMin(Cue.STEP) > f.pitchMax(Cue.DEATH) - f.pitchMin(Cue.DEATH), "feet stray further than a death");
         }
         assertEquals("mob.goblin.taunt", MobSoundSet.eventId("goblin", Cue.TAUNT));
-        assertEquals("subtitles.nusmp.mob.lich.ambient", MobSoundSet.subtitleKey("lich", Cue.AMBIENT));
+        assertEquals("subtitles.anime_multiverse.mob.lich.ambient", MobSoundSet.subtitleKey("lich", Cue.AMBIENT));
         assertEquals(Cue.HURT, Cue.byId("hurt"));
         assertNull(Cue.byId("nope"));
     }
@@ -76,7 +76,7 @@ class MobSoundSetTest {
 
     @Test
     void everyMobOfTheShippedFoundryRosterGetsAKnownFamilyAndTheRosterSpreadsOverManyFamilies() throws IOException {
-        Path dir = Path.of("src/main/resources/data/nusmp/mega/foundry");
+        Path dir = Path.of("src/main/resources/data/anime_multiverse/mega/foundry");
         Map<String, Integer> count = new TreeMap<>();
         int mobs = 0;
         try (Stream<Path> files = Files.list(dir)) {
@@ -97,13 +97,13 @@ class MobSoundSetTest {
     void entityTypesAndBossLooksMapToFamilies() {
         assertEquals("ghoul", MobSoundSet.forEntityType("minecraft:zombie"));
         assertEquals("skeleton", MobSoundSet.forEntityType("minecraft:wither_skeleton"));
-        assertEquals("slime", MobSoundSet.forEntityType("nusmp:dungeon_slime"));
-        assertEquals("armor", MobSoundSet.forEntityType("nusmp:living_armor"));
-        assertEquals("beast", MobSoundSet.forEntityType("nusmp:dungeon_direwolf"));
-        assertNull(MobSoundSet.forEntityType("nusmp:foundry_mob"), "the Foundry mob needs its faction and id");
+        assertEquals("slime", MobSoundSet.forEntityType("anime_multiverse:dungeon_slime"));
+        assertEquals("armor", MobSoundSet.forEntityType("anime_multiverse:living_armor"));
+        assertEquals("beast", MobSoundSet.forEntityType("anime_multiverse:dungeon_direwolf"));
+        assertNull(MobSoundSet.forEntityType("anime_multiverse:foundry_mob"), "the Foundry mob needs its faction and id");
         assertNull(MobSoundSet.forEntityType("minecraft:cow"));
-        assertEquals("ogre", MobSoundSet.forEntity("nusmp:foundry_mob", "ogre", "x_y"));
-        assertEquals("lich", MobSoundSet.forEntity("nusmp:foundry_mob", "undead", "lich_acolyte"));
+        assertEquals("ogre", MobSoundSet.forEntity("anime_multiverse:foundry_mob", "ogre", "x_y"));
+        assertEquals("lich", MobSoundSet.forEntity("anime_multiverse:foundry_mob", "undead", "lich_acolyte"));
         assertEquals("lich", MobSoundSet.forBoss(null, "vecna", "Hand of Vecna", List.of(), "evil"));
         assertEquals("aquatic", MobSoundSet.forBoss(null, "kraken", "Kraken", List.of(), "evil"));
         assertEquals("dragon", MobSoundSet.forBoss("dragon", "lich", "x", List.of(), "evil"), "an explicit sound_set wins");

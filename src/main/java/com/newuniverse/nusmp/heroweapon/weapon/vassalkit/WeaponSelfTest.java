@@ -190,7 +190,7 @@ public final class WeaponSelfTest {
     }
 
     private static JsonObject read(HeroKind kind, List<String> bad) {
-        String path = "/data/nusmp/hero/forms/" + kind.itemId() + ".json";
+        String path = "/data/anime_multiverse/hero/forms/" + kind.itemId() + ".json";
         try (InputStream in = WeaponSelfTest.class.getResourceAsStream(path)) {
             if (in == null) {
                 bad.add(path + " is not in the jar");

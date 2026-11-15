@@ -36,7 +36,7 @@ final class SyntheticCatalog implements PoolSource {
 
     void pool(String id, int emptyWeight, String fallback, Object... idAndWeight) {
         List<PoolEntry> e = new ArrayList<>();
-        for (int i = 0; i < idAndWeight.length; i += 2) e.add(new PoolEntry((String) idAndWeight[i], (Integer) idAndWeight[i + 1], "nusmp:mega_interior"));
+        for (int i = 0; i < idAndWeight.length; i += 2) e.add(new PoolEntry((String) idAndWeight[i], (Integer) idAndWeight[i + 1], "anime_multiverse:mega_interior"));
         pools.put(id, new PoolDef(id, e, emptyWeight, fallback));
     }
 
@@ -111,7 +111,7 @@ final class SyntheticCatalog implements PoolSource {
     /** The stand-in set: everything a sector needs, with weights that give a dense, loopy, tabletop-style map. */
     static SyntheticCatalog standard() {
         SyntheticCatalog c = new SyntheticCatalog();
-        final String M = "nusmp:mega/";
+        final String M = "anime_multiverse:mega/";
         for (int d = 1; d <= 8; d++) c.cap(M + "cap/alcove_" + d, d);
         c.pool(MegaGrid.P_CAP, 0, MegaGrid.P_EMPTY, M + "cap/alcove_1", 2, M + "cap/alcove_2", 2, M + "cap/alcove_3", 2, M + "cap/alcove_4", 2, M + "cap/alcove_5", 2,
                 M + "cap/alcove_6", 2, M + "cap/alcove_7", 1, M + "cap/alcove_8", 1);
@@ -209,7 +209,7 @@ final class SyntheticCatalog implements PoolSource {
      */
     static SyntheticCatalog realSized() {
         SyntheticCatalog c = standard();
-        final String M = "nusmp:mega/";
+        final String M = "anime_multiverse:mega/";
         c.put(c.shape(M + "arena/pit_5x5", RoomKind.ARENA, 5, 5).door('s', 22)
                 .door('n', 22, MegaGrid.CHAIN, MegaGrid.CHAIN, MegaGrid.P_ANTECHAMBER, "minecraft:air")
                 .marker(MarkerKind.GUARDIAN_SPAWN, 22, 9, 22).marker(MarkerKind.GATEKEEPER, 22, 10, 2));
@@ -242,7 +242,7 @@ final class SyntheticCatalog implements PoolSource {
      */
     static SyntheticCatalog floors() {
         SyntheticCatalog c = realSized();
-        final String M = "nusmp:mega/";
+        final String M = "anime_multiverse:mega/";
         String[][] kinds = {{"up", "up"}, {"down", "down"}, {"grand_up", "up"}, {"grand_down", "down"}};
         for (String[] k : kinds) {
             boolean grand = k[0].startsWith("grand");

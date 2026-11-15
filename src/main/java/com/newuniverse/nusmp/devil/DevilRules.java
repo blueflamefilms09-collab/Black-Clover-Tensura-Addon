@@ -173,7 +173,7 @@ public final class DevilRules {
     // ---------------------------------------------------------------- 3.76.0: what a devil's attribute does in a fight
     /**
      * The combat effect of an attribute, on the blows of a host who has let the devil in. {@code bonus}: extra damage as a share of the blow at 100 % assimilation with a Supreme devil;
-     * {@code effectId}: a mob effect put on the target ("" = none; "nusmp:burn" = fire); {@code heal}: share of the blow given back to the host; {@code strip}: the target loses its
+     * {@code effectId}: a mob effect put on the target ("" = none; "anime_multiverse:burn" = fire); {@code heal}: share of the blow given back to the host; {@code strip}: the target loses its
      * protective effects. Pure data, read by {@code DevilCombat}.
      */
     public record Effect(double bonus, String effectId, int ticks, int amp, double heal, boolean strip, String blurb) {}
@@ -188,7 +188,7 @@ public final class DevilRules {
             case SPATIAL -> new Effect(0.55, "", 0, 0, 0, false, "Your blows cut through space: a great deal of extra damage.");
             case CURSE -> new Effect(0.25, "minecraft:wither", 80, 1, 0, false, "Your blows carry a curse that eats the foe.");
             case ANTI_MAGIC -> new Effect(0.30, "", 0, 0, 0, true, "Your blows cancel magic: the foe loses its protections.");
-            case FLAME -> new Effect(0.35, "nusmp:burn", 120, 0, 0, false, "Your blows burn with hellfire.");
+            case FLAME -> new Effect(0.35, "anime_multiverse:burn", 120, 0, 0, false, "Your blows burn with hellfire.");
             case WORD -> new Effect(0.20, "minecraft:weakness", 80, 1, 0, false, "Your word binds: the foe is weakened.");
             case TIME -> new Effect(0.20, "minecraft:slowness", 30, 4, 0, false, "Your blows stop the foe's time for a moment.");
             case BEAST -> new Effect(0.50, "", 0, 0, 0, false, "The beast bites with you: a great deal of extra damage.");

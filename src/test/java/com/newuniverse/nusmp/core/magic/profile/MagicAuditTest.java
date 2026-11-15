@@ -98,7 +98,7 @@ class MagicAuditTest {
         w.lang.add(MagicKeys.pageKey("book_fire", "a"));
         w.lang.add(MagicKeys.pageKey("book_fire", "c"));
         assertFalse(MagicAudit.run(with("FLAME"), w, 0).has("FLAME", "NO_LANG_PAGES"));
-        assertEquals("nusmp.page.book_fire.a", MagicKeys.pageKey("book_fire", "a"));
+        assertEquals("anime_multiverse.page.book_fire.a", MagicKeys.pageKey("book_fire", "a"));
     }
 
     @Test

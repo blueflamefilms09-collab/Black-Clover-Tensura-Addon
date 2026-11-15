@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:sea_dragon_fan",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:rhythm_blade",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:song_wand",
+      "required": false
+    }
+  ]
+}

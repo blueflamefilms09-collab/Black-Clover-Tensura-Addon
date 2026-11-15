@@ -78,7 +78,7 @@ public final class MacroBlocks {
     }
 
     private static void warnOnce(String key, String message) {
-        if (WARNED.add(key)) LOG.warn("[nusmp] Sanctuary generator: {}", message);
+        if (WARNED.add(key)) LOG.warn("[anime_multiverse] Sanctuary generator: {}", message);
     }
 
     /** The state of a kind with default railing connections (no neighbour information). */

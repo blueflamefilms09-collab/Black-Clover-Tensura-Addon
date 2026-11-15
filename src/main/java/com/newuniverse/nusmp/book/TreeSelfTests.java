@@ -68,8 +68,8 @@ public final class TreeSelfTests {
             for (String piece : PIECES) model(key + "_" + piece, missing);
         for (String[] s : SUMMONS) for (int i = 1; i < s.length; i++) model(s[0] + "_" + s[i], missing);
         for (String key : new String[]{"tree", "vine", "plant", "poison_plant", "mud", "mucus"}) {
-            res("assets/nusmp/textures/aura/" + key + "_skin.png", missing);
-            res("assets/nusmp/textures/aura/" + key + "_skin_glow.png", missing);
+            res("assets/anime_multiverse/textures/aura/" + key + "_skin.png", missing);
+            res("assets/anime_multiverse/textures/aura/" + key + "_skin_glow.png", missing);
             for (int n = 1; n <= 3; n++) if (TreeElementBook.shape(MagicType.valueOf(key.toUpperCase()), n).name().startsWith("WIKI")) missing.add(key + " shape " + n);
         }
         if (!missing.isEmpty()) return Result.fail("missing: " + String.join(", ", missing.subList(0, Math.min(8, missing.size()))) + (missing.size() > 8 ? " (+" + (missing.size() - 8) + ")" : ""));
@@ -77,9 +77,9 @@ public final class TreeSelfTests {
     }
 
     private static void model(String id, List<String> missing) {
-        res("assets/nusmp/geo/entity/" + id + ".geo.json", missing);
-        res("assets/nusmp/textures/entity/" + id + ".png", missing);
-        res("assets/nusmp/textures/entity/" + id + "_glow.png", missing);
+        res("assets/anime_multiverse/geo/entity/" + id + ".geo.json", missing);
+        res("assets/anime_multiverse/textures/entity/" + id + ".png", missing);
+        res("assets/anime_multiverse/textures/entity/" + id + "_glow.png", missing);
     }
 
     private static void res(String path, List<String> missing) {

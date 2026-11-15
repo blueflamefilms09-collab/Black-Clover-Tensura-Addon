@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the Sector Recipe is the list of promises every sector makes to the player, kept as DATA ({@code data/nusmp/mega/recipe/default.json}) so the
+ * Why: the Sector Recipe is the list of promises every sector makes to the player, kept as DATA ({@code data/anime_multiverse/mega/recipe/default.json}) so the
  * owner can retune the pacing without a new jar: how far the Guardian's hall must be from the Landing, how deep the far-side band that is kept free
  * for the boss chain is, how many extra safe rooms, trials and treasure closets must exist, how many set pieces may exist, and the thresholds the audit
  * enforces (rooms, loops). The class is pure (a plain bag of numbers with the defaults of the design document), the game-side loader only copies the
@@ -67,13 +67,13 @@ public final class Recipe {
         max.put(RoomKind.TRIAL, 2);
         max.put(RoomKind.TRAP, 2);
         max.put(RoomKind.PUZZLE, 2);
-        shapeMax.put("nusmp:mega/hall/great_hall", 1);
-        shapeMax.put("nusmp:mega/set/cathedral_rotunda", 1);
-        shapeMax.put("nusmp:mega/trap/dark_room", 1);
+        shapeMax.put("anime_multiverse:mega/hall/great_hall", 1);
+        shapeMax.put("anime_multiverse:mega/set/cathedral_rotunda", 1);
+        shapeMax.put("anime_multiverse:mega/trap/dark_room", 1);
     }
 
     /**
-     * 1.58.0: the recipe of a FLOOR of the floor model, the numbers compiled in (the shipped {@code data/nusmp/mega/recipe/floor.json} says the same, and a unit test
+     * 1.58.0: the recipe of a FLOOR of the floor model, the numbers compiled in (the shipped {@code data/anime_multiverse/mega/recipe/floor.json} says the same, and a unit test
      * fails if the two drift). A floor is a small level (about 28 rooms in a region of 17 x 17 modules, 19 x 19 on a boss floor), so every distance is shorter than in the
      * ten-floor sector it replaces, there is one treasure closet to find instead of two, and at most one trial, trap and puzzle room each (they are big rooms, and a
      * floor of 28 rooms with three traps would be a gauntlet). The boss chain keeps its old distances, scaled to the 19-module region.

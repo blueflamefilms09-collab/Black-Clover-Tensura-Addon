@@ -82,7 +82,7 @@ public final class DanteMoves {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] Dante's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] Dante's {} stopped: {}", what, t.toString());
             }
         };
     }

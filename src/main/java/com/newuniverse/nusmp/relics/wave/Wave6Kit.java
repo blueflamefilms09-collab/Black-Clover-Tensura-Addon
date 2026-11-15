@@ -119,7 +119,7 @@ public final class Wave6Kit {
 
     /** Switches a transient modifier of this wave on or off (idempotent). Transient: it never reaches the save file, the tick re-applies it. */
     public static void setMod(LivingEntity e, String attributeId, String name, double amount, AttributeModifier.Operation op, boolean on) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "w6_" + name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w6_" + name);
         attribute(attributeId).ifPresent(h -> {
             AttributeInstance inst = e.getAttribute(h);
             if (inst == null) return;

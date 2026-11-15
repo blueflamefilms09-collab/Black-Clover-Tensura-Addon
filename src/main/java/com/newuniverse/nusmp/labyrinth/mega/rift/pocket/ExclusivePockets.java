@@ -132,7 +132,7 @@ public final class ExclusivePockets {
         if (pocket.phase == 0) {
             for (ServerPlayer m : group) {
                 boolean fresh = rt.waiting.put(m.getUUID(), new PocketRuntime.Waiter(m, riftPos)) == null;
-                if (fresh) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming", "The tomb is forming behind the tear (%s%%). Wait here: you are taken in the moment it stands.", rt.build == null ? 0 : rt.build.percent())
+                if (fresh) m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.forming", "The tomb is forming behind the tear (%s%%). Wait here: you are taken in the moment it stands.", rt.build == null ? 0 : rt.build.percent())
                         .withStyle(ChatFormatting.LIGHT_PURPLE), false);
             }
             if (rt.waitingSince < 0) rt.waitingSince = mega.getGameTime();
@@ -146,7 +146,7 @@ public final class ExclusivePockets {
         if (rt.waiting.isEmpty()) return;
         if (p.phase >= 2) {
             for (PocketRuntime.Waiter w : rt.waiting.values())
-                w.player().displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming.gone", "The tomb behind the tear is coming down. There is nothing to enter.").withStyle(ChatFormatting.GRAY), true);
+                w.player().displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.forming.gone", "The tomb behind the tear is coming down. There is nothing to enter.").withStyle(ChatFormatting.GRAY), true);
             rt.waiting.clear();
             rt.waitingSince = -1;
             return;
@@ -166,10 +166,10 @@ public final class ExclusivePockets {
         }
         if (now % 20 == 0)
             for (PocketRuntime.Waiter w : rt.waiting.values())
-                w.player().displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.forming.progress", "The tomb forms: %s%%", rt.build == null ? 0 : rt.build.percent()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                w.player().displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.forming.progress", "The tomb forms: %s%%", rt.build == null ? 0 : rt.build.percent()).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         if (rt.waitingSince >= 0 && now - rt.waitingSince > 20L * 90 && rt.build != null && !rt.build.done()) {         // a build that has not finished in a minute and a half is restarted (every fill is safe to place twice)
             rt.waitingSince = now;
-            LOG.warn("[nusmp] The tomb {} in slot {} took more than 90 s to form ({}%); its build was restarted.", p.pocketId, p.slot, rt.build.percent());
+            LOG.warn("[anime_multiverse] The tomb {} in slot {} took more than 90 s to form ({}%); its build was restarted.", p.pocketId, p.slot, rt.build.percent());
             rt.build = new PocketBuild(rt);
             rt.build.entry(mega);
         }
@@ -197,13 +197,13 @@ public final class ExclusivePockets {
             mega.getChunk(at.getX() >> 4, at.getZ() >> 4);
             PocketRealm.move(m, mega, at.getX() + 0.5, at.getY(), at.getZ() + 0.5, -90f, 0f);
             m.resetFallDistance();
-            RiftService.title(m, Component.translatableWithFallback("pocket.nusmp." + def.id() + ".name", def.name()),
-                    Component.translatableWithFallback("pocket.nusmp." + def.id() + ".lore", def.lore()));
+            RiftService.title(m, Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".name", def.name()),
+                    Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".lore", def.lore()));
             mega.playSound(null, at, SoundEvents.END_PORTAL_SPAWN, SoundSource.PLAYERS, 0.5f, 0.6f);
             NusmpEvents.fire(m, "mega.pocket", "tomb");
             NusmpEvents.fire(m, "mega.tomb_entered", def.id());
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.welcome", "[Tomb] The treasury behind the master's lair is sealed. It answers to %s magic, to the %s, to force, and to the SEAL LEVER on the wall of the key room: the lever gives in %s s, or the moment the master falls, and the seal opens by itself in %s s. The exit rift is in this hall.",
-                    Component.translatableWithFallback("pocket.nusmp." + def.id() + ".seal", def.seal().label()), Component.translatableWithFallback("pocket.nusmp." + def.id() + ".sigil", def.seal().sigil()),
+            m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.welcome", "[Tomb] The treasury behind the master's lair is sealed. It answers to %s magic, to the %s, to force, and to the SEAL LEVER on the wall of the key room: the lever gives in %s s, or the moment the master falls, and the seal opens by itself in %s s. The exit rift is in this hall.",
+                    Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".seal", def.seal().label()), Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".sigil", def.seal().sigil()),
                     Math.max(0, PocketSwitchRules.secondsToUnlock(pocket.bossDead, mega.getGameTime() - pocket.createdAt, unlockTicks())), Math.max(0, PocketSwitchRules.secondsToAuto(mega.getGameTime() - pocket.createdAt, unlockTicks(), autoTicks(pocket)))).withStyle(ChatFormatting.AQUA), false);
         }
         pocket.lastOccupied = mega.getGameTime();
@@ -253,7 +253,7 @@ public final class ExclusivePockets {
         try {
             rt.build.entry(mega);
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] The entry hall of the tomb {} could not be built (the cell is cleared): {}", def.id(), ex.toString());
+            LOG.warn("[anime_multiverse] The entry hall of the tomb {} could not be built (the cell is cleared): {}", def.id(), ex.toString());
             LOG.debug("tomb entry", ex);
             p.phase = 3;
             rt.clear = new PocketClear(slot);
@@ -266,7 +266,7 @@ public final class ExclusivePockets {
         if (rt.bossSpawn != null) p.bossSpawn = rt.bossSpawn;
         realm.pockets().put(slot, p);
         realm.setDirty();
-        LOG.info("[nusmp] The tomb {} rises in slot {} ({} rooms, seed {}).", def.id(), slot, rt.layout.rooms().size(), seed);
+        LOG.info("[anime_multiverse] The tomb {} rises in slot {} ({} rooms, seed {}).", def.id(), slot, rt.layout.rooms().size(), seed);
         return p;
     }
 
@@ -279,7 +279,7 @@ public final class ExclusivePockets {
             return false;
         }
         if (rt == null) {                                                                         // the definition is gone: eject, then sweep the cell
-            LOG.warn("[nusmp] The tomb '{}' in slot {} has no definition any more; it is collapsed.", p.pocketId, p.slot);
+            LOG.warn("[anime_multiverse] The tomb '{}' in slot {} has no definition any more; it is collapsed.", p.pocketId, p.slot);
             return true;
         }
         if (!in.isEmpty()) {
@@ -299,10 +299,10 @@ public final class ExclusivePockets {
             long left = rt.collapse.totalTicks() - rt.collapse.elapsed(now);
             int w = RiftRules.warnSeconds(left, rt.lastQuiet == 0 ? left + 20 : rt.lastQuiet);
             rt.lastQuiet = left;
-            if (w > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.clock", "The tomb falls in %s seconds.", w).withStyle(w <= 10 ? ChatFormatting.RED : ChatFormatting.GOLD), true);
+            if (w > 0) for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.clock", "The tomb falls in %s seconds.", w).withStyle(w <= 10 ? ChatFormatting.RED : ChatFormatting.GOLD), true);
             if (rt.collapse.finished(now)) return true;
         } else if (warn > 0) {
-            for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn).withStyle(warn <= 10 ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE), true);
+            for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket.collapse", "The realm is collapsing: %s seconds.", warn).withStyle(warn <= 10 ? ChatFormatting.RED : ChatFormatting.LIGHT_PURPLE), true);
         }
         if (now >= p.expiresAt) return true;
         long since = p.lastOccupied < 0 ? now - p.createdAt : now - p.lastOccupied;
@@ -342,7 +342,7 @@ public final class ExclusivePockets {
     private static void bossLost(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket p, PocketRuntime rt, List<ServerPlayer> in) {
         p.bossDead = true;
         realm.setDirty();
-        for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.boss.lost", "The master of the tomb is gone. Its treasury is yours to open.").withStyle(ChatFormatting.GOLD), true);
+        for (ServerPlayer m : in) m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.boss.lost", "The master of the tomb is gone. Its treasury is yours to open.").withStyle(ChatFormatting.GOLD), true);
     }
 
     // ================================================================ collapse and clean-up
@@ -350,7 +350,7 @@ public final class ExclusivePockets {
     public static void collapse(ServerLevel mega, PocketRealm realm, PocketRealm.Pocket p) {
         if (p.phase >= 3) return;
         for (ServerPlayer m : PocketRealm.playersIn(mega, p.slot)) {
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.pocket.gone", "The realm folds shut behind you.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.pocket.gone", "The realm folds shut behind you.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
             PocketGravity.clear(m);
             PocketRealm.leave(mega, m);
         }
@@ -380,7 +380,7 @@ public final class ExclusivePockets {
         ORPHANS.remove(p.slot);
         realm.pockets().remove(p.slot);
         realm.setDirty();
-        LOG.info("[nusmp] The tomb {} in slot {} is gone and its cell is free.", p.pocketId, p.slot);
+        LOG.info("[anime_multiverse] The tomb {} in slot {} is gone and its cell is free.", p.pocketId, p.slot);
     }
 
     /** Server stop: the runtimes and the orphan jobs are not kept. */
@@ -404,7 +404,7 @@ public final class ExclusivePockets {
             try {
                 jobs(mega, realm, p, now);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] A job of the tomb {} in slot {} failed (further detail at debug): {}", p.pocketId, p.slot, ex.toString());
+                LOG.warn("[anime_multiverse] A job of the tomb {} in slot {} failed (further detail at debug): {}", p.pocketId, p.slot, ex.toString());
                 LOG.debug("tomb job", ex);
             }
         }
@@ -414,7 +414,7 @@ public final class ExclusivePockets {
             try {
                 player(mega, realm, pl, now, t, any);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The tomb tick failed for {} (further detail at debug): {}", pl.getGameProfile().getName(), ex.toString());
+                LOG.warn("[anime_multiverse] The tomb tick failed for {} (further detail at debug): {}", pl.getGameProfile().getName(), ex.toString());
                 LOG.debug("tomb player tick", ex);
             }
         }
@@ -489,8 +489,8 @@ public final class ExclusivePockets {
         Long last = rt.sealWarned.get(pl.getUUID());
         if (last != null && now - last < 400) return;
         rt.sealWarned.put(pl.getUUID(), now);
-        pl.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.hint", "A seal of condensed mana: it answers to %s magic, to the %s, or to force (%s of %s left).",
-                Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".seal", rt.def.seal().label()), Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".sigil", rt.def.seal().sigil()), pk.sealHp, rt.def.seal().forceHp())
+        pl.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.seal.hint", "A seal of condensed mana: it answers to %s magic, to the %s, or to force (%s of %s left).",
+                Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".seal", rt.def.seal().label()), Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".sigil", rt.def.seal().sigil()), pk.sealHp, rt.def.seal().forceHp())
                 .withStyle(ChatFormatting.LIGHT_PURPLE), false);
     }
 
@@ -540,7 +540,7 @@ public final class ExclusivePockets {
             Fx.spray(mega, FxThemes.DUNGEON_RIFT, FxOld.CRIT, c.getX() + 0.5, c.getY() + 0.5, c.getZ() + 0.5, 6, 0.8, 1.0, 0.8, 0.1);
             mega.playSound(null, c, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.BLOCKS, 1.0f, 0.6f);
         }
-        if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.force", "The seal holds: %s%% left.",
+        if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.seal.force", "The seal holds: %s%% left.",
                 Math.max(0, pk.sealHp * 100 / Math.max(1, rt.def.seal().forceHp()))).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         if (pk.sealHp <= 0) return openSeal(mega, realm, pk, rt, by, "force");
         return false;
@@ -574,7 +574,7 @@ public final class ExclusivePockets {
         }
         Random rnd = new Random(rt.seed ^ 0x5EA1L);
         for (ServerPlayer m : PocketRealm.playersIn(mega, pk.slot)) {
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.seal.open." + how, how.equals("force") ? "The seal gives way to sheer force. The treasury is open." : how.equals("sigil") ? "The Sigil is spent. The treasury is open."
+            m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.seal.open." + how, how.equals("force") ? "The seal gives way to sheer force. The treasury is open." : how.equals("sigil") ? "The Sigil is spent. The treasury is open."
                     : how.equals("lever") ? "A lever clicks down somewhere in the tomb. The seal falls away. The treasury is open." : how.equals("auto") ? "The old mechanism gives way by itself. The seal falls away. The treasury is open."
                     : "The seal unravels at the touch of your magic. The treasury is open.").withStyle(ChatFormatting.GOLD), false);
             if (rt.resonated.add(m.getUUID())) AncientResonance.inscribe(m, rt.def, rnd.nextDouble());
@@ -603,13 +603,13 @@ public final class ExclusivePockets {
         switch (st) {
             case SPENT -> {
                 mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.6f, 0.6f);
-                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.spent", "The lever is down. The seal is open already.").withStyle(ChatFormatting.GRAY), true);
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.lever.spent", "The lever is down. The seal is open already.").withStyle(ChatFormatting.GRAY), true);
                 return "spent";
             }
             case LOCKED -> {
                 mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.7f, 0.4f);
                 mega.playSound(null, at, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS, 0.7f, 0.5f);
-                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.locked", "The lever is stiff: the master of the tomb still holds the seal. It gives in %s s, or when the master falls.",
+                if (by != null) by.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.lever.locked", "The lever is stiff: the master of the tomb still holds the seal. It gives in %s s, or when the master falls.",
                         PocketSwitchRules.secondsToUnlock(pk.bossDead, mega.getGameTime() - pk.createdAt, unlockTicks())).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 return "locked";
             }
@@ -617,7 +617,7 @@ public final class ExclusivePockets {
                 mega.playSound(null, at, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 1.0f, 0.8f);
                 if (openSeal(mega, realm, pk, rt, by, "lever")) {
                     for (ServerPlayer m : PocketRealm.playersIn(mega, pk.slot))
-                        m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.pulled", "A lever clicks somewhere in the tomb... and the seal of the treasury falls away.").withStyle(ChatFormatting.GOLD), true);
+                        m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.lever.pulled", "A lever clicks somewhere in the tomb... and the seal of the treasury falls away.").withStyle(ChatFormatting.GOLD), true);
                 }
                 return "opened";
             }
@@ -634,7 +634,7 @@ public final class ExclusivePockets {
             if (st == PocketSwitchRules.State.READY && !rt.leverTold) {
                 rt.leverTold = true;
                 for (ServerPlayer m : in) {
-                    m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.lever.ready", "A lever clicks somewhere in the tomb: the seal lever in the key room gives way now.").withStyle(ChatFormatting.AQUA), true);
+                    m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.lever.ready", "A lever clicks somewhere in the tomb: the seal lever in the key room gives way now.").withStyle(ChatFormatting.AQUA), true);
                     mega.playSound(null, m.blockPosition(), SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5f, 1.2f);
                 }
             }
@@ -649,7 +649,7 @@ public final class ExclusivePockets {
         List<String> gaps = PocketWatchdog.missing(mega, rt, p);
         if (gaps.isEmpty()) return;
         rt.repairs++;
-        LOG.warn("[nusmp] The tomb {} in slot {} is missing {} thing(s), e.g. '{}'; a repair pass starts ({} of 6).", p.pocketId, p.slot, gaps.size(), gaps.get(0), rt.repairs);
+        LOG.warn("[anime_multiverse] The tomb {} in slot {} is missing {} thing(s), e.g. '{}'; a repair pass starts ({} of 6).", p.pocketId, p.slot, gaps.size(), gaps.get(0), rt.repairs);
         rt.repairJob = new PocketBuild(rt, true, p.sealOpen);
     }
 
@@ -662,7 +662,7 @@ public final class ExclusivePockets {
         List<ServerPlayer> in = PocketRealm.playersIn(mega, pk.slot);
         PocketBoss.death(mega, rt, in);
         for (ServerPlayer m : in) {
-            m.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.boss.dead", "The master of the tomb falls. The seal still holds the treasury.").withStyle(ChatFormatting.GOLD), true);
+            m.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.boss.dead", "The master of the tomb falls. The seal still holds the treasury.").withStyle(ChatFormatting.GOLD), true);
             NusmpEvents.fire(m, "mega.tomb_boss", rt.def.id());
         }
         // the remains of the lair's court
@@ -672,7 +672,7 @@ public final class ExclusivePockets {
 
     private static void rollLoot(ServerLevel mega, PocketRuntime rt, LabyrinthGuardianEntity boss) {
         try {
-            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", "pocket/" + rt.def.id() + "/boss"));
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket/" + rt.def.id() + "/boss"));
             LootTable table = mega.getServer().reloadableRegistries().getLootTable(key);
             LootParams params = new LootParams.Builder(mega).withParameter(LootContextParams.ORIGIN, boss.position()).withParameter(LootContextParams.THIS_ENTITY, boss).create(LootContextParamSets.GIFT);
             for (ItemStack s : table.getRandomItems(params)) {
@@ -682,7 +682,7 @@ public final class ExclusivePockets {
                 mega.addFreshEntity(ie);
             }
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] The loot of the master of {} could not be rolled: {}", rt.def.id(), ex.toString());
+            LOG.warn("[anime_multiverse] The loot of the master of {} could not be rolled: {}", rt.def.id(), ex.toString());
         }
     }
 

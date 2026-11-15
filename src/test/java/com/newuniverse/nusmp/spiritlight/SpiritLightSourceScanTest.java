@@ -121,7 +121,7 @@ class SpiritLightSourceScanTest {
         for (String f : new String[]{"client/prop/SpiritLightDraw.java", "client/prop/SpiritLightPropPainter.java"}) {
             String c = code(SRC.resolve(f)).replaceAll("(?m)^.*static final.*$", "");      // static tables are built once
             assertFalse(c.contains("new float[") || c.contains("new double[") || c.contains("new Vec3") || c.contains("new ArrayList") || c.contains("new HashMap"), f + " allocates per frame");
-            for (String b : new String[]{"RenderType.eyes(", "RenderType.lightning(", "ADDITIVE_TRANSPARENCY", "ResourceLocation.fromNamespaceAndPath(\"nusmp\", \"textures"})
+            for (String b : new String[]{"RenderType.eyes(", "RenderType.lightning(", "ADDITIVE_TRANSPARENCY", "ResourceLocation.fromNamespaceAndPath(\"anime_multiverse\", \"textures"})
                 if (!f.endsWith("SpiritLightDraw.java") || !b.startsWith("Resource")) assertFalse(c.contains(b), f + " uses " + b);
         }
         String painter = code(SRC.resolve("client/prop/SpiritLightPropPainter.java"));

@@ -206,7 +206,7 @@ public final class WaterBc {
     /** File name without folder or extension: {@code wbc_b_body} or, for the grey twin, {@code wbc_b_body_t}. */
     public static String fileName(String name, boolean twin) { return PREFIX + name + (twin ? "_t" : ""); }
 
-    /** Every texture of the set as a path under assets/nusmp: the sprites, their twins and the solid cell. */
+    /** Every texture of the set as a path under assets/anime_multiverse: the sprites, their twins and the solid cell. */
     public static List<String> allTextures() {
         List<String> out = new ArrayList<>();
         for (int i = 0; i < SPRITES.length; i++) {
@@ -217,7 +217,7 @@ public final class WaterBc {
         return out;
     }
 
-    /** The core pieces of the meshes ({@code assets/nusmp/wbc_meshes/bc_<name>.txt} and {@code bc_<name>_lo.txt}); the index is the piece id the scene hands to the painter. */
+    /** The core pieces of the meshes ({@code assets/anime_multiverse/wbc_meshes/bc_<name>.txt} and {@code bc_<name>_lo.txt}); the index is the piece id the scene hands to the painter. */
     public static final String[] PIECES = {"head_upper", "head_hull", "head_lower", "seg", "seg_b", "tail", "horn", "ripple", "lance", "sphere", "dome"};
     public static final int P_HEAD_UPPER = 0, P_HEAD_HULL = 1, P_HEAD_LOWER = 2, P_SEG = 3, P_SEG_B = 4, P_TAIL = 5, P_HORN = 6, P_RIPPLE = 7, P_LANCE = 8, P_SPHERE = 9, P_DOME = 10;
 

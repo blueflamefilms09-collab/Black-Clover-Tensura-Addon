@@ -1,0 +1,21 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.newuniverse.nusmp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "OverlordUndeadHandlerMixin",
+    "LevelGuardMixin",
+    "LevelChunkGuardMixin",
+    "ResourceLocationMixin"
+  ],
+  "client": [
+    "client.ComingSoonTextMixin",
+    "client.ComingSoonTooltipMixin",
+    "client.FourKingdomsSlotMixin",
+    "client.PlayerModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

@@ -51,7 +51,7 @@ public final class UnifiedTooltipRules {
         public Grade baseGrade() { return base; }
 
         /** The lang key of the label (the fragment {@code unified_tooltips} ships it; the English label is the fallback). */
-        public String langKey() { return "tooltip.nusmp.unified.cat." + name().toLowerCase(Locale.ROOT); }
+        public String langKey() { return "tooltip.anime_multiverse.unified.cat." + name().toLowerCase(Locale.ROOT); }
     }
 
     /** The plain facts about an item that the game side reads. {@code classNames} are the simple class names from the item's class up to (not including) {@code Item}. */
@@ -74,7 +74,7 @@ public final class UnifiedTooltipRules {
     }
 
     /** The mod id whose items get the tooltip. */
-    public static final String NAMESPACE = "nusmp";
+    public static final String NAMESPACE = "anime_multiverse";
 
     /** The footer's first words. */
     public static final String FOOTER_NAME = "Multiverse of Anime";

@@ -728,10 +728,10 @@ public final class Wave105 {
                 int[] range = GradeDamage.range(d.grade().name().toLowerCase(java.util.Locale.ROOT));
                 if (d.meleeDamage() < range[0] || d.meleeDamage() > range[1]) bad.add(id + " damage " + d.meleeDamage() + " is outside " + range[0] + "-" + range[1]);
                 for (String f : new String[]{"weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id + ".png"})
-                    if (Wave105.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
-            } else if (Wave105.class.getResource("/assets/nusmp/relic_worn/uq_" + id + ".txt") == null) bad.add(id + ": its worn model is not in the jar");
+                    if (Wave105.class.getResource("/assets/anime_multiverse/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+            } else if (Wave105.class.getResource("/assets/anime_multiverse/relic_worn/uq_" + id + ".txt") == null) bad.add(id + ": its worn model is not in the jar");
             for (String f : new String[]{"textures/item/" + id + ".png", "models/item/" + id + ".json", "models/item/" + id + "_icon.json"})
-                if (Wave105.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+                if (Wave105.class.getResource("/assets/anime_multiverse/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
         }
         if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
         if (normal != 121 || special != 0) return SelfTests.Result.fail("grades " + normal + " Normal / " + special + " Special (wanted 121 / 0)");

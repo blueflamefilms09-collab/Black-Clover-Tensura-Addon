@@ -87,7 +87,7 @@ public final class PackInstaller {
             switch (d) {
                 case REFUSE -> {
                     return Result.fail("The quest folder " + questsDir + " already holds quests that are not from this pack. Nothing was changed. "
-                            + "Use '/nusmp quests install force' to move them to a backup folder and install the pack.");
+                            + "Use '/anime_multiverse quests install force' to move them to a backup folder and install the pack.");
                 }
                 case FORCED_BACKUP -> {
                     Path backup = uniqueBackup(questsDir, nowMillis);
@@ -113,7 +113,7 @@ public final class PackInstaller {
     public static Result update(Path packRoot, Path questsDir, String version, long nowMillis) {
         try {
             PackManifest marker = readMarker(questsDir);
-            if (marker == null) return Result.fail("Nothing to update: this quest folder was not installed by /nusmp quests install.");
+            if (marker == null) return Result.fail("Nothing to update: this quest folder was not installed by /anime_multiverse quests install.");
             Map<String, byte[]> pack = readPack(packRoot);
             if (pack.isEmpty()) return Result.fail("The quest pack is not bundled in this build (no quest_pack folder in the jar).");
             String newHash = PackManifest.hash(pack);
@@ -136,7 +136,7 @@ public final class PackInstaller {
     public static Result uninstall(Path questsDir, long nowMillis) {
         try {
             PackManifest marker = readMarker(questsDir);
-            if (marker == null) return Result.fail("Nothing to uninstall: this quest folder was not installed by /nusmp quests install.");
+            if (marker == null) return Result.fail("Nothing to uninstall: this quest folder was not installed by /anime_multiverse quests install.");
             Path backup = uniqueBackup(questsDir, nowMillis);
             copyDir(questsDir, backup);
             List<String> gone = PackPlan.planUninstall(new HashSet<>(marker.files()), existingFiles(questsDir));

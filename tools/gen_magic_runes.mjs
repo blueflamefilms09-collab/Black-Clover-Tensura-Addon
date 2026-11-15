@@ -7,7 +7,7 @@ import zlib from "node:zlib";
 
 const root = path.resolve(import.meta.dirname, "..");
 const enumPath = path.join(root, "src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
-const outDir = path.join(root, "src/main/resources/assets/nusmp/textures/particle/magic_runes");
+const outDir = path.join(root, "src/main/resources/assets/anime_multiverse/textures/particle/magic_runes");
 const size = 64, scale = 4, hi = size * scale;
 const colors = {
   FLAME: [255, 116, 42], WATER: [104, 205, 255], WIND: [156, 255, 199], EARTH: [183, 227, 115],

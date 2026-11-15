@@ -42,7 +42,7 @@ class RelicWearDataTest {
     @Test
     void everyWaveRelicWornInACuriosSlotCanBePutOn() throws IOException {
         Map<String, String> slots = new LinkedHashMap<>();
-        for (WornCoverage.Entry r : WornCoverageTest.relicsFromSources()) slots.put("nusmp:" + r.id(), r.slot());
+        for (WornCoverage.Entry r : WornCoverageTest.relicsFromSources()) slots.put("anime_multiverse:" + r.id(), r.slot());
         assertTrue(slots.size() > 800, "relics read from the wave sources: " + slots.size());
         long curios = slots.values().stream().filter(s -> RelicWear.curiosSlot(s) != null).count();
         long armour = slots.values().stream().filter(s -> RelicWear.armourEquipSlot(s) != null).count();
@@ -72,7 +72,7 @@ class RelicWearDataTest {
         List<String> ids = new ArrayList<>(RelicWear.RELIC_SLOTS);
         ids.addAll(RelicWear.OTHER_SLOTS);
         for (String id : ids) {
-            JsonObject o = JsonParser.parseString(Files.readString(RES.resolve("data/nusmp/curios/slots/" + id + ".json"))).getAsJsonObject();
+            JsonObject o = JsonParser.parseString(Files.readString(RES.resolve("data/anime_multiverse/curios/slots/" + id + ".json"))).getAsJsonObject();
             assertTrue(o.get("size").getAsInt() >= 1, id + " size");
             assertTrue(orders.add(o.get("order").getAsInt()), id + ": the order is shared with another slot of the mod");
             assertTrue(o.get("icon").getAsString().matches("[a-z0-9_.-]+:[a-z0-9_/.-]+"), id + " icon");
@@ -85,23 +85,23 @@ class RelicWearDataTest {
         RelicWear.Data d = data();
         assertEquals(2, (int) d.slotSizes().get("dungeon_relic"));
         assertTrue(d.assigned().contains("dungeon_relic"));
-        assertTrue(d.tags().get("dungeon_relic").contains("nusmp:glutton_chalice"));
+        assertTrue(d.tags().get("dungeon_relic").contains("anime_multiverse:glutton_chalice"));
     }
 
     @Test
     void everyEntityFileGivesItsSlotsToThePlayerAndOnlyListsDefinedSlots() throws IOException {
         Set<String> defined = new HashSet<>();
-        try (Stream<Path> s = Files.list(RES.resolve("data/nusmp/curios/slots"))) {
+        try (Stream<Path> s = Files.list(RES.resolve("data/anime_multiverse/curios/slots"))) {
             s.forEach(p -> defined.add(p.getFileName().toString().replace(".json", "")));
         }
-        try (Stream<Path> s = Files.list(RES.resolve("data/nusmp/curios/entities"))) {
+        try (Stream<Path> s = Files.list(RES.resolve("data/anime_multiverse/curios/entities"))) {
             for (Path p : s.toList()) {
                 JsonObject o = JsonParser.parseString(Files.readString(p)).getAsJsonObject();
                 assertTrue(o.getAsJsonArray("entities").toString().contains("player"), p + " must target the player");
                 o.getAsJsonArray("slots").forEach(e -> assertTrue(defined.contains(e.getAsString()), p + ": slot " + e + " has no slot file in this mod"));
             }
         }
-        assertTrue(RelicWear.ENTITY_FILES.stream().allMatch(f -> Files.exists(RES.resolve("data/nusmp/curios/entities/" + f + ".json"))));
+        assertTrue(RelicWear.ENTITY_FILES.stream().allMatch(f -> Files.exists(RES.resolve("data/anime_multiverse/curios/entities/" + f + ".json"))));
     }
 
     @Test

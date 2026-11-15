@@ -21,9 +21,9 @@ final class TemplateGrids {
     private TemplateGrids() {}
 
     /** Root of the shipped templates. */
-    static final Path ROOT = Path.of("src/main/resources/data/nusmp/structure");
+    static final Path ROOT = Path.of("src/main/resources/data/anime_multiverse/structure");
 
-    /** The template id {@code nusmp:mega/hall/x} read from disk, or null when the file does not exist. */
+    /** The template id {@code anime_multiverse:mega/hall/x} read from disk, or null when the file does not exist. */
     static ClearanceGrid load(String templateId) throws IOException {
         String p = templateId.contains(":") ? templateId.substring(templateId.indexOf(':') + 1) : templateId;
         Path f = ROOT.resolve(p + ".nbt");

@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:spells/characters",
+  "display": {
+    "icon": {
+      "id": "minecraft:writable_book"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spells.page_dimension_slash_equinox.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spells.page_dimension_slash_equinox.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_page_unlocked_dimension_slash_equinox": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "page.unlocked",
+        "arg": "dimension_slash_equinox"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_page_unlocked_dimension_slash_equinox"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

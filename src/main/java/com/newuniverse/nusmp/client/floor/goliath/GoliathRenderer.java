@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * Draws the Goliath (tools/gen_goliath.py writes assets/nusmp/geo|animations|textures/entity/goliath_*) from its synched state:
+ * Draws the Goliath (tools/gen_goliath.py writes assets/anime_multiverse/geo|animations|textures/entity/goliath_*) from its synched state:
  * <ul>
  *   <li><b>Skin</b>: the whole stone body, and from the middle of the Gates' transformation the cracked skin (same model, every crack burning), with a
  *       burst of amber over the swap.</li>

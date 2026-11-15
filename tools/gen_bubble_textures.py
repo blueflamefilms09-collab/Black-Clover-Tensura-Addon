@@ -4,7 +4,7 @@ Look reference (Black Clover anime, Bubble Refresher): a giant clam shell heaped
 cel-shaded: flat white discs, a flat blue-grey crescent shadow on the lower side, a thin dark-blue linework outline, a pale highlight;
 small clear soap bubbles with a rim line and a glint float around it.
 
-Deterministic (fixed seeds). Output: src/main/resources/assets/nusmp/textures/particle/bubble_*.png
+Deterministic (fixed seeds). Output: src/main/resources/assets/anime_multiverse/textures/particle/bubble_*.png
 
     python3 -B tools/gen_bubble_textures.py
 """
@@ -14,7 +14,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 LINE = (58, 92, 148)       # linework
 SHADE = (176, 200, 232)    # cel shadow

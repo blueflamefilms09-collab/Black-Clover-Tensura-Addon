@@ -16,7 +16,7 @@ public final class UpgradeCaps {
     public static final int GOD_MODEL_VERTICES = 4800, GOD_ENSEMBLE_VERTICES = 16000, GOD_HELD_VERTICES = 2500;
 
     /**
-     * 3.9.0 X3 (the blocky armour relic models, assets/nusmp/relic_worn_x3): one model file, and everything one wearer's armour relics wear at x3 detail. The classic model of the same piece is
+     * 3.9.0 X3 (the blocky armour relic models, assets/anime_multiverse/relic_worn_x3): one model file, and everything one wearer's armour relics wear at x3 detail. The classic model of the same piece is
      * the LOD form (beyond {@link #LOD_DISTANCE} blocks, at the low quality, and for a wearer past the nearest {@link #X3_WEARERS}). Checked against the generated files by X3ModelsTest.
      */
     public static final int X3_MODEL_VERTICES = 6400, X3_ENSEMBLE_VERTICES = 14000, X3_WEARERS = 4;
@@ -26,7 +26,7 @@ public final class UpgradeCaps {
 
     /**
      * The caps of one upgraded relic: one model file, everything it wears at full detail, and the LOD share. The two slices keep their own tables because their relics differ (the Charms /
-     * Genesis table is the file assets/nusmp/visual_upgrade/caps_charms_genesis_worn.txt, the God worn table is the GOD row above and tools/visual_upgrade/god_worn/caps.py); the lookup
+     * Genesis table is the file assets/anime_multiverse/visual_upgrade/caps_charms_genesis_worn.txt, the God worn table is the GOD row above and tools/visual_upgrade/god_worn/caps.py); the lookup
      * below is the one place that answers for a relic, and a test pins both tables to their files.
      */
     public record Caps(int modelVertices, int ensembleVertices, double lodFraction) {}

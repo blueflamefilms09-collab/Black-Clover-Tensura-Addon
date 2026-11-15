@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Why: the Beast Will Core (item nusmp:beast_will_core) is a solid 3D orb in hand, on the ground and in frames, like the rank Mana Cores (docs/solid_cores.md). It reuses the sphere / skin / mesh
+"""Why: the Beast Will Core (item anime_multiverse:beast_will_core) is a solid 3D orb in hand, on the ground and in frames, like the rank Mana Cores (docs/solid_cores.md). It reuses the sphere / skin / mesh
 writer of tools/gen_mana_core_models.py (same dialect, same outward winding, same glow shell).
 
 The look: a rough, dark stone (24 x 12 sphere, radius jittered a few percent, facets of different grey) split by a network of fissures that glow white-hot; the fissures are widest and brightest round
@@ -9,7 +9,7 @@ solid and neutral by gen_core_icon.py and tinted per will by an item colour hand
 
     python3 -B tools/beastwill/gen_beast_core_model.py [--sheet out.png]
 
-Writes under src/main/resources/assets/nusmp: weapon_meshes/beast_will_core.txt, textures/entity/weapon/beast_will_core.png (+ _glow.png), models/item/beast_will_core.json (builtin/entity, the display
+Writes under src/main/resources/assets/anime_multiverse: weapon_meshes/beast_will_core.txt, textures/entity/weapon/beast_will_core.png (+ _glow.png), models/item/beast_will_core.json (builtin/entity, the display
 transforms of the rank cores), and appends "beast_will_core": "handitem" to weapon_classes.json. Cost per core in hand: 288 body quads + 288 glow quads = 576 quads, no allocation.
 """
 import json
@@ -84,7 +84,7 @@ def main():
     g.to_img(glow).save(os.path.join(tex, CID + "_glow.png"), optimize=True)
     text = g.mesh_text(CID, "beastwill", radius_field(), True).replace("tools/gen_mana_core_models.py", "tools/beastwill/gen_beast_core_model.py")
     g.write(os.path.join(g.ASSETS, "weapon_meshes", CID + ".txt"), text)
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + CID}, "display": g.DISPLAY}
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + CID}, "display": g.DISPLAY}
     g.write(os.path.join(g.ASSETS, "models", "item", CID + ".json"), json.dumps(model, indent=2) + "\n")
     print("classes added:", write_classes())
     if sheet:

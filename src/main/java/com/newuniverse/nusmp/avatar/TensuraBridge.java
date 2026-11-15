@@ -190,6 +190,6 @@ public final class TensuraBridge {
     private static void warn(String what, Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] Avatar: could not write Tensura {} ({}); further Tensura failures are silent", what, t.toString());
+        LOG.warn("[anime_multiverse] Avatar: could not write Tensura {} ({}); further Tensura failures are silent", what, t.toString());
     }
 }

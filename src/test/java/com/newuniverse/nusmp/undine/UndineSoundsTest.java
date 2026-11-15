@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tensura or mob sound.
  */
 class UndineSoundsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp"), SOUNDS = ASSETS.resolve("sounds");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse"), SOUNDS = ASSETS.resolve("sounds");
 
     private static JsonObject soundsJson() throws IOException { return JsonParser.parseString(Files.readString(ASSETS.resolve("sounds.json"))).getAsJsonObject(); }
 
@@ -94,7 +94,7 @@ class UndineSoundsTest {
             assertTrue(events.contains(key), "sounds.json entry " + key + " is not in the catalogue");
             for (JsonElement s : doc.getAsJsonObject(key).getAsJsonArray("sounds")) {
                 String n = s.getAsJsonObject().get("name").getAsString();
-                assertTrue(n.startsWith("nusmp:undine/"), key + " names a sound of another set: " + n);
+                assertTrue(n.startsWith("anime_multiverse:undine/"), key + " names a sound of another set: " + n);
                 named.add(fileOf(n).toString().replace('\\', '/'));
             }
         }
@@ -112,7 +112,7 @@ class UndineSoundsTest {
             assertFalse(line.isBlank(), "no lang line for " + c.subtitleKey());
             assertTrue(line.contains(c.verb()), "the subtitle says what the cue is");
         }
-        for (String key : new String[]{"key.nusmp.undine_link", "nusmp.undine.spirit.full", "nusmp.undine.spirit.linked", "nusmp.undine.spirit.unlinked"}) assertTrue(lang.has(key), key);
+        for (String key : new String[]{"key.anime_multiverse.undine_link", "anime_multiverse.undine.spirit.full", "anime_multiverse.undine.spirit.linked", "anime_multiverse.undine.spirit.unlinked"}) assertTrue(lang.has(key), key);
         JsonObject doc = soundsJson();
         for (String old : new String[]{"zagred_word", "zagred_seal", "zagred_fall", "zagred_shatter", "zagred_heal", "zagred_overwrite", "zagred_phase", "mob.goblin.taunt", "mob.dragon.cast"})
             assertTrue(doc.has(old), "the older entry " + old + " must stay");

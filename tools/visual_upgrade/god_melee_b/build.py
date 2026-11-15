@@ -3,7 +3,7 @@
     python3 -B tools/visual_upgrade/god_melee_b/build.py [id ...]         (no ids = all nine; deterministic, idempotent)
 
 For every weapon: runs its ORIGINAL builder with the slice's hooks (lib.run_old_builder), paints on top (items_a / items_b), writes the NEW files under `up/`
-(mesh, level-of-detail mesh, orbiting piece, skin, core glow, vein glow) and the data table assets/nusmp/visual_upgrade/<id>.json. The old files are not touched.
+(mesh, level-of-detail mesh, orbiting piece, skin, core glow, vein glow) and the data table assets/anime_multiverse/visual_upgrade/<id>.json. The old files are not touched.
 """
 import json
 import os

@@ -9,7 +9,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 /**
- * Test command (ops): /nusmp vfx <shape> [power]
+ * Test command (ops): /anime_multiverse vfx <shape> [power]
  * Plays the effect from you toward the block you're looking at, so you can preview VFX
  * without any skill code.
  */
@@ -17,7 +17,7 @@ public final class VfxCommand {
     private VfxCommand() {}
 
     public static void register(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("nusmp").requires(s -> s.hasPermission(2))
+        event.getDispatcher().register(Commands.literal("anime_multiverse").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("vfx")
                         .then(Commands.argument("shape", StringArgumentType.word())
                                 .suggests((ctx, b) -> { for (VfxShape s : VfxShape.values()) b.suggest(s.name().toLowerCase()); return b.buildFuture(); })

@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Why: one foundry mob as {@code data/nusmp/mega/foundry/<id>.json} describes it (written by tools/foundry/gen_foundry.py from the roster, read by {@link FoundryData} on data
+ * Why: one foundry mob as {@code data/anime_multiverse/mega/foundry/<id>.json} describes it (written by tools/foundry/gen_foundry.py from the roster, read by {@link FoundryData} on data
  * reload). It holds the facts the SERVER needs: which road and tier it belongs to, its faction (one of the eleven of the Mega-Dungeon contract, which decides who it fights in
  * a turf war and what it leaves), its archetype and its abilities (ids of the library), its size (a multiplier on the model's height) and the source it is inspired by (kept for
- * the docs and the admin command). What the CLIENT needs (the animation class, the glow colour) is in {@code assets/nusmp/foundry/index.json}, because a client never sees data
+ * the docs and the admin command). What the CLIENT needs (the animation class, the glow colour) is in {@code assets/anime_multiverse/foundry/index.json}, because a client never sees data
  * packs. Pure: the parser is strict and reports every problem as a line of text, like the encounter parser.
  *
  * @param height the model's height in blocks (the art kit measured it); with {@code size} it gives the SCALE attribute
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public record FoundryDef(String id, String name, Polarity road, int tier, String faction, String archetype, List<String> abilities, double size, double height, String source, int glow) {
 
     private static final Pattern ID = Pattern.compile("[a-z][a-z0-9_]{1,63}");
-    /** The eleven factions of the Mega-Dungeon contract (the entity-type tags {@code nusmp:mega/<id>}). */
+    /** The eleven factions of the Mega-Dungeon contract (the entity-type tags {@code anime_multiverse:mega/<id>}). */
     public static final List<String> FACTIONS = List.of("undead", "goblin", "ogre", "beast", "slime", "construct", "cultist", "demon", "elemental", "aquatic", "insect");
 
     public FoundryDef {
@@ -87,12 +87,12 @@ public record FoundryDef(String id, String name, Polarity road, int tier, String
         return new Parsed(new FoundryDef(id, name, road, tier, faction, archetype, abilities, size, height, FoundryLibrary.str(o, "source", ""), rgb), problems);
     }
 
-    /** The registry-style key a spawned mob is requested by: {@code nusmp:foundry_mob#<id>}. */
-    public static final String ENTITY_ID = "nusmp:foundry_mob";
+    /** The registry-style key a spawned mob is requested by: {@code anime_multiverse:foundry_mob#<id>}. */
+    public static final String ENTITY_ID = "anime_multiverse:foundry_mob";
 
     public String entityKey() { return ENTITY_ID + "#" + id; }
 
-    /** The registry id of the entity type to create for a key: {@code nusmp:foundry_mob} for a foundry key, the text itself for anything else. */
+    /** The registry id of the entity type to create for a key: {@code anime_multiverse:foundry_mob} for a foundry key, the text itself for anything else. */
     public static String baseId(String key) { return idOfKey(key) == null ? key : ENTITY_ID; }
 
     /** The id of a key made by {@link #entityKey()}, or null when the text is not one. */

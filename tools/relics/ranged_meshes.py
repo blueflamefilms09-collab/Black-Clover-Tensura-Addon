@@ -42,7 +42,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MESH_DIR = os.path.join(ASSETS, "weapon_meshes")
 
 # ---- the states: (file suffix, draw fraction the mesh shows, projectile on it). Pull thresholds are the Java side's (RangedStage): bow 0.65 / 0.9, crossbow 0.58 / 1.0

@@ -24,8 +24,8 @@ public final class SafeCast {
     private static final Logger LOG = LogUtils.getLogger();
     public static final int BASE_COOLDOWN_TICKS = 100, MAX_COOLDOWN_TICKS = 1200;
 
-    private static final SafeRunner SERVER = new SafeRunner(new FaultLedger(BASE_COOLDOWN_TICKS, MAX_COOLDOWN_TICKS, m -> LOG.error("[nusmp] {}", m)));
-    private static final SafeRunner CLIENT = new SafeRunner(new FaultLedger(BASE_COOLDOWN_TICKS, MAX_COOLDOWN_TICKS, m -> LOG.error("[nusmp] {}", m)));
+    private static final SafeRunner SERVER = new SafeRunner(new FaultLedger(BASE_COOLDOWN_TICKS, MAX_COOLDOWN_TICKS, m -> LOG.error("[anime_multiverse] {}", m)));
+    private static final SafeRunner CLIENT = new SafeRunner(new FaultLedger(BASE_COOLDOWN_TICKS, MAX_COOLDOWN_TICKS, m -> LOG.error("[anime_multiverse] {}", m)));
 
     /** True while this magic is on its recovery cooldown after a fault. Check it BEFORE spending mana. */
     public static boolean blocked(String magicId, long gameTime) { return SERVER.ledger().blocked(magicId, gameTime); }

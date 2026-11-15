@@ -25,8 +25,8 @@ public final class SaiyanUltimates {
 
     /** One Ultimate: its id (a save key, never renamed), the race it is restricted to, the default requirements. */
     public record Ultimate(String id, String race, Need need) {
-        public String nameKey() { return "nusmp.saiyan.ultimate." + id; }
-        public String epithetKey() { return "nusmp.saiyan.ultimate." + id + ".epithet"; }
+        public String nameKey() { return "anime_multiverse.saiyan.ultimate." + id; }
+        public String epithetKey() { return "anime_multiverse.saiyan.ultimate." + id + ".epithet"; }
     }
 
     public static final List<Ultimate> ALL = List.of(new Ultimate(GOKU, RACE_SAIYAN, Need.GOKU_DEFAULT));

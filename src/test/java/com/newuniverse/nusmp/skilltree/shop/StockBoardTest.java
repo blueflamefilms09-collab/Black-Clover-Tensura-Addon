@@ -39,27 +39,27 @@ class StockBoardTest {
 
     @Test
     void theAllRoutesLineSkipsTheRoutesThatHaveALineOfTheirOwn() {
-        List<StockEntry> entries = List.of(route("fang", "nusmp:smoldering_fang_of_insanity", false), route("books", "", true), sp("archery", "beginner_archery", 100));
-        List<String> routes = List.of("nusmp:smoldering_fang_of_insanity", "nusmp:lady_luck", "nusmp:basic_swordsmanship");
+        List<StockEntry> entries = List.of(route("fang", "anime_multiverse:smoldering_fang_of_insanity", false), route("books", "", true), sp("archery", "beginner_archery", 100));
+        List<String> routes = List.of("anime_multiverse:smoldering_fang_of_insanity", "anime_multiverse:lady_luck", "anime_multiverse:basic_swordsmanship");
         List<StockBoard.Slot> slots = StockBoard.slots(entries, routes);
-        assertEquals(List.of("fang", "books@nusmp:lady_luck", "books@nusmp:basic_swordsmanship"), ids(slots), "an old SP line makes no slot any more (1.96.0)");
-        assertEquals("nusmp:smoldering_fang_of_insanity", slots.get(0).ref());
-        assertEquals("nusmp:basic_swordsmanship", slots.get(2).ref());
+        assertEquals(List.of("fang", "books@anime_multiverse:lady_luck", "books@anime_multiverse:basic_swordsmanship"), ids(slots), "an old SP line makes no slot any more (1.96.0)");
+        assertEquals("anime_multiverse:smoldering_fang_of_insanity", slots.get(0).ref());
+        assertEquals("anime_multiverse:basic_swordsmanship", slots.get(2).ref());
     }
 
     @Test
     void aLineForARouteThatDoesNotExistMakesNoSlot() {
-        List<StockEntry> entries = List.of(route("fang", "nusmp:smoldering_fang_of_insanity", false), route("books", "", true));
-        assertEquals(List.of("books@nusmp:lady_luck"), ids(StockBoard.slots(entries, List.of("nusmp:lady_luck"))), "the missing flagship route is not stocked, nor taken from the all-routes line");
+        List<StockEntry> entries = List.of(route("fang", "anime_multiverse:smoldering_fang_of_insanity", false), route("books", "", true));
+        assertEquals(List.of("books@anime_multiverse:lady_luck"), ids(StockBoard.slots(entries, List.of("anime_multiverse:lady_luck"))), "the missing flagship route is not stocked, nor taken from the all-routes line");
         assertTrue(StockBoard.slots(entries, List.of()).isEmpty(), "with no routes nothing can stock the shelf");
     }
 
     @Test
     void aSlotTheShopPacketCouldNotCarryIsLeftOffTheShelf() {
-        String huge = "nusmp:" + "x".repeat(StockBoard.MAX_ID);
+        String huge = "anime_multiverse:" + "x".repeat(StockBoard.MAX_ID);
         List<StockEntry> entries = List.of(route("books", "", true));
-        assertEquals(List.of("books@nusmp:ok"), ids(StockBoard.slots(entries, List.of(huge, "nusmp:ok"))), "a route id too long for the wire is skipped, the others stay");
-        String edge = "nusmp:" + "y".repeat(StockBoard.MAX_ID - "books@nusmp:".length());
+        assertEquals(List.of("books@anime_multiverse:ok"), ids(StockBoard.slots(entries, List.of(huge, "anime_multiverse:ok"))), "a route id too long for the wire is skipped, the others stay");
+        String edge = "anime_multiverse:" + "y".repeat(StockBoard.MAX_ID - "books@anime_multiverse:".length());
         assertEquals(1, StockBoard.slots(entries, List.of(edge)).size(), "a slot id of exactly the limit is kept");
         assertTrue(StockBoard.slots(entries, List.of(edge + "z")).isEmpty(), "one character more is not");
     }
@@ -67,14 +67,14 @@ class StockBoardTest {
     @Test
     void aNewRouteAppearsWithNoEditToTheFile() {
         List<StockEntry> entries = List.of(route("books", "", true));
-        assertEquals(1, StockBoard.slots(entries, List.of("nusmp:a")).size());
-        assertEquals(2, StockBoard.slots(entries, List.of("nusmp:a", "nusmp:b")).size());
+        assertEquals(1, StockBoard.slots(entries, List.of("anime_multiverse:a")).size());
+        assertEquals(2, StockBoard.slots(entries, List.of("anime_multiverse:a", "anime_multiverse:b")).size());
     }
 
     @Test
     void buildAppliesTheRollTheWeightAndThePurchases() {
-        List<StockEntry> entries = List.of(weighted("archery", "nusmp:basic_swordsmanship", 100), weighted("ghost", "nusmp:oath_of_the_heavy_armor", 0), route("fang", "nusmp:smoldering_fang_of_insanity", false));
-        List<StockBoard.Slot> slots = StockBoard.slots(entries, List.of("nusmp:basic_swordsmanship", "nusmp:oath_of_the_heavy_armor", "nusmp:smoldering_fang_of_insanity"));
+        List<StockEntry> entries = List.of(weighted("archery", "anime_multiverse:basic_swordsmanship", 100), weighted("ghost", "anime_multiverse:oath_of_the_heavy_armor", 0), route("fang", "anime_multiverse:smoldering_fang_of_insanity", false));
+        List<StockBoard.Slot> slots = StockBoard.slots(entries, List.of("anime_multiverse:basic_swordsmanship", "anime_multiverse:oath_of_the_heavy_armor", "anime_multiverse:smoldering_fang_of_insanity"));
         List<StockBoard.Offer> shelf = StockBoard.build(SEED, 5, 0, slots, id -> 0);
         assertEquals(2, shelf.size(), "the weight-0 line is not on the shelf");
         assertNull(StockBoard.find(shelf, "ghost"));
@@ -93,7 +93,7 @@ class StockBoardTest {
 
     @Test
     void aNewPeriodGivesANewShelfWithNothingBoughtYet() {
-        List<StockBoard.Slot> slots = StockBoard.slots(List.of(route("books", "", true)), List.of("nusmp:a", "nusmp:b", "nusmp:c"));
+        List<StockBoard.Slot> slots = StockBoard.slots(List.of(route("books", "", true)), List.of("anime_multiverse:a", "anime_multiverse:b", "anime_multiverse:c"));
         List<StockBoard.Offer> p1 = StockBoard.build(SEED, 1, 0, slots, id -> 1);
         List<StockBoard.Offer> p2 = StockBoard.build(SEED, 2, 0, slots, id -> 0);
         assertEquals(0, p1.get(0).left());

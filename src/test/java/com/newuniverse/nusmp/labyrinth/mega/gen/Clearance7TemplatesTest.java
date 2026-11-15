@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class Clearance7TemplatesTest {
     private static CatalogSource catalog() throws IOException { return CatalogSource.load(CatalogSource.DEFAULT); }
 
-    private static Placed turned(Shape s) { return new Placed(0, s, "nusmp:mega_interior", 0, Vec.ZERO, 0, -1, -1, -1, false); }
+    private static Placed turned(Shape s) { return new Placed(0, s, "anime_multiverse:mega_interior", 0, Vec.ZERO, 0, -1, -1, -1, false); }
 
     private static boolean[] allDoors(Shape s) {
         boolean[] c = new boolean[s.sockets.size()];
@@ -92,7 +92,7 @@ class Clearance7TemplatesTest {
             kept += st.kept();
             capped += st.capped();
             if (st.capped() > 0) capsBy.merge(sh.kind.name(), st.capped(), Integer::sum);
-            if (st.capped() > 0) capsList.add(sh.id.replace("nusmp:mega/", "") + "=" + st.capped());
+            if (st.capped() > 0) capsList.add(sh.id.replace("anime_multiverse:mega/", "") + "=" + st.capped());
             lit += st.lit();
             for (Clearance7.Cut c : cuts) {
                 switch (c.kind()) {
@@ -117,7 +117,7 @@ class Clearance7TemplatesTest {
         for (String s : stuck) System.out.println("CLEARANCE7 stuck: " + s);
         assertTrue(templates > 100, "the real templates must be found (" + templates + ")");
         // The one known exception: a loot chest on a shelf inside the apron of a door of the fungus farm (a chest that holds loot is never cut away).
-        for (String x : stuck) assertTrue(x.startsWith("nusmp:mega/hall/fungal_underdark_fungus_farm DOORWAY") && x.contains("minecraft:chest"), "a transition stays below 7x7 after the cuts: " + x);
+        for (String x : stuck) assertTrue(x.startsWith("anime_multiverse:mega/hall/fungal_underdark_fungus_farm DOORWAY") && x.contains("minecraft:chest"), "a transition stays below 7x7 after the cuts: " + x);
         assertTrue(stuck.size() <= 1, "more than the one known exception: " + stuck);
     }
 
@@ -129,7 +129,7 @@ class Clearance7TemplatesTest {
             if (sh.isCap()) continue;
             List<Clearance7.Cut> base = Clearance7.cuts(turned(sh), allDoors(sh));
             for (int r = 1; r < 4; r++) {
-                Placed p = new Placed(0, sh, "nusmp:mega_interior", r, new Vec(100, 56, -200), 0, -1, -1, -1, false);
+                Placed p = new Placed(0, sh, "anime_multiverse:mega_interior", r, new Vec(100, 56, -200), 0, -1, -1, -1, false);
                 List<Clearance7.Cut> cuts = Clearance7.cuts(p, allDoors(sh));
                 assertEquals(base.size(), cuts.size(), sh.id + " r" + r);
                 for (int i = 0; i < cuts.size(); i++) {

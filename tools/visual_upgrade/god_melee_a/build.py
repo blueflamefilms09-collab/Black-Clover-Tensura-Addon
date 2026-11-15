@@ -2,8 +2,8 @@
 
     python3 -B tools/visual_upgrade/god_melee_a/build.py [ids...]           (no ids = all twelve)
 
-Writes assets/nusmp/weapon_meshes/up/<id>.txt (+ <id>_lod.txt, and the crossbow's draw states), assets/nusmp/textures/entity/weapon/up/<id>*.png and
-assets/nusmp/visual_upgrade/<id>.json. The shipped meshes, skins, sprites and item models are NOT touched (the old files stay; the renderer falls back to them with the client
+Writes assets/anime_multiverse/weapon_meshes/up/<id>.txt (+ <id>_lod.txt, and the crossbow's draw states), assets/anime_multiverse/textures/entity/weapon/up/<id>*.png and
+assets/anime_multiverse/visual_upgrade/<id>.json. The shipped meshes, skins, sprites and item models are NOT touched (the old files stay; the renderer falls back to them with the client
 flag visual.upgrade = false).
 """
 import os

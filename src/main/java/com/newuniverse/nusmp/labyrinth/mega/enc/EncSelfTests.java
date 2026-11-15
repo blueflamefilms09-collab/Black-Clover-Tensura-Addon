@@ -152,7 +152,7 @@ final class EncSelfTests {
         if (m.kind() != EncounterTable.Kind.ENTITY) return false;
         int colon = m.entity().indexOf(':');
         String ns = colon < 0 ? "" : m.entity().substring(0, colon);
-        return !ns.isEmpty() && !ns.equals("minecraft") && !ns.equals("nusmp") && !ModList.get().isLoaded(ns);
+        return !ns.isEmpty() && !ns.equals("minecraft") && !ns.equals("anime_multiverse") && !ModList.get().isLoaded(ns);
     }
 
     // ---------------------------------------------------------------- enc.roll

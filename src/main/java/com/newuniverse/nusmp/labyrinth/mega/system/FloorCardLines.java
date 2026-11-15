@@ -53,7 +53,7 @@ public final class FloorCardLines {
         if (c.themeId() == null || c.themeId().isEmpty()) {
             out.add(new Line(Kind.THEME, tr.get(FloorInfoText.THEME_NONE, "THEME: not shaped yet")));
         } else {
-            String name = tr.get("message.nusmp.mega.mgd.theme." + c.themeId(), c.themeName());
+            String name = tr.get("message.anime_multiverse.mega.mgd.theme." + c.themeId(), c.themeName());
             out.add(new Line(Kind.THEME, tr.get(FloorInfoText.THEME, "THEME: %1$s", name)));
             out.add(new Line(Kind.ALIGN, alignText(c, tr)));
             String desc = tr.get(FloorInfoText.themeDescKey(c.themeId()), c.themeDesc());
@@ -105,10 +105,10 @@ public final class FloorCardLines {
         int shown = Math.min(list.size(), FloorCard.MAX_MECHS);
         for (int i = 0; i < shown; i++) {
             FloorCard.Mech m = list.get(i);
-            String name = tr.get("mechanic.nusmp." + m.id() + ".name", m.name().isEmpty() ? FloorInfoRules.humanize(m.id()) : m.name());
+            String name = tr.get("mechanic.anime_multiverse." + m.id() + ".name", m.name().isEmpty() ? FloorInfoRules.humanize(m.id()) : m.name());
             out.add(new Line(Kind.MECH, name));
             out.add(new Line(Kind.STATE, stateText(m, tr)));
-            String desc = tr.get("mechanic.nusmp." + m.id() + ".desc", m.desc());
+            String desc = tr.get("mechanic.anime_multiverse." + m.id() + ".desc", m.desc());
             if (!desc.isEmpty()) out.add(new Line(Kind.BODY, desc));
             out.add(new Line(Kind.COUNTER, counterText(m, tr)));
         }
@@ -134,7 +134,7 @@ public final class FloorCardLines {
         String kind = m.counterKind() == null ? "" : m.counterKind().toLowerCase(Locale.ROOT);
         if (kind.isEmpty()) return tr.get(FloorInfoText.MECH_COUNTER_UNKNOWN, "Counter: see the mechanic's own hint in the room.");
         if (kind.equals("none")) return tr.get(FloorInfoText.MECH_COUNTER_NONE, "Counter: none. Survive it, or leave its area.");
-        String hint = tr.get("message.nusmp.mega.mech.hint." + kind, m.hint() == null || m.hint().isEmpty() ? FloorInfoRules.humanize(kind) : m.hint());
+        String hint = tr.get("message.anime_multiverse.mega.mech.hint." + kind, m.hint() == null || m.hint().isEmpty() ? FloorInfoRules.humanize(kind) : m.hint());
         return tr.get(FloorInfoText.MECH_COUNTER, "Counter: %1$s", hint);
     }
 

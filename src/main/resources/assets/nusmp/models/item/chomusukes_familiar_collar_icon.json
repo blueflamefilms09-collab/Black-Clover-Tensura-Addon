@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/chomusukes_familiar_collar"
-  }
-}

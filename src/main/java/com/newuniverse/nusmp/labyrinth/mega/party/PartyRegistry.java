@@ -48,25 +48,25 @@ public final class PartyRegistry {
     private static void onServerStarted(ServerStartedEvent e) {
         try {
             if (!PartyService.instanced()) {
-                LOG.info("[nusmp] Dungeon parties: the dungeon is shared (party.mode = {}, floor model = {}); everybody walks party 0.", PartyConfig.mode().id(), FloorsConfig.get(FloorsConfig.PER_SECTOR) <= 1);
+                LOG.info("[anime_multiverse] Dungeon parties: the dungeon is shared (party.mode = {}, floor model = {}); everybody walks party 0.", PartyConfig.mode().id(), FloorsConfig.get(FloorsConfig.PER_SECTOR) <= 1);
                 return;
             }
             int max = PartyService.maxParties();
             int far = PartyLanes.maxZ(max), near = PartyLanes.minZ(max);
-            LOG.info("[nusmp] Dungeon parties: up to {} parties, lanes from z = {} (Holy road) to z = {} (Abyssal road).", max, near, far);
+            LOG.info("[anime_multiverse] Dungeon parties: up to {} parties, lanes from z = {} (Holy road) to z = {} (Abyssal road).", max, near, far);
             for (Sector s : MegaData.get(e.getServer()).sectors()) {
                 if (!s.isFloor() && !PartyLanes.insideBand(s.region.minZ(), s.region.maxZ(), s.party)) {
-                    LOG.warn("[nusmp] Sector {} (the legacy ten-floor model) winds through z {}..{}, farther than half a lane step ({}) from its lane: it could meet the floors of another party. Set party.mode to shared to be safe.",
+                    LOG.warn("[anime_multiverse] Sector {} (the legacy ten-floor model) winds through z {}..{}, farther than half a lane step ({}) from its lane: it could meet the floors of another party. Set party.mode to shared to be safe.",
                             s.id, s.region.minZ(), s.region.maxZ(), MegaGrid.PARTY_STEP / 2);
                 }
             }
             ServerLevel mega = MegaDungeon.level(e.getServer());
             if (mega == null) return;
             if (!mega.getWorldBorder().isWithinBounds(new BlockPos(0, 64, far)) || !mega.getWorldBorder().isWithinBounds(new BlockPos(0, 64, near))) {
-                LOG.warn("[nusmp] The world border of the Mega-Dungeon does not contain the lanes of {} parties (z = {} to z = {}). Parties whose lane is outside it take border damage; widen the border or lower party.maxParties.", max, near, far);
+                LOG.warn("[anime_multiverse] The world border of the Mega-Dungeon does not contain the lanes of {} parties (z = {} to z = {}). Parties whose lane is outside it take border damage; widen the border or lower party.maxParties.", max, near, far);
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The party lanes could not be checked against the world border: {}", ex.toString());
+            LOG.warn("[anime_multiverse] The party lanes could not be checked against the world border: {}", ex.toString());
         }
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 THEME-C, theme 2 of 4 (1.59.0, docs/labyrinth/mega_v2_thc.md): the signature rooms of the NECROPOLIS, the evil road's city of the dead. Every room is named
-`necropolis_<room>.nbt` so that `data/nusmp/mega/template_themes/necropolis.json` can reserve it for sectors of that theme.
+`necropolis_<room>.nbt` so that `data/anime_multiverse/mega/template_themes/necropolis.json` can reserve it for sectors of that theme.
 
     python3 tools/labyrinth/gen_mega_theme_necropolis.py                     # (re)writes every template
     python3 tools/labyrinth/gen_mega_theme_necropolis.py necropolis_catacombs   # only this one
@@ -30,7 +30,7 @@ CALM = ("necropolis_burial_vault",)           # no spawn markers needed by the c
 SOUL = True
 GHOST = "minecraft:verdant_froglight"        # a pale green lamp, light 15, that no theme swaps: the glow of the dead
 BONE = "minecraft:bone_block"
-LOOT = "nusmp:chests/labyrinth_trial"
+LOOT = "anime_multiverse:chests/labyrinth_trial"
 
 
 def skull(h, x, y, z, rot=0, kind="skeleton"):

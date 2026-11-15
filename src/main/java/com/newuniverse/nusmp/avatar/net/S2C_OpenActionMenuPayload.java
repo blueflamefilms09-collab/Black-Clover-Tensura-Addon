@@ -13,7 +13,7 @@ import java.util.UUID;
 /** Why: opens the small action menu (Name / Info) of the creator's own Avatar; carries what the Info tab shows, so the client needs no extra requests. */
 public record S2C_OpenActionMenuPayload(UUID avatarId, String name, boolean named, String race, String primary, String secondary, double luck, float scale,
                                         List<String> info) implements CustomPacketPayload {
-    public static final Type<S2C_OpenActionMenuPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_open_actions"));
+    public static final Type<S2C_OpenActionMenuPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_open_actions"));
     public static final StreamCodec<RegistryFriendlyByteBuf, S2C_OpenActionMenuPayload> CODEC = StreamCodec.of(S2C_OpenActionMenuPayload::write, S2C_OpenActionMenuPayload::read);
 
     private static void write(RegistryFriendlyByteBuf b, S2C_OpenActionMenuPayload p) {

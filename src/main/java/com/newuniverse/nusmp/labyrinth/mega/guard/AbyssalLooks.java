@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 
 /**
  * Why: the one table of the abyssal boss looks (docs/labyrinth/abyssal_bosses.md), pure Java with no game class so the pick of a look, the numbers a renderer needs and the check that every look has
- * its files can be unit tested. The table is {@code assets/nusmp/abyssal/looks.json}, written by tools/abyssal/gen_abyssal.py next to the models it describes: look id to display name, kind
+ * its files can be unit tested. The table is {@code assets/anime_multiverse/abyssal/looks.json}, written by tools/abyssal/gen_abyssal.py next to the models it describes: look id to display name, kind
  * ({@code humanoid}: the vanilla player body with a 64x64 skin and separate extras; {@code geo}: a full model), the height the model was built to, the ground one walk and run cycle cover, the
  * shadow, the culling box, the size boost, the glow colour, and for each of the three phases the model, the caption said when the boss reaches it and, for a humanoid, its skin and its extras (id,
  * the part of the body they hang on, their bones) so the player-model renderer can take the same skin and the same extras. A boss profile names its look in {@code look}; a profile without one keeps
@@ -27,7 +27,7 @@ public final class AbyssalLooks {
     private AbyssalLooks() {}
 
     /** The resource the table is read from (it is on the class path of the game and of the tests). */
-    public static final String TABLE = "/assets/nusmp/abyssal/looks.json";
+    public static final String TABLE = "/assets/anime_multiverse/abyssal/looks.json";
 
     /** One extra of a humanoid: a crown, a phylactery, wings ... hung on the player part {@code anchor} (head, body, arm_r, arm_l, leg_r, leg_l or root); {@code bones} are its bones in the extras model ([] = cubes on the anchor bone itself). */
     public record Extra(String id, String anchor, List<String> bones) {}
@@ -48,7 +48,7 @@ public final class AbyssalLooks {
         public float glowLevel(int p) { return glowLevel[Math.max(1, Math.min(glowLevel.length, p)) - 1]; }
     }
 
-    /** The id of one phase of a humanoid look in the player-model kit's table {@code assets/nusmp/playermodel/looks_abyssal.json}. */
+    /** The id of one phase of a humanoid look in the player-model kit's table {@code assets/anime_multiverse/playermodel/looks_abyssal.json}. */
     public static String kitId(String lookId, int phase) { return "abyssal_" + lookId + "_p" + Math.max(1, Math.min(3, phase)); }
 
     private static volatile Map<String, Look> looks;
@@ -88,7 +88,7 @@ public final class AbyssalLooks {
     /** The path (inside the mod's resources) of everything a look needs, for the asset test and the self-test: models, animations, textures with their glow layers, and for a humanoid the skins and extras. */
     public static List<String> assetPaths(Look look) {
         List<String> out = new ArrayList<>();
-        String a = "assets/nusmp/";
+        String a = "assets/anime_multiverse/";
         out.add(a + "animations/entity/abyssal_" + look.animation() + ".animation.json");
         for (Phase p : look.phases()) {
             out.add(a + "geo/entity/abyssal_" + p.model() + ".geo.json");

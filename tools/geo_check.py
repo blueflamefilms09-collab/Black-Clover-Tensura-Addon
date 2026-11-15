@@ -1,7 +1,7 @@
 """Checks geo models written by geo_builder: python3 -B tools/geo_check.py <key>_<name> ...  (bones linked, uvs inside the texture, texture + glow exist,
 animation bones exist). Prints one line per model and exits 1 on a problem."""
 import json, os, sys
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse")
 bad = 0
 for mid in sys.argv[1:]:
     g = json.load(open(os.path.join(ROOT, "geo", "entity", mid + ".geo.json")))["minecraft:geometry"][0]

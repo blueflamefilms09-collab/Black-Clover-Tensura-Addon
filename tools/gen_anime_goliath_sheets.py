@@ -13,7 +13,7 @@ sys.path.insert(0, HERE)
 from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, ".."))
-GEO = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp", "geo", "entity")
+GEO = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse", "geo", "entity")
 SCRATCH = os.environ.get("AG_SCRATCH", "/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad")
 SRC = os.path.join(SCRATCH, "previews_anime_goliath")
 OUT = os.path.join(REPO, "docs", "mobs", "phaseE")

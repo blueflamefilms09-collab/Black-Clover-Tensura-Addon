@@ -27,7 +27,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.UUID;
 
 /**
- * Why: the client half of Shishou is small and decides nothing. No keys of its own (2.1.0: his abilities are the Tensura Ultimate skill {@code nusmp:shishou}, used with the skill system's keys). While the sword is in a hand, once a second, the client tells the server what is under the crosshair (an entity id, or -1 for the off-hand item) for
+ * Why: the client half of Shishou is small and decides nothing. No keys of its own (2.1.0: his abilities are the Tensura Ultimate skill {@code anime_multiverse:shishou}, used with the skill system's keys). While the sword is in a hand, once a second, the client tells the server what is under the crosshair (an entity id, or -1 for the off-hand item) for
  * Appraisal; the answer and the sword's state come back as two small packets and are drawn by {@link ShishouHud} (movable). The tooltip of a stack that is not the viewer's own shows the false "Rusty Sword" lines
  * (Stat Concealment). The entity renderer is {@link ShishouRenderer}. Call {@link #init} from the client setup with the mod bus.
  */

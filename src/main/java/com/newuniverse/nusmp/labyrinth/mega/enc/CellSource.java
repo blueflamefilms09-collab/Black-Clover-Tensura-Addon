@@ -12,7 +12,7 @@ import java.util.Random;
 
 /**
  * Why: the Dungeon Master needs places to put monsters, and the sector already knows them. The level designers (the template builders) mark good
- * ambush spots with {@code nusmp:spawn} markers (a doorway's shadow, the back of a crypt, behind a pillar); those are the first choice, weighted
+ * ambush spots with {@code anime_multiverse:spawn} markers (a doorway's shadow, the back of a crypt, behind a pillar); those are the first choice, weighted
  * by the marker's {@code weight}. A sector with few markers in reach (a sparse template, a cavern) is topped up with random floor cells from the
  * rooms that are neither rest rooms, boss rooms nor corridors, so the Director never runs dry. Everything here reads only the sector's SAVED data
  * (markers and room boxes), so it touches no chunk and loads nothing; whether a cell can actually hold a monster (floor, air above) is decided

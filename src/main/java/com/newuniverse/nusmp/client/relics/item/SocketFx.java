@@ -136,10 +136,10 @@ public final class SocketFx {
         for (SocketData.Entry en : data.entries()) {
             SocketDef d = SocketCatalog.byId(en.id());
             if (d == null) continue;
-            tip.add(Component.translatable("socket.nusmp.tip.bound", Component.translatable(d.nameKey()).withColor(d.rgb()), d.act().name()).withStyle(ChatFormatting.GRAY));
+            tip.add(Component.translatable("socket.anime_multiverse.tip.bound", Component.translatable(d.nameKey()).withColor(d.rgb()), d.act().name()).withStyle(ChatFormatting.GRAY));
         }
         int free = slots - data.size();
-        if (free > 0) tip.add(Component.translatable("socket.nusmp.tip.free", free).withStyle(ChatFormatting.DARK_GRAY));
+        if (free > 0) tip.add(Component.translatable("socket.anime_multiverse.tip.free", free).withStyle(ChatFormatting.DARK_GRAY));
     }
 
     // ---------------------------------------------------------------- relicfx.quality, found reflectively
@@ -158,7 +158,7 @@ public final class SocketFx {
 
         static int read() {
             try {
-                String prop = System.getProperty("nusmp.relicfx.quality");
+                String prop = System.getProperty("anime_multiverse.relicfx.quality");
                 if (prop != null) return SocketFxRules.parseQuality(prop);
                 if (!probed) probe();
                 Object v = method != null ? method.invoke(null) : field != null ? field.get(null) : null;

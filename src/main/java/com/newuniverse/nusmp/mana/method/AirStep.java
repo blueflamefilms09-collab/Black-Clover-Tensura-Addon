@@ -113,7 +113,7 @@ public final class AirStep {
             s.until = until;
         }
         p.level().playSound(null, p.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.9f, 1.5f);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.air_step", "Air Step Rune: walk on air for %s s (sneak to drop)", MobilityRules.seconds(seconds)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.air_step", "Air Step Rune: walk on air for %s s (sneak to drop)", MobilityRules.seconds(seconds)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         return true;
     }
 
@@ -137,7 +137,7 @@ public final class AirStep {
             if (now >= s.until) {
                 end(s);
                 it.remove();
-                p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.air_step_end", "The Air Step Rune fades.").withStyle(ChatFormatting.GRAY), true);
+                p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.air_step_end", "The Air Step Rune fades.").withStyle(ChatFormatting.GRAY), true);
                 continue;
             }
             step(s, now);

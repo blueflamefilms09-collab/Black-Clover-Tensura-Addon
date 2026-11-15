@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * rules, so a typo in a boss id or a condition on the wrong side shows up here and not as a silent line that nobody ever hears.
  */
 class DanMachiDialogueTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/arc/dialogue");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/arc/dialogue");
     private static final List<String> BOSSES = List.of("minotaur", "black_goliath", "amphisbaena", "udaeus");
     private static final Set<String> SHOPS = Set.of("welf_crozzo", "liliruca_arde");
 

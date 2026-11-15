@@ -21,7 +21,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 
 /**
- * Draws the Charybdis Spawn (tools/gen_charybdis.py writes assets/nusmp/geo|animations|textures/entity/charybdis_spawn*): the squid-whale leviathan
+ * Draws the Charybdis Spawn (tools/gen_charybdis.py writes assets/anime_multiverse/geo|animations|textures/entity/charybdis_spawn*): the squid-whale leviathan
  * in its teal skin, and in its flushed skin once the Gates are open (the skin changes at the middle of the transformation, under a flash of cyan).
  * The clip, the glow and the fade of a dying body are the Zogratis family's own ({@link ZogratisPose}, {@link ZogratisGlow}); what is its own is
  * the pose: it faces where the server says it faces and pitches nose up or down with the way it swims, about the middle of its body, and its long

@@ -15,13 +15,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Why: the owner's complaint was that every Decennial boss looked like the same suit of armour. This pins the fix without a game: the table of looks (assets/nusmp/abyssal/looks.json) holds the
+ * Why: the owner's complaint was that every Decennial boss looked like the same suit of armour. This pins the fix without a game: the table of looks (assets/anime_multiverse/abyssal/looks.json) holds the
  * twenty-two creatures with three phases each, every SHIPPED boss profile that names a look names one the table has, every famous boss has its own distinct look (so no two of the seventeen can
  * look alike), an evil boss of an Abyss sector with no look of its own wears the Abyss demon of its tier while a holy one and a boss of any other sector keep the old look, a profile without a
  * {@code look} parses as it always did, and a bad look id is refused with a plain sentence. The files themselves (model, texture, glow, skin, extras, clips) are checked by AbyssalAssetsTest.
  */
 class AbyssalLooksTest {
-    private static final String DIR = "src/main/resources/data/nusmp/mega/dnd_bosses";
+    private static final String DIR = "src/main/resources/data/anime_multiverse/mega/dnd_bosses";
     private static final List<String> FAMOUS_LOOKS = List.of("beholder", "elder_brain", "strahd", "lolth", "zariel", "kraken", "demogorgon", "asmodeus", "orcus", "acererak", "tiamat", "vecna",
             "tarrasque", "bahamut", "solar", "dracolich", "lich_king");
 

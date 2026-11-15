@@ -32,13 +32,13 @@ public class UnbindingSealItem extends Item {
         RelicDef def = other.isEmpty() ? null : Relics.defOf(other);
         boolean attuned = def != null && Attune.owner(other) != null;
         switch (AttuneRules.unbind(def != null, attuned)) {
-            case NO_RELIC -> sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.unbinding_seal.no_relic", "Hold a relic in your other hand."), true);
-            case NOT_ATTUNED -> sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.unbinding_seal.not_attuned", "That relic is not attuned to anyone."), true);
+            case NO_RELIC -> sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.unbinding_seal.no_relic", "Hold a relic in your other hand."), true);
+            case NOT_ATTUNED -> sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.unbinding_seal.not_attuned", "That relic is not attuned to anyone."), true);
             case RELEASED -> {
                 Attune.release(sp, other);
                 if (!sp.getAbilities().instabuild) seal.shrink(1);
                 level.playSound(null, sp.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.0f, 0.7f);
-                sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.unbinding_seal.released", "The seal dissolves. %s is no longer attuned to anyone.", other.getHoverName()), true);
+                sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.unbinding_seal.released", "The seal dissolves. %s is no longer attuned to anyone.", other.getHoverName()), true);
             }
         }
         return InteractionResultHolder.sidedSuccess(seal, false);
@@ -46,7 +46,7 @@ public class UnbindingSealItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.unbinding_seal.tip", "Hold it in one hand and an attuned relic in the other, then use it: the relic is freed from its attunement.").withStyle(ChatFormatting.LIGHT_PURPLE));
-        tip.add(Component.translatableWithFallback("item.nusmp.unbinding_seal.tip2", "Used up. Only Legend grade and above relics need attunement.").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.unbinding_seal.tip", "Hold it in one hand and an attuned relic in the other, then use it: the relic is freed from its attunement.").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.unbinding_seal.tip2", "Used up. Only Legend grade and above relics need attunement.").withStyle(ChatFormatting.GRAY));
     }
 }

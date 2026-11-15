@@ -154,8 +154,8 @@ final class LuciferoMoves {
             BowRules.Verdict v = BowRules.verdict(SpadeFx.antiMagic(e), false, bowed);
             if (!BowRules.pinnedByBow(v)) {
                 if (e instanceof Player p) {
-                    if (v == BowRules.Verdict.UNBOWED) SpadeFx.hint(p, "message.nusmp.spade.unbowed", "Your anti-magic holds the weight off you.");
-                    else SpadeFx.hint(p, "message.nusmp.spade.bowed", "You bowed. He lets you stand.");
+                    if (v == BowRules.Verdict.UNBOWED) SpadeFx.hint(p, "message.anime_multiverse.spade.unbowed", "Your anti-magic holds the weight off you.");
+                    else SpadeFx.hint(p, "message.anime_multiverse.spade.bowed", "You bowed. He lets you stand.");
                 }
                 continue;
             }
@@ -169,7 +169,7 @@ final class LuciferoMoves {
                 SpadeFx.slam(e, 1.0);
                 e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 4));
             }
-            if (e instanceof Player p) SpadeFx.hint(p, "message.nusmp.spade.crushed", "You did not bow. Crouch (hold sneak) when he orders it, or hold anti-magic.");
+            if (e instanceof Player p) SpadeFx.hint(p, "message.anime_multiverse.spade.crushed", "You did not bow. Crouch (hold sneak) when he orders it, or hold anti-magic.");
         }
         return crushed;
     }
@@ -249,7 +249,7 @@ final class LuciferoMoves {
         sl.playSound(null, b.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.2f, 0.4f);
         if (SpadeFx.antiMagic(best)) {
             ZogratisVfx.gravityImpact(sl, best.position(), 2.4, ACCENT_RGB);
-            if (best instanceof Player p) SpadeFx.hint(p, "message.nusmp.spade.parried", "Your anti-magic cuts the hand of gravity.");
+            if (best instanceof Player p) SpadeFx.hint(p, "message.anime_multiverse.spade.parried", "Your anti-magic cuts the hand of gravity.");
             return new Grasp(best, true);
         }
         final LivingEntity seized = best;
@@ -377,9 +377,9 @@ final class LuciferoMoves {
             double factor = BowRules.kneelFactor(v);
             SpadeFx.crush(b, e, (float) (base * factor * (v == BowRules.Verdict.CRUSHED ? SpadeFx.guard01(e) : 1.0)), TensuraDamageTypes.GRAVITY_EXPLODE);
             if (e instanceof Player p) {
-                if (v == BowRules.Verdict.POCKET) SpadeFx.hint(p, "message.nusmp.spade.pocket", "The still air shelters you.");
-                else if (v == BowRules.Verdict.UNBOWED) SpadeFx.hint(p, "message.nusmp.spade.unbowed", "Your anti-magic holds the weight off you.");
-                else SpadeFx.hint(p, "message.nusmp.spade.kneel_ultimate", "Crushed. Find the still air (white rings) or hold anti-magic: crouching is not enough.");
+                if (v == BowRules.Verdict.POCKET) SpadeFx.hint(p, "message.anime_multiverse.spade.pocket", "The still air shelters you.");
+                else if (v == BowRules.Verdict.UNBOWED) SpadeFx.hint(p, "message.anime_multiverse.spade.unbowed", "Your anti-magic holds the weight off you.");
+                else SpadeFx.hint(p, "message.anime_multiverse.spade.kneel_ultimate", "Crushed. Find the still air (white rings) or hold anti-magic: crouching is not enough.");
             }
             if (!BowRules.pinnedByKneel(v)) continue;
             crushed++;

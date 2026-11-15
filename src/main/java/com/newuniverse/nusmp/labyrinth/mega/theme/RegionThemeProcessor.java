@@ -29,8 +29,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * glowing growths of the templates) is brightened or dimmed by the theme's {@code light} shift ({@link ThemeSwap#shiftLight}, never under level 6), which is
  * what makes a Radiant sector bright and an Abyss one dim without a single template being redrawn. It never throws: one exception here would abort the whole piece.
  * <p>
- * Registered as {@code nusmp:region_theme} by {@link ThemeRegistry}; the processor list {@code nusmp:mega_interior} runs it BEFORE
- * {@code nusmp:mod_compat} (the theme changes the wood, the compat swap then replaces furniture on top of the new wood). It has no parameters.
+ * Registered as {@code anime_multiverse:region_theme} by {@link ThemeRegistry}; the processor list {@code anime_multiverse:mega_interior} runs it BEFORE
+ * {@code anime_multiverse:mod_compat} (the theme changes the wood, the compat swap then replaces furniture on top of the new wood). It has no parameters.
  */
 public final class RegionThemeProcessor extends StructureProcessor {
     /** The one instance: a processor without parameters is a unit codec, like vanilla's {@code NopProcessor}. */

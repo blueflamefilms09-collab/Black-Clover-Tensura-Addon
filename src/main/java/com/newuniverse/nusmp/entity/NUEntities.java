@@ -28,8 +28,8 @@ public final class NUEntities {
             () -> EntityType.Builder.of(PaintedConstructEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("painted_construct"));
 
     /**
-     * 0.47: Zagred, the Kotodama devil, as a 4-phase boss. 1.60.0: this is the LEGACY Zagred. The id {@code nusmp:zagred} now belongs to the remade boss
-     * ({@code arc/zagred/ZagredBoss}, registered through {@code ArcEntities}); the old class stays (no egg, no command, no floor) under {@code nusmp:zagred_legacy}.
+     * 0.47: Zagred, the Kotodama devil, as a 4-phase boss. 1.60.0: this is the LEGACY Zagred. The id {@code anime_multiverse:zagred} now belongs to the remade boss
+     * ({@code arc/zagred/ZagredBoss}, registered through {@code ArcEntities}); the old class stays (no egg, no command, no floor) under {@code anime_multiverse:zagred_legacy}.
      * The Java name {@code ZAGRED} is kept because the legacy renderer and the legacy summon still use it.
      */
     public static final DeferredHolder<EntityType<?>, EntityType<ZagredBossEntity>> ZAGRED = ENTITIES.register("zagred_legacy",

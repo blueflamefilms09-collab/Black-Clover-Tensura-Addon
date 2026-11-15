@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * Why: the owner's naming rules (section 6) are the heart of the Avatar's loyalty. A formal name costs the creator a Magicule Exhaustion Tax (the
- * {@code nusmp:naming_sleep} debuff, then a permanent share of their maximum magicule for as long as the Avatar lives), gives the Avatar an instant EP surge
+ * {@code anime_multiverse:naming_sleep} debuff, then a permanent share of their maximum magicule for as long as the Avatar lives), gives the Avatar an instant EP surge
  * of +50% to +200% scaled by luck and INT, evolves it into the race's {@code evolves_to_race_id} when the race has one, and locks the bond: a named Avatar
  * can never betray. This class applies all of that on the server, through {@link AvatarCreation#nameAvatar} (our GUI) and through Tensura's own naming
  * event (so naming the Avatar with Tensura's naming works the same way). Everything Tensura-side goes through {@link TensuraBridge}.
@@ -40,7 +40,7 @@ public final class TensuraNamingEngine {
     private TensuraNamingEngine() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    private static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_tax");
+    private static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_tax");
 
     /** Names the Avatar. The creator must be its creator, the name valid and unique among their Avatars, and the Avatar not named yet. */
     public static AvatarCreation.Result name(ServerPlayer creator, AvatarEntity a, String rawName) {
@@ -116,11 +116,11 @@ public final class TensuraNamingEngine {
                 + ". Your magicules are exhausted.").withStyle(ChatFormatting.GOLD));
         AvatarChatterEngine.say(a, ChatEvent.NAMING, name);
         NusmpEvents.fire(creator, "avatar.named");
-        LOG.debug("[nusmp] Avatar {} named {} (boost {}, evolved {})", a.getUUID(), name, boost, evolved);
+        LOG.debug("[anime_multiverse] Avatar {} named {} (boost {}, evolved {})", a.getUUID(), name, boost, evolved);
     }
 
     /**
-     * Puts the permanent tax of the creator's living Avatars on their maximum magicule ({@code nusmp:avatar_tax}, a transient multiplier), or takes it
+     * Puts the permanent tax of the creator's living Avatars on their maximum magicule ({@code anime_multiverse:avatar_tax}, a transient multiplier), or takes it
      * off when there is none. Cheap; called on login, on naming, on death and by the Avatar's own slow tick so a tax can never get stuck.
      */
     public static void refreshTax(ServerPlayer p) {
@@ -137,7 +137,7 @@ public final class TensuraNamingEngine {
             inst.removeModifier(TAX_ID);
             inst.addTransientModifier(new AttributeModifier(TAX_ID, -tax, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         } catch (Throwable t) {
-            LOG.debug("[nusmp] could not refresh the avatar tax: {}", t.toString());
+            LOG.debug("[anime_multiverse] could not refresh the avatar tax: {}", t.toString());
         }
     }
 }

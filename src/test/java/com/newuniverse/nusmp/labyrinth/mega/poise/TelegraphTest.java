@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class TelegraphTest {
     private static FoundryLibrary library() throws Exception {
-        String a = Files.readString(Path.of("src/main/resources/data/nusmp/mega/foundry/_abilities.json"));
-        String b = Files.readString(Path.of("src/main/resources/data/nusmp/mega/foundry/_archetypes.json"));
+        String a = Files.readString(Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_abilities.json"));
+        String b = Files.readString(Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_archetypes.json"));
         return new FoundryLibrary(FoundryLibrary.parseAbilities(a).rows(), FoundryLibrary.parseArchetypes(b).rows());
     }
 
     private static TelegraphLibrary shipped() throws Exception {
-        TelegraphLibrary.Parsed p = TelegraphLibrary.parse(Files.readString(Path.of("src/main/resources/data/nusmp/mega/poise/telegraphs.json")));
+        TelegraphLibrary.Parsed p = TelegraphLibrary.parse(Files.readString(Path.of("src/main/resources/data/anime_multiverse/mega/poise/telegraphs.json")));
         assertEquals(List.of(), p.problems(), "the shipped telegraph file has problems");
         return p.library();
     }

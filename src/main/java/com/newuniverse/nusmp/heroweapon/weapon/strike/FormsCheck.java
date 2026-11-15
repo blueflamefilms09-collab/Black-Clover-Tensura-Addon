@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Why: a weapon's forms file ({@code data/nusmp/hero/forms/<itemId>.json}) is data nobody can play-test here, and a wrong skill id, a missing parent or a stat over the budget
+ * Why: a weapon's forms file ({@code data/anime_multiverse/hero/forms/<itemId>.json}) is data nobody can play-test here, and a wrong skill id, a missing parent or a stat over the budget
  * would only show up in the running game as a skipped form. The forms system has its own validator of the structure (the rules of design.md section 6); this class repeats the
  * structural rules that matter to a weapon builder (so the weapon's own unit test and self-test need nothing from that system) and adds what only the weapon knows: every skill
  * id in a form is one the weapon has, a form has at most one ultimate, every passive is one the logic implements, and every skill and every passive of the weapon is used by

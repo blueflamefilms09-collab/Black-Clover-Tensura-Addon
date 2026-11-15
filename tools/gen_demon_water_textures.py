@@ -1,6 +1,6 @@
 """Generates the Demon Water Magic VFX textures (Hydra of Darkneros: scaled serpent heads with fanged maws, spiny crests, ink-black water).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/demon_water_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/demon_water_*.png
 
     python3 -B tools/gen_demon_water_textures.py
 
@@ -15,7 +15,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

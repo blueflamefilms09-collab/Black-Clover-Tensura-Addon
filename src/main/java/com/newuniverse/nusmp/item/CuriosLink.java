@@ -74,7 +74,7 @@ public final class CuriosLink {
     private static void noteFailure(String what, Throwable t) {
         failures++;
         String msg = what + ": " + t;
-        if (!msg.equals(lastFailure)) LOG.warn("[nusmp] Curios is present but its inventory could not be read ({}); relics worn in Curios slots may be invisible until this is fixed", msg);
+        if (!msg.equals(lastFailure)) LOG.warn("[anime_multiverse] Curios is present but its inventory could not be read ({}); relics worn in Curios slots may be invisible until this is fixed", msg);
         lastFailure = msg;
     }
 
@@ -306,7 +306,7 @@ public final class CuriosLink {
 
     private static ResourceLocation id(Kind k) {
         ResourceLocation r = IDS[k.ordinal()];
-        if (r == null) IDS[k.ordinal()] = r = ResourceLocation.fromNamespaceAndPath("nusmp", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT));
+        if (r == null) IDS[k.ordinal()] = r = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "curio_" + k.name().toLowerCase(java.util.Locale.ROOT));
         return r;
     }
 

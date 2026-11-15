@@ -1,7 +1,7 @@
 """Textures for the 0.45 extended attributes: Light, World Tree, Dice, Slash, Compass, Mercury. Deterministic; no fonts (dice
 numbers are drawn as engraved seven-segment strokes), no external images.
 
-    python tools/gen_attr_vfx_textures.py  ->  src/main/resources/assets/nusmp/textures/particle/{light,tree,dice,slash,compass,merc}_*.png
+    python tools/gen_attr_vfx_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/particle/{light,tree,dice,slash,compass,merc}_*.png
 
 Convention (as the rest of textures/particle): greyscale + alpha, tinted per quad by the vertex colour.
 """

@@ -75,7 +75,7 @@ public class WorldTreeBook extends GrimoireBook {
 
     /**
      * Grows a real Minecraft tree (the vanilla generator) at the ground under 'at'. Unless the server keeps World Tree trees
-     * (nusmp config worldTreeTreesStay), every block the tree placed is put back as it was after 'ticks' - only blocks that
+     * (anime_multiverse config worldTreeTreesStay), every block the tree placed is put back as it was after 'ticks' - only blocks that
      * are still what the tree made, so nothing built in the meantime is touched. Returns true if a tree grew.
      */
     static boolean growTree(ServerLevel level, Vec3 at, ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> key, int ticks) {

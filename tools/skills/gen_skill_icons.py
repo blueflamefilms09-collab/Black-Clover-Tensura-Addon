@@ -2,7 +2,7 @@
 (enchanted_book, golden_sword ...) in the skill list. This script draws one distinct 32x32 icon per skill id, stylised to the skill
 (bolt, bell, wings, eye, card, book, boot-flame ...), in the same framed, glowing style as the grimoire icons of tools/gen_skill_icons.py.
 
-    python tools/skills/gen_skill_icons.py            # writes src/main/resources/assets/nusmp/textures/skill/<id>.png
+    python tools/skills/gen_skill_icons.py            # writes src/main/resources/assets/anime_multiverse/textures/skill/<id>.png
     python tools/skills/gen_skill_icons.py --sheet    # also writes build/skill_icons/skills_sheet.png (labelled preview, not shipped)
 
 Frame by skill type: Extra = steel, Unique = gold, Ultimate = black iron lit in the skill's colour, so the type reads at a glance.
@@ -17,7 +17,7 @@ import sys
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
 PREVIEW = os.path.join(ROOT, "build", "skill_icons")
 N = 32
 S = 256

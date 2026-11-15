@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * Draws the God of Order (tools/gen_god_of_order.py writes assets/nusmp/geo|animations|textures/entity/god_of_order_*) from its synced state, on the
+ * Draws the God of Order (tools/gen_god_of_order.py writes assets/anime_multiverse/geo|animations|textures/entity/god_of_order_*) from its synced state, on the
  * pose clock and the glow of the Zogratis renderers:
  * <ul>
  *   <li><b>Model</b>: one body in two forms, {@code base} and {@code gates} (the open ledger: a second turning halo and floating pages), swapped in the

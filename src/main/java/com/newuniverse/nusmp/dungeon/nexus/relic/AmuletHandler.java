@@ -25,7 +25,7 @@ import java.util.UUID;
 final class AmuletHandler {
     private AmuletHandler() {}
 
-    static final ResourceLocation MUFFLE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_muffled_mana");
+    static final ResourceLocation MUFFLE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_muffled_mana");
     /** Halves the regeneration: the total is multiplied by one minus a half. */
     static final double MUFFLE = -0.5;
 

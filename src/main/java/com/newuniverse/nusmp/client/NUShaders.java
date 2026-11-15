@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import java.util.function.Consumer;
 
 /**
- * 0.48: this mod's core shaders for items and entities (assets/nusmp/shaders/core). A shader that fails to compile on someone's
+ * 0.48: this mod's core shaders for items and entities (assets/anime_multiverse/shaders/core). A shader that fails to compile on someone's
  * driver is logged and left null; {@link NURenderTypes} then falls back to a vanilla render type, so the game never breaks
  * over a shader.
  * <ul>
@@ -44,10 +44,10 @@ public final class NUShaders {
     /** Registers one shader; if it can't be built it is logged and set to null (the vanilla fallback is used). */
     private static void load(RegisterShadersEvent e, String name, VertexFormat format, Consumer<ShaderInstance> loaded) {
         try {
-            e.registerShader(new ShaderInstance(e.getResourceProvider(), ResourceLocation.fromNamespaceAndPath("nusmp", name), format), loaded);
+            e.registerShader(new ShaderInstance(e.getResourceProvider(), ResourceLocation.fromNamespaceAndPath("anime_multiverse", name), format), loaded);
         } catch (Exception ex) {
             loaded.accept(null);
-            LogUtils.getLogger().error("[nusmp] shader {} failed to load; a vanilla look is used instead", name, ex);
+            LogUtils.getLogger().error("[anime_multiverse] shader {} failed to load; a vanilla look is used instead", name, ex);
         }
     }
 }

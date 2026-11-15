@@ -40,8 +40,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="51fdb09")
     a = ap.parse_args()
-    cat = load(os.path.join(RES, "data", "nusmp", "particle_catalog.json"))["particles"]
-    themes_doc = load(os.path.join(RES, "data", "nusmp", "particle_themes.json"))
+    cat = load(os.path.join(RES, "data", "anime_multiverse", "particle_catalog.json"))["particles"]
+    themes_doc = load(os.path.join(RES, "data", "anime_multiverse", "particle_themes.json"))
     themes = themes_doc["themes"]
     cmap = load(os.path.join(HERE, "map.json"))
     uses = collections.defaultdict(list)
@@ -64,11 +64,11 @@ def main():
     w("")
     w("| Part | Where |")
     w("|---|---|")
-    w("| %d particle types in %d groups, 4 to 8 frames each, 16x16 and 32x32 pixel art, additive glows | `particle/fx` (`FxTypes`), textures `assets/nusmp/textures/particle/<id>_<n>.png`, sprite lists `assets/nusmp/particles/<id>.json` |" % (len(cat), len(groups)))
-    w("| One particle class with a physics profile per type (gravity, drag, spin, swirl, sway, jitter, size curve, fade, light, blend, lifetime) | `client/particle/fx/FxParticle`, profiles in `data/nusmp/particle_catalog.json` (written by the generator) |")
+    w("| %d particle types in %d groups, 4 to 8 frames each, 16x16 and 32x32 pixel art, additive glows | `particle/fx` (`FxTypes`), textures `assets/anime_multiverse/textures/particle/<id>_<n>.png`, sprite lists `assets/anime_multiverse/particles/<id>.json` |" % (len(cat), len(groups)))
+    w("| One particle class with a physics profile per type (gravity, drag, spin, swirl, sway, jitter, size curve, fade, light, blend, lifetime) | `client/particle/fx/FxParticle`, profiles in `data/anime_multiverse/particle_catalog.json` (written by the generator) |")
     w("| One provider for all types, one atlas lookup list per type, nothing allocated per particle but the particle | `client/particle/fx/FxClient` |")
     w("| Tint payload (colour + size) with a codec and a stream codec | `TintedParticleOptions`, `TintedParticleType`, pure data in `FxTint` |")
-    w("| Theme table: %d themes (all 105 magic types, 7 relic grades, 21 relic elements, 100 relic waves, skills, bosses, dungeon areas), 1 to 4 particles + a colour + a dark flavour each | `data/nusmp/particle_themes.json` (written by `tools/particles/gen_themes.py`), `ParticleThemes`, `ThemeKey` |" % len(themes))
+    w("| Theme table: %d themes (all 105 magic types, 7 relic grades, 21 relic elements, 100 relic waves, skills, bosses, dungeon areas), 1 to 4 particles + a colour + a dark flavour each | `data/anime_multiverse/particle_themes.json` (written by `tools/particles/gen_themes.py`), `ParticleThemes`, `ThemeKey` |" % len(themes))
     w("| The facade `Fx` (spray / add / burst / stream / gather / aura / send / ring) through the perf budgets, the quality level and the distance | `particle/fx/Fx`, `FxRelic` (relics by colour hue) |")
     w("| Switches `particles.custom` (client file `nusmp-particles-client.toml`, server file `nusmp-particles-server.toml`, default true); off = the old vanilla particle of the mapping (Rukh for the calls that used the Rukh) | `FxConfig` |")
     w("| `/multiverse particles list [group]`, `spawn <id> [count] [color]`, `theme <key>`, `status` (operators) | `FxCommands` |")

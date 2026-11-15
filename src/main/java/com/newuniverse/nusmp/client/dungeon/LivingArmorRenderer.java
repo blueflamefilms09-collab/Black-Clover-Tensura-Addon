@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** A Living Armor: a humanoid mass of dark mollusk flesh (tools/gen_dungeon_assets.py) wearing whatever armour it found. */
 public class LivingArmorRenderer extends HumanoidMobRenderer<LivingArmorEntity, HumanoidModel<LivingArmorEntity>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/living_armor.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/living_armor.png");
 
     public LivingArmorRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE)), 0.5f);

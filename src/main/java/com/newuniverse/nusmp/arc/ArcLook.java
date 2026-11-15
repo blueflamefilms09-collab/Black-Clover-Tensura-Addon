@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.arc;
 /**
  * Why: how a character is drawn, as plain numbers, so the boss class (server) can state it next to its stats and the one generic renderer (client) can
  * read it without a renderer class per character. The model, animations and textures are found by {@link #model()}: the art kit writes
- * {@code assets/nusmp/geo/entity/arc_<model>.geo.json}, {@code animations/entity/arc_<model>.animation.json} and {@code textures/entity/arc_<model>*.png}.
+ * {@code assets/anime_multiverse/geo/entity/arc_<model>.geo.json}, {@code animations/entity/arc_<model>.animation.json} and {@code textures/entity/arc_<model>*.png}.
  *
  * @param model     the model key ("heath_grice"; files are prefixed arc_)
  * @param height    the model's height in blocks (its true size; the renderer scales the hitbox to it)

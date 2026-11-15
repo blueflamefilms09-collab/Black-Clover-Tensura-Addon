@@ -302,7 +302,7 @@ public final class RecombinationProps {
         for (PropKind k : new PropKind[]{PropKind.RECOMBINATION_1, PropKind.RECOMBINATION_2, PropKind.RECOMBINATION_3, PropKind.RECOMBINATION_4})
             if (MagicProps.behavior(k) == null) return SelfTests.Result.fail("no behaviour for " + k);
         for (String n : new String[]{"helm", "chest", "tasset", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "greave_r", "greave_l", "back", "halo", "bull", "room", "drill"})
-            if (RecombinationProps.class.getResource("/assets/nusmp/geo/entity/recombination_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
+            if (RecombinationProps.class.getResource("/assets/anime_multiverse/geo/entity/recombination_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
         return SelfTests.Result.ok(total + " pages in order, 4 behaviours, 14 geo models");
     }
 }

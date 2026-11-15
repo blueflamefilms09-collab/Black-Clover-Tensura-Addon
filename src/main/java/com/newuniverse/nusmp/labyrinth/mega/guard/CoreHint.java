@@ -4,7 +4,7 @@ package com.newuniverse.nusmp.labyrinth.mega.guard;
  * Why: a Mana Core that is only a key leaves a party that fled the Guardian's hall with a glowing stone and no idea where its door is. Held
  * and used (right click in the air) it tells which way its seal lies and how far, in plain compass words, the way the old explorers'
  * compasses of the Dungeon do. The arithmetic is here, free of Minecraft types, so the eight sectors of the compass and the distance are
- * tested; the item only reads the answer and picks the lang key {@code message.nusmp.mega.mgd.dir.<name>}.
+ * tested; the item only reads the answer and picks the lang key {@code message.anime_multiverse.mega.mgd.dir.<name>}.
  */
 public final class CoreHint {
     private CoreHint() {}

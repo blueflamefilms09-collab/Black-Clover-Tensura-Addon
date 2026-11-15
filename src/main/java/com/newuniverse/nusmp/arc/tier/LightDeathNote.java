@@ -10,7 +10,7 @@ import net.minecraft.world.item.Items;
 
 /**
  * Why: the end of the Death Note gag is a REAL death, and it must go through the ordinary death flow so keepInventory, respawn, the death screen, the Totem of Undying and every mod's death hook
- * behave exactly as for any other death. The blow is one hit of the custom damage type {@code nusmp:death_note} (data pack entry; its death message is "&lt;player&gt; died of a heart attack"), listed
+ * behave exactly as for any other death. The blow is one hit of the custom damage type {@code anime_multiverse:death_note} (data pack entry; its death message is "&lt;player&gt; died of a heart attack"), listed
  * in the vanilla "bypasses armour / effects / enchantments / shield / cooldown" tags so armour and Resistance cannot soften it, and NOT in "bypasses invulnerability", which is the tag that would
  * let a death skip the Totem. Creative and spectator players are never hit (the boss and {@link LightScene} check before this is called, and it checks again).
  */
@@ -20,7 +20,7 @@ public final class LightDeathNote {
     /** What the blow did. */
     public enum Result { KILLED, SAVED_BY_TOTEM, RESISTED, SKIPPED }
 
-    public static final ResourceKey<DamageType> TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "death_note"));
+    public static final ResourceKey<DamageType> TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "death_note"));
 
     /** The damage source (plain magic damage if the data pack entry is missing, so a broken pack never crashes the scene). */
     public static DamageSource source(ServerPlayer victim) {

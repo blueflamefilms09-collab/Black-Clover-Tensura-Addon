@@ -97,7 +97,7 @@ public final class NoelleFormState {
         if (NoelleFormRules.expired(f, since, now)) {
             ArmourState.takeOff(p);
             if (f == Form.BLACK_DRAGON) exhaust(p, now);
-            else p.displayClientMessage(Component.translatableWithFallback("nusmp.noelle.limit", "The form ends.").withStyle(ChatFormatting.GRAY), true);
+            else p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.noelle.limit", "The form ends.").withStyle(ChatFormatting.GRAY), true);
             return;
         }
         boolean water = p.isInWaterOrBubble();
@@ -110,12 +110,12 @@ public final class NoelleFormState {
 
     /** The Black Dragon Form ran its course: slowness and weakness (never hunger) and no re-entry for the aftermath. Creative players pay nothing. */
     static void exhaust(ServerPlayer p, long now) {
-        if (p.isCreative()) { p.displayClientMessage(Component.translatableWithFallback("nusmp.noelle.black_end", "The black scales crumble.").withStyle(ChatFormatting.GRAY), true); return; }
+        if (p.isCreative()) { p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.noelle.black_end", "The black scales crumble.").withStyle(ChatFormatting.GRAY), true); return; }
         int ticks = (int) NoelleFormRules.BLACK_AFTERMATH_TICKS;
         p.getPersistentData().putLong(AFTER, now + ticks);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1));
         p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 0));
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.noelle.black_exhausted", "The black scales crumble. The dragon leaves you hollow.").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.noelle.black_exhausted", "The black scales crumble. The dragon leaves you hollow.").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD), true);
     }
 
     private static Holder<MobEffect> effect(String name) {

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Why: the client's table of the effect specs (assets/nusmp/visual_upgrade/&lt;id&gt;.json), read lazily from the resource manager and thrown away on a resource reload
+ * Why: the client's table of the effect specs (assets/anime_multiverse/visual_upgrade/&lt;id&gt;.json), read lazily from the resource manager and thrown away on a resource reload
  * ({@code WeaponUpgrade.clear} is called where the weapon meshes are cleared). A spec that is missing or broken is logged once and simply absent: the item then draws as it did before.
  * Also the lookup of an act recipe by its signature id (the crc32 the server sends).
  */
@@ -33,14 +33,14 @@ public final class UpgradeSpecs {
         if (SPECS.containsKey(id)) return SPECS.get(id);
         UpgradeSpec spec = null;
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/" + id + ".json"));
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/" + id + ".json"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
                     spec = UpgradeSpec.parse(in);
                 }
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] visual upgrade spec {} failed to load; the item keeps its old look", id, ex);
+            LogUtils.getLogger().error("[anime_multiverse] visual upgrade spec {} failed to load; the item keeps its old look", id, ex);
             spec = null;
         }
         SPECS.put(id, spec);

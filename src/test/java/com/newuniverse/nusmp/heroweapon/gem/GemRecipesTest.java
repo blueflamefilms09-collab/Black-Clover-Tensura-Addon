@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
  * with it, so {@code tools/heroweapon/gen_gem_recipes.py} and the table cannot drift.
  */
 class GemRecipesTest {
-    private static final Path RECIPES = Path.of("src/main/resources/data/nusmp/recipe");
+    private static final Path RECIPES = Path.of("src/main/resources/data/anime_multiverse/recipe");
     private static final Path VANILLA = Path.of("src/test/resources/heroweapon/vanilla_item_ids.txt");
 
     private static Set<String> vanillaIds() throws Exception {
@@ -118,14 +118,14 @@ class GemRecipesTest {
         for (String row : GemRecipes.HOLY_PATTERN) for (char c : row.toCharArray()) used.add(c);
         assertEquals(used.size(), key.size(), "the key defines exactly the symbols the pattern uses");
         for (char c : used) assertEquals(GemRecipes.HOLY_KEYS.get(c), key.getAsJsonObject(String.valueOf(c)).get("item").getAsString());
-        assertEquals("nusmp:" + GemCatalog.HOLY_ID, holy.getAsJsonObject("result").get("id").getAsString());
+        assertEquals("anime_multiverse:" + GemCatalog.HOLY_ID, holy.getAsJsonObject("result").get("id").getAsString());
         assertEquals(1, holy.getAsJsonObject("result").get("count").getAsInt());
 
         // the fragment
         JsonObject fragment = read(GemCatalog.FRAGMENT_ID);
         assertEquals("minecraft:crafting_shapeless", fragment.get("type").getAsString());
         assertEquals(GemRecipes.fragmentSlotIds(), ingredientIds(fragment.getAsJsonArray("ingredients")));
-        assertEquals("nusmp:" + GemCatalog.FRAGMENT_ID, fragment.getAsJsonObject("result").get("id").getAsString());
+        assertEquals("anime_multiverse:" + GemCatalog.FRAGMENT_ID, fragment.getAsJsonObject("result").get("id").getAsString());
         assertEquals(1, fragment.getAsJsonObject("result").get("count").getAsInt());
 
         // the seventeen Seals
@@ -134,7 +134,7 @@ class GemRecipesTest {
             JsonObject r = read(id);
             assertEquals("minecraft:crafting_shapeless", r.get("type").getAsString(), id);
             assertEquals(s.slotIds(), ingredientIds(r.getAsJsonArray("ingredients")), id + " ingredients");
-            assertEquals("nusmp:" + id, r.getAsJsonObject("result").get("id").getAsString(), id + " result");
+            assertEquals("anime_multiverse:" + id, r.getAsJsonObject("result").get("id").getAsString(), id + " result");
             assertEquals(1, r.getAsJsonObject("result").get("count").getAsInt(), id + " count");
             assertFalse(r.getAsJsonObject("result").has("components"), id + ": a Seal is an item of its own, not a component");
         }

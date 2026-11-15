@@ -21,7 +21,7 @@ public final class BossBarNet {
      * 0xRRGGBB tints, the phase 0-4 and the rage flag.
      */
     public record Style(UUID bar, String bossId, int primary, int secondary, int phase, boolean rage) implements CustomPacketPayload {
-        public static final Type<Style> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "boss_bar_style"));
+        public static final Type<Style> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss_bar_style"));
         public static final StreamCodec<FriendlyByteBuf, Style> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUUID(p.bar());
@@ -38,7 +38,7 @@ public final class BossBarNet {
 
     /** The bar {@code bar} was removed: forget its style. */
     public record Clear(UUID bar) implements CustomPacketPayload {
-        public static final Type<Clear> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "boss_bar_clear"));
+        public static final Type<Clear> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss_bar_clear"));
         public static final StreamCodec<FriendlyByteBuf, Clear> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> buf.writeUUID(p.bar()),
                 buf -> new Clear(buf.readUUID()));

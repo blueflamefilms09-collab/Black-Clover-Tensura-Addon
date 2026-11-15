@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Faith: a Unique skill fuelled by devotion. Faith points are saved on the skill itself (tag "Faith", so admins can fix them with
- * /nusmp faith, and they carry over unchanged when the skill evolves into Goddess of Faith). Modes: Bestow (teach the player you look at one
+ * /anime_multiverse faith, and they carry over unchanged when the skill evolves into Goddess of Faith). Modes: Bestow (teach the player you look at one
  * random skill from the configured list, for Faith and a long wait), Pray (turn magicules into Faith) and Check Faith. The Ultimate
  * adds Blessing and Miracle. The arithmetic is in {@link FaithRules}.
  */

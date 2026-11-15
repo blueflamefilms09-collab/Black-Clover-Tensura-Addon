@@ -32,7 +32,7 @@ public final class SafeAdditiveSelfTests {
         if (SafeAdditiveMath.alphaAdd(0f, 1f, 0.5f, 0.5f) != 0.25f) return SelfTests.Result.fail("the alpha-weighted add is wrong");
         if (AdditivePolicy.choose(TextureAlpha.Kind.COLOUR_UNDER_ALPHA, false) != AdditivePolicy.Blend.ALPHA_ADD || AdditivePolicy.choose(TextureAlpha.Kind.BLACK_UNDER_ALPHA, true) != AdditivePolicy.Blend.ALPHA_ADD) return SelfTests.Result.fail("the blend policy is wrong");
         BufferedImage img;
-        try (InputStream in = SafeAdditiveSelfTests.class.getResourceAsStream("/assets/nusmp/textures/entity/weapon_vu/halo.png")) {
+        try (InputStream in = SafeAdditiveSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/entity/weapon_vu/halo.png")) {
             if (in == null) return SelfTests.Result.fail("halo.png is missing");
             img = ImageIO.read(in);
         }
@@ -55,7 +55,7 @@ public final class SafeAdditiveSelfTests {
         if (borderMax > 6) return SelfTests.Result.fail("halo.png has a visible card border (alpha " + borderMax + ")");
         if (solidCells != 0) return SelfTests.Result.fail("halo.png has a solid white card");
         VuMesh m;
-        try (InputStream in = SafeAdditiveSelfTests.class.getResourceAsStream("/assets/nusmp/weapon_meshes_vu/elsdocia.txt")) {
+        try (InputStream in = SafeAdditiveSelfTests.class.getResourceAsStream("/assets/anime_multiverse/weapon_meshes_vu/elsdocia.txt")) {
             if (in == null) return SelfTests.Result.fail("the Elsdocia mesh is missing");
             m = VuMesh.parse(MeshText.reader(in));
         }

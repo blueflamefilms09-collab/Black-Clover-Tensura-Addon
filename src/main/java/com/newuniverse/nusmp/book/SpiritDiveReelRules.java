@@ -284,7 +284,7 @@ public final class SpiritDiveReelRules {
     }
 
     // ------------------------------------------------------------------ the textures
-    /** Texture paths (under assets/nusmp/textures) by element; the generator is tools/gen_spirit_dive_reel_textures.py. */
+    /** Texture paths (under assets/anime_multiverse/textures) by element; the generator is tools/gen_spirit_dive_reel_textures.py. */
     public static String cubeTexture(Element el) { return "aura/sdr_cube_" + name(el); }
     public static String barTexture(Element el) { return "aura/sdr_bar_" + name(el); }
     public static String wingTexture(Element el) { return "aura/sdr_wing_" + name(el); }

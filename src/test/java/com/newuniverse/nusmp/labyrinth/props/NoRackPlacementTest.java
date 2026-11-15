@@ -78,26 +78,26 @@ class NoRackPlacementTest {
         assertTrue(reg.contains("NUItems.ITEMS.register(\"weapon_rack\""), "the item stays registered");
         assertTrue(reg.contains("BLOCK_ENTITIES.register(\"weapon_rack\""), "the block entity stays registered");
         assertTrue(Files.exists(SRC.resolve("client/labyrinth/props/WeaponRackRenderer.java")), "the renderer stays");
-        assertTrue(Files.exists(Path.of("src/main/resources/data/nusmp/loot_table/racks/armoury.json")), "the rack loot tables stay");
+        assertTrue(Files.exists(Path.of("src/main/resources/data/anime_multiverse/loot_table/racks/armoury.json")), "the rack loot tables stay");
     }
 
     @Test
     void noTemplateAndNoRoomLootTablePlacesOrNamesTheRack() throws IOException {
         List<String> bad = new ArrayList<>();
-        try (Stream<Path> w = Files.walk(Path.of("src/main/resources/data/nusmp/structure"))) {
+        try (Stream<Path> w = Files.walk(Path.of("src/main/resources/data/anime_multiverse/structure"))) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".nbt"))::iterator) {
                 byte[] raw = Files.readAllBytes(p);
                 try (java.util.zip.GZIPInputStream in = new java.util.zip.GZIPInputStream(new java.io.ByteArrayInputStream(raw))) {
                     String s = new String(in.readAllBytes(), StandardCharsets.ISO_8859_1);
-                    if (s.contains("nusmp:weapon_rack")) bad.add(p.toString());
+                    if (s.contains("anime_multiverse:weapon_rack")) bad.add(p.toString());
                 }
             }
         }
         assertTrue(bad.isEmpty(), "templates that contain the weapon rack: " + bad);
         List<String> loot = new ArrayList<>();
-        try (Stream<Path> w = Files.walk(Path.of("src/main/resources/data/nusmp/loot_table"))) {
+        try (Stream<Path> w = Files.walk(Path.of("src/main/resources/data/anime_multiverse/loot_table"))) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".json"))::iterator) {
-                String rel = Path.of("src/main/resources/data/nusmp/loot_table").relativize(p).toString().replace('\\', '/');
+                String rel = Path.of("src/main/resources/data/anime_multiverse/loot_table").relativize(p).toString().replace('\\', '/');
                 if (rel.startsWith("racks/") || rel.equals("blocks/weapon_rack.json")) continue;     // the rack's own tables and the drop of the rack block (old racks and crafted racks use them)
                 if (Files.readString(p, StandardCharsets.UTF_8).contains("weapon_rack")) loot.add(rel);
             }

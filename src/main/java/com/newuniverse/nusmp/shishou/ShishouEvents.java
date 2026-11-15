@@ -138,8 +138,8 @@ public final class ShishouEvents {
     /** Black Flame blocks natural health regeneration of its victim. */
     static void onHeal(LivingHealEvent e) { if (ShishouEffects.burning(e.getEntity())) e.setCanceled(true); }
 
-    private static final ResourceLocation LEVEL_ATTACK = ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_level_attack"), ARTS = ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_arts"),
-            ARTS_SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_arts_speed"), SHARING = ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_sharing");
+    private static final ResourceLocation LEVEL_ATTACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_level_attack"), ARTS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_arts"),
+            ARTS_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_arts_speed"), SHARING = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_sharing");
 
     /** The stats the held sword gives: attack by level (capped), Sword Arts Mastery (a little speed and damage), Skill Sharing (a little walking speed); main hand only. Computed from the stack's own mirror. */
     static void onAttributes(ItemAttributeModifierEvent e) {

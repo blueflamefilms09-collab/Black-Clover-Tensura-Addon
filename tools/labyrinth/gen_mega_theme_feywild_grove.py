@@ -2,7 +2,7 @@
 """
 Why: THEME-B (1.59.0, docs/labyrinth/mega_v2_thb.md section 1) gives the Holy road the Feywild: a grove of giant glowing flowers and toadstools, cherry and azalea, will-o'-wisps,
 a hollow ancient tree, a ring of standing stones, a feast the fey never stop eating, a court of the four seasons and a pond that keeps the moon. This script writes its rooms
-(`structure/mega/<folder>/feywild_grove_*.nbt`, the prefix `data/nusmp/mega/template_themes/feywild_grove.json` claims for the theme), so only a sector of the Feywild Grove
+(`structure/mega/<folder>/feywild_grove_*.nbt`, the prefix `data/anime_multiverse/mega/template_themes/feywild_grove.json` claims for the theme), so only a sector of the Feywild Grove
 theme ever draws them.
 
     python3 tools/labyrinth/gen_mega_theme_feywild_grove.py                  # builds, checks and writes every room (a room with a defect is not written)

@@ -11,7 +11,7 @@ import java.util.Set;
  * That decision is a few string rules, so it lives here with no Minecraft type and is pinned by tests. A table counts only if its path has a {@code chests/}
  * segment (the convention of vanilla and of this mod; a mob's table, a block's, a fishing or an archaeology table never has it). A TREASURE table is one whose
  * path names something precious (a vault, a treasure, a boss, a guardian, a crucible, a reward): it rolls the better grades more often. And the
- * relic-bearing tables ({@code nusmp:chests/dungeon_relic_vault} and {@code nusmp:chests/labyrinth_pedestal}, the two the relic system and the Crucible's offer
+ * relic-bearing tables ({@code anime_multiverse:chests/dungeon_relic_vault} and {@code anime_multiverse:chests/labyrinth_pedestal}, the two the relic system and the Crucible's offer
  * are built on) are NEVER touched, whatever a data pack says ({@link #ALWAYS_EXCLUDED}): the pedestal holds exactly the relic it was made for, and the owner's
  * rule is that the Crucible is the only source of the high relics, so the standard gear stays out of those containers altogether. The data file
  * ({@code tables.json}, section {@code chests}) can add excluded ids and treasure words; it can never remove the two fixed exclusions. Pure.
@@ -25,7 +25,7 @@ public record ChestRules(Set<String> excluded, List<String> treasureWords) {
     public enum Kind { NONE, STANDARD, TREASURE }
 
     /** The two tables that carry relics. Fixed in code on purpose: no data file can switch this protection off. */
-    public static final Set<String> ALWAYS_EXCLUDED = Set.of("nusmp:chests/dungeon_relic_vault", "nusmp:chests/labyrinth_pedestal");
+    public static final Set<String> ALWAYS_EXCLUDED = Set.of("anime_multiverse:chests/dungeon_relic_vault", "anime_multiverse:chests/labyrinth_pedestal");
 
     /** The treasure words the shipped file lists; also what a file with no {@code chests} section gets, so an old or partial data pack behaves the same. */
     public static final List<String> DEFAULT_TREASURE_WORDS = List.of("treasure", "vault", "boss", "guardian", "crucible", "antechamber", "reward");

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /** 0.52: Charmy's cotton sheep (see {@link CottonSheepModel}); a touch under life size, so a cook fits a kitchen cloud. */
 public class CottonSheepRenderer extends MobRenderer<CottonSheepEntity, CottonSheepModel> {
-    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/cotton_sheep.png");
+    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/cotton_sheep.png");
 
     public CottonSheepRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new CottonSheepModel(ctx.bakeLayer(CottonSheepModel.LAYER)), 0.6f);

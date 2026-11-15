@@ -1,4 +1,4 @@
-"""Why: the Dark Disciple, the hooded acolyte a Zogratis devil-bearer calls up (entity nusmp:dark_disciple, entity/zogratis/DarkDiscipleEntity). It was a hand-built cube
+"""Why: the Dark Disciple, the hooded acolyte a Zogratis devil-bearer calls up (entity anime_multiverse:dark_disciple, entity/zogratis/DarkDiscipleEntity). It was a hand-built cube
 model; the owner asked for the mod's mobs to be player-model characters of the Old Witch's quality, so this is the art kit's version of the same mob: the same hood, the
 same bone mask and the same devil tint (Lucifero violet, Megicula crimson, Beelzebub indigo, Astaroth gold, any other devil neutral grey), now a full character with a
 painted face under the mask, a ragged robe written with the devil's runes, a ritual dagger and a floating orb of the devil's colour that gathers when it casts.

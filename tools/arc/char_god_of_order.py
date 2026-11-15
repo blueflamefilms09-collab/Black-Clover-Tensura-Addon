@@ -1,4 +1,4 @@
-"""Why: the God of Order (entity nusmp:god_of_order, relics/order/GodOfOrder), the arbiter that comes for a second copy of a relic. The old hand-built model is replaced by the art
+"""Why: the God of Order (entity anime_multiverse:god_of_order, relics/order/GodOfOrder), the arbiter that comes for a second copy of a relic. The old hand-built model is replaced by the art
 kit's player-proportioned character (docs/arc/remodel.md), keeping its design: tall (3.4 blocks) and slender in a white and gold robe with a stole of ledger glyphs, a shoulder mantle
 and a long cape, a hood over a porcelain mask (no mouth, two slits of light for eyes), a crown of gold prongs, a halo of ledger glyphs that turns behind the shoulders, and a long
 measuring staff graduated like a rule. `form2` is the ledger opened (100% authority): a second, larger counter-turning ring and six pages that orbit it (made in `extra`).

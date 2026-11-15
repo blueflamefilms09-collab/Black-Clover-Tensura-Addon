@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.84.0] — the mod id is now `anime_multiverse`
+- REPLACED (asked for: "this should be the new id anime_multiverse"): the mod id `nusmp` became `anime_multiverse`: the mod id in `neoforge.mods.toml`, every registry namespace (items, blocks, entities, skills, advancements ... `anime_multiverse:name`), the resource folders (`assets/anime_multiverse`, `data/anime_multiverse`), the language-key segment (`item.anime_multiverse.x`), the mixin config, the command root (`/anime_multiverse ...`) and the debug system properties. Done by `tools/rename_modid.py` (51,000 places in 7,000 files, repeatable).
+- NEW (so nothing saved is lost): `migrate/LegacyId` plus a `ResourceLocation` mixin read any id written with the old namespace as the new one, so saved items, skills, components and attributes, data packs and advancement progress still resolve. The old command root `/nusmp ...` still works as an alias of the new one.
+- KEPT on purpose (stored data, not the id): the Java package `com.newuniverse.nusmp`, saved-data keys and files that start `nusmp_` (for example `data/nusmp_mega.dat`, `nusmp_wizard`), the config file names `nusmp-*.toml` (your tuned server settings keep loading), game rule names, the jar name `multiverse-of-anime-<version>.jar`.
+- Tests: `LegacyIdTest` (old namespace maps, others untouched, folders moved); the client-class source scans still look for the package text `nusmp.client` (the rename script had changed it to the new id, which would have switched those guards off; restored); the grip golden file is regenerated.
+- Cost: none at run time (one string comparison per id built).
+- Not seen in a game. The migration was not tried on a real old world: CI cannot open one, and the mixin is optional (if a Minecraft update ever changes the constructor it quietly does nothing, and ids written with the old namespace would be missing). Back up worlds before loading them with 3.84.0.
+
 ## [3.83.9] — the mod is called Anime Multiverse
 - REPLACED (asked for: the pack should be called "Anime Multiverse"): the display name in the mod list is now **Anime Multiverse** (it was "Multiverse"); README title updated.
 - KEPT: the internal mod id `nusmp` (changing it would break every save, config file name and asset path), the jar file name `multiverse-of-anime-<version>.jar`, and the in-game texts that say "Multiverse of Anime" (key-binding category, tooltip footer, advancement tab).

@@ -12,7 +12,7 @@ public final class GateRules {
 
     public static final int GATE = 0, VOLLEY = 1, RAIN = 2, CHAINS = 3, ARMOR = 4, VIMANA = 5, KING = 6, GAE = 7, EA = 8, ELIXIR = 9;
     public static final int MODES = 10;
-    /** The ids of the modes, in order (the lang keys are nusmp.skill.mode.gate.&lt;id&gt;). */
+    /** The ids of the modes, in order (the lang keys are anime_multiverse.skill.mode.gate.&lt;id&gt;). */
     public static final String[] IDS = {"gate", "volley", "rain", "chains", "armor", "vimana", "king", "gae", "ea", "elixir"};
 
     public static boolean valid(int mode) { return mode >= 0 && mode < MODES; }

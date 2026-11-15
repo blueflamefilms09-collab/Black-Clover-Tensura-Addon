@@ -31,15 +31,15 @@ public final class DecennialReload extends SimpleJsonResourceReloadListener {
         Map<String, JsonObject> objects = new HashMap<>();
         for (Map.Entry<ResourceLocation, JsonElement> e : files.entrySet()) {
             if (e.getValue().isJsonObject()) objects.put(e.getKey().getPath(), e.getValue().getAsJsonObject());
-            else LOG.warn("[nusmp] decennial boss file {} skipped: it is not a JSON object", e.getKey());
+            else LOG.warn("[anime_multiverse] decennial boss file {} skipped: it is not a JSON object", e.getKey());
         }
         DecennialRoster.Loaded l = DecennialRoster.parseObjects(objects);
-        for (String problem : l.problems()) LOG.warn("[nusmp] decennial boss file skipped: {}", problem);
+        for (String problem : l.problems()) LOG.warn("[anime_multiverse] decennial boss file skipped: {}", problem);
         if (l.profiles().isEmpty() && DecennialRoster.size() > 0) {
-            LOG.error("[nusmp] No decennial boss file could be read: the previous roster ({} bosses) is kept.", DecennialRoster.size());
+            LOG.error("[anime_multiverse] No decennial boss file could be read: the previous roster ({} bosses) is kept.", DecennialRoster.size());
             return;
         }
         DecennialRoster.replace(l.profiles());
-        LOG.info("[nusmp] decennial bosses: {} loaded from {} file(s)", l.profiles().size(), files.size());
+        LOG.info("[anime_multiverse] decennial bosses: {} loaded from {} file(s)", l.profiles().size(), files.size());
     }
 }

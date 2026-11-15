@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_iron_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/iron_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/iron_*.png
 
 Look reference (the owner's manga still "Iron God of War"): a stern iron giant drawn in stippled grey screentone with heavy black ink
 linework, studded shoulders and chest (rivets in rows), a crown with a third eye, a chain at the hip, a huge gauntlet fist, bold ink
@@ -22,7 +22,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

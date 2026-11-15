@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave12_models.py warmages_longsword     (also renders the preview beside the card)
 
 Run tools/relics/wave12_icons.py first: every mesh is placed on its 16 x 16 sprite (which stays the inventory icon). Per id it writes
-assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
+assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
 
 The method, in order, for every weapon: 0 target (the card's art and text), 1 measure the card (every proportion is a NAMED CONSTANT with a comment
 saying where on the card it came from), 2 lofted geometry from real cross-sections (never a box or a four-sided frustum for a long form), 3 the

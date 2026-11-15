@@ -50,7 +50,7 @@ final class SpadeFx {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] {}'s {} stopped: {}", who, what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] {}'s {} stopped: {}", who, what, t.toString());
             }
         };
     }
@@ -205,7 +205,7 @@ final class SpadeFx {
         try {
             e.addEffect(new MobEffectInstance(SpadeEffects.KNEELING, ticks, 0, false, true, true));
         } catch (RuntimeException notRegistered) {
-            LogUtils.getLogger().warn("[nusmp] the Kneeling effect is not registered (SpadeEffects.EFFECTS must be wired in NUSMP): {}", notRegistered.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the Kneeling effect is not registered (SpadeEffects.EFFECTS must be wired in NUSMP): {}", notRegistered.toString());
             e.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, ticks, 5));
         }
         slam(e, 1.0);

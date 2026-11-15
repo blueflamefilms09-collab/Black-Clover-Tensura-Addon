@@ -146,7 +146,7 @@ public final class ShopPools {
             PriceTable.Price p = MarketData.prices().get(id);
             return p == null ? 0 : p.gold();
         });
-        if (safe.size() < pool.size()) LOG.info("[nusmp] black market: {} item(s) of {} left out of the pool because the witch pays as much or more for them", pool.size() - safe.size(), key);
+        if (safe.size() < pool.size()) LOG.info("[anime_multiverse] black market: {} item(s) of {} left out of the pool because the witch pays as much or more for them", pool.size() - safe.size(), key);
         if (safe.isEmpty()) once(key, "the pool of " + e.item() + " is empty (" + found.size() + " found, " + dropped + " not allowed)");
         return List.copyOf(safe);
     }
@@ -158,6 +158,6 @@ public final class ShopPools {
     }
 
     private static void once(String key, String why) {
-        if (LOGGED.add(key)) LOG.warn("[nusmp] black market: the line {} makes no slot: {}", key, why);
+        if (LOGGED.add(key)) LOG.warn("[anime_multiverse] black market: the line {} makes no slot: {}", key, why);
     }
 }

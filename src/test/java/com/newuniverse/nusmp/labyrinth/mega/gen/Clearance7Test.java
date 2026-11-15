@@ -63,9 +63,9 @@ class Clearance7Test {
         assertFalse(Clearance7.carvable("minecraft:chest", true));
         assertFalse(Clearance7.carvable("minecraft:barrel", true));
         assertFalse(Clearance7.carvable("minecraft:spawner", true));
-        assertFalse(Clearance7.carvable("nusmp:gatekeeper_door", false));
-        assertFalse(Clearance7.carvable("nusmp:sealed_archway", false));
-        assertFalse(Clearance7.carvable("nusmp:relic_pedestal", true));
+        assertFalse(Clearance7.carvable("anime_multiverse:gatekeeper_door", false));
+        assertFalse(Clearance7.carvable("anime_multiverse:sealed_archway", false));
+        assertFalse(Clearance7.carvable("anime_multiverse:relic_pedestal", true));
         assertFalse(Clearance7.carvable("minecraft:water", false));
         assertFalse(Clearance7.carvable("minecraft:air", false));
         assertTrue(Clearance7.carvable("minecraft:deepslate_bricks", false));
@@ -107,12 +107,12 @@ class Clearance7Test {
     }
 
     private static Socket door(int x, int z, Facing f) {
-        return new Socket(new Vec(x, 9, z), f, "nusmp:mega_door", "nusmp:mega_door", "nusmp:mega/side", 0, 0, "minecraft:air");
+        return new Socket(new Vec(x, 9, z), f, "anime_multiverse:mega_door", "anime_multiverse:mega_door", "anime_multiverse:mega/side", 0, 0, "minecraft:air");
     }
 
     @Test
     void aDoorwayCutIsSevenWideSevenHighAndReachesThroughBothWallLayersAndTheApron() {
-        Shape hall = shape("nusmp:mega/hall/t", 18, 18, RoomKind.HALL, door(4, 0, Facing.NORTH), door(17, 13, Facing.EAST));
+        Shape hall = shape("anime_multiverse:mega/hall/t", 18, 18, RoomKind.HALL, door(4, 0, Facing.NORTH), door(17, 13, Facing.EAST));
         Placed p = new Placed(0, hall, "", 0, new Vec(100, 56, 100), 0, -1, -1, -1, false);
         List<Clearance7.Cut> cuts = Clearance7.cuts(p, new boolean[] {true, false});
         assertEquals(1, cuts.size(), "only the connected socket is cut");
@@ -122,22 +122,22 @@ class Clearance7Test {
         assertEquals(7, c.width());
         assertEquals(7, c.height());
         // the boss-chain sockets (a Gatekeeper door block stands in them) are never cut; the plain doorway of the Way Onward is
-        Socket chain = new Socket(new Vec(4, 9, 0), Facing.NORTH, "nusmp:mega_chain", "nusmp:mega_chain", "nusmp:mega/antechamber", 0, 0, "minecraft:air");
-        Socket vault = new Socket(new Vec(13, 9, 0), Facing.NORTH, "nusmp:mega_vault", "nusmp:mega_vault", "nusmp:mega/vault", 0, 0, "minecraft:air");
-        Shape odd = shape("nusmp:mega/hall/o", 18, 18, RoomKind.HALL, chain, vault);
+        Socket chain = new Socket(new Vec(4, 9, 0), Facing.NORTH, "anime_multiverse:mega_chain", "anime_multiverse:mega_chain", "anime_multiverse:mega/antechamber", 0, 0, "minecraft:air");
+        Socket vault = new Socket(new Vec(13, 9, 0), Facing.NORTH, "anime_multiverse:mega_vault", "anime_multiverse:mega_vault", "anime_multiverse:mega/vault", 0, 0, "minecraft:air");
+        Shape odd = shape("anime_multiverse:mega/hall/o", 18, 18, RoomKind.HALL, chain, vault);
         assertEquals(0, Clearance7.cuts(new Placed(0, odd, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {true, true}).size());
-        Socket onward = new Socket(new Vec(4, 9, 0), Facing.NORTH, "nusmp:mega_onward", "nusmp:mega_onward", "nusmp:mega/onward", 0, 0, "minecraft:air");
-        Shape ante = shape("nusmp:mega/antechamber/o", 27, 27, RoomKind.ANTECHAMBER, onward);
+        Socket onward = new Socket(new Vec(4, 9, 0), Facing.NORTH, "anime_multiverse:mega_onward", "anime_multiverse:mega_onward", "anime_multiverse:mega/onward", 0, 0, "minecraft:air");
+        Shape ante = shape("anime_multiverse:mega/antechamber/o", 27, 27, RoomKind.ANTECHAMBER, onward);
         assertEquals(1, Clearance7.cuts(new Placed(0, ante, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {true}).size());
         assertEquals(0, Clearance7.cuts(new Placed(0, ante, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {false}).size(), "an unconnected socket is not cut");
         // a door cap is never cut
-        Shape cap = shape("nusmp:mega/cap/c", 3, 3, RoomKind.CAP, door(1, 0, Facing.NORTH));
+        Shape cap = shape("anime_multiverse:mega/cap/c", 3, 3, RoomKind.CAP, door(1, 0, Facing.NORTH));
         assertEquals(0, Clearance7.cuts(new Placed(0, cap, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {true}).size());
     }
 
     @Test
     void aStraightCorridorGetsASevenWideStripAndABendASevenBySevenChamber() {
-        Shape straight = shape("nusmp:mega/corridor/s", 9, 27, RoomKind.CORRIDOR, door(4, 0, Facing.NORTH), door(4, 26, Facing.SOUTH));
+        Shape straight = shape("anime_multiverse:mega/corridor/s", 9, 27, RoomKind.CORRIDOR, door(4, 0, Facing.NORTH), door(4, 26, Facing.SOUTH));
         List<Clearance7.Cut> cuts = Clearance7.cuts(new Placed(0, straight, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {true, true});
         assertEquals(3, cuts.size(), "two doorways and the strip");
         Clearance7.Cut strip = cuts.get(2);
@@ -145,30 +145,30 @@ class Clearance7Test {
         assertEquals(new Box(1, 9, 1, 7, 15, 25), strip.box());
         assertEquals(7, strip.width());
         // an Onward keeps both end walls two layers thick (its far end is the rubble seal)
-        Shape onward = shape("nusmp:mega/onward/s", 9, 27, RoomKind.ONWARD, door(4, 0, Facing.NORTH));
+        Shape onward = shape("anime_multiverse:mega/onward/s", 9, 27, RoomKind.ONWARD, door(4, 0, Facing.NORTH));
         Clearance7.Cut o = Clearance7.cuts(new Placed(0, onward, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {false}).get(0);
         assertEquals(new Box(1, 9, 2, 7, 15, 24), o.box());
-        Shape bend = shape("nusmp:mega/corridor/b", 9, 9, RoomKind.CORRIDOR, door(4, 0, Facing.NORTH), door(8, 4, Facing.EAST));
+        Shape bend = shape("anime_multiverse:mega/corridor/b", 9, 9, RoomKind.CORRIDOR, door(4, 0, Facing.NORTH), door(8, 4, Facing.EAST));
         List<Clearance7.Cut> b = Clearance7.cuts(new Placed(0, bend, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {false, false});
         assertEquals(1, b.size());
         assertEquals(Clearance7.Kind.CHAMBER, b.get(0).kind());
         assertEquals(new Box(1, 9, 1, 7, 15, 7), b.get(0).box());
         // a bent Way Onward (27 x 27): a lane from each socket to the far wall's inner face, the end walls stay two layers thick (the seal is in one of them)
-        Shape bent = shape("nusmp:mega/onward/l", 27, 27, RoomKind.ONWARD,
-                new Socket(new Vec(0, 9, 4), Facing.WEST, "nusmp:mega_door", "nusmp:mega_door", "minecraft:empty", 0, 0, "minecraft:cobbled_deepslate"),
-                new Socket(new Vec(22, 9, 26), Facing.SOUTH, "nusmp:mega_onward", "nusmp:mega_onward", "minecraft:empty", 0, 0, "minecraft:air"));
+        Shape bent = shape("anime_multiverse:mega/onward/l", 27, 27, RoomKind.ONWARD,
+                new Socket(new Vec(0, 9, 4), Facing.WEST, "anime_multiverse:mega_door", "anime_multiverse:mega_door", "minecraft:empty", 0, 0, "minecraft:cobbled_deepslate"),
+                new Socket(new Vec(22, 9, 26), Facing.SOUTH, "anime_multiverse:mega_onward", "anime_multiverse:mega_onward", "minecraft:empty", 0, 0, "minecraft:air"));
         List<Clearance7.Cut> lanes = Clearance7.cuts(new Placed(0, bent, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {false, true});
         assertEquals(3, lanes.size(), "the entrance doorway and one lane per socket; the sealed end's own doorway is not cut");
         assertEquals(new Box(2, 9, 1, 24, 15, 7), lanes.get(1).box(), "from behind the seal's two wall layers to the east wall's inner face, 7 wide round z 4");
         assertEquals(new Box(19, 9, 2, 25, 15, 24), lanes.get(2).box(), "from behind the entrance's wall layers to the north wall's inner face, 7 wide round x 22");
         // a two-module corridor (a gallery) and a hall get no strip: they are wide enough already
-        Shape gallery = shape("nusmp:mega/corridor/g", 18, 36, RoomKind.CORRIDOR);
+        Shape gallery = shape("anime_multiverse:mega/corridor/g", 18, 36, RoomKind.CORRIDOR);
         assertEquals(0, Clearance7.cuts(new Placed(0, gallery, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[0]).size());
     }
 
     @Test
     void aStairwellGetsNoApronSoItsStepsStayAndItsHeadRoomIsCutPerStep() {
-        Shape stair = shape("nusmp:mega/stairwell/u", 9, 9, RoomKind.STAIRWELL, door(8, 4, Facing.EAST));
+        Shape stair = shape("anime_multiverse:mega/stairwell/u", 9, 9, RoomKind.STAIRWELL, door(8, 4, Facing.EAST));
         List<Clearance7.Cut> cuts = Clearance7.cuts(new Placed(0, stair, "", 0, Vec.ZERO, 0, -1, -1, -1, false), new boolean[] {true});
         assertEquals(1, cuts.size());
         assertEquals(new Box(7, 9, 1, 8, 15, 7), cuts.get(0).box(), "the two wall layers only");
@@ -219,8 +219,8 @@ class Clearance7Test {
 
     private static CatalogSource catalog() throws IOException {
         CatalogSource cat = CatalogSource.load(CatalogSource.DEFAULT);
-        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "nusmp:mega/side", "nusmp:mega/cap", "nusmp:mega/arena",
-                "nusmp:mega/antechamber", "nusmp:mega/vault_3", "nusmp:mega/onward", "nusmp:mega/link"}) {
+        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "anime_multiverse:mega/side", "anime_multiverse:mega/cap", "anime_multiverse:mega/arena",
+                "anime_multiverse:mega/antechamber", "anime_multiverse:mega/vault_3", "anime_multiverse:mega/onward", "anime_multiverse:mega/link"}) {
             PoolDef p = cat.pool(id);
             boolean stocked = false;
             if (p != null) for (PoolEntry e : p.entries()) if (cat.shape(e.shape()) != null) stocked = true;

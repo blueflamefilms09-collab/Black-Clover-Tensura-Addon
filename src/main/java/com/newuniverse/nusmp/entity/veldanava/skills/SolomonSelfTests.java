@@ -143,16 +143,16 @@ public final class SolomonSelfTests {
             if (SolomonHooks.antiMagicImmune(p)) return Result.fail("Jibril's toggles made someone immune to anti-magic");
             JudgmentState.write(p, 0);
 
-            String icon = "assets/nusmp/textures/skill/veldanava/solomon.png";
+            String icon = "assets/anime_multiverse/textures/skill/veldanava/solomon.png";
             if (SolomonSelfTests.class.getClassLoader().getResource(icon) == null) return Result.fail("missing " + icon);
             JsonObject lang;
-            try (InputStream in = SolomonSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+            try (InputStream in = SolomonSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
                 if (in == null) return Result.fail("no en_us.json");
                 lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
             }
-            for (String k : new String[]{"nusmp.skill.solomon", "nusmp.skill.solomon.description", "nusmp.skill.solomon.mastered"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
+            for (String k : new String[]{"anime_multiverse.skill.solomon", "anime_multiverse.skill.solomon.description", "anime_multiverse.skill.solomon.mastered"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
             for (JudgmentRules.Mode m : SolomonRules.SOLOMON.modes())
-                if (!lang.has("nusmp.skill.mode.solomon." + m.id())) return Result.fail("missing lang key for mode " + m.id());
+                if (!lang.has("anime_multiverse.skill.mode.solomon." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             return Result.ok("registered, learned once, 10 modes named, the mask keeps the skills apart, icon and lang are in the jar");
         } finally {
             JudgmentState.write(p, 0);
@@ -245,7 +245,7 @@ public final class SolomonSelfTests {
             String spellId = SolomonCasts.spell(book.getRegistryName().toString(), 0);
             for (int k = 0; k < 100; k++) SolomonCasts.add(other, spellId, sl.dimension(), center.add(5.0, 0.0, 0.0), sl.getGameTime());
             if (SolomonCasts.logSize() != SolomonRules.LOG_SIZE || SolomonCasts.lastOf(other).size() != SolomonRules.OWN_LOG) return Result.fail("the cast log is not bounded");
-            if (!SolomonCasts.replayable(spellId) || SolomonCasts.replayable("nusmp:nothing|0") || SolomonCasts.replayable(spellId + "9999")) return Result.fail("the replayable test is wrong");
+            if (!SolomonCasts.replayable(spellId) || SolomonCasts.replayable("anime_multiverse:nothing|0") || SolomonCasts.replayable(spellId + "9999")) return Result.fail("the replayable test is wrong");
             SolomonCasts.Entry found = SolomonCasts.findToCopy(p);
             if (found == null || !spellId.equals(found.spell())) return Result.fail("the copy did not find the spell cast nearby");
             SolomonCasts.add(p.getUUID(), spellId, sl.dimension(), center, sl.getGameTime());

@@ -31,7 +31,7 @@ public class DungeonMapItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.nusmp.dungeon_map.tip1").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("item.nusmp.dungeon_map.tip2").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.dungeon_map.tip1").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.dungeon_map.tip2").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 THEME-C, theme 4 of 4 (1.59.0, docs/labyrinth/mega_v2_thc.md): the signature rooms of the HAUNTED MANOR, the evil road's house that remembers. Every room is named
-`haunted_manor_<room>.nbt` so that `data/nusmp/mega/template_themes/haunted_manor.json` can reserve it for sectors of that theme.
+`haunted_manor_<room>.nbt` so that `data/anime_multiverse/mega/template_themes/haunted_manor.json` can reserve it for sectors of that theme.
 
     python3 tools/labyrinth/gen_mega_theme_haunted_manor.py                      # (re)writes every template
     python3 tools/labyrinth/gen_mega_theme_haunted_manor.py haunted_manor_grand_stair   # only this one
@@ -30,7 +30,7 @@ CALM = ("haunted_manor_master_bedroom", "haunted_manor_ballroom")      # a safe 
 SOUL = True
 MOON = "minecraft:verdant_froglight"             # the pale green lamp behind every window: light 15, never swapped by a theme
 PANES = ("minecraft:light_gray_stained_glass", "minecraft:cyan_stained_glass", "minecraft:light_gray_stained_glass", "minecraft:white_stained_glass")
-LOOT = "nusmp:chests/labyrinth_trial"
+LOOT = "anime_multiverse:chests/labyrinth_trial"
 
 
 def sheet(h, x, z, w=1, d=1, hgt=1):

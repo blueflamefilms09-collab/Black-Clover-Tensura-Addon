@@ -14,7 +14,7 @@ import java.util.Optional;
 
 /**
  * Why: the hand-made half of the relic-to-theme mapping ({@link RelicThemes}) is data the owner will want to tune, so it lives in
- * {@code data/nusmp/mega/relic_themes.json} and is read by this reload listener (the pattern of {@code ThemeDefs} and of the Cursed Spirit roster) into
+ * {@code data/anime_multiverse/mega/relic_themes.json} and is read by this reload listener (the pattern of {@code ThemeDefs} and of the Cursed Spirit roster) into
  * an immutable table that is swapped in with one assignment. A file that is missing or broken never stops the game: the table stays empty and every
  * relic is then placed by its keywords or its hash, with a warning in the log. The warnings of the last load are kept for the self-test that checks the
  * shipped file in the real game. Since 1.55.0 the same file also carries the ruleset variants of single relics and the names of the rulesets (see
@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 public final class RelicThemeMap implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
-    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/relic_themes.json");
+    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/relic_themes.json");
     private static volatile Map<String, String> EXPLICIT = Map.of();
     private static volatile Map<String, String> RULESETS = Map.of();
     private static volatile Map<String, String> NAMES = Map.of();
@@ -66,8 +66,8 @@ public final class RelicThemeMap implements ResourceManagerReloadListener {
         } catch (Exception e) {
             parsed = new RelicThemes.Parsed(Map.of(), List.of(FILE + " could not be read: " + e));
         }
-        for (String w : parsed.warnings()) LOG.warn("[nusmp] mega relic themes: {}", w);
+        for (String w : parsed.warnings()) LOG.warn("[anime_multiverse] mega relic themes: {}", w);
         replace(parsed.explicit(), parsed.rulesets(), parsed.names(), parsed.warnings());
-        LOG.info("[nusmp] mega relic themes: {} relics placed by hand, {} with a ruleset variant, {} ruleset names", parsed.explicit().size(), parsed.rulesets().size(), parsed.names().size());
+        LOG.info("[anime_multiverse] mega relic themes: {} relics placed by hand, {} with a ruleset variant, {} ruleset names", parsed.explicit().size(), parsed.rulesets().size(), parsed.names().size());
     }
 }

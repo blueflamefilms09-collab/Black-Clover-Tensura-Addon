@@ -83,7 +83,7 @@ public final class ModeArmorValkyrieSelfTests {
         for (String t : new String[]{"textures/entity/mode/valk2_atlas.png", "textures/entity/mode/valk2_scales.png", "valkyrie_meshes/pieces.json", "weapon_meshes/valkyrie_drill_lance.txt",
                 "textures/entity/weapon/valkyrie_drill_lance.png", "textures/entity/weapon/valkyrie_drill_lance_glow.png", "textures/item/valkyrie_drill_lance.png",
                 "models/item/valkyrie_drill_lance.json", "models/item/valkyrie_drill_lance_icon.json"})
-            if (ModeArmorValkyrieSelfTests.class.getClassLoader().getResource("assets/nusmp/" + t) == null) bad.add("missing asset " + t);
+            if (ModeArmorValkyrieSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + t) == null) bad.add("missing asset " + t);
         // ---- options
         if (ModeArmorValkyrieRules.DEFAULT_LOOK != ModeArmorValkyrieRules.Look.V2 || ModeArmorValkyrieRules.parseLook("garbage") != ModeArmorValkyrieRules.Look.V2 || ModeArmorValkyrieRules.parseLook("classic") != ModeArmorValkyrieRules.Look.CLASSIC
                 || ModeArmorValkyrieRules.DEFAULT_FORM != Form.VALKYRIE || ModeArmorValkyrieRules.parseForm("mermaid") != Form.MERMAID || ModeArmorValkyrieRules.parseForm("saint") != Form.SAINT

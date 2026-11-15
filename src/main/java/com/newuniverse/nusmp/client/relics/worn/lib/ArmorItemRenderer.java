@@ -48,7 +48,7 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** Every armour item that may carry the renderer: the mod's armour items and the relic armour. */
     private static boolean candidate(Item item) {
-        return item instanceof ArmorItem && ("nusmp".equals(BuiltInRegistries.ITEM.getKey(item).getNamespace()));
+        return item instanceof ArmorItem && ("anime_multiverse".equals(BuiltInRegistries.ITEM.getKey(item).getNamespace()));
     }
 
     /** Mod bus: the custom renderer of every armour item that is not a GeckoLib item (those hand it out themselves). */
@@ -118,7 +118,7 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
             try {
                 e = ensembleOf(stack);
             } catch (RuntimeException ex) {
-                LogUtils.getLogger().error("[nusmp] the 3D model of armour item {} failed; its icon is used", path, ex);
+                LogUtils.getLogger().error("[anime_multiverse] the 3D model of armour item {} failed; its icon is used", path, ex);
             }
         }
         if (e == null || e.pieces.isEmpty()) {                                     // the inventory, no model, or a piece that draws nothing (anime legs and boots): the old icon

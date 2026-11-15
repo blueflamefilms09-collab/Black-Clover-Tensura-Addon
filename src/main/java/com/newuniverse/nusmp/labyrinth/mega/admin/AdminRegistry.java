@@ -59,7 +59,7 @@ public final class AdminRegistry {
         } catch (RuntimeException e) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The /dungeon admin clock failed (further failures are not logged): {}", e.toString());
+                LOG.warn("[anime_multiverse] The /dungeon admin clock failed (further failures are not logged): {}", e.toString());
             }
         }
     }

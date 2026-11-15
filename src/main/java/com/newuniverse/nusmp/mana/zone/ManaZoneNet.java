@@ -25,7 +25,7 @@ public final class ManaZoneNet {
     /** op, owner entity id, serial (the zone's unique number, the effect's seed), centre, radius cap, growth ticks, tier (0 Mana Zone), style, tint, start tick, ticks elapsed. */
     public record ZonePayload(int op, int ownerId, long serial, float cx, float cy, float cz, float radiusCap, int growTicks, int tier, int style, int tint, long startTick, int elapsed)
             implements CustomPacketPayload {
-        public static final Type<ZonePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone"));
+        public static final Type<ZonePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone"));
         public static final StreamCodec<FriendlyByteBuf, ZonePayload> CODEC = CustomPacketPayload.codec(ZonePayload::write, ZonePayload::read);
 
         private void write(FriendlyByteBuf b) {
@@ -59,7 +59,7 @@ public final class ManaZoneNet {
     public record GrandZonePayload(boolean present, String id, String name, boolean box, float cx, float cy, float cz, float radius,
                                    float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int theme, int effects, int densityTenths, int harmHundredths,
                                    int boonHundredths, int tint) implements CustomPacketPayload {
-        public static final Type<GrandZonePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grand_zone"));
+        public static final Type<GrandZonePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grand_zone"));
         public static final StreamCodec<FriendlyByteBuf, GrandZonePayload> CODEC = CustomPacketPayload.codec(GrandZonePayload::write, GrandZonePayload::read);
 
         public static GrandZonePayload none() { return new GrandZonePayload(false, "", "", false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0); }
@@ -92,7 +92,7 @@ public final class ManaZoneNet {
     }
 
     public record GatePayload(boolean open, int attuneSeconds, int attuneNeeded) implements CustomPacketPayload {
-        public static final Type<GatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_gate"));
+        public static final Type<GatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_gate"));
         public static final StreamCodec<FriendlyByteBuf, GatePayload> CODEC = CustomPacketPayload.codec(GatePayload::write, GatePayload::read);
 
         private void write(FriendlyByteBuf b) {

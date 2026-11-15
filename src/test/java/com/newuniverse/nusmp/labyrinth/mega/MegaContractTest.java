@@ -56,13 +56,13 @@ public class MegaContractTest {
 
     @Test
     public void roomKindComesFromTheFolder() {
-        assertEquals(RoomKind.SAFE, RoomKind.of("nusmp:mega/safe/hearth_hall_a"));
+        assertEquals(RoomKind.SAFE, RoomKind.of("anime_multiverse:mega/safe/hearth_hall_a"));
         assertEquals(RoomKind.LANDING, RoomKind.of("mega/landing/landing_a"));
-        assertEquals(RoomKind.CAP, RoomKind.of("nusmp:mega/cap/plain_wall"));
-        assertEquals(RoomKind.SET_PIECE, RoomKind.of("nusmp:mega/set/cathedral_rotunda"));
-        assertEquals(RoomKind.OTHER, RoomKind.of("nusmp:labyrinth/base"));
+        assertEquals(RoomKind.CAP, RoomKind.of("anime_multiverse:mega/cap/plain_wall"));
+        assertEquals(RoomKind.SET_PIECE, RoomKind.of("anime_multiverse:mega/set/cathedral_rotunda"));
+        assertEquals(RoomKind.OTHER, RoomKind.of("anime_multiverse:labyrinth/base"));
         assertEquals(RoomKind.OTHER, RoomKind.of(null));
-        assertEquals(RoomKind.OTHER, RoomKind.of("nusmp:mega/unknown_folder/x"));
+        assertEquals(RoomKind.OTHER, RoomKind.of("anime_multiverse:mega/unknown_folder/x"));
         assertTrue(RoomKind.SAFE.isSafe() && RoomKind.LANDING.isSafe() && !RoomKind.HALL.isSafe());
         assertTrue(RoomKind.CORRIDOR.isCirculation() && RoomKind.LINK.isCirculation() && !RoomKind.VAULT.isCirculation());
     }
@@ -75,22 +75,22 @@ public class MegaContractTest {
 
     @Test
     public void markerGrammar() {
-        MarkerSpec s = MarkerSpec.parse("nusmp:seat;as=chair;facing=north");
+        MarkerSpec s = MarkerSpec.parse("anime_multiverse:seat;as=chair;facing=north");
         assertNotNull(s);
         assertEquals(MarkerKind.SEAT, s.kind());
         assertEquals("chair", s.arg("as", ""));
         assertEquals("north", s.arg("facing", ""));
-        assertEquals("nusmp:seat;as=chair;facing=north", s.toMetadata());
-        MarkerSpec e = MarkerSpec.parse("nusmp:expansion_socket;facing=west;w=3;h=4;d=2");
+        assertEquals("anime_multiverse:seat;as=chair;facing=north", s.toMetadata());
+        MarkerSpec e = MarkerSpec.parse("anime_multiverse:expansion_socket;facing=west;w=3;h=4;d=2");
         assertNotNull(e);
         assertEquals(MarkerKind.EXPANSION_SOCKET, e.kind());
         assertEquals(4, e.intArg("h", 0));
         assertEquals(7, e.intArg("missing", 7));
-        MarkerSpec flag = MarkerSpec.parse("nusmp:spawn;boss");
+        MarkerSpec flag = MarkerSpec.parse("anime_multiverse:spawn;boss");
         assertNotNull(flag);
         assertEquals("true", flag.arg("boss", ""));
         assertNull(MarkerSpec.parse("minecraft:seat"), "another namespace is not ours");
-        assertNull(MarkerSpec.parse("nusmp:not_a_kind"), "an unknown kind is skipped, not an error");
+        assertNull(MarkerSpec.parse("anime_multiverse:not_a_kind"), "an unknown kind is skipped, not an error");
         assertNull(MarkerSpec.parse(null));
         assertNull(MarkerSpec.parse(""));
     }
@@ -99,7 +99,7 @@ public class MegaContractTest {
     public void markerKindIdsRoundTrip() {
         for (MarkerKind k : MarkerKind.values()) {
             assertEquals(k, MarkerKind.byId(k.id()));
-            assertEquals(k, MarkerKind.byId("nusmp:" + k.id()));
+            assertEquals(k, MarkerKind.byId("anime_multiverse:" + k.id()));
             assertEquals(k, MarkerKind.byId(k.id().toUpperCase()));
         }
         assertNull(MarkerKind.byId("zzz"));

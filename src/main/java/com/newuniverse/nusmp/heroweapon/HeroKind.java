@@ -53,7 +53,7 @@ public enum HeroKind {
         this.sins = List.of(sins);
     }
 
-    /** The registry path of the item ({@code nusmp:<itemId>}); also the name of the forms file, the mesh and the textures. */
+    /** The registry path of the item ({@code anime_multiverse:<itemId>}); also the name of the forms file, the mesh and the textures. */
     public String itemId() { return itemId; }
 
     /** The English display name (the lang file carries the same). */
@@ -84,10 +84,10 @@ public enum HeroKind {
     /** The fully qualified logic class, e.g. {@code com.newuniverse.nusmp.heroweapon.weapon.sewingset.SewingSetLogic}. */
     public String logicClassName() { return "com.newuniverse.nusmp.heroweapon.weapon." + pkg() + "." + logicSimpleName(); }
 
-    /** The weapon with this item id (registry path, with or without the {@code nusmp:} prefix), or null. */
+    /** The weapon with this item id (registry path, with or without the {@code anime_multiverse:} prefix), or null. */
     public static HeroKind byItemId(String id) {
         if (id == null) return null;
-        String path = id.startsWith("nusmp:") ? id.substring(6) : id;
+        String path = id.startsWith("anime_multiverse:") ? id.substring(6) : id;
         for (HeroKind k : values()) if (k.itemId.equals(path)) return k;
         return null;
     }

@@ -1,12 +1,12 @@
 """Draws the Israfil skill icon (32x32): a cyan maze spiral and a brass trumpet on a deep indigo disc.
-Original art, drawn from scratch with Pillow. Run: python tools/gen_israfil_icon.py -> src/main/resources/assets/nusmp/textures/skill/veldanava/israfil.png
+Original art, drawn from scratch with Pillow. Run: python tools/gen_israfil_icon.py -> src/main/resources/assets/anime_multiverse/textures/skill/veldanava/israfil.png
 (Same family as tools/gen_sandalphon_icon.py; the next three skills add their own builders.)"""
 import math
 import os
 from PIL import Image, ImageDraw
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "veldanava")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "veldanava")
 S = 32
 
 

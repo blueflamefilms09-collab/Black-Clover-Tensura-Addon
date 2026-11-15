@@ -4,7 +4,7 @@ Relics of Many Worlds, wave 18: the 16x16 inventory sprites and flat item models
 
     python3 tools/relics/wave18_icons.py [--preview out.png]
 
-Writes under src/main/resources/assets/nusmp/
+Writes under src/main/resources/assets/anime_multiverse/
   textures/item/<id>.png   the sprite: a dark outline, four shades of the main material and three of the trim lit from the upper left, the relic's own
                            extra colours, a few glow pixels, and one outline pixel in the grade's colour (the grade rim)
   models/item/<id>.json    the flat item model (parent item/generated, layer0 = the sprite): charms are worn, so none has a 3D hand mesh
@@ -22,7 +22,7 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -499,7 +499,7 @@ def build(preview=None):
         cv.grade_rim(GRADE_RGB[grade])
         ims.append(cv.save(os.path.join(ICONS, rid + ".png")))
         with open(os.path.join(MODELS, rid + ".json"), "w", encoding="utf-8") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}, f, indent=2)
             f.write("\n")
     if preview:
         scale, cols = 10, 6

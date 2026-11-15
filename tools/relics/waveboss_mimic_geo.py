@@ -3,7 +3,7 @@
     python3 -B tools/relics/waveboss_mimic_geo.py          # writes the model, the animations and both textures, then runs tools/geo_check.py
     python3 -B tools/relics/waveboss_preview.py            # side / front views of the rest, jaw-open and bite poses next to the player's body boxes
 
-Writes assets/nusmp/geo/entity/relic_mimic_belt.geo.json, animations/entity/relic_mimic_belt.animation.json and
+Writes assets/anime_multiverse/geo/entity/relic_mimic_belt.geo.json, animations/entity/relic_mimic_belt.animation.json and
 textures/entity/relic_mimic_belt.png + _glow.png (client/relics/worn/ArtifactMimicRenderer draws it with GeoSpec.of("relic", "mimic_belt")).
 
 FRAME. The model is authored in the player's own frame (see docs/asset_pipeline.md, section Curio attachment): y up, the neck line at y = 24, the hips at

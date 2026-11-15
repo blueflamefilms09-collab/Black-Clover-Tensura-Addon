@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * was taken from the old model before the upgrade.
  */
 class DemonSlayerAssetsTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     static final Path DOCS = Path.of("docs", "visual_upgrade");
     static final String ID = DsCatalog.ID;
 
@@ -51,7 +51,7 @@ class DemonSlayerAssetsTest {
         for (String f : new String[]{"textures/entity/demon_slayer_sword.png", "textures/entity/demon_slayer_bloom.png", "textures/entity/demon_slayer_bloom_glow.png", "models/item/demon_slayer_sword.json",
                 "models/item/demon_slayer_sword_icon.json", "textures/item/demon_slayer_sword.png"})
             if (!Files.exists(RES.resolve(f))) bad.add(f + ": the old look was removed (it must stay: visual.upgrade = false draws it)");
-        assertTrue(Files.exists(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "client", "DemonSlayerMesh.java")), "the old pixel model stays");
+        assertTrue(Files.exists(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "DemonSlayerMesh.java")), "the old pixel model stays");
         assertEquals(List.of(), bad);
     }
 
@@ -103,11 +103,11 @@ class DemonSlayerAssetsTest {
         if (s.idle.size() < 6) bad.add(s.idle.size() + " idle animations (a full set is at least 6)");
         if (s.draw == null) bad.add("no draw animation");
         if (s.swing == null) bad.add("no swing trail");
-        if (s.soundLoop == null || !s.soundLoop.startsWith("nusmp:")) bad.add("no looped sound id");
+        if (s.soundLoop == null || !s.soundLoop.startsWith("anime_multiverse:")) bad.add("no looped sound id");
         for (String act : DsCatalog.ACTS) if (s.act(act) == null) bad.add("act " + act + " has no signature burst");
         for (VuSpec.Act a : s.acts.values()) {
             if (!VuBurst.known(a.pattern())) bad.add("unknown burst pattern " + a.pattern());
-            if (a.sound().isEmpty() || !a.sound().startsWith("nusmp:")) bad.add("a burst without a sound id");
+            if (a.sound().isEmpty() || !a.sound().startsWith("anime_multiverse:")) bad.add("a burst without a sound id");
         }
         List<String> used = new ArrayList<>();
         for (VuMesh.Group g : m.groups) if (!g.name.equals("-")) used.add(g.name);

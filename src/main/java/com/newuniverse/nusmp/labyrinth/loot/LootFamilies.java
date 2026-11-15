@@ -5,7 +5,7 @@ import java.util.Locale;
 
 /**
  * Why: the drops of a monster follow its FAMILY, and the dungeon already has one: the Dungeon Master tags every monster it makes with its faction ({@code nusmp_dm_<faction>}),
- * and the entity-type tags {@code nusmp:mega/<faction>} list the members of the eleven factions. Those two are the first answer. A monster that has neither (a mob from another
+ * and the entity-type tags {@code anime_multiverse:mega/<faction>} list the members of the eleven factions. Those two are the first answer. A monster that has neither (a mob from another
  * mod that wandered in, a vanilla creature in a rift) is placed by the words of its registry path: {@code ghoul} is undead, {@code kobold} a goblin, {@code kraken} aquatic. A
  * monster none of that places is of the family {@code any}, which only the generic rows of the tables serve. Pure: the game side finds the tag and passes the strings.
  */

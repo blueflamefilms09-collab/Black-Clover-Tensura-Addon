@@ -5,16 +5,16 @@ usage: python3 tools/audio/voice_convert.py <raw_dir> [--no-json]
 
 For every line of tools/audio/voice_lines.json that has <raw_dir>/<id>.mp3:
   * ffmpeg: mono, 32 kHz, trim leading / trailing silence, loudnorm (about -16 LUFS, true peak <= -1 dB), Ogg Vorbis q3
-    -> src/main/resources/assets/nusmp/sounds/voice/<role>/<id>.ogg
+    -> src/main/resources/assets/anime_multiverse/sounds/voice/<role>/<id>.ogg
   * ffprobe: the duration, written to tools/audio/voice_report.json (id, seconds, bytes) so a test can check the 0.5 to 12 s range
-Then appends the events 'voice.<id>' (subtitle off) to assets/nusmp/sounds.json (append-only: an existing entry is kept).
+Then appends the events 'voice.<id>' (subtitle off) to assets/anime_multiverse/sounds.json (append-only: an existing entry is kept).
 The raw takes stay outside the repository. Needs ffmpeg and ffprobe on the path."""
 import json, os, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "voice")
-SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice")
+SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 REPORT = os.path.join(HERE, "voice_report.json")
 # the silence filter is applied twice, the second time on the reversed signal, so both ends are trimmed
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
@@ -55,7 +55,7 @@ def main():
             key = "voice." + ln["id"]
             if key in doc:
                 continue
-            doc[key] = {"sounds": [{"name": "nusmp:voice/%s/%s" % (ln["role"], ln["id"]), "stream": False}]}
+            doc[key] = {"sounds": [{"name": "anime_multiverse:voice/%s/%s" % (ln["role"], ln["id"]), "stream": False}]}
             added += 1
         with open(SOUNDS_JSON, "w", encoding="utf-8") as f:
             json.dump(doc, f, indent=2, ensure_ascii=False)

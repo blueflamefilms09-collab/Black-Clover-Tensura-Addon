@@ -84,7 +84,7 @@ public final class Relics {
     public static String itemId(RelicDef d) {
         Map<Item, RelicDef> m = adoptedMap();
         if (m != null) for (Map.Entry<Item, RelicDef> e : m.entrySet()) if (e.getValue() == d) return BuiltInRegistries.ITEM.getKey(e.getKey()).toString();
-        return "nusmp:" + d.id();
+        return "anime_multiverse:" + d.id();
     }
 
     // ---------------------------------------------------------------- what an entity carries

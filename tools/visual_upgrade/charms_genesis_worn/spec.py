@@ -28,7 +28,7 @@ class Item:
         self.pieces = pieces                  # for items whose worn pieces are more than one model: [(suffix, anchor, mirror)]
         self.layers = list(layers)
         self.acts = acts or {}
-        self.sound = sound or "nusmp:relic.ambient.%s" % rid
+        self.sound = sound or "anime_multiverse:relic.ambient.%s" % rid
         self.seed = seed
         self.extra_worn = extra_worn
         self.skin = skin

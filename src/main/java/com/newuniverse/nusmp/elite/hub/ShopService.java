@@ -50,18 +50,18 @@ public final class ShopService {
         ItemStack goods = new ItemStack(item, offer.count());
         if (!sp.getInventory().add(goods) && !goods.isEmpty()) sp.drop(goods, false);
         d.recordPurchase(offer.id(), day, 1);
-        QuestService.tell(sp, "message.nusmp.hub.shop.bought", "Bought %s x%s for %s.", new ItemStack(item).getHoverName(), offer.count(), CoinMath.describe(price));
+        QuestService.tell(sp, "message.anime_multiverse.hub.shop.bought", "Bought %s x%s for %s.", new ItemStack(item).getHoverName(), offer.count(), CoinMath.describe(price));
         com.newuniverse.nusmp.audio.voice.Voice.npc(sp, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.BUY, true);               // 1.110.0: spoken line
         return v;
     }
 
     private static void tell(ServerPlayer sp, ShopRules.Verdict v, ShopTable.Offer offer) {
         switch (v) {
-            case SHOP_OFF -> QuestService.tell(sp, "message.nusmp.hub.shop.off", "The Merchant is not trading.");
-            case UNKNOWN_OFFER -> QuestService.tell(sp, "message.nusmp.hub.shop.unknown", "The Merchant does not sell that.");
-            case LOCKED -> QuestService.tell(sp, "message.nusmp.hub.shop.locked", "The Merchant will not sell you that until you have reached floor %s.", offer == null ? 0 : offer.minFloor());
-            case SOLD_OUT -> QuestService.tell(sp, "message.nusmp.hub.shop.sold_out", "You have bought all of that the Merchant will sell you today.");
-            case CANNOT_AFFORD -> QuestService.tell(sp, "message.nusmp.hub.shop.poor", "You cannot afford that.");
+            case SHOP_OFF -> QuestService.tell(sp, "message.anime_multiverse.hub.shop.off", "The Merchant is not trading.");
+            case UNKNOWN_OFFER -> QuestService.tell(sp, "message.anime_multiverse.hub.shop.unknown", "The Merchant does not sell that.");
+            case LOCKED -> QuestService.tell(sp, "message.anime_multiverse.hub.shop.locked", "The Merchant will not sell you that until you have reached floor %s.", offer == null ? 0 : offer.minFloor());
+            case SOLD_OUT -> QuestService.tell(sp, "message.anime_multiverse.hub.shop.sold_out", "You have bought all of that the Merchant will sell you today.");
+            case CANNOT_AFFORD -> QuestService.tell(sp, "message.anime_multiverse.hub.shop.poor", "You cannot afford that.");
             case OK -> { }
         }
     }
@@ -87,6 +87,6 @@ public final class ShopService {
 
     /** A line of chat for a player that tried a Merchant while the economy is off. */
     public static void tellOff(ServerPlayer sp) {
-        sp.sendSystemMessage(Component.translatableWithFallback("message.nusmp.hub.shop.off", "The Merchant is not trading."));
+        sp.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.hub.shop.off", "The Merchant is not trading."));
     }
 }

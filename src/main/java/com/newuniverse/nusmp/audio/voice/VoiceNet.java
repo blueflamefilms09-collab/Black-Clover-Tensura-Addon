@@ -20,7 +20,7 @@ public final class VoiceNet {
 
     /** Server to client: say this line. */
     public record Say(String line) implements CustomPacketPayload {
-        public static final Type<Say> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "voice_say"));
+        public static final Type<Say> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "voice_say"));
         public static final StreamCodec<FriendlyByteBuf, Say> CODEC = StreamCodec.of(VoiceNet::write, VoiceNet::read);
 
         @Override

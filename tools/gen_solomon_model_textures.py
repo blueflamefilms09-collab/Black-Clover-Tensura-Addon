@@ -3,7 +3,7 @@
 Deterministic and font-free (every machine writes the same pixels). Written for this mod, same palette as tools/gen_solomon_vfx_textures.py (deep indigo and violet marble, antique gold, parchment white, lilac glass and the
 eight element sigils); it IMPORTS the line-art helpers of that script (Mask, runes, the element sigils), it does not change it. It only ADDS one file: the 17 flat textures of gen_solomon_vfx_textures.py stay and are still
 drawn when the setting `solomonModels` is off.
-Output: src/main/resources/assets/nusmp/textures/particle/solomon_model_atlas.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/solomon_model_atlas.png
 
     python tools/gen_solomon_model_textures.py
 
@@ -669,7 +669,7 @@ CELL_FUNCS = [cell_stone, cell_stone_dark, cell_flute, cell_trim, cell_cap_top, 
     cell_link_top, cell_link_side, cell_gem_a, cell_gem_b, cell_gem_c, cell_head_plate,
     cell_ring_band, cell_ring_band_b, cell_bezel, cell_halo, cell_crystal_a, cell_crystal_b, cell_shard, cell_shard_b, cell_shard_edge, cell_page_glow_l]
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 def tex_atlas():

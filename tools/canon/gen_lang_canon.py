@@ -11,7 +11,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-LANG = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "lang", "en_us.json")
+LANG = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 OUT = os.path.join(HERE, "lang_canon.json")
 
 RULES = [

@@ -4,7 +4,7 @@ import net.minecraft.core.particles.ParticleOptions;
 
 /**
  * Why: the one builder of the particle options of the upgraded items' effect tables, used by every loader (the God melee tables, the Genesis weapon tables, the worn relic tables, the act
- * bursts, the tiny Djinn): a table token ({@code fx}, {@code dust}, {@code minecraft:flame}, {@code nusmp:ember}, ...) becomes options of one of the mod's own particles, dyed with the layer's
+ * bursts, the tiny Djinn): a table token ({@code fx}, {@code dust}, {@code minecraft:flame}, {@code anime_multiverse:ember}, ...) becomes options of one of the mod's own particles, dyed with the layer's
  * colour where the particle is tintable. The decision itself is the pure {@link UpgradeParticleAlias}; this class only turns the answer into options. It never answers a vanilla particle and
  * never reads the vanilla particle registry. Called once per layer when a table is loaded (the options are cached by the caller), never per particle.
  */

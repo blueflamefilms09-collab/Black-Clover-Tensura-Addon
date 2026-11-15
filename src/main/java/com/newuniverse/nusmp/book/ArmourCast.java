@@ -36,7 +36,7 @@ public final class ArmourCast {
             ArmourState.takeOff(p);
             return true;
         } catch (RuntimeException e) {
-            LOG.error("[nusmp] armour: beforeCast failed for page {}", pageId, e);
+            LOG.error("[anime_multiverse] armour: beforeCast failed for page {}", pageId, e);
             return false;
         }
     }
@@ -46,7 +46,7 @@ public final class ArmourCast {
         try {
             afterCastChecked(p, b, i, pageId, mode);
         } catch (RuntimeException e) {
-            LOG.error("[nusmp] armour: afterCast failed for page {}", pageId, e);      // a bug here must never break the cast that already succeeded
+            LOG.error("[anime_multiverse] armour: afterCast failed for page {}", pageId, e);      // a bug here must never break the cast that already succeeded
         }
     }
 

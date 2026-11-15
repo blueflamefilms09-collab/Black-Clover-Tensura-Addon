@@ -152,20 +152,20 @@ public final class GrandZones {
         protected void apply(Map<ResourceLocation, JsonElement> files, ResourceManager manager, ProfilerFiller profiler) {
             List<GrandZoneRegion> out = new ArrayList<>();
             for (Map.Entry<ResourceLocation, JsonElement> e : files.entrySet()) {
-                String id = e.getKey().getNamespace().equals("nusmp") ? e.getKey().getPath() : e.getKey().toString();
+                String id = e.getKey().getNamespace().equals("anime_multiverse") ? e.getKey().getPath() : e.getKey().toString();
                 try {
                     if (!e.getValue().isJsonObject()) throw new IllegalArgumentException(id + ": not an object");
                     GrandZoneRegion r = GrandZoneRegion.parse(id, e.getValue().getAsJsonObject());
-                    for (String p : r.problems()) LOG.warn("[nusmp] grand magic zone: {}", p);
+                    for (String p : r.problems()) LOG.warn("[anime_multiverse] grand magic zone: {}", p);
                     out.add(r);
                 } catch (RuntimeException ex) {
-                    LOG.warn("[nusmp] grand magic zone {} skipped: {}", id, ex.getMessage());
+                    LOG.warn("[anime_multiverse] grand magic zone {} skipped: {}", id, ex.getMessage());
                 }
             }
             out.sort((a, b) -> a.id().compareTo(b.id()));
             fromData = List.copyOf(out);
             rebuild();
-            LOG.info("[nusmp] {} Grand Magic Zone region(s) loaded", out.size());
+            LOG.info("[anime_multiverse] {} Grand Magic Zone region(s) loaded", out.size());
         }
     }
 
@@ -312,8 +312,8 @@ public final class GrandZones {
             case "fed" -> "The dense mana feeds you.";
             default -> "The mana here is thick and wild, and it answers your strength.";
         };
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.zone.enter", "You enter %s, a Grand Magic Zone. %s", r.name(),
-                Component.translatableWithFallback("nusmp.zone.feel." + key, fallback)).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.zone.enter", "You enter %s, a Grand Magic Zone. %s", r.name(),
+                Component.translatableWithFallback("anime_multiverse.zone.feel." + key, fallback)).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE), true);
     }
 
     // ---------------------------------------------------------------- the effects (each capped, none lethal on its own, none edits the world)

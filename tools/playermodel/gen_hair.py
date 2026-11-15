@@ -1,5 +1,5 @@
-"""Why: writes the haircuts of the player-model kit: assets/nusmp/playermodel/hair_styles.json (the boxes, chains and UV regions the Java hair system reads) and one painted 64x64 sheet per
-style, assets/nusmp/textures/entity/playermodel/hair/<style>.png (grey strands with an alpha mask; the game tints them with the character's hair colour). Run:
+"""Why: writes the haircuts of the player-model kit: assets/anime_multiverse/playermodel/hair_styles.json (the boxes, chains and UV regions the Java hair system reads) and one painted 64x64 sheet per
+style, assets/anime_multiverse/textures/entity/playermodel/hair/<style>.png (grey strands with an alpha mask; the game tints them with the character's hair colour). Run:
     python3 -B tools/playermodel/gen_hair.py
 The styles are the eleven the owner named (short, long, ponytail, twin_tails, braid, spiky, bob, messy, bun, mane, bald) and the cuts the arc characters and the old avatar hair ids need
 (slick, curtains, swept, mohawk, hime, layered, high_ponytail, drills, pompadour, ahoge, spiky_long, hood). See docs/playermodel.md for the geometry rules:

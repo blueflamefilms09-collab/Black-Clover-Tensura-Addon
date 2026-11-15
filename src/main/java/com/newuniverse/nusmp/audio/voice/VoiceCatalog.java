@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Why: the one list of the spoken voice lines (120 of the System, the bosses, the NPCs and the Djinn, and the Gnome's own, appended as a fifth role: ids as in {@code tools/audio/voice_lines.json}, made by {@code tools/audio/voice_lines.py}). Pure data with no Minecraft
  * class, so the tests, the payload codec, the cooldown logic and the registry ({@link VoiceSounds}) all read the same ids and cannot drift apart. An id is {@code <role>_<rest>}; the
- * role is also the folder of the file ({@code sounds/voice/<role>/<id>.ogg}) and the sound event is {@code nusmp:voice.<id>}.
+ * role is also the folder of the file ({@code sounds/voice/<role>/<id>.ogg}) and the sound event is {@code anime_multiverse:voice.<id>}.
  */
 public final class VoiceCatalog {
     private VoiceCatalog() {}

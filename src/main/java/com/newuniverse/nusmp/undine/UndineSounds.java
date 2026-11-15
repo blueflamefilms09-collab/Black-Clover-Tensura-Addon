@@ -13,7 +13,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Why: one {@code SoundEvent} per cue of {@link UndineSoundSet} ({@code nusmp:undine.ambient}, {@code undine.link}, ...), registered in a loop from the catalogue so the registry, the catalogue,
+ * Why: one {@code SoundEvent} per cue of {@link UndineSoundSet} ({@code anime_multiverse:undine.ambient}, {@code undine.link}, ...), registered in a loop from the catalogue so the registry, the catalogue,
  * {@code sounds.json} and the files cannot drift apart ({@code UndineSoundsTest} and the self-test {@code magic.undine} compare them). It is its own register next to {@code NUSounds},
  * {@code ModSounds}, {@code MusicSounds} and {@code VoiceSounds}, so none of the files other builders append to is touched. The events are variable-range: the attenuation distance of each is the
  * one {@code sounds.json} gives it.

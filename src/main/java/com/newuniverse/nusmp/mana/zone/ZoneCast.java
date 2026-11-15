@@ -110,7 +110,7 @@ public final class ZoneCast {
             try {
                 c = begin(p, pageId, now);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] zone-cast could not start for page {}: {}", pageId, e.toString());
+                LOG.warn("[anime_multiverse] zone-cast could not start for page {}: {}", pageId, e.toString());
                 restoreQuietly(current);
                 current = null;
                 c = null;

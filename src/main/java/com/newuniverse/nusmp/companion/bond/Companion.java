@@ -13,7 +13,7 @@ import java.util.UUID;
  * server thread.
  *
  * <p>Her own lines are lang keys under {@link #langPrefix()}: {@code act.five}, {@code use} (the item), {@code gift.love} / {@code gift.ok} / {@code gift.hate} / {@code gift.no} (the item), {@code likes.love} /
- * {@code likes.hate} (the items) and {@code stance.guard} / {@code stance.aggressive} / {@code stance.passive}. The common wording (buttons, why a choice is closed) is the mod's own, {@code nusmp.companion.*}.
+ * {@code likes.hate} (the items) and {@code stance.guard} / {@code stance.aggressive} / {@code stance.passive}. The common wording (buttons, why a choice is closed) is the mod's own, {@code anime_multiverse.companion.*}.
  */
 public interface Companion {
     /** The high five kinds: none, and the high five. */
@@ -22,7 +22,7 @@ public interface Companion {
     /** Unique, lower case letters, digits and underscores; names what is kept on the player (use the mod id as a prefix). */
     String bondKey();
 
-    /** Where her own lines are in the lang file, with the trailing dot ({@code "nusmp.companion.charmy."}). */
+    /** Where her own lines are in the lang file, with the trailing dot ({@code "anime_multiverse.companion.charmy."}). */
     String langPrefix();
 
     /** Her side of the bond: stance, pouch, the use-it switch. Saved with her ({@link PersonState#save}). */

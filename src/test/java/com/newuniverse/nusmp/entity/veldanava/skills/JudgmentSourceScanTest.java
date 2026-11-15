@@ -38,7 +38,7 @@ class JudgmentSourceScanTest {
     @Test
     void theServerCodeNamesNoClientClass() throws IOException {
         Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
-        Pattern ours = Pattern.compile("com\\.newuniverse\\.nusmp\\.client\\.");
+        Pattern ours = Pattern.compile("com\\.newuniverse\\.anime_multiverse\\.client\\.");
         List<String> bad = new ArrayList<>();
         for (Path p : files()) {
             String c = code(read(p));
@@ -179,12 +179,12 @@ class JudgmentSourceScanTest {
 
     @Test
     void everyAssetLangKeyAndSmokePrefixExists() throws IOException {
-        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/sandalphon.png")), "missing skill icon");
-        JsonObject lang = JsonParser.parseString(read(RES.resolve("assets/nusmp/lang/en_us.json"))).getAsJsonObject();
-        for (String k : new String[]{"nusmp.skill.sandalphon", "nusmp.skill.sandalphon.description", "nusmp.skill.sandalphon.mastered", "effect.nusmp.temporal_stutter", "effect.nusmp.temporal_debt", "effect.nusmp.event_silence",
-                "effect.nusmp.future_rejection", "effect.nusmp.movement_interference", "effect.nusmp.action_lock"})
+        assertTrue(Files.exists(RES.resolve("assets/anime_multiverse/textures/skill/veldanava/sandalphon.png")), "missing skill icon");
+        JsonObject lang = JsonParser.parseString(read(RES.resolve("assets/anime_multiverse/lang/en_us.json"))).getAsJsonObject();
+        for (String k : new String[]{"anime_multiverse.skill.sandalphon", "anime_multiverse.skill.sandalphon.description", "anime_multiverse.skill.sandalphon.mastered", "effect.anime_multiverse.temporal_stutter", "effect.anime_multiverse.temporal_debt", "effect.anime_multiverse.event_silence",
+                "effect.anime_multiverse.future_rejection", "effect.anime_multiverse.movement_interference", "effect.anime_multiverse.action_lock"})
             assertTrue(lang.has(k), "missing lang key " + k);
-        for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes()) assertTrue(lang.has("nusmp.skill.mode.sandalphon." + m.id()), "missing lang key for mode " + m.id());
+        for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes()) assertTrue(lang.has("anime_multiverse.skill.mode.sandalphon." + m.id()), "missing lang key for mode " + m.id());
         String smoke = read(Path.of(".github/workflows/smoke.yml"));
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]sandalphon[\",]").matcher(smoke).find(), "the smoke list must expect the sandalphon self-tests");
         String tests = file("JudgmentSelfTests");
@@ -194,34 +194,34 @@ class JudgmentSourceScanTest {
         assertTrue(fields.contains("level.getGameTime() < f.endsAt") && fields.contains("JudgmentConfig.sandalphonUpgrades()"), "the last toll only comes when a Verdict of Ruin runs out by itself and the setting is on");
         assertTrue(fields.contains("MAX_FIELD_TARGETS") && fields.contains("getEntitiesOfClass"), "the last toll is one bounded query");
 
-        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/israfil.png")), "missing Israfil icon");
-        for (String k : new String[]{"nusmp.skill.israfil", "nusmp.skill.israfil.description", "nusmp.skill.israfil.mastered", "effect.nusmp.gravity_crush", "effect.nusmp.nihility_collapse"})
+        assertTrue(Files.exists(RES.resolve("assets/anime_multiverse/textures/skill/veldanava/israfil.png")), "missing Israfil icon");
+        for (String k : new String[]{"anime_multiverse.skill.israfil", "anime_multiverse.skill.israfil.description", "anime_multiverse.skill.israfil.mastered", "effect.anime_multiverse.gravity_crush", "effect.anime_multiverse.nihility_collapse"})
             assertTrue(lang.has(k), "missing lang key " + k);
-        for (JudgmentRules.Mode m : IsrafilRules.ISRAFIL.modes()) assertTrue(lang.has("nusmp.skill.mode.israfil." + m.id()), "missing lang key for mode " + m.id());
+        for (JudgmentRules.Mode m : IsrafilRules.ISRAFIL.modes()) assertTrue(lang.has("anime_multiverse.skill.mode.israfil." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]israfil[\",]").matcher(smoke).find(), "the smoke list must expect the israfil self-tests");
         String israfilTests = file("IsrafilSelfTests");
         for (String key : new String[]{"israfil.rules", "israfil.skill", "israfil.conditions", "israfil.upgrades"}) assertTrue(israfilTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilEvents.register("), "Israfil's tests and events are wired");
-        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/jibril.png")), "missing Jibril icon");
-        for (String k : new String[]{"nusmp.skill.jibril", "nusmp.skill.jibril.description", "nusmp.skill.jibril.mastered"})
+        assertTrue(Files.exists(RES.resolve("assets/anime_multiverse/textures/skill/veldanava/jibril.png")), "missing Jibril icon");
+        for (String k : new String[]{"anime_multiverse.skill.jibril", "anime_multiverse.skill.jibril.description", "anime_multiverse.skill.jibril.mastered"})
             assertTrue(lang.has(k), "missing lang key " + k);
-        for (JudgmentRules.Mode m : JibrilRules.JIBRIL.modes()) assertTrue(lang.has("nusmp.skill.mode.jibril." + m.id()), "missing lang key for mode " + m.id());
+        for (JudgmentRules.Mode m : JibrilRules.JIBRIL.modes()) assertTrue(lang.has("anime_multiverse.skill.mode.jibril." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]jibril[\",]").matcher(smoke).find(), "the smoke list must expect the jibril self-tests");
         String jibrilTests = file("JibrilSelfTests");
         for (String key : new String[]{"jibril.rules", "jibril.skill", "jibril.conditions", "jibril.upgrades"}) assertTrue(jibrilTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("JibrilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("JibrilEvents.register("), "Jibril's tests and events are wired");
-        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/solomon.png")), "missing Solomon icon");
-        for (String k : new String[]{"nusmp.skill.solomon", "nusmp.skill.solomon.description", "nusmp.skill.solomon.mastered"})
+        assertTrue(Files.exists(RES.resolve("assets/anime_multiverse/textures/skill/veldanava/solomon.png")), "missing Solomon icon");
+        for (String k : new String[]{"anime_multiverse.skill.solomon", "anime_multiverse.skill.solomon.description", "anime_multiverse.skill.solomon.mastered"})
             assertTrue(lang.has(k), "missing lang key " + k);
-        for (JudgmentRules.Mode m : SolomonRules.SOLOMON.modes()) assertTrue(lang.has("nusmp.skill.mode.solomon." + m.id()), "missing lang key for mode " + m.id());
+        for (JudgmentRules.Mode m : SolomonRules.SOLOMON.modes()) assertTrue(lang.has("anime_multiverse.skill.mode.solomon." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]solomon[\",]").matcher(smoke).find(), "the smoke list must expect the solomon self-tests");
         String solomonTests = file("SolomonSelfTests");
         for (String key : new String[]{"solomon.rules", "solomon.skill", "solomon.conditions", "solomon.upgrades"}) assertTrue(solomonTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("SolomonSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("SolomonEvents.register("), "Solomon's tests and events are wired");
-        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/hercules.png")), "missing Hercules icon");
-        for (String k : new String[]{"nusmp.skill.hercules", "nusmp.skill.hercules.description", "nusmp.skill.hercules.mastered", "effect.nusmp.armor_break"})
+        assertTrue(Files.exists(RES.resolve("assets/anime_multiverse/textures/skill/veldanava/hercules.png")), "missing Hercules icon");
+        for (String k : new String[]{"anime_multiverse.skill.hercules", "anime_multiverse.skill.hercules.description", "anime_multiverse.skill.hercules.mastered", "effect.anime_multiverse.armor_break"})
             assertTrue(lang.has(k), "missing lang key " + k);
-        for (JudgmentRules.Mode m : HerculesRules.HERCULES.modes()) assertTrue(lang.has("nusmp.skill.mode.hercules." + m.id()), "missing lang key for mode " + m.id());
+        for (JudgmentRules.Mode m : HerculesRules.HERCULES.modes()) assertTrue(lang.has("anime_multiverse.skill.mode.hercules." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]hercules[\",]").matcher(smoke).find(), "the smoke list must expect the hercules self-tests");
         String herculesTests = file("HerculesSelfTests");
         for (String key : new String[]{"hercules.rules", "hercules.skill", "hercules.conditions"}) assertTrue(herculesTests.contains("\"" + key + "\""), "self-test missing: " + key);

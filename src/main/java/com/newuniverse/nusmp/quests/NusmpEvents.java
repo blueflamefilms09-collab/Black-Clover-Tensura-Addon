@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * Why: the one door between the game code and the advancement / questline system. A one-line {@code NusmpEvents.fire(player, "key")} at the
- * right spot of a feature counts the event for that player and lets any advancement criterion {@code nusmp:event} that waits for the key
+ * right spot of a feature counts the event for that player and lets any advancement criterion {@code anime_multiverse:event} that waits for the key
  * (see {@link NusmpEventTrigger}) complete. Advancements in turn feed the FTB Quests "advancement" tasks, so this door also drives the
  * questline.
  *
@@ -36,7 +36,7 @@ import java.util.Map;
 public final class NusmpEvents {
     private NusmpEvents() {}
 
-    public static final String MODID = "nusmp";
+    public static final String MODID = "anime_multiverse";
     /** Name of the compound inside the player's persistent data that holds the counters. */
     public static final String COUNTS_TAG = "nusmp_quest_counts";
 
@@ -44,7 +44,7 @@ public final class NusmpEvents {
     private static boolean warned;
 
     private static final DeferredRegister<CriterionTrigger<?>> TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, MODID);
-    /** The trigger type {@code nusmp:event}. */
+    /** The trigger type {@code anime_multiverse:event}. */
     public static final DeferredHolder<CriterionTrigger<?>, NusmpEventTrigger> EVENT = TRIGGERS.register("event", NusmpEventTrigger::new);
 
     /** Registers the trigger type and the clone listener. Call from the mod constructor (before registries freeze). */
@@ -60,7 +60,7 @@ public final class NusmpEvents {
     }
 
     /**
-     * Counts the event ({@code key} and, with an argument, {@code key|arg}) and runs the player's {@code nusmp:event} criteria.
+     * Counts the event ({@code key} and, with an argument, {@code key|arg}) and runs the player's {@code anime_multiverse:event} criteria.
      * Safe to call anywhere on the server; a no-op for null, fake or client-side players.
      */
     public static void fire(ServerPlayer player, String key, String arg) {
@@ -144,7 +144,7 @@ public final class NusmpEvents {
 
     // ---------------------------------------------------------------- future bosses
     /**
-     * Grants the placeholder advancement {@code nusmp:future/<arc>_<boss>} (see {@link FutureBossIds}) to the player. A boss that has just
+     * Grants the placeholder advancement {@code anime_multiverse:future/<arc>_<boss>} (see {@link FutureBossIds}) to the player. A boss that has just
      * been built calls this from its death hook for the players who took part; until then the questline shows "Awaiting the boss".
      *
      * @return true when the advancement exists and was granted now or already earlier
@@ -196,6 +196,6 @@ public final class NusmpEvents {
     private static void warnOnce(Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] quest event hook failed (further failures are not logged)", t);
+        LOG.warn("[anime_multiverse] quest event hook failed (further failures are not logged)", t);
     }
 }

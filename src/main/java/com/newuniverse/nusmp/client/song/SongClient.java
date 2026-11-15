@@ -23,8 +23,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * Call {@link #init} from the client setup with the mod bus.
  */
 public final class SongClient {
-    public static final KeyMapping SING = new KeyMapping("key.nusmp.song_sing", InputConstants.Type.KEYSYM,
-            InputConstants.KEY_V, "key.categories.nusmp");
+    public static final KeyMapping SING = new KeyMapping("key.anime_multiverse.song_sing", InputConstants.Type.KEYSYM,
+            InputConstants.KEY_V, "key.categories.anime_multiverse");
 
     private static boolean down;
     private static int sinceSent;
@@ -34,7 +34,7 @@ public final class SongClient {
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(SING));
         modBus.addListener((RegisterGuiLayersEvent e) ->
-                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "song_meter"), SongClient::render));
+                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "song_meter"), SongClient::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { down = false; SongHudState.clear(); });
     }

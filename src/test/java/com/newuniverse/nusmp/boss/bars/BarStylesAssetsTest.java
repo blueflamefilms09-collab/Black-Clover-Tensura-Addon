@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * are as big as their lists say, and the layout block of {@code _index.json} (which the python mock-up and the generator read) agrees with {@link BarLayoutMath}.
  */
 class BarStylesAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DATA = ASSETS.resolve("boss_bars"), TEX = ASSETS.resolve("textures/gui/boss_bar");
 
     private static JsonObject index() throws IOException {

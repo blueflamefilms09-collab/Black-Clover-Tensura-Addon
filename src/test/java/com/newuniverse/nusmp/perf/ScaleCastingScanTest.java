@@ -173,7 +173,7 @@ class ScaleCastingScanTest {
         String kit = code(read("scalecast/ScaleCastKit.java"));
         assertTrue(kit.contains("Map<UUID, State> STATES") && kit.contains("Map<UUID, Entry> SUPP"), "the tables are not keyed by UUID");
         assertFalse(kit.contains("static ServerPlayer") && kit.contains("static LivingEntity current"), "a static current player");
-        Pattern client = Pattern.compile("net\\.minecraft\\.client|com\\.mojang\\.blaze3d|com\\.newuniverse\\.nusmp\\.client|neoforge\\.client|Minecraft\\.getInstance");
+        Pattern client = Pattern.compile("net\\.minecraft\\.client|com\\.mojang\\.blaze3d|com\\.newuniverse\\.anime_multiverse\\.client|neoforge\\.client|Minecraft\\.getInstance");
         try (Stream<Path> s = Files.list(SRC.resolve("scalecast"))) {
             for (Path p : s.filter(f -> f.toString().endsWith(".java")).toList()) assertFalse(client.matcher(code(Files.readString(p))).find(), p + " names a client class");
         }

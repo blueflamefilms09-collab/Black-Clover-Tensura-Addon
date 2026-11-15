@@ -77,8 +77,8 @@ final class Wave9Events {
     /** On a hostile gladiator: the game time at which it fades; a gladiator that loads after that time is removed (it was unloaded when its time ran out). */
     static final String K_ROGUE = "nusmp_w9_rogue_until", K_REFLECTED = "nusmp_w9_reflected";
 
-    private static final ResourceLocation DRAIN_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w9_null_drain");
-    private static final ResourceLocation EXILE_SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w9_exile_stride");
+    private static final ResourceLocation DRAIN_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w9_null_drain");
+    private static final ResourceLocation EXILE_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w9_exile_stride");
     private static final String OWNER_TAG = "nusmp_relic_owner";
 
     /** True while one of these weapons deals its own ability damage, so its on-hit bonuses do not fire on it again. */

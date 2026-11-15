@@ -15,8 +15,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
-MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item")
 
 DISPLAY = {
     "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
@@ -62,7 +62,7 @@ def convert(i, check):
         return "done"
     if os.path.exists(icon):
         return "done"
-    tex = (old.get("textures") or {}).get("layer0") or "nusmp:item/" + i
+    tex = (old.get("textures") or {}).get("layer0") or "anime_multiverse:item/" + i
     if check:
         return "todo"
     with open(icon, "w", newline="\n") as fh:

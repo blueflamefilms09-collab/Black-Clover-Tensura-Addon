@@ -19,11 +19,11 @@ public final class SpawnFilterConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("spawn");
-        BLACKLIST = b.comment("Entity ids that never exist in any dungeon dimension (the Mega-Dungeon and its pockets, the Spire, the Sanctuary): they are refused when they spawn, when they are added by another mod, and removed when a saved chunk holds one. 'namespace:path' is exact, 'namespace:*' is every creature of a mod, a bare 'path' is that path in any namespace. Ice and Fire's Gorgon is on the list by default. The tag nusmp:dungeon/banned is read too.")
+        BLACKLIST = b.comment("Entity ids that never exist in any dungeon dimension (the Mega-Dungeon and its pockets, the Spire, the Sanctuary): they are refused when they spawn, when they are added by another mod, and removed when a saved chunk holds one. 'namespace:path' is exact, 'namespace:*' is every creature of a mod, a bare 'path' is that path in any namespace. Ice and Fire's Gorgon is on the list by default. The tag anime_multiverse:dungeon/banned is read too.")
                 .defineListAllowEmpty("blacklist", SpawnBlacklist.DEFAULT, () -> "iceandfire:gorgon", o -> o instanceof String);
         ADMIN_BYPASS = b.comment("true = an operator's own /summon or spawn egg may bring a blacklisted creature in anyway. false (default) = never, not even for an operator.")
                 .define("blacklistAllowsAdmin", false);
-        THEME_FILTER = b.comment("A floor only gets creatures of the factions its Region Theme likes (the themeWeights of data/nusmp/mega/factions: a weight of 0 means never native). Creatures without a faction, bosses, owned and named creatures and an operator's are never filtered. false = any faction on any floor, as before 1.107.0.")
+        THEME_FILTER = b.comment("A floor only gets creatures of the factions its Region Theme likes (the themeWeights of data/anime_multiverse/mega/factions: a weight of 0 means never native). Creatures without a faction, bosses, owned and named creatures and an operator's are never filtered. false = any faction on any floor, as before 1.107.0.")
                 .define("themeFilter", true);
         THEME_MIN_WEIGHT = b.comment("How much a faction must like the floor's theme to count as native: 0 = any weight above zero, 1 = at least the neutral weight, higher = only the favourites. A theme where no faction reaches the bar filters nothing.")
                 .defineInRange("themeMinWeight", 0.0, 0.0, 10.0);

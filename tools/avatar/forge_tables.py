@@ -1,12 +1,12 @@
 """Why: the Soul Forge's shipped data (30 Magic Aptitudes, 42 skills) is hand-balanced as TABLES here, in one place, and two scripts read them:
-gen_forge_data.py writes data/nusmp/avatar_aptitudes/*.json and data/nusmp/avatar_skills/*.json, gen_aptitude_icons.py draws one circular icon per
+gen_forge_data.py writes data/anime_multiverse/avatar_aptitudes/*.json and data/anime_multiverse/avatar_skills/*.json, gen_aptitude_icons.py draws one circular icon per
 aptitude. Keeping the numbers in one table means a rebalance is one edit and a regeneration, and the JUnit test that reads the shipped JSON still checks
 every rule (real ids, real magic names, the tax ladder) so the table cannot drift from what ships.
 
 Sources of the ids (nothing here is invented):
   * Tensura skills: the owner's Tensura 2.0.1.3 id reference, src/test/resources/com/newuniverse/nusmp/charter/tensura_skill_ids.txt (358 ids), and the
     API dump's registry class io.github.manasmods.tensura.registry.skill.UniqueSkills for which of them are Unique skills.
-  * nusmp skills: SKILLS.register("...") lines of src/main/java/com/newuniverse/nusmp/skill/NUSkills.java (the mod's own Ultimate evolutions).
+  * anime_multiverse skills: SKILLS.register("...") lines of src/main/java/com/newuniverse/nusmp/skill/NUSkills.java (the mod's own Ultimate evolutions).
   * magic: the lower-cased names of the MagicType enum (src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java), colours from the grimoire books
     (super(MagicType.X, 0xFF......) in src/main/java/com/newuniverse/nusmp/book/*Book.java), lightened where the book colour is too dark for the UI.
 
@@ -122,12 +122,12 @@ SKILLS = [
     ("sloth", "tensura:sloth", "ultimate", "Sloth", 12, 3000, 0x9CC0A0, "Rest so deep the world waits for you."),
     ("wrath", "tensura:wrath", "ultimate", "Wrath", 14, 3500, 0xFF3355, "Anger given a shape and a target."),
     # ---- this mod's own Ultimate skills (SkillType.ULTIMATE in NUSkills): Tensura 2.0.1.3 ships no Ultimate skill ids of its own
-    ("lord_of_summons", "nusmp:lord_of_summons", "ultimate", "Lord of Summons", 16, 4000, 0x9A7CFF, "Every summon obeys, every gate opens."),
-    ("goddess_of_faith", "nusmp:goddess_of_faith", "ultimate", "Goddess of Faith", 16, 4000, 0xFFF2A8, "Belief made into strength."),
-    ("heros_argonaut", "nusmp:heros_argonaut", "ultimate", "Hero's Argonaut", 15, 3500, 0xFFD060, "A hero's growth with no ceiling."),
-    ("hell_conqueror", "nusmp:hell_conqueror", "ultimate", "Hell Conqueror", 15, 3500, 0xFF6A1E, "Walks through fire and keeps the flame."),
-    ("immortal_will", "nusmp:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
-    ("adolla_burst", "nusmp:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),
-    ("black_wings", "nusmp:black_wings", "ultimate", "Black Wings", 14, 3000, 0x4A3A6A, "Direction, bent to your will."),
+    ("lord_of_summons", "anime_multiverse:lord_of_summons", "ultimate", "Lord of Summons", 16, 4000, 0x9A7CFF, "Every summon obeys, every gate opens."),
+    ("goddess_of_faith", "anime_multiverse:goddess_of_faith", "ultimate", "Goddess of Faith", 16, 4000, 0xFFF2A8, "Belief made into strength."),
+    ("heros_argonaut", "anime_multiverse:heros_argonaut", "ultimate", "Hero's Argonaut", 15, 3500, 0xFFD060, "A hero's growth with no ceiling."),
+    ("hell_conqueror", "anime_multiverse:hell_conqueror", "ultimate", "Hell Conqueror", 15, 3500, 0xFF6A1E, "Walks through fire and keeps the flame."),
+    ("immortal_will", "anime_multiverse:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
+    ("adolla_burst", "anime_multiverse:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),
+    ("black_wings", "anime_multiverse:black_wings", "ultimate", "Black Wings", 14, 3000, 0x4A3A6A, "Direction, bent to your will."),
     # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone)
 ]

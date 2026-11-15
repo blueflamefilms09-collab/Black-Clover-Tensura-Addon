@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 final class Wave5Hooks {
     private Wave5Hooks() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static boolean registered;
 
     static synchronized void register() {
@@ -50,7 +50,7 @@ final class Wave5Hooks {
             }
             if ((p.tickCount + p.getId()) % 20 == 7) slow(p);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 tick failed", failed);
+            LOG.error("[anime_multiverse] wave 5 tick failed", failed);
         }
     }
 
@@ -72,7 +72,7 @@ final class Wave5Hooks {
             Wave5Souls.onOutgoing(e);
             Wave5Hemlock.onIncoming(e);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 damage hook failed", failed);
+            LOG.error("[anime_multiverse] wave 5 damage hook failed", failed);
         }
     }
 
@@ -87,7 +87,7 @@ final class Wave5Hooks {
             if (Wave5Hemlock.reliquary(e, p)) return;
             Wave5Safeguard.restore(e, p);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 lethal-blow hook failed", failed);
+            LOG.error("[anime_multiverse] wave 5 lethal-blow hook failed", failed);
         }
     }
 
@@ -97,7 +97,7 @@ final class Wave5Hooks {
             Wave5Hemlock.onChangeTarget(e);
             if (!e.isCanceled()) Wave5Huntress.onChangeTarget(e);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 target hook failed", failed);
+            LOG.error("[anime_multiverse] wave 5 target hook failed", failed);
         }
     }
 
@@ -105,7 +105,7 @@ final class Wave5Hooks {
         try {
             Wave5Hemlock.onEffect(e);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 effect hook failed", failed);
+            LOG.error("[anime_multiverse] wave 5 effect hook failed", failed);
         }
     }
 
@@ -115,7 +115,7 @@ final class Wave5Hooks {
             Wave5Hemlock.onDeath(e);
             if (e.getEntity() instanceof ServerPlayer p) end(p);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 death hook failed", failed);
+            LOG.error("[anime_multiverse] wave 5 death hook failed", failed);
         }
     }
 
@@ -131,7 +131,7 @@ final class Wave5Hooks {
             Wave5Dragon.cleanup(p);
             Wave5Souls.clear(p);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 5 cleanup failed", failed);
+            LOG.error("[anime_multiverse] wave 5 cleanup failed", failed);
         }
     }
 }

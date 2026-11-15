@@ -10,11 +10,11 @@ citadel gate on the surface. Generates the template `structure/mega_gateway/gate
 What it is: a 39 x 39 circular platform of three terraces (each one step up) on a foundation that runs from the bottom of the box up to the paving
 (buried on flat ground, a retaining skirt on a slope); a reinforced curb ring round it; four obelisks, four braziers, eight armoured statues on
 plinths; and in the middle two stout pylons (six wide, seven deep) joined by a bridge over a nine-wide pointed arch whose opening is a plane of
-`nusmp:labyrinth_gate` blocks, with rose windows and banners above it.
+`anime_multiverse:labyrinth_gate` blocks, with rose windows and banners above it.
 
 Why three kinds of hard block: the Overworld is not held by the Dungeon Guard (the Mega-Dungeon's dimension is), so nothing but the blocks themselves
 protects the Gateway.
-  1. The portal blocks (`nusmp:labyrinth_gate`) are indestructible by their own properties (labyrinth/gate/GateBlock, the same strength as bedrock).
+  1. The portal blocks (`anime_multiverse:labyrinth_gate`) are indestructible by their own properties (labyrinth/gate/GateBlock, the same strength as bedrock).
   2. The cores of the pylons and of the towers, hidden behind a brick shell, are `minecraft:bedrock`: nobody mines bedrock in survival and no explosion
      breaks it, so a griefer who digs into a pylon reaches a wall he cannot pass. They are never visible (the cells behind the arrow slits are brick).
   3. Everything visible that touches the portal plane (the tunnel faces, the arch and the bridge) and the curb ring round the platform is
@@ -52,11 +52,11 @@ W = 39            # footprint edge (odd: the arch is on the centre line)
 C = 19            # centre cell
 H = 46            # template height
 S = 6             # row of the surface block (template row S lands on the terrain's surface block)
-GATE = "nusmp:labyrinth_gate"
+GATE = "anime_multiverse:labyrinth_gate"
 REINFORCED = "minecraft:reinforced_deepslate"       # the visible hard shell: the tunnel faces, the arch, the bridge, the curb ring
 HIDDEN = "minecraft:bedrock"                        # the cores no one ever sees (inside the pylons and towers): unbreakable in survival
 NAME = "mega_gateway/gateway"
-DATA = os.path.join(L.RES, "data", "nusmp")
+DATA = os.path.join(L.RES, "data", "anime_multiverse")
 N, E, S_, Wd = "north", "east", "south", "west"
 OPPOSITE = {N: S_, S_: N, E: Wd, Wd: E}
 
@@ -73,7 +73,7 @@ class GateT:
     def __init__(self):
         self.t = Template(NAME, W, H, W)
         self.name = NAME
-        self.rng = random.Random("nusmp:mega:gateway")
+        self.rng = random.Random("anime_multiverse:mega:gateway")
 
     def set(self, x, y, z, block, props=None, nbt_=None):
         if not (0 <= x < W and 0 <= y < H and 0 <= z < W):
@@ -83,7 +83,7 @@ class GateT:
         err = L.check_state(block, props)
         if err:
             raise ValueError("gateway: bad block state at (%d,%d,%d): %s" % (x, y, z, err))
-        if block.startswith("nusmp:") and block != GATE:
+        if block.startswith("anime_multiverse:") and block != GATE:
             raise ValueError("gateway: %s is not allowed here (the gate block is the only custom block)" % block)
         self.t.set(x, y, z, block, props, nbt_)
 
@@ -399,23 +399,23 @@ def build():
 # the data files that place it
 # ---------------------------------------------------------------------------------------------------------------------
 def data_files():
-    """{relative path under data/nusmp: json text}"""
+    """{relative path under data/anime_multiverse: json text}"""
     def js(o):
         return json.dumps(o, indent=2) + "\n"
     return {
         "worldgen/template_pool/mega_gateway/base.json": js({
             "fallback": "minecraft:empty",
-            "elements": [{"weight": 1, "element": {"element_type": "minecraft:single_pool_element", "location": "nusmp:mega_gateway/gateway",
-                                                   "processors": "nusmp:gate_weathering", "projection": "rigid"}}]}),
+            "elements": [{"weight": 1, "element": {"element_type": "minecraft:single_pool_element", "location": "anime_multiverse:mega_gateway/gateway",
+                                                   "processors": "anime_multiverse:gate_weathering", "projection": "rigid"}}]}),
         "worldgen/structure/mega_gateway.json": js({
-            "type": "minecraft:jigsaw", "biomes": "#nusmp:has_structure/mega_gateway", "step": "surface_structures", "spawn_overrides": {},
-            "terrain_adaptation": "beard_thin", "start_pool": "nusmp:mega_gateway/base", "size": 1, "start_height": {"absolute": -S},
+            "type": "minecraft:jigsaw", "biomes": "#anime_multiverse:has_structure/mega_gateway", "step": "surface_structures", "spawn_overrides": {},
+            "terrain_adaptation": "beard_thin", "start_pool": "anime_multiverse:mega_gateway/base", "size": 1, "start_height": {"absolute": -S},
             "project_start_to_heightmap": "WORLD_SURFACE_WG", "max_distance_from_center": 48, "use_expansion_hack": False}),
         "worldgen/structure_set/mega_gateway.json": js({
-            "structures": [{"structure": "nusmp:mega_gateway", "weight": 1}],
+            "structures": [{"structure": "anime_multiverse:mega_gateway", "weight": 1}],
             "placement": {"type": "minecraft:concentric_rings", "distance": 5, "spread": 1, "count": 1,
-                          "preferred_biomes": "#nusmp:has_structure/mega_gateway_preferred", "salt": 1540154}}),
-        "tags/worldgen/structure/mega_gateway.json": js({"replace": False, "values": ["nusmp:mega_gateway"]}),
+                          "preferred_biomes": "#anime_multiverse:has_structure/mega_gateway_preferred", "salt": 1540154}}),
+        "tags/worldgen/structure/mega_gateway.json": js({"replace": False, "values": ["anime_multiverse:mega_gateway"]}),
         "tags/worldgen/biome/has_structure/mega_gateway.json": js({"replace": False, "values": ["#minecraft:is_overworld"]}),
         "tags/worldgen/biome/has_structure/mega_gateway_preferred.json": js({"replace": False, "values": [
             "#minecraft:is_forest", "#minecraft:is_taiga", "#minecraft:is_mountain", "#minecraft:is_hill", "#minecraft:is_jungle", "#minecraft:is_savanna",
@@ -428,8 +428,8 @@ def dungeon_gate_tag():
     """The existing tag with the Gateway appended (one added value; nothing removed)."""
     path = os.path.join(DATA, "tags", "worldgen", "structure", "dungeon_gate.json")
     doc = json.load(open(path))
-    if "nusmp:mega_gateway" not in doc["values"]:
-        doc["values"].append("nusmp:mega_gateway")
+    if "anime_multiverse:mega_gateway" not in doc["values"]:
+        doc["values"].append("anime_multiverse:mega_gateway")
     return path, json.dumps(doc, indent=2) + "\n"
 
 
@@ -469,9 +469,9 @@ def main(argv):
         p = os.path.join(DATA, rel)
         os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, "w").write(text)
-        print("wrote data/nusmp/" + rel)
+        print("wrote data/anime_multiverse/" + rel)
     open(gate_tag_path, "w").write(gate_tag_text)
-    print("wrote data/nusmp/tags/worldgen/structure/dungeon_gate.json (appended nusmp:mega_gateway)")
+    print("wrote data/anime_multiverse/tags/worldgen/structure/dungeon_gate.json (appended anime_multiverse:mega_gateway)")
     return 0
 
 

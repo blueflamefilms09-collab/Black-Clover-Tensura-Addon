@@ -13,7 +13,7 @@ import java.util.Map;
  * chosen), not an accident of some JSON files. This pure class (no Minecraft types, so JUnit can run it) is the table of that decision: the Holy Calling
  * Gem's pattern, the Gem Fragment's shard recipe, and for each of the seventeen Seven Star and Vassal Weapons the signature material its Seal is made from,
  * each with the reason it was chosen. {@code tools/heroweapon/gen_gem_recipes.py} reads THIS file to write the recipe JSON under
- * {@code data/nusmp/recipe/}, and {@code GemRecipesTest} reads the JSON back and fails when the two ever differ, so the table and the shipped data cannot
+ * {@code data/anime_multiverse/recipe/}, and {@code GemRecipesTest} reads the JSON back and fails when the two ever differ, so the table and the shipped data cannot
  * drift apart. Every ingredient is a vanilla item the player can always obtain (no Tensura item, nothing that only an operator can give), the sets are all
  * different, and no recipe needs more than the nine slots of the crafting grid. The cost is a design default the owner may change by editing this table
  * and running the script.
@@ -52,7 +52,7 @@ public final class GemRecipes {
     }
 
     /** The registry id of the Gem Fragment, the one ingredient every Seal shares. */
-    public static final String FRAGMENT_ITEM = "nusmp:gem_fragment";
+    public static final String FRAGMENT_ITEM = "anime_multiverse:gem_fragment";
 
     // ------------------------------------------------------------------ the Holy Calling Gem (shaped, 3 x 3)
     /** The pattern of the Holy Calling Gem: emerald, lapis, redstone and gold blocks at the corners (the four jewel colours), netherite on the edges, a nether star in the middle. */

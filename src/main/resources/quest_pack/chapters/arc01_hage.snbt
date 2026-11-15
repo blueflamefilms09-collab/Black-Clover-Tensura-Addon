@@ -4,7 +4,7 @@
 	order_index: 6
 	filename: "arc01_hage"
 	icon: {
-		id: "nusmp:grimoire"
+		id: "anime_multiverse:grimoire"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:grimoire"
+				id: "anime_multiverse:grimoire"
 			}
 			tasks: [
 				{
@@ -44,7 +44,7 @@
 				{
 					id: "74E9A3D90E45BB9A"
 					type: "advancement"
-					advancement: "nusmp:start/meet_wizard"
+					advancement: "anime_multiverse:start/meet_wizard"
 					criterion: ""
 				}
 			]
@@ -64,20 +64,20 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:grimoire_altar"
+				id: "anime_multiverse:grimoire_altar"
 			}
 			dependencies: ["2B1072CA6702E96F"]
 			tasks: [
 				{
 					id: "67551C6689720BD6"
 					type: "advancement"
-					advancement: "nusmp:start/ceremony"
+					advancement: "anime_multiverse:start/ceremony"
 					criterion: ""
 				}
 				{
 					id: "12F30016C85FF37F"
 					type: "advancement"
-					advancement: "nusmp:arcs/hage_village"
+					advancement: "anime_multiverse:arcs/hage_village"
 					criterion: ""
 				}
 			]
@@ -107,7 +107,7 @@
 				{
 					id: "68E1662052B88A11"
 					type: "advancement"
-					advancement: "nusmp:start/first_spell"
+					advancement: "anime_multiverse:start/first_spell"
 					criterion: ""
 				}
 			]
@@ -132,7 +132,7 @@
 				{
 					id: "4A6D1DAAFC8CB961"
 					type: "advancement"
-					advancement: "nusmp:start/casts_50"
+					advancement: "anime_multiverse:start/casts_50"
 					criterion: ""
 				}
 			]
@@ -176,7 +176,7 @@
 			y: 3.0d
 			shape: "square"
 			icon: {
-				id: "nusmp:magic_stone"
+				id: "anime_multiverse:magic_stone"
 			}
 			dependencies: ["6ED19EF9A4775198"]
 			optional: true
@@ -185,7 +185,7 @@
 					id: "085528AAAA118FC6"
 					type: "item"
 					item: {
-						id: "nusmp:magic_stone"
+						id: "anime_multiverse:magic_stone"
 					}
 					count: 16L
 					consume_items: false
@@ -207,14 +207,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:grimoire"
+				id: "anime_multiverse:grimoire"
 			}
 			dependencies: ["5CD263E4872BA9BA"]
 			tasks: [
 				{
 					id: "4C23EF800ECA08F5"
 					type: "advancement"
-					advancement: "nusmp:start/pages_5"
+					advancement: "anime_multiverse:start/pages_5"
 					criterion: ""
 				}
 			]

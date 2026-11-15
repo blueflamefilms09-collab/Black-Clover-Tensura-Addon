@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * Why: the attribute bonuses of a will (3.45.0), applied and removed in ONE place so cleanup can never miss one. Every bonus is a TRANSIENT modifier (never saved: a crash can not leave a permanent one) with
- * a fixed id {@code nusmp:bw/<attribute>/<add|mult>}, one id per attribute and operation, so applying again replaces instead of stacking. The bonuses of the passive and of the running phase are SUMMED per
+ * a fixed id {@code anime_multiverse:bw/<attribute>/<add|mult>}, one id per attribute and operation, so applying again replaces instead of stacking. The bonuses of the passive and of the running phase are SUMMED per
  * attribute, multiplied by the strength share, and then cut to the hard cap of {@link BeastWillRules#ATTR_CAPS}: however a will file or a stack of scales adds up, the total can not pass the cap
  * (that is the answer to "no runaway multiplicative bonuses"). {@link #clear} removes everything of the system from a player; it is what the form's end, death, respawn, logout and a swap all call.
  */
@@ -22,7 +22,7 @@ public final class BeastWillAttributes {
 
     static ResourceLocation id(String attribute, BeastWillDef.Op op) {
         String path = attribute.substring(attribute.indexOf(':') + 1).replace('.', '_');
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "bw/" + path + "/" + (op == BeastWillDef.Op.ADD ? "add" : "mult"));
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "bw/" + path + "/" + (op == BeastWillDef.Op.ADD ? "add" : "mult"));
     }
 
     private static Holder<Attribute> holder(String attribute) {

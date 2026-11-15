@@ -9,7 +9,7 @@ import java.util.Locale;
  * to be the same decision every time the same sector is rebuilt (a server that stopped mid-generation re-runs the saved plan). The rule is
  * separated from the listener so it can be tested: rooms that only carry traffic (corridors, junctions, links, the Way Onward) and the safe rooms
  * (Landings, Break Levels) belong to nobody, because a monster has no business claiming a place where players rest and a hallway is nobody's
- * home; every other room belongs to the faction its template names with a {@code nusmp:faction;faction=<id>} marker, and when the template names
+ * home; every other room belongs to the faction its template names with a {@code anime_multiverse:faction;faction=<id>} marker, and when the template names
  * none, to a faction drawn from the region's theme with the seed {@code sectorSeed ^ roomId}. A marker that names an unknown faction (a typo,
  * or a datapack that removed it) falls back to the draw instead of leaving the room unowned. Pure (no Minecraft types).
  */

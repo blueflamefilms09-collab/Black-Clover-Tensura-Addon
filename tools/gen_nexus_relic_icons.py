@@ -6,10 +6,10 @@ gear this script also drew, were removed with the Living Dungeon in 1.58.0: docs
 
     python3 tools/gen_nexus_relic_icons.py
 
-Writes assets/nusmp/textures/item/
+Writes assets/anime_multiverse/textures/item/
   glutton_chalice.png, mantle_of_the_scavenger.png, band_of_the_spatial_anchor.png, devil_bound_sheath.png, gamblers_grimoire_page.png
   amulet_of_the_juggernauts_blindness.png (the Sentient Dungeon's fourth relic)
-and under assets/nusmp/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the chalice, the sheath,
+and under assets/anime_multiverse/models/item/ the item models: <id>.json (the 3D marker client/WeaponRenderer draws in hand: the chalice, the sheath,
 the page and the amulet; the flat model for the mantle and the band) and <id>_icon.json (the inventory icon).
 tools/gen_nexus_relic_models.py (run through tools/gen_weapon_models.py) builds the in-hand 3D models and reads these sprites for placement, so run
 this script first. Idempotent: running it again rewrites the same files.
@@ -21,7 +21,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -344,7 +344,7 @@ GENERATED_DISPLAY = {                                  # minecraft:item/generate
 
 
 def flat_model(sprite):
-    return {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + sprite}}
+    return {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + sprite}}
 
 
 def marker_model(item_id, display):
@@ -354,7 +354,7 @@ def marker_model(item_id, display):
     display = copy.deepcopy(display)
     for side in ("thirdperson", "firstperson"):
         display.setdefault(side + "_lefthand", copy.deepcopy(display[side + "_righthand"]))
-    return {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": display}
+    return {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": display}
 
 
 def write_models():
@@ -365,7 +365,7 @@ def write_models():
     # the sheath is long and diagonal like a sword: the Magebane Longsword's transforms
     src = json.load(open(os.path.join(MODELS, "magebane_longsword.json")))
     write_model("devil_bound_sheath", marker_model("devil_bound_sheath", src["display"]))
-    write_model("devil_bound_sheath_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/devil_bound_sheath"}})
+    write_model("devil_bound_sheath_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/devil_bound_sheath"}})
     # the mantle and the band are never held: plain flat items (the _icon twins are for uniformity and are not needed)
     for item_id in ("mantle_of_the_scavenger", "band_of_the_spatial_anchor"):
         write_model(item_id, flat_model(item_id))

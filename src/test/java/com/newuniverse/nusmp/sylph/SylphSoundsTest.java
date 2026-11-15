@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The Sylph's sound set (docs/magic/sylph.md): the catalogue ({@link SylphSoundSet}, from which {@link SylphSounds} registers one sound event per cue), the {@code sylph.*} entries of
- * {@code assets/nusmp/sounds.json} and the {@code .ogg} files {@code tools/gen_sylph_sounds.py} synthesises must say the same: every cue has an entry with its variants, whose files exist and are
+ * {@code assets/anime_multiverse/sounds.json} and the {@code .ogg} files {@code tools/gen_sylph_sounds.py} synthesises must say the same: every cue has an entry with its variants, whose files exist and are
  * short mono Vorbis; no entry or file is an orphan; every subtitle has its line; the set is small; and none of it points at the Tensura spirits' sounds.
  */
 class SylphSoundsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path SOUNDS = ASSETS.resolve("sounds");
     private static final Path DIR = SOUNDS.resolve("sylph");
 
@@ -56,7 +56,7 @@ class SylphSoundsTest {
             assertTrue(c.volume() > 0f && c.volume() <= 1.2f);
             assertTrue(c.pitchMin() >= 0.5f && c.pitchMax() <= 2.0f && c.pitchMin() <= c.pitchMax());
             assertTrue(c.cooldown() >= 0);
-            assertEquals("subtitles.nusmp.sylph." + c.id(), c.subtitleKey());
+            assertEquals("subtitles.anime_multiverse.sylph." + c.id(), c.subtitleKey());
             assertEquals("sylph/" + c.id() + "_1", c.file(1));
             assertTrue(SylphSoundSet.has(c.id()));
         }
@@ -81,7 +81,7 @@ class SylphSoundsTest {
             assertEquals(c.variants(), e.getAsJsonArray("sounds").size(), c.id() + " lists every variant");
             int v = 1;
             for (JsonElement s : e.getAsJsonArray("sounds")) {
-                assertEquals("nusmp:" + c.file(v), nameOf(s));
+                assertEquals("anime_multiverse:" + c.file(v), nameOf(s));
                 Path f = SOUNDS.resolve(c.file(v) + ".ogg");
                 assertTrue(Files.exists(f), "file " + f);
                 Ogg o = readOgg(f);
@@ -103,12 +103,12 @@ class SylphSoundsTest {
             if (!e.getKey().startsWith("sylph.")) continue;
             assertTrue(events.contains(e.getKey()), "an entry no cue names: " + e.getKey());
             for (JsonElement s : e.getValue().getAsJsonObject().getAsJsonArray("sounds")) {
-                assertTrue(nameOf(s).startsWith("nusmp:sylph/"), "her entries use her own files only: " + nameOf(s));
+                assertTrue(nameOf(s).startsWith("anime_multiverse:sylph/"), "her entries use her own files only: " + nameOf(s));
                 assertFalse(nameOf(s).startsWith("tensura:") || nameOf(s).contains("minecraft:"), "never the basic spirit's sounds: " + nameOf(s));
             }
         }
         Set<String> named = new HashSet<>();
-        for (var e : soundsJson().entrySet()) if (e.getKey().startsWith("sylph.")) for (JsonElement s : e.getValue().getAsJsonObject().getAsJsonArray("sounds")) named.add(nameOf(s).substring("nusmp:".length()));
+        for (var e : soundsJson().entrySet()) if (e.getKey().startsWith("sylph.")) for (JsonElement s : e.getValue().getAsJsonObject().getAsJsonArray("sounds")) named.add(nameOf(s).substring("anime_multiverse:".length()));
         try (Stream<Path> w = Files.list(DIR)) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".ogg"))::iterator) {
                 String n = "sylph/" + p.getFileName().toString().replace(".ogg", "");

@@ -166,7 +166,7 @@ def layout_map(k, out):
     d = ImageDraw.Draw(img, "RGBA")
     f_small, f_mid, f_big = _font(13), _font(16), _font(22, True)
     ox, oy = 20, head
-    d.text((20, 14), "Floor 0, the Sanctuary Hub (nusmp:sanctuary): plan and section along z = 0", font=f_big, fill=(235, 235, 240))
+    d.text((20, 14), "Floor 0, the Sanctuary Hub (anime_multiverse:sanctuary): plan and section along z = 0", font=f_big, fill=(235, 235, 240))
     d.text((20, 44), "every number is read from HubLayout.java / HubPlazaLayout.java / HubProtect.java", font=f_small, fill=(150, 154, 166))
 
     def X(x):

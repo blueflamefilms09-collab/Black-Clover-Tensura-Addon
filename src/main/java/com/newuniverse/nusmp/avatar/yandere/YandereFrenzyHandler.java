@@ -32,9 +32,9 @@ public final class YandereFrenzyHandler {
     private YandereFrenzyHandler() {}
 
     private static final String T_FRENZY = "nusmp_av_frenzy", T_EXHAUST = "nusmp_av_exhaust";
-    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_frenzy_speed");
+    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_frenzy_speed");
     /** The temporary drain on the Avatar's maximum health that its frenzy casts cause (one transient modifier, replaced on every cast, removed when the frenzy ends). */
-    private static final ResourceLocation DRAIN_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_frenzy_drain");
+    private static final ResourceLocation DRAIN_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_frenzy_drain");
 
     /** The creator was damaged: start or refresh this Avatar's frenzy, and let it go for the attacker. Never throws on a client. */
     public static void onCreatorHurt(AvatarEntity avatar, DamageSource source, float amount) {

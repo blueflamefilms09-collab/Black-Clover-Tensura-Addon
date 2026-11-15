@@ -22,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class RelicExclusivityTest {
     private static final Path RELICS = Path.of("src/main/java/com/newuniverse/nusmp/relics");
-    private static final Path RECIPES = Path.of("src/main/resources/data/nusmp/recipe");
+    private static final Path RECIPES = Path.of("src/main/resources/data/anime_multiverse/recipe");
     private static final Path DATA = Path.of("src/main/resources/data");
-    private static final Path LOOT = Path.of("src/main/resources/data/nusmp/loot_table");
+    private static final Path LOOT = Path.of("src/main/resources/data/anime_multiverse/loot_table");
     private static final Pattern DEF = Pattern.compile("RelicDef\\.of\\(\"([a-z0-9_]+)\"");
 
     private static List<Path> files(Path root, String suffix) throws IOException {
@@ -51,7 +51,7 @@ class RelicExclusivityTest {
 
     private static List<String> mentions(String text, TreeSet<String> ids) {
         List<String> hit = new ArrayList<>();
-        for (String id : ids) if (text.contains("\"nusmp:" + id + "\"")) hit.add(id);
+        for (String id : ids) if (text.contains("\"anime_multiverse:" + id + "\"")) hit.add(id);
         return hit;
     }
 
@@ -82,17 +82,17 @@ class RelicExclusivityTest {
 
     @Test
     void theVaultTablesRollRelicsThroughTheEntryTypeAndTheTrialDoesNot() throws IOException {
-        assertTrue(read(LOOT.resolve("chests/dungeon_relic_vault.json")).contains("\"type\": \"nusmp:relic\""));
-        assertTrue(read(LOOT.resolve("chests/labyrinth_pedestal.json")).contains("\"type\": \"nusmp:relic\""));
+        assertTrue(read(LOOT.resolve("chests/dungeon_relic_vault.json")).contains("\"type\": \"anime_multiverse:relic\""));
+        assertTrue(read(LOOT.resolve("chests/labyrinth_pedestal.json")).contains("\"type\": \"anime_multiverse:relic\""));
         String trial = read(LOOT.resolve("chests/labyrinth_trial.json"));
-        assertFalse(trial.contains("nusmp:relic"), "the trial chests are mundane");
+        assertFalse(trial.contains("anime_multiverse:relic"), "the trial chests are mundane");
         assertEquals(List.of(), mentions(trial, relicIds()));
     }
 
     @Test
     void theGlobalLootModifierIsStillEnabled() throws IOException {
         String glm = read(Path.of("src/main/resources/data/neoforge/loot_modifiers/global_loot_modifiers.json"));
-        assertTrue(glm.contains("\"nusmp:relic_chests\""), "the vault's bonus relic comes through the modifier");
+        assertTrue(glm.contains("\"anime_multiverse:relic_chests\""), "the vault's bonus relic comes through the modifier");
     }
 
     @Test

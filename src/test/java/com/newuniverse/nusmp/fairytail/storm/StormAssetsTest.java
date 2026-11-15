@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The files the Stormcaller Staff and its storms need: the 3D model with skin, glow and icon, the class and grip rows, the Better Combat file, the franchise row, the textures of the effect and the lang text. */
 class StormAssetsTest {
     private static final String ID = "stormcaller_staff";
-    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/nusmp");
+    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/anime_multiverse");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
 
@@ -30,7 +30,7 @@ class StormAssetsTest {
             if (!Files.exists(ASSETS.resolve(f))) missing.add(f);
         assertTrue(missing.isEmpty(), "missing " + missing);
         assertEquals("minecraft:builtin/entity", json(ASSETS.resolve("models/item/" + ID + ".json")).get("parent").getAsString(), "the 3D model draws through the weapon renderer");
-        assertEquals("nusmp:item/" + ID, json(ASSETS.resolve("models/item/" + ID + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the old sprite is the inventory icon");
+        assertEquals("anime_multiverse:item/" + ID, json(ASSETS.resolve("models/item/" + ID + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the old sprite is the inventory icon");
         BufferedImage icon = javax.imageio.ImageIO.read(ASSETS.resolve("textures/item/" + ID + ".png").toFile());
         assertEquals(16, icon.getWidth());
         assertEquals(16, icon.getHeight());
@@ -52,16 +52,16 @@ class StormAssetsTest {
 
     @Test
     void betterCombatKnowsTheStaffAsAStaff() throws IOException {
-        JsonObject bc = json(RES.resolve("data/nusmp/weapon_attributes/" + ID + ".json"));
+        JsonObject bc = json(RES.resolve("data/anime_multiverse/weapon_attributes/" + ID + ".json"));
         assertEquals("bettercombat:staff", bc.get("parent").getAsString());
         assertTrue(read(Path.of("tools", "bettercombat", "manifest.json")).contains("\"" + ID + "\": {"));
     }
 
     @Test
     void theStaffIsFairyTailAndEngraved() throws IOException {
-        assertTrue(read(RES.resolve("data/nusmp/relics/franchise_map.json")).contains("\"" + ID + "\": \"fairy_tail\""));
+        assertTrue(read(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).contains("\"" + ID + "\": \"fairy_tail\""));
         assertTrue(read(Path.of("tools", "relics", "franchise_overrides.json")).contains("\"" + ID + "\": \"fairy_tail\""));
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + ID + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -94,7 +94,7 @@ class StormAssetsTest {
 
     @Test
     void theLayerNamesOnlyTexturesThatExist() throws IOException {
-        String layer = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "vfx", "client", "layer", "StormLayer.java"));
+        String layer = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "vfx", "client", "layer", "StormLayer.java"));
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("byName\\(\"(storm_[a-z]+)\"\\)").matcher(layer);
         int n = 0;
         while (m.find()) {
@@ -107,15 +107,15 @@ class StormAssetsTest {
     @Test
     void theLangFragmentHasEveryString() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "storm_staff.json"));
-        for (String k : new String[]{"item.nusmp." + ID, "item.nusmp." + ID + ".lore", "nusmp.storm.tooltip.magic", "nusmp.storm.selected", "nusmp.storm.no_energy", "nusmp.storm.cooldown",
-                "nusmp.storm.sky_full", "nusmp.skill.book_storm", "nusmp.skill.book_storm.description", "nusmp.skill.grimoire_storm"})
+        for (String k : new String[]{"item.anime_multiverse." + ID, "item.anime_multiverse." + ID + ".lore", "anime_multiverse.storm.tooltip.magic", "anime_multiverse.storm.selected", "anime_multiverse.storm.no_energy", "anime_multiverse.storm.cooldown",
+                "anime_multiverse.storm.sky_full", "anime_multiverse.skill.book_storm", "anime_multiverse.skill.book_storm.description", "anime_multiverse.skill.grimoire_storm"})
             assertTrue(lang.has(k), k);
         for (StormSpell s : StormSpell.values()) {
-            assertTrue(lang.has("nusmp.storm.spell." + s.id), s.id);
-            assertEquals(s.description, lang.get("nusmp.storm.spell." + s.id + ".desc").getAsString(), "the text of " + s.id + " is the table's");
-            assertEquals(s.displayName, lang.get("nusmp.storm.spell." + s.id).getAsString());
+            assertTrue(lang.has("anime_multiverse.storm.spell." + s.id), s.id);
+            assertEquals(s.description, lang.get("anime_multiverse.storm.spell." + s.id + ".desc").getAsString(), "the text of " + s.id + " is the table's");
+            assertEquals(s.displayName, lang.get("anime_multiverse.storm.spell." + s.id).getAsString());
         }
-        assertTrue(lang.get("nusmp.skill.book_storm").getAsString().contains("Fairy Tail"), "the magic UI labels Storm Magic as Fairy Tail");
+        assertTrue(lang.get("anime_multiverse.skill.book_storm").getAsString().contains("Fairy Tail"), "the magic UI labels Storm Magic as Fairy Tail");
         for (var e : lang.entrySet()) {
             String v = e.getValue().getAsString().toLowerCase();
             assertFalse(v.contains("hunger") || v.contains("starv") || v.contains("food"), e.getKey());

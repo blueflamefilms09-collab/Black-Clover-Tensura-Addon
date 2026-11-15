@@ -1,4 +1,4 @@
-"""Why: the Blood Beast (entity nusmp:blood_beast, entity/zogratis/BloodBeastEntity), Vanica's creature of living blood: a lion-wolf with a mane of blood thorns and glowing veins that rises
+"""Why: the Blood Beast (entity anime_multiverse:blood_beast, entity/zogratis/BloodBeastEntity), Vanica's creature of living blood: a lion-wolf with a mane of blood thorns and glowing veins that rises
 out of a puddle, crouches over the telegraph of its pounce, hangs open-jawed in the leap, bites, and melts into a puddle when it dies. The hand-built model is replaced by the art kit's
 version, a creature as an anthropomorphic character on the player's rig: a small, lean, crimson body of translucent-looking blood-red skin, no clothes, a mane of blood thorns for hair
 (the kit's `wild_mane` in dark red with a bright streak), a lion-wolf muzzle with fangs (made in `extra`), pointed ears, a tufted tail, claws, and veins that glow along the face and

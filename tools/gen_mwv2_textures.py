@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Textures of the Wind Spirit Dive v2 overlay (Yuno's coat, crown and wings), written to assets/nusmp/textures/entity/mode/mwv2_*.png.
+"""Textures of the Wind Spirit Dive v2 overlay (Yuno's coat, crown and wings), written to assets/anime_multiverse/textures/entity/mode/mwv2_*.png.
 
     python tools/gen_mwv2_textures.py
 
@@ -20,7 +20,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "entity", "mode")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "mode")
 LAYOUT = json.load(open(os.path.join(HERE, "mwv2_layout.json")))
 
 GOLD = np.array([236, 204, 100]) / 255.0

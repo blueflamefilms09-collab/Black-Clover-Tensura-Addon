@@ -44,7 +44,7 @@ public final class FoundryCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.foundry.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.foundry.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {

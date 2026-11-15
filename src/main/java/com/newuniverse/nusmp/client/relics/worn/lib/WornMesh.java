@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * One worn relic model, parsed from assets/nusmp/relic_worn/&lt;name&gt;.txt (written by tools/relics/gen_worn_*.py; the format is described at the top of
+ * One worn relic model, parsed from assets/anime_multiverse/relic_worn/&lt;name&gt;.txt (written by tools/relics/gen_worn_*.py; the format is described at the top of
  * tools/relics/gen_worn_lib.py). Pure: no Minecraft types, so the files are parsed and checked in tests. The data sits in flat arrays so drawing allocates
  * nothing: quad {@code i} has its four corners at {@code pos[12 i ..]}, {@code uv[8 i ..]}, {@code nrm[12 i ..]}; quads are sorted by animation group, and
  * group {@code g} owns the quads {@code groupStart[g] .. groupStart[g + 1]} (group 0 is the static base).
@@ -48,7 +48,7 @@ public final class WornMesh {
     public final Group[] groups;
     public final int emitQuads, shellQuads, glowMapQuads, starQuads, haloQuads;
     /**
-     * The visual upgrade: textures of this model under assets/nusmp/textures/ (null for the library models, which share the atlas). {@code skin} is the record {@code skin <v>} as written:
+     * The visual upgrade: textures of this model under assets/anime_multiverse/textures/ (null for the library models, which share the atlas). {@code skin} is the record {@code skin <v>} as written:
      * a texture path ending in .png (Charms / Genesis models: painted skin, drawn instead of the atlas, no palette tint) or a bare id (God worn models: the skin is
      * {@code relic_worn/god/<id>.png} and its glow map {@code relic_worn/god/<id>_glow.png}, a grey albedo tinted by the palette slots like the atlas, see {@link #tinted}).
      * {@code glowTex} (its emissive map, same UVs), {@code starTex} (the scrolling nebula of the STAR quads) and {@code lodName} (the model drawn instead of this one from far away, at most 15%
@@ -98,10 +98,10 @@ public final class WornMesh {
     /** The God worn kind of skin (a bare id in the {@code skin} record): the albedo is grey and tinted by the palette slots like the atlas, and the LIT / ADD quads are drawn from the glow map. */
     public boolean tinted() { return skin != null && !skin.endsWith(".png"); }
 
-    /** The albedo texture under assets/nusmp/textures/, or null for a library model. */
+    /** The albedo texture under assets/anime_multiverse/textures/, or null for a library model. */
     public String skinPath() { return skin == null ? null : tinted() ? "relic_worn/god/" + skin + ".png" : skin; }
 
-    /** The emissive map under assets/nusmp/textures/: the {@code glowtex} record, else (a tinted skin) {@code <id>_glow.png}, else null. */
+    /** The emissive map under assets/anime_multiverse/textures/: the {@code glowtex} record, else (a tinted skin) {@code <id>_glow.png}, else null. */
     public String glowPath() { return glowTex != null ? glowTex : tinted() ? "relic_worn/god/" + skin + "_glow.png" : null; }
 
     /**

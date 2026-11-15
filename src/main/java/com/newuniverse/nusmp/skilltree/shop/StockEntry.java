@@ -3,14 +3,14 @@ package com.newuniverse.nusmp.skilltree.shop;
 import java.util.List;
 
 /**
- * Why: one line of the witch's shelf, as the data file {@code data/nusmp/black_market/stock.json} states it, kept as a plain immutable record with no game types so the
+ * Why: one line of the witch's shelf, as the data file {@code data/anime_multiverse/black_market/stock.json} states it, kept as a plain immutable record with no game types so the
  * validator, the price roll and the shelf builder can all be unit tested without a running game. The shelf is DATA (not code) for the same reason the skill trees are: the
  * owner wants to retune a price band, add a primer or remove a book with a datapack and {@code /reload}, with no rebuild. A line describes what MAY be on the shelf and at
  * what terms (a price band, a stock range, a chance to appear); what actually IS on it this restock is decided by {@link StockRoll} from the world seed and the restock period.
  *
  * @param id         the line's id, lower-case snake; it is the key of the purchases counted against this line, so renaming it forgets what was bought this period
  * @param kind       a Skill Book that opens a route, or an SP Book that gives Skill Points
- * @param route      the route id of a single route book ({@code nusmp:lady_luck}), or empty
+ * @param route      the route id of a single route book ({@code anime_multiverse:lady_luck}), or empty
  * @param allRoutes  true for the line that stocks one book for EVERY route of the registry that has no line of its own, so a new magic added by a datapack is on sale with no edit here
  * @param spKind     the kind of an SP Book ({@code magic_booster}), or empty
  * @param priceMin   the cheapest the line may be rolled at, in gold

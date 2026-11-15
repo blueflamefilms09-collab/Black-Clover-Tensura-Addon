@@ -1,5 +1,5 @@
 """Why: nothing of the player-model kit can be run in a game here, so this renders what the kit draws (the player model with the character's skin, the hair style at its colour, and the extras
-anchored on the model's parts) with the software renderer in pmrender.py / pmgeo.py, straight from assets/nusmp/playermodel/looks.json, and saves the images the review needs.
+anchored on the model's parts) with the software renderer in pmrender.py / pmgeo.py, straight from assets/anime_multiverse/playermodel/looks.json, and saves the images the review needs.
     python3 -B tools/playermodel/preview.py asta escanor ...            characters (front, three-quarter, back), written to docs/previews/playermodel/
     python3 -B tools/playermodel/preview.py --hair                       every hair style on a plain body, three views
     python3 -B tools/playermodel/preview.py --hair-motion                three hair styles at rest, running and nodding (the spring chain's targets)

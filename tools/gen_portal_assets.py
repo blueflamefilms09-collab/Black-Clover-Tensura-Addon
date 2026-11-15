@@ -1,5 +1,5 @@
 """
-Generates the textures of the 3D spatial portal (src/main/resources/assets/nusmp/textures/particle/portal_*.png).
+Generates the textures of the 3D spatial portal (src/main/resources/assets/anime_multiverse/textures/particle/portal_*.png).
 
 Why: the gate is drawn from polar strips (u = angle round the gate, v = distance from the middle / across a band) so the same texture
 works for the shader path (it adds a per-pixel swirl on top) and for the plain translucent fallback. All textures are near-white
@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 TAU = np.pi * 2
 
 

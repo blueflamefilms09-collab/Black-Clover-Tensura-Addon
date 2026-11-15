@@ -6,7 +6,7 @@ field is not abilities here but the WEAR RECIPE (tools/dungeon_skins/recipes.py:
 of a goblin), `tusks=orc|boar|small` and `beard=dwarf|short`, `snout=reptile` (3D parts of the player model, tools/dungeon_skins/parts.py) because the art kit draws those on the head box and the
 player model's head has to wear them as parts.
 
-Each archetype becomes a look `dg_<id>` (assets/nusmp/playermodel/looks_dungeon.json) with its own skin `textures/entity/playermodel/dg_<id>.png` (+ `_glow`), its own hair, its extras (horns, wings,
+Each archetype becomes a look `dg_<id>` (assets/anime_multiverse/playermodel/looks_dungeon.json) with its own skin `textures/entity/playermodel/dg_<id>.png` (+ `_glow`), its own hair, its extras (horns, wings,
 tails, halos, capes from the art kit's model of the row; ears, tusks, beards, snouts from the parts library) and a stance. The Foundry mobs that are goblins, orcs, undead, demons and so on take the
 same recipes and the same face / hair defaults of their family when their own row does not say otherwise (foundry.py), which is what makes a goblin raid look like one tribe.
 """

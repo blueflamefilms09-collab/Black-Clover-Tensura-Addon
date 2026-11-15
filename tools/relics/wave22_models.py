@@ -4,7 +4,7 @@
     W22_PREVIEW=<dir> python3 -B tools/relics/wave22_models.py lich_wand      (also renders the preview beside the card)
 
 Run tools/relics/wave22_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals) and textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals) and textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px
 skin each). Budget: 8 to 14 named parts and at most 2800 quads per weapon.
 
 The method, in order, for every weapon (each build_<id>() follows it):

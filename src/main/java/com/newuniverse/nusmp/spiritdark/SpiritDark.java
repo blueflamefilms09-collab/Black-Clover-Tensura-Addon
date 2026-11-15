@@ -104,7 +104,7 @@ public final class SpiritDark {
     static boolean link(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         if (!SPIRITS.acquire(p.getUUID(), SpiritDarkRules.SPIRITS_PER_PLAYER, SpiritDarkConfig.maxSpirits())) {
-            say(p, s, "nusmp.spirit_dark.full", "The Spirit of Darkness cannot answer: too many spirits are out.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.spirit_dark.full", "The Spirit of Darkness cannot answer: too many spirits are out.", ChatFormatting.RED);
             return false;
         }
         long now = sl.getGameTime();
@@ -120,7 +120,7 @@ public final class SpiritDark {
         VfxSpawn.send(sl, VfxShape.DARKFX_BURST, at, at.add(0, 0.3, 0), COLOR, 16, 0.5f);
         Fx.send(sl, DARK, at.x, at.y, at.z, 6, 0.4);
         SpiritDarkSounds.play(p, Cue.CHIME, at);
-        say(p, s, "nusmp.spirit_dark.linked", "The Spirit of Darkness settles on your shoulder.", ChatFormatting.DARK_PURPLE);
+        say(p, s, "anime_multiverse.spirit_dark.linked", "The Spirit of Darkness settles on your shoulder.", ChatFormatting.DARK_PURPLE);
         mood(p, s, Event.LINK);
         return true;
     }
@@ -136,7 +136,7 @@ public final class SpiritDark {
         s.powered = null;
         s.companion = null;
         LIVE.remove(p.getUUID());
-        if (speak) say(p, s, "nusmp.spirit_dark.unlinked", "The Spirit of Darkness melts back into the shadows.", ChatFormatting.GRAY);
+        if (speak) say(p, s, "anime_multiverse.spirit_dark.unlinked", "The Spirit of Darkness melts back into the shadows.", ChatFormatting.GRAY);
     }
 
     /** A prop that ends with a farewell: it plays its bow and dissolve ({@link Pose#FAREWELL}) and ends itself a moment later ({@link SpiritDarkProps}). */
@@ -150,11 +150,11 @@ public final class SpiritDark {
     private static void power(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         long now = sl.getGameTime();
-        if (s.companion == null) { say(p, s, "nusmp.spirit_dark.needlink", "Link the Spirit of Darkness first.", ChatFormatting.GRAY); return; }
+        if (s.companion == null) { say(p, s, "anime_multiverse.spirit_dark.needlink", "Link the Spirit of Darkness first.", ChatFormatting.GRAY); return; }
         if (s.powered != null) { endPowered(p, s, true); return; }
-        if (now < s.powerReadyAt) { say(p, s, "nusmp.spirit_dark.recharging", "The demon is not ready to come again yet.", ChatFormatting.GRAY); return; }
+        if (now < s.powerReadyAt) { say(p, s, "anime_multiverse.spirit_dark.recharging", "The demon is not ready to come again yet.", ChatFormatting.GRAY); return; }
         if (!POWERED.acquire(p.getUUID(), SpiritDarkRules.POWERED_PER_PLAYER, SpiritDarkConfig.maxPowered())) {
-            say(p, s, "nusmp.spirit_dark.poweredfull", "Too many demons are out.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.spirit_dark.poweredfull", "Too many demons are out.", ChatFormatting.RED);
             return;
         }
         double[] a = SpiritDarkRules.powered(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -191,14 +191,14 @@ public final class SpiritDark {
     private static void step(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         long now = sl.getGameTime();
-        if (s.companion == null) { say(p, s, "nusmp.spirit_dark.needlink", "Link the Spirit of Darkness first.", ChatFormatting.GRAY); return; }
-        if (now < s.stepReadyAt) { say(p, s, "nusmp.spirit_dark.steprecharging", "The shadows are still settling.", ChatFormatting.GRAY); return; }
+        if (s.companion == null) { say(p, s, "anime_multiverse.spirit_dark.needlink", "Link the Spirit of Darkness first.", ChatFormatting.GRAY); return; }
+        if (now < s.stepReadyAt) { say(p, s, "anime_multiverse.spirit_dark.steprecharging", "The shadows are still settling.", ChatFormatting.GRAY); return; }
         if (now < s.stepRetryAt || !p.isAlive() || p.isSpectator() || p.isPassenger() || p.isSleeping()) return;
         Vec3 look = p.getLookAngle();
         ShadowStep.Spot spot = ShadowStep.pick(new ShadowProbe(sl, p), p.getX(), p.getY(), p.getZ(), p.getEyeHeight(), p.getYRot(), look.y, SpiritDarkRules.STEP_RANGE_MAX);
         if (spot == null || !lastLook(sl, p, spot)) {
             s.stepRetryAt = now + SpiritDarkRules.STEP_RETRY_GAP;
-            say(p, s, "nusmp.spirit_dark.nostep", "No shadow to step into that way.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.spirit_dark.nostep", "No shadow to step into that way.", ChatFormatting.GRAY);
             return;
         }
         boolean powered = s.powered != null;

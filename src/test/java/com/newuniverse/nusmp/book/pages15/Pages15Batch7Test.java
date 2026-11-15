@@ -198,9 +198,9 @@ class Pages15Batch7Test {
     @Test
     void theSixCharacterSetsParseReachFifteenPagesAndNameOnlyRealPages() throws IOException {
         Map<String, List<Page>> by = byBook();
-        JsonObject en = JsonParser.parseString(read(ROOT.resolve("src/main/resources/assets/nusmp/lang/en_us.json"))).getAsJsonObject();
+        JsonObject en = JsonParser.parseString(read(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"))).getAsJsonObject();
         for (var e : SETS.entrySet()) {
-            String json = read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/" + e.getKey() + ".json"));
+            String json = read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/" + e.getKey() + ".json"));
             List<String> bad = new ArrayList<>();
             CharacterSet set = CharacterSetLoader.parse(json, bad);
             assertEquals(List.of(), bad, e.getKey() + " parses without a problem");
@@ -208,7 +208,7 @@ class Pages15Batch7Test {
             assertEquals(List.of(), CharacterSetLoader.problems(set), e.getKey() + " has no problem");
             assertTrue(set.spells().size() >= 15, e.getKey() + " lists " + set.spells().size() + " pages, the goal is 15");
             Set<String> real = new HashSet<>();
-            for (String k : en.keySet()) if (k.startsWith("nusmp.page." + e.getValue() + ".")) real.add(k.substring(("nusmp.page." + e.getValue() + ".").length()));
+            for (String k : en.keySet()) if (k.startsWith("anime_multiverse.page." + e.getValue() + ".")) real.add(k.substring(("anime_multiverse.page." + e.getValue() + ".").length()));
             Set<String> mine = new HashSet<>();
             for (Page p : by.get(e.getValue())) mine.add(p.id());
             Set<String> listedPages = new HashSet<>();

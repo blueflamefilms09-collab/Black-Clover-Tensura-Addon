@@ -1,0 +1,50 @@
+{
+  "parent": "anime_multiverse:bosses/first",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:dante_gravity_crown"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.bosses.dante_zogratis.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.bosses.dante_zogratis.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "dante_zogratis"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:dante_zogratis"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

@@ -27,8 +27,8 @@ public final class GnomeDraw {
      * ONE sheet, so the companion's models read the giant's textures (the same pixels): the game loads each sheet once, not twice.
      */
     private static GeoSpec lod(GeoSpec base, String modelId, String textureId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + textureId + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + textureId + ".png"), null);
     }
 
     private static final GeoSpec COMP = GeoSpec.of("gnome", "companion"), FULL = GeoSpec.of("gnome", "full");
@@ -45,9 +45,9 @@ public final class GnomeDraw {
         String[] forms = {"companion", "full"};
         for (int f = 0; f < 2; f++)
             for (int x = 0; x < FACES.length; x++) {
-                ResourceLocation model = ResourceLocation.fromNamespaceAndPath("nusmp", "geo/gnome/gnome_" + forms[f] + "_face_" + FACES[x] + ".geo.json");
-                PLATE[f][x] = new GeoSpec(model, bases[f].animations(), ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/gnome_faces.png"), null);
-                PLATE_FX[f][x] = new GeoSpec(model, bases[f].animations(), ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/gnome_faces_fx.png"), null);
+                ResourceLocation model = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/gnome/gnome_" + forms[f] + "_face_" + FACES[x] + ".geo.json");
+                PLATE[f][x] = new GeoSpec(model, bases[f].animations(), ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/gnome_faces.png"), null);
+                PLATE_FX[f][x] = new GeoSpec(model, bases[f].animations(), ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/gnome_faces_fx.png"), null);
             }
     }
 

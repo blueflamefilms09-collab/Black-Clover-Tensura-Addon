@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.labyrinth.mega.spawnfilter;
 
 /**
  * Why: the whole "may this creature enter the Dungeon" decision as one pure function over plain facts, so the truth table is unit tested and the event glue
- * ({@link SpawnFilterEvents}) only gathers the facts. Two layers, in this order. The BAN (the {@code spawn.blacklist} list and the {@code nusmp:dungeon/banned}
+ * ({@link SpawnFilterEvents}) only gathers the facts. Two layers, in this order. The BAN (the {@code spawn.blacklist} list and the {@code anime_multiverse:dungeon/banned}
  * tag) is absolute: it applies to every way a creature can arrive, a creature loaded from an old save included (that is how a Gorgon already standing in a
  * chunk is cleaned up), and only an operator's own {@code /summon} or spawn egg can bypass it, and only when the config says so (off by default: "never"
  * means never). The THEME palette ({@link FloorThemeMobFilter}) is softer: it applies only to a fresh spawn of a creature that has a faction, never to an

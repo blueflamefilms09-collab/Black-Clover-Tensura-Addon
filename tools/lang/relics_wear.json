@@ -1,14 +1,14 @@
 {
-  "message.nusmp.relic_debug.wear_slots": "Curios slot types of this wearer: %s",
-  "message.nusmp.relic_debug.wear_missing": "RELIC SLOT TYPES THE WEARER DOES NOT HAVE: %s (relics of these slots cannot be put on)",
-  "message.nusmp.relic_debug.causes": "Causes noted on this machine since the game started (each once):",
-  "message.nusmp.relic_debug.wear": "     wear: slot %s, equipped %s, slot defined: %s, tag: %s, sent to clients %s, visible by default %s%s",
-  "message.nusmp.relic_debug.wear_options": "Options in force: relicfx.showWorn=%s (all worn relics), relicfx.hideArmourRelics=%s, relicfx.models=%s; Curios eye icons are per slot",
-  "message.nusmp.relic_debug.wear_client": "     wear: slot %s, equipped (found on this client) yes, synced from the server %s, visible now %s%s",
-  "message.nusmp.relic_wear.equipped": "%s put on (%s slot)",
-  "message.nusmp.relic_wear.show_on": "Worn relics are shown on every player.",
-  "message.nusmp.relic_wear.show_off": "Worn relics are hidden on every player (turn them back on with /multiverse relic show on).",
-  "key.nusmp.toggle_show_worn_relics": "Show or hide all worn relics",
-  "message.nusmp.relic_wear.moved": "%s moved to its Curios slot (%s)",
-  "message.nusmp.relic_wear.slot_full": "The %s slot is full: take the relic in it off first"
+  "message.anime_multiverse.relic_debug.wear_slots": "Curios slot types of this wearer: %s",
+  "message.anime_multiverse.relic_debug.wear_missing": "RELIC SLOT TYPES THE WEARER DOES NOT HAVE: %s (relics of these slots cannot be put on)",
+  "message.anime_multiverse.relic_debug.causes": "Causes noted on this machine since the game started (each once):",
+  "message.anime_multiverse.relic_debug.wear": "     wear: slot %s, equipped %s, slot defined: %s, tag: %s, sent to clients %s, visible by default %s%s",
+  "message.anime_multiverse.relic_debug.wear_options": "Options in force: relicfx.showWorn=%s (all worn relics), relicfx.hideArmourRelics=%s, relicfx.models=%s; Curios eye icons are per slot",
+  "message.anime_multiverse.relic_debug.wear_client": "     wear: slot %s, equipped (found on this client) yes, synced from the server %s, visible now %s%s",
+  "message.anime_multiverse.relic_wear.equipped": "%s put on (%s slot)",
+  "message.anime_multiverse.relic_wear.show_on": "Worn relics are shown on every player.",
+  "message.anime_multiverse.relic_wear.show_off": "Worn relics are hidden on every player (turn them back on with /multiverse relic show on).",
+  "key.anime_multiverse.toggle_show_worn_relics": "Show or hide all worn relics",
+  "message.anime_multiverse.relic_wear.moved": "%s moved to its Curios slot (%s)",
+  "message.anime_multiverse.relic_wear.slot_full": "The %s slot is full: take the relic in it off first"
 }

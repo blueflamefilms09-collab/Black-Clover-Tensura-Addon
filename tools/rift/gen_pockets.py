@@ -4,11 +4,11 @@
     python3 -B tools/rift/gen_pockets.py            # writes the files
     python3 -B tools/rift/gen_pockets.py --check    # exit 1 when a file on disk differs from what the roster says
 
-  data/nusmp/mega/pockets/<id>.json                    the pocket (look, gravity, palette, layout, traps, exclusive mobs, seal, relics ...)       read by labyrinth/mega/rift/pocket/PocketDef
-  data/nusmp/mega/pockets/bosses/<boss>.json           the mega-boss: a D&D profile of the Guardian (guard/DndProfile) plus the "mega" extras   read by PocketBossExtra
-  data/nusmp/worldgen/biome/pocket_<id>.json           the biome of the pocket (fog, sky, water, ambient particles, sounds, music)               applied to the pocket's cell by PocketBiomes
-  data/nusmp/loot_table/pocket/<id>/{boss,treasury,secondary,chest,minor}.json
-                                                       the HARD-GATED loot: every pool carries the condition nusmp:in_pocket, the relic entry is nusmp:pocket_relic
+  data/anime_multiverse/mega/pockets/<id>.json                    the pocket (look, gravity, palette, layout, traps, exclusive mobs, seal, relics ...)       read by labyrinth/mega/rift/pocket/PocketDef
+  data/anime_multiverse/mega/pockets/bosses/<boss>.json           the mega-boss: a D&D profile of the Guardian (guard/DndProfile) plus the "mega" extras   read by PocketBossExtra
+  data/anime_multiverse/worldgen/biome/pocket_<id>.json           the biome of the pocket (fog, sky, water, ambient particles, sounds, music)               applied to the pocket's cell by PocketBiomes
+  data/anime_multiverse/loot_table/pocket/<id>/{boss,treasury,secondary,chest,minor}.json
+                                                       the HARD-GATED loot: every pool carries the condition anime_multiverse:in_pocket, the relic entry is anime_multiverse:pocket_relic
   tools/lang/rift_pockets.json                         the English of the pocket names, lore, seals, mobs, bosses (merged into en_us.json by the lead)
 
 Why generated: thirteen tombs of the same shape are one table of choices; a typo in one file would otherwise be thirteen different bugs. The tests (PocketDataTest) read the files back.
@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import pocket_roster as R  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-DATA = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp")
+DATA = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse")
 LANG = os.path.join(ROOT, "tools", "lang", "rift_pockets.json")
 
 
@@ -68,7 +68,7 @@ def biome_json(p):
 
 
 def cond(p, stage):
-    return {"condition": "nusmp:in_pocket", "pocket": p["id"], "stage": stage}
+    return {"condition": "anime_multiverse:in_pocket", "pocket": p["id"], "stage": stage}
 
 
 def item(name, lo, hi, weight):
@@ -81,7 +81,7 @@ def item(name, lo, hi, weight):
 def relic_with_fallback(p, relic):
     """The relic, or when the world has it already (a unique relic alive) a handful of magic crystals instead: the table never rolls an empty hand."""
     return {"type": "minecraft:alternatives", "children": [
-        {"type": "nusmp:pocket_relic", "relic": relic, "pocket": p["id"]},
+        {"type": "anime_multiverse:pocket_relic", "relic": relic, "pocket": p["id"]},
         item("tensura:high_quality_magic_crystal", 3, 5, 1)]}
 
 
@@ -101,7 +101,7 @@ def loot_treasury(p):
 def loot_secondary(p):
     return {"type": "minecraft:chest", "pools": [
         {"rolls": 1, "conditions": [cond(p, "treasury")],
-         "entries": [item("nusmp:magic_tool_sword", 1, 1, 4), item("nusmp:magic_tool_bow", 1, 1, 3), item("nusmp:magic_tool_spear", 1, 1, 3)]}]}
+         "entries": [item("anime_multiverse:magic_tool_sword", 1, 1, 4), item("anime_multiverse:magic_tool_bow", 1, 1, 3), item("anime_multiverse:magic_tool_spear", 1, 1, 3)]}]}
 
 
 def loot_chest(p):
@@ -122,23 +122,23 @@ def loot_minor(p):
 def files():
     out = {}
     for p in R.POCKETS:
-        out["src/main/resources/data/nusmp/mega/pockets/%s.json" % p["id"]] = dump(pocket_json(p))
-        out["src/main/resources/data/nusmp/worldgen/biome/pocket_%s.json" % p["id"]] = dump(biome_json(p))
-        base = "src/main/resources/data/nusmp/loot_table/pocket/%s/" % p["id"]
+        out["src/main/resources/data/anime_multiverse/mega/pockets/%s.json" % p["id"]] = dump(pocket_json(p))
+        out["src/main/resources/data/anime_multiverse/worldgen/biome/pocket_%s.json" % p["id"]] = dump(biome_json(p))
+        base = "src/main/resources/data/anime_multiverse/loot_table/pocket/%s/" % p["id"]
         out[base + "boss.json"] = dump(loot_boss(p))
         out[base + "treasury.json"] = dump(loot_treasury(p))
         out[base + "secondary.json"] = dump(loot_secondary(p))
         out[base + "chest.json"] = dump(loot_chest(p))
         out[base + "minor.json"] = dump(loot_minor(p))
     for bid, b in R.BOSSES.items():
-        out["src/main/resources/data/nusmp/mega/pockets/bosses/%s.json" % bid] = dump(boss_json(b))
+        out["src/main/resources/data/anime_multiverse/mega/pockets/bosses/%s.json" % bid] = dump(boss_json(b))
     return out
 
 
 def lang():
     m = {}
     for p in R.POCKETS:
-        k = "pocket.nusmp." + p["id"]
+        k = "pocket.anime_multiverse." + p["id"]
         m[k + ".name"] = p["name"]
         m[k + ".lore"] = p["lore"]
         m[k + ".seal"] = p["seal"]["label"]

@@ -84,11 +84,11 @@ public class RobeItem extends ArmorItem implements GeoItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         if (getType() != ArmorItem.Type.CHESTPLATE) {
-            tip.add(Component.literal("Part of the " + Component.translatable("item.nusmp." + setId).getString() + " set").withStyle(ChatFormatting.GRAY));
+            tip.add(Component.literal("Part of the " + Component.translatable("item.anime_multiverse." + setId).getString() + " set").withStyle(ChatFormatting.GRAY));
             tip.add(Component.literal("Full set: chest bonus +50%").withStyle(ChatFormatting.GOLD));
             return;
         }
-        tip.add(Component.translatable("tooltip.nusmp.armor.set_pieces", Component.translatable("item.nusmp." + setId)).withStyle(ChatFormatting.DARK_AQUA));
+        tip.add(Component.translatable("tooltip.anime_multiverse.armor.set_pieces", Component.translatable("item.anime_multiverse." + setId)).withStyle(ChatFormatting.DARK_AQUA));
         tip.add(Component.literal("Set bonus (robe worn):").withStyle(ChatFormatting.GOLD));
         int k = NUConfig.GEAR_ELEMENT_BONUS.get();
         switch (kind) {

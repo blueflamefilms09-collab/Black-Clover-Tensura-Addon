@@ -92,7 +92,7 @@ public final class LagAudit1SelfTests {
         // ---- 5. the franchise caches answer what the uncached code answered
         int checked = 0;
         for (Map.Entry<String, String> m : FranchiseMap.map().items().entrySet()) {
-            Item item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", m.getKey())).orElse(null);
+            Item item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", m.getKey())).orElse(null);
             if (item == null) continue;
             ItemStack s = new ItemStack(item);
             String first = FranchiseEngravings.franchiseOf(s), again = FranchiseEngravings.franchiseOf(s);
@@ -105,7 +105,7 @@ public final class LagAudit1SelfTests {
         if (FranchiseEngravings.franchiseOf(new ItemStack(net.minecraft.world.item.Items.APPLE)) != null || FranchiseEngravings.tooltipLine(new ItemStack(net.minecraft.world.item.Items.APPLE)) != null)
             return SelfTests.Result.fail("an apple has a franchise");
         // ---- 6. micro timings (informational; the ceiling only catches a scan of a whole table per call)
-        ItemStack probe = new ItemStack(BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", FranchiseMap.map().items().keySet().iterator().next())).orElse(net.minecraft.world.item.Items.APPLE));
+        ItemStack probe = new ItemStack(BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", FranchiseMap.map().items().keySet().iterator().next())).orElse(net.minecraft.world.item.Items.APPLE));
         int n = 200_000;
         long t0 = System.nanoTime();
         int sink = 0;

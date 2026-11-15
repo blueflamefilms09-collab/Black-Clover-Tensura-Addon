@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.visual.genesis.VuPose;
 import com.newuniverse.nusmp.visual.genesis.VuSpec;
 
 /**
- * The stack-driven poses of the upgraded Genesis Demon-Slayer (assets/nusmp/visual_upgrade/demon_slayer_sword.json, tools/visual_upgrade/demon_slayer): three animation kinds that
+ * The stack-driven poses of the upgraded Genesis Demon-Slayer (assets/anime_multiverse/visual_upgrade/demon_slayer_sword.json, tools/visual_upgrade/demon_slayer): three animation kinds that
  * {@link VuPose#eval} does not know (it skips an unknown kind) and that depend on the stack, not on the clock alone. Pure maths, no Minecraft classes, tested without the game.
  * <ul>
  *   <li>{@code fracture}: the shards of the blade during Black Meteorite. The group drifts along {@code axis} by {@code amp} times the fracture (0..1), turns by {@code deg} degrees about z

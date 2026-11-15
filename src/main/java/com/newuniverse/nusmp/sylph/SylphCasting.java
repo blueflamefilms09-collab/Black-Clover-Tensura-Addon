@@ -79,7 +79,7 @@ public final class SylphCasting {
     static boolean link(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         if (!SPIRITS.acquire(p.getUUID(), SylphRules.SPIRITS_PER_PLAYER, SylphConfig.maxSpirits())) {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.sylph.full", "Sylph cannot answer: too many spirits are out.").withStyle(ChatFormatting.RED), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.sylph.full", "Sylph cannot answer: too many spirits are out.").withStyle(ChatFormatting.RED), true);
             return false;
         }
         double[] a = SylphRules.small(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -95,7 +95,7 @@ public final class SylphCasting {
         VfxSpawn.send(sl, VfxShape.WIND_GALE, new Vec3(a[0], a[1] - 0.2, a[2]), new Vec3(a[0], a[1] + 0.6, a[2]), SYLPH_COLOR, 12, 0.4f);
         SylphSounds.play(sl, a[0], a[1], a[2], "link");
         SylphMoods.fire(p, s, SylphMood.Event.LINK);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.sylph.linked", "Sylph floats to your side.").withStyle(ChatFormatting.GREEN), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.sylph.linked", "Sylph floats to your side.").withStyle(ChatFormatting.GREEN), true);
         return true;
     }
 
@@ -109,7 +109,7 @@ public final class SylphCasting {
         }
         if (s.spirit != null) SPIRITS.release(p.getUUID());
         s.spirit = null;
-        if (say) p.displayClientMessage(Component.translatableWithFallback("nusmp.sylph.unlinked", "Sylph drifts away on the wind.").withStyle(ChatFormatting.GRAY), true);
+        if (say) p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.sylph.unlinked", "Sylph drifts away on the wind.").withStyle(ChatFormatting.GRAY), true);
     }
 
     /** The colour of Sylph's effects (the wind spirit's pale green). */

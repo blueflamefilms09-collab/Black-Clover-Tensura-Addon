@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * The client's copy of what its player has discovered, filled by the {@code nusmp:discovery_sync} packet. It holds plain strings and statics
+ * The client's copy of what its player has discovered, filled by the {@code anime_multiverse:discovery_sync} packet. It holds plain strings and statics
  * only (no client classes), so touching it from a common class is safe on a dedicated server too. Every UI asks it, never the server.
  * <p>
  * Until the first sync of a session arrives ({@link #synced()} false: a server without the mod, or a screen opened too early) the cache shows

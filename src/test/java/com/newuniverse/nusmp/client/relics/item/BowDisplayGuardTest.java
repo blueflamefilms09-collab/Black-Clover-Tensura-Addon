@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * when the string is drawn), and every bow mesh has its grip at or below the middle.
  */
 class BowDisplayGuardTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     static final double MAX_TILT = 30.0;
     static final Pattern ROT = Pattern.compile("\"%s\"\\s*:\\s*\\{[^}]*?\"rotation\"\\s*:\\s*\\[\\s*(-?[\\d.]+)\\s*,\\s*(-?[\\d.]+)\\s*,\\s*(-?[\\d.]+)");
     static final Pattern PLACE = Pattern.compile("(?m)^place\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)");

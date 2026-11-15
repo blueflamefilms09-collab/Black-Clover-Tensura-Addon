@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * inside a texture that exists at the size the model declares (and so does its glow map), and every animation names real bones.
  */
 class GeoAssetsTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final File GEO = new File(ASSETS, "geo/entity"), ANIM = new File(ASSETS, "animations/entity"), TEX = new File(ASSETS, "textures/entity");
 
     private static JsonObject json(File f) throws Exception {

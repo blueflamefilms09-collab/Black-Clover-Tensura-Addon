@@ -105,7 +105,7 @@ public final class Wave2Rules {
         if (damageTypeId == null) return Hit.OTHER;
         if (direct && damageTypeId.equals("minecraft:player_attack")) return Hit.MELEE;
         if (damageTypeId.equals("minecraft:magic") || damageTypeId.equals("minecraft:indirect_magic")) return Hit.SPELL;
-        return damageTypeId.startsWith("minecraft:") ? Hit.OTHER : Hit.SPELL;       // another namespace (tensura, nusmp, a spell mod) is a spell
+        return damageTypeId.startsWith("minecraft:") ? Hit.OTHER : Hit.SPELL;       // another namespace (tensura, anime_multiverse, a spell mod) is a spell
     }
 
     /** The smite's 1d8 extra radiant damage, at 0.6 per pip, half as much again against evil. */

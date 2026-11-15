@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * footprint box, and no mesh of a shield is turned or mirrored by the file (place angle 90 = upright, handle toward -z).
  */
 class ShieldFrameTest {
-    static final Path MESHES = Path.of("src", "main", "resources", "assets", "nusmp", "weapon_meshes");
+    static final Path MESHES = Path.of("src", "main", "resources", "assets", "anime_multiverse", "weapon_meshes");
 
     /** {xmin, xmax, ymin, ymax, zmin, zmax} over the body, void and glow layers; the place line in {@code place} (5 floats). */
     static float[] box(Path file, float[] place) throws IOException {

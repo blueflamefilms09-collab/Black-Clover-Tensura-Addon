@@ -20,8 +20,8 @@ import org.joml.Matrix4f;
  * The full-body GeckoLib renderer (SpiritLordRenderer) is kept and can be registered again later.
  */
 public class SpiritOrbRenderer extends EntityRenderer<SpiritLordEntity> {
-    private static final ResourceLocation ORB = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/spirit_orb.png");
-    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png");
+    private static final ResourceLocation ORB = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/spirit_orb.png");
+    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png");
     private static final float CORE = 0.45f, HALO = 1.15f, MOTE = 0.12f;
 
     public SpiritOrbRenderer(EntityRendererProvider.Context ctx) {

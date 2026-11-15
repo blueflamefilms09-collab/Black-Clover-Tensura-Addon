@@ -2,7 +2,7 @@
 
     python3 -B tools/compass/gen_compass3d_textures.py
 
-Writes assets/nusmp/textures/entity/compass3d/{rim,face,face_glow,star,needle,glass,aura,glint,seal_ring}.png, deterministically (fixed seed, no clock).
+Writes assets/anime_multiverse/textures/entity/compass3d/{rim,face,face_glow,star,needle,glass,aura,glint,seal_ring}.png, deterministically (fixed seed, no clock).
 The layout (rim profile rows and their texture rows, the star's texture columns, the sizes) is tools/compass/compass3d_layout.json, shared with
 compass3d/CompassMesh.java. The look follows the anime compass: a thick olive-bronze rim, concentric green rings, a pale cream and gold 8 point
 compass rose, a thin gold needle with a small ring at its tail, a glassy glint, a spiky yellow aura behind.
@@ -19,7 +19,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "entity", "compass3d")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "compass3d")
 LAYOUT = json.load(open(os.path.join(HERE, "compass3d_layout.json")))
 SZ = LAYOUT["textures"]
 

@@ -3,7 +3,7 @@ docs/attributes/art_reference/weapons/bolt_thrower_crossbow_of_swift_death_club_
 
     python3 -B tools/gen_rot_doom_icons.py
 
-Writes assets/nusmp/textures/item/<id>.png (16x16, the weapon on the same bottom-left to top-right diagonal as every other weapon icon,
+Writes assets/anime_multiverse/textures/item/<id>.png (16x16, the weapon on the same bottom-left to top-right diagonal as every other weapon icon,
 so the 3D mesh of tools/gen_weapon_models.py is placed the same way) and the two item models <id>.json (the 3D in-hand model, display
 transforms copied from the Magebane Longsword) and <id>_icon.json (the flat inventory icon). The 3D models come from gen_weapon_models.py.
 Both icons are drawn in (along, across) coordinates of the diagonal, then shaded with the light coming from the upper left.
@@ -15,7 +15,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 S = 16
@@ -221,11 +221,11 @@ def doom_hammer():
 
 def models(item_id):
     tpl = json.load(open(os.path.join(MODELS, "magebane_longsword.json"), encoding="utf-8"))
-    tpl["textures"] = {"particle": "nusmp:item/" + item_id}
+    tpl["textures"] = {"particle": "anime_multiverse:item/" + item_id}
     with open(os.path.join(MODELS, item_id + ".json"), "w", newline="\n") as f:
         f.write(json.dumps(tpl, indent=2))
     with open(os.path.join(MODELS, item_id + "_icon.json"), "w", newline="\n") as f:
-        f.write(json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}, indent=2))
+        f.write(json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}, indent=2))
 
 
 def main():

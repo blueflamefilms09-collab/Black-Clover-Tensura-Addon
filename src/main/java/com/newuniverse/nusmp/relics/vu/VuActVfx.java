@@ -27,14 +27,14 @@ public final class VuActVfx {
     private static VuActTable table() {
         if (table == null) {
             VuActTable t = VuActTable.parse(java.util.List.of());
-            try (InputStream in = VuActVfx.class.getResourceAsStream("/data/nusmp/visual_upgrade/act_vfx.txt")) {
+            try (InputStream in = VuActVfx.class.getResourceAsStream("/data/anime_multiverse/visual_upgrade/act_vfx.txt")) {
                 if (in != null) {
                     BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
                     t = VuActTable.parse(r.lines().toList());
-                    for (String p : t.problems()) LogUtils.getLogger().error("[nusmp] visual_upgrade/act_vfx.txt: {}", p);
+                    for (String p : t.problems()) LogUtils.getLogger().error("[anime_multiverse] visual_upgrade/act_vfx.txt: {}", p);
                 }
             } catch (Exception ex) {
-                LogUtils.getLogger().error("[nusmp] visual_upgrade/act_vfx.txt could not be read", ex);
+                LogUtils.getLogger().error("[anime_multiverse] visual_upgrade/act_vfx.txt could not be read", ex);
             }
             table = t;
         }

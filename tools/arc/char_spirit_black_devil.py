@@ -1,4 +1,4 @@
-"""Why: the Black Devil, the dark companion kind of the Spirit Lord (entity nusmp:spirit_lord kind BLACK_DEVIL: Tensura's greater daemon, a dark orb with a red rim in the orb renderer).
+"""Why: the Black Devil, the dark companion kind of the Spirit Lord (entity anime_multiverse:spirit_lord kind BLACK_DEVIL: Tensura's greater daemon, a dark orb with a red rim in the orb renderer).
 There is no old model of its own, so the design is new: a small, lithe devil sprite on the player's rig (the companion's hitbox is 0.6 x 1.4), black-violet skin, curled horns, short bat
 wings, a pointed tail, red slit eyes, a ragged violet-black cloak and a dark orb that glows red in its hand (its anti-magic slash). Kept light enough to read in a dim hall.
 See docs/arc/remodel.md. A game design, not canon.

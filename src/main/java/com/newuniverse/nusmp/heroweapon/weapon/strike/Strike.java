@@ -187,7 +187,7 @@ public final class Strike {
             try {
                 task.accept(cx);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] a delayed hero technique failed", ex);
+                LOG.warn("[anime_multiverse] a delayed hero technique failed", ex);
             }
         });
     }
@@ -201,7 +201,7 @@ public final class Strike {
             try {
                 step.accept(cx, age);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] a hero technique step failed", ex);
+                LOG.warn("[anime_multiverse] a hero technique step failed", ex);
             }
         });
     }

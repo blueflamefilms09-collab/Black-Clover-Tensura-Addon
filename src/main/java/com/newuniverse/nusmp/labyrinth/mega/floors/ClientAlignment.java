@@ -4,7 +4,7 @@ import com.newuniverse.nusmp.labyrinth.mega.Polarity;
 
 /**
  * Why: the client needs to know which road its player is bound to (a future gate hint, a tooltip on the Hub's signposts, a line in the System window), and
- * the only truth lives on the server, so the {@code nusmp:alignment_sync} packet fills this holder. It is plain Java with statics and no client-only import
+ * the only truth lives on the server, so the {@code anime_multiverse:alignment_sync} packet fills this holder. It is plain Java with statics and no client-only import
  * (the same shape as the discovery system's cache), so a common class on a dedicated server can touch it without loading a client class, and a unit test
  * can pin it. One immutable {@link Snapshot} is swapped in whole: the network thread writes and the render thread reads, and a reader must never see a
  * half-updated mix (the new road with the old lock). Until the first packet of a session arrives ({@link #synced()} false: a server without the module, or

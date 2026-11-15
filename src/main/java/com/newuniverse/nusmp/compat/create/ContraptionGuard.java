@@ -89,7 +89,7 @@ public final class ContraptionGuard {
                         return switch (method.getName()) {
                             case "hashCode" -> System.identityHashCode(proxy);
                             case "equals" -> proxy == args[0];
-                            default -> "nusmp dungeon movement check";
+                            default -> "anime_multiverse dungeon movement check";
                         };
                     }
                     if (!method.getName().equals(answering.getName()) || method.getReturnType() != answering.getReturnType()) return null;
@@ -106,7 +106,7 @@ public final class ContraptionGuard {
                 reg.invoke(null, proxy);
                 registered = true;
                 status = "registered with " + name;
-                LOG.info("[nusmp] Create compat: dungeon movement check registered with {}", name);
+                LOG.info("[anime_multiverse] Create compat: dungeon movement check registered with {}", name);
                 return;
             } catch (ClassNotFoundException e) {
                 status = name + " not found";

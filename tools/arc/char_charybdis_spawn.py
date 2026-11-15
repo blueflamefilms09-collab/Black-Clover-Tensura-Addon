@@ -1,4 +1,4 @@
-"""Why: the Charybdis Spawn (entity nusmp:charybdis_spawn, dungeon/floor/charybdis/CharybdisSpawnBoss), the Deep Waterways' floor boss: an ancient squid-whale leviathan, about five blocks of body
+"""Why: the Charybdis Spawn (entity anime_multiverse:charybdis_spawn, dungeon/floor/charybdis/CharybdisSpawnBoss), the Deep Waterways' floor boss: an ancient squid-whale leviathan, about five blocks of body
 and seven with its arms, teal and deep-blue skin in rows of cyan scales, a scarred blind eye and a living one, a dark beak ringed with eight arms and two long feeding tentacles, great
 ragged side fins, a whale's fluke, barnacles and two broken harpoons in its back. The hand-built model (tools/gen_charybdis.py, kept) is replaced by the art kit's version, a creature
 as an anthropomorphic character on the player's rig: a huge teal-scaled humanoid titan that floats, with one blind scarred eye and one cyan eye, a beak and a ring of eight arms where a

@@ -9,7 +9,7 @@ sys.path.insert(0, HERE)
 import djinn36_roster as R                      # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "djinn", "DjinnRoster36.java")
+OUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "djinn", "DjinnRoster36.java")
 
 # how the dust of each affinity moves and how much of it there is a second
 PROFILE = {"HEAT": ("RISE", 9), "WATER": ("FALL", 8), "WIND": ("SWIRL", 11), "LIFE": ("RISE", 7), "STRENGTH": ("HEAVY", 8), "SOUND": ("RING", 7), "LIGHT": ("TWINKLE", 9), "LIGHTNING": ("JITTER", 10)}
@@ -28,7 +28,7 @@ import java.util.Map;
  * the order or the Look of the enum entries is: {@link #styleOf} and {@link #ambientOf} answer for a Djinn's ordinal (the first twelve keep their rows in
  * {@link DjinnLook}); {@link #dustOf} and {@link #colours} describe the Djinn's dust, a particle in the colours of the Djinn (its glow fading to its
  * body colour, black and violet for a Dark Djinn) moving the way its affinity moves; {@link DjinnRoster36Fx} spawns it (this class has no Minecraft types, so it is unit tested). The art itself (meshes, skins, runes, busts, weapons) is read by name from
- * assets/nusmp/djinn and textures/entity/djinn like the first twelve; tools/relics/djinn36_build.py writes it and tools/relics/djinn36_java.py writes THIS FILE
+ * assets/anime_multiverse/djinn and textures/entity/djinn like the first twelve; tools/relics/djinn36_build.py writes it and tools/relics/djinn36_java.py writes THIS FILE
  * from the same table (tools/relics/djinn36_roster.py).
  *
  * <p>The tail rule of the first twelve holds: a Djinn whose Look has no tail has no tail segments in its row (and one that has a tail has some), whatever

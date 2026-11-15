@@ -200,7 +200,7 @@ public final class GrimoireSlot {
     // ---------------------------------------------------------------- network
     /** Player {@code entityId}'s Grimoire Slot content (empty = no grimoire at the hip). */
     public record HipPayload(int entityId, ItemStack stack) implements CustomPacketPayload {
-        public static final Type<HipPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_hip"));
+        public static final Type<HipPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_hip"));
         public static final StreamCodec<RegistryFriendlyByteBuf, HipPayload> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.VAR_INT, HipPayload::entityId,
                 ItemStack.OPTIONAL_STREAM_CODEC, HipPayload::stack,
@@ -211,7 +211,7 @@ public final class GrimoireSlot {
     /** Client asks to open its Grimoire Slot. */
     public record OpenPayload() implements CustomPacketPayload {
         public static final OpenPayload INSTANCE = new OpenPayload();
-        public static final Type<OpenPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_slot_open"));
+        public static final Type<OpenPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_slot_open"));
         public static final StreamCodec<RegistryFriendlyByteBuf, OpenPayload> STREAM_CODEC = StreamCodec.unit(INSTANCE);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }

@@ -49,7 +49,7 @@ def tongue():
     c.blur(0.6)
     c.fade_edges(0.03)
     from PIL import Image
-    c.image().transpose(Image.ROTATE_270).save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle", "flamefx_flame.png"))   # the same flame lying down, tip to the right: what a ribbon (tail -> tip) wants
+    c.image().transpose(Image.ROTATE_270).save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle", "flamefx_flame.png"))   # the same flame lying down, tip to the right: what a ribbon (tail -> tip) wants
     return c.save("flamefx_tongue")
 
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the gear tests read the REAL shipped table ({@code data/nusmp/mega/gear/tables.json}) so a typo in it fails the build, and no JSON library is on
+ * Why: the gear tests read the REAL shipped table ({@code data/anime_multiverse/mega/gear/tables.json}) so a typo in it fails the build, and no JSON library is on
  * the test class path of this project (the other data tests carry their own reader for the same reason; this is a copy of the faction tests' reader,
  * because that one is package-private). It is the smallest reader that does the job: objects (insertion ordered), arrays, strings with the usual
  * escapes, numbers (as {@code Double}), booleans and null, producing exactly the tree shape {@link GearTablesParser} takes. It throws

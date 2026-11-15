@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 
 /** 0.52: Charmy's cotton cloud: a flat-bottomed heap of 18 cotton puffs (texture in tools/gen_cotton_textures.py, 64x64). */
 public class CottonCloudModel {
-    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "cotton_cloud"), "main");
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cotton_cloud"), "main");
 
     /** x, y, z of each puff (px); the first 7 are big (12x6x12), the rest small (8x5x8). */
     static final float[][] PUFFS = {

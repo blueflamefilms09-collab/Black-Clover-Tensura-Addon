@@ -18,7 +18,7 @@ import djinn36_roster as R                      # noqa: E402
 import djinn36_doc as D                         # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-A = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+A = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 CORE = ["helm", "chest", "belt", "pauldron_l", "pauldron_r", "vambrace_l", "vambrace_r", "gauntlet_l", "gauntlet_r", "greave_l", "greave_r", "crest", "wing_in_l", "wing_in_r",
         "wing_out_l", "wing_out_r", "weapon", "backdrop"]
 BUDGET = 5200

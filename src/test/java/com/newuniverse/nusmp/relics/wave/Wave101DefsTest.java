@@ -199,9 +199,9 @@ class Wave101DefsTest {
     void everyRelicHasItsLangEntriesAndTheCardNamesEveryAct() throws IOException {
         String lang = Files.readString(LANG);
         for (Def d : defs()) {
-            for (String k : new String[]{"item.nusmp." + d.id(), "item.nusmp." + d.id() + ".desc", "item.nusmp." + d.id() + ".card"})
+            for (String k : new String[]{"item.anime_multiverse." + d.id(), "item.anime_multiverse." + d.id() + ".desc", "item.anime_multiverse." + d.id() + ".card"})
                 assertTrue(lang.contains("\"" + k + "\": \""), "no lang key " + k);
-            assertTrue(lang.contains("\"item.nusmp." + d.id() + "\": \"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
+            assertTrue(lang.contains("\"item.anime_multiverse." + d.id() + "\": \"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
             Matcher m = Pattern.compile("Act\\.of\\(\"[a-z_]+\", \"([^\"]+)\"").matcher(d.block());
             while (m.find()) assertTrue(lang.contains(m.group(1)), d.id() + ": the card does not name the act " + m.group(1));
         }

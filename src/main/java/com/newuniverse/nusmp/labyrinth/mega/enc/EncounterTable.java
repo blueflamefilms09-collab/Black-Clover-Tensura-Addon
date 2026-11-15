@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Why: the Dungeon Master's encounter table is DATA (one file per theme, {@code data/nusmp/mega/encounters/<theme>.json}), because what lives
+ * Why: the Dungeon Master's encounter table is DATA (one file per theme, {@code data/anime_multiverse/mega/encounters/<theme>.json}), because what lives
  * in a region is the part of the design the owner will keep tuning, and it must change without a rebuild. This class is the parsed form of one
  * file, immutable and free of Minecraft types so the same shape is used by the loader, the roll, the admin command and the tests that read the
  * shipped files. A table is a list of entries; an entry names a size of trouble ({@link Band}), the threat window in which it may happen, what
@@ -14,7 +14,7 @@ import java.util.Set;
  * bigger or smaller.
  */
 public record EncounterTable(String id, String description, int rollBonus, double budgetScale, String defaultFaction, List<Entry> entries) {
-    /** The faction ids of the Mega-Dungeon's contract (the entity-type tags are {@code nusmp:mega/<id>}). */
+    /** The faction ids of the Mega-Dungeon's contract (the entity-type tags are {@code anime_multiverse:mega/<id>}). */
     public static final Set<String> FACTIONS = Set.of("undead", "goblin", "ogre", "beast", "slime", "construct", "cultist", "demon", "elemental", "aquatic", "insect");
 
     public static final EncounterTable EMPTY = new EncounterTable("empty", "", 0, 1.0, null, List.of());

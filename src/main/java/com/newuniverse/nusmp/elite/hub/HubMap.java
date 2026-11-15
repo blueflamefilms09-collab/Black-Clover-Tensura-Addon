@@ -29,13 +29,13 @@ public final class HubMap {
     /** The use of a map by a player: builds the picture of the floor they stand on, charges the use, sends it. */
     static void use(ServerPlayer sp, ItemStack stack) {
         if (!on()) {
-            QuestService.tell(sp, "message.nusmp.hub.map.off", "The map is blank: the Dungeon Map is switched off on this server.");
+            QuestService.tell(sp, "message.anime_multiverse.hub.map.off", "The map is blank: the Dungeon Map is switched off on this server.");
             return;
         }
         ServerLevel level = sp.serverLevel();
         Sector sector = MegaDungeon.in(level) ? MegaDungeon.sectorAt(level, sp.blockPosition()) : null;
         if (sector == null) {
-            QuestService.tell(sp, "message.nusmp.hub.map.nothing", "The map shows nothing here. Use it on a floor of the Mega-Dungeon.");
+            QuestService.tell(sp, "message.anime_multiverse.hub.map.nothing", "The map shows nothing here. Use it on a floor of the Mega-Dungeon.");
             return;
         }
         int floor = MegaDungeon.floorAt(level, sp.blockPosition());

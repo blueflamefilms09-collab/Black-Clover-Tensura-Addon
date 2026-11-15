@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Why: the library (abilities, archetypes) and the roster (400 mob definitions) are data packs' business, so the game reads them again on every data reload and must never crash on
  * a bad file. This class owns the two immutable snapshots everything else reads ({@link #library()}, {@link #roster()}) and the reload listener that replaces them. The files
- * are {@code data/nusmp/mega/foundry/_abilities.json}, {@code _archetypes.json} and one {@code <id>.json} per mob; only the {@code nusmp} namespace is read, so a datapack
+ * are {@code data/anime_multiverse/mega/foundry/_abilities.json}, {@code _archetypes.json} and one {@code <id>.json} per mob; only the {@code anime_multiverse} namespace is read, so a datapack
  * overrides a file by shipping the same path. Every problem the pure parsers report is logged with the file's name; one bad file never costs the others. Snapshots are swapped
  * whole (volatile fields), so the server thread never sees a half-read roster.
  */
@@ -69,7 +69,7 @@ public final class FoundryData {
             FoundryLibrary lib = FoundryLibrary.EMPTY;
             List<FoundryDef> defs = new ArrayList<>();
             try {
-                Map<ResourceLocation, Resource> files = manager.listResources(FOLDER, rl -> rl.getNamespace().equals("nusmp") && rl.getPath().endsWith(".json"));
+                Map<ResourceLocation, Resource> files = manager.listResources(FOLDER, rl -> rl.getNamespace().equals("anime_multiverse") && rl.getPath().endsWith(".json"));
                 List<ResourceLocation> keys = new ArrayList<>(files.keySet());
                 keys.sort(Comparator.comparing(ResourceLocation::toString));
                 String abilitiesText = null, archetypesText = null;
@@ -80,8 +80,8 @@ public final class FoundryData {
                 }
                 var abilities = abilitiesText == null ? new FoundryLibrary.Parsed<FoundryAbility>(Map.of(), List.of("_abilities.json is missing")) : FoundryLibrary.parseAbilities(abilitiesText);
                 var archetypes = archetypesText == null ? new FoundryLibrary.Parsed<FoundryArchetype>(Map.of(), List.of("_archetypes.json is missing")) : FoundryLibrary.parseArchetypes(archetypesText);
-                for (String p : abilities.problems()) LOG.warn("[nusmp] foundry abilities: {}", p);
-                for (String p : archetypes.problems()) LOG.warn("[nusmp] foundry archetypes: {}", p);
+                for (String p : abilities.problems()) LOG.warn("[anime_multiverse] foundry abilities: {}", p);
+                for (String p : archetypes.problems()) LOG.warn("[anime_multiverse] foundry archetypes: {}", p);
                 lib = new FoundryLibrary(abilities.rows(), archetypes.rows());
                 for (ResourceLocation key : keys) {
                     String file = key.getPath().substring(key.getPath().lastIndexOf('/') + 1);
@@ -89,14 +89,14 @@ public final class FoundryData {
                     String text = read(files.get(key), key);
                     if (text == null) continue;
                     FoundryDef.Parsed p = FoundryDef.parse(file, text, lib);
-                    for (String problem : p.problems()) LOG.warn("[nusmp] foundry mob: {}", problem);
+                    for (String problem : p.problems()) LOG.warn("[anime_multiverse] foundry mob: {}", problem);
                     if (p.def() != null) defs.add(p.def());
                 }
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] The Mob Foundry's data could not be listed: {}", e.toString());
+                LOG.warn("[anime_multiverse] The Mob Foundry's data could not be listed: {}", e.toString());
             }
             install(lib, new FoundryRoster(defs));
-            LOG.info("[nusmp] Mob Foundry: {} mobs ({} holy, {} abyssal), {} abilities, {} archetypes", roster.size(), roster.count(com.newuniverse.nusmp.labyrinth.mega.Polarity.HOLY),
+            LOG.info("[anime_multiverse] Mob Foundry: {} mobs ({} holy, {} abyssal), {} abilities, {} archetypes", roster.size(), roster.count(com.newuniverse.nusmp.labyrinth.mega.Polarity.HOLY),
                     roster.count(com.newuniverse.nusmp.labyrinth.mega.Polarity.ABYSSAL), library.abilities().size(), library.archetypes().size());
         }
 
@@ -105,7 +105,7 @@ public final class FoundryData {
             try (InputStream in = res.open()) {
                 return new String(in.readAllBytes(), StandardCharsets.UTF_8);
             } catch (IOException | RuntimeException e) {
-                LOG.warn("[nusmp] {} could not be read: {}", key, e.toString());
+                LOG.warn("[anime_multiverse] {} could not be read: {}", key, e.toString());
                 return null;
             }
         }

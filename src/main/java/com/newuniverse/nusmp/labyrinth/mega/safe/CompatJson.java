@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Why: the compat tables are data files ({@code data/nusmp/mega/compat/<mod>.json}) so the owner can correct a block id of another mod without
+ * Why: the compat tables are data files ({@code data/anime_multiverse/mega/compat/<mod>.json}) so the owner can correct a block id of another mod without
  * a rebuild, and reading a data file must be forgiving (one wrong entry must never take the whole file, or the whole data reload, down) and must
  * be testable. This class is only the translation from parsed JSON (Gson, which the game ships) to the pure {@link CompatTable.Source}: it has no
  * Minecraft types, so the same code is unit-tested against the files that really ship. The schema is

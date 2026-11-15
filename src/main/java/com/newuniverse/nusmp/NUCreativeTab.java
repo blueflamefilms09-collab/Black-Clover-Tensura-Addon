@@ -98,7 +98,7 @@ public final class NUCreativeTab {
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> tab(String id, G g, java.util.function.Supplier<ItemStack> icon) {
         return TABS.register(id, () -> CreativeModeTab.builder()
-                .title(Component.translatable("itemGroup.nusmp." + id))
+                .title(Component.translatable("itemGroup.anime_multiverse." + id))
                 .icon(icon)
                 .displayItems((params, output) -> fill(params, output, g))
                 .build());

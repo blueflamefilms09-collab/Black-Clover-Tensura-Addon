@@ -27,16 +27,16 @@ import java.util.List;
 public final class RelicActKeys {
     private RelicActKeys() {}
 
-    public static final KeyMapping USE = new KeyMapping("key.nusmp.use_worn_relic", InputConstants.Type.KEYSYM,
-            org.lwjgl.glfw.GLFW.GLFW_KEY_V, "key.categories.nusmp");
+    public static final KeyMapping USE = new KeyMapping("key.anime_multiverse.use_worn_relic", InputConstants.Type.KEYSYM,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_V, "key.categories.anime_multiverse");
 
     /** 1.34.0: switches the worn visuals of armour relics (head, chest, feet) off and on; unbound by default. Curios relics use the eye icon of the Curios screen. */
-    public static final KeyMapping TOGGLE_VISUALS = new KeyMapping("key.nusmp.toggle_relic_visuals", InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+    public static final KeyMapping TOGGLE_VISUALS = new KeyMapping("key.anime_multiverse.toggle_relic_visuals", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.anime_multiverse");
 
     /** relics_wear: the all-relics switch ({@code relicfx.showWorn}) as a key; unbound by default. {@code /multiverse relic show <on|off|toggle>} does the same. */
-    public static final KeyMapping TOGGLE_SHOW_WORN = new KeyMapping("key.nusmp.toggle_show_worn_relics", InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+    public static final KeyMapping TOGGLE_SHOW_WORN = new KeyMapping("key.anime_multiverse.toggle_show_worn_relics", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.anime_multiverse");
 
     /** One ability on the ring. */
     record Entry(RelicDef def, Act act) {}
@@ -71,7 +71,7 @@ public final class RelicActKeys {
         while (USE.consumeClick()) { /* the edge is read from isDown below; clicks are drained so they do not pile up */ }
         while (TOGGLE_VISUALS.consumeClick()) {
             boolean hidden = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.toggleHideArmourRelics();
-            mc.player.displayClientMessage(net.minecraft.network.chat.Component.translatable(hidden ? "nusmp.relic.visuals.hidden" : "nusmp.relic.visuals.shown"), true);
+            mc.player.displayClientMessage(net.minecraft.network.chat.Component.translatable(hidden ? "anime_multiverse.relic.visuals.hidden" : "anime_multiverse.relic.visuals.shown"), true);
         }
         while (TOGGLE_SHOW_WORN.consumeClick()) {
             boolean on = com.newuniverse.nusmp.client.relics.fx.RelicFxOptions.toggleShowWorn();

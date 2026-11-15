@@ -11,8 +11,8 @@ import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-MESH = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdw3_meshes")
-SKIN = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "aura", "sdw3_skin.png")
+MESH = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdw3_meshes")
+SKIN = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura", "sdw3_skin.png")
 OUT = os.path.join(ROOT, "docs", "previews", "spirit_dive_wind3", "weapons_turntable.png")
 L = (0.30, 0.35, 0.89)
 ORDER = ["sword", "bow", "arrow", "spear", "blade", "feather", "crown", "plate", "cube", "panel"]

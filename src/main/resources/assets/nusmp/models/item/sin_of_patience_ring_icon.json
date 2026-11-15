@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/sin_of_patience_ring"
-  }
-}

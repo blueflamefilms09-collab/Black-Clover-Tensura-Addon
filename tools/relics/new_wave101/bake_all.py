@@ -2,10 +2,10 @@
 
     python3 -B tools/relics/new_wave101/bake_all.py [id ...]
 
-  assets/nusmp/visual_upgrade/models/<id>[_worn][_lod].txt, textures/visual_upgrade/<id>[_lod][_glow|_star].png   the models, skins, glow maps and nebulae
-  assets/nusmp/visual_upgrade/overrides_genesis_new.txt                                                         the hand / worn lines (read after overrides.txt, like the duel disk file)
-  assets/nusmp/visual_upgrade/fx/<id>.json                                                                      the ambient layers (custom particle tokens only)
-  data/nusmp/visual_upgrade/act_vfx.txt                                                                         the lines `act <id> <act> ...` of these relics, appended between two marker comments
+  assets/anime_multiverse/visual_upgrade/models/<id>[_worn][_lod].txt, textures/visual_upgrade/<id>[_lod][_glow|_star].png   the models, skins, glow maps and nebulae
+  assets/anime_multiverse/visual_upgrade/overrides_genesis_new.txt                                                         the hand / worn lines (read after overrides.txt, like the duel disk file)
+  assets/anime_multiverse/visual_upgrade/fx/<id>.json                                                                      the ambient layers (custom particle tokens only)
+  data/anime_multiverse/visual_upgrade/act_vfx.txt                                                                         the lines `act <id> <act> ...` of these relics, appended between two marker comments
 
 Nothing of the 27 upgraded relics is touched: their overrides.txt (a test counts its 27 lines) and models stay as they are. Idempotent and deterministic. The hook that runs it with the
 shared generators is one line at the end of tools/relics/gen_worn_all.py (main).
@@ -58,7 +58,7 @@ def write_fx(items):
 
 def check_act_shapes(items):
     """The act table accepts only the shapes of VuActTable.SHAPES and at most MAX_STEPS steps per act (a test and the game's own parser say so): fail here, not in the build."""
-    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "vu", "VuActTable.java"), encoding="utf-8").read()
+    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "vu", "VuActTable.java"), encoding="utf-8").read()
     block = src[src.index("SHAPES = Set.of("):src.index("WHERE = Set.of")]
     shapes = set(re.findall(r'"([A-Z_0-9]+)"', block))
     maxsteps = int(re.search(r"MAX_STEPS = (\d+)", src).group(1))
@@ -75,7 +75,7 @@ def check_act_shapes(items):
 
 
 def write_acts(items):
-    path = os.path.join(MT.ROOT, "src", "main", "resources", "data", "nusmp", "visual_upgrade", "act_vfx.txt")
+    path = os.path.join(MT.ROOT, "src", "main", "resources", "data", "anime_multiverse", "visual_upgrade", "act_vfx.txt")
     text = open(path, encoding="utf-8").read()
     if BEGIN in text:
         text = text[:text.index(BEGIN)].rstrip("\n") + "\n"
@@ -89,7 +89,7 @@ def write_acts(items):
 
 def verify(items):
     """The acts of each relic in Wave101.java and the keys of its act effects must be the same set."""
-    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave101.java"), encoding="utf-8").read()
+    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave101.java"), encoding="utf-8").read()
     bad = []
     for it in items:
         m = re.search(r'RelicDef\.of\("%s",' % it.rid, src)

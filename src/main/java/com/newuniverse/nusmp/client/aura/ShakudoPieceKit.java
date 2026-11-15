@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * 1.93.0 (the Shakudo, Scale, Spike, Nail and Hair rebuild): the piece engine of their temporary armour. The armour is ONE geo model per magic
- * ({@code assets/nusmp/geo/entity/<key>_armor.geo.json}) whose ROOT BONES are the pieces (helm, chest, waist, pauldron_r / _l, vambrace_r / _l,
+ * ({@code assets/anime_multiverse/geo/entity/<key>_armor.geo.json}) whose ROOT BONES are the pieces (helm, chest, waist, pauldron_r / _l, vambrace_r / _l,
  * gauntlet_r / _l, greave_r / _l, back ...), authored on the humanoid frame. Each piece is drawn on its own, anchored on the model part it was built
  * for (so it follows crouching, swimming, swinging and the head), and forged in / shattered out by {@link EquipAnimation} exactly like the pieces of the
  * Djinn full equip: staggered by a per-piece delay of 0 to 12 ticks, flying in from its own side while it fades up and grows 85 to 100 percent over 8

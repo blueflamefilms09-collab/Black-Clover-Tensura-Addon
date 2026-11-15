@@ -1,6 +1,6 @@
 """Generates the Legion Magic VFX textures (chess-piece soldiers, the circular board, the crimson rising halo, the grimoire page).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/legion_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/legion_*.png
 
     python3 -B tools/gen_legion_textures.py
 
@@ -14,7 +14,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

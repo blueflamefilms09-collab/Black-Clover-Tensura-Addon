@@ -44,7 +44,7 @@ public final class MacroCommand {
 
     private static int info(CommandSourceStack src) {
         ServerLevel level = src.getServer().getLevel(Labyrinth.SANCTUARY_DIMENSION);
-        if (level == null) return fail(src, "This build has no nusmp:sanctuary dimension.");
+        if (level == null) return fail(src, "This build has no anime_multiverse:sanctuary dimension.");
         MacroParams p = MacroConfig.params();
         HubModel m = model(level);
         say(src, "Sanctuary generator: hub seed " + m.seed() + ", landmarks " + (p.landmarks() ? "on" : "OFF") + ", cell " + p.cell() + ", spire noise " + p.spireNoise()
@@ -60,7 +60,7 @@ public final class MacroCommand {
 
     private static int sample(CommandSourceStack src, int x, int y, int z) {
         ServerLevel level = src.getServer().getLevel(Labyrinth.SANCTUARY_DIMENSION);
-        if (level == null) return fail(src, "This build has no nusmp:sanctuary dimension.");
+        if (level == null) return fail(src, "This build has no anime_multiverse:sanctuary dimension.");
         HubModel m = model(level);
         BlockKind k = m.kindAt(x, y, z);
         BlockPos pos = new BlockPos(x, y, z);

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FuegoleonArmDjinnScanTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path JAVA = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
 
     private static String read(Path p) {
         try { return Files.readString(p, StandardCharsets.UTF_8); } catch (IOException e) { throw new AssertionError("cannot read " + p, e); }
@@ -34,7 +34,7 @@ class FuegoleonArmDjinnScanTest {
     private static String src(String rel) { return code(read(JAVA.resolve(rel))); }
 
     // ------------------------------------------------------------------ 1. server safety
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
 
     @Test
     void theCommonClassesNameNoClientClassAndKeepNoStaticState() {
@@ -127,7 +127,7 @@ class FuegoleonArmDjinnScanTest {
         assertTrue(s.contains("sparkNow("), "staggered by entity id");
         assertTrue(s.contains("PerfProbe.section(\"c.fuegoleon.arm.sparks\")") && s.contains("PerfProbe.begin()") && s.contains("PerfProbe.end("), "timed by the probe");
         assertTrue(s.contains("mc.isPaused()"), "nothing spawns while paused");
-        String themes = read(ROOT.resolve("src/main/resources/data/nusmp/particle_themes.json"));
+        String themes = read(ROOT.resolve("src/main/resources/data/anime_multiverse/particle_themes.json"));
         assertTrue(themes.contains("\"fuegoleon_arm.sparks\""), "the theme exists in the table");
         assertTrue(read(ROOT.resolve("tools/particles/gen_themes.py")).contains("\"fuegoleon_arm.sparks\""), "and in its generator");
     }

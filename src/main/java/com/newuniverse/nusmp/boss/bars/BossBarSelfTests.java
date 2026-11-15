@@ -47,11 +47,11 @@ public final class BossBarSelfTests {
     private static SelfTests.Result run(MinecraftServer server) throws Exception {
         // ---- the styles ship, parse, and have their art
         for (String id : BarStyleIds.ALL) {
-            BarStyle s = BarStyle.parse(read("/assets/nusmp/boss_bars/" + id + ".json"));
+            BarStyle s = BarStyle.parse(read("/assets/anime_multiverse/boss_bars/" + id + ".json"));
             if (!s.id().equals(id)) return SelfTests.Result.fail("style file " + id + " says id " + s.id());
-            if (!exists("/assets/nusmp/textures/gui/boss_bar/frame_" + id + ".png")) return SelfTests.Result.fail("no frame texture for " + id);
+            if (!exists("/assets/anime_multiverse/textures/gui/boss_bar/frame_" + id + ".png")) return SelfTests.Result.fail("no frame texture for " + id);
         }
-        for (String f : new String[]{"emblems.png", "fillfx.png", "chains.png"}) if (!exists("/assets/nusmp/textures/gui/boss_bar/" + f)) return SelfTests.Result.fail("missing texture " + f);
+        for (String f : new String[]{"emblems.png", "fillfx.png", "chains.png"}) if (!exists("/assets/anime_multiverse/textures/gui/boss_bar/" + f)) return SelfTests.Result.fail("missing texture " + f);
 
         // ---- the resolver covers the roster
         List<DecennialProfile> all = DecennialRoster.all();

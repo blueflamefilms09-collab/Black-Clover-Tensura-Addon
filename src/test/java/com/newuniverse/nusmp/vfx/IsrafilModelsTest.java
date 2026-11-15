@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IsrafilModelsTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYER_DIR = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer");
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 

@@ -16,7 +16,7 @@ import java.util.List;
  * Why: the owner saw a tiny dagger and katanas that looked like a thin line. Measured, a katana blade was 1.1 pixels wide and 0.2 pixels thick in the hand, and four daggers had a
  * first-person scale of 0.383. tools/relics/weapon_sizes.py writes thickened copies of the meshes into {@code weapon_meshes_sz}, {@code weapon_meshes_sz/up} and
  * {@code weapon_meshes_vu_sz} (the old files stay); the renderer reads the copy when it exists ({@link #szPath}); this class measures a mesh text the same way the tool does and checks
- * it against the limits of {@code assets/nusmp/weapon_sizes.json}.
+ * it against the limits of {@code assets/anime_multiverse/weapon_sizes.json}.
  */
 public final class WeaponSizeRule {
     private WeaponSizeRule() {}
@@ -29,7 +29,7 @@ public final class WeaponSizeRule {
 
     // ---------------------------------------------------------------- paths
     /**
-     * The path of the thickened copy of a mesh file (relative to assets/nusmp), or null for a path that has none: {@code weapon_meshes/x.txt} to {@code weapon_meshes_sz/x.txt},
+     * The path of the thickened copy of a mesh file (relative to assets/anime_multiverse), or null for a path that has none: {@code weapon_meshes/x.txt} to {@code weapon_meshes_sz/x.txt},
      * {@code weapon_meshes/up/x.txt} to {@code weapon_meshes_sz/up/x.txt}, {@code weapon_meshes_vu/x.txt} to {@code weapon_meshes_vu_sz/x.txt}.
      */
     public static String szPath(String file) {

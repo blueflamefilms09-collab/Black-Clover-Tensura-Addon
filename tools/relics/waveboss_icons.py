@@ -1,6 +1,6 @@
 """The 16x16 inventory icons of the three boss relics (Dante's Gravity Crown, Zenon's Spatial Ring, the Artifact Mimic).
 
-Writes textures/item/<id>.png and models/item/<id>.json (parent item/generated) under src/main/resources/assets/nusmp. Idempotent. Reuses the Icon
+Writes textures/item/<id>.png and models/item/<id>.json (parent item/generated) under src/main/resources/assets/anime_multiverse. Idempotent. Reuses the Icon
 helper of wave7_icons.py (a char grid, derived light and dark edges, a one pixel outline, grade-coloured rim pixels).
 
 Run from the repository root:  python3 -B tools/relics/waveboss_icons.py
@@ -105,7 +105,7 @@ def main():
     for rid, make in (("dante_gravity_crown", crown), ("zenon_spatial_ring", ring), ("artifact_mimic", mimic)):
         make().image().save(os.path.join(tex, rid + ".png"))
         with open(os.path.join(mod, rid + ".json"), "w") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}, f, indent=2)
         print("wrote", rid)
 
 

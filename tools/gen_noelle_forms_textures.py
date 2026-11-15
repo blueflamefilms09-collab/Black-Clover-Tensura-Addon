@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_noelle_forms_textures.py
 
-Writes assets/nusmp/textures/aura/noelle_*.png (+ _glow for the 64x64 skin overlays). Every sprite is NEUTRAL (white-grey on transparent; the painter tints it per form with the vertex colour),
+Writes assets/anime_multiverse/textures/aura/noelle_*.png (+ _glow for the 64x64 skin overlays). Every sprite is NEUTRAL (white-grey on transparent; the painter tints it per form with the vertex colour),
 black under its transparent texels and fully transparent at its border (the additive passes of the mod ask for that: docs/vfx_square_bug.md). Deterministic.
 
   noelle_ring        a band for the halo and gyro rings: runes and ticks, bright rim, soft top and bottom, tiles along u

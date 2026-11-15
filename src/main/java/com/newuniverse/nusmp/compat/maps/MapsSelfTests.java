@@ -30,7 +30,7 @@ public final class MapsSelfTests {
         int total = 0;
         List<String> missing = new ArrayList<>();
         for (ResourceLocation id : BuiltInRegistries.BLOCK.keySet()) {
-            if (!"nusmp".equals(id.getNamespace())) continue;
+            if (!"anime_multiverse".equals(id.getNamespace())) continue;
             total++;
             Block b = BuiltInRegistries.BLOCK.get(id);
             if (b.defaultMapColor() == MapColor.NONE) missing.add(id.getPath());
@@ -43,7 +43,7 @@ public final class MapsSelfTests {
         int strings = 0;
         for (String n : DimensionAudit.NAMES) {
             for (WaypointShare.Kind k : WaypointShare.Kind.values()) {
-                String dim = "nusmp:" + n;
+                String dim = "anime_multiverse:" + n;
                 String s = WaypointShare.xaero("Floor 3: " + n, -12, 70, 4_000_123, k, dim);
                 Optional<WaypointShare.Waypoint> w = WaypointShare.parse(s);
                 if (w.isEmpty()) return SelfTests.Result.fail("the waypoint string does not parse back: " + s);
@@ -65,12 +65,12 @@ public final class MapsSelfTests {
         for (DimensionAudit.Report r : dims) if (!r.problems().contains("no dimension type JSON")) visible = true;
         if (visible) for (DimensionAudit.Report r : dims) if (!r.ok()) return SelfTests.Result.fail("dimension " + r.id() + ": " + r.problems());
         // 4. the FTB Chunks reader and the minimap geometry
-        FtbChunksCheck.Result f = FtbChunksCheck.analyse("claim_dimension_blacklist: [ \"nusmp:*\" ]", FtbChunksGuard.ourDimensions(), "selftest");
-        if (f.status() != FtbChunksCheck.Status.COVERED) return SelfTests.Result.fail("the FTB Chunks reader did not accept a nusmp:* blacklist");
+        FtbChunksCheck.Result f = FtbChunksCheck.analyse("claim_dimension_blacklist: [ \"anime_multiverse:*\" ]", FtbChunksGuard.ourDimensions(), "selftest");
+        if (f.status() != FtbChunksCheck.Status.COVERED) return SelfTests.Result.fail("the FTB Chunks reader did not accept a anime_multiverse:* blacklist");
         MinimapRect.Rect mini = MinimapRect.topRight(480, 270, 140);
         if (MinimapRect.avoidX(400, 20, 60, 20, mini) >= mini.x()) return SelfTests.Result.fail("the minimap helper did not move a box out of the minimap");
         // 4b. the chat line carries the readable text, and the raw Xaero's string unless the owner switched that off
-        String shown = MapShare.line(new MapShare.Place(WaypointShare.Kind.GATE, "Self-test: Gate", "nusmp:sanctuary", 1, 2, 3)).getString();
+        String shown = MapShare.line(new MapShare.Place(WaypointShare.Kind.GATE, "Self-test: Gate", "anime_multiverse:sanctuary", 1, 2, 3)).getString();
         if (!shown.contains("1, 2, 3")) return SelfTests.Result.fail("the waypoint chat line lost its coordinates: " + shown);
         if (MapsConfig.get(MapsConfig.RAW_XAERO_STRING) && !shown.contains("xaero-waypoint:Self-test^col^ Gate:S:1:2:3:")) return SelfTests.Result.fail("the waypoint chat line lacks the raw Xaero's string: " + shown);
         // 5. the block colours

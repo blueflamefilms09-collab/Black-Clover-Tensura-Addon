@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "anime_multiverse:shadowsteel_ingot"
+    },
+    "H": {
+      "item": "anime_multiverse:imp_horn"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " SH",
+    " S ",
+    "I  "
+  ],
+  "result": {
+    "id": "anime_multiverse:shadowsteel_katana",
+    "count": 1
+  }
+}

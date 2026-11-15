@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * Why: the list of Sylph's SPOKEN lines (docs/magic/sylph.md, "Voice lines"), pure data with no game class, so the tests, the voice catalogue
- * ({@link com.newuniverse.nusmp.audio.voice.VoiceCatalog}: the id of a line is {@code sylph_<group>_<n>}, its sound event {@code nusmp:voice.sylph_<group>_<n>}, its file
+ * ({@link com.newuniverse.nusmp.audio.voice.VoiceCatalog}: the id of a line is {@code sylph_<group>_<n>}, its sound event {@code anime_multiverse:voice.sylph_<group>_<n>}, its file
  * {@code sounds/voice/sylph/sylph_<group>_<n>.ogg}) and the picker all read the same ids. Only lines whose Ogg file exists are listed: {@code tools/audio/sylph_lines.json} (made by
  * {@code tools/audio/sylph_lines.py}) holds every line she is meant to have and {@code SylphVoiceDataTest} checks that this list, the files, {@code sounds.json} and the subtitles agree.
  * A group is a happening ({@link SylphMood} names which one a mood says); {@link #pick} chooses a line of it without repeating the one said last.
@@ -100,5 +100,5 @@ public final class SylphVoiceLines {
     }
 
     /** The spoken text of a line is in {@code tools/lang/sylph_voice.json} under this subtitle key. */
-    public static String subtitleKey(String id) { return "subtitles.nusmp.voice." + id; }
+    public static String subtitleKey(String id) { return "subtitles.anime_multiverse.voice." + id; }
 }

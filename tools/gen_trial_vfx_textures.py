@@ -1,7 +1,7 @@
 """Generates the Veldanava "Israfil, Lord of Trials" VFX textures (vfx.client.layer.TrialLayer).
 
 Deterministic and font-free (every machine writes the same pixels). Written from scratch for this mod; shares no code or asset with any other mod.
-Output: src/main/resources/assets/nusmp/textures/particle/trial_*.png  (new files only; nothing existing is touched)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/trial_*.png  (new files only; nothing existing is touched)
 
     python tools/gen_trial_vfx_textures.py
 
@@ -35,7 +35,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 WHITE = (255, 255, 255, 255)
 ICE = (222, 251, 255)
 CYAN = (112, 232, 247)

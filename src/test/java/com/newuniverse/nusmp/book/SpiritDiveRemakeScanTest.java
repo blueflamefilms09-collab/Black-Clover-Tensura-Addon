@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SpiritDiveRemakeScanTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path JAVA = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
 
     private static String read(Path p) {
         try { return Files.readString(p, StandardCharsets.UTF_8); } catch (IOException e) { throw new AssertionError("cannot read " + p, e); }
@@ -80,7 +80,7 @@ class SpiritDiveRemakeScanTest {
     }
 
     // ------------------------------------------------------------------ 2. server safety
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
     private static final String[] COMMON = {"book/SpiritDiveTier.java", "book/SpiritDivePieces.java", "book/SpiritDiveForm.java", "book/SpiritDiveConfig.java", "book/SpiritDiveBoot.java",
             "book/SpiritDiveSelfTests.java", "book/FuegoleonArm.java", "book/FuegoleonArmRules.java"};
 
@@ -206,7 +206,7 @@ class SpiritDiveRemakeScanTest {
 
     @Test
     void everyParticleThemeTheTrailNamesIsInTheThemeTable() {
-        String themes = read(ROOT.resolve("src/main/resources/data/nusmp/particle_themes.json"));
+        String themes = read(ROOT.resolve("src/main/resources/data/anime_multiverse/particle_themes.json"));
         Matcher m = Pattern.compile("ThemeKey\\.of\\(\"(spirit_dive\\.[a-z]+)\"\\)").matcher(read(JAVA.resolve("client/aura/DiveParticles.java")));
         int n = 0;
         while (m.find()) {
@@ -221,15 +221,15 @@ class SpiritDiveRemakeScanTest {
     @Test
     void theLangFragmentIsFlatJsonAndHasEveryKeyTheCodeUses() throws IOException {
         String frag = read(ROOT.resolve("tools/lang/spirit_dives.json"));
-        Matcher keys = Pattern.compile("\"(nusmp\\.spiritdive\\.[a-z.]+)\"\\s*:\\s*\"[^\"]+\"").matcher(frag);
+        Matcher keys = Pattern.compile("\"(anime_multiverse\\.spiritdive\\.[a-z.]+)\"\\s*:\\s*\"[^\"]+\"").matcher(frag);
         List<String> have = new ArrayList<>();
         while (keys.find()) have.add(keys.group(1));
         assertEquals(4, have.size());
         assertFalse(frag.contains("{\n  \"") && frag.indexOf('{', 1) > 0, "a flat key -> text file");
-        Matcher arm = Pattern.compile("translatableWithFallback\\(\"(nusmp\\.spiritdive\\.[a-z.]+)\"").matcher(read(JAVA.resolve("book/FuegoleonArm.java")));
+        Matcher arm = Pattern.compile("translatableWithFallback\\(\"(anime_multiverse\\.spiritdive\\.[a-z.]+)\"").matcher(read(JAVA.resolve("book/FuegoleonArm.java")));
         assertTrue(arm.find() && have.contains(arm.group(1)), "the arm's line is not in the fragment");
-        assertTrue(read(JAVA.resolve("book/SpiritDiveForm.java")).contains("\"nusmp.spiritdive.tier.\" + g.name()"), "the tier lines are keyed by the grade name");
-        for (Grade g : new Grade[]{Grade.YUNO, Grade.FUEGOLEON, Grade.NOELLE}) assertTrue(have.contains("nusmp.spiritdive.tier." + g.name().toLowerCase()), "no line for " + g);
+        assertTrue(read(JAVA.resolve("book/SpiritDiveForm.java")).contains("\"anime_multiverse.spiritdive.tier.\" + g.name()"), "the tier lines are keyed by the grade name");
+        for (Grade g : new Grade[]{Grade.YUNO, Grade.FUEGOLEON, Grade.NOELLE}) assertTrue(have.contains("anime_multiverse.spiritdive.tier." + g.name().toLowerCase()), "no line for " + g);
     }
 
     @Test

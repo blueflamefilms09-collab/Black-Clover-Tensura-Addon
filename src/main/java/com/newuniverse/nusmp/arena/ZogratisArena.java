@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Why: Lucius (1.46.0) fights in one place only, a dimension of his own, {@code nusmp:zogratis_arena}, and every other class of the
+ * Why: Lucius (1.46.0) fights in one place only, a dimension of his own, {@code anime_multiverse:zogratis_arena}, and every other class of the
  * arena package (the builder, the director, the travel, the spawn gate, the guard) compares against the same ids and the same centre. This
  * class is that one place, in the shape of {@link com.newuniverse.nusmp.labyrinth.Labyrinth}: the dimension key, {@code in(Level)} and
  * {@code in(Entity)} (null safe, both sides), and the three points of the courtyard that the other classes need (the floor centre, where
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 public final class ZogratisArena {
     private ZogratisArena() {}
 
-    /** The dimension of the fight (data/nusmp/dimension/zogratis_arena.json). */
+    /** The dimension of the fight (data/anime_multiverse/dimension/zogratis_arena.json). */
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "zogratis_arena"));
 
     /** Is this world the arena? Null-safe, both sides (the key is compared, not the level instance). */

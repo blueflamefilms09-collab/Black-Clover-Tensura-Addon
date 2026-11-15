@@ -108,7 +108,7 @@ public final class RelicPowerEvents {
 
     private static void tellOnce(ServerPlayer p, double f) {
         if (!TOLD.add(p.getUUID())) return;
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.relic.attune_lock.hit", "This relic only deals %s%% of its power until you attune it",
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.relic.attune_lock.hit", "This relic only deals %s%% of its power until you attune it",
                 RelicPower.percent(f)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
     }
 
@@ -152,8 +152,8 @@ public final class RelicPowerEvents {
         boolean other = Attune.owner(s) != null;
         List<Component> tip = e.getToolTip();
         tip.add(other
-                ? Component.translatableWithFallback("tooltip.nusmp.relic.attuned_other", "Attuned to someone else: %s%% power. Hold sneak + use for 5 s to take it over", RelicPower.percent(f)).withStyle(ChatFormatting.RED)
-                : Component.translatableWithFallback("tooltip.nusmp.relic.unattuned_power", "Unattuned: %s%% power. Hold sneak + use for 5 s to attune", RelicPower.percent(f)).withStyle(ChatFormatting.RED));
+                ? Component.translatableWithFallback("tooltip.anime_multiverse.relic.attuned_other", "Attuned to someone else: %s%% power. Hold sneak + use for 5 s to take it over", RelicPower.percent(f)).withStyle(ChatFormatting.RED)
+                : Component.translatableWithFallback("tooltip.anime_multiverse.relic.unattuned_power", "Unattuned: %s%% power. Hold sneak + use for 5 s to attune", RelicPower.percent(f)).withStyle(ChatFormatting.RED));
     }
 
     // ---------------------------------------------------------------- /multiverse relic power [player]

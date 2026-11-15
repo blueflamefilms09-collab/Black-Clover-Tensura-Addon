@@ -45,13 +45,13 @@
 				{
 					id: "708A4DE5B3D2EA27"
 					type: "advancement"
-					advancement: "nusmp:start/questionnaire"
+					advancement: "anime_multiverse:start/questionnaire"
 					criterion: ""
 				}
 				{
 					id: "2F954193ECE0375A"
 					type: "advancement"
-					advancement: "nusmp:arcs/entrance_exam"
+					advancement: "anime_multiverse:arcs/entrance_exam"
 					criterion: ""
 				}
 			]
@@ -76,7 +76,7 @@
 				{
 					id: "28DCB13BDEE30DF0"
 					type: "dimension"
-					dimension: "nusmp:grimoire_library"
+					dimension: "anime_multiverse:grimoire_library"
 				}
 			]
 			rewards: [
@@ -100,7 +100,7 @@
 				{
 					id: "732895BB6A396A37"
 					type: "advancement"
-					advancement: "nusmp:start/casts_50"
+					advancement: "anime_multiverse:start/casts_50"
 					criterion: ""
 				}
 			]
@@ -127,7 +127,7 @@
 				{
 					id: "2473A916462C1CAB"
 					type: "advancement"
-					advancement: "nusmp:start/pages_10"
+					advancement: "anime_multiverse:start/pages_10"
 					criterion: ""
 				}
 			]
@@ -159,7 +159,7 @@
 				{
 					id: "57A18B3FE6D33094"
 					type: "advancement"
-					advancement: "nusmp:spells/signature"
+					advancement: "anime_multiverse:spells/signature"
 					criterion: ""
 				}
 			]
@@ -186,7 +186,7 @@
 				{
 					id: "252B5CA884700D84"
 					type: "advancement"
-					advancement: "nusmp:squads/created"
+					advancement: "anime_multiverse:squads/created"
 					criterion: ""
 				}
 			]
@@ -213,7 +213,7 @@
 				{
 					id: "2B3E4C30BDC4E780"
 					type: "advancement"
-					advancement: "nusmp:start/mastery"
+					advancement: "anime_multiverse:start/mastery"
 					criterion: ""
 				}
 			]

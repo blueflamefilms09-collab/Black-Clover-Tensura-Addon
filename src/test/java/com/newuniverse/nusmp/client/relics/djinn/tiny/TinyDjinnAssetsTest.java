@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * shared animation file has the six clips and moves only bones every model has, and the looks differ from one another.
  */
 class TinyDjinnAssetsTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final File SPECS = new File("tools/tiny_djinn/specs.json");
 
     private static JsonObject json(File f) throws Exception {

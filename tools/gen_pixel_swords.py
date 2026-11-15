@@ -20,8 +20,8 @@ import os
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item")
-MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
+MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item")
 PREVIEW = os.path.join(ROOT, "build", "weapons")
 N = 32
 
@@ -344,9 +344,9 @@ def model(name, tp, fp, glow):
     if glow:
         m["loader"] = "neoforge:item_layers"
     m["parent"] = "minecraft:item/handheld"
-    m["textures"] = {"layer0": f"nusmp:item/{name}"}
+    m["textures"] = {"layer0": f"anime_multiverse:item/{name}"}
     if glow:
-        m["textures"]["layer1"] = f"nusmp:item/{name}_glow"
+        m["textures"]["layer1"] = f"anime_multiverse:item/{name}_glow"
         m["neoforge_data"] = {"layers": {"1": {"block_light": 15, "sky_light": 15, "ambient_occlusion": False}}}
     r = lambda v: round(v, 3)
     m["display"] = {

@@ -22,8 +22,8 @@ class GokuRulesTest {
         assertFalse(SaiyanUltimates.openTo(u, "slime"));
         assertFalse(SaiyanUltimates.openTo(null, "saiyan"));
         assertNull(SaiyanUltimates.byId("frieza"), "Frieza is a racial evolution, not a Saiyan Ultimate");
-        assertEquals("nusmp.saiyan.ultimate.goku", u.nameKey());
-        assertEquals("nusmp.saiyan.ultimate.goku.epithet", u.epithetKey());
+        assertEquals("anime_multiverse.saiyan.ultimate.goku", u.nameKey());
+        assertEquals("anime_multiverse.saiyan.ultimate.goku.epithet", u.epithetKey());
     }
 
     @Test

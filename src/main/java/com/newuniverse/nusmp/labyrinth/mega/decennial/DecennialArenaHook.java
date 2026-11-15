@@ -30,7 +30,7 @@ public final class DecennialArenaHook implements SectorListener {
         try {
             hook(level, sector);
         } catch (RuntimeException e) {
-            LOG.error("[nusmp] The Decennial hall of sector {} could not be planned (the old hall stays): {}", sector == null ? -1 : sector.id, e.toString());
+            LOG.error("[anime_multiverse] The Decennial hall of sector {} could not be planned (the old hall stays): {}", sector == null ? -1 : sector.id, e.toString());
         }
     }
 
@@ -61,15 +61,15 @@ public final class DecennialArenaHook implements SectorListener {
         if (p == null) return;                                                  // no boss for this level: the Guardian's old hall stays
         BossArenaStructure plan = ArenaThemes.buildForFloor(p.theme());
         if (plan == null) {
-            LOG.warn("[nusmp] The boss of level {} names the unknown hall '{}': the old hall stays.", level0, p.theme());
+            LOG.warn("[anime_multiverse] The boss of level {} names the unknown hall '{}': the old hall stays.", level0, p.theme());
             return;
         }
         ArenaFrame frame = frameOf(level, sector);
         if (frame == null) {
-            LOG.warn("[nusmp] Sector {} has no Guardian spawn marker: its hall is left as the template made it.", sector.id);
+            LOG.warn("[anime_multiverse] Sector {} has no Guardian spawn marker: its hall is left as the template made it.", sector.id);
             return;
         }
         DecennialArenas.registerSector(level, sector.id, p, plan, frame);
-        LOG.info("[nusmp] Sector {} (floor {}) gets the hall '{}' for {} ({}), turned {}.", sector.id, sector.lastFloor(), p.theme(), p.name(), p.id(), frame.rot());
+        LOG.info("[anime_multiverse] Sector {} (floor {}) gets the hall '{}' for {} ({}), turned {}.", sector.id, sector.lastFloor(), p.theme(), p.name(), p.id(), frame.rot());
     }
 }

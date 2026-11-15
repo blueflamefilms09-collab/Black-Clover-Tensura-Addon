@@ -290,7 +290,7 @@ public final class CharacterArts {
     }
 
     // ================================================================ Yami: Dark Magic
-    private static final ResourceLocation DEEP_BLADE = ResourceLocation.fromNamespaceAndPath("nusmp", "deep_black_blade_reach");
+    private static final ResourceLocation DEEP_BLADE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "deep_black_blade_reach");
 
     /** Dark Cloaked Deep Black Blade: the Black Blade grown deeper: 4 blocks of extra reach and Strength II for 20 s (effect inferred from the name). */
     public static boolean deepBlackBlade(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {

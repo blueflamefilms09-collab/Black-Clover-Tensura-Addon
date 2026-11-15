@@ -96,13 +96,13 @@ public final class MegaRifts {
             double dx = at.getX() + 0.5 - q.getX(), dy = at.getY() - q.getY(), dz = at.getZ() + 0.5 - q.getZ();
             if (q.isSpectator() || dx * dx + dy * dy + dz * dz > r2) continue;
             near.add(q);
-            q.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.opened.mega", "The air SCREAMS open nearby: a tomb out of the old world, torn loose from its place.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), true);
-            q.sendSystemMessage(Component.translatableWithFallback("message.nusmp.mega.rift.hint.mega", "[SYSTEM] A great rift opened %s blocks to the %s. It leads to %s. It will not stay open long.", (int) Math.round(Math.sqrt(dx * dx + dz * dz)),
-                    RiftRules.compass(dx, dz), Component.translatableWithFallback("pocket.nusmp." + def.id() + ".name", def.name())).withStyle(ChatFormatting.LIGHT_PURPLE));
+            q.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.opened.mega", "The air SCREAMS open nearby: a tomb out of the old world, torn loose from its place.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), true);
+            q.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.hint.mega", "[SYSTEM] A great rift opened %s blocks to the %s. It leads to %s. It will not stay open long.", (int) Math.round(Math.sqrt(dx * dx + dz * dz)),
+                    RiftRules.compass(dx, dz), Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".name", def.name())).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
         level.playSound(null, at, SoundEvents.END_PORTAL_SPAWN, SoundSource.AMBIENT, 2.5f, 0.5f);
         if (RiftConfig.get(RiftConfig.MEGA_BROADCAST) && level.getServer() != null) {
-            Component line = Component.translatableWithFallback("message.nusmp.mega.rift.broadcast", "A great rift has torn open on floor %s of the dungeon. Every kingdom will want what is behind it.", FloorMap.label(floor)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
+            Component line = Component.translatableWithFallback("message.anime_multiverse.mega.rift.broadcast", "A great rift has torn open on floor %s of the dungeon. Every kingdom will want what is behind it.", FloorMap.label(floor)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
             for (ServerPlayer q : level.getServer().getPlayerList().getPlayers()) if (!near.contains(q)) q.sendSystemMessage(line);
         }
         if (finder != null) NusmpEvents.fire(finder, "mega.rift", "mega");

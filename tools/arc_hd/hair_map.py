@@ -13,7 +13,7 @@ import sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-STYLES_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "playermodel", "hair_styles.json")
+STYLES_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "playermodel", "hair_styles.json")
 
 KEEP = "classic"      # the 64x64 generator's own choice stays (None as the style below means 'whatever the generator chose')
 

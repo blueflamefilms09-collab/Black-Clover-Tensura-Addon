@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class DiscoveryRulesTest {
     @Test
     void keysHaveTheirPrefixAndOnlyTheModIsTracked() {
-        assertEquals("item:nusmp:heart_of_words", DiscoveryRules.itemKey("nusmp", "heart_of_words"));
+        assertEquals("item:anime_multiverse:heart_of_words", DiscoveryRules.itemKey("anime_multiverse", "heart_of_words"));
         assertEquals("page:fire_book:attribute_bolt", DiscoveryRules.pageKey("fire_book", "attribute_bolt"));
-        assertEquals("skill:nusmp:grimoire_fire", DiscoveryRules.skillKey("nusmp", "grimoire_fire"));
+        assertEquals("skill:anime_multiverse:grimoire_fire", DiscoveryRules.skillKey("anime_multiverse", "grimoire_fire"));
         assertEquals("magic:poison_plant", DiscoveryRules.magicKey("POISON_PLANT"));
         assertEquals("spiritlord:salamander", DiscoveryRules.spiritLordKey("SALAMANDER"));
-        assertEquals("mob:nusmp:zagred", DiscoveryRules.mobKey("nusmp", "zagred"));
+        assertEquals("mob:anime_multiverse:zagred", DiscoveryRules.mobKey("anime_multiverse", "zagred"));
         assertEquals("boss:dante", DiscoveryRules.bossKey("Dante"));
-        assertTrue(DiscoveryRules.tracksNamespace("nusmp"));
+        assertTrue(DiscoveryRules.tracksNamespace("anime_multiverse"));
         assertFalse(DiscoveryRules.tracksNamespace("tensura"));
         assertFalse(DiscoveryRules.tracksNamespace("minecraft"));
         assertFalse(DiscoveryRules.tracksNamespace(null));
@@ -27,36 +27,36 @@ class DiscoveryRulesTest {
 
     @Test
     void validKeysAreShortPrefixedAndClean() {
-        assertTrue(DiscoveryRules.validKey("item:nusmp:a"));
+        assertTrue(DiscoveryRules.validKey("item:anime_multiverse:a"));
         assertTrue(DiscoveryRules.validKey("boss:dante"));
         assertFalse(DiscoveryRules.validKey(null));
         assertFalse(DiscoveryRules.validKey(""));
         assertFalse(DiscoveryRules.validKey("item:"));                       // a prefix alone
-        assertFalse(DiscoveryRules.validKey("nusmp:thing"));                 // no known prefix
-        assertFalse(DiscoveryRules.validKey("item:nusmp:has space"));
-        assertFalse(DiscoveryRules.validKey("item:nusmp:tab\there"));
+        assertFalse(DiscoveryRules.validKey("anime_multiverse:thing"));                 // no known prefix
+        assertFalse(DiscoveryRules.validKey("item:anime_multiverse:has space"));
+        assertFalse(DiscoveryRules.validKey("item:anime_multiverse:tab\there"));
         assertFalse(DiscoveryRules.validKey("item:" + "x".repeat(DiscoveryRules.MAX_KEY_LENGTH)));
         assertTrue(DiscoveryRules.validKey("item:" + "x".repeat(DiscoveryRules.MAX_KEY_LENGTH - 5)));
     }
 
     @Test
     void visibleOnlyWhenKnownOrShowAll() {
-        Set<String> known = Set.of("item:nusmp:a");
-        assertTrue(DiscoveryRules.visible(known, false, "item:nusmp:a"));
-        assertFalse(DiscoveryRules.visible(known, false, "item:nusmp:b"));
-        assertTrue(DiscoveryRules.visible(known, true, "item:nusmp:b"), "show-all (creative) sees everything");
+        Set<String> known = Set.of("item:anime_multiverse:a");
+        assertTrue(DiscoveryRules.visible(known, false, "item:anime_multiverse:a"));
+        assertFalse(DiscoveryRules.visible(known, false, "item:anime_multiverse:b"));
+        assertTrue(DiscoveryRules.visible(known, true, "item:anime_multiverse:b"), "show-all (creative) sees everything");
         assertFalse(DiscoveryRules.visible(known, false, null), "no key is never visible unless show-all");
-        assertFalse(DiscoveryRules.visible(Set.of(), false, "item:nusmp:a"));
-        assertFalse(DiscoveryRules.visible(null, false, "item:nusmp:a"));
+        assertFalse(DiscoveryRules.visible(Set.of(), false, "item:anime_multiverse:a"));
+        assertFalse(DiscoveryRules.visible(null, false, "item:anime_multiverse:a"));
     }
 
     @Test
     void anyOfSeveralKeysShowsAnEntryAndNoKeysNeverGates() {
-        Set<String> known = Set.of("item:nusmp:b");
-        assertTrue(DiscoveryRules.visibleAny(known, false, List.of("item:nusmp:a", "item:nusmp:b")));
-        assertFalse(DiscoveryRules.visibleAny(known, false, List.of("item:nusmp:a", "item:nusmp:c")));
+        Set<String> known = Set.of("item:anime_multiverse:b");
+        assertTrue(DiscoveryRules.visibleAny(known, false, List.of("item:anime_multiverse:a", "item:anime_multiverse:b")));
+        assertFalse(DiscoveryRules.visibleAny(known, false, List.of("item:anime_multiverse:a", "item:anime_multiverse:c")));
         assertTrue(DiscoveryRules.visibleAny(known, false, List.of()), "an entry with no keys is not gated");
-        assertTrue(DiscoveryRules.visibleAny(known, true, List.of("item:nusmp:z")));
+        assertTrue(DiscoveryRules.visibleAny(known, true, List.of("item:anime_multiverse:z")));
         assertEquals(List.of("a", "b", "c"), DiscoveryRules.splitKeys("a|b| c |"));
         assertEquals(List.of(), DiscoveryRules.splitKeys(null));
         assertEquals(List.of(), DiscoveryRules.splitKeys(""));
@@ -64,11 +64,11 @@ class DiscoveryRulesTest {
 
     @Test
     void anUndiscoveredLabelIsAlwaysTheSameThreeQuestionMarks() {
-        Set<String> known = Set.of("item:nusmp:a");
-        assertEquals("Sword", DiscoveryRules.label(known, false, "item:nusmp:a", "Sword"));
-        assertEquals("???", DiscoveryRules.label(known, false, "item:nusmp:b", "Sword"));
-        assertEquals("???", DiscoveryRules.label(known, false, "item:nusmp:b", "A Much Longer Secret Name"), "the length of the name must not leak");
-        assertEquals("A Much Longer Secret Name", DiscoveryRules.label(known, true, "item:nusmp:b", "A Much Longer Secret Name"));
+        Set<String> known = Set.of("item:anime_multiverse:a");
+        assertEquals("Sword", DiscoveryRules.label(known, false, "item:anime_multiverse:a", "Sword"));
+        assertEquals("???", DiscoveryRules.label(known, false, "item:anime_multiverse:b", "Sword"));
+        assertEquals("???", DiscoveryRules.label(known, false, "item:anime_multiverse:b", "A Much Longer Secret Name"), "the length of the name must not leak");
+        assertEquals("A Much Longer Secret Name", DiscoveryRules.label(known, true, "item:anime_multiverse:b", "A Much Longer Secret Name"));
     }
 
     @Test
@@ -113,7 +113,7 @@ class DiscoveryRulesTest {
         assertEquals(1, DiscoveryRules.chunks(List.of()).size(), "an empty set still sends one (empty) packet so the client is told");
         assertTrue(DiscoveryRules.chunks(List.of()).get(0).isEmpty());
         List<String> keys = new ArrayList<>();
-        for (int i = 0; i < DiscoveryRules.CHUNK * 2 + 1; i++) keys.add("item:nusmp:k" + i);
+        for (int i = 0; i < DiscoveryRules.CHUNK * 2 + 1; i++) keys.add("item:anime_multiverse:k" + i);
         List<List<String>> chunks = DiscoveryRules.chunks(keys);
         assertEquals(3, chunks.size());
         int total = 0;

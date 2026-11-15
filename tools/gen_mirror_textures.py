@@ -1,7 +1,7 @@
 """Mirror Magic textures (1.93.0 rebuild): the sprites of the MIRROR_FX1..3 layer, the Glass Garb's ground ring and glints, and the props. The older
 mirror_frame_* / mirror_glass_* / mirror_corona / mirror_prism / mirror_ripple textures (tools/gen_mirror_vfx_textures.py) stay where they are.
 
-    python3 -B tools/gen_mirror_textures.py      # -> src/main/resources/assets/nusmp/textures/particle/mirror_reflex_*.png
+    python3 -B tools/gen_mirror_textures.py      # -> src/main/resources/assets/anime_multiverse/textures/particle/mirror_reflex_*.png
 
 White or light (tinted by the effect colour, violet-silver 0xB89CFF) unless said:
   mirror_reflex_pane     a tall rectangular pane of glass: a bright rim, two diagonal reflection streaks, a soft gradient (128 x 256)

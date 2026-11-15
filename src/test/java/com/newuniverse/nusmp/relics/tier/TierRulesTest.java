@@ -95,11 +95,11 @@ class TierRulesTest {
 
     @Test
     void theTopCatalystIsTheGenesisSeedAndGodTakesHihiirokaneOrADevilsCore() {
-        assertEquals("nusmp:genesis_seed", TierRules.catalystsTo(6)[0].itemId());
+        assertEquals("anime_multiverse:genesis_seed", TierRules.catalystsTo(6)[0].itemId());
         boolean hihi = false, core = false;
         for (Catalyst c : TierRules.catalystsTo(5)) {
             hihi |= c.itemId().equals("tensura:hihiirokane_ingot");
-            core |= c.itemId().equals("nusmp:devils_core");
+            core |= c.itemId().equals("anime_multiverse:devils_core");
         }
         assertTrue(hihi && core);
     }

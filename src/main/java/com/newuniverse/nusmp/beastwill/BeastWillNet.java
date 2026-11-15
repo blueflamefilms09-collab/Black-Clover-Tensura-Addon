@@ -33,7 +33,7 @@ public final class BeastWillNet {
     // ---------------------------------------------------------------- client to server
     /** What the player asked: {@code op} (see OP_*) and one argument (the form 1 or 2, the ability slot 1 or 2, the swap step). */
     public record Action(int op, int arg) implements CustomPacketPayload {
-        public static final Type<Action> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "beastwill_action"));
+        public static final Type<Action> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beastwill_action"));
         public static final StreamCodec<FriendlyByteBuf, Action> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeByte(p.op());
             buf.writeByte(p.arg());
@@ -49,7 +49,7 @@ public final class BeastWillNet {
     public record Sync(String active, int phase, int strain, int assimilation, int mastery, int lockSec, int swapSec, int cd1Sec, int cd2Sec, int flags, int compat, List<Entry> wills)
             implements CustomPacketPayload {
         public static final int F_MEDITATING = 1, F_VEILED = 2, F_REDUCED = 4, F_CONFLICT = 8;
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "beastwill_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beastwill_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeUtf(p.active(), NAME_MAX);
             buf.writeByte(p.phase());
@@ -80,7 +80,7 @@ public final class BeastWillNet {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
-    /** One ability of the active will as the HUD lists it: the phase (1 Acquire, 2 Integrate), the slot, the id (the lang key {@code nusmp.beastwill.ability.<id>}), the cooldown in ticks and the cost and strain. */
+    /** One ability of the active will as the HUD lists it: the phase (1 Acquire, 2 Integrate), the slot, the id (the lang key {@code anime_multiverse.beastwill.ability.<id>}), the cooldown in ticks and the cost and strain. */
     public record AbilityInfo(int phase, int slot, String id, int cooldownTicks, int costPct, int strain) {}
 
     /**
@@ -89,7 +89,7 @@ public final class BeastWillNet {
      */
     public record Info(String will, String beast, String affinity, int rank, int tint, boolean legendary, int acqAssim, int acqMastery, int intAssim, int intMastery, int acqDrain, int intDrain, List<AbilityInfo> abilities)
             implements CustomPacketPayload {
-        public static final Type<Info> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "beastwill_info"));
+        public static final Type<Info> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beastwill_info"));
         public static final StreamCodec<FriendlyByteBuf, Info> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeUtf(p.will(), NAME_MAX);
             buf.writeUtf(p.beast(), 64);
@@ -127,7 +127,7 @@ public final class BeastWillNet {
 
     /** The absorption ask: which will, which beast, its affinity, the rank's ordinal, the source (core or offer), whether the player may take it now, the reason if not, the fit in percent and the EP needed. */
     public record Preview(String will, String beast, String affinity, int rank, int source, boolean ok, String reason, int fitPercent, double haveEp, double needEp) implements CustomPacketPayload {
-        public static final Type<Preview> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "beastwill_preview"));
+        public static final Type<Preview> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beastwill_preview"));
         public static final StreamCodec<FriendlyByteBuf, Preview> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeUtf(p.will(), NAME_MAX);
             buf.writeUtf(p.beast(), 64);

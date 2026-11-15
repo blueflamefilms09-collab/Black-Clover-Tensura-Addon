@@ -6,7 +6,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * Why: server config of the standard gear of the Mega-Dungeon, {@code world/serverconfig/nusmp-labyrinth-mega-gear-server.toml}, section {@code [gear]}.
  * Its own file (the pattern of {@code DndConfig}, {@code MegaConfig} and the faction layer's config) so this builder's switches never share a spec with
  * another builder's. These are the KNOBS of one server (how often each grade drops, how fast the mix shifts with depth, the Looting bonus, the ceiling of
- * the magic resistance); the SHAPES (curves, caps, items, enchantments) are data in {@code data/nusmp/mega/gear/tables.json}. The defaults are read from
+ * the magic resistance); the SHAPES (curves, caps, items, enchantments) are data in {@code data/anime_multiverse/mega/gear/tables.json}. The defaults are read from
  * {@link GearRates#DEFAULT}, the one place the numbers live, so the config and the unit tests cannot drift apart. Every value is a plain
  * {@code define} / {@code defineInRange} (never {@code defineInList}: a list-validated value throws while the server is still loading) and every reader
  * goes through {@link #get}, which answers the default while the spec is not loaded yet. Since 1.55.0 the chest side has four keys of its own ({@code chestNormal},
@@ -39,7 +39,7 @@ public final class GearConfig {
         LOOTING_BONUS = b.comment("Chance added to the TOTAL chance of a drop per level of Looting on the killer's main-hand weapon, shared out between the grades in proportion to their own chances (Looting makes drops more frequent, it does not change their grade).")
                 .defineInRange("lootingBonus", d.lootingBonus(), 0.0, 0.25);
         GearRates c = GearRates.CHEST_DEFAULT;
-        CHEST_NORMAL = b.comment("CHESTS: chance that a chest rolled in the Mega-Dungeon holds ONE Normal-grade piece at floor 1 (the global loot modifier nusmp:gear_chests; any loot table with a chests/ segment, except the two relic tables). At most one piece per chest in all. 0 for all three chest chances = no gear in chests.")
+        CHEST_NORMAL = b.comment("CHESTS: chance that a chest rolled in the Mega-Dungeon holds ONE Normal-grade piece at floor 1 (the global loot modifier anime_multiverse:gear_chests; any loot table with a chests/ segment, except the two relic tables). At most one piece per chest in all. 0 for all three chest chances = no gear in chests.")
                 .defineInRange("chestNormal", c.normal(), 0.0, 1.0);
         CHEST_SPECIAL = b.comment("CHESTS: the same for a Special-grade piece.")
                 .defineInRange("chestSpecial", c.special(), 0.0, 1.0);

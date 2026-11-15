@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * from the project root.
  */
 class RelicThemesDataTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/mega/relic_themes.json");
-    private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/themes");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/mega/relic_themes.json");
+    private static final Path THEMES = Path.of("src/main/resources/data/anime_multiverse/mega/themes");
     private static final Path RELICS = Path.of("src/main/java/com/newuniverse/nusmp/relics");
     /** The themes the mod ships (the same list as {@code ThemeDataTest}): the file is checked against these, whatever the enum on the class path holds. */
     private static final List<String> SHIPPED = List.of("gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral",

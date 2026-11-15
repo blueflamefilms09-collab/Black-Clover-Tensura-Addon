@@ -29,7 +29,7 @@ import java.util.List;
  * foes, Gae Bolg is a spear through three, Ea (Enuma Elish) is one great line through everything in it, and the Elixir heals and cleanses.
  * All state is the game time each window ends at, kept in the skill tag of the one player who owns it: nothing ticks, nothing is cleaned up, nothing is shared. A press looks at no more than 24
  * creatures, strikes at most 12 (24 for Ea) and draws at most three gates and six beams.
- * Switch: server setting {@code gateEnabled}. Obtain: {@code /tensura edit <player> ability grant nusmp:gate_of_babylon}.
+ * Switch: server setting {@code gateEnabled}. Obtain: {@code /tensura edit <player> ability grant anime_multiverse:gate_of_babylon}.
  */
 public class GateOfBabylonSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("gate_of_babylon", "Gate of Babylon",

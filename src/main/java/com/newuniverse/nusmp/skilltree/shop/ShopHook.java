@@ -24,7 +24,7 @@ public final class ShopHook {
             if (!ShopConfig.enabled() || !player.isShiftKeyDown()) return false;
             return ShopService.open(player, npc);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] the Black Market could not open for {}: {}", player == null ? "nobody" : player.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] the Black Market could not open for {}: {}", player == null ? "nobody" : player.getGameProfile().getName(), e.toString());
             return false;
         }
     }

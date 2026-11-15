@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 HOLY_CHURCH (1.59.0, docs/labyrinth/mega_v2_tha.md): the signature rooms of the Holy road's cathedral. Rooms (all `holy_church_*`, drawn ONLY in sectors of the
-theme through `data/nusmp/mega/template_themes/holy_church.json`):
+theme through `data/anime_multiverse/mega/template_themes/holy_church.json`):
 
     hall/holy_church_nave         the great nave: pews, two arcades, a gallery above each aisle, a choir loft with an organ over the door, the chancel and altar
     hall/holy_church_cloister     the cloister garden: a covered walk round an open garden under a glass roof, a well in the middle

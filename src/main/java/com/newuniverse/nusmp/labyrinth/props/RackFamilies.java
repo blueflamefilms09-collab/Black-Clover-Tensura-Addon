@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Why: the loot-filled racks are themed: the rack in a forge hall shows hammers and axes, the one in a crypt shows rusted blades and bone, the one in a church shows blessed steel. There are
- * 27 region themes and six loot tables ({@code data/nusmp/loot_table/racks/<family>.json}); this class is the mapping between them, so a new theme added later falls into {@link #PLAIN} (a table
+ * 27 region themes and six loot tables ({@code data/anime_multiverse/loot_table/racks/<family>.json}); this class is the mapping between them, so a new theme added later falls into {@link #PLAIN} (a table
  * of ordinary gear) instead of into nothing. Pure: the theme id is the lower-case id of {@code RegionTheme}.
  */
 public final class RackFamilies {

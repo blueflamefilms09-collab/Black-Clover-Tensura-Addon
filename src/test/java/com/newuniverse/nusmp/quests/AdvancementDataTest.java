@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * implements, names an item, entity, effect or dimension the mod does not have, or lists a requirement that names no criterion.
  */
 class AdvancementDataTest {
-    private static final Path ADV = Path.of("src/main/resources/data/nusmp/advancement");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ADV = Path.of("src/main/resources/data/anime_multiverse/advancement");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path JAVA = Path.of("src/main/java");
 
     /** The folders the generator owns; convergence/ holds the older hidden advancements and is only checked for parsing. */
@@ -52,8 +52,8 @@ class AdvancementDataTest {
             "mega.hub", "mega.aligned", "mega.floor", "mega.gear", "mega.system_quest", "mega.shadow", "mega.vessel",
             "arc.defeated", "arc.met", "arc.saga_clear", "arc.arena");
 
-    private static final Set<String> DIMENSIONS = Set.of("nusmp:labyrinth", "nusmp:living_dungeon", "nusmp:zogratis_arena", "nusmp:dream",
-            "nusmp:grimoire_library", "nusmp:mega_dungeon", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");
+    private static final Set<String> DIMENSIONS = Set.of("anime_multiverse:labyrinth", "anime_multiverse:living_dungeon", "anime_multiverse:zogratis_arena", "anime_multiverse:dream",
+            "anime_multiverse:grimoire_library", "anime_multiverse:mega_dungeon", "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end");
 
     private static List<Path> files() throws IOException {
         try (Stream<Path> s = Files.walk(ADV)) {
@@ -63,7 +63,7 @@ class AdvancementDataTest {
 
     private static String id(Path p) {
         String rel = ADV.relativize(p).toString().replace('\\', '/');
-        return "nusmp:" + rel.substring(0, rel.length() - ".json".length());
+        return "anime_multiverse:" + rel.substring(0, rel.length() - ".json".length());
     }
 
     private static boolean owned(Path p) {
@@ -139,7 +139,7 @@ class AdvancementDataTest {
 
     @Test
     void theOlderConvergenceFilesAreStillThere() throws IOException {
-        long n = files().stream().filter(p -> id(p).startsWith("nusmp:convergence/")).count();
+        long n = files().stream().filter(p -> id(p).startsWith("anime_multiverse:convergence/")).count();
         assertTrue(n >= 25, "the 25 hidden convergence advancements must stay untouched, found " + n);
     }
 
@@ -155,7 +155,7 @@ class AdvancementDataTest {
             String par = (String) adv.get("parent");
             if (par == null) {
                 roots++;
-                assertEquals("nusmp:root", id(p), "only nusmp:root may have no parent");
+                assertEquals("anime_multiverse:root", id(p), "only anime_multiverse:root may have no parent");
                 assertTrue(map(adv.get("display")).containsKey("background"), "the root needs a background texture");
             } else {
                 assertTrue(all.contains(par), id(p) + " has the missing parent " + par);
@@ -170,7 +170,7 @@ class AdvancementDataTest {
                 cur = parent.get(cur);
                 assertTrue(++guard < 10_000, "parent cycle at " + start);
             }
-            assertEquals("nusmp:root", cur, start + " does not lead back to nusmp:root");
+            assertEquals("anime_multiverse:root", cur, start + " does not lead back to anime_multiverse:root");
         }
     }
 
@@ -187,7 +187,7 @@ class AdvancementDataTest {
                 Object o = display.get(field);
                 assertTrue(o instanceof Map, id(p) + " " + field + " must be a translate component");
                 String tr = (String) map(o).get("translate");
-                assertTrue(tr != null && tr.startsWith("advancement.nusmp."), id(p) + " " + field + " must use advancement.nusmp.*");
+                assertTrue(tr != null && tr.startsWith("advancement.anime_multiverse."), id(p) + " " + field + " must use advancement.anime_multiverse.*");
                 if (!keys.contains(tr)) missing.add(tr);
             }
             assertTrue(Set.of("task", "goal", "challenge").contains(display.get("frame")), id(p) + " has a bad frame");
@@ -207,10 +207,10 @@ class AdvancementDataTest {
             for (Map.Entry<String, Object> e : crits.entrySet()) {
                 Map<String, Object> c = map(e.getValue());
                 String trigger = (String) c.get("trigger");
-                if ("nusmp:event".equals(trigger)) {
+                if ("anime_multiverse:event".equals(trigger)) {
                     Map<String, Object> cond = map(c.get("conditions"));
                     String key = (String) cond.get("key");
-                    assertTrue(key != null && !key.isEmpty(), id(p) + "/" + e.getKey() + " nusmp:event without a key");
+                    assertTrue(key != null && !key.isEmpty(), id(p) + "/" + e.getKey() + " anime_multiverse:event without a key");
                     if (!EVENT_KEYS.contains(key)) badKeys.add(id(p) + " -> " + key);
                     for (String k : cond.keySet())
                         assertTrue(Set.of("key", "count", "arg").contains(k), id(p) + ": unknown event condition field " + k);
@@ -254,17 +254,17 @@ class AdvancementDataTest {
             collect(adv, "id", found);        // the icon
             collect(adv, "items", found);     // inventory_changed / consume_item predicates
             for (String it : found) {
-                if (it.startsWith("nusmp:") && !items.contains(it.substring(6))) problems.add(id(p) + ": item " + it);
+                if (it.startsWith("anime_multiverse:") && !items.contains(it.substring(6))) problems.add(id(p) + ": item " + it);
             }
             List<String> types = new ArrayList<>();
             collect(adv, "type", types);
-            for (String t : types) if (t.startsWith("nusmp:") && !entities.contains(t.substring(6))) problems.add(id(p) + ": entity " + t);
+            for (String t : types) if (t.startsWith("anime_multiverse:") && !entities.contains(t.substring(6))) problems.add(id(p) + ": entity " + t);
             List<String> to = new ArrayList<>();
             collect(adv, "to", to);
             for (String d : to) if (!DIMENSIONS.contains(d)) problems.add(id(p) + ": dimension " + d);
             for (Object o : crit(adv, "minecraft:effects_changed")) {
                 for (String eff : map(map(o).get("effects")).keySet())
-                    if (eff.startsWith("nusmp:") && !lang.contains("effect.nusmp." + eff.substring(6))) problems.add(id(p) + ": effect " + eff);
+                    if (eff.startsWith("anime_multiverse:") && !lang.contains("effect.anime_multiverse." + eff.substring(6))) problems.add(id(p) + ": effect " + eff);
             }
         }
         assertTrue(problems.isEmpty(), "unknown mod ids in advancements: " + problems);
@@ -282,22 +282,22 @@ class AdvancementDataTest {
     void futureBossPlaceholdersAreImpossibleHiddenAndNamedByArc() throws IOException {
         int n = 0;
         for (Path p : files()) {
-            if (!id(p).startsWith("nusmp:future/")) continue;
+            if (!id(p).startsWith("anime_multiverse:future/")) continue;
             n++;
             Map<String, Object> adv = read(p);
             Map<String, Object> crits = map(adv.get("criteria"));
             assertEquals(1, crits.size(), id(p) + " must have one criterion");
             assertEquals("minecraft:impossible", map(crits.values().iterator().next()).get("trigger"), id(p));
             assertTrue(Boolean.TRUE.equals(map(adv.get("display")).get("hidden")), id(p) + " must be hidden until awarded");
-            assertTrue(((String) adv.get("parent")).startsWith("nusmp:arcs/"), id(p) + " hangs off its arc");
-            assertTrue(id(p).matches("nusmp:future/[a-z0-9_]+_[a-z0-9]+"), id(p) + " must be future/<arc>_<boss>");
+            assertTrue(((String) adv.get("parent")).startsWith("anime_multiverse:arcs/"), id(p) + " hangs off its arc");
+            assertTrue(id(p).matches("anime_multiverse:future/[a-z0-9_]+_[a-z0-9]+"), id(p) + " must be future/<arc>_<boss>");
         }
         assertTrue(n >= 8, "the arcs without a boss need their placeholders, found " + n);
     }
 
     @Test
     void theMagicBranchHasOneAdvancementPerFamily() throws IOException {
-        long casts = files().stream().filter(p -> id(p).startsWith("nusmp:magic/cast_")).count();
+        long casts = files().stream().filter(p -> id(p).startsWith("anime_multiverse:magic/cast_")).count();
         assertEquals(105, casts, "one cast advancement per magic family (105)");
     }
 }

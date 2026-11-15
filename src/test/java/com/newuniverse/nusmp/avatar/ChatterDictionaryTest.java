@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The shipped chatter files obey the schema, the loader merges packs, and the limiter holds its limits. */
 class ChatterDictionaryTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/avatar_chatter");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/avatar_chatter");
     private static final ChatEvent[] REQUIRED = {ChatEvent.COMBAT_START, ChatEvent.CREATOR_LOW_HP, ChatEvent.SKILL_CAST, ChatEvent.NAMING,
             ChatEvent.BETRAYAL, ChatEvent.FRENZY, ChatEvent.IDLE};
 

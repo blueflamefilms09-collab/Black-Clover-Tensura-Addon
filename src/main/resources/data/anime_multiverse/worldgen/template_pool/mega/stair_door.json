@@ -1,0 +1,932 @@
+{
+  "fallback": "anime_multiverse:mega/cap",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/bend_1x1_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/bend_1x1_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/bend_1x1_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/cross_1x1_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/cross_1x1_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/cross_1x1_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/gallery_2x4_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/gallery_2x4_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x2_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x2_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x2_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x3_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x3_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x3_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x4_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x4_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/straight_1x4_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/tee_1x1_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/tee_1x1_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/corridor/tee_1x1_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/alchemy_lab_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/alchemy_lab_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/armory_forge_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/armory_forge_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/barracks_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/barracks_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/beast_den_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/casino_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/celestial_court_banquet",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/celestial_court_colonnade",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/celestial_court_sundial",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/celestial_court_terrace",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cell_block_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cell_block_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cistern_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cistern_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/colonnade_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/colonnade_hall_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/crypt_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/crypt_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/crystal_geode_echo_gallery",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/crystal_geode_prism_atrium",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cursed_archive_reading_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cursed_archive_scriptorium",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/cursed_archive_stacks",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/drowned_crypt_flooded_nave",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/drowned_crypt_sarcophagus_vault",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/dwarven_forgehold_chasm_forge",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/dwarven_forgehold_hall_of_pillars",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/dwarven_forgehold_mine_works",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/feywild_grove_feast_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/feywild_grove_hollow_tree",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/feywild_grove_moonlit_glade",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/fungal_underdark_drow_enclave",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/fungal_underdark_fungus_farm",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/graveyard_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/great_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/guard_post_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/hatchery_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/haunted_manor_grand_stair",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/haunted_manor_kitchen",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/holy_church_cloister",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/holy_church_crypt",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/holy_church_nave",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/infernal_foundry_grand_furnace",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/infernal_foundry_penal_forge",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/kitchen_larder",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/lava_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/lava_hall_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/library_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/library_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/mirror_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/mountain_monastery_dojo",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/mountain_monastery_prayer_wheel_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/mountain_monastery_scroll_library",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/mountain_monastery_zen_garden",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/necropolis_catacombs",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/necropolis_mausoleum_street",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/ossuary",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/round_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/round_hall_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/shrine_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/shrine_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/sky_citadel_great_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/sky_citadel_wind_gallery",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/spider_warrens_cocoon_larder",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/spider_warrens_web_great_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/sunken_temple_coral_atrium",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/sunken_temple_coral_nave",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/sunken_temple_drowned_shrines",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/temple_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/torture_chamber_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/torture_chamber_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/training_hall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/vampire_castle_coffin_crypt",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 30,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/hall/vampire_castle_great_hall",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/crossroads_hall_3x3",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_2x2_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_2x2_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 11,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_2x2_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_3x3_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_3x3_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/junction/plaza_3x3_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

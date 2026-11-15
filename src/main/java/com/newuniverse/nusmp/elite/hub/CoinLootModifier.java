@@ -42,10 +42,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Why: the owner asked for Tensura coins to be injected into the drop tables of "all Abyssal/Holy mobs, Secret Rift chests and Decennial bosses" with Global Loot Modifiers, and a global loot modifier
- * is the right door for the first two: it works on loot that has ALREADY been rolled, whoever rolled it, so a monster from any mod (and the 400 {@code nusmp:foundry_mob}, which is one entity type
+ * is the right door for the first two: it works on loot that has ALREADY been rolled, whoever rolled it, so a monster from any mod (and the 400 {@code anime_multiverse:foundry_mob}, which is one entity type
  * with no table of its own) and every chest the dungeon places pay the same way without one mob class or loot-table file being edited, and nothing the table gave is replaced (add the new, keep
- * the old). Same style as {@code SkillBookLootModifier}: a {@link LootModifier} with a codec registered on the mod bus under {@code nusmp:hub_coins}, switched on by one entry in
- * {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}, the shipped JSON ({@code data/nusmp/loot_modifiers/hub_coins.json}) carrying the standard empty {@code conditions} list because the
+ * the old). Same style as {@code SkillBookLootModifier}: a {@link LootModifier} with a codec registered on the mod bus under {@code anime_multiverse:hub_coins}, switched on by one entry in
+ * {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}, the shipped JSON ({@code data/anime_multiverse/loot_modifiers/hub_coins.json}) carrying the standard empty {@code conditions} list because the
  * decision is in code. Two cases. (1) A DEATH: the victim is an ordinary hostile monster of the dungeon ({@link LootVictims#kindOf}: a vanilla {@code Enemy} or one of the Dungeon Master's creatures,
  * never a boss or a servant), a PLAYER did the killing (so a monster that died to another in a turf war is no farm), it stood on a Holy or Abyssal floor (never the Hub), and the pure
  * {@link CoinLoot} rolls the payout at that floor with the killer's Looting. (2) A CHEST: any loot table under {@code chests/} rolled in the Mega-Dungeon (the dungeon's own chests) adds coins at
@@ -64,7 +64,7 @@ public final class CoinLootModifier extends LootModifier {
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> MODIFIERS =
             DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, NUSMP.MODID);
 
-    /** {@code nusmp:hub_coins}, the type id the JSON names. */
+    /** {@code anime_multiverse:hub_coins}, the type id the JSON names. */
     public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<CoinLootModifier>> TYPE = MODIFIERS.register("hub_coins", () -> CODEC);
 
     private static final ResourceKey<Enchantment> LOOTING = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.withDefaultNamespace("looting"));
@@ -81,7 +81,7 @@ public final class CoinLootModifier extends LootModifier {
         try {
             add(generatedLoot, context, HubConfig.lootParams(), null);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] the coin loot modifier failed once and is skipped for that roll", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] the coin loot modifier failed once and is skipped for that roll", ex);
         }
         return generatedLoot;
     }

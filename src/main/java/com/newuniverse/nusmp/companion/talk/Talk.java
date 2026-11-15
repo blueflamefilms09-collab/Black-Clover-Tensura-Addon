@@ -72,7 +72,7 @@ public final class Talk {
                 try {
                     p.panelOpen(player);
                 } catch (RuntimeException ex) {
-                    LOG.warn("[nusmp] the panel of {} failed: {}", e.getType().getDescriptionId(), ex.toString());
+                    LOG.warn("[anime_multiverse] the panel of {} failed: {}", e.getType().getDescriptionId(), ex.toString());
                 }
             }
             end(player, true);
@@ -110,7 +110,7 @@ public final class Talk {
         try {
             if (player.serverLevel().getEntity(s.entity()) instanceof Talkable t) t.talkClosed(player);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] talkClosed failed: {}", ex.toString());
+            LOG.warn("[anime_multiverse] talkClosed failed: {}", ex.toString());
         }
     }
 
@@ -172,7 +172,7 @@ public final class Talk {
         try {
             return t.talkOpen(p);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] a companion could not open a talk: {}", ex.toString());
+            LOG.warn("[anime_multiverse] a companion could not open a talk: {}", ex.toString());
             return null;
         }
     }
@@ -181,7 +181,7 @@ public final class Talk {
         try {
             return t.talkChoose(p, id);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] a companion could not answer the pick {}: {}", id, ex.toString());
+            LOG.warn("[anime_multiverse] a companion could not answer the pick {}: {}", id, ex.toString());
             return null;
         }
     }

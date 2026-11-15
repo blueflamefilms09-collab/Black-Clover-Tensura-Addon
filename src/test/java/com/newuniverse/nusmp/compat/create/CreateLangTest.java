@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * show, say what the code's fallback says, and be flat. Also keeps the package honest about its one hard rule: no source file of it imports a Create class.
  */
 class CreateLangTest {
-    private static final Path FRAGMENT = Paths.get("tools/lang/create_compat.json"), EN_US = Paths.get("src/main/resources/assets/nusmp/lang/en_us.json");
+    private static final Path FRAGMENT = Paths.get("tools/lang/create_compat.json"), EN_US = Paths.get("src/main/resources/assets/anime_multiverse/lang/en_us.json");
     private static final Path DIR = Paths.get("src/main/java/com/newuniverse/nusmp/compat/create");
 
     private static JsonObject read(Path p) throws IOException { return JsonParser.parseString(Files.readString(p, StandardCharsets.UTF_8)).getAsJsonObject(); }
@@ -39,10 +39,10 @@ class CreateLangTest {
         String src = sources();
         List<String> bad = new ArrayList<>();
         int seen = 0;
-        Matcher full = Pattern.compile("translatableWithFallback\\(\\s*\"(message\\.nusmp\\.create\\.[a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
+        Matcher full = Pattern.compile("translatableWithFallback\\(\\s*\"(message\\.anime_multiverse\\.create\\.[a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
         while (full.find()) { seen++; check(frag, full.group(1), full.group(2), bad); }
         Matcher t = Pattern.compile("\\bt\\(\\s*\"([a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
-        while (t.find()) { seen++; check(frag, "message.nusmp.create." + t.group(1), t.group(2), bad); }
+        while (t.find()) { seen++; check(frag, "message.anime_multiverse.create." + t.group(1), t.group(2), bad); }
         assertTrue(seen >= 14, "the scan should find the messages, found " + seen);
         assertTrue(bad.isEmpty(), "lang fragment out of step with the code: " + bad);
     }
@@ -58,7 +58,7 @@ class CreateLangTest {
         JsonObject en = read(EN_US), frag = read(FRAGMENT);
         for (var e : frag.entrySet()) {
             assertTrue(e.getValue().isJsonPrimitive(), e.getKey() + " is not a plain string");
-            assertTrue(e.getKey().startsWith("message.nusmp.create."), e.getKey());
+            assertTrue(e.getKey().startsWith("message.anime_multiverse.create."), e.getKey());
             if (en.has(e.getKey())) assertTrue(en.get(e.getKey()).getAsString().equals(e.getValue().getAsString()), e.getKey() + " differs from en_us.json");
         }
     }

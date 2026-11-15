@@ -1,6 +1,6 @@
 {
-  "nusmp.scale.you": "You",
-  "nusmp.scale.foe": "Foe",
-  "nusmp.scale.pressed": "Pressed down: -%s%% blows",
-  "nusmp.scale.level": "Weighed, not pressed"
+  "anime_multiverse.scale.you": "You",
+  "anime_multiverse.scale.foe": "Foe",
+  "anime_multiverse.scale.pressed": "Pressed down: -%s%% blows",
+  "anime_multiverse.scale.level": "Weighed, not pressed"
 }

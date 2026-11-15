@@ -11,7 +11,7 @@ import java.util.List;
  * it the primary candidates are over (vanilla stops the whole search there; the assembler goes on with the fallback pool instead, because a doorway
  * with nothing behind it would be a hole into the void).
  *
- * @param id          the pool id, e.g. {@code nusmp:mega/side}
+ * @param id          the pool id, e.g. {@code anime_multiverse:mega/side}
  * @param entries     the weighted templates, in file order
  * @param emptyWeight total weight of the empty elements (0 when the pool has none)
  * @param fallback    the pool tried after this one's candidates, {@code minecraft:empty} for none

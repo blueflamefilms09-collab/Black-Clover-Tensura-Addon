@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:raw_monster_meat"
+    },
+    {
+      "tag": "anime_multiverse:purifiers"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:purified_monster_meat",
+    "count": 1
+  }
+}

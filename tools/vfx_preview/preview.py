@@ -1,5 +1,5 @@
 """
-Headless VFX preview for the nusmp VFX layers.
+Headless VFX preview for the anime_multiverse VFX layers.
 
 Compiles the REAL layer classes (src/main/java/.../vfx/client/layer/*) together with the real VfxPose / VfxAnim / VfxBloom /
 VfxTextures / VfxShape and lightly patched copies of VfxVertexBuffer / VfxBlend (GL calls stripped, a drain() added) against
@@ -28,8 +28,8 @@ from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 SRC = os.path.join(ROOT, "src", "main", "java")
-VFX = os.path.join(SRC, "com", "newuniverse", "nusmp", "vfx")
-TEXTURES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+VFX = os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "vfx")
+TEXTURES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 BUILD = os.environ.get("VFX_PREVIEW_BUILD") or os.path.join(ROOT, "build", "vfx_preview")      # 0.53: parallel authors each set their own folder
 JOML = os.path.join(HERE, "lib", "joml-1.10.5.jar")
 JOML_URL = "https://repo.maven.apache.org/maven2/org/joml/joml/1.10.5/joml-1.10.5.jar"
@@ -83,7 +83,7 @@ def build(layers):
     gen = os.path.join(BUILD, "src")
     shutil.rmtree(gen, ignore_errors=True)
     shutil.copytree(os.path.join(HERE, "stubs"), gen)
-    pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "vfx")
+    pkg = os.path.join(gen, "com", "newuniverse", "anime_multiverse", "vfx")
     os.makedirs(os.path.join(pkg, "client", "layer"), exist_ok=True)
     shutil.copy(os.path.join(VFX, "VfxShape.java"), pkg)
     shutil.copy(os.path.join(VFX, "FlatProps.java"), pkg)                  # the pure switch of the flat object cut-outs (the vertex buffer asks it)
@@ -101,10 +101,10 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
     if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
         layers = list(layers) + ["FireSpellLayer", "FlameFxLayer", "FlameMagicLayer"]
-    storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
+    storm_pkg = os.path.join(gen, "com", "newuniverse", "anime_multiverse", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):
-        shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "fairytail", "storm", name), storm_pkg)
+        shutil.copy(os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "fairytail", "storm", name), storm_pkg)
     for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures", "SolidParts", "SolidModels") + (("VfxPart",) if any(l.split(".")[-1] == "ElementShapesLayer" for l in layers) else ()):      # 3.6.0: ElementShapesLayer (the lightning strike) draws a rune band with VfxPart
         shutil.copy(os.path.join(VFX, "client", name + ".java"), os.path.join(pkg, "client"))
     with open(os.path.join(VFX, "client", "VfxVertexBuffer.java"), encoding="utf-8") as f:
@@ -144,19 +144,19 @@ def build(layers):
             shutil.copy(os.path.join(portal_src, fn), portal_dst)
     shutil.copy(os.path.join(layer_dir, "SpatialPortalLayer.java"), os.path.join(pkg, "client", "layer"))
     if any(l.split(".")[-1] == "RuneWritingLayer" for l in layers):           # the Mana Method rune: the pure classes (and the plane maths) the layer reads
-        mm_src = os.path.join(SRC, "com", "newuniverse", "nusmp", "mana", "method")
-        mm_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "mana", "method")
+        mm_src = os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "mana", "method")
+        mm_dst = os.path.join(gen, "com", "newuniverse", "anime_multiverse", "mana", "method")
         os.makedirs(mm_dst, exist_ok=True)
         for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil", "RuneCharge", "RuneHoldView", "LightningCharge", "RuneCost"):      # 3.6.0: RuneGlyphLayout reads LightningCharge (the arcs by ring), which reads RuneCost
             shutil.copy(os.path.join(mm_src, name + ".java"), mm_dst)
-        perf_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "perf")
+        perf_dst = os.path.join(gen, "com", "newuniverse", "anime_multiverse", "perf")
         os.makedirs(perf_dst, exist_ok=True)
-        shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "perf", "PerfMath.java"), perf_dst)
+        shutil.copy(os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "perf", "PerfMath.java"), perf_dst)
     if any(l.split(".")[-1] == "SolomonLayer" for l in layers):               # Solomon: the pure rules of the 72 Pillars (when and where each pillar lands) the layer reads
-        sk_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "entity", "veldanava", "skills")
+        sk_dst = os.path.join(gen, "com", "newuniverse", "anime_multiverse", "entity", "veldanava", "skills")
         os.makedirs(sk_dst, exist_ok=True)
         for name in ("SolomonRules.java", "JudgmentRules.java", "IsrafilRules.java", "JibrilRules.java", "HerculesRules.java"):      # JudgmentRules lists every Veldanava spec
-            shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "entity", "veldanava", "skills", name), sk_dst)
+            shutil.copy(os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "entity", "veldanava", "skills", name), sk_dst)
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)

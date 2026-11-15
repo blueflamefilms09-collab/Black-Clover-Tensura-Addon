@@ -11,13 +11,13 @@
     "1.58.0, the floor model: `stair_door` is where the arrival stairwell's only door draws its first room from (corridors, junctions and halls, which all have several doors, so a floor never starts in a dead end); `stairwell_up`, `stairwell_down`, `stairwell_grand_up`, `stairwell_grand_down` are the four kinds of stairwell by file-name prefix (up_*, down_*, grand_up_*, grand_down_*), drawn for the arrival and the forward stairs of a floor by mega.gen.FloorPlan. Why a new pool and not `side`: the arrival stairwell has ONE door, and `side` holds treasure closets and other dead ends."
   ],
   "scale": 20,
-  "processors": "nusmp:mega_interior",
+  "processors": "anime_multiverse:mega_interior",
   "pools": {
     "landing": {
       "folders": {
         "landing": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "side": {
       "folders": {
@@ -77,7 +77,7 @@
         "mega/treasure/closet_c": 3
       },
       "empty": 2,
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "cap": {
       "absolute": true,
@@ -114,25 +114,25 @@
       "folders": {
         "safe": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "arena": {
       "folders": {
         "arena": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "antechamber": {
       "folders": {
         "antechamber": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "vault": {
       "folders": {
         "vault": 1
       },
-      "fallback": "nusmp:mega/cap",
+      "fallback": "anime_multiverse:mega/cap",
       "filter": "three_"
     },
     "vault_1": {
@@ -140,48 +140,48 @@
         "vault": 1
       },
       "filter": "one_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "vault_2": {
       "folders": {
         "vault": 1
       },
       "filter": "two_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "vault_3": {
       "folders": {
         "vault": 1
       },
       "filter": "three_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "onward": {
       "folders": {
         "onward": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "onward_straight": {
       "folders": {
         "onward": 1
       },
       "filter": "straight_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "onward_left": {
       "folders": {
         "onward": 1
       },
       "filter": "left_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "onward_right": {
       "folders": {
         "onward": 1
       },
       "filter": "right_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "link": {
       "absolute": true,
@@ -193,7 +193,7 @@
         "mega/link/straight_b": 4,
         "mega/link/waystation": 1
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "stair_door": {
       "folders": {
@@ -233,35 +233,35 @@
         "mega/hall/lava_hall": 4,
         "mega/hall/mirror_hall": 4
       },
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "stairwell_up": {
       "folders": {
         "stairwell": 1
       },
       "filter": "up_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "stairwell_down": {
       "folders": {
         "stairwell": 1
       },
       "filter": "down_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "stairwell_grand_up": {
       "folders": {
         "stairwell": 1
       },
       "filter": "grand_up_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     },
     "stairwell_grand_down": {
       "folders": {
         "stairwell": 1
       },
       "filter": "grand_down_",
-      "fallback": "nusmp:mega/cap"
+      "fallback": "anime_multiverse:mega/cap"
     }
   }
 }

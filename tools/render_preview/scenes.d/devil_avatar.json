@@ -491,8 +491,8 @@
     "dist": 7.2
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_back": {
   "kind": "geo",
@@ -535,8 +535,8 @@
     "dist": 7.2
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_face": {
   "kind": "geo",
@@ -579,8 +579,8 @@
     "dist": 2.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_walk": {
   "kind": "geo",
@@ -615,8 +615,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_run": {
   "kind": "geo",
@@ -651,8 +651,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_attack": {
   "kind": "geo",
@@ -687,8 +687,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_cast": {
   "kind": "geo",
@@ -724,8 +724,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_cast_big": {
   "kind": "geo",
@@ -762,8 +762,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_hurt": {
   "kind": "geo",
@@ -798,8 +798,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_transform": {
   "kind": "geo",
@@ -836,8 +836,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_death": {
   "kind": "geo",
@@ -873,8 +873,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_base_m_idle": {
   "kind": "geo",
@@ -910,8 +910,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_base.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_base_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_base.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_base_megicula.png"
  },
  "devil_gates_front": {
   "kind": "geo",
@@ -1405,8 +1405,8 @@
     "dist": 7.2
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_back": {
   "kind": "geo",
@@ -1449,8 +1449,8 @@
     "dist": 7.2
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_face": {
   "kind": "geo",
@@ -1493,8 +1493,8 @@
     "dist": 2.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_walk": {
   "kind": "geo",
@@ -1529,8 +1529,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_run": {
   "kind": "geo",
@@ -1565,8 +1565,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_attack": {
   "kind": "geo",
@@ -1601,8 +1601,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_cast": {
   "kind": "geo",
@@ -1638,8 +1638,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_cast_big": {
   "kind": "geo",
@@ -1676,8 +1676,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_hurt": {
   "kind": "geo",
@@ -1712,8 +1712,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_transform": {
   "kind": "geo",
@@ -1750,8 +1750,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_death": {
   "kind": "geo",
@@ -1787,8 +1787,8 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  },
  "devil_gates_m_idle": {
   "kind": "geo",
@@ -1824,7 +1824,7 @@
     "dist": 7.6
    }
   ],
-  "model": "nusmp:geo/entity/devil_avatar_gates.geo.json",
-  "texture": "nusmp:textures/entity/devil_avatar_gates_megicula.png"
+  "model": "anime_multiverse:geo/entity/devil_avatar_gates.geo.json",
+  "texture": "anime_multiverse:textures/entity/devil_avatar_gates_megicula.png"
  }
 }

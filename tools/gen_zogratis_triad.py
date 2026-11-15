@@ -19,10 +19,10 @@ Models (GeoSpec.of("zogratis", "<name>")), original pixel-art interpretations of
     blood_beast                  a four-legged beast made of living blood: lion-wolf build, mane of blood thorns, dripping, glowing red veins
 
 Writes for each <name> (through tools/geo_builder.py):
-    assets/nusmp/geo/entity/zogratis_<name>.geo.json
-    assets/nusmp/animations/entity/zogratis_<name>.animation.json
-    assets/nusmp/textures/entity/zogratis_<name>.png          humanoids 512x512 at 2 texels per model pixel (so a face is 16x16 texels), beast 256x256
-    assets/nusmp/textures/entity/zogratis_<name>_glow.png     eyes, jewels, curses, devil marks, veins (additive, full bright)
+    assets/anime_multiverse/geo/entity/zogratis_<name>.geo.json
+    assets/anime_multiverse/animations/entity/zogratis_<name>.animation.json
+    assets/anime_multiverse/textures/entity/zogratis_<name>.png          humanoids 512x512 at 2 texels per model pixel (so a face is 16x16 texels), beast 256x256
+    assets/anime_multiverse/textures/entity/zogratis_<name>_glow.png     eyes, jewels, curses, devil marks, veins (additive, full bright)
 and tools/render_preview/scenes.d/zogratis_triad.json (python3 -B tools/render_preview/preview.py triad_dante_base_views ...).
 
 Humanoid clips (same names on every humanoid): idle walk run attack cast cast_big hurt transform death. Rotation signs of this frame (checked in the
@@ -2160,9 +2160,9 @@ def disciple_skin_scenes():
     out = {}
     for dev in DEVILS:
         s = scene("disciple", "idle", (0, 40), (330, 480), [view("front 3/4", 30, 6, (0, 0.95, 0), 4.2)])
-        s["model"] = "nusmp:geo/entity/%s_disciple.geo.json" % KEY
-        s["texture"] = "nusmp:textures/entity/%s_disciple_%s.png" % (KEY, dev)
-        s["animations"] = "nusmp:animations/entity/%s_disciple.animation.json" % KEY
+        s["model"] = "anime_multiverse:geo/entity/%s_disciple.geo.json" % KEY
+        s["texture"] = "anime_multiverse:textures/entity/%s_disciple_%s.png" % (KEY, dev)
+        s["animations"] = "anime_multiverse:animations/entity/%s_disciple.animation.json" % KEY
         out["triad_disciple_%s" % dev] = s
     return out
 
@@ -2359,10 +2359,10 @@ def model_info(name, h, img, glow):
     lo, hi = model_bounds(m)
     info = {
         "spec": 'GeoSpec.of("%s", "%s")' % (KEY, name),
-        "files": {"geo": "src/main/resources/assets/nusmp/geo/entity/%s_%s.geo.json" % (KEY, name),
-                  "animations": "src/main/resources/assets/nusmp/animations/entity/%s_%s.animation.json" % (KEY, name),
-                  "texture": "src/main/resources/assets/nusmp/textures/entity/%s_%s.png" % (KEY, name),
-                  "glow": "src/main/resources/assets/nusmp/textures/entity/%s_%s_glow.png" % (KEY, name)},
+        "files": {"geo": "src/main/resources/assets/anime_multiverse/geo/entity/%s_%s.geo.json" % (KEY, name),
+                  "animations": "src/main/resources/assets/anime_multiverse/animations/entity/%s_%s.animation.json" % (KEY, name),
+                  "texture": "src/main/resources/assets/anime_multiverse/textures/entity/%s_%s.png" % (KEY, name),
+                  "glow": "src/main/resources/assets/anime_multiverse/textures/entity/%s_%s_glow.png" % (KEY, name)},
         "texture_size": [m.tex_w, m.tex_h], "cubes": m.cube_count(), "vertices_per_pass": m.cube_count() * 24,
         "bounds_px": {"min": [round(v, 1) for v in lo], "max": [round(v, 1) for v in hi]},
         "size_blocks": {"width": round((hi[0] - lo[0]) / 16, 2), "height": round((hi[1] - lo[1]) / 16, 2), "depth": round((hi[2] - lo[2]) / 16, 2)},

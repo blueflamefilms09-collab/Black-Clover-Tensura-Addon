@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * slots both have entries, the skills that steal or erase other skills are not offered, and bad files are refused with a reason.
  */
 class ForgeSkillDataTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/avatar_skills");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/avatar_skills");
     private static final Path IDS = Path.of("src/test/resources/com/newuniverse/nusmp/charter/tensura_skill_ids.txt");
     private static final Path NUSKILLS = Path.of("src/main/java/com/newuniverse/nusmp/skill/NUSkills.java");
 
@@ -45,16 +45,16 @@ class ForgeSkillDataTest {
     void everyShippedSkillIdIsRealAndUnique() throws Exception {
         Set<String> tensura = new HashSet<>();
         for (String l : Files.readAllLines(IDS)) if (!l.isBlank() && !l.startsWith("#")) tensura.add(l.trim());
-        Set<String> nusmp = new HashSet<>();
+        Set<String> anime_multiverse = new HashSet<>();
         Matcher m = Pattern.compile("SKILLS\\.register\\(\"([a-z_]+)\"").matcher(Files.readString(NUSKILLS));
-        while (m.find()) nusmp.add(m.group(1));
-        assertTrue(tensura.size() > 300 && nusmp.size() > 20, "read both id sources");
+        while (m.find()) anime_multiverse.add(m.group(1));
+        assertTrue(tensura.size() > 300 && anime_multiverse.size() > 20, "read both id sources");
         Set<String> seen = new HashSet<>();
         for (ForgeSkill s : shipped()) {
             assertTrue(seen.add(s.id()), "duplicate " + s.id());
             String ns = s.id().substring(0, s.id().indexOf(':')), path = s.id().substring(s.id().indexOf(':') + 1);
             if (ns.equals("tensura")) assertTrue(tensura.contains(path), s.id() + " is not in the Tensura id reference");
-            else if (ns.equals("nusmp")) assertTrue(nusmp.contains(path), s.id() + " is not registered in NUSkills");
+            else if (ns.equals("anime_multiverse")) assertTrue(anime_multiverse.contains(path), s.id() + " is not registered in NUSkills");
             else fail("unexpected namespace in " + s.id());
         }
     }

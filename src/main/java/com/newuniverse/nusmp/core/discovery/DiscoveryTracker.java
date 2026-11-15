@@ -222,7 +222,7 @@ public final class DiscoveryTracker {
         } catch (RuntimeException e) {
             if (!skillTroubleLogged) {
                 skillTroubleLogged = true;
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Discovery could not read a player's skills this time: {}", e.toString());
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] Discovery could not read a player's skills this time: {}", e.toString());
             }
         }
     }

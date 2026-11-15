@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * she would lose on), and the margin the owner's numbers were chosen with.
  */
 class ShopLoopGuardTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/black_market");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/black_market");
 
     private static PriceTable prices() throws IOException {
         PriceTable.Parsed p = PriceTable.parse(Files.readString(DIR.resolve("prices.json")));

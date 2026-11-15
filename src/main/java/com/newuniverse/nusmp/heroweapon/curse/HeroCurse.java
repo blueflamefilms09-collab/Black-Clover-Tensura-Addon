@@ -31,7 +31,7 @@ public final class HeroCurse {
     private static void failed(String what, RuntimeException e) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] HeroCurse.{} failed and was ignored (further failures are not logged): {}", what, e.toString(), e);
+        LOG.warn("[anime_multiverse] HeroCurse.{} failed and was ignored (further failures are not logged): {}", what, e.toString(), e);
     }
 
     // ------------------------------------------------------------------ questions (both sides)

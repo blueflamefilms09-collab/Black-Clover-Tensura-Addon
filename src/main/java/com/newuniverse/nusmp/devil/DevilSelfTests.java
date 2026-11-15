@@ -31,7 +31,7 @@ public final class DevilSelfTests {
 
     private static Result registry(MinecraftServer server) {
         if (!DevilStore.CONTRACT.isBound()) return Result.fail("the devil_contract attachment is not registered");
-        if (!NeoForgeRegistries.ATTACHMENT_TYPES.containsKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "devil_contract"))) return Result.fail("the attachment is missing from the registry");
+        if (!NeoForgeRegistries.ATTACHMENT_TYPES.containsKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_contract"))) return Result.fail("the attachment is missing from the registry");
         long u = DevilConfig.unionTicks(), c = DevilConfig.cooldownTicks();
         if (u < 400 || u > 72000) return Result.fail("the union length left its bounds: " + u);
         if (c < 0 || c > 240_000) return Result.fail("the cooldown left its bounds: " + c);

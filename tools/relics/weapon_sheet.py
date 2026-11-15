@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import weapon_orientation as wo  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 ENTITY_SCALE = 0.9375                       # PlayerRenderer.scale
 
 

@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** 3.9.0: the blocky x3 feet relic models: every file parses, stays under the caps, has a classic twin, is listed once, and no cape is among them; the gate bounds the wearers. */
 class X3ModelsTest {
-    static final Path X3 = Path.of("src/main/resources/assets/nusmp/relic_worn_x3");
-    static final Path CLASSIC = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path X3 = Path.of("src/main/resources/assets/anime_multiverse/relic_worn_x3");
+    static final Path CLASSIC = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
 
     static List<String> index() throws IOException {
         List<String> out = new ArrayList<>();

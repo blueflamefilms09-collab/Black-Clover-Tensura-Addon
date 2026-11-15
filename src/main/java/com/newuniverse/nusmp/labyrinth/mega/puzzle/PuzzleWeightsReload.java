@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the weights of the puzzle rooms are data ({@code data/nusmp/mega/puzzles/weights.json}), read again on every data reload so the owner can tune them with a datapack and
+ * Why: the weights of the puzzle rooms are data ({@code data/anime_multiverse/mega/puzzles/weights.json}), read again on every data reload so the owner can tune them with a datapack and
  * {@code /reload}. A missing or broken file leaves the built-in defaults in place and every problem is logged with its path, so a typo in a number never takes the puzzles away.
  */
 final class PuzzleWeightsReload implements ResourceManagerReloadListener {
-    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/puzzles/weights.json");
+    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/puzzles/weights.json");
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
@@ -33,7 +33,7 @@ final class PuzzleWeightsReload implements ResourceManagerReloadListener {
         }
         PuzzleWeights.install(w);
         PuzzleDirector.forgetPlans();
-        for (String p : problems) LogUtils.getLogger().warn("[nusmp] puzzles: {}", p);
-        LogUtils.getLogger().info("[nusmp] Puzzle rooms: {} puzzles, {} per floor at most{}", w.types.size(), w.maxPerFloor, w.enabled ? "" : " (switched off)");
+        for (String p : problems) LogUtils.getLogger().warn("[anime_multiverse] puzzles: {}", p);
+        LogUtils.getLogger().info("[anime_multiverse] Puzzle rooms: {} puzzles, {} per floor at most{}", w.types.size(), w.maxPerFloor, w.enabled ? "" : " (switched off)");
     }
 }

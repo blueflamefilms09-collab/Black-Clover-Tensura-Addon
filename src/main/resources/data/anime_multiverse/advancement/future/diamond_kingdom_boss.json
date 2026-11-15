@@ -1,0 +1,31 @@
+{
+  "parent": "anime_multiverse:arcs/diamond_kingdom",
+  "display": {
+    "icon": {
+      "id": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.future.diamond_kingdom_boss.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.future.diamond_kingdom_boss.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

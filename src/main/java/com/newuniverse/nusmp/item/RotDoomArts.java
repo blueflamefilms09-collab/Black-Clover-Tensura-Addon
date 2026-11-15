@@ -63,9 +63,9 @@ final class RotDoomArts {
     private RotDoomArts() {}
 
     // ---------------------------------------------------------------- names, numbers, colours
-    private static final ResourceLocation ROT_HP = ResourceLocation.fromNamespaceAndPath("nusmp", "rot_decay");
-    private static final ResourceLocation BREAK_ARMOUR = ResourceLocation.fromNamespaceAndPath("nusmp", "doom_armour_break");
-    private static final ResourceLocation BREAK_TOUGH = ResourceLocation.fromNamespaceAndPath("nusmp", "doom_toughness_break");
+    private static final ResourceLocation ROT_HP = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "rot_decay");
+    private static final ResourceLocation BREAK_ARMOUR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "doom_armour_break");
+    private static final ResourceLocation BREAK_TOUGH = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "doom_toughness_break");
     private static final String ROT_N = "nusmp_rot_n", ROT_AT = "nusmp_rot_at", ROT_CHAIN = "nusmp_rot_chain";
     private static final String BRK_N = "nusmp_doom_brk_n", BRK_UNTIL = "nusmp_doom_brk_until";
     private static final String DOOM_AT = "nusmp_doom_at", DOOM_BY = "nusmp_doom_by", DOOM_BANK = "nusmp_doom_bank";

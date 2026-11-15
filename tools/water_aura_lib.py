@@ -15,7 +15,7 @@ Frame of the files (same as Blockbench): model pixels = 1/16 block, y UP, origin
 the right arm is at x = -5 and the head is y 24..32. Body-anchored pieces are authored in these WHOLE-BODY coordinates (the aura painter anchors them
 on the player's own model part); rotations are degrees.
 
-Run python as `python3 -B`. Files are written under src/main/resources/assets/nusmp/ by geo_builder's ROOT.
+Run python as `python3 -B`. Files are written under src/main/resources/assets/anime_multiverse/ by geo_builder's ROOT.
 """
 import json
 import math

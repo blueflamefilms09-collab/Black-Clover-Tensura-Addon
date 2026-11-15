@@ -106,7 +106,7 @@ public final class FranchiseEvents {
             Optional<ResourceKey<Enchantment>> k = en.getKey().unwrapKey();
             if (k.isEmpty()) continue;
             ResourceLocation id = k.get().location();
-            if (!"nusmp".equals(id.getNamespace()) || !id.getPath().startsWith("fr_")) continue;
+            if (!"anime_multiverse".equals(id.getNamespace()) || !id.getPath().startsWith("fr_")) continue;
             Engraving e = FranchiseData.engraving(id.getPath());
             if (e == null || !scopeAllows(e.scope(), rank)) continue;
             if (out == null) out = new LinkedHashMap<>(4);

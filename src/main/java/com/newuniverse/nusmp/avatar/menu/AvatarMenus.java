@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Why: a menu is the server's proof that the creation screen is really open: the net handlers only act for a player whose open container is an
  * {@link AvatarBuilderMenu} (the classic screen) or a {@link SoulForgeMenu} (the Soul Forge ritual), so a client cannot roll or create without the Genesis
- * Core and the forge having opened it. This registers both MenuTypes ({@code nusmp:avatar_builder}, and since 1.58.0 {@code nusmp:soul_forge}); AvatarSystem
+ * Core and the forge having opened it. This registers both MenuTypes ({@code anime_multiverse:avatar_builder}, and since 1.58.0 {@code anime_multiverse:soul_forge}); AvatarSystem
  * calls {@link #init} once.
  */
 public final class AvatarMenus {

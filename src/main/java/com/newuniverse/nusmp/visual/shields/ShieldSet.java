@@ -16,12 +16,12 @@ import java.util.Set;
 public final class ShieldSet {
     private ShieldSet() {}
 
-    /** The item ids (registry paths under nusmp:), in the order the previews and the doc list them. */
+    /** The item ids (registry paths under anime_multiverse:), in the order the previews and the doc list them. */
     public static final List<String> IDS = List.of(
             "magebane_shield", "legendary_shield", "aegis_of_the_abyss", "celestial_support", "heros_shield", "thunder_shield", "calamity_wave_aegis",
             "hylian_hero_shield");
 
-    /** Ids the class table (assets/nusmp/weapon_classes.json) files under "shield" that are not held-up shields. */
+    /** Ids the class table (assets/anime_multiverse/weapon_classes.json) files under "shield" that are not held-up shields. */
     public static final Set<String> CLASS_ONLY = Set.of("vassal_mirror");
 
     /** The suffixes of the extra meshes of one shield (a curse form, the level-of-detail mesh, an orbiting piece of an upgraded mesh). */

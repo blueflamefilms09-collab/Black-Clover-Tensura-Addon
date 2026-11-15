@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The effect data of one upgraded weapon (assets/nusmp/visual_upgrade/&lt;id&gt;.json, written by tools/visual_upgrade/genesis_weapons): the animated groups of the mesh
+ * The effect data of one upgraded weapon (assets/anime_multiverse/visual_upgrade/&lt;id&gt;.json, written by tools/visual_upgrade/genesis_weapons): the animated groups of the mesh
  * (what spins, bobs, breathes, flickers), the ambient effect layers, the idle animations, the draw animation, the swing trail, the signature burst of every act and the
  * looped sound id. Pure data (no Minecraft classes): the client reads it once per resource reload, the tests read it from the file.
  */

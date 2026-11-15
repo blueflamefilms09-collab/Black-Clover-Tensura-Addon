@@ -26,7 +26,7 @@ public final class DiscoveryKeys {
     public static String item(ItemStack stack) { return stack == null || stack.isEmpty() ? null : item(stack.getItem()); }
 
     /** The key of a registered item by its path in this mod ("heart_of_words"). */
-    public static String modItem(String path) { return DiscoveryRules.itemKey("nusmp", path); }
+    public static String modItem(String path) { return DiscoveryRules.itemKey("anime_multiverse", path); }
 
     private static String buildItem(Item item) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);

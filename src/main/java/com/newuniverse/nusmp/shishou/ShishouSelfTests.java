@@ -50,14 +50,14 @@ public final class ShishouSelfTests {
 
     // ================================================================ relic.shishou: registrations, files, rules
     private static Result basics(MinecraftServer server) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "shishou");
-        if (!BuiltInRegistries.ITEM.containsKey(id)) return Result.fail("the item nusmp:shishou is not registered");
-        if (!BuiltInRegistries.ENTITY_TYPE.containsKey(id)) return Result.fail("the entity nusmp:shishou is not registered");
-        if (!BuiltInRegistries.MOB_EFFECT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "black_flame"))) return Result.fail("the Black Flame effect is not registered");
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou");
+        if (!BuiltInRegistries.ITEM.containsKey(id)) return Result.fail("the item anime_multiverse:shishou is not registered");
+        if (!BuiltInRegistries.ENTITY_TYPE.containsKey(id)) return Result.fail("the entity anime_multiverse:shishou is not registered");
+        if (!BuiltInRegistries.MOB_EFFECT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_flame"))) return Result.fail("the Black Flame effect is not registered");
         for (String c : new String[]{"shishou_owner", "shishou_token", "shishou_level"})
-            if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c))) return Result.fail("component " + c + " is not registered");
-        for (String f : new String[]{"/assets/nusmp/weapon_meshes/shishou.txt", "/assets/nusmp/textures/entity/weapon/shishou.png", "/assets/nusmp/textures/item/shishou.png",
-                "/assets/nusmp/animations/entity/shishou_sword.animation.json", "/assets/nusmp/models/item/shishou.json", "/assets/nusmp/models/item/shishou_icon.json"})
+            if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c))) return Result.fail("component " + c + " is not registered");
+        for (String f : new String[]{"/assets/anime_multiverse/weapon_meshes/shishou.txt", "/assets/anime_multiverse/textures/entity/weapon/shishou.png", "/assets/anime_multiverse/textures/item/shishou.png",
+                "/assets/anime_multiverse/animations/entity/shishou_sword.animation.json", "/assets/anime_multiverse/models/item/shishou.json", "/assets/anime_multiverse/models/item/shishou_icon.json"})
             if (!exists(f)) return Result.fail("missing asset " + f);
         if (ShishouSkill.values().length != 31) return Result.fail("the skill table changed size");
         if (ShishouRules.THEFT_SLOW_AMP != 9 || ShishouRules.THEFT_TICKS != 200) return Result.fail("the anti-theft numbers moved");

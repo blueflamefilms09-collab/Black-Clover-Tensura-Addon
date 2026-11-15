@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * from the shipped faction files keep drowned things out of a dry crypt. Pure (java.nio and regular expressions); working directory = project root.
  */
 class SpawnFilterTest {
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
     private static final String GORGON = "iceandfire:gorgon";
 
     // ---------------------------------------------------------------- the blacklist
@@ -139,7 +139,7 @@ class SpawnFilterTest {
         try (Stream<Path> faction = Files.list(tags.resolve("mega"))) {
             for (Path f : (Iterable<Path>) faction::iterator) assertFalse(read(f).contains(GORGON), f + " still lists the Gorgon");
         }
-        assertTrue(read(tags.resolve("dungeon/banned.json")).contains(GORGON), "nusmp:dungeon/banned must name the Gorgon");
+        assertTrue(read(tags.resolve("dungeon/banned.json")).contains(GORGON), "anime_multiverse:dungeon/banned must name the Gorgon");
         assertTrue(read(tags.resolve("dungeon/excluded.json")).contains(GORGON), "the veto tag keeps the Gorgon out of the tiers and the encounters");
     }
 

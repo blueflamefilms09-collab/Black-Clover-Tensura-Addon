@@ -46,7 +46,7 @@ public final class DbPassives {
 
     private static final ResourceLocation SPEED = id("db_speed"), ATTACK = id("db_attack"), FLY = id("db_fly"), KNOCK = id("db_knock"), SCALE = id("db_scale");
 
-    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("nusmp", p); }
+    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", p); }
 
     public static void register(IEventBus bus) { bus.addListener(DbPassives::onDamage); }
 

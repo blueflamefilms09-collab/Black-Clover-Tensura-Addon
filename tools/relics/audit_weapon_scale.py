@@ -4,10 +4,10 @@
     python tools/relics/audit_weapon_scale.py --problems            only the meshes that are too small / too large / flagged
     python tools/relics/audit_weapon_scale.py --json out.json       the table as json
     python tools/relics/audit_weapon_scale.py --sheet out.png [--only problems|all] [ids ...]   the contact sheet (front + held next to Steve)
-    python tools/relics/audit_weapon_scale.py --write               copy the class table to assets/nusmp/weapon_classes.json (the game's copy)
+    python tools/relics/audit_weapon_scale.py --write               copy the class table to assets/anime_multiverse/weapon_classes.json (the game's copy)
     python tools/relics/audit_weapon_scale.py --check               exit 1 when the two class files differ or a mesh has no reviewed class
 
-For every assets/nusmp/weapon_meshes/<id>.txt it places the mesh the way WeaponRenderer does (place line), takes the third-person display scale of the
+For every assets/anime_multiverse/weapon_meshes/<id>.txt it places the mesh the way WeaponRenderer does (place line), takes the third-person display scale of the
 model json (a state mesh uses its base id's), and compares the APPARENT length (mesh length x display scale, in blocks) with the class table of
 tools/relics/weapon_classes.json (min / max, and `head_min` for an axe or hammer head). It also runs the orientation detector
 (tools/relics/weapon_orientation.py): tip down, head toward the player, mirrored. The fixes are tools/relics/weapon_fixes.json, applied by
@@ -27,7 +27,7 @@ import weapon_classes as wc          # noqa: E402
 import weapon_orientation as wo      # noqa: E402
 
 ROOT = wc.ROOT
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MESHES = os.path.join(ASSETS, "weapon_meshes")
 MODELS = os.path.join(ASSETS, "models", "item")
 SKIP_PREFIXES = ("djinn_weapon_",)

@@ -116,7 +116,7 @@ def main(argv):
         return 2
     template, theme_id, prefix = args[0], args[1], args[2]
     root = opts.get("--root", L.RES)
-    path = os.path.join(root, "data", "nusmp", "structure", template + ".nbt")
+    path = os.path.join(root, "data", "anime_multiverse", "structure", template + ".nbt")
     t = themed(path, template, theme_id)
     sx, sy, sz = t.size
     only = set((opts.get("--only") or "iso,plan,walk").split(","))

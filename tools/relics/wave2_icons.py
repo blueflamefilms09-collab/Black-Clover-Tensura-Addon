@@ -6,7 +6,7 @@ top-left edges, shade on the bottom-right ones, a few bright details and glints)
     python3 tools/relics/wave2_icons.py            # writes the icons and the flat item models
     python3 tools/relics/wave2_icons.py --sheet P  # also writes a contact sheet (scaled 12x) to the path P
 
-Writes assets/nusmp/textures/item/<id>.png and assets/nusmp/models/item/<id>.json (parent item/generated, layer0 the icon) for the 12 ids of
+Writes assets/anime_multiverse/textures/item/<id>.png and assets/anime_multiverse/models/item/<id>.json (parent item/generated, layer0 the icon) for the 12 ids of
 wave 2 only. Idempotent: running it again rewrites the same files.
 """
 import json
@@ -17,7 +17,7 @@ import sys
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -405,7 +405,7 @@ def main():
         img = fn()
         img.save(os.path.join(TEX, rid + ".png"))
         with open(os.path.join(MODELS, rid + ".json"), "w", newline="\n") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}, f, indent=2)
             f.write("\n")
         made[rid] = img
     if "--sheet" in sys.argv:

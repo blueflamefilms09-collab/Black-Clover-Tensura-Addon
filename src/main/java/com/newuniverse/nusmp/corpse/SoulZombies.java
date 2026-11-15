@@ -41,10 +41,10 @@ public final class SoulZombies {
         int cap = CorpseConfig.zombieCap();
         int make = SoulZombieRules.fitGlobal(Corpses.ZOMBIES.count(id), n, cap, Corpses.ZOMBIES.total(), CorpseConfig.zombieGlobalCap())[0];
         int life = Math.max(SoulZombieRules.MIN_LIFE, Math.min(SoulZombieRules.MAX_LIFE, lifeTicks));
-        if (make <= 0) LOG.debug("[nusmp] soul zombies: none made for {} (live {}, wanted {}, cap {}, server {}/{})", owner.getGameProfile().getName(), Corpses.ZOMBIES.count(id), n, cap, Corpses.ZOMBIES.total(), CorpseConfig.zombieGlobalCap());
+        if (make <= 0) LOG.debug("[anime_multiverse] soul zombies: none made for {} (live {}, wanted {}, cap {}, server {}/{})", owner.getGameProfile().getName(), Corpses.ZOMBIES.count(id), n, cap, Corpses.ZOMBIES.total(), CorpseConfig.zombieGlobalCap());
         for (int k = 0; k < make; k++) {
             SoulZombieEntity z = CorpseEntities.SOUL_ZOMBIE.get().create(level);
-            if (z == null) { LOG.debug("[nusmp] soul zombies: the world refused to create a soul_zombie (feature flags?)"); continue; }
+            if (z == null) { LOG.debug("[anime_multiverse] soul zombies: the world refused to create a soul_zombie (feature flags?)"); continue; }
             Vec3 spot = k == 0 && firstAt != null ? firstAt : Corpses.findSpot(level, z.getType().getDimensions(), owner.position(), 1.5, 4.0, owner.getRandom(), false);
             if (spot == null) spot = owner.position();
             z.moveTo(spot.x, spot.y, spot.z, owner.getYRot() + 180f, 0f);
@@ -59,7 +59,7 @@ public final class SoulZombies {
             t.putInt("Life", life);
             t.putString("Kind", "zombie");
             z.getPersistentData().put(Corpses.TAG, t);
-            if (!level.addFreshEntity(z)) { LOG.debug("[nusmp] soul zombies: addFreshEntity refused a zombie at {}", spot); continue; }
+            if (!level.addFreshEntity(z)) { LOG.debug("[anime_multiverse] soul zombies: addFreshEntity refused a zombie at {}", spot); continue; }
             for (UUID old : Corpses.ZOMBIES.add(id, z.getUUID(), cap)) Corpses.crumbleById(owner.getServer(), old);
             Corpses.mark(z, 0);
             Fx.spray(level, FxThemes.CORPSE, FxTone.LIGHT, z.getX(), z.getY() + 0.3, z.getZ(), 10, 0.35, 0.25, 0.35, 0.05);

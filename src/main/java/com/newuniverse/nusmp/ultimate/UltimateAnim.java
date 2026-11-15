@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the charge pose of an Ultimate depends on who casts it. Each kingdom of the Black Clover world has its own wind-up, hold and release clip (assets/nusmp/animations/player/cast.animation.json, written by
+ * Why: the charge pose of an Ultimate depends on who casts it. Each kingdom of the Black Clover world has its own wind-up, hold and release clip (assets/anime_multiverse/animations/player/cast.animation.json, written by
  * tools/gen_ultimate_anims.py); a caster without a kingdom, and a server that switched {@code ultimate.kingdomAnimations} off, keep the old single looping Mana Zone pose and the Signature release. Pure (no game
  * class), unit tested; {@link UltimateManager} asks it once per cast, on the server, and sends the chosen clip names with the EXISTING cast-animation payload (no packet of its own, rule 9).
  *

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Why: the table that says which casts are Light and which are Dark is data ({@code data/nusmp/mega/flow/alignments.json}), so a datapack can retune a
+ * Why: the table that says which casts are Light and which are Dark is data ({@code data/anime_multiverse/mega/flow/alignments.json}), so a datapack can retune a
  * family, add a word or move a magic to neutral without a mod update, and a data reload ({@code /reload}, a world load) must rebuild it. A plain
  * {@code ResourceManagerReloadListener} (the pattern this repo already compiles for the avatar races and the Mega factions) reads the file, hands the
  * parsed tree to the pure {@link MagicAlignments#parse}, logs each complaint once with its file, and installs the table in one step. The file the
@@ -30,8 +30,8 @@ import java.util.Optional;
  */
 public final class AlignmentReload implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
-    /** The file, as a resource location in the server data folders: {@code data/nusmp/mega/flow/alignments.json}. */
-    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/flow/alignments.json");
+    /** The file, as a resource location in the server data folders: {@code data/anime_multiverse/mega/flow/alignments.json}. */
+    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/flow/alignments.json");
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
@@ -39,21 +39,21 @@ public final class AlignmentReload implements ResourceManagerReloadListener {
         try {
             Optional<Resource> res = manager.getResource(FILE);
             if (res.isEmpty()) {
-                LOG.warn("[nusmp] Mega flow: {} is missing, so every cast reads as neutral and the Rukh flow does nothing", FILE);
+                LOG.warn("[anime_multiverse] Mega flow: {} is missing, so every cast reads as neutral and the Rukh flow does nothing", FILE);
             } else {
                 try (Reader reader = res.get().openAsReader()) {
                     JsonElement root = JsonParser.parseReader(reader);
                     Object tree = root.isJsonObject() ? toTree(root.getAsJsonObject()) : null;
                     @SuppressWarnings("unchecked") MagicAlignments.Parsed parsed = MagicAlignments.parse((Map<String, Object>) tree);
-                    for (String p : parsed.problems()) LOG.warn("[nusmp] Mega flow file {}: {}", FILE, p);
+                    for (String p : parsed.problems()) LOG.warn("[anime_multiverse] Mega flow file {}: {}", FILE, p);
                     table = parsed.table();
                 }
             }
         } catch (Exception ex) {
-            LOG.warn("[nusmp] Mega flow file {} could not be read, so every cast reads as neutral: {}", FILE, ex.toString());
+            LOG.warn("[anime_multiverse] Mega flow file {} could not be read, so every cast reads as neutral: {}", FILE, ex.toString());
         }
         AlignmentRegistry.install(table);
-        LOG.info("[nusmp] Loaded the Mega-Dungeon Rukh flow table: {} light words, {} dark words, {} exact entries", table.lightKeywords().size(), table.darkKeywords().size(), table.exactEntries().size());
+        LOG.info("[anime_multiverse] Loaded the Mega-Dungeon Rukh flow table: {} light words, {} dark words, {} exact entries", table.lightKeywords().size(), table.darkKeywords().size(), table.exactEntries().size());
     }
 
     /** A Gson element as plain Java: objects to insertion-ordered maps, arrays to lists, numbers to Double, booleans, strings, null. */

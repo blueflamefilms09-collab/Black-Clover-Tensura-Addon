@@ -7,7 +7,7 @@ public final class ResetRules {
     /** Tensura's scroll class: the frames that make a skill removal "a reset". */
     public static final String SCROLL_CLASS = "io.github.manasmods.tensura.item.misc.ResetScrollItem";
     /** Every skill this mod registers lives in this namespace. */
-    public static final String NAMESPACE = "nusmp";
+    public static final String NAMESPACE = "anime_multiverse";
 
     private ResetRules() {}
 

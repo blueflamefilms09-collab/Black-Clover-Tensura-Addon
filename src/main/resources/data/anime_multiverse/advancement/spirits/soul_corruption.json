@@ -1,0 +1,36 @@
+{
+  "parent": "anime_multiverse:spirits/devil_union",
+  "display": {
+    "icon": {
+      "id": "minecraft:wither_skeleton_skull"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spirits.soul_corruption.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spirits.soul_corruption.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "afflicted": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "anime_multiverse:soul_corruption": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "afflicted"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

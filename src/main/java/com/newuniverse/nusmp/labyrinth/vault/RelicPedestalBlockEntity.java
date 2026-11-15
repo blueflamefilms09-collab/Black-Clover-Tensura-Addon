@@ -179,7 +179,7 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
             boolean exhausted = rolling;                                                    // rolled just now and got nothing: the ledger is exhausted
             taken = true;
             sync();
-            player.displayClientMessage(Component.translatable(exhausted ? "nusmp.relic_pedestal.exhausted" : "nusmp.relic_pedestal.empty"), true);
+            player.displayClientMessage(Component.translatable(exhausted ? "anime_multiverse.relic_pedestal.exhausted" : "anime_multiverse.relic_pedestal.empty"), true);
             return false;
         }
         ItemStack give = held.copy();
@@ -193,7 +193,7 @@ public final class RelicPedestalBlockEntity extends BlockEntity {
         Fx.spray(server, FxThemes.DUNGEON_VAULT, FxOld.ENCHANT, c.x, c.y + 1.2, c.z, 40, 0.4, 0.4, 0.4, 0.6);
         level.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 0.8f, 1.5f);
         level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6f, 1.0f);
-        player.displayClientMessage(Component.translatable("nusmp.relic_pedestal.taken", name), true);
+        player.displayClientMessage(Component.translatable("anime_multiverse.relic_pedestal.taken", name), true);
         com.newuniverse.nusmp.quests.NusmpEvents.fire(player, "labyrinth.vault_opened");
         return true;
     }

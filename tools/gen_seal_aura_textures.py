@@ -1,6 +1,6 @@
 """Generates the Sealing Magic aura textures: three streak rings for Orbital Bind (comet arcs of different density), the rune halo of the gentle
 style, the latitude sphere shell and a 64x64 player-skin-layout shimmer. White with alpha (tinted by the vertex colour).
-Output: src/main/resources/assets/nusmp/textures/aura/seal_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/aura/seal_*.png
 
     python tools/gen_seal_aura_textures.py
 """
@@ -11,7 +11,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
 
 
 def save(a, name):

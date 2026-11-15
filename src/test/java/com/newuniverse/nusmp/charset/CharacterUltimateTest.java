@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * and {@code opens}) against the REAL shipped character files of characters from several kingdoms and every registered Ultimate. Pure, no game.
  */
 class CharacterUltimateTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
 
     private static CharacterSetRegistry shipped() {
         CharacterSetRegistry r = CharacterSetRegistry.load(CharacterSetRegistry.SHIPPED, id -> {

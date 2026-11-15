@@ -227,10 +227,10 @@ final class GuardSelfTests {
     // ================================================================ guard.registry
     private static Result registry(MinecraftServer server) {
         var access = server.overworld().registryAccess();
-        expect(BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_core")), "item nusmp:mana_core is not registered");
-        expect(BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "guardian_altar")), "item nusmp:guardian_altar is not registered");
-        expect(BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "guardian_altar")), "block nusmp:guardian_altar is not registered");
-        expect(BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "labyrinth_guardian")), "entity nusmp:labyrinth_guardian is not registered");
+        expect(BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_core")), "item anime_multiverse:mana_core is not registered");
+        expect(BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "guardian_altar")), "item anime_multiverse:guardian_altar is not registered");
+        expect(BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "guardian_altar")), "block anime_multiverse:guardian_altar is not registered");
+        expect(BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "labyrinth_guardian")), "entity anime_multiverse:labyrinth_guardian is not registered");
         expect(GatekeeperDoorBlock.KIND.getPossibleValues().contains(GatekeeperDoorBlock.Kind.SECTOR), "the gatekeeper door has no kind=sector");
         // the data component survives the stack's codec (save and load, as a chest or a restart does) and the network codec
         ItemStack core = ManaCoreItem.forSector(7, RegionTheme.STORM);
@@ -747,11 +747,11 @@ final class GuardSelfTests {
     private static Result dnd(MinecraftServer server) {
         World w = world(server);
         ServerLevel level = w.level();
-        expect(DndProfiles.count() >= 20, "only " + DndProfiles.count() + " boss profiles are loaded (data/nusmp/mega/dnd_bosses holds twenty)");
+        expect(DndProfiles.count() >= 20, "only " + DndProfiles.count() + " boss profiles are loaded (data/anime_multiverse/mega/dnd_bosses holds twenty)");
         for (int floor : new int[] {1, 150, 450, 650, 950, -1, -250, -450, -750, -1000}) {
             expect(DndProfiles.byId(DndProfiles.idForFloor(floor)) != null, "floor " + floor + " has no profile (" + DndProfiles.idForFloor(floor) + ")");
         }
-        expect(DndProfiles.famousCount() >= 15, "only " + DndProfiles.famousCount() + " famous bosses are loaded (data/nusmp/mega/dnd_bosses/famous)");
+        expect(DndProfiles.famousCount() >= 15, "only " + DndProfiles.famousCount() + " famous bosses are loaded (data/anime_multiverse/mega/dnd_bosses/famous)");
         if (GuardConfig.get(GuardConfig.FAMOUS_PERCENT) == 50) {                              // the default chance: a run of sectors on one floor holds both kinds, and the pick is stable
             int famous = 0;
             for (int sector = 0; sector < 80; sector++) {

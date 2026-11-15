@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_sound_rebuild_geo.py        # writes every model, animation and texture, runs tools/geo_check.py
 
-Models (assets/nusmp/geo/entity/sound_<name>.geo.json, animations/entity/..., textures/entity/sound_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/sound_<name>.geo.json, animations/entity/..., textures/entity/sound_<name>.png + _glow.png):
   armour    (Space.PLAYER, one root bone per piece, drawn piece by piece by client/aura/SongArmourKit with the Djinn equip animation)
             helm (headphones with speaker-cone ear cups, a mic boom, two antenna fins), chest (amp plate: speaker grille, VU meter bars, knobs),
             wave_a / wave_b / wave_c (three arcs of sound behind the back, each pulsing outward), cable (a coiled cable tail with a plug),

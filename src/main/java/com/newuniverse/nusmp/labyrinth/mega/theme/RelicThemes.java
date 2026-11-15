@@ -17,7 +17,7 @@ import java.util.Set;
  * palette and ruleset of the next ten floors"), so a relic has to be an IDENTITY with a place in the world, not a random number: taking Frostfang
  * leads to the Frost road, the Bloodbound Katana to the Blood road, and the choice among three pedestals is a choice of where to go next. A mapping
  * that important must be explainable to a player and tunable by the owner without a mod update, so it is a pure function of three things the owner
- * can see: (a) an EXPLICIT table, {@code data/nusmp/mega/relic_themes.json}, that says "this relic id belongs to that theme" and always wins (the
+ * can see: (a) an EXPLICIT table, {@code data/anime_multiverse/mega/relic_themes.json}, that says "this relic id belongs to that theme" and always wins (the
  * famous relics are placed by hand, by their lore); (b) otherwise the KEYWORDS the themes already carry for this purpose ({@code relics.keywords} in
  * each theme file): the theme with the most distinct keywords found at the start of a word of the relic's id or card name wins, a tie going to the
  * theme that comes first in {@link RegionTheme}; (c) otherwise a stable HASH of the relic id over the themes, so a relic nobody has described yet (one
@@ -55,7 +55,7 @@ public final class RelicThemes {
     /** Is this text usable as a ruleset id (lower case letters, digits and underscores, at most 40)? */
     public static boolean validRuleset(String id) { return id != null && RULESET_ID.matcher(id).matches(); }
 
-    /** A relic id as the tables key it: trimmed, lower case, without a namespace ({@code nusmp:Frostfang} and {@code frostfang} are the same relic). Never null. */
+    /** A relic id as the tables key it: trimmed, lower case, without a namespace ({@code anime_multiverse:Frostfang} and {@code frostfang} are the same relic). Never null. */
     public static String key(String relicId) {
         if (relicId == null) return "";
         String s = relicId.trim().toLowerCase(Locale.ROOT);
@@ -103,7 +103,7 @@ public final class RelicThemes {
         if (rulesets == null || rulesets.isEmpty() || key.isEmpty()) return null;
         String direct = normalRuleset(rulesets.get(key));
         if (direct != null) return direct;
-        for (Map.Entry<String, String> e : rulesets.entrySet()) {                    // a caller's map may be keyed "nusmp:Frostfang"
+        for (Map.Entry<String, String> e : rulesets.entrySet()) {                    // a caller's map may be keyed "anime_multiverse:Frostfang"
             if (e.getKey() == null || !key.equals(key(e.getKey()))) continue;
             String id = normalRuleset(e.getValue());
             if (id != null) return id;
@@ -122,7 +122,7 @@ public final class RelicThemes {
         if (explicit == null || explicit.isEmpty() || key.isEmpty()) return null;
         RegionTheme direct = themeById(explicit.get(key));
         if (direct != null) return direct;
-        for (Map.Entry<String, String> e : explicit.entrySet()) {                    // a caller's map may be keyed "nusmp:Frostfang"
+        for (Map.Entry<String, String> e : explicit.entrySet()) {                    // a caller's map may be keyed "anime_multiverse:Frostfang"
             if (e.getKey() == null || !key.equals(key(e.getKey()))) continue;
             RegionTheme t = themeById(e.getValue());
             if (t != null) return t;

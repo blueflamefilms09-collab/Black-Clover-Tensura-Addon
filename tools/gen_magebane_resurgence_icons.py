@@ -4,9 +4,9 @@ magebane_longsword_and_shield.jpg and paladin_items_weapon_of_resurgence_hand_of
     python3 -B tools/gen_magebane_resurgence_icons.py
 
 Writes
-  assets/nusmp/textures/item/<id>.png       the 16x16 inventory icon (the shield stands upright, the sword lies on the usual diagonal)
-  assets/nusmp/models/item/<id>_icon.json   the flat inventory icon model
-  assets/nusmp/models/item/<id>.json        the 3D in-hand model (builtin/entity, drawn by client/WeaponRenderer from the mesh that
+  assets/anime_multiverse/textures/item/<id>.png       the 16x16 inventory icon (the shield stands upright, the sword lies on the usual diagonal)
+  assets/anime_multiverse/models/item/<id>_icon.json   the flat inventory icon model
+  assets/anime_multiverse/models/item/<id>.json        the 3D in-hand model (builtin/entity, drawn by client/WeaponRenderer from the mesh that
                                             tools/gen_weapon_models.py builds); the sword's display transforms are the Magebane
                                             Longsword's, the shield has its own (held on the forearm, its face turned to the front).
 """
@@ -20,7 +20,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 S = 16
@@ -115,7 +115,7 @@ def write_json(name, data):
 
 
 def icon_model(item_id):
-    write_json(item_id + "_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}})
+    write_json(item_id + "_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}})
 
 
 def tf(rot, tr, sc):
@@ -125,7 +125,7 @@ def tf(rot, tr, sc):
 def sword_model(item_id):
     """The Magebane Longsword's display transforms (the sprite sits on the usual diagonal)."""
     src = json.load(open(os.path.join(MODELS, "magebane_longsword.json")))
-    src["textures"] = {"particle": "nusmp:item/" + item_id}
+    src["textures"] = {"particle": "anime_multiverse:item/" + item_id}
     write_json(item_id, src)
 
 
@@ -145,7 +145,7 @@ def shield_model(item_id):
         "fixed": tf((0, 180, 0), (0, 0, 0), 1),
         "gui": tf((0, 0, 0), (0, 0, 0), 1),
     }
-    write_json(item_id, {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": d})
+    write_json(item_id, {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": d})
 
 
 def main():

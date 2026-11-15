@@ -67,7 +67,7 @@ public final class SystemOverlay {
             draw(g, mc, partialTick, scale, gs, live, toasts);
         } catch (RuntimeException | LinkageError e) {
             ClientSystem.broken = true;
-            LOG.warn("[nusmp] The System window failed to draw and is switched off until the server sends news", e);
+            LOG.warn("[anime_multiverse] The System window failed to draw and is switched off until the server sends news", e);
         } finally {
             if (pushed) g.pose().popPose();
         }
@@ -123,7 +123,7 @@ public final class SystemOverlay {
             replay(g, mc.font, frame.ops());
             return frame;
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] The System window preview failed to draw", e);
+            LOG.warn("[anime_multiverse] The System window preview failed to draw", e);
             return null;
         } finally {
             if (pushed) g.pose().popPose();

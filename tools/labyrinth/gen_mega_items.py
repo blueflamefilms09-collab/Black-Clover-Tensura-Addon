@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.join(HERE, ".."))
 import gen_labyrinth_seal_assets as seal  # noqa: E402
 
 RES = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "resources"))
-ASSETS = os.path.join(RES, "assets", "nusmp")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
 
 TEAL = (70, 214, 186)
 TEAL_HI = (176, 255, 240)
@@ -142,8 +142,8 @@ def core_item_models():
         "gui": t([0, 0, 0], [0, 0, 0], 1),
     }
     return {
-        "models/item/mana_core.json": {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/mana_core"}, "display": display},
-        "models/item/mana_core_icon.json": {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/mana_core"}},
+        "models/item/mana_core.json": {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/mana_core"}, "display": display},
+        "models/item/mana_core_icon.json": {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/mana_core"}},
     }
 
 
@@ -271,8 +271,8 @@ def altar_pillar():
 
 
 def altar_models():
-    tex = {"particle": "nusmp:block/guardian_altar_side", "side": "nusmp:block/guardian_altar_side", "top": "nusmp:block/guardian_altar_top",
-           "pillar": "nusmp:block/guardian_altar_pillar", "bottom": "minecraft:block/polished_deepslate"}
+    tex = {"particle": "anime_multiverse:block/guardian_altar_side", "side": "anime_multiverse:block/guardian_altar_side", "top": "anime_multiverse:block/guardian_altar_top",
+           "pillar": "anime_multiverse:block/guardian_altar_pillar", "bottom": "minecraft:block/polished_deepslate"}
 
     def el(a, b, side, up, down="#bottom"):
         return {"from": a, "to": b, "faces": {"north": {"texture": side}, "south": {"texture": side}, "east": {"texture": side}, "west": {"texture": side},
@@ -284,8 +284,8 @@ def altar_models():
         elements.append(el([x0, 4, z0], [x0 + 3, 16, z0 + 3], "#pillar", "#pillar"))
     return {
         "models/block/guardian_altar.json": {"parent": "minecraft:block/block", "textures": tex, "elements": elements},
-        "blockstates/guardian_altar.json": {"variants": {"": {"model": "nusmp:block/guardian_altar"}}},
-        "models/item/guardian_altar.json": {"parent": "nusmp:block/guardian_altar"},
+        "blockstates/guardian_altar.json": {"variants": {"": {"model": "anime_multiverse:block/guardian_altar"}}},
+        "models/item/guardian_altar.json": {"parent": "anime_multiverse:block/guardian_altar"},
     }
 
 
@@ -293,15 +293,15 @@ def sector_door_models():
     out = {}
     for half, tex in (("lower", "gatekeeper_door_sector_bottom"), ("upper", "gatekeeper_door_sector_top")):
         out["models/block/gatekeeper_door_sector_%s.json" % half] = {"parent": "minecraft:block/cube", "textures": {
-            "particle": "nusmp:block/" + tex, "down": "nusmp:block/gatekeeper_door_end", "up": "nusmp:block/gatekeeper_door_end",
-            "north": "nusmp:block/" + tex, "south": "nusmp:block/" + tex, "east": "nusmp:block/" + tex, "west": "nusmp:block/" + tex}}
+            "particle": "anime_multiverse:block/" + tex, "down": "anime_multiverse:block/gatekeeper_door_end", "up": "anime_multiverse:block/gatekeeper_door_end",
+            "north": "anime_multiverse:block/" + tex, "south": "anime_multiverse:block/" + tex, "east": "anime_multiverse:block/" + tex, "west": "anime_multiverse:block/" + tex}}
     return out
 
 
-DOOR_STATES = {"kind=sector,open=false,half=lower": {"model": "nusmp:block/gatekeeper_door_sector_lower"},
-               "kind=sector,open=true,half=lower": {"model": "nusmp:block/gatekeeper_door_open"},
-               "kind=sector,open=false,half=upper": {"model": "nusmp:block/gatekeeper_door_sector_upper"},
-               "kind=sector,open=true,half=upper": {"model": "nusmp:block/gatekeeper_door_open"}}
+DOOR_STATES = {"kind=sector,open=false,half=lower": {"model": "anime_multiverse:block/gatekeeper_door_sector_lower"},
+               "kind=sector,open=true,half=lower": {"model": "anime_multiverse:block/gatekeeper_door_open"},
+               "kind=sector,open=false,half=upper": {"model": "anime_multiverse:block/gatekeeper_door_sector_upper"},
+               "kind=sector,open=true,half=upper": {"model": "anime_multiverse:block/gatekeeper_door_open"}}
 
 
 # ================================================================================================================ the file set
@@ -316,7 +316,7 @@ def js(obj):
 
 
 def build():
-    """published relative path (under assets/nusmp) -> bytes, for every file this script owns outright."""
+    """published relative path (under assets/anime_multiverse) -> bytes, for every file this script owns outright."""
     out = {}
     out["textures/item/mana_core.png"] = png_bytes(core_sprite())
     for path, obj in {**core_item_models(), **altar_models(), **sector_door_models()}.items():

@@ -107,8 +107,8 @@ class CyclicLayerTest {
         assertFalse(SocketRules.aligned(a, new LoopPlanner.Door(1, new Cell(3, 3), Dir.WEST)), "one module off");
         assertFalse(SocketRules.aligned(a, new LoopPlanner.Door(1, new Cell(3, 2), Dir.EAST)), "not facing");
         assertFalse(SocketRules.aligned(a, new LoopPlanner.Door(1, new Cell(4, 2), Dir.WEST)), "a module apart");
-        assertTrue(SocketRules.namesMatch("nusmp:mega_door", "nusmp:mega_door", "nusmp:mega_door", "nusmp:mega_door"));
-        assertFalse(SocketRules.namesMatch("nusmp:mega_vault", "nusmp:mega_vault", "nusmp:mega_door", "nusmp:mega_door"), "a boss-chain doorway never meets an ordinary one");
+        assertTrue(SocketRules.namesMatch("anime_multiverse:mega_door", "anime_multiverse:mega_door", "anime_multiverse:mega_door", "anime_multiverse:mega_door"));
+        assertFalse(SocketRules.namesMatch("anime_multiverse:mega_vault", "anime_multiverse:mega_vault", "anime_multiverse:mega_door", "anime_multiverse:mega_door"), "a boss-chain doorway never meets an ordinary one");
     }
 
     @Test

@@ -17,7 +17,7 @@ class BossSkillPolicyTest {
         assertTrue(BossSkillPolicy.isForbidden("tensura:ultraspeed_regeneration", "extra"));
         assertTrue(BossSkillPolicy.isForbidden("othermod:Second Wind", "common"));
         assertTrue(BossSkillPolicy.isForbidden("othermod:second-wind", "common"));
-        assertTrue(BossSkillPolicy.isForbidden("nusmp:revive_totem", "other"));
+        assertTrue(BossSkillPolicy.isForbidden("anime_multiverse:revive_totem", "other"));
     }
 
     @Test
@@ -45,7 +45,7 @@ class BossSkillPolicyTest {
         assertFalse(BossSkillPolicy.isForbidden("tensura:strength", "common"));
         assertFalse(BossSkillPolicy.isForbidden("tensura:fire_ball", "magic"));
         assertFalse(BossSkillPolicy.isForbidden("tensura:sword_dance", "battlewill"));
-        assertFalse(BossSkillPolicy.isForbidden("nusmp:book_time", "other"));
+        assertFalse(BossSkillPolicy.isForbidden("anime_multiverse:book_time", "other"));
         assertFalse(BossSkillPolicy.isForbidden(null, "unique"));
         assertFalse(BossSkillPolicy.isForbidden("", "unique"));
     }

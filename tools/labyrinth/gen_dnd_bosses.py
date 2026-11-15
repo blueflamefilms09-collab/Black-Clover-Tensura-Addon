@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes data/nusmp/mega/dnd_bosses/<side>_t<tier><a|b>.json: the twenty Decennial boss profiles (1.65.0): ten Holy (ascension), ten Evil (descent), five tiers of two.
+"""Writes data/anime_multiverse/mega/dnd_bosses/<side>_t<tier><a|b>.json: the twenty Decennial boss profiles (1.65.0): ten Holy (ascension), ten Evil (descent), five tiers of two.
 
     python3 tools/labyrinth/gen_dnd_bosses.py            # writes
     python3 tools/labyrinth/gen_dnd_bosses.py --check    # exit 1 when a file on disk differs
@@ -8,7 +8,7 @@ Why a generator: twenty files of the same shape must agree on the schema (labyri
 unlocks grow with the tier); one table here says which anime and which D&D creature each boss fuses and which traits it has, and DndProfilesFilesTest reads the files back."""
 import json, os, sys
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "dnd_bosses")
+OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "dnd_bosses")
 
 # (side, tier, variant, name, anime, dnd, forms, flags)   flags: A anti-magic aura, F frightful aura, M absorbs magic, X execution
 T = [

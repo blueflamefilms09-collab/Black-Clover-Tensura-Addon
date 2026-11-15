@@ -2,15 +2,15 @@
 """Why: the Soul Forge (the block that starts the Avatar ritual) and its screen need pictures, and every one of them is drawn here from code so none can be
 lost and every run is byte-identical. Pillow only. It writes:
 
-    assets/nusmp/textures/block/soul_forge_base.png   16x16  the obsidian body with faint violet veins (pillar and plinth)
-    assets/nusmp/textures/block/soul_forge_trim.png   16x16  riveted gold trim (rims, studs, the basin's side)
-    assets/nusmp/textures/block/soul_forge_top.png    16x16  the basin's top: a glowing rune circle with a hexagram (emissive in the model)
-    assets/nusmp/textures/block/soul_forge_gem.png    16x16  the floating soul gem (faceted, glowing; emissive in the model)
-    assets/nusmp/textures/item/soul_forge.png         16x16  the inventory icon (the block in the hand is the 3D model; the sprite stays the icon)
-    assets/nusmp/textures/gui/soulforge/ring.png      64x64  a white ring (tinted at draw time): frames, the category buttons, the slots
-    assets/nusmp/textures/gui/soulforge/disc.png      64x64  a white soft disc (tinted): the dark medallion behind an icon
-    assets/nusmp/textures/gui/soulforge/slot.png      64x64  a white ring with eight notches: an empty skill or aptitude slot
-    assets/nusmp/textures/gui/soulforge/cat_<identity|appearance|traits|skills|aptitudes>.png  32x32 white glyphs (tinted): the five category buttons
+    assets/anime_multiverse/textures/block/soul_forge_base.png   16x16  the obsidian body with faint violet veins (pillar and plinth)
+    assets/anime_multiverse/textures/block/soul_forge_trim.png   16x16  riveted gold trim (rims, studs, the basin's side)
+    assets/anime_multiverse/textures/block/soul_forge_top.png    16x16  the basin's top: a glowing rune circle with a hexagram (emissive in the model)
+    assets/anime_multiverse/textures/block/soul_forge_gem.png    16x16  the floating soul gem (faceted, glowing; emissive in the model)
+    assets/anime_multiverse/textures/item/soul_forge.png         16x16  the inventory icon (the block in the hand is the 3D model; the sprite stays the icon)
+    assets/anime_multiverse/textures/gui/soulforge/ring.png      64x64  a white ring (tinted at draw time): frames, the category buttons, the slots
+    assets/anime_multiverse/textures/gui/soulforge/disc.png      64x64  a white soft disc (tinted): the dark medallion behind an icon
+    assets/anime_multiverse/textures/gui/soulforge/slot.png      64x64  a white ring with eight notches: an empty skill or aptitude slot
+    assets/anime_multiverse/textures/gui/soulforge/cat_<identity|appearance|traits|skills|aptitudes>.png  32x32 white glyphs (tinted): the five category buttons
 
     python3 -B tools/avatar/gen_soul_forge_assets.py                 # write everything
     python3 -B tools/avatar/gen_soul_forge_assets.py --check         # a second render must give byte-identical files
@@ -28,7 +28,7 @@ import forge_art as A  # noqa: E402
 from PIL import Image, ImageDraw, ImageFilter  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp", "textures")
+ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse", "textures")
 
 OBS = [(20, 13, 31), (27, 18, 42), (34, 24, 52), (15, 10, 24)]
 VEIN = [(86, 52, 140), (118, 78, 182)]

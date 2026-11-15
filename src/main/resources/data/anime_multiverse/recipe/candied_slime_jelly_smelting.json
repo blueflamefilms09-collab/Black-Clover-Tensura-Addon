@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "anime_multiverse:raw_slime_jelly"
+  },
+  "result": {
+    "id": "anime_multiverse:candied_slime_jelly"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

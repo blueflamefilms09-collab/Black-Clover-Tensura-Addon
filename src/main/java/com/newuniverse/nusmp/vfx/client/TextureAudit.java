@@ -43,7 +43,7 @@ public final class TextureAudit {
         try {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(tex);
             if (res.isEmpty()) {
-                LogUtils.getLogger().warn("[nusmp] texture {} does not exist: sprites using it are drawn with the generated soft circle", tex);
+                LogUtils.getLogger().warn("[anime_multiverse] texture {} does not exist: sprites using it are drawn with the generated soft circle", tex);
                 return null;
             }
             try (InputStream in = res.get().open(); NativeImage img = NativeImage.read(in)) {
@@ -61,7 +61,7 @@ public final class TextureAudit {
                 return TextureAlpha.classify(sw, sh, argb);
             }
         } catch (Exception | LinkageError e) {
-            LogUtils.getLogger().warn("[nusmp] texture {} could not be read for the alpha audit: {}", tex, e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] texture {} could not be read for the alpha audit: {}", tex, e.toString());
             return null;
         }
     }

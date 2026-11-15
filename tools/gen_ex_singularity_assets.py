@@ -2,8 +2,8 @@
 """Generates the textures of the EX-Singularity sword effect: the prismatic shard (a four-pointed star glint) and the tint-neutral copy of Shishou's glow skin.
 
 Output (deterministic):
-  src/main/resources/assets/nusmp/textures/entity/weapon/ex_singularity_star.png    (64x64 star glint)
-  src/main/resources/assets/nusmp/textures/entity/weapon/shishou_prism_glow.png     (the sword's glow skin made tint-neutral)
+  src/main/resources/assets/anime_multiverse/textures/entity/weapon/ex_singularity_star.png    (64x64 star glint)
+  src/main/resources/assets/anime_multiverse/textures/entity/weapon/shishou_prism_glow.png     (the sword's glow skin made tint-neutral)
 
 The sword's orbiting shards (client/ExSingularityFx) draw this one star in the additive pass and tint it per vertex with the spectrum, so the texture itself is neutral: white, with the
 colour PREMULTIPLIED (RGB = alpha, transparent texels are 0,0,0,0). That makes it safe in both blends of client/SafeAdditive (alpha-weighted and plain additive): nothing under alpha, no
@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-WEAPON = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "weapon")
+WEAPON = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "weapon")
 OUT = os.path.join(WEAPON, "ex_singularity_star.png")
 GLOW_IN = os.path.join(WEAPON, "shishou_glow.png")
 GLOW_OUT = os.path.join(WEAPON, "shishou_prism_glow.png")

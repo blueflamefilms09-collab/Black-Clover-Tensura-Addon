@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The Salamander's creature sounds (docs/magic/fire_casting.md, 4.2): the catalogue ({@link SalamanderSoundSet}, from which {@link SalamanderSounds} registers one sound event per cue), the
- * {@code salamander.*} entries of {@code assets/nusmp/sounds.json}, the {@code .ogg} files {@code tools/gen_salamander_sounds.py} synthesises and the subtitle lines of
+ * {@code salamander.*} entries of {@code assets/anime_multiverse/sounds.json}, the {@code .ogg} files {@code tools/gen_salamander_sounds.py} synthesises and the subtitle lines of
  * {@code tools/lang/salamander_moods.json} must say the same: every cue has an entry with its variants, whose files exist and are short mono Vorbis; no entry or file is an orphan; every
  * subtitle has its line; the set is 15 to 25 files and under 2 MB; nothing points at the Tensura spirits' sounds; the older entries are still there.
  */
 class SalamanderSoundsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path SOUNDS = ASSETS.resolve("sounds");
     private static final Path DIR = SOUNDS.resolve("salamander");
     private static final Path LANG = Path.of("tools/lang/salamander_moods.json");
@@ -60,7 +60,7 @@ class SalamanderSoundsTest {
             assertTrue(c.volume() > 0f && c.volume() <= 1.2f);
             assertTrue(c.pitchMin() >= 0.5f && c.pitchMax() <= 2.0f && c.pitchMin() <= c.pitchMax());
             assertTrue(c.cooldown() >= 0);
-            assertEquals("subtitles.nusmp.salamander." + c.id(), c.subtitleKey());
+            assertEquals("subtitles.anime_multiverse.salamander." + c.id(), c.subtitleKey());
             assertEquals("salamander/" + c.id() + "_1", c.file(1));
         }
         for (String id : new String[]{"trill", "chirp", "growl", "hiss", "whoosh", "purr", "yawn", "whimper", "flap", "roar", "dragon_flap"}) assertTrue(SalamanderSoundSet.has(id), id);
@@ -90,7 +90,7 @@ class SalamanderSoundsTest {
             assertEquals(c.variants(), e.getAsJsonArray("sounds").size(), c.id() + " lists every variant");
             int v = 1;
             for (JsonElement s : e.getAsJsonArray("sounds")) {
-                assertEquals("nusmp:" + c.file(v), nameOf(s));
+                assertEquals("anime_multiverse:" + c.file(v), nameOf(s));
                 Path f = SOUNDS.resolve(c.file(v) + ".ogg");
                 assertTrue(Files.exists(f), "file " + f);
                 Ogg o = readOgg(f);
@@ -117,9 +117,9 @@ class SalamanderSoundsTest {
             if (!e.getKey().startsWith("salamander.")) continue;
             assertTrue(events.contains(e.getKey()), "an entry no cue names: " + e.getKey());
             for (JsonElement s : e.getValue().getAsJsonObject().getAsJsonArray("sounds")) {
-                assertTrue(nameOf(s).startsWith("nusmp:salamander/"), "its entries use its own files only: " + nameOf(s));
+                assertTrue(nameOf(s).startsWith("anime_multiverse:salamander/"), "its entries use its own files only: " + nameOf(s));
                 assertFalse(nameOf(s).startsWith("tensura:") || nameOf(s).contains("minecraft:"), "never the basic spirit's sounds: " + nameOf(s));
-                named.add(nameOf(s).substring("nusmp:".length()));
+                named.add(nameOf(s).substring("anime_multiverse:".length()));
             }
         }
         try (Stream<Path> w = Files.list(DIR)) {
@@ -139,7 +139,7 @@ class SalamanderSoundsTest {
             assertFalse(lang.get(c.subtitleKey()).getAsString().isBlank());
             keys.add(c.subtitleKey());
         }
-        for (var e : lang.entrySet()) if (e.getKey().startsWith("subtitles.nusmp.salamander.")) assertTrue(keys.contains(e.getKey()), "a subtitle no cue names: " + e.getKey());
+        for (var e : lang.entrySet()) if (e.getKey().startsWith("subtitles.anime_multiverse.salamander.")) assertTrue(keys.contains(e.getKey()), "a subtitle no cue names: " + e.getKey());
     }
 
     @Test

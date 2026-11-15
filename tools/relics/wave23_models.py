@@ -4,7 +4,7 @@
     W23_PREVIEW=<dir> python3 -B tools/relics/wave23_models.py divine_mercy      (also renders the preview beside the card)
 
 Run tools/relics/wave23_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px skin
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px skin
 each) and, for the four longbows and the Warlute, the draw states <id>_pull1..3 (and <id>_charged for the crossbow) through the core's own state rig
 (tools/relics/ranged_meshes.py moves the limbs and the string of the finished rest mesh; the arrow of a bow rides the nock).
 Budget: 8 to 14 named parts and at most 2800 quads per mesh.

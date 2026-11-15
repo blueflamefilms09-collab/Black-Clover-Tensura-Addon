@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:dungeon/seal",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.vault.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.vault.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_labyrinth_vault_opened": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "labyrinth.vault_opened"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_labyrinth_vault_opened"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

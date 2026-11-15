@@ -90,7 +90,7 @@ def usage():
     use = collections.defaultdict(lambda: [set(), set(), 0])
     for a in spec_adv.S.advs:
         for n, t, c in a.crit["list"]:
-            if t == "nusmp:event":
+            if t == "anime_multiverse:event":
                 u = use[c["key"]]
                 if "arg" in c:
                     u[0].add(c["arg"])
@@ -125,14 +125,14 @@ def adv_doc():
     lines = ["# Advancements: the tab \"Multiverse of Anime\" (1.49.0)", "",
              "Why: the owner asked for advancements next to a full FTB Quests line. The quest book is built on top of these advancements (an FTB "
              "advancement task completes when a team member has the advancement), so the tree is also the progress model of the book. "
-             "Everything here is **new**: nothing like it existed. The 25 hidden files under `data/nusmp/advancement/convergence` (from the removed "
+             "Everything here is **new**: nothing like it existed. The 25 hidden files under `data/anime_multiverse/advancement/convergence` (from the removed "
              "Convergence system) are **kept untouched**.", "",
              "Nothing was run in Minecraft. See \"Unverified in the game\".", "",
              "## Where it comes from", "",
              "- `tools/quests/spec_adv.py` is the single source of truth (ids, titles, descriptions, parents, icons, criteria). "
-             "`python tools/quests/gen_advancements.py` writes `src/main/resources/data/nusmp/advancement/**` and the lang fragment "
+             "`python tools/quests/gen_advancements.py` writes `src/main/resources/data/anime_multiverse/advancement/**` and the lang fragment "
              "`tools/quests/lang/qst.lang.json`; `--check` fails if anything is out of date.",
-             "- The lang fragment must be merged into `assets/nusmp/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). "
+             "- The lang fragment must be merged into `assets/anime_multiverse/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). "
              "`AdvancementDataTest` fails while a key is missing.",
              "- `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, one root, no cycle, "
              "translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every "
@@ -149,9 +149,9 @@ def adv_doc():
               "`changed_dimension` (the five mod dimensions), `player_killed_entity` (bosses, together with the event), `player_interacted_with_entity` "
               "(the Tower Wizard, a Spirit Lord), `consume_item` (cooked monster meat), `effects_changed` (mod effects), `minecraft:impossible` (the "
               "future-boss placeholders).", "",
-              "Everything else is the mod's own trigger `nusmp:event` (implemented in `quests/NusmpEventTrigger`, fired by `NusmpEvents.fire`, see "
+              "Everything else is the mod's own trigger `anime_multiverse:event` (implemented in `quests/NusmpEventTrigger`, fired by `NusmpEvents.fire`, see "
               "`docs/quests_java.md`):", "",
-              "```json", '{"trigger": "nusmp:event", "conditions": {"key": "spell.cast", "count": 10, "arg": "thread"}}', "```", "",
+              "```json", '{"trigger": "anime_multiverse:event", "conditions": {"key": "spell.cast", "count": 10, "arg": "thread"}}', "```", "",
               "`key` is required; `count` (default 1, written only when above 1) is compared with the per-player counter of the key (or of `key|arg` "
               "when `arg` is given) with `>=`; `arg` is an exact string match. Boss kills use an OR of the event and the vanilla kill, so they work "
               "whichever one the Java side delivers. The keys:", "",
@@ -165,10 +165,10 @@ def adv_doc():
     lines += ["", "Keys of the original brief that no advancement uses: " + ", ".join("`%s`" % e[0] for e in EVENTS if e[0] not in use)
               + ", plus `convergence.stage` and `convergence.anomaly` (the Convergence system was removed in 1.14.0, so there is nothing to hook).",
               "", "## Add an advancement in three lines", "",
-              "```python", "# tools/quests/spec_adv.py", 'add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "nusmp:labyrinth_gate", ev("mega.entered", 3), xp=20)',
+              "```python", "# tools/quests/spec_adv.py", 'add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "anime_multiverse:labyrinth_gate", ev("mega.entered", 3), xp=20)',
               "```", "then `python tools/quests/gen_advancements.py` and `python tools/quests/merge_lang.py`.", "",
               "## The future-boss placeholders", "",
-              "`nusmp:future/<arc>_<boss>` (hidden, criterion `impossible`). They are awarded by `NusmpEvents.futureBoss(player, arc, boss)`. "
+              "`anime_multiverse:future/<arc>_<boss>` (hidden, criterion `impossible`). They are awarded by `NusmpEvents.futureBoss(player, arc, boss)`. "
               "The table is in `docs/quests.md`.", "",
               "## Unverified in the game", "",
               "- No advancement was loaded by Minecraft. The JSON follows the 1.21.1 format (`display.icon.id`, `background` as a texture path, "
@@ -231,21 +231,21 @@ def quests_doc():
            "only for the previous arc's (free) welcome node. `hide_until_deps_complete` is off everywhere.", "",
            "## Arc to boss table", "",
            "Existing bosses award their quest through `boss.defeated` (arg = entity path); a placeholder quest sits on a hidden advancement "
-           "`nusmp:future/<arc>_<boss>` that nothing awards today. **To make an arc's boss real**: add the boss, then call "
+           "`anime_multiverse:future/<arc>_<boss>` that nothing awards today. **To make an arc's boss real**: add the boss, then call "
            "`NusmpEvents.futureBoss(serverPlayer, \"<arc>\", \"<boss>\")` for the killer (and, with Teams credit on, the squad) in the boss' death hook "
            "(`BossHooks` style); the quest completes and the hidden advancement appears. Nothing in the pack changes.", "",
            "| Arc chapter | Live boss quests (advancement) | Placeholder (advancement id) | Placeholder arguments for `futureBoss` | What to hook when the boss is made |",
            "| --- | --- | --- | --- | --- |"]
     for ch, title, live, soon in ARC_ROWS:
-        liv = "; ".join("%s (`nusmp:%s`)" % (n, a) for n, a in live) or "none (no boss in this arc)"
+        liv = "; ".join("%s (`anime_multiverse:%s`)" % (n, a) for n, a in live) or "none (no boss in this arc)"
         if soon:
-            sid = "; ".join("`nusmp:future/%s_%s`" % (a, b) for a, b, _ in soon)
+            sid = "; ".join("`anime_multiverse:future/%s_%s`" % (a, b) for a, b, _ in soon)
             args = "; ".join("`\"%s\", \"%s\"`" % (a, b) for a, b, _ in soon)
             hook = "; ".join("death hook of %s" % w for _, _, w in soon)
         else:
             sid, args, hook = "none", "-", ("nothing: the arc has all the bosses it needs" if live else "no boss in this arc")
         L_.append("| `%s` %s | %s | %s | %s | %s |" % (ch, title, liv, sid, args, hook))
-    L_ += ["", "The same placeholders as a flat list: " + ", ".join("`nusmp:future/%s_%s`" % (a, b) for a, b, *_ in
+    L_ += ["", "The same placeholders as a flat list: " + ", ".join("`anime_multiverse:future/%s_%s`" % (a, b) for a, b, *_ in
                                                                    [(x, y) for x, y, _, _ in spec_adv.FUTURE]) + ".", "",
            "## Teams: how progress is shared, and how it relates to Squads", "",
            "- FTB Quests keeps **all progress per FTB team**, never per player. A player always belongs to a team (their own one-player party "
@@ -263,7 +263,7 @@ def quests_doc():
            "- With `quests.shareSquadCredit` (Java side) a boss kill or an arena victory is also fired for every online team member within 128 "
            "blocks, so the squad's advancements follow the squad, not only the killer.", "",
            "## Event keys: the contract with the Java side", "",
-           "The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compared with the per-player counter of the key, or of `key|arg` "
+           "The advancement trigger `anime_multiverse:event` takes `key`, optional `count` (>= 1, compared with the per-player counter of the key, or of `key|arg` "
            "when `arg` is set) and optional `arg`. The keys the advancement tree uses, with the meaning of `arg` and the place to fire them from "
            "(the full agreement, including what the Java side really sends, is `docs/quests_java.md` and the shared note QST_TRG.md):", "",
            "| Key | Argument | Fired from |", "| --- | --- | --- |"] + ["| `%s` | %s | %s |" % e for e in EVENTS] + [
@@ -273,7 +273,7 @@ def quests_doc():
            "every other advancement and quest works without them.", "",
            "## Add a quest in three lines", "",
            "```python", "# tools/quests/spec_q_journey.py (or the arc / boss module)",
-           'c.q("my_key", "Title", (col, row), "nusmp:magic_stone", "step", "Subtitle", "One paragraph.\\nAnother.",',
+           'c.q("my_key", "Title", (col, row), "anime_multiverse:magic_stone", "step", "Subtitle", "One paragraph.\\nAnother.",',
            '    deps=["earlier_key", "other_chapter/quest_key"], tasks=[T.adv("start/first_spell")], rewards=[R.xp(20)])',
            "```", "then `python tools/quests/gen_quests.py && python tools/quests/validate_snbt.py`. An id is the hash of `quest/<chapter>/<key>`: "
            "never rename a key you have shipped (add a new quest instead).", "",
@@ -286,7 +286,7 @@ def quests_doc():
            "Quests source; the committed copy lets the check run without the checkout.", "",
            "## How the installer works (Java side, summary)", "",
            "The pack is bundled in the jar under `/quest_pack/` (FTB's files directly at its top level; `README.txt` is documentation and is not copied). "
-           "`/nusmp quests install|status|update|uninstall` (operators) copies the files into `config/ftbquests/quests/`, writes a marker "
+           "`/anime_multiverse quests install|status|update|uninstall` (operators) copies the files into `config/ftbquests/quests/`, writes a marker "
            "`.nusmp_pack` (pack version, hash, file list), and tells you to `/ftbquests reload`. Details and safety rules: `docs/quests_java.md`.", "",
            "## The format, derived from the FTB Quests source",
            "",

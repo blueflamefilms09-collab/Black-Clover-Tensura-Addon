@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class AuraRender {
     private AuraRender() {}
 
-    /** {@code nusmp:textures/<path>.png}. 1.99.0: built once per path (the painters that ask for a sprite while they paint did a string concatenation and a location per call, per frame). */
+    /** {@code anime_multiverse:textures/<path>.png}. 1.99.0: built once per path (the painters that ask for a sprite while they paint did a string concatenation and a location per call, per frame). */
     public static ResourceLocation tex(String path) { return com.newuniverse.nusmp.perf.RlCache.modTexture(path); }
 
     /** 1.105.0: {@code RenderType.eyes} for a texture that is black under its transparent texels, the alpha-weighted additive type for one that carries a colour there (it would be a solid square otherwise); see {@link com.newuniverse.nusmp.client.AdditiveTypes}. */

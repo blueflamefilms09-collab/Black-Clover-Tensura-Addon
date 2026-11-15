@@ -1,6 +1,6 @@
 """The Spirit of Space, both forms (docs/magic/spirit_space.md): the geo models of the orb's rift ring and of the wisp-dragon's small horned head, their animations, their sheets and their levels of detail.
 
-    python3 -B tools/gen_spirit_space_geo.py            writes assets/nusmp/{geo,animations,textures}/entity/spirit_space_{orb,wisp}[_lod1|_lod2|_fx]*
+    python3 -B tools/gen_spirit_space_geo.py            writes assets/anime_multiverse/{geo,animations,textures}/entity/spirit_space_{orb,wisp}[_lod1|_lod2|_fx]*
     python3 -B tools/gen_spirit_space_geo.py --count    prints the quads of every model
 
     spirit_space_orb       LOD 0   the rift ring: a ring of 16 cracked-glass shards and 5 fragments, drawn ADDITIVE (the dark of the sheet adds nothing), animated: the ring spins, the fragments orbit

@@ -1,4 +1,4 @@
-"""Why: the painted einherjar of Painting Magic (entity nusmp:painted_construct, kind KNIGHT: "Living Illustration, Master of Valhalla": a knight of wet paint with a sword; hitbox 0.6 x 1.95).
+"""Why: the painted einherjar of Painting Magic (entity anime_multiverse:painted_construct, kind KNIGHT: "Living Illustration, Master of Valhalla": a knight of wet paint with a sword; hitbox 0.6 x 1.95).
 It was the vanilla zombie model with a painted skin, and the game's iron sword drawn in its hand; the art kit's version is a knight on the player's rig, painted once in pale paint and tinted
 by the paint's colour (tools/remodel/painted.py): a closed helm with a visor slit that glows, a breastplate, pauldrons and greaves of painted plate, a short cape of brush strokes, and a
 broad painted sword in its hand. See docs/arc/remodel.md.

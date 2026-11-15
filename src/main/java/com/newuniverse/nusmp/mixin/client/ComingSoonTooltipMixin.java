@@ -19,23 +19,23 @@ import java.util.List;
  */
 @Mixin(GuiGraphics.class)
 public abstract class ComingSoonTooltipMixin {
-    private static boolean nusmp$soon(String s) { return s != null && s.toLowerCase(java.util.Locale.ROOT).contains("coming soon"); }
+    private static boolean anime_multiverse$soon(String s) { return s != null && s.toLowerCase(java.util.Locale.ROOT).contains("coming soon"); }
 
     @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;II)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$tipComponent(Font font, Component text, int x, int y, CallbackInfo ci) {
-        if (text != null && nusmp$soon(text.getString()) && FourKingdomsSlot.onTensuraScreen()) ci.cancel();
+    private void anime_multiverse$tipComponent(Font font, Component text, int x, int y, CallbackInfo ci) {
+        if (text != null && anime_multiverse$soon(text.getString()) && FourKingdomsSlot.onTensuraScreen()) ci.cancel();
     }
 
     @Inject(method = "renderComponentTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;II)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$tipList(Font font, List<Component> lines, int x, int y, CallbackInfo ci) {
-        if (lines != null && !lines.isEmpty() && nusmp$soon(lines.get(0).getString()) && FourKingdomsSlot.onTensuraScreen()) ci.cancel();
+    private void anime_multiverse$tipList(Font font, List<Component> lines, int x, int y, CallbackInfo ci) {
+        if (lines != null && !lines.isEmpty() && anime_multiverse$soon(lines.get(0).getString()) && FourKingdomsSlot.onTensuraScreen()) ci.cancel();
     }
 
     @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;II)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$tipSeq(Font font, List<? extends FormattedCharSequence> lines, int x, int y, CallbackInfo ci) {
+    private void anime_multiverse$tipSeq(Font font, List<? extends FormattedCharSequence> lines, int x, int y, CallbackInfo ci) {
         if (lines == null || lines.isEmpty() || !FourKingdomsSlot.onTensuraScreen()) return;
         StringBuilder sb = new StringBuilder();
         lines.get(0).accept((i, st, cp) -> { sb.appendCodePoint(cp); return true; });
-        if (nusmp$soon(sb.toString())) ci.cancel();
+        if (anime_multiverse$soon(sb.toString())) ci.cancel();
     }
 }

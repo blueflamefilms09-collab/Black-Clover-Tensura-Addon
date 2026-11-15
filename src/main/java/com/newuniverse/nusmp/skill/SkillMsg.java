@@ -12,18 +12,18 @@ import net.minecraft.network.chat.MutableComponent;
 public final class SkillMsg {
     private SkillMsg() {}
 
-    /** A message: key under {@code nusmp.skill.msg.}; {@code %s} in the fallback is filled by the args. */
+    /** A message: key under {@code anime_multiverse.skill.msg.}; {@code %s} in the fallback is filled by the args. */
     public static MutableComponent t(String key, String fallback, Object... args) {
-        return Component.translatableWithFallback("nusmp.skill.msg." + key, fallback, args);
+        return Component.translatableWithFallback("anime_multiverse.skill.msg." + key, fallback, args);
     }
 
-    /** A mode name: key under {@code nusmp.skill.mode.} (the pre-existing mode keys keep their names). */
+    /** A mode name: key under {@code anime_multiverse.skill.mode.} (the pre-existing mode keys keep their names). */
     public static MutableComponent mode(String key, String fallback) {
-        return Component.translatableWithFallback("nusmp.skill.mode." + key, fallback);
+        return Component.translatableWithFallback("anime_multiverse.skill.mode." + key, fallback);
     }
 
-    /** One line of a chant: {@code nusmp.skill.chant.<spell>.<line>} (line starts at 1). */
+    /** One line of a chant: {@code anime_multiverse.skill.chant.<spell>.<line>} (line starts at 1). */
     public static MutableComponent chant(String spell, int line, String fallback) {
-        return Component.translatableWithFallback("nusmp.skill.chant." + spell + "." + line, fallback);
+        return Component.translatableWithFallback("anime_multiverse.skill.chant." + spell + "." + line, fallback);
     }
 }

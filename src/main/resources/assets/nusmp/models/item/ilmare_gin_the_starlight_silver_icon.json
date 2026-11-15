@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "nusmp:item/ilmare_gin_the_starlight_silver"
-  }
-}

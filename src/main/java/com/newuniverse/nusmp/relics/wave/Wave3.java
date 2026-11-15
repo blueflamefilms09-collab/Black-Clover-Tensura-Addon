@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 /**
  * Relics of Many Worlds, wave 3: five relics for the head (a circlet, two crowns, a cowl, a tricorn), five for the hands, a belt, and two
- * consumables. The long card text of each, as game rules, is in the lang keys {@code item.nusmp.<id>.card}; the numbers and small state machines are
+ * consumables. The long card text of each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the numbers and small state machines are
  * in {@link Wave3Rules} (pure), the abilities in {@link Wave3Head}, {@link Wave3Hands}, {@link Wave3Belt} and {@link Wave3Goods}, what stays in the
  * world in {@link Wave3Field}, the handlers in {@link Wave3Events}.
  * <p>

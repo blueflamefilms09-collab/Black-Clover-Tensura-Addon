@@ -10,7 +10,7 @@ Extra glass sprites that the hybrid needs on top of the 26 sprites of tools/gen_
   bc_ribbon   a thin glass ribbon with a bright core line and tapered ends (flow ribbons spiralling round the body / the lance)
 
     python tools/gen_water_bc_textures.py     ->  docs/previews/vfx_remake/water_new/tex/bc_*.png   (Pillow + numpy, deterministic)
-                                              ->  src/main/resources/assets/nusmp/textures/particle/wbc_*.png   (the game set: the sprites the in-game build draws, copied from the preview
+                                              ->  src/main/resources/assets/anime_multiverse/textures/particle/wbc_*.png   (the game set: the sprites the in-game build draws, copied from the preview
                                                   folder under the prefix `wbc_`, plus the grey twins `wbc_<name>_t` of the sprites the tintable shapes use, and `wbc_solid` for the mesh quads)
 
 The names must equal vfx/WaterBc.SPRITES / TINT_TWINS (WaterBcAssetTest checks both ways).
@@ -114,7 +114,7 @@ def ribbon(w=256, h=32):
     return Image.fromarray((np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
-GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 # preview file -> game name (prefix wbc_); the bc_ prefix of the preview is dropped
 GAME_SPRITES = {"b_body": "b_body", "b_ripple": "b_ripple", "b_crown": "b_crown", "b_drop": "b_drop", "b_bubble": "b_bubble", "b_glint": "b_glint", "b_lance": "b_lance", "b_sphere": "b_sphere",
                 "b_dome": "b_dome", "b_swirl": "b_swirl", "bc_mist": "mist", "bc_ribbon": "ribbon", "bc_sheen": "sheen", "bc_shell": "shell", "glow": "glow",

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The one packet of the Charter Grimoires, {@code nusmp:charter_sync} (server to client): the set of claimed grimoires, whole, at login and
+ * The one packet of the Charter Grimoires, {@code anime_multiverse:charter_sync} (server to client): the set of claimed grimoires, whole, at login and
  * whenever a claim is made or cleared. Register {@link #registerPayloads} on the mod bus.
  */
 public final class CharterNet {
@@ -27,7 +27,7 @@ public final class CharterNet {
     public record Entry(String boss, String name, long day) {}
 
     public record Sync(List<Entry> entries) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "charter_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "charter_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeVarInt(p.entries().size());

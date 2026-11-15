@@ -1,0 +1,19 @@
+{
+  "theme": "drowned_crypt",
+  "templates": [
+    "anime_multiverse:mega/hall/drowned_crypt_",
+    "anime_multiverse:mega/puzzle/drowned_crypt_",
+    "anime_multiverse:mega/trial/drowned_crypt_",
+    "anime_multiverse:mega/set/drowned_crypt_",
+    "anime_multiverse:mega/safe/drowned_crypt_",
+    "anime_multiverse:mega/treasure/drowned_crypt_"
+  ],
+  "relative": {
+    "mega/hall/drowned_crypt_": 30,
+    "mega/puzzle/drowned_crypt_": 20,
+    "mega/trial/drowned_crypt_": 20,
+    "mega/set/drowned_crypt_": 20,
+    "mega/safe/drowned_crypt_": 20,
+    "mega/treasure/drowned_crypt_": 20
+  }
+}

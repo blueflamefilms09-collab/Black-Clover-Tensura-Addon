@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class FuegoleonArmDjinnRulesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
 
     private static String read(Path p) {
         try { return Files.readString(p, StandardCharsets.UTF_8); } catch (IOException e) { throw new AssertionError("cannot read " + p, e); }

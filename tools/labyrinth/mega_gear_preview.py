@@ -10,7 +10,7 @@ It also is an INDEPENDENT second implementation of the roller and of the factory
 GearLook), written from the Java source, so the pictures can be checked against the Java: `--verify dump.json` replays the exact Java seeds (this file
 carries java.util.Random's generator) and fails if a single chance, item, bonus, enchantment or resistance differs. The dump comes from
 tools/labyrinth/mega_gear_dump/PreviewDump.java (its comment has the commands). The numbers come from
-data/nusmp/mega/gear/tables.json and the config defaults (GearRates.DEFAULT), so a change to the data file changes the pictures.
+data/anime_multiverse/mega/gear/tables.json and the config defaults (GearRates.DEFAULT), so a change to the data file changes the pictures.
 
 Usage:  python3 tools/labyrinth/mega_gear_preview.py [--out DIR] [--verify dump.json]      (needs Pillow; run from the project root)
 Vanilla numbers (attack damage, durability) are from github.com/misode/mcmeta 1.21.1-summary item_components; armour points are the vanilla armour
@@ -25,7 +25,7 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-TABLES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "gear", "tables.json")
+TABLES = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "gear", "tables.json")
 
 GRADES = ["normal", "special", "rare"]
 SLOTS = ["sword", "axe", "bow", "crossbow", "shield", "helmet", "chestplate", "leggings", "boots"]
@@ -477,7 +477,7 @@ def picture_tables(t, out):
     fb = sans(22, True)
     x0 = 60
     d.text((x0, 40), "Standard gear of the Mega-Dungeon: Normal, Special, Rare", font=f_t, fill=INK)
-    d.text((x0, 94), "Ordinary vanilla items stamped with the data component nusmp:gear_grade. Not relics: no serial, no Order's ledger, no world limit.", font=f_b, fill=INK2)
+    d.text((x0, 94), "Ordinary vanilla items stamped with the data component anime_multiverse:gear_grade. Not relics: no serial, no Order's ledger, no world limit.", font=f_b, fill=INK2)
     d.text((x0, 128), "A kill by a player in the Mega-Dungeon rolls once over the three grades' chances (at most one piece). A sector Guardian drops one guaranteed Rare piece. "
            "Stones and meat of the economy are untouched.", font=f_b, fill=INK2)
 
@@ -606,7 +606,7 @@ def picture_chances(t, out):
     f_t, f_h, f_b, f_s, fb = sans(40, True), sans(26, True), sans(22), sans(19), sans(22, True)
     x0 = 60
     d.text((x0, 40), "How often a kill or a chest drops standard gear, by floor", font=f_t, fill=INK)
-    intro = ["The roller's own numbers with the default config and the shipped curves. Kills: normal 5 %, special 1.5 %, rare 0.4 % at floor 1. Chests (the loot modifier nusmp:gear_chests): "
+    intro = ["The roller's own numbers with the default config and the shipped curves. Kills: normal 5 %, special 1.5 %, rare 0.4 % at floor 1. Chests (the loot modifier anime_multiverse:gear_chests): "
              "22 %, 6 %, 2 %; a treasure chest multiplies special and rare by 2.",
              "Floors count as distance from the Hub: -10 is as deep as +10. Going deeper MOVES weight from Normal to Special and Rare; the chance of a piece stays about the same "
              "(one in 14 kills, three in ten chests). At most one piece per kill or chest."]
@@ -699,7 +699,7 @@ def picture_tooltips(t, out):
             img.paste(c, (60 + colw * gi + 10, y), c)
         d.line([(60, y + rowh[s] - 26), (W - 60, y + rowh[s] - 26)], fill=(70, 70, 72), width=1)
         y += rowh[s]
-    notes = ["Enchantments come first, then the lore block the factory writes, then the item's attribute lines; the blue line under the base stat is the grade's bonus (a flat modifier with the fixed id nusmp:mega_gear/<slot>).",
+    notes = ["Enchantments come first, then the lore block the factory writes, then the item's attribute lines; the blue line under the base stat is the grade's bonus (a flat modifier with the fixed id anime_multiverse:mega_gear/<slot>).",
              "Tensura engravings are shown with the level they were rolled at; the game caps each at the engraving's own maximum. Normal pieces carry nothing: they are exactly the vanilla item with a grade on it."]
     for n in notes:
         for ln in text_wrap(d, n, f_s, W - 120):

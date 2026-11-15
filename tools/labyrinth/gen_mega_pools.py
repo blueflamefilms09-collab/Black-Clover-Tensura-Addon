@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Writes every template pool of the Mega-Dungeon (data/nusmp/worldgen/template_pool/mega/*.json) from the template folders and the weights of
+Writes every template pool of the Mega-Dungeon (data/anime_multiverse/worldgen/template_pool/mega/*.json) from the template folders and the weights of
 tools/labyrinth/mega_pools.json (1.54.0, docs/labyrinth/mega.md section 4, docs/labyrinth/mega_arch.md).
 
     python3 tools/labyrinth/gen_mega_pools.py            # (re)writes the pools, prints one line per pool
@@ -28,8 +28,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
 
-STRUCT = os.path.join(L.RES, "data", "nusmp", "structure")
-POOL_DIR = os.path.join(L.RES, "data", "nusmp", "worldgen", "template_pool", "mega")
+STRUCT = os.path.join(L.RES, "data", "anime_multiverse", "structure")
+POOL_DIR = os.path.join(L.RES, "data", "anime_multiverse", "worldgen", "template_pool", "mega")
 CONFIG = os.path.join(HERE, "mega_pools.json")
 
 
@@ -76,14 +76,14 @@ def pool_elements(cfg, pool):
 
 
 def element_json(tid, weight, processors):
-    return {"weight": weight, "element": {"element_type": "minecraft:single_pool_element", "location": "nusmp:" + tid, "processors": processors, "projection": "rigid"}}
+    return {"weight": weight, "element": {"element_type": "minecraft:single_pool_element", "location": "anime_multiverse:" + tid, "processors": processors, "projection": "rigid"}}
 
 
-THEME_DIR = os.path.join(L.RES, "data", "nusmp", "mega", "template_themes")
+THEME_DIR = os.path.join(L.RES, "data", "anime_multiverse", "mega", "template_themes")
 
 
 def theme_weights():
-    """1.58.0: {template id prefix: relative weight} gathered from every data/nusmp/mega/template_themes/*.json (the `relative` map of each theme file, same
+    """1.58.0: {template id prefix: relative weight} gathered from every data/anime_multiverse/mega/template_themes/*.json (the `relative` map of each theme file, same
     style of key as mega_pools.json: 'mega/hall/holy_church_'). A theme's builder tunes how often its own rooms are drawn in its own file instead of editing
     the shared mega_pools.json; the rooms are only ever drawn in sectors of that theme (the `templates` prefixes of the same file, read by the game)."""
     out = {}

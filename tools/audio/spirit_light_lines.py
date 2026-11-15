@@ -40,7 +40,7 @@ def main():
         for n, (tags, text) in enumerate(items, 1):
             lid = "spiritlight_%s_%d" % (cue, n)
             out.append({"id": lid, "cue": cue, "voice": VOICE, "prompt": "%s %s" % (tags, text), "text": text})
-            lang["nusmp.spiritlight.say." + lid] = text
+            lang["anime_multiverse.spiritlight.say." + lid] = text
     doc = {"voice_id": VOICE, "voice_name": VOICE_NAME, "model": "eleven_v4", "lines": out}
     with open(os.path.join(HERE, "spirit_light_lines.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(doc, f, indent=1, ensure_ascii=False)

@@ -19,7 +19,7 @@ its identity; the emblem on the medallion comes from tools/canon/motifs.py (MOTI
     python3 tools/canon/gen_canon_models.py                  # writes everything (idempotent)
     python3 tools/canon/gen_canon_models.py --list           # lists the books found and what was read from their old art
     python3 tools/canon/gen_canon_models.py --ids ban dante  # only these
-    python3 tools/canon/gen_canon_models.py --out DIR        # write under DIR (the assets/nusmp layout) instead of the mod's resources
+    python3 tools/canon/gen_canon_models.py --out DIR        # write under DIR (the assets/anime_multiverse layout) instead of the mod's resources
 """
 import argparse
 import json
@@ -37,7 +37,7 @@ import canon_book as B  # noqa: E402
 import canon_tex as T  # noqa: E402
 import motifs as M  # noqa: E402
 
-RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 PREFIX = "charter_grimoire_"
 
 
@@ -63,7 +63,7 @@ def keep_old(ident, src, out):
     else:
         old = json.load(open(os.path.join(mdir, PREFIX + ident + ".json"), encoding="utf-8"))
         assert "loader" not in old, "%s is already the new model but its _v1 copy is missing" % ident
-        old_text = json.dumps(old, indent=2).replace("nusmp:item/%s%s\"" % (PREFIX, ident), "nusmp:item/%s%s_v1\"" % (PREFIX, ident)) + "\n"
+        old_text = json.dumps(old, indent=2).replace("anime_multiverse:item/%s%s\"" % (PREFIX, ident), "anime_multiverse:item/%s%s_v1\"" % (PREFIX, ident)) + "\n"
         old_png = os.path.join(tdir, PREFIX + ident + ".png")
     omdir, otdir = os.path.join(out, "models", "item"), os.path.join(out, "textures", "item")
     os.makedirs(omdir, exist_ok=True)

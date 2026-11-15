@@ -12,10 +12,10 @@ class DiscoveryDataTest {
     void addIsTrueOnlyTheFirstTime() {
         DiscoveryData d = new DiscoveryData();
         assertTrue(d.isEmpty());
-        assertTrue(d.add("item:nusmp:a"));
-        assertFalse(d.add("item:nusmp:a"));
-        assertTrue(d.has("item:nusmp:a"));
-        assertFalse(d.has("item:nusmp:b"));
+        assertTrue(d.add("item:anime_multiverse:a"));
+        assertFalse(d.add("item:anime_multiverse:a"));
+        assertTrue(d.has("item:anime_multiverse:a"));
+        assertFalse(d.has("item:anime_multiverse:b"));
         assertEquals(1, d.size());
     }
 
@@ -25,51 +25,51 @@ class DiscoveryDataTest {
         assertFalse(d.add(null));
         assertFalse(d.add(""));
         assertFalse(d.add("garbage"));
-        assertFalse(d.add("item:nusmp:with space"));
+        assertFalse(d.add("item:anime_multiverse:with space"));
         assertTrue(d.isEmpty());
     }
 
     @Test
     void theSetIsCappedSoItCannotGrowWithoutEnd() {
         DiscoveryData d = new DiscoveryData();
-        for (int i = 0; i < DiscoveryRules.MAX_KEYS + 50; i++) d.add("item:nusmp:k" + i);
+        for (int i = 0; i < DiscoveryRules.MAX_KEYS + 50; i++) d.add("item:anime_multiverse:k" + i);
         assertEquals(DiscoveryRules.MAX_KEYS, d.size());
-        assertFalse(d.add("item:nusmp:one_more"));
-        assertTrue(d.has("item:nusmp:k0"), "what was found first is kept");
+        assertFalse(d.add("item:anime_multiverse:one_more"));
+        assertTrue(d.has("item:anime_multiverse:k0"), "what was found first is kept");
     }
 
     @Test
     void storedKeysLoadWithTheirVersionAndBadOnesAreDropped() {
-        DiscoveryData d = new DiscoveryData(1, List.of("item:nusmp:a", "junk", "page:b:c", "item:nusmp:a"));
+        DiscoveryData d = new DiscoveryData(1, List.of("item:anime_multiverse:a", "junk", "page:b:c", "item:anime_multiverse:a"));
         assertEquals(1, d.version());
-        assertEquals(List.of("item:nusmp:a", "page:b:c"), d.snapshot());
+        assertEquals(List.of("item:anime_multiverse:a", "page:b:c"), d.snapshot());
     }
 
     @Test
     void mergeIsAUnionAndReportsWhatWasNew() {
         DiscoveryData a = new DiscoveryData(), b = new DiscoveryData();
-        a.add("item:nusmp:a");
-        b.add("item:nusmp:a");
-        b.add("item:nusmp:b");
-        assertEquals(List.of("item:nusmp:b"), a.merge(b));
-        assertTrue(a.has("item:nusmp:b"));
+        a.add("item:anime_multiverse:a");
+        b.add("item:anime_multiverse:a");
+        b.add("item:anime_multiverse:b");
+        assertEquals(List.of("item:anime_multiverse:b"), a.merge(b));
+        assertTrue(a.has("item:anime_multiverse:b"));
         assertEquals(List.of(), a.merge(b), "merging again changes nothing");
         assertEquals(List.of(), a.merge(null));
-        assertFalse(b.has("item:nusmp:x"), "the other set is not touched");
+        assertFalse(b.has("item:anime_multiverse:x"), "the other set is not touched");
     }
 
     @Test
     void snapshotIsACopyAndKeysIsReadOnly() {
         DiscoveryData d = new DiscoveryData();
-        d.add("item:nusmp:a");
+        d.add("item:anime_multiverse:a");
         List<String> snap = d.snapshot();
-        snap.add("item:nusmp:z");
-        assertFalse(d.has("item:nusmp:z"));
+        snap.add("item:anime_multiverse:z");
+        assertFalse(d.has("item:anime_multiverse:z"));
         try {
-            d.keys().add("item:nusmp:y");
+            d.keys().add("item:anime_multiverse:y");
             fail("the live view must be read-only");
         } catch (UnsupportedOperationException expected) {
-            assertFalse(d.has("item:nusmp:y"));
+            assertFalse(d.has("item:anime_multiverse:y"));
         }
     }
 

@@ -1,4 +1,4 @@
-"""tdanim: the one animation file every Tiny Djinn model shares (assets/nusmp/animations/entity/tinydjinn_anim.animation.json).
+"""tdanim: the one animation file every Tiny Djinn model shares (assets/anime_multiverse/animations/entity/tinydjinn_anim.animation.json).
 
 All 36 models have the same 25 bones (tdlib.BONES), so one file animates them all. Clips (seconds):
   idle    6.0  loop   float and breathe: the wisp tail sways, the arms and cape swing, the ears twitch, the lids blink, the orbiting accessory sways

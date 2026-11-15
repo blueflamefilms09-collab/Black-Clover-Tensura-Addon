@@ -24,7 +24,7 @@ public final class RelicNet {
     /** The "Use Relic" key (client to server): no data, the server knows who sent it. */
     public record UseRelic() implements CustomPacketPayload {
         public static final UseRelic INSTANCE = new UseRelic();
-        public static final Type<UseRelic> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "use_relic"));
+        public static final Type<UseRelic> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "use_relic"));
         public static final StreamCodec<RegistryFriendlyByteBuf, UseRelic> STREAM_CODEC = StreamCodec.unit(INSTANCE);
 
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }

@@ -62,26 +62,26 @@ public final class RiddleStoneBlockEntity extends BlockEntity {
     /** A right click on the stone: tells the player the target sequence in colour (or that the door is already open). */
     public void read(ServerPlayer player) {
         if (!DndConfig.get(DndConfig.PUZZLES)) {
-            player.displayClientMessage(Component.translatable("message.nusmp.puzzle.quiet").withStyle(ChatFormatting.GRAY), true);
+            player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.quiet").withStyle(ChatFormatting.GRAY), true);
             return;
         }
         PuzzleState s = state();
         if (s.solved()) {
-            player.displayClientMessage(Component.translatable("message.nusmp.puzzle.done").withStyle(ChatFormatting.GREEN), true);
+            player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.done").withStyle(ChatFormatting.GREEN), true);
             return;
         }
-        MutableComponent line = Component.translatable("message.nusmp.puzzle.riddle").withStyle(ChatFormatting.GRAY);
+        MutableComponent line = Component.translatable("message.anime_multiverse.puzzle.riddle").withStyle(ChatFormatting.GRAY);
         int[] seq = s.sequence();
         for (int i = 0; i < seq.length; i++) {
             line.append(Component.literal(i == 0 ? " " : ", "));
-            line.append(Component.translatable("label.nusmp.sigil." + PuzzleState.COLOUR_NAMES[seq[i]]).withStyle(COLOUR_FORMAT[seq[i]], ChatFormatting.BOLD));
+            line.append(Component.translatable("label.anime_multiverse.sigil." + PuzzleState.COLOUR_NAMES[seq[i]]).withStyle(COLOUR_FORMAT[seq[i]], ChatFormatting.BOLD));
         }
         player.sendSystemMessage(line);
         if (level instanceof ServerLevel sl) RukhFx.burst(sl, Vec3.atCenterOf(worldPosition).add(0, 0.8, 0), RukhFx.Alignment.LIGHT, 4);
         player.displayClientMessage(line, true);
-        if (s.progress() > 0) player.displayClientMessage(Component.translatable("message.nusmp.puzzle.progress", s.progress(), s.length()).withStyle(ChatFormatting.AQUA), false);
+        if (s.progress() > 0) player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.progress", s.progress(), s.length()).withStyle(ChatFormatting.AQUA), false);
         long wait = s.lockRemaining(player.level().getGameTime());
-        if (wait > 0) player.sendSystemMessage(Component.translatable("message.nusmp.puzzle.locked", (wait + 19) / 20).withStyle(ChatFormatting.DARK_RED));
+        if (wait > 0) player.sendSystemMessage(Component.translatable("message.anime_multiverse.puzzle.locked", (wait + 19) / 20).withStyle(ChatFormatting.DARK_RED));
     }
 
     // ---------------------------------------------------------------- pressing a plate
@@ -89,7 +89,7 @@ public final class RiddleStoneBlockEntity extends BlockEntity {
     public void press(ServerPlayer player, int colour, BlockPos platePos) {
         if (!(level instanceof ServerLevel sl)) return;
         if (!DndConfig.get(DndConfig.PUZZLES)) {
-            player.displayClientMessage(Component.translatable("message.nusmp.puzzle.quiet").withStyle(ChatFormatting.GRAY), true);
+            player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.quiet").withStyle(ChatFormatting.GRAY), true);
             return;
         }
         PuzzleState s = state();
@@ -101,7 +101,7 @@ public final class RiddleStoneBlockEntity extends BlockEntity {
                 lightPlate(sl, platePos, true);
                 RukhFx.burst(sl, Vec3.atCenterOf(platePos).add(0, 0.4, 0), RukhFx.Alignment.LIGHT, 3);
                 sl.playSound(null, platePos, SoundEvents.NOTE_BLOCK_CHIME.value(), SoundSource.BLOCKS, 1.0f, 0.6f + 0.25f * s.progress());
-                player.displayClientMessage(Component.translatable("message.nusmp.puzzle.progress", s.progress(), s.length()).withStyle(ChatFormatting.AQUA), true);
+                player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.progress", s.progress(), s.length()).withStyle(ChatFormatting.AQUA), true);
                 break;
             case SOLVED:
                 lightPlate(sl, platePos, true);
@@ -109,20 +109,20 @@ public final class RiddleStoneBlockEntity extends BlockEntity {
                 RukhFx.burst(sl, Vec3.atCenterOf(worldPosition).add(0, 0.8, 0), RukhFx.Alignment.LIGHT, 12);
                 sl.playSound(null, worldPosition, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0f, 1.2f);
                 int opened = openDoors(sl);
-                player.displayClientMessage(Component.translatable(opened > 0 ? "message.nusmp.puzzle.solved" : "message.nusmp.puzzle.solved_nodoor").withStyle(ChatFormatting.GREEN), true);
+                player.displayClientMessage(Component.translatable(opened > 0 ? "message.anime_multiverse.puzzle.solved" : "message.anime_multiverse.puzzle.solved_nodoor").withStyle(ChatFormatting.GREEN), true);
                 break;
             case WRONG:
                 forEachPlate(sl, p -> lightPlate(sl, p, false));
                 RukhFx.burst(sl, Vec3.atCenterOf(platePos).add(0, 0.4, 0), RukhFx.Alignment.DARK, 6);
                 sl.playSound(null, platePos, SoundEvents.VILLAGER_NO, SoundSource.BLOCKS, 1.0f, 0.8f);
                 if (!player.isCreative() && !player.isSpectator()) player.hurt(sl.damageSources().magic(), 2.0f);
-                player.displayClientMessage(Component.translatable("message.nusmp.puzzle.wrong", resetTicks / 20).withStyle(ChatFormatting.DARK_RED), true);
+                player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.wrong", resetTicks / 20).withStyle(ChatFormatting.DARK_RED), true);
                 break;
             case LOCKED:
-                player.displayClientMessage(Component.translatable("message.nusmp.puzzle.locked", (s.lockRemaining(sl.getGameTime()) + 19) / 20).withStyle(ChatFormatting.DARK_RED), true);
+                player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.locked", (s.lockRemaining(sl.getGameTime()) + 19) / 20).withStyle(ChatFormatting.DARK_RED), true);
                 break;
             default:
-                player.displayClientMessage(Component.translatable("message.nusmp.puzzle.done").withStyle(ChatFormatting.GREEN), true);
+                player.displayClientMessage(Component.translatable("message.anime_multiverse.puzzle.done").withStyle(ChatFormatting.GREEN), true);
                 break;
         }
     }

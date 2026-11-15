@@ -54,8 +54,8 @@ class MagicKeysTest {
         assertEquals("textures/skill/icons/water_ultimate.png", MagicKeys.ultimateIconPath("water"));
         assertEquals("book_fire", MagicKeys.bookPath("FLAME"), "the one book with another registry id");
         assertEquals("book_air", MagicKeys.bookPath("AIR"));
-        assertEquals("nusmp.skill.book_air", MagicKeys.bookNameKey("book_air"));
-        assertEquals("nusmp.skill.book_air.description", MagicKeys.bookDescriptionKey("book_air"));
+        assertEquals("anime_multiverse.skill.book_air", MagicKeys.bookNameKey("book_air"));
+        assertEquals("anime_multiverse.skill.book_air.description", MagicKeys.bookDescriptionKey("book_air"));
         assertEquals("IMITATION", MagicKeys.auraName("COPY"));
         assertEquals("BONE", MagicKeys.auraName("bone"));
     }

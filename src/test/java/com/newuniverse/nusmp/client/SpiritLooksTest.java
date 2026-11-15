@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Pure (Gson, java.nio); the working directory is the project root.
  */
 class SpiritLooksTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     /** The highest and lowest y (model pixels) of any cube of a geo file, bone rotations ignored. */
     private static float[] extent(String model) throws IOException {

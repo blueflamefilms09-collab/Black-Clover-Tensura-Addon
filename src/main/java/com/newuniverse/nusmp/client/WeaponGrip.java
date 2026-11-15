@@ -23,9 +23,9 @@ import java.util.Optional;
 /**
  * 1.111.0 (docs/weapon_grip.md), client glue: finds the grip point of a loaded weapon mesh and hands {@link WeaponRenderer} / the upgraded-weapon renderer the shift that puts
  * it into the hand. The decisions are pure ({@code client/relics/item/GripFinder, GripMath, GripState, GripTable}, covered by JUnit); this class only reads the resources
- * (assets/nusmp/weapon_grips.json and the {@code display} block of the item model json) and maps the display context to an index.
+ * (assets/anime_multiverse/weapon_grips.json and the {@code display} block of the item model json) and maps the display context to an index.
  * <p>
- * Kill switch: {@code -Dnusmp.weaponGrip=off} on the client JVM restores the 1.110.0 placement exactly (the mesh on the old sprite's diagonal, the oversize rule about
+ * Kill switch: {@code -Danime_multiverse.weaponGrip=off} on the client JVM restores the 1.110.0 placement exactly (the mesh on the old sprite's diagonal, the oversize rule about
  * its quarter point). A mesh whose grip cannot be found (no body, a broken json) is placed the old way as well.
  */
 public final class WeaponGrip {
@@ -34,9 +34,9 @@ public final class WeaponGrip {
     private static GripTable table;
     private static final Map<String, GripMath.Display[]> DISPLAYS = new HashMap<>();
 
-    /** Is the grip placement on? (default yes; -Dnusmp.weaponGrip=off restores the old placement). */
+    /** Is the grip placement on? (default yes; -Danime_multiverse.weaponGrip=off restores the old placement). */
     public static boolean enabled() {
-        return !"off".equalsIgnoreCase(System.getProperty("nusmp.weaponGrip", "on"));
+        return !"off".equalsIgnoreCase(System.getProperty("anime_multiverse.weaponGrip", "on"));
     }
 
     public static void clear() {
@@ -71,7 +71,7 @@ public final class WeaponGrip {
                 }
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] weapon_grips.json failed to load; class grips only", ex);
+            LogUtils.getLogger().error("[anime_multiverse] weapon_grips.json failed to load; class grips only", ex);
         }
         table = t;
         return t;
@@ -92,7 +92,7 @@ public final class WeaponGrip {
             if (g == null) return null;
             return new GripState(g, displays(id), GripState.box(body));
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] grip of weapon mesh {} could not be found; it is placed the old way", id, ex);
+            LogUtils.getLogger().error("[anime_multiverse] grip of weapon mesh {} could not be found; it is placed the old way", id, ex);
             return null;
         }
     }
@@ -117,7 +117,7 @@ public final class WeaponGrip {
             GripFinder.Grip g = GripState.find(body, cls, row.grip(), ov, Float.NaN, false, t.point(base));
             return g == null ? null : new GripState(g, displays(base), GripState.box(body));
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] grip of upgraded mesh {} could not be found; it is placed the old way", meshId, ex);
+            LogUtils.getLogger().error("[anime_multiverse] grip of upgraded mesh {} could not be found; it is placed the old way", meshId, ex);
             return null;
         }
     }

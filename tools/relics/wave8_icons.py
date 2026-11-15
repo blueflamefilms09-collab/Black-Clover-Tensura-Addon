@@ -3,7 +3,7 @@
 
     python3 -B tools/relics/wave8_icons.py            (idempotent)
 
-Per id it writes assets/nusmp/textures/item/<id>.png (the sprite, kept as the inventory icon), models/item/<id>_icon.json (the flat model of the
+Per id it writes assets/anime_multiverse/textures/item/<id>.png (the sprite, kept as the inventory icon), models/item/<id>_icon.json (the flat model of the
 sprite) and models/item/<id>.json (builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt; the Bloodbound Katana's display
 transforms). The shapes are drawn from primitives, given a one pixel dark outline, a grade-coloured rim pixel and glow pixels.
 """

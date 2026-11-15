@@ -49,7 +49,7 @@ public final class LegacyMigration {
             IPlayerSkillTree tree = SkillTreeAttachments.get(p);
             if (hasOldData(tree)) clearOld(tree);
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] could not clear the old skill data of {}", p == null ? "?" : p.getGameProfile().getName(), e);
+            LOG.warn("[anime_multiverse] could not clear the old skill data of {}", p == null ? "?" : p.getGameProfile().getName(), e);
         }
     }
 
@@ -82,7 +82,7 @@ public final class LegacyMigration {
         tree.setClassChangedAt(0L);
     }
 
-    /** The route part of a node key ({@code nusmp:lady_luck#strike} to {@code nusmp:lady_luck}); a key without a {@code #} is returned unchanged. */
+    /** The route part of a node key ({@code anime_multiverse:lady_luck#strike} to {@code anime_multiverse:lady_luck}); a key without a {@code #} is returned unchanged. */
     static String routePart(String key) {
         int i = key.indexOf('#');
         return i < 0 ? key : key.substring(0, i);

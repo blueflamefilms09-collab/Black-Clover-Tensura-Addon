@@ -57,7 +57,7 @@ public final class CompanionScreens {
         String prefix = CompanionCues.prefixOf(tc.getKey());
         Minecraft mc = Minecraft.getInstance();
         if (prefix == null || mc.level == null) return;
-        STORY.add(prefix, BondStory.Kind.HEAL, Component.translatable("nusmp.companion.gs.ev.heal").getString(), mc.level.getGameTime());
+        STORY.add(prefix, BondStory.Kind.HEAL, Component.translatable("anime_multiverse.companion.gs.ev.heal").getString(), mc.level.getGameTime());
         storyVersion++;
     }
 }

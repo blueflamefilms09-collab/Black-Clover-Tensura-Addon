@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.vfx.client;
 import java.util.Locale;
 
 /**
- * Why: the performance report ({@code /nusmp perf report}) should say what the effect system did, not only how long it took: how many effects were running, how many were drawn, how many the
+ * Why: the performance report ({@code /anime_multiverse perf report}) should say what the effect system did, not only how long it took: how many effects were running, how many were drawn, how many the
  * distance level of detail thinned out, how many were culled for being too far to see or skipped because the vertex budget of the frame was used up, and how many vertices went to the GPU.
  * Plain counters written by {@link VfxManager#render} and {@link FxRenderer#render} on the render thread (the numbers of the LAST frame, plus a running total of culled and skipped), read by the
  * client command on the same thread. No game classes.

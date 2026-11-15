@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class RelicUniqueLooksTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Pattern ID = Pattern.compile("RelicDef\\.of\\(\"([a-z0-9_]+)\"");
     private static final Pattern PAL = Pattern.compile("\\.palette\\((0x[0-9A-F]+), (0x[0-9A-F]+), (0x[0-9A-F]+)\\)");
 

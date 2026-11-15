@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * Keeps book skill and grimoire item together:
- * - learning a book (acceptance, /nusmp, /tensura grant) always gives or re-labels the grimoire;
+ * - learning a book (acceptance, /anime_multiverse, /tensura grant) always gives or re-labels the grimoire;
  * - if another mod deletes the book skill while the player still owns the grimoire, it is re-taught.
  */
 public final class GrimoireKeeper {
@@ -69,7 +69,7 @@ public final class GrimoireKeeper {
             if (p.tickCount % 12000 == 0) {
                 p.displayClientMessage(Component.literal("Your grimoire's magic could not return: a server rule on unique skills blocks it. "
                         + "Ask an admin.").withStyle(ChatFormatting.RED), false);
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] {}'s grimoire skill was removed and could not be re-learned; check unique-skill limits "
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] {}'s grimoire skill was removed and could not be re-learned; check unique-skill limits "
                         + "(e.g. tensura_awv_addon 'uniqueSkillsAreGlobal')", p.getName().getString());
             }
             return;

@@ -100,7 +100,7 @@ final class Signatures {
 
     private static void notify(ServerLevel sl, LabyrinthGuardianEntity g, String key) {
         for (Player p : sl.getEntitiesOfClass(Player.class, g.getBoundingBox().inflate(48.0), Player::isAlive)) {
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.decennial.signature." + key, key.equals("enrage") ? "%1$s is enraged!" : "", g.getDisplayName()), true);
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.decennial.signature." + key, key.equals("enrage") ? "%1$s is enraged!" : "", g.getDisplayName()), true);
         }
     }
 

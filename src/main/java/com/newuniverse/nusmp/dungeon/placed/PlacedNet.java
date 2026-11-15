@@ -22,7 +22,7 @@ public final class PlacedNet {
     public static final int REPLACE = 0, ADD = 1, REMOVE = 2;
 
     public record PlacedPayload(String dim, int op, int cx, int cz, long[] keys) implements CustomPacketPayload {
-        public static final Type<PlacedPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "dungeon_placed"));
+        public static final Type<PlacedPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "dungeon_placed"));
         public static final StreamCodec<FriendlyByteBuf, PlacedPayload> CODEC = CustomPacketPayload.codec(PlacedPayload::write, PlacedPayload::read);
 
         private void write(FriendlyByteBuf b) {

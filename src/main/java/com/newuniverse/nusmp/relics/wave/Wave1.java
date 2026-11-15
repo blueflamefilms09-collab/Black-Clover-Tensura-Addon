@@ -45,7 +45,7 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
 public final class Wave1 {
     private Wave1() {}
 
-    private static final ResourceLocation REACH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w1_marid_reach");
+    private static final ResourceLocation REACH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w1_marid_reach");
 
     public static void defs(Consumer<RelicDef> out) {
         // ---------------------------------------------------------------- Staff of Moonlight

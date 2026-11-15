@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the numbers and the filter of the mission stars (3.67.0), with no Minecraft type, so they are unit tested. A mission is a questline advancement
- * of this mod ({@code nusmp:} namespace, shown in the advancement tree); finishing one gives gold stars by how it is shown (task / goal / challenge).
+ * of this mod ({@code anime_multiverse:} namespace, shown in the advancement tree); finishing one gives gold stars by how it is shown (task / goal / challenge).
  * Cost: a string comparison per excluded entry on the one advancement a player earns; nothing per tick.
  */
 public final class MissionStarRules {
@@ -22,7 +22,7 @@ public final class MissionStarRules {
 
     /** True if an advancement gives mission stars: ours, shown in the tree, and not on the exclude list (an entry ending in "/" excludes a folder). */
     public static boolean counts(String namespace, String path, boolean shown, List<? extends String> exclude) {
-        if (!"nusmp".equals(namespace) || !shown || path == null || path.isEmpty()) return false;
+        if (!"anime_multiverse".equals(namespace) || !shown || path == null || path.isEmpty()) return false;
         if (exclude != null) for (String e : exclude) {
             if (e == null || e.isEmpty()) continue;
             if (e.endsWith("/") ? path.startsWith(e) : path.equals(e)) return false;

@@ -1,349 +1,349 @@
 {
   "replace": false,
   "values": [
-    "nusmp:severing_greatsword",
-    "nusmp:elsdocia",
-    "nusmp:thundercleave",
-    "nusmp:doom_hammer",
-    "nusmp:bolt_thrower",
-    "nusmp:crossbow_of_swift_death",
-    "nusmp:magebane_shield",
-    "nusmp:weapon_of_resurgence",
-    "nusmp:otherworld_trident",
-    "nusmp:magic_tool_spear",
-    "nusmp:magic_tool_bow",
+    "anime_multiverse:severing_greatsword",
+    "anime_multiverse:elsdocia",
+    "anime_multiverse:thundercleave",
+    "anime_multiverse:doom_hammer",
+    "anime_multiverse:bolt_thrower",
+    "anime_multiverse:crossbow_of_swift_death",
+    "anime_multiverse:magebane_shield",
+    "anime_multiverse:weapon_of_resurgence",
+    "anime_multiverse:otherworld_trident",
+    "anime_multiverse:magic_tool_spear",
+    "anime_multiverse:magic_tool_bow",
     {
-      "id": "nusmp:cape_of_nine_lives",
+      "id": "anime_multiverse:cape_of_nine_lives",
       "required": false
     },
     {
-      "id": "nusmp:cloak_mimic_tame",
+      "id": "anime_multiverse:cloak_mimic_tame",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_comfort",
+      "id": "anime_multiverse:cloak_of_comfort",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_dichotomy",
+      "id": "anime_multiverse:cloak_of_dichotomy",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_the_depths",
+      "id": "anime_multiverse:cloak_of_the_depths",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_the_moth_rider",
+      "id": "anime_multiverse:cloak_of_the_moth_rider",
       "required": false
     },
     {
-      "id": "nusmp:nightstalkers_mantle",
+      "id": "anime_multiverse:nightstalkers_mantle",
       "required": false
     },
     {
-      "id": "nusmp:autumn_cloak",
+      "id": "anime_multiverse:autumn_cloak",
       "required": false
     },
     {
-      "id": "nusmp:cape_of_bees",
+      "id": "anime_multiverse:cape_of_bees",
       "required": false
     },
     {
-      "id": "nusmp:cape_of_projection",
+      "id": "anime_multiverse:cape_of_projection",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_levitation",
+      "id": "anime_multiverse:cloak_of_levitation",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_the_first_snow",
+      "id": "anime_multiverse:cloak_of_the_first_snow",
       "required": false
     },
     {
-      "id": "nusmp:darkened_cloak_of_elvenkind",
+      "id": "anime_multiverse:darkened_cloak_of_elvenkind",
       "required": false
     },
     {
-      "id": "nusmp:handy_towel_cape",
+      "id": "anime_multiverse:handy_towel_cape",
       "required": false
     },
     {
-      "id": "nusmp:mantle_of_selflessness",
+      "id": "anime_multiverse:mantle_of_selflessness",
       "required": false
     },
     {
-      "id": "nusmp:roswaals_jester_cloak",
+      "id": "anime_multiverse:roswaals_jester_cloak",
       "required": false
     },
     {
-      "id": "nusmp:sword_saints_mantle",
+      "id": "anime_multiverse:sword_saints_mantle",
       "required": false
     },
     {
-      "id": "nusmp:wind_blessed_mantle",
+      "id": "anime_multiverse:wind_blessed_mantle",
       "required": false
     },
     {
-      "id": "nusmp:abyssal_curse_mantle",
+      "id": "anime_multiverse:abyssal_curse_mantle",
       "required": false
     },
     {
-      "id": "nusmp:archers_red_cloak",
+      "id": "anime_multiverse:archers_red_cloak",
       "required": false
     },
     {
-      "id": "nusmp:domain_expansion_mantle",
+      "id": "anime_multiverse:domain_expansion_mantle",
       "required": false
     },
     {
-      "id": "nusmp:gate_of_babylon_crest",
+      "id": "anime_multiverse:gate_of_babylon_crest",
       "required": false
     },
     {
-      "id": "nusmp:gungnirs_shadow",
+      "id": "anime_multiverse:gungnirs_shadow",
       "required": false
     },
     {
-      "id": "nusmp:prushkas_fur_cloak",
+      "id": "anime_multiverse:prushkas_fur_cloak",
       "required": false
     },
     {
-      "id": "nusmp:rulers_banner_mantle",
+      "id": "anime_multiverse:rulers_banner_mantle",
       "required": false
     },
     {
-      "id": "nusmp:sets_storm_mantle",
+      "id": "anime_multiverse:sets_storm_mantle",
       "required": false
     },
     {
-      "id": "nusmp:shroud_of_the_sixth_layer",
+      "id": "anime_multiverse:shroud_of_the_sixth_layer",
       "required": false
     },
     {
-      "id": "nusmp:cloak_of_the_floor_guardian",
+      "id": "anime_multiverse:cloak_of_the_floor_guardian",
       "required": false
     },
     {
-      "id": "nusmp:flammes_founder_cloak",
+      "id": "anime_multiverse:flammes_founder_cloak",
       "required": false
     },
     {
-      "id": "nusmp:griffins_wing_harness",
+      "id": "anime_multiverse:griffins_wing_harness",
       "required": false
     },
     {
-      "id": "nusmp:guild_banner_of_ainz_ooal_gown",
+      "id": "anime_multiverse:guild_banner_of_ainz_ooal_gown",
       "required": false
     },
     {
-      "id": "nusmp:mantle_of_the_overlord",
+      "id": "anime_multiverse:mantle_of_the_overlord",
       "required": false
     },
     {
-      "id": "nusmp:mimic_chest_cloak",
+      "id": "anime_multiverse:mimic_chest_cloak",
       "required": false
     },
     {
-      "id": "nusmp:sages_bandit_hunter_cloak",
+      "id": "anime_multiverse:sages_bandit_hunter_cloak",
       "required": false
     },
     {
-      "id": "nusmp:shadow_monarchs_mantle",
+      "id": "anime_multiverse:shadow_monarchs_mantle",
       "required": false
     },
     {
-      "id": "nusmp:six_faced_dragons_scale",
+      "id": "anime_multiverse:six_faced_dragons_scale",
       "required": false
     },
     {
-      "id": "nusmp:zeniths_healing_mantle",
+      "id": "anime_multiverse:zeniths_healing_mantle",
       "required": false
     },
     {
-      "id": "nusmp:zoltraak_mages_mantle",
+      "id": "anime_multiverse:zoltraak_mages_mantle",
       "required": false
     },
     {
-      "id": "nusmp:band_of_the_hawk_banner",
+      "id": "anime_multiverse:band_of_the_hawk_banner",
       "required": false
     },
     {
-      "id": "nusmp:beldias_pickpocket_cloak",
+      "id": "anime_multiverse:beldias_pickpocket_cloak",
       "required": false
     },
     {
-      "id": "nusmp:cid_kagenous_mob_disguise",
+      "id": "anime_multiverse:cid_kagenous_mob_disguise",
       "required": false
     },
     {
-      "id": "nusmp:elrics_red_coat",
+      "id": "anime_multiverse:elrics_red_coat",
       "required": false
     },
     {
-      "id": "nusmp:fishermans_spear_strap",
+      "id": "anime_multiverse:fishermans_spear_strap",
       "required": false
     },
     {
-      "id": "nusmp:lily_barnetts_cloak",
+      "id": "anime_multiverse:lily_barnetts_cloak",
       "required": false
     },
     {
-      "id": "nusmp:shadows_slime_cloak",
+      "id": "anime_multiverse:shadows_slime_cloak",
       "required": false
     },
     {
-      "id": "nusmp:skull_knights_black_cloak",
+      "id": "anime_multiverse:skull_knights_black_cloak",
       "required": false
     },
     {
-      "id": "nusmp:urek_mazinos_chain_mantle",
+      "id": "anime_multiverse:urek_mazinos_chain_mantle",
       "required": false
     },
     {
-      "id": "nusmp:black_swordsmans_coat",
+      "id": "anime_multiverse:black_swordsmans_coat",
       "required": false
     },
     {
-      "id": "nusmp:fairy_dance_wings",
+      "id": "anime_multiverse:fairy_dance_wings",
       "required": false
     },
     {
-      "id": "nusmp:guild_leaders_flame_cloak",
+      "id": "anime_multiverse:guild_leaders_flame_cloak",
       "required": false
     },
     {
-      "id": "nusmp:heathcliffs_holy_sword_shield_strap",
+      "id": "anime_multiverse:heathcliffs_holy_sword_shield_strap",
       "required": false
     },
     {
-      "id": "nusmp:ruined_castle_guild_banner",
+      "id": "anime_multiverse:ruined_castle_guild_banner",
       "required": false
     },
-    "nusmp:wraith_cloak",
-    "nusmp:drakefang_greatsword",
-    "nusmp:orc_cleaver",
-    "nusmp:golem_maul",
-    "nusmp:bone_lance",
-    "nusmp:wisp_staff",
+    "anime_multiverse:wraith_cloak",
+    "anime_multiverse:drakefang_greatsword",
+    "anime_multiverse:orc_cleaver",
+    "anime_multiverse:golem_maul",
+    "anime_multiverse:bone_lance",
+    "anime_multiverse:wisp_staff",
     {
-      "id": "nusmp:pactbreaker_shroud",
+      "id": "anime_multiverse:pactbreaker_shroud",
       "required": false
     },
     {
-      "id": "nusmp:silent_winter_mantle",
+      "id": "anime_multiverse:silent_winter_mantle",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_hooded_cloak",
+      "id": "anime_multiverse:adventurers_hooded_cloak",
       "required": false
     },
     {
-      "id": "nusmp:d_rank_raiders_mantle",
+      "id": "anime_multiverse:d_rank_raiders_mantle",
       "required": false
     },
     {
-      "id": "nusmp:desert_dancers_veil_cape",
+      "id": "anime_multiverse:desert_dancers_veil_cape",
       "required": false
     },
     {
-      "id": "nusmp:great_jura_travelling_cloak",
+      "id": "anime_multiverse:great_jura_travelling_cloak",
       "required": false
     },
     {
-      "id": "nusmp:supporters_rucksack",
+      "id": "anime_multiverse:supporters_rucksack",
       "required": false
     },
     {
-      "id": "nusmp:corps_foot_soldiers_haori",
+      "id": "anime_multiverse:corps_foot_soldiers_haori",
       "required": false
     },
     {
-      "id": "nusmp:deckhands_oilskin_cape",
+      "id": "anime_multiverse:deckhands_oilskin_cape",
       "required": false
     },
     {
-      "id": "nusmp:dire_wolf_pelt_mantle",
+      "id": "anime_multiverse:dire_wolf_pelt_mantle",
       "required": false
     },
     {
-      "id": "nusmp:hunter_exam_travellers_poncho",
+      "id": "anime_multiverse:hunter_exam_travellers_poncho",
       "required": false
     },
     {
-      "id": "nusmp:job_board_wanderers_duster",
+      "id": "anime_multiverse:job_board_wanderers_duster",
       "required": false
     },
     {
-      "id": "nusmp:priestella_gondoliers_cape",
+      "id": "anime_multiverse:priestella_gondoliers_cape",
       "required": false
     },
     {
-      "id": "nusmp:rangers_moss_scout_cloak",
+      "id": "anime_multiverse:rangers_moss_scout_cloak",
       "required": false
     },
     {
-      "id": "nusmp:silver_rank_plain_cloak",
+      "id": "anime_multiverse:silver_rank_plain_cloak",
       "required": false
     },
     {
-      "id": "nusmp:squad_trainees_mantle",
+      "id": "anime_multiverse:squad_trainees_mantle",
       "required": false
     },
     {
-      "id": "nusmp:bedroll_and_pack",
+      "id": "anime_multiverse:bedroll_and_pack",
       "required": false
     },
     {
-      "id": "nusmp:hage_village_patchwork_cloak",
+      "id": "anime_multiverse:hage_village_patchwork_cloak",
       "required": false
     },
     {
-      "id": "nusmp:hero_students_short_cape",
+      "id": "anime_multiverse:hero_students_short_cape",
       "required": false
     },
     {
-      "id": "nusmp:leaf_village_messenger_satchel",
+      "id": "anime_multiverse:leaf_village_messenger_satchel",
       "required": false
     },
     {
-      "id": "nusmp:magus_apprentices_cloak",
+      "id": "anime_multiverse:magus_apprentices_cloak",
       "required": false
     },
     {
-      "id": "nusmp:navigators_waterproof_cloak",
+      "id": "anime_multiverse:navigators_waterproof_cloak",
       "required": false
     },
     {
-      "id": "nusmp:rain_catchers_reed_cloak",
+      "id": "anime_multiverse:rain_catchers_reed_cloak",
       "required": false
     },
     {
-      "id": "nusmp:sealed_forest_wanderers_cape",
+      "id": "anime_multiverse:sealed_forest_wanderers_cape",
       "required": false
     },
     {
-      "id": "nusmp:state_alchemists_long_coat",
+      "id": "anime_multiverse:state_alchemists_long_coat",
       "required": false
     },
     {
-      "id": "nusmp:travellers_roadside_cape",
+      "id": "anime_multiverse:travellers_roadside_cape",
       "required": false
     },
     {
-      "id": "nusmp:boar_hat_tavern_cloak",
+      "id": "anime_multiverse:boar_hat_tavern_cloak",
       "required": false
     },
     {
-      "id": "nusmp:butterfly_estate_haori",
+      "id": "anime_multiverse:butterfly_estate_haori",
       "required": false
     },
     {
-      "id": "nusmp:truth_seeking_orbs_of_the_sage",
+      "id": "anime_multiverse:truth_seeking_orbs_of_the_sage",
       "required": false
     },
     {
-      "id": "nusmp:wayfaring_pedlars_wagon_cape",
+      "id": "anime_multiverse:wayfaring_pedlars_wagon_cape",
       "required": false
     }
   ]

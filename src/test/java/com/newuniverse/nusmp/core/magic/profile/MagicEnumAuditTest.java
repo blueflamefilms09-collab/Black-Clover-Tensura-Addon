@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class MagicEnumAuditTest {
     private static final Path MAIN = Path.of("src/main");
-    private static final Path RES = MAIN.resolve("resources/assets/nusmp");
+    private static final Path RES = MAIN.resolve("resources/assets/anime_multiverse");
 
     /** The switch that MagicType.restricted() contained before 1.27.0. */
     private static final Set<MagicType> LEGACY_RESTRICTED = Set.of(MagicType.ANTI_MAGIC, MagicType.KOTODAMA, MagicType.DEMON_BEAST, MagicType.CURSE,

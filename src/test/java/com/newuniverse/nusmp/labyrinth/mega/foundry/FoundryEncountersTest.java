@@ -29,8 +29,8 @@ public class FoundryEncountersTest {
 
     @Test
     public void aFoundryKeyMapsToTheOneEntityTypeAndOthersPassThrough() {
-        assertEquals("nusmp:foundry_mob", FoundryDef.baseId("nusmp:foundry_mob#tunnel_kobold"));
+        assertEquals("anime_multiverse:foundry_mob", FoundryDef.baseId("anime_multiverse:foundry_mob#tunnel_kobold"));
         assertEquals("minecraft:zombie", FoundryDef.baseId("minecraft:zombie"));
-        assertEquals("nusmp:foundry_mob#Bad Id", FoundryDef.baseId("nusmp:foundry_mob#Bad Id"));
+        assertEquals("anime_multiverse:foundry_mob#Bad Id", FoundryDef.baseId("anime_multiverse:foundry_mob#Bad Id"));
     }
 }

@@ -31,7 +31,7 @@ import java.util.TreeMap;
  * which alignment the table gives a cast and WHICH RULE decided (ids separated by spaces, the most specific first, such as {@code devil_union light}), the
  * way to tune the data file. {@code flow vessel list} lists the relics that can be handed out as the Metal Vessel and which of them the world already has,
  * and which sectors have paid; {@code flow vessel give <player>} runs the reward logic by hand for the sector the sender stands in (or none), skipping the
- * once-per-sector memory and the switch, for tests and for making good a lost vessel. All text goes through lang keys {@code message.nusmp.mega.mfw.cmd.*}
+ * once-per-sector memory and the switch, for tests and for making good a lost vessel. All text goes through lang keys {@code message.anime_multiverse.mega.mfw.cmd.*}
  * with an English fallback, so the command reads fine before the lang fragment is merged.
  */
 public final class FlowCommand {
@@ -54,7 +54,7 @@ public final class FlowCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.mfw.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.mfw.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {

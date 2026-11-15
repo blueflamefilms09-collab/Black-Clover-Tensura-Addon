@@ -48,12 +48,12 @@ public final class TensuraNamingInterceptor {
                     // run after Tensura finished its own naming this tick
                     p.getServer().execute(() -> TensuraNamingEngine.apply(p, av, wanted, false, epBefore));
                 } catch (RuntimeException ex) {
-                    LOG.warn("[nusmp] Avatar naming interceptor failed: {}", ex.toString());
+                    LOG.warn("[anime_multiverse] Avatar naming interceptor failed: {}", ex.toString());
                 }
                 return EventResult.pass();
             });
         } catch (Throwable t) {
-            LOG.warn("[nusmp] Could not hook Tensura's naming event ({}); Avatars can still be named from their menu", t.toString());
+            LOG.warn("[anime_multiverse] Could not hook Tensura's naming event ({}); Avatars can still be named from their menu", t.toString());
         }
     }
 }

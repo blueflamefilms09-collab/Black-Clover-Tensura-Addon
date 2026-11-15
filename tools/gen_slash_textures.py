@@ -1,6 +1,6 @@
 """Slash Magic textures (1.93.0 rebuild): the sprites of the SLASH_FX1..3 layer, the armour's ground ring and glints, and the props.
 
-    python3 -B tools/gen_slash_textures.py       # -> src/main/resources/assets/nusmp/textures/particle/slash_rip_*.png
+    python3 -B tools/gen_slash_textures.py       # -> src/main/resources/assets/anime_multiverse/textures/particle/slash_rip_*.png
 
 White (tinted by the effect colour, green 0x48FF7A); the existing slash_arc / slash_blade / slash_crescent textures stay where they are.
   slash_rip_crescent   a wide jagged crescent, a bright thin edge on the outside, torn teeth on the inside (256 x 128)

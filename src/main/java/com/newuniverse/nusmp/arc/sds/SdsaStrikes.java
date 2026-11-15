@@ -61,7 +61,7 @@ public final class SdsaStrikes {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] a Seven Deadly Sins boss's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] a Seven Deadly Sins boss's {} stopped: {}", what, t.toString());
             }
         };
     }

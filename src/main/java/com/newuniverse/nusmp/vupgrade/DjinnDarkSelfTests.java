@@ -42,20 +42,20 @@ public final class DjinnDarkSelfTests {
         for (Djinn d : Djinn.values()) {
             String id = DjinnWeaponRules.itemPath(d, true);
             if (!BuiltInRegistries.ITEM.getKey(DjinnWeaponItems.item(d, true)).getPath().equals(id)) return SelfTests.Result.fail(id + ": the dark weapon item is not registered under that id");
-            String table = text("/assets/nusmp/visual_upgrade/" + id + ".json");
+            String table = text("/assets/anime_multiverse/visual_upgrade/" + id + ".json");
             if (table == null) return SelfTests.Result.fail(id + ": the data table is not in the jar");
             UpgradeSpec s = UpgradeSpec.parse(JsonParser.parseString(table).getAsJsonObject());
             if (!s.item().equals(id)) return SelfTests.Result.fail(id + ": the table names " + s.item());
-            int body = GodBSelfTests.quads("/assets/nusmp/weapon_meshes/" + s.mesh() + ".txt");
-            int lod = GodBSelfTests.quads("/assets/nusmp/weapon_meshes/" + s.lodMesh() + ".txt");
-            int orbit = GodBSelfTests.quads("/assets/nusmp/weapon_meshes/" + s.orbitMesh() + ".txt");
+            int body = GodBSelfTests.quads("/assets/anime_multiverse/weapon_meshes/" + s.mesh() + ".txt");
+            int lod = GodBSelfTests.quads("/assets/anime_multiverse/weapon_meshes/" + s.lodMesh() + ".txt");
+            int orbit = GodBSelfTests.quads("/assets/anime_multiverse/weapon_meshes/" + s.orbitMesh() + ".txt");
             if (body < 600) return SelfTests.Result.fail(id + ": the upgraded mesh has only " + body + " quads");
             if (lod <= 0 || lod > 0.15 * body) return SelfTests.Result.fail(id + ": the level-of-detail mesh has " + lod + " of " + body + " quads");
             if (orbit <= 0 && s.orbitPieces() > 0) return SelfTests.Result.fail(id + ": the orbiting piece is empty");
             for (String t : new String[]{"", "_glow", "_glow2"}) {
-                if (!exists("/assets/nusmp/textures/entity/weapon/" + s.mesh() + t + ".png")) return SelfTests.Result.fail(id + ": the skin " + s.mesh() + t + ".png is missing");
+                if (!exists("/assets/anime_multiverse/textures/entity/weapon/" + s.mesh() + t + ".png")) return SelfTests.Result.fail(id + ": the skin " + s.mesh() + t + ".png is missing");
             }
-            if (!exists("/assets/nusmp/weapon_meshes/" + id + ".txt") || !exists("/assets/nusmp/textures/entity/weapon/" + id + ".png")) return SelfTests.Result.fail(id + ": the old mesh or skin (the fallback) is gone");
+            if (!exists("/assets/anime_multiverse/weapon_meshes/" + id + ".txt") || !exists("/assets/anime_multiverse/textures/entity/weapon/" + id + ".png")) return SelfTests.Result.fail(id + ": the old mesh or skin (the fallback) is gone");
             for (UpgradeSpec.Layer l : s.layers()) {
                 if (!l.particle().equals("fx")) return SelfTests.Result.fail(id + ": the particle layer " + l.kind() + " names '" + l.particle() + "', not the mod's own particle (fx)");
             }

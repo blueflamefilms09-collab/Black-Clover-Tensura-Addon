@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * Why: the Valkyrie Drill Lance and the Valkyrie armour v2 are one small self-contained feature, so they have one entry point: the single line the mod constructor calls. It registers the lance (a spear-class
  * item) on its own item register, listens to a player leaving and to the server stopping (both forget the hit-burst map) and registers the CI self-test {@code magic.valkyrie_armor} (the armour's budgets and
  * meshes, the lance's registration, numbers, engravings and caps; pure checks, they run on the dedicated server). The lance is creative-only: it is in the creative tab and nowhere else (no loot table, no
- * recipe, no drop, no trade). Its 3D model, skins, glow and engravings are data ({@code assets/nusmp/weapon_meshes}, {@code item/WeaponEngravings}). Safe to call twice. The client halves are
+ * recipe, no drop, no trade). Its 3D model, skins, glow and engravings are data ({@code assets/anime_multiverse/weapon_meshes}, {@code item/WeaponEngravings}). Safe to call twice. The client halves are
  * {@code client/WeaponRenderer} (the model, its turning drill) and {@code client/mode/ModeArmorValkyrieV2} (the armour layer).
  */
 public final class ValkyrieLanceBoot {

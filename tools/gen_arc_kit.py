@@ -1,11 +1,11 @@
 """Why: the front door of the art kit of the characters of the arcs. A character is ONE python file tools/arc/char_<id>.py that exposes a dict SPEC (see
 docs/arc/art_kit.md for every field) and optionally `extra(kit, rig)` for a signature part; tools/gen_arc_characters.py turns every such file into a GeoLite model
-(assets/nusmp/geo|animations|textures/entity/arc_<id>*). This module re-exports what a character file or an `extra` may need: the builder, the painters, the
+(assets/anime_multiverse/geo|animations|textures/entity/arc_<id>*). This module re-exports what a character file or an `extra` may need: the builder, the painters, the
 colour helpers, the vocabularies (names of hair styles, eyes, outfits ...) and the registry of props.
 
     import gen_arc_kit as kit
     R = kit.build_character(SPEC, extra)         # a finished Rig (nothing written yet)
-    kit.save(R)                                  # geo, animation, texture, glow texture under src/main/resources/assets/nusmp
+    kit.save(R)                                  # geo, animation, texture, glow texture under src/main/resources/assets/anime_multiverse
 
 Inside `extra(kit, rig)`: `rig` is the Rig under construction (rig.box / rig.pair / rig.spike / rig.clump / rig.bone, rig.d = the measured body, rig.spec = the
 normalised spec, rig.look = the palettes); add bones and cubes with the painters exported here. Clips are generated after `extra`, so a bone you add can be given motion

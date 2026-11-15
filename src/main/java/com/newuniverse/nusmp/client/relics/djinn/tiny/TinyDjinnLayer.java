@@ -98,7 +98,7 @@ public final class TinyDjinnLayer {
     /** True while the config shows the figure (the old bust is then not drawn). */
     public static boolean replacesBust() { return TinyDjinnConfig.enabled(); }
 
-    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     private static GeoSpec spec(Djinn d, boolean dark) {
         GeoSpec s = SPECS[d.ordinal()][dark ? 1 : 0];

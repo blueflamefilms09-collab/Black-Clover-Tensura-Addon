@@ -234,7 +234,7 @@ public final class PuzzleInstance {
             if (tick % 10 == 0) drawLinks();
         } catch (RuntimeException e) {
             errors++;
-            if (WARNED.add(type + ":update")) LOG.warn("[nusmp] puzzle {} failed in update: {}", type, e.toString());
+            if (WARNED.add(type + ":update")) LOG.warn("[anime_multiverse] puzzle {} failed in update: {}", type, e.toString());
         }
     }
 
@@ -428,7 +428,7 @@ public final class PuzzleInstance {
                 }
             } catch (RuntimeException e) {
                 errors++;
-                if (WARNED.add(type + ":" + f.kind())) LOG.warn("[nusmp] puzzle {} could not carry out {}: {}", type, f.kind(), e.toString());
+                if (WARNED.add(type + ":" + f.kind())) LOG.warn("[anime_multiverse] puzzle {} could not carry out {}: {}", type, f.kind(), e.toString());
             }
         }
     }
@@ -615,7 +615,7 @@ public final class PuzzleInstance {
         try {
             journal.restore();
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] puzzle {} could not restore its blocks: {}", type, e.toString());
+            LOG.warn("[anime_multiverse] puzzle {} could not restore its blocks: {}", type, e.toString());
         }
         for (UUID id : new ArrayList<>(mobs)) {
             Entity e = level.getEntity(id);

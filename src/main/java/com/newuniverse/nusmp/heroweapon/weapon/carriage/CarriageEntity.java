@@ -233,7 +233,7 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
         } catch (RuntimeException e) {
             if (!FAULT_LOGGED) {
                 FAULT_LOGGED = true;
-                LogUtils.getLogger().error("[nusmp] the carriage failed and was sent away", e);
+                LogUtils.getLogger().error("[anime_multiverse] the carriage failed and was sent away", e);
             }
             try {
                 dismiss();

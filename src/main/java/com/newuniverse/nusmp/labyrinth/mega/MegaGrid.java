@@ -71,12 +71,12 @@ public final class MegaGrid {
     }
 
     /** Jigsaw names and pools every builder must use (the connector contract of docs/labyrinth/mega.md). */
-    public static final String DOOR = "nusmp:mega_door";
-    public static final String P_SIDE = "nusmp:mega/side", P_CAP = "nusmp:mega/cap", P_LANDING = "nusmp:mega/landing",
-            P_ARENA = "nusmp:mega/arena", P_ANTECHAMBER = "nusmp:mega/antechamber", P_VAULT = "nusmp:mega/vault",
-            P_ONWARD = "nusmp:mega/onward", P_SAFE = "nusmp:mega/safe", P_LINK = "nusmp:mega/link", P_EMPTY = "minecraft:empty";
+    public static final String DOOR = "anime_multiverse:mega_door";
+    public static final String P_SIDE = "anime_multiverse:mega/side", P_CAP = "anime_multiverse:mega/cap", P_LANDING = "anime_multiverse:mega/landing",
+            P_ARENA = "anime_multiverse:mega/arena", P_ANTECHAMBER = "anime_multiverse:mega/antechamber", P_VAULT = "anime_multiverse:mega/vault",
+            P_ONWARD = "anime_multiverse:mega/onward", P_SAFE = "anime_multiverse:mega/safe", P_LINK = "anime_multiverse:mega/link", P_EMPTY = "minecraft:empty";
     /** Names of the chain sockets (arena -> antechamber -> vault / onward); the generator can force their pool. */
-    public static final String CHAIN = "nusmp:mega_chain", VAULT = "nusmp:mega_vault", ONWARD = "nusmp:mega_onward";
+    public static final String CHAIN = "anime_multiverse:mega_chain", VAULT = "anime_multiverse:mega_vault", ONWARD = "anime_multiverse:mega_onward";
 
     /** Footprint in blocks of {@code n} modules. */
     public static int blocks(int modules) { return modules * MODULE; }

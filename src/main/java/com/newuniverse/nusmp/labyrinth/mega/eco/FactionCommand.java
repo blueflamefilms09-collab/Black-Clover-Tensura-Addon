@@ -34,7 +34,7 @@ import java.util.TreeSet;
  * what was meant), {@code faction of} names the faction of the creature you are looking at and whether the turf rules apply to it (a boss or a
  * servant sits out, and the command says which), {@code faction room} names the native faction of the room under your feet, and
  * {@code faction set <faction|none>} changes it, because the only way to test a quarrel is to stand two factions in one hall. All text goes through
- * lang keys {@code message.nusmp.mega.mec.cmd.*} with an English fallback, so the command reads fine even before the lang fragment is merged.
+ * lang keys {@code message.anime_multiverse.mega.mec.cmd.*} with an English fallback, so the command reads fine even before the lang fragment is merged.
  */
 public final class FactionCommand {
     private FactionCommand() {}
@@ -59,7 +59,7 @@ public final class FactionCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.mec.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.mec.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {

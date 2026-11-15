@@ -53,7 +53,7 @@ public class MultiverseStatusScreen extends Screen {
     @Override
     protected void init() {
         addRenderableWidget(new ThemedButton(width / 2 - 40, height - 26, 80, 18, Component.literal("Back"), b -> onClose()));
-        addRenderableWidget(new ThemedButton(8, height - 26, 88, 18, Component.translatableWithFallback("nusmp.gui_scale.button", "GUI Size"),
+        addRenderableWidget(new ThemedButton(8, height - 26, 88, 18, Component.translatableWithFallback("anime_multiverse.gui_scale.button", "GUI Size"),
                 b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.GuiSizeScreen(this, null))));
         addRenderableWidget(new ThemedButton(width - 96, height - 26, 88, 18, Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open()));
         // 3.52.0: the Beast Will page: a tab button (the status grid and the page share the screen) and the page's own buttons
@@ -63,20 +63,20 @@ public class MultiverseStatusScreen extends Screen {
         if (asking = BeastWillMenu.asking()) beastView = true;
         int bx = width / 2 - 90, by = height - 50;
         if (asking) {
-            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 88, 18, Component.translatable("nusmp.beastwill.confirm.absorb"), b -> { BeastWillMenu.answer(true); rebuild(); })));
-            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 92, by, 88, 18, Component.translatable("nusmp.beastwill.confirm.decline"), b -> { BeastWillMenu.answer(false); rebuild(); })));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 88, 18, Component.translatable("anime_multiverse.beastwill.confirm.absorb"), b -> { BeastWillMenu.answer(true); rebuild(); })));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 92, by, 88, 18, Component.translatable("anime_multiverse.beastwill.confirm.decline"), b -> { BeastWillMenu.answer(false); rebuild(); })));
             beastButtons.get(0).active = BeastWillMenu.askOk();
         } else {
-            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 58, 18, Component.translatable("nusmp.beastwill.menu.acquire"), b -> BeastWillMenu.acquire())));
-            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 61, by, 58, 18, Component.translatable("nusmp.beastwill.menu.integrate"), b -> BeastWillMenu.integrate())));
-            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 122, by, 58, 18, Component.translatable("nusmp.beastwill.menu.swap"), b -> BeastWillMenu.swap())));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 58, 18, Component.translatable("anime_multiverse.beastwill.menu.acquire"), b -> BeastWillMenu.acquire())));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 61, by, 58, 18, Component.translatable("anime_multiverse.beastwill.menu.integrate"), b -> BeastWillMenu.integrate())));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 122, by, 58, 18, Component.translatable("anime_multiverse.beastwill.menu.swap"), b -> BeastWillMenu.swap())));
             for (ThemedButton t : beastButtons) t.active = BeastWillMenu.has();
         }
         refreshBeast();
     }
 
     private void refreshBeast() {
-        tab.setMessage(Component.translatable(beastView ? "nusmp.beastwill.menu.back" : "nusmp.beastwill.menu.tab"));
+        tab.setMessage(Component.translatable(beastView ? "anime_multiverse.beastwill.menu.back" : "anime_multiverse.beastwill.menu.tab"));
         tab.active = !asking;                                                               // an unanswered ask keeps the page until Absorb / Decline / close
         for (ThemedButton t : beastButtons) t.visible = beastView;
     }
@@ -88,7 +88,7 @@ public class MultiverseStatusScreen extends Screen {
     public void removed() { if (asking) BeastWillMenu.declineIfOpen(); }
 
     private void renderBeast(GuiGraphics g) {
-        g.drawCenteredString(font, Component.translatable("nusmp.beastwill.menu.title"), width / 2, 10, UiTheme.GOLD);
+        g.drawCenteredString(font, Component.translatable("anime_multiverse.beastwill.menu.title"), width / 2, 10, UiTheme.GOLD);
         int h = BeastWillMenu.height();
         BeastWillMenu.draw(g, font, width / 2 - BeastWillMenu.W / 2, Math.max(24, (height - 56 - h) / 2 + 12));
     }
@@ -213,7 +213,7 @@ public class MultiverseStatusScreen extends Screen {
         String rank = s.getString("Rank").isEmpty() ? "5th Class Junior Magic Knight" : s.getString("Rank");
         int sw = Math.max(120, width / 2 - 56);
         int bottom = y0 + ((blocks.size() + cols - 1) / cols) * (ph + gap);                  // where the last row of panels ends
-        String body = warn ? UiLang.get(UiLang.WARNING, UiLang.get("nusmp.ui.status.warn")) : UiLang.get("nusmp.ui.status.read");
+        String body = warn ? UiLang.get(UiLang.WARNING, UiLang.get("anime_multiverse.ui.status.warn")) : UiLang.get("anime_multiverse.ui.status.read");
         sage.set(font, UiLang.get(UiLang.ANALYSIS_COMPLETE), body, UiLang.get(UiLang.RESULT, rank), sw, now);
         int sy = Math.max(bottom + 2, height - 38);
         if (sy + sage.height(font) <= height - 3) {

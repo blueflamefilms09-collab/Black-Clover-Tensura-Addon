@@ -115,12 +115,12 @@ public final class SpiritLight {
     static boolean link(ServerPlayer p, State s, boolean check) {
         if (s.cub != null) return true;
         if (check ? !eligible(p) : !SpiritLightConfig.enabled()) {
-            say(p, s, "nusmp.spiritlight.need", "The Spirit of Light answers only a Light Magic caster.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.spiritlight.need", "The Spirit of Light answers only a Light Magic caster.", ChatFormatting.GRAY);
             return false;
         }
         UUID id = p.getUUID();
         if (!SPIRITS.acquire(id, SpiritLightRules.SPIRITS_PER_PLAYER, SpiritLightConfig.maxSpirits())) {
-            say(p, s, "nusmp.spiritlight.full", "The Spirit of Light cannot answer: too many spirits are out.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.spiritlight.full", "The Spirit of Light cannot answer: too many spirits are out.", ChatFormatting.RED);
             return false;
         }
         ServerLevel sl = p.serverLevel();
@@ -135,7 +135,7 @@ public final class SpiritLight {
         Vec3 at = new Vec3(a[0], a[1] + 0.3, a[2]);
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, at, at, GOLD, 14, 0.5f);
         sound(p, s, at, SpiritLightRules.S_LINK, 0.8f, 1.0f);
-        say(p, s, "nusmp.spiritlight.linked", "The Spirit of Light takes your shoulder.", ChatFormatting.GOLD);
+        say(p, s, "anime_multiverse.spiritlight.linked", "The Spirit of Light takes your shoulder.", ChatFormatting.GOLD);
         react(p, s, LightMoodRules.Situation.LINK, false, false);
         return true;
     }
@@ -151,7 +151,7 @@ public final class SpiritLight {
         removeSwiftness(p);
         if (say) {
             sound(p, s, p.position().add(0, 1.4, 0), SpiritLightRules.S_UNLINK, 0.7f, 1.0f);
-            say(p, s, "nusmp.spiritlight.unlinked", "The Spirit of Light fades into the light.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.spiritlight.unlinked", "The Spirit of Light fades into the light.", ChatFormatting.GRAY);
         }
         if (s.seraph == null) LIVE.remove(p.getUUID());
     }
@@ -177,12 +177,12 @@ public final class SpiritLight {
         if (s.seraph != null) { endPower(p, s, true, true); return; }
         long now = p.level().getGameTime();
         if (!SpiritLightRules.powerReady(now, s.powerReadyAt)) {
-            say(p, s, "nusmp.spiritlight.recharge", "The seraph is not ready to rise again.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.spiritlight.recharge", "The seraph is not ready to rise again.", ChatFormatting.GRAY);
             return;
         }
         UUID id = p.getUUID();
         if (!POWERED.acquire(id, SpiritLightRules.POWERED_PER_PLAYER, SpiritLightConfig.maxPowered())) {
-            say(p, s, "nusmp.spiritlight.powered_full", "Too many seraphs are risen: the Spirit of Light stays a cub.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.spiritlight.powered_full", "Too many seraphs are risen: the Spirit of Light stays a cub.", ChatFormatting.RED);
             return;
         }
         ServerLevel sl = p.serverLevel();
@@ -197,7 +197,7 @@ public final class SpiritLight {
         Vec3 at = new Vec3(a[0], a[1] + 1.2, a[2]);
         VfxSpawn.send(sl, VfxShape.LIGHT_FLARE, at, at, GOLD, 18, 1.1f);
         sound(p, s, at, SpiritLightRules.S_POWER, 1.0f, 1.0f);
-        say(p, s, "nusmp.spiritlight.risen", "The Spirit of Light rises as a seraph.", ChatFormatting.GOLD);
+        say(p, s, "anime_multiverse.spiritlight.risen", "The Spirit of Light rises as a seraph.", ChatFormatting.GOLD);
         react(p, s, LightMoodRules.Situation.POWER_UP, true, true);
     }
 
@@ -213,7 +213,7 @@ public final class SpiritLight {
         setCubHidden(sl, s, false);
         if (say) {
             sound(p, s, p.position().add(0, 1.6, 0), SpiritLightRules.S_UNLINK, 0.8f, 0.85f);
-            say(p, s, "nusmp.spiritlight.fallen", "The seraph settles back into the cub.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.spiritlight.fallen", "The seraph settles back into the cub.", ChatFormatting.GRAY);
             react(p, s, LightMoodRules.Situation.POWER_DOWN, false, true);
         }
     }
@@ -367,7 +367,7 @@ public final class SpiritLight {
         }
         s.mood.said(line);
         SpiritLightVoice.say(p, line, LightMoodRules.cueCooldown(cue));
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.spiritlight.say." + line, SpiritLightVoiceLines.text(line)).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spiritlight.say." + line, SpiritLightVoiceLines.text(line)).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), true);
     }
 
     /** The owner took damage (the damage event of a player with a linked spirit): a flinch, or at low health the spirit's alarm. */

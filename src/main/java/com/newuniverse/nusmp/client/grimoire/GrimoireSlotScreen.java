@@ -79,11 +79,11 @@ public class GrimoireSlotScreen extends AbstractContainerScreen<GrimoireSlot.Men
         String head, body, result = "";
         if (book.hasItem()) {
             head = UiLang.get(UiLang.ANALYSIS_COMPLETE);
-            body = UiLang.get("nusmp.ui.slot.bound");
-            if (gr.getInt("Pages") > 0) result = UiLang.get(UiLang.RESULT, UiLang.get("nusmp.ui.slot.pages", gr.getInt("Unlocked"), gr.getInt("Pages")));
+            body = UiLang.get("anime_multiverse.ui.slot.bound");
+            if (gr.getInt("Pages") > 0) result = UiLang.get(UiLang.RESULT, UiLang.get("anime_multiverse.ui.slot.pages", gr.getInt("Unlocked"), gr.getInt("Pages")));
         } else {
             head = UiLang.get(UiLang.ANALYZING);
-            body = UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.slot.empty"));
+            body = UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.slot.empty"));
         }
         sage.set(font, head, body, result, imageWidth - 16, now);
         int ph = sage.height(font) + 10, py = y + imageHeight + 5;

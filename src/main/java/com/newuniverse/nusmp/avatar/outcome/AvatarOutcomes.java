@@ -22,7 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
  * Why: this is the owner's three-day outcome engine. {@link AvatarEntity#aiStep} calls {@link #tick} every tick; when the 72000-tick timer reaches zero the
  * pure {@link OutcomeMath} decides (Betrayal / Soul Awakening / Ordinary, skipped for a named Avatar and for one with a Unique or Ultimate skill) and
  * {@link #apply} carries the result out on the entity: goals rebuilt, perks applied, the creator told, the quest key fired. The same {@code apply} is what
- * the {@code /nusmp avatar outcome} command uses to force a result for testing.
+ * the {@code /anime_multiverse avatar outcome} command uses to force a result for testing.
  *
  * <p>What each result does:
  * <ul>

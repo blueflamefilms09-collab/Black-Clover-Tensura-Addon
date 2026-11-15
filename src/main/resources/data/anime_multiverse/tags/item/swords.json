@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:iron_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:magic_tool_sword",
+      "required": false
+    },
+    "#anime_multiverse:katanas",
+    {
+      "id": "anime_multiverse:spell_forged_rapier",
+      "required": false
+    }
+  ]
+}

@@ -37,7 +37,7 @@ import java.util.Optional;
  * Magic Stone / crystal item entities and a raw monster cut to the drops, and {@link LivingExperienceDropEvent} zeroes the vanilla orbs, so
  * "level up by killing" is replaced by "gather, cook, trade". Both handlers act only when the level is the Labyrinth, the mob is a hostile
  * {@link Enemy} and it is not a boss: bosses keep their own loot tables (relics, the Shadow Key) and are excluded by the interface
- * {@link BudgetedBoss}, the {@code nusmp_peak_boss} tag the Peak Altar puts on its boss, the {@code nusmp:floor_warden} id and the common
+ * {@link BudgetedBoss}, the {@code nusmp_peak_boss} tag the Peak Altar puts on its boss, the {@code anime_multiverse:floor_warden} id and the common
  * {@code c:bosses} entity tag, so a boss from another mod that follows the tag convention is excluded without a list. The monster's toughness
  * is read from its BASE max health (attribute modifiers such as the Labyrinth health buffer do not change what a stone is worth, so the buffer
  * cannot inflate the payout). Drops are added, never replaced: vanilla loot stays (rule: add the new, keep the old). The roll itself is the
@@ -50,7 +50,7 @@ public final class EconomyDrops {
     public static final String PEAK_BOSS_TAG = "nusmp_peak_boss";
 
     private static final ResourceLocation STONE = tensura("magic_stone"), LOW = tensura("low_quality_magic_crystal"),
-            MEDIUM = tensura("medium_quality_magic_crystal"), HIGH = tensura("high_quality_magic_crystal"), WARDEN = ResourceLocation.fromNamespaceAndPath("nusmp", "floor_warden");
+            MEDIUM = tensura("medium_quality_magic_crystal"), HIGH = tensura("high_quality_magic_crystal"), WARDEN = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "floor_warden");
     private static final ResourceKey<Enchantment> LOOTING = ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.withDefaultNamespace("looting"));
 
     private static ResourceLocation tensura(String path) { return ResourceLocation.fromNamespaceAndPath("tensura", path); }

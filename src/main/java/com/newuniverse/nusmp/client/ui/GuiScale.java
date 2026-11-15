@@ -41,7 +41,7 @@ import java.util.Set;
  * The numbers come from {@link GuiScaleMath}; the values from {@link GuiScaleOptions} (nusmp-gui-client.toml).
  */
 public final class GuiScale {
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.gui_size", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_F8, "key.categories.nusmp");
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.gui_size", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_F8, "key.categories.anime_multiverse");
 
     private static final String PREFIX = "com.newuniverse.nusmp.";
     private static final Map<Class<?>, GuiScaleRegistry.Entry> CLASS_CACHE = new HashMap<>();
@@ -66,7 +66,7 @@ public final class GuiScale {
         NeoForge.EVENT_BUS.addListener(EventPriority.HIGHEST, GuiScale::onScroll);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, GuiScale::onLayerPre);
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, GuiScale::onLayerPost);
-        GuiMove.init(modBus, container);                                                    // GUI Move: nusmp-gui-layout-client.toml, the edit key, /nusmp gui move
+        GuiMove.init(modBus, container);                                                    // GUI Move: nusmp-gui-layout-client.toml, the edit key, /anime_multiverse gui move
     }
 
     // ---- values ----------------------------------------------------------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ public final class GuiScale {
 
     private static void onLayerPre(RenderGuiLayerEvent.Pre e) {
         ResourceLocation name = e.getName();
-        if (!"nusmp".equals(name.getNamespace())) return;
+        if (!"anime_multiverse".equals(name.getNamespace())) return;
         GuiScaleRegistry.Entry en = GuiScaleRegistry.byLayer(name.getPath());
         if (en == null) return;
         int moved = GuiMove.layerPre(e.getGuiGraphics(), en.id());     // GUI Move: a hidden layer is not drawn, a placed one is drawn at its saved place (at its own size times the GUI Size size, once)

@@ -40,9 +40,9 @@ import java.util.List;
 /**
  * Renders spec-driven effects (vfx.fx). Each piece's mesh is built ONCE (white, local space) when the
  * effect starts; every frame only its animated transform, colour and alpha change. Each live piece is
- * one draw with the nusmp:fx shader (shimmer / pulse uniforms carry the fine detail).
+ * one draw with the anime_multiverse:fx shader (shimmer / pulse uniforms carry the fine detail).
  *
- * <p>1.99.0 (performance pass, docs/performance_1_99.md): the texture of a piece is looked up in a cache instead of being built ({@code ResourceLocation.fromNamespaceAndPath("nusmp",
+ * <p>1.99.0 (performance pass, docs/performance_1_99.md): the texture of a piece is looked up in a cache instead of being built ({@code ResourceLocation.fromNamespaceAndPath("anime_multiverse",
  * "textures/fx/" + name + ".png")}) for every piece of every effect on every frame; the sprite and ribbon vertices are placed with scratch vectors instead of three or four new vectors per
  * vertex (the same arithmetic in the same order, so the same floats); an effect whose reach is entirely beyond the far limit of the quality is not drawn; and the number of effects that may
  * run at once follows the quality (48 on high, as before).
@@ -72,10 +72,10 @@ public final class FxRenderer {
 
     public static void registerShaders(RegisterShadersEvent e) {
         try {
-            e.registerShader(new ShaderInstance(e.getResourceProvider(), ResourceLocation.fromNamespaceAndPath("nusmp", "fx"), DefaultVertexFormat.POSITION_TEX_COLOR),
+            e.registerShader(new ShaderInstance(e.getResourceProvider(), ResourceLocation.fromNamespaceAndPath("anime_multiverse", "fx"), DefaultVertexFormat.POSITION_TEX_COLOR),
                     s -> shader = s);
         } catch (IOException ex) {
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] FX shader failed to load, falling back to the vanilla shader", ex);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] FX shader failed to load, falling back to the vanilla shader", ex);
         }
     }
 

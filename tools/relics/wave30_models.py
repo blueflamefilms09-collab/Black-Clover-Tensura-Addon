@@ -5,7 +5,7 @@
     RELICS_ZIP=<dir of the card images> W1_PREVIEW=<dir> python3 -B tools/relics/wave30_models.py paradox      (also renders the preview beside the card)
 
 Run tools/relics/wave30_icons.py first: the mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon). It writes
-assets/nusmp/weapon_meshes/paradox.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/paradox.png (512 px) and paradox_glow.png.
+assets/anime_multiverse/weapon_meshes/paradox.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/paradox.png (512 px) and paradox_glow.png.
 The helpers (wave1_models: add, paint_part, finish ...) are shared with wave 1. Under 14 named parts and 2800 quads.
 """
 import importlib

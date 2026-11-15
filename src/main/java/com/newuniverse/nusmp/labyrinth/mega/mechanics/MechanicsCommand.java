@@ -22,7 +22,7 @@ import java.util.List;
  * {@code mechanic list [category] [page]} counts the library or lists a category's ids, {@code info <id>} prints everything about one mechanic (text, source, scope, tiers, road,
  * trigger, counter, effects), {@code apply <id> here} starts it where the sender stands (refused in a safe room), {@code clear} ends every live mechanic and keeps the sector quiet,
  * {@code reset} lets it start again and forgets which were beaten, {@code count} says how many there are and how many are live, {@code verify} runs the same check as the self-test.
- * All text goes through lang keys {@code message.nusmp.mega.mech.cmd.*} with an English fallback, so it reads fine before the lang fragment is merged.
+ * All text goes through lang keys {@code message.anime_multiverse.mega.mech.cmd.*} with an English fallback, so it reads fine before the lang fragment is merged.
  */
 public final class MechanicsCommand {
     private MechanicsCommand() {}
@@ -49,7 +49,7 @@ public final class MechanicsCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.mech.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.mech.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {

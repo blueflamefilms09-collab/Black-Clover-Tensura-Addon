@@ -73,7 +73,7 @@ final class ZagredDecrees {
                 task.run();
             } catch (Throwable t) {
                 dead[0] = true;
-                LOG.warn("[nusmp] Zagred's {} stopped: {}", what, t.toString());
+                LOG.warn("[anime_multiverse] Zagred's {} stopped: {}", what, t.toString());
             }
         };
     }
@@ -87,7 +87,7 @@ final class ZagredDecrees {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LOG.warn("[nusmp] Zagred's {} stopped: {}", what, t.toString());
+                LOG.warn("[anime_multiverse] Zagred's {} stopped: {}", what, t.toString());
             }
         };
     }
@@ -269,7 +269,7 @@ final class ZagredDecrees {
         for (LivingEntity e : b.foes(outer + 2)) {
             if (!ZagredGeometry.inBand(flatDist(e, c), core, outer)) continue;
             if (e instanceof Player p && DanteMoves.antiMagicHeld(p)) {
-                p.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.held", "You hold the line against the word.", 0xB8FFC8, true), true);
+                p.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.held", "You hold the line against the word.", 0xB8FFC8, true), true);
                 continue;
             }
             hit.add(e);
@@ -503,7 +503,7 @@ final class ZagredDecrees {
             return;
         }
         if (DanteMoves.antiMagicHeld(p)) {
-            p.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.held", "You hold the line against the word.", 0xB8FFC8, true), true);
+            p.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.held", "You hold the line against the word.", 0xB8FFC8, true), true);
             VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, p.getBoundingBox().getCenter(), p.position(), 0xFFFFFFFF, 14, 1.2f);
             return;
         }
@@ -650,7 +650,7 @@ final class ZagredDecrees {
             if (!(sl.getPlayerByUUID(m.id) instanceof ServerPlayer p)) continue;
             if (ZagredAnswers.spared(m.word, m.snapshot(p, b))) {
                 answered++;
-                p.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.answered", "Answered!", 0xB8FFC8, true), true);
+                p.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.answered", "Answered!", 0xB8FFC8, true), true);
                 sl.playSound(null, p.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.HOSTILE, 0.6f, 1.6f);
                 NusmpEvents.fire(p, "zagred.verdict", m.word.id());
             } else {
@@ -717,7 +717,7 @@ final class ZagredDecrees {
             ZagredFx.corrupt(sl, b.position(), 16f, total + 20, ZagredFx.RED);
             ZagredFx.stones(sl, b.stones, rule.ordinal());
             ZagredScreen.title(sl, b.position(), ZagredScreen.text(rule.textKey(), rule.text().toUpperCase(java.util.Locale.ROOT), RED, true),
-                    ZagredScreen.text("message.nusmp.zagred.overwrite.sub", "Break three of the five stones before the sentence is written", 0xE8E0F8, false), 4, total, 8);
+                    ZagredScreen.text("message.anime_multiverse.zagred.overwrite.sub", "Break three of the five stones before the sentence is written", 0xE8E0F8, false), 4, total, 8);
         }
         if (left % 6 == 0) {
             ZagredFx.ring(sl, b.position(), 6f, 12, ZagredFx.RED);

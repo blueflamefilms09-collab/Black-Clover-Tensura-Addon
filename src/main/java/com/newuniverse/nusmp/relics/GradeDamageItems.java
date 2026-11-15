@@ -4,7 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * The Minecraft side of {@link GradeDamage}: the weapon type of a stack or a relic def. The table lives in assets/nusmp/weapon_classes.json
+ * The Minecraft side of {@link GradeDamage}: the weapon type of a stack or a relic def. The table lives in assets/anime_multiverse/weapon_classes.json
  * (the same classes the weapon renderer sizes meshes by), with a keyword guess for ids nobody classified.
  */
 public final class GradeDamageItems {

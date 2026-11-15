@@ -5,7 +5,7 @@
 
 Why this exists: the owner asked for custom-looking undead mobs that match the series art of Rades Spirito's Soul Corpse Magic. Each is a GeoLite model built from boxes (tools/geo_builder.py,
 the same toolset and the same Body / material helpers as tools/gen_corpse_assets.py, imported here), with a texture per decay stage (stage 0 to 3, the stage the
-nusmp:soul_corpse effect carries; later stages are the first plus more dirt and tears) and a glow map per skin that client/corpse/RadesUndeadRenderer draws with the safe additive helper
+anime_multiverse:soul_corpse effect carries; later stages are the first plus more dirt and tears) and a glow map per skin that client/corpse/RadesUndeadRenderer draws with the safe additive helper
 (violet soul light, and what each figure glows with in the art: Jimmy's golden spiral eyes, Alfredo's visor and spirit aura, Carl's soul and mitre gem, Michael's palms).
 
 The art that was followed (the owner's screenshots of the wiki images):
@@ -15,7 +15,7 @@ The art that was followed (the owner's screenshots of the wiki images):
     No.1 Carl     a tall thin priest-like figure in long white ornate robes and a tall white mitre (a box hat); a dark wild-haired body inside the robe.
     No.0 Michael  a lean figure in a white featureless mask with a grey ponytail; a blue-grey robe, a red sash; dark belts and bandages on the arms; arms spread wide.
 
-Writes under src/main/resources/assets/nusmp: geo/entity/rades_<name>.geo.json, animations/entity/rades_<name>.animation.json,
+Writes under src/main/resources/assets/anime_multiverse: geo/entity/rades_<name>.geo.json, animations/entity/rades_<name>.animation.json,
 textures/entity/rades_<name>.png, rades_<name>_s1..3.png and a *_glow.png for each. Deterministic (hash noise only). Run python as `python3 -B`.
 """
 import math

@@ -18,7 +18,7 @@ import java.util.Map;
  * Each grade owns a disjoint range (normal 20-30, special 35-55, rare 60-85, unique 90-115, legend 130-175, god 190-240, genesis 260-350, akashic / EX-Singularity 420-560: the top, above Elsdocia's own 400; no rolled relic has it).
  * The weapon type picks the place inside the range from {@link #factor}: light, fast daggers and rapiers sit low (they make it up in attack speed),
  * swords and spears in the middle, greatswords, hammers, scythes and halberds high; bows, crossbows and staves use their own ranged scale.
- * The type names are the class names of {@code assets/nusmp/weapon_classes.json} plus the plain Tensura names (sword, axe, lance ...).
+ * The type names are the class names of {@code assets/anime_multiverse/weapon_classes.json} plus the plain Tensura names (sword, axe, lance ...).
  */
 public final class GradeDamage {
     private GradeDamage() {}
@@ -108,7 +108,7 @@ public final class GradeDamage {
         WeaponClasses c = classes;
         if (c != null) return c;
         Map<String, String> ids = new HashMap<>();
-        try (InputStream in = GradeDamage.class.getResourceAsStream("/assets/nusmp/weapon_classes.json")) {
+        try (InputStream in = GradeDamage.class.getResourceAsStream("/assets/anime_multiverse/weapon_classes.json")) {
             if (in != null) {
                 JsonObject o = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
                 if (o.has("weapons")) for (Map.Entry<String, JsonElement> e : o.getAsJsonObject("weapons").entrySet()) ids.put(e.getKey(), e.getValue().getAsString());

@@ -105,10 +105,10 @@ class SoulCorpsePagesSourceScanTest {
 
     @Test
     void theSummonWiringIsInPlace() throws IOException {
-        String nusmp = code("NUSMP.java");
+        String anime_multiverse = code("NUSMP.java");
         for (String needle : new String[]{"CorpseEntities.ENTITIES.register(modEventBus)", "modEventBus.addListener(com.newuniverse.nusmp.corpse.CorpseEntities::attributes)",
                 "CorpseHooks.register()", "CorpseConfig.SPEC", "CorpseEffects.EFFECTS.register(modEventBus)"})
-            assertTrue(nusmp.contains(needle), "NUSMP lost: " + needle);
+            assertTrue(anime_multiverse.contains(needle), "NUSMP lost: " + needle);
         String ent = code("corpse/CorpseEntities.java");
         assertTrue(ent.contains("ENTITIES.register(\"soul_zombie\"") && ent.contains("e.put(SOUL_ZOMBIE.get(), SoulZombieEntity.createAttributes().build())"), "the soul zombie type or its attributes are not registered");
         assertTrue(code("client/corpse/CorpseClient.java").contains("registerEntityRenderer(CorpseEntities.SOUL_ZOMBIE.get()"), "the soul zombie has no renderer on the client");
@@ -137,11 +137,11 @@ class SoulCorpsePagesSourceScanTest {
 
     @Test
     void thePageTextsExist() throws IOException {
-        String en = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
+        String en = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
         String fragment = Files.readString(Path.of("tools/lang/soul_corpse_fix.json"), StandardCharsets.UTF_8);
         String rades = Files.readString(Path.of("tools/lang/rades_undead.json"), StandardCharsets.UTF_8);
         for (String id : SoulCorpseAccess.ORDER) {
-            String key = "\"nusmp.page.book_soul_corpse." + id + "\"";
+            String key = "\"anime_multiverse.page.book_soul_corpse." + id + "\"";
             assertTrue(en.contains(key) || fragment.contains(key) || rades.contains(key), "no page text for " + id);
         }
     }

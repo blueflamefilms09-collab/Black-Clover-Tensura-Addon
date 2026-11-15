@@ -6,7 +6,7 @@ culled and the far half's inside showed through: a hollow, see-through orb; the 
     python3 -B tools/solid_cores.py            # repair (idempotent: a quad that already faces out is left alone)
     python3 -B tools/solid_cores.py --check    # report only, exit 1 if anything is still hollow / soft
 
-What it does to src/main/resources/assets/nusmp: weapon_meshes/core_*.txt: quads that face inward get their vertex order reversed, the glow layer (2) is moved out to a 1.015 shell once
+What it does to src/main/resources/assets/anime_multiverse: weapon_meshes/core_*.txt: quads that face inward get their vertex order reversed, the glow layer (2) is moved out to a 1.015 shell once
 (marker line in the header); textures/item/core_*.png: re-shaded from the skin as a solid icon. Skins are untouched (they are already opaque RGB).
 """
 import glob

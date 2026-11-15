@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class RelicForgeBlock extends Block {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
-    private static final Component TITLE = Component.translatable("container.nusmp.relic_forge");
+    private static final Component TITLE = Component.translatable("container.anime_multiverse.relic_forge");
 
     public RelicForgeBlock(Properties props) { super(props); }
 

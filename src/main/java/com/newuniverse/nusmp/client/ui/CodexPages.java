@@ -74,18 +74,18 @@ public final class CodexPages {
         register(new CatalogPage("Relics", "R", i -> i instanceof RelicItem));
         register(new TextPage("Bestiary", "B", List.of(
                 new String[]{"Zagred, the Word-Eater", "A boss of spoken words, barrier layers and a dream dimension. Drops the Heart of Words and one of: Last Word, Shroud of Margins, Circlet of Quickened Thought.",
-                        "mob:nusmp:zagred|item:nusmp:heart_of_words|item:nusmp:last_word|item:nusmp:shroud_of_margins|item:nusmp:circlet_of_quickened_thought"},
+                        "mob:anime_multiverse:zagred|item:anime_multiverse:heart_of_words|item:anime_multiverse:last_word|item:anime_multiverse:shroud_of_margins|item:anime_multiverse:circlet_of_quickened_thought"},
                 new String[]{"Sylph, the Wind Spirit Lord", "A wind spirit of the gale. Drops the Gale Feather (use: Gale Leap).",
-                        "mob:nusmp:wind_spirit_lord|item:nusmp:gale_feather"})));
+                        "mob:anime_multiverse:wind_spirit_lord|item:anime_multiverse:gale_feather"})));
         register(new TextPage("Spirit Lords", "L", List.of(
                 new String[]{"Salamander", "A winged fire dragon. Flame Breath burns everything in a cone; its master resists fire.", "spiritlord:salamander"},
                 new String[]{"Undine", "A woman of water. Tidal Lance slows foes, and she mends her master when they are hurt.", "spiritlord:undine"},
                 new String[]{"Sylph", "A green fairy on dragonfly wings. Gale Cut throws foes into the air; her master moves faster and lands softly.", "spiritlord:sylph"},
                 new String[]{"Gnome", "A hunched stone giant. Earth Slam raises stone claws round a foe; his master takes less damage.", "spiritlord:gnome"},
                 new String[]{"One mage each", "As in Black Clover, each elemental Spirit Lord answers to a single mage on the server. At 100 Trust and with a True Name, sneak-use the Spirit Charm to call yours.",
-                        "spiritlord:salamander|spiritlord:undine|spiritlord:sylph|spiritlord:gnome|item:nusmp:spirit_charm"},
+                        "spiritlord:salamander|spiritlord:undine|spiritlord:sylph|spiritlord:gnome|item:anime_multiverse:spirit_charm"},
                 new String[]{"Tensura spirits", "Anyone can call a Tensura-style spirit: a small floating orb that follows you. Use the Spirit Charm to pick its element, sneak-use to call it.",
-                        "item:nusmp:spirit_charm"})));
+                        "item:anime_multiverse:spirit_charm"})));
         register(new TextPage("Guide", "?", List.of(
                 new String[]{"Turning pages", "Use the mouse wheel over the book, the arrow keys or A and D, or click a tab. Long pages scroll with the wheel; hold Shift to turn the page instead."},
                 new String[]{"The figure", "Click the figure for a new pose, drag it to turn it."},
@@ -118,7 +118,7 @@ public final class CodexPages {
                 if (skills != null) {
                     for (ManasSkillInstance i : new ArrayList<>(skills.getLearnedSkills())) {
                         ResourceLocation id = i.getSkill().getRegistryName();
-                        if (id == null || !"nusmp".equals(id.getNamespace())) continue;
+                        if (id == null || !"anime_multiverse".equals(id.getNamespace())) continue;
                         String kind = id.getPath().contains("grimoire") ? "Grimoire magic" : "Skill";
                         String dk = id.getNamespace() + ".skill." + id.getPath() + ".description";          // 1.37.0: the skill's own one-line description, if it has one
                         out.add(new String[]{id.getPath(), pretty(id.getPath()), kind, net.minecraft.client.resources.language.I18n.exists(dk) ? net.minecraft.client.resources.language.I18n.get(dk) : ""});

@@ -29,8 +29,8 @@ public final class EngravingCodexItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatableWithFallback("nusmp.engraving_codex.tip.kind", "A book of every engraving in the mod").withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatableWithFallback("nusmp.engraving_codex.tip.lore", "What each engraving does, its cooldowns and caps, and which items carry it.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatableWithFallback("nusmp.engraving_codex.tip.use", "Use: open the book. Type in the search box to find an engraving or an item.").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatableWithFallback("anime_multiverse.engraving_codex.tip.kind", "A book of every engraving in the mod").withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatableWithFallback("anime_multiverse.engraving_codex.tip.lore", "What each engraving does, its cooldowns and caps, and which items carry it.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatableWithFallback("anime_multiverse.engraving_codex.tip.use", "Use: open the book. Type in the search box to find an engraving or an item.").withStyle(ChatFormatting.GRAY));
     }
 }

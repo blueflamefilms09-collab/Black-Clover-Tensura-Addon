@@ -132,7 +132,7 @@ final class Wave4Upkeep {
     }
 
     private static ResourceLocation modId(Wave4Forest s, Wave4Forest.Mod m) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w4_forest_" + s.id + "_" + m.attr());
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w4_forest_" + s.id + "_" + m.attr());
     }
 
     private static AttributeModifier.Operation operation(int op) {
@@ -179,7 +179,7 @@ final class Wave4Upkeep {
             gills = !st.isEmpty() && Wave4Store.read(st).getLong(Wave4Store.K_GILLS) > p.level().getGameTime();
         }
         AttributeInstance swim = p.getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY);
-        ResourceLocation mid = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w4_dreamer_gills");
+        ResourceLocation mid = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w4_dreamer_gills");
         if (gills) {
             Wave4State.GILLS.add(id);
             Wave4Look.ambient(p, "minecraft:water_breathing", 100, 0);

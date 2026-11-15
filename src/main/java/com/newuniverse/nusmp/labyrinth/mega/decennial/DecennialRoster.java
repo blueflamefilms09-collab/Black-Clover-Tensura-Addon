@@ -118,7 +118,7 @@ public final class DecennialRoster {
 
     /** Test seam: loads the shipped files into the live roster. */
     public static Loaded loadShipped() {
-        Loaded l = loadDirectory(Path.of("src/main/resources/data/nusmp/" + DIRECTORY));
+        Loaded l = loadDirectory(Path.of("src/main/resources/data/anime_multiverse/" + DIRECTORY));
         replace(l.profiles());
         return l;
     }

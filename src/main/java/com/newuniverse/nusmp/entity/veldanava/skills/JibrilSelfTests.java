@@ -105,16 +105,16 @@ public final class JibrilSelfTests {
             if (JudgmentState.onFor(p, 3, 0) || JudgmentState.onFor(p, 3, 3)) return Result.fail("Israfil's toggles switched Jibril's passives on");
             JudgmentState.write(p, 0);
 
-            String icon = "assets/nusmp/textures/skill/veldanava/jibril.png";
+            String icon = "assets/anime_multiverse/textures/skill/veldanava/jibril.png";
             if (JibrilSelfTests.class.getClassLoader().getResource(icon) == null) return Result.fail("missing " + icon);
             JsonObject lang;
-            try (InputStream in = JibrilSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+            try (InputStream in = JibrilSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
                 if (in == null) return Result.fail("no en_us.json");
                 lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
             }
-            for (String k : new String[]{"nusmp.skill.jibril", "nusmp.skill.jibril.description", "nusmp.skill.jibril.mastered"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
+            for (String k : new String[]{"anime_multiverse.skill.jibril", "anime_multiverse.skill.jibril.description", "anime_multiverse.skill.jibril.mastered"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
             for (JudgmentRules.Mode m : JibrilRules.JIBRIL.modes())
-                if (!lang.has("nusmp.skill.mode.jibril." + m.id())) return Result.fail("missing lang key for mode " + m.id());
+                if (!lang.has("anime_multiverse.skill.mode.jibril." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             return Result.ok("registered, learned once, 10 modes named, the mask keeps the three skills apart, icon and lang are in the jar");
         } finally {
             JudgmentState.write(p, 0);

@@ -264,7 +264,7 @@ public final class ManaMethodPages {
         RuneManager.Begin r = RuneManager.begin(b, i, p, mode, spec, p.getServer().getTickCount(), charge);
         switch (r) {
             case OK -> {
-                p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.cast", "Mana Method: %s (%s)", spec.element().title + (spec.trueMagic() ? " True Magic" : " Rune"), RuneMods.describe(spec.mods()) + (charge.legacy() ? "" : ", " + charge.stage().name().toLowerCase(java.util.Locale.ROOT))).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.cast", "Mana Method: %s (%s)", spec.element().title + (spec.trueMagic() ? " True Magic" : " Rune"), RuneMods.describe(spec.mods()) + (charge.legacy() ? "" : ", " + charge.stage().name().toLowerCase(java.util.Locale.ROOT))).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 return true;
             }
             case CASTER_FULL -> GrimoireBook.fail(p, "Your runes are still forming (" + ManaMethodConfig.perCaster() + " at most).");

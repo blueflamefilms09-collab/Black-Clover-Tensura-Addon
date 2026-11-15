@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
  * chef's hat, a blue neckerchief and its tie. The part table is the one in tools/gen_cotton_textures.py (128x128).
  */
 public class CottonSheepModel extends EntityModel<CottonSheepEntity> {
-    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "cotton_sheep"), "main");
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cotton_sheep"), "main");
 
     private final ModelPart root, body, head, armR, armL, legR, legL, hat, band, tie;
 

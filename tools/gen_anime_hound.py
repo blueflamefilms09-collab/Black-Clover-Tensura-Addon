@@ -6,9 +6,9 @@
     python3 -B tools/anime_hound_sheets.py                   # composes the labelled contact sheets into docs/mobs/phaseE/hound_*.png
 
 Files written (all new, nothing existing is touched):
-    assets/nusmp/geo/entity/anime_hound{,_lod1,_lod2,_fx}.geo.json           the model: a four-legged beast, y up, front -z, +x the model's left, 1/16 block units
-    assets/nusmp/textures/entity/anime_hound.png, anime_hound_glow.png       the cel sheet and its glow sheet (PNG8, painted at 4x4 samples a texel and reduced by mode)
-    assets/nusmp/animations/entity/anime_hound.animation.json                idle walk run bite pounce howl hurt death sleep (+ pose_face_* for the five eye plates)
+    assets/anime_multiverse/geo/entity/anime_hound{,_lod1,_lod2,_fx}.geo.json           the model: a four-legged beast, y up, front -z, +x the model's left, 1/16 block units
+    assets/anime_multiverse/textures/entity/anime_hound.png, anime_hound_glow.png       the cel sheet and its glow sheet (PNG8, painted at 4x4 samples a texel and reduced by mode)
+    assets/anime_multiverse/animations/entity/anime_hound.animation.json                idle walk run bite pounce howl hurt death sleep (+ pose_face_* for the five eye plates)
     tools/render_preview/scenes.d/anime_hound.json                           the preview scenes
 
 Rotation signs (as gen_veldanava): positive x swings a hanging limb FORWARD (toward -z) and lifts a forward-pointing head, negative x folds a knee / trails the tail BACK,
@@ -28,7 +28,7 @@ sys.path.insert(0, HERE)
 import anime_hound_paint as P  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 SCENES_OUT = os.path.join(HERE, "render_preview", "scenes.d", "anime_hound.json")
 SCRATCH = os.environ.get("HOUND_SCRATCH", "/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad")
 PREVIEW_OUT = os.path.join(SCRATCH, "previews_hound")
@@ -771,7 +771,7 @@ def scene(model, anim, ages, views, tile=(380, 400), texture=None, animations=No
     return s
 
 
-LOD_MODEL = {0: ID, 1: "nusmp:geo/entity/anime_hound_lod1.geo.json", 2: "nusmp:geo/entity/anime_hound_lod2.geo.json"}
+LOD_MODEL = {0: ID, 1: "anime_multiverse:geo/entity/anime_hound_lod1.geo.json", 2: "anime_multiverse:geo/entity/anime_hound_lod2.geo.json"}
 
 
 def scenes():
@@ -799,7 +799,7 @@ def scenes():
         mdl = LOD_MODEL[lod]
         extra = {}
         if lod:
-            extra = dict(texture="nusmp:textures/entity/anime_hound.png", animations="nusmp:animations/entity/anime_hound.animation.json")
+            extra = dict(texture="anime_multiverse:textures/entity/anime_hound.png", animations="anime_multiverse:animations/entity/anime_hound.animation.json")
         return scene(mdl, clip, ages, [view("3/4", yaw, 7, (0, 0.95, 0.15), d * wide * 0.9)], tile=(340, 340), **extra)
     sc["hound_idle"] = strip("idle", 3.2, 5)
     sc["hound_walk"] = strip("walk", 1.2, 6, yaw=75, wide=1.2)
@@ -813,7 +813,7 @@ def scenes():
     # LODs
     for lod in (1, 2):
         sc["hound_lod%d" % lod] = scene(LOD_MODEL[lod], "idle", [0], [view("LOD%d 3/4" % lod, 38, 10, tgt, d), view("LOD%d side" % lod, 90, 3, tgt, d * 1.15)], tile=(380, 400),
-                                        texture="nusmp:textures/entity/anime_hound.png", animations="nusmp:animations/entity/anime_hound.animation.json")
+                                        texture="anime_multiverse:textures/entity/anime_hound.png", animations="anime_multiverse:animations/entity/anime_hound.animation.json")
     return sc
 
 

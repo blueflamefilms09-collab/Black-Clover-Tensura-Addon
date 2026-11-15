@@ -1,8 +1,8 @@
 {
-  "nusmp.voice.role.system": "The System",
-  "nusmp.voice.role.boss": "Boss",
-  "nusmp.voice.role.npc": "Hub NPC",
-  "nusmp.voice.role.djinn": "Djinn",
-  "nusmp.voice.config.enabled": "Spoken voice lines",
-  "nusmp.voice.config.volume": "Spoken voice volume"
+  "anime_multiverse.voice.role.system": "The System",
+  "anime_multiverse.voice.role.boss": "Boss",
+  "anime_multiverse.voice.role.npc": "Hub NPC",
+  "anime_multiverse.voice.role.djinn": "Djinn",
+  "anime_multiverse.voice.config.enabled": "Spoken voice lines",
+  "anime_multiverse.voice.config.volume": "Spoken voice volume"
 }

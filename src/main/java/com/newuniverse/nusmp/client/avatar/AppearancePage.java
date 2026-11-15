@@ -44,12 +44,12 @@ final class AppearancePage extends ForgePage {
 
     @Override int accent() { return 0x7CF0B0; }
 
-    @Override String title() { return ForgeText.s("nusmp.avatar.forge.page.appearance", "Race & Appearance"); }
+    @Override String title() { return ForgeText.s("anime_multiverse.avatar.forge.page.appearance", "Race & Appearance"); }
 
     // ================================================================ the controls of the three setting tabs
-    private static String lookKey(String what, int id) { return Component.translatable("nusmp.avatar." + what + "." + id).getString(); }
+    private static String lookKey(String what, int id) { return Component.translatable("anime_multiverse.avatar." + what + "." + id).getString(); }
 
-    private static String noneOr(String what, int id) { return id < 0 ? Component.translatable("nusmp.avatar.gui.look.none").getString() : lookKey(what, id); }
+    private static String noneOr(String what, int id) { return id < 0 ? Component.translatable("anime_multiverse.avatar.gui.look.none").getString() : lookKey(what, id); }
 
     private void setLook(AppearanceData d) {
         h.setLook(d);
@@ -58,30 +58,30 @@ final class AppearancePage extends ForgePage {
 
     private void buildLook() {
         lookList.clear();
-        lookList.add(new ForgeControls.Heading(() -> Component.translatable("nusmp.avatar.gui.look.skin").getString(), UiTheme.GREEN));
+        lookList.add(new ForgeControls.Heading(() -> Component.translatable("anime_multiverse.avatar.gui.look.skin").getString(), UiTheme.GREEN));
         lookList.add(new ForgeControls.Swatches(DynamicAppearanceEngine.SKIN_PALETTE, () -> h.look().skinTone(), c -> { setLook(h.look().withSkin(c)); h.pulse(c); }));
-        lookList.add(new ForgeControls.Slider(0xE8C468, () -> shadeOf(h.look().skinTone()), v -> Component.translatable("nusmp.avatar.gui.look.shade").getString(),
+        lookList.add(new ForgeControls.Slider(0xE8C468, () -> shadeOf(h.look().skinTone()), v -> Component.translatable("anime_multiverse.avatar.gui.look.shade").getString(),
                 v -> setLook(h.look().withSkin(shaded(h.look().skinTone(), v)))));
         lookList.add(new ForgeControls.Spacer(2));
-        lookList.add(new ForgeControls.Cycler(() -> Component.translatable("nusmp.avatar.gui.look.hair").getString(), () -> lookKey("hair", h.look().hairId()),
+        lookList.add(new ForgeControls.Cycler(() -> Component.translatable("anime_multiverse.avatar.gui.look.hair").getString(), () -> lookKey("hair", h.look().hairId()),
                 d -> setLook(h.look().withHair(Math.floorMod(h.look().hairId() + d, AppearanceData.HAIR_COUNT)))));
-        lookList.add(new ForgeControls.Cycler(() -> Component.translatable("nusmp.avatar.gui.look.outfit").getString(), () -> lookKey("outfit", h.look().outfitId()),
+        lookList.add(new ForgeControls.Cycler(() -> Component.translatable("anime_multiverse.avatar.gui.look.outfit").getString(), () -> lookKey("outfit", h.look().outfitId()),
                 d -> setLook(h.look().withOutfit(Math.floorMod(h.look().outfitId() + d, AppearanceData.OUTFIT_COUNT)))));
     }
 
     private void buildForm() {
         formList.clear();
-        formList.add(new ForgeControls.Heading(() -> ForgeText.s("nusmp.avatar.forge.form", "Form"), UiTheme.GREEN));
-        formList.add(new ForgeControls.Cycler(() -> Component.translatable("nusmp.avatar.gui.look.horn").getString(), () -> noneOr("horn", h.look().hornId()),
+        formList.add(new ForgeControls.Heading(() -> ForgeText.s("anime_multiverse.avatar.forge.form", "Form"), UiTheme.GREEN));
+        formList.add(new ForgeControls.Cycler(() -> Component.translatable("anime_multiverse.avatar.gui.look.horn").getString(), () -> noneOr("horn", h.look().hornId()),
                 d -> setLook(h.look().withHorn(Math.floorMod(h.look().hornId() + 1 + d, AppearanceData.HORN_COUNT + 1) - 1))));
-        formList.add(new ForgeControls.Cycler(() -> Component.translatable("nusmp.avatar.gui.look.wing").getString(), () -> noneOr("wing", h.look().wingId()),
+        formList.add(new ForgeControls.Cycler(() -> Component.translatable("anime_multiverse.avatar.gui.look.wing").getString(), () -> noneOr("wing", h.look().wingId()),
                 d -> setLook(h.look().withWing(Math.floorMod(h.look().wingId() + 1 + d, AppearanceData.WING_COUNT + 1) - 1))));
         formList.add(new ForgeControls.Spacer(2));
         formList.add(new ForgeControls.Slider(UiTheme.GREEN & 0xFFFFFF, this::sizeFraction,
-                v -> Component.translatable("nusmp.avatar.gui.look.scale", String.format(Locale.ROOT, "%.2f", sizeOf(v))).getString(),
+                v -> Component.translatable("anime_multiverse.avatar.gui.look.scale", String.format(Locale.ROOT, "%.2f", sizeOf(v))).getString(),
                 v -> setLook(h.look().withScale((float) sizeOf(v)))));
         formList.add(new ForgeControls.Spacer(4));
-        formList.add(new ForgeControls.Button(() -> Component.translatable("nusmp.avatar.gui.look.random").getString(), 0x7CF0B0, () -> {
+        formList.add(new ForgeControls.Button(() -> Component.translatable("anime_multiverse.avatar.gui.look.random").getString(), 0x7CF0B0, () -> {
             RaceEntry re = h.raceEntry();
             float base = re == null ? 1.0f : re.scale();
             setLook(DynamicAppearanceEngine.defaultsFor(h.state().race(), base, rng.nextLong()));
@@ -91,11 +91,11 @@ final class AppearancePage extends ForgePage {
 
     private void buildAura() {
         auraList.clear();
-        auraList.add(new ForgeControls.Heading(() -> Component.translatable("nusmp.avatar.gui.look.aura").getString(), UiTheme.VIOLET));
+        auraList.add(new ForgeControls.Heading(() -> Component.translatable("anime_multiverse.avatar.gui.look.aura").getString(), UiTheme.VIOLET));
         auraList.add(new ForgeControls.Swatches(DynamicAppearanceEngine.AURA_PALETTE, () -> h.look().auraRgb(), c -> { setLook(h.look().withAura(c)); h.pulse(c); }));
         channels(auraList, true);
         auraList.add(new ForgeControls.Spacer(3));
-        auraList.add(new ForgeControls.Heading(() -> Component.translatable("nusmp.avatar.gui.look.eyes").getString(), UiTheme.CYAN));
+        auraList.add(new ForgeControls.Heading(() -> Component.translatable("anime_multiverse.avatar.gui.look.eyes").getString(), UiTheme.CYAN));
         auraList.add(new ForgeControls.Swatches(DynamicAppearanceEngine.EYE_PALETTE, () -> h.look().eyeRgb(), c -> setLook(h.look().withEye(c))));
         channels(auraList, false);
     }
@@ -171,8 +171,8 @@ final class AppearancePage extends ForgePage {
     @Override
     void render(GuiGraphics g, int mx, int my, float partial) {
         var font = h.font();
-        String[] names = {ForgeText.s("nusmp.avatar.forge.tab.race", "Race"), ForgeText.s("nusmp.avatar.forge.tab.look", "Look"),
-                ForgeText.s("nusmp.avatar.forge.tab.form", "Form"), ForgeText.s("nusmp.avatar.forge.tab.aura", "Aura")};
+        String[] names = {ForgeText.s("anime_multiverse.avatar.forge.tab.race", "Race"), ForgeText.s("anime_multiverse.avatar.forge.tab.look", "Look"),
+                ForgeText.s("anime_multiverse.avatar.forge.tab.form", "Form"), ForgeText.s("anime_multiverse.avatar.forge.tab.aura", "Aura")};
         for (int i = 0; i < 4; i++) {
             Rect t = tabRects[i];
             ForgeUi.chip(g, font, t, names[i], tab.ordinal() == i, h.hover(t, t.contains(mx, my)), 0x7CF0B0);
@@ -207,7 +207,7 @@ final class AppearancePage extends ForgePage {
             ForgeUi.text(g, font, ForgeUi.fit(font, name, row.w() - (r.available() ? 6 : 14)), row.x() + 4, row.y() + 3, col);
             if (!r.available()) ForgeUi.text(g, font, "x", row.right() - 9, row.y() + 3, UiTheme.RED);
         }
-        if (rs.isEmpty()) ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("nusmp.avatar.gui.race.none").getString(), list.w() - 6), list.x() + 4, list.y() + 4, UiTheme.TEXT_DIM);
+        if (rs.isEmpty()) ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("anime_multiverse.avatar.gui.race.none").getString(), list.w() - 6), list.x() + 4, list.y() + 4, UiTheme.TEXT_DIM);
         ForgeUi.scrollbar(g, new Rect(list.right() - 4, list.y() + 1, 3, list.h() - 2), raceScroll, maxRaceScroll(), rows, rs.size(), 0x7CF0B0);
         RaceEntry shown = hover != null ? hover : race();
         if (shown != null) drawRaceDetails(g, shown);
@@ -226,16 +226,16 @@ final class AppearancePage extends ForgePage {
         List<String> lines = new ArrayList<>();
         List<Integer> colours = new ArrayList<>();
         lines.add(Component.translatableWithFallback(d.name(), d.name()).getString()); colours.add(d.available() ? UiTheme.GOLD : UiTheme.TEXT_DIM);
-        lines.add(Component.translatable("nusmp.avatar.gui.race.scale", String.format(Locale.ROOT, "%.2f", d.scale())).getString()); colours.add(UiTheme.TEXT);
-        lines.add(Component.translatable("nusmp.avatar.gui.race.ep", (long) d.ep()).getString()); colours.add(UiTheme.TEXT);
-        lines.add(Component.translatable("nusmp.avatar.gui.race.magicule", (long) d.magicule()).getString()); colours.add(UiTheme.TEXT);
+        lines.add(Component.translatable("anime_multiverse.avatar.gui.race.scale", String.format(Locale.ROOT, "%.2f", d.scale())).getString()); colours.add(UiTheme.TEXT);
+        lines.add(Component.translatable("anime_multiverse.avatar.gui.race.ep", (long) d.ep()).getString()); colours.add(UiTheme.TEXT);
+        lines.add(Component.translatable("anime_multiverse.avatar.gui.race.magicule", (long) d.magicule()).getString()); colours.add(UiTheme.TEXT);
         if (!d.statMults().isEmpty()) { lines.add(String.join(" ", d.statMults()).toUpperCase(Locale.ROOT)); colours.add(UiTheme.TEXT_DIM); }
-        if (!d.evolvesTo().isEmpty()) { lines.add(Component.translatable("nusmp.avatar.gui.race.evolves", d.evolvesTo()).getString()); colours.add(UiTheme.VIOLET); }
-        if (d.requiresDnd()) { lines.add(Component.translatable("nusmp.avatar.gui.race.dnd").getString()); colours.add(UiTheme.GOLD); }
+        if (!d.evolvesTo().isEmpty()) { lines.add(Component.translatable("anime_multiverse.avatar.gui.race.evolves", d.evolvesTo()).getString()); colours.add(UiTheme.VIOLET); }
+        if (d.requiresDnd()) { lines.add(Component.translatable("anime_multiverse.avatar.gui.race.dnd").getString()); colours.add(UiTheme.GOLD); }
         if (!d.available()) {
-            lines.add(Component.translatable("nusmp.avatar.gui.race.locked").getString());
+            lines.add(Component.translatable("anime_multiverse.avatar.gui.race.locked").getString());
             colours.add(raceFlash > 0 && raceFlash % 6 < 3 ? UiTheme.WHITE : UiTheme.RED);
-            for (String f : d.failed()) { lines.add("- " + Component.translatableWithFallback("nusmp.avatar.cond." + f.replace(':', '.'), f).getString()); colours.add(UiTheme.TEXT_FAINT); }
+            for (String f : d.failed()) { lines.add("- " + Component.translatableWithFallback("anime_multiverse.avatar.cond." + f.replace(':', '.'), f).getString()); colours.add(UiTheme.TEXT_FAINT); }
         }
         for (int i = 0; i < lines.size() && y + lh <= details.bottom() + 1; i++) {
             ForgeUi.text(g, font, ForgeUi.fit(font, lines.get(i), w), x, y, colours.get(i));
@@ -246,15 +246,15 @@ final class AppearancePage extends ForgePage {
     private List<Component> raceTooltip(RaceEntry d) {
         List<Component> t = new ArrayList<>();
         t.add(Component.translatableWithFallback(d.name(), d.name()).withStyle(d.available() ? ChatFormatting.GOLD : ChatFormatting.GRAY));
-        t.add(Component.translatable("nusmp.avatar.gui.race.scale", String.format(Locale.ROOT, "%.2f", d.scale())).withStyle(ChatFormatting.WHITE));
-        t.add(Component.translatable("nusmp.avatar.gui.race.ep", (long) d.ep()).withStyle(ChatFormatting.WHITE));
-        t.add(Component.translatable("nusmp.avatar.gui.race.magicule", (long) d.magicule()).withStyle(ChatFormatting.WHITE));
+        t.add(Component.translatable("anime_multiverse.avatar.gui.race.scale", String.format(Locale.ROOT, "%.2f", d.scale())).withStyle(ChatFormatting.WHITE));
+        t.add(Component.translatable("anime_multiverse.avatar.gui.race.ep", (long) d.ep()).withStyle(ChatFormatting.WHITE));
+        t.add(Component.translatable("anime_multiverse.avatar.gui.race.magicule", (long) d.magicule()).withStyle(ChatFormatting.WHITE));
         if (!d.statMults().isEmpty()) t.add(Component.literal(String.join(" ", d.statMults()).toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY));
-        if (!d.evolvesTo().isEmpty()) t.add(Component.translatable("nusmp.avatar.gui.race.evolves", d.evolvesTo()).withStyle(ChatFormatting.LIGHT_PURPLE));
-        if (d.requiresDnd()) t.add(Component.translatable("nusmp.avatar.gui.race.dnd").withStyle(ChatFormatting.GOLD));
+        if (!d.evolvesTo().isEmpty()) t.add(Component.translatable("anime_multiverse.avatar.gui.race.evolves", d.evolvesTo()).withStyle(ChatFormatting.LIGHT_PURPLE));
+        if (d.requiresDnd()) t.add(Component.translatable("anime_multiverse.avatar.gui.race.dnd").withStyle(ChatFormatting.GOLD));
         if (!d.available()) {
-            t.add(Component.translatable("nusmp.avatar.gui.race.locked").withStyle(ChatFormatting.RED));
-            for (String f : d.failed()) t.add(Component.literal("- ").append(Component.translatableWithFallback("nusmp.avatar.cond." + f.replace(':', '.'), f)).withStyle(ChatFormatting.DARK_GRAY));
+            t.add(Component.translatable("anime_multiverse.avatar.gui.race.locked").withStyle(ChatFormatting.RED));
+            for (String f : d.failed()) t.add(Component.literal("- ").append(Component.translatableWithFallback("anime_multiverse.avatar.cond." + f.replace(':', '.'), f)).withStyle(ChatFormatting.DARK_GRAY));
         }
         return t;
     }

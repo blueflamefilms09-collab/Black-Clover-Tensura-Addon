@@ -1,7 +1,7 @@
-"""Why: the characters of the arcs already have bespoke GeoLite models (tools/arc/char_*.py, assets/nusmp/geo/entity/arc_<id>.geo.json) with wings, horns, tails, halos, capes and
+"""Why: the characters of the arcs already have bespoke GeoLite models (tools/arc/char_*.py, assets/anime_multiverse/geo/entity/arc_<id>.geo.json) with wings, horns, tails, halos, capes and
 weapons. The owner wants every humanoid on the player model, so the body, face, outfit and hair are replaced by the player model with a painted skin, and what is NOT body (the "extras")
 is carried over from those models: this script cuts every extra bone out of an arc model, anchors it on the player-model part it belongs to (head, body, right or left arm), moves and
-scales it from the arc rig into the player rig, and writes it as assets/nusmp/geo/entity/pmx_<id>.geo.json (+ animations/entity/pmx_<id>.animation.json). The textures are the arc model's own
+scales it from the arc rig into the player rig, and writes it as assets/anime_multiverse/geo/entity/pmx_<id>.geo.json (+ animations/entity/pmx_<id>.animation.json). The textures are the arc model's own
 (arc_<id>.png and its _glow.png), so nothing is repainted. Run:
     python3 -B tools/playermodel/extract_extras.py [id ...]          (no id: every humanoid of tools/playermodel/characters.py)
 
@@ -22,7 +22,7 @@ import sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 GEO = os.path.join(ASSETS, "geo", "entity")
 ANIM = os.path.join(ASSETS, "animations", "entity")
 

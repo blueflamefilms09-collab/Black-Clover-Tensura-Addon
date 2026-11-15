@@ -25,7 +25,7 @@ public final class WornDebug {
     /** The report: lines for the operator, and the compact "id|SLOT|WHERE" list sent to the operator's client. */
     public record Report(List<Component> lines, List<String> compact) {}
 
-    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.nusmp.relic_debug." + key, fallback, args); }
+    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.relic_debug." + key, fallback, args); }
 
     private static Component lit(String s) { return Component.literal(s); }
 

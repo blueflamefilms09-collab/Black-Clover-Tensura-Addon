@@ -54,13 +54,13 @@ public final class QuestService {
         if (!on() || !(sp.containerMenu instanceof HubMenus.QuestMenu menu) || !menu.stillValid(sp)) return;
         QuestDef def = HubCatalogs.quests().get(questId);
         if (def == null) {
-            tell(sp, "message.nusmp.hub.quest.unknown", "That quest is no longer on offer.");
+            tell(sp, "message.anime_multiverse.hub.quest.unknown", "That quest is no longer on offer.");
         } else if (action == HubNet.ACT_ACCEPT) {
             accept(sp, def);
         } else if (action == HubNet.ACT_TURN_IN) {
             turnIn(sp, def);
         } else if (action == HubNet.ACT_ABANDON) {
-            if (fresh(sp).abandon(def.id())) tell(sp, "message.nusmp.hub.quest.abandoned", "Quest abandoned: %s", QuestText.title(def));
+            if (fresh(sp).abandon(def.id())) tell(sp, "message.anime_multiverse.hub.quest.abandoned", "Quest abandoned: %s", QuestText.title(def));
         }
         HubSync.request(sp);
         sendBoard(sp);
@@ -73,12 +73,12 @@ public final class QuestService {
         boolean onBoard = !def.daily() || board(d, day).stream().anyMatch(q -> q.id().equals(def.id()));
         PlayerQuestData.AcceptResult r = d.accept(def, day, HubConfig.get(HubConfig.MAX_ACTIVE_QUESTS), onBoard);
         switch (r) {
-            case OK -> tell(sp, "message.nusmp.hub.quest.accepted", "Quest accepted: %s", QuestText.title(def));
-            case ALREADY_ACTIVE -> tell(sp, "message.nusmp.hub.quest.already", "You already have that quest.");
-            case ALREADY_DONE -> tell(sp, "message.nusmp.hub.quest.done", "You have already done that quest%s.", def.daily() ? " today" : "");
-            case FULL -> tell(sp, "message.nusmp.hub.quest.full", "You cannot carry more quests (the limit is %s).", HubConfig.get(HubConfig.MAX_ACTIVE_QUESTS));
-            case LOCKED -> tell(sp, "message.nusmp.hub.quest.locked", "That quest is not open to you yet.");
-            case NOT_OFFERED -> tell(sp, "message.nusmp.hub.quest.not_offered", "That quest is not on today's board.");
+            case OK -> tell(sp, "message.anime_multiverse.hub.quest.accepted", "Quest accepted: %s", QuestText.title(def));
+            case ALREADY_ACTIVE -> tell(sp, "message.anime_multiverse.hub.quest.already", "You already have that quest.");
+            case ALREADY_DONE -> tell(sp, "message.anime_multiverse.hub.quest.done", "You have already done that quest%s.", def.daily() ? " today" : "");
+            case FULL -> tell(sp, "message.anime_multiverse.hub.quest.full", "You cannot carry more quests (the limit is %s).", HubConfig.get(HubConfig.MAX_ACTIVE_QUESTS));
+            case LOCKED -> tell(sp, "message.anime_multiverse.hub.quest.locked", "That quest is not open to you yet.");
+            case NOT_OFFERED -> tell(sp, "message.anime_multiverse.hub.quest.not_offered", "That quest is not on today's board.");
         }
         return r;
     }
@@ -88,22 +88,22 @@ public final class QuestService {
         PlayerQuestData d = fresh(sp);
         PlayerQuestData.Active a = d.find(def.id());
         if (a == null) {
-            tell(sp, "message.nusmp.hub.quest.not_active", "You have not accepted that quest.");
+            tell(sp, "message.anime_multiverse.hub.quest.not_active", "You have not accepted that quest.");
             return 0;
         }
         long have = def.kind() == ObjectiveKind.DELIVER ? countItem(sp, def.item()) : 0;
         if (!d.canTurnIn(def, have)) {
-            tell(sp, "message.nusmp.hub.quest.not_ready", "That quest is not finished yet.");
+            tell(sp, "message.anime_multiverse.hub.quest.not_ready", "That quest is not finished yet.");
             return 0;
         }
         if (def.kind() == ObjectiveKind.DELIVER && !removeItem(sp, def.item(), a.target())) {
-            tell(sp, "message.nusmp.hub.quest.not_ready", "That quest is not finished yet.");
+            tell(sp, "message.anime_multiverse.hub.quest.not_ready", "That quest is not finished yet.");
             return 0;
         }
         if (!d.complete(def, have)) return 0;
         long reward = QuestRules.reward(def, HubConfig.get(HubConfig.REWARD_SCALE));
         if (reward > 0) Currency.give(sp, reward);
-        tell(sp, "message.nusmp.hub.quest.complete", "Quest complete: %s. Reward: %s.", QuestText.title(def), CoinMath.describe(reward));
+        tell(sp, "message.anime_multiverse.hub.quest.complete", "Quest complete: %s. Reward: %s.", QuestText.title(def), CoinMath.describe(reward));
         com.newuniverse.nusmp.audio.voice.Voice.npc(sp, com.newuniverse.nusmp.audio.voice.VoicePicker.NpcAct.QUEST_DONE, false);        // 1.110.0: spoken line
         return reward;
     }
@@ -131,7 +131,7 @@ public final class QuestService {
         for (PlayerQuestData.Update u : updates) {
             if (u.change() != PlayerQuestData.Change.READY) continue;
             QuestDef def = HubCatalogs.quests().get(u.id());
-            if (def != null) tell(sp, "message.nusmp.hub.quest.ready", "Quest ready to hand in: %s", QuestText.title(def));
+            if (def != null) tell(sp, "message.anime_multiverse.hub.quest.ready", "Quest ready to hand in: %s", QuestText.title(def));
         }
         HubSync.request(sp);
     }

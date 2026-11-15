@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * wait for the spell before them, and keep the Soul Corpse fix (docs/magic/soul_corpse_fix.md) true for Rades.
  */
 class CharacterSetRestTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     static final List<String> REST = List.of("charlotte", "jack", "rill", "dorothy", "zenon", "vanica", "dante", "lucius", "rades", "gadjah", "mars", "kahono", "kiato");
 

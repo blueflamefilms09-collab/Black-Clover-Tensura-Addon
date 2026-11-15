@@ -42,7 +42,7 @@ final class CyclicAssembly {
     private CyclicAssembly() {}
 
     private static final int MODULE = MegaGrid.MODULE;
-    private static final String P_SIDE = MegaGrid.P_SIDE, P_LINK = "nusmp:mega/link";
+    private static final String P_SIDE = MegaGrid.P_SIDE, P_LINK = "anime_multiverse:mega/link";
 
     // ================================================================================================================ the placement step
 

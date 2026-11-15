@@ -69,7 +69,7 @@ class HeroKindTest {
     void parseFindsAWeaponByItemIdOrName() {
         assertEquals(HeroKind.SHIELD, HeroKind.parse("shield"));
         assertEquals(HeroKind.SHIELD, HeroKind.parse("legendary_shield"));
-        assertEquals(HeroKind.SHIELD, HeroKind.parse("nusmp:legendary_shield"));
+        assertEquals(HeroKind.SHIELD, HeroKind.parse("anime_multiverse:legendary_shield"));
         assertEquals(HeroKind.SEWING_SET, HeroKind.parse("Sewing_Set"));
         assertEquals(HeroKind.SEWING_SET, HeroKind.parse("vassal_sewing_set"));
         assertNull(HeroKind.parse("boat"));

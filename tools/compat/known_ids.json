@@ -1,5 +1,5 @@
 {
-  "_about": "Ids this pack is allowed to reference, each checked by hand against the unpacked jar of Tensura No Index 0.71.0 (lang/en_us.json, assets/models and the registration constants of its classes) and against this repo (BossRegistry, NUEntities, data/nusmp/loot_table). Update it only after re-checking.",
+  "_about": "Ids this pack is allowed to reference, each checked by hand against the unpacked jar of Tensura No Index 0.71.0 (lang/en_us.json, assets/models and the registration constants of its classes) and against this repo (BossRegistry, NUEntities, data/anime_multiverse/loot_table). Update it only after re-checking.",
   "tensuranoindex_items": [
     "phase_dust",
     "name_slip",

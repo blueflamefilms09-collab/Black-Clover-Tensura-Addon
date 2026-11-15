@@ -230,7 +230,7 @@ public class GodOfOrder extends ZogratisBoss {
         super.remove(reason);
     }
 
-    @Override protected Component getTypeName() { return Component.translatable("entity.nusmp.god_of_order"); }
+    @Override protected Component getTypeName() { return Component.translatable("entity.anime_multiverse.god_of_order"); }
 
     // ================================================================ save data
     @Override

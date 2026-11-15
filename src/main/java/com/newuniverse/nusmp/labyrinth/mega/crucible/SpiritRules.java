@@ -84,7 +84,7 @@ final class SpiritRules {
         } catch (Throwable noSkills) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] mega crucible: the skill sweep of a Cursed Spirit failed: {}", noSkills.toString());
+                LOG.warn("[anime_multiverse] mega crucible: the skill sweep of a Cursed Spirit failed: {}", noSkills.toString());
             }
         }
         return removed;

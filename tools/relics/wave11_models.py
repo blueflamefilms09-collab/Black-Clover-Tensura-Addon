@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave11_models.py wavebreaker     (also renders the preview beside the card)
 
 Run tools/relics/wave11_icons.py first (every mesh is placed on its 16 x 16 sprite, which stays the inventory icon). Per id it writes
-assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
+assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
 The method, in order, for every weapon: 0 target, 1 measure the card (named constants with the pixel they came from), 2 lofted geometry from real
 sections, 3 the small raised parts as their own named parts, 4 smoothed normals + projected UVs, 5 painted skin + glow skin, 6 preview beside the
 card. The ten builders live in wave11_ma.py (blades 1 to 5) and wave11_mb.py (blades 6 to 10); the shared helpers are here.

@@ -46,7 +46,7 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             }
     }
 
-    private static ResourceLocation tex(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", BASE + name + ".png"); }
+    private static ResourceLocation tex(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", BASE + name + ".png"); }
 
     private final PlayerModel<AbstractClientPlayer> overlay;
     private final DevilModels.Horns horns;

@@ -86,7 +86,7 @@ public final class MultiverseConfig {
         b.pop();
 
         b.push("missions");
-        MISSION_STARS = b.comment("3.67.0: finishing a mission (any nusmp: advancement shown in the advancement tree) gives gold stars, once per player per mission.").define("enabled", true);
+        MISSION_STARS = b.comment("3.67.0: finishing a mission (any anime_multiverse: advancement shown in the advancement tree) gives gold stars, once per player per mission.").define("enabled", true);
         MISSION_TASK = b.comment("Gold stars for a mission shown as a task.").defineInRange("starsTask", 1, 0, 100);
         MISSION_GOAL = b.comment("Gold stars for a mission shown as a goal.").defineInRange("starsGoal", 2, 0, 100);
         MISSION_CHALLENGE = b.comment("Gold stars for a mission shown as a challenge.").defineInRange("starsChallenge", 5, 0, 100);
@@ -129,7 +129,7 @@ public final class MultiverseConfig {
         b.push("guard");
         GRIMOIRE_GUARD = b.comment("Grimoire skills cannot be copied, plundered, stolen or learned any other way than from the world or an admin",
                 "(/multiverse grimoire give | canon, the ceremony, the Tower Wizard, an awakening). Anything else is cancelled or taken back.").define("grimoireGuard", true);
-        RESET_SCROLL_GUARD = b.comment("3.42.0: Tensura's Reset Scrolls (skill reset, full reset) cannot remove any skill of this mod (namespace nusmp).",
+        RESET_SCROLL_GUARD = b.comment("3.42.0: Tensura's Reset Scrolls (skill reset, full reset) cannot remove any skill of this mod (namespace anime_multiverse).",
                 "false = the scrolls reset them like any other skill. The admin command /tensura reset is never blocked.").define("resetScrollGuard", true);
         b.pop();
 

@@ -69,7 +69,7 @@ public final class BeastWillMenu {
         if (s == null || s.active().isEmpty()) {
             UiPanel.panel(g, x, y, W, 40, UiTheme.CYAN, 0.3f, 0.92f);
             int cy = y + 8;
-            for (String line : wrap(font, Component.translatable("nusmp.beastwill.menu.none").getString(), W - 14)) {
+            for (String line : wrap(font, Component.translatable("anime_multiverse.beastwill.menu.none").getString(), W - 14)) {
                 g.drawString(font, line, x + 7, cy, UiTheme.TEXT_DIM, false);
                 cy += 10;
             }
@@ -83,18 +83,18 @@ public final class BeastWillMenu {
         UiPanel.panel(g, x, y, W, 150, p.ok() ? UiTheme.CYAN : UiTheme.RED, 0.8f, 0.95f);
         int cx = x + 7, iw = W - 14, cy = y + 6;
         g.drawString(font, BeastWillClient.name(p.will()), cx, cy, UiTheme.WHITE, true);
-        String rank = Component.translatable("nusmp.beastwill.hud.rank", BeastWillClient.rankName(p.rank())).getString();
+        String rank = Component.translatable("anime_multiverse.beastwill.hud.rank", BeastWillClient.rankName(p.rank())).getString();
         g.drawString(font, rank, x + W - 7 - font.width(rank), cy, UiTheme.GOLD, false);
         cy += 11;
-        g.drawString(font, font.plainSubstrByWidth(Component.translatable("nusmp.beastwill.confirm.from", p.beast(), p.affinity()).getString(), iw), cx, cy, UiTheme.TEXT_DIM, false);
+        g.drawString(font, font.plainSubstrByWidth(Component.translatable("anime_multiverse.beastwill.confirm.from", p.beast(), p.affinity()).getString(), iw), cx, cy, UiTheme.TEXT_DIM, false);
         cy += 10;
-        g.drawString(font, Component.translatable(p.source() == 0 ? "nusmp.beastwill.confirm.source_core" : "nusmp.beastwill.confirm.source_offer"), cx, cy, UiTheme.TEXT_DIM, false);
+        g.drawString(font, Component.translatable(p.source() == 0 ? "anime_multiverse.beastwill.confirm.source_core" : "anime_multiverse.beastwill.confirm.source_offer"), cx, cy, UiTheme.TEXT_DIM, false);
         cy += 13;
-        g.drawString(font, Component.translatable("nusmp.beastwill.confirm.ep", Math.round(p.haveEp()), Math.round(p.needEp())), cx, cy, p.haveEp() >= p.needEp() ? UiTheme.GREEN : UiTheme.RED, false);
+        g.drawString(font, Component.translatable("anime_multiverse.beastwill.confirm.ep", Math.round(p.haveEp()), Math.round(p.needEp())), cx, cy, p.haveEp() >= p.needEp() ? UiTheme.GREEN : UiTheme.RED, false);
         cy += 10;
-        g.drawString(font, Component.translatable("nusmp.beastwill.confirm.fit", p.fitPercent()), cx, cy, p.fitPercent() >= 100 ? UiTheme.GREEN : UiTheme.GOLD, false);
+        g.drawString(font, Component.translatable("anime_multiverse.beastwill.confirm.fit", p.fitPercent()), cx, cy, p.fitPercent() >= 100 ? UiTheme.GREEN : UiTheme.GOLD, false);
         cy += 13;
-        String text = p.ok() ? Component.translatable("nusmp.beastwill.confirm.warning").getString() : Component.translatable("nusmp.beastwill.msg.no." + p.reason()).getString();
+        String text = p.ok() ? Component.translatable("anime_multiverse.beastwill.confirm.warning").getString() : Component.translatable("anime_multiverse.beastwill.msg.no." + p.reason()).getString();
         for (String line : wrap(font, text, iw)) {
             g.drawString(font, line, cx, cy, p.ok() ? UiTheme.TEXT : UiTheme.RED, false);
             cy += 10;

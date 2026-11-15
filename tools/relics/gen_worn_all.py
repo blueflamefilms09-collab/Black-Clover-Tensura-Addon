@@ -2,7 +2,7 @@
 
     python3 tools/relics/gen_worn_all.py [--check]
 
-Writes src/main/resources/assets/nusmp/relic_worn/*.txt, catalog.txt and textures/relic_worn/{atlas,shimmer}.png (idempotent: the same files every run). With --check it
+Writes src/main/resources/assets/anime_multiverse/relic_worn/*.txt, catalog.txt and textures/relic_worn/{atlas,shimmer}.png (idempotent: the same files every run). With --check it
 only reports the vertex count of every model and of every relic's ensemble and fails if one is over its cap. The catalog is data: to give a new relic its own look, add a
 model function to a gen_worn_*.py file and one `cat.relic(...)` line here (docs/relic_visuals.md, "How to add a signature model").
 """
@@ -230,7 +230,7 @@ def main(argv):
             bad += 1
     if not check:
         cat.write()
-    if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "visual_upgrade", "charms_genesis_worn", "build.py"), run_name="vu_charms_genesis_worn")      # visual upgrade, slice charms_genesis_worn: bakes its own files under assets/nusmp/visual_upgrade only
+    if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "visual_upgrade", "charms_genesis_worn", "build.py"), run_name="vu_charms_genesis_worn")      # visual upgrade, slice charms_genesis_worn: bakes its own files under assets/anime_multiverse/visual_upgrade only
     if not check: __import__("runpy").run_path(os.path.join(HERE, "new_wave101", "build_all.py"), run_name="wave101_hook")      # 1.111.0 (append-only hook): the 15 Genesis relics of wave 101 (models, sprites, weapons, lang, tags)
     # 1.102.0 (append-only hook): the God grade worn upgrade (models, skins, effect tables) lives in tools/visual_upgrade/god_worn and adds files only; it skips itself when up to date
     sys.path.insert(0, os.path.join(HERE, "..", "visual_upgrade", "god_worn"))

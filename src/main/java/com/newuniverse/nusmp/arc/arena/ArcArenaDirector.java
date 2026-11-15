@@ -101,7 +101,7 @@ public final class ArcArenaDirector {
         try {
             step(server);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] The arena director's pass failed and was skipped: {}", ex.toString());          // never out of an event: the next pass tries again
+            LOG.error("[anime_multiverse] The arena director's pass failed and was skipped: {}", ex.toString());          // never out of an event: the next pass tries again
         }
     }
 
@@ -124,7 +124,7 @@ public final class ArcArenaDirector {
             try {
                 tickSlot(sl, save, slot, players);
             } catch (RuntimeException ex) {
-                LOG.error("[nusmp] The arena director failed at site {}; the site is reset so it cannot stay stuck", slot, ex);
+                LOG.error("[anime_multiverse] The arena director failed at site {}; the site is reset so it cannot stay stuck", slot, ex);
                 save.state(slot).reset();
                 save.setDirty();
             }
@@ -151,7 +151,7 @@ public final class ArcArenaDirector {
             case COOLDOWN -> {
                 if (st.tickCooldown(now)) {
                     save.setDirty();
-                    for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.quiet", "The arena is quiet again.").withStyle(ChatFormatting.GOLD));
+                    for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.quiet", "The arena is quiet again.").withStyle(ChatFormatting.GOLD));
                 }
             }
         }
@@ -191,8 +191,8 @@ public final class ArcArenaDirector {
             save.bossId(slot, null);
             st.abandon(now);
             save.setDirty();
-            for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.withdraws", "The boss withdraws. The arena is quiet for 60 seconds.").withStyle(ChatFormatting.GRAY));
-            LOG.info("[nusmp] The fight at site {} was abandoned; the arena rests for 60 seconds", slot);
+            for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.withdraws", "The boss withdraws. The arena is quiet for 60 seconds.").withStyle(ChatFormatting.GRAY));
+            LOG.info("[anime_multiverse] The fight at site {} was abandoned; the arena rests for 60 seconds", slot);
         }
     }
 
@@ -208,9 +208,9 @@ public final class ArcArenaDirector {
             boss = r.outcome() == ArcSpawner.Outcome.SPAWNED ? r.boss() : null;
         }
         if (boss == null) {
-            LOG.warn("[nusmp] The arena could not create {}; the arena rests for 60 seconds", c.id());
+            LOG.warn("[anime_multiverse] The arena could not create {}; the arena rests for 60 seconds", c.id());
             save.state(slot).abandon(sl.getGameTime());
-            for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.no_boss", "%s does not answer. Try again in a minute.", c.name()).withStyle(ChatFormatting.GRAY));
+            for (ServerPlayer p : players) p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.no_boss", "%s does not answer. Try again in a minute.", c.name()).withStyle(ChatFormatting.GRAY));
             return;
         }
         boss.getPersistentData().putBoolean(SpawnGate.TAG, true);
@@ -254,21 +254,21 @@ public final class ArcArenaDirector {
                 ArcCharacter c = id == null ? null : ArcRoster.byId(id);
                 for (ServerPlayer p : sl.players()) {
                     if (ArenaGrid.slotAt(p.getX(), p.getZ()) != slot || !p.isAlive() || p.isSpectator()) continue;
-                    p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.won", "%s has fallen. The arena is yours.", c == null ? "The boss" : c.fullName())
+                    p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.won", "%s has fallen. The arena is yours.", c == null ? "The boss" : c.fullName())
                             .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
-                    p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.go_home", "[ Return home ]").withStyle(s -> s.withColor(ChatFormatting.AQUA).withBold(true)
+                    p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.go_home", "[ Return home ]").withStyle(s -> s.withColor(ChatFormatting.AQUA).withBold(true)
                             .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/multiverse arc arena leave"))));
                 }
-                LOG.info("[nusmp] {} was defeated at site {}; the arena rests for {} minutes", id, slot, ArcWorldConfig.arenaCooldownMinutes());
+                LOG.info("[anime_multiverse] {} was defeated at site {}; the arena rests for {} minutes", id, slot, ArcWorldConfig.arenaCooldownMinutes());
             } else if (dead instanceof ServerPlayer p) {
                 int slot = ArenaGrid.slotAt(p.getX(), p.getZ());
                 if (slot < 0) return;
-                p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.fell",
+                p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.fell",
                         "You fell in the arena. Your belongings lie where you fell (%s) for five minutes; the Chronicle Sigil takes you back once the fight is over.",
                         (int) p.getX() + ", " + (int) p.getY() + ", " + (int) p.getZ()).withStyle(ChatFormatting.RED));
             }
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the arena director could not close a fight: {}", ex.toString());
+            LOG.error("[anime_multiverse] the arena director could not close a fight: {}", ex.toString());
         }
     }
 
@@ -277,11 +277,11 @@ public final class ArcArenaDirector {
     static void welcome(MinecraftServer server, ServerLevel arena, ServerPlayer p, int slot, ArcCharacter c) {
         ArenaState st = ArcArenaSave.get(server).state(slot);
         switch (st.phase()) {
-            case READY -> p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.ready",
+            case READY -> p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.ready",
                     "%s will answer ten seconds after the first of you arrives, or five seconds after one of you stands near their place.", c.name()).withStyle(ChatFormatting.GRAY));
-            case FIGHTING -> p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.fighting",
+            case FIGHTING -> p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.fighting",
                     "The fight is underway. Hold the Chronicle Sigil for ten seconds, or use a way home, to leave.").withStyle(ChatFormatting.GRAY));
-            case COOLDOWN -> p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.arena.resting",
+            case COOLDOWN -> p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.resting",
                     "The arena is resting for %s more seconds.", Long.toString(st.cooldownSecondsLeft(arena.getGameTime()))).withStyle(ChatFormatting.GRAY));
         }
     }
@@ -295,7 +295,7 @@ public final class ArcArenaDirector {
         p.fallDistance = 0;
         p.setDeltaMovement(Vec3.ZERO);
         p.hurtMarked = true;
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.arena.void", "The void gives you back.").withStyle(ChatFormatting.GRAY), true);
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.void", "The void gives you back.").withStyle(ChatFormatting.GRAY), true);
     }
 
     private static void title(List<ServerPlayer> players, String title, String subtitle, ChatFormatting color) {

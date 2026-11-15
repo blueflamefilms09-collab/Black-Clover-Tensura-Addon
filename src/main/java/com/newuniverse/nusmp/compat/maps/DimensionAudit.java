@@ -22,7 +22,7 @@ import java.util.Set;
 public final class DimensionAudit {
     private DimensionAudit() {}
 
-    /** The dimensions of the mod, by path in {@code nusmp:}. A unit test compares this list with the folder, so a new dimension has to be added here. */
+    /** The dimensions of the mod, by path in {@code anime_multiverse:}. A unit test compares this list with the folder, so a new dimension has to be added here. */
     public static final List<String> NAMES = List.of("mega_dungeon", "sanctuary", "labyrinth", "living_dungeon", "grimoire_library", "arc_arena", "zogratis_arena", "dream", "trial");
 
     /** How a map mod will most likely see the dimension (cave style layer under a roof, or a plain top-down surface). */
@@ -49,7 +49,7 @@ public final class DimensionAudit {
 
     /**
      * Checks a dimension type JSON ({@code type}) and the dimension JSON that uses it ({@code dimension}, may be null) for the dimension {@code id}.
-     * {@code knownTypes} are the dimension type ids that exist in this mod ({@code nusmp:...}); a {@code minecraft:} type is accepted without a lookup.
+     * {@code knownTypes} are the dimension type ids that exist in this mod ({@code anime_multiverse:...}); a {@code minecraft:} type is accepted without a lookup.
      */
     public static Report audit(String id, JsonObject type, JsonObject dimension, Set<String> knownTypes) {
         List<String> p = new ArrayList<>();
@@ -75,7 +75,7 @@ public final class DimensionAudit {
         if (dimension != null) {
             String t = dimension.has("type") && dimension.get("type").isJsonPrimitive() ? dimension.get("type").getAsString() : "";
             if (t.isEmpty()) p.add("the dimension JSON has no type");
-            else if (t.startsWith("nusmp:") && !knownTypes.contains(t)) p.add("the dimension JSON names type " + t + " which does not exist");
+            else if (t.startsWith("anime_multiverse:") && !knownTypes.contains(t)) p.add("the dimension JSON names type " + t + " which does not exist");
         }
         return new Report(id, profileOf(sky, ceil), minY, height, logical, scale, effects, p);
     }
@@ -89,9 +89,9 @@ public final class DimensionAudit {
     }
 
     // ---------------------------------------------------------------- loader (class path)
-    /** Reads {@code data/nusmp/<folder>/<name>.json} from the mod's resources; null when it is not there or not JSON. */
+    /** Reads {@code data/anime_multiverse/<folder>/<name>.json} from the mod's resources; null when it is not there or not JSON. */
     public static JsonObject load(ClassLoader cl, String folder, String name) {
-        String path = "data/nusmp/" + folder + "/" + name + ".json";
+        String path = "data/anime_multiverse/" + folder + "/" + name + ".json";
         try (InputStream in = cl.getResourceAsStream(path)) {
             if (in == null) return null;
             try (Reader r = new InputStreamReader(in, StandardCharsets.UTF_8)) {
@@ -106,9 +106,9 @@ public final class DimensionAudit {
     /** Audits every dimension of {@link #NAMES} from the class path. */
     public static List<Report> auditAll(ClassLoader cl) {
         Set<String> types = new java.util.HashSet<>();
-        for (String n : NAMES) if (load(cl, "dimension_type", n) != null) types.add("nusmp:" + n);
+        for (String n : NAMES) if (load(cl, "dimension_type", n) != null) types.add("anime_multiverse:" + n);
         List<Report> out = new ArrayList<>();
-        for (String n : NAMES) out.add(audit("nusmp:" + n, load(cl, "dimension_type", n), load(cl, "dimension", n), types));
+        for (String n : NAMES) out.add(audit("anime_multiverse:" + n, load(cl, "dimension_type", n), load(cl, "dimension", n), types));
         return out;
     }
 }

@@ -8,7 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 /**
  * Why: the registration entry point of the floors and the Directional Lock of the bidirectional Mega-Dungeon (1.55.0). {@code MegaSystem} calls
  * {@link #init} and {@link #register} (the lead adds no other line for the code), so the package wires itself. {@code init} registers what must exist before
- * the registries freeze or before the first sector is generated: the player attachment {@code nusmp:dungeon_alignment} and the {@code nusmp:alignment_sync}
+ * the registries freeze or before the first sector is generated: the player attachment {@code anime_multiverse:dungeon_alignment} and the {@code anime_multiverse:alignment_sync}
  * packet on the mod bus, the {@link FloorAssigner} that numbers a sector's rooms when the generator announces it, the {@link LockPolicy} that every door
  * asks through {@code MegaDungeon.mayEnter}, and the module's in-game self-tests ({@link FloorsSelfTests}, keys {@code floors.*}). {@code register} puts
  * the {@link FloorTracker} on the game bus: the tick that watches the floors and runs the hard guard, and the login, logout, respawn, dimension and stop

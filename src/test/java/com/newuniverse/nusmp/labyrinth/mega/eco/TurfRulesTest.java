@@ -68,7 +68,7 @@ class TurfRulesTest {
     }
 
     @Test void aTerritorialFactionSparesItsAlliesInItsOwnRoom() {
-        FactionDef warden = new FactionDef("warden", "warden", 0xFFFFFF, "nusmp:mega/warden", List.of(), List.of("cultist"), 8, 12, true, false, java.util.Map.of(), "raw_armor_flank", 0.25);
+        FactionDef warden = new FactionDef("warden", "warden", 0xFFFFFF, "anime_multiverse:mega/warden", List.of(), List.of("cultist"), 8, 12, true, false, java.util.Map.of(), "raw_armor_flank", 0.25);
         FactionGraph g = FactionGraph.of(List.of(warden, CULTIST, GOBLIN));
         assertEquals(TurfRules.Relation.NONE, TurfRules.relation(g, warden, "cultist", true), "an ally walking through is no intruder");
         assertEquals(0.0, TurfRules.reach(g, warden, "cultist", true, 8, 12));

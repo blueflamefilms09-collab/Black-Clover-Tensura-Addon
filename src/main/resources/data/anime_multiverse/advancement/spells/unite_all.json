@@ -1,0 +1,65 @@
+{
+  "parent": "anime_multiverse:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:ender_eye"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spells.unite_all.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spells.unite_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_unite_mode_canis": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "canis"
+      }
+    },
+    "e_unite_mode_equus": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "equus"
+      }
+    },
+    "e_unite_mode_felis": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "felis"
+      }
+    },
+    "e_unite_mode_gallus": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "gallus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_unite_mode_canis"
+    ],
+    [
+      "e_unite_mode_equus"
+    ],
+    [
+      "e_unite_mode_felis"
+    ],
+    [
+      "e_unite_mode_gallus"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

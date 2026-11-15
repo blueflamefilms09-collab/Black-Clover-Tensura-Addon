@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Spirit Dive WIND remake (the three selectable looks A, B, C): one real 3D piece (a sword, a bow, an arrow, a feather, a cube ...) as plain arrays, parsed from
- * {@code assets/nusmp/sdw3_meshes/<name>.txt} (written by {@code tools/gen_sdw3_models.py}, the mesh pipeline of the weapon models). Pure and server safe: it touches no Minecraft class, so the budgets
+ * {@code assets/anime_multiverse/sdw3_meshes/<name>.txt} (written by {@code tools/gen_sdw3_models.py}, the mesh pipeline of the weapon models). Pure and server safe: it touches no Minecraft class, so the budgets
  * and the tests count the real quads. Shared instances: every diver draws the same arrays, nothing is copied per frame.
  *
  * <p>A mesh has three layers: 0 the solid body, 1 the soft glow shell (drawn additive), 2 rings and ornaments (solid, dropped at low detail and on the standard tier). Every quad carries its four
@@ -23,7 +23,7 @@ public final class SpiritDiveWind3Mesh {
     public static final int LAYERS = 3, SOLID = 0, GLOW = 1, ORNAMENT = 2;
     /** Every mesh of the look (the generator writes exactly these). */
     public static final List<String> NAMES = List.of("sword", "bow", "arrow", "spear", "blade", "feather", "cube", "panel", "plate", "crown");
-    public static final String DIR = "/assets/nusmp/sdw3_meshes/";
+    public static final String DIR = "/assets/anime_multiverse/sdw3_meshes/";
     /** The mesh folder of the final Wind A (the 3D crown, {@code tools/gen_sdw4_models.py}); loaded by the same code through {@link #getIn}. */
     public static final String FOLDER3 = "sdw3_meshes", FOLDER4 = "sdw4_meshes";
     /** The shade of a face: the light comes from the front, a little from above and the side (mesh space: x across, y along the piece, z through it). */
@@ -84,13 +84,13 @@ public final class SpiritDiveWind3Mesh {
     public static boolean existsIn(String folder, String name) { return read(folder, name) != null; }
 
     private static List<String> read(String folder, String name) {
-        try (InputStream in = SpiritDiveWind3Mesh.class.getResourceAsStream("/assets/nusmp/" + folder + "/" + name + ".txt")) {
+        try (InputStream in = SpiritDiveWind3Mesh.class.getResourceAsStream("/assets/anime_multiverse/" + folder + "/" + name + ".txt")) {
             if (in != null) {
                 try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) { return r.lines().toList(); }
             }
         } catch (IOException ignored) { }
         try {
-            Path p = Path.of("src", "main", "resources", "assets", "nusmp", folder, name + ".txt");
+            Path p = Path.of("src", "main", "resources", "assets", "anime_multiverse", folder, name + ".txt");
             if (Files.isRegularFile(p)) return Files.readAllLines(p, StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException ignored) { }
         return null;

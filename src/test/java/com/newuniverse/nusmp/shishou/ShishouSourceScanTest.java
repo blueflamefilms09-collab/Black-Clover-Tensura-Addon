@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ShishouSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
 
     private static String read(String rel) throws IOException { return Files.readString(SRC.resolve(rel)); }
 

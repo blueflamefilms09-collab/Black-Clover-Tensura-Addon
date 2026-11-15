@@ -46,7 +46,7 @@ import com.newuniverse.nusmp.particle.fx.FxRelic;
 public final class Wave16Events {
     private Wave16Events() {}
 
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("nusmp");
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("anime_multiverse");
     /** True while the Sigil's own fireball is in flight, so a second Sigil does not answer it with another. */
     private static boolean inReprisal;
 
@@ -240,7 +240,7 @@ public final class Wave16Events {
         } catch (ClassNotFoundException none) {
             // Curios is not installed: no relic in a Curios slot works anyway
         } catch (ReflectiveOperationException | RuntimeException | LinkageError odd) {
-            LOG.debug("[nusmp] relics: the Dryad's band could not join Curios' unequip event", odd);
+            LOG.debug("[anime_multiverse] relics: the Dryad's band could not join Curios' unequip event", odd);
         }
     }
 

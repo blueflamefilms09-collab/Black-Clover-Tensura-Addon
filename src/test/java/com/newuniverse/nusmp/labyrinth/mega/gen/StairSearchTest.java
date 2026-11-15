@@ -82,7 +82,7 @@ class StairSearchTest {
     /** A catalog whose only rooms are straight corridors (a door at each end) and one-module stairwells: every floor must be a single line. */
     private static SyntheticCatalog lineCatalog() {
         SyntheticCatalog c = new SyntheticCatalog();
-        final String M = "nusmp:mega/";
+        final String M = "anime_multiverse:mega/";
         for (int d = 1; d <= 8; d++) c.cap(M + "cap/alcove_" + d, d);
         c.pool(MegaGrid.P_CAP, 0, MegaGrid.P_EMPTY, M + "cap/alcove_1", 1, M + "cap/alcove_2", 1, M + "cap/alcove_3", 1);
         c.put(c.shape(M + "corridor/line_1x2", RoomKind.CORRIDOR, 1, 2).door('n', 4).door('s', 4));

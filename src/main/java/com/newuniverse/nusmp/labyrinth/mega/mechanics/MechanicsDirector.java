@@ -102,7 +102,7 @@ public final class MechanicsDirector {
         try {
             tick(e.getServer());
         } catch (Throwable t) {
-            LOG.warn("[nusmp] mechanics tick failed: {}", t.toString());
+            LOG.warn("[anime_multiverse] mechanics tick failed: {}", t.toString());
         }
     }
 
@@ -112,7 +112,7 @@ public final class MechanicsDirector {
         if (!recovered) {
             recovered = true;
             int n = MechanicsData.get(server).recover(level);
-            if (n > 0) LOG.info("[nusmp] mechanics: restored {} journals left over from the last run", n);
+            if (n > 0) LOG.info("[anime_multiverse] mechanics: restored {} journals left over from the last run", n);
         }
         long now = level.getGameTime();
         if (!MechanicsConfig.enabled()) {
@@ -130,7 +130,7 @@ public final class MechanicsDirector {
                         || (in.def.scope() == Scope.BOSS && in.sector != null && in.sector.state != Sector.State.ACTIVE) || in.errors > 40;
                 if (over) end(in);
             } catch (RuntimeException ex) {                                      // one broken mechanic must not stop the others, nor flood the log every tick
-                LOG.warn("[nusmp] mechanic {} failed and was ended: {}", in.def.id(), ex.toString());
+                LOG.warn("[anime_multiverse] mechanic {} failed and was ended: {}", in.def.id(), ex.toString());
                 end(in);
             }
         }
@@ -174,7 +174,7 @@ public final class MechanicsDirector {
                     Instance in = build(level, s, slot, here, p, k);
                     if (in != null) start(in);
                 } catch (RuntimeException ex) {
-                    LOG.warn("[nusmp] mechanic {} could not start: {}", slot.def().id(), ex.toString());
+                    LOG.warn("[anime_multiverse] mechanic {} could not start: {}", slot.def().id(), ex.toString());
                 }
             }
         }
@@ -244,7 +244,7 @@ public final class MechanicsDirector {
         try {
             in.end();
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] mechanic {} did not end cleanly: {}", in.def.id(), e.toString());
+            LOG.warn("[anime_multiverse] mechanic {} did not end cleanly: {}", in.def.id(), e.toString());
         }
         ACTIVE.remove(in.key);
     }
@@ -262,7 +262,7 @@ public final class MechanicsDirector {
             try {
                 MechanicsData.get(in.level.getServer()).markSolved(in.key);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] mechanic {} could not be remembered as released: {}", in.def.id(), e.toString());
+                LOG.warn("[anime_multiverse] mechanic {} could not be remembered as released: {}", in.def.id(), e.toString());
             }
         }
     }

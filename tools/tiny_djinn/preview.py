@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(HERE, "..", "..", "docs", "previews", "tiny_djinn")
 PX = 1.0 / 16.0
 

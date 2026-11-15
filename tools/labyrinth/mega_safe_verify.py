@@ -428,7 +428,7 @@ def verify(mt, expect=None, min_light=6, check_light=True):
     if expect.get("arrival"):
         if kinds.get("arrival", 0) != 1:
             rep.err("a Landing needs exactly one arrival marker, has %d" % kinds.get("arrival", 0))
-        exits = [pos for pos, c in mt.t.cells.items() if c.block == "nusmp:labyrinth_exit"]
+        exits = [pos for pos, c in mt.t.cells.items() if c.block == "anime_multiverse:labyrinth_exit"]
         if len(exits) != 9:
             rep.err("a Landing needs a 3x3 plane of labyrinth_exit blocks, has %d" % len(exits))
     elif kinds.get("arrival"):

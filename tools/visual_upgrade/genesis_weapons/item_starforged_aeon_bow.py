@@ -218,9 +218,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "A8D8FF", "groups": ["stars", "zodiac"], "note": "the stars drop into orbit and the zodiac opens behind the riser when the bow is drawn from the hand"}
     it.swing = {"trail": "comet", "rgb": "A8D8FF", "rgb2": "E8C040", "length": 1.3, "width": 0.3, "life": 10, "particles": "star_glint"}
-    it.sound = "nusmp:item.genesis.aeon_bow.starsong_loop"
+    it.sound = "anime_multiverse:item.genesis.aeon_bow.starsong_loop"
     it.acts = {
-        "meteor_arrow": {"burst": "meteor_arrow", "pattern": "line", "rgb": "A8D8FF", "ring": 7.0, "particles": 36, "sound": "nusmp:item.genesis.aeon_bow.meteor"},
-        "constellation_volley": {"burst": "constellation_volley", "pattern": "cone", "rgb": "E8F0FF", "ring": 6.0, "particles": 44, "sound": "nusmp:item.genesis.aeon_bow.volley"},
-        "starfall": {"burst": "starfall", "pattern": "column", "rgb": "E8C040", "ring": 6.0, "particles": 46, "sound": "nusmp:item.genesis.aeon_bow.starfall"},
+        "meteor_arrow": {"burst": "meteor_arrow", "pattern": "line", "rgb": "A8D8FF", "ring": 7.0, "particles": 36, "sound": "anime_multiverse:item.genesis.aeon_bow.meteor"},
+        "constellation_volley": {"burst": "constellation_volley", "pattern": "cone", "rgb": "E8F0FF", "ring": 6.0, "particles": 44, "sound": "anime_multiverse:item.genesis.aeon_bow.volley"},
+        "starfall": {"burst": "starfall", "pattern": "column", "rgb": "E8C040", "ring": 6.0, "particles": 46, "sound": "anime_multiverse:item.genesis.aeon_bow.starfall"},
     }

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  * (body cutout, wings translucent and iridescent, blade additive, glow pass) and emits her wind trails.
  */
 public class WindSpiritLordRenderer extends EntityRenderer<WindSpiritLordEntity> {
-    private static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/sylph_body.png");
+    private static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/sylph_body.png");
 
     public WindSpiritLordRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);

@@ -611,7 +611,7 @@ public final class Preview {
         String s = str(sc, "skin", "steve").toLowerCase(Locale.ROOT);
         if (s.contains(":")) return ResourceLocation.parse(str(sc, "skin", "steve"));
         boolean slim = s.equals("slim") || s.equals("alex");
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/preview/skin_" + (slim ? "alex" : "steve") + ".png");
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/preview/skin_" + (slim ? "alex" : "steve") + ".png");
     }
 
     static boolean slimOf(Map<String, Object> sc) {
@@ -713,7 +713,7 @@ public final class Preview {
             // the stand-in figure (a player model): recorded once at the origin, placed by the rasteriser
             int figure = -1;
             if (bool(sc, "figure", true)) {
-                PlayerRig rig = new PlayerRig(new AbstractClientPlayer(new EntityType<>(), level), false, ResourceLocation.fromNamespaceAndPath("nusmp", "textures/preview/skin_steve.png"));
+                PlayerRig rig = new PlayerRig(new AbstractClientPlayer(new EntityType<>(), level), false, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/preview/skin_steve.png"));
                 Rec rec = new Rec();
                 PoseStack pose = new PoseStack();
                 try {

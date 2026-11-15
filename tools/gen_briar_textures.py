@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Briar Magic VFX sprites -> src/main/resources/assets/nusmp/textures/particle/briar_*.png
+"""Briar Magic VFX sprites -> src/main/resources/assets/anime_multiverse/textures/particle/briar_*.png
 
 Look (after the owner's anime still): pale flat ribbon-straps with fine parallel grooves, a dark ink outline and small triangular
 thorns along the edges, coiling into tangles; small blue roses. The sprites are grey-scale + alpha so the vertex colour tints them
@@ -17,7 +17,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 OUTLINE = 52
 

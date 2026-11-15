@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class WikiBookAssetsTest {
     @Test
     void everyWikiEntryHasATitleTextAndAUniqueOrder() throws Exception {
-        File[] files = new File("src/main/resources/assets/nusmp/codex/wiki").listFiles((d, n) -> n.endsWith(".json"));
+        File[] files = new File("src/main/resources/assets/anime_multiverse/codex/wiki").listFiles((d, n) -> n.endsWith(".json"));
         assertNotNull(files);
         assertTrue(files.length >= 20, "the wiki should cover every system");
         java.util.Set<Integer> orders = new java.util.HashSet<>();
@@ -28,9 +28,9 @@ class WikiBookAssetsTest {
     @Test
     void theBookItemHasItsAssets() throws Exception {
         for (String p : new String[]{"textures/item/multiverse_wiki.png", "models/item/multiverse_wiki.json"})
-            assertTrue(new File("src/main/resources/assets/nusmp/" + p).isFile(), p);
-        assertTrue(new File("src/main/resources/data/nusmp/recipe/multiverse_wiki.json").isFile());
-        String lang = Files.readString(new File("src/main/resources/assets/nusmp/lang/en_us.json").toPath());
-        assertTrue(lang.contains("\"item.nusmp.multiverse_wiki\"") && lang.contains("\"nusmp.wiki.tip\""));
+            assertTrue(new File("src/main/resources/assets/anime_multiverse/" + p).isFile(), p);
+        assertTrue(new File("src/main/resources/data/anime_multiverse/recipe/multiverse_wiki.json").isFile());
+        String lang = Files.readString(new File("src/main/resources/assets/anime_multiverse/lang/en_us.json").toPath());
+        assertTrue(lang.contains("\"item.anime_multiverse.multiverse_wiki\"") && lang.contains("\"anime_multiverse.wiki.tip\""));
     }
 }

@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:dungeon/shadow_key",
+  "display": {
+    "icon": {
+      "id": "minecraft:tripwire_hook"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.seal.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.seal.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_labyrinth_seal_opened": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "labyrinth.seal_opened"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_labyrinth_seal_opened"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

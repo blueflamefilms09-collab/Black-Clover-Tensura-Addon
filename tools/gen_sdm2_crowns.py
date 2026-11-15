@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import gen_sdw3_models as g  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdm2_meshes")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdm2_meshes")
 DOC = os.path.join(ROOT, "docs", "previews", "spirit_dive_merge2", "crowns.txt")
 
 R = 3.3                    # radius of the ring (the old crown: 5.3)

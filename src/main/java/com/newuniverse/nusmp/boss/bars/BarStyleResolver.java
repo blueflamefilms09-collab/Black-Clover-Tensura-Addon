@@ -127,7 +127,7 @@ public final class BarStyleResolver {
         return s != null ? s : BarStyleIds.MAGIC_KNIGHTS;
     }
 
-    /** A boss by the path of its entity type ({@code nusmp:<path>}), or null when the path is not a named boss (the caller then asks something more specific). */
+    /** A boss by the path of its entity type ({@code anime_multiverse:<path>}), or null when the path is not a named boss (the caller then asks something more specific). */
     public static String forEntityPath(String path) { return ENTITY.get(low(path)); }
 
     /** The style of a Labyrinth Guardian that is not a Decennial boss: a pocket tomb's mega-boss wears the gold tomb frame, any other Guardian the Warden frame. */

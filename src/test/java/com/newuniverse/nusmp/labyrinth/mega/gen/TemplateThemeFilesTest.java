@@ -28,20 +28,20 @@ class TemplateThemeFilesTest {
     @Test
     void aGoodFileClaimsItsPrefixesForItsTheme() {
         List<String> problems = new ArrayList<>();
-        TemplateThemes t = TemplateThemeFiles.parse(List.of(file("frost", List.of("mega/hall/holy_church_", "nusmp:mega/set/cathedral_"))), problems);
+        TemplateThemes t = TemplateThemeFiles.parse(List.of(file("frost", List.of("mega/hall/holy_church_", "anime_multiverse:mega/set/cathedral_"))), problems);
         assertEquals(List.of(), problems);
-        assertTrue(t.allows("nusmp:mega/hall/holy_church_nave", "frost"));
-        assertFalse(t.allows("nusmp:mega/hall/holy_church_nave", "blood"));
-        assertTrue(t.allows("nusmp:mega/set/cathedral_rotunda", "frost"), "a prefix that already names its namespace is kept");
-        assertFalse(t.allows("nusmp:mega/set/cathedral_rotunda", "gravity"));
-        assertTrue(t.allows("nusmp:mega/hall/crypt_a", "gravity"), "a template nobody claims stays free");
+        assertTrue(t.allows("anime_multiverse:mega/hall/holy_church_nave", "frost"));
+        assertFalse(t.allows("anime_multiverse:mega/hall/holy_church_nave", "blood"));
+        assertTrue(t.allows("anime_multiverse:mega/set/cathedral_rotunda", "frost"), "a prefix that already names its namespace is kept");
+        assertFalse(t.allows("anime_multiverse:mega/set/cathedral_rotunda", "gravity"));
+        assertTrue(t.allows("anime_multiverse:mega/hall/crypt_a", "gravity"), "a template nobody claims stays free");
         assertEquals(2, t.size());
     }
 
     @Test
     void thePrefixIsGivenTheNamespaceWhenTheFileOmitsIt() {
-        assertEquals("nusmp:mega/hall/x_", TemplateThemeFiles.normalise("mega/hall/x_"));
-        assertEquals("nusmp:mega/hall/x_", TemplateThemeFiles.normalise("  mega/hall/x_ "));
+        assertEquals("anime_multiverse:mega/hall/x_", TemplateThemeFiles.normalise("mega/hall/x_"));
+        assertEquals("anime_multiverse:mega/hall/x_", TemplateThemeFiles.normalise("  mega/hall/x_ "));
         assertEquals("other:mega/hall/x_", TemplateThemeFiles.normalise("other:mega/hall/x_"));
     }
 
@@ -62,7 +62,7 @@ class TemplateThemeFilesTest {
         TemplateThemes t = TemplateThemeFiles.parse(List.of(file("frozt", List.of("mega/hall/holy_church_"))), problems);
         assertEquals(1, problems.size());
         assertTrue(problems.get(0).contains("'frozt' is not a theme id"), problems.get(0));
-        assertFalse(t.restricted("nusmp:mega/hall/holy_church_nave"), "a rule for a theme that cannot exist would make the rooms unreachable, so none is made");
+        assertFalse(t.restricted("anime_multiverse:mega/hall/holy_church_nave"), "a rule for a theme that cannot exist would make the rooms unreachable, so none is made");
         assertEquals(0, t.size());
     }
 
@@ -90,8 +90,8 @@ class TemplateThemeFilesTest {
         prefixes.add(" ");
         TemplateThemes t = TemplateThemeFiles.parse(List.of(file("frost", prefixes)), problems);
         assertEquals(2, problems.size(), problems.toString());
-        assertTrue(t.allows("nusmp:mega/hall/holy_church_nave", "frost"));
-        assertFalse(t.allows("nusmp:mega/hall/holy_church_nave", "gravity"));
+        assertTrue(t.allows("anime_multiverse:mega/hall/holy_church_nave", "frost"));
+        assertFalse(t.allows("anime_multiverse:mega/hall/holy_church_nave", "gravity"));
     }
 
     @Test
@@ -125,10 +125,10 @@ class TemplateThemeFilesTest {
                 file("frost", List.of("mega/hall/chapel_")),
                 file("astral", List.of("mega/hall/chapel_", "mega/hall/court_"))), problems);
         assertEquals(List.of(), problems);
-        assertTrue(t.allows("nusmp:mega/hall/chapel_a", "frost"));
-        assertTrue(t.allows("nusmp:mega/hall/chapel_a", "astral"));
-        assertFalse(t.allows("nusmp:mega/hall/chapel_a", "gravity"));
-        assertTrue(t.allows("nusmp:mega/hall/court_a", "astral"));
-        assertFalse(t.allows("nusmp:mega/hall/court_a", "frost"));
+        assertTrue(t.allows("anime_multiverse:mega/hall/chapel_a", "frost"));
+        assertTrue(t.allows("anime_multiverse:mega/hall/chapel_a", "astral"));
+        assertFalse(t.allows("anime_multiverse:mega/hall/chapel_a", "gravity"));
+        assertTrue(t.allows("anime_multiverse:mega/hall/court_a", "astral"));
+        assertFalse(t.allows("anime_multiverse:mega/hall/court_a", "frost"));
     }
 }

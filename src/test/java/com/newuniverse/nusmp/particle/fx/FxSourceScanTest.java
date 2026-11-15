@@ -96,7 +96,7 @@ class FxSourceScanTest {
         String lang = Files.readString(ROOT.resolve("tools/lang/custom_particles.json"), StandardCharsets.UTF_8);
         JsonElement frag = JsonParser.parseString(lang);
         assertTrue(frag.isJsonObject());
-        java.util.regex.Matcher m = Pattern.compile("\"(nusmp\\.particles\\.[a-z.]+)\"").matcher(cmd);
+        java.util.regex.Matcher m = Pattern.compile("\"(anime_multiverse\\.particles\\.[a-z.]+)\"").matcher(cmd);
         int n = 0;
         while (m.find()) {
             n++;

@@ -30,7 +30,7 @@ import gen_mega_rooms2 as R2  # noqa: E402
 from mega_decor_r1 import Hall, GROUND, FLOOR  # noqa: E402
 
 FR = L.FLOOR_ROW
-LOOT_TRIAL = "nusmp:chests/labyrinth_trial"
+LOOT_TRIAL = "anime_multiverse:chests/labyrinth_trial"
 DIRS4 = (("north", 0, -1), ("east", 1, 0), ("south", 0, 1), ("west", -1, 0))
 
 
@@ -172,7 +172,7 @@ def print_table(theme, names):
     for n in names:
         folder, _fn, _spec = theme.rooms[n]
         path = "%s_%s" % (theme.id, n)
-        t = load(os.path.join(L.RES, "data", "nusmp", "structure", "mega", folder, path + ".nbt"), "mega/%s/%s" % (folder, path))
+        t = load(os.path.join(L.RES, "data", "anime_multiverse", "structure", "mega", folder, path + ".nbt"), "mega/%s/%s" % (folder, path))
         sx, sy, sz = t.size
         doors = []
         for (x, y, z), o, _d in t.jigsaws():
@@ -265,7 +265,7 @@ def preview(theme, folder, name, out, spec=None, views=True):
     _install_colours()
     os.makedirs(out, exist_ok=True)
     full = "%s_%s" % (theme.id, name)
-    path = os.path.join(L.RES, "data", "nusmp", "structure", "mega", folder, full + ".nbt")
+    path = os.path.join(L.RES, "data", "anime_multiverse", "structure", "mega", folder, full + ".nbt")
     exists = TP.vanilla_ids().__contains__
     states = json.load(open(TP.STATES, encoding="utf-8"))
 

@@ -4,7 +4,7 @@
 	order_index: 4
 	filename: "spirits_devils"
 	icon: {
-		id: "nusmp:spirit_charm"
+		id: "anime_multiverse:spirit_charm"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:spirit_charm"
+				id: "anime_multiverse:spirit_charm"
 			}
 			tasks: [
 				{
@@ -37,14 +37,14 @@
 			x: 1.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:spirit_charm"
+				id: "anime_multiverse:spirit_charm"
 			}
 			dependencies: ["6859D66D7BFAE575"]
 			tasks: [
 				{
 					id: "0F43E49A2E27413E"
 					type: "advancement"
-					advancement: "nusmp:spirits/charm"
+					advancement: "anime_multiverse:spirits/charm"
 					criterion: ""
 				}
 			]
@@ -64,14 +64,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:spirit_lord_skill"
+				id: "anime_multiverse:spirit_lord_skill"
 			}
 			dependencies: ["45967F026D55797C"]
 			tasks: [
 				{
 					id: "6C0ADDE4A1D31087"
 					type: "advancement"
-					advancement: "nusmp:spirits/lord_skill"
+					advancement: "anime_multiverse:spirits/lord_skill"
 					criterion: ""
 				}
 			]
@@ -94,14 +94,14 @@
 			x: 3.0d
 			y: 0.0d
 			icon: {
-				id: "nusmp:spirit_core_fire"
+				id: "anime_multiverse:spirit_core_fire"
 			}
 			dependencies: ["45967F026D55797C"]
 			tasks: [
 				{
 					id: "6E15A157250AB0FF"
 					type: "advancement"
-					advancement: "nusmp:spirits/meet_elemental"
+					advancement: "anime_multiverse:spirits/meet_elemental"
 					criterion: ""
 				}
 			]
@@ -121,14 +121,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:spirit_core_earth"
+				id: "anime_multiverse:spirit_core_earth"
 			}
 			dependencies: ["40696B24201ED87C"]
 			tasks: [
 				{
 					id: "78350E1ADEE9E3AE"
 					type: "advancement"
-					advancement: "nusmp:spirits/cores"
+					advancement: "anime_multiverse:spirits/cores"
 					criterion: ""
 				}
 			]
@@ -160,7 +160,7 @@
 				{
 					id: "5A5CE54CC18283D3"
 					type: "advancement"
-					advancement: "nusmp:spirits/contract"
+					advancement: "anime_multiverse:spirits/contract"
 					criterion: ""
 				}
 			]
@@ -192,7 +192,7 @@
 				{
 					id: "13BDDAA80EDDEE6E"
 					type: "advancement"
-					advancement: "nusmp:bosses/wind_spirit_lord"
+					advancement: "anime_multiverse:bosses/wind_spirit_lord"
 					criterion: ""
 				}
 			]
@@ -215,14 +215,14 @@
 			x: 1.5d
 			y: 4.5d
 			icon: {
-				id: "nusmp:devil_contract"
+				id: "anime_multiverse:devil_contract"
 			}
 			dependencies: ["6859D66D7BFAE575"]
 			tasks: [
 				{
 					id: "499C92EEDFEC3EE8"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_contract"
+					advancement: "anime_multiverse:spirits/devil_contract"
 					criterion: ""
 				}
 			]
@@ -242,14 +242,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:devils_core"
+				id: "anime_multiverse:devils_core"
 			}
 			dependencies: ["02B8976CEF3700F2"]
 			tasks: [
 				{
 					id: "08B8FD30DEFD42EB"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_core"
+					advancement: "anime_multiverse:spirits/devil_core"
 					criterion: ""
 				}
 			]
@@ -274,14 +274,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["02B8976CEF3700F2"]
 			tasks: [
 				{
 					id: "65B7168969338B37"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_union"
+					advancement: "anime_multiverse:spirits/devil_union"
 					criterion: ""
 				}
 			]
@@ -313,7 +313,7 @@
 				{
 					id: "2197CE37E1B7B1CA"
 					type: "advancement"
-					advancement: "nusmp:spirits/soul_corruption"
+					advancement: "anime_multiverse:spirits/soul_corruption"
 					criterion: ""
 				}
 			]
@@ -340,7 +340,7 @@
 				{
 					id: "37A83BAE7B87589D"
 					type: "advancement"
-					advancement: "nusmp:spirits/paladin"
+					advancement: "anime_multiverse:spirits/paladin"
 					criterion: ""
 				}
 			]
@@ -360,14 +360,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_core_beelzebub"
+				id: "anime_multiverse:devil_core_beelzebub"
 			}
 			dependencies: ["0EF2B1BB1C86CFCB"]
 			tasks: [
 				{
 					id: "7BEBD4A238E640C9"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_cores_all"
+					advancement: "anime_multiverse:spirits/devil_cores_all"
 					criterion: ""
 				}
 			]

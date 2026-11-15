@@ -261,7 +261,7 @@ class ShishouUpdate21Test {
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(new ShishouFeed.Item("minecraft:bone", 1, 0, false, false, true, false, false)), "armour");
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(new ShishouFeed.Item("minecraft:bone", 1, 0, false, false, false, true, false)), "a block");
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(new ShishouFeed.Item("minecraft:bone", 1, 0, false, false, false, false, true)), "a container");
-        assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(item("nusmp:shishou", 1, 3)), "never himself");
+        assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(item("anime_multiverse:shishou", 1, 3)), "never himself");
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(item("minecraft:zombie_spawn_egg", 1, 0)));
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(item("minecraft:bone", 0, 0)));
         assertEquals(ShishouFeed.Kind.NONE, ShishouFeed.classify(null));
@@ -354,7 +354,7 @@ class ShishouUpdate21Test {
         assertEquals(50, ShishouGuiLayout.gaugePixels(7f, 50));
         assertEquals(25, ShishouGuiLayout.gaugePixels(0.5f, 50));
         // the atlas file and the skill icon exist and the regions are not empty
-        Path atlas = Path.of("src/main/resources/assets/nusmp/textures/gui/shishou/akashic.png");
+        Path atlas = Path.of("src/main/resources/assets/anime_multiverse/textures/gui/shishou/akashic.png");
         assertTrue(Files.isRegularFile(atlas), "the atlas exists (python3 tools/shishou/gen_shishou_gui.py)");
         BufferedImage img = javax.imageio.ImageIO.read(atlas.toFile());
         assertEquals(ShishouGuiLayout.ATLAS, img.getWidth());
@@ -364,7 +364,7 @@ class ShishouUpdate21Test {
             for (int y = r.v(); y < r.v() + r.h(); y++) for (int x = r.u(); x < r.u() + r.w(); x++) if ((img.getRGB(x, y) >>> 24) > 16) opaque++;
             assertTrue(opaque > 0, "a region of the atlas is empty: " + r);
         }
-        BufferedImage icon = javax.imageio.ImageIO.read(Path.of("src/main/resources/assets/nusmp/textures/skill/shishou.png").toFile());
+        BufferedImage icon = javax.imageio.ImageIO.read(Path.of("src/main/resources/assets/anime_multiverse/textures/skill/shishou.png").toFile());
         assertEquals(32, icon.getWidth());
         assertEquals(32, icon.getHeight());
         long solid = 0;
@@ -380,14 +380,14 @@ class ShishouUpdate21Test {
         try (Stream<Path> w = Files.walk(MAIN)) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator) {
                 String c = code(Files.readString(p));
-                assertFalse(c.contains("\"key.nusmp.shishou"), p + " still registers a Shishou key");
+                assertFalse(c.contains("\"key.anime_multiverse.shishou"), p + " still registers a Shishou key");
             }
         }
         String net = code(read("shishou/ShishouNet.java"));
         assertFalse(net.contains("ACT_THROW_RECALL") || net.contains("ShishouNet.Key"), "no key action is left");
         String skill = code(read("skill/ShishouUltimateSkill.java"));
         assertTrue(skill.contains("SkillType.ULTIMATE") && skill.contains("getModes") && skill.contains("onPressed"), "it is an Ultimate with modes");
-        assertTrue(code(read("skill/NUSkills.java")).contains("SKILLS.register(\"shishou\""), "registered as nusmp:shishou");
+        assertTrue(code(read("skill/NUSkills.java")).contains("SKILLS.register(\"shishou\""), "registered as anime_multiverse:shishou");
     }
 
     @Test
@@ -433,22 +433,22 @@ class ShishouUpdate21Test {
         JsonObject a = JsonParser.parseString(Files.readString(Path.of("tools/lang/shishou.json"))).getAsJsonObject(), b = JsonParser.parseString(Files.readString(Path.of("tools/lang/shishou_skill.json"))).getAsJsonObject();
         Set<String> keys = new HashSet<>(a.keySet());
         keys.addAll(b.keySet());
-        Pattern p = Pattern.compile("(?:translatableWithFallback|SkillMsg\\.mode|SkillMsg\\.t)\\(\\s*\"((?:shishou|nusmp\\.skill)[a-z_.]*[a-z_])\"");
+        Pattern p = Pattern.compile("(?:translatableWithFallback|SkillMsg\\.mode|SkillMsg\\.t)\\(\\s*\"((?:shishou|anime_multiverse\\.skill)[a-z_.]*[a-z_])\"");
         List<String> missing = new ArrayList<>();
         for (String f : new String[]{"shishou/ShishouGrantService.java", "shishou/ShishouFeedService.java", "client/shishou/ShishouStomachScreen.java", "skill/ShishouUltimateSkill.java"}) {
             Matcher m = p.matcher(read(f));
             while (m.find()) {
                 String k = m.group(1);
-                if (f.endsWith("ShishouUltimateSkill.java") && !k.startsWith("nusmp.skill")) k = "nusmp.skill.mode." + k;
+                if (f.endsWith("ShishouUltimateSkill.java") && !k.startsWith("anime_multiverse.skill")) k = "anime_multiverse.skill.mode." + k;
                 if (!keys.contains(k)) missing.add(f + ": " + k);
             }
         }
         for (ShishouModes.Mode m : ShishouModes.Mode.values()) {
             assertTrue(keys.contains(m.langKey()), "lang: " + m.langKey());
-            assertTrue(keys.contains("nusmp.skill.mode.shishou." + m.id()), "lang: the skill system's mode name of " + m.id());
+            assertTrue(keys.contains("anime_multiverse.skill.mode.shishou." + m.id()), "lang: the skill system's mode name of " + m.id());
         }
-        assertTrue(keys.contains("nusmp.skill.shishou") && keys.contains("nusmp.skill.shishou.description"), "the skill's name and description");
-        assertTrue(keys.contains("nusmp.gui_scale.gui.shishou_stomach") && keys.contains("shishou.tooltip.keys") && keys.contains("shishou.tooltip.feed"));
+        assertTrue(keys.contains("anime_multiverse.skill.shishou") && keys.contains("anime_multiverse.skill.shishou.description"), "the skill's name and description");
+        assertTrue(keys.contains("anime_multiverse.gui_scale.gui.shishou_stomach") && keys.contains("shishou.tooltip.keys") && keys.contains("shishou.tooltip.feed"));
         assertFalse(a.get("shishou.tooltip.keys").getAsString().toLowerCase().contains("controls >"), "the tooltip no longer points at a key in Controls");
         assertTrue(missing.isEmpty(), "texts without a lang entry: " + missing);
         for (String k : b.keySet()) {

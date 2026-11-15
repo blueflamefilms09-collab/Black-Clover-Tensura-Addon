@@ -12,7 +12,7 @@ touches the art of the seven (their ids are skipped).
     python3 tools/gen_arc_grimoire_assets.py                    # writes the assets of every arc boss with a grimoire
     python3 tools/gen_arc_grimoire_assets.py --list             # only lists what it found
     python3 tools/gen_arc_grimoire_assets.py --ids foo:203040:90B0D0 bar    # explicit characters (id[:main[:accent]], hex colours), for a test or a one-off
-    python3 tools/gen_arc_grimoire_assets.py --out DIR          # write under DIR instead of src/main/resources/assets/nusmp
+    python3 tools/gen_arc_grimoire_assets.py --out DIR          # write under DIR instead of src/main/resources/assets/anime_multiverse
     python3 tools/gen_arc_grimoire_assets.py --preview sheet.png   # also a contact sheet of the books (a software render, the game is not needed)
 """
 import argparse
@@ -96,7 +96,7 @@ def write(chars, res, preview_path):
         mdl = gca.model(ident)
         gca.write_json(os.path.join(res, "models", "item", "charter_grimoire_%s.json" % ident), mdl)
         gca.write_json(os.path.join(res, "models", "item", "charter_grimoire_%s_icon.json" % ident),
-                       {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/charter_grimoire_%s_icon" % ident}})
+                       {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/charter_grimoire_%s_icon" % ident}})
         if sheet is not None:
             x, y = 240 * (i % 6), (240 + 80) * (i // 6)
             sheet.paste(gca.preview(mdl, tex), (x, y))

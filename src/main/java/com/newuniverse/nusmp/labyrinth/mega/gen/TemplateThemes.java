@@ -13,7 +13,7 @@ import java.util.Set;
  * nave of its own and a Cursed Archive could never have a reading hall of its own: a pool drew the same rooms in every sector. This is the one rule that
  * lets a template belong to a theme: a template whose id starts with a registered prefix may be drawn ONLY in sectors of the themes registered for that
  * prefix; a template that matches no prefix stays free for every theme (so the 122 rooms that exist keep working exactly as before). It is pure data
- * (no game types), loaded from {@code data/nusmp/mega/template_themes/<theme>.json} ({@code {"theme": "holy_church", "templates": ["nusmp:mega/hall/holy_church_"]}})
+ * (no game types), loaded from {@code data/anime_multiverse/mega/template_themes/<theme>.json} ({@code {"theme": "holy_church", "templates": ["anime_multiverse:mega/hall/holy_church_"]}})
  * by the generator's data loader, and consulted by the assembler when it draws a pool entry for a sector. Longest matching prefix wins, so a theme can claim
  * one folder and a more specific prefix can hand a single room to another theme.
  */

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * The ambient and act effects of one upgraded relic (1.102.0), read from {@code assets/nusmp/visual_upgrade/<relic id>.json} (written by tools/visual_upgrade/god_worn/fx.py). Pure data and
+ * The ambient and act effects of one upgraded relic (1.102.0), read from {@code assets/anime_multiverse/visual_upgrade/<relic id>.json} (written by tools/visual_upgrade/god_worn/fx.py). Pure data and
  * parsing, no game classes, so the tables are unit-tested and the server (act effects) and the client (ambient layers) read the very same file from the jar.
  * <pre>
  * { "id": "...", "layers": [ { "name": "idle_motes", "kind": "motes", "particle": "minecraft:end_rod" | "dust", "color": "FFF0C0", "size": 1.0, "per_second": 6,
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public final class UpgradeFxData {
     /** The layer kinds the client knows. */
     public static final List<String> KINDS = List.of("motes", "ring", "line", "orbit", "trail", "ground");
-    public static final String DIR = "/assets/nusmp/visual_upgrade/";
+    public static final String DIR = "/assets/anime_multiverse/visual_upgrade/";
 
     /** One ambient layer. Arrays are never null (zeros when the file leaves them out). */
     public record Layer(String name, String kind, String particle, int color, float size, float perSecond, double[] box, double[] center, double radius, double spin, String plane, double[] from,

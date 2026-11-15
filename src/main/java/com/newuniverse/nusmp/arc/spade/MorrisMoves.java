@@ -184,7 +184,7 @@ final class MorrisMoves {
             boolean cut = SpadeFx.antiMagic(best);
             if (b.strike(best, (float) (damage * SpadeFx.magicGuard(best)), true)) {
                 caught++;
-                if (best instanceof net.minecraft.world.entity.player.Player p && cut) SpadeFx.hint(p, "message.nusmp.spade.tendril_cut", "Your anti-magic cuts the tendril.");
+                if (best instanceof net.minecraft.world.entity.player.Player p && cut) SpadeFx.hint(p, "message.anime_multiverse.spade.tendril_cut", "Your anti-magic cuts the tendril.");
                 if (!cut && law.granted()) drag(b, best, BalanceLaw.controlTicks(best, 10));
             }
         }
@@ -273,7 +273,7 @@ final class MorrisMoves {
                     SpadeFx.grounded(e);
                     e.knockback(0.9, -in.x, -in.z);
                     e.hurtMarked = true;
-                    if (e instanceof net.minecraft.world.entity.player.Player p) SpadeFx.hint(p, "message.nusmp.spade.cage_wall", "The tendril wall: leave through a door (a gap in the ring).");
+                    if (e instanceof net.minecraft.world.entity.player.Player p) SpadeFx.hint(p, "message.anime_multiverse.spade.cage_wall", "The tendril wall: leave through a door (a gap in the ring).");
                 }
             }
             if (age >= closeTicks) {

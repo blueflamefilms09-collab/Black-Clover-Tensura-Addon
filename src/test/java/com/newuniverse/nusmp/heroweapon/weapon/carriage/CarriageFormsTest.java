@@ -19,7 +19,7 @@ import java.util.Set;
  * built appears in some form. The texts of the techniques and passives are checked to exist for each one and to stay plain ASCII.
  */
 class CarriageFormsTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/hero/forms/vassal_carriage.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/hero/forms/vassal_carriage.json");
 
     @Test
     void theShippedFileIsSoundAndUsesEverythingTheCarriageBuilt() throws Exception {

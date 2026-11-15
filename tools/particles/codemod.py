@@ -276,7 +276,7 @@ class FileJob:
         return self.names[simple]
 
     # -- the rewriting passes
-    DUST_HELPER = re.compile(r"(?P<ret>(?:net\.minecraft\.core\.particles\.)?SimpleParticleType)(?P<mid>\s+dust\s*\(\s*int\s+(?P<a>\w+)\s*,\s*float\s+(?P<b>\w+)\s*\)\s*\{\s*)return\s+(?:(?:[\w.]*\.)?align\(\s*(?P=a)\s*\)\s*\.type\(\)|(?:com\.newuniverse\.nusmp\.relics\.)?Fx\.dust\(\s*(?P=a)\s*,\s*(?P=b)\s*\))\s*;")
+    DUST_HELPER = re.compile(r"(?P<ret>(?:net\.minecraft\.core\.particles\.)?SimpleParticleType)(?P<mid>\s+dust\s*\(\s*int\s+(?P<a>\w+)\s*,\s*float\s+(?P<b>\w+)\s*\)\s*\{\s*)return\s+(?:(?:[\w.]*\.)?align\(\s*(?P=a)\s*\)\s*\.type\(\)|(?:com\.newuniverse\.anime_multiverse\.relics\.)?Fx\.dust\(\s*(?P=a)\s*,\s*(?P=b)\s*\))\s*;")
 
     def _dust_helper(self, src):
         """The idiom of the relic waves: 'SimpleParticleType dust(int rgb, float size) { return align(rgb).type(); }' becomes a helper that returns the colour's dyed particle."""
@@ -389,7 +389,7 @@ class FileJob:
                     continue
         # ---- RukhFx / RukhClientFx facade calls
         if not self.keep_rukh:
-            for mt in re.finditer(r"(?:\b(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*(?:client\s*\.\s*)?particle\s*\.\s*rukh\s*\.\s*))?\b(?:RukhFx|RukhClientFx)\s*\.\s*(spray|burst|stream|gather|aura)\s*\(", m):
+            for mt in re.finditer(r"(?:\b(?:com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*(?:client\s*\.\s*)?particle\s*\.\s*rukh\s*\.\s*))?\b(?:RukhFx|RukhClientFx)\s*\.\s*(spray|burst|stream|gather|aura)\s*\(", m):
                 op = mt.end() - 1
                 cl = match_close(m, op)
                 if cl < 0:
@@ -404,7 +404,7 @@ class FileJob:
         # ---- the relic helpers of relics.Fx (ring, burst, align, alignOf, dust) answer with Rukh; the Djinn keeps them, everyone else moves to FxRelic
         if not self.keep_rukh:
             relics_fx_bare = self.names["Fx"] != "Fx" and (re.search(r"^import\s+%s\.relics\.Fx\s*;" % re.escape(PKG), src, re.M) or self._package() == PKG + ".relics")
-            for mt in re.finditer(r"(?:(?<![\w.])com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*relics\s*\.\s*Fx|(?<![\w.])Fx)\s*\.\s*(ring|burst|align|alignOf|dust)\s*\(", m):
+            for mt in re.finditer(r"(?:(?<![\w.])com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*relics\s*\.\s*Fx|(?<![\w.])Fx)\s*\.\s*(ring|burst|align|alignOf|dust)\s*\(", m):
                 txt = mt.group(0)
                 if not txt.startswith("com") and not relics_fx_bare:
                     continue
@@ -420,20 +420,20 @@ class FileJob:
                 add(mt.start(), mt.end() - 1, new, "relic_fx_" + meth)
         # ---- comparisons with the Rukh type and Rukh types as values
         if not self.keep_rukh:
-            for mt in re.finditer(r"(?P<lhs>[A-Za-z_][\w.]*(?:\([^()]*\))?)\s*==\s*(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?RukhParticles\s*\.\s*(?P<w>dark|light)\(\)", m):
+            for mt in re.finditer(r"(?P<lhs>[A-Za-z_][\w.]*(?:\([^()]*\))?)\s*==\s*(?:com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?RukhParticles\s*\.\s*(?P<w>dark|light)\(\)", m):
                 tone = "%s.%s" % (self.nm("FxTone"), mt.group("w").upper())
                 add(mt.start(), mt.end(), "%s.toneOf(%s) == %s" % (self.nm("Fx"), src[mt.start("lhs"):mt.end("lhs")], tone), "rukh_compare")
-            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhParticles\s*\.\s*(light|dark)\(\)", m):
+            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhParticles\s*\.\s*(light|dark)\(\)", m):
                 tone = "%s.%s" % (self.nm("FxTone"), mt.group(1).upper())
                 add(mt.start(), mt.end(), "%s.options(%s, %s)" % (self.nm("Fx"), self.theme_at(m, mt.start()), tone), "rukh_value")
-            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhParticles\s*\.\s*of\s*\(", m):
+            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhParticles\s*\.\s*of\s*\(", m):
                 op = mt.end() - 1
                 cl = match_close(m, op)
                 if cl < 0:
                     continue
                 add(mt.start(), cl + 1, "%s.options(%s, %s)" % (self.nm("Fx"), theme_ref, src[op + 1:cl].strip()), "rukh_value")
             # ---- the Alignment type
-            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*nusmp\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhFx\s*\.\s*Alignment\b", m):
+            for mt in re.finditer(r"(?:com\s*\.\s*newuniverse\s*\.\s*anime_multiverse\s*\.\s*particle\s*\.\s*rukh\s*\.\s*)?\bRukhFx\s*\.\s*Alignment\b", m):
                 if in_import(m, mt.start()):
                     continue
                 if re.match(r"\s*\.\s*type\s*\(", m[mt.end():mt.end() + 12]):
@@ -601,7 +601,7 @@ public final class FxThemes {
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--root", default=os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp"))
+    ap.add_argument("--root", default=os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse"))
     ap.add_argument("--map", default=os.path.join(HERE, "map.json"))
     ap.add_argument("--include-relics", action="store_true", help="also process the relic waves, the client relic FX and the other relic helpers (other builders' lane)")
     ap.add_argument("--include-lanes", action="store_true", help="also process the other lanes of map.json (the rift pockets)")

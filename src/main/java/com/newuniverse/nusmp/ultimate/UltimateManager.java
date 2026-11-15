@@ -115,7 +115,7 @@ public final class UltimateManager {
     private static final EnumMap<Cancel, Integer> CANCELS = new EnumMap<>(Cancel.class);
     private static int released;
 
-    private static final ResourceLocation LOCK_SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_speed"), LOCK_JUMP = ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_jump");
+    private static final ResourceLocation LOCK_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_speed"), LOCK_JUMP = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_jump");
     private static final PerfProbe.Section PROBE = PerfProbe.section("s.ultimate.tick");
 
     // ---------------------------------------------------------------- queries
@@ -194,7 +194,7 @@ public final class UltimateManager {
         sendCircle(sl, p, s);
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 3.0f, 0.5f);
         warnNearby(sl, p, s);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.ultimate.gathering", "You gather everything you are... (sneak to let go)").withStyle(ChatFormatting.GOLD), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.ultimate.gathering", "You gather everything you are... (sneak to let go)").withStyle(ChatFormatting.GOLD), true);
         return true;
     }
 
@@ -307,7 +307,7 @@ public final class UltimateManager {
         finish(s);
         if (why != Cancel.LOGOUT && why != Cancel.SHUTDOWN && why != Cancel.DEATH && !p.isRemoved()) {
             CastAnim.play(p, CastAnim.FAIL);
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.ultimate.cancel." + why.name().toLowerCase(java.util.Locale.ROOT), UltimateRules.reason(why)).withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.ultimate.cancel." + why.name().toLowerCase(java.util.Locale.ROOT), UltimateRules.reason(why)).withStyle(ChatFormatting.GRAY), true);
         }
     }
 
@@ -512,7 +512,7 @@ public final class UltimateManager {
 
     private static void warnNearby(ServerLevel sl, ServerPlayer p, Session s) {
         double range = s.radius + UltimateRules.WARN_EXTRA_RANGE;
-        Component line = Component.translatableWithFallback("nusmp.ultimate.warning", "%s gathers an Ultimate Magic! Get away or break their concentration!", p.getName()).withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
+        Component line = Component.translatableWithFallback("anime_multiverse.ultimate.warning", "%s gathers an Ultimate Magic! Get away or break their concentration!", p.getName()).withStyle(ChatFormatting.RED, ChatFormatting.BOLD);
         int sent = 0;
         for (ServerPlayer o : sl.players()) {
             if (o == p || o.distanceToSqr(p) > range * range) continue;

@@ -22,7 +22,7 @@ import java.util.Set;
  * Where relics come from in the wild. {@link #rollUnissued} hands out a relic the world does not have yet (the God of Order's ledger decides, so
  * two chests, two Lootr openings or two Mimics can never produce the same one). Two sources use it: the chests of structures
  * ({@link RelicLootModifier}, which runs whenever a loot table under "chests/" is rolled, Lootr's per-player rolls included) and Mimics (any
- * entity whose type path is "mimic", or in the tag nusmp:relic_mimic_types: the Artifacts mod's and the Relics mod's mimics).
+ * entity whose type path is "mimic", or in the tag anime_multiverse:relic_mimic_types: the Artifacts mod's and the Relics mod's mimics).
  * 1.35.0: while {@code labyrinth.relicsExclusive} is on, Mimics drop relics only inside the Labyrinth or the legacy Living Dungeon
  * ({@code labyrinth.vault.RelicExclusivity}); off, the old behaviour above is unchanged.
  */
@@ -32,7 +32,7 @@ public final class RelicLoot {
     /** Chance a dying Mimic drops a relic of RARE to LEGEND; and the chance it drops the tame Cloak Mimic instead. */
     static final float MIMIC_CHANCE = 0.06f, CLOAK_CHANCE = 0.015f;
     static final String CLOAK_ID = "cloak_mimic_tame";
-    static final TagKey<EntityType<?>> MIMIC_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "relic_mimic_types"));
+    static final TagKey<EntityType<?>> MIMIC_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_mimic_types"));
 
     /** Game-bus listeners. */
     public static void register(IEventBus bus) { bus.addListener(RelicLoot::onDrops); }
@@ -74,7 +74,7 @@ public final class RelicLoot {
 
     /**
      * 1.35.0: whether any relic of the range could still be rolled (the dry run of {@link #rollUnissuedAll}, nothing is stamped). The
-     * {@code nusmp:relic} loot entry asks this in {@code expand} so an exhausted range drops out of a pool and a fallback entry can run.
+     * {@code anime_multiverse:relic} loot entry asks this in {@code expand} so an exhausted range drops out of a pool and a fallback entry can run.
      */
     public static boolean anyUnissued(ServerLevel level, Grade min, Grade max) {
         if (level == null || level.getServer() == null) return false;

@@ -12,7 +12,7 @@ import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-M = os.path.join(ROOT, "src/main/resources/assets/nusmp/models/item")
+M = os.path.join(ROOT, "src/main/resources/assets/anime_multiverse/models/item")
 
 IDS = "magebane_shield legendary_shield aegis_of_the_abyss celestial_support heros_shield thunder_shield calamity_wave_aegis hylian_hero_shield".split()
 
@@ -48,11 +48,11 @@ def model(i, display, blocking):
     d = {
         "parent": "minecraft:builtin/entity",
         "gui_light": "front",
-        "textures": {"particle": "nusmp:item/" + i},
+        "textures": {"particle": "anime_multiverse:item/" + i},
         "display": {k: display[k] for k in ORDER},
     }
     if not blocking:
-        d["overrides"] = [{"predicate": {"blocking": 1}, "model": "nusmp:item/" + i + "_blocking"}]
+        d["overrides"] = [{"predicate": {"blocking": 1}, "model": "anime_multiverse:item/" + i + "_blocking"}]
     return d
 
 

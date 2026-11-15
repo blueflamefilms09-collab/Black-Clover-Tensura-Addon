@@ -47,7 +47,7 @@ public final class ScreenPreview {
 
     static Map<String, String> lang() throws Exception {
         Map<String, String> out = new HashMap<>();
-        for (String f : new String[]{"src/main/resources/assets/nusmp/lang/en_us.json", "tools/lang/franchise_engravings.json", "tools/lang/engraving_codex.json"}) {
+        for (String f : new String[]{"src/main/resources/assets/anime_multiverse/lang/en_us.json", "tools/lang/franchise_engravings.json", "tools/lang/engraving_codex.json"}) {
             JsonObject o = JsonParser.parseString(Files.readString(new File(f).toPath())).getAsJsonObject();
             for (Map.Entry<String, JsonElement> e : o.entrySet()) out.put(e.getKey(), e.getValue().getAsString());
         }
@@ -82,17 +82,17 @@ public final class ScreenPreview {
         FranchiseData.Table table = FranchiseData.table();
         Map<String, TreeSet<String>> franchise = new HashMap<>();
         for (Map.Entry<String, String> e : FranchiseMap.map().items().entrySet())
-            franchise.computeIfAbsent(e.getValue(), k -> new TreeSet<>()).add(lang.getOrDefault("item.nusmp." + e.getKey(), CodexEntries.pretty(e.getKey())));
+            franchise.computeIfAbsent(e.getValue(), k -> new TreeSet<>()).add(lang.getOrDefault("item.anime_multiverse." + e.getKey(), CodexEntries.pretty(e.getKey())));
         Map<String, TreeSet<String>> carriers = new HashMap<>();
         for (String f : new String[]{"item/WeaponEngravings.java", "item/ArmorEngravings.java"})
             for (Map.Entry<String, List<String>> w : specs(f).entrySet())
-                for (String id : w.getValue()) carriers.computeIfAbsent(id.contains(":") ? id : "tensura:" + id, k -> new TreeSet<>()).add(lang.getOrDefault("item.nusmp." + w.getKey(), CodexEntries.pretty(w.getKey())));
+                for (String id : w.getValue()) carriers.computeIfAbsent(id.contains(":") ? id : "tensura:" + id, k -> new TreeSet<>()).add(lang.getOrDefault("item.anime_multiverse." + w.getKey(), CodexEntries.pretty(w.getKey())));
         List<CodexEntries.Own> own = new ArrayList<>();
-        File[] files = new File("src/main/resources/data/nusmp/enchantment").listFiles((d, n) -> n.endsWith(".json") && !n.startsWith("fr_"));
+        File[] files = new File("src/main/resources/data/anime_multiverse/enchantment").listFiles((d, n) -> n.endsWith(".json") && !n.startsWith("fr_"));
         java.util.Arrays.sort(files);
         for (File f : files) {
             String id = f.getName().replace(".json", "");
-            own.add(new CodexEntries.Own(id, "main", 1, carriers.getOrDefault("nusmp:" + id, new TreeSet<>())));
+            own.add(new CodexEntries.Own(id, "main", 1, carriers.getOrDefault("anime_multiverse:" + id, new TreeSet<>())));
         }
         List<CodexEntries.TensuraRef> tensura = new ArrayList<>();
         for (Map.Entry<String, TreeSet<String>> e : new java.util.TreeMap<>(carriers).entrySet())

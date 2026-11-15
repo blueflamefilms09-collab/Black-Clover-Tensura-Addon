@@ -42,7 +42,7 @@ public final class ThirdEyeBond {
                     b -> b != fallen && b.isAlive() && EyeBondRules.ragesOn(id, b.character().id()));
             for (ArcBoss b : others) b.enrage(fallen.character().name());
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] the Third Eye bond failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the Third Eye bond failed: {}", e.toString());
         }
     }
 

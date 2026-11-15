@@ -17,7 +17,7 @@ sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
 import rr_halls as H  # noqa: E402
 
-MANIFEST = os.path.join(L.RES, "data", "nusmp", "mega", "rooms_rebuilt.json")
+MANIFEST = os.path.join(L.RES, "data", "anime_multiverse", "mega", "rooms_rebuilt.json")
 
 ROOF = {"groin": "groin (cross) vault, one bay per module", "barrel": "barrel vault along the long axis", "flat": "the old roof height, coffered", "gable": "A-frame (gable) roof",
         "dome": "dome over the middle", "hip": "hip (pyramid) roof"}

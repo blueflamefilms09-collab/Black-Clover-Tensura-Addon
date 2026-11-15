@@ -28,7 +28,7 @@ public final class SpiritDiveWindSelfTests {
     }
 
     private static boolean asset(String path) {
-        return SpiritDiveWindSelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null;
+        return SpiritDiveWindSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null;
     }
 
     private static boolean finite(float[] a, int n) {

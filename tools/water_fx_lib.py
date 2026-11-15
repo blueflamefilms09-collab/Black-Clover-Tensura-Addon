@@ -13,7 +13,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 sys.dont_write_bytecode = True
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 class Canvas:

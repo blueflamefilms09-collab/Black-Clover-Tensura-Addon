@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * Why: the Black Bulls of the owner's brief (Yami, Asta, Noelle and their squad) are friends the player meets in the Sanctuary Hub, not enemies, so each of
- * them is only a record for the one shared NPC entity {@code nusmp:arc_npc}: a name, two colours, the magic they fight with, and the moment they show up. Their
- * words live in {@code data/nusmp/arc/dialogue/<id>.json} and their look in the art kit's {@code tools/arc/char_<id>.py}; no Java class per person. They are
+ * them is only a record for the one shared NPC entity {@code anime_multiverse:arc_npc}: a name, two colours, the magic they fight with, and the moment they show up. Their
+ * words live in {@code data/anime_multiverse/arc/dialogue/<id>.json} and their look in the art kit's {@code tools/arc/char_<id>.py}; no Java class per person. They are
  * listed together in one place because they come as one group with one rule (below), so the lead registers them with a single call from
  * {@code ArcCharacters.bootstrap()}.
  *

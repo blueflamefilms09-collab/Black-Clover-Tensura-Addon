@@ -40,7 +40,7 @@ class SpiritControlSourceScanTest {
     @Test
     void noSpiritKeyRegistrationIsLeftAnywhere() throws IOException {
         List<String> bad = new ArrayList<>();
-        Pattern spiritKey = Pattern.compile("key\\.nusmp\\.(sylph|undine_link|gnome|fire_salamander|spirit_(light|dark|space)_\\w+)");
+        Pattern spiritKey = Pattern.compile("key\\.anime_multiverse\\.(sylph|undine_link|gnome|fire_salamander|spirit_(light|dark|space)_\\w+)");
         for (Path p : javaIn(SRC)) {
             String c = code(p);
             if (spiritKey.matcher(c).find()) bad.add(SRC.relativize(p) + " registers or names a spirit key");
@@ -190,7 +190,7 @@ class SpiritControlSourceScanTest {
     void everyTranslatableKeyOfThePackageIsInTheLangFragment() throws IOException {
         JsonObject frag = JsonParser.parseString(Files.readString(Path.of("tools/lang/spirit_control.json"), StandardCharsets.UTF_8)).getAsJsonObject();
         List<String> missing = new ArrayList<>();
-        Pattern key = Pattern.compile("\"(nusmp\\.spirit_control\\.[a-z_]+)\"");
+        Pattern key = Pattern.compile("\"(anime_multiverse\\.spirit_control\\.[a-z_]+)\"");
         for (Path p : javaIn(CTL)) {
             Matcher m = key.matcher(code(p));
             while (m.find()) if (!frag.has(m.group(1))) missing.add(m.group(1));

@@ -47,6 +47,6 @@ public final class SquadEvents {
     private static void warn(String what, Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The squad layer failed once in {} and goes on: {}", what, t.toString(), t);
+        LOG.warn("[anime_multiverse] The squad layer failed once in {} and goes on: {}", what, t.toString(), t);
     }
 }

@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Spirit Dive, Djinn-equip style (the {@code DJINN} look, the default of {@link SpiritDiveLook#look()}): the Spirit Dive of Wind, Fire, Water and Earth drawn as a FULL SET OF PLATES on the player's own
  * body, forged on piece by piece, the way the Djinn Full Equip is (client.relics.djinn.DjinnArmorLayer). The pieces are listed by {@link SpiritDiveDjinnPieces}; each is a geo model with an engraved
- * glow map ({@code assets/nusmp/geo/entity/sdj_<element>_<s|c>_arm_<piece>}, made by tools/gen_spirit_dive_djinn.py), anchored on the model part it was built for (so it follows every crouch, swing
+ * glow map ({@code assets/anime_multiverse/geo/entity/sdj_<element>_<s|c>_arm_<piece>}, made by tools/gen_spirit_dive_djinn.py), anchored on the model part it was built for (so it follows every crouch, swing
  * and swim) and forged in / shattered out by {@link EquipAnimation}, the Djinn's own arithmetic: staggered by the piece's delay, flying in from its own side while it fades up and grows from 85 to
  * 100 percent over 8 ticks, shattering out over the last 18 ticks of the lease. Nothing is put in an armour slot.
  *

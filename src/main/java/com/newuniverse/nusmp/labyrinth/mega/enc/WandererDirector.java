@@ -65,7 +65,7 @@ public final class WandererDirector {
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
     /** The entity tag of a wandering boss, and the persistent data that binds it to its sector. */
     public static final String TAG = "nusmp_wanderer", SECTOR = "nusmp_wanderer_sector";
-    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_wanderer_health"), SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_wanderer_speed");
+    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_wanderer_health"), SPEED_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_wanderer_speed");
     private static final int THINK_EVERY = 10, GRACE = 600, MIN_CHASE = 60;
     private static final double SPAWN_FAR = 40.0, SPAWN_NEAR = 28.0, METER_HEARD = 3.0;
 
@@ -211,7 +211,7 @@ public final class WandererDirector {
         SoundEvent rumble = sound("minecraft:entity.warden.nearby_closest");
         for (ServerPlayer p : who) {
             if (rumble != null) level.playSound(null, p.getX(), p.getY(), p.getZ(), rumble, SoundSource.AMBIENT, 0.7f, 0.5f);
-            EncounterCue.tell(p, "message.nusmp.mega.enc.wanderer_spawn");
+            EncounterCue.tell(p, "message.anime_multiverse.mega.enc.wanderer_spawn");
         }
     }
 
@@ -550,6 +550,6 @@ public final class WandererDirector {
     private static void warn(String what, Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The wandering boss director failed in {} (further failures are not logged)", what, t);
+        LOG.warn("[anime_multiverse] The wandering boss director failed in {} (further failures are not logged)", what, t);
     }
 }

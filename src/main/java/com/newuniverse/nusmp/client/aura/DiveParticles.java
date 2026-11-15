@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * Spirit Dive remake: the particle trail of a dive, spawned on the CLIENT from the lease the server already sent (no packet of its own): the custom particles of the theme of the dive
- * ({@code spirit_dive.<wind|fire|water|earth|yuno|fuegoleon|noelle>} in data/nusmp/particle_themes.json, written by tools/particles/gen_themes.py), thrown round the body with the motion of the
+ * ({@code spirit_dive.<wind|fire|water|earth|yuno|fuegoleon|noelle>} in data/anime_multiverse/particle_themes.json, written by tools/particles/gen_themes.py), thrown round the body with the motion of the
  * element (Wind swirls, Fire rises, Water drifts out, Earth lifts as dust). Bounded three times over: only dives within {@link SpiritDiveTier#TRAIL_RANGE} blocks, at most
  * {@link SpiritDiveTier#TRAIL_PLAYERS} dives per tick ({@link SpiritDiveTier#trailCount}: one every third tick for the standard tier, two a tick for the character tier), and every particle goes
  * through {@code Fx} (the client particle budget {@code PerfBudgets.clientParticles}, the effect quality and the distance bands). On the tick after a dive begins a burst of

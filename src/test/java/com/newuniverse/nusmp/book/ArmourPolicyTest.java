@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: the armour policy is data (data/nusmp/armour_policy.json), and a wrong line in data fails silently in play: a magic missing from the file would read as "no armour", a typo in a
+ * Why: the armour policy is data (data/anime_multiverse/armour_policy.json), and a wrong line in data fails silently in play: a magic missing from the file would read as "no armour", a typo in a
  * page id would make an armour that nothing can put on, and a page that casting a bolt can reach would bring the old "every cast equips" back. This test reads the SHIPPED file with
  * the real parser (any complaint fails the build) and checks it against the REAL list of magics (MagicType.java) and the REAL page ids of the books (the sources under book/):
  * every magic has an entry; the armoured share is small; every armour or form page named exists; no page that is not an armour or form page answers anything but "no armour
@@ -42,7 +42,7 @@ class ArmourPolicyTest {
     private static final Path MAGIC_TYPE = ROOT.resolve("src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
     private static final Path BOOKS = ROOT.resolve("src/main/java/com/newuniverse/nusmp/book");
     private static final Path SHAPES = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/VfxShape.java");
-    private static final Path FILE = ROOT.resolve("src/main/resources/data/nusmp/armour_policy.json");
+    private static final Path FILE = ROOT.resolve("src/main/resources/data/anime_multiverse/armour_policy.json");
     private static final Path SNAPSHOT = ROOT.resolve("src/test/resources/armour_policy/page_ids_1_98.txt");
     private static final Pattern PAGE = Pattern.compile("(?:\\b(?:starter|mid|zone|signature|daily)|new BookPage)\\(\\s*\"([a-z0-9_]+)\"");
     /** The pages every grimoire has besides its family pages (GrimoireBook.pages()). */

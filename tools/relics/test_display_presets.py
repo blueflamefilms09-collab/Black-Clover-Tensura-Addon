@@ -80,7 +80,7 @@ class MathsTest(unittest.TestCase):
         self.assertGreater(s, exact - 0.001 - 1e-12)
 
     def test_the_java_guard_repeats_the_same_numbers(self):
-        java = os.path.join(dp.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "item", "OversizeGuard.java")
+        java = os.path.join(dp.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "item", "OversizeGuard.java")
         with open(java, encoding="utf-8") as f:
             text = f.read()
         self.assertEqual(float(re.search(r"APPARENT_MAX = ([0-9.]+)f", text).group(1)), dp.APPARENT_MAX_BLOCKS)
@@ -100,7 +100,7 @@ def model(first_scale=0.68, third_scale=1.5, parent="minecraft:builtin/entity"):
         disp["thirdperson_" + side] = {"rotation": list(r1), "translation": [0, 4, 0.5], "scale": [third_scale] * 3}
         disp["firstperson_" + side] = {"rotation": list(r2), "translation": [1.13, 3.2, 1.13], "scale": [first_scale] * 3}
     disp["gui"] = {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}
-    return {"parent": parent, "textures": {"particle": "nusmp:item/x"}, "display": disp}
+    return {"parent": parent, "textures": {"particle": "anime_multiverse:item/x"}, "display": disp}
 
 
 class FilesTest(unittest.TestCase):

@@ -10,11 +10,11 @@ import java.util.Set;
  * (x, y, z) on the mesh and the share of the mesh length (from the low y end) it lies at. Sources, strongest first:
  * <ol>
  *   <li>{@link Source#GRIPXYZ}: the mesh states the point itself (a {@code gripxyz x y z} line, for a generator that knows);</li>
- *   <li>{@link Source#OVERRIDE}: a per-weapon fraction in assets/nusmp/weapon_grips.json (checked by eye on the preview sheets);</li>
+ *   <li>{@link Source#OVERRIDE}: a per-weapon fraction in assets/anime_multiverse/weapon_grips.json (checked by eye on the preview sheets);</li>
  *   <li>{@link Source#DIRECTIVE}: the mesh's {@code grip <fraction>} line (derived from its part names by tools/relics/mesh_lib.py, or verified by hand);</li>
  *   <li>{@link Source#HANDLE}: a sword-like class (dagger to greatsword, cleaver): the middle of the handle, i.e. of the narrow stretch between the pommel and the first
  *       section that is much wider (the guard), read from 64 cross-sections of the body;</li>
- *   <li>{@link Source#CLASS}: the grip fraction of the weapon's class (assets/nusmp/weapon_classes.json: 0.20 for a sword, 0.33 for a spear, 0.40 for a staff, 0.50 for a bow
+ *   <li>{@link Source#CLASS}: the grip fraction of the weapon's class (assets/anime_multiverse/weapon_classes.json: 0.20 for a sword, 0.33 for a spear, 0.40 for a staff, 0.50 for a bow
  *       and a held item), which is also where the oversize rule of first person holds a long weapon.</li>
  * </ol>
  */

@@ -75,8 +75,8 @@ public enum ZagredWord {
     /** True when someone holding anti-magic is not touched by it. */
     public boolean antiMagicExempt() { return antiMagicExempt; }
 
-    /** The language key of the title ({@code message.nusmp.zagred.word.<id>}). */
-    public String titleKey() { return "message.nusmp.zagred.word." + id; }
+    /** The language key of the title ({@code message.anime_multiverse.zagred.word.<id>}). */
+    public String titleKey() { return "message.anime_multiverse.zagred.word." + id; }
 
     /** The language key of the counter line. */
     public String hintKey() { return titleKey() + ".hint"; }

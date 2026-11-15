@@ -36,10 +36,10 @@ public final class VoiceSelfTests {
     private static SelfTests.Result voices(MinecraftServer server) throws Exception {
         List<String> bad = new ArrayList<>();
         JsonObject doc;
-        try (Reader in = new InputStreamReader(VoiceSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json"), StandardCharsets.UTF_8)) {
+        try (Reader in = new InputStreamReader(VoiceSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json"), StandardCharsets.UTF_8)) {
             doc = JsonParser.parseReader(in).getAsJsonObject();
         } catch (NullPointerException | IllegalStateException ex) {
-            return SelfTests.Result.fail("assets/nusmp/sounds.json is not on the class path or not an object");
+            return SelfTests.Result.fail("assets/anime_multiverse/sounds.json is not on the class path or not an object");
         }
         long bytes = 0;
         int files = 0;
@@ -53,7 +53,7 @@ public final class VoiceSelfTests {
                 bad.add("no sounds.json entry " + VoiceCatalog.eventId(line));
                 continue;
             }
-            String path = "/assets/nusmp/sounds/" + VoiceCatalog.filePath(line) + ".ogg";
+            String path = "/assets/anime_multiverse/sounds/" + VoiceCatalog.filePath(line) + ".ogg";
             try (InputStream in = VoiceSelfTests.class.getResourceAsStream(path)) {
                 if (in == null) {
                     bad.add("missing file " + path);

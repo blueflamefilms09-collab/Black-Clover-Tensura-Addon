@@ -28,7 +28,7 @@ public abstract class GrimoirePageSkill extends Skill {
     protected GrimoirePageSkill(MagicType magic) {
         super(SkillType.EXTRA);
         this.magic = magic;
-        this.icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
     }
 
     @Override public ResourceLocation getSkillIcon() { return icon; }

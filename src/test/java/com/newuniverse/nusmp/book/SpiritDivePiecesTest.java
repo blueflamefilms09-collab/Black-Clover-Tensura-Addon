@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * that every piece the lists name has its geo model, texture and glow map in the resources. Pure (no game classes); the working directory is the project root.
  */
 class SpiritDivePiecesTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     @Test
     void styleNumberRoundTripsForEveryElementAndStage() {

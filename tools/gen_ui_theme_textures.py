@@ -3,7 +3,7 @@
 Textures of the Anime Multiverse UI theme (client/ui/theme, docs/gui_theme.md): the layers of the animated magic circle. Every texture is
 white with alpha, 256x256, so that the game tints it (GuiGraphics.setColor) and draws it rotated and, for the glow, additively.
 Each layer comes in three size tiers (name.png 256 px, name_128.png, name_64.png with fatter strokes), and the game picks the tier nearest to
-the size it draws, so a thin rotating line never shrinks below about a pixel. They live in assets/nusmp/textures/gui/theme/ and each has a .mcmeta asking for linear filtering ("blur"), because the layers are drawn rotated.
+the size it draws, so a thin rotating line never shrinks below about a pixel. They live in assets/anime_multiverse/textures/gui/theme/ and each has a .mcmeta asking for linear filtering ("blur"), because the layers are drawn rotated.
 
     circle_outer.png   double ring, 72 tick marks, a band of 24 rune glyphs
     circle_star.png    ring with a hexagram, vertex nodes and an inner hexagon
@@ -26,7 +26,7 @@ import sys
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "gui", "theme")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "theme")
 
 BASE = 256
 SS = 4                      # supersampling

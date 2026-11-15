@@ -2,11 +2,11 @@ package com.newuniverse.nusmp.vfx.client;
 
 import net.minecraft.resources.ResourceLocation;
 
-/** VFX textures (assets/nusmp/textures/particle). All are white so vertex color tints them. */
+/** VFX textures (assets/anime_multiverse/textures/particle). All are white so vertex color tints them. */
 public final class VfxTextures {
     private VfxTextures() {}
 
-    private static ResourceLocation t(String n) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/" + n + ".png"); }
+    private static ResourceLocation t(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/" + n + ".png"); }
 
     public static final ResourceLocation MAGIC_CIRCLE = t("magic_circle");
     public static final ResourceLocation RUNE_RING = t("rune_ring");

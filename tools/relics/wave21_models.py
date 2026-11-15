@@ -4,7 +4,7 @@
     W21_PREVIEW=<dir> python3 -B tools/relics/wave21_models.py rift_breaker      (also renders the preview beside the card)
 
 Run tools/relics/wave21_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex normals), textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px skin
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex normals), textures/entity/weapon/<id>.png and <id>_glow.png (one 512 px skin
 each). Budget: 8 to 14 named parts and at most 2800 quads per weapon. Sizes follow the 1.34 size rule: the mesh is built at the natural length of its
 weapon class (the lead's size and orientation tools run afterwards).
 

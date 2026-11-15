@@ -84,7 +84,7 @@ final class CurseEvents {
     private static void failed(String what, RuntimeException e) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The Curse Series failed in its {} handler and carried on (further failures are not logged): {}", what, e.toString(), e);
+        LOG.warn("[anime_multiverse] The Curse Series failed in its {} handler and carried on (further failures are not logged): {}", what, e.toString(), e);
     }
 
     // ------------------------------------------------------------------ the clock

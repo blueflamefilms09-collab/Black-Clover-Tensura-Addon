@@ -8,7 +8,7 @@
 A line is REGISTERED only when its ogg exists, so the game never lists a line it cannot play. Registering means (all idempotent, nothing of other roles is touched):
   * tools/audio/voice_lines.json   the gnome entries are rewritten, in the order of LINES below, after everything else (the order of VoiceCatalog)
   * tools/audio/voice_report.json  the gnome entries (seconds, bytes) are merged in
-  * assets/nusmp/sounds.json       the events 'voice.gnome_<line>' (no subtitle) are appended when missing
+  * assets/anime_multiverse/sounds.json       the events 'voice.gnome_<line>' (no subtitle) are appended when missing
   * VoiceCatalog.java              the list GNOME_LINES is rewritten to the registered lines
 The voice: ElevenLabs library voice "Garrison - Rugged and Stoic" (id xHxp1c5pQOzhWjBqV78M), model eleven_v4, one generation per line, no cloning of any person. The take of every line is generated
 with the prompt below (the audio tags [deep, slow, gravelly] set the delivery). Needs ffmpeg and ffprobe on the path."""
@@ -21,11 +21,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 VOICE_ID = "xHxp1c5pQOzhWjBqV78M"
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "voice", "gnome")
-SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice", "gnome")
+SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 LINES_JSON = os.path.join(HERE, "voice_lines.json")
 REPORT = os.path.join(HERE, "voice_report.json")
-CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "audio", "voice", "VoiceCatalog.java")
+CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "audio", "voice", "VoiceCatalog.java")
 
 # suffix -> prompt. The group (the part before the number) is the situation of GnomeMoodRules.
 LINES = {
@@ -100,7 +100,7 @@ def register():
     for s in got:
         key = '"voice.%s"' % line_id(s)
         if key not in raw:
-            add.append('  %s: { "sounds": [ { "name": "nusmp:voice/gnome/%s", "stream": false } ] }' % (key, line_id(s)))
+            add.append('  %s: { "sounds": [ { "name": "anime_multiverse:voice/gnome/%s", "stream": false } ] }' % (key, line_id(s)))
     if add:
         end = raw.rstrip().rfind("}")
         raw = raw[:end].rstrip() + ",\n" + ",\n".join(add) + "\n}\n"

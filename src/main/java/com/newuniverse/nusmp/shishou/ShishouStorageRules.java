@@ -26,7 +26,7 @@ public final class ShishouStorageRules {
     public static Refusal refusal(String itemId, boolean empty, boolean hasContainer, boolean hasBundle, boolean livingThing) {
         if (empty) return Refusal.EMPTY;
         String id = itemId == null ? "" : itemId.toLowerCase(Locale.ROOT);
-        if (id.equals("nusmp:" + ShishouRules.ID) || id.endsWith(":" + ShishouRules.ID)) return Refusal.SELF;
+        if (id.equals("anime_multiverse:" + ShishouRules.ID) || id.endsWith(":" + ShishouRules.ID)) return Refusal.SELF;
         if (livingThing) return Refusal.LIVING;
         if (hasBundle || id.endsWith("bundle")) return Refusal.BUNDLE;
         if (hasContainer) return Refusal.CONTAINER;

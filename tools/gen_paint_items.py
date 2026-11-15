@@ -17,7 +17,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw
 
-ROOT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ROOT, "textures", "item")
 MOD = os.path.join(ROOT, "models", "item")
 PAINTS = [("ink", (0x3A, 0x7B, 0xFF)), ("fire", (0xFF, 0x5A, 0x3A)), ("water", (0x4A, 0xA8, 0xFF)), ("ice", (0x8A, 0xE6, 0xFF)),
@@ -153,8 +153,8 @@ def palette_model(sel):
                     "faces": {d: {"texture": "#paint", "uv": uv} for d in ("south", "east", "west", "up", "down")}})
     return {
         "gui_light": "front",
-        "textures": {"particle": "nusmp:item/paint_studio", "wood": "nusmp:item/paint_studio", "edge": "nusmp:item/paint_studio",
-                     "paint": "nusmp:item/paint_pools"},
+        "textures": {"particle": "anime_multiverse:item/paint_studio", "wood": "anime_multiverse:item/paint_studio", "edge": "anime_multiverse:item/paint_studio",
+                     "paint": "anime_multiverse:item/paint_pools"},
         "elements": els,
         "display": {
             "thirdperson_righthand": {"rotation": [-25, 0, 0], "translation": [0, 3, 1.5], "scale": [0.62, 0.62, 0.62]},
@@ -188,7 +188,7 @@ def brush_model(sel):
     ]
     return {
         "gui_light": "front",
-        "textures": {"particle": "nusmp:item/paint_studio", "wood": "nusmp:item/paint_studio", "paint": "nusmp:item/paint_pools"},
+        "textures": {"particle": "anime_multiverse:item/paint_studio", "wood": "anime_multiverse:item/paint_studio", "paint": "anime_multiverse:item/paint_pools"},
         "elements": els,
         "display": {
             "thirdperson_righthand": {"rotation": [0, -90, 55], "translation": [0, 4.0, 0.5], "scale": [0.85, 0.85, 0.85]},
@@ -213,7 +213,7 @@ def main():
     specular_maps()
     for base, fn in (("paint_palette", palette_model), ("paint_brush", brush_model)):
         root = fn(0)
-        root["overrides"] = [{"predicate": {"custom_model_data": k + 1}, "model": f"nusmp:item/{base}_{PAINTS[k][0]}"} for k in range(1, len(PAINTS))]
+        root["overrides"] = [{"predicate": {"custom_model_data": k + 1}, "model": f"anime_multiverse:item/{base}_{PAINTS[k][0]}"} for k in range(1, len(PAINTS))]
         write(base, root)
         for k in range(1, len(PAINTS)):
             write(f"{base}_{PAINTS[k][0]}", fn(k))

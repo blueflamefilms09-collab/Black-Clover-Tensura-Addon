@@ -125,7 +125,7 @@ public final class FireCasting {
                 if (level >= 1) spiral(p, s, level);
             } else {
                 s.broke = true;
-                say(p, s, "nusmp.firecast.spent", "The spiral stops winding: no mana left.", ChatFormatting.RED);
+                say(p, s, "anime_multiverse.firecast.spent", "The spiral stops winding: no mana left.", ChatFormatting.RED);
             }
         }
         if (heldTicks == FireCastRules.CHARGE_FREE_TICKS + 1) CastAnim.play(p, CastAnim.FIRE_CHARGE);
@@ -151,7 +151,7 @@ public final class FireCasting {
             s.armedMode = mode;
             s.armedUntil = now + FireCastRules.ARM_TICKS;
             int hits = FireCastRules.finisherHits(page.costPercent(), ManaLaw.zoneActive(p));
-            say(p, s, "nusmp.firecast.ready", "Ready: " + page.name() + ". Punch " + hits + " times to release it.", ChatFormatting.GOLD);
+            say(p, s, "anime_multiverse.firecast.ready", "Ready: " + page.name() + ". Punch " + hits + " times to release it.", ChatFormatting.GOLD);
             return true;
         }
         if (st == FireStyle.LEOPOLD) {

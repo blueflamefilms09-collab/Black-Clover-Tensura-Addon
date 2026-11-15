@@ -50,7 +50,7 @@ public abstract class GrimoireBook extends Skill {
     private int builtVersion;
 
     protected GrimoireBook(MagicType magic, int color) {
-        this(magic, color, ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png"));
+        this(magic, color, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png"));
     }
 
     protected GrimoireBook(MagicType magic, int color, ResourceLocation icon) {
@@ -65,7 +65,7 @@ public abstract class GrimoireBook extends Skill {
         super(type);
         this.magic = magic;
         this.color = color;
-        this.icon = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
+        this.icon = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png");
     }
 
     // ---------------------------------------------------------------- 1.27.0: what a book calls itself (a merged book answers dynamically)
@@ -651,7 +651,7 @@ public abstract class GrimoireBook extends Skill {
             i.getOrCreateTag().putLong("CataclysmUntil", p.level().getGameTime() + 120);
             p.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 120, 2));
             com.newuniverse.nusmp.blackclover.TimedModifiers.apply(p, net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE,
-                    ResourceLocation.fromNamespaceAndPath("nusmp", "cataclysm_kb"), 1.0, 120);
+                    ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cataclysm_kb"), 1.0, 120);
             b.spiritFx(p, VfxShape.FX_SPIRIT_CATACLYSM, from, from, 1.2f, true);
             SpellRuntime.zone(p.serverLevel(), 120, 10, age -> {
                 for (LivingEntity t : around(p, p.position(), 4 * size(i, p))) b.hurt(i, p, t, mode, 6f);
@@ -697,7 +697,7 @@ public abstract class GrimoireBook extends Skill {
         if (now < i.getOrCreateTag().getLong("DiveUntil") && !com.newuniverse.nusmp.relics.Severance.isSevered(p)) {      // 1.45.0: severed, the upkeep waits (nothing is drained, nothing ends)
             SpiritDiveUpkeep.Verdict verdict = diveVerdict(p);      // one decision (book.SpiritDiveUpkeep): the gate, then the pay (a creative player pays nothing)
             if (verdict != SpiritDiveUpkeep.Verdict.HOLD) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").info("nusmp spirit dive ended: {} ({}, creative={})", verdict.reason(), p.getGameProfile().getName(), p.isCreative());
+                org.slf4j.LoggerFactory.getLogger("anime_multiverse").info("anime_multiverse spirit dive ended: {} ({}, creative={})", verdict.reason(), p.getGameProfile().getName(), p.isCreative());
                 i.getOrCreateTag().putLong("DiveUntil", now);
                 if (diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, diveArmor());
                 SpiritDiveForm.end(p, this);

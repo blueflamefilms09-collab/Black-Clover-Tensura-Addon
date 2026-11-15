@@ -4,7 +4,7 @@ The two Landings (templates `structure/mega/landing/landing_a` and `landing_b`, 
 a Landing is the first room of every region, so the sectors must not all begin in the same hall; A is the stone-brick WORKSHOP of the owner's first
 reference picture (columns with iron bars, window slits with shutters, work stations, a hearth, hay beds), B is the purple deepslate VAULT of the
 second (chequerboard floor, a balcony reached by a stair, chains and cages, wall niches with lanterns and chests). Both: four doors at the centre of
-each side (the generator attaches one to the previous sector and fills the others), the way home (`nusmp:labyrinth_exit` in a framed alcove, with a
+each side (the generator attaches one to the previous sector and fills the others), the way home (`anime_multiverse:labyrinth_exit` in a framed alcove, with a
 sign), an arrival marker, seats, hearths and beds for the rest system, two patrol points, light on every floor cell.
 """
 import mega_safe_lib as S
@@ -13,7 +13,7 @@ from mega_safe_lib import *  # noqa: F401,F403
 
 # ------------------------------------------------------------------------------------------------------------------------ shared pieces
 def exit_gate(sr, side, lat, y0=None):
-    """The way home: a 3x3 plane of `nusmp:labyrinth_exit` blocks standing in the inner wall layer of `side`'s wall, in a framed recess (polished
+    """The way home: a 3x3 plane of `anime_multiverse:labyrinth_exit` blocks standing in the inner wall layer of `side`'s wall, in a framed recess (polished
     pillars, a chiselled lintel), centred at lateral `lat`; the outer wall layer behind it stays solid. The block has no collision: a player walks
     into it. Above the lintel a wall sign says what it is. The ARRIVAL marker goes 3 cells in front (`Wall.xz(lat, 3)`)."""
     y0 = sr.stand if y0 is None else y0

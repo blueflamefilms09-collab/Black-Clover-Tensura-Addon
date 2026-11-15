@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * event has its entry in sounds.json, every entry its files (mono Ogg Vorbis, short), every file an entry, every subtitle a line in the lang fragment, the older entries are still there.
  */
 class SpiritSpaceAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp"), SOUNDS = ASSETS.resolve("sounds"), LANG = Path.of("tools/lang/spirit_space.json");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse"), SOUNDS = ASSETS.resolve("sounds"), LANG = Path.of("tools/lang/spirit_space.json");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 
@@ -201,7 +201,7 @@ class SpiritSpaceAssetsTest {
             if (id.contains(".voice_")) voiceVariants += sounds.size();
             for (JsonElement s : sounds) {
                 String name = s.getAsJsonObject().get("name").getAsString();
-                if (!name.startsWith("nusmp:spirit_space/")) bad.add(id + ": odd sound name " + name);
+                if (!name.startsWith("anime_multiverse:spirit_space/")) bad.add(id + ": odd sound name " + name);
                 Path f = SOUNDS.resolve(name.substring(name.indexOf(':') + 1) + ".ogg");
                 if (!Files.exists(f)) { bad.add(id + ": missing file " + f); continue; }
                 Ogg ogg = readOgg(f);
@@ -224,7 +224,7 @@ class SpiritSpaceAssetsTest {
         for (String key : doc.keySet()) {
             if (!key.startsWith("spirit_space.")) continue;
             if (!events.contains(key)) bad.add("entry " + key + " has no sound event");
-            for (JsonElement s : doc.getAsJsonObject(key).getAsJsonArray("sounds")) named.add(SOUNDS.resolve(s.getAsJsonObject().get("name").getAsString().substring("nusmp:".length()) + ".ogg").toString().replace('\\', '/'));
+            for (JsonElement s : doc.getAsJsonObject(key).getAsJsonArray("sounds")) named.add(SOUNDS.resolve(s.getAsJsonObject().get("name").getAsString().substring("anime_multiverse:".length()) + ".ogg").toString().replace('\\', '/'));
         }
         try (Stream<Path> files = Files.walk(SOUNDS.resolve("spirit_space"))) {
             for (Path f : (Iterable<Path>) files.filter(x -> x.toString().endsWith(".ogg"))::iterator) if (!named.contains(f.toString().replace('\\', '/'))) bad.add("no entry names the file " + f);
@@ -244,9 +244,9 @@ class SpiritSpaceAssetsTest {
         for (var e : lang.entrySet()) assertTrue(e.getValue().isJsonPrimitive() && e.getValue().getAsJsonPrimitive().isString() && !e.getValue().getAsString().isBlank(), "flat string lines only: " + e.getKey());
         for (String id : expectedEvents()) {
             String key = doc.getAsJsonObject(id).get("subtitle").getAsString();
-            assertEquals("subtitles.nusmp." + id, key, id + " subtitle key");
+            assertEquals("subtitles.anime_multiverse." + id, key, id + " subtitle key");
             assertTrue(lang.has(key), "no lang line for " + key);
         }
-        for (String key : new String[]{"key.nusmp.spirit_space_link", "key.nusmp.spirit_space_cycle", "key.nusmp.spirit_space_use", "nusmp.spirit_space.linked", "nusmp.spirit_space.dimension"}) assertTrue(lang.has(key), key);
+        for (String key : new String[]{"key.anime_multiverse.spirit_space_link", "key.anime_multiverse.spirit_space_cycle", "key.anime_multiverse.spirit_space_use", "anime_multiverse.spirit_space.linked", "anime_multiverse.spirit_space.dimension"}) assertTrue(lang.has(key), key);
     }
 }

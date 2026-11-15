@@ -27,7 +27,7 @@ import org.joml.Matrix4f;
  * no per-frame allocation, no system clock, and every pedestal in view is in step.
  */
 public final class RelicPedestalRenderer implements BlockEntityRenderer<RelicPedestalBlockEntity> {
-    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png");
+    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png");
     private static final float TURN_TICKS = 120f;        // one turn in six seconds
     private static final float HOVER = 0.9f;             // the pivot of the item above the block's bottom
     private static final float BOB = 0.05f;

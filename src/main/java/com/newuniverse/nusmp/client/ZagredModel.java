@@ -28,7 +28,7 @@ import net.minecraft.world.entity.HumanoidArm;
  * </ul>
  */
 public class ZagredModel extends EntityModel<ZagredBossEntity> implements ArmedModel {
-    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "zagred_true"), "main");
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "zagred_true"), "main");
     private static final float BODY_SCALE = 0.55f;
 
     private final ModelPart root, body, head, armR, armL, forearmR, forearmL, handR, handL, legR, legL, shinR, shinL,

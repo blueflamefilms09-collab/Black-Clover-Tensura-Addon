@@ -96,7 +96,7 @@ final class CrucibleOffer {
         if (!CrucibleRules.shouldRoll(Phase.of(c.phase.name()))) return false;
         List<BlockPos> slots = CruciblePedestals.ordered(s);
         if (slots.isEmpty()) {
-            if (WARNED.add(s.id)) LOG.warn("[nusmp] mega crucible: sector {} has no pedestal marker, so its vault cannot offer relics", s.id);
+            if (WARNED.add(s.id)) LOG.warn("[anime_multiverse] mega crucible: sector {} has no pedestal marker, so its vault cannot offer relics", s.id);
             return false;
         }
         MegaData data = MegaData.get(level.getServer());
@@ -112,17 +112,17 @@ final class CrucibleOffer {
         data.setDirty();
         BlockPos center = CruciblePedestals.center(s);
         if (defs.isEmpty()) {
-            for (ServerPlayer p : CruciblePedestals.playersInBox(level, center)) p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.exhausted").withStyle(ChatFormatting.GRAY), false);
+            for (ServerPlayer p : CruciblePedestals.playersInBox(level, center)) p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.exhausted").withStyle(ChatFormatting.GRAY), false);
             MegaDungeon.crucibleResolved(level, s.id);
             return true;
         }
         show(level, s);
         List<ServerPlayer> inside = CruciblePedestals.playersInBox(level, center);
         for (ServerPlayer p : inside)
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.offered", defs.size()).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), false);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.offered", defs.size()).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC), false);
         if (ThemeConfig.get(ThemeConfig.SHOW_ROADS)) {                               // a choice is only a choice when the party knows what each relic leads to
             for (RelicDef d : defs) {
-                Component line = Component.translatable("message.nusmp.mega.crucible.offer_line", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
+                Component line = Component.translatable("message.anime_multiverse.mega.crucible.offer_line", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
                         NextTheme.describe(NextTheme.roadOfRelic(d.id()))).withStyle(ChatFormatting.GRAY);
                 for (ServerPlayer p : inside) p.displayClientMessage(line, false);
             }
@@ -237,7 +237,7 @@ final class CrucibleOffer {
         if (slot < 0) return;
         RelicDef d = Relics.byId(offered.get(slot));
         if (d == null) return;
-        p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.inspect", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
+        p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.inspect", Component.literal(d.cardName()).withStyle(d.grade().colour()), d.grade().shortName(),
                 NextTheme.describe(NextTheme.roadOfRelic(d.id()))), true);
     }
 

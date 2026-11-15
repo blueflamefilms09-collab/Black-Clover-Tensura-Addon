@@ -46,7 +46,7 @@
 				{
 					id: "489450D7735EAD7B"
 					type: "advancement"
-					advancement: "nusmp:squads/created"
+					advancement: "anime_multiverse:squads/created"
 					criterion: ""
 				}
 			]
@@ -78,7 +78,7 @@
 				{
 					id: "261F17BD1D3A16FF"
 					type: "advancement"
-					advancement: "nusmp:squads/joined"
+					advancement: "anime_multiverse:squads/joined"
 					criterion: ""
 				}
 			]
@@ -108,7 +108,7 @@
 				{
 					id: "29B0F36E896E997C"
 					type: "advancement"
-					advancement: "nusmp:squads/captain"
+					advancement: "anime_multiverse:squads/captain"
 					criterion: ""
 				}
 			]
@@ -133,7 +133,7 @@
 				{
 					id: "48C94B301BB0886E"
 					type: "advancement"
-					advancement: "nusmp:squads/vice"
+					advancement: "anime_multiverse:squads/vice"
 					criterion: ""
 				}
 			]
@@ -153,7 +153,7 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:magic_stone"
+				id: "anime_multiverse:magic_stone"
 			}
 			dependencies: ["6255311CC4B1725F", "3920F2278290AB96"]
 			tasks: [
@@ -161,7 +161,7 @@
 					id: "03D44D1A7F84FA30"
 					type: "item"
 					item: {
-						id: "nusmp:magic_stone"
+						id: "anime_multiverse:magic_stone"
 					}
 					count: 256L
 					consume_items: true
@@ -253,7 +253,7 @@
 			x: 4.5d
 			y: 4.5d
 			icon: {
-				id: "nusmp:charter_grimoire_goliath"
+				id: "anime_multiverse:charter_grimoire_goliath"
 			}
 			dependencies: ["260EB6A349F0B83C", "3920F2278290AB96"]
 			dependency_requirement: "one_completed"
@@ -261,7 +261,7 @@
 				{
 					id: "325E2186753E7807"
 					type: "advancement"
-					advancement: "nusmp:squads/charter"
+					advancement: "anime_multiverse:squads/charter"
 					criterion: ""
 				}
 			]
@@ -281,7 +281,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:charter_grimoire_lucius"
+				id: "anime_multiverse:charter_grimoire_lucius"
 			}
 			dependencies: ["0771DC0B1327EB21"]
 			optional: true
@@ -289,7 +289,7 @@
 				{
 					id: "79DA4AADFF2D69F3"
 					type: "advancement"
-					advancement: "nusmp:squads/charter_all"
+					advancement: "anime_multiverse:squads/charter_all"
 					criterion: ""
 				}
 			]
@@ -322,19 +322,19 @@
 				{
 					id: "610C81C1CCDD2E0D"
 					type: "advancement"
-					advancement: "nusmp:bosses/goliath"
+					advancement: "anime_multiverse:bosses/goliath"
 					criterion: ""
 				}
 				{
 					id: "017B7DEE60BFAA23"
 					type: "advancement"
-					advancement: "nusmp:bosses/charybdis_spawn"
+					advancement: "anime_multiverse:bosses/charybdis_spawn"
 					criterion: ""
 				}
 				{
 					id: "1690D503ECBBDB95"
 					type: "advancement"
-					advancement: "nusmp:bosses/floor_warden"
+					advancement: "anime_multiverse:bosses/floor_warden"
 					criterion: ""
 				}
 			]
@@ -368,7 +368,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:charter_grimoire_dante"
+				id: "anime_multiverse:charter_grimoire_dante"
 			}
 			dependencies: ["6ACB36753E4D140E"]
 			optional: true
@@ -376,19 +376,19 @@
 				{
 					id: "5930713BF9B21CF6"
 					type: "advancement"
-					advancement: "nusmp:bosses/dante_zogratis"
+					advancement: "anime_multiverse:bosses/dante_zogratis"
 					criterion: ""
 				}
 				{
 					id: "3D9C87556D3F1A89"
 					type: "advancement"
-					advancement: "nusmp:bosses/vanica_zogratis"
+					advancement: "anime_multiverse:bosses/vanica_zogratis"
 					criterion: ""
 				}
 				{
 					id: "328E981A19557CE7"
 					type: "advancement"
-					advancement: "nusmp:bosses/zenon_zogratis"
+					advancement: "anime_multiverse:bosses/zenon_zogratis"
 					criterion: ""
 				}
 			]
@@ -422,7 +422,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["586ACC8AF2FA388B"]
 			optional: true
@@ -430,13 +430,13 @@
 				{
 					id: "4F45212A68D37FA1"
 					type: "advancement"
-					advancement: "nusmp:bosses/zagred"
+					advancement: "anime_multiverse:bosses/zagred"
 					criterion: ""
 				}
 				{
 					id: "6EB01B42B62D6958"
 					type: "advancement"
-					advancement: "nusmp:bosses/devil_avatar"
+					advancement: "anime_multiverse:bosses/devil_avatar"
 					criterion: ""
 				}
 			]
@@ -605,7 +605,7 @@
 				{
 					id: "7032519F9CB380A2"
 					type: "advancement"
-					advancement: "nusmp:world/kingdoms"
+					advancement: "anime_multiverse:world/kingdoms"
 					criterion: ""
 				}
 			]
@@ -637,7 +637,7 @@
 				{
 					id: "027870A76C5A1ED4"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_clover"
+					advancement: "anime_multiverse:world/kingdom_clover"
 					criterion: ""
 				}
 			]
@@ -664,7 +664,7 @@
 				{
 					id: "3D55EC92217B204F"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_spade"
+					advancement: "anime_multiverse:world/kingdom_spade"
 					criterion: ""
 				}
 			]
@@ -691,7 +691,7 @@
 				{
 					id: "5C653A985D031217"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_heart"
+					advancement: "anime_multiverse:world/kingdom_heart"
 					criterion: ""
 				}
 			]
@@ -718,7 +718,7 @@
 				{
 					id: "1FC22CCCF22875D5"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_diamond"
+					advancement: "anime_multiverse:world/kingdom_diamond"
 					criterion: ""
 				}
 			]
@@ -746,7 +746,7 @@
 				{
 					id: "39D443A6C1DBE3D5"
 					type: "advancement"
-					advancement: "nusmp:world/all_kingdoms"
+					advancement: "anime_multiverse:world/all_kingdoms"
 					criterion: ""
 				}
 			]
@@ -776,7 +776,7 @@
 				{
 					id: "691A7A9C16DC4DEE"
 					type: "dimension"
-					dimension: "nusmp:grimoire_library"
+					dimension: "anime_multiverse:grimoire_library"
 				}
 			]
 			rewards: [
@@ -800,7 +800,7 @@
 				{
 					id: "6218A4E38B98A551"
 					type: "dimension"
-					dimension: "nusmp:dream"
+					dimension: "anime_multiverse:dream"
 				}
 			]
 			rewards: [
@@ -818,7 +818,7 @@
 			y: 10.5d
 			shape: "square"
 			icon: {
-				id: "nusmp:compat_codex"
+				id: "anime_multiverse:compat_codex"
 			}
 			dependencies: ["68E33F8680AA0587"]
 			optional: true
@@ -826,7 +826,7 @@
 				{
 					id: "12300DC467469815"
 					type: "advancement"
-					advancement: "nusmp:world/codex"
+					advancement: "anime_multiverse:world/codex"
 					criterion: ""
 				}
 			]

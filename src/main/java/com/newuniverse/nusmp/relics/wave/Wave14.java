@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 /**
  * Relics of Many Worlds, wave 14: nine relics for the head (three dragon circlets, a duck crown, two unicorn crowns, the Phoenix circlet, the
  * Conjurer's crown, a diadem) and eight for the feet (planestriding boots, cursed boots, mud boots, high-ground boots, wind greaves, water boots,
- * sandals, dragon fire boots). The long card text of each, as game rules, is in the lang keys {@code item.nusmp.<id>.card}; the numbers and small
+ * sandals, dragon fire boots). The long card text of each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the numbers and small
  * state machines are in {@link Wave14Rules} (pure), the abilities in {@link Wave14Head} and {@link Wave14Feet}, what stays in the world in
  * {@link Wave14Zones}, the handlers in {@link Wave14Events}.
  * <p>

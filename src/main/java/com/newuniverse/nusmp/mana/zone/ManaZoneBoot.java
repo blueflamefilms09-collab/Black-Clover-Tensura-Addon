@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
 /**
  * The one place that wires the Mana Zone and the Grand Magic Zones into the game (one call from the mod constructor): the server config, the three packets,
- * the data reload listeners (data/nusmp/mana_zone.json and data/&lt;namespace&gt;/grand_magic_zones/*.json), the server and player events, the self-tests, and on a
+ * the data reload listeners (data/anime_multiverse/mana_zone.json and data/&lt;namespace&gt;/grand_magic_zones/*.json), the server and player events, the self-tests, and on a
  * client the renderer. Each event handler returns at once when there is nothing to do (no open zone, no loaded region), so an idle server pays almost nothing.
  */
 public final class ManaZoneBoot {

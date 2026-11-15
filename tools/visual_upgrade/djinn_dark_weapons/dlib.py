@@ -8,7 +8,7 @@ The old weapons are baked meshes (the Djinn armour set's weapon piece, tools/rel
   3. new parts (tools/visual_upgrade/djinn_dark_weapons/dkit.py, built with the owner's mesh_lib method on the frame of the old weapon, `frame.py`) are added; they are painted with the
      mesh_lib materials, then every surface (old and new) gets grain / ambient occlusion / bevel / scratches (`detail_pass` of god_melee_b, `detail_old` here for the enlarged old islands);
   4. a core glow map, a second emissive map (energy veins) and the files are written as NEW files under up/: weapon_meshes/up/<id>.txt, _lod.txt, _orbit.txt, textures/entity/weapon/up/<id>*.png,
-     assets/nusmp/visual_upgrade/<id>.json (the table client/GodMeleeBRender reads). The old files are not touched.
+     assets/anime_multiverse/visual_upgrade/<id>.json (the table client/GodMeleeBRender reads). The old files are not touched.
 """
 import importlib.util
 import json

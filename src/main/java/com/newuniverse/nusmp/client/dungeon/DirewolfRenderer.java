@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * The Direwolf of the Living Dungeon in its own model (tools/gen_dungeon_mobs.py -> assets/nusmp/geo/entity/dungeon_direwolf.geo.json, its animations
+ * The Direwolf of the Living Dungeon in its own model (tools/gen_dungeon_mobs.py -> assets/anime_multiverse/geo/entity/dungeon_direwolf.geo.json, its animations
  * and textures), drawn with client.geo.GeoDraw like the Tower Wizard: a huge scarred dire wolf, blue-grey fur, pale paws, a dark mane along the spine,
  * lower fangs and glowing amber eyes (the additive glow layer, pulsing). Clips: idle, walk, run (while it hunts and moves), attack (a lunge with open
  * jaws, while it hunts and stands), sleep (a full apex predator lies curled up), hurt (a flinch). The walk and run clips are driven by the distance the

@@ -16,12 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GuiGraphics.class)
 public abstract class FourKingdomsSlotMixin {
     @Inject(method = "innerBlit(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFF)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$fourKingdomsSlot(ResourceLocation atlas, int x1, int x2, int y1, int y2, int z, float u0, float u1, float v0, float v1, CallbackInfo ci) {
+    private void anime_multiverse$fourKingdomsSlot(ResourceLocation atlas, int x1, int x2, int y1, int y2, int z, float u0, float u1, float v0, float v1, CallbackInfo ci) {
         if (FourKingdomsSlot.replace((GuiGraphics) (Object) this, atlas, x1, x2, y1, y2)) ci.cancel();
     }
 
     @Inject(method = "innerBlit(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFFFFF)V", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$fourKingdomsSlotTinted(ResourceLocation atlas, int x1, int x2, int y1, int y2, int z, float u0, float u1, float v0, float v1,
+    private void anime_multiverse$fourKingdomsSlotTinted(ResourceLocation atlas, int x1, int x2, int y1, int y2, int z, float u0, float u1, float v0, float v1,
                                              float r, float g, float b, float a, CallbackInfo ci) {
         if (FourKingdomsSlot.replace((GuiGraphics) (Object) this, atlas, x1, x2, y1, y2)) ci.cancel();
     }

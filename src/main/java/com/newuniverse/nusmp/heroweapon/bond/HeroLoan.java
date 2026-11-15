@@ -233,7 +233,7 @@ public final class HeroLoan {
             level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, 1.5f);
         });
         if (HeroConfig.showMessages())
-            p.displayClientMessage(Component.translatable("hero.msg.summoned", Component.translatable("item.nusmp." + kind.itemId())).withColor(HeroColors.rgb(kind)), true);
+            p.displayClientMessage(Component.translatable("hero.msg.summoned", Component.translatable("item.anime_multiverse." + kind.itemId())).withColor(HeroColors.rgb(kind)), true);
         NusmpEvents.fire(p, "hero.summoned", kind.itemId());
         HeroSync.sendNow(p);
     }
@@ -270,7 +270,7 @@ public final class HeroLoan {
             level.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0f, 0.8f);
         });
         if (HeroConfig.showMessages())
-            p.displayClientMessage(Component.translatable("hero.msg.dismissed", Component.translatable("item.nusmp." + kind.itemId())).withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatable("hero.msg.dismissed", Component.translatable("item.anime_multiverse." + kind.itemId())).withStyle(ChatFormatting.GRAY), true);
         HeroSync.sendNow(p);
         return Outcome.OK;
     }
@@ -421,7 +421,7 @@ public final class HeroLoan {
         if (!b.isBound()) {
             String why = HeroBonds.bind(p, kind);
             if (why != null) {
-                if (HeroConfig.showMessages()) p.displayClientMessage(Component.translatable("hero.msg.adopt_refused", Component.translatable("item.nusmp." + kind.itemId()), why), true);
+                if (HeroConfig.showMessages()) p.displayClientMessage(Component.translatable("hero.msg.adopt_refused", Component.translatable("item.anime_multiverse." + kind.itemId()), why), true);
                 return;
             }
         }

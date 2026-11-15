@@ -28,7 +28,7 @@ public final class RelicTextures {
 
     private static volatile boolean paintedUpgrade, painted;
 
-    /** Were the armour layers painted by the 1.110.0 painter (true) or the older one (false)? For {@code /nusmp debug worn}. */
+    /** Were the armour layers painted by the 1.110.0 painter (true) or the older one (false)? For {@code /anime_multiverse debug worn}. */
     public static boolean paintedWithUpgrade() { return paintedUpgrade; }
 
     /** Called by the worn layer once per frame: repaints the layers once when {@code visual.upgrade} was flipped since they were painted (one boolean read otherwise). */
@@ -85,7 +85,7 @@ public final class RelicTextures {
         if (bad > 0) {
             heals++;
             lastVerify = bad + " armour layer(s) were missing or empty (first: " + first + "); painted again (repair " + heals + ")";
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] {}", lastVerify);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] {}", lastVerify);
             registerAll();
             verifiedGeneration = generation;
         } else {
@@ -111,7 +111,7 @@ public final class RelicTextures {
             verify();
         } catch (RuntimeException | LinkageError failed) {
             lastVerify = "the check failed: " + failed;
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] the armour layer check failed", failed);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] the armour layer check failed", failed);
         }
     }
 
@@ -170,7 +170,7 @@ public final class RelicTextures {
                     OWN_LAYERS.put(d.id(), outer);
                     PAINTED_OK.add(d.id());
                 } catch (RuntimeException | LinkageError failed) {
-                    com.mojang.logging.LogUtils.getLogger().error("[nusmp] the armour layer of relic {} could not be painted; a plain layer in its colours is used", d.id(), failed);
+                    com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] the armour layer of relic {} could not be painted; a plain layer in its colours is used", d.id(), failed);
                     try {
                         int[] plain = com.newuniverse.nusmp.client.relics.worn.ArmorVisible.solidLayer(d.paletteMain(), d.paletteTrim());
                         tm.register(outer, new DynamicTexture(image(plain)));
@@ -178,7 +178,7 @@ public final class RelicTextures {
                         OWN_LAYERS.put(d.id(), outer);
                         PAINTED_OK.add(d.id());
                     } catch (RuntimeException | LinkageError worse) {
-                        com.mojang.logging.LogUtils.getLogger().error("[nusmp] not even the plain armour layer of relic {} could be registered", d.id(), worse);
+                        com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] not even the plain armour layer of relic {} could be registered", d.id(), worse);
                     }
                 }
             }
@@ -187,7 +187,7 @@ public final class RelicTextures {
             paintedUpgrade = v2;
             painted = true;
         } catch (RuntimeException | LinkageError failed) {
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] relic textures could not be painted", failed);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] relic textures could not be painted", failed);
         }
     }
 

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/copper_adventurer_plate_of_e_rantel"
-  }
-}

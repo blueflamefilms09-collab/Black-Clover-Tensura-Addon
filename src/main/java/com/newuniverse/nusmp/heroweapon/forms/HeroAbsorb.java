@@ -56,7 +56,7 @@ public final class HeroAbsorb {
         try {
             return absorbUnsafe(player, stack, whole, verbose);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: absorbing failed", e);
+            LOG.warn("[anime_multiverse] hero forms: absorbing failed", e);
             return 0;
         }
     }

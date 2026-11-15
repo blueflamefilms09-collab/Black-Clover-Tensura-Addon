@@ -85,7 +85,7 @@ two earlier God slices (`god_melee_a`: the twelve God weapons of Wave 71; `god_m
 
 | | What |
 |---|---|
-| **NEW** | for each of the 36: an upgraded mesh `weapon_meshes/up/<id>.txt`, its level-of-detail mesh `up/<id>_lod.txt`, the mesh of its one orbiting piece `up/<id>_orbit.txt`; skins `textures/entity/weapon/up/<id>.png` (1024 px), `_glow.png` (core glow, additive) and `_glow2.png` (energy veins, a separate emissive map); the effect table `assets/nusmp/visual_upgrade/<id>.json` (36 files) |
+| **NEW** | for each of the 36: an upgraded mesh `weapon_meshes/up/<id>.txt`, its level-of-detail mesh `up/<id>_lod.txt`, the mesh of its one orbiting piece `up/<id>_orbit.txt`; skins `textures/entity/weapon/up/<id>.png` (1024 px), `_glow.png` (core glow, additive) and `_glow2.png` (energy veins, a separate emissive map); the effect table `assets/anime_multiverse/visual_upgrade/<id>.json` (36 files) |
 | **NEW** | generators `tools/visual_upgrade/djinn_dark_weapons/{{frame, dlib, dkit, skin_glyphs, ditems, build, preview, measure, make_doc}}.py`; the measurements `docs/visual_upgrade/djinn_dark_weapons_baseline.json` (taken before anything was changed, first commit of the slice) and `_after.json`; the before / after sheets `docs/previews/visual_upgrade/djinn_dark_weapons/<name>.png` |
 | **NEW** | `vupgrade/DjinnDarkSelfTests` (self-test `visual.djinn_dark_weapons`), the pure `relics/upgrade/UpgradeParticleNames`, JUnit `DjinnDarkBudgetTest`, `DjinnDarkRatioTest`, `UpgradeParticleNamesTest`, `UpgradeFxPurgeScopeTest`; the lang fragment `tools/lang/djinn_dark_weapons.json` (one tooltip line) |
 | **REPLACED** | nothing was removed. In the hand, on the ground, in frames and on mobs a dark Djinn weapon is drawn from the NEW mesh instead of the old one while the client option `visual.upgrade` is on (that is the only replacement, and it is a switch). The upgraded mesh keeps **every old quad** (position, normal, shape: a test checks it) and adds to it, so the silhouette, the size and the placement in the hand (`place` line copied) are the old ones |
@@ -166,7 +166,7 @@ the two files from the purge scan since 1.106.0. Both now go through the custom 
 class `relics/upgrade/UpgradeParticleNames` (an alias table for the names `FxOld` has no constant for: `note` is an enchant glyph, `nautilus` a bubble, `cherry_leaves` a heart, ...; an unknown vanilla name becomes the
 end-rod slot). The tick builds a local `ParticleOptions` before `level.addParticle`, which is what the scan's call pattern wants. The two exclusion lines were removed from `docs/rukh/scope.txt`;
 `RukhPurgeScopeTest` and `FxSourceScanTest` pass, and `UpgradeFxPurgeScopeTest` pins that the two files are in the scope and that the scan patterns find nothing in them; `UpgradeParticleNamesTest` checks that
-every particle name in every shipped table resolves to a constant of the generated `FxOld`. The tables themselves (`assets/nusmp/visual_upgrade/*.json`) were not changed: they keep their vanilla names, now only
+every particle name in every shipped table resolves to a constant of the generated `FxOld`. The tables themselves (`assets/anime_multiverse/visual_upgrade/*.json`) were not changed: they keep their vanilla names, now only
 names for the facade. Not run in a game: how the custom particles of a theme look instead of the dust is unseen.
 
 ## 5. Decisions the brief did not settle (honest notes)
@@ -191,8 +191,8 @@ names for the facade. Not run in a game: how the custom particles of a theme loo
 
 * `NUSMP.java`: one line, `com.newuniverse.nusmp.vupgrade.DjinnDarkSelfTests.register()` (next to the other visual self-tests). Self-test prefix: `visual.djinn_dark_weapons`.
 * `client/vupgrade/godb/UpgradeSpecs.java`: the particle token `fx` (the mod's own particle by the layer's colour) before the existing `dust` branch; `UpgradeConfig` (the comment of `visual.upgrade` names the dark Djinn weapons).
-  `WeaponRenderer` and `GodMeleeBRender` are **not** edited: the renderer finds the tables by item id (`assets/nusmp/visual_upgrade/<item>.json`) through the hooks of `god_melee_b`.
-* `relics/djinn/weapon/DjinnWeaponItem.java`: one tooltip line for the dark weapons (`translatableWithFallback`, key `tooltip.nusmp.djinn_weapon.dark_look`, the English text is the fallback and the lang fragment).
+  `WeaponRenderer` and `GodMeleeBRender` are **not** edited: the renderer finds the tables by item id (`assets/anime_multiverse/visual_upgrade/<item>.json`) through the hooks of `god_melee_b`.
+* `relics/djinn/weapon/DjinnWeaponItem.java`: one tooltip line for the dark weapons (`translatableWithFallback`, key `tooltip.anime_multiverse.djinn_weapon.dark_look`, the English text is the fallback and the lang fragment).
 * `client/relics/fx/UpgradeFxClient.java`, `relics/upgrade/UpgradeActFx.java`: the follow-up of section 4; `relics/upgrade/UpgradeParticleNames.java` new.
 * `docs/rukh/scope.txt`: the two exclusion lines removed.
 * `tools/relics/djinn_weapons.py`: one line at the end of `main` that runs `tools/visual_upgrade/djinn_dark_weapons/build.py` after the old files are written (not in `--check`).
@@ -221,7 +221,7 @@ existing listing sees them.
   weapon in the previews, but none was tuned either. The sheets are the software rasteriser's, with one light and no additive blending.
 * The enlarged old islands next to the fresh new parts: the difference in sharpness is only seen in the game. The core glow of the old weapon is kept; the veins on the old islands are procedural.
 * `visual.guiModel` (the tilted model in the inventory slot) was written for `god_melee_b` and never drawn for these weapons.
-* Frame time: the cost model is by construction (one extra pass over at most 700 glow quads for the veins, at most 330 level-of-detail quads for the halo and the ghosts, 6 small pieces), not measured; `/nusmp perf` was not run.
+* Frame time: the cost model is by construction (one extra pass over at most 700 glow quads for the veins, at most 330 level-of-detail quads for the halo and the ghosts, 6 small pieces), not measured; `/anime_multiverse perf` was not run.
 """
 
 if __name__ == "__main__":

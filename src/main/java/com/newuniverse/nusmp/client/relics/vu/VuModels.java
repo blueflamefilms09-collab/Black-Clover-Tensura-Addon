@@ -13,7 +13,7 @@ import java.util.Optional;
 
 /**
  * Why: the hand library ({@code HandForms}) and the worn library ({@code WornLibrary}) each answer "which models is this relic drawn as?" once per relic and cache it. For the
- * relics of the visual upgrade the answer comes from the override table (assets/nusmp/visual_upgrade/overrides.txt, {@link VuOverrides}) while {@code visual.upgrade} is on, and
+ * relics of the visual upgrade the answer comes from the override table (assets/anime_multiverse/visual_upgrade/overrides.txt, {@link VuOverrides}) while {@code visual.upgrade} is on, and
  * from the older catalogs otherwise. This class reads the table once (forgotten on a resource reload), answers the pieces, and counts a {@link #generation()} that grows when the
  * option flips or the resources reload, so the two libraries drop their caches exactly then. Client thread only.
  */
@@ -45,33 +45,33 @@ public final class VuModels {
         if (table != null) return table;
         if (System.currentTimeMillis() < retryAt) return EMPTY;
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides.txt"));
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/overrides.txt"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
                     List<String> all = new ArrayList<>(in.lines().toList());
                     // 1.110.0 (duel disk): the table of the deck relics is read after the first one, so its lines win for the relics it names (an optional file)
-                    Optional<Resource> extra = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides_duel_disk.txt"));
+                    Optional<Resource> extra = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/overrides_duel_disk.txt"));
                     if (extra.isPresent()) {
                         try (BufferedReader in2 = extra.get().openAsReader()) {
                             all.addAll(in2.lines().toList());
                         }
                     }
                     // 1.111.0 (wave 101): the table of the twelve new Genesis relics, read last (an optional file; it names only relics of its own)
-                    Optional<Resource> extra2 = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/overrides_genesis_new.txt"));
+                    Optional<Resource> extra2 = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/overrides_genesis_new.txt"));
                     if (extra2.isPresent()) {
                         try (BufferedReader in3 = extra2.get().openAsReader()) {
                             all.addAll(in3.lines().toList());
                         }
                     }
                     VuOverrides t = VuOverrides.parse(all);
-                    for (String p : t.problems()) LogUtils.getLogger().error("[nusmp] visual_upgrade/overrides.txt: {}", p);
+                    for (String p : t.problems()) LogUtils.getLogger().error("[anime_multiverse] visual_upgrade/overrides.txt: {}", p);
                     table = t;
                 }
             } else {
-                LogUtils.getLogger().warn("[nusmp] visual_upgrade/overrides.txt is missing; the upgraded relic models are not used");
+                LogUtils.getLogger().warn("[anime_multiverse] visual_upgrade/overrides.txt is missing; the upgraded relic models are not used");
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] visual_upgrade/overrides.txt could not be read", ex);
+            LogUtils.getLogger().error("[anime_multiverse] visual_upgrade/overrides.txt could not be read", ex);
         }
         if (table == null) {
             retryAt = System.currentTimeMillis() + 3000L;

@@ -58,7 +58,7 @@ final class GemSelfTests {
         // the items
         Set<HeroKind> kinds = new HashSet<>();
         for (String id : GemCatalog.allItemIds()) {
-            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("nusmp", id);
+            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("anime_multiverse", id);
             if (!BuiltInRegistries.ITEM.containsKey(rl)) {
                 bad.add("no item " + rl);
                 continue;
@@ -80,7 +80,7 @@ final class GemSelfTests {
         // the recipes, as the real recipe manager loaded them
         int recipes = 0;
         for (String id : GemCatalog.allItemIds()) {
-            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("nusmp", id);
+            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("anime_multiverse", id);
             Optional<RecipeHolder<?>> holder = server.getRecipeManager().byKey(rl);
             if (holder.isEmpty()) {
                 bad.add("recipe " + rl + " was not loaded (an ingredient id the game does not know, or a broken file; see the log)");

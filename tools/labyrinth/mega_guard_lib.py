@@ -26,7 +26,7 @@ DIRS = {"n": "north", "e": "east", "s": "south", "w": "west"}
 INWARD = {"n": "south", "s": "north", "w": "east", "e": "west"}      # from the wall into the room
 TOWARD_WALL = DIRS                                                      # from the room to the wall
 
-GATE_STATE = "nusmp:gatekeeper_door[kind=sector,open=false,half=lower]"
+GATE_STATE = "anime_multiverse:gatekeeper_door[kind=sector,open=false,half=lower]"
 
 
 # ------------------------------------------------------------------ small writers
@@ -205,7 +205,7 @@ def fill_gatekeeper(mt, side, offset):
                 if (x, y, z) == jig:
                     continue
                 # written on the underlying Template: mega_lib's schema table reads `gatekeeper_door` as a wooden door (its `.*_door` rule) and would refuse `kind`
-                mt.t.set(x, y, z, "nusmp:gatekeeper_door", {"kind": "sector", "open": "false", "half": "lower" if row < L.DOOR_ROW + 2 else "upper"})
+                mt.t.set(x, y, z, "anime_multiverse:gatekeeper_door", {"kind": "sector", "open": "false", "half": "lower" if row < L.DOOR_ROW + 2 else "upper"})
                 n += 1
     return n
 

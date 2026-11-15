@@ -26,7 +26,7 @@ public final class HeroLogics {
         if (logic == null || logic.kind() == null) return;
         if (LOGICS.putIfAbsent(logic.kind(), logic) != null) return;
         for (HeroSkill s : logic.skills()) {
-            if (SKILLS.putIfAbsent(s.id(), s) != null) LogUtils.getLogger().warn("[nusmp] hero skill id {} registered twice; the first stays", s.id());
+            if (SKILLS.putIfAbsent(s.id(), s) != null) LogUtils.getLogger().warn("[anime_multiverse] hero skill id {} registered twice; the first stays", s.id());
         }
     }
 

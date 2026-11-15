@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Great Spirit GUI textures (theme 'great_spirit'): writes the PNGs of the two shipped skins, B (Parchment & Ink) and C (Slime Crest), into
-src/main/resources/assets/nusmp/textures/gui/gs/<b|c>/. Direction A (Holo Grimoire) is not built and there is no gauge texture at all.
+src/main/resources/assets/anime_multiverse/textures/gui/gs/<b|c>/. Direction A (Holo Grimoire) is not built and there is no gauge texture at all.
 
-    python3 tools/gen_gs_gui_textures.py [--out src/main/resources/assets/nusmp/textures/gui/gs]
+    python3 tools/gen_gs_gui_textures.py [--out src/main/resources/assets/anime_multiverse/textures/gui/gs]
 
 The generators are the ones of the mock-up toolchain (tools/gui_redesign/gs_sprites.py, 2 texels per GUI pixel). Every PNG gets a .mcmeta with
 blur + clamp (the art is drawn at half size, like the magic circles). Needs Pillow and numpy. Deterministic (fixed seeds).
@@ -44,7 +44,7 @@ def build(key):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=os.path.join(ROOT, "src/main/resources/assets/nusmp/textures/gui/gs"))
+    ap.add_argument("--out", default=os.path.join(ROOT, "src/main/resources/assets/anime_multiverse/textures/gui/gs"))
     a = ap.parse_args()
     total = 0
     for key in ("B", "C"):

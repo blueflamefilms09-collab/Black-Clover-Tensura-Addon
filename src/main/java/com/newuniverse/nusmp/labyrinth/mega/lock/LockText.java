@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Why: every word of the escape rules (the label over a release rune, what the System says when a seal closes, opens, or a player types {@code /dungeon unstuck}) is a lang key
- * under {@code message.nusmp.mega.system.lock.*} with its English fallback kept here, in ONE pure map, for the reason the System's other texts are: the lead merges the lang
+ * under {@code message.anime_multiverse.mega.system.lock.*} with its English fallback kept here, in ONE pure map, for the reason the System's other texts are: the lead merges the lang
  * fragment ({@code tools/lang/system_floor_info.json}, which is written from this map and from {@code FloorInfoText}) after the code, so every line must read properly before
  * that, and a unit test pins that the fragment and the map cannot drift. The keys share the System prefix so a pop-up line sent through {@code SystemSync.toast} resolves on the
  * client with the System's own lookup. Pure.
@@ -14,7 +14,7 @@ import java.util.Map;
 public final class LockText {
     private LockText() {}
 
-    private static final String PREFIX = "message.nusmp.mega.system.lock.";
+    private static final String PREFIX = "message.anime_multiverse.mega.system.lock.";
     private static final Map<String, String> EN = new LinkedHashMap<>();
 
     private static String put(String shortKey, String english) {

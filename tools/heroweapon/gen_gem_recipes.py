@@ -7,7 +7,7 @@
 
 The single source of truth is the table in
   src/main/java/com/newuniverse/nusmp/heroweapon/gem/GemRecipes.java
-which this script READS (it never repeats the table). It writes, under src/main/resources/data/nusmp/recipe/ (1.21.1 format):
+which this script READS (it never repeats the table). It writes, under src/main/resources/data/anime_multiverse/recipe/ (1.21.1 format):
   calling_gem.json        shaped 3 x 3: the Holy Calling Gem (the four jewel colours round a nether star, bound by netherite)
   gem_fragment.json       shapeless: 4 amethyst shards, a gold ingot, an ender pearl -> one Gem Fragment
   vassal_seal_<kind>.json shapeless: a Gem Fragment and the weapon's signature material -> its Vassal Seal (seventeen)
@@ -20,11 +20,11 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon", "gem", "GemRecipes.java")
-OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "recipe")
-CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon", "HeroKind.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon", "gem", "GemRecipes.java")
+OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "recipe")
+CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon", "HeroKind.java")
 
-FRAGMENT_ITEM = "nusmp:gem_fragment"
+FRAGMENT_ITEM = "anime_multiverse:gem_fragment"
 HOLY_ID = "calling_gem"
 FRAGMENT_ID = "gem_fragment"
 SEAL_PREFIX = "vassal_seal_"
@@ -75,13 +75,13 @@ def recipes():
         "category": "misc",
         "key": {c: {"item": keys[c]} for c in used},
         "pattern": pattern,
-        "result": {"id": "nusmp:" + HOLY_ID, "count": 1},
+        "result": {"id": "anime_multiverse:" + HOLY_ID, "count": 1},
     }
     out[FRAGMENT_ID + ".json"] = {
         "type": "minecraft:crafting_shapeless",
         "category": "misc",
         "ingredients": [{"item": i} for i, n in fragment for _ in range(n)],
-        "result": {"id": "nusmp:" + FRAGMENT_ID, "count": 1},
+        "result": {"id": "anime_multiverse:" + FRAGMENT_ID, "count": 1},
     }
     for name, display, klass in cat:
         if klass == "HOLY":
@@ -98,7 +98,7 @@ def recipes():
             "category": "misc",
             "group": "vassal_seal",
             "ingredients": ingredients,
-            "result": {"id": "nusmp:" + item_id, "count": 1},
+            "result": {"id": "anime_multiverse:" + item_id, "count": 1},
         }
     extra = set(seals) - {n for n, _, k in cat if k != "HOLY"}
     if extra:

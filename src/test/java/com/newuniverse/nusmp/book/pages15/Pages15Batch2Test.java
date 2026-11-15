@@ -195,7 +195,7 @@ class Pages15Batch2Test {
 
     @Test
     void noelleAndRillKeepTheirOldEntriesGainTheNewOnesAndOnlyNameRealPages() throws IOException {
-        Path dir = ROOT.resolve("src/main/resources/data/nusmp/character_spells");
+        Path dir = ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells");
         Set<String> mine = new HashSet<>();
         for (Page p : pages()) mine.add(p.id());
         Set<String> real = olderIds();

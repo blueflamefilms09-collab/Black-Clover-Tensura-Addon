@@ -16,7 +16,7 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TIER_DIR = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "java", "com", "newuniverse", "nusmp", "arc", "tier"))
+TIER_DIR = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "arc", "tier"))
 ROSTERS = ["TierRosterF.java", "TierRosterD.java"]
 
 # TierLetter: (health, attack)

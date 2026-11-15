@@ -1,7 +1,7 @@
 """Generates the boss VFX textures (bfx_*.png) for the 1.35.0 Zogratis effects (vfx/client/layer/Zogratis*FxLayer).
 
 Deterministic (fixed seeds), Pillow + numpy only. White (or lightly coloured) alpha textures: the layers tint them with the vertex colour.
-Output: src/main/resources/assets/nusmp/textures/particle/bfx_*.png (never touches time_*.png).
+Output: src/main/resources/assets/anime_multiverse/textures/particle/bfx_*.png (never touches time_*.png).
 
     python3 -B tools/gen_boss_vfx_textures.py            # writes the textures
     python3 -B tools/gen_boss_vfx_textures.py --sheet out.png   # also writes a contact sheet on a dark background
@@ -19,7 +19,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 MADE = {}
 
 

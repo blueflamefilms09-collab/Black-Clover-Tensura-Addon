@@ -15,10 +15,10 @@ whole art of five Vassal weapons, written with the owner's model method (tools/r
   6 rendered, looked at and corrected: silhouette, then sections and bevels, then the raised parts, then the texture.
 
 For every id it writes
-  assets/nusmp/textures/item/<id>.png                 the 16 x 16 sprite (the inventory icon), drawn by hand in art_hart3_sprites.py
-  assets/nusmp/weapon_meshes/<id>.txt                 the mesh WeaponRenderer draws (per-vertex smoothed normals, the part list as comments)
-  assets/nusmp/textures/entity/weapon/<id>.png        the painted skin, and <id>_glow.png the additive glow skin
-  assets/nusmp/models/item/<id>.json and <id>_icon.json   the in-hand model (builtin/entity) and the flat inventory model
+  assets/anime_multiverse/textures/item/<id>.png                 the 16 x 16 sprite (the inventory icon), drawn by hand in art_hart3_sprites.py
+  assets/anime_multiverse/weapon_meshes/<id>.txt                 the mesh WeaponRenderer draws (per-vertex smoothed normals, the part list as comments)
+  assets/anime_multiverse/textures/entity/weapon/<id>.png        the painted skin, and <id>_glow.png the additive glow skin
+  assets/anime_multiverse/models/item/<id>.json and <id>_icon.json   the in-hand model (builtin/entity) and the flat inventory model
 and tools/heroweapon/classes_hart3.json (the size class of each id, for the lead to merge into tools/relics/weapon_classes.json).
 
 Axes (docs/weapon_scale_orientation.md): y runs along the weapon, the grip low and the head high; mesh -x is FORWARD (the cutting edge, the blade of a scythe,

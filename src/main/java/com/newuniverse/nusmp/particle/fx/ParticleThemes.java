@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Why: every magic, relic grade, relic element, skill family and boss of the mod must have its OWN recognisable particles instead of the same end-rod, and the owner must be able to change
- * them without touching code: {@code data/nusmp/particle_themes.json} maps a theme id ({@code magic.FLAME}, {@code relic.grade.GOD}, {@code relic.element.fire}, {@code skill.sword},
+ * them without touching code: {@code data/anime_multiverse/particle_themes.json} maps a theme id ({@code magic.FLAME}, {@code relic.grade.GOD}, {@code relic.element.fire}, {@code skill.sword},
  * {@code boss.zenon}, {@code dungeon.vault}, ...) to two to four library particles and a colour, plus an optional {@code dark} flavour (the shadowed twin). This class is the pure part: it
  * parses the document, resolves an id to its theme (exact id, else the id with its last dotted part dropped, again and again, else the table default) and hands out {@link Theme} values. The
  * parsed table is cached; {@link #reload} swaps it (tests, an admin command) and bumps {@link #epoch}, which the facade's per-theme caches watch.
@@ -26,7 +26,7 @@ import java.util.Map;
 public final class ParticleThemes {
     private ParticleThemes() {}
 
-    public static final String RESOURCE = "/data/nusmp/particle_themes.json";
+    public static final String RESOURCE = "/data/anime_multiverse/particle_themes.json";
     public static final int MAX_PARTICLES = 4;
 
     /** A resolved theme: ids of its particles (1..4, slot order), its colour, and the dark flavour. */

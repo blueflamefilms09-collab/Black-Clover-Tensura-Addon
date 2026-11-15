@@ -32,7 +32,7 @@ import java.util.List;
 public final class DepthMobs {
     private DepthMobs() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static boolean warned;
 
     /** Persistent data on the mob: the signed floor it was born on, and the mind level it got. */
@@ -41,7 +41,7 @@ public final class DepthMobs {
     static final ResourceLocation HEALTH_ID = id("mega_depth_health"), DAMAGE_ID = id("mega_depth_damage"), SPEED_ID = id("mega_depth_speed"),
             ARMOR_ID = id("mega_depth_armor"), KNOCKBACK_ID = id("mega_depth_knockback"), FOLLOW_ID = id("mega_depth_follow");
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     // ---------------------------------------------------------------- the event
     public static void onJoin(EntityJoinLevelEvent e) {
@@ -56,7 +56,7 @@ public final class DepthMobs {
         } catch (Throwable t) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The depth rule failed on a mob (further failures are not logged)", t);
+                LOG.warn("[anime_multiverse] The depth rule failed on a mob (further failures are not logged)", t);
             }
         }
     }

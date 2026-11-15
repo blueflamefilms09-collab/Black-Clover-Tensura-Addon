@@ -50,7 +50,7 @@ public final class ShopClient {
         if (mc.player == null || mc.level == null || mc.screen != null || mc.level.getGameTime() % 20 != 0) return;
         Entity looked = mc.crosshairPickEntity;
         if (looked instanceof ArcNpcEntity npc && BlackMarketWitch.ID.equals(npc.characterId()) && npc.distanceTo(mc.player) < 6.0f) {
-            mc.gui.setOverlayMessage(Component.translatable(mc.player.isShiftKeyDown() ? "gui.nusmp.shop.hint_open" : "gui.nusmp.shop.hint_sneak"), false);
+            mc.gui.setOverlayMessage(Component.translatable(mc.player.isShiftKeyDown() ? "gui.anime_multiverse.shop.hint_open" : "gui.anime_multiverse.shop.hint_sneak"), false);
         }
     }
 }

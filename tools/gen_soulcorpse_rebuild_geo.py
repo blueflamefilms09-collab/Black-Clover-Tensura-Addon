@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_soulcorpse_rebuild_geo.py        # writes every model, animation and texture, runs tools/geo_check.py
 
-Models (assets/nusmp/geo/entity/soulcorpse_<name>.geo.json, animations/entity/..., textures/entity/soulcorpse_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/soulcorpse_<name>.geo.json, animations/entity/..., textures/entity/soulcorpse_<name>.png + _glow.png):
   armour    (Space.PLAYER, one root bone per piece, drawn piece by piece by client/aura/SongArmourKit with the Djinn equip animation)
             cowl (a stitched leather cowl over a bone skull mask with hollow glowing eyes and a nail through the crown), corset (a leather corset with bone ribs and
             coffin nails), lid (a coffin lid on the back), bar (the puppeteer's control bar floating above the head with the strings that run down to the head and

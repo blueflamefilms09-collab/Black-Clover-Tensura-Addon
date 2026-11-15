@@ -1,4 +1,4 @@
-"""Why: the Direwolf (entity nusmp:dungeon_direwolf, dungeon/DirewolfEntity), an apex predator of the Living Dungeon's food web: a huge, heavy, scarred dire wolf with blue-grey fur, a dark ridge
+"""Why: the Direwolf (entity anime_multiverse:dungeon_direwolf, dungeon/DirewolfEntity), an apex predator of the Living Dungeon's food web: a huge, heavy, scarred dire wolf with blue-grey fur, a dark ridge
 of spiking mane, pale paws, lower fangs and amber eyes, that sleeps curled up when it has eaten. The owner wants every mob of the mod built on the player's rig with the art kit, and a
 creature becomes an anthropomorphic design with its features kept, so this is a wolf-man: a broad, heavily furred body with a wolf's muzzle and lower fangs (made in `extra`), tall wolf
 ears, a bushy tail, a dark mane that runs down the back, pale boots for the paws and claws on the hands, old scars, amber eyes. It has the kit's clips plus `sleep` (curled up, made with

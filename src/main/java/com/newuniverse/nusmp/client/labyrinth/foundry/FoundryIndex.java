@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: a CLIENT never sees data packs, so everything the renderer needs to draw one of the 400 foundry mobs is in an ASSET file, {@code assets/nusmp/foundry/index.json}, written by
+ * Why: a CLIENT never sees data packs, so everything the renderer needs to draw one of the 400 foundry mobs is in an ASSET file, {@code assets/anime_multiverse/foundry/index.json}, written by
  * tools/foundry/gen_foundry.py next to the models: for each mob id, which shared animation file its clips are in ({@code anim}: the art kit's animation class, see
  * tools/foundry/foundry_kit.py), its glow colour, its size (a multiplier on the model, 1 = as the kit built it), its tier (the glow burns brighter deeper down) and its model height.
  * This class is the pure parser and the lookup (Gson only, no Minecraft type), so the file's shape is tested without a client. A broken entry is skipped, never an exception: a mob

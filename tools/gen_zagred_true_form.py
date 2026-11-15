@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_arcane_vfx_textures import fbm  # noqa: E402
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "entity")
-MODEL = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "ZagredModel.java")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity")
+MODEL = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "ZagredModel.java")
 S = 128
 
 # (name, parent, pivot xyz, rotation xyz (radians), [boxes]); box = (x, y, z, w, h, d, mirror, material). Texture offsets are

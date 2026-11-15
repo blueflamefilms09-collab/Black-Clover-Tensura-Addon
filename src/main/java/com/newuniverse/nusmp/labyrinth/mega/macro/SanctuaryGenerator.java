@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 /**
- * Why: this is the "custom {@code ChunkGenerator} utilizing 3D noise" of the owner's brief, for Floor 0, the Sanctuary Hub ({@code nusmp:sanctuary}). It is
+ * Why: this is the "custom {@code ChunkGenerator} utilizing 3D noise" of the owner's brief, for Floor 0, the Sanctuary Hub ({@code anime_multiverse:sanctuary}). It is
  * deliberately THIN: everything about what the Hub looks like is decided by the pure {@link HubModel} (so it is unit tested and previewed without a game); this
  * class only (1) is a valid 1.21.1 {@link ChunkGenerator} with a codec the dimension JSON can name, (2) asks the model for every column of a chunk and places the
  * blocks, keeping the chunk's heightmaps right so vegetation and mobs find the ground, and (3) refuses to produce structures. Why each override:
@@ -56,18 +56,18 @@ import java.util.function.Predicate;
  * the inherited one on purpose, so the biome's own vegetation features (grass, flowers, trees) run on the plains; {@code spawnOriginalMobs} lets the biome's
  * passive animals exist at the first visit, as in every vanilla generator.
  *
- * <p>The world seed is derived from the {@link RandomState} the game hands every generator ({@code getOrCreateRandomFactory("nusmp:sanctuary")}), which is a
+ * <p>The world seed is derived from the {@link RandomState} the game hands every generator ({@code getOrCreateRandomFactory("anime_multiverse:sanctuary")}), which is a
  * function of the world seed alone, so every chunk of a world agrees on the Hub whatever order and on whichever thread it is generated, and the model is
  * cached per seed. SAFETY NET: a bug in the landmark code must never stop chunk generation (a chunk that never finishes freezes the player who is in it), so
  * each chunk's fill is wrapped; on any throwable ONE warning is logged and that chunk is filled with plain plains instead.
  */
 public final class SanctuaryGenerator extends ChunkGenerator {
-    /** The one field of the codec is the biome source; the dimension JSON is {@code {"type": "nusmp:sanctuary", "biome_source": {...}}}. */
+    /** The one field of the codec is the biome source; the dimension JSON is {@code {"type": "anime_multiverse:sanctuary", "biome_source": {...}}}. */
     public static final MapCodec<SanctuaryGenerator> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             BiomeSource.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeSource)).apply(inst, inst.stable(SanctuaryGenerator::new)));
 
     private static final Logger LOG = LogUtils.getLogger();
-    private static final ResourceLocation SEED_KEY = ResourceLocation.fromNamespaceAndPath("nusmp", "sanctuary");
+    private static final ResourceLocation SEED_KEY = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "sanctuary");
     private static final AtomicBoolean WARNED = new AtomicBoolean();
 
     public SanctuaryGenerator(BiomeSource biomeSource) {
@@ -87,7 +87,7 @@ public final class SanctuaryGenerator extends ChunkGenerator {
     private static void warn(Throwable t) {
         if (WARNED.compareAndSet(false, true)) {
             StackTraceElement top = t.getStackTrace().length > 0 ? t.getStackTrace()[0] : null;
-            LOG.warn("[nusmp] The Sanctuary generator failed ({}: {} at {}); the affected chunks are drawn as plain plains. This is logged once.", t.getClass().getSimpleName(), t.getMessage(), top);
+            LOG.warn("[anime_multiverse] The Sanctuary generator failed ({}: {} at {}); the affected chunks are drawn as plain plains. This is logged once.", t.getClass().getSimpleName(), t.getMessage(), top);
         }
     }
 

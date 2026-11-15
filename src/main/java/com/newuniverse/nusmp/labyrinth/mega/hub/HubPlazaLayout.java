@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.labyrinth.mega.hub;
 import com.newuniverse.nusmp.labyrinth.mega.HubLayout;
 
 /**
- * Why: the plaza of Floor 0 is a Structure Template ({@code data/nusmp/structure/hub/plaza.nbt}) written by {@code tools/labyrinth/gen_mega_hub.py}
+ * Why: the plaza of Floor 0 is a Structure Template ({@code data/anime_multiverse/structure/hub/plaza.nbt}) written by {@code tools/labyrinth/gen_mega_hub.py}
  * and stamped by {@link HubPlaza}; the template, the Java that places it, the protection box that surrounds it and the self-tests must all agree on
  * the same numbers: how big the template is, which of its rows is the paving, and therefore where its corner lands in the world so that its home
  * gate stands exactly on {@link HubLayout#HOME_GATE_X} / {@code Y} / {@code Z}. This class is that one place. It is pure (no Minecraft import) and
@@ -16,7 +16,7 @@ import com.newuniverse.nusmp.labyrinth.mega.HubLayout;
 public final class HubPlazaLayout {
     private HubPlazaLayout() {}
 
-    /** The template's path under {@code data/nusmp/structure/}, without the extension. */
+    /** The template's path under {@code data/anime_multiverse/structure/}, without the extension. */
     public static final String TEMPLATE = "hub/plaza";
     /**
      * Size of the template in blocks. X and Z are odd so the plaza has a middle block on {@link HubLayout#PLAZA_X} / {@code Z}. It is 20 high (the paving on

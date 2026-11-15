@@ -18,8 +18,8 @@ from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-WORN = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "relic_worn")
-ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "relic_worn", "atlas.png")
+WORN = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "relic_worn")
+ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "relic_worn", "atlas.png")
 
 ANCHORS = {"head": (0, 0, 0), "body": (0, 0, 0), "rarm": (-5, 2, 0), "larm": (5, 2, 0), "rleg": (-1.9, 12, 0), "lleg": (1.9, 12, 0)}
 VIEWS = {"front": (0, 0), "three": (35, 12), "side": (90, 0), "back": (180, 0), "top": (0, 70)}

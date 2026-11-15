@@ -1,0 +1,203 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_banner_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_banner_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_barrels",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_bones",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_bookcase",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_brazier",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_candles_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_candles_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_cell",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_chest",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_cobweb",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_lantern_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_lantern_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_rack",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_skulls",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_snake",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_statue_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_statue_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_window_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/alcove_window_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/plain_wall_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/cap/plain_wall_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

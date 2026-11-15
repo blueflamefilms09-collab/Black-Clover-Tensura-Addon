@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * The class table of weapon sizes and the id to class mapping (docs/weapon_scale_orientation.md; the Python side is tools/relics/weapon_classes.py and
- * the data is tools/relics/weapon_classes.json, copied to assets/nusmp/weapon_classes.json for the game). Pure: no Minecraft imports.
+ * the data is tools/relics/weapon_classes.json, copied to assets/anime_multiverse/weapon_classes.json for the game). Pure: no Minecraft imports.
  * <p>
  * Sizes are APPARENT blocks: the mesh length times the third-person display scale, i.e. what a viewer sees of the weapon held in a hand
  * (1 block = 1 metre, Steve is 1.8). {@code min}/{@code max} bound the whole weapon, {@code headMin} the widest part of an axe or hammer head,

@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * what to do with it; the client sets its own option. The server keeps nothing and learns nothing about the preference. {@code mode}: 0 off, 1 on, 2 toggle, 3 say the state.
  */
 public record RelicShowPayload(int mode) implements CustomPacketPayload {
-    public static final Type<RelicShowPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_show"));
+    public static final Type<RelicShowPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_show"));
     public static final int OFF = 0, ON = 1, TOGGLE = 2, STATUS = 3;
 
     public static final StreamCodec<RegistryFriendlyByteBuf, RelicShowPayload> STREAM_CODEC = StreamCodec.of(

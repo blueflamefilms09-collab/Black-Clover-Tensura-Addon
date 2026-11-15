@@ -28,7 +28,7 @@ import java.util.Optional;
 /**
  * 3.58.0: the 27 Beast Will skill pairs (a Unique that evolves into an Ultimate, {@link BeastSkill}): registration, the evolution check, the grant when a will reaches full mastery and the admin command. The
  * evolution is the same rule as {@link SkillEvolution} (a MASTERED Unique plus the server's minimum EP), run from the same 5-second player check right after {@link DbSkills#evolve}; the table is kept apart so
- * the older evolution table stays exactly as it was. Obtain: {@code /multiverse beastskill give <player> <id> [unique|ultimate]} (permission 2), {@code /tensura edit <player> ability grant nusmp:bw_<key>_unique},
+ * the older evolution table stays exactly as it was. Obtain: {@code /multiverse beastskill give <player> <id> [unique|ultimate]} (permission 2), {@code /tensura edit <player> ability grant anime_multiverse:bw_<key>_unique},
  * or master the Beast Will itself (the Unique of that will is granted once, setting {@code beastSkillGrantOnMastery}).
  */
 public final class BeastSkills {

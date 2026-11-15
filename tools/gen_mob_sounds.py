@@ -35,8 +35,8 @@ import zlib
 import numpy as np
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-SOUND_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds', 'mob')
-SOUNDS_JSON = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds.json')
+SOUND_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds', 'mob')
+SOUNDS_JSON = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds.json')
 LANG_OUT = os.path.join(ROOT, 'tools', 'lang', 'mob_audio.json')
 
 CUES = ['ambient', 'aggro', 'attack', 'hurt', 'death', 'step', 'cast', 'taunt']
@@ -1751,7 +1751,7 @@ def manifest():
         label, sr, verbs = FAMILIES[fam]
         for ci, cue in enumerate(CUES):
             key = 'mob.%s.%s' % (fam, cue)
-            sub = 'subtitles.nusmp.mob.%s.%s' % (fam, cue)
+            sub = 'subtitles.anime_multiverse.mob.%s.%s' % (fam, cue)
             lang[sub] = '%s %s' % (label, verbs[ci])
             sounds = []
             for i in range(1, VARIANTS[cue] + 1):
@@ -1759,7 +1759,7 @@ def manifest():
                 if not os.path.exists(path):
                     raise SystemExit('missing %s (run the generator first)' % path)
                 sizes += os.path.getsize(path)
-                s = {'name': 'nusmp:' + file_name(fam, cue, i)}
+                s = {'name': 'anime_multiverse:' + file_name(fam, cue, i)}
                 if ogg_seconds(path) >= STREAM_OVER:
                     s['stream'] = True
                 if fam in ATTENUATION and cue in LOUD_CUES:
@@ -1831,7 +1831,7 @@ def check():
                 continue
             for s in doc[key]['sounds']:
                 rel = s['name'].split(':', 1)[1]
-                path = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds', rel + '.ogg')
+                path = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds', rel + '.ogg')
                 if not os.path.exists(path):
                     bad.append('missing ' + path)
                     continue

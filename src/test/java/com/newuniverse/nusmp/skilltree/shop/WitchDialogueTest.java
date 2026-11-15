@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * without repeating one back to back. No other file of the arcs says any of her sentences.
  */
 class WitchDialogueTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/arc/dialogue");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/arc/dialogue");
     private static final Path FILE = DIR.resolve("black_market_witch.json");
     private static final List<String> SAGAS = List.of(ArcSaga.ELF_REINCARNATION.id(), ArcSaga.SPADE_RAID.id(), ArcSaga.WIZARD_KING.id(), ArcSaga.SEVEN_DEADLY_SINS.id(), ArcSaga.DANMACHI.id());
 

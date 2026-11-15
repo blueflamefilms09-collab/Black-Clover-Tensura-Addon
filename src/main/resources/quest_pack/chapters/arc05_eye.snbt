@@ -4,7 +4,7 @@
 	order_index: 10
 	filename: "arc05_eye"
 	icon: {
-		id: "nusmp:ring_of_power"
+		id: "anime_multiverse:ring_of_power"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:ring_of_power"
+				id: "anime_multiverse:ring_of_power"
 			}
 			dependencies: ["62BC305F4B28121F"]
 			tasks: [
@@ -38,14 +38,14 @@
 			x: 1.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:bag_of_holding"
+				id: "anime_multiverse:bag_of_holding"
 			}
 			dependencies: ["55BFA770A1B1265C"]
 			tasks: [
 				{
 					id: "31B24F0A4C8FDFAD"
 					type: "advancement"
-					advancement: "nusmp:relics/first"
+					advancement: "anime_multiverse:relics/first"
 					criterion: ""
 				}
 			]
@@ -63,20 +63,20 @@
 			x: 3.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:ring_of_power"
+				id: "anime_multiverse:ring_of_power"
 			}
 			dependencies: ["6A2E4C72DEF47C92"]
 			tasks: [
 				{
 					id: "57CFAE976DDEA056"
 					type: "advancement"
-					advancement: "nusmp:relics/equipped"
+					advancement: "anime_multiverse:relics/equipped"
 					criterion: ""
 				}
 				{
 					id: "2AFAA1E57561BBF3"
 					type: "advancement"
-					advancement: "nusmp:arcs/eye_midnight"
+					advancement: "anime_multiverse:arcs/eye_midnight"
 					criterion: ""
 				}
 			]
@@ -96,20 +96,20 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:relic_forge"
+				id: "anime_multiverse:relic_forge"
 			}
 			dependencies: ["5BF74C5A389D2DC1"]
 			tasks: [
 				{
 					id: "14707485DB313CFC"
 					type: "advancement"
-					advancement: "nusmp:relics/forge_block"
+					advancement: "anime_multiverse:relics/forge_block"
 					criterion: ""
 				}
 				{
 					id: "5A508D2855A5CA3F"
 					type: "advancement"
-					advancement: "nusmp:relics/forged"
+					advancement: "anime_multiverse:relics/forged"
 					criterion: ""
 				}
 			]
@@ -132,14 +132,14 @@
 			x: 6.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:ring_of_power"
+				id: "anime_multiverse:ring_of_power"
 			}
 			dependencies: ["670D9A20D2396885"]
 			tasks: [
 				{
 					id: "525B8FD678B48F25"
 					type: "advancement"
-					advancement: "nusmp:relics/grade_rare"
+					advancement: "anime_multiverse:relics/grade_rare"
 					criterion: ""
 				}
 			]
@@ -166,7 +166,7 @@
 				{
 					id: "774D4CAFD351FBDD"
 					type: "advancement"
-					advancement: "nusmp:relics/socketed"
+					advancement: "anime_multiverse:relics/socketed"
 					criterion: ""
 				}
 			]
@@ -193,7 +193,7 @@
 				{
 					id: "34B95CE3D9B1C5EC"
 					type: "advancement"
-					advancement: "nusmp:future/eye_midnight_boss"
+					advancement: "anime_multiverse:future/eye_midnight_boss"
 					criterion: ""
 				}
 			]
@@ -225,7 +225,7 @@
 				{
 					id: "04CE264EB85773C1"
 					type: "advancement"
-					advancement: "nusmp:relics/grade_unique"
+					advancement: "anime_multiverse:relics/grade_unique"
 					criterion: ""
 				}
 			]

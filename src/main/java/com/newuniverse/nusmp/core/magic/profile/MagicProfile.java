@@ -55,7 +55,7 @@ public interface MagicProfile {
     /** The magic's main colour, ARGB. */
     default int color() { return 0xFF000000 | com.newuniverse.nusmp.grimoire.BookPalette.glow(MagicKeys.enumKey(id())); }
 
-    /** The particle theme of the magic ({@code magic.FLAME}, ...): its own particles and colour in data/nusmp/particle_themes.json; an id without a theme gets the default one. */
+    /** The particle theme of the magic ({@code magic.FLAME}, ...): its own particles and colour in data/anime_multiverse/particle_themes.json; an id without a theme gets the default one. */
     default ThemeKey themeKey() { return ThemeKey.of("magic." + MagicKeys.enumKey(id())); }
 
     /** The signature particle of the magic's theme (light or dark flavour); the final fallback is a vanilla glow. Never null. */
@@ -74,10 +74,10 @@ public interface MagicProfile {
     /** The player render layer slot this magic has, or null (then casting never asks for one). */
     default Aura auraStyle() { return null; }
 
-    /** Texture path inside assets/nusmp of the icon (it may not exist: use {@link #icon()}, which is checked by the audit). */
+    /** Texture path inside assets/anime_multiverse of the icon (it may not exist: use {@link #icon()}, which is checked by the audit). */
     default String iconPath() { return MagicKeys.iconPath(id()); }
 
-    default ResourceLocation icon() { return ResourceLocation.fromNamespaceAndPath("nusmp", iconPath()); }
+    default ResourceLocation icon() { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", iconPath()); }
 
     // ---------------------------------------------------------------- safe numbers (used when a page does not state its own)
     /** Cost of a cast as a percent of max magicule. */

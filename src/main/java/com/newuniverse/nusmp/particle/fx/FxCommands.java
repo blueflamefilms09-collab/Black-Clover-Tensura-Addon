@@ -68,7 +68,7 @@ public final class FxCommands {
     private static int list(CommandContext<CommandSourceStack> ctx, String group) {
         Map<String, List<String>> g = groups();
         if (group != null && !g.containsKey(group)) {
-            fail(ctx, "nusmp.particles.cmd.nogroup", "No such group: %s. Groups: %s", group, String.join(", ", g.keySet()));
+            fail(ctx, "anime_multiverse.particles.cmd.nogroup", "No such group: %s. Groups: %s", group, String.join(", ", g.keySet()));
             return 0;
         }
         for (Map.Entry<String, List<String>> e : g.entrySet()) {
@@ -86,14 +86,14 @@ public final class FxCommands {
         String id = StringArgumentType.getString(ctx, "id");
         TintedParticleType type = FxTypes.type(id);
         if (type == null) {
-            fail(ctx, "nusmp.particles.cmd.unknown", "No such custom particle: %s (see /multiverse particles list)", id);
+            fail(ctx, "anime_multiverse.particles.cmd.unknown", "No such custom particle: %s (see /multiverse particles list)", id);
             return 0;
         }
         ServerPlayer p;
         try {
             p = ctx.getSource().getPlayerOrException();
         } catch (Exception e) {
-            fail(ctx, "nusmp.particles.cmd.player", "Run this as a player.");
+            fail(ctx, "anime_multiverse.particles.cmd.player", "Run this as a player.");
             return 0;
         }
         ServerLevel sl = p.serverLevel();

@@ -44,7 +44,7 @@
 				{
 					id: "68435CD5B4706FD1"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_flame"
+					advancement: "anime_multiverse:magic/cast_flame"
 					criterion: ""
 				}
 			]
@@ -69,163 +69,163 @@
 				{
 					id: "5B20A7466B565944"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_flame"
+					advancement: "anime_multiverse:magic/cast_flame"
 					criterion: ""
 				}
 				{
 					id: "5BD53A0B6CD1D67C"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_explosion"
+					advancement: "anime_multiverse:magic/cast_explosion"
 					criterion: ""
 				}
 				{
 					id: "48DAE00B22CB98DC"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_magma"
+					advancement: "anime_multiverse:magic/cast_magma"
 					criterion: ""
 				}
 				{
 					id: "5F627C881CD093F4"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_ash"
+					advancement: "anime_multiverse:magic/cast_ash"
 					criterion: ""
 				}
 				{
 					id: "6DB75E9F5C0AD31B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_water"
+					advancement: "anime_multiverse:magic/cast_water"
 					criterion: ""
 				}
 				{
 					id: "3076B0129EF6BA82"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_ice"
+					advancement: "anime_multiverse:magic/cast_ice"
 					criterion: ""
 				}
 				{
 					id: "5081CD8AF16FEDC0"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_snow"
+					advancement: "anime_multiverse:magic/cast_snow"
 					criterion: ""
 				}
 				{
 					id: "342C878A7EE3DE7A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mist"
+					advancement: "anime_multiverse:magic/cast_mist"
 					criterion: ""
 				}
 				{
 					id: "3F99F10FC249919A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_bubble"
+					advancement: "anime_multiverse:magic/cast_bubble"
 					criterion: ""
 				}
 				{
 					id: "6F553ABE28AEC9E4"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_ice_wedge"
+					advancement: "anime_multiverse:magic/cast_ice_wedge"
 					criterion: ""
 				}
 				{
 					id: "7791EC26770ABF3B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_wind"
+					advancement: "anime_multiverse:magic/cast_wind"
 					criterion: ""
 				}
 				{
 					id: "5CEA7DC4DC6FB725"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_storm"
+					advancement: "anime_multiverse:magic/cast_storm"
 					criterion: ""
 				}
 				{
 					id: "4A6E3F16E28E7A6B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_air"
+					advancement: "anime_multiverse:magic/cast_air"
 					criterion: ""
 				}
 				{
 					id: "505A62B8E2DD1522"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_vortex"
+					advancement: "anime_multiverse:magic/cast_vortex"
 					criterion: ""
 				}
 				{
 					id: "60B66AE0870A1F5C"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_wing"
+					advancement: "anime_multiverse:magic/cast_wing"
 					criterion: ""
 				}
 				{
 					id: "369D3F400D2C95A0"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sound"
+					advancement: "anime_multiverse:magic/cast_sound"
 					criterion: ""
 				}
 				{
 					id: "3D1BE65FA8D106D6"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_star"
+					advancement: "anime_multiverse:magic/cast_star"
 					criterion: ""
 				}
 				{
 					id: "6748BCF39EEAED13"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_earth"
+					advancement: "anime_multiverse:magic/cast_earth"
 					criterion: ""
 				}
 				{
 					id: "7B027E3D05B23A35"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sand"
+					advancement: "anime_multiverse:magic/cast_sand"
 					criterion: ""
 				}
 				{
 					id: "675DFEC0487CBDDC"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sandstone"
+					advancement: "anime_multiverse:magic/cast_sandstone"
 					criterion: ""
 				}
 				{
 					id: "0F33167A111BEB9D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_rock"
+					advancement: "anime_multiverse:magic/cast_rock"
 					criterion: ""
 				}
 				{
 					id: "5848C36F346FF1EB"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_stone"
+					advancement: "anime_multiverse:magic/cast_stone"
 					criterion: ""
 				}
 				{
 					id: "45D1C86211911FC1"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mud"
+					advancement: "anime_multiverse:magic/cast_mud"
 					criterion: ""
 				}
 				{
 					id: "5EBF541CA7B53EE9"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_spike"
+					advancement: "anime_multiverse:magic/cast_spike"
 					criterion: ""
 				}
 				{
 					id: "644D4BB111B4EBA8"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mercury"
+					advancement: "anime_multiverse:magic/cast_mercury"
 					criterion: ""
 				}
 				{
 					id: "473442E511103A3B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_gel"
+					advancement: "anime_multiverse:magic/cast_gel"
 					criterion: ""
 				}
 				{
 					id: "4CDFEABDEDAA32E3"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mucus"
+					advancement: "anime_multiverse:magic/cast_mucus"
 					criterion: ""
 				}
 			]
@@ -257,7 +257,7 @@
 				{
 					id: "6C943BABE014A109"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_elements_signature"
+					advancement: "anime_multiverse:magic/branch_elements_signature"
 					criterion: ""
 				}
 			]
@@ -289,7 +289,7 @@
 				{
 					id: "3741E3DA8DA4B141"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_elements_all"
+					advancement: "anime_multiverse:magic/branch_elements_all"
 					criterion: ""
 				}
 			]
@@ -319,7 +319,7 @@
 				{
 					id: "3A37AC7B89A3B9D9"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_light"
+					advancement: "anime_multiverse:magic/cast_light"
 					criterion: ""
 				}
 			]
@@ -344,91 +344,91 @@
 				{
 					id: "33ECA8A1C6ED1697"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_light"
+					advancement: "anime_multiverse:magic/cast_light"
 					criterion: ""
 				}
 				{
 					id: "044F625BE2C2771E"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_lightning"
+					advancement: "anime_multiverse:magic/cast_lightning"
 					criterion: ""
 				}
 				{
 					id: "3348D413A4A02710"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_dark"
+					advancement: "anime_multiverse:magic/cast_dark"
 					criterion: ""
 				}
 				{
 					id: "0036AE8098CB1D3E"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_poison"
+					advancement: "anime_multiverse:magic/cast_poison"
 					criterion: ""
 				}
 				{
 					id: "3B460396DAFA9BCC"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_smoke"
+					advancement: "anime_multiverse:magic/cast_smoke"
 					criterion: ""
 				}
 				{
 					id: "11D07857F138117A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_curse"
+					advancement: "anime_multiverse:magic/cast_curse"
 					criterion: ""
 				}
 				{
 					id: "66212C1407EF24FD"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_curse_warding"
+					advancement: "anime_multiverse:magic/cast_curse_warding"
 					criterion: ""
 				}
 				{
 					id: "1E7394AF39A6FA19"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_eyeball"
+					advancement: "anime_multiverse:magic/cast_eyeball"
 					criterion: ""
 				}
 				{
 					id: "2CE6F5B6B7E2946B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_black_oil"
+					advancement: "anime_multiverse:magic/cast_black_oil"
 					criterion: ""
 				}
 				{
 					id: "4DF181918FF71CB4"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_demon_fire"
+					advancement: "anime_multiverse:magic/cast_demon_fire"
 					criterion: ""
 				}
 				{
 					id: "6F4980F52335B42B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_demon_ice"
+					advancement: "anime_multiverse:magic/cast_demon_ice"
 					criterion: ""
 				}
 				{
 					id: "08176CC122992590"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_demon_light"
+					advancement: "anime_multiverse:magic/cast_demon_light"
 					criterion: ""
 				}
 				{
 					id: "1A9E50272119A848"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_demon_water"
+					advancement: "anime_multiverse:magic/cast_demon_water"
 					criterion: ""
 				}
 				{
 					id: "6F5B9B1D2B655369"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_demon_beast"
+					advancement: "anime_multiverse:magic/cast_demon_beast"
 					criterion: ""
 				}
 				{
 					id: "32205E0F7C876738"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_anti_magic"
+					advancement: "anime_multiverse:magic/cast_anti_magic"
 					criterion: ""
 				}
 			]
@@ -460,7 +460,7 @@
 				{
 					id: "31AA6B72EFBDB1AF"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_light_dark_signature"
+					advancement: "anime_multiverse:magic/branch_light_dark_signature"
 					criterion: ""
 				}
 			]
@@ -492,7 +492,7 @@
 				{
 					id: "4CF80CF5A0B1C095"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_light_dark_all"
+					advancement: "anime_multiverse:magic/branch_light_dark_all"
 					criterion: ""
 				}
 			]
@@ -522,7 +522,7 @@
 				{
 					id: "281B5B6344C25B5D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_reinforcement"
+					advancement: "anime_multiverse:magic/cast_reinforcement"
 					criterion: ""
 				}
 			]
@@ -547,61 +547,61 @@
 				{
 					id: "61A4A5D3631019D6"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_reinforcement"
+					advancement: "anime_multiverse:magic/cast_reinforcement"
 					criterion: ""
 				}
 				{
 					id: "19CE0ACCF735B937"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_body"
+					advancement: "anime_multiverse:magic/cast_body"
 					criterion: ""
 				}
 				{
 					id: "710DBCFBE40A33F9"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_blood"
+					advancement: "anime_multiverse:magic/cast_blood"
 					criterion: ""
 				}
 				{
 					id: "38FA5E656673E5CB"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_bone"
+					advancement: "anime_multiverse:magic/cast_bone"
 					criterion: ""
 				}
 				{
 					id: "41195A81CA7D1C98"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_beast"
+					advancement: "anime_multiverse:magic/cast_beast"
 					criterion: ""
 				}
 				{
 					id: "78F7805E55CC7BFC"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_scale"
+					advancement: "anime_multiverse:magic/cast_scale"
 					criterion: ""
 				}
 				{
 					id: "3DC0BF3EE6D032CD"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_skin"
+					advancement: "anime_multiverse:magic/cast_skin"
 					criterion: ""
 				}
 				{
 					id: "646518DC3A52F7DA"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_nail"
+					advancement: "anime_multiverse:magic/cast_nail"
 					criterion: ""
 				}
 				{
 					id: "7CF8296930D30C74"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_hair"
+					advancement: "anime_multiverse:magic/cast_hair"
 					criterion: ""
 				}
 				{
 					id: "7FD3916AF15B45F4"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_tongue"
+					advancement: "anime_multiverse:magic/cast_tongue"
 					criterion: ""
 				}
 			]
@@ -633,7 +633,7 @@
 				{
 					id: "4055F7E96CEF839F"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_body_signature"
+					advancement: "anime_multiverse:magic/branch_body_signature"
 					criterion: ""
 				}
 			]
@@ -665,7 +665,7 @@
 				{
 					id: "2FBFE543C9261E0D"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_body_all"
+					advancement: "anime_multiverse:magic/branch_body_all"
 					criterion: ""
 				}
 			]
@@ -695,7 +695,7 @@
 				{
 					id: "4D7BD22E53B6C584"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_thread"
+					advancement: "anime_multiverse:magic/cast_thread"
 					criterion: ""
 				}
 			]
@@ -720,61 +720,61 @@
 				{
 					id: "3E8D3727F6C40922"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_thread"
+					advancement: "anime_multiverse:magic/cast_thread"
 					criterion: ""
 				}
 				{
 					id: "476896EA0CFF43C0"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sealing"
+					advancement: "anime_multiverse:magic/cast_sealing"
 					criterion: ""
 				}
 				{
 					id: "361404D12089992F"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_chain"
+					advancement: "anime_multiverse:magic/cast_chain"
 					criterion: ""
 				}
 				{
 					id: "5C9FFC65B0BAACA2"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_key"
+					advancement: "anime_multiverse:magic/cast_key"
 					criterion: ""
 				}
 				{
 					id: "3F76D3E10ED27D96"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_barrier"
+					advancement: "anime_multiverse:magic/cast_barrier"
 					criterion: ""
 				}
 				{
 					id: "084F1038625AB912"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_switching"
+					advancement: "anime_multiverse:magic/cast_switching"
 					criterion: ""
 				}
 				{
 					id: "78DB70EAEE8D1FA8"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_permeation"
+					advancement: "anime_multiverse:magic/cast_permeation"
 					criterion: ""
 				}
 				{
 					id: "6A4B2D96418960BB"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_modification"
+					advancement: "anime_multiverse:magic/cast_modification"
 					criterion: ""
 				}
 				{
 					id: "205A74064EED74FD"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_recombination"
+					advancement: "anime_multiverse:magic/cast_recombination"
 					criterion: ""
 				}
 				{
 					id: "06AAC2873D9BB866"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_legion"
+					advancement: "anime_multiverse:magic/cast_legion"
 					criterion: ""
 				}
 			]
@@ -806,7 +806,7 @@
 				{
 					id: "424711C352F1D404"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_bindings_signature"
+					advancement: "anime_multiverse:magic/branch_bindings_signature"
 					criterion: ""
 				}
 			]
@@ -838,7 +838,7 @@
 				{
 					id: "42A674F3119BB451"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_bindings_all"
+					advancement: "anime_multiverse:magic/branch_bindings_all"
 					criterion: ""
 				}
 			]
@@ -868,7 +868,7 @@
 				{
 					id: "7D4BA1598DB148A2"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_spatial"
+					advancement: "anime_multiverse:magic/cast_spatial"
 					criterion: ""
 				}
 			]
@@ -893,37 +893,37 @@
 				{
 					id: "6FDF132E7636BA6F"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_spatial"
+					advancement: "anime_multiverse:magic/cast_spatial"
 					criterion: ""
 				}
 				{
 					id: "63CD1A36728F0A6B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_time"
+					advancement: "anime_multiverse:magic/cast_time"
 					criterion: ""
 				}
 				{
 					id: "37ACD49DED950CCD"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_gravity"
+					advancement: "anime_multiverse:magic/cast_gravity"
 					criterion: ""
 				}
 				{
 					id: "6744B245589537FC"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_compass"
+					advancement: "anime_multiverse:magic/cast_compass"
 					criterion: ""
 				}
 				{
 					id: "212BFAABE6A8C38D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_game"
+					advancement: "anime_multiverse:magic/cast_game"
 					criterion: ""
 				}
 				{
 					id: "45FCAF05C3CF5151"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_dice"
+					advancement: "anime_multiverse:magic/cast_dice"
 					criterion: ""
 				}
 			]
@@ -955,7 +955,7 @@
 				{
 					id: "6134257441AC09A5"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_space_time_signature"
+					advancement: "anime_multiverse:magic/branch_space_time_signature"
 					criterion: ""
 				}
 			]
@@ -987,7 +987,7 @@
 				{
 					id: "2804A647CFC551DB"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_space_time_all"
+					advancement: "anime_multiverse:magic/branch_space_time_all"
 					criterion: ""
 				}
 			]
@@ -1017,7 +1017,7 @@
 				{
 					id: "6A86F7C7EF1C075B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mirror"
+					advancement: "anime_multiverse:magic/cast_mirror"
 					criterion: ""
 				}
 			]
@@ -1042,49 +1042,49 @@
 				{
 					id: "23DD202518878B45"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mirror"
+					advancement: "anime_multiverse:magic/cast_mirror"
 					criterion: ""
 				}
 				{
 					id: "4E0E7F76B1115ADA"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_painting"
+					advancement: "anime_multiverse:magic/cast_painting"
 					criterion: ""
 				}
 				{
 					id: "2E2B2F60A8927880"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_dream"
+					advancement: "anime_multiverse:magic/cast_dream"
 					criterion: ""
 				}
 				{
 					id: "24AEEB146C129D45"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_illusion"
+					advancement: "anime_multiverse:magic/cast_illusion"
 					criterion: ""
 				}
 				{
 					id: "05D43E7B1BE5C024"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_creation"
+					advancement: "anime_multiverse:magic/cast_creation"
 					criterion: ""
 				}
 				{
 					id: "7C313F5DF4BA5B4C"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_copy"
+					advancement: "anime_multiverse:magic/cast_copy"
 					criterion: ""
 				}
 				{
 					id: "5FA9EA708F529B1A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_memory"
+					advancement: "anime_multiverse:magic/cast_memory"
 					criterion: ""
 				}
 				{
 					id: "2F2FDB87A9FC816D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_eye"
+					advancement: "anime_multiverse:magic/cast_eye"
 					criterion: ""
 				}
 			]
@@ -1116,7 +1116,7 @@
 				{
 					id: "3A233C5346F599A2"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_mind_signature"
+					advancement: "anime_multiverse:magic/branch_mind_signature"
 					criterion: ""
 				}
 			]
@@ -1148,7 +1148,7 @@
 				{
 					id: "21B6474F60E2E54C"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_mind_all"
+					advancement: "anime_multiverse:magic/branch_mind_all"
 					criterion: ""
 				}
 			]
@@ -1178,7 +1178,7 @@
 				{
 					id: "4029A0FFF33717F0"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_song"
+					advancement: "anime_multiverse:magic/cast_song"
 					criterion: ""
 				}
 			]
@@ -1203,31 +1203,31 @@
 				{
 					id: "6ECA8785B9B03255"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_song"
+					advancement: "anime_multiverse:magic/cast_song"
 					criterion: ""
 				}
 				{
 					id: "17275BEED6623745"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_butoh"
+					advancement: "anime_multiverse:magic/cast_butoh"
 					criterion: ""
 				}
 				{
 					id: "1BB6F998FFB36CD0"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_soul"
+					advancement: "anime_multiverse:magic/cast_soul"
 					criterion: ""
 				}
 				{
 					id: "2853B8DAAB990E70"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_soul_corpse"
+					advancement: "anime_multiverse:magic/cast_soul_corpse"
 					criterion: ""
 				}
 				{
 					id: "6A2ABEC3B0779D6E"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_shadow"
+					advancement: "anime_multiverse:magic/cast_shadow"
 					criterion: ""
 				}
 			]
@@ -1259,7 +1259,7 @@
 				{
 					id: "093E8C0C8F7F2EE8"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_performance_signature"
+					advancement: "anime_multiverse:magic/branch_performance_signature"
 					criterion: ""
 				}
 			]
@@ -1291,7 +1291,7 @@
 				{
 					id: "2F3A08DB17AB4D3C"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_performance_all"
+					advancement: "anime_multiverse:magic/branch_performance_all"
 					criterion: ""
 				}
 			]
@@ -1321,7 +1321,7 @@
 				{
 					id: "55AEFD2918096C7A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sword"
+					advancement: "anime_multiverse:magic/cast_sword"
 					criterion: ""
 				}
 			]
@@ -1346,79 +1346,79 @@
 				{
 					id: "47512EE9C9F3E012"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_sword"
+					advancement: "anime_multiverse:magic/cast_sword"
 					criterion: ""
 				}
 				{
 					id: "23774E6F61FAAE95"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_slash"
+					advancement: "anime_multiverse:magic/cast_slash"
 					criterion: ""
 				}
 				{
 					id: "7448F376D9F7467B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_steel"
+					advancement: "anime_multiverse:magic/cast_steel"
 					criterion: ""
 				}
 				{
 					id: "55DB3777884DFD66"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_iron"
+					advancement: "anime_multiverse:magic/cast_iron"
 					criterion: ""
 				}
 				{
 					id: "551F0193066D2977"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_bronze"
+					advancement: "anime_multiverse:magic/cast_bronze"
 					criterion: ""
 				}
 				{
 					id: "0F1DF7D6A2372D06"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_copper"
+					advancement: "anime_multiverse:magic/cast_copper"
 					criterion: ""
 				}
 				{
 					id: "58B8CEC2D3C407C8"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_corundum"
+					advancement: "anime_multiverse:magic/cast_corundum"
 					criterion: ""
 				}
 				{
 					id: "5F67553695045B02"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_crystal"
+					advancement: "anime_multiverse:magic/cast_crystal"
 					criterion: ""
 				}
 				{
 					id: "203F655582139600"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_glass"
+					advancement: "anime_multiverse:magic/cast_glass"
 					criterion: ""
 				}
 				{
 					id: "2EC3456DA764246D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mineral"
+					advancement: "anime_multiverse:magic/cast_mineral"
 					criterion: ""
 				}
 				{
 					id: "02E939C64E8D6804"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_shakudo"
+					advancement: "anime_multiverse:magic/cast_shakudo"
 					criterion: ""
 				}
 				{
 					id: "6453FBD6CB466614"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_red_ochre"
+					advancement: "anime_multiverse:magic/cast_red_ochre"
 					criterion: ""
 				}
 				{
 					id: "3699F52A9B58F7C7"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_transmutation"
+					advancement: "anime_multiverse:magic/cast_transmutation"
 					criterion: ""
 				}
 			]
@@ -1450,7 +1450,7 @@
 				{
 					id: "671C4CB098EF533A"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_forge_signature"
+					advancement: "anime_multiverse:magic/branch_forge_signature"
 					criterion: ""
 				}
 			]
@@ -1482,7 +1482,7 @@
 				{
 					id: "0F31723D562AC9FF"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_forge_all"
+					advancement: "anime_multiverse:magic/branch_forge_all"
 					criterion: ""
 				}
 			]
@@ -1512,7 +1512,7 @@
 				{
 					id: "4B62C37AAA486808"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_plant"
+					advancement: "anime_multiverse:magic/cast_plant"
 					criterion: ""
 				}
 			]
@@ -1537,67 +1537,67 @@
 				{
 					id: "77B95CE35DD025EF"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_plant"
+					advancement: "anime_multiverse:magic/cast_plant"
 					criterion: ""
 				}
 				{
 					id: "65092611F9FA8F2F"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_cotton"
+					advancement: "anime_multiverse:magic/cast_cotton"
 					criterion: ""
 				}
 				{
 					id: "72C677093EEB222B"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_world_tree"
+					advancement: "anime_multiverse:magic/cast_world_tree"
 					criterion: ""
 				}
 				{
 					id: "2278F08E98E48FAF"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_kotodama"
+					advancement: "anime_multiverse:magic/cast_kotodama"
 					criterion: ""
 				}
 				{
 					id: "78B111BDF808C3CA"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_briar"
+					advancement: "anime_multiverse:magic/cast_briar"
 					criterion: ""
 				}
 				{
 					id: "5B116868A9E84568"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_cherry_blossom"
+					advancement: "anime_multiverse:magic/cast_cherry_blossom"
 					criterion: ""
 				}
 				{
 					id: "584ED484B6FBC861"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_fungus"
+					advancement: "anime_multiverse:magic/cast_fungus"
 					criterion: ""
 				}
 				{
 					id: "1A10DC0918EBB388"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_food"
+					advancement: "anime_multiverse:magic/cast_food"
 					criterion: ""
 				}
 				{
 					id: "789A1D986BB65C07"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_poison_plant"
+					advancement: "anime_multiverse:magic/cast_poison_plant"
 					criterion: ""
 				}
 				{
 					id: "3CD4F3E9C9F948A3"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_tree"
+					advancement: "anime_multiverse:magic/cast_tree"
 					criterion: ""
 				}
 				{
 					id: "6337C3B837FC9768"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_vine"
+					advancement: "anime_multiverse:magic/cast_vine"
 					criterion: ""
 				}
 			]
@@ -1629,7 +1629,7 @@
 				{
 					id: "6D1A2CA4AAEC5D7C"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_nature_signature"
+					advancement: "anime_multiverse:magic/branch_nature_signature"
 					criterion: ""
 				}
 			]
@@ -1661,7 +1661,7 @@
 				{
 					id: "45803FCF69CEB1D1"
 					type: "advancement"
-					advancement: "nusmp:magic/branch_nature_all"
+					advancement: "anime_multiverse:magic/branch_nature_all"
 					criterion: ""
 				}
 			]
@@ -1691,7 +1691,7 @@
 				{
 					id: "3582A0B2B4C85348"
 					type: "advancement"
-					advancement: "nusmp:magic/distinct_5"
+					advancement: "anime_multiverse:magic/distinct_5"
 					criterion: ""
 				}
 			]
@@ -1716,7 +1716,7 @@
 				{
 					id: "30D2562F74A18F74"
 					type: "advancement"
-					advancement: "nusmp:magic/distinct_10"
+					advancement: "anime_multiverse:magic/distinct_10"
 					criterion: ""
 				}
 			]
@@ -1741,7 +1741,7 @@
 				{
 					id: "62980FE17A4348AC"
 					type: "advancement"
-					advancement: "nusmp:magic/distinct_25"
+					advancement: "anime_multiverse:magic/distinct_25"
 					criterion: ""
 				}
 			]
@@ -1766,7 +1766,7 @@
 				{
 					id: "01AC98EEC8DA3DFA"
 					type: "advancement"
-					advancement: "nusmp:magic/distinct_50"
+					advancement: "anime_multiverse:magic/distinct_50"
 					criterion: ""
 				}
 			]
@@ -1793,7 +1793,7 @@
 				{
 					id: "191F938B79C61B0E"
 					type: "advancement"
-					advancement: "nusmp:magic/distinct_105"
+					advancement: "anime_multiverse:magic/distinct_105"
 					criterion: ""
 				}
 			]
@@ -1825,67 +1825,67 @@
 				{
 					id: "0CA8B1EC66A9B2F4"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_flame"
+					advancement: "anime_multiverse:magic/soul_flame"
 					criterion: ""
 				}
 				{
 					id: "7E3EC9C00EE51D56"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_water"
+					advancement: "anime_multiverse:magic/soul_water"
 					criterion: ""
 				}
 				{
 					id: "255CBC6B774DBCF6"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_wind"
+					advancement: "anime_multiverse:magic/soul_wind"
 					criterion: ""
 				}
 				{
 					id: "66833933A89A8453"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_earth"
+					advancement: "anime_multiverse:magic/soul_earth"
 					criterion: ""
 				}
 				{
 					id: "13B294CABFF6A7EF"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_light"
+					advancement: "anime_multiverse:magic/soul_light"
 					criterion: ""
 				}
 				{
 					id: "2BE66DA7EE6460A1"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_darkness"
+					advancement: "anime_multiverse:magic/soul_darkness"
 					criterion: ""
 				}
 				{
 					id: "1F05181C0D32116C"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_space"
+					advancement: "anime_multiverse:magic/soul_space"
 					criterion: ""
 				}
 				{
 					id: "594FF8DD157C4CD3"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_time"
+					advancement: "anime_multiverse:magic/soul_time"
 					criterion: ""
 				}
 				{
 					id: "4B97C635BCE18B37"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_battle"
+					advancement: "anime_multiverse:magic/soul_battle"
 					criterion: ""
 				}
 				{
 					id: "1138F74018D2D7D3"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_fantasy"
+					advancement: "anime_multiverse:magic/soul_fantasy"
 					criterion: ""
 				}
 				{
 					id: "22E1304A614E87EC"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_empty"
+					advancement: "anime_multiverse:magic/soul_empty"
 					criterion: ""
 				}
 			]
@@ -1917,7 +1917,7 @@
 				{
 					id: "5A037ADD871C2DFB"
 					type: "advancement"
-					advancement: "nusmp:spells/merged"
+					advancement: "anime_multiverse:spells/merged"
 					criterion: ""
 				}
 			]
@@ -1949,7 +1949,7 @@
 				{
 					id: "42938952CAF89789"
 					type: "advancement"
-					advancement: "nusmp:spells/merged_5"
+					advancement: "anime_multiverse:spells/merged_5"
 					criterion: ""
 				}
 			]
@@ -1981,7 +1981,7 @@
 				{
 					id: "2105C9B1EE0C0141"
 					type: "advancement"
-					advancement: "nusmp:spells/characters"
+					advancement: "anime_multiverse:spells/characters"
 					criterion: ""
 				}
 			]
@@ -2014,7 +2014,7 @@
 				{
 					id: "62DAD63F169B9EC2"
 					type: "advancement"
-					advancement: "nusmp:spells/characters_all"
+					advancement: "anime_multiverse:spells/characters_all"
 					criterion: ""
 				}
 			]
@@ -2044,7 +2044,7 @@
 				{
 					id: "60153A4F153C9C90"
 					type: "advancement"
-					advancement: "nusmp:spells/special"
+					advancement: "anime_multiverse:spells/special"
 					criterion: ""
 				}
 			]
@@ -2072,7 +2072,7 @@
 				{
 					id: "43EE081C00EEA388"
 					type: "advancement"
-					advancement: "nusmp:spells/unite_all"
+					advancement: "anime_multiverse:spells/unite_all"
 					criterion: ""
 				}
 			]

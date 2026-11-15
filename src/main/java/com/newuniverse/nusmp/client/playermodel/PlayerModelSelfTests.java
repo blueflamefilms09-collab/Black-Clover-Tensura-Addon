@@ -38,7 +38,7 @@ public final class PlayerModelSelfTests {
         SelfTests.register("render.playermodel2", server -> {
             List<String> bad = new ArrayList<>(DungeonAudit.run(PlayerModelAudit::classpath));
             for (String id : DungeonLooks.ENTITIES)
-                if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", id))) bad.add("the entity type nusmp:" + id + " is not registered");
+                if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", id))) bad.add("the entity type anime_multiverse:" + id + " is not registered");
             Map<String, PlayerLook> looks = PlayerLookTables.load(PlayerModelAudit::classpath).looks();
             com.newuniverse.nusmp.arc.ArcCharacters.bootstrap();                      // the arcs' friendly characters are people the kit drew in phase 1: each needs its look, or it would wear the default skin
             for (com.newuniverse.nusmp.arc.ArcCharacter c : com.newuniverse.nusmp.arc.ArcRoster.npcs())

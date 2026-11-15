@@ -36,8 +36,8 @@ public final class BindGesture {
     public enum Why {
         OK, GESTURE_DISABLED, NO_SEAL, EMPTY, NOT_A_RELIC, NOT_A_VESSEL, NOT_LEGEND, ALREADY_BOUND, NOT_ATTUNED, NOT_IN_INVENTORY;
 
-        /** The lang key of the reason ({@code message.nusmp.djinn_bind.<name>}). */
-        public String key() { return "message.nusmp.djinn_bind." + name().toLowerCase(java.util.Locale.ROOT); }
+        /** The lang key of the reason ({@code message.anime_multiverse.djinn_bind.<name>}). */
+        public String key() { return "message.anime_multiverse.djinn_bind." + name().toLowerCase(java.util.Locale.ROOT); }
 
         /** The English text used when the key is not translated; {@code %s} is the vessel's name where it makes sense. */
         public String fallback() {
@@ -105,7 +105,7 @@ public final class BindGesture {
     /** The catalog lookup: item id to entry, or null when the item is not a relic. */
     public interface Catalog { Entry of(String itemId); }
 
-    public static final String COMPONENT_BOUND = "nusmp:djinn_bound", COMPONENT_ATTUNED = "nusmp:relic_attuned";
+    public static final String COMPONENT_BOUND = "anime_multiverse:djinn_bound", COMPONENT_ATTUNED = "anime_multiverse:relic_attuned";
 
     /**
      * Reads a stack the way the ritual does: the catalog by item id, and only the two components the ritual owns. Anything else on the stack is ignored.

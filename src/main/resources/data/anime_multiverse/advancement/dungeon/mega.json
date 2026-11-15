@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:root",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:labyrinth_gate"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.mega.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.mega.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "anime_multiverse:mega_dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

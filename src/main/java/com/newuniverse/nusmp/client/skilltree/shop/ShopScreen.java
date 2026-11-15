@@ -60,7 +60,7 @@ public final class ShopScreen extends Screen {
     private List<Rect> bulkRects = List.of();
 
     public ShopScreen(ShopSnapshot snapshot) {
-        super(Component.translatable("gui.nusmp.shop.title"));
+        super(Component.translatable("gui.anime_multiverse.shop.title"));
         this.snap = snapshot;
         this.voice = voiceOf(snapshot);
         this.voiceAt = UiTheme.realNow();
@@ -90,7 +90,7 @@ public final class ShopScreen extends Screen {
 
     private static String voiceOf(ShopSnapshot s) {
         String t = s.voice() == null ? "" : s.voice().getString();
-        return t.isBlank() ? Component.translatable("gui.nusmp.shop.welcome").getString() : t;
+        return t.isBlank() ? Component.translatable("gui.anime_multiverse.shop.welcome").getString() : t;
     }
 
     private void clampScrolls() {
@@ -169,15 +169,15 @@ public final class ShopScreen extends Screen {
         RenderSystem.enableBlend();
         g.blit(ShopPainter.PORTRAIT, pr.x(), pr.y(), ShopPainter.PORTRAIT_W, ShopPainter.PORTRAIT_H, 0, 0, ShopPainter.PORTRAIT_W, ShopPainter.PORTRAIT_H, ShopPainter.PORTRAIT_W, ShopPainter.PORTRAIT_H);
         int tx = pr.right() + 8;
-        g.drawString(font, Component.translatable("gui.nusmp.shop.title").withStyle(s -> s.withBold(true)), tx, lay.panel.y() + 8, ShopPainter.AMBER, true);
+        g.drawString(font, Component.translatable("gui.anime_multiverse.shop.title").withStyle(s -> s.withBold(true)), tx, lay.panel.y() + 8, ShopPainter.AMBER, true);
         Rect pu = lay.purse;
         String gold = GoldFormat.full(snap.gold());
         int gw = font.width(gold);
-        String clock = Component.translatable("gui.nusmp.shop.restock", GoldFormat.clock(snap.ticksToRestock())).getString();
-        String lim = snap.dailyLeft() >= 0 ? Component.translatable("gui.nusmp.shop.limit", snap.dailyLeft()).getString() : "";
+        String clock = Component.translatable("gui.anime_multiverse.shop.restock", GoldFormat.clock(snap.ticksToRestock())).getString();
+        String lim = snap.dailyLeft() >= 0 ? Component.translatable("gui.anime_multiverse.shop.limit", snap.dailyLeft()).getString() : "";
         // the sub-title only appears when the whole of it fits beside the purse (a cut-off line of flavour text looks worse than none)
         int purseW = Math.max(gw + 11, Math.max(font.width(clock), font.width(lim)));
-        String sub = Component.translatable("gui.nusmp.shop.sub").getString();
+        String sub = Component.translatable("gui.anime_multiverse.shop.sub").getString();
         if (font.width(sub) <= pu.right() - purseW - 8 - tx) g.drawString(font, sub, tx, lay.panel.y() + 21, ShopPainter.DIM, false);
         ShopPainter.coin(g, pu.right() - gw - 11, pu.y() + 1, true);
         g.drawString(font, gold, pu.right() - gw, pu.y() + 1, ShopPainter.AMBER, true);
@@ -190,11 +190,11 @@ public final class ShopScreen extends Screen {
     private int shelf(GuiGraphics g, int mx, int my, float now) {
         Rect box = lay.shelfBox;
         UiPanel.well(g, box.x(), box.y(), box.w(), box.h(), ShopPainter.AMBER, 0.9f);
-        UiPanel.heading(g, font, Component.translatable("gui.nusmp.shop.shelves").getString(), box.x() + 4, box.y() + 2, box.w() - 8, ShopPainter.AMBER);
+        UiPanel.heading(g, font, Component.translatable("gui.anime_multiverse.shop.shelves").getString(), box.x() + 4, box.y() + 2, box.w() - 8, ShopPainter.AMBER);
         List<ShopSnapshot.Offer> offers = snap.offers();
         if (offers.isEmpty()) {
             int y = box.y() + ShopLayout.HEADING_H + 6;
-            for (FormattedCharSequence line : font.split(Component.translatable("gui.nusmp.shop.empty_shelf"), box.w() - 12)) {
+            for (FormattedCharSequence line : font.split(Component.translatable("gui.anime_multiverse.shop.empty_shelf"), box.w() - 12)) {
                 g.drawString(font, line, box.x() + 6, y, ShopPainter.DIM, false);
                 y += 10;
             }
@@ -220,9 +220,9 @@ public final class ShopScreen extends Screen {
             String price = GoldFormat.full(o.price());
             g.drawString(font, price, textX + 10, ly, soldOut ? ShopPainter.FAINT : affordable ? ShopPainter.GOOD : ShopPainter.BAD, false);
             int sx = textX + 10 + font.width(price) + 6;
-            String stock = soldOut ? Component.translatable("gui.nusmp.shop.sold_out").getString() : Component.translatable("gui.nusmp.shop.left", o.left()).getString();
+            String stock = soldOut ? Component.translatable("gui.anime_multiverse.shop.sold_out").getString() : Component.translatable("gui.anime_multiverse.shop.left", o.left()).getString();
             if (sx + font.width(stock) <= buy.x() - 2) g.drawString(font, stock, sx, ly, soldOut ? ShopPainter.BAD : ShopPainter.DIM, false);
-            ShopPainter.button(g, font, buy, Component.translatable("gui.nusmp.shop.buy").getString(), affordable, buy.contains(mx, my), ShopPainter.AMBER);
+            ShopPainter.button(g, font, buy, Component.translatable("gui.anime_multiverse.shop.buy").getString(), affordable, buy.contains(mx, my), ShopPainter.AMBER);
         }
         g.disableScissor();
         ShopPainter.scrollbar(g, lay.shelfBar, ShopLayout.thumb(offers.size(), lay.shelfVisible, shelfScroll, lay.shelfBar.h()));
@@ -233,7 +233,7 @@ public final class ShopScreen extends Screen {
     private int goods(GuiGraphics g, int mx, int my) {
         Rect box = lay.goodsBox;
         UiPanel.well(g, box.x(), box.y(), box.w(), box.h(), ShopPainter.PLUM, 0.9f);
-        UiPanel.heading(g, font, Component.translatable("gui.nusmp.shop.goods").getString(), box.x() + 4, box.y() + 2, box.w() - 8, ShopPainter.PLUM);
+        UiPanel.heading(g, font, Component.translatable("gui.anime_multiverse.shop.goods").getString(), box.x() + 4, box.y() + 2, box.w() - 8, ShopPainter.PLUM);
         for (int i = 0; i < bulkRects.size(); i++) {
             ShopPainter.button(g, font, bulkRects.get(i), bulkLabels.get(i), true, bulkRects.get(i).contains(mx, my), ShopPainter.PLUM);
         }
@@ -241,7 +241,7 @@ public final class ShopScreen extends Screen {
         Rect list = lay.goodsList;
         if (sells.isEmpty()) {
             int y = list.y() + 2;
-            for (FormattedCharSequence line : font.split(Component.translatable("gui.nusmp.shop.empty_goods"), list.w() - 4)) {
+            for (FormattedCharSequence line : font.split(Component.translatable("gui.anime_multiverse.shop.empty_goods"), list.w() - 4)) {
                 g.drawString(font, line, list.x() + 3, y, ShopPainter.DIM, false);
                 y += 10;
             }
@@ -259,7 +259,7 @@ public final class ShopScreen extends Screen {
             int textX = ic.right() + 4;
             g.drawString(font, fit(s.stack().getHoverName().getString(), sell.x() - textX - 3), textX, row.y() + 3, ShopPainter.PAPER, false);
             g.drawString(font, fit("x" + s.stack().getCount() + "  " + GoldFormat.compact(s.unit()) + " ea", sell.x() - textX - 3), textX, row.y() + 12, ShopPainter.AMBER, false);
-            ShopPainter.button(g, font, sell, Component.translatable("gui.nusmp.shop.sell").getString(), true, sell.contains(mx, my), ShopPainter.PLUM);
+            ShopPainter.button(g, font, sell, Component.translatable("gui.anime_multiverse.shop.sell").getString(), true, sell.contains(mx, my), ShopPainter.PLUM);
         }
         g.disableScissor();
         ShopPainter.scrollbar(g, lay.goodsBar, ShopLayout.thumb(sells.size(), lay.goodsVisible, goodsScroll, lay.goodsBar.h()));
@@ -280,7 +280,7 @@ public final class ShopScreen extends Screen {
             typedFor = 1000f;                                                                  // a comment on what the mouse touches appears at once; only her own lines are typed
         } else if (hoverGood >= 0) {
             boolean overSell = ShopLayout.sellButton(lay.goodsRow(hoverGood, goodsScroll)).contains(mx, my);       // over the button she says how to sell a whole stack
-            text = Component.translatable(overSell ? "gui.nusmp.shop.blurb.sell" : "gui.nusmp.shop.blurb.goods", GoldFormat.full(snap.sells().get(hoverGood).unit())).getString();
+            text = Component.translatable(overSell ? "gui.anime_multiverse.shop.blurb.sell" : "gui.anime_multiverse.shop.blurb.goods", GoldFormat.full(snap.sells().get(hoverGood).unit())).getString();
             typedFor = 1000f;
         } else {
             text = voice;
@@ -297,7 +297,7 @@ public final class ShopScreen extends Screen {
             left -= line.length();
             y += 9;
         }
-        ShopPainter.button(g, font, lay.closeButton, Component.translatable("gui.nusmp.shop.close").getString(), true, lay.closeButton.contains(mx, my), ShopPainter.AMBER);
+        ShopPainter.button(g, font, lay.closeButton, Component.translatable("gui.anime_multiverse.shop.close").getString(), true, lay.closeButton.contains(mx, my), ShopPainter.AMBER);
     }
 
     private void tooltips(GuiGraphics g, int mx, int my, int hoverOffer, int hoverGood) {
@@ -340,9 +340,9 @@ public final class ShopScreen extends Screen {
     }
 
     private String bulkLabel(String category, boolean withAll) {
-        String key = "gui.nusmp.shop.category." + category;
+        String key = "gui.anime_multiverse.shop.category." + category;
         String name = I18n.exists(key) ? I18n.get(key) : category;
-        if (withAll) return Component.translatable("gui.nusmp.shop.sell_all", name).getString();
+        if (withAll) return Component.translatable("gui.anime_multiverse.shop.sell_all", name).getString();
         return name.isEmpty() ? name : Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
@@ -358,8 +358,8 @@ public final class ShopScreen extends Screen {
 
     /** What the witch murmurs about the offer the mouse is over (the shelf holds no book any more, so every offer is "price each"). */
     private String blurb(ShopSnapshot.Offer o) {
-        if (o.stack().getCount() > 1) return Component.translatable("gui.nusmp.shop.blurb.stack", GoldFormat.full(o.price()), o.stack().getCount()).getString();
-        return Component.translatable("gui.nusmp.shop.blurb.goods", GoldFormat.full(o.price())).getString();
+        if (o.stack().getCount() > 1) return Component.translatable("gui.anime_multiverse.shop.blurb.stack", GoldFormat.full(o.price()), o.stack().getCount()).getString();
+        return Component.translatable("gui.anime_multiverse.shop.blurb.goods", GoldFormat.full(o.price())).getString();
     }
 
     /**

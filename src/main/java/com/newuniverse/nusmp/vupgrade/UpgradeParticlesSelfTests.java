@@ -39,7 +39,7 @@ public final class UpgradeParticlesSelfTests {
 
     private static final String[] TABLES = {"blackrazor", "demon_slayer_sword", "elsdocia", "aurliels_seraph_halberd", "djinn_weapon_bael_dark", "white_whistle"};
     private static final String[] TOKENS = {"fx", "dust", "minecraft:end_rod", "minecraft:flame", "flame", "minecraft:cloud", "minecraft:witch", "minecraft:soul_fire_flame", "minecraft:glow", "electric_spark",
-            "nusmp:ember", "ember", "no_such:particle", "", "minecraft:explosion", "minecraft:note"};
+            "anime_multiverse:ember", "ember", "no_such:particle", "", "minecraft:explosion", "minecraft:note"};
 
     private static SelfTests.Result run(MinecraftServer server) throws IOException {
         for (String t : UpgradeParticleAlias.targets()) {
@@ -53,7 +53,7 @@ public final class UpgradeParticlesSelfTests {
         }
         int tokens = 0;
         for (String id : TABLES) {
-            String text = text("/assets/nusmp/visual_upgrade/" + id + ".json");
+            String text = text("/assets/anime_multiverse/visual_upgrade/" + id + ".json");
             if (text == null) return SelfTests.Result.fail(id + ": the table is not in the jar");
             tokens += walk(JsonParser.parseString(text), id);
         }
@@ -83,7 +83,7 @@ public final class UpgradeParticlesSelfTests {
                 if (en.getKey().equals("particle") && en.getValue().isJsonPrimitive() && en.getValue().getAsJsonPrimitive().isString()) {
                     String token = en.getValue().getAsString();
                     String id = UpgradeParticleAlias.resolve(token);
-                    if (!token.equals("fx") && !token.startsWith("nusmp:")) throw new IllegalStateException(where + ": the token '" + token + "' is not a custom one (run tools/visual_upgrade/custom_particles.py)");
+                    if (!token.equals("fx") && !token.startsWith("anime_multiverse:")) throw new IllegalStateException(where + ": the token '" + token + "' is not a custom one (run tools/visual_upgrade/custom_particles.py)");
                     if (id != null && !FxCatalog.has(id)) throw new IllegalStateException(where + ": '" + token + "' resolves to " + id + ", which is not a catalog particle");
                     n++;
                 } else {

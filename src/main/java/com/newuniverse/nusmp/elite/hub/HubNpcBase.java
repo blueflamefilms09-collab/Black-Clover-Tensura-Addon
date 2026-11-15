@@ -88,7 +88,7 @@ public abstract class HubNpcBase extends PathfinderMob {
             try {
                 open(sp);
             } catch (RuntimeException e) {
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] a Hub NPC could not open its screen: {}", e.toString());       // never out of an interaction handler
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] a Hub NPC could not open its screen: {}", e.toString());       // never out of an interaction handler
             }
         }
         return InteractionResult.CONSUME;

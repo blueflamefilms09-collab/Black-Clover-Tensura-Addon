@@ -1,0 +1,32 @@
+{
+  "fallback": "anime_multiverse:mega/cap",
+  "elements": [
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/stairwell/down_a",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/stairwell/down_b",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "anime_multiverse:mega/stairwell/down_c",
+        "processors": "anime_multiverse:mega_interior",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

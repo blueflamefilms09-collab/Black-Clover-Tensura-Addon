@@ -46,8 +46,8 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
 final class Wave13Events {
     private Wave13Events() {}
 
-    private static final ResourceLocation REACH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w13_whip_reach");
-    private static final ResourceLocation SAINT_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w13_saint_blood");
+    private static final ResourceLocation REACH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w13_whip_reach");
+    private static final ResourceLocation SAINT_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w13_saint_blood");
     private static final String K_CRIT = "nusmp_w13_crit", K_S2_AT = "nusmp_w13_s2_at", K_S2_T = "nusmp_w13_s2_t", K_S2_D = "nusmp_w13_s2_d", K_MAG = "nusmp_w13_mag", K_WIELD = "nusmp_w13_wield_acc";
 
     private static boolean busy;

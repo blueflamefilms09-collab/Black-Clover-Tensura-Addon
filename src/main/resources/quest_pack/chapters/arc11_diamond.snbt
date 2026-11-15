@@ -47,7 +47,7 @@
 				{
 					id: "7A9B02BD16320774"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_diamond"
+					advancement: "anime_multiverse:world/kingdom_diamond"
 					criterion: ""
 				}
 			]
@@ -72,13 +72,13 @@
 				{
 					id: "6C89E538FC72AFD3"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_crystal"
+					advancement: "anime_multiverse:magic/cast_crystal"
 					criterion: ""
 				}
 				{
 					id: "5FA3C1238F02E552"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_corundum"
+					advancement: "anime_multiverse:magic/cast_corundum"
 					criterion: ""
 				}
 			]
@@ -105,13 +105,13 @@
 				{
 					id: "0F64CE29EB36715F"
 					type: "advancement"
-					advancement: "nusmp:spells/merged"
+					advancement: "anime_multiverse:spells/merged"
 					criterion: ""
 				}
 				{
 					id: "1E30293E21EC44E8"
 					type: "advancement"
-					advancement: "nusmp:arcs/diamond_kingdom"
+					advancement: "anime_multiverse:arcs/diamond_kingdom"
 					criterion: ""
 				}
 			]
@@ -143,7 +143,7 @@
 				{
 					id: "4262C14EB8FE93A1"
 					type: "advancement"
-					advancement: "nusmp:spells/merged_5"
+					advancement: "anime_multiverse:spells/merged_5"
 					criterion: ""
 				}
 			]
@@ -175,13 +175,13 @@
 				{
 					id: "64C250C96C039D5D"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mirror"
+					advancement: "anime_multiverse:magic/cast_mirror"
 					criterion: ""
 				}
 				{
 					id: "776373E28FB0A999"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_glass"
+					advancement: "anime_multiverse:magic/cast_glass"
 					criterion: ""
 				}
 			]
@@ -208,7 +208,7 @@
 				{
 					id: "55A4B88B9BEE2C1A"
 					type: "advancement"
-					advancement: "nusmp:future/diamond_kingdom_boss"
+					advancement: "anime_multiverse:future/diamond_kingdom_boss"
 					criterion: ""
 				}
 			]
@@ -240,7 +240,7 @@
 				{
 					id: "580A2B7647883077"
 					type: "advancement"
-					advancement: "nusmp:start/pages_10"
+					advancement: "anime_multiverse:start/pages_10"
 					criterion: ""
 				}
 			]

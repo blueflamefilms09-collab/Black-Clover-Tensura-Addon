@@ -17,7 +17,7 @@ import net.minecraft.world.phys.EntityHitResult;
 
 /**
  * The vector-reflection engine of Black Wings. Until 3.43.0 this class was also the registered Unique skill Vector Manipulation (Accelerator); the owner removed that skill in 3.44.0
- * (its id {@code nusmp:vector_manipulation} lives on as an inert stub, see {@code LegacySkills}), and what is left is the shared base: TOGGLE reflection. While on, projectiles that
+ * (its id {@code anime_multiverse:vector_manipulation} lives on as an inert stub, see {@code LegacySkills}), and what is left is the shared base: TOGGLE reflection. While on, projectiles that
  * would hit you are sent back, and a share of every melee hit is turned back on the attacker (through the balance law's PvP cap, never as a chain: a reflected hit cannot be reflected
  * again). Black Wings (the Ultimate) extends this class. Numbers: {@link VectorRules}.
  */

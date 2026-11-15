@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:bosses/count_3",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_sword"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.bosses.count_10.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.bosses.count_10.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_boss_defeated_10": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "count": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_boss_defeated_10"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

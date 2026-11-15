@@ -19,7 +19,7 @@ import java.util.UUID;
 
 /**
  * Why (3.42.0, owner request: "none of my skills can be rerolled with the basic Tensura skill [reset] and full reset"): Tensura's Reset Scrolls (skill reset and full reset) forget the skills a player holds,
- * and that used to include every skill of this mod. Now a skill of this mod (namespace {@code nusmp}: grimoire, Shishou, the Veldanava-family, Evolution and Unique skills, all of them) cannot be removed by
+ * and that used to include every skill of this mod. Now a skill of this mod (namespace {@code anime_multiverse}: grimoire, Shishou, the Veldanava-family, Evolution and Unique skills, all of them) cannot be removed by
  * a Reset Scroll. Two layers: (1) ManasCore's cancellable {@code REMOVE_SKILL} event is refused when the removal comes out of Tensura's {@code ResetScrollItem} (found on the call stack, which is only walked when
  * one of our skills is being removed, a rare event); (2) best effort, our ids are added to {@code ResetScrollItem.NO_RESET} when that list can be changed. Everything else still works: this mod's own removals
  * (a grimoire swap, {@code /multiverse ... take}, revoking Shishou) are not scroll calls, and the admin command {@code /tensura reset} is not blocked. Server side only; no state but a 64-entry message throttle;

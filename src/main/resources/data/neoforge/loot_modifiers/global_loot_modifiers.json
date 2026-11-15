@@ -1,10 +1,10 @@
 {
   "replace": false,
   "entries": [
-    "nusmp:relic_chests",
-    "nusmp:gear_chests",
-    "nusmp:hub_coins",
-    "nusmp:anime_loot",
-    "nusmp:luck_loot"
+    "anime_multiverse:relic_chests",
+    "anime_multiverse:gear_chests",
+    "anime_multiverse:hub_coins",
+    "anime_multiverse:anime_loot",
+    "anime_multiverse:luck_loot"
   ]
 }

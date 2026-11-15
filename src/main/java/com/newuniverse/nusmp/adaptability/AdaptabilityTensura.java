@@ -36,7 +36,7 @@ final class AdaptabilityTensura {
             markDirty = effect.getMethod("markDirty");
         } catch (ReflectiveOperationException | LinkageError e) {
             severance = null;
-            LOG.warn("[nusmp] Adaptability: Tensura's Severance helpers were not found ({}); the Severance part of the skill is off", e.toString());
+            LOG.warn("[anime_multiverse] Adaptability: Tensura's Severance helpers were not found ({}); the Severance part of the skill is off", e.toString());
         }
     }
 

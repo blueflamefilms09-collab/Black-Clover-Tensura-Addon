@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * converter registers exactly those and this test keeps them honest. The whole set stays under 3 MB.
  */
 class ShishouVoiceAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path VOICE = ASSETS.resolve("sounds/voice/shishou");
     private static final Path MANIFEST = Path.of("tools/audio/shishou_lines.json"), REPORT = Path.of("tools/audio/shishou_voice_report.json"), LANG = Path.of("tools/lang/shishou_voice.json");
     private static final long BUDGET = 3L * 1024 * 1024;
@@ -75,8 +75,8 @@ class ShishouVoiceAssetsTest {
             assertEquals("voice/shishou/" + id, VoiceCatalog.filePath(id));
             JsonObject e = sounds.getAsJsonObject(VoiceCatalog.eventId(id));
             if (e == null) { bad.add("no sounds.json entry for " + id); continue; }
-            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.nusmp.voice." + id)) bad.add(id + ": subtitle key");
-            if (!lang.has("subtitles.nusmp.voice." + id)) bad.add(id + ": no subtitle text");
+            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.anime_multiverse.voice." + id)) bad.add(id + ": subtitle key");
+            if (!lang.has("subtitles.anime_multiverse.voice." + id)) bad.add(id + ": no subtitle text");
             Path f = VOICE.resolve(id + ".ogg");
             if (!Files.exists(f)) { bad.add("missing file " + f); continue; }
             long size = Files.size(f);
@@ -94,7 +94,7 @@ class ShishouVoiceAssetsTest {
         JsonObject sounds = JsonParser.parseString(Files.readString(ASSETS.resolve("sounds.json"))).getAsJsonObject();
         for (String key : sounds.keySet()) if (key.startsWith("voice.shishou_") && !registered.contains(key.substring("voice.".length()))) bad.add("sounds.json " + key + " names a line that is not registered");
         JsonObject lang = JsonParser.parseString(Files.readString(LANG)).getAsJsonObject();
-        for (String key : lang.keySet()) if (key.startsWith("subtitles.nusmp.voice.shishou_") && !registered.contains(key.substring("subtitles.nusmp.voice.".length()))) bad.add("lang " + key + " is an orphan");
+        for (String key : lang.keySet()) if (key.startsWith("subtitles.anime_multiverse.voice.shishou_") && !registered.contains(key.substring("subtitles.anime_multiverse.voice.".length()))) bad.add("lang " + key + " is an orphan");
         if (Files.isDirectory(VOICE)) try (Stream<Path> files = Files.list(VOICE)) {
             files.forEach(f -> { String n = f.getFileName().toString(); if (!n.endsWith(".ogg") || !registered.contains(n.substring(0, n.length() - 4))) bad.add("file " + n + " is not registered"); });
         }

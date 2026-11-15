@@ -1,4 +1,4 @@
-"""Why: writes the 64x64 skins (and glow maps) of every converted character, and the table that says how each is drawn (assets/nusmp/playermodel/looks.json: skin, slim arms, glow, hair style and
+"""Why: writes the 64x64 skins (and glow maps) of every converted character, and the table that says how each is drawn (assets/anime_multiverse/playermodel/looks.json: skin, slim arms, glow, hair style and
 colour, scale, extras). The sheets come from the arcs' art kit (tools/arc/char_*.py, see characters.py), so the skin of Asta is painted from Asta's own sheet: skin tone, face, hair colour,
 outfit, armour, accessories and glow. Run:
     python3 -B tools/playermodel/gen_skins.py [--force-64] [id ...]         (no id: every character; the extras models must exist: run extract_extras.py first)
@@ -26,7 +26,7 @@ import skin_lib as K  # noqa: E402
 from arc_kit import color as C  # noqa: E402
 
 ROOT = CH.ROOT
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 SKINS = os.path.join(ASSETS, "textures", "entity", "playermodel")
 GEO = os.path.join(ASSETS, "geo", "entity")
 OUT_LOOKS = os.path.join(ASSETS, "playermodel", "looks.json")

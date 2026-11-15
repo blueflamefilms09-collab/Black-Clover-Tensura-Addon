@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "anime_multiverse:in_pocket",
+          "pocket": "radiant_basilica",
+          "stage": "treasury"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "anime_multiverse:magic_tool_sword",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "anime_multiverse:magic_tool_bow",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "anime_multiverse:magic_tool_spear",
+          "weight": 3
+        }
+      ]
+    }
+  ]
+}

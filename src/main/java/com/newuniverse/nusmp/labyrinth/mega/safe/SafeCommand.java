@@ -83,7 +83,7 @@ public final class SafeCommand {
 
     private static int refill(CommandSourceStack src, ServerPlayer p) {
         p.getData(SafeRegistry.REST_STATE).refill();
-        p.displayClientMessage(Component.translatable("message.nusmp.mega.safe.refilled"), true);
+        p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.safe.refilled"), true);
         return ok(src, p.getGameProfile().getName() + ": every short rest is back, the long-rest cool-down is cleared.");
     }
 

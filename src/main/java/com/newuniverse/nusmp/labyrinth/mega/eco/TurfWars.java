@@ -56,7 +56,7 @@ public final class TurfWars {
 
     /** Logs the first failure of the turf wars (one line for the whole session; the rest would only repeat it). */
     static void warnOnce(String what, Throwable t) {
-        if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon turf wars: {} ({}); they are off for the mobs this affects", what, t == null ? "no detail" : t.toString());
+        if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon turf wars: {} ({}); they are off for the mobs this affects", what, t == null ? "no detail" : t.toString());
     }
 
     /** Does the mob carry the turf-war goal? False too when its selector cannot be read. (For the admin command and the in-game self-test.) */

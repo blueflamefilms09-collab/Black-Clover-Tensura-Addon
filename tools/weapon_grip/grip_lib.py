@@ -3,7 +3,7 @@
 This is the Python twin of client/relics/item/GripFinder.java and GripMath.java (a golden file, tools/weapon_grip/grip_golden.json, written by
 `python tools/weapon_grip/grip_table.py --write`, is checked against the Java in GripTableTest). Same numbers, same order.
 
-Mesh space (assets/nusmp/weapon_meshes/<id>.txt): the butt of the weapon is at the low y end, mesh y runs along the blade; WeaponRenderer places it as
+Mesh space (assets/anime_multiverse/weapon_meshes/<id>.txt): the butt of the weapon is at the low y end, mesh y runs along the blade; WeaponRenderer places it as
     translate(ox, oy, 0.5); rotateZ(angle - 90); scale(sc); translate(0, -ymin, 0)
 into the item's unit cube. The vanilla hand holds one point of that cube: with the display transform  M = T(t/16) * R * S(s) * T(-0.5)  a point p of the
 cube lands at  hand + t/16 + R * (s * (p - 0.5)),  so the point that sits exactly at the hand is
@@ -19,7 +19,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 # ---- the finder's named constants (GripFinder.java repeats them)
 HANDLE_MODE = {"dagger", "shortsword", "longsword", "rapier", "katana", "sabre", "dadao", "greatsword", "cleaver"}

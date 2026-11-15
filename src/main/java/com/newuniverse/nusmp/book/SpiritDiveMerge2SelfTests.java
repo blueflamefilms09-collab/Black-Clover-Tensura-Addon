@@ -27,7 +27,7 @@ public final class SpiritDiveMerge2SelfTests {
         SelfTests.register("magic.spirit_dive_merge2", SpiritDiveMerge2SelfTests::merge2);
     }
 
-    private static boolean asset(String path) { return SpiritDiveMerge2SelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null; }
+    private static boolean asset(String path) { return SpiritDiveMerge2SelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null; }
 
     private static Result merge2(MinecraftServer server) {
         List<String> bad = new ArrayList<>();

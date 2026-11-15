@@ -28,10 +28,10 @@ public final class ExSingularityFx {
     private ExSingularityFx() {}
 
     /** The four-pointed star every shard shows (textures/entity/weapon/ex_singularity_star.png, made by tools/gen_ex_singularity_assets.py). */
-    public static final ResourceLocation STAR = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/ex_singularity_star.png");
+    public static final ResourceLocation STAR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon/ex_singularity_star.png");
 
     /** The sword's glow skin made tint-neutral (tools/gen_ex_singularity_assets.py): the cyan map of Shishou's mesh could only ever make a dim cyan-ish red or green, this one takes every hue. */
-    public static final ResourceLocation PRISM_GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/shishou_prism_glow.png");
+    public static final ResourceLocation PRISM_GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon/shishou_prism_glow.png");
 
     /** The extra passes are skipped beyond this many blocks from the camera. */
     public static final double FAR_BLOCKS = 24.0;

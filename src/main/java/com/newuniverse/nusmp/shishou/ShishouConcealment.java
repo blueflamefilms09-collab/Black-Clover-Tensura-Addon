@@ -10,7 +10,7 @@ public final class ShishouConcealment {
     private ShishouConcealment() {}
 
     public static final String FALSE_NAME_KEY = "shishou.false.name";
-    public static final String TRUE_NAME_KEY = "item.nusmp.shishou";
+    public static final String TRUE_NAME_KEY = "item.anime_multiverse.shishou";
 
     /** One readout: the name key, the health, the level, the mana, the skill lang keys. */
     public record Readout(String nameKey, float health, float maxHealth, int level, int mana, int maxMana, List<String> skills, boolean concealed) {}

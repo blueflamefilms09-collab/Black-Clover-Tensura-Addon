@@ -44,7 +44,7 @@
 				{
 					id: "70741DC010669A81"
 					type: "advancement"
-					advancement: "nusmp:bosses/first"
+					advancement: "anime_multiverse:bosses/first"
 					criterion: ""
 				}
 			]
@@ -71,7 +71,7 @@
 				{
 					id: "0585F4DA9AF6124B"
 					type: "advancement"
-					advancement: "nusmp:bosses/grimoire_daemon"
+					advancement: "anime_multiverse:bosses/grimoire_daemon"
 					criterion: ""
 				}
 			]
@@ -103,7 +103,7 @@
 				{
 					id: "589E1A9118BD6746"
 					type: "advancement"
-					advancement: "nusmp:bosses/wind_spirit_lord"
+					advancement: "anime_multiverse:bosses/wind_spirit_lord"
 					criterion: ""
 				}
 			]
@@ -135,7 +135,7 @@
 				{
 					id: "1C4291C0FAF99A82"
 					type: "advancement"
-					advancement: "nusmp:bosses/floor_warden"
+					advancement: "anime_multiverse:bosses/floor_warden"
 					criterion: ""
 				}
 			]
@@ -167,7 +167,7 @@
 				{
 					id: "5E2A720CD9F463DF"
 					type: "advancement"
-					advancement: "nusmp:bosses/goliath"
+					advancement: "anime_multiverse:bosses/goliath"
 					criterion: ""
 				}
 			]
@@ -199,7 +199,7 @@
 				{
 					id: "71BF9E91DE7B7B25"
 					type: "advancement"
-					advancement: "nusmp:bosses/charybdis_spawn"
+					advancement: "anime_multiverse:bosses/charybdis_spawn"
 					criterion: ""
 				}
 			]
@@ -238,7 +238,7 @@
 				{
 					id: "5293E2CEED23B672"
 					type: "advancement"
-					advancement: "nusmp:bosses/count_3"
+					advancement: "anime_multiverse:bosses/count_3"
 					criterion: ""
 				}
 			]
@@ -263,14 +263,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:dante_gravity_crown"
+				id: "anime_multiverse:dante_gravity_crown"
 			}
 			dependencies: ["6020F5E3513458D4"]
 			tasks: [
 				{
 					id: "386DE4D15F1F7CC7"
 					type: "advancement"
-					advancement: "nusmp:bosses/dante_zogratis"
+					advancement: "anime_multiverse:bosses/dante_zogratis"
 					criterion: ""
 				}
 			]
@@ -302,7 +302,7 @@
 				{
 					id: "1A373CBB5593322E"
 					type: "advancement"
-					advancement: "nusmp:bosses/vanica_zogratis"
+					advancement: "anime_multiverse:bosses/vanica_zogratis"
 					criterion: ""
 				}
 			]
@@ -327,14 +327,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zenon_spatial_ring"
+				id: "anime_multiverse:zenon_spatial_ring"
 			}
 			dependencies: ["6020F5E3513458D4"]
 			tasks: [
 				{
 					id: "0423220554FE680F"
 					type: "advancement"
-					advancement: "nusmp:bosses/zenon_zogratis"
+					advancement: "anime_multiverse:bosses/zenon_zogratis"
 					criterion: ""
 				}
 			]
@@ -359,14 +359,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:charter_grimoire_dante"
+				id: "anime_multiverse:charter_grimoire_dante"
 			}
 			dependencies: ["43C97B9A0750F2D2", "7A4CAE9F1A8A1507", "39778B2208B00BF1"]
 			tasks: [
 				{
 					id: "0391082D44B41EF5"
 					type: "advancement"
-					advancement: "nusmp:bosses/triad"
+					advancement: "anime_multiverse:bosses/triad"
 					criterion: ""
 				}
 			]
@@ -398,7 +398,7 @@
 				{
 					id: "404DB61406ECCC70"
 					type: "advancement"
-					advancement: "nusmp:bosses/count_10"
+					advancement: "anime_multiverse:bosses/count_10"
 					criterion: ""
 				}
 			]
@@ -423,14 +423,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:last_word"
+				id: "anime_multiverse:last_word"
 			}
 			dependencies: ["194C0DDFDDA2D435"]
 			tasks: [
 				{
 					id: "46A1905EC7B4FE8C"
 					type: "advancement"
-					advancement: "nusmp:bosses/zagred"
+					advancement: "anime_multiverse:bosses/zagred"
 					criterion: ""
 				}
 			]
@@ -455,14 +455,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_horn"
+				id: "anime_multiverse:devil_horn"
 			}
 			dependencies: ["194C0DDFDDA2D435"]
 			tasks: [
 				{
 					id: "489828449B2DA785"
 					type: "advancement"
-					advancement: "nusmp:bosses/devil_avatar"
+					advancement: "anime_multiverse:bosses/devil_avatar"
 					criterion: ""
 				}
 			]
@@ -487,14 +487,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:notice_of_order"
+				id: "anime_multiverse:notice_of_order"
 			}
 			dependencies: ["194C0DDFDDA2D435"]
 			tasks: [
 				{
 					id: "26C1199280A94A40"
 					type: "advancement"
-					advancement: "nusmp:bosses/god_of_order"
+					advancement: "anime_multiverse:bosses/god_of_order"
 					criterion: ""
 				}
 			]
@@ -526,7 +526,7 @@
 				{
 					id: "199C74EA9E498EAD"
 					type: "advancement"
-					advancement: "nusmp:bosses/count_25"
+					advancement: "anime_multiverse:bosses/count_25"
 					criterion: ""
 				}
 			]
@@ -551,14 +551,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["6CBF38CF531CDD43"]
 			tasks: [
 				{
 					id: "55C85243A42BA620"
 					type: "advancement"
-					advancement: "nusmp:bosses/lucius_zogratis"
+					advancement: "anime_multiverse:bosses/lucius_zogratis"
 					criterion: ""
 				}
 			]
@@ -590,7 +590,7 @@
 				{
 					id: "23DBCB90552AB585"
 					type: "advancement"
-					advancement: "nusmp:bosses/all"
+					advancement: "anime_multiverse:bosses/all"
 					criterion: ""
 				}
 			]
@@ -619,7 +619,7 @@
 			y: 9.0d
 			shape: "square"
 			icon: {
-				id: "nusmp:disciple_sigil"
+				id: "anime_multiverse:disciple_sigil"
 			}
 			dependencies: ["1C0D07DCFCBB6855"]
 			optional: true
@@ -627,7 +627,7 @@
 				{
 					id: "0590EC472460442A"
 					type: "kill"
-					entity: "nusmp:dark_disciple"
+					entity: "anime_multiverse:dark_disciple"
 					value: 20L
 				}
 			]
@@ -659,7 +659,7 @@
 				{
 					id: "24DFE611123D5C55"
 					type: "kill"
-					entity: "nusmp:blood_beast"
+					entity: "anime_multiverse:blood_beast"
 					value: 10L
 				}
 			]
@@ -691,7 +691,7 @@
 				{
 					id: "187AD9EC9834286B"
 					type: "kill"
-					entity: "nusmp:zogratis_clone"
+					entity: "anime_multiverse:zogratis_clone"
 					value: 10L
 				}
 			]
@@ -715,7 +715,7 @@
 			y: 11.25d
 			shape: "square"
 			icon: {
-				id: "nusmp:raw_basilisk_fillet"
+				id: "anime_multiverse:raw_basilisk_fillet"
 			}
 			dependencies: ["1C0D07DCFCBB6855"]
 			optional: true
@@ -723,7 +723,7 @@
 				{
 					id: "68935F3AC5EC14A0"
 					type: "kill"
-					entity: "nusmp:basilisk"
+					entity: "anime_multiverse:basilisk"
 					value: 5L
 				}
 			]
@@ -747,7 +747,7 @@
 			y: 11.25d
 			shape: "square"
 			icon: {
-				id: "nusmp:direwolf_pelt"
+				id: "anime_multiverse:direwolf_pelt"
 			}
 			dependencies: ["52D84D4A7EB85132"]
 			optional: true
@@ -755,7 +755,7 @@
 				{
 					id: "2EC94F3EB71D5C05"
 					type: "kill"
-					entity: "nusmp:dungeon_direwolf"
+					entity: "anime_multiverse:dungeon_direwolf"
 					value: 10L
 				}
 			]
@@ -787,7 +787,7 @@
 				{
 					id: "729F2A24E2C51826"
 					type: "kill"
-					entity: "nusmp:living_armor"
+					entity: "anime_multiverse:living_armor"
 					value: 15L
 				}
 			]

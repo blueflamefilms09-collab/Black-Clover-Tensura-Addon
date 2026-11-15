@@ -58,7 +58,7 @@ public final class NoelleFormRules {
     }
 
     // ------------------------------------------------------------------ the models of a form (the single list the painter, the tests and the self-test agree on)
-    /** The model key of a form's pieces: assets/nusmp/geo/entity/&lt;key&gt;_arm_&lt;piece&gt;.geo.json (tools/gen_noelle_forms_geo.py). Style 0 has none. */
+    /** The model key of a form's pieces: assets/anime_multiverse/geo/entity/&lt;key&gt;_arm_&lt;piece&gt;.geo.json (tools/gen_noelle_forms_geo.py). Style 0 has none. */
     public static String key(Form f) {
         return switch (f) {
             case VALKYRIE -> "nvl";
@@ -95,7 +95,7 @@ public final class NoelleFormRules {
         };
     }
 
-    /** The sprite and skin textures the painter draws (assets/nusmp/textures/aura/&lt;name&gt;.png; the shells also have a _glow map). */
+    /** The sprite and skin textures the painter draws (assets/anime_multiverse/textures/aura/&lt;name&gt;.png; the shells also have a _glow map). */
     public static final String[] SPRITES = {"noelle_ring", "noelle_ribbon", "noelle_ribbon_ink", "noelle_feather", "noelle_ember", "noelle_eye", "noelle_bubble", "noelle_spark", "noelle_dot", "noelle_haze",
             "noelle_sigil_val", "noelle_sigil_mer", "noelle_sigil_drg", "noelle_sigil_blk", "noelle_val_shell", "noelle_mer_shell", "noelle_drg_shell", "noelle_blk_shell"};
 

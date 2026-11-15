@@ -28,14 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * play, and the part that is easiest to get silently wrong is the glue between the signature rooms and the sectors: a room whose file name does not start with a
  * prefix of its theme's {@code template_themes} file is a room every theme draws (so the "signature" room turns up in a graveyard), a prefix that matches no file
  * is a typo that restricts nothing, and a room that the pool generator never saw is never drawn at all. This test reads the files that ship, from the source
- * tree, exactly as the pool generator and the game's data loader do: the file of each theme must name its theme, every prefix must be {@code nusmp:mega/<folder>/<theme>_},
+ * tree, exactly as the pool generator and the game's data loader do: the file of each theme must name its theme, every prefix must be {@code anime_multiverse:mega/<folder>/<theme>_},
  * every prefix must match real template files, every template of the theme must be claimed by a prefix, the weights must be whole numbers the pool maths accepts,
  * the theme must have the rooms the brief asks for (five at least, two halls, a set piece, a danger room, a calm room), the generated pool files must hold them, and
  * the rule of {@link TemplateThemes}, loaded from the same files, must allow them in their own theme only. Pure: reads files from the project root.
  */
 class GoodRoadThemesDataTest {
     private static final List<String> THEMES = List.of("holy_church", "celestial_court", "sky_citadel", "mountain_monastery");
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
     private static final Path STRUCT = DATA.resolve("structure/mega");
     private static final Path TEMPLATE_THEMES = DATA.resolve("mega/template_themes");
     private static final Path POOLS = DATA.resolve("worldgen/template_pool/mega");
@@ -52,7 +52,7 @@ class GoodRoadThemesDataTest {
 
     private static JsonObject themeFile(String theme) {
         Path p = TEMPLATE_THEMES.resolve(theme + ".json");
-        assertTrue(Files.exists(p), "missing data/nusmp/mega/template_themes/" + theme + ".json");
+        assertTrue(Files.exists(p), "missing data/anime_multiverse/mega/template_themes/" + theme + ".json");
         return JsonParser.parseString(read(p)).getAsJsonObject();
     }
 
@@ -97,7 +97,7 @@ class GoodRoadThemesDataTest {
             Set<String> seen = new TreeSet<>();
             for (JsonElement e : prefixes) {
                 String p = e.getAsString();
-                assertTrue(p.matches("nusmp:mega/[a-z]+/" + t + "_"), t + ": prefix '" + p + "' must be nusmp:mega/<folder>/" + t + "_");
+                assertTrue(p.matches("anime_multiverse:mega/[a-z]+/" + t + "_"), t + ": prefix '" + p + "' must be anime_multiverse:mega/<folder>/" + t + "_");
                 assertTrue(seen.add(p), t + ": prefix '" + p + "' is listed twice");
             }
         }
@@ -109,7 +109,7 @@ class GoodRoadThemesDataTest {
             Set<String> folders = new TreeSet<>();
             for (JsonElement e : themeFile(t).getAsJsonArray("templates")) {
                 String p = e.getAsString();
-                String folder = p.substring("nusmp:mega/".length(), p.length() - (t.length() + 2));
+                String folder = p.substring("anime_multiverse:mega/".length(), p.length() - (t.length() + 2));
                 folders.add(folder);
             }
             Map<String, List<String>> rooms = roomsOf(t);
@@ -128,7 +128,7 @@ class GoodRoadThemesDataTest {
         for (String t : THEMES) {
             for (Map.Entry<String, List<String>> f : roomsOf(t).entrySet()) {
                 for (String stem : f.getValue()) {
-                    String id = "nusmp:mega/" + f.getKey() + "/" + stem;
+                    String id = "anime_multiverse:mega/" + f.getKey() + "/" + stem;
                     assertTrue(rules.restricted(id), id + " is not restricted to any theme");
                     assertEquals(List.of(t), rules.themesOf(id), id);
                     assertTrue(rules.allows(id, t), id + " must be drawn in " + t);
@@ -137,8 +137,8 @@ class GoodRoadThemesDataTest {
                 }
             }
         }
-        assertTrue(rules.allows("nusmp:mega/hall/crypt_a", "holy_church"), "a template nobody claims stays free for everyone");
-        assertTrue(!rules.restricted("nusmp:mega/hall/crypt_a"));
+        assertTrue(rules.allows("anime_multiverse:mega/hall/crypt_a", "holy_church"), "a template nobody claims stays free for everyone");
+        assertTrue(!rules.restricted("anime_multiverse:mega/hall/crypt_a"));
     }
 
     @Test
@@ -148,7 +148,7 @@ class GoodRoadThemesDataTest {
             JsonObject rel = o.getAsJsonObject("relative");
             assertNotNull(rel, t + ": no 'relative' weights");
             Set<String> want = new TreeSet<>();
-            for (JsonElement e : o.getAsJsonArray("templates")) want.add(e.getAsString().substring("nusmp:".length()));
+            for (JsonElement e : o.getAsJsonArray("templates")) want.add(e.getAsString().substring("anime_multiverse:".length()));
             assertEquals(want, new TreeSet<>(rel.keySet()), t + ": 'relative' must weigh exactly the prefixes of 'templates' (without the namespace)");
             for (Map.Entry<String, JsonElement> e : rel.entrySet()) {
                 double w = e.getValue().getAsDouble();
@@ -187,7 +187,7 @@ class GoodRoadThemesDataTest {
         for (String t : THEMES) {
             for (Map.Entry<String, List<String>> f : roomsOf(t).entrySet()) {
                 for (String stem : f.getValue()) {
-                    String id = "nusmp:mega/" + f.getKey() + "/" + stem;
+                    String id = "anime_multiverse:mega/" + f.getKey() + "/" + stem;
                     assertTrue(side.contains("\"" + id + "\""), id + " is in no entry of the side pool (run tools/labyrinth/gen_mega_pools.py)");
                     if (f.getKey().equals("safe")) assertTrue(safe.contains("\"" + id + "\""), id + " is not in the safe pool");
                 }

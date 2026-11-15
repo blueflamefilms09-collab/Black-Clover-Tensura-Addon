@@ -71,8 +71,8 @@ class HeadFeetWiringTest {
 
     @Test
     void theLangLinesExistInTheFragmentAndTheGameFile() throws IOException {
-        String frag = Files.readString(Path.of("tools/lang/relics_wear.json")), lang = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));
-        for (String key : new String[]{"message.nusmp.relic_wear.moved", "message.nusmp.relic_wear.slot_full"}) {
+        String frag = Files.readString(Path.of("tools/lang/relics_wear.json")), lang = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
+        for (String key : new String[]{"message.anime_multiverse.relic_wear.moved", "message.anime_multiverse.relic_wear.slot_full"}) {
             assertTrue(frag.contains("\"" + key + "\""), key);
             assertTrue(lang.contains("\"" + key + "\""), key);
         }

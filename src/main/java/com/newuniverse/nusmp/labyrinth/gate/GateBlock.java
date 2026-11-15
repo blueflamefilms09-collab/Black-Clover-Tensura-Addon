@@ -19,7 +19,7 @@ import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
- * Why: the Labyrinth Gate ({@code nusmp:labyrinth_gate}) is a block you walk into, not one you click, so a party runs through the arch together
+ * Why: the Labyrinth Gate ({@code anime_multiverse:labyrinth_gate}) is a block you walk into, not one you click, so a party runs through the arch together
  * the way they would run into a nether portal; {@code entityInside} is the hook the game already fires for every entity whose box overlaps a
  * no-collision block, so no ticking block entity is needed. Only a {@link ServerPlayer} travels (mobs and items stay), and only once per gate
  * use: {@link LabyrinthTravel#justTravelled} reads the game-time stamp the travel code leaves in the player's persistent data, so the player

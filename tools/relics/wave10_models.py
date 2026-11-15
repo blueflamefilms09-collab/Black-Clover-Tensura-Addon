@@ -4,7 +4,7 @@
     W10_PREVIEW=<dir> python3 -B tools/relics/wave10_models.py krakeblade      (also renders the preview beside the card)
 
 Run tools/relics/wave10_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png
 (one 512 px skin each) and, for the Needler (a crossbow), its states needler_pull1..3 and needler_charged (ranged_meshes.emit_states).
 Budget of this set: 8 to 14 named parts and at most 2800 quads per weapon.
 

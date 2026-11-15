@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:white_banner"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.squads.created.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.squads.created.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_squad_created": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "squad.created"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_squad_created"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

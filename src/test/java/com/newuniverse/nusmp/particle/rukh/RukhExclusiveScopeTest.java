@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * map ({@code tools/particles/map.json "rukh_keep"}) must list exactly the same paths, so the script and the test cannot disagree (the same arrangement as {@code scope.txt} and the purge).
  * The scan then looks for any use of {@code RukhFx}, {@code RukhClientFx} or {@code RukhParticles} outside the owners and the infrastructure that registers and falls back to them.
  * Files in the lanes other builders were working in when the codemod ran ({@code lanes.relics} and {@code lanes.other} of the map) are tolerated until the marker file
- * {@code docs/rukh/exclusive_enforced} exists (the lead creates it after running the codemod with {@code --include-relics --include-lanes}) or {@code -Dnusmp.rukh.exclusive=true} is given.
+ * {@code docs/rukh/exclusive_enforced} exists (the lead creates it after running the codemod with {@code --include-relics --include-lanes}) or {@code -Danime_multiverse.rukh.exclusive=true} is given.
  */
 class RukhExclusiveScopeTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
@@ -70,7 +70,7 @@ class RukhExclusiveScopeTest {
 
     @Test
     void noRukhTypeIsUsedOutsideTheDjinnAndTheDungeons() throws IOException {
-        boolean enforced = Files.exists(ROOT.resolve("docs/rukh/exclusive_enforced")) || Boolean.getBoolean("nusmp.rukh.exclusive");
+        boolean enforced = Files.exists(ROOT.resolve("docs/rukh/exclusive_enforced")) || Boolean.getBoolean("anime_multiverse.rukh.exclusive");
         List<String> owners = owners();
         List<String> lanes = new ArrayList<>(mapList("lanes", "relics"));
         lanes.addAll(mapList("lanes", "other"));
@@ -110,7 +110,7 @@ class RukhExclusiveScopeTest {
     void theRukhTypesAndTheirParticleJsonsAreStillRegistered() throws IOException {
         String reg = Files.readString(SRC.resolve("particle/rukh/RukhParticles.java"), StandardCharsets.UTF_8);
         assertTrue(reg.contains("\"dark_rukh\"") && reg.contains("\"light_rukh\""));
-        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/nusmp/particles/dark_rukh.json")));
-        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/nusmp/particles/light_rukh.json")));
+        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/anime_multiverse/particles/dark_rukh.json")));
+        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/anime_multiverse/particles/light_rukh.json")));
     }
 }

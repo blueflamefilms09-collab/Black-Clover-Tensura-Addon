@@ -466,7 +466,7 @@ final class SafeSelfTests {
             Map<BlockPos, Marker> withHearth = Map.of(at.above(), hearthMarker);
 
             // 1. the mod "is loaded" (it is this mod) and the second candidate exists: the first (a missing block) is skipped, the campfire becomes a smoker
-            CompatLoader.install(table("nusmp", Map.of("stove", List.of("nusmp:no_such_block_selftest", "minecraft:smoker")), Set.of()));
+            CompatLoader.install(table("anime_multiverse", Map.of("stove", List.of("anime_multiverse:no_such_block_selftest", "minecraft:smoker")), Set.of()));
             BlockState swapped = run(level, c.sector, withHearth, fire, none).state();
             if (!swapped.is(Blocks.SMOKER)) return SelfTests.Result.fail("a campfire with a hearth marker became " + swapped.getBlock() + ", expected the smoker");
             if (swapped.getValue(AbstractFurnaceBlock.FACING) != Direction.EAST) return SelfTests.Result.fail("the swap lost the facing: " + swapped);
@@ -474,14 +474,14 @@ final class SafeSelfTests {
             CompatLoader.install(table("selftest_absent_mod", Map.of("stove", List.of("minecraft:smoker")), Set.of()));
             if (run(level, c.sector, withHearth, fire, none).state() != campfire) return SelfTests.Result.fail("a swap happened although its mod is not loaded");
             // 3. the mod is there but the block does not exist: the block stays
-            CompatLoader.install(table("nusmp", Map.of("stove", List.of("nusmp:no_such_block_selftest")), Set.of()));
+            CompatLoader.install(table("anime_multiverse", Map.of("stove", List.of("anime_multiverse:no_such_block_selftest")), Set.of()));
             if (run(level, c.sector, withHearth, fire, none).state() != campfire) return SelfTests.Result.fail("a swap happened for a block that does not exist");
             // 4. no marker above, and 5. no generator context: the block stays
-            CompatLoader.install(table("nusmp", Map.of("stove", List.of("minecraft:smoker")), Set.of()));
+            CompatLoader.install(table("anime_multiverse", Map.of("stove", List.of("minecraft:smoker")), Set.of()));
             if (run(level, c.sector, Map.of(), fire, none).state() != campfire) return SelfTests.Result.fail("a swap happened with no marker");
             if (run(level, c.sector, null, fire, none).state() != campfire) return SelfTests.Result.fail("a swap happened outside the generator (no region context)");
             // 6. a stair seat flips its facing: oak stairs facing north + seat;as=chair -> a lectern facing south
-            CompatLoader.install(table("nusmp", Map.of("chair", List.of("minecraft:lectern")), Set.of("chair")));
+            CompatLoader.install(table("anime_multiverse", Map.of("chair", List.of("minecraft:lectern")), Set.of("chair")));
             BlockState stair = Blocks.OAK_STAIRS.defaultBlockState().setValue(StairBlock.FACING, Direction.NORTH);
             Marker seatMarker = new Marker(MarkerKind.SEAT, at.above(), Map.of("as", "chair", "facing", "south"));
             BlockState chair = run(level, c.sector, Map.of(at.above(), seatMarker), new StructureTemplate.StructureBlockInfo(at, stair, null), none).state();
@@ -489,7 +489,7 @@ final class SafeSelfTests {
                 return SelfTests.Result.fail("a stair seat facing north became " + chair + ", expected a lectern facing south");
             }
             // 7. a bed: both halves swap together under a quarter turn (the marker is above the FOOT; the head finds it across the bed), the head alone does not
-            CompatLoader.install(table("nusmp", Map.of("bed", List.of("minecraft:blue_bed")), Set.of()));
+            CompatLoader.install(table("anime_multiverse", Map.of("bed", List.of("minecraft:blue_bed")), Set.of()));
             StructurePlaceSettings turned = new StructurePlaceSettings().setRotation(Rotation.CLOCKWISE_90);
             BlockState footState = Blocks.RED_BED.defaultBlockState().setValue(BedBlock.FACING, Direction.SOUTH).setValue(BedBlock.PART, BedPart.FOOT);
             BlockState headState = footState.setValue(BedBlock.PART, BedPart.HEAD);
@@ -512,8 +512,8 @@ final class SafeSelfTests {
 
     // ---------------------------------------------------------------- safe.processor_list
     private static SelfTests.Result processorList(MinecraftServer server) {
-        ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath("nusmp", "mod_compat");
-        if (BuiltInRegistries.STRUCTURE_PROCESSOR.getOptional(typeId).isEmpty()) return SelfTests.Result.fail("the processor type nusmp:mod_compat is not registered");
+        ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mod_compat");
+        if (BuiltInRegistries.STRUCTURE_PROCESSOR.getOptional(typeId).isEmpty()) return SelfTests.Result.fail("the processor type anime_multiverse:mod_compat is not registered");
         if (SafeRegistry.MOD_COMPAT.get().codec() != ModCompatProcessor.CODEC) return SelfTests.Result.fail("the registered type does not use ModCompatProcessor.CODEC");
         Tag encoded = StructureProcessorType.SINGLE_CODEC.encodeStart(NbtOps.INSTANCE, new ModCompatProcessor()).getOrThrow();
         StructureProcessor back = StructureProcessorType.SINGLE_CODEC.parse(NbtOps.INSTANCE, encoded).getOrThrow();
@@ -521,13 +521,13 @@ final class SafeSelfTests {
         ServerLevel level = SelfTests.mega(server);
         if (level == null) return SelfTests.Result.fail("no mega dimension");
         Registry<StructureProcessorList> lists = level.registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
-        ResourceLocation listId = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_interior");
+        ResourceLocation listId = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_interior");
         StructureProcessorList list = lists.getOptional(listId).orElse(null);
         if (list == null) return SelfTests.Result.fail("the processor list " + listId + " was not loaded (a missing processor type fails the whole file)");
         boolean has = false;
         for (StructureProcessor p : list.list()) if (p instanceof ModCompatProcessor) has = true;
-        if (!has) return SelfTests.Result.fail("the processor list " + listId + " does not contain nusmp:mod_compat (" + list.list().size() + " processors)");
-        return SelfTests.Result.ok("nusmp:mod_compat is registered, round-trips through its codec, and sits in " + listId + " (" + list.list().size() + " processors)");
+        if (!has) return SelfTests.Result.fail("the processor list " + listId + " does not contain anime_multiverse:mod_compat (" + list.list().size() + " processors)");
+        return SelfTests.Result.ok("anime_multiverse:mod_compat is registered, round-trips through its codec, and sits in " + listId + " (" + list.list().size() + " processors)");
     }
 
     // ---------------------------------------------------------------- safe.compat_data

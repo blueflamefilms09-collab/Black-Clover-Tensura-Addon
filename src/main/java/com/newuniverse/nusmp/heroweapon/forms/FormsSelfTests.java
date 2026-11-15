@@ -65,7 +65,7 @@ final class FormsSelfTests {
             FormsSchema.Parsed p = FormsStore.reports().get(k);
             boolean hasSkills = !HeroLogics.skillsOf(k).isEmpty();
             if (p == null) {
-                if (hasSkills) bad.add(k.itemId() + " has " + HeroLogics.skillsOf(k).size() + " skills but no forms file (data/nusmp/hero/forms/" + k.itemId() + ".json)");
+                if (hasSkills) bad.add(k.itemId() + " has " + HeroLogics.skillsOf(k).size() + " skills but no forms file (data/anime_multiverse/hero/forms/" + k.itemId() + ".json)");
                 continue;
             }
             files++;

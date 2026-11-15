@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
- * Why: which exclusive pocket dungeons exist, and everything that makes each one itself, is DATA ({@code data/nusmp/mega/pockets/<id>.json}, written by {@code tools/rift/gen_pockets.py} from
+ * Why: which exclusive pocket dungeons exist, and everything that makes each one itself, is DATA ({@code data/anime_multiverse/mega/pockets/<id>.json}, written by {@code tools/rift/gen_pockets.py} from
  * its roster), so a server owner can retune a tomb or add a fourteenth with a datapack and no rebuild, the same reason the Decennial boss profiles are JSON. A definition is a plain record with no
  * Minecraft type, parsed by a strict reader that says in plain words what is wrong with a file (a mob roster of two, an unknown element, a colour that is not a colour) and clamps every
  * number, so one bad file costs one tomb its place in the pool and never the whole load. What a definition holds: the LOOK (the colour of the tear and of its skybox core, the biome: sky, fog,
@@ -85,8 +85,8 @@ public record PocketDef(String id, String name, String series, String lore, int 
     // ---------------------------------------------------------------- limits
     public static final int MOBS_MIN = 3, MOBS_MAX = 5, ROOMS_MIN = 10, ROOMS_MAX = 26, COLLAPSE_MIN = 60, COLLAPSE_MAX = 900;
 
-    /** The id of the biome JSON this pocket's look is written to ({@code nusmp:pocket_<id>}). */
-    public String biomeId() { return "nusmp:pocket_" + id; }
+    /** The id of the biome JSON this pocket's look is written to ({@code anime_multiverse:pocket_<id>}). */
+    public String biomeId() { return "anime_multiverse:pocket_" + id; }
 
     /** The id of the boss profile file ({@code mega/pockets/bosses/<boss>.json}). */
     public String bossFile() { return "bosses/" + boss; }

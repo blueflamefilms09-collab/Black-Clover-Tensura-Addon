@@ -78,8 +78,8 @@ import com.newuniverse.nusmp.particle.fx.FxThemes;
  * A purple boss bar shows the phase; the arena's matter is put back when it dies or is removed.
  *
  * <p>1.60.0: THIS IS THE LEGACY BOSS. Zagred was remade as {@code arc/zagred/ZagredBoss} (a boss of the arcs, with a Word-and-answer fight and a devil
- * form), which took over the entity id {@code nusmp:zagred}; this class stays in the tree (the owner's rule: add the new, keep the old), registered as
- * {@code nusmp:zagred_legacy} so an old world's Zagred still loads, and it still serves the Grimoire Daemons as their {@link DaemonMaster}.
+ * form), which took over the entity id {@code anime_multiverse:zagred}; this class stays in the tree (the owner's rule: add the new, keep the old), registered as
+ * {@code anime_multiverse:zagred_legacy} so an old world's Zagred still loads, and it still serves the Grimoire Daemons as their {@link DaemonMaster}.
  */
 public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss, DaemonMaster {
     /** 0.48: what it is doing (synced with ZagredStatePayload for the model's pose and the target reticle). */
@@ -654,7 +654,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         if (ZagredPhases.startsSecondBar(ph, finalBar) && refill.begin("final", getHealth(), getMaxHealth(), com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS)) {
             finalBar = true;                                              // 1.35.0: the true Word Soul draws a second bar
             com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), VIOLET & 0xFFFFFF, 0xF2194D, com.newuniverse.nusmp.boss.refill.PhaseRefill.DEFAULT_TICKS);
-            Component second = Component.translatable("nusmp.boss.refill.second_bar", "Zagred").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD);
+            Component second = Component.translatable("anime_multiverse.boss.refill.second_bar", "Zagred").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD);
             for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 64 * 64) p.sendSystemMessage(second);
             ZagredFx.corrupt(sl, position(), 20f, 70, ZagredFx.RED);
             ZagredFx.ring(sl, position(), 14f, 50, ZagredFx.PALE);
@@ -917,13 +917,13 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
 
     /**
      * 1.60.0: summons Zagred at 'at' with his arena there (the command {@code /multiverse boss zagred}). Zagred is the REMADE boss now
-     * ({@code arc/zagred/ZagredBoss}, the entity id {@code nusmp:zagred}); this entry point is kept so the command works whatever the call site says.
+     * ({@code arc/zagred/ZagredBoss}, the entity id {@code anime_multiverse:zagred}); this entry point is kept so the command works whatever the call site says.
      */
     public static Mob summon(ServerLevel sl, Vec3 at) {
         return com.newuniverse.nusmp.arc.zagred.ZagredBoss.summon(sl, at);
     }
 
-    /** The legacy boss, summoned the way the command did it before the remake (its type is {@code nusmp:zagred_legacy}; kept for tools and old saves). */
+    /** The legacy boss, summoned the way the command did it before the remake (its type is {@code anime_multiverse:zagred_legacy}; kept for tools and old saves). */
     public static ZagredBossEntity summonLegacy(ServerLevel sl, Vec3 at) {
         ZagredBossEntity z = NUEntities.ZAGRED.get().create(sl);
         if (z == null) return null;

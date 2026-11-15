@@ -55,7 +55,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     }
 
     static ResourceLocation tex(String name) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/mode/" + name + ".png");
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/mode/" + name + ".png");
     }
 
     private static final ResourceLocation WIND_PLATE = tex("wind_plate"), WIND_GLOW = tex("wind_glow"), WIND_FUR = tex("wind_fur"),

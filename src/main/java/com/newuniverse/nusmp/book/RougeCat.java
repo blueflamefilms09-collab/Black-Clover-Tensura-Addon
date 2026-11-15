@@ -23,7 +23,7 @@ public final class RougeCat {
     public static final Map<Integer, Long> UNTIL = new HashMap<>();
 
     public record Payload(int entity, int ticks) implements CustomPacketPayload {
-        public static final Type<Payload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "rouge_cat"));
+        public static final Type<Payload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "rouge_cat"));
         public static final StreamCodec<FriendlyByteBuf, Payload> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeVarInt(p.ticks()); }, buf -> new Payload(buf.readVarInt(), buf.readVarInt()));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }

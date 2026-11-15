@@ -58,8 +58,8 @@ public final class PerfSelfTests {
 
         // ---- the location cache builds exactly what the expression it replaces built, once
         ResourceLocation a = RlCache.modTexture("particle/glow");
-        if (a != RlCache.modTexture("particle/glow") || !a.equals(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png"))) return SelfTests.Result.fail("the texture location cache is wrong");
-        if (!RlCache.mod("x/y").equals(ResourceLocation.fromNamespaceAndPath("nusmp", "x/y"))) return SelfTests.Result.fail("the mod location cache is wrong");
+        if (a != RlCache.modTexture("particle/glow") || !a.equals(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png"))) return SelfTests.Result.fail("the texture location cache is wrong");
+        if (!RlCache.mod("x/y").equals(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "x/y"))) return SelfTests.Result.fail("the mod location cache is wrong");
 
         // ---- the defaults are the old behaviour (a changed default must change this on purpose)
         if (VfxQuality.HIGH.maxActive != 64 || VfxQuality.HIGH.detail != 1.0f || PerfSettings.DEFAULT_RELIC_SCAN_INTERVAL != 10 || PerfSettings.DEFAULT_ENTITY_SCAN_INTERVAL != 5)

@@ -1,6 +1,6 @@
 """Generates the Ice Wedge Magic VFX textures.
 
-Output: src/main/resources/assets/nusmp/textures/particle/ice_wedge_*.png   (python3 -B tools/gen_ice_wedge_textures.py)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/ice_wedge_*.png   (python3 -B tools/gen_ice_wedge_textures.py)
 
 Look reference (owner art, docs/attributes/art_reference/pack_ice_wedge.webp): ice drawn as chiselled WEDGES. A tall flat fan / leaf of
 blunt-tipped wedges radiating from a bright spine, a giant faceted hand of crystal fingers, a crown of long spikes. Bright cyan-white
@@ -14,7 +14,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

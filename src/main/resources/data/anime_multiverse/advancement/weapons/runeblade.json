@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:weapons/first",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:rimeheart_runeblade"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.weapons.runeblade.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.weapons.runeblade.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_rimeheart_runeblade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:rimeheart_runeblade"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_rimeheart_runeblade"
+    ]
+  ],
+  "rewards": {
+    "experience": 40
+  }
+}

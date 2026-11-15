@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 THEME-C, theme 1 of 4 (1.59.0, docs/labyrinth/mega_v2_thc.md): the signature rooms of the CURSED ARCHIVE, the evil road's massive library of forbidden
-knowledge. Every room is named `cursed_archive_<room>.nbt` so that `data/nusmp/mega/template_themes/cursed_archive.json` can reserve it for sectors of that
+knowledge. Every room is named `cursed_archive_<room>.nbt` so that `data/anime_multiverse/mega/template_themes/cursed_archive.json` can reserve it for sectors of that
 theme.
 
     python3 tools/labyrinth/gen_mega_theme_cursed_archive.py                    # (re)writes every template
@@ -283,8 +283,8 @@ def reading_hall():
     return h
 
 
-LOOT = "nusmp:chests/labyrinth_trial"
-LOOT_BOOKS = "nusmp:chests/library_ruins"
+LOOT = "anime_multiverse:chests/labyrinth_trial"
+LOOT_BOOKS = "anime_multiverse:chests/library_ruins"
 
 
 def scribe_station(h, x, z, facing="north", skeleton=False):

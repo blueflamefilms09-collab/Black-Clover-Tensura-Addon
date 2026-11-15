@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The client cost rules of the Sylph and the quad counts of the generated models, which must equal the numbers the doc states and stay inside the owner's budget. */
 class SylphLodTest {
-    private static final Path GEO = Path.of("src/main/resources/assets/nusmp/geo/entity");
+    private static final Path GEO = Path.of("src/main/resources/assets/anime_multiverse/geo/entity");
 
     private static int quads(String model) throws IOException {
         JsonObject root = JsonParser.parseString(Files.readString(GEO.resolve(model + ".geo.json"))).getAsJsonObject();

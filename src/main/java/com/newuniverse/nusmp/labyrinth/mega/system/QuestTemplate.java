@@ -5,10 +5,10 @@ import java.util.Objects;
 
 /**
  * Why: a floor quest is DATA, not a branch in code: the brief's example ("Clear 5 rooms without taking magic damage") is one row of
- * {@code data/nusmp/mega/system/quests.json}, and a datapack can retune a number, add a ninth quest or silence one (weight 0) without a mod update. This record
+ * {@code data/anime_multiverse/mega/system/quests.json}, and a datapack can retune a number, add a ninth quest or silence one (weight 0) without a mod update. This record
  * is one parsed row. The target the player sees is {@code clamp(round(base + perFloor * threat), min, max)} (see {@link QuestRoller#target}), so a quest grows
  * with the depth and a negative {@code perFloor} makes a timed quest shorter the deeper you are. {@code title} is the English text with {@code {n}} (and
- * {@code {t}}) standing for that number; the lang key {@code message.nusmp.mega.system.quest.<id>} takes over where a translation exists, and the English
+ * {@code {t}}) standing for that number; the lang key {@code message.anime_multiverse.mega.system.quest.<id>} takes over where a translation exists, and the English
  * text travels with the sync so a datapack quest with no lang entry still reads properly. {@code stats} and {@code points} say what a success pays when the
  * reward roll picks a stat point, {@code shadowCore} says whether a Shadow Core may be paid instead. Immutable; the constructor normalises, so no consumer has
  * to defend against an empty list or a negative number.

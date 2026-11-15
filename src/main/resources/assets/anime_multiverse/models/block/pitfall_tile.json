@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "anime_multiverse:block/labyrinth_tiles"
+  }
+}

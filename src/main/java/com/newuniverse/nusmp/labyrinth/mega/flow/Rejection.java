@@ -56,7 +56,7 @@ final class Rejection {
         level.playSound(null, FlowEvents.posOf(p), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 0.9f, 0.7f);
         level.playSound(null, FlowEvents.posOf(p), SoundEvents.AMETHYST_CLUSTER_BREAK, SoundSource.PLAYERS, 0.8f, 0.6f);
         String word = cast == Alignment.DARK ? "darkness" : "light";
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.mfw.reject." + cast.id(), "The Rukh of this place reject your " + word + "."), true);
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.mfw.reject." + cast.id(), "The Rukh of this place reject your " + word + "."), true);
     }
 
     /** The particle colour that stands for an alignment (NEUTRAL has no Rukh of its own and reads as light, the default colour). */

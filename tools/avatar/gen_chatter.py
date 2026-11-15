@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Why: the Avatar chatter dictionary is hand-written, one file per personality under tools/avatar/chatter_data/, and this script only checks the
 rules (every event has at least 14 distinct lines, every line under 160 characters, only known placeholders) and writes the shipped JSON
-files data/nusmp/avatar_chatter/<personality>.json. Run it after editing a data file; the JUnit schema test enforces the same rules on the JSON."""
+files data/anime_multiverse/avatar_chatter/<personality>.json. Run it after editing a data file; the JUnit schema test enforces the same rules on the JSON."""
 import importlib.util, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "..", "src", "main", "resources", "data", "nusmp", "avatar_chatter")
+OUT = os.path.join(HERE, "..", "..", "src", "main", "resources", "data", "anime_multiverse", "avatar_chatter")
 REQUIRED = ["COMBAT_START", "CREATOR_LOW_HP", "SKILL_CAST", "NAMING", "BETRAYAL", "FRENZY", "IDLE"]
 EXTRA = {"JEALOUS_WARN"}
 PLACEHOLDERS = {"name", "creator", "target", "skill", "grimoire", "dungeon", "relic", "magicule"}

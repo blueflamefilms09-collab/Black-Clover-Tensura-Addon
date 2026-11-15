@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_bronze_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/bronze_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/bronze_*.png
 
 Look reference (Black Clover, Sekke family of bronze spells + the owner spec "a tarnished green-and-brown metal look; heavy physical
 weaponry"):
@@ -22,7 +22,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

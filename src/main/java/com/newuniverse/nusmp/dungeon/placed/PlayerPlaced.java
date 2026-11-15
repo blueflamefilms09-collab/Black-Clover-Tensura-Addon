@@ -163,6 +163,6 @@ public final class PlayerPlaced {
         long now = who.level().getGameTime();
         if (!PlacedRules.pruneNoticeDue(now, data.getLong(NOTICE_STAMP), NOTICE_INTERVAL)) return;
         data.putLong(NOTICE_STAMP, now);
-        who.displayClientMessage(Component.translatableWithFallback("message.nusmp.guard_exempt.pruned", "The dungeon takes back the oldest block you placed here; it has become part of its stone.").withStyle(ChatFormatting.GRAY), true);
+        who.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.guard_exempt.pruned", "The dungeon takes back the oldest block you placed here; it has become part of its stone.").withStyle(ChatFormatting.GRAY), true);
     }
 }

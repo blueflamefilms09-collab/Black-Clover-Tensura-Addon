@@ -1,7 +1,7 @@
 """Ultimate Magic: one charge animation per kingdom (docs/magic/ultimate_animations.md), as Blockbench / GeckoLib style player clips.
 
     python3 tools/gen_ultimate_anims.py            ->  adds (or refreshes) ONLY the ult_* clips in
-                                                       src/main/resources/assets/nusmp/animations/player/cast.animation.json
+                                                       src/main/resources/assets/anime_multiverse/animations/player/cast.animation.json
     python3 tools/gen_ultimate_anims.py --check    ->  prints the clips and their sizes, writes nothing
 
 Every other clip of the file stays exactly as it is (rule 2: add the new, keep the old). Same format and conventions as tools/gen_cast_animations.py (read its header):
@@ -21,7 +21,7 @@ import math
 import os
 import sys
 
-OUT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "animations", "player", "cast.animation.json"))
+OUT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "animations", "player", "cast.animation.json"))
 TICK = 0.05
 BONES = ("body", "left_arm", "right_arm", "left_leg", "right_leg")
 KINGDOMS = ("clover", "diamond", "spade", "heart")

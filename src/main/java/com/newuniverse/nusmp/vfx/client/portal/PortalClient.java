@@ -118,7 +118,7 @@ public final class PortalClient implements SpatialPortalLayer.Client {
             return true;
         } catch (RuntimeException | LinkageError e) {
             broken = true;                                            // once: from now on the plain translucent path is used
-            LogUtils.getLogger().error("[nusmp] portal shader draw failed; the plain translucent portal is used instead", e);
+            LogUtils.getLogger().error("[anime_multiverse] portal shader draw failed; the plain translucent portal is used instead", e);
             RenderSystem.defaultBlendFunc();
             return false;
         }

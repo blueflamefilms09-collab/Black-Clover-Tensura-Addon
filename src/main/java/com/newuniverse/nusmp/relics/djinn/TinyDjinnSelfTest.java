@@ -29,14 +29,14 @@ public final class TinyDjinnSelfTest {
     public static void register() { SelfTests.register("djinn.tiny", TinyDjinnSelfTest::run); }
 
     private static JsonObject json(String path) throws Exception {
-        try (InputStream in = TinyDjinnSelfTest.class.getResourceAsStream("/assets/nusmp/" + path)) {
+        try (InputStream in = TinyDjinnSelfTest.class.getResourceAsStream("/assets/anime_multiverse/" + path)) {
             if (in == null) throw new IllegalStateException("missing resource " + path);
             return JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
         }
     }
 
     private static boolean exists(String path) {
-        try (InputStream in = TinyDjinnSelfTest.class.getResourceAsStream("/assets/nusmp/" + path)) {
+        try (InputStream in = TinyDjinnSelfTest.class.getResourceAsStream("/assets/anime_multiverse/" + path)) {
             return in != null;
         } catch (Exception e) {
             return false;

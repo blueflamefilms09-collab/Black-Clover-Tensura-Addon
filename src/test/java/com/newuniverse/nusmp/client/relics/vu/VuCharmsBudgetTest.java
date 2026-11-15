@@ -21,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Why: the visual upgrade of the 27 charms, gauntlet, crowns and crest must stay inside the performance guard of the performance pass (a hand item at most 6000 vertices for Genesis, 2500 for
  * God, a lod model of at most 15% of them, nothing allocated per frame) and every item must really carry what the upgrade promises (its own skin, a glow map, a lod, idle animation groups,
- * ambient layers). The numbers are read from the model files the generator wrote, with the same parser the game uses, against the caps table of assets/nusmp/visual_upgrade/caps_charms_genesis_worn.txt.
+ * ambient layers). The numbers are read from the model files the generator wrote, with the same parser the game uses, against the caps table of assets/anime_multiverse/visual_upgrade/caps_charms_genesis_worn.txt.
  * "Vertices" are the vertices of the model's quads; "drawn" adds the quads redrawn with the glow map (each costs a second pass).
  */
 class VuCharmsBudgetTest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final Path VU = ASSETS.resolve("visual_upgrade");
 
     record Caps(int mesh, int drawn, int lodPercent) {}
@@ -180,7 +180,7 @@ class VuCharmsBudgetTest {
             }
             assertTrue(geometry + particles >= (genesis ? 6 : 3), id + " has only " + (geometry + particles) + " ambient layers");
             assertTrue(geometry >= 2 && particles >= 2, id + " needs geometry and particle layers (" + geometry + ", " + particles + ")");
-            assertTrue(fx.ambientSound.startsWith("nusmp:relic.ambient."), id + " has no ambient sound id");
+            assertTrue(fx.ambientSound.startsWith("anime_multiverse:relic.ambient."), id + " has no ambient sound id");
         }
     }
 

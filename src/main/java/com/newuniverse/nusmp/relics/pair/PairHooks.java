@@ -37,7 +37,7 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
 public final class PairHooks {
     private PairHooks() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static final String K_NEXT = "nusmp_pair_next";
     private static boolean registered;
     private static boolean striking;
@@ -80,7 +80,7 @@ public final class PairHooks {
             data.putLong(K_NEXT, PairRules.nextAllowed(now));
             strike(p, victim, off, dmg);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] pair off-hand blow failed", failed);
+            LOG.error("[anime_multiverse] pair off-hand blow failed", failed);
         }
     }
 
@@ -128,10 +128,10 @@ public final class PairHooks {
                 ItemStack rs = rightStacks.get(right.id());
                 if (right.needsAttunement() && rs != null && Attune.isMine(rs, p)) Attune.bind(p, given);      // an attuned right half: the new left half is attuned with it
                 if (!p.getInventory().add(given)) p.drop(given, false);
-                p.sendSystemMessage(Component.translatable("message.nusmp.relic.pair_completed", Component.translatable("item.nusmp." + left.id())).withStyle(ChatFormatting.AQUA));
+                p.sendSystemMessage(Component.translatable("message.anime_multiverse.relic.pair_completed", Component.translatable("item.anime_multiverse." + left.id())).withStyle(ChatFormatting.AQUA));
             }
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] pair first-login grant failed", failed);
+            LOG.error("[anime_multiverse] pair first-login grant failed", failed);
         }
     }
 }

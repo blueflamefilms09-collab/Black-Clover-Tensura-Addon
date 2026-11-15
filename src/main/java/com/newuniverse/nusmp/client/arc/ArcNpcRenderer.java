@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * Why: all friendly characters of the arcs are ONE entity ({@code nusmp:arc_npc}) whose identity is a synced string, so they are drawn by ONE renderer that reads that string,
+ * Why: all friendly characters of the arcs are ONE entity ({@code anime_multiverse:arc_npc}) whose identity is a synced string, so they are drawn by ONE renderer that reads that string,
  * finds the model the art kit wrote for it ({@code arc_<id>}, see {@link ArcModelKey}) and plays the idle, walk and talk clips ({@link ArcNpcPose}: talk is the {@code cast}
  * clip, played when a player stands close). A character whose model is missing is drawn as the plain villager {@value ArcModelKey#FALLBACK}; if even that is missing nothing is
  * drawn (logged once), never an exception. The name of the character floats over its head when you are near.
@@ -51,9 +51,9 @@ public class ArcNpcRenderer extends ZogratisRenderer<ArcNpcEntity> {
         String want = ArcModelKey.clean(e.characterId());
         String id = ArcModelKey.resolve(e.characterId(), ArcModels::hasModel);
         if (id.isEmpty()) {
-            if (warned.add("none:" + want)) LOG.warn("[nusmp] no model for the arc character '{}' and no fallback body: it is not drawn", want);
+            if (warned.add("none:" + want)) LOG.warn("[anime_multiverse] no model for the arc character '{}' and no fallback body: it is not drawn", want);
         } else if (!id.equals(want)) {
-            if (warned.add("fallback:" + want)) LOG.warn("[nusmp] the arc character '{}' has no model (arc_{}): drawn as {}", want, want, id);
+            if (warned.add("fallback:" + want)) LOG.warn("[anime_multiverse] the arc character '{}' has no model (arc_{}): drawn as {}", want, want, id);
         }
         return id;
     }

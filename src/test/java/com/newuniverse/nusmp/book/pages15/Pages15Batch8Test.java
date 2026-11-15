@@ -233,7 +233,7 @@ class Pages15Batch8Test {
     @Test
     void theFourSetFilesParseNameRealPagesAndHaveNoDuplicate() throws Exception {
         for (var s : SETS.entrySet()) {
-            JsonObject o = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/" + s.getKey() + ".json"))).getAsJsonObject();
+            JsonObject o = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/" + s.getKey() + ".json"))).getAsJsonObject();
             assertEquals(s.getKey(), o.get("canon").getAsString());
             assertEquals(s.getValue(), o.get("book").getAsString());
             Set<String> sources = o.getAsJsonObject("sources").keySet();

@@ -3,7 +3,7 @@
 the vanilla one-click swing). So the list of "every melee weapon of the mod" has to come from the repo sources, not from a hand-kept list that
 rots the day someone adds a relic. This script builds that list from the places weapons are declared:
 
-  1. the `weapons` table of src/main/resources/assets/nusmp/weapon_classes.json (the size-class table every model goes through; the copy in
+  1. the `weapons` table of src/main/resources/assets/anime_multiverse/weapon_classes.json (the size-class table every model goes through; the copy in
      tools/relics/weapon_classes.json must agree),
   2. NUItems: every `weapon("id", Kind...)` / `ITEMS.register("id", ...)` that is a sword-like class (MagicWeaponItem, MagicToolSword,
      DemonSlayerSwordItem, OtherworldTridentItem),
@@ -28,7 +28,7 @@ import profiles as PR  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 JAVA = os.path.join(ROOT, "src", "main", "java")
-CLASS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_classes.json")
+CLASS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "weapon_classes.json")
 TOOLS_CLASS_JSON = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
 MANIFEST = os.path.join(HERE, "manifest.json")
 
@@ -63,7 +63,7 @@ def class_table():
 
 def nuitems_ids():
     """Ids of the sword-like items NUItems registers, with the registering expression's class."""
-    t = read(os.path.join(JAVA, "com", "newuniverse", "nusmp", "item", "NUItems.java"))
+    t = read(os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "item", "NUItems.java"))
     out = {}
     for m in re.finditer(r'weapon\("([a-z0-9_]+)",\s*MagicWeaponItem\.Kind', t):
         out[m.group(1)] = "NUItems.weapon"
@@ -92,7 +92,7 @@ def relic_melee():
 
 def djinn_weapons():
     """{id: (kind, reach)} for the Djinn weapons, light and dark."""
-    base = os.path.join(JAVA, "com", "newuniverse", "nusmp", "relics", "djinn")
+    base = os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "relics", "djinn")
     rules = read(os.path.join(base, "weapon", "DjinnWeaponRules.java"))
     prefix = re.search(r'PREFIX\s*=\s*"([a-z_]+)"', rules).group(1)
     dark = re.search(r'DARK_SUFFIX\s*=\s*"([a-z_]+)"', rules).group(1)
@@ -121,7 +121,7 @@ def build():
     table, table2 = class_table()
     problems = []
     if table != table2:
-        problems.append("tools/relics/weapon_classes.json and assets/nusmp/weapon_classes.json disagree")
+        problems.append("tools/relics/weapon_classes.json and assets/anime_multiverse/weapon_classes.json disagree")
     nu = nuitems_ids()
     melee, pairs = relic_melee()
     djinn = djinn_weapons()

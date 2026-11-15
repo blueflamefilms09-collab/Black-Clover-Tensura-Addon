@@ -5,7 +5,7 @@ the name <id>_icon (the inventory icon, the 16x16 sprite, unchanged).
 
 Items: every relic def of the wave sources that is not a weapon (MAIN_HAND) and not an adopted older item: the Curios relics (neck, back, belt, hands, charm), the relic armour
 (head, chest, feet) and the consumables. The new <id>.json is `builtin/entity` with NO display block: what a display block did (how a flat sprite sits in a hand, on the ground, in
-a frame) is now the `sprite` style of assets/nusmp/relic_hand/transforms.txt, and where the 3D form sits is the style of the relic in the same file.
+a frame) is now the `sprite` style of assets/anime_multiverse/relic_hand/transforms.txt, and where the 3D form sits is the style of the relic in the same file.
 Idempotent: an item that is already builtin/entity keeps its json (only the preset display block that tools/relics/gen_armor_item_models.py wrote is taken out of it), and an
 item whose _icon json exists is left alone. Run it again after any wave icon script (those write the flat model).
 """
@@ -18,7 +18,7 @@ sys.path.insert(0, HERE)
 import relic_inventory as RI  # noqa: E402
 
 ROOT = RI.ROOT
-MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item")
+MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item")
 
 # the display block gen_armor_item_models.py gave the armour relics (a vanilla generated item's): it moves to the `sprite` style of transforms.txt
 ARMOUR_PRESET = {
@@ -54,7 +54,7 @@ def convert(i, check):
         return "done"
     if os.path.exists(icon):
         return "done"
-    tex = (old.get("textures") or {}).get("layer0") or "nusmp:item/" + i
+    tex = (old.get("textures") or {}).get("layer0") or "anime_multiverse:item/" + i
     if check:
         return "todo"
     write(icon, old)

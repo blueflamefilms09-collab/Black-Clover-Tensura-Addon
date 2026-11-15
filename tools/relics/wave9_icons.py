@@ -3,9 +3,9 @@
     python3 -B tools/relics/wave9_icons.py [id ...] [--sheet PATH]        (idempotent)
 
 Per id it writes
-  assets/nusmp/textures/item/<id>.png         the sprite (kept as the inventory icon; the weapon in hand is the 3D mesh)
-  assets/nusmp/models/item/<id>_icon.json     the flat inventory model of that sprite
-  assets/nusmp/models/item/<id>.json          the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
+  assets/anime_multiverse/textures/item/<id>.png         the sprite (kept as the inventory icon; the weapon in hand is the 3D mesh)
+  assets/anime_multiverse/models/item/<id>_icon.json     the flat inventory model of that sprite
+  assets/anime_multiverse/models/item/<id>.json          the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
                                               (the display transforms of the Bloodbound Katana, as every diagonal weapon of the mod)
 The meshes (wave9_models.py) are placed on the diagonal of these sprites, so every icon runs from its grip at the lower left to its tip at
 the upper right. Drawn from primitives with a one pixel dark outline, a grade-coloured pixel at the grip and glow pixels on gems and runes.

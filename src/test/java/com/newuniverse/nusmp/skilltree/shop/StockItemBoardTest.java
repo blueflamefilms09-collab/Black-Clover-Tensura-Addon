@@ -157,12 +157,12 @@ class StockItemBoardTest {
     @Test
     void theOldBookLinesStillBuildTheirOldOffersWithOneItemPerPurchase() {
         StockEntry sp = new StockEntry("a", StockEntry.Kind.SP_BOOK, "", false, "x", 100, 200, 0.0, 1, 1, 100, false);
-        StockEntry route = new StockEntry("fang", StockEntry.Kind.ROUTE_BOOK, "nusmp:fang", false, "", 100, 200, 0.0, 1, 1, 100, false);
-        List<StockBoard.Slot> s = StockBoard.slots(List.of(sp, route), List.of("nusmp:fang"));
+        StockEntry route = new StockEntry("fang", StockEntry.Kind.ROUTE_BOOK, "anime_multiverse:fang", false, "", 100, 200, 0.0, 1, 1, 100, false);
+        List<StockBoard.Slot> s = StockBoard.slots(List.of(sp, route), List.of("anime_multiverse:fang"));
         assertEquals(List.of("fang"), s.stream().map(StockBoard.Slot::id).toList(), "an SP line still makes no slot");
         StockBoard.Offer o = StockBoard.build(SEED, 1, 0, s, id -> 0).get(0);
         assertEquals(1, o.amount());
-        assertEquals("nusmp:fang", o.ref());
+        assertEquals("anime_multiverse:fang", o.ref());
         assertFalse(o.flagship());
     }
 

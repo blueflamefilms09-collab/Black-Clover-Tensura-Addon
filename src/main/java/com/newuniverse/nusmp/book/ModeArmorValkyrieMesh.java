@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Mode Armour, VALKYRIE DRESS v2: the static meshes, as plain arrays, parsed and baked ONCE per piece and level of detail from {@code assets/nusmp/valkyrie_meshes/*.txt} (the files of
+ * Mode Armour, VALKYRIE DRESS v2: the static meshes, as plain arrays, parsed and baked ONCE per piece and level of detail from {@code assets/anime_multiverse/valkyrie_meshes/*.txt} (the files of
  * {@code tools/gen_valkyrie_armor_v2.py} and {@code tools/gen_valkyrie_lance.py}; format {@code q <layer> (x y z u v) x4 nx ny nz r g b}, px, the left copy of a paired piece). Pure and server safe: no game
  * class, so the budgets, the self-test, the unit tests and the headless preview count and draw the real quads.
  *
@@ -118,13 +118,13 @@ public final class ModeArmorValkyrieMesh {
     public static List<String> lines(String file) { return read(file); }
 
     private static List<String> read(String file) {
-        try (InputStream in = ModeArmorValkyrieMesh.class.getResourceAsStream("/assets/nusmp/" + FOLDER + "/" + file + ".txt")) {
+        try (InputStream in = ModeArmorValkyrieMesh.class.getResourceAsStream("/assets/anime_multiverse/" + FOLDER + "/" + file + ".txt")) {
             if (in != null) {
                 try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) { return r.lines().toList(); }
             }
         } catch (IOException ignored) { }
         try {
-            Path p = Path.of("src", "main", "resources", "assets", "nusmp", FOLDER, file + ".txt");
+            Path p = Path.of("src", "main", "resources", "assets", "anime_multiverse", FOLDER, file + ".txt");
             if (Files.isRegularFile(p)) return Files.readAllLines(p, StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException ignored) { }
         return null;

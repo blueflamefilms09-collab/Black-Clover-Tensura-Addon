@@ -80,7 +80,7 @@ final class ForgeIcons {
     /** The icon of an aptitude row: the texture its data names (or the default one by id). */
     static ResourceLocation aptitudeTexture(ForgeAptitudeRow row) {
         ResourceLocation t = parse(row.icon());
-        return t != null ? t : parse("nusmp:textures/gui/soulforge/apt/" + row.id() + ".png");
+        return t != null ? t : parse("anime_multiverse:textures/gui/soulforge/apt/" + row.id() + ".png");
     }
 
     /** The registry skill of a row, or null when this client does not know it (never throws). */

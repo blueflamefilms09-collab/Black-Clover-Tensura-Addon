@@ -20,7 +20,7 @@ import org.joml.Vector3f;
 public final class SolidParts {
     private SolidParts() {}
 
-    public static final ResourceLocation SHEET = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/flatprops/solid.png");
+    public static final ResourceLocation SHEET = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/flatprops/solid.png");
     /** Material cells of the sheet (4 x 2). */
     public static final int STEEL = 0, GOLD = 1, BONE = 2, GLASS = 3, OAK = 4, DARK = 5, LEATHER = 6, SILVER = 7;
 

@@ -4,7 +4,7 @@ Relics of Many Worlds, second set, wave 19 (scrolls, potions, sweets, the spellb
 
     python3 tools/relics/wave19_icons.py [--sheet PATH]
 
-Writes src/main/resources/assets/nusmp/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
+Writes src/main/resources/assets/anime_multiverse/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
 spellbook_of_concentration, fey_honey, scroll_of_unreadable_spells, blood_chocolates, scroll_of_absorption, ale_lemental,
 scroll_of_charm_parson_bargain_bin_scrolls_1 .. scroll_of_facsimile_copy_bargain_bin_scrolls_6, mug_of_the_boss, holy_water.
 
@@ -20,7 +20,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -348,7 +348,7 @@ def write_model(iid):
     path = os.path.join(MODELS, iid + ".json")
     os.makedirs(MODELS, exist_ok=True)
     with open(path, "w") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + iid}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + iid}}, f, indent=2)
         f.write("\n")
 
 

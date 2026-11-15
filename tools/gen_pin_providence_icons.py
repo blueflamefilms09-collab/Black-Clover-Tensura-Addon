@@ -5,10 +5,10 @@ paladin_items_weapon_of_resurgence_hand_of_providence_cloak_deliverance.jpg).
     python3 -B tools/gen_pin_providence_icons.py
 
 Writes
-  assets/nusmp/textures/item/<id>.png      the 16x16 inventory icon, on the usual bottom-left to top-right diagonal so the 3D mesh of
+  assets/anime_multiverse/textures/item/<id>.png      the 16x16 inventory icon, on the usual bottom-left to top-right diagonal so the 3D mesh of
                                            tools/gen_weapon_models.py (built by tools/gen_pin_providence_models.py) is placed the same way
-  assets/nusmp/models/item/<id>_icon.json  the flat inventory icon model
-  assets/nusmp/models/item/<id>.json       the 3D in-hand model (builtin/entity, drawn by client/WeaponRenderer from the mesh); the display
+  assets/anime_multiverse/models/item/<id>_icon.json  the flat inventory icon model
+  assets/anime_multiverse/models/item/<id>.json       the 3D in-hand model (builtin/entity, drawn by client/WeaponRenderer from the mesh); the display
                                            transforms are the Magebane Longsword's
 The Brooch Pin is a ruby brooch in gold filigree with a long steel pin (bottom left, pin to the top right, as on the sheet); the Hand of
 Providence is a golden gauntlet closed in a fist with a blue cross on the back of the hand (cuff bottom left, fist top right).
@@ -21,7 +21,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 S = 16
@@ -190,13 +190,13 @@ def write_json(name, data):
 
 
 def icon_model(item_id):
-    write_json(item_id + "_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}})
+    write_json(item_id + "_icon", {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}})
 
 
 def weapon_model(item_id):
     """The Magebane Longsword's display transforms (the sprite sits on the usual diagonal)."""
     src = json.load(open(os.path.join(MODELS, "magebane_longsword.json")))
-    src["textures"] = {"particle": "nusmp:item/" + item_id}
+    src["textures"] = {"particle": "anime_multiverse:item/" + item_id}
     write_json(item_id, src)
 
 

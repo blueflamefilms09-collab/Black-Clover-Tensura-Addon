@@ -194,7 +194,7 @@ public final class EncounterDirector {
         }
         if (now - idleWindowStart < seconds * 20L) return;
         String line = IDLE.line(seconds);
-        if (line != null) LOG.info("[nusmp] Dungeon Master {}", line);
+        if (line != null) LOG.info("[anime_multiverse] Dungeon Master {}", line);
         IDLE.reset();
         idleWindowStart = now;
     }
@@ -808,7 +808,7 @@ public final class EncounterDirector {
         lastFailure = "in " + what + ": " + t + " at " + where + " (" + ((count == null ? 0 : count) + 1) + " time(s))";
         if (count == null) {
             if (FAILURES.size() < 32) FAILURES.put(key, 1);
-            LOG.warn("[nusmp] The Dungeon Master failed in {} (this failure is logged once; /multiverse mega dm why shows the latest)", what, t);
+            LOG.warn("[anime_multiverse] The Dungeon Master failed in {} (this failure is logged once; /multiverse mega dm why shows the latest)", what, t);
         } else {
             FAILURES.put(key, count + 1);
         }
@@ -872,7 +872,7 @@ public final class EncounterDirector {
                 : EncGates.pass("room", room.kind.name().toLowerCase(java.util.Locale.ROOT) + " " + room.id + " (template " + room.template + ")"));
         g.add(level.getDifficulty() == Difficulty.PEACEFUL ? EncGates.block("difficulty", "Peaceful: monsters would vanish at once") : EncGates.pass("difficulty", level.getDifficulty().getKey()));
         EncounterTable table = EncData.table(sector.theme, sector.polarity);
-        if (table.entries().isEmpty()) g.add(EncGates.block("table", "'" + table.id() + "' has no entries (loaded tables: " + EncData.tableNames() + "; a table that failed to parse is named in the log as [nusmp] <file>: <problem>)"));
+        if (table.entries().isEmpty()) g.add(EncGates.block("table", "'" + table.id() + "' has no entries (loaded tables: " + EncData.tableNames() + "; a table that failed to parse is named in the log as [anime_multiverse] <file>: <problem>)"));
         else if (!table.id().equals(sector.theme.id())) g.add(EncGates.warn("table", "no table for the theme '" + sector.theme.id() + "': this sector borrows '" + table.id() + "' (" + table.entries().size() + " entries; " + EncData.tableNames().size() + " tables loaded)"));
         else g.add(EncGates.pass("table", table.id() + ", " + table.entries().size() + " entries (" + EncData.tableNames().size() + " tables loaded)"));
         List<ServerPlayer> ps = new ArrayList<>(party.size());

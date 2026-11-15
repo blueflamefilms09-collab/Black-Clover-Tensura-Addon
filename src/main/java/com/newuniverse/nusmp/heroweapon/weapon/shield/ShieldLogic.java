@@ -30,7 +30,7 @@ import java.util.List;
  * souls, the fury of the Wrath series). This is its one logic object: it lists the techniques ({@link ShieldSkills}), keeps the guard ({@link GuardMeter}) in step
  * with the weapon, and implements the hooks the machinery calls. Every hook catches what it should not throw and reports it once; none changes a block; the damage a
  * hook deals goes through the balance law and never exceeds the blow it answers. The numbers are {@link ShieldNumbers}'s, the forms are
- * {@code data/nusmp/hero/forms/legendary_shield.json}, the whole is described in {@code docs/heroweapon/weapon_shield.md}.
+ * {@code data/anime_multiverse/hero/forms/legendary_shield.json}, the whole is described in {@code docs/heroweapon/weapon_shield.md}.
  */
 public final class ShieldLogic implements HeroLogic {
     private final List<HeroSkill> skills = ShieldSkills.all();

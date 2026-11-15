@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class CharacterSetBullsTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     static final List<String> BULLS = List.of("vanessa", "charmy", "luck", "magna", "gauche", "gordon", "zora", "grey", "henry", "finral", "nacht", "secre");
     /** canon -> {book, magic}. */
     private static final Map<String, String[]> WHO = new LinkedHashMap<>();
@@ -199,7 +199,7 @@ class CharacterSetBullsTest {
     @Test
     void everyAddedPageIsExclusiveToACharacterHasTextAndIsInTheArmourPolicy() throws IOException {
         JsonObject lang = JsonParser.parseString(read(Path.of("tools/lang/character_spells_bulls.json"))).getAsJsonObject();
-        String policy = read(Path.of("src/main/resources/data/nusmp/armour_policy.json"));
+        String policy = read(Path.of("src/main/resources/data/anime_multiverse/armour_policy.json"));
         for (var e : ADDED.entrySet()) {
             for (String id : e.getValue()) {
                 boolean owned = false;
@@ -212,8 +212,8 @@ class CharacterSetBullsTest {
                     }
                 }
                 assertTrue(owned, id + " is not exclusive to any Black Bulls file");
-                assertTrue(lang.has("nusmp.page." + e.getKey() + "." + id), "lang fragment: nusmp.page." + e.getKey() + "." + id);
-                assertTrue(lang.get("nusmp.page." + e.getKey() + "." + id).getAsString().length() > 40, id + ": the text is too short");
+                assertTrue(lang.has("anime_multiverse.page." + e.getKey() + "." + id), "lang fragment: anime_multiverse.page." + e.getKey() + "." + id);
+                assertTrue(lang.get("anime_multiverse.page." + e.getKey() + "." + id).getAsString().length() > 40, id + ": the text is too short");
                 assertTrue(policy.contains("\"" + id + "\""), id + " is not listed in new_pages of armour_policy.json");
             }
         }

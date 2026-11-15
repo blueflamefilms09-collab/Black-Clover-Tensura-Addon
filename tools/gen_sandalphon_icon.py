@@ -1,12 +1,12 @@
 """Draws the Sandalphon skill icon (32x32): a pale-gold guillotine blade falling in front of a cross of light on a deep blue-black disc.
-Original art, drawn from scratch with Pillow. Run: python tools/gen_sandalphon_icon.py -> src/main/resources/assets/nusmp/textures/skill/veldanava/sandalphon.png
+Original art, drawn from scratch with Pillow. Run: python tools/gen_sandalphon_icon.py -> src/main/resources/assets/anime_multiverse/textures/skill/veldanava/sandalphon.png
 (The next four skills of the Veldanava drop add their own icon builders next to this one.)"""
 import math
 import os
 from PIL import Image, ImageDraw
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "veldanava")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "veldanava")
 S = 32
 
 

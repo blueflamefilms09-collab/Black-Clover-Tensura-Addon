@@ -21,7 +21,7 @@ public final class UniteState {
 
     private static final String KIND = "nusmp_unite_kind", UNTIL = "nusmp_unite_until", OLD = "nusmp_unite_old";
 
-    private static ResourceLocation id(String n) { return ResourceLocation.fromNamespaceAndPath("nusmp", "unite_" + n); }
+    private static ResourceLocation id(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "unite_" + n); }
 
     private static final ResourceLocation ARMOR = id("armor"), TOUGH = id("toughness"), SPEED = id("speed"), KB = id("knockback"), JUMP = id("jump"),
             FALL = id("fall"), ATTACK = id("attack");

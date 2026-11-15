@@ -12,11 +12,11 @@
       "terms": [
         {
           "condition": "neoforge:loot_table_id",
-          "loot_table_id": "nusmp:chests/library_ruins"
+          "loot_table_id": "anime_multiverse:chests/library_ruins"
         },
         {
           "condition": "neoforge:loot_table_id",
-          "loot_table_id": "nusmp:chests/grimoire_tower"
+          "loot_table_id": "anime_multiverse:chests/grimoire_tower"
         }
       ]
     }

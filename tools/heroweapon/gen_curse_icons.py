@@ -4,8 +4,8 @@
     python3 -B tools/heroweapon/gen_curse_icons.py --preview DIR   also writes a 16x enlarged picture of the icon (on dark and on light) into DIR
 
 Writes
-  assets/nusmp/textures/item/purification_charm.png    the 16x16 icon
-  assets/nusmp/models/item/purification_charm.json     the flat item model (item/generated)
+  assets/anime_multiverse/textures/item/purification_charm.png    the 16x16 icon
+  assets/anime_multiverse/models/item/purification_charm.json     the flat item model (item/generated)
 
 The charm is a small shield of white pearl in a gold frame, with a pale aqua gem in its heart and a spark of gold light across the gem (the curse breaking),
 hanging from a cord. White and gold are the colours of the Shield of Compassion, the Bless Series shield of the series. The picture is drawn
@@ -19,7 +19,7 @@ import sys
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 ICON_DIR = os.path.join(ASSETS, "textures", "item")
 MODEL_DIR = os.path.join(ASSETS, "models", "item")
 
@@ -79,7 +79,7 @@ def build():
 
 def write_model():
     os.makedirs(MODEL_DIR, exist_ok=True)
-    model = {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + ITEM_ID}}
+    model = {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + ITEM_ID}}
     with open(os.path.join(MODEL_DIR, ITEM_ID + ".json"), "w") as f:
         json.dump(model, f, indent=2)
         f.write("\n")

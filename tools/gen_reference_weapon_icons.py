@@ -1,7 +1,7 @@
 """0.100: 16x16 inventory icons for the weapons of "Custom weapon i want added" (diagonal pixel swords, same pose as the older icons).
 
     python tools/gen_reference_weapon_icons.py
-Writes assets/nusmp/textures/item/<id>.png. The 3D in-hand models come from tools/gen_weapon_models.py.
+Writes assets/anime_multiverse/textures/item/<id>.png. The 3D in-hand models come from tools/gen_weapon_models.py.
 """
 import colorsys
 import os
@@ -9,7 +9,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
 S = 16
 GOLD = ((150, 104, 30), (226, 178, 62), (255, 224, 122))
 

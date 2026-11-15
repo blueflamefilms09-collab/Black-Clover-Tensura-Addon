@@ -5,10 +5,10 @@ robe with wide sleeves and a belt, holding a glowing green orb at chest / mouth 
     python3 -B tools/gen_tower_wizard.py
 
 Writes (through tools/geo_builder.py, drawn by client/wizard/TowerWizardRenderer.java with client.geo.GeoDraw):
-    assets/nusmp/geo/entity/tower_wizard.geo.json
-    assets/nusmp/animations/entity/tower_wizard.animation.json     clips: idle (breathing, beard + hat sway, orb pulse and bob), talk (nods, a hand gesture)
-    assets/nusmp/textures/entity/tower_wizard.png                  256x128 painted procedurally (cloth weave, stitching, beard strands, hat band)
-    assets/nusmp/textures/entity/tower_wizard_glow.png             the green orb, the motes and the faint glint in the eyes (additive, full bright)
+    assets/anime_multiverse/geo/entity/tower_wizard.geo.json
+    assets/anime_multiverse/animations/entity/tower_wizard.animation.json     clips: idle (breathing, beard + hat sway, orb pulse and bob), talk (nods, a hand gesture)
+    assets/anime_multiverse/textures/entity/tower_wizard.png                  256x128 painted procedurally (cloth weave, stitching, beard strands, hat band)
+    assets/anime_multiverse/textures/entity/tower_wizard_glow.png             the green orb, the motes and the faint glint in the eyes (additive, full bright)
 
 Every cube has whole-number sizes so the painted texels stay square. Preview: python3 -B tools/render_preview/preview.py tower_wizard_idle
 """

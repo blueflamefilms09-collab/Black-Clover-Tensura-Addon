@@ -18,7 +18,7 @@ class WandererRosterTest {
             {
               "comment": "why",
               "entries": [
-                {"entity": "nusmp:floor_warden", "weight": 5, "minThreat": 1, "name": "The Warden", "healthScale": 1.5, "speed": 0.9, "comment": "ours"},
+                {"entity": "anime_multiverse:floor_warden", "weight": 5, "minThreat": 1, "name": "The Warden", "healthScale": 1.5, "speed": 0.9, "comment": "ours"},
                 {"entity": "minecraft:ravager", "weight": 3, "minThreat": 3, "maxThreat": 12},
                 {"entity": "tensura:orc_lord", "weight": 2, "minThreat": 8}
               ]
@@ -36,7 +36,7 @@ class WandererRosterTest {
         assertTrue(p.clean(), p.problems().toString());
         List<WandererRoster.Entry> e = p.roster().entries();
         assertEquals(3, e.size());
-        assertEquals("nusmp:floor_warden", e.get(0).entity());
+        assertEquals("anime_multiverse:floor_warden", e.get(0).entity());
         assertEquals("The Warden", e.get(0).name());
         assertEquals(1.5, e.get(0).healthScale(), 1e-9);
         assertEquals(0.9, e.get(0).speed(), 1e-9);
@@ -90,10 +90,10 @@ class WandererRosterTest {
         Map<String, Integer> seen = new HashMap<>();
         for (int i = 0; i < 12000; i++) seen.merge(roster.pick(10, e -> true, r).entity(), 1, Integer::sum);
         assertEquals(3, seen.size());
-        int warden = seen.get("nusmp:floor_warden"), ravager = seen.get("minecraft:ravager"), orc = seen.get("tensura:orc_lord");
+        int warden = seen.get("anime_multiverse:floor_warden"), ravager = seen.get("minecraft:ravager"), orc = seen.get("tensura:orc_lord");
         assertTrue(warden > ravager && ravager > orc, warden + " " + ravager + " " + orc);
         assertTrue(Math.abs(warden - 6000) < 400, "5 of 10 is half: " + warden);
-        for (int i = 0; i < 200; i++) assertEquals("nusmp:floor_warden", roster.pick(1, e -> true, r).entity());
+        for (int i = 0; i < 200; i++) assertEquals("anime_multiverse:floor_warden", roster.pick(1, e -> true, r).entity());
         for (int i = 0; i < 200; i++) assertFalse(roster.pick(20, e -> true, r).entity().equals("minecraft:ravager"));
         for (int i = 0; i < 200; i++) assertEquals("tensura:orc_lord", roster.pick(10, e -> e.entity().startsWith("tensura:"), r).entity());
         assertNull(roster.pick(10, e -> false, r));

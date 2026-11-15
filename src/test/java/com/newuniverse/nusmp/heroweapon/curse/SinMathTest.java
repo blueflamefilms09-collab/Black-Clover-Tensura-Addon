@@ -105,7 +105,7 @@ class SinMathTest {
         assertEquals(27, SinMath.treasureWeight("minecraft:netherite_block"));
         assertEquals(0, SinMath.treasureWeight("minecraft:cobblestone"));
         assertEquals(0, SinMath.treasureWeight(null));
-        assertEquals(0, SinMath.treasureWeight("nusmp:legendary_shield"));
+        assertEquals(0, SinMath.treasureWeight("anime_multiverse:legendary_shield"));
     }
 
     @Test

@@ -2,14 +2,14 @@
 """Franchise engravings (the source table and its generator).
 
 The mod's own engravings, one set per anime / world its relics, weapons, armour, magics and skills come from. An engraving is a 1.21.1 datapack enchantment
-(data/nusmp/enchantment/<id>.json) listed in the tag data/tensura/tags/enchantment/engraving.json (so Tensura's engraving screens and the grindstone rules treat
+(data/anime_multiverse/enchantment/<id>.json) listed in the tag data/tensura/tags/enchantment/engraving.json (so Tensura's engraving screens and the grindstone rules treat
 it like its own engravings); what it DOES is code (franchise/FranchiseEvents.java over the pure franchise/FranchiseRules.java), driven by the numbers in
-data/nusmp/franchise/engravings.json, which this script writes from the table below. Edit the table, run
+data/anime_multiverse/franchise/engravings.json, which this script writes from the table below. Edit the table, run
 
     python3 -B tools/franchise/gen_engravings.py
 
 and the enchantment jsons, the tag additions, the data file and the lang fragment (tools/lang/franchise_engravings.json) are rewritten. Re-runnable; it only adds
-or rewrites the files it owns (data/nusmp/enchantment/fr_*.json), it never touches the older engravings.
+or rewrites the files it owns (data/anime_multiverse/enchantment/fr_*.json), it never touches the older engravings.
 
 A franchise entry:  id, name, colour (tooltip), theme (particle theme key of particle_themes.json for the proc puff), aliases (lower case strings that name it in a
 wave header "inspired by X" or a roster "src"), words (lower case words in an item's own text that name it).
@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "src/main/resources/data/nusmp"
+DATA = ROOT / "src/main/resources/data/anime_multiverse"
 ENCH = DATA / "enchantment"
 TAG = ROOT / "src/main/resources/data/tensura/tags/enchantment/engraving.json"
 FRAG = ROOT / "tools/lang/franchise_engravings.json"
@@ -347,7 +347,7 @@ def write_json(p, obj):
 
 def enchantment_json(en):
     return {
-        "description": {"translate": "enchantment.nusmp." + en["id"]},
+        "description": {"translate": "enchantment.anime_multiverse." + en["id"]},
         "supported_items": "#minecraft:enchantable/durability",
         "weight": 1,
         "max_level": 3,
@@ -374,19 +374,19 @@ def main():
     out_eng = []
     for e in ENGRAVINGS:
         write_json(ENCH / (e["id"] + ".json"), enchantment_json(e))
-        lang["enchantment.nusmp." + e["id"]] = e["name"]
-        lang["enchantment.nusmp." + e["id"] + ".desc"] = describe(e)
+        lang["enchantment.anime_multiverse." + e["id"]] = e["name"]
+        lang["enchantment.anime_multiverse." + e["id"] + ".desc"] = describe(e)
         out_eng.append(dict(id=e["id"], franchise=e["franchise"], name=e["name"], scope=e["scope"], effects=e["effects"]))
     for f in FRANCHISES:
-        lang["franchise.nusmp." + f["id"]] = f["name"]
-    lang["tooltip.nusmp.franchise"] = "Franchise: %s"
+        lang["franchise.anime_multiverse." + f["id"]] = f["name"]
+    lang["tooltip.anime_multiverse.franchise"] = "Franchise: %s"
     write_json(FRAG, lang)
     write_json(OUT, {"version": 1, "comment": "Written by tools/franchise/gen_engravings.py: the franchises and the numbers of the franchise engravings (franchise/FranchiseData).",
                      "franchises": FRANCHISES, "engravings": out_eng})
     tag = json.loads(TAG.read_text(encoding="utf-8"))
     vals = tag["values"]
     for e in ENGRAVINGS:
-        v = "nusmp:" + e["id"]
+        v = "anime_multiverse:" + e["id"]
         if v not in vals:
             vals.append(v)                                                    # append only: the older entries stay where they are
     write_json(TAG, tag)

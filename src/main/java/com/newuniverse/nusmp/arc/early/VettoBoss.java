@@ -151,7 +151,7 @@ public class VettoBoss extends EarlyBoss {
                 auraFx(sl);
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Vetto's aura failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Vetto's aura failed: {}", e.toString());
         }
     }
 
@@ -221,7 +221,7 @@ public class VettoBoss extends EarlyBoss {
                 if (casting != null && casting.id().equals(VettoTable.SHIFT)) a *= VettoTable.SHIFT_BONUS;
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Vetto's tear failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Vetto's tear failed: {}", e.toString());
         }
         return super.filterDamage(source, a);
     }
@@ -497,7 +497,7 @@ public class VettoBoss extends EarlyBoss {
             if (share <= 0) continue;
             if (!EarlyMoves.clear(sl, from, e.getBoundingBox().getCenter(), this)) {
                 blocked++;
-                EarlyMoves.tell(e, "message.nusmp.arc.early.vetto.shielded");
+                EarlyMoves.tell(e, "message.anime_multiverse.arc.early.vetto.shielded");
                 continue;
             }
             if (strike(e, (float) (VettoTable.RELEASE_HIT * share), true)) EarlyMoves.shove(e, position(), 1.6 * share + 0.4);

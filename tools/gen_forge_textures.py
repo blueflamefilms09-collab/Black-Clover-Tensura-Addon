@@ -1,6 +1,6 @@
 """Generates the four 16x16 block textures of the Relic Forge (relic_forge_side/plate/top/bottom.png).
 
-Deterministic, Pillow only. Output: src/main/resources/assets/nusmp/textures/block/
+Deterministic, Pillow only. Output: src/main/resources/assets/anime_multiverse/textures/block/
 
     python3 -B tools/gen_forge_textures.py
 
@@ -12,7 +12,7 @@ import os
 import random
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "block")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "block")
 METAL = [(34, 36, 46), (40, 42, 54), (46, 48, 62), (28, 30, 38)]
 GOLD = [(232, 196, 104), (200, 160, 70), (150, 114, 46)]
 VIOLET = [(154, 124, 255), (190, 160, 255), (235, 225, 255)]

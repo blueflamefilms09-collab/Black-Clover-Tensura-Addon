@@ -21,7 +21,7 @@ public final class LootCreative {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, NUSMP.MODID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = TABS.register("dungeon_loot", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.nusmp.dungeon_loot"))
+            .title(Component.translatable("itemGroup.anime_multiverse.dungeon_loot"))
             .icon(() -> {
                 Item i = LootItems.get("mana_elixir");
                 return new ItemStack(i == null ? Items.EXPERIENCE_BOTTLE : i);

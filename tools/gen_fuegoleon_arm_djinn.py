@@ -9,7 +9,7 @@ bright orange body with a hot yellow core, a dark red outline at the silhouette 
 elbow, a forearm, a wrist and a clenched fist, with flame tongues curling off the shoulder, the elbow (a big hooked tongue) and the wrist. What is taken from the Djinn Equip is the way it is
 built and shown: a set of PIECES (shoulder, upper arm, elbow, forearm, fist), each its own model anchored on the arm, forged in one after the other with a flash.
 
-Files written (assets/nusmp, the frame of tools/water_aura_lib.py: model pixels, y UP, front on -z, the player's right arm at x = -6):
+Files written (assets/anime_multiverse, the frame of tools/water_aura_lib.py: model pixels, y UP, front on -z, the player's right arm at x = -6):
     geo/entity/fuegoleonarm_<piece>.geo.json, animations/entity/fuegoleonarm_<piece>.animation.json (clip "idle": a few degrees of sway),
     textures/entity/fuegoleonarm_<piece>.png and _glow.png (the glow map: only the hot core, alpha 255 everywhere and black elsewhere: nothing under alpha 0),
     textures/aura/fad_tongue.png (four frames side by side, 48 x 96 each: one flame tongue, alpha blended, the colour under the clear texels is the outline colour so no dark fringe).

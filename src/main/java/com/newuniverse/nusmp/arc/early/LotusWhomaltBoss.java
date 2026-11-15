@@ -130,7 +130,7 @@ public class LotusWhomaltBoss extends EarlyBoss {
         try {
             upkeep(sl);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Lotus's smoke failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lotus's smoke failed: {}", e.toString());
         }
     }
 
@@ -148,7 +148,7 @@ public class LotusWhomaltBoss extends EarlyBoss {
             int before = dose.dose(id);
             int after = dose.set(id, DoseLedger.step(before, cloud, sight, aura, decayBeat));
             applyDose(sl, e, after);
-            if (after >= 3 || after != before) EarlyMoves.tell(e, "message.nusmp.arc.early.lotus.dose", after, DoseLedger.MAX);
+            if (after >= 3 || after != before) EarlyMoves.tell(e, "message.anime_multiverse.arc.early.lotus.dose", after, DoseLedger.MAX);
         }
         if (decayBeat) for (UUID id : dose.ids()) if (!seen.contains(id)) dose.add(id, -1);       // a foe who left the fight sobers up slowly
     }
@@ -164,7 +164,7 @@ public class LotusWhomaltBoss extends EarlyBoss {
         e.setDeltaMovement(v.x * 0.3, Math.min(v.y, 0) - 0.5, v.z * 0.3);
         e.hurtMarked = true;
         dose.set(e.getUUID(), DoseLedger.AFTER_FALL);
-        EarlyMoves.tell(e, "message.nusmp.arc.early.lotus.fall");
+        EarlyMoves.tell(e, "message.anime_multiverse.arc.early.lotus.fall");
         VfxSpawn.send(sl, VfxShape.ASH_FORMATION, e.position(), e.position().add(0, 1, 0), ARGB, 30, 2.2f);
         quip("There. Down you go.", "Told you to breathe deep.");
     }
@@ -294,7 +294,7 @@ public class LotusWhomaltBoss extends EarlyBoss {
             for (LivingEntity e : EarlyMoves.inCorridor(this, m.subtract(axis.scale(LotusTable.CROSS_ARM)), m.add(axis.scale(LotusTable.CROSS_ARM)), LotusTable.CROSS_HALF)) {
                 if (!hit.add(e.getId())) continue;
                 if (carriesAntiMagic(e)) {
-                    EarlyMoves.tell(e, "message.nusmp.arc.early.lotus.cut");
+                    EarlyMoves.tell(e, "message.anime_multiverse.arc.early.lotus.cut");
                     continue;
                 }
                 if (!strike(e, LotusTable.CROSS_HIT, true)) continue;
@@ -422,7 +422,7 @@ public class LotusWhomaltBoss extends EarlyBoss {
         EarlyMoves.sound(sl, m, SoundEvents.CHAIN_PLACE, 1.6f, 0.5f);
         for (LivingEntity e : EarlyMoves.inCircle(this, m, LotusTable.SPHERE_RADIUS)) {
             if (carriesAntiMagic(e)) {
-                EarlyMoves.tell(e, "message.nusmp.arc.early.lotus.cut");
+                EarlyMoves.tell(e, "message.anime_multiverse.arc.early.lotus.cut");
                 continue;
             }
             if (!strike(e, LotusTable.SPHERE_HIT, true)) continue;

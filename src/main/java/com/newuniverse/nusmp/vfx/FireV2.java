@@ -204,7 +204,7 @@ public final class FireV2 {
     /** File name without folder or extension: {@code fnw_a_tongue_a} or, for the grey twin, {@code fnw_a_tongue_a_t}. */
     public static String fileName(String name, boolean tintable) { return PREFIX + name + (tintable ? "_t" : ""); }
 
-    /** Every texture of the set as a path under assets/nusmp (34 files + 32 twins = 66). */
+    /** Every texture of the set as a path under assets/anime_multiverse (34 files + 32 twins = 66). */
     public static List<String> allTextures() {
         List<String> out = new ArrayList<>();
         for (String n : TEXTURE_NAMES) {

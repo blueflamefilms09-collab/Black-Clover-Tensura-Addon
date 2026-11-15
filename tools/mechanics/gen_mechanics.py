@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Why: the dungeon mechanics library (1000 mechanics) is generated, not hand-written. Writes the library: data/nusmp/mega/mechanics/<category>.json + ops.json, tools/mechanics/lang_fragment.json and the base-design table
+"""Why: the dungeon mechanics library (1000 mechanics) is generated, not hand-written. Writes the library: data/anime_multiverse/mega/mechanics/<category>.json + ops.json, tools/mechanics/lang_fragment.json and the base-design table
 of docs/labyrinth/mechanics.md.
 
     python3 tools/mechanics/gen_mechanics.py            # writes
@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(HERE, "tables"))
 import ops as OPS_MOD            # noqa: E402
 from dsl import CATEGORIES, THEMES   # noqa: E402
 
-OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "mechanics")
+OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "mechanics")
 LANG = os.path.join(HERE, "lang_fragment.json")
 LANG_STATIC = os.path.join(HERE, "lang_static.json")
 DOC = os.path.join(ROOT, "docs", "labyrinth", "mechanics.md")
@@ -367,9 +367,9 @@ def lang_json(all_m):
     if os.path.exists(LANG_STATIC):
         with open(LANG_STATIC, encoding="utf-8") as f: d.update(json.load(f))
     for m in all_m:
-        d["mechanic.nusmp.%s.name" % m["id"]] = m["name"]
-        d["mechanic.nusmp.%s.desc" % m["id"]] = m["desc"]
-        d["mechanic.nusmp.%s.flavor" % m["id"]] = m["flavor"]
+        d["mechanic.anime_multiverse.%s.name" % m["id"]] = m["name"]
+        d["mechanic.anime_multiverse.%s.desc" % m["id"]] = m["desc"]
+        d["mechanic.anime_multiverse.%s.flavor" % m["id"]] = m["flavor"]
     for c in CATEGORIES:
         pass
     return json.dumps(d, ensure_ascii=False, indent=1) + "\n"

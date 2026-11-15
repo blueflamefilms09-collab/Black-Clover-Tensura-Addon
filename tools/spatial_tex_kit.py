@@ -6,7 +6,7 @@ vertex colour of the effect tints them (the same convention as the Time Magic te
     from spatial_tex_kit import *
     m = Mask(256)                       # a float mask 0..1, drawn with supersampled PIL primitives
     m.ring(0.7, 0.03); m.ticks(0.55, 0.64, 24, 0.012); m.add(glow(256, 2.5) * 0.3)
-    save("spatial_ring", m.rgba())      # -> src/main/resources/assets/nusmp/textures/particle/spatial_ring.png
+    save("spatial_ring", m.rgba())      # -> src/main/resources/assets/anime_multiverse/textures/particle/spatial_ring.png
 
 Run python as `python3 -B`.
 """
@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 sys.dont_write_bytecode = True
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures")
 SS = 4
 
 

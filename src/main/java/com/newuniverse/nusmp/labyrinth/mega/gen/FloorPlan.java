@@ -21,10 +21,10 @@ public final class FloorPlan {
     private FloorPlan() {}
 
     /** The pools of the four kinds of stairwell (the folder {@code structure/mega/stairwell}, files {@code up_*}, {@code down_*}, {@code grand_up_*}, {@code grand_down_*}). */
-    public static final String P_UP = "nusmp:mega/stairwell_up", P_DOWN = "nusmp:mega/stairwell_down",
-            P_GRAND_UP = "nusmp:mega/stairwell_grand_up", P_GRAND_DOWN = "nusmp:mega/stairwell_grand_down";
+    public static final String P_UP = "anime_multiverse:mega/stairwell_up", P_DOWN = "anime_multiverse:mega/stairwell_down",
+            P_GRAND_UP = "anime_multiverse:mega/stairwell_grand_up", P_GRAND_DOWN = "anime_multiverse:mega/stairwell_grand_down";
     /** The pool the arrival stairwell's only door draws its first room from: rooms with several doors only, so a floor never starts in a dead end. */
-    public static final String P_STAIR_DOOR = "nusmp:mega/stair_door";
+    public static final String P_STAIR_DOOR = "anime_multiverse:mega/stair_door";
 
     /** Smallest and largest region of a floor, in modules (both odd: the region is centred on a door that stands at a module centre). */
     public static final int MIN_REGION_MODULES = 13, MAX_REGION_MODULES = MegaGrid.REGION_MODULES;

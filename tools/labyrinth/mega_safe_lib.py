@@ -37,7 +37,7 @@ from mega_lib import (MT, Frame, FLOOR_ROW, WALL, MODULE, DOOR_ROW, DOOR_H, AIR,
                       PLANKS_STAIRS, PLANKS_SLAB, FENCE, FENCE_GATE, TRAPDOOR, WOOD_DOOR, LOG, STRIPPED_LOG, BUTTON, PLATE, OPPOSITE, STEP,
                       RIGHT_OF, LEFT_OF, FACING, SIDES)
 
-EXIT = "nusmp:labyrinth_exit"
+EXIT = "anime_multiverse:labyrinth_exit"
 INWARD = {"n": "south", "s": "north", "w": "east", "e": "west"}      # from a wall into the room
 TOWARD = {"n": "north", "s": "south", "w": "west", "e": "east"}      # from the room toward that wall
 SIDE_OF = {"north": "n", "south": "s", "west": "w", "east": "e"}
@@ -111,7 +111,7 @@ class SR(MT):
         return self.t.get(x, y, z) is None
 
     def door(self, side, offset, **kw):
-        """The contract's ordinary door (pool `nusmp:mega/side`, name `nusmp:mega_door`) at `offset` along `side`."""
+        """The contract's ordinary door (pool `anime_multiverse:mega/side`, name `anime_multiverse:mega_door`) at `offset` along `side`."""
         return self.socket(side, offset, **kw)
 
     def lateral_edge(self, side):

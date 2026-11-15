@@ -49,7 +49,7 @@ public class DjinnWeaponItem extends Item {
                                 com.newuniverse.nusmp.relics.WeaponGrades.djinn(s.kind(), dark).damage() - 1.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_speed"),
                                 s.speed() - 4.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                        .add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "djinn_weapon_reach"),
+                        .add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "djinn_weapon_reach"),
                                 s.reach(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .build());
     }
@@ -86,15 +86,15 @@ public class DjinnWeaponItem extends Item {
         int color = dark ? 0xC08CFF : djinn.glow();
         DjinnTemp.Data t = DjinnTemp.get(stack);
         boolean admin = t == null || t.admin();
-        tip.add(Component.translatable(admin ? "tooltip.nusmp.djinn_weapon.admin" : "tooltip.nusmp.djinn_weapon.temp", djinn.displayName()).withStyle(ChatFormatting.GRAY));
-        if (dark) tip.add(Component.translatable("tooltip.nusmp.djinn_weapon.dark").withStyle(ChatFormatting.DARK_PURPLE));
-        if (dark) tip.add(Component.translatableWithFallback("tooltip.nusmp.djinn_weapon.dark_look", "Its dark form is upgraded: energy veins run up the weapon and its own pieces orbit it (client option visual.upgrade).").withStyle(ChatFormatting.DARK_GRAY));      // 1.108.0 djinn_dark_weapons
-        tip.add(actLine(s, DjinnWeaponRules.ACT_ONE, "tooltip.nusmp.djinn_weapon.act1", color));
+        tip.add(Component.translatable(admin ? "tooltip.anime_multiverse.djinn_weapon.admin" : "tooltip.anime_multiverse.djinn_weapon.temp", djinn.displayName()).withStyle(ChatFormatting.GRAY));
+        if (dark) tip.add(Component.translatable("tooltip.anime_multiverse.djinn_weapon.dark").withStyle(ChatFormatting.DARK_PURPLE));
+        if (dark) tip.add(Component.translatableWithFallback("tooltip.anime_multiverse.djinn_weapon.dark_look", "Its dark form is upgraded: energy veins run up the weapon and its own pieces orbit it (client option visual.upgrade).").withStyle(ChatFormatting.DARK_GRAY));      // 1.108.0 djinn_dark_weapons
+        tip.add(actLine(s, DjinnWeaponRules.ACT_ONE, "tooltip.anime_multiverse.djinn_weapon.act1", color));
         tip.add(Component.translatable("djinn_weapon.act." + s.one().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
-        tip.add(actLine(s, DjinnWeaponRules.ACT_TWO, "tooltip.nusmp.djinn_weapon.act2", color));
+        tip.add(actLine(s, DjinnWeaponRules.ACT_TWO, "tooltip.anime_multiverse.djinn_weapon.act2", color));
         tip.add(Component.translatable("djinn_weapon.act." + s.two().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
-        tip.add(Component.translatable("tooltip.nusmp.djinn_weapon.onhit", djinn.trait().blurb()).withStyle(ChatFormatting.GRAY));
-        tip.add(Component.translatable("tooltip.nusmp.djinn_weapon.rules").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        tip.add(Component.translatable("tooltip.anime_multiverse.djinn_weapon.onhit", djinn.trait().blurb()).withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("tooltip.anime_multiverse.djinn_weapon.rules").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
     }
 
     private Component actLine(DjinnWeaponRules.Spec s, int act, String key, int color) {

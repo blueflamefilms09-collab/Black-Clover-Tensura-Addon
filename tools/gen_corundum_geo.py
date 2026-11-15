@@ -3,7 +3,7 @@
     python3 -B tools/gen_corundum_geo.py            # writes every model, animation and texture, prints the cube counts
     python3 -B tools/geo_check.py corundum_gauntlet corundum_gem_shard corundum_armour ...   # the validator (this script runs it too)
 
-Models (assets/nusmp/geo/entity/corundum_<name>.geo.json, animations/entity/..., textures/entity/corundum_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/corundum_<name>.geo.json, animations/entity/..., textures/entity/corundum_<name>.png + _glow.png):
   gauntlet   the Ideal Closer fist: a huge clenched fist of stone-grey corundum with ruby and sapphire plates, knuckle gems, a gem
              on the back of the hand, a flared cuff ending in a crown of crystal spikes and six shards orbiting the wrist.
              clips: idle (hover, loose fingers), punch (wind up, strike, recover), slam (raise, hammer down, recover)
@@ -567,7 +567,7 @@ def build_plates():
         put(leg, ("north",), (0, 7, 4, 4), "ruby")
         put(leg, ("west", "east", "south"), (1, 7, 2, 4), "sapphire")
         put(leg, ("north", "south", "west", "east"), (0, 10, 4, 2), "trim")
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
     os.makedirs(out, exist_ok=True)
     img.save(os.path.join(out, "corundum_plates.png"))
     glow.save(os.path.join(out, "corundum_plates_glow.png"))

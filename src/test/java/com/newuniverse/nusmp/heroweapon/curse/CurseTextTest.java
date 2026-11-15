@@ -40,7 +40,7 @@ class CurseTextTest {
             assertTrue(keys.add(e.getKey()), "unique key " + e.getKey());
             assertFalse(e.getValue().isBlank(), e.getKey());
             for (char c : (e.getKey() + e.getValue()).toCharArray()) assertTrue(c >= 32 && c < 127, "plain ASCII in " + e.getKey() + ": char " + (int) c);
-            assertTrue(e.getKey().startsWith("hero.curse.") || e.getKey().startsWith("key.nusmp.hero_") || e.getKey().startsWith("item.nusmp.") || e.getKey().startsWith("tooltip.nusmp."),
+            assertTrue(e.getKey().startsWith("hero.curse.") || e.getKey().startsWith("key.anime_multiverse.hero_") || e.getKey().startsWith("item.anime_multiverse.") || e.getKey().startsWith("tooltip.anime_multiverse."),
                     "key in our own namespace: " + e.getKey());
         }
         assertTrue(CurseText.all().size() > 60, "whispers and messages: " + CurseText.all().size());

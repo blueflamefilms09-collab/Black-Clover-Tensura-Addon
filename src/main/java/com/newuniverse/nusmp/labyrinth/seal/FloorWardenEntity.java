@@ -68,7 +68,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
     private static final double SLAM_REACH = 5.0, SLAM_RADIUS = 4.0, STEP_MIN = 8.0, STEP_MAX = 24.0;
     private static final float SLAM_DAMAGE = 8f;
 
-    private final ServerBossEvent bar = new ServerBossEvent(Component.translatable("entity.nusmp.floor_warden.bar"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_6);
+    private final ServerBossEvent bar = new ServerBossEvent(Component.translatable("entity.anime_multiverse.floor_warden.bar"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.NOTCHED_6);
     private int slamCooldown = 60, stepCooldown = 80;
     /** The two Living Armors it calls at half health: once per life. */
     private boolean summoned;
@@ -231,7 +231,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
         bar.removeAllPlayers();
     }
 
-    /** The entity loot table ({@code nusmp:entities/floor_warden}), rolled the way {@code LivingEntity} does: the parent turned it off. */
+    /** The entity loot table ({@code anime_multiverse:entities/floor_warden}), rolled the way {@code LivingEntity} does: the parent turned it off. */
     @Override
     protected void dropFromLootTable(DamageSource source, boolean hitByPlayer) {
         if (!(level() instanceof ServerLevel sl)) return;

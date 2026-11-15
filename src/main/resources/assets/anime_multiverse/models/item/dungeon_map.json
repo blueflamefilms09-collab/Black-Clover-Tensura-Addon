@@ -1,0 +1,21 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "gui_light": "front",
+  "textures": {
+    "particle": "anime_multiverse:item/dungeon_map"
+  },
+  "base": {
+    "parent": "anime_multiverse:item/dungeon_map_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "anime_multiverse:item/dungeon_map_2d"
+    },
+    "ground": {
+      "parent": "anime_multiverse:item/dungeon_map_2d"
+    },
+    "fixed": {
+      "parent": "anime_multiverse:item/dungeon_map_2d"
+    }
+  }
+}

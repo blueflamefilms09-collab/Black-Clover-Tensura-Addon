@@ -7,7 +7,7 @@
 
 Reads tools/tiny_djinn/specs.json (the hand-curated table: palette, face, hair, headgear, ears, cape, weapon, tail, accessory of each Djinn; make_specs.py writes it),
 builds each model from the recipes of tools/tiny_djinn/tdparts.py and paints it with tdpaint.py. Deterministic (hash noise, no random numbers): two runs give identical files.
-Writes under src/main/resources/assets/nusmp/:
+Writes under src/main/resources/assets/anime_multiverse/:
     geo/entity/tinydjinn_<id>.geo.json                       the model (25 bones, 60 to 170 cubes, 64 x 64)
     textures/entity/tinydjinn_<id>.png + _glow.png           the Djinn in its own light (the glow map is drawn additive and full bright)
     textures/entity/tinydjinn_<id>_dark.png + _dark_glow.png the Dark Djinn: the same geo, black metal and gold, the thorn crown and eye crest only painted here
@@ -25,7 +25,7 @@ import tdlib as L          # noqa: E402
 import tdparts as P        # noqa: E402
 import tdanim              # noqa: E402
 
-ROOT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 SPECS = os.path.join(HERE, "tiny_djinn", "specs.json")
 TEXDIR = os.path.join(ROOT, "textures", "entity")
 GEODIR = os.path.join(ROOT, "geo", "entity")

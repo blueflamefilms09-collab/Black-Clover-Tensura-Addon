@@ -51,7 +51,7 @@ class LightBoneJaDataTest {
         for (String magic : new String[]{"LIGHT", "BONE"}) {
             String book = magic.equals("LIGHT") ? "book_light" : "book_bone";
             for (LightBoneJa.Spell s : LightBoneJa.spells(magic)) {
-                String key = "nusmp.page." + book + "." + s.id();
+                String key = "anime_multiverse.page." + book + "." + s.id();
                 assertTrue(lang.has(key), "missing tooltip " + key);
                 String text = lang.get(key).getAsString();
                 assertTrue(text.contains(s.english()), key + " does not say the English name " + s.english());
@@ -59,7 +59,7 @@ class LightBoneJaDataTest {
                 assertTrue(text.contains(s.romaji()), key + " does not say the romaji " + s.romaji());
             }
         }
-        assertTrue(lang.has("nusmp.skill.book_light.description") && lang.has("nusmp.skill.book_bone.description"));
+        assertTrue(lang.has("anime_multiverse.skill.book_light.description") && lang.has("anime_multiverse.skill.book_bone.description"));
         lang.entrySet().forEach(e -> assertTrue(e.getValue().isJsonPrimitive() && !e.getValue().getAsString().isBlank(), e.getKey()));
         assertFalse(read(ROOT.resolve("tools/lang/light_bone_ja.json")).toLowerCase().contains("claude"), "no assistant names in lang text");
     }
@@ -79,7 +79,7 @@ class LightBoneJaDataTest {
     // ================================================================ assets
     @Test
     void everyTextureThePaintersAskForExistsAndTheSceneFileCoversEveryVariant() throws IOException {
-        Path tex = ROOT.resolve("src/main/resources/assets/nusmp/textures");
+        Path tex = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures");
         List<String> missing = new ArrayList<>();
         for (String f : new String[]{"client/prop/LightJaPropPainter.java", "client/prop/BoneJaPropPainter.java"}) {
             Matcher m = Pattern.compile("AuraRender\\.tex\\(\"([a-z0-9_/]+)\"\\)").matcher(src(f));
@@ -110,7 +110,7 @@ class LightBoneJaDataTest {
         String cfg = src("NUConfig.java");
         assertTrue(cfg.contains("LIGHT_BONE_JA") && cfg.contains("\"lightBoneJa\""), "the server config magic.lightBoneJa");
         assertTrue(cfg.contains("b.push(\"magic\")"));
-        String policy = read(ROOT.resolve("src/main/resources/data/nusmp/armour_policy.json"));
+        String policy = read(ROOT.resolve("src/main/resources/data/anime_multiverse/armour_policy.json"));
         for (String id : List.of("bright_judgment_whip", "heaven_splitting_flash", "arrows_of_judgment", "avior_lamp", "absolute_monarch", "demon_sword_dainsleif", "spatial_rupture"))
             assertTrue(policy.contains("\"" + id + "\""), "the armour policy lists the appended page " + id);
         String kinds = src("prop/PropKind.java");

@@ -23,7 +23,7 @@ TOOLS = os.path.abspath(os.path.join(HERE, ".."))
 sys.path.insert(0, TOOLS)
 import geo_builder  # noqa: E402
 
-ROOT = geo_builder.ROOT                      # src/main/resources/assets/nusmp
+ROOT = geo_builder.ROOT                      # src/main/resources/assets/anime_multiverse
 KEY = "abyssal"
 TAU = math.tau
 

@@ -33,7 +33,7 @@ public final class ScaleHud {
         if (registered) return;
         registered = true;
         container.registerConfig(ModConfig.Type.CLIENT, ScaleVisualConfig.SPEC, "nusmp-scale-casting-client.toml");
-        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "scale_weights"), ScaleHud::render));
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "scale_weights"), ScaleHud::render));
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { seen = Long.MIN_VALUE; line1 = ""; line2 = ""; });
     }
 

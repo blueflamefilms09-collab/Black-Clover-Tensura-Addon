@@ -35,7 +35,7 @@ public final class LockPolicy implements AlignmentPolicy {
             refuse(player, polarity);
             return false;
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The Directional Lock failed and let a player through: {}", e.toString());
+            LOG.warn("[anime_multiverse] The Directional Lock failed and let a player through: {}", e.toString());
             return true;
         }
     }

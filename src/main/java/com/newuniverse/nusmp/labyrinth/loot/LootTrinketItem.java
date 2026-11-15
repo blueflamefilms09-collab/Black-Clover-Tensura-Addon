@@ -57,8 +57,8 @@ public class LootTrinketItem extends Item implements LootGear {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        tip.add(LootText.text("tooltip.nusmp.loot.worn_in", def.slot().substring(0, 1).toUpperCase(Locale.ROOT) + def.slot().substring(1)).withStyle(ChatFormatting.DARK_AQUA));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse." + def.id() + ".lore", def.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tip.add(LootText.text("tooltip.anime_multiverse.loot.worn_in", def.slot().substring(0, 1).toUpperCase(Locale.ROOT) + def.slot().substring(1)).withStyle(ChatFormatting.DARK_AQUA));
         GearTooltip.gear(stack, this, tip);
     }
 }

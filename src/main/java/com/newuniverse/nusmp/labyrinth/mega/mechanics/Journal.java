@@ -69,7 +69,7 @@ public final class Journal {
                 if (!level.hasChunkAt(pos)) level.getChunk(pos.getX() >> 4, pos.getZ() >> 4);
                 if (level.getBlockState(pos) != old) DungeonGuard.internal(() -> level.setBlock(pos, old, 3));
             } catch (RuntimeException e) {
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] mechanics: could not restore {}: {}", pos.toShortString(), e.toString());
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] mechanics: could not restore {}: {}", pos.toShortString(), e.toString());
             }
         }
     }

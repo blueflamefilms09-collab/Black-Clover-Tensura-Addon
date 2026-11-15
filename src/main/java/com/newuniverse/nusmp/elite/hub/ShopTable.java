@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Why: the Merchant's goods and prices are DATA ({@code data/nusmp/elite/hub/shop.json}) so the owner can retune a price or add a ware, and a datapack can replace the file, without a mod update.
+ * Why: the Merchant's goods and prices are DATA ({@code data/anime_multiverse/elite/hub/shop.json}) so the owner can retune a price or add a ware, and a datapack can replace the file, without a mod update.
  * This is that table as an immutable value with no game type (an item is a plain id string, so a row may name an item of an addon that is not installed: the game side drops the rows whose item
  * does not exist) plus the reader, which never throws on a bad file: a broken row is skipped with a readable sentence and the rest still load. A row is {@code id} (the offer's own id, what the
  * client sends back), {@code item}, {@code count} (stack size sold), {@code price} (bronze coins for the whole stack), {@code category} ({@code gear}, {@code food}, {@code utility}, {@code map};

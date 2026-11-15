@@ -22,7 +22,7 @@ class ArcModelKeyTest {
         assertEquals("", ArcModelKey.clean("   "));
         assertEquals("", ArcModelKey.clean("../etc/passwd"));
         assertEquals("", ArcModelKey.clean("a/b"));
-        assertEquals("", ArcModelKey.clean("nusmp:asta"));
+        assertEquals("", ArcModelKey.clean("anime_multiverse:asta"));
         assertEquals("", ArcModelKey.clean("a.b"));
         assertEquals("", ArcModelKey.clean("9lives"), "an id starts with a letter, like the roster's ids");
         assertEquals("", ArcModelKey.clean("x".repeat(65)), "a very long id is a bad save, not a model");

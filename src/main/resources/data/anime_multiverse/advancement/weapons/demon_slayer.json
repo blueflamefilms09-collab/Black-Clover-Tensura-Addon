@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:weapons/first",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:demon_slayer_sword"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.weapons.demon_slayer.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.weapons.demon_slayer.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_demon_slayer_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:demon_slayer_sword"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_demon_slayer_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 80
+  }
+}

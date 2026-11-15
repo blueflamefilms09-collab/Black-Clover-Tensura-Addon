@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
  * {@code LabyrinthTravel.enter} is three lines and the Gate block, the legacy Maw and the commands all behave the same. IN: {@link #enterFromOverworld}
  * (the Gateway) remembers where the player came from in their persistent data under {@link HubKeys#ORIGIN}, makes sure the plaza exists, and puts them
  * on the arrival cell facing south, with a short gate cooldown so the gate they were set down near does not send them straight back. ACROSS: {@link
- * #useGate} reads WHICH gate the block is from its position ({@link HubLayout#gateNear}: the three gates are plain {@code nusmp:labyrinth_gate} blocks,
+ * #useGate} reads WHICH gate the block is from its position ({@link HubLayout#gateNear}: the three gates are plain {@code anime_multiverse:labyrinth_gate} blocks,
  * so no block property tells them apart) and sends the player home, or up the Holy road, or down the Abyssal road, asking the Directional Lock first
  * ({@link MegaDungeon#mayEnter}, which tells the player why it refuses). OUT: {@link #leaveToOverworld} returns to the remembered origin, or to the
  * respawn point or the Overworld spawn when it is lost or is itself a Labyrinth or Sanctuary dimension; {@link #returnToPlaza} is how the Mega-Dungeon
@@ -192,6 +192,6 @@ public final class HubTravel {
     }
 
     private static void tell(ServerPlayer p, String key, String english, ChatFormatting colour) {
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.mega.mhb." + key, english).withStyle(colour));
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.mega.mhb." + key, english).withStyle(colour));
     }
 }

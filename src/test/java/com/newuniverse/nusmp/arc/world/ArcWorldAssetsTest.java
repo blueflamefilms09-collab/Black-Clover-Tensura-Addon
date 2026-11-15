@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * its place in the renderer's list, or when the arena's dimension and dimension type are missing or malformed.
  */
 class ArcWorldAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
-    private static final String DATA = "src/main/resources/data/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
+    private static final String DATA = "src/main/resources/data/anime_multiverse/";
 
     private static JsonObject json(String path) throws Exception {
         try (Reader r = new FileReader(new File(path))) {
@@ -48,7 +48,7 @@ class ArcWorldAssetsTest {
         assertEquals("minecraft:builtin/entity", hand.get("parent").getAsString(), "the in-hand model is drawn by the weapon renderer");
         assertTrue(hand.has("display") && hand.getAsJsonObject("display").has("gui") && hand.getAsJsonObject("display").has("thirdperson_righthand") && hand.getAsJsonObject("display").has("firstperson_righthand"));
         JsonObject icon = json(ASSETS + "models/item/chronicle_sigil_icon.json");
-        assertEquals("nusmp:item/chronicle_sigil", icon.getAsJsonObject("textures").get("layer0").getAsString(), "the flat model keeps the old sprite as the icon");
+        assertEquals("anime_multiverse:item/chronicle_sigil", icon.getAsJsonObject("textures").get("layer0").getAsString(), "the flat model keeps the old sprite as the icon");
     }
 
     @Test
@@ -83,7 +83,7 @@ class ArcWorldAssetsTest {
     @Test
     void theArenaDimensionAndItsTypeAreDeclared() throws Exception {
         JsonObject dim = json(DATA + "dimension/arc_arena.json");
-        assertEquals("nusmp:arc_arena", dim.get("type").getAsString());
+        assertEquals("anime_multiverse:arc_arena", dim.get("type").getAsString());
         assertEquals("minecraft:flat", dim.getAsJsonObject("generator").get("type").getAsString());
         JsonObject type = json(DATA + "dimension_type/arc_arena.json");
         assertEquals(0, type.get("min_y").getAsInt(), "the arena sites are built at y 64 up: a dimension from y 0 is enough");

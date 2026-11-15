@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spells.art_unite_gallus.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spells.art_unite_gallus.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_unite_mode_gallus": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "unite.mode",
+        "arg": "gallus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_unite_mode_gallus"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

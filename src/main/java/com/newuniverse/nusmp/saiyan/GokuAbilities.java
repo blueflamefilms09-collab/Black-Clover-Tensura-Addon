@@ -62,7 +62,7 @@ final class GokuAbilities {
             p.connection.send(new ClientboundSetSubtitleTextPacket(Component.translatable(u.epithetKey())));
             p.connection.send(new ClientboundSetTitleTextPacket(name));
         }
-        p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.ultimate", name), false);
+        p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.ultimate", name), false);
         ServerLevel level = p.serverLevel();
         Fx.spray(level, FxThemes.WORLD, FxOld.FIREWORK, p.getX(), p.getY() + 1.0, p.getZ(), 40, 0.8, 1.0, 0.8, 0.2);
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.SPARK, 0xFFB020, 1.5f, p.getX(), p.getY() + 1.0, p.getZ(), 24, 0.6, 1.0, 0.6, 0.15);

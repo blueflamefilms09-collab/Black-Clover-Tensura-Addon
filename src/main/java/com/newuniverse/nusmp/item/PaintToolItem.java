@@ -67,7 +67,7 @@ public class PaintToolItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatable("item.nusmp." + (kind == Kind.BRUSH ? "paint_brush" : "paint_palette") + ".desc").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("item.anime_multiverse." + (kind == Kind.BRUSH ? "paint_brush" : "paint_palette") + ".desc").withStyle(ChatFormatting.GRAY));
         int cmd = stack.has(net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA)
                 ? stack.get(net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA).value() : 1;
         PaintStudio.Paint p = PaintStudio.Paint.of(cmd - 1);

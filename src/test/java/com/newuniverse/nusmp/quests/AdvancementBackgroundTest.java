@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * look wrong with no error anywhere. This reads root.json and the texture as files and pins those rules, and that the generator spec names the same texture as the shipped root.
  */
 class AdvancementBackgroundTest {
-    private static final Path ROOT = Path.of("src/main/resources/data/nusmp/advancement/root.json");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
-    private static final String NEW = "nusmp:textures/gui/advancements/multiverse_weave.png";
+    private static final Path ROOT = Path.of("src/main/resources/data/anime_multiverse/advancement/root.json");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
+    private static final String NEW = "anime_multiverse:textures/gui/advancements/multiverse_weave.png";
 
     private static String background() throws Exception {
         JsonObject o = JsonParser.parseString(Files.readString(ROOT)).getAsJsonObject();
@@ -40,7 +40,7 @@ class AdvancementBackgroundTest {
     @Test
     void everyTileIsSquareOpaqueDarkAndAMultipleOfSixteen() throws Exception {
         for (String name : new String[] {"multiverse_weave", "sigil_tiles", "grimoire_pages"}) {
-            File f = file("nusmp:textures/gui/advancements/" + name + ".png");
+            File f = file("anime_multiverse:textures/gui/advancements/" + name + ".png");
             assertTrue(f.isFile(), name + " missing");
             BufferedImage img = ImageIO.read(f);
             assertNotNull(img, name + " unreadable");
@@ -61,7 +61,7 @@ class AdvancementBackgroundTest {
 
     @Test
     void theOldAltarTileIsKeptForTheAltarBlock() {
-        assertTrue(file("nusmp:textures/block/grimoire_altar_top.png").isFile(), "rule 2: the old texture stays");
+        assertTrue(file("anime_multiverse:textures/block/grimoire_altar_top.png").isFile(), "rule 2: the old texture stays");
         assertTrue(Files.exists(ASSETS.resolve("models/block/grimoire_altar.json")));
     }
 

@@ -1,6 +1,6 @@
 """God melee (a), items 1 to 4: Staff of the Magi, Wizard King's Vow, Wand of the Wisdom King, Hammer of Thunderbolts.
 
-Each item = `extras` (new parts, added to the old builder's mesh before the UVs), `post` (painters run on the finished layout) and `SPEC` (assets/nusmp/visual_upgrade/<id>.json).
+Each item = `extras` (new parts, added to the old builder's mesh before the UVs), `post` (painters run on the finished layout) and `SPEC` (assets/anime_multiverse/visual_upgrade/<id>.json).
 Units: centimetres, y along the weapon, the edge toward -x, the flat toward +z (docs/weapon_scale_orientation.md).
 """
 import math
@@ -140,5 +140,5 @@ class Staff:
                                 {"t": "arcs", "at": "caster", "n": 6, "r": 9.0, "h": 12.0, "rgb": [235, 215, 255], "dur": 30},
                                 {"t": "flash", "at": "caster", "size": 6.0, "rgb": [255, 230, 190], "dur": 8}]),
         ],
-        sound="nusmp:item.upgrade.staff_of_the_magi.hum",
+        sound="anime_multiverse:item.upgrade.staff_of_the_magi.hum",
         note="the great crystal, the armillary and the shards come from the lore text: a staff that takes magic in and turns it back")

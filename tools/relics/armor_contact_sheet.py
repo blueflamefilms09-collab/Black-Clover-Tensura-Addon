@@ -76,7 +76,7 @@ def curios_sheet():
 
 def relics_sheet():
     consts = {}
-    files = glob.glob(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "**", "*.java"), recursive=True)
+    files = glob.glob(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "**", "*.java"), recursive=True)
     for f in files:
         for m in re.finditer(r'\b(ID_\w+)\s*=\s*"([a-z0-9_]+)"', open(f, encoding="utf8").read()):
             consts[m.group(1)] = m.group(2)

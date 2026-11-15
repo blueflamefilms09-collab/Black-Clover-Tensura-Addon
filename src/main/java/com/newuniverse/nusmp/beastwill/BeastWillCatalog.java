@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the set of wills the server loaded from {@code data/nusmp/beast_will} (3.45.0), swapped in one step at every data reload so a reader sees the old set or the new one, never a mixture. Read by the
+ * Why: the set of wills the server loaded from {@code data/anime_multiverse/beast_will} (3.45.0), swapped in one step at every data reload so a reader sees the old set or the new one, never a mixture. Read by the
  * manager, the drops and the commands; the loader ({@link BeastWillLoader}) is the only writer.
  */
 public final class BeastWillCatalog {

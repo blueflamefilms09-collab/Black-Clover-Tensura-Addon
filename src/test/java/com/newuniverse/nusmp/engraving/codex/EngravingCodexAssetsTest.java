@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The item's assets and data: the 3D book model (the grimoire geometry with its own look), the sprite icon, the recipe, the lang text and the GUI-size entry. */
 class EngravingCodexAssetsTest {
     private static final File RES = new File("src/main/resources");
-    private static final File TEX = new File(RES, "assets/nusmp/textures/item/grimoire_book");
+    private static final File TEX = new File(RES, "assets/anime_multiverse/textures/item/grimoire_book");
 
     @Test
     void theLookIsAnEntryOfTheGrimoireCoreWithItsOwnTextures() {
@@ -54,7 +54,7 @@ class EngravingCodexAssetsTest {
         BufferedImage art = ImageIO.read(new File(TEX, "cover_art_engraving.png"));
         assertEquals(64, art.getWidth());
         assertEquals(80, art.getHeight());
-        BufferedImage icon = ImageIO.read(new File(RES, "assets/nusmp/textures/item/engraving_codex.png"));
+        BufferedImage icon = ImageIO.read(new File(RES, "assets/anime_multiverse/textures/item/engraving_codex.png"));
         assertEquals(16, icon.getWidth());
         assertEquals(16, icon.getHeight());
         int opaque = 0;
@@ -64,22 +64,22 @@ class EngravingCodexAssetsTest {
 
     @Test
     void theModelIsTheGrimoireGeometryInHandAndTheSpriteIsTheFlatVariant() throws Exception {
-        JsonObject model = JsonParser.parseString(Files.readString(new File(RES, "assets/nusmp/models/item/engraving_codex.json").toPath())).getAsJsonObject();
-        assertEquals("nusmp:grimoire", model.get("loader").getAsString());
+        JsonObject model = JsonParser.parseString(Files.readString(new File(RES, "assets/anime_multiverse/models/item/engraving_codex.json").toPath())).getAsJsonObject();
+        assertEquals("anime_multiverse:grimoire", model.get("loader").getAsString());
         JsonObject display = model.getAsJsonObject("display");
         for (String k : new String[]{"gui", "ground", "fixed", "head", "thirdperson_righthand", "thirdperson_lefthand", "firstperson_righthand", "firstperson_lefthand"})
             assertTrue(display.has(k), "display " + k);
-        JsonObject icon = JsonParser.parseString(Files.readString(new File(RES, "assets/nusmp/models/item/engraving_codex_icon.json").toPath())).getAsJsonObject();
-        assertEquals("nusmp:item/engraving_codex", icon.getAsJsonObject("textures").get("layer0").getAsString());
+        JsonObject icon = JsonParser.parseString(Files.readString(new File(RES, "assets/anime_multiverse/models/item/engraving_codex_icon.json").toPath())).getAsJsonObject();
+        assertEquals("anime_multiverse:item/engraving_codex", icon.getAsJsonObject("textures").get("layer0").getAsString());
         String baked = Files.readString(new File("src/main/java/com/newuniverse/nusmp/client/grimoire/GrimoireBakedModel.java").toPath());
         assertTrue(baked.contains("EngravingCodexItem") && baked.contains("EngravingCodexLook.LOOK"), "the grimoire model resolves the codex's fixed look");
     }
 
     @Test
     void theRecipeCraftsTheCodexFromABookAmethystAndInk() throws Exception {
-        JsonObject r = JsonParser.parseString(Files.readString(new File(RES, "data/nusmp/recipe/engraving_codex.json").toPath())).getAsJsonObject();
+        JsonObject r = JsonParser.parseString(Files.readString(new File(RES, "data/anime_multiverse/recipe/engraving_codex.json").toPath())).getAsJsonObject();
         assertEquals("minecraft:crafting_shaped", r.get("type").getAsString());
-        assertEquals("nusmp:engraving_codex", r.getAsJsonObject("result").get("id").getAsString());
+        assertEquals("anime_multiverse:engraving_codex", r.getAsJsonObject("result").get("id").getAsString());
         JsonObject key = r.getAsJsonObject("key");
         assertEquals("minecraft:book", key.getAsJsonObject("B").get("item").getAsString());
         assertEquals("minecraft:amethyst_shard", key.getAsJsonObject("A").get("item").getAsString());
@@ -99,10 +99,10 @@ class EngravingCodexAssetsTest {
 
     @Test
     void theItemCommandAndTheSelfTestAreWired() throws Exception {
-        String nusmp = Files.readString(new File("src/main/java/com/newuniverse/nusmp/NUSMP.java").toPath());
-        assertTrue(nusmp.contains("EngravingCodexItems.init()"), "the item is registered before the item register");
-        assertTrue(nusmp.indexOf("EngravingCodexItems.init()") < nusmp.indexOf("NUItems.ITEMS.register("), "init runs before NUItems.ITEMS.register");
-        assertTrue(nusmp.contains("EngravingCodexSelfTests.register()") && nusmp.contains("EngravingCodexClient.init(modEventBus)"));
+        String anime_multiverse = Files.readString(new File("src/main/java/com/newuniverse/nusmp/NUSMP.java").toPath());
+        assertTrue(anime_multiverse.contains("EngravingCodexItems.init()"), "the item is registered before the item register");
+        assertTrue(anime_multiverse.indexOf("EngravingCodexItems.init()") < anime_multiverse.indexOf("NUItems.ITEMS.register("), "init runs before NUItems.ITEMS.register");
+        assertTrue(anime_multiverse.contains("EngravingCodexSelfTests.register()") && anime_multiverse.contains("EngravingCodexClient.init(modEventBus)"));
         String tab = Files.readString(new File("src/main/java/com/newuniverse/nusmp/NUCreativeTab.java").toPath());
         assertTrue(tab.contains("EngravingCodexItems.codexStack()"), "creative tab entry");
         String cmds = Files.readString(new File("src/main/java/com/newuniverse/nusmp/multiverse/MultiverseCommands.java").toPath());

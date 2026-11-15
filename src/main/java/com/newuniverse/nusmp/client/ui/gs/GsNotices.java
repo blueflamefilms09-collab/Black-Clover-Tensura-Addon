@@ -35,7 +35,7 @@ public final class GsNotices {
     /** Mod bus + game bus hooks. Called once from the client section of the mod constructor (through UiThemeClient). */
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterGuiLayersEvent e) ->
-                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "gs_notices"), GsNotices::render));
+                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "gs_notices"), GsNotices::render));
         NeoForge.EVENT_BUS.addListener(GsNotices::onChat);
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> { if (QUEUE.empty()) return; QUEUE.update(UiTheme.realNow()); });
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
@@ -65,7 +65,7 @@ public final class GsNotices {
     /** A grimoire page opened through mastery (called by the page-unlock tracker, client side). */
     public static void pageOpened(String id, String name) {
         if (!on() || name == null || name.isEmpty()) return;
-        offer("nusmp.ui.notice.page:" + id, Component.translatableWithFallback("nusmp.ui.notice.page_open", "A grimoire page opened: %s", name).getString(), GsNoticeQueue.Kind.OK);
+        offer("anime_multiverse.ui.notice.page:" + id, Component.translatableWithFallback("anime_multiverse.ui.notice.page_open", "A grimoire page opened: %s", name).getString(), GsNoticeQueue.Kind.OK);
     }
 
     /** Offers a notice to the bounded queue; false when refused. */
@@ -127,7 +127,7 @@ public final class GsNotices {
             var split = font.getSplitter().splitLines(n.text, CARD_W - 16, net.minecraft.network.chat.Style.EMPTY);
             n.lines[0] = split.isEmpty() ? "" : split.get(0).getString();
             n.lines[1] = split.size() > 1 ? split.get(1).getString() : "";
-            n.head = Component.translatableWithFallback("nusmp.ui.notice.head", "[Notice... Great Sage has recorded]").getString();
+            n.head = Component.translatableWithFallback("anime_multiverse.ui.notice.head", "[Notice... Great Sage has recorded]").getString();
         }
         int lines = n.lines[1].isEmpty() ? 1 : 2;
         int h = 6 + LINE_H + lines * LINE_H;

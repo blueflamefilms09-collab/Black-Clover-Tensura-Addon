@@ -1,12 +1,12 @@
 """Draws the Jibril skill icon (32x32): white-gold wings, a halo and the scales of law on a deep blue disc with a gold rim.
-Original art, drawn from scratch with Pillow. Run: python tools/gen_jibril_icon.py -> src/main/resources/assets/nusmp/textures/skill/veldanava/jibril.png
+Original art, drawn from scratch with Pillow. Run: python tools/gen_jibril_icon.py -> src/main/resources/assets/anime_multiverse/textures/skill/veldanava/jibril.png
 (Same family as tools/gen_israfil_icon.py and tools/gen_sandalphon_icon.py.)"""
 import math
 import os
 from PIL import Image, ImageDraw
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "veldanava")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "veldanava")
 S = 32
 
 GOLD = (255, 216, 122, 255)

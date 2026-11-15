@@ -76,7 +76,7 @@ public final class RelicTooltip {
         } catch (RuntimeException | LinkageError failed) {                                       // never drop the tooltip: the name and the plain grade lines stay
             if (!warned) {
                 warned = true;
-                com.mojang.logging.LogUtils.getLogger().error("[nusmp] the relic tooltip could not be built; showing the plain lines", failed);
+                com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] the relic tooltip could not be built; showing the plain lines", failed);
             }
             try {
                 ItemStack stack = e.getItemStack();
@@ -202,7 +202,7 @@ public final class RelicTooltip {
                 }
                 if (anime) g.fill(0, LINE - 1, Math.round(l.width() / l.scale()), LINE, UiMath.withAlpha(color(d.def(), d.stack(), GRADE), 0.45f));      // a hairline under the grade row
                 if (l.pageCount() > 1) {
-                    String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
+                    String foot = anime ? UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.relic.pages", RelicTooltip.page + 1, l.pageCount()))
                             : RelicTooltipLayout.footer(RelicTooltip.page, l.pageCount()) + "  (mouse wheel)";
                     g.drawString(font, foot, 0, l.pageRows() * LINE, anime ? UiTheme.SAGE_HEAD : 0xFF9A9AA8, true);
                 }
@@ -239,7 +239,7 @@ public final class RelicTooltip {
 
     // ---------------------------------------------------------------- what it says
     private static String text(RelicDef def, String suffix, String fallback) {
-        String key = "item.nusmp." + def.id() + suffix;
+        String key = "item.anime_multiverse." + def.id() + suffix;
         Language lang = Language.getInstance();
         return lang.has(key) ? lang.getOrDefault(key) : fallback;
     }
@@ -251,9 +251,9 @@ public final class RelicTooltip {
         List<Para> out = new ArrayList<>();
         Grade g = Tiers.effectiveGrade(stack, def);                                           // 1.29.0: the effective grade
         out.add(new Para(g.stars() + "  " + g.label() + (def.isVessel() ? "  (can hold a Djinn)" : ""), GRADE));
-        if (g != def.grade()) out.add(new Para(I18n.get("nusmp.tier.tooltip.raised", def.grade().label(), Tiers.steps(stack, def)), PASSIVE));
+        if (g != def.grade()) out.add(new Para(I18n.get("anime_multiverse.tier.tooltip.raised", def.grade().label(), Tiers.steps(stack, def)), PASSIVE));
         out.add(new Para("Slot: " + def.slot().label() + (def.slot().isCurio() ? " (Curios)" : com.newuniverse.nusmp.relics.HeadFeetCurios.redirectSlot(def) != null ? " (Curios: " + (def.slot() == com.newuniverse.nusmp.relics.RelicSlot.HEAD ? "Head" : "Feet") + " Relic slot)" : ""), SLOT));      // 3.12.0: head and feet relics are worn in their Curios slot
-        if (def.isPairHalf()) out.add(new Para(I18n.get("tooltip.nusmp.relic.pair_needs", I18n.get("item.nusmp." + def.pairPartnerId())), HINT_ATTUNE));      // 1.29.0: "Pair: needs <the other half>"
+        if (def.isPairHalf()) out.add(new Para(I18n.get("tooltip.anime_multiverse.relic.pair_needs", I18n.get("item.anime_multiverse." + def.pairPartnerId())), HINT_ATTUNE));      // 1.29.0: "Pair: needs <the other half>"
         boolean mine = mc.player != null && Attune.isMine(stack, mc.player);
         if (def.needsAttunement()) {
             UUID owner = Attune.owner(stack);

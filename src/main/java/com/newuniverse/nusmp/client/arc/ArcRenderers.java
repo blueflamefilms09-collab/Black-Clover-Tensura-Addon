@@ -21,7 +21,7 @@ public final class ArcRenderers {
                 EntityType<? extends ArcBoss> type = b.type().get();
                 e.registerEntityRenderer(type, ctx -> new ArcBossRenderer(ctx, b.look()));
             } catch (RuntimeException ex) {
-                LogUtils.getLogger().error("[nusmp] the renderer of the arc boss {} could not be registered: {}", b.id(), ex.toString());
+                LogUtils.getLogger().error("[anime_multiverse] the renderer of the arc boss {} could not be registered: {}", b.id(), ex.toString());
             }
         }
     }

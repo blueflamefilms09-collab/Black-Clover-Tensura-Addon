@@ -8,7 +8,7 @@
     save_particle("song_demo", c.finish(blur=0.8))
 
 Why: the VFX layers of the five magics draw white-and-alpha sprites (the vertex colour tints them), as tools/gen_time_vfx_textures.py does. Everything is
-deterministic (seeded) so a texture can be regenerated. Files go to src/main/resources/assets/nusmp/textures/particle/. Run python as `python3 -B`.
+deterministic (seeded) so a texture can be regenerated. Files go to src/main/resources/assets/anime_multiverse/textures/particle/. Run python as `python3 -B`.
 """
 import math
 import os
@@ -19,7 +19,7 @@ sys.dont_write_bytecode = True
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

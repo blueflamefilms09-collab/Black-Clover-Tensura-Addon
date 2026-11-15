@@ -23,7 +23,7 @@ import net.minecraft.world.inventory.Slot;
  */
 public class AvatarInventoryScreen extends AbstractContainerScreen<AvatarInventoryMenu> {
     private static final int BG = 0xF0101016, BORDER = 0xFF3B3B4C, GOLD = 0xFFE8C468, SLOT = 0xFF1C1C26, SLOT_EDGE = 0xFF55556A, DIM = 0xFF9A9AAE;
-    private static final String[] BUTTON_KEYS = {"nusmp.avatar.inv.follow", "nusmp.avatar.inv.stay", "nusmp.avatar.inv.delve", "nusmp.avatar.inv.share"};
+    private static final String[] BUTTON_KEYS = {"anime_multiverse.avatar.inv.follow", "anime_multiverse.avatar.inv.stay", "anime_multiverse.avatar.inv.delve", "anime_multiverse.avatar.inv.share"};
 
     private final ThemedButton[] buttons = new ThemedButton[InventoryLayout.BUTTONS];
 
@@ -106,7 +106,7 @@ public class AvatarInventoryScreen extends AbstractContainerScreen<AvatarInvento
         boolean anime = UiTheme.anime();
         g.drawString(font, title, titleLabelX, titleLabelY, anime ? UiTheme.GOLD : GOLD, false);
         g.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, anime ? UiTheme.TEXT_DIM : DIM, false);
-        g.drawString(font, Component.translatable("nusmp.avatar.inv.party", menu.partySize()), 90, 79, anime ? UiTheme.TEXT_DIM : DIM, false);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.inv.party", menu.partySize()), 90, 79, anime ? UiTheme.TEXT_DIM : DIM, false);
     }
 
     @Override

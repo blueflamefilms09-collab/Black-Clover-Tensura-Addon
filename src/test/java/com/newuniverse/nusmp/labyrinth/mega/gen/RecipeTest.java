@@ -15,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Why: the Sector Recipe is data the owner will edit, and the two ways that goes wrong silently are a typo (the key is ignored and the default stays) and
  * a default that drifts away from the shipped file. So unknown keys are reported, values are clamped to sane ranges, and the shipped
- * {@code data/nusmp/mega/recipe/default.json} is read with the same reader the game uses and compared field by field with the defaults compiled into
+ * {@code data/anime_multiverse/mega/recipe/default.json} is read with the same reader the game uses and compared field by field with the defaults compiled into
  * {@link Recipe}: the file is documentation that cannot lie.
  */
 class RecipeTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/mega/recipe/default.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/mega/recipe/default.json");
 
     @Test
     void defaultsAreTheDesignDocumentsRecipe() {
@@ -36,20 +36,20 @@ class RecipeTest {
         assertEquals(1, r.max(RoomKind.SET_PIECE));
         assertEquals(0, r.min(RoomKind.HALL));
         assertEquals(Integer.MAX_VALUE, r.max(RoomKind.HALL));
-        assertEquals(0, r.shapeMax("nusmp:mega/set/anything"));
+        assertEquals(0, r.shapeMax("anime_multiverse:mega/set/anything"));
     }
 
     @Test
     void theRoomBuildersNotesAreInTheDefaults() {
         Recipe r = new Recipe();
         for (RoomKind k : new RoomKind[] {RoomKind.TRIAL, RoomKind.TRAP, RoomKind.PUZZLE}) assertEquals(2, r.max(k), "about one per sector, never more than two: " + k);
-        assertEquals(1, r.shapeMax("nusmp:mega/hall/great_hall"));
-        assertEquals(1, r.shapeMax("nusmp:mega/set/cathedral_rotunda"));
-        assertEquals(1, r.shapeMax("nusmp:mega/trap/dark_room"));
-        assertEquals(0, r.shapeMax("nusmp:mega/hall/crypt_a"), "an ordinary hall may repeat");
-        Recipe own = Recipe.fromMap(Map.of("shapeMax", Map.of("nusmp:mega/hall/great_hall", 0L)));
-        assertEquals(0, own.shapeMax("nusmp:mega/hall/great_hall"), "a data pack can lift a default limit with 0");
-        assertEquals(1, own.shapeMax("nusmp:mega/set/cathedral_rotunda"), "and only that one");
+        assertEquals(1, r.shapeMax("anime_multiverse:mega/hall/great_hall"));
+        assertEquals(1, r.shapeMax("anime_multiverse:mega/set/cathedral_rotunda"));
+        assertEquals(1, r.shapeMax("anime_multiverse:mega/trap/dark_room"));
+        assertEquals(0, r.shapeMax("anime_multiverse:mega/hall/crypt_a"), "an ordinary hall may repeat");
+        Recipe own = Recipe.fromMap(Map.of("shapeMax", Map.of("anime_multiverse:mega/hall/great_hall", 0L)));
+        assertEquals(0, own.shapeMax("anime_multiverse:mega/hall/great_hall"), "a data pack can lift a default limit with 0");
+        assertEquals(1, own.shapeMax("anime_multiverse:mega/set/cathedral_rotunda"), "and only that one");
     }
 
     @Test
@@ -60,7 +60,7 @@ class RecipeTest {
         m.put("requireMarkers", Boolean.FALSE);
         m.put("min", Map.of("trial", 3L));
         m.put("max", Map.of("set", 0L));
-        m.put("shapeMax", Map.of("nusmp:mega/set/rotunda", 1L));
+        m.put("shapeMax", Map.of("anime_multiverse:mega/set/rotunda", 1L));
         m.put("minRoom", 5L);                                   // a typo
         m.put("_comment", "ignored");
         m.put("min2", Map.of());
@@ -71,7 +71,7 @@ class RecipeTest {
         assertEquals(3, r.min(RoomKind.TRIAL));
         assertEquals(2, r.min(RoomKind.TREASURE), "an unmentioned kind keeps its default");
         assertEquals(0, r.max(RoomKind.SET_PIECE));
-        assertEquals(1, r.shapeMax("nusmp:mega/set/rotunda"));
+        assertEquals(1, r.shapeMax("anime_multiverse:mega/set/rotunda"));
         assertTrue(r.unknownKeys().contains("minRoom"), "a typo is reported: " + r.unknownKeys());
         assertTrue(r.unknownKeys().contains("min2"));
         assertFalse(r.unknownKeys().contains("_comment"), "underscore keys are comments");
@@ -132,7 +132,7 @@ class RecipeTest {
             assertEquals(code.min(k), file.min(k), "min " + k);
             assertEquals(code.max(k), file.max(k), "max " + k);
         }
-        for (String id : new String[] {"nusmp:mega/hall/great_hall", "nusmp:mega/set/cathedral_rotunda", "nusmp:mega/trap/dark_room", "nusmp:mega/hall/crypt_a"}) {
+        for (String id : new String[] {"anime_multiverse:mega/hall/great_hall", "anime_multiverse:mega/set/cathedral_rotunda", "anime_multiverse:mega/trap/dark_room", "anime_multiverse:mega/hall/crypt_a"}) {
             assertEquals(code.shapeMax(id), file.shapeMax(id), "shapeMax " + id);
         }
     }

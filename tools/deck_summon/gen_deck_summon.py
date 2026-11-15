@@ -1,6 +1,6 @@
 """gen_deck_summon: the texture atlas of the Deck of Many Things card summon (client effect `DeckSummonLayer`, release 1.110.0).
 
-    python3 -B tools/deck_summon/gen_deck_summon.py        writes src/main/resources/assets/nusmp/textures/particle/deck_summon.png (512 x 256, 8 x 4 cells of 64)
+    python3 -B tools/deck_summon/gen_deck_summon.py        writes src/main/resources/assets/anime_multiverse/textures/particle/deck_summon.png (512 x 256, 8 x 4 cells of 64)
 
 Cells: 0..21 the faces of the 22 cards (colour and motif from the card's alignment and name, never a picture of the card), 22 the card back, 23 the gold rim, 24 a light streak,
 25 a shockwave ring, 26 the column of light. The effect cells are white with their alpha as the light (the vertex colour tints them).
@@ -11,7 +11,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle", "deck_summon.png")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle", "deck_summon.png")
 CARDS = [("Balance", 1), ("Comet", 0), ("The Donjon", 2), ("Euryale", 2), ("The Fates", 0), ("Flames", 2), ("The Fool", 2), ("Gem", 0), ("Idiot", 2), ("Jester", 0), ("Key", 0),
          ("Knight", 0), ("Moon", 0), ("Rogue", 2), ("Ruin", 2), ("Skull", 2), ("Star", 0), ("Sun", 0), ("Talons", 2), ("Throne", 0), ("Vizier", 0), ("The Void", 2)]
 BASE = {0: ((18, 52, 34), (255, 216, 112), (120, 240, 150)), 1: ((14, 42, 58), (190, 240, 255), (110, 216, 255)), 2: ((46, 12, 30), (170, 90, 230), (232, 60, 100))}

@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_seal_secre_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/secre_*.png (white / grey with alpha, tinted by the vertex colour).
+Output: src/main/resources/assets/anime_multiverse/textures/particle/secre_*.png (white / grey with alpha, tinted by the vertex colour).
 Look reference: docs/attributes/art_reference/seal_eternal_prison.webp (clear blue glass cube, thin bright edges, white speed lines),
 seal_inverse_release.webp (a white point with blocky right-angle lightning lines), seal_basic.webp (swirling blue ribbons), seal_circles_pack.jpg.
   secre_hex     256  hexagram circle: square-cut rim, nested squares, hexagram, corner nodes

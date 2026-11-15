@@ -106,7 +106,7 @@ def expand(ids, exact=False):
 
 
 def read_looks():
-    """The look table assets/nusmp/playermodel/looks.json as an ordered dict (looks only)."""
+    """The look table assets/anime_multiverse/playermodel/looks.json as an ordered dict (looks only)."""
     return json.load(open(LOOKS_JSON))["looks"]
 
 

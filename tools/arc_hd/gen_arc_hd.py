@@ -9,7 +9,7 @@ For each look name (a base id also does its `_form2`; `--exact` does only the na
   2. else the BASELINE: the 64x64 generator's result (tools/playermodel/gen_skins.paint_character, scalp painted for the hair of hair_map.py) through the generic HD bridge of
      tools/tier_bosses/hd (smooth upscale, cloth gradients, outlines, metal bevel) with materials named from the character's sheet.
   `--size 128` averages the 256 result down by 2; `--size 64` writes the OLD 64x64 skin and its classic hair (the generator keeps the old look reproducible, CLAUDE.md rule 2).
-It writes assets/nusmp/textures/entity/playermodel/<name>.png (+ _glow.png, the same size) and the look fragment tools/arc_hd/looks/<name>.json (the look entry of looks.json for this name:
+It writes assets/anime_multiverse/textures/entity/playermodel/<name>.png (+ _glow.png, the same size) and the look fragment tools/arc_hd/looks/<name>.json (the look entry of looks.json for this name:
 skin, slim, scale, holds, glow, hair, hair_color, extras). It never touches looks.json or any other character: run tools/arc_hd/merge_looks.py afterwards.
 Needs numpy and Pillow. About 1.5 s per character.
 """

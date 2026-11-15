@@ -44,7 +44,7 @@ public final class SpawnFilterSelfTests {
 
     private static SelfTests.Result ok(String s) { return SelfTests.Result.ok(s); }
 
-    private static TagKey<EntityType<?>> tag(String path) { return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", path)); }
+    private static TagKey<EntityType<?>> tag(String path) { return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", path)); }
 
     // ================================================================ gorgon
     private static SelfTests.Result gorgon(MinecraftServer server) {
@@ -65,7 +65,7 @@ public final class SpawnFilterSelfTests {
             if (cowJoin.isCanceled()) return fail("the join net refused a cow");
             if (g.isEmpty()) return ok("Ice and Fire is not installed here, so there is no Gorgon to spawn; the live blacklist names iceandfire:gorgon, a cow passes the join net");
             EntityType<?> t = g.get();
-            if (!t.is(SpawnFilterEvents.BANNED)) return fail("the Gorgon is not in the nusmp:dungeon/banned tag");
+            if (!t.is(SpawnFilterEvents.BANNED)) return fail("the Gorgon is not in the anime_multiverse:dungeon/banned tag");
             if (t.is(Wildlife.TIER3) || t.is(Wildlife.TIER2) || t.is(Wildlife.TIER1) || t.is(Wildlife.LEGENDARY)) return fail("the Gorgon is still in a dungeon tier tag");
             if (t.is(tag("mega/beast"))) return fail("the Gorgon is still in the mega beast faction tag");
             gorgon = t.create(mega);

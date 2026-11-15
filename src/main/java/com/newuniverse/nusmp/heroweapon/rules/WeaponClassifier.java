@@ -21,7 +21,7 @@ public final class WeaponClassifier {
 
     /**
      * What the game side could read from a stack: a class the item declares ({@code declared}, null for none), flags for the tag and class tests
-     * ({@link #ALLOWED}: the stack is in {@code #nusmp:hero_allowed}; {@link #SWORD} ... {@link #BLUNT}: it is that kind of item by class, tag or use animation;
+     * ({@link #ALLOWED}: the stack is in {@code #anime_multiverse:hero_allowed}; {@link #SWORD} ... {@link #BLUNT}: it is that kind of item by class, tag or use animation;
      * {@link #TOOL}: a pickaxe, shovel or hoe), and {@code attackBonus}, the sum of its attack-damage modifiers in the main hand.
      */
     public record Facts(WeaponClass declared, int flags, double attackBonus) {

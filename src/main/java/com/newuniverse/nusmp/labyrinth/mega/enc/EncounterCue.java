@@ -97,7 +97,7 @@ final class EncounterCue {
     private static SoundEvent sound(String id) {
         ResourceLocation rl = ResourceLocation.tryParse(id);
         Optional<SoundEvent> s = rl == null ? Optional.empty() : BuiltInRegistries.SOUND_EVENT.getOptional(rl);
-        if (s.isEmpty() && WARNED.add("sound:" + id)) LOG.warn("[nusmp] An encounter cue names the unknown sound {}", id);
+        if (s.isEmpty() && WARNED.add("sound:" + id)) LOG.warn("[anime_multiverse] An encounter cue names the unknown sound {}", id);
         return s.orElse(null);
     }
 
@@ -105,7 +105,7 @@ final class EncounterCue {
         ResourceLocation rl = ResourceLocation.tryParse(id);
         Object p = rl == null ? null : BuiltInRegistries.PARTICLE_TYPE.getOptional(rl).orElse(null);
         if (p instanceof SimpleParticleType simple) return simple;
-        if (WARNED.add("particle:" + id)) LOG.warn("[nusmp] An encounter cue names the unknown or option-bearing particle {}", id);
+        if (WARNED.add("particle:" + id)) LOG.warn("[anime_multiverse] An encounter cue names the unknown or option-bearing particle {}", id);
         return null;
     }
 }

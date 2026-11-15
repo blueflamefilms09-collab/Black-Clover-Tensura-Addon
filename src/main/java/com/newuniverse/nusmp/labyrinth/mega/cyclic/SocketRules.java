@@ -4,8 +4,8 @@ package com.newuniverse.nusmp.labyrinth.mega.cyclic;
  * Why: this is the socket-matching algorithm in one place, as plain functions, so that the placement step of the generator, the loop pass and the tests all
  * apply the SAME rules. A doorway ("socket") of a piece is a jigsaw block at the centre of a module on a wall; two doorways form a passage when
  * <ol>
- * <li><b>names agree</b>: the target name of each is the name of the other (the vanilla {@code JigsawBlock.canAttach} rule; {@code nusmp:mega_door} meets
- *     {@code nusmp:mega_door}, and the boss-chain names meet only themselves, which is how a loop can never open into the vault);</li>
+ * <li><b>names agree</b>: the target name of each is the name of the other (the vanilla {@code JigsawBlock.canAttach} rule; {@code anime_multiverse:mega_door} meets
+ *     {@code anime_multiverse:mega_door}, and the boss-chain names meet only themselves, which is how a loop can never open into the vault);</li>
  * <li><b>they face each other</b>: A points east and B points west;</li>
  * <li><b>they line up</b>: the module in front of A is the module B stands in, and the module in front of B is the one A stands in. Because every piece is
  *     on the 9-block grid and every doorway is at a module centre, the second condition is a comparison of two integer cells, not of blocks.</li>

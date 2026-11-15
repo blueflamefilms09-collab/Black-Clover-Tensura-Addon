@@ -21,8 +21,8 @@ public final class DiscoveryDraw {
     }
 
     /** The "undiscovered" hint line (translated). */
-    public static String hint() { return I18n.get("nusmp.discovery.hint"); }
+    public static String hint() { return I18n.get("anime_multiverse.discovery.hint"); }
 
     /** The "Undiscovered" caption (translated). */
-    public static String caption() { return I18n.get("nusmp.discovery.undiscovered"); }
+    public static String caption() { return I18n.get("anime_multiverse.discovery.undiscovered"); }
 }

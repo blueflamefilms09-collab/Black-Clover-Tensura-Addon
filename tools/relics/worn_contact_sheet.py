@@ -27,7 +27,7 @@ GRADE = {"NORMAL": 1, "SPECIAL": 2, "RARE": 3, "UNIQUE": 4, "LEGEND": 5, "GOD": 
 def relic_defs():
     """(id, name, grade, slot, look or None, (main, trim, glow) or None) of every RelicDef.of(...) with a body slot, from the Java sources."""
     rows = {}
-    for f in glob.glob(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "**", "*.java"), recursive=True):
+    for f in glob.glob(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "**", "*.java"), recursive=True):
         s = open(f, encoding="utf8").read()
         for m in re.finditer(r'RelicDef\.of\(\s*"([a-z0-9_]+)"\s*,\s*"([^"]*)"\s*,\s*Grade\.(\w+)\s*,\s*RelicSlot\.(\w+)\s*\)', s):
             end = s.find("RelicDef.of(", m.end())

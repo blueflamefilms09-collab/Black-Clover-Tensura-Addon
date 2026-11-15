@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_memory_rebuild_geo.py        # writes every model, animation and texture, runs tools/geo_check.py
 
-Models (assets/nusmp/geo/entity/memory_<name>.geo.json, animations/entity/..., textures/entity/memory_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/memory_<name>.geo.json, animations/entity/..., textures/entity/memory_<name>.png + _glow.png):
   armour    (Space.PLAYER, one root bone per piece, drawn piece by piece by client/aura/SongArmourKit with the Djinn equip animation)
             crown (a film-strip band round the head with a camera lens for a third eye and two photo-frame fins), shards (three glass shards turning over the head),
             book (a cuirass of pages bound in gold with a lens-locket), reel (a film reel standing behind the back, turning), film (a strip of film hanging from the reel

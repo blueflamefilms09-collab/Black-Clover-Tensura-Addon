@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "src", "main", "resources")
-ASSETS = os.path.join(RES, "assets", "nusmp")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
 DATA = os.path.join(RES, "data")
 
 
@@ -159,19 +159,19 @@ def main():
     os.makedirs(itex, exist_ok=True)
     for fid in FOODS:
         food_texture(fid).save(os.path.join(itex, fid + ".png"))
-        write_json(os.path.join(ASSETS, "models", "item", fid + ".json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + fid}})
-    # cooking and purifying (data/nusmp/recipe, tags)
+        write_json(os.path.join(ASSETS, "models", "item", fid + ".json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + fid}})
+    # cooking and purifying (data/anime_multiverse/recipe, tags)
     cooked = {"raw_slime_jelly": "candied_slime_jelly", "raw_armor_flank": "grilled_armor_flank", "raw_basilisk_fillet": "roast_basilisk_fillet",
               "raw_direwolf_haunch": "roast_direwolf_haunch", "raw_monster_meat": "seared_monster_meat"}
     for raw_id, meal_id in cooked.items():
         for kind, ticks in (("smelting", 200), ("smoking", 100), ("campfire_cooking", 600)):
-            write_json(os.path.join(DATA, "nusmp", "recipe", "%s_%s.json" % (meal_id, kind)),
-                       {"type": "minecraft:" + kind, "category": "food", "ingredient": {"item": "nusmp:" + raw_id}, "result": {"id": "nusmp:" + meal_id},
+            write_json(os.path.join(DATA, "anime_multiverse", "recipe", "%s_%s.json" % (meal_id, kind)),
+                       {"type": "minecraft:" + kind, "category": "food", "ingredient": {"item": "anime_multiverse:" + raw_id}, "result": {"id": "anime_multiverse:" + meal_id},
                         "experience": 0.35, "cookingtime": ticks})
-        write_json(os.path.join(DATA, "nusmp", "recipe", "purify_%s.json" % raw_id),
-                   {"type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": [{"item": "nusmp:" + raw_id}, {"tag": "nusmp:purifiers"}],
-                    "result": {"id": "nusmp:purified_monster_meat", "count": 1}})
-    write_json(os.path.join(DATA, "nusmp", "tags", "item", "purifiers.json"),
+        write_json(os.path.join(DATA, "anime_multiverse", "recipe", "purify_%s.json" % raw_id),
+                   {"type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": [{"item": "anime_multiverse:" + raw_id}, {"tag": "anime_multiverse:purifiers"}],
+                    "result": {"id": "anime_multiverse:purified_monster_meat", "count": 1}})
+    write_json(os.path.join(DATA, "anime_multiverse", "tags", "item", "purifiers.json"),
                {"replace": False, "values": [{"id": "tensura:holy_water", "required": False}, "minecraft:honey_bottle"]})
     eff = os.path.join(ASSETS, "textures", "mob_effect")
     os.makedirs(eff, exist_ok=True)
@@ -184,14 +184,14 @@ def main():
     with open(lang_path) as f:
         lang = json.load(f)
     lang.update({
-        "entity.nusmp.dungeon_slime": "Dungeon Slime", "entity.nusmp.living_armor": "Living Armor", "entity.nusmp.dungeon_direwolf": "Direwolf",
-        "entity.nusmp.basilisk": "Basilisk", "item.nusmp.butcher_cleaver": "Butcher Cleaver",
-        "item.nusmp.raw_slime_jelly": "Raw Slime Jelly", "item.nusmp.raw_armor_flank": "Raw Armor Flank", "item.nusmp.raw_basilisk_fillet": "Raw Basilisk Fillet",
-        "item.nusmp.raw_direwolf_haunch": "Raw Direwolf Haunch", "item.nusmp.raw_monster_meat": "Raw Monster Meat", "item.nusmp.ruined_meat": "Ruined Meat",
-        "item.nusmp.purified_monster_meat": "Purified Monster Meat", "item.nusmp.candied_slime_jelly": "Candied Slime Jelly",
-        "item.nusmp.grilled_armor_flank": "Grilled Armor Flank", "item.nusmp.roast_basilisk_fillet": "Roast Basilisk Fillet",
-        "item.nusmp.roast_direwolf_haunch": "Roast Direwolf Haunch", "item.nusmp.seared_monster_meat": "Seared Monster Meat",
-        "effect.nusmp.suffocation": "Suffocation", "effect.nusmp.magicule_poisoning": "Magicule Poisoning", "effect.nusmp.magicule_sickness": "Magicule Sickness",
+        "entity.anime_multiverse.dungeon_slime": "Dungeon Slime", "entity.anime_multiverse.living_armor": "Living Armor", "entity.anime_multiverse.dungeon_direwolf": "Direwolf",
+        "entity.anime_multiverse.basilisk": "Basilisk", "item.anime_multiverse.butcher_cleaver": "Butcher Cleaver",
+        "item.anime_multiverse.raw_slime_jelly": "Raw Slime Jelly", "item.anime_multiverse.raw_armor_flank": "Raw Armor Flank", "item.anime_multiverse.raw_basilisk_fillet": "Raw Basilisk Fillet",
+        "item.anime_multiverse.raw_direwolf_haunch": "Raw Direwolf Haunch", "item.anime_multiverse.raw_monster_meat": "Raw Monster Meat", "item.anime_multiverse.ruined_meat": "Ruined Meat",
+        "item.anime_multiverse.purified_monster_meat": "Purified Monster Meat", "item.anime_multiverse.candied_slime_jelly": "Candied Slime Jelly",
+        "item.anime_multiverse.grilled_armor_flank": "Grilled Armor Flank", "item.anime_multiverse.roast_basilisk_fillet": "Roast Basilisk Fillet",
+        "item.anime_multiverse.roast_direwolf_haunch": "Roast Direwolf Haunch", "item.anime_multiverse.seared_monster_meat": "Seared Monster Meat",
+        "effect.anime_multiverse.suffocation": "Suffocation", "effect.anime_multiverse.magicule_poisoning": "Magicule Poisoning", "effect.anime_multiverse.magicule_sickness": "Magicule Sickness",
     })
     with open(lang_path, "w") as f:
         json.dump(lang, f, indent=2, ensure_ascii=False)

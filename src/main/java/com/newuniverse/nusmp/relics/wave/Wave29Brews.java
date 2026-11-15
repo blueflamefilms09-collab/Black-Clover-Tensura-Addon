@@ -248,7 +248,7 @@ final class Wave29Brews {
     // ================================================================ Spider Brew
     private static final ResourceLocation M_HEALTH = id("health"), M_ARMOR = id("armor"), M_ATTACK = id("attack"), M_JUMP = id("jump"), M_SCALE = id("scale");
 
-    private static ResourceLocation id(String s) { return ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w29_spider_" + s); }
+    private static ResourceLocation id(String s) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w29_spider_" + s); }
 
     /**
      * Spider Brew: for 1d4 "hours" (five minutes each) you are a giant spider in body and keep your own mind: +6 maximum health, +3 armour, +2 attack, a

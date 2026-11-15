@@ -26,7 +26,7 @@ import java.util.UUID;
  * seeing another. Wiring (the lead): {@code modEventBus.addListener(RelicHolderSync::registerPayload)} and {@code RelicHolderSync.register(NeoForge.EVENT_BUS)}.
  */
 public record RelicHolderSync(int entity, int packed) implements CustomPacketPayload {
-    public static final Type<RelicHolderSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_holder"));
+    public static final Type<RelicHolderSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_holder"));
     public static final StreamCodec<FriendlyByteBuf, RelicHolderSync> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeVarInt(p.packed()); },
             buf -> new RelicHolderSync(buf.readVarInt(), buf.readVarInt()));

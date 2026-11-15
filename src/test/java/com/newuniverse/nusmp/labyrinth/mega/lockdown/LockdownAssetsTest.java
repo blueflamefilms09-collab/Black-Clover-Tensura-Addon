@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * doc is missing, and, because the owner banned it outright, when anything in the lockdown package so much as mentions food or exhaustion.
  */
 class LockdownAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp/labyrinth/mega/lockdown");
 
     private static JsonObject json(String path) throws Exception {
@@ -31,11 +31,11 @@ class LockdownAssetsTest {
 
     @Test
     void theBarrierHasItsBlockstateModelItemModelAndAnimatedTexture() throws Exception {
-        assertEquals("nusmp:block/lockdown_barrier", json(ASSETS + "blockstates/lockdown_barrier.json").getAsJsonObject("variants").getAsJsonObject("").get("model").getAsString());
+        assertEquals("anime_multiverse:block/lockdown_barrier", json(ASSETS + "blockstates/lockdown_barrier.json").getAsJsonObject("variants").getAsJsonObject("").get("model").getAsString());
         JsonObject model = json(ASSETS + "models/block/lockdown_barrier.json");
         assertEquals("minecraft:translucent", model.get("render_type").getAsString(), "a sheet of light must be translucent");
-        assertEquals("nusmp:block/lockdown_barrier", model.getAsJsonObject("textures").get("all").getAsString());
-        assertEquals("nusmp:block/lockdown_barrier", json(ASSETS + "models/item/lockdown_barrier.json").get("parent").getAsString());
+        assertEquals("anime_multiverse:block/lockdown_barrier", model.getAsJsonObject("textures").get("all").getAsString());
+        assertEquals("anime_multiverse:block/lockdown_barrier", json(ASSETS + "models/item/lockdown_barrier.json").get("parent").getAsString());
         BufferedImage tex = ImageIO.read(new File(ASSETS + "textures/block/lockdown_barrier.png"));
         assertEquals(16, tex.getWidth());
         assertEquals(64, tex.getHeight(), "four frames of 16 x 16");
@@ -66,7 +66,7 @@ class LockdownAssetsTest {
             assertTrue(frag.has(e.getKey()), "the fragment lacks " + e.getKey());
             assertEquals(e.getValue(), frag.get(e.getKey()).getAsString(), "the text of " + e.getKey() + " drifted");
         }
-        assertTrue(frag.has("block.nusmp.lockdown_barrier"));
+        assertTrue(frag.has("block.anime_multiverse.lockdown_barrier"));
     }
 
     @Test

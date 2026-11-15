@@ -108,7 +108,7 @@ public final class SpiritSpace {
         long now = p.level().getGameTime();
         if (!SpiritSpaceRules.gapOk(now, s.lastMessage, 12)) return;
         s.lastMessage = now;
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_space." + key, text).withStyle(color), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_space." + key, text).withStyle(color), true);
     }
 
     private static void sound(ServerLevel sl, ServerPlayer p, SoundGate.Kind k, Vec3 at, float volume, float pitch) {
@@ -326,7 +326,7 @@ public final class SpiritSpace {
         Vec3 at = p.position();
         Fx.ring(sl, SPACE, at.x, at.y + 0.1, at.z, 0.9, 10);
         sound(sl, p, SoundGate.Kind.PING, at.add(0, 1, 0), 0.8f, 1.3f);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_space.set", "Waypoint %s marked.", n).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_space.set", "Waypoint %s marked.", n).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         return true;
     }
 

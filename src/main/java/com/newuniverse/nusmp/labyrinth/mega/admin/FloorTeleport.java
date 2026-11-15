@@ -288,7 +288,7 @@ public final class FloorTeleport {
             try {
                 o = step(server, p, t);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] /dungeon tp to floor {} failed for {}: {}", t.floor, p.getGameProfile().getName(), e.toString());
+                LOG.warn("[anime_multiverse] /dungeon tp to floor {} failed for {}: {}", t.floor, p.getGameProfile().getName(), e.toString());
                 AdminMsg.tell(p, AdminMsg.red(AdminText.FAILED, e.getClass().getSimpleName()));
                 o = Outcome.FAILED;
             }

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.List;
 
 /**
- * Why: the one new item of the places where characters appear is the Chronicle Sigil ({@code nusmp:chronicle_sigil}), and like the Hourglass of the Final Hour it
+ * Why: the one new item of the places where characters appear is the Chronicle Sigil ({@code anime_multiverse:chronicle_sigil}), and like the Hourglass of the Final Hour it
  * goes on {@code NUItems.ITEMS}, which means it must be declared before that register is handed to the mod bus. Keeping the declaration in its own small class
  * lets {@code ArcWorldSystem.init} touch it (and so run its static initialiser) at a fixed point, and gives the creative tab one list to read. The sigil stacks
  * to one and is Epic, like the hourglass it descends from.
@@ -17,7 +17,7 @@ import java.util.List;
 public final class ArcWorldItems {
     private ArcWorldItems() {}
 
-    /** {@code nusmp:chronicle_sigil}: hold at the Chronicle to be carried to the chosen boss's arena, hold in an arena to go home. */
+    /** {@code anime_multiverse:chronicle_sigil}: hold at the Chronicle to be carried to the chosen boss's arena, hold in an arena to go home. */
     public static final DeferredItem<ChronicleSigilItem> CHRONICLE_SIGIL = NUItems.ITEMS.register("chronicle_sigil",
             () -> new ChronicleSigilItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 

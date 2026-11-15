@@ -73,7 +73,7 @@ class ArcCharterRulesTest {
             assertSame(b, CharterTable.addArc(heath()), "the same character again is harmless");
             assertSame(b, CharterTable.byId("heath_grice"));
             assertSame(b, CharterTable.byId("HEATH_GRICE"));
-            assertSame(b, CharterTable.byEntity("nusmp", "heath_grice"));
+            assertSame(b, CharterTable.byEntity("anime_multiverse", "heath_grice"));
             assertNull(CharterTable.byEntity("minecraft", "heath_grice"), "only this mod's namespace");
             assertNull(CharterTable.byEntity("tensura", "heath_grice"));
             assertSame(b, CharterTable.byItemPath("charter_grimoire_heath_grice"));
@@ -92,6 +92,6 @@ class ArcCharterRulesTest {
         }
         assertEquals(before, CharterTable.ids());
         assertNull(CharterTable.byId("heath_grice"));
-        assertNull(CharterTable.byEntity("nusmp", "heath_grice"));
+        assertNull(CharterTable.byEntity("anime_multiverse", "heath_grice"));
     }
 }

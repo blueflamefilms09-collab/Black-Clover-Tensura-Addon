@@ -30,10 +30,10 @@ public final class CompatCodexItem extends Item {
     /** Same conventions as the grimoire tooltip: gold title line, purple italic lore, dark-grey details. */
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("nusmp.compat.codex.tip.kind").withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("nusmp.compat.codex.tip.kingdom").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("nusmp.compat.codex.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("nusmp.compat.codex.tip.ornament", Component.translatable("nusmp.compat.codex.motif")).withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("nusmp.compat.codex.tip.use").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("anime_multiverse.compat.codex.tip.kind").withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("anime_multiverse.compat.codex.tip.kingdom").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("anime_multiverse.compat.codex.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("anime_multiverse.compat.codex.tip.ornament", Component.translatable("anime_multiverse.compat.codex.motif")).withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("anime_multiverse.compat.codex.tip.use").withStyle(ChatFormatting.GRAY));
     }
 }

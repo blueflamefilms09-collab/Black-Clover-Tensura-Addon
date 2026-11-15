@@ -14,16 +14,16 @@ import org.joml.Vector3f;
  * {@link SpiritBladesFxMath#MAX_LEAVES} leaves, each two crossed planes drawn on both faces (4 quads), placed by pure maths ({@link SpiritBladesFxMath}), additive and full bright, in the leaf
  * texture (textures/entity/weapon/spirit_blades_leaf.png, made by tools/gen_spirit_blades_models.py). The weapon renderer calls it after the glow pass ({@link WeaponRenderer}); the mesh is already
  * placed, so a leaf is just a point in mesh space. Worst case per weapon per frame: {@code 6 x 4 = 24} quads (96 vertices), one extra buffer; skipped beyond {@link #FAR_BLOCKS} blocks from the
- * camera, and switched off with {@code -Dnusmp.spiritBlades.leaves=off}. Nothing is allocated per frame (scratch vector and array); render thread only.
+ * camera, and switched off with {@code -Danime_multiverse.spiritBlades.leaves=off}. Nothing is allocated per frame (scratch vector and array); render thread only.
  */
 public final class SpiritBladesFx {
     private SpiritBladesFx() {}
 
-    public static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/spirit_blades_leaf.png");
+    public static final ResourceLocation LEAF = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon/spirit_blades_leaf.png");
     /** The leaves are skipped beyond this many blocks from the camera. */
     public static final double FAR_BLOCKS = 24.0;
 
-    private static final boolean ON = !"off".equalsIgnoreCase(System.getProperty("nusmp.spiritBlades.leaves", "on"));
+    private static final boolean ON = !"off".equalsIgnoreCase(System.getProperty("anime_multiverse.spiritBlades.leaves", "on"));
     private static final int FULL_BRIGHT = 0xF000F0;
     private static final Vector3f SCRATCH = new Vector3f();
     private static final float[] LEAF_OUT = new float[SpiritBladesFxMath.FIELDS];

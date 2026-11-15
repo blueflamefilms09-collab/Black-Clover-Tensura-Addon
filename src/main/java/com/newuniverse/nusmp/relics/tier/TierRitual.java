@@ -124,17 +124,17 @@ public final class TierRitual {
         long now = p.level().getGameTime();
         long until = root(p, false) == null ? 0L : root(p, false).getLong(UNTIL);
         if (now < until) {
-            say(p, Component.translatable("nusmp.tier.cooldown", (until - now + 19) / 20).withStyle(ChatFormatting.GRAY));
+            say(p, Component.translatable("anime_multiverse.tier.cooldown", (until - now + 19) / 20).withStyle(ChatFormatting.GRAY));
             return new Result(Reason.COOLDOWN, false, -1);
         }
         if (!Attune.works(relic, def, p)) {
-            say(p, Component.translatable("nusmp.tier.unattuned").withStyle(ChatFormatting.LIGHT_PURPLE));
+            say(p, Component.translatable("anime_multiverse.tier.unattuned").withStyle(ChatFormatting.LIGHT_PURPLE));
             return new Result(Reason.UNATTUNED, false, -1);
         }
         Grade eff = Tiers.effectiveGrade(relic, def);
         int target = TierRules.nextTarget(eff.ordinal());
         if (target < 0) {
-            say(p, Component.translatable("nusmp.tier.top").withStyle(ChatFormatting.GOLD));
+            say(p, Component.translatable("anime_multiverse.tier.top").withStyle(ChatFormatting.GOLD));
             return new Result(Reason.AT_TOP, false, -1);
         }
         Grade to = Grade.values()[target];
@@ -145,17 +145,17 @@ public final class TierRitual {
             if (!matched.isEmpty()) { need = c; break; }
         }
         if (need == null) {
-            say(p, Component.translatable("nusmp.tier.wrong_catalyst", to.label(), catalystList(target)).withStyle(ChatFormatting.RED));
+            say(p, Component.translatable("anime_multiverse.tier.wrong_catalyst", to.label(), catalystList(target)).withStyle(ChatFormatting.RED));
             return new Result(Reason.WRONG_CATALYST, false, target);
         }
         int have = 0;
         for (ItemStack s : matched) have += s.getCount();
         if (!p.isCreative() && have < need.count()) {
-            say(p, Component.translatable("nusmp.tier.need_count", need.count(), matched.get(0).getHoverName()).withStyle(ChatFormatting.RED));
+            say(p, Component.translatable("anime_multiverse.tier.need_count", need.count(), matched.get(0).getHoverName()).withStyle(ChatFormatting.RED));
             return new Result(Reason.NEED_COUNT, false, target);
         }
         if (!payEnergy(p, TierRules.costPercent(target))) {
-            say(p, Component.translatable("nusmp.tier.no_energy", Math.round(TierRules.costPercent(target))).withStyle(ChatFormatting.RED));
+            say(p, Component.translatable("anime_multiverse.tier.no_energy", Math.round(TierRules.costPercent(target))).withStyle(ChatFormatting.RED));
             return new Result(Reason.NO_ENERGY, false, target);
         }
         boolean win = TierRules.succeeds(target, p.getRandom().nextDouble());
@@ -176,12 +176,12 @@ public final class TierRitual {
             FxRelic.ring(p.serverLevel(), p.position(), 1.8, to.rgb());
             FxRelic.burst(p.serverLevel(), p.position(), to.rgb());
             setCooldown(p, now + TierRules.SUCCESS_COOLDOWN_TICKS);
-            say(p, Component.translatable("nusmp.tier.success", relic.getHoverName(), to.label()).withStyle(to.colour()));
+            say(p, Component.translatable("anime_multiverse.tier.success", relic.getHoverName(), to.label()).withStyle(to.colour()));
             return new Result(Reason.SUCCESS, true, target);
         }
         p.level().playSound(null, p.blockPosition(), SoundEvents.ANVIL_BREAK, SoundSource.PLAYERS, 0.6f, 0.7f);
         setCooldown(p, now + TierRules.failCooldownTicks(target));
-        say(p, Component.translatable(lose ? "nusmp.tier.fail_lost" : "nusmp.tier.fail_kept", relic.getHoverName()).withStyle(ChatFormatting.RED));
+        say(p, Component.translatable(lose ? "anime_multiverse.tier.fail_lost" : "anime_multiverse.tier.fail_kept", relic.getHoverName()).withStyle(ChatFormatting.RED));
         return new Result(lose ? Reason.FAILED_LOST : Reason.FAILED_KEPT, false, target);
     }
 

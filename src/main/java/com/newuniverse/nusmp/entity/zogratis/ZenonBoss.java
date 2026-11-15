@@ -177,7 +177,7 @@ public class ZenonBoss extends ZogratisBoss {
             tickGrowth(sl, now);
             if (tickCount % 10 == 0 && SpellSeal.active(getUUID()) && state() != STATE_TRANSFORMING) Tells.gather(sl, position().add(0, 1, 0), 1.0, ACCENT, 6);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Zenon's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Zenon's tick failed: {}", e.toString());
         }
     }
 
@@ -214,7 +214,7 @@ public class ZenonBoss extends ZogratisBoss {
             if (SpellSeal.active(getUUID()) && SpellSeal.hurtDomain(getUUID(), eff, SpellSeal.antiMagicHit(source))) domainBroken();
             if (shell.active(now)) return throughShell(sl, now, amount, eff);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Zenon's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Zenon's defence failed: {}", e.toString());
         }
         return amount;
     }
@@ -290,10 +290,10 @@ public class ZenonBoss extends ZogratisBoss {
             b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
                 if (base != null) base.tell(bs, t, left, total);
                 else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
-                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Zenon's tell effect failed: {}", e.toString()); }
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Zenon's tell effect failed: {}", e.toString()); }
             });
             out.add(b.run((bs, t) -> {
-                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Zenon's strike effect failed: {}", e.toString()); }
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Zenon's strike effect failed: {}", e.toString()); }
                 run.run(bs, t);
             }));
         }

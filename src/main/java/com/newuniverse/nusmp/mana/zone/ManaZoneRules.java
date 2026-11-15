@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * The numbers of the Mana Zone, read from {@code data/nusmp/mana_zone.json} (pure: no Minecraft types, so JUnit and the CI self-test
+ * The numbers of the Mana Zone, read from {@code data/anime_multiverse/mana_zone.json} (pure: no Minecraft types, so JUnit and the CI self-test
  * check the same file the game loads). Every field falls back to the default below when the file leaves it out, so a datapack may
  * override a single number. The gate numbers are FLOORS in {@link ManaZoneGate}: a file or a config value cannot make the technique early.
  */

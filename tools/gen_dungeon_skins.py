@@ -9,7 +9,7 @@ procedurally, so any skin can be redone by changing a row, a recipe or a number 
     python3 -B tools/gen_dungeon_skins.py --list          what is a person and what stays a creature
 
 Every skin is a 64x64 player-layout PNG (the second layer, the hat / jacket / sleeve / pants layer, carries the armour plates, cloth, hoods and tears; a `_glow` map next to it where eyes, runes,
-cracks or veins shine), wide or slim arms as the build asks. The data goes to assets/nusmp/playermodel/looks_dungeon.json (same format as looks.json, plus `stance`), which the game's loader reads
+cracks or veins shine), wide or slim arms as the build asks. The data goes to assets/anime_multiverse/playermodel/looks_dungeon.json (same format as looks.json, plus `stance`), which the game's loader reads
 after looks.json and looks_abyssal.json (client/playermodel/PlayerLookTables). Existing entries of other tables are never touched. A step run with `--only` merges into the table.
 Needs numpy and Pillow. Python as `python3 -B`.
 """

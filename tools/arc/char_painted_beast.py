@@ -1,4 +1,4 @@
-"""Why: the painted hound of Painting Magic's Painted Menagerie (entity nusmp:painted_construct, kind BEAST: a fast hound of wet paint; its genome could give it other heads). It was a
+"""Why: the painted hound of Painting Magic's Painted Menagerie (entity anime_multiverse:painted_construct, kind BEAST: a fast hound of wet paint; its genome could give it other heads). It was a
 quadruped cube model with a texture per paint; the art kit's version is a hound-folk on the player's rig, painted once in pale paint and tinted by the paint's colour by the renderer
 (tools/remodel/painted.py): a lean wolf-eared, long-tailed body of brush strokes, a muzzle and claws (made in `extra`), a glowing pale eye. The genome's other heads (cat, bear, boar,
 griffin, dragon) are not drawn: every beast wears the hound's. See docs/arc/remodel.md.

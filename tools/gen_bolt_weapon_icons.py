@@ -3,7 +3,7 @@
 
     python3 -B tools/gen_bolt_weapon_icons.py
 
-Writes assets/nusmp/textures/item/<id>.png (16x16, the stock on the same diagonal as every other weapon icon so the 3D mesh of
+Writes assets/anime_multiverse/textures/item/<id>.png (16x16, the stock on the same diagonal as every other weapon icon so the 3D mesh of
 tools/gen_weapon_models.py is placed the same way) and the two item models <id>.json (the 3D in-hand model, display transforms copied
 from the Magebane Longsword) and <id>_icon.json (the flat inventory icon).
 Each icon is mirror-symmetric about the diagonal, so its principal axis is exactly the 45 degree sword axis.
@@ -14,7 +14,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 S = 16
@@ -151,11 +151,11 @@ def crossbow_of_swift_death():
 
 def models(item_id):
     tpl = json.load(open(os.path.join(MODELS, "magebane_longsword.json"), encoding="utf-8"))
-    tpl["textures"] = {"particle": "nusmp:item/" + item_id}
+    tpl["textures"] = {"particle": "anime_multiverse:item/" + item_id}
     with open(os.path.join(MODELS, item_id + ".json"), "w", newline="\n") as f:
         f.write(json.dumps(tpl, indent=2))
     with open(os.path.join(MODELS, item_id + "_icon.json"), "w", newline="\n") as f:
-        f.write(json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}, indent=2))
+        f.write(json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}, indent=2))
 
 
 def main():

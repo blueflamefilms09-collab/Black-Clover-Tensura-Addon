@@ -4,7 +4,7 @@
 	order_index: 20
 	filename: "lucius_god"
 	icon: {
-		id: "nusmp:zogratis_hourglass"
+		id: "anime_multiverse:zogratis_hourglass"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			tasks: [
 				{
@@ -37,14 +37,14 @@
 			x: 1.5d
 			y: 3.0d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["56A8F22FA16AB384"]
 			tasks: [
 				{
 					id: "7E16B2491EB25C0D"
 					type: "advancement"
-					advancement: "nusmp:world/hourglass_item"
+					advancement: "anime_multiverse:world/hourglass_item"
 					criterion: ""
 				}
 			]
@@ -63,7 +63,7 @@
 			y: 5.25d
 			shape: "square"
 			icon: {
-				id: "nusmp:arena_return_sigil"
+				id: "anime_multiverse:arena_return_sigil"
 			}
 			dependencies: ["56A8F22FA16AB384"]
 			optional: true
@@ -71,7 +71,7 @@
 				{
 					id: "1D60CDD1695C53F2"
 					type: "advancement"
-					advancement: "nusmp:world/sigil"
+					advancement: "anime_multiverse:world/sigil"
 					criterion: ""
 				}
 			]
@@ -89,14 +89,14 @@
 			x: 3.0d
 			y: 3.0d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["63E175378A296ED8"]
 			tasks: [
 				{
 					id: "6059FF0E36DFC128"
 					type: "advancement"
-					advancement: "nusmp:world/hourglass_used"
+					advancement: "anime_multiverse:world/hourglass_used"
 					criterion: ""
 				}
 			]
@@ -116,14 +116,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:arena_return_sigil"
+				id: "anime_multiverse:arena_return_sigil"
 			}
 			dependencies: ["34C9D509F7D83B02"]
 			tasks: [
 				{
 					id: "47F2A3B8117FCB8B"
 					type: "advancement"
-					advancement: "nusmp:world/arena"
+					advancement: "anime_multiverse:world/arena"
 					criterion: ""
 				}
 			]
@@ -147,7 +147,7 @@
 			y: 5.25d
 			shape: "square"
 			icon: {
-				id: "nusmp:arena_return_sigil"
+				id: "anime_multiverse:arena_return_sigil"
 			}
 			dependencies: ["34C9D509F7D83B02"]
 			optional: true
@@ -155,7 +155,7 @@
 				{
 					id: "00630DC6F5D5820B"
 					type: "dimension"
-					dimension: "nusmp:zogratis_arena"
+					dimension: "anime_multiverse:zogratis_arena"
 				}
 			]
 			rewards: [
@@ -174,14 +174,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["60B9E3B01920EB72"]
 			tasks: [
 				{
 					id: "68C4700B53A68927"
 					type: "advancement"
-					advancement: "nusmp:bosses/lucius_stage2"
+					advancement: "anime_multiverse:bosses/lucius_stage2"
 					criterion: ""
 				}
 			]
@@ -206,14 +206,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["42A5961EB0302E49"]
 			tasks: [
 				{
 					id: "39CFA975252672D9"
 					type: "advancement"
-					advancement: "nusmp:bosses/lucius_stage3"
+					advancement: "anime_multiverse:bosses/lucius_stage3"
 					criterion: ""
 				}
 			]
@@ -238,14 +238,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["6140DF5E887349DB"]
 			tasks: [
 				{
 					id: "489895E340C6D330"
 					type: "advancement"
-					advancement: "nusmp:challenges/lucius_all_stages"
+					advancement: "anime_multiverse:challenges/lucius_all_stages"
 					criterion: ""
 				}
 			]
@@ -277,7 +277,7 @@
 				{
 					id: "2937F94BBF7C7F27"
 					type: "advancement"
-					advancement: "nusmp:challenges/time_decay"
+					advancement: "anime_multiverse:challenges/time_decay"
 					criterion: ""
 				}
 			]
@@ -304,7 +304,7 @@
 				{
 					id: "3DF780714D86FF23"
 					type: "advancement"
-					advancement: "nusmp:challenges/severed"
+					advancement: "anime_multiverse:challenges/severed"
 					criterion: ""
 				}
 			]
@@ -331,7 +331,7 @@
 				{
 					id: "17851F79C99D143E"
 					type: "advancement"
-					advancement: "nusmp:challenges/nullified"
+					advancement: "anime_multiverse:challenges/nullified"
 					criterion: ""
 				}
 			]
@@ -358,7 +358,7 @@
 				{
 					id: "43023CD73FC7AC84"
 					type: "advancement"
-					advancement: "nusmp:world/arena_victory"
+					advancement: "anime_multiverse:world/arena_victory"
 					criterion: ""
 				}
 			]
@@ -388,14 +388,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["6C2581DA4A1AD3C7"]
 			tasks: [
 				{
 					id: "3961BA4AE0E53719"
 					type: "advancement"
-					advancement: "nusmp:bosses/lucius_zogratis"
+					advancement: "anime_multiverse:bosses/lucius_zogratis"
 					criterion: ""
 				}
 			]
@@ -428,7 +428,7 @@
 				{
 					id: "60716FB14561CCAC"
 					type: "advancement"
-					advancement: "nusmp:challenges/norelic"
+					advancement: "anime_multiverse:challenges/norelic"
 					criterion: ""
 				}
 			]
@@ -512,14 +512,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zogratis_hourglass"
+				id: "anime_multiverse:zogratis_hourglass"
 			}
 			dependencies: ["1F921EB3DE0F6525"]
 			tasks: [
 				{
 					id: "45193693CE98A1C3"
 					type: "advancement"
-					advancement: "nusmp:bosses/lucius_zogratis"
+					advancement: "anime_multiverse:bosses/lucius_zogratis"
 					criterion: ""
 				}
 			]

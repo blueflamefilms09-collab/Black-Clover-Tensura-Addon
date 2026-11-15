@@ -11,7 +11,7 @@ and it is placed on the same inventory sprite as the right one (the sprite stays
 hand pose of the off hand, so a mirrored mesh in the off hand is the true mirror image of the main-hand one.
 
 Run the wave 9 and wave 12 icon generators first: the meshes are placed on the existing 16 x 16 sprites. Per half it writes
-assets/nusmp/weapon_meshes/<id>.txt, textures/entity/weapon/<id>.png and <id>_glow.png, and (left only) textures/item/<id>_left.png (a copy of the
+assets/anime_multiverse/weapon_meshes/<id>.txt, textures/entity/weapon/<id>.png and <id>_glow.png, and (left only) textures/item/<id>_left.png (a copy of the
 sprite), models/item/<id>_left.json and <id>_left_icon.json (copies of the right half's, which carry the display transforms).
 """
 import json
@@ -59,7 +59,7 @@ def left_assets(base_id):
         src = os.path.join(MODEL_DIR, base_id + suffix + ".json")
         with open(src, "r", encoding="utf-8") as f:
             text = f.read()
-        text = text.replace("nusmp:item/" + base_id + '"', "nusmp:item/" + left + '"')
+        text = text.replace("anime_multiverse:item/" + base_id + '"', "anime_multiverse:item/" + left + '"')
         data = json.loads(text)
         with open(os.path.join(MODEL_DIR, left + suffix + ".json"), "w", encoding="utf-8", newline="\n") as f:
             json.dump(data, f, indent=2)

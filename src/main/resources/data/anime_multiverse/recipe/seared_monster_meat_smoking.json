@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "anime_multiverse:raw_monster_meat"
+  },
+  "result": {
+    "id": "anime_multiverse:seared_monster_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

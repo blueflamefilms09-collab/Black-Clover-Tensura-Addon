@@ -241,10 +241,10 @@ class ExSingularityTest {
     @Test
     void langFragmentAndTextureExist() throws IOException {
         String lang = Files.readString(Path.of("tools/lang/ex_singularity.json"));
-        assertTrue(lang.contains("\"nusmp.ex_singularity.line\": \"Akashic Relic - Grade: EX-Singularity\""));
-        assertTrue(Files.readString(SRC.resolve("client/ui/tooltip/UnifiedTooltip.java")).contains("\"nusmp.ex_singularity.line\""), "the line is read from the fragment's key");
-        assertTrue(Files.readString(Path.of("tools/lang/unified_tooltips.json")).contains("\"tooltip.nusmp.unified.cat.akashic_relic\""));
-        Path tex = Path.of("src/main/resources/assets/nusmp/textures/entity/weapon/ex_singularity_star.png");
+        assertTrue(lang.contains("\"anime_multiverse.ex_singularity.line\": \"Akashic Relic - Grade: EX-Singularity\""));
+        assertTrue(Files.readString(SRC.resolve("client/ui/tooltip/UnifiedTooltip.java")).contains("\"anime_multiverse.ex_singularity.line\""), "the line is read from the fragment's key");
+        assertTrue(Files.readString(Path.of("tools/lang/unified_tooltips.json")).contains("\"tooltip.anime_multiverse.unified.cat.akashic_relic\""));
+        Path tex = Path.of("src/main/resources/assets/anime_multiverse/textures/entity/weapon/ex_singularity_star.png");
         assertTrue(Files.exists(tex), "the star texture");
         java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(tex.toFile());
         assertEquals(64, img.getWidth());
@@ -263,7 +263,7 @@ class ExSingularityTest {
 
     @Test
     void particleThemeExists() throws IOException {
-        String themes = Files.readString(Path.of("src/main/resources/data/nusmp/particle_themes.json"));
+        String themes = Files.readString(Path.of("src/main/resources/data/anime_multiverse/particle_themes.json"));
         assertTrue(themes.contains("\"relic.grade.AKASHIC\""));
         assertTrue(Files.readString(Path.of("tools/particles/gen_themes.py")).contains("\"relic.grade.AKASHIC\""));
     }

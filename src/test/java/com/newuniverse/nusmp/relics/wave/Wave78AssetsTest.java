@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Crucible. This test reads the files (no game needed); the size and orientation rules are WeaponMeshesTest's, the bow rules BowDisplayGuardTest's.
  */
 class Wave78AssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
 
     private static List<String> ids() throws IOException {
         Matcher m = Pattern.compile("\"([a-z0-9_]+)\"").matcher(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/relics/wave/Wave78.java")).split("IDS = \\{")[1].split("\\};")[0]);
@@ -41,7 +41,7 @@ class Wave78AssetsTest {
             Path model = ASSETS.resolve("models/item/" + id + ".json");
             if (Files.exists(model) && !Files.readString(model).contains("\"minecraft:builtin/entity\"")) bad.add(id + ": the item model is not builtin/entity");
             Path icon = ASSETS.resolve("models/item/" + id + "_icon.json");
-            if (Files.exists(icon) && !Files.readString(icon).contains("\"nusmp:item/" + id + "\"")) bad.add(id + ": the icon model does not show the sprite");
+            if (Files.exists(icon) && !Files.readString(icon).contains("\"anime_multiverse:item/" + id + "\"")) bad.add(id + ": the icon model does not show the sprite");
         }
         assertEquals(List.of(), bad);
     }

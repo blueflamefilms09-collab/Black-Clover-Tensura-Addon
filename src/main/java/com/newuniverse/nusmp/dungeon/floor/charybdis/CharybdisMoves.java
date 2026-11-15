@@ -50,7 +50,7 @@ final class CharybdisMoves {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LOG.warn("[nusmp] The Charybdis Spawn's {} stopped: {}", what, t.toString());
+                LOG.warn("[anime_multiverse] The Charybdis Spawn's {} stopped: {}", what, t.toString());
             }
         };
     }

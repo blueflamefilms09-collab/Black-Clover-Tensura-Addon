@@ -5,8 +5,8 @@
   src/main/java/com/newuniverse/nusmp/relics/wave/Wave71.java          the relic definitions (GENERATED: edit the roster, not the Java)
   src/main/java/com/newuniverse/nusmp/relics/wave/Wave71Passives.java  the passive rules table
   tools/lang/new_weapons_197.json                                       name, tooltip and card text of every weapon (flat fragment; the lead merges it into en_us.json)
-  src/main/resources/assets/nusmp/weapon_classes.json + tools/relics/weapon_classes.json   a class row for every weapon (appended)
-  src/main/resources/data/nusmp/mega/relic_themes.json                  the dungeon road each weapon leads to (appended)
+  src/main/resources/assets/anime_multiverse/weapon_classes.json + tools/relics/weapon_classes.json   a class row for every weapon (appended)
+  src/main/resources/data/anime_multiverse/mega/relic_themes.json                  the dungeon road each weapon leads to (appended)
 
 The meshes, skins, icons and item models are built by new197_build.py (new197_legend.py / new197_god.py / new197_genesis.py).
 """
@@ -19,7 +19,7 @@ sys.path.insert(0, HERE)
 from new197_roster import ROSTER                                    # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
 RES = os.path.join(ROOT, "src", "main", "resources")
 
 RANGES = {"LEGEND": (130, 175), "GOD": (190, 240), "GENESIS": (260, 350)}
@@ -282,9 +282,9 @@ final class Wave71Passives {
 def write_lang():
     d = {}
     for e in ROSTER:
-        d["item.nusmp.%s" % e["id"]] = e["name"]
-        d["item.nusmp.%s.desc" % e["id"]] = short_desc(e)
-        d["item.nusmp.%s.card" % e["id"]] = card_text(e)
+        d["item.anime_multiverse.%s" % e["id"]] = e["name"]
+        d["item.anime_multiverse.%s.desc" % e["id"]] = short_desc(e)
+        d["item.anime_multiverse.%s.card" % e["id"]] = card_text(e)
     os.makedirs(os.path.join(ROOT, "tools", "lang"), exist_ok=True)
     with open(os.path.join(ROOT, "tools", "lang", "new_weapons_197.json"), "w", newline="\n") as f:
         json.dump(d, f, indent=2, ensure_ascii=True)
@@ -336,14 +336,14 @@ def write_doc():
     L.append("## 4. Registration, loot and Better Combat\n")
     L.append("* Registered by `relics/wave/Wave71` (found by `WaveRegistry`, which scans waves 8 to 80): the item, the creative tab entry, `/multiverse relic give <id>`, the tooltip, the "
              "Curios and attunement rules, the Djinn vessel flag, the forge and the sockets are the core's, as for every relic.\n"
-             "* Loot is by grade through the existing relic pools, so the new weapons enter every source that rolls their grade: the `nusmp:relic` entries of the vault tables "
+             "* Loot is by grade through the existing relic pools, so the new weapons enter every source that rolls their grade: the `anime_multiverse:relic` entries of the vault tables "
              "(`chests/dungeon_relic_vault`, `chests/labyrinth_pedestal`: Legend to God at weight 3 / 15, God to Genesis at 1 / 4), the Crucible of Choice of the Mega-Dungeon "
-             "(unique to genesis offers) and the God of Order's ledger (one of each in a world). Each weapon is also placed on a dungeon road in `data/nusmp/mega/relic_themes.json` "
+             "(unique to genesis offers) and the God of Order's ledger (one of each in a world). Each weapon is also placed on a dungeon road in `data/anime_multiverse/mega/relic_themes.json` "
              "(the theme column), so taking it in a Crucible leads to a fitting next region.\n"
-             "* Better Combat: a file in `data/nusmp/weapon_attributes/<id>.json` for every melee weapon (31; the two bows, the crossbow and the shield have none, as every ranged "
+             "* Better Combat: a file in `data/anime_multiverse/weapon_attributes/<id>.json` for every melee weapon (31; the two bows, the crossbow and the shield have none, as every ranged "
              "weapon and shield), made by `python3 -B tools/bettercombat/inventory.py` and `gen_attributes.py`; the gauntlets are class `dagger` (their size and swing) with the damage "
              "of a club.\n"
-             "* Size classes: a row for every id in `assets/nusmp/weapon_classes.json` and `tools/relics/weapon_classes.json`; the first-person display of the long weapons is the "
+             "* Size classes: a row for every id in `assets/anime_multiverse/weapon_classes.json` and `tools/relics/weapon_classes.json`; the first-person display of the long weapons is the "
              "oversize rule (`new197_presets.py`).\n")
     L.append("## 5. Tests\n")
     L.append("JUnit (all pure, run without the game): `relics/wave/Wave71DefsTest` (counts, unique ids, 3D, engravings from the Tensura list, 2 or 3 acts, damage inside the grade's range, "
@@ -359,8 +359,8 @@ def write_doc():
              "python3 -B tools/bettercombat/inventory.py && python3 -B tools/bettercombat/gen_attributes.py\n"
              "python3 -B tools/item_preview/preview_weapons.py vorpal_sword blackrazor   # the held view, build/item_preview/weapons.png\n```\n")
     L.append("## 7. Edits to files that already existed (all additions)\n")
-    L.append("* `assets/nusmp/weapon_classes.json`, `tools/relics/weapon_classes.json`: 35 class rows appended.\n"
-             "* `data/nusmp/mega/relic_themes.json`: 35 dungeon-road rows appended.\n"
+    L.append("* `assets/anime_multiverse/weapon_classes.json`, `tools/relics/weapon_classes.json`: 35 class rows appended.\n"
+             "* `data/anime_multiverse/mega/relic_themes.json`: 35 dungeon-road rows appended.\n"
              "* `tools/bettercombat/manifest.json`: the 31 melee weapons added (regenerated by the tool).\n"
              "* `tools/relics/display_presets_manifest.json`: the rows of the 26 long weapons added.\n"
              "* New: `relics/GradeDamage.java` (a STAND-IN with exactly `range(String)` and `damage(String, String)`; replace it with the full damage-table class when that is merged), "
@@ -377,7 +377,7 @@ def write_doc():
 
 
 def write_classes():
-    pa = os.path.join(RES, "assets", "nusmp", "weapon_classes.json")
+    pa = os.path.join(RES, "assets", "anime_multiverse", "weapon_classes.json")
     pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
     a = json.load(open(pa))
     t = json.load(open(pt))
@@ -391,7 +391,7 @@ def write_classes():
 
 
 def write_themes():
-    p = os.path.join(RES, "data", "nusmp", "mega", "relic_themes.json")
+    p = os.path.join(RES, "data", "anime_multiverse", "mega", "relic_themes.json")
     raw = open(p).read()
     d = json.loads(raw)
     for e in ROSTER:

@@ -15,9 +15,9 @@ import java.util.regex.Pattern;
 /**
  * Why: the brief wants Farmer's Delight stoves, skillets and cutting boards in place of generic campfires, and MrCrayfish's Furniture Mod:
  * Refurbished sofas, tables and storage in place of stair-chairs and wool beds, when those mods are installed, and plain vanilla otherwise,
- * from ONE set of templates. The templates only say WHAT a block is ({@code nusmp:seat;as=chair}); this table says which block of which mod
+ * from ONE set of templates. The templates only say WHAT a block is ({@code anime_multiverse:seat;as=chair}); this table says which block of which mod
  * can stand in for it. It is data, not code, because the block ids of other mods cannot be verified here and must be correctable by editing a
- * JSON file ({@code data/nusmp/mega/compat/<mod>.json}) rather than recompiling: each hint lists several plausible ids in order, a candidate is
+ * JSON file ({@code data/anime_multiverse/mega/compat/<mod>.json}) rather than recompiling: each hint lists several plausible ids in order, a candidate is
  * used only if its mod is loaded AND the id exists in the block registry, so a wrong id silently falls through to the next one and finally to
  * the vanilla block. This class is the PURE half (no Minecraft types): the parsed files go in as {@link Source}s, the loader and the processor
  * supply "is this mod loaded" and "does this block exist" as predicates, so loaded / absent / unknown id / empty are all unit-tested.

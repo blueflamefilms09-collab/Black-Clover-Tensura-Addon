@@ -1,0 +1,9 @@
+{
+  "type": "anime_multiverse:gear_chests",
+  "conditions": [
+    {
+      "condition": "minecraft:location_check",
+      "predicate": { "dimension": "anime_multiverse:mega_dungeon" }
+    }
+  ]
+}

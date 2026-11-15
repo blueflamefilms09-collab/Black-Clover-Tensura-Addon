@@ -20,7 +20,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /** 0.49: Rouge, the red-thread cat, sitting on her summoner's head (see book.RougeCat). */
 public class RougeCatLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/rouge_cat.png");
+    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/rouge_cat.png");
     /** The remodel: draw the art kit's Rouge on the head instead of the old cube cat (which stays in the tree, one switch away). */
     static final boolean KIT_CAT = true;
     static final float KIT_CAT_SCALE = 0.36f;

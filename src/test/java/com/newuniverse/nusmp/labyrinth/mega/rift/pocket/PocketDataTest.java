@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * condition of its own pocket, a pocket's relics are in no loot table but its own, and the relic entry names only that pocket's relics.
  */
 class PocketDataTest {
-    static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
     static final Path POCKETS = DATA.resolve("mega/pockets");
 
     /** The vanilla ids this mod's pocket data may use (checked against the game's registries by hand and by the in-game self-test rift.pockets). */
@@ -190,7 +190,7 @@ class PocketDataTest {
         for (PocketDef d : defs().values()) {
             PocketDef.Biome b = d.biome();
             for (String s : new String[]{b.ambient(), b.mood(), b.additions(), b.music()}) assertTrue(SOUNDS.contains(s), d.id() + ": biome sound " + s + " is not in the checked list");
-            for (String s : new String[]{b.softAmbient(), b.softCrackle()}) assertTrue(s.startsWith("nusmp:") && s.matches("[a-z0-9_.:]+"), d.id() + ": soft sound " + s);
+            for (String s : new String[]{b.softAmbient(), b.softCrackle()}) assertTrue(s.startsWith("anime_multiverse:") && s.matches("[a-z0-9_.:]+"), d.id() + ": soft sound " + s);
             assertTrue(PARTICLES.contains(b.particle()), d.id() + ": biome particle " + b.particle());
             PocketDef.Palette p = d.palette();
             for (String s : new String[]{p.wall(), p.floor(), p.ceiling(), p.pillar(), p.accent(), p.light(), p.glass(), p.liquid()}) assertTrue(BLOCKS.contains(s), d.id() + ": block " + s + " is not in the checked list");
@@ -216,14 +216,14 @@ class PocketDataTest {
             for (String k : new String[]{"has_precipitation", "temperature", "downfall", "spawners", "spawn_costs", "carvers", "features"}) assertTrue(o.has(k), d.id() + " biome lacks " + k);
             for (String k : new String[]{"monster", "creature", "ambient", "axolotls", "underground_water_creature", "water_creature", "water_ambient", "misc"})
                 assertTrue(o.getAsJsonObject("spawners").has(k) && o.getAsJsonObject("spawners").getAsJsonArray(k).isEmpty(), d.id() + " spawner " + k + ": nothing spawns by itself in a tomb");
-            assertEquals(d.biomeId(), "nusmp:pocket_" + d.id());
+            assertEquals(d.biomeId(), "anime_multiverse:pocket_" + d.id());
         }
     }
 
     @Test
     void theMegaBossProfilesAreAcceptedByTheGuardiansOwnReader() throws IOException {
         Set<String> looks = new HashSet<>();
-        JsonObject lookTable = json(Path.of("src/main/resources/assets/nusmp/abyssal/looks.json")).getAsJsonObject("looks");
+        JsonObject lookTable = json(Path.of("src/main/resources/assets/anime_multiverse/abyssal/looks.json")).getAsJsonObject("looks");
         looks.addAll(lookTable.keySet());
         for (PocketDef d : defs().values()) {
             JsonObject o = json(POCKETS.resolve(d.bossFile() + ".json"));
@@ -314,7 +314,7 @@ class PocketDataTest {
     private static void collectRelicEntries(JsonElement e, List<JsonObject> out) {
         if (!e.isJsonObject()) return;
         JsonObject o = e.getAsJsonObject();
-        if (o.has("type") && o.get("type").getAsString().equals("nusmp:pocket_relic")) out.add(o);
+        if (o.has("type") && o.get("type").getAsString().equals("anime_multiverse:pocket_relic")) out.add(o);
         if (o.has("children")) for (JsonElement c : o.getAsJsonArray("children")) collectRelicEntries(c, out);
         if (o.has("entries")) for (JsonElement c : o.getAsJsonArray("entries")) collectRelicEntries(c, out);
     }
@@ -333,7 +333,7 @@ class PocketDataTest {
                     collectConditions(pool, conds);
                     boolean gated = false;
                     for (JsonObject c : conds) {
-                        if (c.get("condition").getAsString().equals("nusmp:in_pocket")) {
+                        if (c.get("condition").getAsString().equals("anime_multiverse:in_pocket")) {
                             gated = true;
                             assertEquals(d.id(), c.get("pocket").getAsString(), "a pool of " + d.id() + " is gated by another pocket");
                             String stage = c.get("stage").getAsString();
@@ -341,7 +341,7 @@ class PocketDataTest {
                             if (table.equals("treasury") || table.equals("secondary") || table.equals("chest")) assertEquals("treasury", stage);
                         }
                     }
-                    assertTrue(gated, f + " has a pool that is not gated by nusmp:in_pocket");
+                    assertTrue(gated, f + " has a pool that is not gated by anime_multiverse:in_pocket");
                     List<JsonObject> relics = new ArrayList<>();
                     collectRelicEntries(pool, relics);
                     for (JsonObject r : relics) {
@@ -380,7 +380,7 @@ class PocketDataTest {
                 String norm = f.toString().replace('\\', '/');
                 if (norm.contains("loot_table/pocket/") || norm.contains("mega/pockets/") || norm.endsWith("mega/relic_themes.json")) continue;     // the dungeon road of a weapon is not a way to get it
                 String t = Files.readString(f);
-                for (String r : owner.keySet()) assertFalse(t.contains("\"nusmp:" + r + "\"") || t.contains("\"" + r + "\""), r + " appears in " + f);
+                for (String r : owner.keySet()) assertFalse(t.contains("\"anime_multiverse:" + r + "\"") || t.contains("\"" + r + "\""), r + " appears in " + f);
             }
         }
     }

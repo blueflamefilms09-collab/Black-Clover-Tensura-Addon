@@ -31,8 +31,8 @@ import net.minecraft.world.item.ItemStack;
 public final class ShadowExtraction {
     private ShadowExtraction() {}
 
-    /** Creatures a datapack forbids as shadows (data/nusmp/tags/entity_type/shadow_immune.json, beside corpse_immune and paladin_immune). */
-    public static final TagKey<EntityType<?>> IMMUNE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "shadow_immune"));
+    /** Creatures a datapack forbids as shadows (data/anime_multiverse/tags/entity_type/shadow_immune.json, beside corpse_immune and paladin_immune). */
+    public static final TagKey<EntityType<?>> IMMUNE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shadow_immune"));
 
     /** How many deaths are remembered at once, whatever the dungeon does. */
     private static final int LEDGER_CAP = 64;

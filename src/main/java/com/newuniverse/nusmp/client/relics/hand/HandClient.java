@@ -26,7 +26,7 @@ public final class HandClient {
 
     /** The items this renderer owns: the relics worn in Curios slots and the consumable relics. */
     private static boolean candidate(Item item) {
-        return (item instanceof RelicGearItem || item instanceof RelicConsumableItem) && "nusmp".equals(BuiltInRegistries.ITEM.getKey(item).getNamespace());
+        return (item instanceof RelicGearItem || item instanceof RelicConsumableItem) && "anime_multiverse".equals(BuiltInRegistries.ITEM.getKey(item).getNamespace());
     }
 
     public static void init(IEventBus modBus) {

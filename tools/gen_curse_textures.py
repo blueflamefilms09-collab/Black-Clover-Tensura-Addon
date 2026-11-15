@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_curse_textures.py [name ...]        # no names = all
 
-Writes src/main/resources/assets/nusmp/textures/particle/curse_*.png.
+Writes src/main/resources/assets/anime_multiverse/textures/particle/curse_*.png.
 
 Look (Black Clover, Curse Magic: curses descend from Megicula): glowing, jagged black runes; thorned black marks that crawl and
 glow deep purple; ash; veins of corruption cracking the ground; soul wisps drained out of the victim. High contrast: black
@@ -36,7 +36,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for clean edges
 
 

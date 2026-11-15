@@ -35,7 +35,7 @@ class EncounterTableParserTest {
                   "needs": {"dark": false, "noisy": true},
                   "scaleWithParty": false,
                   "minParty": 2,
-                  "message": "message.nusmp.mega.enc.goblin_patrol",
+                  "message": "message.anime_multiverse.mega.enc.goblin_patrol",
                   "range": [20, 40],
                   "cells": 3,
                   "hunt": 900,
@@ -83,7 +83,7 @@ class EncounterTableParserTest {
         assertTrue(e.needs().any());
         assertFalse(e.scaleWithParty());
         assertEquals(2, e.minParty());
-        assertEquals("message.nusmp.mega.enc.goblin_patrol", e.message());
+        assertEquals("message.anime_multiverse.mega.enc.goblin_patrol", e.message());
         assertEquals(20.0, e.minRange(), 0.0);
         assertEquals(40.0, e.maxRange(), 0.0);
         assertEquals(3, e.cells());

@@ -136,7 +136,7 @@ public final class WindMc {
     /** File name without folder or extension: {@code wmc_crescent_0} or, for the grey twin, {@code wmc_crescent_0_t}. */
     public static String fileName(String name, int frame, boolean tintable) { return PREFIX + name + "_" + frame + (tintable ? "_t" : ""); }
 
-    /** Every texture of the set as a path under assets/nusmp (32 files: 8 names x 2 frames x pack palette / grey twin). */
+    /** Every texture of the set as a path under assets/anime_multiverse (32 files: 8 names x 2 frames x pack palette / grey twin). */
     public static List<String> allTextures() {
         List<String> out = new ArrayList<>();
         for (String n : TEXTURE_NAMES) for (int f = 0; f < FRAMES; f++) for (int t = 0; t < 2; t++) out.add("textures/particle/" + fileName(n, f, t == 1) + ".png");

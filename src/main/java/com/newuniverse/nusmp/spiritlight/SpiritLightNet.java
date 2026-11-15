@@ -26,7 +26,7 @@ public final class SpiritLightNet {
 
     /** Server to client: the seraph (entity id {@code speaker}, a player) says this line. */
     public record Say(String line, int speaker) implements CustomPacketPayload {
-        public static final Type<Say> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "spirit_light_say"));
+        public static final Type<Say> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "spirit_light_say"));
         public static final StreamCodec<FriendlyByteBuf, Say> STREAM_CODEC = StreamCodec.of(SpiritLightNet::write, SpiritLightNet::read);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }

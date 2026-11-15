@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * client reads the pose back from the clock, and that every pose names a real clip of the animation files and every sound cue a real cue of the catalogue.
  */
 class SalamanderMoodRulesTest {
-    private static final Path ANIM = Path.of("src/main/resources/assets/nusmp/animations/entity");
+    private static final Path ANIM = Path.of("src/main/resources/assets/anime_multiverse/animations/entity");
 
     private static JsonObject clips(String form) throws IOException { return JsonParser.parseString(Files.readString(ANIM.resolve("firecast_" + form + ".animation.json"))).getAsJsonObject().getAsJsonObject("animations"); }
 

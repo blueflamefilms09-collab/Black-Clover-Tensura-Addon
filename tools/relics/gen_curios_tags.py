@@ -24,7 +24,7 @@ TAGS = ROOT / "src/main/resources/data/curios/tags/item"
 SLOT_TAG = {"NECK": "necklace", "BACK": "back", "BELT": "belt", "HANDS": "hands", "CHARM": "charm",
             "HEAD": "relic_head", "FEET": "relic_feet"}      # 3.10.0: head and feet relics can ALSO be worn in their own Curios slot (they stay armour too)
 # CHEST is real armour only; MAIN_HAND and CONSUMABLE are not worn: none of them has a Curios slot, so SLOT_TAG.get() skips them. HEAD and FEET armour relics also fit relic_head / relic_feet.
-MODID = "nusmp"
+MODID = "anime_multiverse"
 
 DEF = re.compile(r'RelicDef\s*\.\s*of\s*\(\s*([^,]+?)\s*,\s*"(?:[^"\\]|\\.)*"\s*,\s*Grade\s*\.\s*(\w+)\s*,\s*RelicSlot\s*\.\s*(\w+)\s*\)', re.S)
 CONST_DECL = re.compile(r'static\s+final\s+String\s+([^;]+);')

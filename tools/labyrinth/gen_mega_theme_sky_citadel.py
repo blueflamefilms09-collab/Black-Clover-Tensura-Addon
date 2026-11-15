@@ -2,7 +2,7 @@
 """
 SKY_CITADEL (1.59.0, docs/labyrinth/mega_v2_tha.md): the signature rooms of a cloud giant's castle on the Holy road: white stone and cloud, wind, long drops,
 furniture built for something ten times the size of the party. Rooms (all `sky_citadel_*`, drawn ONLY in sectors of the theme through
-`data/nusmp/mega/template_themes/sky_citadel.json`):
+`data/anime_multiverse/mega/template_themes/sky_citadel.json`):
 
     hall/sky_citadel_great_hall      the giant's great hall: a table four blocks high you can walk under (and climb, by a ladder up a leg), giant chairs, a hearth
     hall/sky_citadel_wind_gallery    a long gallery open to the sky on one side: arches of bars in front of the glare, a fire in every recess, a ring chandelier of lightning rods

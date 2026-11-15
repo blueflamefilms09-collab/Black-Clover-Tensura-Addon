@@ -24,7 +24,7 @@ import java.util.function.Consumer;
  * </ul>
  * The half / full stage is the one {@link ArmourRules#diveScale} already decides (the first {@link ArmourRules#HALF_DIVES} dives of an unmastered book are half dives).</p>
  *
- * <p>A piece id is {@code "<geo key>:<name>"}: the model is {@code assets/nusmp/geo/entity/<key>_arm_<name>.geo.json} (the same convention as client.aura.WaterAuraRig; the key
+ * <p>A piece id is {@code "<geo key>:<name>"}: the model is {@code assets/anime_multiverse/geo/entity/<key>_arm_<name>.geo.json} (the same convention as client.aura.WaterAuraRig; the key
  * {@code water} is the old water armour, {@code spiritdive} the new pieces of tools/gen_spirit_dive_geo.py).</p>
  */
 public final class SpiritDivePieces {

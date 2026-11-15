@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the profile of one Decennial boss, as a plain record with no Minecraft type, read from {@code data/nusmp/mega/decennial/bosses/<side>_<nnn>.json} by a strict parser that says in plain words
+ * Why: the profile of one Decennial boss, as a plain record with no Minecraft type, read from {@code data/anime_multiverse/mega/decennial/bosses/<side>_<nnn>.json} by a strict parser that says in plain words
  * what is wrong with a file and clamps every number through {@link DecennialRules}. It is the same idea as the D&D profile of the Guardian ({@code guard.DndProfile}), one level up: the D&D profile
  * says which legendary actions and resistances a boss has; this one says WHO the boss of a level is (name, title, lore), WHERE it fights (the arena theme), what it is made of (creature type,
  * damage resistances, signature mechanic), how the fight unfolds (two to four phases, each with a health threshold, abilities, a speed and damage change and adds), what the hall itself does

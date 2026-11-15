@@ -1,0 +1,55 @@
+{
+  "parent": "anime_multiverse:magic/signature_time",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.magic.master_time.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.magic.master_time.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_time": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "time"
+      }
+    },
+    "e_spell_cast_sealing": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "sealing"
+      }
+    },
+    "e_spell_cast_curse_warding": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "curse_warding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_time"
+    ],
+    [
+      "e_spell_cast_sealing"
+    ],
+    [
+      "e_spell_cast_curse_warding"
+    ]
+  ],
+  "rewards": {
+    "experience": 180
+  }
+}

@@ -60,7 +60,7 @@ class FxCodemodMapTest {
         String themes = read("particle/fx/FxThemes.java");
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("ThemeKey (\\w+) = ThemeKey\\.of\\(\"([^\"]+)\"\\);").matcher(themes);
         Set<String> generated = new HashSet<>();
-        ParticleThemes.Table table = ParticleThemes.parse(JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/nusmp/particle_themes.json"), StandardCharsets.UTF_8)));
+        ParticleThemes.Table table = ParticleThemes.parse(JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/anime_multiverse/particle_themes.json"), StandardCharsets.UTF_8)));
         while (m.find()) {
             generated.add(m.group(2));
             assertEquals(m.group(2).replaceAll("[^A-Za-z0-9]", "_").toUpperCase(), m.group(1), "constant name");

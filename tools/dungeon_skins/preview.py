@@ -1,5 +1,5 @@
 """Why: nothing here can be run in a game, so this renders what the kit would draw for the dungeon's looks (the player model with the skin, the hair at its colour, the extras on their anchors, the
-arm raised for the weapon) with the software renderer of tools/playermodel (pmrender / pmgeo) straight from assets/nusmp/playermodel/looks_dungeon.json, into docs/previews/humanoids/:
+arm raised for the weapon) with the software renderer of tools/playermodel (pmrender / pmgeo) straight from assets/anime_multiverse/playermodel/looks_dungeon.json, into docs/previews/humanoids/:
 
     python3 -B tools/dungeon_skins/preview.py sheets                 one three-view sheet per family: archetypes, the dungeon's own bodies, the puppets' four stages
     python3 -B tools/dungeon_skins/preview.py contact [prefix]       contact sheets (pages of 40) of every look whose id starts with the prefix (default: foundry_)

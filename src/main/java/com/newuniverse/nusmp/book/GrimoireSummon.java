@@ -163,7 +163,7 @@ public final class GrimoireSummon {
     // ---------------------------------------------------------------- network
     /** Player {@code entityId}'s floating grimoire; an empty stack means it was put away. */
     public record FloatPayload(int entityId, ItemStack stack) implements CustomPacketPayload {
-        public static final Type<FloatPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_float"));
+        public static final Type<FloatPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_float"));
         public static final StreamCodec<RegistryFriendlyByteBuf, FloatPayload> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.VAR_INT, FloatPayload::entityId,
                 ItemStack.OPTIONAL_STREAM_CODEC, FloatPayload::stack,
@@ -174,7 +174,7 @@ public final class GrimoireSummon {
 
     /** Player {@code entityId} switched spells while their grimoire is out: play the page flip ({@code reverse} = flip backwards). */
     public record FlipPayload(int entityId, boolean reverse) implements CustomPacketPayload {
-        public static final Type<FlipPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_flip"));
+        public static final Type<FlipPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_flip"));
         public static final StreamCodec<RegistryFriendlyByteBuf, FlipPayload> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.VAR_INT, FlipPayload::entityId,
                 ByteBufCodecs.BOOL, FlipPayload::reverse,
@@ -185,7 +185,7 @@ public final class GrimoireSummon {
 
     /** The "Summon Grimoire" key (client): summon your book from its slot, or stow it ({@code stow} = shift was held). */
     public record KeyPayload(boolean stow) implements CustomPacketPayload {
-        public static final Type<KeyPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_summon_key"));
+        public static final Type<KeyPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_summon_key"));
         public static final StreamCodec<RegistryFriendlyByteBuf, KeyPayload> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, KeyPayload::stow, KeyPayload::new);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }

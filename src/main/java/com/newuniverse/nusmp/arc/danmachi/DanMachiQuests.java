@@ -41,7 +41,7 @@ public final class DanMachiQuests {
                 try {
                     finish(p, npc);
                 } catch (RuntimeException e) {
-                    LogUtils.getLogger().error("[nusmp] could not finish the request of {} for {}: {}", npc, p.getGameProfile().getName(), e.toString());
+                    LogUtils.getLogger().error("[anime_multiverse] could not finish the request of {} for {}: {}", npc, p.getGameProfile().getName(), e.toString());
                 }
             }
         }

@@ -43,7 +43,7 @@ public final class UiTheme {
     /** The same clock but never frozen (timers that must run out, e.g. a toast, use this). */
     public static float realNow() { return (System.nanoTime() - T0) / 50_000_000f; }
 
-    /** A translatable line in the Great Sage's voice, e.g. {@code sage("nusmp.ui.sage.result", rank)}. */
+    /** A translatable line in the Great Sage's voice, e.g. {@code sage("anime_multiverse.ui.sage.result", rank)}. */
     public static Component sage(String key, Object... args) { return Component.translatable(key, args); }
 
     /** The current font (menus may call this when they hold no font reference). */

@@ -70,7 +70,7 @@ public final class VanicaMoves {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] Vanica's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] Vanica's {} stopped: {}", what, t.toString());
             }
         };
     }

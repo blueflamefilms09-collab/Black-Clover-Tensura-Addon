@@ -55,7 +55,7 @@ final class SaiyanAbilities {
         return s.ready(kind, now) && !p.isSpectator();
     }
 
-    static void say(ServerPlayer p, String key) { p.displayClientMessage(Component.translatable("nusmp.saiyan.msg." + key), true); }
+    static void say(ServerPlayer p, String key) { p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg." + key), true); }
 
     /** Pays the stamina and the Ki of an attack, or says why not (nothing is taken then). */
     static boolean pay(ServerPlayer p, SaiyanState s, double stamina, double kiPercent) {

@@ -1,5 +1,5 @@
 """
-grip_table: writes assets/nusmp/weapon_grips.json (the per-weapon half of the grip table) and tools/weapon_grip/grip_golden.json (what the finder gives for every mesh, which
+grip_table: writes assets/anime_multiverse/weapon_grips.json (the per-weapon half of the grip table) and tools/weapon_grip/grip_golden.json (what the finder gives for every mesh, which
 client/relics/item/GripFinder.java is tested against in GripTableTest).    docs/weapon_grip.md
 
     python tools/weapon_grip/grip_table.py            # print what would change
@@ -144,7 +144,7 @@ def main(argv=None):
     table, golden, needed = build()
     if needed:
         print("meshes with no grip class (add them to weapon_classes.json or EXTRA_CLASS):", ", ".join(sorted(needed)))
-    table_out = {"version": 1, "_doc": "assets/nusmp/weapon_grips.json, written by tools/weapon_grip/grip_table.py (docs/weapon_grip.md): classOf = grip class of weapons "
+    table_out = {"version": 1, "_doc": "assets/anime_multiverse/weapon_grips.json, written by tools/weapon_grip/grip_table.py (docs/weapon_grip.md): classOf = grip class of weapons "
                  "weapon_classes.json does not list; points = grip point (mesh space) of the upgraded meshes; fractions = per-weapon grip fraction (share of the length from the butt)",
                  "classOf": table["classOf"], "fractions": table["fractions"], "points": table["points"]}
     if args.list:

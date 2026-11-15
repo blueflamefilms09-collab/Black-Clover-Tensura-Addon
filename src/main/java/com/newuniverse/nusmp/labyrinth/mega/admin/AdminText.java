@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: every sentence the {@code /dungeon} admin tree says is a translation key under {@code message.nusmp.dungeon.admin.*} with its English text kept here, in ONE pure map. The
+ * Why: every sentence the {@code /dungeon} admin tree says is a translation key under {@code message.anime_multiverse.dungeon.admin.*} with its English text kept here, in ONE pure map. The
  * owner's rule is that new lang strings go into their own flat fragment ({@code tools/lang/dungeon_admin.json}) and the big {@code en_us.json} is not edited, so the code builds
  * every component with {@code Component.translatableWithFallback(key, english, args)}: before the fragment is merged a command still reads in plain English instead of printing a raw
  * key, afterwards a language file can change the wording. A unit test pins that the fragment and this map say exactly the same thing (same keys, same words, same order) so the two
@@ -16,7 +16,7 @@ public final class AdminText {
     private AdminText() {}
 
     /** The prefix of every key of this module. */
-    public static final String PREFIX = "message.nusmp.dungeon.admin.";
+    public static final String PREFIX = "message.anime_multiverse.dungeon.admin.";
 
     private static final Map<String, String> EN = new LinkedHashMap<>();
 

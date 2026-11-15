@@ -18,7 +18,7 @@ import java.util.WeakHashMap;
 
 /**
  * What every renderer of the Zogratis family shares: the GeoLite models (tools/gen_zogratis_triad.py and tools/gen_zogratis_lucius.py
- * write assets/nusmp/geo|animations|textures/entity/zogratis_*), one {@link ZogratisPose} clock per entity (which clip, which second),
+ * write assets/anime_multiverse/geo|animations|textures/entity/zogratis_*), one {@link ZogratisPose} clock per entity (which clip, which second),
  * the red hit tint, the fade of a dying body, and a culling box that keeps wings, halos and capes from popping at the screen edge.
  * The animation and glow logic itself is in the pure classes {@link ZogratisPose} and {@link ZogratisGlow}.
  */

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Why: the entity type of the player-made Avatar ({@code nusmp:player_avatar}) needs its own register, kept apart from the Devil Avatar boss's
+ * Why: the entity type of the player-made Avatar ({@code anime_multiverse:player_avatar}) needs its own register, kept apart from the Devil Avatar boss's
  * ({@code entity.avatar.AvatarEntities}, a different package and a different thing). Registered by {@link AvatarSystem#init}.
  */
 public final class AvatarEntities {

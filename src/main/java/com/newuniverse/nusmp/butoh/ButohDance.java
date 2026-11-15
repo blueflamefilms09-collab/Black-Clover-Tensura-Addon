@@ -39,7 +39,7 @@ import java.util.UUID;
 public final class ButohDance {
     private ButohDance() {}
 
-    static final ResourceLocation SCALE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "butoh_dance_scale");
+    static final ResourceLocation SCALE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "butoh_dance_scale");
     /** How long a stuck hitbox may wait for room to grow back before it is forced back to normal (ticks). */
     private static final int GROW_BACK_LIMIT = 200;
 

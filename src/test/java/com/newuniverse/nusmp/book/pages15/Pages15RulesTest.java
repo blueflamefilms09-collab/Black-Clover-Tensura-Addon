@@ -53,7 +53,7 @@ class Pages15RulesTest {
         assertNotNull(Pages15Rules.nameProblem("Em"));
         assertNotNull(Pages15Rules.nameProblem("Bad\nName"));
         assertNotNull(Pages15Rules.nameProblem(null));
-        assertEquals("nusmp.page.book_fire.ember_lance", Pages15Rules.langKey("book_fire", "ember_lance"));
+        assertEquals("anime_multiverse.page.book_fire.ember_lance", Pages15Rules.langKey("book_fire", "ember_lance"));
     }
 
     // ------------------------------------------------------------------ tiers

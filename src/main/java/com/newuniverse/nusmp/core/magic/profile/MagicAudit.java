@@ -29,7 +29,7 @@ public final class MagicAudit {
         @Override public String toString() { return severity + " [" + magic + "] " + code + ": " + message; }
     }
 
-    /** What the audit asks the world. Resource paths are inside assets/nusmp. */
+    /** What the audit asks the world. Resource paths are inside assets/anime_multiverse. */
     public interface Probe {
         boolean hasResource(String assetPath);
         boolean hasLang(String key);
@@ -37,7 +37,7 @@ public final class MagicAudit {
         String bookPath(String magicId);
         /** Number of pages of the magic's book (all modes), or -1 when it has no book. */
         int pageCount(String magicId);
-        /** Is the legacy per-magic grimoire skill registered (nusmp:grimoire_&lt;name&gt;)? */
+        /** Is the legacy per-magic grimoire skill registered (anime_multiverse:grimoire_&lt;name&gt;)? */
         default boolean legacySkill(String magicId) { return true; }
         /** The ids of the book's own (family) pages, for the page description lang keys; empty = not checked. */
         default java.util.List<String> familyPageIds(String magicId) { return java.util.List.of(); }
@@ -157,7 +157,7 @@ public final class MagicAudit {
         if (!icon.isBlank() && !probe.hasResource(icon))
             add(out, Severity.WARN, id, "NO_ICON", "icon " + icon + " is missing (the skill list shows the fallback " + MagicKeys.FALLBACK_ICON + ")");
         String book = probe.bookPath(id);
-        if (!probe.legacySkill(id)) add(out, Severity.ERROR, id, "NO_LEGACY_SKILL", "nusmp:grimoire_" + id.toLowerCase(Locale.ROOT) + " is not registered: NUSkills.grimoireSkill() would throw");
+        if (!probe.legacySkill(id)) add(out, Severity.ERROR, id, "NO_LEGACY_SKILL", "anime_multiverse:grimoire_" + id.toLowerCase(Locale.ROOT) + " is not registered: NUSkills.grimoireSkill() would throw");
         if (book == null) {
             add(out, Severity.WARN, id, "NO_BOOK", "no Unique book is registered (NUSkills.BOOKS / WIKI_ATTRIBUTE_BOOKS): the grimoire falls back to the legacy skill with no pages");
         } else {

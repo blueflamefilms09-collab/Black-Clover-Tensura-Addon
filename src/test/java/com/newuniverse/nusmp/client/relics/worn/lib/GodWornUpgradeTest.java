@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * the per-grade cap table (and that the Python table and the Java constants agree), the skins and glow maps, the effect tables, the ratio file, the old files that must stay.
  */
 class GodWornUpgradeTest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final Path WORN = ASSETS.resolve("relic_worn");
     static final Path UPG = ASSETS.resolve("visual_upgrade");
     static final Path SKINS = ASSETS.resolve("textures/relic_worn/god");
@@ -221,7 +221,7 @@ class GodWornUpgradeTest {
                 models.add(p.model());
             }
         }
-        assertTrue(Files.exists(Path.of("src/main/resources/assets/nusmp/textures/relic_worn/atlas.png")), "the old atlas stays");
+        assertTrue(Files.exists(Path.of("src/main/resources/assets/anime_multiverse/textures/relic_worn/atlas.png")), "the old atlas stays");
         assertTrue(models.size() >= 40);
     }
 

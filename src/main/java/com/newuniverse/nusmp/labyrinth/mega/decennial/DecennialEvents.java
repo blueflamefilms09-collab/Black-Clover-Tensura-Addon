@@ -65,7 +65,7 @@ final class DecennialEvents {
             if (DecennialArenas.breakAt(sl, pos, e.getPlayer() instanceof ServerPlayer sp ? sp : null)) return;
             BreakableCells.serverRemove(pos.asLong());                             // a stale cell (its hall is gone): forget it
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] An element of a hall could not be broken: {}", ex.toString());
+            LOG.warn("[anime_multiverse] An element of a hall could not be broken: {}", ex.toString());
         }
     }
 
@@ -88,7 +88,7 @@ final class DecennialEvents {
             Entity boss = sl.getEntity(owner);
             if (boss instanceof LabyrinthGuardianEntity g && g.decennial().active()) g.decennial().addDied(g);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The death of an add could not be told to its boss: {}", ex.toString());
+            LOG.warn("[anime_multiverse] The death of an add could not be told to its boss: {}", ex.toString());
         }
     }
 
@@ -99,7 +99,7 @@ final class DecennialEvents {
             DecennialArenas.stepBuilds(server);
             if (server.getTickCount() % 20 == 7) DecennialArenas.pulse(server);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The Decennial halls could not be advanced: {}", ex.toString());
+            LOG.warn("[anime_multiverse] The Decennial halls could not be advanced: {}", ex.toString());
         }
     }
 
@@ -107,7 +107,7 @@ final class DecennialEvents {
         try {
             DecennialArenas.recount(e.getServer());
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The Decennial halls could not be counted at start: {}", ex.toString());
+            LOG.warn("[anime_multiverse] The Decennial halls could not be counted at start: {}", ex.toString());
         }
     }
 
@@ -125,11 +125,11 @@ final class DecennialEvents {
             DecennialProfile p = s == null ? null : DecennialRoster.forLevel(s.level);
             if (p == null) return;
             ItemStack named = stack.copy();
-            named.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("message.nusmp.mega.decennial.core", "Core of %1$s",
+            named.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("message.anime_multiverse.mega.decennial.core", "Core of %1$s",
                     Component.translatableWithFallback("decennial.boss." + p.id() + ".name", p.name())).withStyle(st -> st.withItalic(false).withColor(0xE0B0FF)));
             item.setItem(named);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] A Mana Core could not be named: {}", ex.toString());
+            LOG.warn("[anime_multiverse] A Mana Core could not be named: {}", ex.toString());
         }
     }
 }

@@ -12,14 +12,14 @@ import java.util.List;
 
 /**
  * Why: the Codex page of the Beast Will system (3.45.0): how to get a will, how it is learned, what the two forms are, what strain does and which keys do what, plus the wills the player holds
- * with their progress. Two columns of titled paragraphs, like the other text pages; the texts are lang keys {@code nusmp.beastwill.codex.*}. Appended after the stock pages (pages only ever go at the
+ * with their progress. Two columns of titled paragraphs, like the other text pages; the texts are lang keys {@code anime_multiverse.beastwill.codex.*}. Appended after the stock pages (pages only ever go at the
  * end). Rebuilt each time the Codex opens, so the progress is the last one the server sent.
  */
 public final class BeastWillCodexPage implements CodexPage {
     private static final String[] TOPICS = {"what", "get", "learn", "forms", "strain", "keys", "wills"};
     private List<String[]> entries;
 
-    @Override public String title() { return Component.translatable("nusmp.beastwill.codex.title").getString(); }
+    @Override public String title() { return Component.translatable("anime_multiverse.beastwill.codex.title").getString(); }
 
     @Override public String glyph() { return "Bw"; }
 
@@ -33,17 +33,17 @@ public final class BeastWillCodexPage implements CodexPage {
             StringBuilder sb = new StringBuilder();
             for (BeastWillNet.Entry e : s.wills()) {
                 sb.append(e.id().equals(s.active()) ? "▶ " : "  ").append(BeastWillClient.name(e.id())).append(": ")
-                        .append(Component.translatable("nusmp.beastwill.codex.progress", e.assimilation(), e.mastery()).getString()).append('\n');
+                        .append(Component.translatable("anime_multiverse.beastwill.codex.progress", e.assimilation(), e.mastery()).getString()).append('\n');
             }
-            out.add(new String[]{Component.translatable("nusmp.beastwill.codex.yours").getString(), sb.toString().stripTrailing()});
+            out.add(new String[]{Component.translatable("anime_multiverse.beastwill.codex.yours").getString(), sb.toString().stripTrailing()});
         }
         for (String t : TOPICS) {
             String body = t.equals("keys")
-                    ? Component.translatable("nusmp.beastwill.codex.keys.text", BeastWillClient.ACQUIRE.getTranslatedKeyMessage().getString(), BeastWillClient.INTEGRATE.getTranslatedKeyMessage().getString(),
+                    ? Component.translatable("anime_multiverse.beastwill.codex.keys.text", BeastWillClient.ACQUIRE.getTranslatedKeyMessage().getString(), BeastWillClient.INTEGRATE.getTranslatedKeyMessage().getString(),
                             BeastWillClient.ABILITY1.getTranslatedKeyMessage().getString(), BeastWillClient.ABILITY2.getTranslatedKeyMessage().getString(),
                             BeastWillClient.SWAP.getTranslatedKeyMessage().getString()).getString()
-                    : Component.translatable("nusmp.beastwill.codex." + t + ".text").getString();
-            out.add(new String[]{Component.translatable("nusmp.beastwill.codex." + t + ".title").getString(), body});
+                    : Component.translatable("anime_multiverse.beastwill.codex." + t + ".text").getString();
+            out.add(new String[]{Component.translatable("anime_multiverse.beastwill.codex." + t + ".title").getString(), body});
         }
         entries = out;
         return out;

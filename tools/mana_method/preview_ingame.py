@@ -1,6 +1,6 @@
 """
 The Mana Method rune through the game's OWN render path: tools/vfx_preview/preview.py compiles the real vfx layer (vfx/client/layer/RuneWritingLayer.java) with the real vertex buffer
-(patched only to drain its quads instead of drawing them, and to take the 1,200 vertex budget of this layer) and the real textures (assets/nusmp/textures/particle/rune_*.png), runs the
+(patched only to drain its quads instead of drawing them, and to take the 1,200 vertex budget of this layer) and the real textures (assets/anime_multiverse/textures/particle/rune_*.png), runs the
 layer's render() for the ages asked, and rasterises the quads the layer emitted with their blend, vertex colours and textures. This script drives it for the scenes of the owner's review and
 puts the result next to the reference frame. What the headless tool cannot draw is the open grimoire (the mod's item model, drawn by client.manamethod.RuneClient): only its gold glow shows.
 

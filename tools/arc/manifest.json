@@ -10,10 +10,10 @@
    "name": "Ais Wallenstein",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_ais_wallenstein.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_ais_wallenstein.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ais_wallenstein.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ais_wallenstein_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_ais_wallenstein.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_ais_wallenstein.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ais_wallenstein.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ais_wallenstein_glow.png"
    ],
    "texture": [
     512,
@@ -128,10 +128,10 @@
    "name": "Amphisbaena",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_amphisbaena.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_amphisbaena.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_amphisbaena.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_amphisbaena_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_amphisbaena.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_amphisbaena.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_amphisbaena.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_amphisbaena_glow.png"
    ],
    "texture": [
     512,
@@ -257,10 +257,10 @@
    "name": "Amphisbaena, Leveled",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_amphisbaena_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_amphisbaena_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_amphisbaena_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_amphisbaena_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_amphisbaena_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_amphisbaena_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_amphisbaena_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_amphisbaena_form2_glow.png"
    ],
    "texture": [
     512,
@@ -388,10 +388,10 @@
    "name": "Asta",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_asta.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_asta.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_asta.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_asta_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_asta.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_asta.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_asta.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_asta_glow.png"
    ],
    "texture": [
     512,
@@ -499,10 +499,10 @@
    "name": "Ban",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_ban.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_ban.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ban.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ban_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_ban.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_ban.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ban.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ban_glow.png"
    ],
    "texture": [
     512,
@@ -609,10 +609,10 @@
    "name": "Ban, the Last Life",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_ban_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_ban_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ban_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_ban_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_ban_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_ban_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ban_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_ban_form2_glow.png"
    ],
    "texture": [
     512,
@@ -728,10 +728,10 @@
    "name": "Basilisk",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_basilisk.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_basilisk.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_basilisk.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_basilisk_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_basilisk.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_basilisk.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_basilisk.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_basilisk_glow.png"
    ],
    "texture": [
     512,
@@ -853,10 +853,10 @@
    "name": "Bell Cranel",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_bell_cranel.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_bell_cranel.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_bell_cranel.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_bell_cranel_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_bell_cranel.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_bell_cranel.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_bell_cranel.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_bell_cranel_glow.png"
    ],
    "texture": [
     512,
@@ -964,10 +964,10 @@
    "name": "Black Goliath",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_black_goliath.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_black_goliath.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_goliath.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_goliath_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_black_goliath.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_black_goliath.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_goliath.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_goliath_glow.png"
    ],
    "texture": [
     512,
@@ -1086,10 +1086,10 @@
    "name": "Black Goliath, Leveled",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_black_goliath_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_black_goliath_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_goliath_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_goliath_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_black_goliath_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_black_goliath_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_goliath_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_goliath_form2_glow.png"
    ],
    "texture": [
     512,
@@ -1210,10 +1210,10 @@
    "name": "Old Witch",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_black_market_witch.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_black_market_witch.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_market_witch.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_black_market_witch_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_black_market_witch.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_black_market_witch.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_market_witch.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_black_market_witch_glow.png"
    ],
    "texture": [
     512,
@@ -1325,10 +1325,10 @@
    "name": "Blood Beast",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_blood_beast.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_blood_beast.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_blood_beast.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_blood_beast_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_blood_beast.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_blood_beast.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_blood_beast.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_blood_beast_glow.png"
    ],
    "texture": [
     512,
@@ -1447,10 +1447,10 @@
    "name": "Charlotte Roselei",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_charlotte_roselei.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_charlotte_roselei.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charlotte_roselei.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charlotte_roselei_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_charlotte_roselei.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_charlotte_roselei.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charlotte_roselei.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charlotte_roselei_glow.png"
    ],
    "texture": [
     512,
@@ -1560,10 +1560,10 @@
    "name": "Charmy Pappitson",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_charmy_pappitson.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_charmy_pappitson.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charmy_pappitson.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charmy_pappitson_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_charmy_pappitson.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_charmy_pappitson.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charmy_pappitson.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charmy_pappitson_glow.png"
    ],
    "texture": [
     512,
@@ -1671,10 +1671,10 @@
    "name": "Charybdis Spawn",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_charybdis_spawn.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_charybdis_spawn.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_charybdis_spawn.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_charybdis_spawn.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charybdis_spawn.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charybdis_spawn_glow.png"
    ],
    "texture": [
     512,
@@ -1810,10 +1810,10 @@
    "name": "Charybdis Spawn, Flushed",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_charybdis_spawn_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_charybdis_spawn_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_charybdis_spawn_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_charybdis_spawn_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_charybdis_spawn_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charybdis_spawn_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_charybdis_spawn_form2_glow.png"
    ],
    "texture": [
     512,
@@ -1949,10 +1949,10 @@
    "name": "Cotton Cloud",
    "build": "child",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_cloud.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_cloud.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_cloud.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_cloud_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_cotton_cloud.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_cotton_cloud.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_cloud.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_cloud_glow.png"
    ],
    "texture": [
     512,
@@ -2058,10 +2058,10 @@
    "name": "Cotton Sheep",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_sheep.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_sheep.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_cotton_sheep.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_cotton_sheep.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_sheep.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_sheep_glow.png"
    ],
    "texture": [
     512,
@@ -2176,10 +2176,10 @@
    "name": "Cotton Sheep Cook",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_cotton_sheep_cook.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_cotton_sheep_cook.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_cook.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_cotton_sheep_cook_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_cotton_sheep_cook.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_cotton_sheep_cook.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_sheep_cook.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_cotton_sheep_cook_glow.png"
    ],
    "texture": [
     512,
@@ -2295,10 +2295,10 @@
    "name": "Dante Zogratis",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dante_zogratis.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dante_zogratis.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dante_zogratis.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dante_zogratis_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dante_zogratis.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dante_zogratis.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dante_zogratis.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dante_zogratis_glow.png"
    ],
    "texture": [
     512,
@@ -2405,10 +2405,10 @@
    "name": "Dante Zogratis, Lucifero",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dante_zogratis_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dante_zogratis_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dante_zogratis_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dante_zogratis_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dante_zogratis_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dante_zogratis_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dante_zogratis_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dante_zogratis_form2_glow.png"
    ],
    "texture": [
     512,
@@ -2519,10 +2519,10 @@
    "name": "Dark Disciple",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dark_disciple.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dark_disciple.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dark_disciple.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dark_disciple_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dark_disciple.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dark_disciple.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dark_disciple.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dark_disciple_glow.png"
    ],
    "texture": [
     512,
@@ -2635,10 +2635,10 @@
    "name": "Devil Avatar",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_devil_avatar.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_devil_avatar.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_devil_avatar.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_devil_avatar_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_devil_avatar.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_devil_avatar.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_devil_avatar.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_devil_avatar_glow.png"
    ],
    "texture": [
     512,
@@ -2759,10 +2759,10 @@
    "name": "Devil Avatar, Gates Open",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_devil_avatar_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_devil_avatar_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_devil_avatar_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_devil_avatar_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_devil_avatar_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_devil_avatar_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_devil_avatar_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_devil_avatar_form2_glow.png"
    ],
    "texture": [
     512,
@@ -2885,10 +2885,10 @@
    "name": "Diane",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_diane.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_diane.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_diane.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_diane_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_diane.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_diane.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_diane.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_diane_glow.png"
    ],
    "texture": [
     512,
@@ -2997,10 +2997,10 @@
    "name": "Diane, in Drole's Dance",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_diane_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_diane_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_diane_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_diane_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_diane_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_diane_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_diane_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_diane_form2_glow.png"
    ],
    "texture": [
     512,
@@ -3115,10 +3115,10 @@
    "name": "Dorothy Unsworth",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dorothy_unsworth.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dorothy_unsworth.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dorothy_unsworth.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dorothy_unsworth_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dorothy_unsworth.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dorothy_unsworth.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dorothy_unsworth.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dorothy_unsworth_glow.png"
    ],
    "texture": [
     512,
@@ -3229,10 +3229,10 @@
    "name": "Direwolf",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dungeon_direwolf.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dungeon_direwolf.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_direwolf.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_direwolf_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dungeon_direwolf.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dungeon_direwolf.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dungeon_direwolf.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dungeon_direwolf_glow.png"
    ],
    "texture": [
     512,
@@ -3354,10 +3354,10 @@
    "name": "Dungeon Slime",
    "build": "child",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_dungeon_slime.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_dungeon_slime.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_slime.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_dungeon_slime_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_dungeon_slime.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_dungeon_slime.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dungeon_slime.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_dungeon_slime_glow.png"
    ],
    "texture": [
     512,
@@ -3468,10 +3468,10 @@
    "name": "Eina Tulle",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_eina_tulle.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_eina_tulle.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_eina_tulle.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_eina_tulle_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_eina_tulle.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_eina_tulle.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_eina_tulle.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_eina_tulle_glow.png"
    ],
    "texture": [
     512,
@@ -3579,10 +3579,10 @@
    "name": "Escanor",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_escanor.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_escanor.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_escanor.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_escanor_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_escanor.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_escanor.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_escanor.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_escanor_glow.png"
    ],
    "texture": [
     512,
@@ -3689,10 +3689,10 @@
    "name": "Escanor, Pride in the Sun",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_escanor_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_escanor_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_escanor_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_escanor_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_escanor_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_escanor_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_escanor_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_escanor_form2_glow.png"
    ],
    "texture": [
     512,
@@ -3805,10 +3805,10 @@
    "name": "Fana",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_fana.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_fana.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fana.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fana_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_fana.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_fana.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fana.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fana_glow.png"
    ],
    "texture": [
     512,
@@ -3922,10 +3922,10 @@
    "name": "Fana, the Evil Heart",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_fana_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_fana_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fana_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fana_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_fana_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_fana_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fana_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fana_form2_glow.png"
    ],
    "texture": [
     512,
@@ -4041,10 +4041,10 @@
    "name": "Finral Roulacase",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_finral_roulacase.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_finral_roulacase.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_finral_roulacase.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_finral_roulacase_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_finral_roulacase.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_finral_roulacase.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_finral_roulacase.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_finral_roulacase_glow.png"
    ],
    "texture": [
     512,
@@ -4154,10 +4154,10 @@
    "name": "Floor Warden",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_floor_warden.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_floor_warden.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_floor_warden.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_floor_warden_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_floor_warden.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_floor_warden.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_floor_warden.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_floor_warden_glow.png"
    ],
    "texture": [
     512,
@@ -4278,10 +4278,10 @@
    "name": "Fuegoleon Vermillion",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_fuegoleon_vermillion.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_fuegoleon_vermillion.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fuegoleon_vermillion.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_fuegoleon_vermillion_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_fuegoleon_vermillion.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_fuegoleon_vermillion.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fuegoleon_vermillion.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_fuegoleon_vermillion_glow.png"
    ],
    "texture": [
     512,
@@ -4390,10 +4390,10 @@
    "name": "Gauche Adlai",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_gauche_adlai.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_gauche_adlai.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gauche_adlai.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gauche_adlai_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_gauche_adlai.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_gauche_adlai.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gauche_adlai.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gauche_adlai_glow.png"
    ],
    "texture": [
     512,
@@ -4504,10 +4504,10 @@
    "name": "God of Order",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_god_of_order.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_god_of_order.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_god_of_order.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_god_of_order_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_god_of_order.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_god_of_order.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_god_of_order.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_god_of_order_glow.png"
    ],
    "texture": [
     512,
@@ -4634,10 +4634,10 @@
    "name": "God of Order, Ledger Open",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_god_of_order_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_god_of_order_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_god_of_order_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_god_of_order_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_god_of_order_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_god_of_order_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_god_of_order_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_god_of_order_form2_glow.png"
    ],
    "texture": [
     512,
@@ -4768,10 +4768,10 @@
    "name": "Goliath",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_goliath.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_goliath.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_goliath.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_goliath.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_goliath.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_goliath.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_goliath_glow.png"
    ],
    "texture": [
     512,
@@ -4881,10 +4881,10 @@
    "name": "Goliath, Gates Open",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_goliath_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_goliath_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_goliath_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_goliath_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_goliath_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_goliath_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_goliath_form2_glow.png"
    ],
    "texture": [
     512,
@@ -5007,10 +5007,10 @@
    "name": "Gordon Agrippa",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_gordon_agrippa.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_gordon_agrippa.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gordon_agrippa.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gordon_agrippa_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_gordon_agrippa.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_gordon_agrippa.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gordon_agrippa.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gordon_agrippa_glow.png"
    ],
    "texture": [
     512,
@@ -5119,10 +5119,10 @@
    "name": "Gowther",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_gowther.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_gowther.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gowther.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_gowther.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_gowther.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gowther.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gowther_glow.png"
    ],
    "texture": [
     512,
@@ -5232,10 +5232,10 @@
    "name": "Gowther, the Doll Unbound",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_gowther_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_gowther_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_gowther_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_gowther_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_gowther_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gowther_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_gowther_form2_glow.png"
    ],
    "texture": [
     512,
@@ -5355,10 +5355,10 @@
    "name": "Grey",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_grey.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_grey.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grey.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grey_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_grey.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_grey.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grey.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grey_glow.png"
    ],
    "texture": [
     512,
@@ -5468,10 +5468,10 @@
    "name": "Grimoire Daemon",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_grimoire_daemon.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_grimoire_daemon.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_grimoire_daemon.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_grimoire_daemon.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_glow.png"
    ],
    "texture": [
     512,
@@ -5582,10 +5582,10 @@
    "name": "Grimoire Daemon",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_grimoire_daemon_arch.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_grimoire_daemon_arch.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_arch.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_arch_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_grimoire_daemon_arch.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_grimoire_daemon_arch.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_arch.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_arch_glow.png"
    ],
    "texture": [
     512,
@@ -5704,10 +5704,10 @@
    "name": "Grimoire Daemon",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_grimoire_daemon_greater.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_grimoire_daemon_greater.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_greater.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_greater_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_grimoire_daemon_greater.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_grimoire_daemon_greater.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_greater.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_greater_glow.png"
    ],
    "texture": [
     512,
@@ -5820,10 +5820,10 @@
    "name": "Rule Stone",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_grimoire_daemon_stone.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_grimoire_daemon_stone.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_stone.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_grimoire_daemon_stone_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_grimoire_daemon_stone.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_grimoire_daemon_stone.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_stone.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_grimoire_daemon_stone_glow.png"
    ],
    "texture": [
     512,
@@ -5930,10 +5930,10 @@
    "name": "Heath Grice",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_heath_grice.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_heath_grice.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_heath_grice.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_heath_grice.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_heath_grice.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_heath_grice_glow.png"
    ],
    "texture": [
     512,
@@ -6047,10 +6047,10 @@
    "name": "Heath Grice, Purified",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_heath_grice_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_heath_grice_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_heath_grice_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_heath_grice_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_heath_grice_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_heath_grice_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_heath_grice_form2_glow.png"
    ],
    "texture": [
     512,
@@ -6174,10 +6174,10 @@
    "name": "Hestia",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_hestia.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_hestia.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_hestia.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_hestia_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_hestia.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_hestia.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_hestia.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_hestia_glow.png"
    ],
    "texture": [
     512,
@@ -6283,10 +6283,10 @@
    "name": "Jack the Ripper",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_jack_the_ripper.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_jack_the_ripper.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_jack_the_ripper.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_jack_the_ripper_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_jack_the_ripper.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_jack_the_ripper.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_jack_the_ripper.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_jack_the_ripper_glow.png"
    ],
    "texture": [
     512,
@@ -6396,10 +6396,10 @@
    "name": "Julius Novachrono",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_julius_novachrono.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_julius_novachrono.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_julius_novachrono.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_julius_novachrono_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_julius_novachrono.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_julius_novachrono.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_julius_novachrono.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_julius_novachrono_glow.png"
    ],
    "texture": [
     512,
@@ -6510,10 +6510,10 @@
    "name": "Kahono",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_kahono.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_kahono.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_kahono.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_kahono_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_kahono.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_kahono.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_kahono.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_kahono_glow.png"
    ],
    "texture": [
     512,
@@ -6622,10 +6622,10 @@
    "name": "Kiato",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_kiato.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_kiato.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_kiato.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_kiato_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_kiato.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_kiato.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_kiato.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_kiato_glow.png"
    ],
    "texture": [
     512,
@@ -6733,10 +6733,10 @@
    "name": "King",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_king.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_king.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_king.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_king_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_king.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_king.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_king.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_king_glow.png"
    ],
    "texture": [
     512,
@@ -6858,10 +6858,10 @@
    "name": "King, the Fairy King Harlequin",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_king_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_king_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_king_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_king_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_king_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_king_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_king_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_king_form2_glow.png"
    ],
    "texture": [
     512,
@@ -6985,10 +6985,10 @@
    "name": "Klaus Lunettes",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_klaus_lunettes.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_klaus_lunettes.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_klaus_lunettes.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_klaus_lunettes_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_klaus_lunettes.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_klaus_lunettes.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_klaus_lunettes.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_klaus_lunettes_glow.png"
    ],
    "texture": [
     512,
@@ -7097,10 +7097,10 @@
    "name": "Leopold Vermillion",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_leopold_vermillion.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_leopold_vermillion.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_leopold_vermillion.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_leopold_vermillion_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_leopold_vermillion.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_leopold_vermillion.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_leopold_vermillion.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_leopold_vermillion_glow.png"
    ],
    "texture": [
     512,
@@ -7209,10 +7209,10 @@
    "name": "Liliruca Arde",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_liliruca_arde.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_liliruca_arde.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_liliruca_arde.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_liliruca_arde_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_liliruca_arde.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_liliruca_arde.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_liliruca_arde.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_liliruca_arde_glow.png"
    ],
    "texture": [
     512,
@@ -7319,10 +7319,10 @@
    "name": "Living Armor",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_living_armor.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_living_armor.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_living_armor.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_living_armor_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_living_armor.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_living_armor.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_living_armor.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_living_armor_glow.png"
    ],
    "texture": [
     512,
@@ -7430,10 +7430,10 @@
    "name": "Lotus Whomalt",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_lotus_whomalt.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_lotus_whomalt.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lotus_whomalt.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lotus_whomalt_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_lotus_whomalt.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_lotus_whomalt.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lotus_whomalt.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lotus_whomalt_glow.png"
    ],
    "texture": [
     512,
@@ -7550,10 +7550,10 @@
    "name": "Lucifero",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_lucifero.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_lucifero.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_lucifero.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_lucifero.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucifero.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucifero_glow.png"
    ],
    "texture": [
     512,
@@ -7675,10 +7675,10 @@
    "name": "Lucifero, King of Devils (full power)",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_lucifero_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_lucifero_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucifero_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_lucifero_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_lucifero_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucifero_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucifero_form2_glow.png"
    ],
    "texture": [
     512,
@@ -7800,10 +7800,10 @@
    "name": "Lucius Zogratis",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_lucius_zogratis.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_lucius_zogratis.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucius_zogratis.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucius_zogratis_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_lucius_zogratis.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_lucius_zogratis.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucius_zogratis.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucius_zogratis_glow.png"
    ],
    "texture": [
     512,
@@ -7913,10 +7913,10 @@
    "name": "Lucius Zogratis, Divine",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_lucius_zogratis_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_lucius_zogratis_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucius_zogratis_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_lucius_zogratis_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_lucius_zogratis_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_lucius_zogratis_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucius_zogratis_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_lucius_zogratis_form2_glow.png"
    ],
    "texture": [
     512,
@@ -8038,10 +8038,10 @@
    "name": "Luck Voltia",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_luck_voltia.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_luck_voltia.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_luck_voltia.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_luck_voltia_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_luck_voltia.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_luck_voltia.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_luck_voltia.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_luck_voltia_glow.png"
    ],
    "texture": [
     512,
@@ -8150,10 +8150,10 @@
    "name": "Magna Swing",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_magna_swing.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_magna_swing.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_magna_swing.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_magna_swing_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_magna_swing.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_magna_swing.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_magna_swing.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_magna_swing_glow.png"
    ],
    "texture": [
     512,
@@ -8265,10 +8265,10 @@
    "name": "Mars",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_mars.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_mars.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mars.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mars_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_mars.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_mars.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mars.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mars_glow.png"
    ],
    "texture": [
     512,
@@ -8387,10 +8387,10 @@
    "name": "Mars, Stones Aflame",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_mars_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_mars_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mars_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mars_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_mars_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_mars_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mars_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mars_form2_glow.png"
    ],
    "texture": [
     512,
@@ -8511,10 +8511,10 @@
    "name": "Marx Francois",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_marx_francois.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_marx_francois.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_marx_francois.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_marx_francois_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_marx_francois.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_marx_francois.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_marx_francois.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_marx_francois_glow.png"
    ],
    "texture": [
     512,
@@ -8622,10 +8622,10 @@
    "name": "Meliodas",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_meliodas.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_meliodas.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_meliodas.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_meliodas_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_meliodas.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_meliodas.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_meliodas.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_meliodas_glow.png"
    ],
    "texture": [
     512,
@@ -8732,10 +8732,10 @@
    "name": "Meliodas, the Demon King",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_meliodas_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_meliodas_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_meliodas_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_meliodas_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_meliodas_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_meliodas_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_meliodas_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_meliodas_form2_glow.png"
    ],
    "texture": [
     512,
@@ -8844,10 +8844,10 @@
    "name": "Mereoleona Vermillion",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_mereoleona_vermillion.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_mereoleona_vermillion.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mereoleona_vermillion.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mereoleona_vermillion_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_mereoleona_vermillion.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_mereoleona_vermillion.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mereoleona_vermillion.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mereoleona_vermillion_glow.png"
    ],
    "texture": [
     512,
@@ -8957,10 +8957,10 @@
    "name": "Merlin",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_merlin.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_merlin.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_merlin.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_merlin.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_merlin.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_merlin.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_merlin_glow.png"
    ],
    "texture": [
     512,
@@ -9075,10 +9075,10 @@
    "name": "Merlin, Infinity Unbound",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_merlin_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_merlin_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_merlin_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_merlin_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_merlin_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_merlin_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_merlin_form2_glow.png"
    ],
    "texture": [
     512,
@@ -9195,10 +9195,10 @@
    "name": "Mimosa Vermillion",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_mimosa_vermillion.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_mimosa_vermillion.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mimosa_vermillion.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_mimosa_vermillion_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_mimosa_vermillion.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_mimosa_vermillion.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mimosa_vermillion.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_mimosa_vermillion_glow.png"
    ],
    "texture": [
     512,
@@ -9308,10 +9308,10 @@
    "name": "Minotaur",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_minotaur.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_minotaur.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_minotaur.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_minotaur_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_minotaur.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_minotaur.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_minotaur.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_minotaur_glow.png"
    ],
    "texture": [
     512,
@@ -9427,10 +9427,10 @@
    "name": "Asterius",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_minotaur_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_minotaur_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_minotaur_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_minotaur_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_minotaur_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_minotaur_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_minotaur_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_minotaur_form2_glow.png"
    ],
    "texture": [
     512,
@@ -9546,10 +9546,10 @@
    "name": "Morris Libardirt",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_morris_libardirt.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_morris_libardirt.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_morris_libardirt.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_morris_libardirt.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_morris_libardirt.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_morris_libardirt_glow.png"
    ],
    "texture": [
     512,
@@ -9661,10 +9661,10 @@
    "name": "Morris Libardirt, Lucifero's Host",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_morris_libardirt_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_morris_libardirt_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_morris_libardirt_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_morris_libardirt_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_morris_libardirt_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_morris_libardirt_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_morris_libardirt_form2_glow.png"
    ],
    "texture": [
     512,
@@ -9782,10 +9782,10 @@
    "name": "Nacht Faust",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_nacht_faust.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_nacht_faust.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_nacht_faust.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_nacht_faust_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_nacht_faust.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_nacht_faust.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_nacht_faust.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_nacht_faust_glow.png"
    ],
    "texture": [
     512,
@@ -9896,10 +9896,10 @@
    "name": "Noelle Silva",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_noelle_silva.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_noelle_silva.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_noelle_silva.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_noelle_silva_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_noelle_silva.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_noelle_silva.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_noelle_silva.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_noelle_silva_glow.png"
    ],
    "texture": [
     512,
@@ -10009,10 +10009,10 @@
    "name": "Nozel Silva",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_nozel_silva.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_nozel_silva.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_nozel_silva.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_nozel_silva_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_nozel_silva.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_nozel_silva.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_nozel_silva.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_nozel_silva_glow.png"
    ],
    "texture": [
     512,
@@ -10122,10 +10122,10 @@
    "name": "Villager",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_npc_default.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_npc_default.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_npc_default.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_npc_default_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_npc_default.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_npc_default.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_npc_default.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_npc_default_glow.png"
    ],
    "texture": [
     512,
@@ -10229,10 +10229,10 @@
    "name": "Painted Hound",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_painted_beast.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_painted_beast.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_beast.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_beast_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_painted_beast.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_painted_beast.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_beast.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_beast_glow.png"
    ],
    "texture": [
     512,
@@ -10350,10 +10350,10 @@
    "name": "Painted Giant",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_painted_giant.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_painted_giant.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_giant.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_giant_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_painted_giant.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_painted_giant.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_giant.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_giant_glow.png"
    ],
    "texture": [
     512,
@@ -10465,10 +10465,10 @@
    "name": "Painted Knight",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_painted_knight.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_painted_knight.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_knight.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_painted_knight_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_painted_knight.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_painted_knight.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_knight.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_painted_knight_glow.png"
    ],
    "texture": [
     512,
@@ -10591,10 +10591,10 @@
    "name": "Patolli",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_patolli.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_patolli.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_patolli.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_patolli.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_patolli.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_patolli.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_patolli_glow.png"
    ],
    "texture": [
     512,
@@ -10705,10 +10705,10 @@
    "name": "Patolli, the Dark Elf",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_patolli_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_patolli_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_patolli_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_patolli_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_patolli_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_patolli_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_patolli_form2_glow.png"
    ],
    "texture": [
     512,
@@ -10821,10 +10821,10 @@
    "name": "Rades Spirito",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_rades_spirito.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_rades_spirito.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_rades_spirito.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_rades_spirito.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rades_spirito.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rades_spirito_glow.png"
    ],
    "texture": [
     512,
@@ -10933,10 +10933,10 @@
    "name": "Rades Spirito, the Betrayed",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_rades_spirito_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_rades_spirito_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rades_spirito_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_rades_spirito_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_rades_spirito_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rades_spirito_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rades_spirito_form2_glow.png"
    ],
    "texture": [
     512,
@@ -11049,10 +11049,10 @@
    "name": "Revchi Salik",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_revchi_salik.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_revchi_salik.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_revchi_salik.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_revchi_salik_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_revchi_salik.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_revchi_salik.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_revchi_salik.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_revchi_salik_glow.png"
    ],
    "texture": [
     512,
@@ -11166,10 +11166,10 @@
    "name": "Rhya",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_rhya.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_rhya.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rhya.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_rhya.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_rhya.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rhya.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rhya_glow.png"
    ],
    "texture": [
     512,
@@ -11278,10 +11278,10 @@
    "name": "Rhya, the Open Eye",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_rhya_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_rhya_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rhya_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_rhya_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_rhya_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rhya_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rhya_form2_glow.png"
    ],
    "texture": [
     512,
@@ -11391,10 +11391,10 @@
    "name": "Rouge",
    "build": "child",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_rouge.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_rouge.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rouge.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_rouge_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_rouge.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_rouge.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rouge.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_rouge_glow.png"
    ],
    "texture": [
     512,
@@ -11516,10 +11516,10 @@
    "name": "Secre Swallowtail",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_secre_swallowtail.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_secre_swallowtail.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_secre_swallowtail.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_secre_swallowtail_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_secre_swallowtail.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_secre_swallowtail.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_secre_swallowtail.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_secre_swallowtail_glow.png"
    ],
    "texture": [
     512,
@@ -11630,10 +11630,10 @@
    "name": "Solid Silva",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_solid_silva.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_solid_silva.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_solid_silva.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_solid_silva_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_solid_silva.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_solid_silva.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_solid_silva.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_solid_silva_glow.png"
    ],
    "texture": [
     512,
@@ -11742,10 +11742,10 @@
    "name": "Black Devil",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_spirit_black_devil.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_spirit_black_devil.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_black_devil.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_black_devil_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_spirit_black_devil.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_spirit_black_devil.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_black_devil.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_black_devil_glow.png"
    ],
    "texture": [
     512,
@@ -11867,10 +11867,10 @@
    "name": "Gnome",
    "build": "huge",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_spirit_gnome.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_spirit_gnome.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_gnome.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_gnome_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_spirit_gnome.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_spirit_gnome.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_gnome.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_gnome_glow.png"
    ],
    "texture": [
     512,
@@ -11976,10 +11976,10 @@
    "name": "Salamander",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_spirit_salamander.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_spirit_salamander.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_salamander.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_salamander_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_spirit_salamander.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_spirit_salamander.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_salamander.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_salamander_glow.png"
    ],
    "texture": [
     512,
@@ -12100,10 +12100,10 @@
    "name": "Sylph",
    "build": "small",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_spirit_sylph.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_spirit_sylph.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_sylph.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_sylph_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_spirit_sylph.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_spirit_sylph.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_sylph.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_sylph_glow.png"
    ],
    "texture": [
     512,
@@ -12221,10 +12221,10 @@
    "name": "Undine",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_spirit_undine.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_spirit_undine.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_undine.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_spirit_undine_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_spirit_undine.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_spirit_undine.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_undine.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_spirit_undine_glow.png"
    ],
    "texture": [
     512,
@@ -12336,10 +12336,10 @@
    "name": "Tower Wizard",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_tower_wizard.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_tower_wizard.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_tower_wizard.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_tower_wizard_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_tower_wizard.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_tower_wizard.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_tower_wizard.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_tower_wizard_glow.png"
    ],
    "texture": [
     512,
@@ -12449,10 +12449,10 @@
    "name": "Udaeus",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_udaeus.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_udaeus.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_udaeus.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_udaeus_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_udaeus.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_udaeus.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_udaeus.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_udaeus_glow.png"
    ],
    "texture": [
     512,
@@ -12571,10 +12571,10 @@
    "name": "Udaeus, Leveled",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_udaeus_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_udaeus_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_udaeus_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_udaeus_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_udaeus_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_udaeus_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_udaeus_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_udaeus_form2_glow.png"
    ],
    "texture": [
     512,
@@ -12695,10 +12695,10 @@
    "name": "Vanessa Enoteca",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_vanessa_enoteca.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_vanessa_enoteca.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanessa_enoteca.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanessa_enoteca_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_vanessa_enoteca.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_vanessa_enoteca.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanessa_enoteca.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanessa_enoteca_glow.png"
    ],
    "texture": [
     512,
@@ -12811,10 +12811,10 @@
    "name": "Vanica Zogratis",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_vanica_zogratis.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_vanica_zogratis.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanica_zogratis.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanica_zogratis_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_vanica_zogratis.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_vanica_zogratis.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanica_zogratis.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanica_zogratis_glow.png"
    ],
    "texture": [
     512,
@@ -12921,10 +12921,10 @@
    "name": "Vanica Zogratis, Megicula",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_vanica_zogratis_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_vanica_zogratis_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanica_zogratis_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vanica_zogratis_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_vanica_zogratis_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_vanica_zogratis_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanica_zogratis_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vanica_zogratis_form2_glow.png"
    ],
    "texture": [
     512,
@@ -13037,10 +13037,10 @@
    "name": "Vetto",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_vetto.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_vetto.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vetto.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vetto_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_vetto.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_vetto.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vetto.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vetto_glow.png"
    ],
    "texture": [
     512,
@@ -13149,10 +13149,10 @@
    "name": "Vetto, Mythical Beast",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_vetto_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_vetto_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vetto_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_vetto_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_vetto_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_vetto_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vetto_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_vetto_form2_glow.png"
    ],
    "texture": [
     512,
@@ -13268,10 +13268,10 @@
    "name": "Welf Crozzo",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_welf_crozzo.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_welf_crozzo.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_welf_crozzo.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_welf_crozzo_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_welf_crozzo.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_welf_crozzo.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_welf_crozzo.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_welf_crozzo_glow.png"
    ],
    "texture": [
     512,
@@ -13381,10 +13381,10 @@
    "name": "William Vangeance",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_william_vangeance.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_william_vangeance.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_william_vangeance.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_william_vangeance_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_william_vangeance.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_william_vangeance.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_william_vangeance.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_william_vangeance_glow.png"
    ],
    "texture": [
     512,
@@ -13494,10 +13494,10 @@
    "name": "Yami Sukehiro",
    "build": "broad",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_yami_sukehiro.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_yami_sukehiro.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_yami_sukehiro.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_yami_sukehiro_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_yami_sukehiro.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_yami_sukehiro.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_yami_sukehiro.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_yami_sukehiro_glow.png"
    ],
    "texture": [
     512,
@@ -13607,10 +13607,10 @@
    "name": "Yuno",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_yuno.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_yuno.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_yuno.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_yuno_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_yuno.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_yuno.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_yuno.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_yuno_glow.png"
    ],
    "texture": [
     512,
@@ -13720,10 +13720,10 @@
    "name": "Zagred",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zagred.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zagred.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zagred.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zagred.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_glow.png"
    ],
    "texture": [
     512,
@@ -13840,10 +13840,10 @@
    "name": "Zagred, the Word Soul Devil",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zagred_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zagred_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zagred_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zagred_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_form2_glow.png"
    ],
    "texture": [
     512,
@@ -13974,10 +13974,10 @@
    "name": "Zagred (legacy)",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zagred_legacy.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zagred_legacy.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_legacy.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_legacy_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zagred_legacy.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zagred_legacy.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_legacy.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_legacy_glow.png"
    ],
    "texture": [
     512,
@@ -14097,10 +14097,10 @@
    "name": "Zagred (legacy), phase 4",
    "build": "lanky",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zagred_legacy_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zagred_legacy_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_legacy_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zagred_legacy_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zagred_legacy_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zagred_legacy_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_legacy_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zagred_legacy_form2_glow.png"
    ],
    "texture": [
     512,
@@ -14222,10 +14222,10 @@
    "name": "Zenon Zogratis",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zenon_zogratis.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zenon_zogratis.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zenon_zogratis.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zenon_zogratis_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zenon_zogratis.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zenon_zogratis.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zenon_zogratis.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zenon_zogratis_glow.png"
    ],
    "texture": [
     512,
@@ -14329,10 +14329,10 @@
    "name": "Zenon Zogratis, Beelzebub",
    "build": "average",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zenon_zogratis_form2.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zenon_zogratis_form2.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zenon_zogratis_form2.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zenon_zogratis_form2_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zenon_zogratis_form2.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zenon_zogratis_form2.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zenon_zogratis_form2.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zenon_zogratis_form2_glow.png"
    ],
    "texture": [
     512,
@@ -14449,10 +14449,10 @@
    "name": "Zora Ideale",
    "build": "slim",
    "files": [
-    "src/main/resources/assets/nusmp/geo/entity/arc_zora_ideale.geo.json",
-    "src/main/resources/assets/nusmp/animations/entity/arc_zora_ideale.animation.json",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zora_ideale.png",
-    "src/main/resources/assets/nusmp/textures/entity/arc_zora_ideale_glow.png"
+    "src/main/resources/assets/anime_multiverse/geo/entity/arc_zora_ideale.geo.json",
+    "src/main/resources/assets/anime_multiverse/animations/entity/arc_zora_ideale.animation.json",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zora_ideale.png",
+    "src/main/resources/assets/anime_multiverse/textures/entity/arc_zora_ideale_glow.png"
    ],
    "texture": [
     512,

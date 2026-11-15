@@ -221,7 +221,7 @@ GEAR = [
       [("Weights Off", 150, 2, "dash:10+buff:speed:8:1+buff:jump:8:1", "The air feels very light.")], id="weighted_training_boots"),
 ]
 
-# source franchise and dungeon road of each gear relic (the road for God relics only: data/nusmp/mega/relic_themes.json)
+# source franchise and dungeon road of each gear relic (the road for God relics only: data/anime_multiverse/mega/relic_themes.json)
 GEAR_META = {
     "perfect_susanoo_plate": ("Naruto", "spatial"), "joyboys_straw_hat": ("One Piece", "sunken_temple"), "greed_island_binder": ("Hunter x Hunter", "cursed_archive"),
     "requiem_ladybug_brooch": ("JoJo's Bizarre Adventure", "celestial_court"),

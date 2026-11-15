@@ -62,7 +62,7 @@ public final class QuestWorldEvents {
         }
     }
 
-    /** The Convergence data pack grants {@code nusmp:convergence/*} advancements; each one is mirrored as an event. */
+    /** The Convergence data pack grants {@code anime_multiverse:convergence/*} advancements; each one is mirrored as an event. */
     private static void onAdvancement(AdvancementEvent.AdvancementEarnEvent e) {
         try {
             if (!(e.getEntity() instanceof ServerPlayer p)) return;

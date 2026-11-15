@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  * heaps round the foe for Sheep Bondage; a puff that swells and fades for a strike's landing.
  */
 public class CottonCloudRenderer extends EntityRenderer<CottonCloudEntity> {
-    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/cotton_cloud.png");
+    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/cotton_cloud.png");
     private final CottonCloudModel model;
 
     public CottonCloudRenderer(EntityRendererProvider.Context ctx) {

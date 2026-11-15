@@ -71,7 +71,7 @@ public final class ZenonMoves {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] Zenon's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] Zenon's {} stopped: {}", what, t.toString());
             }
         };
     }

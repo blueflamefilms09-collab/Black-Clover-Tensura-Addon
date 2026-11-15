@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * under the frame budget.
  */
 class DjinnUniqueAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     private static final List<String> CORE = List.of("helm", "chest", "belt", "pauldron_l", "pauldron_r", "vambrace_l", "vambrace_r", "gauntlet_l", "gauntlet_r", "greave_l",
             "greave_r", "crest", "wing_in_l", "wing_in_r", "wing_out_l", "wing_out_r", "weapon", "backdrop");
     /** The most lines (body + glow quads) a set may draw in a Full Equip, the tail counted five times as the layer draws it. */

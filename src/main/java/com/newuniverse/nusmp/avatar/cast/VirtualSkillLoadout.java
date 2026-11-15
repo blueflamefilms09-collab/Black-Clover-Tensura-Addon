@@ -224,7 +224,7 @@ public final class VirtualSkillLoadout {
             skills.markDirty();
             return true;
         } catch (RuntimeException | LinkageError soft) {
-            LOG.warn("[nusmp] Avatar could not learn {}: {}", id, soft.toString());
+            LOG.warn("[anime_multiverse] Avatar could not learn {}: {}", id, soft.toString());
             return false;
         }
     }

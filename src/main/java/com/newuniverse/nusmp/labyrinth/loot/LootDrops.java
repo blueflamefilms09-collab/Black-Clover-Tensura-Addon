@@ -30,26 +30,26 @@ import java.util.List;
  * family, a depth, a luck and the rates; this class finds those inputs and turns the answer into stacks. A kill counts when a PLAYER dealt the last blow (the vanilla
  * {@code LAST_DAMAGE_PLAYER} parameter: monsters killing each other, or a trap, drop nothing extra, so there is no way to farm the table with a mob grinder that no player
  * fights); the victim is not a player, not a tamed pet, not a summoned minion of the Mob Foundry; and the place counts: a dimension of the mod that is not the Hub (the
- * Mega-Dungeon, the old Spire, a rift pocket), or, by the config, one of the mod's own monsters (the Dungeon Master's tag, a Foundry mob, any entity of the {@code nusmp}
- * namespace) anywhere. The family is the Dungeon Master's faction tag first, then the entity-type tag {@code nusmp:mega/<faction>}, then the words of the registry path; the depth is
+ * Mega-Dungeon, the old Spire, a rift pocket), or, by the config, one of the mod's own monsters (the Dungeon Master's tag, a Foundry mob, any entity of the {@code anime_multiverse}
+ * namespace) anywhere. The family is the Dungeon Master's faction tag first, then the entity-type tag {@code anime_multiverse:mega/<faction>}, then the words of the registry path; the depth is
  * the floor under the monster (or, outside the Mega-Dungeon, a guess from its health); a boss is whatever {@link BalanceLaw#isBoss} says. An item that is already in the loot is
  * never added a second time. Server side; any fault leaves the loot as it was.
  */
 public final class LootDrops {
     private LootDrops() {}
 
-    /** Is this a dimension of the mod where the loot modifier works for every monster: a nusmp dimension that is neither the Hub nor the removed Living Dungeon? */
+    /** Is this a dimension of the mod where the loot modifier works for every monster: a anime_multiverse dimension that is neither the Hub nor the removed Living Dungeon? */
     public static boolean dungeon(Level level) {
         if (level == null) return false;
         ResourceLocation d = level.dimension().location();
-        return "nusmp".equals(d.getNamespace()) && !Labyrinth.inSanctuary(level) && !Labyrinth.inRemovedDungeon(level);
+        return "anime_multiverse".equals(d.getNamespace()) && !Labyrinth.inSanctuary(level) && !Labyrinth.inRemovedDungeon(level);
     }
 
     /** Is this one of the mod's own monsters: tagged by the Dungeon Master, a Mob Foundry mob, or of the mod's namespace? */
     public static boolean ours(LivingEntity e) {
         if (MegaDungeon.isDungeonMonster(e) || e instanceof FoundryMobEntity) return true;
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(e.getType());
-        return id != null && "nusmp".equals(id.getNamespace());
+        return id != null && "anime_multiverse".equals(id.getNamespace());
     }
 
     /** The loot family of a monster. */
@@ -58,7 +58,7 @@ public final class LootDrops {
         if (e instanceof FoundryMobEntity f && f.faction() != null) dm = f.faction();
         for (String f : FactionIds.CONTRACT) {
             if (dm == null && e.getTags().contains(MegaDungeon.DM_TAG + "_" + f)) dm = f;
-            if (tag == null && e.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "mega/" + f)))) tag = f;
+            if (tag == null && e.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/" + f)))) tag = f;
         }
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(e.getType());
         return LootFamilies.resolve(dm, tag, id == null ? "" : id.getPath());

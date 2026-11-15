@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * is left out of the set.
  */
 class ShieldModelsTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 

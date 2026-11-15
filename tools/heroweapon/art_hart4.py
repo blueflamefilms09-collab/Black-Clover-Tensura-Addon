@@ -7,10 +7,10 @@ each weapon, all drawn here from code so that every number can be read and chang
     python3 -B tools/heroweapon/art_hart4.py [--preview=DIR] [--audit]    also render the pictures into DIR (or $HART4_PREVIEW) / print the size audit
 
 Per id it writes (the files design.md section 11 asks for)
-  assets/nusmp/weapon_meshes/<id>.txt                 the mesh, smoothed per-vertex normals ("qn" lines), placed on the sprite's 45 degree diagonal
-  assets/nusmp/textures/entity/weapon/<id>.png        the painted skin (512 px) and <id>_glow.png the additive glow skin
-  assets/nusmp/textures/item/<id>.png                 the 16 x 16 sprite: the inventory icon, drawn by hand-built pixel code
-  assets/nusmp/models/item/<id>.json, <id>_icon.json  the in-hand model (builtin/entity, drawn by client/WeaponRenderer) and the flat icon model
+  assets/anime_multiverse/weapon_meshes/<id>.txt                 the mesh, smoothed per-vertex normals ("qn" lines), placed on the sprite's 45 degree diagonal
+  assets/anime_multiverse/textures/entity/weapon/<id>.png        the painted skin (512 px) and <id>_glow.png the additive glow skin
+  assets/anime_multiverse/textures/item/<id>.png                 the 16 x 16 sprite: the inventory icon, drawn by hand-built pixel code
+  assets/anime_multiverse/models/item/<id>.json, <id>_icon.json  the in-hand model (builtin/entity, drawn by client/WeaponRenderer) and the flat icon model
 and tools/heroweapon/classes_hart4.json (id -> size class of weapon_classes.json, merged by the lead).
 
 The method is the owner's (tools/relics/mesh_lib.py, worked example tools/relics/wave23_models.py): decide the target, real cross-sections (lofts, sweeps,
@@ -969,7 +969,7 @@ def icon_sewing_set():
 
 
 # ================================================================ driver
-# The size class of each weapon (an existing class of assets/nusmp/weapon_classes.json; the lead merges classes_hart4.json into the table). Why these:
+# The size class of each weapon (an existing class of assets/anime_multiverse/weapon_classes.json; the lead merges classes_hart4.json into the table). Why these:
 #   shield    the Mirror is held up like a small shield and works like one (the Vassal Mirror reflects magic); 0.9 to 1.2 blocks
 #   staff     the Harpoon is shorter than a lance: 2.0 to 2.6 blocks (the spear / trident classes start at 2.8)
 #   whip      the Chain is a long flexible weapon: 1.6 to 2.4 blocks along its axis (its path falls away from the axis, so it is longer still)
@@ -1000,7 +1000,7 @@ def make(item_id):
 
 
 def files_of(item_id):
-    """The six files design.md section 11 asks for, relative to assets/nusmp (what HeroAssetsTest looks for)."""
+    """The six files design.md section 11 asks for, relative to assets/anime_multiverse (what HeroAssetsTest looks for)."""
     return ["models/item/%s.json" % item_id, "models/item/%s_icon.json" % item_id, "textures/item/%s.png" % item_id, "weapon_meshes/%s.txt" % item_id,
             "textures/entity/weapon/%s.png" % item_id, "textures/entity/weapon/%s_glow.png" % item_id]
 

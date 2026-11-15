@@ -11,11 +11,11 @@ import java.io.Reader;
 import java.util.EnumMap;
 import java.util.Map;
 
-/** Loads assets/nusmp/vfx/effects.json (reloads with F3+T / resource packs can override it). */
+/** Loads assets/anime_multiverse/vfx/effects.json (reloads with F3+T / resource packs can override it). */
 public final class VfxDefinitions implements ResourceManagerReloadListener {
     public record Def(int color, int duration, float shake) {}
 
-    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "vfx/effects.json");
+    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "vfx/effects.json");
     private static final Map<VfxShape, Def> DEFS = new EnumMap<>(VfxShape.class);
 
     public static Def get(VfxShape shape) { return DEFS.get(shape); }
@@ -41,7 +41,7 @@ public final class VfxDefinitions implements ResourceManagerReloadListener {
                     DEFS.put(s, new Def(color, dur, shake));
                 }
             } catch (Exception e) {
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Could not read vfx/effects.json", e);
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] Could not read vfx/effects.json", e);
             }
         });
     }

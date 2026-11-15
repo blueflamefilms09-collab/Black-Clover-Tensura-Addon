@@ -150,7 +150,7 @@ class WikiStylesTest {
 
     @Test
     void everyTextureTheTableNamesIsGenerated() {
-        File dir = new File("src/main/resources/assets/nusmp/textures/particle");
+        File dir = new File("src/main/resources/assets/anime_multiverse/textures/particle");
         for (int i = 0; i < WikiStyles.COUNT; i++) assertTrue(new File(dir, WikiStyles.texture(i) + ".png").isFile(), WikiStyles.texture(i));
         for (Group g : Group.values()) {
             assertTrue(new File(dir, WikiStyles.groupTexture(g) + ".png").isFile(), WikiStyles.groupTexture(g));

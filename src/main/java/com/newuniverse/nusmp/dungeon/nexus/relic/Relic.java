@@ -60,7 +60,7 @@ public enum Relic {
     public static Relic byName(String name) {
         if (name == null) return null;
         String n = name.toLowerCase(Locale.ROOT);
-        if (n.startsWith("nusmp:")) n = n.substring(6);
+        if (n.startsWith("anime_multiverse:")) n = n.substring(6);
         for (Relic r : values()) if (r.id.equals(n) || r.name().toLowerCase(Locale.ROOT).equals(n)) return r;
         return null;
     }

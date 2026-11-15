@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Why: the Beast Will core (item nusmp:beast_will_core, 3.45.0) needs an inventory icon. Flat icon (an orb with claw marks and motes, drawn procedurally so it can be regenerated and tuned).
+"""Why: the Beast Will core (item anime_multiverse:beast_will_core, 3.45.0) needs an inventory icon. Flat icon (an orb with claw marks and motes, drawn procedurally so it can be regenerated and tuned).
 Solid cores: the 3D in-hand model is now beast_will_core.json (tools/beastwill/gen_beast_core_model.py); this sprite is its inventory icon, so the model written here is beast_will_core_icon.json.
 The sprite is now SOLID (every pixel fully opaque or fully clear, no soft halo) and NEUTRAL (grey stone, pale heart): an item colour handler tints it with the colour of the core's will.
-Writes src/main/resources/assets/nusmp/textures/item/beast_will_core.png (16x16) and models/item/beast_will_core_icon.json (a plain generated item model).
+Writes src/main/resources/assets/anime_multiverse/textures/item/beast_will_core.png (16x16) and models/item/beast_will_core_icon.json (a plain generated item model).
 Run from the repo root: python tools/beastwill/gen_core_icon.py"""
 import json
 import math
@@ -11,8 +11,8 @@ import os
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item", "beast_will_core.png")
-MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item", "beast_will_core_icon.json")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "beast_will_core.png")
+MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item", "beast_will_core_icon.json")
 
 N = 16
 C = (N - 1) / 2.0
@@ -62,7 +62,7 @@ def main():
     im.save(TEX)
     os.makedirs(os.path.dirname(MODEL), exist_ok=True)
     with open(MODEL, "w", encoding="utf-8", newline="\n") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/beast_will_core"}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/beast_will_core"}}, f, indent=2)
         f.write("\n")
     print("wrote", TEX, "and", MODEL)
 

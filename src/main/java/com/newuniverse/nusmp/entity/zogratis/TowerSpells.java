@@ -59,7 +59,7 @@ final class TowerSpells {
                         }
                     }
                 } catch (Throwable t) {
-                    LogUtils.getLogger().warn("[nusmp] the grimoire towers could not read the pages of {}: {}", m.displayName, t.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] the grimoire towers could not read the pages of {}: {}", m.displayName, t.toString());
                 }
                 if (pages.isEmpty()) {                                  // a book that cannot be read still answers, in the four tiers
                     pages.add(new Entry(m, m.word + " Bolt", 8));

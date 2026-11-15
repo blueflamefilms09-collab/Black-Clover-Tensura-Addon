@@ -2,7 +2,7 @@
 crystal clusters, thick arms ending in huge rocky fists, a SMALL head with glowing amber eyes under a heavy brow, a magic circle (a diamond in a star) carved on the chest, crystal veins that glow,
 a crown of crystal shards, floating stones, and legs of stacked boulders that stay planted on the ground.
 
-    python3 -B tools/gen_gnome_geo.py            writes assets/nusmp/{geo,animations,textures}/entity/gnome_{full,companion}[_lod1|_lod2|_fx]*
+    python3 -B tools/gen_gnome_geo.py            writes assets/anime_multiverse/{geo,animations,textures}/entity/gnome_{full,companion}[_lod1|_lod2|_fx]*
     python3 -B tools/gen_gnome_geo.py --count    prints the quads of every model
 
     gnome_full        the FULL form (about 6.9 blocks with its crown, a stone giant), rising out of the ground for the big earth spells

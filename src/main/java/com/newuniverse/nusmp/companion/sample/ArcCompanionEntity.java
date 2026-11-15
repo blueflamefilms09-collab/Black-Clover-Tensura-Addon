@@ -143,7 +143,7 @@ public class ArcCompanionEntity extends ArcNpcEntity implements Talkable, Compan
         } else if (bondTier(p) < CompanionRules.ACQUAINTANCE) {
             b.addBlocked("t:join", Component.translatable(lp + "q.join"), TalkView.INTERACT, Component.translatable(lp + "join.need"));
         } else if (CompanionTravel.followersOf(p, 64.0).size() >= CompanionConfig.maxFollowers()) {
-            b.addBlocked("t:join", Component.translatable(lp + "q.join"), TalkView.INTERACT, Component.translatable("nusmp.companion.join.full"));
+            b.addBlocked("t:join", Component.translatable(lp + "q.join"), TalkView.INTERACT, Component.translatable("anime_multiverse.companion.join.full"));
         } else {
             b.add("t:join", Component.translatable(lp + "q.join"), TalkView.INTERACT);
         }
@@ -156,7 +156,7 @@ public class ArcCompanionEntity extends ArcNpcEntity implements Talkable, Compan
         if (owner != null && !owner.equals(p.getUUID())) return Component.translatable(lp + "join.taken");
         if (owner == null) {
             if (bondTier(p) < CompanionRules.ACQUAINTANCE) return Component.translatable(lp + "join.need");
-            if (CompanionTravel.followersOf(p, 64.0).size() >= CompanionConfig.maxFollowers()) return Component.translatable("nusmp.companion.join.full");
+            if (CompanionTravel.followersOf(p, 64.0).size() >= CompanionConfig.maxFollowers()) return Component.translatable("anime_multiverse.companion.join.full");
             owner = p.getUUID();
             followedCache = null;
         }

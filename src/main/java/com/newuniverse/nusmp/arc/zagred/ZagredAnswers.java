@@ -37,7 +37,7 @@ public final class ZagredAnswers {
         public String hint() { return hint; }
 
         /** The language key of the instruction. */
-        public String hintKey() { return "message.nusmp.zagred.answer." + name().toLowerCase(java.util.Locale.ROOT); }
+        public String hintKey() { return "message.anime_multiverse.zagred.answer." + name().toLowerCase(java.util.Locale.ROOT); }
     }
 
     /**

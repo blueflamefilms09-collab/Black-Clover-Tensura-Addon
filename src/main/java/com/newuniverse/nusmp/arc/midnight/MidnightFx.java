@@ -61,7 +61,7 @@ final class MidnightFx {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] a Midnight Sun boss's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] a Midnight Sun boss's {} stopped: {}", what, t.toString());
             }
         };
     }

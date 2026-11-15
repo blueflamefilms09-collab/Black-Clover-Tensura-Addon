@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
  */
 class ScytheFormsTest {
     private static JsonObject file() throws Exception {
-        return JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/nusmp/hero/forms/vassal_scythe.json"))).getAsJsonObject();
+        return JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/anime_multiverse/hero/forms/vassal_scythe.json"))).getAsJsonObject();
     }
 
     private static JsonObject form(JsonObject root, String id) {

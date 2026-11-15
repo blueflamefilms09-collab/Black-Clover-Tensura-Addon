@@ -3,7 +3,7 @@
     python3 -B tools/gen_copper_geo.py            # writes every model, animation and texture, prints the cube counts and runs tools/geo_check.py
     python3 -B tools/geo_check.py copper_mace copper_coil_golem copper_pauldrons copper_crown
 
-Models (assets/nusmp/geo/entity/copper_<name>.geo.json, animations/entity/..., textures/entity/copper_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/copper_<name>.geo.json, animations/entity/..., textures/entity/copper_<name>.png + _glow.png):
   mace         the Red Shine Mace: a huge polearm mace standing upright (grip at y = 24 px), a red-hot flanged head of eight copper flanges round a glowing
                core, copper bands and wire winding on a dark shaft, a collar with spikes, a spiked butt, a cloth tassel and sparks circling the head.
                clips: idle (hover, the rings and sparks turn), swing (draw back, strike forward, recover), slam (raise high, hammer down, recover)

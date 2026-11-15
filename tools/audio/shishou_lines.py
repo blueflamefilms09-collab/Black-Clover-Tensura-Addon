@@ -25,7 +25,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 VOICE_ID = None                                     # the ElevenLabs voice id, chosen with the owner (None until then)
 VOICE_NAME = None
 MODEL = "eleven_v4"
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "shishou", "ShishouVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "shishou", "ShishouVoiceLines.java")
 LANG = os.path.join(ROOT, "tools", "lang", "shishou_voice.json")
 
 GROUPS = {

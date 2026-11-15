@@ -36,7 +36,7 @@ public final class NoelleFormRig {
             this.name = name; this.anchor = anchor; this.delay = delay; this.dx = dx; this.dy = dy; this.dz = dz;
         }
 
-        /** @param name assets/nusmp/geo/entity/&lt;key&gt;_arm_&lt;name&gt;; delay 0..12 ticks; dx dy dz the direction (model pixels, y down) the piece flies in from. */
+        /** @param name assets/anime_multiverse/geo/entity/&lt;key&gt;_arm_&lt;name&gt;; delay 0..12 ticks; dx dy dz the direction (model pixels, y down) the piece flies in from. */
         public static Piece of(String name, Anchor anchor, float delay, float dx, float dy, float dz) { return new Piece(name, anchor, delay, dx, dy, dz); }
 
         public Piece glass() { this.glass = true; return this; }

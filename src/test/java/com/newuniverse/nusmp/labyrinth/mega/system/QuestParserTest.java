@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * fires and that one bad row never costs the good ones.
  */
 class QuestParserTest {
-    static final Path QUESTS = Path.of("src/main/resources/data/nusmp/mega/system/quests.json");
+    static final Path QUESTS = Path.of("src/main/resources/data/anime_multiverse/mega/system/quests.json");
 
     static Map<String, Object> shippedTree() throws IOException {
         return MiniJson.object(Files.readString(QUESTS, StandardCharsets.UTF_8));
@@ -76,7 +76,7 @@ class QuestParserTest {
         for (QuestTemplate t : shipped().templates()) {
             assertTrue(ids.add(t.id()), "duplicate " + t.id());
             assertTrue(t.id().matches("[a-z0-9_]{1,48}"), t.id());
-            assertEquals("message.nusmp.mega.system.quest." + t.id(), t.langKey());
+            assertEquals("message.anime_multiverse.mega.system.quest." + t.id(), t.langKey());
         }
     }
 
@@ -149,7 +149,7 @@ class QuestParserTest {
         QuestCatalog cat = new QuestCatalog(List.of(a, c, b));
         assertEquals(2, cat.size());
         assertEquals(9.0, cat.get("x").base());
-        assertEquals(9.0, cat.get("nusmp:x").base(), "the namespace is ignored");
+        assertEquals(9.0, cat.get("anime_multiverse:x").base(), "the namespace is ignored");
         assertNull(cat.get("nope"));
         assertTrue(cat.hasKind(QuestKind.SPEED));
         assertFalse(cat.hasKind(QuestKind.CLEAR_ROOMS));

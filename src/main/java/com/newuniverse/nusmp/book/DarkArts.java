@@ -44,7 +44,7 @@ import net.minecraft.world.phys.Vec3;
 public final class DarkArts {
     private DarkArts() {}
 
-    private static final ResourceLocation BLACK_BLADE = ResourceLocation.fromNamespaceAndPath("nusmp", "black_blade_reach");
+    private static final ResourceLocation BLACK_BLADE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_blade_reach");
 
     private static boolean ally(ServerPlayer p, LivingEntity t) { return t == p || t.isAlliedTo(p); }
 

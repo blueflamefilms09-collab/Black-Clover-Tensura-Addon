@@ -49,7 +49,7 @@ public final class StarAwards extends SavedData {
             sa.setDirty();
             hold(server);
         } catch (Throwable t) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] star awards failed", t);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] star awards failed", t);
         }
     }
 

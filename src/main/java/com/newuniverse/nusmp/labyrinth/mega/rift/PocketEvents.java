@@ -64,12 +64,12 @@ public final class PocketEvents {
         switch (r) {
             case PROGRESS -> {
                 level.playSound(null, at, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_CHIME.value(), net.minecraft.sounds.SoundSource.BLOCKS, 1.2f, 0.7f + 0.25f * puzzle.done());
-                p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.puzzle.progress", "The plate hums (%s of 4).", puzzle.done()).withStyle(ChatFormatting.AQUA), true);
+                p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.puzzle.progress", "The plate hums (%s of 4).", puzzle.done()).withStyle(ChatFormatting.AQUA), true);
             }
             case SOLVED -> realm.clear(level, pocket, "puzzle");
             case WRONG -> {
                 level.playSound(null, at, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_BASS.value(), net.minecraft.sounds.SoundSource.BLOCKS, 1.4f, 0.5f);
-                p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.rift.puzzle.wrong", "Wrong. The plates go dark; something stirs.").withStyle(ChatFormatting.RED), true);
+                p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.puzzle.wrong", "Wrong. The plates go dark; something stirs.").withStyle(ChatFormatting.RED), true);
                 p.hurt(level.damageSources().magic(), 3f);
                 PocketBuilder.wake(level, at);
             }

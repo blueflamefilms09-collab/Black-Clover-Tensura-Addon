@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "anime_multiverse:item/clover_kingdom_citizen_seal"
+  }
+}

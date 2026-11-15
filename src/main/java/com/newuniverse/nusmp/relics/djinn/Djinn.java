@@ -17,7 +17,7 @@ public enum Djinn {
     AMON("Amon", "Sovereign of Flame", Affinity.HEAT, 0xFF5A14, 0xFFD27A, "Flame-Sovereign Maso",
             new Look(Look.Horns.RAM, Look.Wings.FIRE, Look.Tail.FLAME, Look.Halo.RING, false),
             new Trait(Special.MELT, "minecraft:weakness", 90, 0, 0.35, 8.0, "Your blade melts guard: foes burn and lose Resistance."),
-            new Extreme("Amon Salos: Crown of the Sun", Shape.NOVA, 13.0, 32.0, "nusmp:burn", 160, 0,
+            new Extreme("Amon Salos: Crown of the Sun", Shape.NOVA, 13.0, 32.0, "anime_multiverse:burn", 160, 0,
                     "A sun blooms over you and bursts outward in one white-hot wave.")),
     VINEA("Vinea", "Queen of the Deep", Affinity.WATER, 0x2D9CDB, 0xB5F0FF, "Tide-Queen Maso",
             new Look(Look.Horns.CRESCENT, Look.Wings.VEIL, Look.Tail.TENDRIL, Look.Halo.RUNES, true),
@@ -47,7 +47,7 @@ public enum Djinn {
     MARCHOSIAS("Marchosias", "Hunter of Embers", Affinity.HEAT, 0xE23A22, 0xFFA878, "Ember-Wolf Maso",
             new Look(Look.Horns.SPIKE, Look.Wings.MEMBRANE, Look.Tail.FLAME, Look.Halo.NONE, true),
             new Trait(Special.BRAND, "minecraft:glowing", 150, 0, 0.30, 7.5, "Foes are branded: set alight and lit up for the hunt."),
-            new Extreme("Marchosias Hunt: Emberfang Run", Shape.BEAM, 22.0, 36.0, "nusmp:burn", 160, 0,
+            new Extreme("Marchosias Hunt: Emberfang Run", Shape.BEAM, 22.0, 36.0, "anime_multiverse:burn", 160, 0,
                     "You become a streak of fire and run a straight line through everything in it.")),
     SITRI("Sitri", "Dawn's Radiance", Affinity.LIGHT, 0xFFE070, 0xFFFFFF, "Radiant Maso",
             new Look(Look.Horns.CROWN, Look.Wings.FEATHER, Look.Tail.NONE, Look.Halo.RING, false),
@@ -128,8 +128,8 @@ public enum Djinn {
                     "Four notes ring out from you in a cross and meet in the air.")),
     BELIAL("Belial", "Lord of Hollow Thrones", Affinity.HEAT, 0x7A0F2E, 0xFF7096, "Hollow-Lord Maso",
             new Look(Look.Horns.CROWN, Look.Wings.FIRE, Look.Tail.FLAME, Look.Halo.NONE, false),
-            new Trait(Special.CINDER, "nusmp:burn", 140, 0, 0.30, 7.5, "Cinders spread: the fire leaps to foes near the target."),
-            new Extreme("Belial Inanis: Fall of the Hollow Throne", Shape.IMPLODE, 14.0, 32.0, "nusmp:burn", 160, 0,
+            new Trait(Special.CINDER, "anime_multiverse:burn", 140, 0, 0.30, 7.5, "Cinders spread: the fire leaps to foes near the target."),
+            new Extreme("Belial Inanis: Fall of the Hollow Throne", Shape.IMPLODE, 14.0, 32.0, "anime_multiverse:burn", 160, 0,
                     "The air is dragged in towards you, and a moment later the hollow collapses in fire.")),
     DECARABIA("Decarabia", "Star Crab of the Deep", Affinity.LIGHT, 0xE0B45A, 0xFFF4C8, "Star-Crab Maso",
             new Look(Look.Horns.NONE, Look.Wings.MEMBRANE, Look.Tail.BLADE, Look.Halo.SPOKES, true),
@@ -173,8 +173,8 @@ public enum Djinn {
                     "A knight's charge on an ice wind sweeps a wide fan in front of you.")),
     BALAM("Balam", "Three-Headed Prophet", Affinity.HEAT, 0xD1622A, 0xFFE0A0, "Three-Head Maso",
             new Look(Look.Horns.RAM, Look.Wings.FIRE, Look.Tail.WHIP, Look.Halo.SPOKES, true),
-            new Trait(Special.TRIPLE, "nusmp:burn", 100, 0, 0.25, 6.5, "Three heads, three bites: two foes near the target take a share too."),
-            new Extreme("Balam Trias: Prophecy of Three Flames", Shape.COLUMNS, 15.0, 28.0, "nusmp:burn", 140, 0,
+            new Trait(Special.TRIPLE, "anime_multiverse:burn", 100, 0, 0.25, 6.5, "Three heads, three bites: two foes near the target take a share too."),
+            new Extreme("Balam Trias: Prophecy of Three Flames", Shape.COLUMNS, 15.0, 28.0, "anime_multiverse:burn", 140, 0,
                     "Eight pillars of foretold flame rise from the ground, each marked before it strikes.")),
     ALLOCES("Alloces", "Lion-Eyed Knight", Affinity.HEAT, 0xE8892B, 0xFFF0B0, "Lion-Eye Maso",
             new Look(Look.Horns.CROWN, Look.Wings.FIRE, Look.Tail.WHIP, Look.Halo.RING, true),
@@ -228,7 +228,7 @@ public enum Djinn {
     /**
      * Half Equip: extra damage as a share of the blow (capped; a hit on a player never gets more than {@link TraitRules#PLAYER_RIDER_CAP} points of it, so
      * the cap of a row only matters against mobs), the Djinn's special, and one mob effect (an id like "minecraft:slowness", "" for none; the special
-     * "nusmp:burn" is a fire, not an effect).
+     * "anime_multiverse:burn" is a fire, not an effect).
      */
     public record Trait(Special special, String effectId, int effectTicks, int effectAmp, double bonusFrac, double bonusCap, String blurb) {}
 

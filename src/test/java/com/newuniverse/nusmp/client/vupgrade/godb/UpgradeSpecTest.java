@@ -11,9 +11,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The shipped data tables (assets/nusmp/visual_upgrade/*.json) parse and meet the rules every table must meet; a broken table is refused with a reason. */
+/** The shipped data tables (assets/anime_multiverse/visual_upgrade/*.json) parse and meet the rules every table must meet; a broken table is refused with a reason. */
 class UpgradeSpecTest {
-    static final Path DIR = Path.of("src", "main", "resources", "assets", "nusmp", "visual_upgrade");
+    static final Path DIR = Path.of("src", "main", "resources", "assets", "anime_multiverse", "visual_upgrade");
     static final List<String> IDS = List.of("aurliels_seraph_halberd", "chronarchs_pendulum_sabre", "deepwatch_harpoon", "orials_starfall_staff", "reflected_kings_mirrorblade",
             "rimeheart_greatblade", "sanguine_wardens_cleaver", "valkarins_stormlance", "paradox");
 

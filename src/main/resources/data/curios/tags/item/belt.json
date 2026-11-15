@@ -1,296 +1,296 @@
 {
   "replace": false,
   "values": [
-    "nusmp:demon_slasher_katana",
-    "nusmp:miasma_infused_katana",
-    "nusmp:spell_forged_rapier",
-    "nusmp:demon_slayer_sword",
-    "nusmp:demon_dweller_sword",
-    "nusmp:demon_destroyer_sword",
-    "nusmp:licht_dweller_sword",
-    "nusmp:licht_destroyer_sword",
-    "nusmp:rimeheart_runeblade",
-    "nusmp:last_word",
-    "nusmp:quicklings_ivy",
-    "nusmp:magebane_longsword",
-    "nusmp:prism_blade",
-    "nusmp:bloodbound_katana",
-    "nusmp:permafrost_sabre",
-    "nusmp:cyclone_rapier",
-    "nusmp:club_of_rot",
-    "nusmp:magic_tool_sword",
-    "nusmp:brooch_pin",
-    "nusmp:butcher_cleaver",
+    "anime_multiverse:demon_slasher_katana",
+    "anime_multiverse:miasma_infused_katana",
+    "anime_multiverse:spell_forged_rapier",
+    "anime_multiverse:demon_slayer_sword",
+    "anime_multiverse:demon_dweller_sword",
+    "anime_multiverse:demon_destroyer_sword",
+    "anime_multiverse:licht_dweller_sword",
+    "anime_multiverse:licht_destroyer_sword",
+    "anime_multiverse:rimeheart_runeblade",
+    "anime_multiverse:last_word",
+    "anime_multiverse:quicklings_ivy",
+    "anime_multiverse:magebane_longsword",
+    "anime_multiverse:prism_blade",
+    "anime_multiverse:bloodbound_katana",
+    "anime_multiverse:permafrost_sabre",
+    "anime_multiverse:cyclone_rapier",
+    "anime_multiverse:club_of_rot",
+    "anime_multiverse:magic_tool_sword",
+    "anime_multiverse:brooch_pin",
+    "anime_multiverse:butcher_cleaver",
     {
-      "id": "nusmp:alchemists_belt",
+      "id": "anime_multiverse:alchemists_belt",
       "required": false
     },
     {
-      "id": "nusmp:artifact_mimic",
+      "id": "anime_multiverse:artifact_mimic",
       "required": false
     },
     {
-      "id": "nusmp:buffoons_pantaloons",
+      "id": "anime_multiverse:buffoons_pantaloons",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_mimic",
+      "id": "anime_multiverse:ring_of_the_mimic",
       "required": false
     },
     {
-      "id": "nusmp:murasames_sheath",
+      "id": "anime_multiverse:murasames_sheath",
       "required": false
     },
     {
-      "id": "nusmp:cursed_spirit_sash",
+      "id": "anime_multiverse:cursed_spirit_sash",
       "required": false
     },
     {
-      "id": "nusmp:excaliburs_scabbard_avalon",
+      "id": "anime_multiverse:excaliburs_scabbard_avalon",
       "required": false
     },
     {
-      "id": "nusmp:hunters_grappling_belt",
+      "id": "anime_multiverse:hunters_grappling_belt",
       "required": false
     },
     {
-      "id": "nusmp:kotomines_black_keys_cord",
+      "id": "anime_multiverse:kotomines_black_keys_cord",
       "required": false
     },
     {
-      "id": "nusmp:rikos_satchel",
+      "id": "anime_multiverse:rikos_satchel",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_ration_satchel",
+      "id": "anime_multiverse:adventurers_ration_satchel",
       "required": false
     },
     {
-      "id": "nusmp:belt_of_the_eight_edge",
+      "id": "anime_multiverse:belt_of_the_eight_edge",
       "required": false
     },
     {
-      "id": "nusmp:dagger_masters_sash",
+      "id": "anime_multiverse:dagger_masters_sash",
       "required": false
     },
     {
-      "id": "nusmp:dwarfs_knife_roll",
+      "id": "anime_multiverse:dwarfs_knife_roll",
       "required": false
     },
     {
-      "id": "nusmp:eisens_shield_strap",
+      "id": "anime_multiverse:eisens_shield_strap",
       "required": false
     },
     {
-      "id": "nusmp:eriss_flaming_sash",
+      "id": "anime_multiverse:eriss_flaming_sash",
       "required": false
     },
     {
-      "id": "nusmp:kelpies_bridle",
+      "id": "anime_multiverse:kelpies_bridle",
       "required": false
     },
     {
-      "id": "nusmp:pauls_old_sword_belt",
+      "id": "anime_multiverse:pauls_old_sword_belt",
       "required": false
     },
     {
-      "id": "nusmp:starks_cowardly_axe_strap",
+      "id": "anime_multiverse:starks_cowardly_axe_strap",
       "required": false
     },
     {
-      "id": "nusmp:walking_mushroom_pouch",
+      "id": "anime_multiverse:walking_mushroom_pouch",
       "required": false
     },
     {
-      "id": "nusmp:darknesss_armour_strap",
+      "id": "anime_multiverse:darknesss_armour_strap",
       "required": false
     },
     {
-      "id": "nusmp:dragonslayer_scale_sword_strap",
+      "id": "anime_multiverse:dragonslayer_scale_sword_strap",
       "required": false
     },
     {
-      "id": "nusmp:eriss_padded_coin_purse",
+      "id": "anime_multiverse:eriss_padded_coin_purse",
       "required": false
     },
     {
-      "id": "nusmp:etas_sewing_needle_roll",
+      "id": "anime_multiverse:etas_sewing_needle_roll",
       "required": false
     },
     {
-      "id": "nusmp:iriss_royal_sword_sash",
+      "id": "anime_multiverse:iriss_royal_sword_sash",
       "required": false
     },
     {
-      "id": "nusmp:mastery_violet_sword_belt",
+      "id": "anime_multiverse:mastery_violet_sword_belt",
       "required": false
     },
     {
-      "id": "nusmp:shinsu_pouch_of_the_tower",
+      "id": "anime_multiverse:shinsu_pouch_of_the_tower",
       "required": false
     },
     {
-      "id": "nusmp:wolf_hunters_crossbow_sling",
+      "id": "anime_multiverse:wolf_hunters_crossbow_sling",
       "required": false
     },
     {
-      "id": "nusmp:elucidator_style_sheath",
+      "id": "anime_multiverse:elucidator_style_sheath",
       "required": false
     },
     {
-      "id": "nusmp:lightning_flashs_rapier_sash",
+      "id": "anime_multiverse:lightning_flashs_rapier_sash",
       "required": false
     },
-    "nusmp:golem_core_belt",
-    "nusmp:goblin_fang_dagger",
-    "nusmp:delvers_longsword",
-    "nusmp:shadowsteel_katana",
+    "anime_multiverse:golem_core_belt",
+    "anime_multiverse:goblin_fang_dagger",
+    "anime_multiverse:delvers_longsword",
+    "anime_multiverse:shadowsteel_katana",
     {
-      "id": "nusmp:silvered_sash_of_reflections",
+      "id": "anime_multiverse:silvered_sash_of_reflections",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_mana_flask_belt",
+      "id": "anime_multiverse:adventurers_mana_flask_belt",
       "required": false
     },
     {
-      "id": "nusmp:alchemists_chalk_pouch",
+      "id": "anime_multiverse:alchemists_chalk_pouch",
       "required": false
     },
     {
-      "id": "nusmp:duelists_deck_box_belt",
+      "id": "anime_multiverse:duelists_deck_box_belt",
       "required": false
     },
     {
-      "id": "nusmp:gate_scavengers_satchel",
+      "id": "anime_multiverse:gate_scavengers_satchel",
       "required": false
     },
     {
-      "id": "nusmp:guild_veterans_sash",
+      "id": "anime_multiverse:guild_veterans_sash",
       "required": false
     },
     {
-      "id": "nusmp:medicine_peddlers_satchel",
+      "id": "anime_multiverse:medicine_peddlers_satchel",
       "required": false
     },
     {
-      "id": "nusmp:nazarick_pages_sash",
+      "id": "anime_multiverse:nazarick_pages_sash",
       "required": false
     },
     {
-      "id": "nusmp:street_thiefs_sash",
+      "id": "anime_multiverse:street_thiefs_sash",
       "required": false
     },
     {
-      "id": "nusmp:cave_raiders_rope_belt",
+      "id": "anime_multiverse:cave_raiders_rope_belt",
       "required": false
     },
     {
-      "id": "nusmp:curse_tool_sash",
+      "id": "anime_multiverse:curse_tool_sash",
       "required": false
     },
     {
-      "id": "nusmp:delvers_ration_belt",
+      "id": "anime_multiverse:delvers_ration_belt",
       "required": false
     },
     {
-      "id": "nusmp:dwargon_smiths_tool_belt",
+      "id": "anime_multiverse:dwargon_smiths_tool_belt",
       "required": false
     },
     {
-      "id": "nusmp:gathering_hunters_belt",
+      "id": "anime_multiverse:gathering_hunters_belt",
       "required": false
     },
     {
-      "id": "nusmp:hunter_guild_utility_belt",
+      "id": "anime_multiverse:hunter_guild_utility_belt",
       "required": false
     },
     {
-      "id": "nusmp:kunai_holster_belt",
+      "id": "anime_multiverse:kunai_holster_belt",
       "required": false
     },
     {
-      "id": "nusmp:marine_cutlass_baldric",
+      "id": "anime_multiverse:marine_cutlass_baldric",
       "required": false
     },
     {
-      "id": "nusmp:orc_hide_utility_belt",
+      "id": "anime_multiverse:orc_hide_utility_belt",
       "required": false
     },
     {
-      "id": "nusmp:regulars_shinsu_pouch_belt",
+      "id": "anime_multiverse:regulars_shinsu_pouch_belt",
       "required": false
     },
     {
-      "id": "nusmp:spell_component_belt",
+      "id": "anime_multiverse:spell_component_belt",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_money_pouch_belt",
+      "id": "anime_multiverse:adventurers_money_pouch_belt",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_potion_holster",
+      "id": "anime_multiverse:adventurers_potion_holster",
       "required": false
     },
     {
-      "id": "nusmp:hunters_utility_belt",
+      "id": "anime_multiverse:hunters_utility_belt",
       "required": false
     },
     {
-      "id": "nusmp:kouhas_silk_sash",
+      "id": "anime_multiverse:kouhas_silk_sash",
       "required": false
     },
     {
-      "id": "nusmp:kunai_holster_strap",
+      "id": "anime_multiverse:kunai_holster_strap",
       "required": false
     },
     {
-      "id": "nusmp:lucys_key_ring_belt",
+      "id": "anime_multiverse:lucys_key_ring_belt",
       "required": false
     },
     {
-      "id": "nusmp:ogre_village_rope_belt",
+      "id": "anime_multiverse:ogre_village_rope_belt",
       "required": false
     },
     {
-      "id": "nusmp:pilgrims_knotted_rope_cord",
+      "id": "anime_multiverse:pilgrims_knotted_rope_cord",
       "required": false
     },
     {
-      "id": "nusmp:servants_contract_belt",
+      "id": "anime_multiverse:servants_contract_belt",
       "required": false
     },
     {
-      "id": "nusmp:straw_hat_crew_sash",
+      "id": "anime_multiverse:straw_hat_crew_sash",
       "required": false
     },
     {
-      "id": "nusmp:witch_cult_prayer_cord",
+      "id": "anime_multiverse:witch_cult_prayer_cord",
       "required": false
     },
     {
-      "id": "nusmp:zanpakuto_sheath_sash",
+      "id": "anime_multiverse:zanpakuto_sheath_sash",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_cooking_belt",
+      "id": "anime_multiverse:adventurers_cooking_belt",
       "required": false
     },
     {
-      "id": "nusmp:shinobi_tool_belt",
+      "id": "anime_multiverse:shinobi_tool_belt",
       "required": false
     },
     {
-      "id": "nusmp:millennium_key",
+      "id": "anime_multiverse:millennium_key",
       "required": false
     },
     {
-      "id": "nusmp:seven_dragon_balls_of_shenron",
+      "id": "anime_multiverse:seven_dragon_balls_of_shenron",
       "required": false
     },
     {
-      "id": "nusmp:turtle_school_weighted_belt",
+      "id": "anime_multiverse:turtle_school_weighted_belt",
       "required": false
     }
   ]

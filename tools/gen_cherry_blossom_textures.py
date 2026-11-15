@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_cherry_blossom_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/cherry_blossom_*.png  (only these files are written)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/cherry_blossom_*.png  (only these files are written)
 
 Look reference (owner art): the Black Clover Sakura caster stills. A sea of soft pink cumulus made of petals, cel-shaded
 (light top-left, a darker mauve underside, white speckles), solid pale-pink petals with a notched tip and fine veins, thin
@@ -24,7 +24,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

@@ -10,7 +10,7 @@ import net.neoforged.bus.api.IEventBus;
  * {@code init} (mod bus, before {@code NUItems.ITEMS.register}) registers the biome modifier serializer that keeps the Sanctuary's biome peaceful and plain
  * ({@link SanctuaryPeaceModifier}) and the in-game self-tests ({@link HubSelfTests}, keys {@code hub.*}) with the shared registry the CI server smoke test
  * runs; {@code register} (game bus) adds the rule handlers of {@link HubRules}. The package registers no block and no item (the gates are the existing
- * {@code nusmp:labyrinth_gate}), so it has no ordering constraint against {@code NUItems.ITEMS}. The travel entry points are the static methods of
+ * {@code anime_multiverse:labyrinth_gate}), so it has no ordering constraint against {@code NUItems.ITEMS}. The travel entry points are the static methods of
  * {@link HubTravel} that the lead's routing in {@code LabyrinthTravel.enter} calls; the dimension, its type and the biome are data files.
  */
 public final class HubRegistry {

@@ -53,7 +53,7 @@ public final class LockdownTable {
 
     public boolean isEmpty() { return kinds.isEmpty() && templates.isEmpty() && patterns.isEmpty(); }
 
-    /** {@code nusmp:mega/hall/barracks_a} and {@code mega/hall/barracks_a} are both {@code mega/hall/barracks_a}. */
+    /** {@code anime_multiverse:mega/hall/barracks_a} and {@code mega/hall/barracks_a} are both {@code mega/hall/barracks_a}. */
     public static String normalise(String templateId) {
         if (templateId == null) return "";
         String s = templateId.trim().toLowerCase(Locale.ROOT);

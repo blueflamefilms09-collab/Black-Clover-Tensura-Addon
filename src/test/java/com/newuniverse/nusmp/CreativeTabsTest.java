@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CreativeTabsTest {
     @Test
     void everyTabHasATitleAndItsGroupIsUsed() throws Exception {
-        String lang = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));
+        String lang = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
         String src = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUCreativeTab.java"));
         for (String id : new String[]{"main", "weapons", "armor", "relics", "eggs", "dungeon", "misc"})
-            assertTrue(lang.contains("\"itemGroup.nusmp." + id + "\""), id);
+            assertTrue(lang.contains("\"itemGroup.anime_multiverse." + id + "\""), id);
         for (String g : new String[]{"GRIM", "WEAPONS", "RELICS", "EGGS", "DUNGEON", "MISC"})
             assertTrue(src.contains("o.apply(G." + g + ")"), "nothing goes to " + g);
     }

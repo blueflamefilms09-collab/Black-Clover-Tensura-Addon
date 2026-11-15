@@ -113,7 +113,7 @@ class DevilWorldsTest {
             assertTrue(Pattern.compile("(?m)^\\s*" + m.group(1) + "\\b").matcher(shapes).find() || Pattern.compile("[, ]" + m.group(1) + "[,;]").matcher(shapes).find(), "no effect " + m.group(1));
         }
         assertTrue(n >= 24, "the eight rituals share too few effects: " + n);
-        String themes = Files.readString(main.resolve("resources/data/nusmp/particle_themes.json"));
+        String themes = Files.readString(main.resolve("resources/data/anime_multiverse/particle_themes.json"));
         Matcher t = Pattern.compile("ThemeKey\\.of\\(\"([^\"]+)\"\\)").matcher(rituals);
         int k = 0;
         while (t.find()) {

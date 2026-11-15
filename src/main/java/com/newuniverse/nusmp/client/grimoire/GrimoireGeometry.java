@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * The {@code "loader": "nusmp:grimoire"} geometry of assets/nusmp/models/item/grimoire.json. It has no elements of its own: baking
+ * The {@code "loader": "anime_multiverse:grimoire"} geometry of assets/anime_multiverse/models/item/grimoire.json. It has no elements of its own: baking
  * resolves the grimoire_book textures and hands them to a {@link GrimoireBakedModel}, which builds each book's 3D model from its
  * look. The JSON's "display" block still supplies the gui / hand / ground / frame transforms.
  */
@@ -26,7 +26,7 @@ public final class GrimoireGeometry implements IUnbakedGeometry<GrimoireGeometry
     public static final IGeometryLoader<GrimoireGeometry> LOADER = (json, context) -> new GrimoireGeometry();
 
     static ResourceLocation texture(String name) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "item/grimoire_book/" + name);
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "item/grimoire_book/" + name);
     }
 
     @Override

@@ -127,7 +127,7 @@ final class Wave26Util {
         return rl == null ? Optional.empty() : BuiltInRegistries.ATTRIBUTE.getHolder(rl).map(h -> (Holder<Attribute>) h);
     }
 
-    private static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "w26/" + name); }
+    private static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w26/" + name); }
 
     static void setMod(LivingEntity e, String attrId, String name, double amount, AttributeModifier.Operation op) {
         Optional<Holder<Attribute>> a = attribute(attrId);

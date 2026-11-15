@@ -24,16 +24,16 @@ public final class FireCastDraw {
 
     /** A level of detail (or the glow-only model): its own model and its own copy of the sheet (a lower level reads a smaller one), the animation file of the full model, no glow pass. */
     private static GeoSpec lod(GeoSpec base, String modelId) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + modelId + ".png"), null);
     }
 
     private static GeoSpec[] faces(GeoSpec base, String prefix) {
         GeoSpec[] out = new GeoSpec[SalamanderMoodRules.FACES - 1];
         for (int f = 1; f < SalamanderMoodRules.FACES; f++) {
             String id = prefix + SalamanderMoodRules.faceName(f);
-            out[f - 1] = new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + id + ".geo.json"), base.animations(),
-                    ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + id + ".png"), ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + id + "_glow.png"));
+            out[f - 1] = new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + id + ".geo.json"), base.animations(),
+                    ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + id + ".png"), ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + id + "_glow.png"));
         }
         return out;
     }

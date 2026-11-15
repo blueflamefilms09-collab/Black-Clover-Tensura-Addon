@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:world/arena",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:arena_return_sigil"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.world.arena_dim.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.world.arena_dim.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "anime_multiverse:zogratis_arena"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

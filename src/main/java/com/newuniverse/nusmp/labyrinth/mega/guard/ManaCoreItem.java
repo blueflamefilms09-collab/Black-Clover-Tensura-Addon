@@ -67,18 +67,18 @@ public class ManaCoreItem extends Item {
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
         SectorCore c = coreOf(stack);
         if (c == null) {
-            tooltip.add(Component.translatable("item.nusmp.mana_core.tooltip.dormant").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("item.anime_multiverse.mana_core.tooltip.dormant").withStyle(ChatFormatting.GRAY));
         } else {
             RegionTheme theme = c.theme().isEmpty() ? null : RegionTheme.fromId(c.theme());
             int rgb = GuardianScaling.themeColor(theme);
-            tooltip.add(Component.translatable("item.nusmp.mana_core.tooltip.sector", c.sector()).withStyle(s -> s.withColor(rgb)));
+            tooltip.add(Component.translatable("item.anime_multiverse.mana_core.tooltip.sector", c.sector()).withStyle(s -> s.withColor(rgb)));
             if (theme != null) {
-                tooltip.add(Component.translatable("item.nusmp.mana_core.tooltip.theme", Component.translatable("message.nusmp.mega.mgd.theme." + theme.id()))
+                tooltip.add(Component.translatable("item.anime_multiverse.mana_core.tooltip.theme", Component.translatable("message.anime_multiverse.mega.mgd.theme." + theme.id()))
                         .withStyle(s -> s.withColor(rgb)));
             }
-            tooltip.add(Component.translatable("item.nusmp.mana_core.tooltip.unseals", c.sector()).withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltip.add(Component.translatable("item.anime_multiverse.mana_core.tooltip.unseals", c.sector()).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
-        tooltip.add(Component.translatable("item.nusmp.mana_core.tooltip.forged").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.anime_multiverse.mana_core.tooltip.forged").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
     }
 
     // ---------------------------------------------------------------- use: which way is the seal
@@ -96,15 +96,15 @@ public class ManaCoreItem extends Item {
 
     /** The action-bar line: dormant, silent outside the dungeon, lost, right here, or "N blocks to the north east". */
     private static Component hint(Level level, Player player, SectorCore core) {
-        if (core == null) return Component.translatable("message.nusmp.mega.mgd.core_dormant").withStyle(ChatFormatting.GRAY);
-        if (!Labyrinth.inMega(level) || !(level instanceof ServerLevel sl)) return Component.translatable("message.nusmp.mega.mgd.core_silent").withStyle(ChatFormatting.GRAY);
+        if (core == null) return Component.translatable("message.anime_multiverse.mega.mgd.core_dormant").withStyle(ChatFormatting.GRAY);
+        if (!Labyrinth.inMega(level) || !(level instanceof ServerLevel sl)) return Component.translatable("message.anime_multiverse.mega.mgd.core_silent").withStyle(ChatFormatting.GRAY);
         Sector sector = MegaData.get(sl.getServer()).sector(core.sector());
         BlockPos door = sector == null ? null : sector.gatekeeper;
-        if (door == null) return Component.translatable("message.nusmp.mega.mgd.core_lost").withStyle(ChatFormatting.GRAY);
+        if (door == null) return Component.translatable("message.anime_multiverse.mega.mgd.core_lost").withStyle(ChatFormatting.GRAY);
         double dx = door.getX() + 0.5 - player.getX(), dz = door.getZ() + 0.5 - player.getZ();
         int dist = CoreHint.distance(dx, dz);
-        if (dist <= CoreHint.HERE) return Component.translatable("message.nusmp.mega.mgd.core_here").withStyle(ChatFormatting.LIGHT_PURPLE);
-        return Component.translatable("message.nusmp.mega.mgd.core_pull", dist, Component.translatable("message.nusmp.mega.mgd.dir." + CoreHint.direction(dx, dz)))
+        if (dist <= CoreHint.HERE) return Component.translatable("message.anime_multiverse.mega.mgd.core_here").withStyle(ChatFormatting.LIGHT_PURPLE);
+        return Component.translatable("message.anime_multiverse.mega.mgd.core_pull", dist, Component.translatable("message.anime_multiverse.mega.mgd.dir." + CoreHint.direction(dx, dz)))
                 .withStyle(s -> s.withColor(GuardianScaling.themeColor(sector.theme)));
     }
 

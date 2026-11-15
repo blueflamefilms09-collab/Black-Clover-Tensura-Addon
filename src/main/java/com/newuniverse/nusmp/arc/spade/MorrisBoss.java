@@ -223,7 +223,7 @@ public class MorrisBoss extends ArcBoss {
             }
             return now < staggerUntil ? amount * 1.15f : amount;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Morris's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Morris's defence failed: {}", e.toString());
             return amount;
         }
     }
@@ -258,7 +258,7 @@ public class MorrisBoss extends ArcBoss {
             if (tether != null) tickTether(sl, now);
             antiMagicHit = false;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Morris's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Morris's tick failed: {}", e.toString());
         }
     }
 
@@ -281,7 +281,7 @@ public class MorrisBoss extends ArcBoss {
         specimenId = s.getUUID();
         tetherWatch.begin(now, TETHER_LIFE, getMaxHealth() * 0.06);
         announce("Specimen Mark: " + s.getName().getString() + " is tethered to Morris. Cut the thread (an ally stands on it), break line of sight, hit Morris for 6% of his health, or hold anti-magic.");
-        if (s instanceof Player p) SpadeFx.hint(p, "message.nusmp.spade.specimen", "You are the specimen: the thread drags and drains you. Have an ally stand on it, break line of sight, or hold anti-magic.");
+        if (s instanceof Player p) SpadeFx.hint(p, "message.anime_multiverse.spade.specimen", "You are the specimen: the thread drags and drains you. Have an ally stand on it, break line of sight, or hold anti-magic.");
         quip("You. Yes, you. Do hold still.", "A fine specimen. The best of the lot.");
     }
 
@@ -574,7 +574,7 @@ public class MorrisBoss extends ArcBoss {
             cageCenter = ZogratisBoss.ground(sl, new Vec3(x, target.getY(), z));
             doors = CageMath.doors(MorrisMoves.openDirections(this, cageCenter), CageMath.DOORS);
             announce("Dissection Theatre: a cage of tendrils will close round the party. Leave through a door (a gap in the ring) before it shuts.");
-            SpadeFx.hintAround(this, 64, "message.nusmp.spade.cage_order", "DISSECTION THEATRE! Leave the ring through one of its doors (the gaps).");
+            SpadeFx.hintAround(this, 64, "message.anime_multiverse.spade.cage_order", "DISSECTION THEATRE! Leave the ring through one of its doors (the gaps).");
             VfxSpawn.send(sl, VfxShape.WIKI_MAGIC_FIELD, cageCenter, cageCenter.add(0, 1, 0), MorrisMoves.MODIFICATION_ARGB, total, (float) (CageMath.START / 3));
         }
         if (cageCenter == null) return;

@@ -50,7 +50,7 @@ public final class CodexRuleState {
         try { return CodexRuleValue.number(v.get(), "s", true); } catch (IllegalStateException notLoaded) { return CodexRuleValue.number(v.getDefault(), "s", false); }
     }
 
-    /** The stock rules that map to a config switch. Ids are the file names under assets/nusmp/codex/rules/. */
+    /** The stock rules that map to a config switch. Ids are the file names under assets/anime_multiverse/codex/rules/. */
     private static synchronized void defaults() {
         if (!STATE.isEmpty()) return;
         register("relics_exclusive", () -> bool(LabyrinthConfig.RELICS_EXCLUSIVE));

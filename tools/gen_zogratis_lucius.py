@@ -16,10 +16,10 @@ Models (GeoSpec.of("zogratis", "<name>")), original pixel-art interpretations of
     grimoire_prop   Lucius's floating golden open grimoire: gold covers, pages, a radiant starburst, a turning page, orbiting runes
 
 Writes for each <name> (through tools/geo_builder.py):
-    assets/nusmp/geo/entity/zogratis_<name>.geo.json
-    assets/nusmp/animations/entity/zogratis_<name>.animation.json
-    assets/nusmp/textures/entity/zogratis_<name>.png          512 wide at 2 texels per model pixel (faces, halo, feathers, plates at 3 to 6), as tall as needed
-    assets/nusmp/textures/entity/zogratis_<name>_glow.png     eyes, spark, halo, antlers, wing tips, sigils, grimoire (additive, full bright)
+    assets/anime_multiverse/geo/entity/zogratis_<name>.geo.json
+    assets/anime_multiverse/animations/entity/zogratis_<name>.animation.json
+    assets/anime_multiverse/textures/entity/zogratis_<name>.png          512 wide at 2 texels per model pixel (faces, halo, feathers, plates at 3 to 6), as tall as needed
+    assets/anime_multiverse/textures/entity/zogratis_<name>_glow.png     eyes, spark, halo, antlers, wing tips, sigils, grimoire (additive, full bright)
 and tools/render_preview/scenes.d/zogratis_lucius.json (python3 -B tools/render_preview/preview.py lucius_base_idle ...), and, with the scratchpad path of the session (ZOG_SCRATCH), the manifest
 and, with --preview, the preview sheets (see MANIFEST_OUT / PREVIEW_OUT).
 
@@ -1893,8 +1893,8 @@ def load_json(path):
 
 def asset_paths(name):
     i = "zogratis_" + name
-    return {"geo": "src/main/resources/assets/nusmp/geo/entity/%s.geo.json" % i, "animations": "src/main/resources/assets/nusmp/animations/entity/%s.animation.json" % i,
-            "texture": "src/main/resources/assets/nusmp/textures/entity/%s.png" % i, "glow": "src/main/resources/assets/nusmp/textures/entity/%s_glow.png" % i}
+    return {"geo": "src/main/resources/assets/anime_multiverse/geo/entity/%s.geo.json" % i, "animations": "src/main/resources/assets/anime_multiverse/animations/entity/%s.animation.json" % i,
+            "texture": "src/main/resources/assets/anime_multiverse/textures/entity/%s.png" % i, "glow": "src/main/resources/assets/anime_multiverse/textures/entity/%s_glow.png" % i}
 
 
 def inspect(name):

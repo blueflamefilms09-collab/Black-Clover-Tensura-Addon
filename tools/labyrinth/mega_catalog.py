@@ -23,7 +23,7 @@ sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
 from template import load  # noqa: E402
 
-DATA = os.path.join(L.RES, "data", "nusmp")
+DATA = os.path.join(L.RES, "data", "anime_multiverse")
 OUT = os.path.join(L.ROOT, "src", "test", "resources", "mega", "catalog.json")
 FOLDER_KIND = {"landing": "LANDING", "safe": "SAFE", "corridor": "CORRIDOR", "junction": "JUNCTION", "hall": "HALL", "set": "SET_PIECE", "cavern": "CAVERN",
                "trial": "TRIAL", "trap": "TRAP", "puzzle": "PUZZLE", "treasure": "TREASURE", "arena": "ARENA", "antechamber": "ANTECHAMBER",
@@ -32,7 +32,7 @@ THEME_DIR = os.path.join(DATA, "mega", "template_themes")
 
 
 def theme_rules():
-    """[(prefix, theme id)] of every data/nusmp/mega/template_themes/*.json (1.58.0, docs/labyrinth/mega_v2.md section 5.1): a template whose id starts with a prefix may
+    """[(prefix, theme id)] of every data/anime_multiverse/mega/template_themes/*.json (1.58.0, docs/labyrinth/mega_v2.md section 5.1): a template whose id starts with a prefix may
     only be drawn in sectors of that theme. Prefixes are written with or without the namespace; here they get it, like the pool entries have it. A file that cannot be
     read is skipped here and reported by mega_check.py."""
     out = []
@@ -45,7 +45,7 @@ def theme_rules():
         for prefix in doc.get("templates", []):
             if isinstance(prefix, str) and prefix.strip():
                 p = prefix.strip()
-                out.append((p if ":" in p else "nusmp:" + p, theme))
+                out.append((p if ":" in p else "anime_multiverse:" + p, theme))
     return out
 
 
@@ -77,7 +77,7 @@ def build():
         for (x, y, z), c in sorted(t.cells.items(), key=lambda kv: (kv[0][1], kv[0][2], kv[0][0])):
             if c.block == "minecraft:structure_block" and c.nbt is not None:
                 meta = str(c.nbt.get("metadata", ""))
-                if meta.startswith("nusmp:"):
+                if meta.startswith("anime_multiverse:"):
                     parts_m = meta.split(";")
                     args = {}
                     for a in parts_m[1:]:
@@ -87,10 +87,10 @@ def build():
                         elif a:
                             args[a] = "true"
                     markers.append({"kind": parts_m[0][6:], "x": x, "y": y, "z": z, "args": args})
-        templates["nusmp:" + name] = {"size": list(t.size), "kind": kind, "sockets": sockets, "markers": markers, "themes": themes_of("nusmp:" + name, rules)}
+        templates["anime_multiverse:" + name] = {"size": list(t.size), "kind": kind, "sockets": sockets, "markers": markers, "themes": themes_of("anime_multiverse:" + name, rules)}
     pools = {}
     for path in sorted(glob.glob(os.path.join(DATA, "worldgen", "template_pool", "mega", "*.json"))):
-        pid = "nusmp:mega/" + os.path.basename(path)[:-5]
+        pid = "anime_multiverse:mega/" + os.path.basename(path)[:-5]
         p = json.load(open(path))
         els = []
         empty = 0

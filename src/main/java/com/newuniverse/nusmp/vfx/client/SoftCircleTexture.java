@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class SoftCircleTexture {
     private SoftCircleTexture() {}
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("nusmp", "dynamic/soft_circle");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "dynamic/soft_circle");
     private static boolean registered;
 
     /** The location of the soft circle, registering it on the first call. */

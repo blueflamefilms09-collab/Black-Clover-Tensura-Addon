@@ -35,7 +35,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * CI only (3.9.2). Started with {@code -Dnusmp.clientshot=1} (gradle {@code -Pclientshot}, see .github/workflows/clientshot.yml): in a real dev client under a software GL driver it makes a flat
+ * CI only (3.9.2). Started with {@code -Danime_multiverse.clientshot=1} (gradle {@code -Pclientshot}, see .github/workflows/clientshot.yml): in a real dev client under a software GL driver it makes a flat
  * world, puts the Mask of Mind Melting and the Ruby Boots of Planestriding on the player, takes screenshots of the body (third person front and back, the inventory paper doll),
  * logs what the worn layer found and decided, and quits. It exists so the worn armour relics can be SEEN by the build, not only reasoned about. Without the property nothing is registered.
  * Client only; never touches a server.
@@ -44,7 +44,7 @@ public final class ClientShot {
     private ClientShot() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    private static final boolean ON = System.getProperty("nusmp.clientshot") != null;
+    private static final boolean ON = System.getProperty("anime_multiverse.clientshot") != null;
     private static final long LIMIT_NANOS = 40L * 60L * 1_000_000_000L;
     private static final String[] ARMOUR = {"armor.head mask_of_mind_melting", "armor.feet ruby_boots_of_planestriding"};
     /** 3.83.1: the 21 hero weapons, held one after the other and photographed in third and first person (the Blender-made models had only been seen in the software preview). */
@@ -126,7 +126,7 @@ public final class ClientShot {
                 serverResync(mc, p);
                 for (String a : ARMOUR) {
                     String[] x = a.split(" ");
-                    mc.player.connection.sendCommand("item replace entity @s " + x[0] + " with nusmp:" + x[1]);
+                    mc.player.connection.sendCommand("item replace entity @s " + x[0] + " with anime_multiverse:" + x[1]);
                 }
                 mc.player.connection.sendCommand("time set day");
                 say("equipment commands sent");
@@ -234,8 +234,8 @@ public final class ClientShot {
                 mc.player.connection.sendCommand("multiverse hero release @s");
                 mc.player.connection.sendCommand("multiverse hero bind @s " + HERO[heroI]);
                 mc.player.connection.sendCommand("multiverse hero summon");
-                mc.player.connection.sendCommand("item replace entity @e[type=minecraft:armor_stand,tag=shot,limit=1] weapon.mainhand with nusmp:" + HERO[heroI]);
-                mc.player.connection.sendCommand("data merge entity @e[type=minecraft:item_display,tag=shot,limit=1] {item:{id:\"nusmp:" + HERO[heroI] + "\",count:1}}");
+                mc.player.connection.sendCommand("item replace entity @e[type=minecraft:armor_stand,tag=shot,limit=1] weapon.mainhand with anime_multiverse:" + HERO[heroI]);
+                mc.player.connection.sendCommand("data merge entity @e[type=minecraft:item_display,tag=shot,limit=1] {item:{id:\"anime_multiverse:" + HERO[heroI] + "\",count:1}}");
                 mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
                 mc.setScreen(null);
                 stage = 10;

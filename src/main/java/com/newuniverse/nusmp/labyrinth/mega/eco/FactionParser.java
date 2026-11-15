@@ -66,10 +66,10 @@ public final class FactionParser {
         }
 
         String tag = text(json, "tag", "", id, problems);
-        if (tag.isEmpty()) tag = "nusmp:mega/" + id;
+        if (tag.isEmpty()) tag = "anime_multiverse:mega/" + id;
         else if (!LOCATION.matcher(tag).matches()) {
-            problems.add(id + ": tag '" + tag + "' is not a resource location; using nusmp:mega/" + id);
-            tag = "nusmp:mega/" + id;
+            problems.add(id + ": tag '" + tag + "' is not a resource location; using anime_multiverse:mega/" + id);
+            tag = "anime_multiverse:mega/" + id;
         }
 
         List<String> rivals = idList(json.get("rivals"), "rivals", id, problems);
@@ -108,7 +108,7 @@ public final class FactionParser {
             Object cut = d.get("meat");
             if (cut instanceof String s) {
                 String c = s.trim().toLowerCase(Locale.ROOT);
-                if (c.startsWith("nusmp:")) c = c.substring(6);
+                if (c.startsWith("anime_multiverse:")) c = c.substring(6);
                 if (FactionDef.CUTS.contains(c)) meat = c;
                 else problems.add(id + ": drops.meat '" + s + "' is not one of " + FactionDef.CUTS + "; using " + DEFAULT_CUT);
             } else if (cut != null) problems.add(id + ": drops.meat must be a string");

@@ -1,4 +1,4 @@
-"""The clips of the Spirit of Light (docs/magic/spirit_light.md): the poses of the lion cub and of the seraph, one clip each, written to assets/nusmp/animations/entity/spiritlight_{cub,seraph}.animation.json
+"""The clips of the Spirit of Light (docs/magic/spirit_light.md): the poses of the lion cub and of the seraph, one clip each, written to assets/anime_multiverse/animations/entity/spiritlight_{cub,seraph}.animation.json
 by tools/gen_spirit_light_geo.py. The names, lengths and faces are the table of the server rules (spiritlight.LightMoodRules: POSES); SpiritLightAssetsTest checks that the files and the table agree.
 
 A face is not a texture swap: the base face is painted on the head, the other moods are thin overlay slabs in front of it, one bone each (`face_<mood>`; the base one is `face_base`). Every clip scales

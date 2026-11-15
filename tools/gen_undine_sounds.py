@@ -29,7 +29,7 @@ import numpy as np
 
 sys.dont_write_bytecode = True
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-ASSETS = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp')
+ASSETS = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse')
 SOUND_DIR = os.path.join(ASSETS, 'sounds', 'undine')
 SOUNDS_JSON = os.path.join(ASSETS, 'sounds.json')
 LANG_OUT = os.path.join(ROOT, 'tools', 'lang', 'undine.json')
@@ -445,7 +445,7 @@ def build(only, preview):
 
 def entry(cue, lengths):
     variants, att, verb, db = CUES[cue]
-    lines = ['  "undine.%s": {' % cue, '    "subtitle": "subtitles.nusmp.undine.%s",' % cue, '    "sounds": [']
+    lines = ['  "undine.%s": {' % cue, '    "subtitle": "subtitles.anime_multiverse.undine.%s",' % cue, '    "sounds": [']
     items = []
     for v in range(1, variants + 1):
         path = os.path.join(SOUND_DIR, '%s_%d.ogg' % (cue, v))
@@ -453,7 +453,7 @@ def entry(cue, lengths):
         if sec is None:
             sec = len(seconds_of(path)) / SR
         stream = ', "stream": true' if sec >= STREAM_OVER else ''
-        items.append('      { "name": "nusmp:undine/%s_%d", "attenuation_distance": %d%s }' % (cue, v, att, stream))
+        items.append('      { "name": "anime_multiverse:undine/%s_%d", "attenuation_distance": %d%s }' % (cue, v, att, stream))
     lines.append(',\n'.join(items))
     lines += ['    ]', '  }']
     return '\n'.join(lines)
@@ -470,14 +470,14 @@ def write_manifest(lengths):
         f.write(new)
     keep = {}
     if os.path.exists(LANG_OUT):                                                          # the subtitles of the spoken lines belong to tools/audio/undine_voice_convert.py: kept as they are
-        keep = {k: v for k, v in json.load(open(LANG_OUT, encoding='utf-8')).items() if k.startswith('subtitles.nusmp.voice.undine_')}
-    lang = {'subtitles.nusmp.undine.%s' % c: 'Undine %s' % CUES[c][2] for c in CUES}
+        keep = {k: v for k, v in json.load(open(LANG_OUT, encoding='utf-8')).items() if k.startswith('subtitles.anime_multiverse.voice.undine_')}
+    lang = {'subtitles.anime_multiverse.undine.%s' % c: 'Undine %s' % CUES[c][2] for c in CUES}
     lang.update(keep)
     lang.update({
-        'key.nusmp.undine_link': 'Undine (link or unlink Noelle\'s water spirit)',
-        'nusmp.undine.spirit.full': 'Undine cannot answer: too many spirits are out.',
-        'nusmp.undine.spirit.linked': 'Undine rises from the water beside you.',
-        'nusmp.undine.spirit.unlinked': 'Undine sinks back into the water.',
+        'key.anime_multiverse.undine_link': 'Undine (link or unlink Noelle\'s water spirit)',
+        'anime_multiverse.undine.spirit.full': 'Undine cannot answer: too many spirits are out.',
+        'anime_multiverse.undine.spirit.linked': 'Undine rises from the water beside you.',
+        'anime_multiverse.undine.spirit.unlinked': 'Undine sinks back into the water.',
     })
     with open(LANG_OUT, 'w', encoding='utf-8', newline='\n') as f:
         json.dump(lang, f, indent=2, ensure_ascii=False)

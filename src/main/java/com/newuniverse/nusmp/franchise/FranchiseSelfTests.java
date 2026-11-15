@@ -47,9 +47,9 @@ public final class FranchiseSelfTests {
         HolderLookup.RegistryLookup<Enchantment> lookup = server.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         TagKey<Enchantment> tag = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("tensura", "engraving"));
         for (FranchiseData.Engraving en : table.engravings().values()) {
-            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("nusmp", en.id())));
-            if (h.isEmpty()) return SelfTests.Result.fail("enchantment nusmp:" + en.id() + " is not registered");
-            if (!h.get().is(tag)) return SelfTests.Result.fail("nusmp:" + en.id() + " is not in the tensura:engraving tag");
+            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("anime_multiverse", en.id())));
+            if (h.isEmpty()) return SelfTests.Result.fail("enchantment anime_multiverse:" + en.id() + " is not registered");
+            if (!h.get().is(tag)) return SelfTests.Result.fail("anime_multiverse:" + en.id() + " is not in the tensura:engraving tag");
         }
         // ---- every mapped franchise: an existing item of it is engraved once, with its franchise's engravings
         int engraved = 0;
@@ -57,13 +57,13 @@ public final class FranchiseSelfTests {
         java.util.Set<String> done = new java.util.HashSet<>();
         for (Map.Entry<String, String> m : items.entrySet()) {
             if (done.contains(m.getValue())) continue;
-            Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", m.getKey()));
+            Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", m.getKey()));
             if (item.isEmpty()) continue;
             ItemStack s = new ItemStack(item.get());
             if (!FranchiseEngravings.engravable(s)) continue;
             if (!FranchiseEngravings.engrave(s, server.registryAccess())) return SelfTests.Result.fail(m.getKey() + " was not engraved");
             for (FranchiseData.Engraving en : table.of(m.getValue())) {
-                Holder<Enchantment> h = lookup.getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("nusmp", en.id())));
+                Holder<Enchantment> h = lookup.getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("anime_multiverse", en.id())));
                 if (s.getEnchantments().getLevel(h) < 1) return SelfTests.Result.fail(m.getKey() + " lacks " + en.id());
             }
             if (FranchiseEngravings.engrave(s, server.registryAccess())) return SelfTests.Result.fail(m.getKey() + " was engraved twice");
@@ -78,7 +78,7 @@ public final class FranchiseSelfTests {
         LivingEntity victim = EntityType.ZOMBIE.create(level);
         if (victim == null) return SelfTests.Result.fail("no test victim");
         try {
-            Holder<Enchantment> dragonForce = lookup.getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("nusmp", "fr_dragon_force")));
+            Holder<Enchantment> dragonForce = lookup.getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "fr_dragon_force")));
             ItemStack sword = new ItemStack(Items.IRON_SWORD);
             p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sword);
             p.setHealth(4.0f);

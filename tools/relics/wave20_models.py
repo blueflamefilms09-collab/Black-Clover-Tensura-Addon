@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave20_models.py mjolnir      (also renders the preview beside the card)
 
 Run tools/relics/wave20_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon). Per id it writes
-assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png (512 px) and <id>_glow.png.
+assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png (512 px) and <id>_glow.png.
 Units are centimetres, y runs from the butt (0) to the tip, -x is forward (the cutting edge, a hook's inside, the front of a head), z is through the
 weapon. Every weapon is built at the natural length of its class (the lead's size tools scale it afterwards) and stays under 14 named parts and
 2800 quads. The reference of every weapon is the card image (measurements are written as named constants with the card pixels they came from).

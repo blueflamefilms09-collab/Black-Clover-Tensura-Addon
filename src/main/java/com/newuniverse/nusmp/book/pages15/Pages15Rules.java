@@ -101,7 +101,7 @@ public final class Pages15Rules {
     }
 
     /** The lang key of a page's description. */
-    public static String langKey(String bookPath, String id) { return "nusmp.page." + bookPath + "." + id; }
+    public static String langKey(String bookPath, String id) { return "anime_multiverse.page." + bookPath + "." + id; }
 
     // ------------------------------------------------------------------ the mark of every page: canon or original
     /** {@code original} = made up for this project (marked as such in the docs); otherwise the wiki / manga / anime place the spell comes from. */

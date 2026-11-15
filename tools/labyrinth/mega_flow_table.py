@@ -8,7 +8,7 @@ Draws the magic-alignment tables of the Rukh flow (docs/labyrinth/mega_flow.md) 
     flow_families.png  every one of the mod's magic families by alignment, the pages whose name overrules their family, and examples of Tensura skills
 
 Why a script and not a hand-made picture: the table has to be the TRUTH. It reads the same three files the game reads (the shipped
-data/nusmp/mega/flow/alignments.json, the real MagicType.java and the numbers in FlowRules.java), applies the same rules as the Java class MagicAlignments
+data/anime_multiverse/mega/flow/alignments.json, the real MagicType.java and the numbers in FlowRules.java), applies the same rules as the Java class MagicAlignments
 (an exact entry beats a keyword, whole words only, dark beats light, the first id with an entry decides alone) and scans the page ids of the real sources, so
 a re-run after the owner edits the JSON or adds a family shows the new truth. The Python port of the rules is cross-checked against the Java class by the
 build's own test (AlignmentDataTest pins the same results), and `--selfcheck` re-checks a few known ids here without Pillow.
@@ -23,8 +23,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
-DATA = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "flow", "alignments.json")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+DATA = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "flow", "alignments.json")
 
 # ----------------------------------------------------------------------------------------------------------------------------- the rules (a port of MagicAlignments)
 LIGHT, DARK, NEUTRAL = "light", "dark", "neutral"
@@ -142,7 +142,7 @@ def pages(names):
 
 
 def numbers():
-    t = read(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "flow", "FlowRules.java"))
+    t = read(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "flow", "FlowRules.java"))
 
     def num(name):
         m = re.search(name + r"\s*=\s*([0-9.]+)", t)
@@ -419,7 +419,7 @@ def families_image(fams, table, pg, out, tensura):
         for j, i in enumerate(ok):
             d.text((x + 18, sy0 + 54 + j * 26), i, font=f_s, fill=INK)
     y = sy0 + sh + 24
-    d.text((48, y), "Everything not named by an entry or a word is NEUTRAL, which is also the answer when the table is empty or broken: the flow then does nothing. Edit data/nusmp/mega/flow/alignments.json to retune.", font=f_s, fill=MUTE)
+    d.text((48, y), "Everything not named by an entry or a word is NEUTRAL, which is also the answer when the table is empty or broken: the flow then does nothing. Edit data/anime_multiverse/mega/flow/alignments.json to retune.", font=f_s, fill=MUTE)
     y += 44
     img = img.crop((0, 0, W, y))
     img.save(out)

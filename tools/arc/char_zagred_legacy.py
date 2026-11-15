@@ -1,4 +1,4 @@
-"""Why: the legacy Zagred (entity nusmp:zagred_legacy, entity/ZagredBossEntity): the first Zagred boss, kept registered when the remade one (char_zagred.py, nusmp:zagred) took the id.
+"""Why: the legacy Zagred (entity anime_multiverse:zagred_legacy, entity/ZagredBossEntity): the first Zagred boss, kept registered when the remade one (char_zagred.py, anime_multiverse:zagred) took the id.
 Its 0.48 "true form" was a hand-built cube devil: a tall black devil with spread bat wings, horns, claws and a whip tail, red eyes, a ribcage lit by cracks and runes, and from the
 fourth phase the otherworldly trident in its right claws. The owner asked for every mob of the mod to be a player-model character built with the art kit, so this is that devil
 again, on the kit's body: a black-violet lanky devil with a bare cracked ribcage, glowing red rune lines, bat wings with lit veins, curved horns and a long whip tail. It stays

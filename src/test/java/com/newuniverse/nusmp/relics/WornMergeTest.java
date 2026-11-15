@@ -11,30 +11,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class WornMergeTest {
     @Test
     void whatTheClientFoundIsNotAddedAgain() {
-        assertEquals(List.of(), WornMerge.missing(List.of("nusmp:a", "nusmp:b"), List.of("nusmp:a", "nusmp:b")));
+        assertEquals(List.of(), WornMerge.missing(List.of("anime_multiverse:a", "anime_multiverse:b"), List.of("anime_multiverse:a", "anime_multiverse:b")));
     }
 
     @Test
     void whatOnlyTheServerKnowsIsAdded() {
-        assertEquals(List.of(1), WornMerge.missing(List.of("nusmp:a"), List.of("nusmp:a", "nusmp:b")));
-        assertEquals(List.of(0, 1), WornMerge.missing(List.of(), List.of("nusmp:a", "nusmp:b")), "a client whose Curios read failed finds nothing: everything comes from the server");
+        assertEquals(List.of(1), WornMerge.missing(List.of("anime_multiverse:a"), List.of("anime_multiverse:a", "anime_multiverse:b")));
+        assertEquals(List.of(0, 1), WornMerge.missing(List.of(), List.of("anime_multiverse:a", "anime_multiverse:b")), "a client whose Curios read failed finds nothing: everything comes from the server");
     }
 
     @Test
     void theSameItemTwiceIsMatchedOneForOne() {
-        assertEquals(List.of(1), WornMerge.missing(List.of("nusmp:ring"), List.of("nusmp:ring", "nusmp:ring")));
-        assertEquals(List.of(), WornMerge.missing(List.of("nusmp:ring", "nusmp:ring"), List.of("nusmp:ring", "nusmp:ring")));
-        assertEquals(List.of(), WornMerge.missing(List.of("nusmp:ring", "nusmp:ring", "nusmp:ring"), List.of("nusmp:ring")), "more found than told: nothing to add");
+        assertEquals(List.of(1), WornMerge.missing(List.of("anime_multiverse:ring"), List.of("anime_multiverse:ring", "anime_multiverse:ring")));
+        assertEquals(List.of(), WornMerge.missing(List.of("anime_multiverse:ring", "anime_multiverse:ring"), List.of("anime_multiverse:ring", "anime_multiverse:ring")));
+        assertEquals(List.of(), WornMerge.missing(List.of("anime_multiverse:ring", "anime_multiverse:ring", "anime_multiverse:ring"), List.of("anime_multiverse:ring")), "more found than told: nothing to add");
     }
 
     @Test
     void aMobPackTheClientCanNeverReadComesEntirelyFromTheServer() {
-        assertEquals(List.of(0, 1, 2), WornMerge.missing(List.of("minecraft:iron_helmet"), Arrays.asList("nusmp:ring_a", "nusmp:cloak_b", "nusmp:belt_c")));
+        assertEquals(List.of(0, 1, 2), WornMerge.missing(List.of("minecraft:iron_helmet"), Arrays.asList("anime_multiverse:ring_a", "anime_multiverse:cloak_b", "anime_multiverse:belt_c")));
     }
 
     @Test
     void nullKeysAreIgnored() {
-        assertEquals(List.of(1), WornMerge.missing(Arrays.asList("nusmp:a", null), Arrays.asList(null, "nusmp:b")));
+        assertEquals(List.of(1), WornMerge.missing(Arrays.asList("anime_multiverse:a", null), Arrays.asList(null, "anime_multiverse:b")));
     }
 
     @Test

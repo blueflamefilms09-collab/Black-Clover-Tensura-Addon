@@ -200,9 +200,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "FFE8A0", "groups": ["wing_l", "wing_r", "glitter_l", "glitter_r", "law"], "note": "the wings unfold and the glitter spirals out as the gauntlets are drawn"}
     it.swing = {"trail": "glitter", "rgb": "FFE8A0", "rgb2": "FFFFFF", "length": 0.8, "width": 0.3, "life": 8, "particles": "glitter"}
-    it.sound = "nusmp:item.genesis.fairy_glitter.shimmer_loop"
+    it.sound = "anime_multiverse:item.genesis.fairy_glitter.shimmer_loop"
     it.acts = {
-        "glitter_barrage": {"burst": "glitter_barrage", "pattern": "cone", "rgb": "FFE8A0", "ring": 4.5, "particles": 40, "sound": "nusmp:item.genesis.fairy_glitter.barrage"},
-        "fairy_glitter": {"burst": "fairy_glitter", "pattern": "nova", "rgb": "FFFFFF", "ring": 5.0, "particles": 46, "sound": "nusmp:item.genesis.fairy_glitter.glitter"},
-        "law_of_the_guild": {"burst": "guild_law", "pattern": "ring", "rgb": "FFD070", "ring": 5.5, "particles": 40, "sound": "nusmp:item.genesis.fairy_glitter.law"},
+        "glitter_barrage": {"burst": "glitter_barrage", "pattern": "cone", "rgb": "FFE8A0", "ring": 4.5, "particles": 40, "sound": "anime_multiverse:item.genesis.fairy_glitter.barrage"},
+        "fairy_glitter": {"burst": "fairy_glitter", "pattern": "nova", "rgb": "FFFFFF", "ring": 5.0, "particles": 46, "sound": "anime_multiverse:item.genesis.fairy_glitter.glitter"},
+        "law_of_the_guild": {"burst": "guild_law", "pattern": "ring", "rgb": "FFD070", "ring": 5.5, "particles": 40, "sound": "anime_multiverse:item.genesis.fairy_glitter.law"},
     }

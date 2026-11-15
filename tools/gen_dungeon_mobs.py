@@ -6,10 +6,10 @@ a Direwolf (a huge, heavy, scarred dire wolf: blue-grey fur, a dark ridge of spi
     python3 -B tools/gen_dungeon_mobs.py direwolf     # only the named ones
 
 Writes (through tools/geo_builder.py; GeoSpec.of("dungeon", "direwolf") / GeoSpec.of("dungeon", "basilisk") name exactly these):
-    assets/nusmp/geo/entity/dungeon_<name>.geo.json
-    assets/nusmp/animations/entity/dungeon_<name>.animation.json
-    assets/nusmp/textures/entity/dungeon_<name>.png          256x128, painted procedurally (fur strands / overlapping scales, shading, scars)
-    assets/nusmp/textures/entity/dungeon_<name>_glow.png     the eyes (and the Basilisk's crest), additive and full bright
+    assets/anime_multiverse/geo/entity/dungeon_<name>.geo.json
+    assets/anime_multiverse/animations/entity/dungeon_<name>.animation.json
+    assets/anime_multiverse/textures/entity/dungeon_<name>.png          256x128, painted procedurally (fur strands / overlapping scales, shading, scars)
+    assets/anime_multiverse/textures/entity/dungeon_<name>_glow.png     the eyes (and the Basilisk's crest), additive and full bright
 
 Clips   direwolf: idle, walk, run, attack, sleep, hurt        basilisk: idle, walk, attack, sleep, hurt
 Drawn by client/dungeon/DirewolfRenderer.java and BasiliskRenderer.java with client.geo.GeoDraw (Space.PROP, front on -z).

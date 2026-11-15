@@ -151,7 +151,7 @@ public final class BrushRunes {
         PAINTS.add(a);
         RuneNet.sendBrush(level, a.id, RuneNet.PHASE_APPEAR, face.get3DDataValue(), c, p.getYRot(), radius, spec.pack(), life);
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.9f, 1.4f);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.brush", "Brush Rune: the array is painted (%s s)", Math.round(life / 20.0)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_method.brush", "Brush Rune: the array is painted (%s s)", Math.round(life / 20.0)).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         return true;
     }
 

@@ -80,7 +80,7 @@ public final class CrucibleHook {
         try {
             return pick(level, s, slots, slot, player);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] mega crucible: a pick in sector {} failed: {}", s.id, e.toString());
+            LOG.warn("[anime_multiverse] mega crucible: a pick in sector {} failed: {}", s.id, e.toString());
             return Boolean.FALSE;                                                   // fail closed: never fall through to the old pick with a preview in the pedestal
         }
     }
@@ -147,7 +147,7 @@ public final class CrucibleHook {
                 try {
                     announce(level, center, player, name, swapped, chosen.id());
                 } catch (RuntimeException chatFailed) {
-                    LOG.warn("[nusmp] mega crucible: could not announce the pick in sector {}: {}", s.id, chatFailed.toString());
+                    LOG.warn("[anime_multiverse] mega crucible: could not announce the pick in sector {}: {}", s.id, chatFailed.toString());
                 }
                 NusmpEvents.fire(player, "mega.crucible_choice", chosen.id());                // never throws: the quest hook swallows its own errors
             }
@@ -164,7 +164,7 @@ public final class CrucibleHook {
                 }
                 CrucibleOffer.clearAll(level, s, true);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] mega crucible: could not finish emptying the pedestals of sector {}: {}", s.id, e.toString());
+                LOG.warn("[anime_multiverse] mega crucible: could not finish emptying the pedestals of sector {}: {}", s.id, e.toString());
             }
         }
         if (refused) {
@@ -190,23 +190,23 @@ public final class CrucibleHook {
     }
 
     private static void announce(ServerLevel level, BlockPos center, ServerPlayer chooser, Component relic, boolean swapped, String relicId) {
-        Component line = Component.translatable("message.nusmp.mega.crucible.chosen", chooser.getDisplayName(), relic).withStyle(ChatFormatting.GOLD);
+        Component line = Component.translatable("message.anime_multiverse.mega.crucible.chosen", chooser.getDisplayName(), relic).withStyle(ChatFormatting.GOLD);
         Component road = ThemeConfig.get(ThemeConfig.SHOW_ROADS)
-                ? Component.translatable("message.nusmp.mega.crucible.road", NextTheme.describe(NextTheme.roadOfRelic(relicId))).withStyle(ChatFormatting.AQUA) : null;
+                ? Component.translatable("message.anime_multiverse.mega.crucible.road", NextTheme.describe(NextTheme.roadOfRelic(relicId))).withStyle(ChatFormatting.AQUA) : null;
         for (ServerPlayer p : CruciblePedestals.playersInBox(level, center)) {
             p.displayClientMessage(line, false);
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.crumble").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), false);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.crumble").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), false);
             if (road != null) p.displayClientMessage(road, false);
         }
-        if (swapped) chooser.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.swapped").withStyle(ChatFormatting.GRAY), true);
+        if (swapped) chooser.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.swapped").withStyle(ChatFormatting.GRAY), true);
     }
 
     private static void tell(ServerPlayer player, String key) {
-        player.displayClientMessage(Component.translatable("message.nusmp.mega.crucible." + key).withStyle(ChatFormatting.GRAY), true);
+        player.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible." + key).withStyle(ChatFormatting.GRAY), true);
     }
 
     private static void tellChat(ServerPlayer player, String key) {
-        player.displayClientMessage(Component.translatable("message.nusmp.mega.crucible." + key).withStyle(ChatFormatting.RED), false);
+        player.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible." + key).withStyle(ChatFormatting.RED), false);
     }
 
     // ---------------------------------------------------------------- the drop guard

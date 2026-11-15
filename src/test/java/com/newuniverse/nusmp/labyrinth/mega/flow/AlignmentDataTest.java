@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class AlignmentDataTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path FILE = ROOT.resolve("src/main/resources/data/nusmp/mega/flow/alignments.json");
+    private static final Path FILE = ROOT.resolve("src/main/resources/data/anime_multiverse/mega/flow/alignments.json");
     private static final Path MAGIC_TYPE = ROOT.resolve("src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
     private static final Path BOOKS = ROOT.resolve("src/main/java/com/newuniverse/nusmp/book");
     private static final Path SOURCES = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
@@ -182,7 +182,7 @@ class AlignmentDataTest {
             assertEquals(Alignment.DARK, t.classify(id), id);
         for (String id : new String[] {"tensura:lighten", "tensura:healing", "tensura:fire_ball", "tensura:lightning_lance", "tensura:thunder", "tensura:flight",
                 "tensura:explosion", "tensura:megiddo", "tensura:burden", "tensura:analyze", "tensura:mental_crush", "tensura:dominate", "tensura:hypnos",
-                "tensura:water_cutter", "tensura:full_recovery", "nusmp:book_flame", "minecraft:fireball"})
+                "tensura:water_cutter", "tensura:full_recovery", "anime_multiverse:book_flame", "minecraft:fireball"})
             assertEquals(Alignment.NEUTRAL, t.classify(id), id);
     }
 

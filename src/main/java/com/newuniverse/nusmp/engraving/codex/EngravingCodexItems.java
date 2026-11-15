@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public final class EngravingCodexItems {
     private EngravingCodexItems() {}
 
-    /** {@code nusmp:engraving_codex}: a grimoire-style book that opens the list of every engraving of the mod. */
+    /** {@code anime_multiverse:engraving_codex}: a grimoire-style book that opens the list of every engraving of the mod. */
     public static final DeferredItem<EngravingCodexItem> CODEX = NUItems.ITEMS.register("engraving_codex",
             () -> new EngravingCodexItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 

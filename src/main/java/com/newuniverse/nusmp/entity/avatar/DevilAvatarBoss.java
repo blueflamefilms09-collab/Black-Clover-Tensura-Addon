@@ -187,12 +187,12 @@ public class DevilAvatarBoss extends ZogratisBoss {
             sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(AvatarText.fell(bossName(), killer == null ? null : killer.getName().getString()))
                     .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
         } catch (RuntimeException | LinkageError ex) {
-            LogUtils.getLogger().warn("[nusmp] The fall of the Devil Avatar could not be announced: {}", ex.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] The fall of the Devil Avatar could not be announced: {}", ex.toString());
         }
         try {
             DjinnSources.floorBossFell(sl, at, "UNDERWORLD_GATE", killer);
         } catch (RuntimeException | LinkageError ex) {
-            LogUtils.getLogger().warn("[nusmp] The reward of the Underworld Gate could not be paid: {}", ex.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] The reward of the Underworld Gate could not be paid: {}", ex.toString());
         }
     }
 

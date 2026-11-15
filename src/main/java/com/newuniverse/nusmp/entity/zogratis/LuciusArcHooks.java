@@ -46,7 +46,7 @@ import java.util.UUID;
  *       blow arrives.</li>
  * </ul>
  * Anti-magic is recognised by the existing detection ({@link LuciusFx#antiMagicHit}: the demon swords, the Anti-Magic Lord, the grimoire)
- * and by the item tag {@code nusmp:anti_magic_weapons}, which lists the registered 3D weapons (every entry optional).
+ * and by the item tag {@code anime_multiverse:anti_magic_weapons}, which lists the registered 3D weapons (every entry optional).
  * Wire it in NUSMP once: {@code LuciusArcHooks.register()} (idempotent).
  */
 public final class LuciusArcHooks {

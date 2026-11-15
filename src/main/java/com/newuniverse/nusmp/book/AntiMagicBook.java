@@ -50,9 +50,9 @@ import java.util.List;
  */
 public class AntiMagicBook extends ElementBook {
     static final String K_LORD = "Lord", K_FORM = "BlackForm", K_VERSION = "AuraVer";
-    private static final ResourceLocation PHYS_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_physique");
-    private static final ResourceLocation PHYS_KB = ResourceLocation.fromNamespaceAndPath("nusmp", "anti_magic_knockback");
-    private static final ResourceLocation FORM_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "black_form");
+    private static final ResourceLocation PHYS_DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "anti_magic_physique");
+    private static final ResourceLocation PHYS_KB = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "anti_magic_knockback");
+    private static final ResourceLocation FORM_DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_form");
 
     public AntiMagicBook() {
         super(MagicType.ANTI_MAGIC, 0xFF2A0A30, TensuraDamageTypes.MAGIC_GENERIC, List.of(

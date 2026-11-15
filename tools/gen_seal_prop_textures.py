@@ -2,7 +2,7 @@
 (hexagram, concentric rings, star) and the Eternal Prison cube parts (pane, edge, flare, speed line, rune cross, cracks).
 
 Deterministic and font-free (runes are drawn from strokes). White with alpha so the vertex colour tints them, except the cube pane.
-Output: src/main/resources/assets/nusmp/textures/prop/seal_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/prop/seal_*.png
 
     python tools/gen_seal_prop_textures.py
 
@@ -15,7 +15,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "prop")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "prop")
 SS = 3
 
 GLYPHS = [

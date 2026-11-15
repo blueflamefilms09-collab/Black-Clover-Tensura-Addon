@@ -1,7 +1,7 @@
 package com.newuniverse.nusmp.labyrinth.mega;
 
 /**
- * Why: Floor 0 (the Sanctuary Hub, dimension {@code nusmp:sanctuary}) is built by THREE parties that never import each other: the 3D-noise chunk generator
+ * Why: Floor 0 (the Sanctuary Hub, dimension {@code anime_multiverse:sanctuary}) is built by THREE parties that never import each other: the 3D-noise chunk generator
  * draws the plains, the Holy Spire and the Abyssal Chasm and puts the two polarity gates at the end of their stairs; the hub package places the plaza
  * (the way home and the signposts), protects it and routes the gates; the alignment lock decides who may use which gate. They agree on WHERE things are
  * through these constants and nothing else, so a landmark can be redrawn without anyone else changing a line, and a unit test can pin that the gates sit
@@ -55,7 +55,7 @@ public final class HubLayout {
 
     /**
      * The gate whose recorded centre is nearest to the position and within {@link #GATE_REACH} blocks (spherical), or null. This is how the gate block
-     * (a plain {@code nusmp:labyrinth_gate} in the Hub) learns which road it is without a block property: the position decides.
+     * (a plain {@code anime_multiverse:labyrinth_gate} in the Hub) learns which road it is without a block property: the position decides.
      */
     public static GateKind gateNear(int x, int y, int z) {
         GateKind best = null;

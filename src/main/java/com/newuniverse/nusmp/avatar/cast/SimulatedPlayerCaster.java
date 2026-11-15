@@ -147,7 +147,7 @@ public final class SimulatedPlayerCaster extends FakePlayer {
                 if (creator != null) src = GrimoirePages.grimoireOf(creator).orElse(null);
             }
         } catch (RuntimeException | LinkageError soft) {
-            LOG.debug("[nusmp] Avatar grimoire lookup failed", soft);
+            LOG.debug("[anime_multiverse] Avatar grimoire lookup failed", soft);
         }
         if (src == null || !(src.getSkill() instanceof GrimoireBook book)) return have;       // keep the old copy while the creator is away
         GrimoireCopy fresh = new GrimoireCopy(book, src.copy(), now);
@@ -181,7 +181,7 @@ public final class SimulatedPlayerCaster extends FakePlayer {
                 com.newuniverse.nusmp.book.PageBits.write(inst.getOrCreateTag(), com.newuniverse.nusmp.book.PageBits.UNLOCKED, PageTier.mask64(open));      // 64 bits (a book can have more than 31 family pages)
                 out.add(new Source("apt:" + ids.get(i), i, book, inst));
             } catch (RuntimeException | LinkageError soft) {
-                LOG.debug("[nusmp] Avatar aptitude book failed for {}", ids.get(i), soft);
+                LOG.debug("[anime_multiverse] Avatar aptitude book failed for {}", ids.get(i), soft);
             }
         }
         List<Source> list = List.copyOf(out);
@@ -359,7 +359,7 @@ public final class SimulatedPlayerCaster extends FakePlayer {
                 removeEffect(e.getEffect());
             }
         } catch (RuntimeException soft) {
-            LOG.debug("[nusmp] Avatar caster sync-back failed", soft);
+            LOG.debug("[anime_multiverse] Avatar caster sync-back failed", soft);
         }
     }
 

@@ -32,7 +32,7 @@ public final class GsCrestScreen extends Screen {
     private int grabX, grabY;
 
     public GsCrestScreen(Screen parent) {
-        super(Component.translatableWithFallback("nusmp.ui.crest.title", "Alert crest"));
+        super(Component.translatableWithFallback("anime_multiverse.ui.crest.title", "Alert crest"));
         this.parent = parent;
     }
 
@@ -61,15 +61,15 @@ public final class GsCrestScreen extends Screen {
         if (!dragging) { cx = xy[0]; cy = xy[1]; }
         else { cx = clampX(cx); cy = clampY(cy); }
         int bw = 74, gap = 4, total = bw * 4 + gap * 3, x0 = (width - total) / 2, y = height - 28;
-        addRenderableWidget(new ThemedButton(x0, y, bw, 18, Component.translatableWithFallback("nusmp.ui.crest.save", "Save"), b -> { save(); onClose(); }));
-        addRenderableWidget(new ThemedButton(x0 + bw + gap, y, bw, 18, Component.translatableWithFallback("nusmp.ui.crest.reset", "Reset"), b -> {
+        addRenderableWidget(new ThemedButton(x0, y, bw, 18, Component.translatableWithFallback("anime_multiverse.ui.crest.save", "Save"), b -> { save(); onClose(); }));
+        addRenderableWidget(new ThemedButton(x0 + bw + gap, y, bw, 18, Component.translatableWithFallback("anime_multiverse.ui.crest.reset", "Reset"), b -> {
             int[] d = GsCrestPos.resolve(GsCrestPos.Place.DEFAULT, width, height, GsDraw.CREST, GsDraw.CREST);
             cx = d[0];
             cy = d[1];
         }));
-        addRenderableWidget(new ThemedButton(x0 + 2 * (bw + gap), y, bw, 18, Component.translatableWithFallback("nusmp.ui.crest.test", "Test notice"), b ->
-                GsNotices.offer("nusmp.ui.notice.test:" + (testCounter++), Component.translatableWithFallback("nusmp.ui.crest.test_text", "This is where Great Sage will tell you what it has recorded.").getString(), GsNoticeQueue.Kind.INFO)));
-        addRenderableWidget(new ThemedButton(x0 + 3 * (bw + gap), y, bw, 18, Component.translatableWithFallback("nusmp.ui.crest.cancel", "Cancel"), b -> onClose()));
+        addRenderableWidget(new ThemedButton(x0 + 2 * (bw + gap), y, bw, 18, Component.translatableWithFallback("anime_multiverse.ui.crest.test", "Test notice"), b ->
+                GsNotices.offer("anime_multiverse.ui.notice.test:" + (testCounter++), Component.translatableWithFallback("anime_multiverse.ui.crest.test_text", "This is where Great Sage will tell you what it has recorded.").getString(), GsNoticeQueue.Kind.INFO)));
+        addRenderableWidget(new ThemedButton(x0 + 3 * (bw + gap), y, bw, 18, Component.translatableWithFallback("anime_multiverse.ui.crest.cancel", "Cancel"), b -> onClose()));
     }
 
     private int clampX(int x) { return Math.max(0, Math.min(width - GsDraw.CREST, x)); }
@@ -93,9 +93,9 @@ public final class GsCrestScreen extends Screen {
         boolean over = mouseX >= cx && mouseX < cx + GsDraw.CREST && mouseY >= cy && mouseY < cy + GsDraw.CREST;
         g.renderOutline(cx - 2, cy - 2, GsDraw.CREST + 4, GsDraw.CREST + 4, UiMath.withAlpha(GsDraw.NEON2[s], dragging ? 0.95f : over ? 0.8f : 0.4f));
         GsNotices.draw(g, font, width, height, place(), now, 1f, false);
-        g.drawCenteredString(font, Component.translatableWithFallback("nusmp.ui.crest.hint", "Drag the crest where you want it. Arrow keys nudge it (Shift = 8). Enter saves, Esc cancels."), width / 2, 12, UiMath.withAlpha(GsDraw.TEXT[s], 1f) | 0xFF000000);
+        g.drawCenteredString(font, Component.translatableWithFallback("anime_multiverse.ui.crest.hint", "Drag the crest where you want it. Arrow keys nudge it (Shift = 8). Enter saves, Esc cancels."), width / 2, 12, UiMath.withAlpha(GsDraw.TEXT[s], 1f) | 0xFF000000);
         if (!UiTheme.greatSpirit())
-            g.drawCenteredString(font, Component.translatableWithFallback("nusmp.ui.crest.theme_hint", "The crest only shows in game when ui.theme is great_spirit."), width / 2, 24, 0xFFFFB04A);
+            g.drawCenteredString(font, Component.translatableWithFallback("anime_multiverse.ui.crest.theme_hint", "The crest only shows in game when ui.theme is great_spirit."), width / 2, 24, 0xFFFFB04A);
         GsCrestPos.Place p = place();
         g.drawCenteredString(font, p.corner().name() + "  +" + p.dx() + ", +" + p.dy(), width / 2, height - 42, UiMath.withAlpha(GsDraw.DIM[s], 1f) | 0xFF000000);
     }

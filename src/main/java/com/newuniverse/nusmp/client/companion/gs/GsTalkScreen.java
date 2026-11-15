@@ -128,55 +128,55 @@ public final class GsTalkScreen extends Screen implements TalkHost {
     // ================================================================ texts
     private void resolveTexts() {
         String[] tabs = {"talk", "interact", "bond", "pouch"};
-        for (int i = 0; i < 4; i++) frame.tabNames[i] = t("nusmp.companion.tab." + tabs[i]);
+        for (int i = 0; i < 4; i++) frame.tabNames[i] = t("anime_multiverse.companion.tab." + tabs[i]);
         String[] labels = frame.labels;
-        labels[GsTalkFrame.L_CLOSE] = t("nusmp.companion.close");
-        labels[GsTalkFrame.L_GIVE] = t("nusmp.companion.gs.give");
-        labels[GsTalkFrame.L_LIKES] = t("nusmp.companion.gs.likes");
-        labels[GsTalkFrame.L_FIVE] = t("nusmp.companion.bond.five");
-        labels[GsTalkFrame.L_FOLLOW] = t("nusmp.companion.gs.follow");
-        labels[GsTalkFrame.L_WAIT] = t("nusmp.companion.gs.wait");
-        labels[GsTalkFrame.L_PANEL] = t("nusmp.companion.gs.panel");
-        labels[GsTalkFrame.L_USE_ON] = t("nusmp.companion.gs.use_on");
-        labels[GsTalkFrame.L_USE_OFF] = t("nusmp.companion.gs.use_off");
-        labels[GsTalkFrame.L_PUT] = t("nusmp.companion.gs.put");
-        labels[GsTalkFrame.L_TAKE_ALL] = t("nusmp.companion.gs.take_all");
-        labels[GsTalkFrame.L_TASTES] = t("nusmp.companion.gs.tastes");
-        labels[GsTalkFrame.L_STORY] = t("nusmp.companion.gs.story");
-        labels[GsTalkFrame.L_PICKER] = t("nusmp.companion.gs.picker");
-        labels[GsTalkFrame.L_GIFT_HINT] = t("nusmp.companion.gs.gift_hint");
-        labels[GsTalkFrame.L_HAND] = t("nusmp.companion.gs.hand");
-        labels[GsTalkFrame.L_NO_STORY] = t("nusmp.companion.gs.story.none");
-        labels[GsTalkFrame.L_RING_READY] = t("nusmp.companion.gs.ring.ready");
-        labels[GsTalkFrame.L_RING_EMPTY] = t("nusmp.companion.gs.ring.empty");
-        labels[GsTalkFrame.L_RING_OFF] = t("nusmp.companion.gs.ring.off");
-        labels[GsTalkFrame.L_RING_LOCKED] = t("nusmp.companion.gs.ring.locked");
-        for (int i = 0; i < 3; i++) labels[GsTalkFrame.L_STANCE0 + i] = t("nusmp.companion.stance." + STANCE_KEYS[i]);
-        labels[GsTalkFrame.L_MOOD] = t("nusmp.companion.gs.mood");
-        labels[GsTalkFrame.L_NO_TASTES] = t("nusmp.companion.gs.tastes.none");
-        labels[GsTalkFrame.L_FOLLOWING] = t("nusmp.companion.gs.state.following");
-        labels[GsTalkFrame.L_WAITING] = t("nusmp.companion.gs.state.waiting");
-        labels[GsTalkFrame.L_PUT_HINT] = t("nusmp.companion.gs.put_hint");
+        labels[GsTalkFrame.L_CLOSE] = t("anime_multiverse.companion.close");
+        labels[GsTalkFrame.L_GIVE] = t("anime_multiverse.companion.gs.give");
+        labels[GsTalkFrame.L_LIKES] = t("anime_multiverse.companion.gs.likes");
+        labels[GsTalkFrame.L_FIVE] = t("anime_multiverse.companion.bond.five");
+        labels[GsTalkFrame.L_FOLLOW] = t("anime_multiverse.companion.gs.follow");
+        labels[GsTalkFrame.L_WAIT] = t("anime_multiverse.companion.gs.wait");
+        labels[GsTalkFrame.L_PANEL] = t("anime_multiverse.companion.gs.panel");
+        labels[GsTalkFrame.L_USE_ON] = t("anime_multiverse.companion.gs.use_on");
+        labels[GsTalkFrame.L_USE_OFF] = t("anime_multiverse.companion.gs.use_off");
+        labels[GsTalkFrame.L_PUT] = t("anime_multiverse.companion.gs.put");
+        labels[GsTalkFrame.L_TAKE_ALL] = t("anime_multiverse.companion.gs.take_all");
+        labels[GsTalkFrame.L_TASTES] = t("anime_multiverse.companion.gs.tastes");
+        labels[GsTalkFrame.L_STORY] = t("anime_multiverse.companion.gs.story");
+        labels[GsTalkFrame.L_PICKER] = t("anime_multiverse.companion.gs.picker");
+        labels[GsTalkFrame.L_GIFT_HINT] = t("anime_multiverse.companion.gs.gift_hint");
+        labels[GsTalkFrame.L_HAND] = t("anime_multiverse.companion.gs.hand");
+        labels[GsTalkFrame.L_NO_STORY] = t("anime_multiverse.companion.gs.story.none");
+        labels[GsTalkFrame.L_RING_READY] = t("anime_multiverse.companion.gs.ring.ready");
+        labels[GsTalkFrame.L_RING_EMPTY] = t("anime_multiverse.companion.gs.ring.empty");
+        labels[GsTalkFrame.L_RING_OFF] = t("anime_multiverse.companion.gs.ring.off");
+        labels[GsTalkFrame.L_RING_LOCKED] = t("anime_multiverse.companion.gs.ring.locked");
+        for (int i = 0; i < 3; i++) labels[GsTalkFrame.L_STANCE0 + i] = t("anime_multiverse.companion.stance." + STANCE_KEYS[i]);
+        labels[GsTalkFrame.L_MOOD] = t("anime_multiverse.companion.gs.mood");
+        labels[GsTalkFrame.L_NO_TASTES] = t("anime_multiverse.companion.gs.tastes.none");
+        labels[GsTalkFrame.L_FOLLOWING] = t("anime_multiverse.companion.gs.state.following");
+        labels[GsTalkFrame.L_WAITING] = t("anime_multiverse.companion.gs.state.waiting");
+        labels[GsTalkFrame.L_PUT_HINT] = t("anime_multiverse.companion.gs.put_hint");
         String[] moods = {"neutral", "happy", "shy", "angry", "hungry"};
-        for (Mood m : Mood.values()) moodNames[m.ordinal()] = t("nusmp.companion.gs.mood." + moods[Math.min(m.ordinal(), moods.length - 1)]);
-        tipPortrait = Component.translatable("nusmp.companion.gs.tip.portrait");
-        tipGiftSlot = Component.translatable("nusmp.companion.gs.tip.gift_slot");
-        tipGive = Component.translatable("nusmp.companion.gs.tip.give");
-        tipMeter = Component.translatable("nusmp.companion.gs.tip.meter");
-        tipMeterMax = Component.translatable("nusmp.companion.gs.tip.meter.max");
-        tipFollowOn = Component.translatable("nusmp.companion.gs.tip.follow.on");
-        tipFollowOff = Component.translatable("nusmp.companion.gs.tip.follow.off");
-        tipMood = Component.translatable("nusmp.companion.gs.tip.mood");
-        tipRing[PouchRing.State.READY.ordinal()] = Component.translatable("nusmp.companion.gs.tip.ring.ready");
-        tipRing[PouchRing.State.EMPTY.ordinal()] = Component.translatable("nusmp.companion.gs.tip.ring.empty");
-        tipRing[PouchRing.State.OFF.ordinal()] = Component.translatable("nusmp.companion.gs.tip.ring.off");
-        tipRing[PouchRing.State.LOCKED.ordinal()] = Component.translatable("nusmp.companion.gs.tip.ring.locked");
-        for (int i = 0; i < 3; i++) tipStance[i] = Component.translatable("nusmp.companion.bond.stance." + STANCE_KEYS[i]);
-        tipTaste[GiftMemory.Reaction.LOVED.ordinal()] = Component.translatable("nusmp.companion.gs.tip.taste.loved");
-        tipTaste[GiftMemory.Reaction.LIKED.ordinal()] = Component.translatable("nusmp.companion.gs.tip.taste.liked");
-        tipTaste[GiftMemory.Reaction.HATED.ordinal()] = Component.translatable("nusmp.companion.gs.tip.taste.hated");
-        tipTaste[GiftMemory.Reaction.REFUSED.ordinal()] = Component.translatable("nusmp.companion.gs.tip.taste.refused");
-        hintBond = t("nusmp.companion.gs.hint.bond");
+        for (Mood m : Mood.values()) moodNames[m.ordinal()] = t("anime_multiverse.companion.gs.mood." + moods[Math.min(m.ordinal(), moods.length - 1)]);
+        tipPortrait = Component.translatable("anime_multiverse.companion.gs.tip.portrait");
+        tipGiftSlot = Component.translatable("anime_multiverse.companion.gs.tip.gift_slot");
+        tipGive = Component.translatable("anime_multiverse.companion.gs.tip.give");
+        tipMeter = Component.translatable("anime_multiverse.companion.gs.tip.meter");
+        tipMeterMax = Component.translatable("anime_multiverse.companion.gs.tip.meter.max");
+        tipFollowOn = Component.translatable("anime_multiverse.companion.gs.tip.follow.on");
+        tipFollowOff = Component.translatable("anime_multiverse.companion.gs.tip.follow.off");
+        tipMood = Component.translatable("anime_multiverse.companion.gs.tip.mood");
+        tipRing[PouchRing.State.READY.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.ring.ready");
+        tipRing[PouchRing.State.EMPTY.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.ring.empty");
+        tipRing[PouchRing.State.OFF.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.ring.off");
+        tipRing[PouchRing.State.LOCKED.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.ring.locked");
+        for (int i = 0; i < 3; i++) tipStance[i] = Component.translatable("anime_multiverse.companion.bond.stance." + STANCE_KEYS[i]);
+        tipTaste[GiftMemory.Reaction.LOVED.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.taste.loved");
+        tipTaste[GiftMemory.Reaction.LIKED.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.taste.liked");
+        tipTaste[GiftMemory.Reaction.HATED.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.taste.hated");
+        tipTaste[GiftMemory.Reaction.REFUSED.ordinal()] = Component.translatable("anime_multiverse.companion.gs.tip.taste.refused");
+        hintBond = t("anime_multiverse.companion.gs.hint.bond");
     }
 
     // ================================================================ the companion (name key, portrait)
@@ -247,19 +247,19 @@ public final class GsTalkScreen extends Screen implements TalkHost {
         int before = track.rapport();
         int delta = track.update(v.rapport, now);
         frame.rapport = v.rapport;
-        frame.tierName = v.rapport >= 0 ? t("nusmp.companion.tier." + TIER_KEYS[tier]) : "";
+        frame.tierName = v.rapport >= 0 ? t("anime_multiverse.companion.tier." + TIER_KEYS[tier]) : "";
         frame.rapportText = v.rapport >= 0 ? Integer.toString(v.rapport) : "";
         frame.tierLine = frame.tierName;
         frame.toNext = v.rapport >= 0 ? RapportMeter.toNext(v.rapport) : 0;
         frame.nextText = frame.toNext > 0 ? "+" + frame.toNext : "";
         if (delta > 0) {
             moodTimer.set(Mood.HAPPY, now);
-            CompanionScreens.story().add(companionKey, BondStory.Kind.RAPPORT, t("nusmp.companion.gs.ev.rapport", delta), gameTime());
+            CompanionScreens.story().add(companionKey, BondStory.Kind.RAPPORT, t("anime_multiverse.companion.gs.ev.rapport", delta), gameTime());
             CompanionScreens.storyChanged();
-            notice("companion:rapport", frame.name + ": " + t("nusmp.companion.gs.ev.rapport", delta), GsNoticeQueue.Kind.OK);
+            notice("companion:rapport", frame.name + ": " + t("anime_multiverse.companion.gs.ev.rapport", delta), GsNoticeQueue.Kind.OK);
             if (RapportMeter.tier(before) < tier) {
-                CompanionScreens.story().add(companionKey, BondStory.Kind.RAPPORT, t("nusmp.companion.gs.ev.tier", frame.tierName), gameTime());
-                notice("companion:tier", frame.name + ": " + t("nusmp.companion.gs.ev.tier", frame.tierName), GsNoticeQueue.Kind.OK);
+                CompanionScreens.story().add(companionKey, BondStory.Kind.RAPPORT, t("anime_multiverse.companion.gs.ev.tier", frame.tierName), gameTime());
+                notice("companion:tier", frame.name + ": " + t("anime_multiverse.companion.gs.ev.tier", frame.tierName), GsNoticeQueue.Kind.OK);
             }
             if (UiTheme.motion()) Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_CHIME, 1.2f));
         }
@@ -286,7 +286,7 @@ public final class GsTalkScreen extends Screen implements TalkHost {
         frame.giftBlocked = oGift != null && oGift.blocked();
         frame.hasLikes = oLikes != null;
         frame.hasPut = oPut != null;
-        frame.putBlocked = oPut != null && oPut.blocked() && oPut.blockedReason().getContents() instanceof TranslatableContents bc && "nusmp.companion.bond.pouch.locked".equals(bc.getKey());
+        frame.putBlocked = oPut != null && oPut.blocked() && oPut.blockedReason().getContents() instanceof TranslatableContents bc && "anime_multiverse.companion.bond.pouch.locked".equals(bc.getKey());
         frame.hasTakeAll = oTakeAll != null;
         frame.hasUse = oUseOn != null || oUseOff != null;
 
@@ -350,31 +350,31 @@ public final class GsTalkScreen extends Screen implements TalkHost {
             CompanionScreens.gifts().record(companionKey, pendingGiftId, r);
             switch (r) {
                 case LOVED -> {
-                    story.add(companionKey, BondStory.Kind.LOVED, t("nusmp.companion.gs.ev.loved", item), gt);
-                    notice("companion:loved", frame.name + ": " + t("nusmp.companion.gs.ev.loved", item), GsNoticeQueue.Kind.OK);
+                    story.add(companionKey, BondStory.Kind.LOVED, t("anime_multiverse.companion.gs.ev.loved", item), gt);
+                    notice("companion:loved", frame.name + ": " + t("anime_multiverse.companion.gs.ev.loved", item), GsNoticeQueue.Kind.OK);
                 }
-                case LIKED -> story.add(companionKey, BondStory.Kind.LIKED, t("nusmp.companion.gs.ev.liked", item), gt);
+                case LIKED -> story.add(companionKey, BondStory.Kind.LIKED, t("anime_multiverse.companion.gs.ev.liked", item), gt);
                 case HATED -> {
-                    story.add(companionKey, BondStory.Kind.HATED, t("nusmp.companion.gs.ev.hated", item), gt);
-                    notice("companion:hated", frame.name + ": " + t("nusmp.companion.gs.ev.hated", item), GsNoticeQueue.Kind.WARN);
+                    story.add(companionKey, BondStory.Kind.HATED, t("anime_multiverse.companion.gs.ev.hated", item), gt);
+                    notice("companion:hated", frame.name + ": " + t("anime_multiverse.companion.gs.ev.hated", item), GsNoticeQueue.Kind.WARN);
                 }
-                default -> story.add(companionKey, BondStory.Kind.NOTE, t("nusmp.companion.gs.ev.refused", item), gt);
+                default -> story.add(companionKey, BondStory.Kind.NOTE, t("anime_multiverse.companion.gs.ev.refused", item), gt);
             }
             CompanionScreens.storyChanged();
             return;
         }
         switch (cue) {
-            case FIVE -> story.add(companionKey, BondStory.Kind.FIVE, t("nusmp.companion.gs.ev.five"), gt);
+            case FIVE -> story.add(companionKey, BondStory.Kind.FIVE, t("anime_multiverse.companion.gs.ev.five"), gt);
             case JOIN_OK -> {
-                story.add(companionKey, BondStory.Kind.JOINED, t("nusmp.companion.gs.ev.joined"), gt);
-                notice("companion:joined", frame.name + ": " + t("nusmp.companion.gs.ev.joined"), GsNoticeQueue.Kind.INFO);
+                story.add(companionKey, BondStory.Kind.JOINED, t("anime_multiverse.companion.gs.ev.joined"), gt);
+                notice("companion:joined", frame.name + ": " + t("anime_multiverse.companion.gs.ev.joined"), GsNoticeQueue.Kind.INFO);
             }
             case WAIT -> {
-                story.add(companionKey, BondStory.Kind.LEFT, t("nusmp.companion.gs.ev.left"), gt);
-                notice("companion:left", frame.name + ": " + t("nusmp.companion.gs.ev.left"), GsNoticeQueue.Kind.INFO);
+                story.add(companionKey, BondStory.Kind.LEFT, t("anime_multiverse.companion.gs.ev.left"), gt);
+                notice("companion:left", frame.name + ": " + t("anime_multiverse.companion.gs.ev.left"), GsNoticeQueue.Kind.INFO);
             }
             case STANCE -> {
-                if (v.stance >= 0 && v.stance < 3) story.add(companionKey, BondStory.Kind.STANCE, t("nusmp.companion.gs.ev.stance", t("nusmp.companion.stance." + STANCE_KEYS[v.stance])), gt);
+                if (v.stance >= 0 && v.stance < 3) story.add(companionKey, BondStory.Kind.STANCE, t("anime_multiverse.companion.gs.ev.stance", t("anime_multiverse.companion.stance." + STANCE_KEYS[v.stance])), gt);
             }
             case PUT, TOOK -> story.add(companionKey, BondStory.Kind.POUCH, mainText, gt);
             default -> {

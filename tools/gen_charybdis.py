@@ -9,13 +9,13 @@ back, rose veins). The scale is a small flat shard of light in a warm skin for w
     python3 -B tools/gen_charybdis.py --preview [scene ...]    # the headless render of tools/render_preview (needs JOML_JAR / GSON_JAR or the usual lib folders)
 
 Writes (GeoSpec.of("charybdis", "spawn"), skin "charybdis_spawn_gates"; GeoSpec.of("magicule", "scale"), skin "magicule_scale_returned"):
-    assets/nusmp/geo/entity/charybdis_spawn.geo.json
-    assets/nusmp/animations/entity/charybdis_spawn.animation.json
-    assets/nusmp/textures/entity/charybdis_spawn.png                the opening skin, 1024 wide at 2 texels per model pixel (eyes at 4)
-    assets/nusmp/textures/entity/charybdis_spawn_glow.png           the rows of scales, the living eye, the suckers, the harpoon wounds (additive, full bright)
-    assets/nusmp/textures/entity/charybdis_spawn_gates.png          the flushed skin of the Gates (the same boxes)
-    assets/nusmp/textures/entity/charybdis_spawn_gates_glow.png     every scale white-hot, rose veins in the fins
-    assets/nusmp/geo/entity/magicule_scale.geo.json, textures/entity/magicule_scale[_glow].png, magicule_scale_returned[_glow].png
+    assets/anime_multiverse/geo/entity/charybdis_spawn.geo.json
+    assets/anime_multiverse/animations/entity/charybdis_spawn.animation.json
+    assets/anime_multiverse/textures/entity/charybdis_spawn.png                the opening skin, 1024 wide at 2 texels per model pixel (eyes at 4)
+    assets/anime_multiverse/textures/entity/charybdis_spawn_glow.png           the rows of scales, the living eye, the suckers, the harpoon wounds (additive, full bright)
+    assets/anime_multiverse/textures/entity/charybdis_spawn_gates.png          the flushed skin of the Gates (the same boxes)
+    assets/anime_multiverse/textures/entity/charybdis_spawn_gates_glow.png     every scale white-hot, rose veins in the fins
+    assets/anime_multiverse/geo/entity/magicule_scale.geo.json, textures/entity/magicule_scale[_glow].png, magicule_scale_returned[_glow].png
 and tools/render_preview/scenes.d/charybdis.json.
 
 Clips (the names ZogratisPose chooses): idle walk run attack cast cast_big hurt transform death. walk is the swim (a travelling wave down the body, the fins

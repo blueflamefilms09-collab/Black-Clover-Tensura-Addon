@@ -1,0 +1,36 @@
+{
+  "parent": "anime_multiverse:dungeon/entered",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:purified_monster_meat"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.meat.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.meat.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "consumed": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "anime_multiverse:purified_monster_meat"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consumed"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

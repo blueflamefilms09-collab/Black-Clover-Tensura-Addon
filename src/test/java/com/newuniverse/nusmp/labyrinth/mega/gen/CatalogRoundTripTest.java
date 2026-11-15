@@ -68,8 +68,8 @@ class CatalogRoundTripTest {
     void aMissingCatalogFileIsAnEmptySourceNotAnError() throws IOException {
         CatalogSource c = CatalogSource.load(Path.of("no/such/catalog.json"));
         assertTrue(c.isEmpty());
-        assertNull(c.pool("nusmp:mega/side"));
-        assertNull(c.shape("nusmp:mega/hall/x"));
+        assertNull(c.pool("anime_multiverse:mega/side"));
+        assertNull(c.shape("anime_multiverse:mega/hall/x"));
     }
 
     @Test

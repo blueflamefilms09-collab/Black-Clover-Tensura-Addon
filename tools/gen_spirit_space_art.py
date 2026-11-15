@@ -23,7 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from spirit_space_lib import rgb, smoothstep  # noqa: E402
 
-ROOT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity")
+ROOT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity")
 OUT = os.path.join(ROOT, "spirit_space")
 
 PAL = dict(void="#05031A", ink="#0A0626", indigo="#120A3C", deep="#1E1260", violet="#6A3DFF", violet_l="#9C7BFF", lilac="#C9B8FF", cyan="#4FE3FF", cyan_d="#1FA8D8",

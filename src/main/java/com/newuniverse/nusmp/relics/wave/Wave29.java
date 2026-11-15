@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 /**
  * Why: Relics of Many Worlds, part 4, wave 29: four potions (Pocket Portal, Potion of Vampirism, Romlo's Potion of Sleep, Spider Brew). The long card text of
- * each, as game rules, is in the lang keys {@code item.nusmp.<id>.card}; the numbers are in {@link Wave29Rules} (pure), the portal in {@link Wave29Portal},
+ * each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the numbers are in {@link Wave29Rules} (pure), the portal in {@link Wave29Portal},
  * the three drinks in {@link Wave29Brews} and the handlers in {@link Wave29Events}.
  * <p>
  * Tabletop became Minecraft: a round is 6 s, 5 ft is a block, a long rest (or "a day") is a Minecraft day, a saving throw is a d20 roll against a difficulty

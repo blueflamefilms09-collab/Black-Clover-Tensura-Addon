@@ -11,7 +11,7 @@ import java.util.List;
  * free space", and falls back to the template's own pool when the policy lists no variants.
  */
 public interface OnwardPolicy {
-    /** Pool ids of the Way Onward variants, best first (for example {@code nusmp:mega/onward_straight}); empty to use the pool written in the template. */
+    /** Pool ids of the Way Onward variants, best first (for example {@code anime_multiverse:mega/onward_straight}); empty to use the pool written in the template. */
     List<String> variants();
 
     /**

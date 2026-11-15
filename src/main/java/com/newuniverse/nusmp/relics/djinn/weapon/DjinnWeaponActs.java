@@ -100,7 +100,7 @@ public final class DjinnWeaponActs {
         try {
             run(c);
         } catch (RuntimeException ex) {
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] Djinn weapon act {} failed", spec.act(act).key(), ex);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] Djinn weapon act {} failed", spec.act(act).key(), ex);
         }
         return true;
     }

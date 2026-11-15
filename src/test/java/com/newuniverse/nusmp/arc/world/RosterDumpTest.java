@@ -65,7 +65,7 @@ class RosterDumpTest {
 
     @Test
     void everyBossOfTheRosterFileHasItsAdvancementAndEverySagaWithABossHasOne() throws IOException {
-        Path adv = Path.of("src/main/resources/data/nusmp/advancement/arc");
+        Path adv = Path.of("src/main/resources/data/anime_multiverse/advancement/arc");
         Set<String> sagas = new HashSet<>();
         for (String line : Files.readAllLines(Path.of("tools/quests/arc_roster.txt"))) {
             if (line.isBlank() || line.startsWith("#")) continue;

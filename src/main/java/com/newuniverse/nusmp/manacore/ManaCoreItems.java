@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the 24 rank cores as items (3.51.0): ids {@code nusmp:core_<rank>_<variant>} (core_e_standard ... core_ss_ancient). One register of its own, attached to the mod bus by {@link ManaCoreBoot}. They are not the
- * sector-key {@code nusmp:mana_core}. No recipe: they come from drops, dungeon rewards and {@code /manacore give}.
+ * Why: the 24 rank cores as items (3.51.0): ids {@code anime_multiverse:core_<rank>_<variant>} (core_e_standard ... core_ss_ancient). One register of its own, attached to the mod bus by {@link ManaCoreBoot}. They are not the
+ * sector-key {@code anime_multiverse:mana_core}. No recipe: they come from drops, dungeon rewards and {@code /manacore give}.
  */
 public final class ManaCoreItems {
     private ManaCoreItems() {}

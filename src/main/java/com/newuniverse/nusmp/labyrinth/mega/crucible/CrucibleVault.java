@@ -51,7 +51,7 @@ public final class CrucibleVault {
             if (t % 100 == 0) sweepChosen(level, data);
             for (ServerPlayer p : players) visit(level, data, p, p.blockPosition(), t);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] mega crucible: the vault tick failed: {}", ex.toString());       // a tick handler never throws
+            LOG.warn("[anime_multiverse] mega crucible: the vault tick failed: {}", ex.toString());       // a tick handler never throws
         }
     }
 
@@ -83,7 +83,7 @@ public final class CrucibleVault {
             if (Phase.of(s.crucible.phase.name()) != Phase.CHOSEN || CatastropheRunner.active(s.id)) continue;
             s.crucible.phase = Sector.Crucible.Phase.valueOf(CrucibleRules.afterRestart(Phase.CHOSEN).name());
             data.setDirty();
-            LOG.info("[nusmp] mega crucible: the catastrophe of sector {} did not survive the restart; its vault is resolved", s.id);
+            LOG.info("[anime_multiverse] mega crucible: the catastrophe of sector {} did not survive the restart; its vault is resolved", s.id);
             MegaDungeon.crucibleResolved(level, s.id);
         }
     }

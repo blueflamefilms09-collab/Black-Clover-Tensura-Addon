@@ -39,7 +39,7 @@ class PocketSourceScanTest {
     @Test
     void theWorldCodeNamesNoClientClassAndNoStaticPlayer() throws IOException {
         String c = file("PocketLabyrinth");
-        assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|com\\.newuniverse\\.nusmp\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
+        assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
         assertFalse(c.contains("static ServerPlayer") || c.contains("static LivingEntity") || c.contains("static Player "), "no static current player: everything is keyed by UUID");
         assertTrue(c.contains("Map<UUID, Session> BY_CASTER") && c.contains("Map<UUID, Session> BY_MEMBER"));
     }
@@ -80,12 +80,12 @@ class PocketSourceScanTest {
 
     @Test
     void theDimensionTheAuditListTheSettingAndTheSmokeTestExist() throws IOException {
-        JsonObject type = JsonParser.parseString(read(RES.resolve("data/nusmp/dimension_type/trial.json"))).getAsJsonObject();
+        JsonObject type = JsonParser.parseString(read(RES.resolve("data/anime_multiverse/dimension_type/trial.json"))).getAsJsonObject();
         assertEquals(128, type.get("height").getAsInt());
         assertTrue(type.get("has_ceiling").getAsBoolean() && !type.get("has_skylight").getAsBoolean());
         assertEquals(0, type.get("min_y").getAsInt());
-        JsonObject dim = JsonParser.parseString(read(RES.resolve("data/nusmp/dimension/trial.json"))).getAsJsonObject();
-        assertEquals("nusmp:trial", dim.get("type").getAsString());
+        JsonObject dim = JsonParser.parseString(read(RES.resolve("data/anime_multiverse/dimension/trial.json"))).getAsJsonObject();
+        assertEquals("anime_multiverse:trial", dim.get("type").getAsString());
         assertEquals("minecraft:the_void", dim.getAsJsonObject("generator").getAsJsonObject("settings").get("biome").getAsString());
         assertTrue(DimensionAudit.NAMES.contains("trial"));
         String cfg = code(read(SRC.resolve("entity/veldanava/skills/JudgmentConfig.java")));

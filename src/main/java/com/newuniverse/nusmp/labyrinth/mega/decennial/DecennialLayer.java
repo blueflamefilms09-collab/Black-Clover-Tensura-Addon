@@ -41,8 +41,8 @@ public final class DecennialLayer {
     /** The scoreboard tag and the persistent keys of a Decennial boss (the modules that look for it, and the renderer / audio builders, read these). */
     public static final String TAG = "nusmp_decennial", ID_KEY = "nusmp_dec_id", SOUND_KEY = "nusmp_sound_set";
 
-    private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_speed"), DAMAGE = ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_damage"),
-            FREEZE = ResourceLocation.fromNamespaceAndPath("nusmp", "decennial_freeze");
+    private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_speed"), DAMAGE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_damage"),
+            FREEZE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "decennial_freeze");
 
     // ---- the profile the facade wants the NEXT Guardian to get (the altar creates the entity, so the wish travels in a static; server thread only)
     private static int wishLevel;
@@ -261,7 +261,7 @@ public final class DecennialLayer {
                 lairs.clear();
                 g.noteCast(2);
                 DecennialProfile.Phase next = profile.phase(e.phase());
-                Component line = Component.translatableWithFallback("message.nusmp.mega.decennial.phase", "%1$s shifts into its next form: %2$s!", g.getName(),
+                Component line = Component.translatableWithFallback("message.anime_multiverse.mega.decennial.phase", "%1$s shifts into its next form: %2$s!", g.getName(),
                         Component.translatableWithFallback("decennial.boss." + profile.id() + ".phase." + e.phase(), next.name())).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD);
                 for (Player p : players) p.displayClientMessage(line, true);
                 if (!next.shout().isEmpty()) {
@@ -304,7 +304,7 @@ public final class DecennialLayer {
                 Fx.spray(sl, FxThemes.DUNGEON_DECENNIAL, FxOld.SOUL, m.getX(), m.getY() + 0.6, m.getZ(), 8, 0.3, 0.5, 0.3, 0.03);
             }
         }
-        Component line = Component.translatableWithFallback("message.nusmp.mega.decennial.adds", "Something stirs in the ground!").withStyle(ChatFormatting.DARK_PURPLE);
+        Component line = Component.translatableWithFallback("message.anime_multiverse.mega.decennial.adds", "Something stirs in the ground!").withStyle(ChatFormatting.DARK_PURPLE);
         for (Player p : players) p.displayClientMessage(line, true);
     }
 

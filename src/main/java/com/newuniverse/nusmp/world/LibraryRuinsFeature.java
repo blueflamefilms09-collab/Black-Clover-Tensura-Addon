@@ -16,7 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 /** Rare ruined library: broken walls, toppled bookshelves, cobwebs and a relic chest. */
 public class LibraryRuinsFeature extends Feature<NoneFeatureConfiguration> {
     static final ResourceKey<LootTable> LOOT = ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath("nusmp", "chests/library_ruins"));
+            ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/library_ruins"));
 
     public LibraryRuinsFeature() { super(NoneFeatureConfiguration.CODEC); }
 

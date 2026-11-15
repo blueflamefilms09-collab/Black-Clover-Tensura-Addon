@@ -80,7 +80,7 @@ public final class RiftSelfTests {
     private static SelfTests.Result waypoint(MinecraftServer server) {
         ServerLevel mega = SelfTests.mega(server);
         if (mega == null) return SelfTests.Result.fail("the Mega-Dungeon dimension is not loaded");
-        Waypoint w = new Waypoint("nusmp:mega_dungeon", 7, 3, -25, 10.5, 64.0, -3.25, 90f, 12f, 777L);
+        Waypoint w = new Waypoint("anime_multiverse:mega_dungeon", 7, 3, -25, 10.5, 64.0, -3.25, 90f, 12f, 777L);
         Waypoint r = Waypoint.load(w.save());
         if (!w.equals(r)) return SelfTests.Result.fail("the waypoint changed in a compound round trip: " + r);
         if (Waypoint.levelOf(1) != 1 || Waypoint.levelOf(10) != 1 || Waypoint.levelOf(11) != 2 || Waypoint.levelOf(-25) != 3 || Waypoint.levelOf(0) != 0)
@@ -88,7 +88,7 @@ public final class RiftSelfTests {
         if (Waypoint.load(new CompoundTag()) != null) return SelfTests.Result.fail("an empty compound loaded as a waypoint");
         FakePlayer p = SelfTests.player(mega, "rift_tester", 0, 70, 0);
         try {
-            Waypoint nowhere = new Waypoint("nusmp:mega_dungeon", 999_999, 1, 1, 0, 70, 0, 0f, 0f, 1L);
+            Waypoint nowhere = new Waypoint("anime_multiverse:mega_dungeon", 999_999, 1, 1, 0, 70, 0, 0f, 0f, 1L);
             if (WaypointService.outcome(server, p, nowhere) != WaypointService.Outcome.GONE) return SelfTests.Result.fail("a waypoint on a floor that does not exist was not GONE");
             if (WaypointService.outcome(server, p, null) != WaypointService.Outcome.GONE) return SelfTests.Result.fail("no waypoint was not GONE");
         } finally {

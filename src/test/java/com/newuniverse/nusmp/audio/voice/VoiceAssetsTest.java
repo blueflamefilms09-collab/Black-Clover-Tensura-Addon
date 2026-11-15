@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: four things must say the same about the spoken lines: the manifest ({@code tools/audio/voice_lines.json}, the prompts the voices were made from), the catalogue ({@link VoiceCatalog},
- * from which {@link VoiceSounds} registers one sound event per line), the entries of {@code assets/nusmp/sounds.json} and the {@code .ogg} files under {@code sounds/voice/<role>/}. A line
+ * from which {@link VoiceSounds} registers one sound event per line), the entries of {@code assets/anime_multiverse/sounds.json} and the {@code .ogg} files under {@code sounds/voice/<role>/}. A line
  * without a file logs an error in the game, an entry without a file the same, a file nothing names is dead weight. This test walks all of it: every manifest id is in the catalogue (same ids,
  * same order), has a file that is a mono Ogg Vorbis between 0.5 and 12 seconds and a sane size, has its {@code voice.<id>} entry with the subtitle off, no entry or file is an orphan, the
  * registry really loops over the catalogue, and the whole set stays small.
  */
 class VoiceAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path VOICE = ASSETS.resolve("sounds/voice");
     private static final Path MANIFEST = Path.of("tools/audio/voice_lines.json");
     private static final double MIN_SECONDS = 0.5, MAX_SECONDS = 12.0;
@@ -117,7 +117,7 @@ class VoiceAssetsTest {
             }
             JsonElement s = sounds.get(0);
             String name = s.isJsonObject() ? s.getAsJsonObject().get("name").getAsString() : s.getAsString();
-            if (!name.equals("nusmp:" + VoiceCatalog.filePath(id))) bad.add(key + ": names " + name + ", expected nusmp:" + VoiceCatalog.filePath(id));
+            if (!name.equals("anime_multiverse:" + VoiceCatalog.filePath(id))) bad.add(key + ": names " + name + ", expected anime_multiverse:" + VoiceCatalog.filePath(id));
             Path f = ASSETS.resolve("sounds").resolve(VoiceCatalog.filePath(id) + ".ogg");
             if (!Files.exists(f)) {
                 bad.add(key + ": missing file " + f);

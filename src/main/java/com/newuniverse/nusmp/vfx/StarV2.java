@@ -158,7 +158,7 @@ public final class StarV2 {
 
     public static String fileName(String name) { return PREFIX + name; }
 
-    /** Every texture of the set as a path under assets/nusmp (24 files). */
+    /** Every texture of the set as a path under assets/anime_multiverse (24 files). */
     public static List<String> allTextures() {
         List<String> out = new ArrayList<>();
         for (String n : TEXTURE_NAMES) out.add("textures/particle/" + fileName(n) + ".png");

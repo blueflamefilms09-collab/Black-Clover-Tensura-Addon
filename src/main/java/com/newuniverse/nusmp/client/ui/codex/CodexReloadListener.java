@@ -45,16 +45,16 @@ public final class CodexReloadListener implements ResourceManagerReloadListener 
                     try (InputStream in = res.open()) {
                         json = new String(in.readAllBytes(), StandardCharsets.UTF_8);
                     } catch (IOException | RuntimeException e) {
-                        LOG.warn("[nusmp] Codex file {} could not be read: {}", rl, e.toString());
+                        LOG.warn("[anime_multiverse] Codex file {} could not be read: {}", rl, e.toString());
                         continue;
                     }
                     CodexEntryParser.Result r = CodexEntryParser.parse(section, id, json);
                     if (r.ok()) all.add(r.entry());
-                    else LOG.warn("[nusmp] Codex file {} skipped: {}", rl, r.error());
+                    else LOG.warn("[anime_multiverse] Codex file {} skipped: {}", rl, r.error());
                 }
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The Codex could not scan its data folder", e);
+            LOG.warn("[anime_multiverse] The Codex could not scan its data folder", e);
         }
         CodexData.replace(CodexMerger.merge(all));
     }

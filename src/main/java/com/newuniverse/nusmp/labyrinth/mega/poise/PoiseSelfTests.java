@@ -54,7 +54,7 @@ public final class PoiseSelfTests {
     // ---------------------------------------------------------------- data and defaults
     private static SelfTests.Result data() {
         TelegraphLibrary lib = PoiseSystem.telegraphs();
-        if (lib.kinds().isEmpty()) return fail("the telegraph table is empty: data/nusmp/mega/poise/telegraphs.json was not read");
+        if (lib.kinds().isEmpty()) return fail("the telegraph table is empty: data/anime_multiverse/mega/poise/telegraphs.json was not read");
         List<String> bad = lib.check(FoundryData.library());
         if (!bad.isEmpty()) return fail(bad.size() + " problem(s) in the telegraph table, first: " + bad.get(0));
         if (EcoConfig.TURF_WARS.getDefault()) return fail("eco.turfWarsEnabled must default to false");

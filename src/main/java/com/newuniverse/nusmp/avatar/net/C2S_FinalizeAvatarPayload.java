@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  * are never in it, the server uses the roll it made itself (the token only tells it which roll the screen showed, so a stale screen is refused). The look is cleaned by {@code DynamicAppearanceEngine.sanitize} before use.
  */
 public record C2S_FinalizeAvatarPayload(String raceId, String primary, String secondary, CompoundTag appearance, String name, long token) implements CustomPacketPayload {
-    public static final Type<C2S_FinalizeAvatarPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_finalize"));
+    public static final Type<C2S_FinalizeAvatarPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_finalize"));
     public static final StreamCodec<RegistryFriendlyByteBuf, C2S_FinalizeAvatarPayload> CODEC = StreamCodec.composite(
             ByteBufCodecs.stringUtf8(NetText.ID_MAX), C2S_FinalizeAvatarPayload::raceId,
             ByteBufCodecs.stringUtf8(NetText.ID_MAX), C2S_FinalizeAvatarPayload::primary,

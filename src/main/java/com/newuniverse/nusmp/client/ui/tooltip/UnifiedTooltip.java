@@ -79,7 +79,7 @@ public final class UnifiedTooltip {
                 if (!(text instanceof Component line)) continue;
                 String key = keyOf(line);
                 if (akashic && "shishou.grade".equals(key)) {                                      // the yellow "Akashic Relic - Grade: EX-Singularity" line becomes the prismatic one
-                    els.set(i, Either.right(new Data(PRISM_LINE, Language.getInstance().getOrDefault("nusmp.ex_singularity.line", line.getString()), "", style.rgb(), maxWidth)));
+                    els.set(i, Either.right(new Data(PRISM_LINE, Language.getInstance().getOrDefault("anime_multiverse.ex_singularity.line", line.getString()), "", style.rgb(), maxWidth)));
                     continue;
                 }
                 int c = UnifiedTooltipRules.statColour(key);
@@ -92,7 +92,7 @@ public final class UnifiedTooltip {
         } catch (RuntimeException | LinkageError failed) {                                            // never drop the tooltip: the vanilla lines stay
             if (!warned) {
                 warned = true;
-                com.mojang.logging.LogUtils.getLogger().error("[nusmp] the unified tooltip could not be built; showing the plain lines", failed);
+                com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] the unified tooltip could not be built; showing the plain lines", failed);
             }
             try {
                 e.getTooltipElements().removeIf(x -> x.right().orElse(null) instanceof Data);

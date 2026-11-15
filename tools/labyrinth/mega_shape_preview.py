@@ -506,7 +506,7 @@ def connectivity(t):
     for p, c in t.cells.items():
         if c.block == "minecraft:structure_block" and c.nbt is not None:
             meta = str(c.nbt.get("metadata", ""))
-            kind = meta.split(";")[0].replace("nusmp:", "")
+            kind = meta.split(";")[0].replace("anime_multiverse:", "")
             if kind in ("spawn", "patrol", "room_center", "arrival", "seat", "hearth", "bed", "guardian_spawn") and p not in cells:
                 bad_markers.append((p, meta))
     return bad_sockets, bad_markers
@@ -734,7 +734,7 @@ def main(argv):
     flags = {f for f in ("--top", "--light", "--lightreport", "--nocut", "--nomarkers", "--lit") if f in args}
     args = [a for a in args if a not in flags]
     name = args[0]
-    path = os.path.join(opts.get("--root", L.RES), "data", "nusmp", "structure", name + ".nbt")
+    path = os.path.join(opts.get("--root", L.RES), "data", "anime_multiverse", "structure", name + ".nbt")
     t = load(path, name)
     if "--lightreport" in flags:
         print(format_report(name, light_report(t, name)))

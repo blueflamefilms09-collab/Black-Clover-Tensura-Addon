@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * a box: SafeAdditive), a plume texture without its outline or a backdrop whose quad count in the budget does not match the model would only show up in a running game. This test reads the real files.
  */
 class SpiritDiveAnimeAssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage png(String tex) throws IOException {
         return ImageIO.read(ASSETS.resolve("textures/" + tex + ".png").toFile());

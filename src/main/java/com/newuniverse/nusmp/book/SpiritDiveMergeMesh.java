@@ -12,14 +12,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Spirit Dive MERGE: the light meshes of the spirits (the ghost that flows into the diver, the faint silhouette it leaves), read once from {@code assets/nusmp/sdm_meshes/<name>.txt} (written by
+ * Spirit Dive MERGE: the light meshes of the spirits (the ghost that flows into the diver, the faint silhouette it leaves), read once from {@code assets/anime_multiverse/sdm_meshes/<name>.txt} (written by
  * {@code tools/gen_sdm_models.py}) and shared by every diver. The quad line format and the parser are those of {@link SpiritDiveWind3Mesh}; every quad of these meshes is on layer 1 (the additive
  * layer). Pure and server safe (no Minecraft class).
  */
 public final class SpiritDiveMergeMesh {
     private SpiritDiveMergeMesh() {}
 
-    public static final String DIR = "/assets/nusmp/sdm_meshes/";
+    public static final String DIR = "/assets/anime_multiverse/sdm_meshes/";
     private static final Map<String, SpiritDiveWind3Mesh> CACHE = new ConcurrentHashMap<>();
 
     /** The mesh of that name (read once, shared); an empty mesh when the file is missing (nothing is drawn; the self-test reports it). */
@@ -41,7 +41,7 @@ public final class SpiritDiveMergeMesh {
             }
         } catch (IOException ignored) { }
         try {
-            Path p = Path.of("src", "main", "resources", "assets", "nusmp", "sdm_meshes", name + ".txt");
+            Path p = Path.of("src", "main", "resources", "assets", "anime_multiverse", "sdm_meshes", name + ".txt");
             if (Files.isRegularFile(p)) return Files.readAllLines(p, StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException ignored) { }
         return null;

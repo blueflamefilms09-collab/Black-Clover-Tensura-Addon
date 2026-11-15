@@ -5,8 +5,8 @@
   src/main/java/com/newuniverse/nusmp/relics/wave/Wave102.java          the 29 relic definitions (GENERATED: edit the roster, not the Java)
   src/main/java/com/newuniverse/nusmp/relics/wave/Wave102Passives.java  the passive rules of the 9 weapons
   tools/lang/god_special_new.json                                       name, short text and card text of every relic (flat fragment; the lead merges it into en_us.json)
-  assets/nusmp/weapon_classes.json + tools/relics/weapon_classes.json   a class row for every weapon (appended)
-  data/nusmp/mega/relic_themes.json                                     the dungeon road of each God relic (appended)
+  assets/anime_multiverse/weapon_classes.json + tools/relics/weapon_classes.json   a class row for every weapon (appended)
+  data/anime_multiverse/mega/relic_themes.json                                     the dungeon road of each God relic (appended)
   docs/relics/god_special_new.md                                        the table of every new relic
 
 The meshes, skins, sprites and item models: build102.py; the worn models: worn102.py (called by gen_worn_all.py); the effect tables of the God gear: fx102.py.
@@ -22,7 +22,7 @@ import relic_rows_lib as RL  # noqa: E402
 from roster102 import WEAPONS, GEAR, GEAR_META, WORN_GOD  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
 RES = os.path.join(ROOT, "src", "main", "resources")
 
 RANGES = {"SPECIAL": (35, 55), "GOD": (190, 240)}
@@ -366,13 +366,13 @@ final class Wave102Passives {
 def write_lang():
     d = {}
     for e in WEAPONS:
-        d["item.nusmp.%s" % e["id"]] = e["name"]
-        d["item.nusmp.%s.desc" % e["id"]] = weapon_desc(e)
-        d["item.nusmp.%s.card" % e["id"]] = weapon_card(e)
+        d["item.anime_multiverse.%s" % e["id"]] = e["name"]
+        d["item.anime_multiverse.%s.desc" % e["id"]] = weapon_desc(e)
+        d["item.anime_multiverse.%s.card" % e["id"]] = weapon_card(e)
     for r in GEAR:
-        d["item.nusmp.%s" % r["id"]] = r["name"]
-        d["item.nusmp.%s.desc" % r["id"]] = gear_desc(r)
-        d["item.nusmp.%s.card" % r["id"]] = gear_card(r)
+        d["item.anime_multiverse.%s" % r["id"]] = r["name"]
+        d["item.anime_multiverse.%s.desc" % r["id"]] = gear_desc(r)
+        d["item.anime_multiverse.%s.card" % r["id"]] = gear_card(r)
     os.makedirs(os.path.join(ROOT, "tools", "lang"), exist_ok=True)
     with open(os.path.join(ROOT, "tools", "lang", "god_special_new.json"), "w", newline="\n") as f:
         json.dump(d, f, indent=2, ensure_ascii=True)
@@ -391,7 +391,7 @@ def patch_json(path, mutate, **dump):
 
 
 def write_classes():
-    pa = os.path.join(RES, "assets", "nusmp", "weapon_classes.json")
+    pa = os.path.join(RES, "assets", "anime_multiverse", "weapon_classes.json")
     pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
 
     def a(d):
@@ -406,7 +406,7 @@ def write_classes():
 
 
 def write_themes():
-    p = os.path.join(RES, "data", "nusmp", "mega", "relic_themes.json")
+    p = os.path.join(RES, "data", "anime_multiverse", "mega", "relic_themes.json")
 
     def m(d):
         for e in WEAPONS:
@@ -458,7 +458,7 @@ def write_doc():
         L.append("* **%s** (`%s`): %s" % (e["name"], e["id"], e["doc"]))
     L.append("")
     L.append("**God gear** (`worn102.py`, the worn relic library): each has its own multi-part signature model with emissive and pulsing glow parts and animated groups, a table of nine ambient particle "
-             "layers and a visual for each act (`assets/nusmp/visual_upgrade/<id>.json`, `fx102.py`; every particle is one of the mod's own).\n")
+             "layers and a visual for each act (`assets/anime_multiverse/visual_upgrade/<id>.json`, `fx102.py`; every particle is one of the mod's own).\n")
     for rid, txt in (("perfect_susanoo_plate", "a violet plated cuirass with a glowing ribcage over chest and back, a spiked gorget with a sigil, tassets, horned layered pauldrons and chakra motes circling (3 pieces, 2600 vertices)."),
                      ("joyboys_straw_hat", "a woven wide-brim straw hat with a red band, knot and cord, and behind it a sun halo with twelve turning rays and sparks drifting round the head."),
                      ("greed_island_binder", "a book on a chain at the hip: covers with gilt corners, a latch and a glowing emblem, six cards circling it."),
@@ -475,8 +475,8 @@ def write_doc():
              "* Gear: attribute / resistance / lent-skill passives and acts from the vocabulary of `Wave31Acts` (heal, regeneration, buff, shield, area damage, bolt, dash, blink, cleanse, allies, mark, second "
              "wind, gale, pull). God gear needs attunement; Special never does (`AttuneRules`). Nothing here touches hunger or exhaustion.\n"
              "* Loot: by grade through the existing relic pools (vault, pedestals, the Crucible, the God of Order's ledger), so the new relics enter every source that rolls God and Special. Each God relic is also "
-             "placed on a dungeon road in `data/nusmp/mega/relic_themes.json`.\n"
-             "* Better Combat: a file in `data/nusmp/weapon_attributes/<id>.json` for each melee weapon (the bow and the shield have none).\n"
+             "placed on a dungeon road in `data/anime_multiverse/mega/relic_themes.json`.\n"
+             "* Better Combat: a file in `data/anime_multiverse/weapon_attributes/<id>.json` for each melee weapon (the bow and the shield have none).\n"
              "* Everything is server-side logic (rule 9): the client only draws; no new packet; per-player state is the engine's own; effects go through the existing particle and effect budgets.\n")
     L.append("## 5. Tests and tools\n")
     L.append("JUnit `relics/wave/Wave102DefsTest` (exactly 9 God and 20 Special, none of the ids in another wave, every weapon's damage inside its grade's range, engravings from the Tensura list, acts, the "
@@ -497,8 +497,8 @@ def write_doc():
     L.append("## 7. Edits to files that already existed (all additions)\n")
     L.append("* `relics/RelicCatalog.java`: one `guard(\"Wave102\", ...)` line in `init()` and one in `hooks()` (plus the import).\n"
              "* `visual/shields/ShieldSet.java` (the id of the new shield appended), `tools/gen_shield_models.py` (the same id).\n"
-             "* `assets/nusmp/weapon_classes.json`, `tools/relics/weapon_classes.json`: 9 class rows appended. `data/nusmp/mega/relic_themes.json`: 9 God rows appended.\n"
-             "* `tools/relics/gen_worn_all.py`: two append-only hook lines (`worn102.register`, `worn102.catalog`); `assets/nusmp/relic_worn/catalog.txt`: 24 lines appended by that generator.\n"
+             "* `assets/anime_multiverse/weapon_classes.json`, `tools/relics/weapon_classes.json`: 9 class rows appended. `data/anime_multiverse/mega/relic_themes.json`: 9 God rows appended.\n"
+             "* `tools/relics/gen_worn_all.py`: two append-only hook lines (`worn102.register`, `worn102.catalog`); `assets/anime_multiverse/relic_worn/catalog.txt`: 24 lines appended by that generator.\n"
              "* `data/curios/tags/item/{necklace,back,belt,hands,charm}.json`: the new Curios relics appended by `gen_curios_tags.py`.\n"
              "* `tools/bettercombat/manifest.json` and the Better Combat attribute files, `tools/relics/display_presets_manifest.json`: rows for the new melee weapons.\n"
              "* Not touched, as asked: the version, the changelog, the README, LIBRARIES, `en_us.json` (the lead merges `tools/lang/god_special_new.json`), `.github`, the Time Magic VFX.\n")

@@ -1,5 +1,5 @@
 """Why: nothing of the player-model kit can be run in a game here, so this is a small software renderer of exactly what the kit draws: the vanilla player model (wide or slim arms, the 64x64
-skin with its jacket, sleeve, pants and hat layers), the hair styles of assets/nusmp/playermodel/hair_styles.json (scalp cap, static boxes and the chains of segments, with the same pivots,
+skin with its jacket, sleeve, pants and hat layers), the hair styles of assets/anime_multiverse/playermodel/hair_styles.json (scalp cap, static boxes and the chains of segments, with the same pivots,
 rotations and UV layout the Java hair drawer uses) and GeoLite extras (geo.json models with their bone tree, anchored on a model part). It uses the vanilla cube geometry (the corner order and
 the UV assignment of ModelPart.Cube, copied from client/geo/GeoDraw), an orthographic camera and a depth buffer, alpha-tested textures and a simple three-light shading. It is a re-implementation
 for review, not the game: colours and lighting differ from Minecraft's.
@@ -18,7 +18,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 
 # ---------------------------------------------------------------- matrices (4x4, applied to column vectors)

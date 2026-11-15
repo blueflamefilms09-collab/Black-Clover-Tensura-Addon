@@ -175,7 +175,7 @@ final class RelicScanner {
                 examine(server, ledger, j, ref, spot, tick);
                 for (StackRef inside : StackRefs.insideOf(ref)) examine(server, ledger, j, inside, spot, tick);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The Order could not examine a stack: {}", ex.toString());
+                LOG.warn("[anime_multiverse] The Order could not examine a stack: {}", ex.toString());
             }
         }
         return Math.max(spent, n > 0 ? 1 : 0);
@@ -194,7 +194,7 @@ final class RelicScanner {
             if (j.run == Run.COUNT) return;
             if (j.run == Run.STRIP) {
                 if (StackRefs.clear(ref)) j.removedIds.add(id);
-                else LOG.warn("[nusmp] The Order could not take a duplicate of {} {}", id, spot.describe());
+                else LOG.warn("[anime_multiverse] The Order could not take a duplicate of {} {}", id, spot.describe());
                 return;
             }
         }
@@ -208,7 +208,7 @@ final class RelicScanner {
             case ADOPT, REVIVE -> {
                 UUID use = serial != null ? serial : UUID.randomUUID();
                 if (serial == null && !StackRefs.stamp(ref, use)) {
-                    LOG.warn("[nusmp] The Order could not stamp {} {}; it is left unrecorded", id, spot.describe());
+                    LOG.warn("[anime_multiverse] The Order could not stamp {} {}; it is left unrecorded", id, spot.describe());
                     return;
                 }
                 L.adopt(id, use, spot, tick, true);

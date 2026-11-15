@@ -8,7 +8,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SRC = open(os.path.join(ROOT, 'src/main/java/com/newuniverse/nusmp/saiyan/SaiyanLook.java')).read()
-TEX = os.path.join(ROOT, 'src/main/resources/assets/nusmp/textures/particle')
+TEX = os.path.join(ROOT, 'src/main/resources/assets/anime_multiverse/textures/particle')
 ROW = re.compile(r'add\(l\("(\w+)",\s*(0x[0-9A-Fa-f]+),\s*(true|false),\s*(0x[0-9A-Fa-f]+),\s*(0x[0-9A-Fa-f]+|0),\s*(true|false),\s*(\d+),\s*(\d+),\s*([\d.]+)f,\s*([\d.]+)f,\s*(true|false)\)\)')
 LOOKS = {}
 for m in ROW.finditer(SRC):
@@ -228,7 +228,7 @@ def sheet(ims, labels, cols):
 def pose_strip(out):
     """The saiyan_charge body clip as stick figures, front view (side swing) and side view (forward swing), at the story poses."""
     import json
-    c = json.load(open(os.path.join(ROOT, 'src/main/resources/assets/nusmp/animations/player/cast.animation.json')))['animations']['saiyan_charge']['bones']
+    c = json.load(open(os.path.join(ROOT, 'src/main/resources/assets/anime_multiverse/animations/player/cast.animation.json')))['animations']['saiyan_charge']['bones']
     def at(bone, ch, t):
         ks = sorted((float(k), v) for k, v in c[bone][ch].items())
         for (t0, a), (t1, b2) in zip(ks, ks[1:]):

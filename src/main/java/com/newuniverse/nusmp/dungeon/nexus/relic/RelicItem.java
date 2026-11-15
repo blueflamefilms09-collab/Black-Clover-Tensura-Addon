@@ -52,7 +52,7 @@ public class RelicItem extends Item {
             case FEED -> ChaliceHandler.feedByHand(sp, stack);
             case CAST -> GamblerPage.use(sp, stack);
             case WRONG_HAND -> sp.displayClientMessage(Component.literal("The page answers from a Dungeon Relic slot (press ")
-                    .append(Component.keybind("key.nusmp.use_relic")).append(") or from the off-hand.").withStyle(ChatFormatting.GRAY), true);
+                    .append(Component.keybind("key.anime_multiverse.use_relic")).append(") or from the off-hand.").withStyle(ChatFormatting.GRAY), true);
             default -> { }
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());

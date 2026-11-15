@@ -66,7 +66,7 @@ import java.util.UUID;
  * 0.48 Genesis: Asta's Demon-Slayer Sword raised to a God-class existence (docs/demon_slayer_genesis_spec.md). It replaces the
  * 0.28 item at the same id ("demon_slayer_sword"), so swords already drawn keep working, and Black Divider stays on right-click.
  * <ul>
- *   <li><b>Conceptual Severance</b> (a full swing): EP-scaled true damage through the nusmp:conceptual_severance damage type
+ *   <li><b>Conceptual Severance</b> (a full swing): EP-scaled true damage through the anime_multiverse:conceptual_severance damage type
  *       (armour, enchantments, resistance and the hit cooldown are ignored) plus spiritual damage. A player loses at most the PvP
  *       hit cap of their max health per hit (40% by default), a boss 15%.</li>
  *   <li><b>Infinite durability</b> (unbreakable; old damage mends).</li>
@@ -86,9 +86,9 @@ import java.util.UUID;
  */
 public class DemonSlayerSwordItem extends MagicWeaponItem {
     public static final ResourceKey<DamageType> SEVERANCE =
-            ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "conceptual_severance"));
-    static final ResourceLocation VOID_CUT = ResourceLocation.fromNamespaceAndPath("nusmp", "void_severance");
-    static final ResourceLocation BLADE_GROWTH = ResourceLocation.fromNamespaceAndPath("nusmp", "demon_slayer_growth");
+            ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "conceptual_severance"));
+    static final ResourceLocation VOID_CUT = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "void_severance");
+    static final ResourceLocation BLADE_GROWTH = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "demon_slayer_growth");
     public static final int CRIMSON = 0xFFC0102A, VOID = 0xFF0A0408;
     public static final double FIELD = 15, LOCK_RANGE = 100, ZONE_RADIUS = 12;
     private static final int GROWTH_TICKS = 160;
@@ -431,6 +431,6 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
         int res = d == null ? 0 : d.copyTag().getInt("Resonance");
         if (res > 0) tip.add(Component.literal("Resonance " + "●".repeat(res) + "○".repeat(4 - res) + " — a great existence is near").withStyle(ChatFormatting.RED));
-        tip.add(Component.translatableWithFallback("nusmp.demon_slayer_vu.tooltip", "The clover, the rings and the drifting shards answer the Resonance; in Black Meteorite the blade breaks apart.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));   // 1.108.0
+        tip.add(Component.translatableWithFallback("anime_multiverse.demon_slayer_vu.tooltip", "The clover, the rings and the drifting shards answer the Resonance; in Black Meteorite the blade breaks apart.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));   // 1.108.0
     }
 }

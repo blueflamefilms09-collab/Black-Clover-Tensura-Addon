@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The files the Sylph needs: the models (three levels, the wings, the glow-only model) of both forms with their sheets and animations, the lang text, the previews and the doc. */
 class SylphAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 
@@ -180,7 +180,7 @@ class SylphAssetsTest {
     @Test
     void theLangFragmentHasEveryString() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "sylph.json"));
-        for (String k : new String[]{"key.nusmp.sylph", "nusmp.sylph.full", "nusmp.sylph.linked", "nusmp.sylph.unlinked"}) assertTrue(lang.has(k), k);
+        for (String k : new String[]{"key.anime_multiverse.sylph", "anime_multiverse.sylph.full", "anime_multiverse.sylph.linked", "anime_multiverse.sylph.unlinked"}) assertTrue(lang.has(k), k);
         for (SylphSoundSet.Cue c : SylphSoundSet.cues()) assertTrue(lang.has(c.subtitleKey()), c.subtitleKey());
         for (var e : lang.entrySet()) {
             String v = e.getValue().getAsString().toLowerCase();

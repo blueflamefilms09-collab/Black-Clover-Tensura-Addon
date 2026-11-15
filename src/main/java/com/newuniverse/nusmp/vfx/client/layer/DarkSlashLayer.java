@@ -19,7 +19,7 @@ import static com.newuniverse.nusmp.vfx.client.layer.DarkSlashStrip.*;
  *       the tear stands when it lands; power = size (height 3 + 1.6 * power blocks). A thin white-violet hairline flashes open into a tall vertical
  *       tear that flies out along from -> to in the first third and stays at 'to': a pitch-black core with a white-violet rim, tiny stars inside the
  *       void, a jagged violet / magenta aura that ripples and crawls, warped afterimage rings spreading from it, the cut line it left in the air
- *       and three long diagonal scratches (the manga). The tear is one quad drawn with the nusmp:dimension_slash shader ({@link DarkSlashShaderPass})
+ *       and three long diagonal scratches (the manga). The tear is one quad drawn with the anime_multiverse:dimension_slash shader ({@link DarkSlashShaderPass})
  *       whose jitter / ripple / stars are computed per pixel; without the shader the same texture is drawn as a ribbon that ripples in the vertices.</li>
  *   <li>DARK_SLASH_BLADE (Dark Cloaked Black Blade): darkness coats the sword and grows a long black blade. from = the hand, to = the tip the blade
  *       reaches; power = size (blade width). Black smoke wraps the grip first, then the blade grows from the hand to the tip with violet edge light

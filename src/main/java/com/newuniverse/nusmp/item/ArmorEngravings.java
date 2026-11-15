@@ -144,7 +144,7 @@ public final class ArmorEngravings {
     public static boolean engrave(ItemStack stack, HolderLookup.Provider registries) {
         if (stack.isEmpty()) return false;
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        if (!"nusmp".equals(key.getNamespace())) return false;
+        if (!"anime_multiverse".equals(key.getNamespace())) return false;
         List<Engraving> list = forItem(key.getPath());
         if (list.isEmpty()) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);

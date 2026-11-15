@@ -18,7 +18,7 @@ import net.minecraft.util.Mth;
  * Why: draws the Scale Magic balance scale ({@link ScaleMesh}, the same geometry tools/scalecast/preview_scale.py shows) into the game: the solid passes (cutout, or alpha blended while the
  * Scale fades), the glow passes (the etched runes of the beam, the halo, the glows of the jewel and the pans, additive through {@link SafeAdditive} only, so no transparent corner can show as
  * a square), the weighing line and the seal ring under the weighed foe. Render thread only, no allocation per frame (the sinks are reused, every position is plain floats). Textures:
- * assets/nusmp/textures/entity/scalecast (tools/scalecast/gen_scale_textures.py).
+ * assets/anime_multiverse/textures/entity/scalecast (tools/scalecast/gen_scale_textures.py).
  */
 public final class ScaleRender {
     private ScaleRender() {}

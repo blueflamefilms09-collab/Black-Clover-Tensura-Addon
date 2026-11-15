@@ -28,7 +28,7 @@ import java.util.List;
  * Spirit Bomb grows with the living allies lending it energy and Ki Sense shows every hostile presence near.
  * All state is the game time each window ends at, kept in the skill tag of the one player who owns it: nothing ticks, nothing is cleaned up, nothing is shared. A press looks at no more than 24
  * creatures, hits at most 24 (Spirit Bomb, 90-second cooldown) and draws one beam or one ring.
- * Switch: server setting {@code kiEnabled}. Obtain: {@code /tensura edit <player> ability grant nusmp:ki}.
+ * Switch: server setting {@code kiEnabled}. Obtain: {@code /tensura edit <player> ability grant anime_multiverse:ki}.
  */
 public class KiSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("ki", "Ki",

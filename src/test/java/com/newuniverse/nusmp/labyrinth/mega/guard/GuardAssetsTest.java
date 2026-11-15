@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * missing from the class table and the Better Combat manifest that decide how a held item is sized and whether it swings.
  */
 class GuardAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
 
     private static JsonObject json(String path) throws Exception {
         try (Reader r = new FileReader(new File(path))) {
@@ -33,14 +33,14 @@ class GuardAssetsTest {
 
     private static boolean exists(String path) { return new File(path).isFile(); }
 
-    /** {@code nusmp:block/x} to the file of that model; vanilla ids resolve to null (they are the game's). */
+    /** {@code anime_multiverse:block/x} to the file of that model; vanilla ids resolve to null (they are the game's). */
     private static String modelFile(String id) {
-        if (!id.startsWith("nusmp:")) return null;
+        if (!id.startsWith("anime_multiverse:")) return null;
         return ASSETS + "models/" + id.substring(6) + ".json";
     }
 
     private static String textureFile(String id) {
-        if (!id.startsWith("nusmp:")) return null;
+        if (!id.startsWith("anime_multiverse:")) return null;
         return ASSETS + "textures/" + id.substring(6) + ".png";
     }
 
@@ -114,7 +114,7 @@ class GuardAssetsTest {
         JsonObject state = json(ASSETS + "blockstates/guardian_altar.json").getAsJsonObject("variants");
         assertTrue(state.has(""), "a block without properties has one empty variant");
         assertModelComplete(state.getAsJsonObject("").get("model").getAsString());
-        assertModelComplete("nusmp:item/guardian_altar");
+        assertModelComplete("anime_multiverse:item/guardian_altar");
         for (String t : new String[] {"side", "top", "pillar"}) {
             BufferedImage img = ImageIO.read(new File(ASSETS + "textures/block/guardian_altar_" + t + ".png"));
             assertEquals(16, img.getWidth(), t);
@@ -128,7 +128,7 @@ class GuardAssetsTest {
         JsonObject held = json(ASSETS + "models/item/mana_core.json");
         assertEquals("minecraft:builtin/entity", held.get("parent").getAsString(), "the in-hand model is drawn by the weapon renderer");
         assertTrue(held.getAsJsonObject("display").has("thirdperson_righthand") && held.getAsJsonObject("display").has("firstperson_righthand"), "the hand transforms are written");
-        assertModelComplete("nusmp:item/mana_core_icon");
+        assertModelComplete("anime_multiverse:item/mana_core_icon");
         BufferedImage icon = ImageIO.read(new File(ASSETS + "textures/item/mana_core.png"));
         assertEquals(16, icon.getWidth());
         assertEquals(16, icon.getHeight());

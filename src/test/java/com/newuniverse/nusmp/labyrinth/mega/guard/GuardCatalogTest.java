@@ -35,7 +35,7 @@ class GuardCatalogTest {
     private static final List<String> MINE = List.of("arena/guardian_hall_a", "arena/guardian_hall_b", "antechamber/antechamber_a", "antechamber/antechamber_b",
             "onward/straight_a", "onward/straight_b", "onward/straight_c", "onward/left_a", "onward/left_b", "onward/left_c", "onward/right_a", "onward/right_b",
             "onward/right_c");
-    private static final String DOOR = "nusmp:mega_door", CHAIN = "nusmp:mega_chain", VAULT = "nusmp:mega_vault", ONWARD = "nusmp:mega_onward";
+    private static final String DOOR = "anime_multiverse:mega_door", CHAIN = "anime_multiverse:mega_chain", VAULT = "anime_multiverse:mega_vault", ONWARD = "anime_multiverse:mega_onward";
     private static final String EMPTY = "minecraft:empty", AIR = "minecraft:air";
 
     /** Template name (without the namespace) to its catalog entry, for the templates of this builder that the catalog holds. */
@@ -46,7 +46,7 @@ class GuardCatalogTest {
             JsonObject all = root.getAsJsonObject("templates");
             Map<String, JsonObject> out = new LinkedHashMap<>();
             for (String name : MINE) {
-                JsonElement e = all.get("nusmp:mega/" + name);
+                JsonElement e = all.get("anime_multiverse:mega/" + name);
                 if (e != null) out.put(name, e.getAsJsonObject());
             }
             return out;
@@ -127,10 +127,10 @@ class GuardCatalogTest {
             assertEquals(AIR, in.get("final").getAsString(), n + " entry final state (an open hole)");
             assertEquals("north", out.get("facing").getAsString(), n + " exit face");
             assertEquals(22, offset(out), n + " exit offset");
-            assertEquals("nusmp:mega/antechamber", out.get("pool").getAsString(), n + " exit pool");
+            assertEquals("anime_multiverse:mega/antechamber", out.get("pool").getAsString(), n + " exit pool");
             assertEquals(CHAIN, out.get("target").getAsString(), n + " exit target");
             String fin = out.get("final").getAsString();
-            assertTrue(fin.startsWith("nusmp:gatekeeper_door[") && fin.contains("kind=sector") && fin.contains("open=false"), n + " exit final state is the sector Gatekeeper door: " + fin);
+            assertTrue(fin.startsWith("anime_multiverse:gatekeeper_door[") && fin.contains("kind=sector") && fin.contains("open=false"), n + " exit final state is the sector Gatekeeper door: " + fin);
         }
     }
 
@@ -167,8 +167,8 @@ class GuardCatalogTest {
             assertTrue((vf.equals("east") && of.equals("west")) || (vf.equals("west") && of.equals("east")), n + ": the two roads leave on opposite flanks (vault " + vf + ", onward " + of + ")");
             assertEquals(13, offset(vault.get(0)), n + " vault offset");
             assertEquals(13, offset(onward.get(0)), n + " onward offset");
-            assertEquals("nusmp:mega/vault", vault.get(0).get("pool").getAsString(), n + " vault pool");
-            assertEquals("nusmp:mega/onward", onward.get(0).get("pool").getAsString(), n + " onward pool");
+            assertEquals("anime_multiverse:mega/vault", vault.get(0).get("pool").getAsString(), n + " vault pool");
+            assertEquals("anime_multiverse:mega/onward", onward.get(0).get("pool").getAsString(), n + " onward pool");
             assertEquals(AIR, vault.get(0).get("final").getAsString(), n + " vault final state");
             assertEquals(AIR, onward.get(0).get("final").getAsString(), n + " onward final state");
             assertEquals(1, markers(r, "patrol").size(), n + " patrol markers");

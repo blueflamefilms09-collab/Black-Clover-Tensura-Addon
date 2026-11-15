@@ -29,7 +29,7 @@ import java.util.UUID;
 /**
  * The game-bus side of the Charter Grimoires. Call {@link #register} once from the mod constructor with {@code NeoForge.EVENT_BUS}.
  * <ul>
- *   <li><b>The first-kill drop</b>: when a boss of this mod (only the registry namespace {@code nusmp}, see {@link CharterTable#byEntity}) dies, the
+ *   <li><b>The first-kill drop</b>: when a boss of this mod (only the registry namespace {@code anime_multiverse}, see {@link CharterTable#byEntity}) dies, the
  *       world's lock is read; if the grimoire is unclaimed and a player killed it, a configurable roll ({@link DropRoll}) decides. On success the lock
  *       is set in the same call (the first claim wins, all of it on the server thread), the book goes to the killer, everybody is told and every
  *       client is synced. The handler runs after everybody else's (a death another mod cancelled is not a kill), and the book is a separate item
@@ -122,7 +122,7 @@ public final class CharterEvents {
         try {
             server.overworld().getDataStorage().save();                              // written now, not at the next autosave: a crash must not lose the lock while the book is already in an inventory
         } catch (RuntimeException saveFailed) {
-            LOG.warn("[nusmp] could not write the Canon lock at once ({}); it is saved with the world", saveFailed.toString());
+            LOG.warn("[anime_multiverse] could not write the Canon lock at once ({}); it is saved with the world", saveFailed.toString());
         }
         award(server, level, data, boss, killer, stack);
     }
@@ -135,7 +135,7 @@ public final class CharterEvents {
             drop.setInvulnerable(true);
             killer.serverLevel().addFreshEntity(drop);
         }
-        LOG.info("[nusmp] {} claimed the Canon Grimoire of {} (day {})", killer.getGameProfile().getName(), boss.id(), data.claim(boss.id()).day());
+        LOG.info("[anime_multiverse] {} claimed the Canon Grimoire of {} (day {})", killer.getGameProfile().getName(), boss.id(), data.claim(boss.id()).day());
         server.getPlayerList().broadcastSystemMessage(Component.literal("[Server] " + killer.getGameProfile().getName()
                 + " is the first to claim the Canon Grimoire of " + boss.name() + ".").withStyle(ChatFormatting.GOLD), false);
         CharterNet.sendAll(data);

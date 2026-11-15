@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * quad (the owner's request: keep the effect), and the older models and tables were not touched.
  */
 class DuelDiskModelsTest {
-    static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     static final Path VU = ASSETS.resolve("visual_upgrade");
     static final Path MODELS = VU.resolve("models");
     static final float FIT = WornPlacer.BODY_SCALE;                       // the worn library draws a relic piece at this scale about its anchor

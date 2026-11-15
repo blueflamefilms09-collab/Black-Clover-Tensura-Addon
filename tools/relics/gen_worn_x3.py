@@ -1,6 +1,6 @@
-"""The x3 blocky worn models (3.9.0): every worn relic model of assets/nusmp/relic_worn is voxelised on a small grid, hidden faces are dropped, coplanar faces are merged, and the big flat
+"""The x3 blocky worn models (3.9.0): every worn relic model of assets/anime_multiverse/relic_worn is voxelised on a small grid, hidden faces are dropped, coplanar faces are merged, and the big flat
 faces get a raised frame + panel + glow inlay (the Saint Valkyrie Dress look). Every quad keeps the colour SLOT and the atlas TILE of the quad it came from, so a relic keeps its own colours
-(palette main / trim / glow) and only takes the blocky shape. Output: assets/nusmp/relic_worn_x3/<name>.txt + index.txt (the game picks a model's x3 version when the file is listed).
+(palette main / trim / glow) and only takes the blocky shape. Output: assets/anime_multiverse/relic_worn_x3/<name>.txt + index.txt (the game picks a model's x3 version when the file is listed).
 
     python3 tools/relics/gen_worn_x3.py [--only name,name] [--out DIR] [--report]
 
@@ -21,7 +21,7 @@ sys.path.insert(0, HERE)
 import gen_worn_lib as L  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 WORN = os.path.join(ASSETS, "relic_worn")
 DEFAULT_OUT = os.path.join(ASSETS, "relic_worn_x3")
 

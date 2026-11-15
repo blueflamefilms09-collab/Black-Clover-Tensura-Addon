@@ -1,7 +1,7 @@
 {
  "remodel_dark_disciple_lucifero": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_dark_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -41,12 +41,12 @@
     "dist": 4.023
    }
   ],
-  "texture": "nusmp:textures/entity/arc_dark_disciple_lucifero.png",
-  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_dark_disciple_lucifero.png",
+  "animations": "anime_multiverse:animations/entity/arc_dark_disciple.animation.json"
  },
  "remodel_dark_disciple_megicula": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_dark_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -86,12 +86,12 @@
     "dist": 4.023
    }
   ],
-  "texture": "nusmp:textures/entity/arc_dark_disciple_megicula.png",
-  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_dark_disciple_megicula.png",
+  "animations": "anime_multiverse:animations/entity/arc_dark_disciple.animation.json"
  },
  "remodel_dark_disciple_beelzebub": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_dark_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -131,12 +131,12 @@
     "dist": 4.023
    }
   ],
-  "texture": "nusmp:textures/entity/arc_dark_disciple_beelzebub.png",
-  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_dark_disciple_beelzebub.png",
+  "animations": "anime_multiverse:animations/entity/arc_dark_disciple.animation.json"
  },
  "remodel_dark_disciple_astaroth": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_dark_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_dark_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -176,12 +176,12 @@
     "dist": 4.023
    }
   ],
-  "texture": "nusmp:textures/entity/arc_dark_disciple_astaroth.png",
-  "animations": "nusmp:animations/entity/arc_dark_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_dark_disciple_astaroth.png",
+  "animations": "anime_multiverse:animations/entity/arc_dark_disciple.animation.json"
  },
  "remodel_devil_avatar_megicula": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_devil_avatar.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_devil_avatar.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -221,12 +221,12 @@
     "dist": 8.445
    }
   ],
-  "texture": "nusmp:textures/entity/arc_devil_avatar_megicula.png",
-  "animations": "nusmp:animations/entity/arc_devil_avatar.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_devil_avatar_megicula.png",
+  "animations": "anime_multiverse:animations/entity/arc_devil_avatar.animation.json"
  },
  "remodel_devil_avatar_megicula_form2": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/arc_devil_avatar_form2.geo.json",
+  "model": "anime_multiverse:geo/entity/arc_devil_avatar_form2.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -266,7 +266,7 @@
     "dist": 8.449
    }
   ],
-  "texture": "nusmp:textures/entity/arc_devil_avatar_megicula_form2.png",
-  "animations": "nusmp:animations/entity/arc_devil_avatar_form2.animation.json"
+  "texture": "anime_multiverse:textures/entity/arc_devil_avatar_megicula_form2.png",
+  "animations": "anime_multiverse:animations/entity/arc_devil_avatar_form2.animation.json"
  }
 }

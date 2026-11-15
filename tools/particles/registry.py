@@ -1,5 +1,5 @@
 """The particle registry of the custom library: one decorated drawing function per particle id, carrying the catalog data
-(family, frames, texture size, behaviour text and the physics profile the game reads from data/nusmp/particle_catalog.json).
+(family, frames, texture size, behaviour text and the physics profile the game reads from data/anime_multiverse/particle_catalog.json).
 
 Profile keys (units are the game's): gravity (+falls, -rises; yd -= 0.04 * gravity per tick), drag (velocity multiplier per tick), spin (roll, rad/tick),
 swirl (rad/tick the horizontal velocity turns), sway (sinusoidal horizontal drift, blocks/tick), jitter (random velocity noise per tick),

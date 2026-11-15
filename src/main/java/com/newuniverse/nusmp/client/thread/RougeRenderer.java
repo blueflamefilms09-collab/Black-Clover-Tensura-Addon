@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
  * nothing as she unravels and grows back (with a small overshoot) as she reknits.
  */
 public class RougeRenderer extends EntityRenderer<RougeEntity> {
-    private static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/rouge_cat.png");
+    private static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/rouge_cat.png");
     private static final float SCALE = 0.45f;
     private final RougeModel model;
 

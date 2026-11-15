@@ -114,16 +114,16 @@ public final class HerculesSelfTests {
             if (VeldanavaGuard.spatiallyFree(p) || VeldanavaGuard.mindImmune(p)) return Result.fail("Hercules' toggles switched Israfil's guards on");
             JudgmentState.write(p, 0);
 
-            String icon = "assets/nusmp/textures/skill/veldanava/hercules.png";
+            String icon = "assets/anime_multiverse/textures/skill/veldanava/hercules.png";
             if (HerculesSelfTests.class.getClassLoader().getResource(icon) == null) return Result.fail("missing " + icon);
             JsonObject lang;
-            try (InputStream in = HerculesSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+            try (InputStream in = HerculesSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
                 if (in == null) return Result.fail("no en_us.json");
                 lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
             }
-            for (String k : new String[]{"nusmp.skill.hercules", "nusmp.skill.hercules.description", "nusmp.skill.hercules.mastered", "effect.nusmp.armor_break"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
+            for (String k : new String[]{"anime_multiverse.skill.hercules", "anime_multiverse.skill.hercules.description", "anime_multiverse.skill.hercules.mastered", "effect.anime_multiverse.armor_break"}) if (!lang.has(k)) return Result.fail("missing lang key " + k);
             for (JudgmentRules.Mode m : HerculesRules.HERCULES.modes())
-                if (!lang.has("nusmp.skill.mode.hercules." + m.id())) return Result.fail("missing lang key for mode " + m.id());
+                if (!lang.has("anime_multiverse.skill.mode.hercules." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             return Result.ok("registered, learned once, 10 modes named, the mask keeps the skills apart, icon and lang are in the jar");
         } finally {
             JudgmentState.write(p, 0);

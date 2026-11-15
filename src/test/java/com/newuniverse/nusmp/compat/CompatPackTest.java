@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CompatPackTest {
     private static final Path PACK = Path.of("src/main/resources/resourcepacks/nusmp_tni_compat");
     private static final Path SOURCE = Path.of("tools/compat/multiverse_x_tensura_no_index");
-    private static final Path OUR_LOOT = Path.of("src/main/resources/data/nusmp/loot_table");
+    private static final Path OUR_LOOT = Path.of("src/main/resources/data/anime_multiverse/loot_table");
 
     private static List<Path> jsons(Path root) throws IOException {
         try (Stream<Path> s = Files.walk(root)) {
@@ -92,8 +92,8 @@ class CompatPackTest {
         for (Path p : jsons(PACK.resolve("data/nusmp_tni_compat/loot_modifiers"))) collect(read(p), "loot_table_id", targets);
         assertFalse(targets.isEmpty());
         for (String t : targets) {
-            assertTrue(t.startsWith("nusmp:"), t);
-            assertTrue(Files.exists(OUR_LOOT.resolve(t.substring("nusmp:".length()) + ".json")), "no such table of ours: " + t);
+            assertTrue(t.startsWith("anime_multiverse:"), t);
+            assertTrue(Files.exists(OUR_LOOT.resolve(t.substring("anime_multiverse:".length()) + ".json")), "no such table of ours: " + t);
         }
     }
 
@@ -139,8 +139,8 @@ class CompatPackTest {
             ids.add(o.get("id").getAsString());
         }
         Set<String> expected = new HashSet<>();
-        for (String path : BossRegistry.paths()) expected.add("nusmp:" + path);
-        expected.add("nusmp:zagred");
+        for (String path : BossRegistry.paths()) expected.add("anime_multiverse:" + path);
+        expected.add("anime_multiverse:zagred");
         assertEquals(expected, ids);
     }
 
@@ -154,7 +154,7 @@ class CompatPackTest {
             assertFalse(o.get("required").getAsBoolean(), "every id optional: " + o);
             ids.add(o.get("id").getAsString());
         }
-        for (String path : BossRegistry.paths()) assertTrue(ids.contains("nusmp:" + path), path);
+        for (String path : BossRegistry.paths()) assertTrue(ids.contains("anime_multiverse:" + path), path);
         assertTrue(ids.contains("tensuranoindex:coronzon") && ids.contains("tensuranoindex:innocentius"));
         assertEquals(15, ids.size());
     }

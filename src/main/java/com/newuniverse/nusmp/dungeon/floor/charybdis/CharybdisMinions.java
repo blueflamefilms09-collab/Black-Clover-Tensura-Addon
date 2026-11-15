@@ -132,7 +132,7 @@ public final class CharybdisMinions {
     static Mob spawnAt(ServerLevel level, CharybdisSpawnBoss boss, Vec3 spot, LivingEntity target) {
         EntityType<?> type = Wildlife.typeOf(MEGALODON);
         if (type == null) {
-            if (WARNED.add("absent")) LOG.warn("[nusmp] There is no tensura:megalodon, so the Charybdis Spawn calls none");
+            if (WARNED.add("absent")) LOG.warn("[anime_multiverse] There is no tensura:megalodon, so the Charybdis Spawn calls none");
             return null;
         }
         Vec3 c = boss.arenaCenter();
@@ -172,7 +172,7 @@ public final class CharybdisMinions {
             level.addFreshEntity(m);
             return m;
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.add(Wildlife.idOf(type) + ":" + ex.getClass().getName())) LOG.warn("[nusmp] Could not spawn {}", Wildlife.idOf(type), ex);
+            if (WARNED.add(Wildlife.idOf(type) + ":" + ex.getClass().getName())) LOG.warn("[anime_multiverse] Could not spawn {}", Wildlife.idOf(type), ex);
             return null;
         }
     }
@@ -266,7 +266,7 @@ public final class CharybdisMinions {
             if (!(e.getEntity() instanceof ServerPlayer victim) || !isMinion(e.getSource().getEntity())) return;
             e.setAmount(CharybdisTable.capMinion(e.getAmount(), victim.getMaxHealth()));
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.add("cap")) LOG.warn("[nusmp] Could not cap the blow of a megalodon (this is logged once)", ex);
+            if (WARNED.add("cap")) LOG.warn("[anime_multiverse] Could not cap the blow of a megalodon (this is logged once)", ex);
         }
     }
 

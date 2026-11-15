@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Why: the client has to know which creatures to dress in a halo and wings, and a mob effect is the one piece of state vanilla
  * already syncs to everyone tracking an entity, shows in no list a player can break, and saves with the creature. So a Paladin
- * carries {@code nusmp:paladin}: an infinite, particle-less, icon-less beneficial effect that does nothing by itself (the stats are
+ * carries {@code anime_multiverse:paladin}: an infinite, particle-less, icon-less beneficial effect that does nothing by itself (the stats are
  * attribute modifiers, the behaviour is in {@link Paladins}); it is only the marker. It is its own {@link DeferredRegister}, so the
  * lead wires two lines and no other registry is touched, the same way as {@code LuciusEffects}.
  * <p>

@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Why: a form is the unit of progress of a hero weapon (the Weapon Copy of the series: the gem takes in materials and the weapon becomes the Leaf Shield, the
  * Chimera Viper Shield, the Shield of Rage ...). Every system reads forms: the loadout (stats, skills, passives), the Weapon Book (requirements, mastery), the
- * curse (curse forms), the renderer (the look) and the weapon logic (its passives). One immutable record, loaded from {@code data/nusmp/hero/forms/<itemId>.json}
+ * curse (curse forms), the renderer (the look) and the weapon logic (its passives). One immutable record, loaded from {@code data/anime_multiverse/hero/forms/<itemId>.json}
  * by the forms system, keeps them agreeing. The JSON schema and its rules are in {@code docs/heroweapon/design.md} section 6.
  *
  * @param kind            the weapon

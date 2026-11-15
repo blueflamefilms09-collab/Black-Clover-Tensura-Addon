@@ -70,7 +70,7 @@ public final class MegaGenRegistry {
             ExpansionQueue.get().tick(e.getServer());
             MegaTravel.tick(e.getServer());
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon tick failed: {}", t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon tick failed: {}", t.toString(), t);
         }
     }
 
@@ -78,7 +78,7 @@ public final class MegaGenRegistry {
         try {
             ExpansionQueue.get().onServerStarted(e.getServer());
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon could not repair unfinished sectors: {}", t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon could not repair unfinished sectors: {}", t.toString(), t);
         }
     }
 
@@ -87,7 +87,7 @@ public final class MegaGenRegistry {
             ExpansionQueue.get().onServerStopped();
             MegaTravel.onServerStopped();
         } catch (Throwable t) {
-            LOG.error("[nusmp] The Mega-Dungeon did not shut down cleanly: {}", t.toString(), t);
+            LOG.error("[anime_multiverse] The Mega-Dungeon did not shut down cleanly: {}", t.toString(), t);
         }
     }
 

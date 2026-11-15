@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Why: the bespoke audio engine's registry (the owner's "custom DeferredRegister of SoundEvent mapping to specific audio cues"). One {@code SoundEvent} per family and cue of
- * {@link MobSoundSet} (25 families x 8 cues = 200 events, {@code nusmp:mob.goblin.taunt} and so on), built in a loop from the catalogue so the registry, the catalogue and
+ * {@link MobSoundSet} (25 families x 8 cues = 200 events, {@code anime_multiverse:mob.goblin.taunt} and so on), built in a loop from the catalogue so the registry, the catalogue and
  * {@code sounds.json} cannot drift apart ({@code SoundsJsonTest}). It is a second register next to {@link com.newuniverse.nusmp.sound.NUSounds} (the Zagred voice lines): that one
  * names every event by hand, this one would need two hundred lines, and the two files stay append-only for the builders that edit them. The register is handed to the mod bus in
  * {@code NUSMP} ({@code ModSounds.SOUNDS.register(modEventBus)}). The events are variable-range, so the attenuation distance of each is the one {@code sounds.json} gives it.

@@ -149,7 +149,7 @@ final class Wave30Kit {
 
     /** Switches a transient modifier of this wave on or off (idempotent). It never reaches the save file; a tick re-applies it. */
     static void setMod(LivingEntity e, String attributeId, String name, double amount, AttributeModifier.Operation op, boolean on) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "w30_" + name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w30_" + name);
         attribute(attributeId).ifPresent(h -> {
             AttributeInstance inst = e.getAttribute(h);
             if (inst == null) return;
@@ -166,7 +166,7 @@ final class Wave30Kit {
 
     /** Sets a permanent modifier (it is saved with the player; the wave re-applies it from its own counter after a death, which does not copy modifiers). */
     static void setPermanent(LivingEntity e, String attributeId, String name, double amount, AttributeModifier.Operation op) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "w30_" + name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w30_" + name);
         attribute(attributeId).ifPresent(h -> {
             AttributeInstance inst = e.getAttribute(h);
             if (inst == null) return;

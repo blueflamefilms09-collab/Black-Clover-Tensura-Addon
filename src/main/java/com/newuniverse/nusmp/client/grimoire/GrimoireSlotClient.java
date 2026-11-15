@@ -21,12 +21,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * text above players' heads (config {@code [hud] hideHeadText}, default on).
  */
 public final class GrimoireSlotClient {
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.grimoire_slot", InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.grimoire_slot", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.anime_multiverse");
 
     /** Summon Grimoire (default G): your book floats from the hip to your right hand; with shift held it goes back to the hip. */
-    public static final KeyMapping SUMMON = new KeyMapping("key.nusmp.grimoire_summon", InputConstants.Type.KEYSYM,
-            org.lwjgl.glfw.GLFW.GLFW_KEY_G, "key.categories.nusmp");
+    public static final KeyMapping SUMMON = new KeyMapping("key.anime_multiverse.grimoire_summon", InputConstants.Type.KEYSYM,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_G, "key.categories.anime_multiverse");
 
     private GrimoireSlotClient() {}
 

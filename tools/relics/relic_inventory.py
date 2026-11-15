@@ -13,7 +13,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-WAVES = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+WAVES = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
 
 LOOK_DEFAULT = {"MAIN_HAND": "SWORD", "HEAD": "CIRCLET", "CHEST": "PLATE", "NECK": "AMULET", "BACK": "CLOAK", "BELT": "BELT", "HANDS": "GAUNTLETS",
                 "CHARM": "CHARM", "FEET": "BOOTS", "CONSUMABLE": "POTION"}

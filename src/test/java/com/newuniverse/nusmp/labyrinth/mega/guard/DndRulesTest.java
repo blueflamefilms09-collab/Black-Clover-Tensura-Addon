@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * magic is eaten, and the phase from health; and it reads the twenty SHIPPED profile files with the real parser so a typo in a file fails the build and not a player's boss fight.
  */
 class DndRulesTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/mega/dnd_bosses");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/mega/dnd_bosses");
 
     @Test
     void aSaveHasNaturalTwentyAndNaturalOne() {

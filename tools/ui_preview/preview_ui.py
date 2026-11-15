@@ -2,7 +2,7 @@
 """
 Mock-ups of the anime UI theme (client/ui/theme, docs/gui_theme.md), drawn with PIL. NOT the game: this is a re-implementation of the
 theme's draw calls (panel, bar, brackets, sweep, hover, chip, Sage block, magic circle) and of the screens' layout numbers, using the real
-circle textures from assets/nusmp/textures/gui/theme/. Use it to judge colours, alpha and layout without the game; the Java is the truth.
+circle textures from assets/anime_multiverse/textures/gui/theme/. Use it to judge colours, alpha and layout without the game; the Java is the truth.
 
     python3 tools/ui_preview/preview_ui.py OUT_DIR            # writes codex.png, status.png, ... into OUT_DIR
     python3 tools/ui_preview/preview_ui.py OUT_DIR --scale 3  # bigger
@@ -18,7 +18,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEX = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp", "textures", "gui", "theme")
+TEX = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "theme")
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 FONTB = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
 

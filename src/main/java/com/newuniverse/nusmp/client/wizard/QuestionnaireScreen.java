@@ -99,7 +99,7 @@ public class QuestionnaireScreen extends Screen {
             float now = UiTheme.now();
             progress.update(index / (float) texts.size(), now, true);
             progress.draw(g, x + 12, top + 17, w - 24, 3, UiTheme.VIOLET, now, 1f);
-            sage.set(font, "", font.plainSubstrByWidth(UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.wizard.hint")), w - 24), "", w - 24, now);
+            sage.set(font, "", font.plainSubstrByWidth(UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.wizard.hint")), w - 24), "", w - 24, now);
             sage.draw(g, font, x + 12, height / 2 + 79, now, 1f);
         }
     }

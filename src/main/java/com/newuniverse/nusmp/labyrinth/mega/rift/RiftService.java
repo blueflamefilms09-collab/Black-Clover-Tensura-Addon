@@ -84,7 +84,7 @@ public final class RiftService {
                 WaypointService.tick(p);
                 if ((server.getTickCount() + p.getId()) % 20 == 0) roll(mega, p);
             } catch (RuntimeException ex) {                                         // one player's failure must not stop the others' rolls
-                LOG.warn("[nusmp] The rift spawner failed for {} (further detail at debug): {}", p.getGameProfile().getName(), ex.toString());
+                LOG.warn("[anime_multiverse] The rift spawner failed for {} (further detail at debug): {}", p.getGameProfile().getName(), ex.toString());
                 LOG.debug("rift spawner", ex);
             }
         }
@@ -170,10 +170,10 @@ public final class RiftService {
         for (ServerPlayer q : new ArrayList<>(level.players())) {
             double dx = at.getX() + 0.5 - q.getX(), dy = at.getY() - q.getY(), dz = at.getZ() + 0.5 - q.getZ();
             if (q.isSpectator() || dx * dx + dy * dy + dz * dz > r2) continue;
-            q.displayClientMessage(Component.translatableWithFallback(pocket ? "message.nusmp.mega.rift.opened.pocket" : "message.nusmp.mega.rift.opened.shortcut",
+            q.displayClientMessage(Component.translatableWithFallback(pocket ? "message.anime_multiverse.mega.rift.opened.pocket" : "message.anime_multiverse.mega.rift.opened.shortcut",
                     pocket ? "The air tears open nearby: a hidden realm hums behind it." : "A tear in the air opens nearby. It leads further on.").withStyle(pocket ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.AQUA), true);
             if (SystemSync.hasConnection(q)) {
-                q.sendSystemMessage(Component.translatableWithFallback("message.nusmp.mega.rift.hint",
+                q.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.mega.rift.hint",
                         "[SYSTEM] A rift opened %s blocks to the %s. Walk into the tear, or right-click it, to step through; it closes in a few minutes.", (int) Math.round(Math.sqrt(dx * dx + dz * dz)),
                         RiftRules.compass(dx, dz)).withStyle(pocket ? ChatFormatting.LIGHT_PURPLE : ChatFormatting.AQUA));
                 SystemSync.toast(q, ToastKind.INFO, SystemText.TOAST_RIFT_NEAR);
@@ -315,7 +315,7 @@ public final class RiftService {
             case SETTLE -> {
                 int was = be.targetChain(), waitedTicks = be.waited();
                 be.retarget(nearer);
-                LOG.info("[nusmp] A shortcut rift at {} waited {} s for chain {} and settles for chain {}.", be.getBlockPos().toShortString(), waitedTicks / 20, was, nearer);
+                LOG.info("[anime_multiverse] A shortcut rift at {} waited {} s for chain {} and settles for chain {}.", be.getBlockPos().toShortString(), waitedTicks / 20, was, nearer);
                 for (ServerPlayer q : level.players())
                     if (q.distanceToSqr(be.getBlockPos().getX() + 0.5, be.getBlockPos().getY(), be.getBlockPos().getZ() + 0.5) <= 12.0 * 12.0)
                         WaypointService.say(q, "shortcut.settled", "The tear steadies: it leads %s floors on.", ChatFormatting.AQUA, nearer - be.fromChain());
@@ -336,7 +336,7 @@ public final class RiftService {
         }
         if (from != null && SectorGenerator.playable(from) && !from.isBossFloor()) {
             String why = ExpansionQueue.get().tryNext(level, from);
-            if (why != null) LOG.debug("[nusmp] A shortcut rift could not queue the floor after chain {}: {}", from.chainIndex, why);
+            if (why != null) LOG.debug("[anime_multiverse] A shortcut rift could not queue the floor after chain {}: {}", from.chainIndex, why);
         }
     }
 
@@ -393,7 +393,7 @@ public final class RiftService {
     /** An error inside a rift: logged, and after {@link RiftRules#FAIL_LIMIT} of them the rift closes itself instead of failing every tick. */
     public static void failed(ServerLevel level, DimensionalRiftBlockEntity be, Throwable ex) {
         int n = be.failed(ex);
-        LOG.warn("[nusmp] A {} rift at {} failed ({} of {}): {}", be.type().id(), be.getBlockPos().toShortString(), n, RiftRules.FAIL_LIMIT, ex.toString());
+        LOG.warn("[anime_multiverse] A {} rift at {} failed ({} of {}): {}", be.type().id(), be.getBlockPos().toShortString(), n, RiftRules.FAIL_LIMIT, ex.toString());
         LOG.debug("rift failure", ex);
         if (n >= RiftRules.FAIL_LIMIT) be.close();
     }
@@ -419,8 +419,8 @@ public final class RiftService {
         for (ServerPlayer m : group) {
             LabyrinthTravel.arrive(m, level, pad, null);
             m.getPersistentData().putLong(StairTravel.UNTIL, level.getGameTime() + 100L);
-            title(m, Component.translatableWithFallback("message.nusmp.mega.rift.floor", "Floor %s", FloorMap.label(t.firstFloor())),
-                    Component.translatableWithFallback("message.nusmp.mega.rift.jump", "You fall through the tear: %s floors on.", be.targetChain() - be.fromChain()));
+            title(m, Component.translatableWithFallback("message.anime_multiverse.mega.rift.floor", "Floor %s", FloorMap.label(t.firstFloor())),
+                    Component.translatableWithFallback("message.anime_multiverse.mega.rift.jump", "You fall through the tear: %s floors on.", be.targetChain() - be.fromChain()));
             NusmpEvents.fire(m, "mega.rift_jump", FloorMap.label(t.firstFloor()));
         }
         be.close();                                                         // a tear is used up by being used

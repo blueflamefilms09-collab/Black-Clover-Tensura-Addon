@@ -27,7 +27,7 @@ public final class Tasks {
 
     /** Logs the first failure of a named hook or step, then stays quiet about it. */
     public static void warnOnce(String what, Throwable e) {
-        if (TOLD.add(what)) LogUtils.getLogger().warn("[nusmp] hero weapon {} failed: {}", what, e.toString());
+        if (TOLD.add(what)) LogUtils.getLogger().warn("[anime_multiverse] hero weapon {} failed: {}", what, e.toString());
     }
 
     /** The names of the hooks and techniques whose first failure was logged and begin with {@code prefix}: how a self-test learns that a guarded body threw. */

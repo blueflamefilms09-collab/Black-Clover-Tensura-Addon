@@ -1,0 +1,13 @@
+{
+  "type": "anime_multiverse:mega_dungeon",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "anime_multiverse:mega_depths",
+      "layers": [],
+      "features": false,
+      "lakes": false,
+      "structure_overrides": []
+    }
+  }
+}

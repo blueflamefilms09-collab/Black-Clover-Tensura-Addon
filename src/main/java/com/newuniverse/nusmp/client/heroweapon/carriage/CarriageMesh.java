@@ -28,7 +28,7 @@ final class CarriageMesh {
     private static MeshBake.Baked cached;
     private static boolean loaded;
 
-    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** Forgets the baked model (a resource reload re-reads the mesh). */
     static void clear() {
@@ -58,7 +58,7 @@ final class CarriageMesh {
                 if (baked != null) return baked;
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] the carriage mesh failed to load; a plain wagon is drawn instead", ex);
+            LogUtils.getLogger().error("[anime_multiverse] the carriage mesh failed to load; a plain wagon is drawn instead", ex);
         }
         return MeshBake.fallback();
     }

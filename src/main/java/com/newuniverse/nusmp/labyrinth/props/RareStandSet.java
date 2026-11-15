@@ -55,13 +55,13 @@ public final class RareStandSet {
                 case "legs" -> "leggings";
                 default -> "boots";
             };
-            case "drakescale" -> "nusmp:drakescale_" + switch (slot) {
+            case "drakescale" -> "anime_multiverse:drakescale_" + switch (slot) {
                 case "head" -> "helm";
                 case "chest" -> "vest";
                 case "legs" -> "greaves";
                 default -> "boots";
             };
-            default -> "nusmp:shadowsteel_" + switch (slot) {
+            default -> "anime_multiverse:shadowsteel_" + switch (slot) {
                 case "head" -> "helm";
                 case "chest" -> "cuirass";
                 case "legs" -> "greaves";

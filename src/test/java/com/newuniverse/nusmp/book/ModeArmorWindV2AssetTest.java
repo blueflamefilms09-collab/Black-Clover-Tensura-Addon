@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class ModeArmorWindV2AssetTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage read(String path) throws IOException { return ImageIO.read(TEX.resolve(path).toFile()); }
 

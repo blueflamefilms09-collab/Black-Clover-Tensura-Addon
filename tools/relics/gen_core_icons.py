@@ -4,7 +4,7 @@
     python3 tools/relics/gen_core_icons.py            write 15 PNGs + 15 models
     python3 tools/relics/gen_core_icons.py --sheet out.png   also an 8x scaled contact sheet
 
-What it writes (assets/nusmp):
+What it writes (assets/anime_multiverse):
     textures/item/spirit_core_<element>.png, devil_core_<devil>.png     16x16, drawn from the colours in the Java catalog
     models/item/<same>.json                                             parent item/generated
 The colours are PARSED from relics/socket/SocketCatalog.java and SocketElement.java, so the Java table stays the single source: a new socket added
@@ -21,8 +21,8 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-SOCK = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "socket")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
+SOCK = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "socket")
 
 
 def table():
@@ -107,7 +107,7 @@ def main():
         img = gem(rgb) if devil else orb(rgb)
         img.save(os.path.join(tdir, name + ".png"), optimize=True)
         with open(os.path.join(mdir, name + ".json"), "w") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + name}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + name}}, f, indent=2)
             f.write("\n")
         big = img.resize((128, 128), Image.NEAREST)
         sheet.paste(big, ((i % 5) * 128, (i // 5) * 128), big)

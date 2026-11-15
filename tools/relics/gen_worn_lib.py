@@ -1,8 +1,8 @@
 """gen_worn_lib: the shared kit of the worn-relic model library (client/relics/worn/lib).
 
 Every worn relic model is built here with the owner's method (tools/relics/mesh_lib.py: named parts, lofts, lathes, smoothed normals) and written as a
-small text file the game parses once and caches: assets/nusmp/relic_worn/<model>.txt. The colours are NOT painted into the models: a quad names a colour
-SLOT (main, trim, glow, dark, accent, none) and a material TILE of one shared, tileable, grey-ish atlas (assets/nusmp/textures/relic_worn/atlas.png), and the
+small text file the game parses once and caches: assets/anime_multiverse/relic_worn/<model>.txt. The colours are NOT painted into the models: a quad names a colour
+SLOT (main, trim, glow, dark, accent, none) and a material TILE of one shared, tileable, grey-ish atlas (assets/anime_multiverse/textures/relic_worn/atlas.png), and the
 game tints the tile with the relic's palette. One model therefore serves every relic of its look, and the signature relics only change the numbers.
 
 Authoring frame (Y UP, front is -Z, 1 unit = 1 model pixel = 1/16 block), relative to the pivot of the body part the model is attached to:

@@ -42,7 +42,7 @@ public final class DevilContracts {
     private static final ResourceLocation STR = rl("devil_strength"), SPD = rl("devil_speed"), FLY = rl("devil_flight"), HALF = rl("devil_sacrifice_half_hp"), EYE = rl("devil_sacrifice_eye_reach");
     private static final ResourceLocation FLESH = rl("devil_sacrifice_flesh");
 
-    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     public static void register(IEventBus bus) {
         bus.addListener(DevilContracts::onTick);
@@ -167,7 +167,7 @@ public final class DevilContracts {
         c.assimilating = false;
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.6f, 0.7f);
         ForbiddenMagic.PactDevil devil = ForbiddenMagic.devilOf(p);
-        ForbiddenMagic.subtitle(p, Component.translatableWithFallback("nusmp.devil.msg.union_begins", "%s unites with %s.", p.getName().getString(), devil == null ? "a devil" : devil.displayName));
+        ForbiddenMagic.subtitle(p, Component.translatableWithFallback("anime_multiverse.devil.msg.union_begins", "%s unites with %s.", p.getName().getString(), devil == null ? "a devil" : devil.displayName));
         syncNow(p, c);
     }
 
@@ -372,6 +372,6 @@ public final class DevilContracts {
     }
 
     private static void msg(ServerPlayer p, String key, String fallback, ChatFormatting color) {
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.devil.msg." + key, fallback).withStyle(color), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.devil.msg." + key, fallback).withStyle(color), true);
     }
 }

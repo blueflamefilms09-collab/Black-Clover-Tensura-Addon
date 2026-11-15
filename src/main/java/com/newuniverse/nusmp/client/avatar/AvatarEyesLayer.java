@@ -19,7 +19,7 @@ import net.minecraft.util.Mth;
  * pixels, additive and full bright, tinted by the colour; everything else in that texture is black and adds nothing.
  */
 public class AvatarEyesLayer extends RenderLayer<AvatarEntity, PlayerModel<AvatarEntity>> {
-    private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/avatar/eyes_glow.png");
+    private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/avatar/eyes_glow.png");
 
     public AvatarEyesLayer(RenderLayerParent<AvatarEntity, PlayerModel<AvatarEntity>> parent) { super(parent); }
 

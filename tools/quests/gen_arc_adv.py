@@ -4,7 +4,7 @@
 Why: the characters are written by many builders and merged one by one; the owner wants an advancement for every one of them, and the lead must be able to
 refresh them in one step after a merge without knowing the generator. The roster file (tools/quests/arc_roster.txt, `id|name|saga|role` per line) is the
 bridge: the in-game command `/multiverse arc dump` writes it from the live roster, this script reads it (through spec_arc.py, which the advancement spec imports)
-and runs the ordinary advancement generator, which writes the JSON files under data/nusmp/advancement/arc and refreshes tools/quests/lang/qst.lang.json.
+and runs the ordinary advancement generator, which writes the JSON files under data/anime_multiverse/advancement/arc and refreshes tools/quests/lang/qst.lang.json.
 
 Usage:
     python tools/quests/gen_arc_adv.py                      regenerate from tools/quests/arc_roster.txt

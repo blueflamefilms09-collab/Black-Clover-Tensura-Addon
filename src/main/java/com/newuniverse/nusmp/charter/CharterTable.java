@@ -27,7 +27,7 @@ public final class CharterTable {
     private CharterTable() {}
 
     /** The only namespace whose entities count as bosses. */
-    public static final String NAMESPACE = "nusmp";
+    public static final String NAMESPACE = "anime_multiverse";
     /** The key prefix of the world's drop lock: {@code has_dropped_charter_grimoire_<bossId>}. */
     public static final String FLAG_PREFIX = "has_dropped_charter_grimoire_";
     public static final String ITEM_PREFIX = "charter_grimoire_";

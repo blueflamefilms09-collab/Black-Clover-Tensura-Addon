@@ -17,11 +17,11 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Why: the registry of the Treasure Vault: the Relic Pedestal block, its block item, its block entity type and the {@code nusmp:relic} loot
+ * Why: the registry of the Treasure Vault: the Relic Pedestal block, its block item, its block entity type and the {@code anime_multiverse:relic} loot
  * pool entry type. One class with its own DeferredRegisters and a single {@link #init} is the pattern every Labyrinth package follows so
  * {@code LabyrinthSystem} can wire them in order; the block item goes on the mod's shared item register ({@code NUItems.ITEMS}) like every
  * other block item so the creative tab and the lang file see it in the usual place. The loot entry type lives in the vanilla registry
- * {@code Registries.LOOT_POOL_ENTRY_TYPE}: a datapack loot table can then name {@code "type": "nusmp:relic"} and vanilla's loot codec
+ * {@code Registries.LOOT_POOL_ENTRY_TYPE}: a datapack loot table can then name {@code "type": "anime_multiverse:relic"} and vanilla's loot codec
  * resolves it like {@code minecraft:item}.
  */
 public final class VaultRegistry {
@@ -43,7 +43,7 @@ public final class VaultRegistry {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RelicPedestalBlockEntity>> PEDESTAL_BE = BLOCK_ENTITIES.register("relic_pedestal",
             () -> BlockEntityType.Builder.of(RelicPedestalBlockEntity::new, PEDESTAL.get()).build(null));
 
-    /** {@code nusmp:relic}: one unissued relic of a grade range (both halves of a pair). */
+    /** {@code anime_multiverse:relic}: one unissued relic of a grade range (both halves of a pair). */
     public static final DeferredHolder<LootPoolEntryType, LootPoolEntryType> RELIC_ENTRY = LOOT_ENTRIES.register("relic", () -> new LootPoolEntryType(RelicLootEntry.CODEC));
 
     /** Registers the three registers on the mod bus (called by LabyrinthSystem). */

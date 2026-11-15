@@ -62,6 +62,6 @@ public final class GatewayGuard {
         CompoundTag data = player.getPersistentData();
         if (now - data.getLong(STAMP) < MESSAGE_INTERVAL_TICKS && now >= data.getLong(STAMP)) return;
         data.putLong(STAMP, now);
-        player.displayClientMessage(Component.translatable("message.nusmp.mega.gateway.holds").withStyle(ChatFormatting.GRAY), true);
+        player.displayClientMessage(Component.translatable("message.anime_multiverse.mega.gateway.holds").withStyle(ChatFormatting.GRAY), true);
     }
 }

@@ -87,7 +87,7 @@ class ArenaThemesTest {
     private static void check(String text, JsonObject vanilla, Set<String> names, Set<String> checked, String where) {
         if (text.isEmpty() || !checked.add(text)) return;
         BlockSpec spec = BlockSpec.parse(text);
-        if (spec.namespace().equals("nusmp")) {
+        if (spec.namespace().equals("anime_multiverse")) {
             assertTrue(spec.path().equals("gatekeeper_door") || spec.path().equals("guardian_altar"), where + ": unexpected mod block " + text);
             return;
         }
@@ -239,9 +239,9 @@ class ArenaThemesTest {
         for (String id : ArenaThemes.ids()) {
             BossArenaStructure a = ArenaThemes.build(id, 45);
             int c = a.c;
-            long gate = a.extras().stream().filter(p -> p.spec().startsWith("nusmp:gatekeeper_door[kind=sector")).count();
+            long gate = a.extras().stream().filter(p -> p.spec().startsWith("anime_multiverse:gatekeeper_door[kind=sector")).count();
             assertEquals(24, gate, id + ": a 3 x 4 x 2 Gatekeeper slab");
-            assertTrue(a.extras().stream().anyMatch(p -> p.x() == c && p.y() == 3 && p.z() == c && p.spec().equals("nusmp:guardian_altar")), id);
+            assertTrue(a.extras().stream().anyMatch(p -> p.x() == c && p.y() == 3 && p.z() == c && p.spec().equals("anime_multiverse:guardian_altar")), id);
             assertEquals(12, a.sealCells().size(), id);
             for (Placed p : a.sealCells()) {
                 assertEquals(a.size - 2, p.z());

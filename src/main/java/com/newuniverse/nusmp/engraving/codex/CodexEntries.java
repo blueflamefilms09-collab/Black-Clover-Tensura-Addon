@@ -24,7 +24,7 @@ import java.util.function.Function;
 public final class CodexEntries {
     private CodexEntries() {}
 
-    /** Group ids that are not franchises (they start with an underscore because the franchise "tensura" is a real franchise id; their lang keys end in "nusmp" and "tensura"). */
+    /** Group ids that are not franchises (they start with an underscore because the franchise "tensura" is a real franchise id; their lang keys end in "anime_multiverse" and "tensura"). */
     public static final String GROUP_MOD = "_mod", GROUP_TENSURA = "_tensura_engravings";
 
     /** What an entry is: an engraving of this mod's own, one of Tensura's, or one of a franchise. */
@@ -34,7 +34,7 @@ public final class CodexEntries {
     public record Group(String id, String name, String shortName, int colour, Kind kind, int count) {}
 
     /**
-     * One engraving of the book. {@code key} is the enchantment id ({@code nusmp:fr_falna}), {@code search} is the lower-case text the search box looks in (name, group, effect text,
+     * One engraving of the book. {@code key} is the enchantment id ({@code anime_multiverse:fr_falna}), {@code search} is the lower-case text the search box looks in (name, group, effect text,
      * facts and the items that carry it), {@code foundOn} is the sorted display names of the items that carry it.
      */
     public record Entry(String key, String groupId, Kind kind, String groupName, int colour, String name, String scope, String text, List<String> facts, List<String> foundOn, String search) {}
@@ -60,9 +60,9 @@ public final class CodexEntries {
 
     public static String descKey(String ns, String path) { return "enchantment." + ns + "." + path + ".desc"; }
 
-    public static String franchiseKey(String id) { return "franchise.nusmp." + id; }
+    public static String franchiseKey(String id) { return "franchise.anime_multiverse." + id; }
 
-    public static String groupKey(String id) { return "nusmp.engraving_codex.group." + id; }
+    public static String groupKey(String id) { return "anime_multiverse.engraving_codex.group." + id; }
 
     private static String tr(Function<String, String> lang, String key, String fallback) {
         String v = lang == null ? null : lang.apply(key);
@@ -105,15 +105,15 @@ public final class CodexEntries {
         Map<String, List<String>> shared = new LinkedHashMap<>();           // one sorted list per franchise, shared by its engravings
 
         // ---- this mod's own enchantments (not franchise engravings)
-        String modGroup = tr(lang, groupKey("nusmp"), "Multiverse of Anime");
+        String modGroup = tr(lang, groupKey("anime_multiverse"), "Multiverse of Anime");
         for (Own o : in.own()) {
-            String name = tr(lang, nameKey("nusmp", o.id()), pretty(o.id()));
+            String name = tr(lang, nameKey("anime_multiverse", o.id()), pretty(o.id()));
             String scope = "main".equals(o.scope()) ? CodexFacts.scopeWords("main") : CodexFacts.scopeWords("any");
-            String text = tr(lang, descKey("nusmp", o.id()), "An enchantment of Multiverse of Anime.");
+            String text = tr(lang, descKey("anime_multiverse", o.id()), "An enchantment of Multiverse of Anime.");
             List<String> facts = new ArrayList<>();
             if (o.maxLevel() > 0) facts.add("Highest level: " + o.maxLevel());
             List<String> found = sorted(o.carriers());
-            own.add(new Entry("nusmp:" + o.id(), GROUP_MOD, Kind.MOD, modGroup, 0xE8C468, name, scope, text, List.copyOf(facts), found, searchText(name, modGroup, scope, text, facts, found)));
+            own.add(new Entry("anime_multiverse:" + o.id(), GROUP_MOD, Kind.MOD, modGroup, 0xE8C468, name, scope, text, List.copyOf(facts), found, searchText(name, modGroup, scope, text, facts, found)));
         }
         own.sort(Comparator.comparing(e -> e.name().toLowerCase(Locale.ROOT)));
 
@@ -142,16 +142,16 @@ public final class CodexEntries {
             List<String> found = shared.computeIfAbsent(f.id(), k -> sorted(in.franchiseCarriers().get(f.id())));
             for (FranchiseData.Engraving en : list) {
                 String path = en.id();
-                String name = tr(lang, nameKey("nusmp", path), en.name());
+                String name = tr(lang, nameKey("anime_multiverse", path), en.name());
                 String scope = CodexFacts.scopeWords(en.scope());
-                String text = CodexFacts.trimBoilerplate(tr(lang, descKey("nusmp", path), CodexFacts.fallbackText(en)));   // the scope and the caps are said by the scope line and the facts
+                String text = CodexFacts.trimBoilerplate(tr(lang, descKey("anime_multiverse", path), CodexFacts.fallbackText(en)));   // the scope and the caps are said by the scope line and the facts
                 List<String> facts = CodexFacts.of(en);
-                franchise.add(new Entry("nusmp:" + path, f.id(), Kind.FRANCHISE, fname, f.colour(), name, scope, text, facts, found, searchText(name, fname, scope, text, facts, found)));
+                franchise.add(new Entry("anime_multiverse:" + path, f.id(), Kind.FRANCHISE, fname, f.colour(), name, scope, text, facts, found, searchText(name, fname, scope, text, facts, found)));
             }
             franchiseGroups.add(new Group(f.id(), fname, CodexNames.table().getOrDefault(f.id(), fname), f.colour(), Kind.FRANCHISE, list.size()));
         }
 
-        groups.add(new Group(GROUP_MOD, modGroup, tr(lang, groupKey("nusmp.short"), "Mod enchantments"), 0xE8C468, Kind.MOD, own.size()));
+        groups.add(new Group(GROUP_MOD, modGroup, tr(lang, groupKey("anime_multiverse.short"), "Mod enchantments"), 0xE8C468, Kind.MOD, own.size()));
         groups.add(new Group(GROUP_TENSURA, tensuraGroup, tr(lang, groupKey("tensura.short"), "Tensura engravings"), 0x4FB8E8, Kind.TENSURA, tensura.size()));
         groups.addAll(franchiseGroups);
         List<Entry> all = new ArrayList<>(own.size() + tensura.size() + franchise.size());

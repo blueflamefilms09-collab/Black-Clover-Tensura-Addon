@@ -39,11 +39,11 @@ public final class DndProfiles extends SimpleJsonResourceReloadListener {
                 DndProfile p = DndProfile.parse(id, e.getValue().getAsJsonObject());
                 next.put(id, p);
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] dnd boss profile {} skipped: {}", e.getKey(), ex.getMessage());
+                LOG.warn("[anime_multiverse] dnd boss profile {} skipped: {}", e.getKey(), ex.getMessage());
             }
         }
         profiles = Map.copyOf(next);
-        LOG.info("[nusmp] dnd boss profiles: {} loaded from {} file(s)", next.size(), files.size());
+        LOG.info("[anime_multiverse] dnd boss profiles: {} loaded from {} file(s)", next.size(), files.size());
     }
 
     /** The id of the profile a floor gets: {@code holy_t3b}. */

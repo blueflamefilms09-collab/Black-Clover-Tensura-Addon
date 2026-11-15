@@ -32,7 +32,7 @@ final class MacroSelfTests {
 
     private static ServerLevel level(MinecraftServer server) { return server.getLevel(Labyrinth.SANCTUARY_DIMENSION); }
 
-    private static SelfTests.Result skipped() { return SelfTests.Result.ok("skipped: this build has no nusmp:sanctuary level"); }
+    private static SelfTests.Result skipped() { return SelfTests.Result.ok("skipped: this build has no anime_multiverse:sanctuary level"); }
 
     private static SelfTests.Result fail(String s) { return SelfTests.Result.fail(s); }
 

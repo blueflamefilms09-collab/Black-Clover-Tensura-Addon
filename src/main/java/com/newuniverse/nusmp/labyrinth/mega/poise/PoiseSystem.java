@@ -56,7 +56,7 @@ public final class PoiseSystem {
     private static final Set<Mob> TRACKED = Collections.newSetFromMap(new WeakHashMap<>());
     /** How long a swing or a drawn weapon keeps the super armor up (a vanilla swing lasts about 6 ticks). */
     static final int ATTACK_ARMOR_TICKS = 10;
-    static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "poise_desperate_speed");
+    static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "poise_desperate_speed");
 
     // ================================================================ what the rest of the mod asks
     /** The numbers in force (rebuilt from the config once a second). */
@@ -316,6 +316,6 @@ public final class PoiseSystem {
     private static void warn(String what, Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The poise layer failed once in {} and goes on: {}", what, t.toString(), t);
+        LOG.warn("[anime_multiverse] The poise layer failed once in {} and goes on: {}", what, t.toString(), t);
     }
 }

@@ -2,7 +2,7 @@
 
 Deterministic and font-free (every machine writes the same pixels). Written for this mod, same palette as tools/gen_trial_vfx_textures.py (imported, not changed): deep indigo and midnight teal, cyan-white
 edges and a little brass. It only ADDS one file; the 18 flat textures of gen_trial_vfx_textures.py stay and are still drawn when the setting `israfilModels` is off.
-Output: src/main/resources/assets/nusmp/textures/particle/israfil_model_atlas.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/israfil_model_atlas.png
 
     python tools/gen_israfil_model_textures.py
 

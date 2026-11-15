@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * three phases and all four decay stages; the fallback flag's rule; the loader of looks_abyssal.json and the add-only merge of the tables.
  */
 class DungeonLooksTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
 
     private static InputStream open(String path) {
         try {

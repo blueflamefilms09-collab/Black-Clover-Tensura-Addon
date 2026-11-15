@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "nusmp:block/snuffer_glyph_top",
-    "bottom": "nusmp:block/snuffer_glyph_side",
-    "side": "nusmp:block/snuffer_glyph_side"
-  }
-}

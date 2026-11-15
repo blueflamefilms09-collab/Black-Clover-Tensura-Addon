@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * reads the real files.
  */
 class SpiritDiveWindAssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage png(String tex) throws IOException {
         return ImageIO.read(ASSETS.resolve("textures/" + tex + ".png").toFile());

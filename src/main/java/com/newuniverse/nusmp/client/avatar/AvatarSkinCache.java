@@ -35,7 +35,7 @@ public final class AvatarSkinCache {
     private static final Map<String, int[]> TEMPLATES = new HashMap<>();
     private static int counter;
 
-    private static ResourceLocation tex(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/avatar/" + path + ".png"); }
+    private static ResourceLocation tex(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/avatar/" + path + ".png"); }
 
     /** The skin to draw an Avatar with this look and race with. */
     public static ResourceLocation skin(AppearanceData look, String raceId) {
@@ -61,11 +61,11 @@ public final class AvatarSkinCache {
                     img.setPixelRGBA(x, y, (a & 0xFF00FF00) | ((a >> 16) & 255) | ((a & 255) << 16));   // ARGB -> the image's ABGR
                 }
             DynamicTexture dt = new DynamicTexture(img);
-            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_skin/s" + (counter++));
+            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_skin/s" + (counter++));
             Minecraft.getInstance().getTextureManager().register(rl, dt);
             return rl;
         } catch (Exception ex) {
-            LOG.error("[nusmp] could not compose an avatar skin", ex);
+            LOG.error("[anime_multiverse] could not compose an avatar skin", ex);
             return null;
         }
     }
@@ -88,10 +88,10 @@ public final class AvatarSkinCache {
                     }
                 }
             } else if (!name.startsWith("outfit_")) {
-                LOG.warn("[nusmp] avatar template {} not found", name);
+                LOG.warn("[anime_multiverse] avatar template {} not found", name);
             }
         } catch (Exception ex) {
-            LOG.error("[nusmp] avatar template {} failed to load", name, ex);
+            LOG.error("[anime_multiverse] avatar template {} failed to load", name, ex);
         }
         TEMPLATES.put(name, out);
         return out;

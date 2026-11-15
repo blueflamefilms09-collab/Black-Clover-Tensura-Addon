@@ -54,7 +54,7 @@ public enum RoomKind {
     public boolean isCirculation() { return this == CORRIDOR || this == JUNCTION || this == LINK || this == ONWARD; }
 
     /**
-     * The kind of a template id such as {@code nusmp:mega/safe/hearth_hall} or {@code mega/safe/hearth_hall}: the first path segment after
+     * The kind of a template id such as {@code anime_multiverse:mega/safe/hearth_hall} or {@code mega/safe/hearth_hall}: the first path segment after
      * {@code mega/}. Anything else is {@link #OTHER}.
      */
     public static RoomKind of(String templateId) {

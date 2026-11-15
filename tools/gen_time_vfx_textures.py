@@ -1,7 +1,7 @@
 """Generates the Time Magic VFX textures (Chrono Stasis, Chrono Anastasis, rewind / acceleration dials).
 
 Deterministic and font-free: the Roman numerals are drawn from strokes, so every machine produces the same pixels.
-Output: src/main/resources/assets/nusmp/textures/particle/time_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/time_*.png
 
     python tools/gen_time_vfx_textures.py
 
@@ -15,7 +15,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for clean edges
 
 ROMAN = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"]

@@ -34,7 +34,7 @@ public final class CompanionNet {
     // ---------------------------------------------------------------- client to server
     /** The player picked a choice (an id on the screen they were last sent) in the conversation with this entity. */
     public record Pick(int entityId, String id) implements CustomPacketPayload {
-        public static final Type<Pick> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_pick"));
+        public static final Type<Pick> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_pick"));
         public static final StreamCodec<RegistryFriendlyByteBuf, Pick> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeVarInt(p.entityId()); buf.writeUtf(p.id(), TalkRules.WIRE_ID); },
                 buf -> new Pick(buf.readVarInt(), buf.readUtf(TalkRules.WIRE_ID)));
@@ -43,7 +43,7 @@ public final class CompanionNet {
 
     /** The player closed the screen. */
     public record Close(int entityId) implements CustomPacketPayload {
-        public static final Type<Close> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_close"));
+        public static final Type<Close> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_close"));
         public static final StreamCodec<RegistryFriendlyByteBuf, Close> STREAM_CODEC = StreamCodec.of((buf, p) -> buf.writeVarInt(p.entityId()), buf -> new Close(buf.readVarInt()));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
@@ -51,7 +51,7 @@ public final class CompanionNet {
     // ---------------------------------------------------------------- server to client
     /** A whole screen of the conversation with this entity (the first one opens the talk screen, later ones replace its content). */
     public record Show(int entityId, TalkView view) implements CustomPacketPayload {
-        public static final Type<Show> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_show"));
+        public static final Type<Show> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_show"));
         public static final StreamCodec<RegistryFriendlyByteBuf, Show> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeVarInt(p.entityId()); TalkView.STREAM_CODEC.encode(buf, p.view()); },
                 buf -> new Show(buf.readVarInt(), TalkView.STREAM_CODEC.decode(buf)));
@@ -60,14 +60,14 @@ public final class CompanionNet {
 
     /** The conversation is over (the server closed it): the screen closes. */
     public record End(int entityId) implements CustomPacketPayload {
-        public static final Type<End> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_end"));
+        public static final Type<End> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_end"));
         public static final StreamCodec<RegistryFriendlyByteBuf, End> STREAM_CODEC = StreamCodec.of((buf, p) -> buf.writeVarInt(p.entityId()), buf -> new End(buf.readVarInt()));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
     /** A speech bubble over an entity for some ticks. */
     public record BubbleLine(int entityId, Component line, int ticks) implements CustomPacketPayload {
-        public static final Type<BubbleLine> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_bubble"));
+        public static final Type<BubbleLine> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_bubble"));
         public static final StreamCodec<RegistryFriendlyByteBuf, BubbleLine> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> { buf.writeVarInt(p.entityId()); ComponentSerialization.STREAM_CODEC.encode(buf, p.line()); buf.writeVarInt(p.ticks()); },
                 buf -> new BubbleLine(buf.readVarInt(), ComponentSerialization.STREAM_CODEC.decode(buf), Math.max(1, Math.min(buf.readVarInt(), 1200))));

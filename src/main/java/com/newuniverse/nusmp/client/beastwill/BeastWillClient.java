@@ -41,14 +41,14 @@ import java.util.List;
 public final class BeastWillClient {
     private BeastWillClient() {}
 
-    public static final String CATEGORY = "key.categories.nusmp";
-    public static final KeyMapping ACQUIRE = new KeyMapping("key.nusmp.beastwill_acquire", InputConstants.Type.KEYSYM, InputConstants.KEY_LBRACKET, CATEGORY);
-    public static final KeyMapping INTEGRATE = new KeyMapping("key.nusmp.beastwill_integrate", InputConstants.Type.KEYSYM, InputConstants.KEY_RBRACKET, CATEGORY);
-    public static final KeyMapping ABILITY1 = new KeyMapping("key.nusmp.beastwill_ability1", InputConstants.Type.KEYSYM, InputConstants.KEY_SEMICOLON, CATEGORY);
-    public static final KeyMapping ABILITY2 = new KeyMapping("key.nusmp.beastwill_ability2", InputConstants.Type.KEYSYM, InputConstants.KEY_BACKSLASH, CATEGORY);
-    public static final KeyMapping SWAP = new KeyMapping("key.nusmp.beastwill_swap", InputConstants.Type.KEYSYM, InputConstants.KEY_EQUALS, CATEGORY);
+    public static final String CATEGORY = "key.categories.anime_multiverse";
+    public static final KeyMapping ACQUIRE = new KeyMapping("key.anime_multiverse.beastwill_acquire", InputConstants.Type.KEYSYM, InputConstants.KEY_LBRACKET, CATEGORY);
+    public static final KeyMapping INTEGRATE = new KeyMapping("key.anime_multiverse.beastwill_integrate", InputConstants.Type.KEYSYM, InputConstants.KEY_RBRACKET, CATEGORY);
+    public static final KeyMapping ABILITY1 = new KeyMapping("key.anime_multiverse.beastwill_ability1", InputConstants.Type.KEYSYM, InputConstants.KEY_SEMICOLON, CATEGORY);
+    public static final KeyMapping ABILITY2 = new KeyMapping("key.anime_multiverse.beastwill_ability2", InputConstants.Type.KEYSYM, InputConstants.KEY_BACKSLASH, CATEGORY);
+    public static final KeyMapping SWAP = new KeyMapping("key.anime_multiverse.beastwill_swap", InputConstants.Type.KEYSYM, InputConstants.KEY_EQUALS, CATEGORY);
 
-    static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("nusmp", "beastwill_hud");
+    static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beastwill_hud");
 
     private static volatile BeastWillNet.Sync sync;
     private static volatile BeastWillNet.Info info;
@@ -154,16 +154,16 @@ public final class BeastWillClient {
     static void answer(boolean yes) { pending = null; PacketDistributor.sendToServer(new BeastWillNet.Action(yes ? BeastWillNet.OP_CONFIRM : BeastWillNet.OP_DECLINE, 0)); }
 
     // ---------------------------------------------------------------- text
-    static String name(String will) { return Component.translatableWithFallback("nusmp.beastwill." + will + ".name", will).getString(); }
+    static String name(String will) { return Component.translatableWithFallback("anime_multiverse.beastwill." + will + ".name", will).getString(); }
 
-    static String abilityName(String id) { return Component.translatableWithFallback("nusmp.beastwill.ability." + id, id).getString(); }
+    static String abilityName(String id) { return Component.translatableWithFallback("anime_multiverse.beastwill.ability." + id, id).getString(); }
 
     static String rankName(int ordinal) {
         BeastRank[] r = BeastRank.values();
         return r[Math.max(0, Math.min(r.length - 1, ordinal))].name();
     }
 
-    static String t(String key, Object... args) { return Component.translatable("nusmp.beastwill.hud." + key, args).getString(); }
+    static String t(String key, Object... args) { return Component.translatable("anime_multiverse.beastwill.hud." + key, args).getString(); }
 
     // ---------------------------------------------------------------- the HUD
     /** The text of the panel, rebuilt when a packet lands and twice a second. */

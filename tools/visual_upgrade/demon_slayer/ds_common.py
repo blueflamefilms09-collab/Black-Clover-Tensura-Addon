@@ -19,7 +19,7 @@ NAME = "Demon-Slayer Sword (Genesis)"
 PREVIEWS = os.path.join(ROOT, "docs", "previews", "visual_upgrade", SLICE)
 OLD_TEX = os.path.join(ASSETS, "textures", "entity")
 SCRATCH = os.environ.get("DS_SCRATCH", os.path.join(ROOT, "build", "ds_scratch"))
-DS_MESH_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "DemonSlayerMesh.java")
+DS_MESH_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "DemonSlayerMesh.java")
 MESH_DUMP_JAVA = os.path.join(ROOT, "tools", "item_preview", "MeshDump.java")
 LAYERS = {0: "body", 1: "void", 2: "clover", 3: "bloom", 4: "crack"}
 

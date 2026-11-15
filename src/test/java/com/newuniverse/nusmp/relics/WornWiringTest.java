@@ -75,7 +75,7 @@ class WornWiringTest {
         for (String f : new String[]{"relics/WornDebug.java", "client/relics/worn/WornDebugClient.java"}) {
             Matcher m = t.matcher(read(f));
             while (m.find()) {
-                String key = "message.nusmp.relic_debug." + m.group(1), text = m.group(2).replace("\\\"", "\"").replace("\\\\", "\\");
+                String key = "message.anime_multiverse.relic_debug." + m.group(1), text = m.group(2).replace("\\\"", "\"").replace("\\\\", "\\");
                 String before = code.put(key, text);
                 assertTrue(before == null || before.equals(text), "two different texts under " + key);
             }

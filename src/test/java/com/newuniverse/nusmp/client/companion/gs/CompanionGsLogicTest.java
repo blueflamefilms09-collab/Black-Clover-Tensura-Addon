@@ -35,20 +35,20 @@ class CompanionGsLogicTest {
     // ---------------------------------------------------------------- what a line means
     @Test
     void aCompanionKeyHasItsOwnPrefixAndACommonKeyHasNone() {
-        assertEquals("nusmp.companion.charmy.", CompanionCues.prefixOf("nusmp.companion.charmy.gift.love"));
-        assertEquals("nusmp.companion.charmy.", CompanionCues.prefixOf("nusmp.companion.charmy.sub"));
-        assertNull(CompanionCues.prefixOf("nusmp.companion.bond.pouch.put"));
-        assertNull(CompanionCues.prefixOf("nusmp.companion.tab.talk"));
-        assertNull(CompanionCues.prefixOf("nusmp.companion.gs.give"));
-        assertNull(CompanionCues.prefixOf("nusmp.companion.close"));
+        assertEquals("anime_multiverse.companion.charmy.", CompanionCues.prefixOf("anime_multiverse.companion.charmy.gift.love"));
+        assertEquals("anime_multiverse.companion.charmy.", CompanionCues.prefixOf("anime_multiverse.companion.charmy.sub"));
+        assertNull(CompanionCues.prefixOf("anime_multiverse.companion.bond.pouch.put"));
+        assertNull(CompanionCues.prefixOf("anime_multiverse.companion.tab.talk"));
+        assertNull(CompanionCues.prefixOf("anime_multiverse.companion.gs.give"));
+        assertNull(CompanionCues.prefixOf("anime_multiverse.companion.close"));
         assertNull(CompanionCues.prefixOf("something.else"));
         assertNull(CompanionCues.prefixOf(null));
-        assertNull(CompanionCues.prefixOf("nusmp.companion." + "x".repeat(200)));
+        assertNull(CompanionCues.prefixOf("anime_multiverse.companion." + "x".repeat(200)));
     }
 
     @Test
     void theCueIsReadFromTheKeyAndNeverFromTheWording() {
-        String p = "nusmp.companion.charmy.";
+        String p = "anime_multiverse.companion.charmy.";
         assertEquals(CompanionCues.Cue.GIFT_LOVE, CompanionCues.cueOf(p + "gift.love"));
         assertEquals(CompanionCues.Cue.GIFT_OK, CompanionCues.cueOf(p + "gift.ok"));
         assertEquals(CompanionCues.Cue.GIFT_HATE, CompanionCues.cueOf(p + "gift.hate"));
@@ -59,10 +59,10 @@ class CompanionGsLogicTest {
         assertEquals(CompanionCues.Cue.USE, CompanionCues.cueOf(p + "use"));
         assertEquals(CompanionCues.Cue.STANCE, CompanionCues.cueOf(p + "stance.guard"));
         assertEquals(CompanionCues.Cue.FOOD_TALK, CompanionCues.cueOf(p + "a.food"));
-        assertEquals(CompanionCues.Cue.PUT, CompanionCues.cueOf("nusmp.companion.bond.pouch.put"));
-        assertEquals(CompanionCues.Cue.TOOK, CompanionCues.cueOf("nusmp.companion.bond.pouch.tookall"));
-        assertEquals(CompanionCues.Cue.REFUSED, CompanionCues.cueOf("nusmp.companion.bond.pouch.full"));
-        assertEquals(CompanionCues.Cue.NONE, CompanionCues.cueOf("nusmp.companion.bond.five"));
+        assertEquals(CompanionCues.Cue.PUT, CompanionCues.cueOf("anime_multiverse.companion.bond.pouch.put"));
+        assertEquals(CompanionCues.Cue.TOOK, CompanionCues.cueOf("anime_multiverse.companion.bond.pouch.tookall"));
+        assertEquals(CompanionCues.Cue.REFUSED, CompanionCues.cueOf("anime_multiverse.companion.bond.pouch.full"));
+        assertEquals(CompanionCues.Cue.NONE, CompanionCues.cueOf("anime_multiverse.companion.bond.five"));
         assertEquals(CompanionCues.Cue.NONE, CompanionCues.cueOf(null));
         assertEquals(CompanionCues.Cue.NONE, CompanionCues.cueOf("block.minecraft.stone"));
     }

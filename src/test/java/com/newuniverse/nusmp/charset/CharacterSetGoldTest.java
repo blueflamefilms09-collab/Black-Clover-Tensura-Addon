@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class CharacterSetGoldTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     static final List<String> OWNED = List.of("mereoleona", "leopold", "mimosa", "william", "klaus", "langris", "lemiel", "julius", "kirsch", "karna", "nozel", "kaiser", "letoile");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
@@ -204,7 +204,7 @@ class CharacterSetGoldTest {
     @Test
     void everyAddedPageIsOwnedNamedTextedAndListedInThePolicy() throws IOException {
         JsonObject lang = JsonParser.parseString(read(Path.of("tools/lang/character_spells_gold.json"))).getAsJsonObject();
-        JsonObject policy = JsonParser.parseString(read(Path.of("src/main/resources/data/nusmp/armour_policy.json"))).getAsJsonObject().getAsJsonObject("magics");
+        JsonObject policy = JsonParser.parseString(read(Path.of("src/main/resources/data/anime_multiverse/armour_policy.json"))).getAsJsonObject().getAsJsonObject("magics");
         Set<String> listed = new HashSet<>();
         for (var e : policy.entrySet()) if (e.getValue().getAsJsonObject().has("new_pages")) for (var x : e.getValue().getAsJsonObject().getAsJsonArray("new_pages")) listed.add(x.getAsString());
         Map<String, Set<String>> pages = bookPages();
@@ -225,7 +225,7 @@ class CharacterSetGoldTest {
                 }
                 assertNotNull(who, page + " (" + book + ") is not exclusive to any gold character file");
                 assertTrue(page.startsWith(who + "_"), page + " does not carry the name of its owner " + who);
-                assertTrue(lang.has("nusmp.page." + book + "." + page) && lang.get("nusmp.page." + book + "." + page).getAsString().length() > 40, "lang: " + book + "." + page);
+                assertTrue(lang.has("anime_multiverse.page." + book + "." + page) && lang.get("anime_multiverse.page." + book + "." + page).getAsString().length() > 40, "lang: " + book + "." + page);
                 assertTrue(listed.contains(page), page + " is not in the armour policy's new_pages");
             }
             assertTrue(pages.get(book).size() <= 32, book + " has " + pages.get(book).size() + " family pages: the budget of one grimoire is 32 (the unlock mask holds 64)");

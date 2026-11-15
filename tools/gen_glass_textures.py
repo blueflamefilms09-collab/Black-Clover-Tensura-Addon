@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_glass_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/glass_*.png (only glass_* files are written).
+Output: src/main/resources/assets/anime_multiverse/textures/particle/glass_*.png (only glass_* files are written).
 
 Look reference (docs/attributes/art_reference/pack_glass.webp, Verre Detection): a faceted, almost clear crystal solid whose planes
 are barely tinted, each plane catching a little light; razor-thin bright edge lines; a soft white bloom hugging the silhouette and
@@ -15,7 +15,7 @@ import os
 import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

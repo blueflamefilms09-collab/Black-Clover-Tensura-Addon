@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Why: the client half of the performance safety nets (see {@code perf.PerfBoot} for the server half). It registers the client file nusmp-performance-client.toml, the probe's two wide client
  * sections (everything that hangs on the client tick, everything that draws after the particles: the VFX layers, the FX pieces, the zone, the floating grimoires), and the command
- * {@code /nusmp perf on|off|report|reset}, which prints the ten most expensive client sections plus what the effect system did last frame ({@link VfxStats}: effects drawn, culled, thinned,
+ * {@code /anime_multiverse perf on|off|report|reset}, which prints the ten most expensive client sections plus what the effect system did last frame ({@link VfxStats}: effects drawn, culled, thinned,
  * vertices). Client-side commands need no operator rights: they only read this machine.
  */
 public final class PerfClient {
@@ -61,16 +61,16 @@ public final class PerfClient {
     }
 
     private static void registerCommands(RegisterClientCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("perf")
+        event.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("perf")
                 .executes(PerfClient::report)
                 .then(Commands.literal("on").executes(ctx -> {
                     PerfProbe.setEnabled(true);
-                    sayKey(ctx, "nusmp.perf.client.on", "Client performance probe ON. Play for a minute, then use /nusmp perf report.", ChatFormatting.GOLD);
+                    sayKey(ctx, "anime_multiverse.perf.client.on", "Client performance probe ON. Play for a minute, then use /anime_multiverse perf report.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("off").executes(ctx -> {
                     PerfProbe.setEnabled(false);
-                    sayKey(ctx, "nusmp.perf.client.off", "Client performance probe OFF.", ChatFormatting.GOLD);
+                    sayKey(ctx, "anime_multiverse.perf.client.off", "Client performance probe OFF.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("report").executes(PerfClient::report))
@@ -79,7 +79,7 @@ public final class PerfClient {
                     VfxStats.reset();
                     PerfBudgets.resetStats();
                     com.newuniverse.nusmp.client.upgrade.UpgradeGate.budget().resetStats();
-                    sayKey(ctx, "nusmp.perf.client.reset", "Client performance probe cleared.", ChatFormatting.GOLD);
+                    sayKey(ctx, "anime_multiverse.perf.client.reset", "Client performance probe cleared.", ChatFormatting.GOLD);
                     return 1;
                 }))
                 .then(Commands.literal("settings").executes(ctx -> {

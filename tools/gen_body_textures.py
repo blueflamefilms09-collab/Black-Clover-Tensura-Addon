@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_body_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/body_*.png   (deterministic: fixed seeds, no fonts, no external images)
+Output: src/main/resources/assets/anime_multiverse/textures/particle/body_*.png   (deterministic: fixed seeds, no fonts, no external images)
 
 Look reference: Body Magic (Titan). Extreme physical enhancement shown as pulsing muscle expansion with rapid steam emission; the canon
 spell Body Compression condenses part of the body and restructures it into a gun barrel that fires a compressed blast. So the sprites are:
@@ -34,7 +34,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4          # supersampling for drawn shapes
 TAU = math.tau
 

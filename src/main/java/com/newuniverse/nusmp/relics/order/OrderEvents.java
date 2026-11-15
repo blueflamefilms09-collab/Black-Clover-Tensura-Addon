@@ -67,7 +67,7 @@ public final class OrderEvents {
         UniqueLedger.bind(server);
         UniqueRules.bind(server);                                                          // 1.68.0: the God of Order's list of one-world-only relics
         UniqueLedger l = UniqueLedger.get(server);
-        LOG.info("[nusmp] The Order's ledger: {} relics written ({} alive), mode {}", l.entries().size(), l.liveCount(), l.mode(server.overworld().getGameTime()));
+        LOG.info("[anime_multiverse] The Order's ledger: {} relics written ({} alive), mode {}", l.entries().size(), l.liveCount(), l.mode(server.overworld().getGameTime()));
     }
 
     static void onServerStopping(ServerStoppingEvent e) {
@@ -136,7 +136,7 @@ public final class OrderEvents {
         UniqueLedger l = UniqueLedger.get(server);
         if (LedgerRules.judge(true, l.known(id), RelicSerial.get(s), false) != Verdict.CANONICAL) return;
         if (collectedBelow(sl, ie)) return;
-        if (l.lose(id)) LOG.info("[nusmp] {} was destroyed ({}) at {}: the Order marks it lost", OrderText.titleCase(id), why, ie.blockPosition().toShortString());
+        if (l.lose(id)) LOG.info("[anime_multiverse] {} was destroyed ({}) at {}: the Order marks it lost", OrderText.titleCase(id), why, ie.blockPosition().toShortString());
     }
 
     /** Is there a container where the item entity was (a hopper takes an item entity by copying its stack, leaving the entity's stack as it was)? */

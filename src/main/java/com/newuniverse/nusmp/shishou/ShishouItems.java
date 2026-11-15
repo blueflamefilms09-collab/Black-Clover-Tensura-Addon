@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 import java.util.function.Supplier;
 
-/** Why: the one item of Shishou ({@code nusmp:shishou}) in its own register (attached to the mod bus by {@link ShishouBoot}). */
+/** Why: the one item of Shishou ({@code anime_multiverse:shishou}) in its own register (attached to the mod bus by {@link ShishouBoot}). */
 public final class ShishouItems {
     private ShishouItems() {}
 

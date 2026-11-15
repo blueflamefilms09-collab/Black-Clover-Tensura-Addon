@@ -80,7 +80,7 @@ public final class LockdownDirector {
         try {
             pass(level, level.getGameTime());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The lockdown director failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] The lockdown director failed: {}", e.toString());
         }
     }
 
@@ -169,7 +169,7 @@ public final class LockdownDirector {
         OpeningScan.Result judged = OpeningScan.judge(scan.plane(), OpeningScan.limitsFor(LockdownConfig.limits(), cut));
         if (!judged.ok()) {
             REJECTED.put(key, judged.why());
-            LOG.info("[nusmp] Lockdown: room {} of sector {} ({}) does not lock: {}", room.id, sector.id, room.template, judged.why());
+            LOG.info("[anime_multiverse] Lockdown: room {} of sector {} ({}) does not lock: {}", room.id, sector.id, room.template, judged.why());
             return ArmResult.no(judged.why());
         }
         List<BlockPos> cells = new ArrayList<>(scan.fill().size());
@@ -198,7 +198,7 @@ public final class LockdownDirector {
         LockdownWaves.Result wave = LockdownWaves.spawn(level, sector.id, room.id, party, band, RND, cells);
         if (wave.mobs().isEmpty()) {
             coolDownFor(sector.id, room.id, now, 400L);
-            LOG.info("[nusmp] Lockdown: room {} of sector {} would lock but its wave could not be placed ({})", room.id, sector.id, wave.text());
+            LOG.info("[anime_multiverse] Lockdown: room {} of sector {} would lock but its wave could not be placed ({})", room.id, sector.id, wave.text());
             return ArmResult.no("no wave could be placed: " + wave.text());
         }
 
@@ -227,7 +227,7 @@ public final class LockdownDirector {
                 }
             });
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] Lockdown of room {} of sector {} failed while placing the barriers: {}", room.id, sector.id, ex.toString());
+            LOG.warn("[anime_multiverse] Lockdown of room {} of sector {} failed while placing the barriers: {}", room.id, sector.id, ex.toString());
             undo(level, placed, old);
             for (var m : wave.mobs()) m.discard();
             return ArmResult.no("placing the barriers failed: " + ex);
@@ -240,7 +240,7 @@ public final class LockdownDirector {
         LOCKED.put(key, placed.get(0).asLong());
         armedTotal++;
         announce(level, sector, room, party, placed, waveCount);
-        LOG.info("[nusmp] Lockdown: room {} of sector {} ({}) is sealed: {} cells, {} waves of band {}, first wave {} monsters", room.id, sector.id, room.template, placed.size(), waveCount, waveBand.label(), wave.mobs().size());
+        LOG.info("[anime_multiverse] Lockdown: room {} of sector {} ({}) is sealed: {} cells, {} waves of band {}, first wave {} monsters", room.id, sector.id, room.template, placed.size(), waveCount, waveBand.label(), wave.mobs().size());
         return new ArmResult(true, "sealed", placed.size(), wave.mobs().size());
     }
 
@@ -391,7 +391,7 @@ public final class LockdownDirector {
             Room r = s == null ? null : s.roomAt(keystone);
             NeoForge.EVENT_BUS.post(new RoomLockdownEvent(level, s, r, inside, Band.STANDARD, 1, RoomLockdownEvent.Source.TRIAL));
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] The trial lockdown event failed: {}", e.toString());
+            LOG.debug("[anime_multiverse] The trial lockdown event failed: {}", e.toString());
         }
     }
 

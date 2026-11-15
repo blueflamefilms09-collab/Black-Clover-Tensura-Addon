@@ -54,7 +54,7 @@ public final class FloorInfoConfig {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-floorinfo-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The floor report config could not be registered ({}); the defaults apply", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The floor report config could not be registered ({}); the defaults apply", e.toString());
         }
     }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "anime_multiverse:drake_scale"
+    },
+    "C": {
+      "item": "anime_multiverse:chitin_plate"
+    }
+  },
+  "pattern": [
+    "D D",
+    "C C"
+  ],
+  "result": {
+    "id": "anime_multiverse:drakescale_boots",
+    "count": 1
+  }
+}

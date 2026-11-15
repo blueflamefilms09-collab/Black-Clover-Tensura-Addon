@@ -61,7 +61,7 @@ public final class ArenaSpawnEvents {
         SpawnGate.Verdict v = SpawnGate.decide(true, ArenaConfig.arenaOnly(), e.loadedFromDisk(), ZogratisArena.in(e.getLevel()), tagged(en));
         if (v != SpawnGate.Verdict.DENY) return;
         e.setCanceled(true);
-        LOG.info("[nusmp] Refused to spawn {} at {} in {}: Lucius exists only in the arena (luciusArenaOnly)", net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(en.getType()), en.blockPosition(), e.getLevel().dimension().location());
+        LOG.info("[anime_multiverse] Refused to spawn {} at {} in {}: Lucius exists only in the arena (luciusArenaOnly)", net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(en.getType()), en.blockPosition(), e.getLevel().dimension().location());
         if (e.getLevel() instanceof ServerLevel sl) {
             Vec3 at = en.position();
             for (ServerPlayer p : sl.players()) if (p.distanceToSqr(at) <= 24.0 * 24.0) p.displayClientMessage(Component.literal(HINT).withStyle(ChatFormatting.GOLD), false);
@@ -79,7 +79,7 @@ public final class ArenaSpawnEvents {
         if (en.level().isClientSide || !family(en)) return;
         if (!SpawnGate.mayLeave(true, ArenaConfig.arenaOnly(), e.getDimension() == ZogratisArena.DIMENSION)) {
             e.setCanceled(true);
-            LOG.info("[nusmp] Lucius was refused a trip to {}: he cannot be carried out of the arena", e.getDimension().location());
+            LOG.info("[anime_multiverse] Lucius was refused a trip to {}: he cannot be carried out of the arena", e.getDimension().location());
         }
     }
 

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/hogyoku_of_the_crystal_dissolution"
-  }
-}

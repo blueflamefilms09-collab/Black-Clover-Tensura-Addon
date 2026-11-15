@@ -167,7 +167,7 @@ public final class PlacedSelfTests {
 
     // ================================================================ sync
     private static SelfTests.Result sync(MinecraftServer server) {
-        String dim = "nusmp:selftest";
+        String dim = "anime_multiverse:selftest";
         long k1 = PlacedSet.pack(100, 64, 200), k2 = PlacedSet.pack(101, 64, 200);
         try {
             PlacedMirror.clear();

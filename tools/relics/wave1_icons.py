@@ -3,9 +3,9 @@
     python3 -B tools/relics/wave1_icons.py            (idempotent)
 
 Writes, per id,
-  assets/nusmp/textures/item/<id>.png            the sprite: the old-style inventory icon (kept as the icon, the item itself is 3D)
-  assets/nusmp/models/item/<id>_icon.json        the flat inventory model of that sprite
-  assets/nusmp/models/item/<id>.json             the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
+  assets/anime_multiverse/textures/item/<id>.png            the sprite: the old-style inventory icon (kept as the icon, the item itself is 3D)
+  assets/anime_multiverse/models/item/<id>_icon.json        the flat inventory model of that sprite
+  assets/anime_multiverse/models/item/<id>.json             the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
                                                  (the display transforms of the Bloodbound Katana for the diagonal weapons, of the Spirit
                                                  Charm for the two upright tools, the Viola and the Book)
 Every icon is drawn from primitives (lines, discs) on a 16 x 16 canvas, then given a one pixel dark outline; the grade shows as a
@@ -20,7 +20,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 ICONS = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 S = 16
@@ -354,10 +354,10 @@ UPRIGHT_DISPLAY = "spirit_charm"
 
 def write_models(item_id, upright):
     src = json.load(open(os.path.join(MODELS, UPRIGHT_DISPLAY if upright else DIAGONAL_DISPLAY) + ".json"))
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": src["display"]}
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": src["display"]}
     with open(os.path.join(MODELS, item_id + ".json"), "w", newline="\n") as f:
         json.dump(model, f, indent=2)
-    icon = {"parent": "minecraft:item/generated" if upright else "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}
+    icon = {"parent": "minecraft:item/generated" if upright else "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
     with open(os.path.join(MODELS, item_id + "_icon.json"), "w", newline="\n") as f:
         json.dump(icon, f, indent=2)
 

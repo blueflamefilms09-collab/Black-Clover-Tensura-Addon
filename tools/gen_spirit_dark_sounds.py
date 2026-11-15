@@ -13,7 +13,7 @@ Eight cues, each with two or three variants, all of them short (0.3 to 2.4 s), m
     unlink    the spirit leaving: a descending chime and a last breath                                                     (unlink, the powered form ending)
     powered   the demon form called: a deep drone swell with a growl, a bell and whispers                                  (the powered form)
 
-    python3 -B tools/gen_spirit_dark_sounds.py            writes assets/nusmp/sounds/spirit/dark/*.ogg and the "spirit.dark.*" entries of sounds.json
+    python3 -B tools/gen_spirit_dark_sounds.py            writes assets/anime_multiverse/sounds/spirit/dark/*.ogg and the "spirit.dark.*" entries of sounds.json
     python3 -B tools/gen_spirit_dark_sounds.py --check    verifies the files and the entries
 
 Played by the SERVER (spiritdark/SpiritDarkSounds) to nearby players only, through a per-player gap and a server-wide per-tick budget; sounds.json gives each cue its own attenuation distance.
@@ -32,8 +32,8 @@ import numpy as np
 sys.dont_write_bytecode = True
 SR = 32000
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "spirit", "dark")
-SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "spirit", "dark")
+SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 CUES = {
     # cue: (variants, attenuation distance in blocks, volume class in dB RMS)
     "whisper": (3, 18, -24.0), "chime": (2, 24, -22.0), "flutter": (3, 20, -23.0), "step": (3, 24, -21.0),
@@ -299,8 +299,8 @@ def file_name(cue, i):
 def entries():
     out = {}
     for cue, (variants, att, _) in CUES.items():
-        out["spirit.dark." + cue] = {"subtitle": "subtitles.nusmp.spirit.dark." + cue,
-                                     "sounds": [{"name": "nusmp:spirit/dark/" + file_name(cue, i), "attenuation_distance": att} for i in range(variants)]}
+        out["spirit.dark." + cue] = {"subtitle": "subtitles.anime_multiverse.spirit.dark." + cue,
+                                     "sounds": [{"name": "anime_multiverse:spirit/dark/" + file_name(cue, i), "attenuation_distance": att} for i in range(variants)]}
     return out
 
 

@@ -16,7 +16,7 @@ public final class Room {
     public final String template;
     public final RoomKind kind;
     public final BoundingBox box;
-    /** The native faction (an id of {@code data/nusmp/mega/factions}); null until the ecology assigned one. Mutable on purpose: the eco builder sets it after generation. */
+    /** The native faction (an id of {@code data/anime_multiverse/mega/factions}); null until the ecology assigned one. Mutable on purpose: the eco builder sets it after generation. */
     public String faction;
     /** 1.55.0: the signed floor of this room ({@link FloorMap}); 0 until the floor assigner banded the sector (a 1.54.0 save stays 0, which {@code MegaDungeon.floorAt} reads as the sector's first floor). Mutable on purpose: the floors builder sets it after generation. */
     public int floor;

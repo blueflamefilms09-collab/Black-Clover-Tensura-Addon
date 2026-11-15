@@ -69,7 +69,7 @@ public final class FoundryDrops {
             add(out, FactionLoot.HIGH_PATH, extra.stones().high());
             for (ItemStack s : out) e.getDrops().add(new ItemEntity(level, m.getX(), m.getY() + 0.3, m.getZ(), s));
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] foundry faction drops failed once and are skipped for that death", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] foundry faction drops failed once and are skipped for that death", ex);
         }
     }
 

@@ -46,7 +46,7 @@ public final class AvatarPartyManager extends SavedData {
     /** The persistent-data key a party member carries: the id of the Avatar it belongs to. */
     public static final String MARK = "nusmp_party_of";
     private static final String NAME = "nusmp_avatar_party";
-    private static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_party_tax");
+    private static final ResourceLocation TAX_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_party_tax");
     /** A member that fell this far behind is brought back to the Avatar's side. */
     private static final double RECALL_DISTANCE = 28.0, REGROUP_DISTANCE = 7.0;
 

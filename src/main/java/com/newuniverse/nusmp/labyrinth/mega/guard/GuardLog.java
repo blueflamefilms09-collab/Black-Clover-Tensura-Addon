@@ -27,6 +27,6 @@ final class GuardLog {
     static void failed(String where, RuntimeException e) {
         if (strict) throw e;
         int n = SEEN.merge(where, 1, Integer::sum);
-        if (n <= 3) LOG.warn("[nusmp] the guard systems failed in {} (occurrence {}): {}", where, n, e.toString(), e);
+        if (n <= 3) LOG.warn("[anime_multiverse] the guard systems failed in {} (occurrence {}): {}", where, n, e.toString(), e);
     }
 }

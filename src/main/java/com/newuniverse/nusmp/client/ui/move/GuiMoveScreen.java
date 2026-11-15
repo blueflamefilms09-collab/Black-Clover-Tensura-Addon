@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: this is "edit mode" of the GUI Move system: one screen, opened by the GUI Move key (F9) or {@code /nusmp gui move}, that frees the cursor and lets the player place
+ * Why: this is "edit mode" of the GUI Move system: one screen, opened by the GUI Move key (F9) or {@code /anime_multiverse gui move}, that frees the cursor and lets the player place
  * every custom GUI of the mod. Every registered HUD element that was on screen shows a dashed outline and its name; the ones that are not on screen right now (a Djinn panel
  * without a Djinn, the quest tracker without a quest) show dimmed, so they can be placed too (the {@code Show all} switch). The panels of the mod's screens (the codex, the
  * forge ...) are all centred and would lie on top of each other, so they are picked one at a time with Tab once {@code Panels} is on, and the picked one takes its place when

@@ -9,7 +9,7 @@ Looks (the Wind Spirit Dive pack, docs/magic/spirit_dives_wind.md):
   Spirit of Zephyr   a long glowing mint-green blade (flat blade, bright edge bevel, deep glowing fuller on both faces), a cross-guard whose quillons curve UP and end in leaf points,
                      two crossed rings (a big one facing the viewer, a smaller one across it) turning round the hilt, a wrapped green grip and a glowing gem pommel with a cross.
   Spirit of Boreas   a bow of two LEAF limbs (a leaf section: widest in the middle), a cross ornament on each limb, a slim riser, a thin string of light and an arrow of light.
-It writes (through new197_lib.finish / new197_ranged.finish_bow): assets/nusmp/weapon_meshes/<id>.txt (+ the bow's _pull1..3 states), textures/entity/weapon/<id>.png and _glow.png,
+It writes (through new197_lib.finish / new197_ranged.finish_bow): assets/anime_multiverse/weapon_meshes/<id>.txt (+ the bow's _pull1..3 states), textures/entity/weapon/<id>.png and _glow.png,
 textures/item/<id>.png (the 16 x 16 inventory sprite rendered from the finished mesh, kept as the inventory icon), models/item/<id>.json and <id>_icon.json, then the class rows (both
 copies of weapon_classes.json) and the display presets. The json files with other weapons' rows are changed by text insertion only: every other row stays byte for byte.
 Also writes the small leaf sprite of the hand effect (textures/entity/weapon/spirit_blades_leaf.png).
@@ -32,7 +32,7 @@ from new197_god import helix_pts                                           # noq
 from new197_legend import glow_parts, fuller_pair                          # noqa: E402
 
 REPO = os.path.abspath(os.path.join(_TOOLS, ".."))
-GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 SWORD_ID = "spirit_of_zephyr"
 BOW_ID = "spirit_of_boreas"
 

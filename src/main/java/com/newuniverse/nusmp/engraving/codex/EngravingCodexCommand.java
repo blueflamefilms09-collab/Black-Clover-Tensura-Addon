@@ -27,13 +27,13 @@ public final class EngravingCodexCommand {
         try {
             player = ctx.getSource().getPlayerOrException();
         } catch (CommandSyntaxException notAPlayer) {
-            ctx.getSource().sendFailure(Component.translatableWithFallback("nusmp.engraving_codex.cmd.console", "Only a player can be handed the Engravement Codex."));
+            ctx.getSource().sendFailure(Component.translatableWithFallback("anime_multiverse.engraving_codex.cmd.console", "Only a player can be handed the Engravement Codex."));
             return 0;
         }
         ItemStack book = EngravingCodexItems.codexStack();
         if (!player.getInventory().add(book)) player.drop(book, false);
-        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback("nusmp.engraving_codex.cmd.given", "You were given the Engravement Codex. Use it to open the list of every engraving.").withStyle(ChatFormatting.GOLD), false);
-        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback("nusmp.engraving_codex.cmd.where",
+        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback("anime_multiverse.engraving_codex.cmd.given", "You were given the Engravement Codex. Use it to open the list of every engraving.").withStyle(ChatFormatting.GOLD), false);
+        ctx.getSource().sendSuccess(() -> Component.translatableWithFallback("anime_multiverse.engraving_codex.cmd.where",
                 "You can also craft it (a book, 2 amethyst shards and 2 ink sacs in a cross) or take it from the Multiverse of Anime creative tab.").withStyle(ChatFormatting.GRAY), false);
         return 1;
     }

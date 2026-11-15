@@ -42,25 +42,25 @@ public final class FireCastSelfTests {
      */
     private static Result runMoods(MinecraftServer server) throws Exception {
         for (SalamanderSoundSet.Cue c : SalamanderSoundSet.cues()) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.event()))) return Result.fail("sound event " + c.event() + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.event()))) return Result.fail("sound event " + c.event() + " is not registered");
             for (int v = 1; v <= c.variants(); v++)
-                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/" + c.file(v) + ".ogg")) {
+                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds/" + c.file(v) + ".ogg")) {
                     if (in == null) return Result.fail("sound file " + c.file(v) + " is missing");
                 }
         }
-        try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json")) {
+        try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json")) {
             String text = in == null ? "" : new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             for (SalamanderSoundSet.Cue c : SalamanderSoundSet.cues()) if (!text.contains("\"" + c.event() + "\"")) return Result.fail("sounds.json has no entry " + c.event());
         }
         for (String form : new String[]{"salamander", "dragon"}) {
             boolean big = form.equals("dragon");
-            try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/animations/entity/firecast_" + form + ".animation.json")) {
+            try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/anime_multiverse/animations/entity/firecast_" + form + ".animation.json")) {
                 String text = in == null ? "" : new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
                 for (int pose = 0; pose < SalamanderMoodRules.poseCount(big); pose++)
                     if (!text.contains("\"" + SalamanderMoodRules.clipName(big, pose) + "\"")) return Result.fail(form + " clip " + SalamanderMoodRules.clipName(big, pose) + " is missing");
             }
             for (int f = 1; f < SalamanderMoodRules.FACES; f++)
-                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/geo/entity/firecast_" + form + "_fx_face_" + SalamanderMoodRules.faceName(f) + ".geo.json")) {
+                try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/anime_multiverse/geo/entity/firecast_" + form + "_fx_face_" + SalamanderMoodRules.faceName(f) + ".geo.json")) {
                     if (in == null) return Result.fail("face model " + form + " " + SalamanderMoodRules.faceName(f) + " is missing");
                 }
         }
@@ -98,7 +98,7 @@ public final class FireCastSelfTests {
     }
 
     private static Result run(MinecraftServer server) throws Exception {
-        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "magnas_soul_bat"))) return Result.fail("the Soul Bat is not registered");
+        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "magnas_soul_bat"))) return Result.fail("the Soul Bat is not registered");
         if (PropKind.valueOf("FIRECAST_1") == null || PropKind.valueOf("FIRECAST_2") == null) return Result.fail("a firecast prop kind is missing");
         if (FireStyle.ofCanon(CanonBook.MAGNA.id()) != FireStyle.MAGNA || FireStyle.ofCanon(CanonBook.MEREOLEONA.id()) != FireStyle.MEREOLEONA
                 || FireStyle.ofCanon(CanonBook.FUEGOLEON.id()) != FireStyle.FUEGOLEON || FireStyle.ofCanon(CanonBook.LEOPOLD.id()) != FireStyle.LEOPOLD) return Result.fail("a canon book does not map to its style");
@@ -125,7 +125,7 @@ public final class FireCastSelfTests {
         if (l.total() != 0) return Result.fail("the ledger kept a slot after forget");
 
         // the animation clips
-        try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/nusmp/animations/player/cast.animation.json")) {
+        try (InputStream in = FireCastSelfTests.class.getResourceAsStream("/assets/anime_multiverse/animations/player/cast.animation.json")) {
             if (in == null) return Result.fail("cast.animation.json is missing");
             String text = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             for (String clip : new String[]{"fire_bat_swing", "fire_punch_a", "fire_punch_b", "fire_punch_finisher", "fire_charge", "fire_charge_release"})

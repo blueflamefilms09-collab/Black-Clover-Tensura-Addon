@@ -120,7 +120,7 @@ class ForgeRulesTest {
 
     @Test
     void everyMessageHasALangKeyAndAnUnknownOrdinalIsOk() {
-        for (Msg m : Msg.values()) assertEquals("nusmp.forge.msg." + m.name().toLowerCase(), m.langKey());
+        for (Msg m : Msg.values()) assertEquals("anime_multiverse.forge.msg." + m.name().toLowerCase(), m.langKey());
         assertSame(Msg.OK, Msg.of(-1));
         assertSame(Msg.OK, Msg.of(999));
         assertTrue(Msg.UPGRADE_OK.good());

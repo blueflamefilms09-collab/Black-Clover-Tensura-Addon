@@ -71,20 +71,20 @@ public final class CompatLoader implements ResourceManagerReloadListener {
                 try (Reader reader = new InputStreamReader(found.get(rl).open(), StandardCharsets.UTF_8)) {
                     CompatTable.Source source = CompatJson.parse(JsonParser.parseReader(reader));
                     if (source == null) {
-                        LOG.warn("[nusmp] Mod-compat file {} skipped: it needs a \"mod\" and a \"swaps\" object", rl);
+                        LOG.warn("[anime_multiverse] Mod-compat file {} skipped: it needs a \"mod\" and a \"swaps\" object", rl);
                     } else if (modLoaded(source.mod())) {
                         sources.add(source);
                     }
                 } catch (IOException | RuntimeException e) {
-                    LOG.warn("[nusmp] Mod-compat file {} could not be read and was skipped: {}", rl, e.toString());
+                    LOG.warn("[anime_multiverse] Mod-compat file {} could not be read and was skipped: {}", rl, e.toString());
                 }
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Mod-compat data could not be scanned; no furniture will be swapped", e);
+            LOG.warn("[anime_multiverse] Mod-compat data could not be scanned; no furniture will be swapped", e);
         }
         table = CompatTable.of(sources);
         filesSeen = seen;
         filesUsed = sources.size();
-        if (!table.isEmpty()) LOG.info("[nusmp] Mod compat for the Safe Zones: {} furniture hints are available ({})", table.hints().size(), table.hints());
+        if (!table.isEmpty()) LOG.info("[anime_multiverse] Mod compat for the Safe Zones: {} furniture hints are available ({})", table.hints().size(), table.hints());
     }
 }

@@ -208,7 +208,7 @@ public final class FoundryAbilityRunner {
                 case BURST -> burst(m, a, level, dmg, al);
             }
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] a foundry ability failed once and is skipped for that cast: {}", ex.toString());
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] a foundry ability failed once and is skipped for that cast: {}", ex.toString());
         }
     }
 
@@ -432,7 +432,7 @@ public final class FoundryAbilityRunner {
                 }
             }
         } catch (RuntimeException ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] a foundry ability timer failed once: {}", ex.toString());
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] a foundry ability timer failed once: {}", ex.toString());
         }
     }
 
@@ -451,7 +451,7 @@ public final class FoundryAbilityRunner {
             FoundryAbility a = m.brain().abilities().get(i);
             burst(m, a, level, a.damage(m.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)), RukhFx.Alignment.of(a.dark(m.road() == com.newuniverse.nusmp.labyrinth.mega.Polarity.ABYSSAL)));
         } catch (RuntimeException ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] a foundry death burst failed once: {}", ex.toString());
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] a foundry death burst failed once: {}", ex.toString());
         }
     }
 

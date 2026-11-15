@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: the pure half of reading a marker: a structure block's metadata string ({@code nusmp:seat;as=chair;facing=north}) split into a
+ * Why: the pure half of reading a marker: a structure block's metadata string ({@code anime_multiverse:seat;as=chair;facing=north}) split into a
  * {@link MarkerKind} and its arguments. Split from {@link Marker} (which carries a {@code BlockPos}) so the parser can be unit-tested
  * without Minecraft and so the Python checker ({@code tools/labyrinth/mega_check.py}) and the Java reader provably accept the same grammar:
- * {@code nusmp:<kind>[;key=value]*}, keys lower-case, no spaces required, a missing {@code =} gives the value {@code "true"}.
+ * {@code anime_multiverse:<kind>[;key=value]*}, keys lower-case, no spaces required, a missing {@code =} gives the value {@code "true"}.
  */
 public record MarkerSpec(MarkerKind kind, Map<String, String> args) {
     public MarkerSpec {
@@ -19,7 +19,7 @@ public record MarkerSpec(MarkerKind kind, Map<String, String> args) {
     public static MarkerSpec parse(String metadata) {
         if (metadata == null) return null;
         String[] parts = metadata.trim().split(";");
-        if (parts.length == 0 || !parts[0].trim().startsWith("nusmp:")) return null;
+        if (parts.length == 0 || !parts[0].trim().startsWith("anime_multiverse:")) return null;
         MarkerKind kind = MarkerKind.byId(parts[0]);
         if (kind == null) return null;
         Map<String, String> args = new LinkedHashMap<>();
@@ -41,7 +41,7 @@ public record MarkerSpec(MarkerKind kind, Map<String, String> args) {
 
     /** The metadata string this spec was (or would be) written as. */
     public String toMetadata() {
-        StringBuilder b = new StringBuilder("nusmp:").append(kind.id());
+        StringBuilder b = new StringBuilder("anime_multiverse:").append(kind.id());
         for (Map.Entry<String, String> e : args.entrySet()) b.append(';').append(e.getKey()).append('=').append(e.getValue());
         return b.toString();
     }

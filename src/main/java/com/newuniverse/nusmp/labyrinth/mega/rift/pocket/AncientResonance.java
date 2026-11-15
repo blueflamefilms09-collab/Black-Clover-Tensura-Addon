@@ -41,14 +41,14 @@ public final class AncientResonance {
             if (max <= 0) return false;
             inst.setMastery(Math.min(max, inst.getMastery() + max * SHARE));
             inst.markDirty();
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.resonance",
-                    "An ancient spell of %s resonates with your %s grimoire and inscribes itself into it.", Component.translatableWithFallback("pocket.nusmp." + def.id() + ".name", def.name()), magic)
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.resonance",
+                    "An ancient spell of %s resonates with your %s grimoire and inscribes itself into it.", Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".name", def.name()), magic)
                     .withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC), false);
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 0.7f);
             RukhFx.aura(p.serverLevel(), p, RukhFx.Alignment.LIGHT);
             return true;
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] The resonance of {} could not be written into {}'s grimoire: {}", def.id(), p.getGameProfile().getName(), ex.toString());
+            LOG.warn("[anime_multiverse] The resonance of {} could not be written into {}'s grimoire: {}", def.id(), p.getGameProfile().getName(), ex.toString());
             return false;
         }
     }

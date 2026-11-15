@@ -149,7 +149,7 @@ public final class FloorTracker {
         } catch (RuntimeException ex) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The floor tracker failed (further failures are not logged): {}", ex.toString());
+                LOG.warn("[anime_multiverse] The floor tracker failed (further failures are not logged): {}", ex.toString());
             }
         }
     }
@@ -169,7 +169,7 @@ public final class FloorTracker {
             } catch (RuntimeException ex) {
                 if (!warned) {
                     warned = true;
-                    LOG.warn("[nusmp] The floor tracker failed for {} (further failures are not logged): {}", p.getGameProfile().getName(), ex.toString());
+                    LOG.warn("[anime_multiverse] The floor tracker failed for {} (further failures are not logged): {}", p.getGameProfile().getName(), ex.toString());
                 }
             }
         }
@@ -214,9 +214,9 @@ public final class FloorTracker {
     private static void onServerStarted(ServerStartedEvent e) {
         try {
             int n = FloorAssigner.numberOldSectors(e.getServer());
-            if (n > 0) LOG.info("[nusmp] Numbered the floors of {} sector(s) that were saved before floors existed.", n);
+            if (n > 0) LOG.info("[anime_multiverse] Numbered the floors of {} sector(s) that were saved before floors existed.", n);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The sectors saved before floors existed could not be numbered: {}", ex.toString());
+            LOG.warn("[anime_multiverse] The sectors saved before floors existed could not be numbered: {}", ex.toString());
         }
     }
 

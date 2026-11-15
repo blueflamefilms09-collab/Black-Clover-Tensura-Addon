@@ -1,10 +1,10 @@
 """Why: the one command that builds the Mob Foundry (docs/labyrinth/foundry.md). It reads the roster tables (roster_holy.py, roster_abyssal.py), runs the guard (guard.py), and writes
 
-  src/main/resources/assets/nusmp/geo/entity/foundry_<id>.geo.json            the model of each mob (kit geometry, minified)
-  src/main/resources/assets/nusmp/textures/entity/foundry_<id>[_glow].png     its texture and glow layer (8-bit palette PNG)
-  src/main/resources/assets/nusmp/animations/entity/foundry_anim_<class>.animation.json   the SHARED clips of an animation class (see foundry_kit.py)
-  src/main/resources/assets/nusmp/foundry/index.json                           what the client needs to draw a mob: animation class, glow colour, size
-  src/main/resources/data/nusmp/mega/foundry/<id>.json                         the definition the server reads (road, tier, faction, archetype, abilities)
+  src/main/resources/assets/anime_multiverse/geo/entity/foundry_<id>.geo.json            the model of each mob (kit geometry, minified)
+  src/main/resources/assets/anime_multiverse/textures/entity/foundry_<id>[_glow].png     its texture and glow layer (8-bit palette PNG)
+  src/main/resources/assets/anime_multiverse/animations/entity/foundry_anim_<class>.animation.json   the SHARED clips of an animation class (see foundry_kit.py)
+  src/main/resources/assets/anime_multiverse/foundry/index.json                           what the client needs to draw a mob: animation class, glow colour, size
+  src/main/resources/data/anime_multiverse/mega/foundry/<id>.json                         the definition the server reads (road, tier, faction, archetype, abilities)
   docs/labyrinth/foundry_report.txt                                            the verification report: counts, closest look pairs, sizes, animation sharing
 
     python3 -B tools/foundry/gen_foundry.py                 # everything (guard first; a failing guard writes nothing)
@@ -37,8 +37,8 @@ import roster_common as RC  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 RES = os.path.join(REPO, "src", "main", "resources")
-ASSETS = os.path.join(RES, "assets", "nusmp")
-DATA = os.path.join(RES, "data", "nusmp", "mega", "foundry")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
+DATA = os.path.join(RES, "data", "anime_multiverse", "mega", "foundry")
 REPORT = os.path.join(REPO, "docs", "labyrinth", "foundry_report.txt")
 
 
@@ -60,7 +60,7 @@ def load_abilities():
 
 
 def mob_json(r, facts):
-    """The server-side definition of a mob (data/nusmp/mega/foundry/<id>.json)."""
+    """The server-side definition of a mob (data/anime_multiverse/mega/foundry/<id>.json)."""
     return {"id": r["id"], "name": r["name"], "road": r["road"], "tier": r["tier"], "faction": r["faction"], "archetype": r["arch"], "abilities": list(r["abilities"]),
             "size": r["size"], "height": facts["height"], "source": r["source"], "glow": facts["glow"], "animation": facts["cls"]}
 
@@ -267,7 +267,7 @@ def check(rows, jobs):
     """Rebuilds everything into a temporary folder and compares it with the committed files."""
     tmp = tempfile.mkdtemp(prefix="foundry_check_")
     try:
-        assets = os.path.join(tmp, "assets", "nusmp")
+        assets = os.path.join(tmp, "assets", "anime_multiverse")
         data = os.path.join(tmp, "data")
         build_all(rows, (), assets, data, jobs, 0, use_cache=False)
         bad = 0
@@ -366,9 +366,9 @@ def preview(ids_and_scenes, rows):
         anim = json.load(open(os.path.join(ASSETS, "animations", "entity", "foundry_anim_%s.animation.json" % cls)))["animations"]
         clips = {k: (v["animation_length"], v["loop"]) for k, v in anim.items()}
         for name, sc in SC.scenes_for(R, clips).items():
-            sc["model"] = "nusmp:geo/entity/foundry_%s.geo.json" % mid
-            sc["texture"] = "nusmp:textures/entity/foundry_%s.png" % mid
-            sc["animations"] = "nusmp:animations/entity/foundry_anim_%s.animation.json" % cls
+            sc["model"] = "anime_multiverse:geo/entity/foundry_%s.geo.json" % mid
+            sc["texture"] = "anime_multiverse:textures/entity/foundry_%s.png" % mid
+            sc["animations"] = "anime_multiverse:animations/entity/foundry_anim_%s.animation.json" % cls
             allsc[name.replace("arc_", "foundry_", 1)] = sc
     with open(scene_file, "w") as f:
         json.dump(allsc, f)

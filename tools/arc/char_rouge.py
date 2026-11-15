@@ -1,4 +1,4 @@
-"""Why: Rouge (entity nusmp:rouge, thread/RougeEntity), the cat of red thread of Thread Magic ("Red Thread of Fate: Rouge"): in the anime a small red cat that sits on Vanessa's shoulder, bolts
+"""Why: Rouge (entity anime_multiverse:rouge, thread/RougeEntity), the cat of red thread of Thread Magic ("Red Thread of Fate: Rouge"): in the anime a small red cat that sits on Vanessa's shoulder, bolts
 to whoever is about to be hit and taps them so the blow never happens. The old model was a small cat sitting upright, tail curled round its paws, woven of crimson thread with gold eyes
 (tools/gen_rouge_cat.py, drawn by client/thread/RougeRenderer). The art kit's version is a catgirl on the player's rig, built at a child's size (the renderer shrinks it to the 0.35 x 0.4
 hitbox): crimson thread for skin (a woven look in the red tones), a short bob of thread-red hair, gold cat eyes, tall cat ears, a long tail with a curl, a loose thread-woven tunic, a gold

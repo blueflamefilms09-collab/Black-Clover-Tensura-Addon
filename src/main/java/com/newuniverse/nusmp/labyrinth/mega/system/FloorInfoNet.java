@@ -27,7 +27,7 @@ public final class FloorInfoNet {
 
     /** Server to client: the floor report. */
     public record Card(FloorCard card) implements CustomPacketPayload {
-        public static final Type<Card> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_floor_card"));
+        public static final Type<Card> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_floor_card"));
         public static final StreamCodec<FriendlyByteBuf, Card> CODEC = StreamCodec.of(Card::write, Card::read);
 
         @Override
@@ -104,7 +104,7 @@ public final class FloorInfoNet {
 
     /** Client to server: the key was pressed, send the report again. */
     public record Request() implements CustomPacketPayload {
-        public static final Type<Request> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_floor_request"));
+        public static final Type<Request> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_floor_request"));
         public static final StreamCodec<FriendlyByteBuf, Request> CODEC = StreamCodec.of((b, p) -> { }, b -> new Request());
 
         @Override

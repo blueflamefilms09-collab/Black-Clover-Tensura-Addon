@@ -222,7 +222,7 @@ public class LuciferoBoss extends ArcBoss {
             }
             if (horizonEnd > 0) tickHorizon(sl, now, casting);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Lucifero's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucifero's tick failed: {}", e.toString());
         }
     }
 
@@ -292,7 +292,7 @@ public class LuciferoBoss extends ArcBoss {
             if (shell.active(now)) return throughShell(sl, now, a, effective(source, a));
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Lucifero's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucifero's defence failed: {}", e.toString());
             return amount;
         }
     }
@@ -461,7 +461,7 @@ public class LuciferoBoss extends ArcBoss {
         if (first(left, total)) {
             crouched.clear();
             say("Bow.");
-            SpadeFx.hintAround(this, 64, "message.nusmp.spade.bow_order", "BOW! Crouch (hold sneak) before the weight falls, or hold anti-magic.");
+            SpadeFx.hintAround(this, 64, "message.anime_multiverse.spade.bow_order", "BOW! Crouch (hold sneak) before the weight falls, or hold anti-magic.");
             sl.playSound(null, blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 3f, 0.4f);
         }
         Tells.ring(sl, position(), 3 + 20 * progress(left, total), RGB, 1.5f, 72);
@@ -474,7 +474,7 @@ public class LuciferoBoss extends ArcBoss {
         Tells.gather(sl, position().add(0, 1.4, 0), 1.0, ACCENT, 6);
         Tells.ring(sl, position(), 3 + 4 * progress(left, total), RGB, 1.3f, 40);
         if (LuciferoTable.FLATTEN_AIR.equals(id)) {
-            if (first(left, total)) SpadeFx.hintAround(this, 64, "message.nusmp.spade.flatten", "The air is pressed flat: no jumping, no gliding. Walk. Anti-magic holders are not held.");
+            if (first(left, total)) SpadeFx.hintAround(this, 64, "message.anime_multiverse.spade.flatten", "The air is pressed flat: no jumping, no gliding. Walk. Anti-magic holders are not held.");
             Tells.ring(sl, position(), 6 + 22 * progress(left, total), ACCENT, 1.4f, 80);
         }
     }
@@ -529,7 +529,7 @@ public class LuciferoBoss extends ArcBoss {
         if (first(left, total)) {
             pockets = LuciferoMoves.pockets(this, WeightMath.pocketCount(foes(48).size()));
             say("Kneel before the King.");
-            SpadeFx.hintAround(this, 64, "message.nusmp.spade.kneel_order", "KNEEL BEFORE THE KING! Stand in a white ring of still air or hold anti-magic. Crouching will not save you.");
+            SpadeFx.hintAround(this, 64, "message.anime_multiverse.spade.kneel_order", "KNEEL BEFORE THE KING! Stand in a white ring of still air or hold anti-magic. Crouching will not save you.");
             sl.playSound(null, blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 3f, 0.3f);
             for (Vec3 p : pockets) ZogratisVfx.pillar(sl, p, WeightMath.POCKET_RADIUS, total + 2, 0xFFFFFF, true);
         }
@@ -547,7 +547,7 @@ public class LuciferoBoss extends ArcBoss {
             horizon = ZogratisBoss.ground(sl, position());
             horizonEnd = sl.getGameTime() + left;
             announce("EVENT HORIZON: the room is being pulled into Lucifero. Walk away from him: everything within " + (int) WeightMath.CORE_RADIUS + " blocks is crushed when it collapses.");
-            SpadeFx.hintAround(this, 64, "message.nusmp.spade.horizon_order", "EVENT HORIZON! Walk away from Lucifero: the core is 9 blocks wide.");
+            SpadeFx.hintAround(this, 64, "message.anime_multiverse.spade.horizon_order", "EVENT HORIZON! Walk away from Lucifero: the core is 9 blocks wide.");
             ZogratisVfx.singularity(sl, horizon.add(0, 3.0, 0), WeightMath.CORE_RADIUS, total + 6, RGB);
             ZogratisVfx.well(sl, horizon, WeightMath.CORE_RADIUS, total + 2, RGB, true);
         }

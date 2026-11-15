@@ -1,0 +1,69 @@
+{
+  "parent": "anime_multiverse:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:lantern"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.entered.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.entered.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_e_dungeon_entered": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "dungeon.entered"
+      }
+    },
+    "b1_e_labyrinth_entered": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "labyrinth.entered"
+      }
+    },
+    "c2_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "anime_multiverse:living_dungeon"
+      }
+    },
+    "d3_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "anime_multiverse:labyrinth"
+      }
+    },
+    "e4_e_mega_entered": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "mega.entered"
+      }
+    },
+    "f5_entered": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "anime_multiverse:mega_dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_e_dungeon_entered",
+      "b1_e_labyrinth_entered",
+      "c2_entered",
+      "d3_entered",
+      "e4_e_mega_entered",
+      "f5_entered"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

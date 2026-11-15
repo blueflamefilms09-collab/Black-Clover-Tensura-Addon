@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Relics of Many Worlds, second card set, wave 17: the 16x16 inventory icons of the notebooks, pouches and charms.
 
-Writes textures/item/<id>.png and models/item/<id>.json (parent item/generated) under src/main/resources/assets/nusmp
+Writes textures/item/<id>.png and models/item/<id>.json (parent item/generated) under src/main/resources/assets/anime_multiverse
 for every id of wave 17. Idempotent. Each icon is drawn from primitives (rect, disc, line, ellipse, ascii rows) in its own
 function, shaded with a light top-left and a dark bottom-right edge, wrapped in a one pixel dark outline; one rim pixel per
 grade star above Normal (rare 1, unique 2, legend 3) is in the grade colour and glow pixels sit on the gems and sparks.
@@ -18,7 +18,7 @@ import sys
 from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 GRADE_RGB = {"NORMAL": 0xAAAAAA, "RARE": 0x55FFFF, "UNIQUE": 0xFF77FF, "LEGEND": 0xFFAA00}
 RIM_PIXELS = {"NORMAL": 0, "RARE": 1, "UNIQUE": 2, "LEGEND": 3}
@@ -577,7 +577,7 @@ def main():
         im = fn().image()
         im.save(os.path.join(tex, rid + ".png"))
         with open(os.path.join(mod, rid + ".json"), "w", newline="\n") as f:
-            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + rid}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + rid}}, f, indent=2)
             f.write("\n")
         images.append(im)
         print("wrote", rid)

@@ -2,7 +2,7 @@
 """
 MOUNTAIN_MONASTERY (1.59.0, docs/labyrinth/mega_v2_tha.md): the signature rooms of a monks' retreat on the Holy road: timber and paper, bamboo and red lacquer,
 stairs cut into a cliff, a garden raked round a few stones. Rooms (all `mountain_monastery_*`, drawn ONLY in sectors of the theme through
-`data/nusmp/mega/template_themes/mountain_monastery.json`):
+`data/anime_multiverse/mega/template_themes/mountain_monastery.json`):
 
     hall/mountain_monastery_dojo               the training hall: a mat ringed in red, dummies, weapon racks, a shrine shelf and a bell, giant paper lanterns
     hall/mountain_monastery_prayer_wheel_hall  a hall round one great prayer wheel, rows of small wheels along the walls, a gallery over them
@@ -606,7 +606,7 @@ def duel_ring():
         for (x, z, axis) in ((k, 7, "x"), (k, 19, "x"), (7, k, "z"), (19, k, "z")):
             h.set(x, GROUND + 2, z, L.CHAIN_BLOCK, {"axis": axis})
     glyphs = [(3, 3), (23, 3), (3, 23), (23, 23), (3, 13), (23, 13), (8, 3), (18, 23)]
-    K.trial_core(h, [("minecraft:iron_golem", 1), ("nusmp:living_armor", 2)], glyphs, radius=13)
+    K.trial_core(h, [("minecraft:iron_golem", 1), ("anime_multiverse:living_armor", 2)], glyphs, radius=13)
     # ---- a red gate before each door, benches for the watchers along the side walls, racks of staves, a bell by the south door
     torii(h, c, 6, "x", span=2, y0=GROUND, height=6)
     torii(h, c, 20, "x", span=2, y0=GROUND, height=6)

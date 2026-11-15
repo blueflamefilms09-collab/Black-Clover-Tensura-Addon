@@ -16,7 +16,7 @@ public final class BossRoster {
     private BossRoster() {}
 
     /** The boss every altar can always call: ours, registered by {@link SealRegistry}. */
-    public static final String FALLBACK = "nusmp:floor_warden";
+    public static final String FALLBACK = "anime_multiverse:floor_warden";
 
     /** One roster line: an entity id and its weight (0 or less = never). */
     public record Entry(String id, int weight) {}

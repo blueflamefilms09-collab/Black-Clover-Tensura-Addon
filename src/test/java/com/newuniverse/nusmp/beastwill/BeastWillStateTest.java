@@ -122,6 +122,6 @@ class BeastWillStateTest {
     @Test
     void theDataFilesSaveCompatibilityIdsNeverChange() throws Exception {
         for (String id : new String[]{"dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will"})
-            assertTrue(Files.exists(Path.of("src/main/resources/data/nusmp/beast_will/" + id + ".json")), id + " is a save key: it must not be renamed or removed");
+            assertTrue(Files.exists(Path.of("src/main/resources/data/anime_multiverse/beast_will/" + id + ".json")), id + " is a save key: it must not be renamed or removed");
     }
 }

@@ -92,14 +92,14 @@ final class RoomsSelfTests {
         int files = 0, stands = 0;
         List<String> bad = new ArrayList<>();
         for (Map.Entry<String, Integer> e : table.counts().entrySet()) {
-            Optional<StructureTemplate> shipped = mgr.get(ResourceLocation.fromNamespaceAndPath("nusmp", RoomVariants.bare(e.getKey())));
+            Optional<StructureTemplate> shipped = mgr.get(ResourceLocation.fromNamespaceAndPath("anime_multiverse", RoomVariants.bare(e.getKey())));
             if (shipped.isEmpty()) {
                 bad.add(e.getKey() + " is named by the table but the game cannot read it");
                 continue;
             }
             Face s = face(shipped.get());
             for (int k = 1; k <= e.getValue(); k++) {
-                String id = RoomVariants.variantId("nusmp:" + e.getKey(), k);
+                String id = RoomVariants.variantId("anime_multiverse:" + e.getKey(), k);
                 Optional<StructureTemplate> t = mgr.get(ResourceLocation.parse(id));
                 if (t.isEmpty()) {
                     bad.add(id + " cannot be read");

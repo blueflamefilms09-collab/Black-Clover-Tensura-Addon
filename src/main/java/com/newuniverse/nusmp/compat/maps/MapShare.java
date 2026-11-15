@@ -44,7 +44,7 @@ public final class MapShare {
 
     private static volatile ShareLimiter limiter = new ShareLimiter(4, 1200);
 
-    /** One place to tell. {@code dim} is a dimension id such as {@code nusmp:mega_dungeon}. */
+    /** One place to tell. {@code dim} is a dimension id such as {@code anime_multiverse:mega_dungeon}. */
     public record Place(WaypointShare.Kind kind, String name, String dim, int x, int y, int z) {
         public String xaero() { return WaypointShare.xaero(name, x, y, z, kind, dim); }
     }
@@ -64,9 +64,9 @@ public final class MapShare {
     /** The readable name of a dimension for a fallback (the translation key {@code dimension.<ns>.<path>} wins when the lang file has it). */
     static String dimFallback(String id) {
         return switch (id == null ? "" : id) {
-            case "nusmp:mega_dungeon" -> "the Mega-Dungeon";
-            case "nusmp:sanctuary" -> "Floor 0, the Hub";
-            case "nusmp:labyrinth" -> "the Labyrinth";
+            case "anime_multiverse:mega_dungeon" -> "the Mega-Dungeon";
+            case "anime_multiverse:sanctuary" -> "Floor 0, the Hub";
+            case "anime_multiverse:labyrinth" -> "the Labyrinth";
             case "minecraft:overworld" -> "the Overworld";
             case "minecraft:the_nether" -> "the Nether";
             case "minecraft:the_end" -> "the End";
@@ -83,21 +83,21 @@ public final class MapShare {
     /** The chat line for a place, as described in the class comment. */
     public static Component line(Place pl) {
         String coords = pl.x() + " " + pl.y() + " " + pl.z();
-        Component hover = Component.translatableWithFallback("message.nusmp.maps.hover",
+        Component hover = Component.translatableWithFallback("message.anime_multiverse.maps.hover",
                 "Click to copy the coordinates (%1$s). With Xaero's Minimap or World Map, click the grey text to add the waypoint.", coords);
-        MutableComponent text = Component.translatableWithFallback("message.nusmp.maps.line", "%1$s at %2$s, %3$s, %4$s (%5$s)", pl.name(), pl.x(), pl.y(), pl.z(), dimLabel(pl.dim()))
+        MutableComponent text = Component.translatableWithFallback("message.anime_multiverse.maps.line", "%1$s at %2$s, %3$s, %4$s (%5$s)", pl.name(), pl.x(), pl.y(), pl.z(), dimLabel(pl.dim()))
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, coords))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)));
         MutableComponent out = Component.literal("[").withStyle(ChatFormatting.DARK_GRAY)
-                .append(Component.translatableWithFallback("message.nusmp.maps.tag", "Map").withStyle(ChatFormatting.DARK_AQUA))
+                .append(Component.translatableWithFallback("message.anime_multiverse.maps.tag", "Map").withStyle(ChatFormatting.DARK_AQUA))
                 .append(Component.literal("] ").withStyle(ChatFormatting.DARK_GRAY))
                 .append(text);
         if (MapsConfig.get(MapsConfig.RAW_XAERO_STRING)) {
             String raw = pl.xaero();
             out.append(Component.literal(" ")).append(Component.literal(raw).withStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY)
                     .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, raw))
-                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatableWithFallback("message.nusmp.maps.hover_raw", "Click to copy the Xaero's waypoint text.")))));
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatableWithFallback("message.anime_multiverse.maps.hover_raw", "Click to copy the Xaero's waypoint text.")))));
         }
         return out;
     }
@@ -160,7 +160,7 @@ public final class MapShare {
             if (rememberKey != null) markKnown(p, rememberKey);
             return true;
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map waypoint line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map waypoint line failed (ignored)", ex);
             return false;
         }
     }
@@ -171,7 +171,7 @@ public final class MapShare {
         try {
             offer(p, new Place(WaypointShare.Kind.GATE, "Labyrinth Gate", dim, pos.getX(), pos.getY(), pos.getZ()), "gate:" + dim + ":" + (pos.getX() >> 5) + ":" + (pos.getZ() >> 5));
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map gate line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map gate line failed (ignored)", ex);
         }
     }
 
@@ -180,7 +180,7 @@ public final class MapShare {
         try {
             for (Place pl : hubGatePlaces()) offer(p, pl, "hub:" + pl.name());
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map hub line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map hub line failed (ignored)", ex);
         }
     }
 
@@ -198,7 +198,7 @@ public final class MapShare {
             if (w == null) return;
             offer(p, placeOf(w), null);
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map return line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map return line failed (ignored)", ex);
         }
     }
 
@@ -213,7 +213,7 @@ public final class MapShare {
             String dim = p.level().dimension().location().toString();
             offer(p, new Place(pocket ? WaypointShare.Kind.POCKET : WaypointShare.Kind.SHORTCUT, pocket ? "Pocket Rift" : "Shortcut Rift", dim, at.getX(), at.getY(), at.getZ()), null);
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map rift line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map rift line failed (ignored)", ex);
         }
     }
 
@@ -223,7 +223,7 @@ public final class MapShare {
             String dim = p.level().dimension().location().toString();
             offer(p, new Place(WaypointShare.Kind.SAFE, "Safe Room", dim, at.getX(), at.getY(), at.getZ()), "safe:" + dim + ":" + at.getX() + ":" + at.getY() + ":" + at.getZ());
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] map safe room line failed (ignored)", ex);
+            LOG.debug("[anime_multiverse] map safe room line failed (ignored)", ex);
         }
     }
 

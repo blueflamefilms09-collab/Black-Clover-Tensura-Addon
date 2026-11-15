@@ -114,10 +114,10 @@ public final class PocketClear {
             if (chunkIdx >= chunks.size()) {
                 sweepEntities(level);
                 finished = true;
-                LOG.debug("[nusmp] The cell of slot {} is clear ({} blocks removed).", slot, cleared);
+                LOG.debug("[anime_multiverse] The cell of slot {} is clear ({} blocks removed).", slot, cleared);
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The sweep of the pocket cell {} failed at chunk {} (it goes on with the next chunk): {}", slot, chunkIdx, ex.toString());
+            LOG.warn("[anime_multiverse] The sweep of the pocket cell {} failed at chunk {} (it goes on with the next chunk): {}", slot, chunkIdx, ex.toString());
             chunkIdx++;
             sectionIdx = minSection;
             blockIdx = 0;

@@ -14,7 +14,7 @@ import org.joml.Quaternionf;
 
 /**
  * 1.93.0 (the Water / Dark / Lightning / Flame rebuild): the shared engine of the four temporary armours. An armour is a {@link Set} of {@link Piece}s; each
- * piece is its own GeoLite model (assets/nusmp/geo/entity/&lt;key&gt;_arm_&lt;name&gt;.geo.json, a texture, a {@code _glow} map, optionally an animation clip) authored in
+ * piece is its own GeoLite model (assets/anime_multiverse/geo/entity/&lt;key&gt;_arm_&lt;name&gt;.geo.json, a texture, a {@code _glow} map, optionally an animation clip) authored in
  * WHOLE-BODY coordinates (feet at y = 0, shoulders at y = 24, the right arm at x = -5, see tools/water_aura_lib.py), anchored on the model part it was built for
  * (head, body, an arm, a leg) so it follows every pose, crouch, swing and swim, and forged in / shattered out by {@link EquipAnimation} EXACTLY like the Djinn full
  * equip: staggered by the piece's delay (0 to 12 ticks), flying in from its own side while it fades up and grows from 85 to 100 percent over 8 ticks, and shattering
@@ -47,7 +47,7 @@ public final class WaterAuraRig {
         }
 
         /**
-         * @param name   the file name part: assets/nusmp/geo/entity/&lt;key&gt;_arm_&lt;name&gt;
+         * @param name   the file name part: assets/anime_multiverse/geo/entity/&lt;key&gt;_arm_&lt;name&gt;
          * @param delay  stagger in ticks, 0 to 12
          * @param dx dy dz the direction in model pixels the piece flies in from (vanilla layer space: y down; negative x = the model's right side); the Djinn uses 2 to 14
          */

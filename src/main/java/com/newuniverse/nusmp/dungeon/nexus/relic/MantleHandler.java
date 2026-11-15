@@ -151,7 +151,7 @@ final class MantleHandler {
             m.setTarget(target);
             m.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, target);
         } catch (RuntimeException | LinkageError otherBrain) {
-            LOG.debug("[nusmp] A creature could not be set on the marked player", otherBrain);
+            LOG.debug("[anime_multiverse] A creature could not be set on the marked player", otherBrain);
         }
     }
 

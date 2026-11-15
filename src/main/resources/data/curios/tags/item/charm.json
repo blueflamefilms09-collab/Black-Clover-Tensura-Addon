@@ -1,1035 +1,1035 @@
 {
   "replace": false,
   "values": [
-    "nusmp:brooch_pin",
+    "anime_multiverse:brooch_pin",
     {
-      "id": "nusmp:holy_chains",
+      "id": "anime_multiverse:holy_chains",
       "required": false
     },
     {
-      "id": "nusmp:pact_of_the_deck",
+      "id": "anime_multiverse:pact_of_the_deck",
       "required": false
     },
     {
-      "id": "nusmp:phantom_steps",
+      "id": "anime_multiverse:phantom_steps",
       "required": false
     },
     {
-      "id": "nusmp:sand_of_the_pocket",
+      "id": "anime_multiverse:sand_of_the_pocket",
       "required": false
     },
     {
-      "id": "nusmp:the_tome_of_wait_thats_illegal",
+      "id": "anime_multiverse:the_tome_of_wait_thats_illegal",
       "required": false
     },
     {
-      "id": "nusmp:alabaster_white_runechalk",
+      "id": "anime_multiverse:alabaster_white_runechalk",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_colding",
+      "id": "anime_multiverse:bag_of_colding",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_devouring",
+      "id": "anime_multiverse:bag_of_devouring",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_golding",
+      "id": "anime_multiverse:bag_of_golding",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_holding",
+      "id": "anime_multiverse:bag_of_holding",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_kittens",
+      "id": "anime_multiverse:bag_of_kittens",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_molding",
+      "id": "anime_multiverse:bag_of_molding",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_realistic_capacity",
+      "id": "anime_multiverse:bag_of_realistic_capacity",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_scolding",
+      "id": "anime_multiverse:bag_of_scolding",
       "required": false
     },
     {
-      "id": "nusmp:bag_of_unfolding",
+      "id": "anime_multiverse:bag_of_unfolding",
       "required": false
     },
     {
-      "id": "nusmp:bags_of_transferrence",
+      "id": "anime_multiverse:bags_of_transferrence",
       "required": false
     },
     {
-      "id": "nusmp:coin_of_draconic_luck",
+      "id": "anime_multiverse:coin_of_draconic_luck",
       "required": false
     },
     {
-      "id": "nusmp:coin_of_fortune",
+      "id": "anime_multiverse:coin_of_fortune",
       "required": false
     },
     {
-      "id": "nusmp:crystal_dragon",
+      "id": "anime_multiverse:crystal_dragon",
       "required": false
     },
     {
-      "id": "nusmp:defenders_dial",
+      "id": "anime_multiverse:defenders_dial",
       "required": false
     },
     {
-      "id": "nusmp:dragon_satchel",
+      "id": "anime_multiverse:dragon_satchel",
       "required": false
     },
     {
-      "id": "nusmp:drow_sunscreen",
+      "id": "anime_multiverse:drow_sunscreen",
       "required": false
     },
     {
-      "id": "nusmp:dryads_wedding_band",
+      "id": "anime_multiverse:dryads_wedding_band",
       "required": false
     },
     {
-      "id": "nusmp:elephant_of_the_room",
+      "id": "anime_multiverse:elephant_of_the_room",
       "required": false
     },
     {
-      "id": "nusmp:fast_travel_beads",
+      "id": "anime_multiverse:fast_travel_beads",
       "required": false
     },
     {
-      "id": "nusmp:fury_of_the_fallen",
+      "id": "anime_multiverse:fury_of_the_fallen",
       "required": false
     },
     {
-      "id": "nusmp:holy_handgrenade",
+      "id": "anime_multiverse:holy_handgrenade",
       "required": false
     },
     {
-      "id": "nusmp:jar_of_bats",
+      "id": "anime_multiverse:jar_of_bats",
       "required": false
     },
     {
-      "id": "nusmp:lifes_emergency",
+      "id": "anime_multiverse:lifes_emergency",
       "required": false
     },
     {
-      "id": "nusmp:madama_cupcake",
+      "id": "anime_multiverse:madama_cupcake",
       "required": false
     },
     {
-      "id": "nusmp:martels_magical_bag_of_candy",
+      "id": "anime_multiverse:martels_magical_bag_of_candy",
       "required": false
     },
     {
-      "id": "nusmp:mirror_of_spell_reflection",
+      "id": "anime_multiverse:mirror_of_spell_reflection",
       "required": false
     },
     {
-      "id": "nusmp:old_masters_spellbook",
+      "id": "anime_multiverse:old_masters_spellbook",
       "required": false
     },
     {
-      "id": "nusmp:paralyzing_perfume",
+      "id": "anime_multiverse:paralyzing_perfume",
       "required": false
     },
     {
-      "id": "nusmp:plastic_sheriff_badge",
+      "id": "anime_multiverse:plastic_sheriff_badge",
       "required": false
     },
     {
-      "id": "nusmp:portable_god",
+      "id": "anime_multiverse:portable_god",
       "required": false
     },
     {
-      "id": "nusmp:satchel_of_unmet_needs",
+      "id": "anime_multiverse:satchel_of_unmet_needs",
       "required": false
     },
     {
-      "id": "nusmp:shared_pouches_of_transfer",
+      "id": "anime_multiverse:shared_pouches_of_transfer",
       "required": false
     },
     {
-      "id": "nusmp:simple_blue_runechalk",
+      "id": "anime_multiverse:simple_blue_runechalk",
       "required": false
     },
     {
-      "id": "nusmp:snugglable_doll",
+      "id": "anime_multiverse:snugglable_doll",
       "required": false
     },
     {
-      "id": "nusmp:spellbook_of_concentration",
+      "id": "anime_multiverse:spellbook_of_concentration",
       "required": false
     },
     {
-      "id": "nusmp:strange_idol",
+      "id": "anime_multiverse:strange_idol",
       "required": false
     },
     {
-      "id": "nusmp:the_devils_due",
+      "id": "anime_multiverse:the_devils_due",
       "required": false
     },
     {
-      "id": "nusmp:the_lovers_divide",
+      "id": "anime_multiverse:the_lovers_divide",
       "required": false
     },
     {
-      "id": "nusmp:the_pocket_campsite",
+      "id": "anime_multiverse:the_pocket_campsite",
       "required": false
     },
     {
-      "id": "nusmp:tiny_orbit",
+      "id": "anime_multiverse:tiny_orbit",
       "required": false
     },
     {
-      "id": "nusmp:urn_of_black_pudding",
+      "id": "anime_multiverse:urn_of_black_pudding",
       "required": false
     },
     {
-      "id": "nusmp:wallet_of_the_slayer",
+      "id": "anime_multiverse:wallet_of_the_slayer",
       "required": false
     },
     {
-      "id": "nusmp:weaversong",
+      "id": "anime_multiverse:weaversong",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_dante",
+      "id": "anime_multiverse:charter_grimoire_dante",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_vanica",
+      "id": "anime_multiverse:charter_grimoire_vanica",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_zenon",
+      "id": "anime_multiverse:charter_grimoire_zenon",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_lucius",
+      "id": "anime_multiverse:charter_grimoire_lucius",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_devil_avatar",
+      "id": "anime_multiverse:charter_grimoire_devil_avatar",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_goliath",
+      "id": "anime_multiverse:charter_grimoire_goliath",
       "required": false
     },
     {
-      "id": "nusmp:charter_grimoire_charybdis_spawn",
+      "id": "anime_multiverse:charter_grimoire_charybdis_spawn",
       "required": false
     },
     {
-      "id": "nusmp:bewitching_lyre",
+      "id": "anime_multiverse:bewitching_lyre",
       "required": false
     },
     {
-      "id": "nusmp:deck_of_many_things",
+      "id": "anime_multiverse:deck_of_many_things",
       "required": false
     },
     {
-      "id": "nusmp:eye_of_the_deep_one",
+      "id": "anime_multiverse:eye_of_the_deep_one",
       "required": false
     },
     {
-      "id": "nusmp:horn_of_leroy",
+      "id": "anime_multiverse:horn_of_leroy",
       "required": false
     },
     {
-      "id": "nusmp:instant_cooking_pot",
+      "id": "anime_multiverse:instant_cooking_pot",
       "required": false
     },
     {
-      "id": "nusmp:lucky_egg",
+      "id": "anime_multiverse:lucky_egg",
       "required": false
     },
     {
-      "id": "nusmp:lumpy",
+      "id": "anime_multiverse:lumpy",
       "required": false
     },
     {
-      "id": "nusmp:monster_compass",
+      "id": "anime_multiverse:monster_compass",
       "required": false
     },
     {
-      "id": "nusmp:official_looking_badge",
+      "id": "anime_multiverse:official_looking_badge",
       "required": false
     },
     {
-      "id": "nusmp:orb_of_plagues",
+      "id": "anime_multiverse:orb_of_plagues",
       "required": false
     },
     {
-      "id": "nusmp:orb_of_the_dryad",
+      "id": "anime_multiverse:orb_of_the_dryad",
       "required": false
     },
     {
-      "id": "nusmp:pocket_time",
+      "id": "anime_multiverse:pocket_time",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_endless_rage",
+      "id": "anime_multiverse:ring_of_endless_rage",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_memories",
+      "id": "anime_multiverse:ring_of_memories",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_power",
+      "id": "anime_multiverse:ring_of_power",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_regeneration",
+      "id": "anime_multiverse:ring_of_regeneration",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_rock_eating",
+      "id": "anime_multiverse:ring_of_rock_eating",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_game",
+      "id": "anime_multiverse:ring_of_the_game",
       "required": false
     },
     {
-      "id": "nusmp:rose_petal",
+      "id": "anime_multiverse:rose_petal",
       "required": false
     },
     {
-      "id": "nusmp:silver_tongued_lyre",
+      "id": "anime_multiverse:silver_tongued_lyre",
       "required": false
     },
     {
-      "id": "nusmp:soup_spoon_of_improbability",
+      "id": "anime_multiverse:soup_spoon_of_improbability",
       "required": false
     },
     {
-      "id": "nusmp:spirit_lantern",
+      "id": "anime_multiverse:spirit_lantern",
       "required": false
     },
     {
-      "id": "nusmp:the_forgotten_ring",
+      "id": "anime_multiverse:the_forgotten_ring",
       "required": false
     },
     {
-      "id": "nusmp:the_mind_stone",
+      "id": "anime_multiverse:the_mind_stone",
       "required": false
     },
     {
-      "id": "nusmp:the_power_stone",
+      "id": "anime_multiverse:the_power_stone",
       "required": false
     },
     {
-      "id": "nusmp:the_reality_stone",
+      "id": "anime_multiverse:the_reality_stone",
       "required": false
     },
     {
-      "id": "nusmp:the_soul_stone",
+      "id": "anime_multiverse:the_soul_stone",
       "required": false
     },
     {
-      "id": "nusmp:the_space_stone_or_the_tesseract",
+      "id": "anime_multiverse:the_space_stone_or_the_tesseract",
       "required": false
     },
     {
-      "id": "nusmp:the_time_stone_or_the_eye_of_agamotto",
+      "id": "anime_multiverse:the_time_stone_or_the_eye_of_agamotto",
       "required": false
     },
     {
-      "id": "nusmp:warrens_key",
+      "id": "anime_multiverse:warrens_key",
       "required": false
     },
     {
-      "id": "nusmp:witchs_ring",
+      "id": "anime_multiverse:witchs_ring",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_mimic",
+      "id": "anime_multiverse:ring_of_the_mimic",
       "required": false
     },
     {
-      "id": "nusmp:echidnas_tea_set",
+      "id": "anime_multiverse:echidnas_tea_set",
       "required": false
     },
     {
-      "id": "nusmp:gospel_of_the_mansion",
+      "id": "anime_multiverse:gospel_of_the_mansion",
       "required": false
     },
     {
-      "id": "nusmp:pocket_watch_of_return",
+      "id": "anime_multiverse:pocket_watch_of_return",
       "required": false
     },
     {
-      "id": "nusmp:rogues_insignia",
+      "id": "anime_multiverse:rogues_insignia",
       "required": false
     },
     {
-      "id": "nusmp:shard_of_the_witch_factor",
+      "id": "anime_multiverse:shard_of_the_witch_factor",
       "required": false
     },
     {
-      "id": "nusmp:cartridge_of_the_gate",
+      "id": "anime_multiverse:cartridge_of_the_gate",
       "required": false
     },
     {
-      "id": "nusmp:cradle_of_desire",
+      "id": "anime_multiverse:cradle_of_desire",
       "required": false
     },
     {
-      "id": "nusmp:curse_repelling_vessel",
+      "id": "anime_multiverse:curse_repelling_vessel",
       "required": false
     },
     {
-      "id": "nusmp:cursed_womb_death_painting",
+      "id": "anime_multiverse:cursed_womb_death_painting",
       "required": false
     },
     {
-      "id": "nusmp:delvers_lantern",
+      "id": "anime_multiverse:delvers_lantern",
       "required": false
     },
     {
-      "id": "nusmp:gae_bolg_spear_charm",
+      "id": "anime_multiverse:gae_bolg_spear_charm",
       "required": false
     },
     {
-      "id": "nusmp:holy_grail_fragment",
+      "id": "anime_multiverse:holy_grail_fragment",
       "required": false
     },
     {
-      "id": "nusmp:hunter_license_insignia",
+      "id": "anime_multiverse:hunter_license_insignia",
       "required": false
     },
     {
-      "id": "nusmp:noble_phantasm_token",
+      "id": "anime_multiverse:noble_phantasm_token",
       "required": false
     },
     {
-      "id": "nusmp:osiriss_reed_scepter_charm",
+      "id": "anime_multiverse:osiriss_reed_scepter_charm",
       "required": false
     },
     {
-      "id": "nusmp:prison_realm_cube",
+      "id": "anime_multiverse:prison_realm_cube",
       "required": false
     },
     {
-      "id": "nusmp:reverse_cursed_technique_charm",
+      "id": "anime_multiverse:reverse_cursed_technique_charm",
       "required": false
     },
     {
-      "id": "nusmp:rule_breaker_dagger_charm",
+      "id": "anime_multiverse:rule_breaker_dagger_charm",
       "required": false
     },
     {
-      "id": "nusmp:seal_of_the_sealed_god",
+      "id": "anime_multiverse:seal_of_the_sealed_god",
       "required": false
     },
     {
-      "id": "nusmp:servant_summoning_circle_chalk",
+      "id": "anime_multiverse:servant_summoning_circle_chalk",
       "required": false
     },
     {
-      "id": "nusmp:star_compass",
+      "id": "anime_multiverse:star_compass",
       "required": false
     },
     {
-      "id": "nusmp:sukunas_finger",
+      "id": "anime_multiverse:sukunas_finger",
       "required": false
     },
     {
-      "id": "nusmp:sukunas_twenty_fingers",
+      "id": "anime_multiverse:sukunas_twenty_fingers",
       "required": false
     },
     {
-      "id": "nusmp:ten_shadows_seal",
+      "id": "anime_multiverse:ten_shadows_seal",
       "required": false
     },
     {
-      "id": "nusmp:thoths_tablet",
+      "id": "anime_multiverse:thoths_tablet",
       "required": false
     },
     {
-      "id": "nusmp:unlimited_blade_works_brooch",
+      "id": "anime_multiverse:unlimited_blade_works_brooch",
       "required": false
     },
     {
-      "id": "nusmp:gate_key",
+      "id": "anime_multiverse:gate_key",
       "required": false
     },
     {
-      "id": "nusmp:pocket_key",
+      "id": "anime_multiverse:pocket_key",
       "required": false
     },
     {
-      "id": "nusmp:return_crystal",
+      "id": "anime_multiverse:return_crystal",
       "required": false
     },
     {
-      "id": "nusmp:rift_compass",
+      "id": "anime_multiverse:rift_compass",
       "required": false
     },
     {
-      "id": "nusmp:chimeras_spice_rack",
+      "id": "anime_multiverse:chimeras_spice_rack",
       "required": false
     },
     {
-      "id": "nusmp:cooks_dungeon_pot",
+      "id": "anime_multiverse:cooks_dungeon_pot",
       "required": false
     },
     {
-      "id": "nusmp:crystal_of_resurrection",
+      "id": "anime_multiverse:crystal_of_resurrection",
       "required": false
     },
     {
-      "id": "nusmp:great_tomb_sigil",
+      "id": "anime_multiverse:great_tomb_sigil",
       "required": false
     },
     {
-      "id": "nusmp:grimoire_of_flower_fields",
+      "id": "anime_multiverse:grimoire_of_flower_fields",
       "required": false
     },
     {
-      "id": "nusmp:heiters_brandy_flask",
+      "id": "anime_multiverse:heiters_brandy_flask",
       "required": false
     },
     {
-      "id": "nusmp:heros_statue_charm",
+      "id": "anime_multiverse:heros_statue_charm",
       "required": false
     },
     {
-      "id": "nusmp:himmels_sword_sheath_charm",
+      "id": "anime_multiverse:himmels_sword_sheath_charm",
       "required": false
     },
     {
-      "id": "nusmp:hitogamis_dice_charm",
+      "id": "anime_multiverse:hitogamis_dice_charm",
       "required": false
     },
     {
-      "id": "nusmp:hobgoblins_rice_bowl",
+      "id": "anime_multiverse:hobgoblins_rice_bowl",
       "required": false
     },
     {
-      "id": "nusmp:hunters_association_badge",
+      "id": "anime_multiverse:hunters_association_badge",
       "required": false
     },
     {
-      "id": "nusmp:hunters_gate_key",
+      "id": "anime_multiverse:hunters_gate_key",
       "required": false
     },
     {
-      "id": "nusmp:instant_dungeon_compass",
+      "id": "anime_multiverse:instant_dungeon_compass",
       "required": false
     },
     {
-      "id": "nusmp:kamishs_fang_charm",
+      "id": "anime_multiverse:kamishs_fang_charm",
       "required": false
     },
     {
-      "id": "nusmp:knights_appetite_charm",
+      "id": "anime_multiverse:knights_appetite_charm",
       "required": false
     },
     {
-      "id": "nusmp:land_of_souls_lantern",
+      "id": "anime_multiverse:land_of_souls_lantern",
       "required": false
     },
     {
-      "id": "nusmp:magic_of_the_soul_compass",
+      "id": "anime_multiverse:magic_of_the_soul_compass",
       "required": false
     },
     {
-      "id": "nusmp:nanahoshis_phone_charm",
+      "id": "anime_multiverse:nanahoshis_phone_charm",
       "required": false
     },
     {
-      "id": "nusmp:perugiuss_ancient_tower_key",
+      "id": "anime_multiverse:perugiuss_ancient_tower_key",
       "required": false
     },
     {
-      "id": "nusmp:rubedo_thread_charm",
+      "id": "anime_multiverse:rubedo_thread_charm",
       "required": false
     },
     {
-      "id": "nusmp:rune_of_the_system",
+      "id": "anime_multiverse:rune_of_the_system",
       "required": false
     },
     {
-      "id": "nusmp:salamanders_warming_stone",
+      "id": "anime_multiverse:salamanders_warming_stone",
       "required": false
     },
     {
-      "id": "nusmp:scroll_case_of_the_tenth_tier",
+      "id": "anime_multiverse:scroll_case_of_the_tenth_tier",
       "required": false
     },
     {
-      "id": "nusmp:series_ancient_grimoire",
+      "id": "anime_multiverse:series_ancient_grimoire",
       "required": false
     },
     {
-      "id": "nusmp:witchs_ladle_of_stirring",
+      "id": "anime_multiverse:witchs_ladle_of_stirring",
       "required": false
     },
     {
-      "id": "nusmp:axis_cult_holy_symbol",
+      "id": "anime_multiverse:axis_cult_holy_symbol",
       "required": false
     },
     {
-      "id": "nusmp:baams_night_wire_charm",
+      "id": "anime_multiverse:baams_night_wire_charm",
       "required": false
     },
     {
-      "id": "nusmp:behelit_egg",
+      "id": "anime_multiverse:behelit_egg",
       "required": false
     },
     {
-      "id": "nusmp:demon_kings_army_badge",
+      "id": "anime_multiverse:demon_kings_army_badge",
       "required": false
     },
     {
-      "id": "nusmp:floor_guardians_seal",
+      "id": "anime_multiverse:floor_guardians_seal",
       "required": false
     },
     {
-      "id": "nusmp:gammas_merchant_ledger",
+      "id": "anime_multiverse:gammas_merchant_ledger",
       "required": false
     },
     {
-      "id": "nusmp:kazumas_adventurer_card",
+      "id": "anime_multiverse:kazumas_adventurer_card",
       "required": false
     },
     {
-      "id": "nusmp:lighthouses_guide_lantern",
+      "id": "anime_multiverse:lighthouses_guide_lantern",
       "required": false
     },
     {
-      "id": "nusmp:megumins_staff_charm",
+      "id": "anime_multiverse:megumins_staff_charm",
       "required": false
     },
     {
-      "id": "nusmp:moon_tower_black_sigil",
+      "id": "anime_multiverse:moon_tower_black_sigil",
       "required": false
     },
     {
-      "id": "nusmp:philosophers_stone_shard",
+      "id": "anime_multiverse:philosophers_stone_shard",
       "required": false
     },
     {
-      "id": "nusmp:pucks_fairy_dust_pouch",
+      "id": "anime_multiverse:pucks_fairy_dust_pouch",
       "required": false
     },
     {
-      "id": "nusmp:regulars_test_badge",
+      "id": "anime_multiverse:regulars_test_badge",
       "required": false
     },
     {
-      "id": "nusmp:sacred_spring_water_flask",
+      "id": "anime_multiverse:sacred_spring_water_flask",
       "required": false
     },
     {
-      "id": "nusmp:state_alchemists_silver_watch",
+      "id": "anime_multiverse:state_alchemists_silver_watch",
       "required": false
     },
     {
-      "id": "nusmp:tower_guides_ledger",
+      "id": "anime_multiverse:tower_guides_ledger",
       "required": false
     },
     {
-      "id": "nusmp:truths_gate_fragment",
+      "id": "anime_multiverse:truths_gate_fragment",
       "required": false
     },
     {
-      "id": "nusmp:zetas_beast_tail_charm",
+      "id": "anime_multiverse:zetas_beast_tail_charm",
       "required": false
     },
     {
-      "id": "nusmp:administrators_authority_key",
+      "id": "anime_multiverse:administrators_authority_key",
       "required": false
     },
     {
-      "id": "nusmp:adventurers_guild_card_of_akiba",
+      "id": "anime_multiverse:adventurers_guild_card_of_akiba",
       "required": false
     },
     {
-      "id": "nusmp:aincrad_floor_clear_medal",
+      "id": "anime_multiverse:aincrad_floor_clear_medal",
       "required": false
     },
     {
-      "id": "nusmp:asunas_cooking_skill_ladle",
+      "id": "anime_multiverse:asunas_cooking_skill_ladle",
       "required": false
     },
     {
-      "id": "nusmp:crystal_of_corridor",
+      "id": "anime_multiverse:crystal_of_corridor",
       "required": false
     },
     {
-      "id": "nusmp:floor_boss_room_key",
+      "id": "anime_multiverse:floor_boss_room_key",
       "required": false
     },
     {
-      "id": "nusmp:healers_crystal_charm",
+      "id": "anime_multiverse:healers_crystal_charm",
       "required": false
     },
     {
-      "id": "nusmp:minoris_healers_staff_charm",
+      "id": "anime_multiverse:minoris_healers_staff_charm",
       "required": false
     },
     {
-      "id": "nusmp:raid_boss_drop_medal",
+      "id": "anime_multiverse:raid_boss_drop_medal",
       "required": false
     },
     {
-      "id": "nusmp:round_table_council_seal",
+      "id": "anime_multiverse:round_table_council_seal",
       "required": false
     },
     {
-      "id": "nusmp:teleport_crystal",
+      "id": "anime_multiverse:teleport_crystal",
       "required": false
     },
-    "nusmp:goblin_ear_ward",
-    "nusmp:wisp_lantern",
+    "anime_multiverse:goblin_ear_ward",
+    "anime_multiverse:wisp_lantern",
     {
-      "id": "nusmp:archivists_starbound_codex",
+      "id": "anime_multiverse:archivists_starbound_codex",
       "required": false
     },
     {
-      "id": "nusmp:ashen_forgeheart",
+      "id": "anime_multiverse:ashen_forgeheart",
       "required": false
     },
     {
-      "id": "nusmp:orrery_of_drowned_hours",
+      "id": "anime_multiverse:orrery_of_drowned_hours",
       "required": false
     },
     {
-      "id": "nusmp:reliquary_seedheart",
+      "id": "anime_multiverse:reliquary_seedheart",
       "required": false
     },
     {
-      "id": "nusmp:vaultmakers_pocketwatch",
+      "id": "anime_multiverse:vaultmakers_pocketwatch",
       "required": false
     },
     {
-      "id": "nusmp:beatrices_doll_charm",
+      "id": "anime_multiverse:beatrices_doll_charm",
       "required": false
     },
     {
-      "id": "nusmp:caravan_water_flask",
+      "id": "anime_multiverse:caravan_water_flask",
       "required": false
     },
     {
-      "id": "nusmp:compass_of_true_north",
+      "id": "anime_multiverse:compass_of_true_north",
       "required": false
     },
     {
-      "id": "nusmp:elf_village_herb_pouch",
+      "id": "anime_multiverse:elf_village_herb_pouch",
       "required": false
     },
     {
-      "id": "nusmp:everburning_torch_charm",
+      "id": "anime_multiverse:everburning_torch_charm",
       "required": false
     },
     {
-      "id": "nusmp:familia_emblem_pin",
+      "id": "anime_multiverse:familia_emblem_pin",
       "required": false
     },
     {
-      "id": "nusmp:filo_feather_charm",
+      "id": "anime_multiverse:filo_feather_charm",
       "required": false
     },
     {
-      "id": "nusmp:four_leaf_squires_pin",
+      "id": "anime_multiverse:four_leaf_squires_pin",
       "required": false
     },
     {
-      "id": "nusmp:happys_fish_charm",
+      "id": "anime_multiverse:happys_fish_charm",
       "required": false
     },
     {
-      "id": "nusmp:hi_potion_vial_bandolier",
+      "id": "anime_multiverse:hi_potion_vial_bandolier",
       "required": false
     },
     {
-      "id": "nusmp:kobold_miners_lamp",
+      "id": "anime_multiverse:kobold_miners_lamp",
       "required": false
     },
     {
-      "id": "nusmp:little_slime_charm",
+      "id": "anime_multiverse:little_slime_charm",
       "required": false
     },
     {
-      "id": "nusmp:quiet_mages_flower_locket",
+      "id": "anime_multiverse:quiet_mages_flower_locket",
       "required": false
     },
     {
-      "id": "nusmp:spirit_whisper_bell",
+      "id": "anime_multiverse:spirit_whisper_bell",
       "required": false
     },
     {
-      "id": "nusmp:wanderers_waystone",
+      "id": "anime_multiverse:wanderers_waystone",
       "required": false
     },
     {
-      "id": "nusmp:aincrad_teleport_crystal_chip",
+      "id": "anime_multiverse:aincrad_teleport_crystal_chip",
       "required": false
     },
     {
-      "id": "nusmp:aladdins_flute_replica",
+      "id": "anime_multiverse:aladdins_flute_replica",
       "required": false
     },
     {
-      "id": "nusmp:boar_hat_tavern_token",
+      "id": "anime_multiverse:boar_hat_tavern_token",
       "required": false
     },
     {
-      "id": "nusmp:capsule_case_charm",
+      "id": "anime_multiverse:capsule_case_charm",
       "required": false
     },
     {
-      "id": "nusmp:card_sleeve_locket",
+      "id": "anime_multiverse:card_sleeve_locket",
       "required": false
     },
     {
-      "id": "nusmp:chunin_exam_scroll_case_charm",
+      "id": "anime_multiverse:chunin_exam_scroll_case_charm",
       "required": false
     },
     {
-      "id": "nusmp:cracked_mana_crystal",
+      "id": "anime_multiverse:cracked_mana_crystal",
       "required": false
     },
     {
-      "id": "nusmp:crimson_tassel_of_axel",
+      "id": "anime_multiverse:crimson_tassel_of_axel",
       "required": false
     },
     {
-      "id": "nusmp:delvers_brass_lamp",
+      "id": "anime_multiverse:delvers_brass_lamp",
       "required": false
     },
     {
-      "id": "nusmp:dungeon_cooks_ladle_charm",
+      "id": "anime_multiverse:dungeon_cooks_ladle_charm",
       "required": false
     },
     {
-      "id": "nusmp:dwargon_smiths_hammer_charm",
+      "id": "anime_multiverse:dwargon_smiths_hammer_charm",
       "required": false
     },
     {
-      "id": "nusmp:dwargon_vault_key_charm",
+      "id": "anime_multiverse:dwargon_vault_key_charm",
       "required": false
     },
     {
-      "id": "nusmp:goblin_slayers_tooth_tally",
+      "id": "anime_multiverse:goblin_slayers_tooth_tally",
       "required": false
     },
     {
-      "id": "nusmp:grand_line_berry_purse_charm",
+      "id": "anime_multiverse:grand_line_berry_purse_charm",
       "required": false
     },
     {
-      "id": "nusmp:half_senzu_bean_charm",
+      "id": "anime_multiverse:half_senzu_bean_charm",
       "required": false
     },
     {
-      "id": "nusmp:hell_butterfly_pin",
+      "id": "anime_multiverse:hell_butterfly_pin",
       "required": false
     },
     {
-      "id": "nusmp:hobgoblin_warband_token",
+      "id": "anime_multiverse:hobgoblin_warband_token",
       "required": false
     },
     {
-      "id": "nusmp:hotbar_potion_pouch",
+      "id": "anime_multiverse:hotbar_potion_pouch",
       "required": false
     },
     {
-      "id": "nusmp:hunter_exam_number_tag",
+      "id": "anime_multiverse:hunter_exam_number_tag",
       "required": false
     },
     {
-      "id": "nusmp:jujutsu_high_warding_strip",
+      "id": "anime_multiverse:jujutsu_high_warding_strip",
       "required": false
     },
     {
-      "id": "nusmp:lacrima_spark_lamp",
+      "id": "anime_multiverse:lacrima_spark_lamp",
       "required": false
     },
     {
-      "id": "nusmp:lizardman_marsh_scale_charm",
+      "id": "anime_multiverse:lizardman_marsh_scale_charm",
       "required": false
     },
     {
-      "id": "nusmp:orario_delvers_compass",
+      "id": "anime_multiverse:orario_delvers_compass",
       "required": false
     },
     {
-      "id": "nusmp:orc_disaster_tusk_charm",
+      "id": "anime_multiverse:orc_disaster_tusk_charm",
       "required": false
     },
     {
-      "id": "nusmp:priests_poultice_kit_charm",
+      "id": "anime_multiverse:priests_poultice_kit_charm",
       "required": false
     },
     {
-      "id": "nusmp:roxys_water_pearl",
+      "id": "anime_multiverse:roxys_water_pearl",
       "required": false
     },
     {
-      "id": "nusmp:shadow_garden_cipher_coin",
+      "id": "anime_multiverse:shadow_garden_cipher_coin",
       "required": false
     },
     {
-      "id": "nusmp:shinobi_smoke_pellet_pouch",
+      "id": "anime_multiverse:shinobi_smoke_pellet_pouch",
       "required": false
     },
     {
-      "id": "nusmp:soul_candy_pill_case",
+      "id": "anime_multiverse:soul_candy_pill_case",
       "required": false
     },
     {
-      "id": "nusmp:spare_mana_gem",
+      "id": "anime_multiverse:spare_mana_gem",
       "required": false
     },
     {
-      "id": "nusmp:starwolf_fang_pendant",
+      "id": "anime_multiverse:starwolf_fang_pendant",
       "required": false
     },
     {
-      "id": "nusmp:state_alchemists_pocket_watch",
+      "id": "anime_multiverse:state_alchemists_pocket_watch",
       "required": false
     },
     {
-      "id": "nusmp:survey_corps_signal_flare_charm",
+      "id": "anime_multiverse:survey_corps_signal_flare_charm",
       "required": false
     },
     {
-      "id": "nusmp:capsule_corp_capsule_case",
+      "id": "anime_multiverse:capsule_corp_capsule_case",
       "required": false
     },
     {
-      "id": "nusmp:command_spell_ink_vial",
+      "id": "anime_multiverse:command_spell_ink_vial",
       "required": false
     },
     {
-      "id": "nusmp:cooked_mandrake_sprig",
+      "id": "anime_multiverse:cooked_mandrake_sprig",
       "required": false
     },
     {
-      "id": "nusmp:cursed_talisman_strip",
+      "id": "anime_multiverse:cursed_talisman_strip",
       "required": false
     },
     {
-      "id": "nusmp:dungeon_key_fragment",
+      "id": "anime_multiverse:dungeon_key_fragment",
       "required": false
     },
     {
-      "id": "nusmp:elder_lich_apprentice_bone_charm",
+      "id": "anime_multiverse:elder_lich_apprentice_bone_charm",
       "required": false
     },
     {
-      "id": "nusmp:explosion_fan_club_pin",
+      "id": "anime_multiverse:explosion_fan_club_pin",
       "required": false
     },
     {
-      "id": "nusmp:final_selection_wisteria_charm",
+      "id": "anime_multiverse:final_selection_wisteria_charm",
       "required": false
     },
     {
-      "id": "nusmp:grimoire_page_scrap",
+      "id": "anime_multiverse:grimoire_page_scrap",
       "required": false
     },
     {
-      "id": "nusmp:hearth_warm_pocket_stone",
+      "id": "anime_multiverse:hearth_warm_pocket_stone",
       "required": false
     },
     {
-      "id": "nusmp:hero_course_pass_tag",
+      "id": "anime_multiverse:hero_course_pass_tag",
       "required": false
     },
     {
-      "id": "nusmp:himmels_statue_pebble",
+      "id": "anime_multiverse:himmels_statue_pebble",
       "required": false
     },
     {
-      "id": "nusmp:linas_fireball_tassel",
+      "id": "anime_multiverse:linas_fireball_tassel",
       "required": false
     },
     {
-      "id": "nusmp:log_pose_keychain",
+      "id": "anime_multiverse:log_pose_keychain",
       "required": false
     },
     {
-      "id": "nusmp:merchants_weighing_coin",
+      "id": "anime_multiverse:merchants_weighing_coin",
       "required": false
     },
     {
-      "id": "nusmp:millennium_puzzle_replica",
+      "id": "anime_multiverse:millennium_puzzle_replica",
       "required": false
     },
     {
-      "id": "nusmp:nen_water_divination_cup",
+      "id": "anime_multiverse:nen_water_divination_cup",
       "required": false
     },
     {
-      "id": "nusmp:ninja_tool_pouch_charm",
+      "id": "anime_multiverse:ninja_tool_pouch_charm",
       "required": false
     },
     {
-      "id": "nusmp:roxys_water_drop_charm",
+      "id": "anime_multiverse:roxys_water_drop_charm",
       "required": false
     },
     {
-      "id": "nusmp:soul_reaper_academy_badge",
+      "id": "anime_multiverse:soul_reaper_academy_badge",
       "required": false
     },
     {
-      "id": "nusmp:subarus_track_jacket_zipper",
+      "id": "anime_multiverse:subarus_track_jacket_zipper",
       "required": false
     },
     {
-      "id": "nusmp:telekinesis_club_badge",
+      "id": "anime_multiverse:telekinesis_club_badge",
       "required": false
     },
     {
-      "id": "nusmp:wave_fragment_sliver",
+      "id": "anime_multiverse:wave_fragment_sliver",
       "required": false
     },
     {
-      "id": "nusmp:flower_field_charm",
+      "id": "anime_multiverse:flower_field_charm",
       "required": false
     },
     {
-      "id": "nusmp:greed_island_binder",
+      "id": "anime_multiverse:greed_island_binder",
       "required": false
     },
     {
-      "id": "nusmp:kuriboh_plush_charm",
+      "id": "anime_multiverse:kuriboh_plush_charm",
       "required": false
     },
     {
-      "id": "nusmp:pochita_pull_cord_charm",
+      "id": "anime_multiverse:pochita_pull_cord_charm",
       "required": false
     },
     {
-      "id": "nusmp:requiem_ladybug_brooch",
+      "id": "anime_multiverse:requiem_ladybug_brooch",
       "required": false
     },
     {
-      "id": "nusmp:greed_island_original_binder",
+      "id": "anime_multiverse:greed_island_original_binder",
       "required": false
     },
     {
-      "id": "nusmp:hogyoku_of_the_crystal_dissolution",
+      "id": "anime_multiverse:hogyoku_of_the_crystal_dissolution",
       "required": false
     },
     {
-      "id": "nusmp:millennium_scale",
+      "id": "anime_multiverse:millennium_scale",
       "required": false
     },
     {
-      "id": "nusmp:wisteria_incense_sachet",
+      "id": "anime_multiverse:wisteria_incense_sachet",
       "required": false
     }
   ]

@@ -18,7 +18,7 @@ import java.util.TreeSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Why: a theme's own rooms are claimed by a data file ({@code data/nusmp/mega/template_themes/<theme>.json}) that names them only by id PREFIX, so a typo in a prefix (a
+ * Why: a theme's own rooms are claimed by a data file ({@code data/anime_multiverse/mega/template_themes/<theme>.json}) that names them only by id PREFIX, so a typo in a prefix (a
  * folder that does not exist, a prefix nothing starts with, a room whose name the prefix misses) is a room that is silently free for every theme, or a claim on nothing, and
  * neither fails anywhere else. This test reads the shipped files and the shipped templates and checks that they agree: every file parses and names a real theme, every prefix is
  * a real kind folder and claims at least one template, every template named {@code <theme>_*} is claimed by that theme's file (and only by it), the weights are positive and
@@ -28,9 +28,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * directory of Gradle's test task), no Minecraft.
  */
 class TemplateThemesDataTest {
-    private static final Path THEMES = Path.of("src/main/resources/data/nusmp/mega/template_themes");
-    private static final Path STRUCT = Path.of("src/main/resources/data/nusmp/structure/mega");
-    private static final Path POOLS = Path.of("src/main/resources/data/nusmp/worldgen/template_pool/mega");
+    private static final Path THEMES = Path.of("src/main/resources/data/anime_multiverse/mega/template_themes");
+    private static final Path STRUCT = Path.of("src/main/resources/data/anime_multiverse/structure/mega");
+    private static final Path POOLS = Path.of("src/main/resources/data/anime_multiverse/worldgen/template_pool/mega");
     private static final Path CATALOG = Path.of("src/test/resources/mega/catalog.json");
 
     /** One parsed theme file. */
@@ -55,7 +55,7 @@ class TemplateThemesDataTest {
         return out;
     }
 
-    /** Every template of the data folder as "nusmp:mega/&lt;folder&gt;/&lt;name&gt;". */
+    /** Every template of the data folder as "anime_multiverse:mega/&lt;folder&gt;/&lt;name&gt;". */
     private static List<String> templates() throws IOException {
         List<String> out = new ArrayList<>();
         try (var folders = Files.list(STRUCT)) {
@@ -63,7 +63,7 @@ class TemplateThemesDataTest {
                 try (var files = Files.list(folder)) {
                     for (Path f : files.filter(x -> x.toString().endsWith(".nbt")).sorted().toList()) {
                         String name = f.getFileName().toString();
-                        out.add("nusmp:mega/" + folder.getFileName() + "/" + name.substring(0, name.length() - ".nbt".length()));
+                        out.add("anime_multiverse:mega/" + folder.getFileName() + "/" + name.substring(0, name.length() - ".nbt".length()));
                     }
                 }
             }
@@ -84,9 +84,9 @@ class TemplateThemesDataTest {
             assertFalse(c.prefixes().isEmpty(), c.theme() + " claims nothing");
             Set<String> seen = new HashSet<>();
             for (String p : c.prefixes()) {
-                assertTrue(p.startsWith("nusmp:mega/"), c.theme() + ": prefix " + p + " must start with nusmp:mega/");
+                assertTrue(p.startsWith("anime_multiverse:mega/"), c.theme() + ": prefix " + p + " must start with anime_multiverse:mega/");
                 assertTrue(p.endsWith("_"), c.theme() + ": prefix " + p + " must end with an underscore (a prefix without it would claim a neighbour's rooms)");
-                assertTrue(p.split("/").length == 3, c.theme() + ": prefix " + p + " must be nusmp:mega/<folder>/<name>_");
+                assertTrue(p.split("/").length == 3, c.theme() + ": prefix " + p + " must be anime_multiverse:mega/<folder>/<name>_");
                 assertTrue(Files.isDirectory(STRUCT.resolve(folderOf(p))), c.theme() + ": " + folderOf(p) + " is not a kind folder of the templates");
                 assertTrue(seen.add(p), c.theme() + ": prefix " + p + " is listed twice");
             }
@@ -116,7 +116,7 @@ class TemplateThemesDataTest {
     void weightsArePositiveAndWrittenForExactlyTheClaimedPrefixes() throws IOException {
         for (Claim c : claims().values()) {
             Set<String> expected = new TreeSet<>();
-            for (String p : c.prefixes()) expected.add(p.substring("nusmp:".length()));
+            for (String p : c.prefixes()) expected.add(p.substring("anime_multiverse:".length()));
             assertEquals(expected, new TreeSet<>(c.relative().keySet()), c.theme() + ": `relative` must be written (as mega/<folder>/<name>_) for exactly the claimed prefixes");
             for (Map.Entry<String, Integer> e : c.relative().entrySet()) {
                 assertTrue(e.getValue() >= 1 && e.getValue() <= 150, c.theme() + ": weight of " + e.getKey() + " is " + e.getValue() + " (1..150)");

@@ -3,7 +3,7 @@
     python3 -B tools/gen_demon_ice_textures.py            # all textures
     python3 -B tools/gen_demon_ice_textures.py lance wall  # only the named ones
 
-Output: src/main/resources/assets/nusmp/textures/particle/demon_ice_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/demon_ice_*.png
 
 Look: corrupted ice, black glassy crystal (obsidian body, bright facet edges) with violet-blue light leaking out of its seams,
 frost that crawls as ferns and cracks, black cold fog, angular frost runes. Every crystal sprite is grey-scale + alpha where the
@@ -25,7 +25,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for clean edges
 
 

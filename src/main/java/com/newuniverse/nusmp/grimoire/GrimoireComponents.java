@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Compatibility only. Before 0.21 every grimoire stack carried an {@code nusmp:appearance} component (the old procedural look,
+ * Compatibility only. Before 0.21 every grimoire stack carried an {@code anime_multiverse:appearance} component (the old procedural look,
  * now removed). If the id vanished from the registry, Minecraft would fail to load those stacks and the books would be lost, so the
  * id stays registered with a pass-through codec that accepts whatever old data is there. GrimoireItem strips it from a stack the
  * first time the server sees it; the 0.21 look comes from the grimoire's own data (cover, magic, canon book, owner).

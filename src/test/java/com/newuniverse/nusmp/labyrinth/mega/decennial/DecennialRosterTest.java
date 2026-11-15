@@ -214,7 +214,7 @@ class DecennialRosterTest {
     @Test
     void theSeventeenFamousVillainsEachStandExactlyOnce() throws IOException {
         roster();
-        Path dir = ROOT.resolve("src/main/resources/data/nusmp/mega/dnd_bosses/famous");
+        Path dir = ROOT.resolve("src/main/resources/data/anime_multiverse/mega/dnd_bosses/famous");
         Set<String> famousFiles = new HashSet<>();
         try (var s = Files.list(dir)) {
             s.forEach(p -> famousFiles.add(p.getFileName().toString().replace(".json", "")));
@@ -258,7 +258,7 @@ class DecennialRosterTest {
             assertFalse(n.contains("hunger") || n.contains("food") || n.contains("starv") || n.contains("exhaust") || n.contains("saturat"), n);
         }
         for (String f : List.of("lairs.json", "signatures.json")) {
-            JsonObject table = JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/nusmp/mega/decennial/" + f), StandardCharsets.UTF_8)).getAsJsonObject();
+            JsonObject table = JsonParser.parseString(Files.readString(ROOT.resolve("src/main/resources/data/anime_multiverse/mega/decennial/" + f), StandardCharsets.UTF_8)).getAsJsonObject();
             for (var entry : table.entrySet()) {
                 if (entry.getKey().startsWith("_")) continue;                       // the explanation may say there is no hunger
                 String body = entry.getValue().toString().toLowerCase();

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * that table can roll are of Rare grade or lower (the grades the God of Order's ledger does not cap). This reads the templates and the table straight from the resources.
  */
 class RelicCacheTemplatesTest {
-    private static final Path RES = Path.of("src", "main", "resources", "data", "nusmp");
+    private static final Path RES = Path.of("src", "main", "resources", "data", "anime_multiverse");
 
     @Test
     void everyTreasureRoomChestRollsTheHiddenCache() throws IOException {
@@ -35,8 +35,8 @@ class RelicCacheTemplatesTest {
                     raw = new String(in.readAllBytes(), StandardCharsets.ISO_8859_1);
                 }
                 seen++;
-                if (raw.contains("nusmp:chests/labyrinth_trial")) bad.add(p.getFileName() + " still rolls the plain trial table");
-                if (!raw.contains("nusmp:chests/hidden_cache") && !raw.contains("nusmp:chests/library_ruins")) bad.add(p.getFileName() + " has no hidden cache chest");
+                if (raw.contains("anime_multiverse:chests/labyrinth_trial")) bad.add(p.getFileName() + " still rolls the plain trial table");
+                if (!raw.contains("anime_multiverse:chests/hidden_cache") && !raw.contains("anime_multiverse:chests/library_ruins")) bad.add(p.getFileName() + " has no hidden cache chest");
             }
         }
         assertTrue(seen >= 14, "the treasure rooms are found: " + seen);
@@ -54,6 +54,6 @@ class RelicCacheTemplatesTest {
             assertTrue(g.equals("normal") || g.equals("special") || g.equals("rare"), "the hidden cache may roll up to Rare, not " + g);
         }
         assertTrue(n >= 1, "the hidden cache has a relic entry");
-        assertTrue(json.contains("nusmp:chests/labyrinth_trial"), "it keeps the trial loot");
+        assertTrue(json.contains("anime_multiverse:chests/labyrinth_trial"), "it keeps the trial loot");
     }
 }

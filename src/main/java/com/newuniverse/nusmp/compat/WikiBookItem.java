@@ -25,6 +25,6 @@ public final class WikiBookItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("nusmp.wiki.tip").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("anime_multiverse.wiki.tip").withStyle(ChatFormatting.GRAY));
     }
 }

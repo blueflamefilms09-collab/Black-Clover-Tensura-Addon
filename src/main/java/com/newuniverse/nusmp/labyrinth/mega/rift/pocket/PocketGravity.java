@@ -16,8 +16,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class PocketGravity {
     private PocketGravity() {}
 
-    public static final ResourceLocation GRAVITY_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "pocket_gravity");
-    public static final ResourceLocation CUSHION_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "pocket_cushion");
+    public static final ResourceLocation GRAVITY_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket_gravity");
+    public static final ResourceLocation CUSHION_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket_cushion");
 
     /** Puts the pocket's gravity on a player: the zone's (null = none) in a pocket of the given base gravity, and the cushion for falls. */
     public static void apply(ServerPlayer p, PocketLayout.Kind zone, double base, boolean gravityOn) {

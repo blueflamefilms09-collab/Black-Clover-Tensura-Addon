@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "nusmp:soul_zombie",
-    "nusmp:corpse_jimmy",
-    "nusmp:corpse_david",
-    "nusmp:corpse_alfredo",
-    "nusmp:corpse_carl",
-    "nusmp:corpse_michael_caesal"
+    "anime_multiverse:soul_zombie",
+    "anime_multiverse:corpse_jimmy",
+    "anime_multiverse:corpse_david",
+    "anime_multiverse:corpse_alfredo",
+    "anime_multiverse:corpse_carl",
+    "anime_multiverse:corpse_michael_caesal"
   ]
 }

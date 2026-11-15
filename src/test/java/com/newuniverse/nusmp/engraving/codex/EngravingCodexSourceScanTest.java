@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EngravingCodexSourceScanTest {
     private static final Path COMMON = Path.of("src/main/java/com/newuniverse/nusmp/engraving/codex");
     private static final Path CLIENT = Path.of("src/main/java/com/newuniverse/nusmp/client/engraving");
-    private static final Pattern CLIENT_NAMES = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT_NAMES = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
 
     private static String strip(String s) { return s.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\\n]*", ""); }
 
@@ -109,7 +109,7 @@ class EngravingCodexSourceScanTest {
         }
         assertFalse(body(src, "private void drawFurniture(").contains("for ("), "no loop over the entries in the footer");
         // the strings of the footer are built where the filter or the page changes
-        assertTrue(body(src, "private void updateLines(").contains("tr(\"nusmp.engraving_codex.count\""));
+        assertTrue(body(src, "private void updateLines(").contains("tr(\"anime_multiverse.engraving_codex.count\""));
         assertTrue(body(src, "private void go(").contains("updateLines()"));
         assertTrue(body(src, "private void refilter(").contains("updateLines()"));
     }

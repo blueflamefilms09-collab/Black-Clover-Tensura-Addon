@@ -10,13 +10,13 @@ import java.util.Map;
  * Why: every word the puzzles say is a lang key with an English fallback in code ({@code Component.translatableWithFallback}), so the messages read fine before the lang fragment
  * ({@code tools/lang/puzzles_v2.json}, merged into {@code en_us.json} by the lead) is merged. This is the one place the English lives: the world layer asks {@link #resolve} for the key of
  * a rule's line and {@link #en} for its text, the JUnit test demands that every line a rule can say exists here, and {@link #json} writes the flat fragment so the file and the code can never
- * drift apart. Keys are relative to {@code message.nusmp.mega.puzzle.}: {@code <puzzle>.name}, {@code <puzzle>.hint}, {@code <puzzle>.<line>}, {@code common.<line>}, {@code theme.<theme id>}
+ * drift apart. Keys are relative to {@code message.anime_multiverse.mega.puzzle.}: {@code <puzzle>.name}, {@code <puzzle>.hint}, {@code <puzzle>.<line>}, {@code common.<line>}, {@code theme.<theme id>}
  * (the per-theme flavour, with the puzzle's name as its argument), {@code riddle.<id>.q / a0..a2}, {@code item.<token>.q}, {@code colour.<name>}, {@code compound.<n>}. Pure.
  */
 public final class PuzzleText {
     private PuzzleText() {}
 
-    public static final String PREFIX = "message.nusmp.mega.puzzle.";
+    public static final String PREFIX = "message.anime_multiverse.mega.puzzle.";
     private static final Map<String, String> EN = new LinkedHashMap<>();
 
     private static void p(String key, String text) { EN.put(key, text); }

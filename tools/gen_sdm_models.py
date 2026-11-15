@@ -8,9 +8,9 @@ spirit is rebuilt from its LARGEST cubes (volume), in the pose of the form (rest
 with its neck raised). Nothing of the geo files changes.
 
 Writes
-  src/main/resources/assets/nusmp/sdm_meshes/<element>_<kind>.txt     the meshes (the `q` quad line format of SpiritDiveWind3Mesh, every quad on layer 1 = the additive layer)
-  src/main/resources/assets/nusmp/textures/aura/sdm_skin.png         16 x 16 plain light (the meshes are mapped on its middle)
-  src/main/resources/assets/nusmp/textures/aura/sdm_trail.png        64 x 16 the light strip (soft across, bright head, fading tail)
+  src/main/resources/assets/anime_multiverse/sdm_meshes/<element>_<kind>.txt     the meshes (the `q` quad line format of SpiritDiveWind3Mesh, every quad on layer 1 = the additive layer)
+  src/main/resources/assets/anime_multiverse/textures/aura/sdm_skin.png         16 x 16 plain light (the meshes are mapped on its middle)
+  src/main/resources/assets/anime_multiverse/textures/aura/sdm_trail.png        64 x 16 the light strip (soft across, bright head, fading tail)
   docs/previews/spirit_dive_merge/models.txt                         cubes, quads, vertices and size per mesh
 
 Mesh space: model pixels (1/16 block), origin = the centre of the spirit's bounding box, +y points DOWN (the layer space of the player renderer), the front of the spirit is -z. The mesh is normalised so that
@@ -25,9 +25,9 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-GEO = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "geo", "entity")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdm_meshes")
-TEXDIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+GEO = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "geo", "entity")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdm_meshes")
+TEXDIR = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
 DOC = os.path.join(ROOT, "docs", "previews", "spirit_dive_merge", "models.txt")
 
 NORM = 32.0                                    # the longest side of every mesh, px

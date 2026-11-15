@@ -559,7 +559,7 @@ def write_item_models(item_id, upright, third_scale=None, display=None):
         for k in ("thirdperson_righthand", "thirdperson_lefthand"):
             if k in disp:
                 disp[k]["scale"] = [third_scale] * 3
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": disp}
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": disp}
     mesh_path = os.path.join(MESH_DIR, item_id + ".txt")
     if os.path.exists(mesh_path):
         info = dp.read_mesh(mesh_path)
@@ -567,7 +567,7 @@ def write_item_models(item_id, upright, third_scale=None, display=None):
             plan = dp.plan_for(item_id, model, info)
             model = dp.apply_plan(model, plan)
     write_json(os.path.join(MODEL_DIR, item_id + ".json"), model)
-    icon = {"parent": "minecraft:item/generated" if upright else "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}
+    icon = {"parent": "minecraft:item/generated" if upright else "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
     write_json(os.path.join(MODEL_DIR, item_id + "_icon.json"), icon)
     return model
 

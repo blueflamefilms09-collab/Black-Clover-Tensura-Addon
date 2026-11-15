@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-RES = os.path.join(ROOT, 'src/main/resources/assets/nusmp/textures')
+RES = os.path.join(ROOT, 'src/main/resources/assets/anime_multiverse/textures')
 SRC = os.path.join(ROOT, 'src/main/java/com/newuniverse/nusmp')
 NAME = re.compile(r'(ring|circle|halo|glow|ripple|sigil|haze|puff|bloom|flare|mote|spark|glint)')
 

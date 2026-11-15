@@ -1,0 +1,33 @@
+{
+ "id": "millennium_eye",
+ "grade": "GENESIS",
+ "ambient_sound": "anime_multiverse:relic.ambient.millennium_eye",
+ "draw_ticks": 12,
+ "layers": [
+  {
+   "name": "wdjat glow",
+   "kind": "geometry",
+   "type": "aura_shell",
+   "group": "wdjat_glow",
+   "views": [
+    "hand",
+    "worn"
+   ]
+  },
+  {
+   "name": "eye glint",
+   "kind": "particle",
+   "type": "glints",
+   "particle": "anime_multiverse:gem_sparkle",
+   "count": 1,
+   "every": 12,
+   "radius": 0.4,
+   "rise": 0.01,
+   "views": [
+    "hand",
+    "worn"
+   ],
+   "color": "58F0E8"
+  }
+ ]
+}

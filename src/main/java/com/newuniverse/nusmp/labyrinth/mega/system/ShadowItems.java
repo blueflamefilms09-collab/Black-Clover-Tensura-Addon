@@ -14,8 +14,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Why: the registrations of the Shadow Core, in one class so {@link SystemRegistry#init} can force them with one call before {@code NUItems.ITEMS.register}
- * (the way {@code AvatarItems} does for the Genesis Core): the item {@code nusmp:shadow_core}, put on the mod's shared item register, and the one data component
- * it carries, {@code nusmp:shadow_core_charges}, its remaining extractions. A data component, not a damage value or NBT, because it is the 1.21 form of "a number
+ * (the way {@code AvatarItems} does for the Genesis Core): the item {@code anime_multiverse:shadow_core}, put on the mod's shared item register, and the one data component
+ * it carries, {@code anime_multiverse:shadow_core_charges}, its remaining extractions. A data component, not a damage value or NBT, because it is the 1.21 form of "a number
  * on a stack": saved, synced to the client for the tooltip, and copied with the stack. The component has NO default in the item's properties on purpose: a stack
  * without it reads as a full core ({@link ShadowCoreItem#charges}), so a core from a creative tab, a command or a loot table needs no setup, and no code
  * depends on the order the registries are filled.
@@ -29,7 +29,7 @@ public final class ShadowItems {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> CHARGES =
             COMPONENTS.registerComponentType("shadow_core_charges", b -> b.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
-    /** {@code nusmp:shadow_core}: one to a stack, never destroyed by fire (a dungeon item). */
+    /** {@code anime_multiverse:shadow_core}: one to a stack, never destroyed by fire (a dungeon item). */
     public static final DeferredItem<ShadowCoreItem> SHADOW_CORE = NUItems.ITEMS.register("shadow_core",
             () -> new ShadowCoreItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 

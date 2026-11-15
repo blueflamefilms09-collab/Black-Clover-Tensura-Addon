@@ -49,7 +49,7 @@ final class EncounterSpawner {
     static final String TAG = MegaDungeon.DM_TAG;
     /** Persistent data: the id of the table entry that made it, and the game time it was made. */
     static final String ENTRY = "nusmp_dm_entry", BORN = "nusmp_dm_born";
-    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_dm_health"), DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mega_dm_damage");
+    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_dm_health"), DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_dm_damage");
     private static final Set<String> WARNED = new HashSet<>();
     /** The places tried round a cell, nearest first. */
     private static final int[][] OFFSETS = {{0, 0}, {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {2, 0}, {-2, 0}, {0, 2}, {0, -2}};
@@ -116,7 +116,7 @@ final class EncounterSpawner {
             }
         } catch (RuntimeException | LinkageError e) {
             String key = Bestiary.id(type) + ":" + e.getClass().getName();
-            if (WARNED.add(key)) LOG.warn("[nusmp] The Dungeon Master could not spawn {}: {}", Bestiary.id(type), e.toString());
+            if (WARNED.add(key)) LOG.warn("[anime_multiverse] The Dungeon Master could not spawn {}: {}", Bestiary.id(type), e.toString());
         }
         if (mob != null) mob.discard();
         return null;

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class ShopTableTest {
     private static ShopTable shipped() throws IOException {
-        ShopTable.Parsed p = ShopTable.parse(Files.readString(Path.of("src/main/resources/data/nusmp/elite/hub/shop.json")));
+        ShopTable.Parsed p = ShopTable.parse(Files.readString(Path.of("src/main/resources/data/anime_multiverse/elite/hub/shop.json")));
         assertTrue(p.problems().isEmpty(), "the shipped shop reads clean: " + p.problems());
         return p.table();
     }
@@ -30,7 +30,7 @@ class ShopTableTest {
         for (String c : new String[] {"gear", "food", "utility", "map"}) assertTrue(t.categories().contains(c), "category " + c);
         ShopTable.Offer map = t.get("dungeon_map");
         assertNotNull(map, "the Dungeon Map is on sale");
-        assertEquals("nusmp:dungeon_map", map.item());
+        assertEquals("anime_multiverse:dungeon_map", map.item());
         Set<String> ids = new HashSet<>();
         for (ShopTable.Offer o : t.offers()) {
             assertTrue(ids.add(o.id()));

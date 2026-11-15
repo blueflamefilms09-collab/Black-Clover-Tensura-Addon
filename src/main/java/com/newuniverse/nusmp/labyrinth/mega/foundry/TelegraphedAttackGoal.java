@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Why: the owner's design is that a strong enemy WARNS before it strikes, and that warning is a fair fight: the party sees the ground the attack will hit, has long enough to read it and
  * move, and can break the attacker's poise to stop it. This is the ability goal of the Mob Foundry with that added, for every ability the telegraph table
- * ({@code data/nusmp/mega/poise/telegraphs.json}) knows, whether it is a cleave, a slam, a leap, a dash, a dive, an aura or an ultimate: the abilities, their cooldowns and the brain that picks
+ * ({@code data/anime_multiverse/mega/poise/telegraphs.json}) knows, whether it is a cleave, a slam, a leap, a dash, a dive, an aura or an ultimate: the abilities, their cooldowns and the brain that picks
  * one are the existing ones ({@link FoundryAbility}, {@link FoundryBrain}, {@link FoundryAbilityRunner}); this goal changes only the wind-up. (1) The wind-up is at least the telegraph's minimum
  * (so a 4-tick lunge becomes a readable 10), shorter in desperation but never under the readable floor. (2) While it lasts, the outline of the exact ground the attack will hit is drawn
  * with the mod's particles every four ticks, with a smaller copy growing inside it. (3) The mob has super armor from the first tick of the wind-up until just after the swing, if the row

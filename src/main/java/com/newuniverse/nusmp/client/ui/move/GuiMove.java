@@ -42,7 +42,7 @@ import java.util.Map;
  *
  * <p><b>Nothing moves unless the player moves it:</b> an element without a saved place is drawn exactly as before (the old GUI Size behaviour, bit for bit). A moved
  * element is drawn at {@code total = its own size x the GUI Size size} (one product, applied once, see {@link GuiMoveMath#total}) with its corner at the saved place.
- * Edit mode ({@link GuiMoveScreen}) is opened by the {@link #KEY} (default F9, rebindable under Controls) or {@code /nusmp gui move}; {@code /nusmp gui reset} puts every
+ * Edit mode ({@link GuiMoveScreen}) is opened by the {@link #KEY} (default F9, rebindable under Controls) or {@code /anime_multiverse gui move}; {@code /anime_multiverse gui reset} puts every
  * GUI back. The saved layout is {@code nusmp-gui-layout-client.toml} ({@link GuiMoveOptions}), read once when it loads.
  *
  * <p><b>Cost.</b> A frame costs one map lookup and a few field writes per visible element, plus the pose push of a moved one; nothing is allocated and no string is built.
@@ -52,7 +52,7 @@ public final class GuiMove {
     private GuiMove() {}
 
     /** Open edit mode. Default F9 (next to the GUI Size key F8); rebind it under Controls > Multiverse of Anime. */
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.gui_move", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_F9, "key.categories.nusmp");
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.gui_move", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_F9, "key.categories.anime_multiverse");
 
     private static final String PREFIX = "com.newuniverse.nusmp.";
     private static final Map<Class<?>, Object> PANELS = new HashMap<>();
@@ -82,9 +82,9 @@ public final class GuiMove {
         if (mc.player == null) openRequested = false;
     }
 
-    /** {@code /nusmp gui move} opens edit mode (a flag the next tick picks up, so the chat screen closing cannot swallow it); {@code /nusmp gui reset} puts every GUI back. */
+    /** {@code /anime_multiverse gui move} opens edit mode (a flag the next tick picks up, so the chat screen closing cannot swallow it); {@code /anime_multiverse gui reset} puts every GUI back. */
     private static void registerCommands(RegisterClientCommandsEvent e) {
-        e.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("gui")
+        e.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("gui")
                 .then(Commands.literal("move").executes(c -> {
                     openRequested = true;
                     return Command.SINGLE_SUCCESS;

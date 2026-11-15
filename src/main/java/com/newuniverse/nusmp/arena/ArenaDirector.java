@@ -89,7 +89,7 @@ public final class ArenaDirector {
                 }
             }
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] The arena director failed; the arena is reset so it cannot stay stuck", ex);
+            LOG.error("[anime_multiverse] The arena director failed; the arena is reset so it cannot stay stuck", ex);
             st.reset();
             save.setDirty();
         }
@@ -126,7 +126,7 @@ public final class ArenaDirector {
             st.abandon(now);
             save.setDirty();
             for (ServerPlayer p : players) p.sendSystemMessage(Component.literal("Lucius withdraws into the Final Hour. The arena is quiet for 60 seconds.").withStyle(ChatFormatting.GRAY));
-            LOG.info("[nusmp] The Final Hour was abandoned; the arena rests for 60 seconds");
+            LOG.info("[anime_multiverse] The Final Hour was abandoned; the arena rests for 60 seconds");
         }
     }
 
@@ -135,7 +135,7 @@ public final class ArenaDirector {
         clearStrays(sl);
         LuciusBoss boss = ZogratisBoss.spawnAt(sl, ZogratisEntities.LUCIUS.get(), ZogratisArena.daisStand(), 0f);
         if (boss == null) {
-            LOG.warn("[nusmp] The arena could not create Lucius; the arena rests for 60 seconds");
+            LOG.warn("[anime_multiverse] The arena could not create Lucius; the arena rests for 60 seconds");
             save.state().abandon(sl.getGameTime());
             return;
         }
@@ -182,7 +182,7 @@ public final class ArenaDirector {
                 p.sendSystemMessage(Component.literal("[ Return home ]").withStyle(s -> s.withColor(ChatFormatting.AQUA).withBold(true)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/zogratis_arena leave"))));
             }
-            LOG.info("[nusmp] Lucius was defeated in the arena; it rests for {} minutes", ArenaConfig.cooldownMinutes());
+            LOG.info("[anime_multiverse] Lucius was defeated in the arena; it rests for {} minutes", ArenaConfig.cooldownMinutes());
         } else if (e.getEntity() instanceof ServerPlayer p) {
             long now = sl.getGameTime();
             p.getPersistentData().putLong(SOUL, now + SOUL_TICKS);

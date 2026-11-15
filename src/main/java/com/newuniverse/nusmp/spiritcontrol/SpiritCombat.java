@@ -79,10 +79,10 @@ public final class SpiritCombat {
         UUID id = p.getUUID();
         if (on) {
             if (ACTIVE.putIfAbsent(id, new Fight()) == null) {
-                p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_control.combat_on", "Spirit combat mode ON: your spirits cast with their mana and yours.").withStyle(ChatFormatting.GOLD), true);
+                p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_control.combat_on", "Spirit combat mode ON: your spirits cast with their mana and yours.").withStyle(ChatFormatting.GOLD), true);
             }
         } else if (ACTIVE.remove(id) != null) {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_control.combat_off_now", "Spirit combat mode off.").withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_control.combat_off_now", "Spirit combat mode off.").withStyle(ChatFormatting.GRAY), true);
         }
         com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.refresh(p);
     }
@@ -177,8 +177,8 @@ public final class SpiritCombat {
     private static void outOfMana(ServerPlayer p, Fight f, long now, SpiritHandle h, CombatRules.Refusal why) {
         if (now < f.nextSay) return;
         f.nextSay = now + 100;
-        if (why == CombatRules.Refusal.NO_SPIRIT_MANA) p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_control.spirit_dry", "%s has no mana left to cast.", h.display()).withStyle(ChatFormatting.AQUA), true);
-        else p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_control.user_dry", "%s waits: you have no mana to spare.", h.display()).withStyle(ChatFormatting.AQUA), true);
+        if (why == CombatRules.Refusal.NO_SPIRIT_MANA) p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_control.spirit_dry", "%s has no mana left to cast.", h.display()).withStyle(ChatFormatting.AQUA), true);
+        else p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_control.user_dry", "%s waits: you have no mana to spare.", h.display()).withStyle(ChatFormatting.AQUA), true);
     }
 
     // ================================================================================================ the target

@@ -22,7 +22,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ROOT, "docs", "previews", "ex_singularity")
 UNIFONT = "/usr/share/fonts/opentype/unifont/unifont.otf"
 SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"

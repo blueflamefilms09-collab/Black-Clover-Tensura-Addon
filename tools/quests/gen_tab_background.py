@@ -1,4 +1,4 @@
-"""Why: the "Multiverse of Anime" advancement tab (data/nusmp/advancement/root.json) used the altar block texture (a flat green 16x16 tile) as its
+"""Why: the "Multiverse of Anime" advancement tab (data/anime_multiverse/advancement/root.json) used the altar block texture (a flat green 16x16 tile) as its
 background. 3.44.0 gives the tab its own seamless background, three candidates, all dark and low-contrast so the advancement frames and lines stay readable.
 
 How the game draws it: Minecraft 1.21.1's advancement tab fills the window black and then blits ONE texture over and over in 16x16 GUI-pixel cells, with the
@@ -8,8 +8,8 @@ at GUI scale 2 and 4 (and slightly uneven at 3). Every tile here is 32x32 and wr
     python tools/quests/gen_tab_background.py            # writes the three textures + docs/previews/advancement_tab/*.png
     python tools/quests/gen_tab_background.py --check    # exits 1 if a texture on disk differs from what the script makes
 
-Output (textures): src/main/resources/assets/nusmp/textures/gui/advancements/{multiverse_weave,sigil_tiles,grimoire_pages}.png
-The shipped one is multiverse_weave (root.json). To use another, change the "background" string in data/nusmp/advancement/root.json AND ROOT_BG in
+Output (textures): src/main/resources/assets/anime_multiverse/textures/gui/advancements/{multiverse_weave,sigil_tiles,grimoire_pages}.png
+The shipped one is multiverse_weave (root.json). To use another, change the "background" string in data/anime_multiverse/advancement/root.json AND ROOT_BG in
 tools/quests/spec_adv.py. The old texture textures/block/grimoire_altar_top.png stays in the jar (the altar block still uses it).
 """
 import math
@@ -20,7 +20,7 @@ import sys
 from PIL import Image, ImageDraw
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "advancements")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "advancements")
 PREV = os.path.join(ROOT, "docs", "previews", "advancement_tab")
 N = 32
 

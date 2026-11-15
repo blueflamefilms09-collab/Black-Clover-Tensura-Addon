@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the dungeon armour already carries randomised stat lines (the pre-rolled {@code nusmp:gear_roll}); what was missing is a way for a CHEST, or a lucky kill, to hand one out
+ * Why: the dungeon armour already carries randomised stat lines (the pre-rolled {@code anime_multiverse:gear_roll}); what was missing is a way for a CHEST, or a lucky kill, to hand one out
  * at all, and for Luck and depth to decide how good it is. Three decisions, all pure: WHICH piece (any piece of a set whose first depth band the floor has reached, uniformly, so a
  * first-floor chest never holds the deepest set); HOW GOOD (the rarity the existing weights give at this band and Luck, one band better for a boss, never above the last band);
  * and THE SEED of the roll (drawn from the dice, so two chests give two different pieces and a test with a seeded dice gets the same piece every time). The roll of the stat lines

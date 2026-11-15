@@ -37,7 +37,7 @@ public final class ArcClient {
             try {
                 registerBoss(e, b);
             } catch (RuntimeException ex) {
-                LOG.error("[nusmp] no renderer for the arc boss {}: {}", b.id(), ex.toString());
+                LOG.error("[anime_multiverse] no renderer for the arc boss {}: {}", b.id(), ex.toString());
             }
         }
     }

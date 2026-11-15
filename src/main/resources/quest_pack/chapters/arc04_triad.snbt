@@ -45,13 +45,13 @@
 				{
 					id: "405464116373318A"
 					type: "advancement"
-					advancement: "nusmp:spells/signature"
+					advancement: "anime_multiverse:spells/signature"
 					criterion: ""
 				}
 				{
 					id: "08031937815330B2"
 					type: "advancement"
-					advancement: "nusmp:arcs/dark_triad"
+					advancement: "anime_multiverse:arcs/dark_triad"
 					criterion: ""
 				}
 			]
@@ -76,7 +76,7 @@
 				{
 					id: "72186EE939C92215"
 					type: "advancement"
-					advancement: "nusmp:spells/signature_10"
+					advancement: "anime_multiverse:spells/signature_10"
 					criterion: ""
 				}
 			]
@@ -94,14 +94,14 @@
 			x: 4.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:bag_of_holding"
+				id: "anime_multiverse:bag_of_holding"
 			}
 			dependencies: ["278818B4655A79C6"]
 			tasks: [
 				{
 					id: "69430509A99ED550"
 					type: "advancement"
-					advancement: "nusmp:relics/first"
+					advancement: "anime_multiverse:relics/first"
 					criterion: ""
 				}
 			]
@@ -119,14 +119,14 @@
 			x: 6.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:ring_of_power"
+				id: "anime_multiverse:ring_of_power"
 			}
 			dependencies: ["10D761F0E728ED4A"]
 			tasks: [
 				{
 					id: "3EB60C7FF01259E8"
 					type: "advancement"
-					advancement: "nusmp:relics/equipped"
+					advancement: "anime_multiverse:relics/equipped"
 					criterion: ""
 				}
 			]
@@ -153,7 +153,7 @@
 				{
 					id: "7135C829FD96C4A7"
 					type: "advancement"
-					advancement: "nusmp:squads/created"
+					advancement: "anime_multiverse:squads/created"
 					criterion: ""
 				}
 			]
@@ -180,7 +180,7 @@
 				{
 					id: "67E397F581298CAF"
 					type: "advancement"
-					advancement: "nusmp:future/dark_triad_boss"
+					advancement: "anime_multiverse:future/dark_triad_boss"
 					criterion: ""
 				}
 			]
@@ -212,7 +212,7 @@
 				{
 					id: "7ACF2D964FA23AC1"
 					type: "advancement"
-					advancement: "nusmp:spells/signature_50"
+					advancement: "anime_multiverse:spells/signature_50"
 					criterion: ""
 				}
 			]

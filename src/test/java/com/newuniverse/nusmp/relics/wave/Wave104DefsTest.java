@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class Wave104DefsTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Pattern DEF = Pattern.compile("RelicDef\\.of\\(\"([a-z0-9_]+)\",\\s*\"((?:[^\"\\\\]|\\\\.)*)\",\\s*Grade\\.(\\w+),\\s*RelicSlot\\.(\\w+)\\)");
     private static final Map<String, int[]> RANGE = Map.of("NORMAL", new int[]{20, 30}, "SPECIAL", new int[]{35, 55});
 
@@ -106,7 +106,7 @@ class Wave104DefsTest {
         for (Def d : defs()) {
             for (String f : new String[]{"textures/item/" + d.id() + ".png", "models/item/" + d.id() + ".json", "models/item/" + d.id() + "_icon.json"})
                 assertTrue(Files.exists(ASSETS.resolve(f)), d.id() + " " + f);
-            for (String k : new String[]{"item.nusmp." + d.id(), "item.nusmp." + d.id() + ".card", "item.nusmp." + d.id() + ".desc"})
+            for (String k : new String[]{"item.anime_multiverse." + d.id(), "item.anime_multiverse." + d.id() + ".card", "item.anime_multiverse." + d.id() + ".desc"})
                 assertTrue(lang.contains("\"" + k + "\""), "lang " + k);
             if (!d.slot().equals("MAIN_HAND")) {
                 assertTrue(Files.exists(ASSETS.resolve("relic_worn/uq_" + d.id() + ".txt")), d.id() + " worn ornament");

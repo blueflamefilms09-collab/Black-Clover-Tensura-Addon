@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:arcs/dark_triad",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:ring_of_power"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.arcs.eye_midnight.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.arcs.eye_midnight.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_equipped": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "relic.equipped"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_equipped"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  }
+}

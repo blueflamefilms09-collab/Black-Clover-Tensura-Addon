@@ -36,14 +36,14 @@ public final class ChatterReloadListener implements ResourceManagerReloadListene
                     try (InputStream in = res.open()) {
                         ChatterDictionary.Parsed p = ChatterDictionary.parseFile(new String(in.readAllBytes(), StandardCharsets.UTF_8));
                         if (p.ok()) files.add(p);
-                        else LOG.warn("[nusmp] Avatar chatter file {} skipped: {}", rl, p.error());
+                        else LOG.warn("[anime_multiverse] Avatar chatter file {} skipped: {}", rl, p.error());
                     } catch (IOException | RuntimeException e) {
-                        LOG.warn("[nusmp] Avatar chatter file {} could not be read: {}", rl, e.toString());
+                        LOG.warn("[anime_multiverse] Avatar chatter file {} could not be read: {}", rl, e.toString());
                     }
                 }
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Avatar chatter could not scan its data folder", e);
+            LOG.warn("[anime_multiverse] Avatar chatter could not scan its data folder", e);
         }
         ChatterDictionary.install(ChatterDictionary.build(files));
     }

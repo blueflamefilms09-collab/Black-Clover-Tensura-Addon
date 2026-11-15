@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@code /nusmp debug worn}, a client command (nothing is sent to the server, no permission is needed, it prints once when run): lists what the local player wears in the four armour
+ * {@code /anime_multiverse debug worn}, a client command (nothing is sent to the server, no permission is needed, it prints once when run): lists what the local player wears in the four armour
  * slots and in the Curios slots, and for each piece the way it is drawn right now ({@link ArmorSlotPlan} for an armour relic, {@link WornPlan} for a Curios relic) with the reason
  * when nothing of it reaches the body. Complements {@code /multiverse relic debug}, which looks at any wearer from the server's side. Client thread only.
  */
@@ -36,10 +36,10 @@ public final class WornDebugCommand {
 
     /** Game bus: {@code RegisterClientCommandsEvent}. */
     public static void register(RegisterClientCommandsEvent e) {
-        e.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("debug").then(Commands.literal("worn").executes(WornDebugCommand::run))));
+        e.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("debug").then(Commands.literal("worn").executes(WornDebugCommand::run))));
     }
 
-    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.nusmp.worn_debug." + key, fallback, args); }
+    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.worn_debug." + key, fallback, args); }
 
     private static int run(CommandContext<CommandSourceStack> ctx) {
         Minecraft mc = Minecraft.getInstance();

@@ -1,4 +1,4 @@
-"""Why: Zenon Zogratis, the youngest of the Dark Triad and the one with the least to say (entity nusmp:zenon_zogratis, entity/zogratis/ZenonBoss). Remodelled from the old hand-built
+"""Why: Zenon Zogratis, the youngest of the Dark Triad and the one with the least to say (entity anime_multiverse:zenon_zogratis, entity/zogratis/ZenonBoss). Remodelled from the old hand-built
 model into the art kit's player-proportioned character (docs/arc/remodel.md): lean, bareheaded (no crown, as in the references), short black hair, a vertical scar with cross bars
 that runs through the forehead and one eye, pale eyes, a maroon belted vest over bare arms. `form2` is the hybrid of the Gates (100% Beelzebub): bone spines and ribs through the
 vest, a bone crest for hair, the wing remnants of an insect, hollow eyes that burn indigo. The colours and the cut are the game's reading of the design, not a trace.

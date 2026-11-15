@@ -47,7 +47,7 @@ public final class Pages15SelfTests {
 
     private static Set<String> langKeys() {
         Set<String> keys = new HashSet<>();
-        try (InputStream in = Pages15SelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+        try (InputStream in = Pages15SelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
             if (in != null) {
                 JsonObject o = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
                 for (var e : o.entrySet()) if (e.getValue() != null && e.getValue().isJsonPrimitive()) keys.add(e.getKey());

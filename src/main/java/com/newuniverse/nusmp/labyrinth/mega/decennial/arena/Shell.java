@@ -110,14 +110,14 @@ public final class Shell {
         // what a standalone hall adds: the Gatekeeper slab, the open entry, the altar on its pedestal, and the seal cells
         for (int x = c - 1; x <= c + 1; x++) {
             for (int z = 0; z <= 1; z++)
-                for (int y = 1; y <= 4; y++) a.extra(x, y, z, "nusmp:gatekeeper_door[kind=sector,open=false,half=" + (y <= 2 ? "lower" : "upper") + "]");
+                for (int y = 1; y <= 4; y++) a.extra(x, y, z, "anime_multiverse:gatekeeper_door[kind=sector,open=false,half=" + (y <= 2 ? "lower" : "upper") + "]");
             for (int z = last - 1; z <= last; z++)
                 for (int y = 1; y <= 4; y++) a.extra(x, y, z, BossArenaStructure.AIR);
             for (int y = 1; y <= 4; y++) a.sealCell(x, y, last - 1, b("iron_bars"));
         }
         a.extra(c, 1, c, p.floorC());
         a.extra(c, 2, c, p.trim());
-        a.extra(c, 3, c, "nusmp:guardian_altar");
+        a.extra(c, 3, c, "anime_multiverse:guardian_altar");
         return a;
     }
 

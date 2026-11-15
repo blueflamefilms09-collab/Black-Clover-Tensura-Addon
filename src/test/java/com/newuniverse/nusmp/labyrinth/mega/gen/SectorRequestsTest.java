@@ -32,7 +32,7 @@ class SectorRequestsTest {
         assertEquals(-1, q.start.parent());
         assertTrue(q.pre.isEmpty());
         assertNull(prep.tunnelObstacle());
-        assertEquals("nusmp:mega/vault_2", q.forced.get(MegaGrid.VAULT), "the vault pool follows the relic count");
+        assertEquals("anime_multiverse:mega/vault_2", q.forced.get(MegaGrid.VAULT), "the vault pool follows the relic count");
         assertEquals(2, q.relicCount);
         assertTrue(q.exclusions.isEmpty());
         assertEquals(p.region(), q.region);

@@ -35,7 +35,7 @@ public final class SpiritLooksSelfTests {
     }
 
     private static boolean has(String path) {
-        return SpiritLooksSelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null;
+        return SpiritLooksSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null;
     }
 
     private static Result looks(MinecraftServer server) {

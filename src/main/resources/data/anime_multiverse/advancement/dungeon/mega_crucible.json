@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:dungeon/mega_sector",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.mega_crucible.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.mega_crucible.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_mega_crucible_choice": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "mega.crucible_choice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_mega_crucible_choice"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

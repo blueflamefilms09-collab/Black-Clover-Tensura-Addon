@@ -20,7 +20,7 @@ public final class DeckSummonSelfTests {
 
     static SelfTests.Result run() throws IOException {
         if (VfxShape.valueOf("DECK_SUMMON").ordinal() != 439) return SelfTests.Result.fail("DECK_SUMMON moved from its shipped ordinal 439 (ordinals are saved; shapes are only ever appended after it)");   // 439 = its place when it shipped; later shapes (the Storm Magic ones) are appended behind it
-        try (InputStream in = DeckSummonSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/deck_summon.png")) {
+        try (InputStream in = DeckSummonSelfTests.class.getResourceAsStream("/assets/anime_multiverse/textures/particle/deck_summon.png")) {
             if (in == null) return SelfTests.Result.fail("the summon atlas textures/particle/deck_summon.png is not in the jar");
         }
         if (DeckSummonTimeline.TOTAL < 30 || DeckSummonTimeline.TOTAL > 50) return SelfTests.Result.fail("the summon is not about two seconds: " + DeckSummonTimeline.TOTAL + " ticks");

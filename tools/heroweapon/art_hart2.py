@@ -12,7 +12,7 @@ sections lofted, swept and turned, small raised parts as their own named parts, 
 skin, 8 to 14 named parts and at most 2800 quads each. The shared tools (materials, the gem and its seven-sided setting, the Big Dipper engraving, the sprite
 canvas, the item model writer, the previews, the audit) are in art_hart2_kit.py.
 
-Per weapon this writes, under src/main/resources/assets/nusmp:
+Per weapon this writes, under src/main/resources/assets/anime_multiverse:
   weapon_meshes/<id>.txt                       the mesh (per-vertex "qn" lines, `grip` and `# part` lines written by mesh_lib)
   textures/entity/weapon/<id>.png, <id>_glow.png   the painted skin and its glow skin (512 px, UVs in the renderer's 128 space)
   textures/item/<id>.png                        the 16 x 16 sprite (the inventory icon), drawn by hand-built pixel code, not a render
@@ -1174,7 +1174,7 @@ def make(item, preview=False, views=False):
 
 def write_class_fragment():
     """tools/heroweapon/classes_hart2.json: the size class of each id (existing classes only, so no table of the game has to grow); the lead merges it."""
-    frag = {"_doc": "hart2 (the Seven Star weapons): id -> a class of assets/nusmp/weapon_classes.json. No new class is needed. Merge into the `weapons` map of "
+    frag = {"_doc": "hart2 (the Seven Star weapons): id -> a class of assets/anime_multiverse/weapon_classes.json. No new class is needed. Merge into the `weapons` map of "
                     "tools/relics/weapon_classes.json (then python tools/relics/audit_weapon_scale.py --write copies it to the game).",
             "classes": {}, "weapons": {k: v for k, v in sorted(CLASS_OF.items())}}
     with open(K.CLASS_FRAGMENT, "w", newline="\n") as f:

@@ -35,9 +35,9 @@ public class LootMaterialItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp." + id + ".lore", lore).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        if (code) tip.add(LootText.text("tooltip.nusmp.loot.use." + id).withStyle(ChatFormatting.AQUA));
-        tip.add(LootText.text("tooltip.nusmp.loot.value", CoinMath.describe(value)).withStyle(ChatFormatting.DARK_GRAY));
-        tip.add(LootText.text("tooltip.nusmp.loot.sell_hint").withStyle(ChatFormatting.DARK_GRAY));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse." + id + ".lore", lore).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        if (code) tip.add(LootText.text("tooltip.anime_multiverse.loot.use." + id).withStyle(ChatFormatting.AQUA));
+        tip.add(LootText.text("tooltip.anime_multiverse.loot.value", CoinMath.describe(value)).withStyle(ChatFormatting.DARK_GRAY));
+        tip.add(LootText.text("tooltip.anime_multiverse.loot.sell_hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

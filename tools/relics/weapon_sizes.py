@@ -6,12 +6,12 @@ The owner's report: the dagger is tiny in first and third person, and the katana
   * four daggers have a hand-written first-person display with scale 0.383 (a 0.27 block weapon in the hand), and the others sit at 0.44 blocks.
 
 This tool keeps every old mesh file and writes NEW thickened copies next to them, which the renderer prefers when they exist:
-    assets/nusmp/weapon_meshes/<id>.txt            ->  assets/nusmp/weapon_meshes_sz/<id>.txt
-    assets/nusmp/weapon_meshes/up/<id>[_lod].txt   ->  assets/nusmp/weapon_meshes_sz/up/<id>[_lod].txt        (the Genesis / God melee upgrade meshes)
-    assets/nusmp/weapon_meshes_vu/<id>[_lod].txt   ->  assets/nusmp/weapon_meshes_vu_sz/<id>[_lod].txt        (the Genesis visual upgrade meshes)
+    assets/anime_multiverse/weapon_meshes/<id>.txt            ->  assets/anime_multiverse/weapon_meshes_sz/<id>.txt
+    assets/anime_multiverse/weapon_meshes/up/<id>[_lod].txt   ->  assets/anime_multiverse/weapon_meshes_sz/up/<id>[_lod].txt        (the Genesis / God melee upgrade meshes)
+    assets/anime_multiverse/weapon_meshes_vu/<id>[_lod].txt   ->  assets/anime_multiverse/weapon_meshes_vu_sz/<id>[_lod].txt        (the Genesis visual upgrade meshes)
 and rewrites ONLY firstperson_* of the model json of a dagger (its first-person scale), as display_presets.py does.
 
-THE RULE (the numbers are assets/nusmp/weapon_sizes.json, read by the Java class visual/sizes/WeaponSizeRule and by its tests)
+THE RULE (the numbers are assets/anime_multiverse/weapon_sizes.json, read by the Java class visual/sizes/WeaponSizeRule and by its tests)
   Mesh space: y along the weapon, x across the blade (width), z through it (thickness). The mesh is cut into 32 slices along y (weapon_orientation.measure).
   * Blade section: the median width / depth of the slices at 45 to 70 percent of the length (the same stretch for every weapon: past every guard, before the taper).
   * Length (daggers only): scaled about the grip up to `len3p` apparent third-person blocks (never smaller); katanas keep their length.
@@ -42,7 +42,7 @@ import weapon_orientation as wo      # noqa: E402
 import display_presets as dp         # noqa: E402
 
 ROOT = wc.ROOT
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 MODELS = os.path.join(ASSETS, "models", "item")
 RULES_JSON = os.path.join(ASSETS, "weapon_sizes.json")
 DIRS = (("weapon_meshes", "weapon_meshes_sz", "old"), ("weapon_meshes/up", "weapon_meshes_sz/up", "up"), ("weapon_meshes_vu", "weapon_meshes_vu_sz", "vu"))

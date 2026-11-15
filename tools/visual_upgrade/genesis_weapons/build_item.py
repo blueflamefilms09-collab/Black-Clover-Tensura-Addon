@@ -6,7 +6,7 @@ An item module `item_<id>.py` provides:
     TEX             the skin size (1024 / 2048)
     STATES          [(mesh id, state tag)] for items with several meshes (a bow's draw stages); default [(id, '')]
     build(it, state)    fills the Item (parts, groups, flares, painters, spec lists); `state` is the tag of the mesh
-    spec(it)            the extra spec entries ({'acts': ..., 'swing': ..., 'draw': ..., ...}) merged into assets/nusmp/visual_upgrade/<id>.json
+    spec(it)            the extra spec entries ({'acts': ..., 'swing': ..., 'draw': ..., ...}) merged into assets/anime_multiverse/visual_upgrade/<id>.json
 """
 import importlib
 import json

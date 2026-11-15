@@ -45,7 +45,7 @@
 				{
 					id: "5816058DDE4BA897"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_thread"
+					advancement: "anime_multiverse:magic/cast_thread"
 					criterion: ""
 				}
 			]
@@ -70,7 +70,7 @@
 				{
 					id: "6E7316EECEF9E9A9"
 					type: "advancement"
-					advancement: "nusmp:spells/art_thread_trap"
+					advancement: "anime_multiverse:spells/art_thread_trap"
 					criterion: ""
 				}
 			]
@@ -97,13 +97,13 @@
 				{
 					id: "3C790518ACCDF0AF"
 					type: "advancement"
-					advancement: "nusmp:spells/art_rouge"
+					advancement: "anime_multiverse:spells/art_rouge"
 					criterion: ""
 				}
 				{
 					id: "58ABBC3EC8C75193"
 					type: "advancement"
-					advancement: "nusmp:arcs/witches_forest"
+					advancement: "anime_multiverse:arcs/witches_forest"
 					criterion: ""
 				}
 			]
@@ -135,25 +135,25 @@
 				{
 					id: "0AA19D0AFE002435"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_plant"
+					advancement: "anime_multiverse:magic/cast_plant"
 					criterion: ""
 				}
 				{
 					id: "68BEF43AA6BCF3C4"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_tree"
+					advancement: "anime_multiverse:magic/cast_tree"
 					criterion: ""
 				}
 				{
 					id: "4FBC5D558DAB7BE8"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_vine"
+					advancement: "anime_multiverse:magic/cast_vine"
 					criterion: ""
 				}
 				{
 					id: "3D49170C170358F7"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_briar"
+					advancement: "anime_multiverse:magic/cast_briar"
 					criterion: ""
 				}
 			]
@@ -181,7 +181,7 @@
 				{
 					id: "34ED4B67B08C7291"
 					type: "advancement"
-					advancement: "nusmp:spells/page_thread_trap"
+					advancement: "anime_multiverse:spells/page_thread_trap"
 					criterion: ""
 				}
 			]
@@ -213,7 +213,7 @@
 				{
 					id: "26E83A896B2901FC"
 					type: "advancement"
-					advancement: "nusmp:future/witches_forest_boss"
+					advancement: "anime_multiverse:future/witches_forest_boss"
 					criterion: ""
 				}
 			]
@@ -245,7 +245,7 @@
 				{
 					id: "568E8B191074CDA5"
 					type: "advancement"
-					advancement: "nusmp:spells/special"
+					advancement: "anime_multiverse:spells/special"
 					criterion: ""
 				}
 			]

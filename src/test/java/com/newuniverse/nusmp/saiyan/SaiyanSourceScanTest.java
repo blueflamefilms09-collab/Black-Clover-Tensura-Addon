@@ -38,7 +38,7 @@ class SaiyanSourceScanTest {
 
     @Test
     void noClientClassAndNoMinecraftInstanceInTheCommonCode() throws IOException {
-        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
+        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
         for (String f : files()) assertFalse(client.matcher(code(f)).find(), f + " names a client-only class");
     }
 
@@ -105,21 +105,21 @@ class SaiyanSourceScanTest {
 
     @Test
     void everyTextKeyTheSaiyanCodeUsesIsInTheLanguageFile() throws IOException {
-        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
+        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
         List<String> keys = new ArrayList<>();
         for (SaiyanRules.Rank r : SaiyanRules.Rank.values()) keys.add(r.key());
-        for (String m : List.of("not_awakened", "no_ki", "no_stamina", "awakened", "rank_up")) keys.add("nusmp.saiyan.msg." + m);
+        for (String m : List.of("not_awakened", "no_ki", "no_stamina", "awakened", "rank_up")) keys.add("anime_multiverse.saiyan.msg." + m);
         Matcher h = Pattern.compile("\\bt\\(\"([a-z_]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
-        while (h.find()) keys.add("nusmp.saiyan.hud." + h.group(1));
-        keys.add("nusmp.saiyan.hud.blast");
-        keys.add("nusmp.saiyan.hud.barrage");
-        keys.add("key.nusmp.saiyan_blast");
-        keys.add("key.nusmp.saiyan_barrage");
+        while (h.find()) keys.add("anime_multiverse.saiyan.hud." + h.group(1));
+        keys.add("anime_multiverse.saiyan.hud.blast");
+        keys.add("anime_multiverse.saiyan.hud.barrage");
+        keys.add("key.anime_multiverse.saiyan_blast");
+        keys.add("key.anime_multiverse.saiyan_barrage");
         keys.add("gui_move.element.saiyan_hud");
-        keys.add("nusmp.gui_scale.gui.saiyan_hud");
+        keys.add("anime_multiverse.gui_scale.gui.saiyan_hud");
         for (String k : keys) assertTrue(lang.contains("\"" + k + "\""), "the language file lacks " + k);
         Matcher say = Pattern.compile("say\\(p, \"([a-z_]+)\"").matcher(code("SaiyanAbilities.java"));
-        while (say.find()) assertTrue(lang.contains("\"nusmp.saiyan.msg." + say.group(1) + "\""), "the language file lacks the message " + say.group(1));
+        while (say.find()) assertTrue(lang.contains("\"anime_multiverse.saiyan.msg." + say.group(1) + "\""), "the language file lacks the message " + say.group(1));
     }
 
     // ------------------------------------------------------------------ 3.65.0: Stage 2, the Goku path and the forms
@@ -183,7 +183,7 @@ class SaiyanSourceScanTest {
 
     @Test
     void everyStage2TextKeyIsInTheLanguageFile() throws IOException {
-        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
+        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
         List<String> keys = new ArrayList<>();
         for (SaiyanForms.Form f : SaiyanForms.ALL) keys.add(f.key());
         for (SaiyanFlightRules.Tier t : SaiyanFlightRules.Tier.values()) keys.add(t.key());
@@ -193,18 +193,18 @@ class SaiyanSourceScanTest {
             keys.add(u.epithetKey());
         }
         Pattern lit = Pattern.compile("(?:say\\(p, |msg\\(p, |deactivate\\(p, s, r, now, )\"([a-z_0-9]+)\"");
-        Pattern direct = Pattern.compile("translatable\\(\"(nusmp\\.[a-z_0-9.]*[a-z_0-9])\"");
+        Pattern direct = Pattern.compile("translatable\\(\"(anime_multiverse\\.[a-z_0-9.]*[a-z_0-9])\"");
         for (String f : files()) {
             if (f.equals("SaiyanSelfTests.java") || f.equals("SaiyanStage2SelfTests.java")) continue;
             String c = code(f);
             Matcher m = lit.matcher(c);
-            while (m.find()) keys.add("nusmp.saiyan.msg." + m.group(1));
+            while (m.find()) keys.add("anime_multiverse.saiyan.msg." + m.group(1));
             Matcher d = direct.matcher(c);
             while (d.find()) keys.add(d.group(1));
         }
         Matcher h = Pattern.compile("\\bt\\(\"([a-z_0-9]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
-        while (h.find()) keys.add("nusmp.saiyan.hud." + h.group(1));
-        Matcher k = Pattern.compile("new KeyMapping\\(\"(key\\.nusmp\\.saiyan_[a-z_]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
+        while (h.find()) keys.add("anime_multiverse.saiyan.hud." + h.group(1));
+        Matcher k = Pattern.compile("new KeyMapping\\(\"(key\\.anime_multiverse\\.saiyan_[a-z_]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
         while (k.find()) keys.add(k.group(1));
         assertTrue(keys.size() > 40, "the scan found the keys it should");
         for (String key : keys) assertTrue(lang.contains("\"" + key + "\""), "the language file lacks " + key);

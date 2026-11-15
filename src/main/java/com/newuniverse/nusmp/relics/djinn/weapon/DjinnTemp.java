@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.UUID;
 
 /**
- * The {@code nusmp:djinn_temp} component of a Djinn weapon, read and written as a view over its compound: who the weapon was summoned for, which
+ * The {@code anime_multiverse:djinn_temp} component of a Djinn weapon, read and written as a view over its compound: who the weapon was summoned for, which
  * Djinn, when it lapses (a game time, 0 = it lasts as long as the Equip) and whether it is an admin weapon (given by command or taken from the creative
  * tab: it does not depend on a Djinn Equip, is never taken back and can be dropped). A stack without the component is a bare weapon item.
  */

@@ -36,7 +36,7 @@ public record UltimateDef(String id, String bookPath, String magic, String name,
     public boolean canon() { return origin != null && origin.startsWith("canon:"); }
 
     /** The lang key of the page's description (the same key the grimoire's "new page" message uses). */
-    public String langKey() { return "nusmp.page." + bookPath + "." + id; }
+    public String langKey() { return "anime_multiverse.page." + bookPath + "." + id; }
 
     /** The first problem with this row, or null when it is fine (used by the tests and the self-test). */
     public String problem() {

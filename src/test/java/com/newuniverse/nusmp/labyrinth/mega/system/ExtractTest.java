@@ -15,7 +15,7 @@ class ExtractTest {
     static final UUID ME = new UUID(1, 1), YOU = new UUID(2, 2);
 
     static ExtractLedger.Fallen fell(String type, UUID killer, double x, long tick) {
-        return new ExtractLedger.Fallen(type, "Name", 20.0, 3.0, x, 65, 0, "nusmp:mega_dungeon", killer, tick);
+        return new ExtractLedger.Fallen(type, "Name", 20.0, 3.0, x, 65, 0, "anime_multiverse:mega_dungeon", killer, tick);
     }
 
     static ExtractRules.Facts good() { return new ExtractRules.Facts(true, true, true, true, true, false, false, false, false, false); }
@@ -48,14 +48,14 @@ class ExtractTest {
         ExtractLedger l = new ExtractLedger(8);
         ExtractLedger.Fallen f = fell("minecraft:zombie", ME, 10, 100);
         l.record(f);
-        assertSame(f, l.nearest(ME, "nusmp:mega_dungeon", 12, 65, 0, 150, 100, 12));
-        assertNull(l.nearest(YOU, "nusmp:mega_dungeon", 12, 65, 0, 150, 100, 12), "only the killer can extract it");
+        assertSame(f, l.nearest(ME, "anime_multiverse:mega_dungeon", 12, 65, 0, 150, 100, 12));
+        assertNull(l.nearest(YOU, "anime_multiverse:mega_dungeon", 12, 65, 0, 150, 100, 12), "only the killer can extract it");
         assertNull(l.nearest(ME, "minecraft:overworld", 12, 65, 0, 150, 100, 12), "another dimension");
-        assertNull(l.nearest(ME, "nusmp:mega_dungeon", 40, 65, 0, 150, 100, 12), "too far away");
-        assertSame(f, l.nearest(ME, "nusmp:mega_dungeon", 22, 65, 0, 150, 100, 12), "exactly 12 blocks is still in reach");
-        assertNull(l.nearest(ME, "nusmp:mega_dungeon", 22.1, 65, 0, 150, 100, 12));
-        assertSame(f, l.nearest(ME, "nusmp:mega_dungeon", 12, 65, 0, 200, 100, 12), "exactly the window is still inside it");
-        assertNull(l.nearest(ME, "nusmp:mega_dungeon", 12, 65, 0, 201, 100, 12), "one tick later it is gone");
+        assertNull(l.nearest(ME, "anime_multiverse:mega_dungeon", 40, 65, 0, 150, 100, 12), "too far away");
+        assertSame(f, l.nearest(ME, "anime_multiverse:mega_dungeon", 22, 65, 0, 150, 100, 12), "exactly 12 blocks is still in reach");
+        assertNull(l.nearest(ME, "anime_multiverse:mega_dungeon", 22.1, 65, 0, 150, 100, 12));
+        assertSame(f, l.nearest(ME, "anime_multiverse:mega_dungeon", 12, 65, 0, 200, 100, 12), "exactly the window is still inside it");
+        assertNull(l.nearest(ME, "anime_multiverse:mega_dungeon", 12, 65, 0, 201, 100, 12), "one tick later it is gone");
     }
 
     @Test void theNearestOfSeveralDeathsWins() {
@@ -63,7 +63,7 @@ class ExtractTest {
         ExtractLedger.Fallen far = fell("minecraft:zombie", ME, 10, 100), near = fell("minecraft:skeleton", ME, 3, 90);
         l.record(far);
         l.record(near);
-        assertSame(near, l.nearest(ME, "nusmp:mega_dungeon", 0, 65, 0, 110, 100, 12));
+        assertSame(near, l.nearest(ME, "anime_multiverse:mega_dungeon", 0, 65, 0, 110, 100, 12));
     }
 
     @Test void takingAMemoryUsesItUp() {
@@ -72,7 +72,7 @@ class ExtractTest {
         l.record(f);
         assertTrue(l.take(f));
         assertFalse(l.take(f));
-        assertNull(l.nearest(ME, "nusmp:mega_dungeon", 0, 65, 0, 20, 100, 12));
+        assertNull(l.nearest(ME, "anime_multiverse:mega_dungeon", 0, 65, 0, 20, 100, 12));
         assertTrue(l.isEmpty());
     }
 

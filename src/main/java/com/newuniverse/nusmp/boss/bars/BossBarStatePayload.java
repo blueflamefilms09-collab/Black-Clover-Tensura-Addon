@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
  * pure {@link BossBarState#write}, so a unit test round-trips it; this class only lends the {@code FriendlyByteBuf} to it. Registered by {@code BossBarNet.registerPayloads}.
  */
 public record BossBarStatePayload(BossBarState state) implements CustomPacketPayload {
-    public static final Type<BossBarStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "boss_bar_state"));
+    public static final Type<BossBarStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss_bar_state"));
 
     public static final StreamCodec<FriendlyByteBuf, BossBarStatePayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> p.state().write(new Wr(buf)),
@@ -36,7 +36,7 @@ public record BossBarStatePayload(BossBarState state) implements CustomPacketPay
 
     /** {@code /multiverse bossbar preview}: the server asks one client to show a bar of a style with no boss behind it. */
     public record Preview(String style, int hpPercent, int phase, int phases) implements CustomPacketPayload {
-        public static final Type<Preview> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "boss_bar_preview"));
+        public static final Type<Preview> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss_bar_preview"));
         public static final StreamCodec<FriendlyByteBuf, Preview> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUtf(p.style(), BossBarState.MAX_STYLE);

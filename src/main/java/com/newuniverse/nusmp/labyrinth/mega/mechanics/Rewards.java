@@ -19,14 +19,14 @@ import java.util.List;
 
 /**
  * Why: a mechanic that was beaten pays out, and what it pays is data on the mechanic ({@code reward}: loot, xp, heal, mana). The loot is the dungeon's OWN trial table
- * ({@code nusmp:chests/labyrinth_trial}: ingots, arrows, bread, experience bottles, magic stones - never a relic, which only a Crucible may hand out in the Mega-Dungeon), rolled
+ * ({@code anime_multiverse:chests/labyrinth_trial}: ingots, arrows, bread, experience bottles, magic stones - never a relic, which only a Crucible may hand out in the Mega-Dungeon), rolled
  * once per player present, popped at the anchor so nothing is lost to a full inventory; experience scales with depth; healing and mana go to the players in the area. Shared by the
  * counters and by the {@code give_loot} primitive.
  */
 final class Rewards {
     private Rewards() {}
 
-    static final ResourceLocation TABLE = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/labyrinth_trial");
+    static final ResourceLocation TABLE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/labyrinth_trial");
 
     static void give(Instance in, ServerPlayer by) {
         List<ServerPlayer> who = in.inside.stream().filter(Safety::affects).toList();

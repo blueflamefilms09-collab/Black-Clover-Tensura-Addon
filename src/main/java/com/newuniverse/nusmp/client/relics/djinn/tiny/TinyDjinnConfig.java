@@ -16,15 +16,15 @@ public final class TinyDjinnConfig {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("djinn");
         TINY_MODEL = b.comment("The Lesser Summon is drawn as a real tiny Djinn (a small 3D figure of your Djinn at your shoulder). False: the old translucent bust.")
-                .translation("nusmp.configuration.djinn.tinyModel").define("tinyModel", true);
+                .translation("anime_multiverse.configuration.djinn.tinyModel").define("tinyModel", true);
         TINY_MAX = b.comment("The most Tiny Djinn drawn in one frame (the nearest ones are kept). 0 draws none.")
-                .translation("nusmp.configuration.djinn.tinyMax").defineInRange("tinyMax", TinyDjinnMath.DEFAULT_MAX, 0, TinyDjinnMath.MAX_LIMIT);
+                .translation("anime_multiverse.configuration.djinn.tinyMax").defineInRange("tinyMax", TinyDjinnMath.DEFAULT_MAX, 0, TinyDjinnMath.MAX_LIMIT);
         TINY_NAME = b.comment("Float the Djinn's name over the figure (within 16 blocks).")
-                .translation("nusmp.configuration.djinn.tinyNameTag").define("tinyNameTag", true);
+                .translation("anime_multiverse.configuration.djinn.tinyNameTag").define("tinyNameTag", true);
         TINY_BAR = b.comment("A thin bar under the name that shows the seconds the Lesser Summon has left.")
-                .translation("nusmp.configuration.djinn.tinyTimerBar").define("tinyTimerBar", true);
+                .translation("anime_multiverse.configuration.djinn.tinyTimerBar").define("tinyTimerBar", true);
         TINY_PORTRAIT = b.comment("Draw the figure's head in the circle of the Djinn panel during a Lesser Summon, instead of the silhouette.")
-                .translation("nusmp.configuration.djinn.tinyPortrait").define("tinyPortrait", true);
+                .translation("anime_multiverse.configuration.djinn.tinyPortrait").define("tinyPortrait", true);
         b.pop();
         SPEC = b.build();
     }

@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * The Basilisk of the Living Dungeon in its own model (tools/gen_dungeon_mobs.py -> assets/nusmp/geo/entity/dungeon_basilisk.geo.json, its animations
+ * The Basilisk of the Living Dungeon in its own model (tools/gen_dungeon_mobs.py -> assets/anime_multiverse/geo/entity/dungeon_basilisk.geo.json, its animations
  * and textures), drawn with client.geo.GeoDraw: a low, heavy armoured lizard, forest-green and near-black scales, a bone crest down the back, a wedge
  * head and splayed legs. The venom-green eyes and a faint green glow along the crest are the additive glow layer, pulsing. Clips: idle (slow breaths,
  * a tongue flick, a swaying tail), walk (alternating splayed legs, the body undulating; driven by the distance walked), attack (it rears up and snaps,

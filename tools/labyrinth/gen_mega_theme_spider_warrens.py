@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Why: the SPIDER_WARRENS theme (1.59.0, THEME-D, docs/labyrinth/mega_v2_thd.md): a spider queen's warren, black chitin and white silk. A themed sector must read as a NEW place, so besides the
-palette swap of `data/nusmp/mega/themes/spider_warrens.json` (polished blackstone walls, cobbled deepslate floors, white calcite pillars, silk-white wool patches, warm lanterns) it owns its
-signature rooms, which the assembler may draw only in sectors of this theme (`data/nusmp/mega/template_themes/spider_warrens.json`, prefix `nusmp:mega/<folder>/spider_warrens_`).
+palette swap of `data/anime_multiverse/mega/themes/spider_warrens.json` (polished blackstone walls, cobbled deepslate floors, white calcite pillars, silk-white wool patches, warm lanterns) it owns its
+signature rooms, which the assembler may draw only in sectors of this theme (`data/anime_multiverse/mega/template_themes/spider_warrens.json`, prefix `anime_multiverse:mega/<folder>/spider_warrens_`).
 
     python3 tools/labyrinth/gen_mega_theme_spider_warrens.py                 # build, check and write every room
     python3 tools/labyrinth/gen_mega_theme_spider_warrens.py web_great_hall  # only this one

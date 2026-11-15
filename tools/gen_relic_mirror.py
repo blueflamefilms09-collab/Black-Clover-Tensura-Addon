@@ -8,8 +8,8 @@ import os
 from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item", "gauches_hand_mirror.png")
-MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item", "gauches_hand_mirror.json")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "gauches_hand_mirror.png")
+MODEL = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item", "gauches_hand_mirror.json")
 SILVER = ["#4a5262", "#8a94a6", "#c8d0dc", "#ffffff"]
 GLASS = ["#5aa0c8", "#8ccbe8", "#c8ecfa", "#ffffff"]
 GRIP = ["#3a2a3e", "#5a4060", "#7a5a80"]
@@ -41,7 +41,7 @@ def main():
     im.putpixel((1, 15), rgb(SILVER[2]))
     im.save(TEX)
     with open(MODEL, "w", newline="\n") as f:
-        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/gauches_hand_mirror"}}, f)
+        json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/gauches_hand_mirror"}}, f)
         f.write("\n")
     print("wrote gauches_hand_mirror")
 

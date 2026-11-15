@@ -78,18 +78,18 @@ class ArcBossProfileTest {
             assertFalse(BossRegistry.addArc("goliath", "probe_two"), "an old boss's path cannot be taken");
             assertFalse(BossRegistry.addArc("probe_two", BossRegistry.GOLIATH), "an old boss's id cannot be taken");
             assertFalse(BossRegistry.addArc("", "x"));
-            assertEquals("probe_boss", BossRegistry.idOf("nusmp", "probe_boss").orElseThrow());
+            assertEquals("probe_boss", BossRegistry.idOf("anime_multiverse", "probe_boss").orElseThrow());
             assertTrue(BossRegistry.idOf("minecraft", "probe_boss").isEmpty(), "only this mod's namespace");
             assertTrue(BossRegistry.known("probe_boss"));
             assertEquals(oldIds + 1, BossRegistry.ids().size());
-            assertEquals("goliath", BossRegistry.idOf("nusmp", "goliath").orElseThrow());
+            assertEquals("goliath", BossRegistry.idOf("anime_multiverse", "goliath").orElseThrow());
         } finally {
             BossBuffTable.clearArcForTests();
             BossRegistry.clearArcForTests();
         }
         assertEquals(oldRows, BossBuffTable.all().size());
         assertEquals(oldIds, BossRegistry.ids().size());
-        assertTrue(BossRegistry.idOf("nusmp", "probe_boss").isEmpty());
+        assertTrue(BossRegistry.idOf("anime_multiverse", "probe_boss").isEmpty());
         assertNull(BossBuffTable.profile("probe_boss"));
         assertEquals(List.of("dante", "vanica", "zenon", "lucius", "devil_avatar", "goliath", "charybdis_spawn"), BossRegistry.ids());
     }

@@ -111,7 +111,7 @@ final class Wave14Util {
     }
 
     // ---------------------------------------------------------------- attribute modifiers of this wave (transient: gone with a relog or a death)
-    static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "w14/" + name); }
+    static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w14/" + name); }
 
     static void setMod(LivingEntity e, String attrId, String name, double amount, AttributeModifier.Operation op) {
         Optional<Holder<Attribute>> a = attribute(attrId);

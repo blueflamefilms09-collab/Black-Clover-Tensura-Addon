@@ -2,7 +2,7 @@
 demon (about 2.3 blocks: horns, bat wings, a spaded tail, a black-violet tailcoat, glowing crimson eyes). Models are Bedrock geo (1/16 block units, y up, front -z, +x the model's left), the skins are
 hand-tuned cel-shaded sheets painted by tools/spirit_dark_art.py, three levels of detail per form and a glow-only model (the additive pass: eyes, grin, runes, wing seams, smoke wisps):
 
-    python3 -B tools/gen_spirit_dark_geo.py            writes assets/nusmp/{geo,animations,textures}/entity/spirit_dark_{companion,powered}[_lod1|_lod2|_fx]*
+    python3 -B tools/gen_spirit_dark_geo.py            writes assets/anime_multiverse/{geo,animations,textures}/entity/spirit_dark_{companion,powered}[_lod1|_lod2|_fx]*
     python3 -B tools/gen_spirit_dark_geo.py --count    prints the quads of every model
 
 All levels and the glow-only model use the one sheet of their form (a lower level reads a smaller copy of the same layout), the same bones, so one animation file drives them all. Wings, tail, coat,

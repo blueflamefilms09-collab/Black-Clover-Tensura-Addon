@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The Gnome's spoken lines as data: the script (tools/audio/gnome_voice.py), the manifest, the catalogue, sounds.json and the files must say the same, and the audio must stay small. */
 class GnomeVoiceDataTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final String VOICE_ID = "xHxp1c5pQOzhWjBqV78M";
 
     private static List<String> planned() {
@@ -64,7 +64,7 @@ class GnomeVoiceDataTest {
             JsonObject e = sounds.getAsJsonObject("voice." + id);
             assertNotNull(e, "sounds.json entry for " + id);
             assertFalse(e.has("subtitle"), id + ": a spoken line has no subtitle (the text is shown by the game's own message)");
-            assertEquals("nusmp:voice/gnome/" + id, e.getAsJsonArray("sounds").get(0).getAsJsonObject().get("name").getAsString());
+            assertEquals("anime_multiverse:voice/gnome/" + id, e.getAsJsonArray("sounds").get(0).getAsJsonObject().get("name").getAsString());
             assertTrue(report.has(id), "voice_report.json has " + id);
         }
         for (String key : sounds.keySet()) if (key.startsWith("voice.gnome_")) assertTrue(want.contains(key.substring("voice.".length())), "no entry without a recording: " + key);

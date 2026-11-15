@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** Why: races are hand-written datapack JSON, so the parser is checked on bad input and every shipped file is parsed; the connection tags are checked with a fake player. */
 class AvatarRaceTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/avatar_races");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/avatar_races");
 
     private static Map<String, AvatarRace> shipped() throws IOException {
         Map<String, AvatarRace> out = new HashMap<>();
@@ -95,7 +95,7 @@ class AvatarRaceTest {
 
     @Test
     void namespacedEvolutionIdsLoseTheNamespace() {
-        JsonObject o = JsonParser.parseString("{\"evolves_to_race_id\":\"nusmp:ogre\"}").getAsJsonObject();
+        JsonObject o = JsonParser.parseString("{\"evolves_to_race_id\":\"anime_multiverse:ogre\"}").getAsJsonObject();
         assertEquals("ogre", AvatarRaceParser.parse("goblin", o).evolvesTo());
     }
 
@@ -125,7 +125,7 @@ class AvatarRaceTest {
         boolean contract = true, falna = false, relic = false, grimoire = true;
         double ep = 5000;
         String dim = "minecraft:overworld";
-        @Override public boolean hasItem(String id) { return id.equals("nusmp:genesis_core"); }
+        @Override public boolean hasItem(String id) { return id.equals("anime_multiverse:genesis_core"); }
         @Override public boolean hasSkill(String id) { return id.equals("tensura:sage"); }
         @Override public boolean hasGrimoire() { return grimoire; }
         @Override public boolean hasMagic(String id) { return id.equalsIgnoreCase("flame"); }
@@ -141,7 +141,7 @@ class AvatarRaceTest {
     @Test
     void parameterisedTagsSplitAtTheKeyEvenWithANamespacedArgument() {
         FakePlayer p = new FakePlayer();
-        assertTrue(t(p, "has_item:nusmp:genesis_core"));
+        assertTrue(t(p, "has_item:anime_multiverse:genesis_core"));
         assertFalse(t(p, "has_item:minecraft:stick"));
         assertTrue(t(p, "has_skill:tensura:sage"));
         assertTrue(t(p, "has_magic:flame"));
@@ -191,7 +191,7 @@ class AvatarRaceTest {
     @Test
     void evaluateCollectsEveryFailure() {
         FakePlayer p = new FakePlayer();
-        ConditionEvaluator.Result r = ConditionEvaluator.evaluate(p, List.of("has_grimoire", "danmachi:has_falna", "min_ep:99999", "has_item:nusmp:genesis_core"), w -> {});
+        ConditionEvaluator.Result r = ConditionEvaluator.evaluate(p, List.of("has_grimoire", "danmachi:has_falna", "min_ep:99999", "has_item:anime_multiverse:genesis_core"), w -> {});
         assertFalse(r.ok());
         assertEquals(List.of("danmachi:has_falna", "min_ep:99999"), r.failed());
         assertTrue(ConditionEvaluator.evaluate(p, List.of(), w -> {}).ok());

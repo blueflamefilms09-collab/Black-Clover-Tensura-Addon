@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * 0.56: "what kind of weapon is in the hand" for spells that need a particular weapon type (data/nusmp/tags/item/*.json: katanas,
+ * 0.56: "what kind of weapon is in the hand" for spells that need a particular weapon type (data/anime_multiverse/tags/item/*.json: katanas,
  * swords, greatswords, dance_weapons). Datapacks and other mods can add their weapons to the tags; the tag entries of items that
  * do not exist are optional, so a missing id never breaks loading.
  */
@@ -17,7 +17,7 @@ public final class WeaponMagicHelper {
 
     public static final TagKey<Item> KATANAS = tag("katanas"), SWORDS = tag("swords"), GREATSWORDS = tag("greatswords"), DANCE_WEAPONS = tag("dance_weapons");
 
-    private static TagKey<Item> tag(String name) { return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("nusmp", name)); }
+    private static TagKey<Item> tag(String name) { return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("anime_multiverse", name)); }
 
     public static boolean is(ItemStack stack, TagKey<Item> tag) { return !stack.isEmpty() && stack.is(tag); }
 

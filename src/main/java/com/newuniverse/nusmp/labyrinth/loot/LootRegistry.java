@@ -7,7 +7,7 @@ import net.neoforged.neoforge.event.AnvilUpdateEvent;
 /**
  * Why: the registration entry point of the functional anime loot, the one class {@code MegaSystem} calls (an append-only pair of lines, like every other system of the
  * Mega-Dungeon). {@code init} (mod bus, before the registries freeze) registers what must exist in a registry: the eighty items ({@link LootItems}), the data component
- * {@code nusmp:gear_roll}, the {@code mana_surge} effect, the two armour materials, the codec of the global loot modifier {@code nusmp:anime_loot}, the creative tab, and the in-game
+ * {@code anime_multiverse:gear_roll}, the {@code mana_surge} effect, the two armour materials, the codec of the global loot modifier {@code anime_multiverse:anime_loot}, the creative tab, and the in-game
  * self-test {@code loot.functional}. {@code register} (game bus, {@code addListener} with no annotation scanning, like the rest of the mod) adds the handlers: the anvil
  * uses and the venom strikes, the critical-chance lines, the trinket bridge, and the sale to the Hub Merchant (before the Merchant's own click, at high priority).
  * The lead registers {@link LootConfig#SPEC} as {@code nusmp-labyrinth-loot-server.toml}.
@@ -17,7 +17,7 @@ public final class LootRegistry {
 
     public static void init(IEventBus modBus) {
         String problem = LootRoster.get().problem();
-        if (!problem.isEmpty()) LogUtils.getLogger().warn("[nusmp] {}", problem);
+        if (!problem.isEmpty()) LogUtils.getLogger().warn("[anime_multiverse] {}", problem);
         LootComponents.COMPONENTS.register(modBus);
         LootEffects.EFFECTS.register(modBus);
         LootArmorMaterials.MATERIALS.register(modBus);

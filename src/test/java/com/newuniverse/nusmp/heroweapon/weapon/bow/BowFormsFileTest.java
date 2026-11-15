@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * technique. A deliberately broken copy proves the checker rejects what it should.
  */
 class BowFormsFileTest {
-    private static final String FILE = "src/main/resources/data/nusmp/hero/forms/legendary_bow.json";
+    private static final String FILE = "src/main/resources/data/anime_multiverse/hero/forms/legendary_bow.json";
 
     private static Spec spec() {
         Set<String> ultimates = new HashSet<>();

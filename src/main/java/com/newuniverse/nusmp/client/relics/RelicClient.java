@@ -37,12 +37,12 @@ public final class RelicClient {
         modBus.addListener((RegisterClientReloadListenersEvent e) ->
                 e.registerReloadListener((ResourceManagerReloadListener) mgr -> RelicTextures.registerAll()));          // a reload wipes the painted textures
         modBus.addListener((RegisterGuiLayersEvent e) ->
-                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_hud"), (graphics, delta) -> RelicActKeys.renderHud(graphics)));
+                e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_hud"), (graphics, delta) -> RelicActKeys.renderHud(graphics)));
         NeoForge.EVENT_BUS.addListener(RelicActKeys::onClientTick);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.client.event.ClientTickEvent.Post e) -> RelicTextures.onClientTick());      // 1.111.0: the painted armour layers are checked at the first world frame and every ten seconds, and painted again when one is gone
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onGather);
         NeoForge.EVENT_BUS.addListener(RelicTooltip::onScroll);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.worn.WornDebugCommand::register);          // 1.110.0: /nusmp debug worn
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.worn.WornDebugCommand::register);          // 1.110.0: /anime_multiverse debug worn
         NeoForge.EVENT_BUS.addListener(RelicWearClient::onClientTick);                 // relics_wear: a fresh look at the local player while a screen is open (the preview and the paper doll)
         NeoForge.EVENT_BUS.addListener(RelicWearClient::onLeave);                     // relics_wear: the server's list for an entity is dropped when the entity leaves the client's level
         NeoForge.EVENT_BUS.addListener(RelicWearClient::registerCommands);            // relics_wear: /multiverse relic show <on|off|toggle> (relicfx.showWorn)
@@ -110,7 +110,7 @@ public final class RelicClient {
             if (type != EntityType.PLAYER && addHumanoid(event, type)) humanoids++;
         }
         humanoidLayers = humanoids;
-        if (refused.length() > 0) com.mojang.logging.LogUtils.getLogger().error("[nusmp] the worn relic layer was NOT added to: {} (only PlayerRenderer instances take it)", layersRefused);
-        else com.mojang.logging.LogUtils.getLogger().info("[nusmp] the worn relic layer was added to {} player renderers and {} humanoid renderers", added, humanoids);
+        if (refused.length() > 0) com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] the worn relic layer was NOT added to: {} (only PlayerRenderer instances take it)", layersRefused);
+        else com.mojang.logging.LogUtils.getLogger().info("[anime_multiverse] the worn relic layer was added to {} player renderers and {} humanoid renderers", added, humanoids);
     }
 }

@@ -1,5 +1,5 @@
 """Preview of the Recombination anime look's particles (vfx/client/RecombAnimeFx.java) without the game: a side view of the fist's landing (the orange flash with spark lines, the dust ring, thrown
-bricks) and of a footfall (the dust ring), at several ticks, drawn from the REAL particle sprites (textures/particle/<id>_<n>.png) and the REAL physics profiles of data/nusmp/particle_catalog.json
+bricks) and of a footfall (the dust ring), at several ticks, drawn from the REAL particle sprites (textures/particle/<id>_<n>.png) and the REAL physics profiles of data/anime_multiverse/particle_catalog.json
 (gravity, drag, size curve, fade, frames, blend). It re-implements the spawn code of RecombAnimeFx (same counts, speeds and sizes) and the per-tick update of FxParticle, so it shows the layout and the
 timing of the effect, not the game's exact pixels (no camera perspective, no lighting, no random jitter beyond a fixed seed).
 
@@ -15,8 +15,8 @@ from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
-CAT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "particle_catalog.json")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
+CAT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "particle_catalog.json")
 OUT = os.path.join(ROOT, "docs", "previews", "recomb_anime")
 
 with open(CAT) as f:

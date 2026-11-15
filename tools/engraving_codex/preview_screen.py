@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUT = os.path.join(ROOT, "build", "engraving_codex")
 DOCS = os.path.join(ROOT, "docs", "previews", "engraving_codex")
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
 S = 2                                           # pixels per GUI pixel in the preview
 SW = 132                                        # the contents strip's width (STRIP_W of the screen)
 

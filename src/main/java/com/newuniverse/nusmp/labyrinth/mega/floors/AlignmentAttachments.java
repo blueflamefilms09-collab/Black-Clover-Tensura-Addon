@@ -10,13 +10,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 /**
- * Why: this registers the player attachment {@code nusmp:dungeon_alignment} that holds a {@link PlayerDungeonAlignment}. NeoForge 1.21 has no capability
+ * Why: this registers the player attachment {@code anime_multiverse:dungeon_alignment} that holds a {@link PlayerDungeonAlignment}. NeoForge 1.21 has no capability
  * for player data; an attachment is its replacement: it is saved with the player, found with {@code player.getData(...)} (created on first use, so no
  * caller null-checks), and {@code copyOnDeath()} carries it to the new body, which is the whole point of a lock that must survive dying. It is serialised
  * with a codec built from the five primitives of the state ({@link PlayerDungeonAlignment#of} and the getters), every field optional, so a save written by
  * an older build, a hand-edited one or one with fields missing still loads. The predicate on the serializer skips the default state, so a player who never
  * touched the dungeon adds nothing to their save file. NeoForge does not send an attachment to the client by itself unless asked; {@link AlignmentNet}
- * sends a small packet of our own (the contract names it {@code nusmp:alignment_sync}) so the sync points are ours to choose: login, respawn, dimension change
+ * sends a small packet of our own (the contract names it {@code anime_multiverse:alignment_sync}) so the sync points are ours to choose: login, respawn, dimension change
  * and every change. Register {@link #ATTACHMENTS} on the mod bus ({@code FloorsRegistry.init} does).
  */
 public final class AlignmentAttachments {
@@ -33,7 +33,7 @@ public final class AlignmentAttachments {
 
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, NUSMP.MODID);
 
-    /** {@code nusmp:dungeon_alignment}: saved with the player (unless it is still the default), copied on death and on the End return. */
+    /** {@code anime_multiverse:dungeon_alignment}: saved with the player (unless it is still the default), copied on death and on the End return. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerDungeonAlignment>> ALIGNMENT = ATTACHMENTS.register("dungeon_alignment",
             () -> AttachmentType.builder(() -> new PlayerDungeonAlignment()).serialize(CODEC, a -> !a.isDefault()).copyOnDeath().build());
 

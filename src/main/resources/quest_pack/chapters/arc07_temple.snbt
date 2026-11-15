@@ -45,13 +45,13 @@
 				{
 					id: "55AC61BC02174B3A"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_water"
+					advancement: "anime_multiverse:magic/cast_water"
 					criterion: ""
 				}
 				{
 					id: "1750D0CD1692EFAE"
 					type: "advancement"
-					advancement: "nusmp:arcs/underwater_temple"
+					advancement: "anime_multiverse:arcs/underwater_temple"
 					criterion: ""
 				}
 			]
@@ -76,7 +76,7 @@
 				{
 					id: "09C0F5A2CD34E60A"
 					type: "advancement"
-					advancement: "nusmp:magic/soul_water"
+					advancement: "anime_multiverse:magic/soul_water"
 					criterion: ""
 				}
 			]
@@ -103,13 +103,13 @@
 				{
 					id: "67793205A7CD40FA"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_ice"
+					advancement: "anime_multiverse:magic/cast_ice"
 					criterion: ""
 				}
 				{
 					id: "5F7D1453A5D8F489"
 					type: "advancement"
-					advancement: "nusmp:magic/cast_mist"
+					advancement: "anime_multiverse:magic/cast_mist"
 					criterion: ""
 				}
 			]
@@ -136,7 +136,7 @@
 				{
 					id: "6C59A81B2AD52423"
 					type: "advancement"
-					advancement: "nusmp:bosses/charybdis_spawn"
+					advancement: "anime_multiverse:bosses/charybdis_spawn"
 					criterion: ""
 				}
 			]
@@ -168,7 +168,7 @@
 				{
 					id: "69DE40A8EAC0AE53"
 					type: "advancement"
-					advancement: "nusmp:future/underwater_temple_boss"
+					advancement: "anime_multiverse:future/underwater_temple_boss"
 					criterion: ""
 				}
 			]
@@ -200,7 +200,7 @@
 				{
 					id: "0208D008CB2219F4"
 					type: "advancement"
-					advancement: "nusmp:dungeon/charybdis"
+					advancement: "anime_multiverse:dungeon/charybdis"
 					criterion: ""
 				}
 			]

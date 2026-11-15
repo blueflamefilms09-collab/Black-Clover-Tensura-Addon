@@ -30,8 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * boss cannot take her id, and check that every asset the id promises exists.
  */
 class BlackMarketWitchTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
     private static final Path MAGIC_TYPE = Path.of("src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java");
 
     @Test

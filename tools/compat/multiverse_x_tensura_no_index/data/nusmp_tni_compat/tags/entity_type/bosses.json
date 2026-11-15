@@ -2,35 +2,35 @@
   "replace": false,
   "values": [
     {
-      "id": "nusmp:dante_zogratis",
+      "id": "anime_multiverse:dante_zogratis",
       "required": false
     },
     {
-      "id": "nusmp:vanica_zogratis",
+      "id": "anime_multiverse:vanica_zogratis",
       "required": false
     },
     {
-      "id": "nusmp:zenon_zogratis",
+      "id": "anime_multiverse:zenon_zogratis",
       "required": false
     },
     {
-      "id": "nusmp:lucius_zogratis",
+      "id": "anime_multiverse:lucius_zogratis",
       "required": false
     },
     {
-      "id": "nusmp:devil_avatar",
+      "id": "anime_multiverse:devil_avatar",
       "required": false
     },
     {
-      "id": "nusmp:goliath",
+      "id": "anime_multiverse:goliath",
       "required": false
     },
     {
-      "id": "nusmp:charybdis_spawn",
+      "id": "anime_multiverse:charybdis_spawn",
       "required": false
     },
     {
-      "id": "nusmp:zagred",
+      "id": "anime_multiverse:zagred",
       "required": false
     }
   ]

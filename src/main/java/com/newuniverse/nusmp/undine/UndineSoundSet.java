@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Why: the Undine has a sound set of her own, so she never sounds like the basic Tensura spirit (which the owner asked for). This is the CATALOGUE, pure data with no Minecraft type so JUnit can pin
- * it: the cues, how many variants each has, their loudness, pitch range and how far they carry. {@link UndineSounds} registers one {@code SoundEvent} per cue ({@code nusmp:undine.ambient}...),
+ * it: the cues, how many variants each has, their loudness, pitch range and how far they carry. {@link UndineSounds} registers one {@code SoundEvent} per cue ({@code anime_multiverse:undine.ambient}...),
  * {@code tools/gen_undine_sounds.py} synthesises the {@code .ogg} files ({@code sounds/undine/<cue>_<n>.ogg}: flowing water, soft glass bells, a low watery choir hum and a wave crash, all
  * generated from nothing) and writes the entries of {@code sounds.json}; {@code UndineSoundsTest} keeps the three in step.
  */
@@ -59,10 +59,10 @@ public final class UndineSoundSet {
         public String event() { return "undine." + id; }
 
         /** The subtitle key ({@code tools/lang/undine.json} has the text). */
-        public String subtitleKey() { return "subtitles.nusmp.undine." + id; }
+        public String subtitleKey() { return "subtitles.anime_multiverse.undine." + id; }
 
-        /** The resource name of variant {@code n} (1-based) without the extension: {@code nusmp:undine/ambient_1}. */
-        public String file(int n) { return "nusmp:undine/" + id + "_" + n; }
+        /** The resource name of variant {@code n} (1-based) without the extension: {@code anime_multiverse:undine/ambient_1}. */
+        public String file(int n) { return "anime_multiverse:undine/" + id + "_" + n; }
 
         /** A random pitch for the cue, {@code r01} being a random number in [0, 1). */
         public float pitch(double r01) {

@@ -1,7 +1,7 @@
 """Why: Adaptability (3.70.0) gets its own 32x32 skill icon in the same framed style as tools/skills/gen_skill_icons.py (Unique = gold frame): a dark ground, three nested shield arcs that grow
 brighter inward (the body learning a blow, layer by layer) and a small spiral-arrow of light. Deterministic.
 
-    python tools/skills/gen_adaptability_icon.py     # writes src/main/resources/assets/nusmp/textures/skill/adaptability.png
+    python tools/skills/gen_adaptability_icon.py     # writes src/main/resources/assets/anime_multiverse/textures/skill/adaptability.png
 """
 import math
 import os
@@ -9,7 +9,7 @@ import os
 from PIL import Image, ImageDraw
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "adaptability.png")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "adaptability.png")
 S, N = 256, 32
 GOLD, GOLD_D, GOLD_L = (222, 176, 62), (120, 84, 22), (255, 232, 140)
 

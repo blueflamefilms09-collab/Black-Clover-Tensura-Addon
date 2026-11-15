@@ -1,4 +1,4 @@
-"""Why: the Devil Avatar, the floor boss of the Underworld Gate (entity nusmp:devil_avatar, entity/avatar/DevilAvatarBoss): a high devil of the Spade Kingdom's Underworld, tall
+"""Why: the Devil Avatar, the floor boss of the Underworld Gate (entity anime_multiverse:devil_avatar, entity/avatar/DevilAvatarBoss): a high devil of the Spade Kingdom's Underworld, tall
 (3.2 blocks to the tips of its horns), gaunt, horned, with long clawed arms, a tattered cloak, a thin tail that ends in a spade, a halo of gravity sigils that turns behind the
 shoulders, glowing eyes and glowing cracks. The old hand-built model is replaced by the art kit's player-proportioned character (docs/arc/remodel.md): a lanky body, devil horns, a
 ragged hooded cloak, claws made in `extra`, the spade-tailed devil tail and the turning halo. `form2` is the Gates: longer horns with a second pair, spines on the back, a bigger

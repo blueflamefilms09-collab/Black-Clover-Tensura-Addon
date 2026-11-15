@@ -41,7 +41,7 @@ public class RelicItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatable("item.nusmp." + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this).getPath() + ".desc").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("item.anime_multiverse." + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this).getPath() + ".desc").withStyle(ChatFormatting.GRAY));
         if (kind == Kind.FORTUNE_DIE) tip.add(Component.literal(com.newuniverse.nusmp.NUConfig.GEAR_FORTUNE_SUCCESS.get() + "% five-sided, "
                 + com.newuniverse.nusmp.NUConfig.GEAR_FORTUNE_CRACK.get() + "% cracked").withStyle(ChatFormatting.GOLD));
         if (kind == Kind.COMMUNICATION && stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA))

@@ -97,15 +97,15 @@ public final class TierSelfTests {
         else if (DefaultAttributes.getSupplier((net.minecraft.world.entity.EntityType) type) == null) bad.add("no attributes");
         var damage = server.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE);
         var holder = damage.getHolder(LightDeathNote.TYPE);
-        if (holder.isEmpty()) bad.add("damage type nusmp:death_note is missing");
+        if (holder.isEmpty()) bad.add("damage type anime_multiverse:death_note is missing");
         else {
             var h = holder.get();
             if (!h.is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR) || !h.is(net.minecraft.tags.DamageTypeTags.BYPASSES_EFFECTS)) bad.add("the death note does not bypass armour and effects");
             if (h.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) bad.add("the death note must not bypass invulnerability (the Totem of Undying has to work)");
-            if (!"nusmp.death_note".equals(h.value().msgId())) bad.add("message id " + h.value().msgId());
+            if (!"anime_multiverse.death_note".equals(h.value().msgId())) bad.add("message id " + h.value().msgId());
         }
         for (String id : new String[]{LightSounds.CHIP_LINE, LightSounds.JUST_AS_PLANNED, LightSounds.I_AM_JUSTICE}) {
-            if (!net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", id))) bad.add("sound event " + id + " is not registered");
+            if (!net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", id))) bad.add("sound event " + id + " is not registered");
         }
         if (!ArcConfig.lightDeathNoteLethal()) bad.add("lightDeathNoteLethal is not on by default");
         return bad.isEmpty() ? SelfTests.Result.ok("Light Yagami: row, damage type, three sounds and the setting are in place")

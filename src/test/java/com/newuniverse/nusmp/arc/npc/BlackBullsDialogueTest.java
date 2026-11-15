@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * in the source, and a long conversation mixes lines without repeating one twice in a row. The rules they enforce are written in {@code docs/arc/npca.md}.
  */
 class BlackBullsDialogueTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/arc/dialogue");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/arc/dialogue");
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final List<String> SOURCE_ROOTS = List.of("book", "seal", "shadow", "blackclover", "thread", "grimoire", "labyrinth");
 

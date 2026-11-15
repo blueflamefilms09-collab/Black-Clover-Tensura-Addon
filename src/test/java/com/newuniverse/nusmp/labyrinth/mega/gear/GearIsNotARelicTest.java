@@ -88,7 +88,7 @@ class GearIsNotARelicTest {
         String text = Files.readString(PACKAGE.resolve("GearComponents.java"), StandardCharsets.UTF_8);
         int count = 0;
         for (int i = text.indexOf("registerComponentType("); i >= 0; i = text.indexOf("registerComponentType(", i + 1)) count++;
-        assertEquals(1, count, "one data component, nusmp:gear_grade");
+        assertEquals(1, count, "one data component, anime_multiverse:gear_grade");
         assertTrue(text.contains("\"gear_grade\""));
     }
 }

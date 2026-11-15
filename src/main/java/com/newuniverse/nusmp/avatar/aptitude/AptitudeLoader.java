@@ -38,7 +38,7 @@ public final class AptitudeLoader implements ResourceManagerReloadListener {
                 JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
                 loaded.put(id, AptitudeParser.parse(id, root));
             } catch (Exception ex) {
-                LOG.warn("[nusmp] Skipping avatar aptitude {}: {}", e.getKey(), ex.toString());
+                LOG.warn("[anime_multiverse] Skipping avatar aptitude {}: {}", e.getKey(), ex.toString());
             }
         }
         List<Aptitude> list = new ArrayList<>();
@@ -49,6 +49,6 @@ public final class AptitudeLoader implements ResourceManagerReloadListener {
         }
         AptitudeCatalog.replaceAll(list);
         AptitudeLook.replaceAll(looks);
-        LOG.info("[nusmp] Loaded {} avatar aptitudes", list.size());
+        LOG.info("[anime_multiverse] Loaded {} avatar aptitudes", list.size());
     }
 }

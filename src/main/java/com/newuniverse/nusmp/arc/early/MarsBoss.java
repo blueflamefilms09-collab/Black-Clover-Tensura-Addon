@@ -158,7 +158,7 @@ public class MarsBoss extends EarlyBoss {
                 }
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Mars's stones failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Mars's stones failed: {}", e.toString());
         }
         return super.filterDamage(source, amount);
     }
@@ -178,12 +178,12 @@ public class MarsBoss extends EarlyBoss {
             double factor = FrontGuard.factor(true, angle, antiMagic(source));
             if (factor < 1.0 && attacker instanceof LivingEntity who && now - lastGuardNote > 40) {
                 lastGuardNote = now;
-                EarlyMoves.tell(who, "message.nusmp.arc.early.mars.guarded");
+                EarlyMoves.tell(who, "message.anime_multiverse.arc.early.mars.guarded");
                 EarlyMoves.sound(sl, position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f, 0.8f);
             }
             return (float) (amount * factor);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Mars's armor failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Mars's armor failed: {}", e.toString());
             return amount;
         }
     }

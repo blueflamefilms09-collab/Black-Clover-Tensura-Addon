@@ -6,7 +6,7 @@
     python3 tools/relics/gen_djinn_unique.py --preview OUT_DIR           render previews (full, half, dark full, weapon) beside the reference crops
     python3 tools/relics/gen_djinn_unique.py --only art|skins            only the meshes + atlas, or only the 2D skins (rune, art, bust)
 
-Writes under src/main/resources/assets/nusmp:
+Writes under src/main/resources/assets/anime_multiverse:
     djinn/u_<id>/<piece>.txt, djinn/d_<id>/<piece>.txt         the pieces (qn quads, UV space 128; WEAPON is item space, the rest model space)
     textures/entity/djinn/<id>_u_armor.png (+_glow), <id>_d_armor.png (+_glow)        the painted skins + additive glow
     textures/entity/djinn/<id>_u_rune.png, <id>_d_rune.png                            the body-art overlays (additive)

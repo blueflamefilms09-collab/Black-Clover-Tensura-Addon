@@ -44,7 +44,7 @@ public final class LuciusSpells {
     private static boolean first(int left, int total) { return left >= total - 3; }
 
     private static void safely(String what, Runnable r) {
-        try { r.run(); } catch (RuntimeException e) { com.mojang.logging.LogUtils.getLogger().warn("[nusmp] Lucius's {} failed: {}", what, e.toString()); }
+        try { r.run(); } catch (RuntimeException e) { com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] Lucius's {} failed: {}", what, e.toString()); }
     }
 
     // ================================================================ code

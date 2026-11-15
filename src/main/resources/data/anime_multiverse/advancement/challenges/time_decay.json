@@ -1,0 +1,36 @@
+{
+  "parent": "anime_multiverse:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.challenges.time_decay.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.challenges.time_decay.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "afflicted": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "anime_multiverse:time_decay": {}
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "afflicted"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

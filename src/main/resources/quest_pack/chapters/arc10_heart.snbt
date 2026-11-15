@@ -47,7 +47,7 @@
 				{
 					id: "62EBA69DE186A3E5"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_heart"
+					advancement: "anime_multiverse:world/kingdom_heart"
 					criterion: ""
 				}
 			]
@@ -65,14 +65,14 @@
 			x: 1.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:spirit_charm"
+				id: "anime_multiverse:spirit_charm"
 			}
 			dependencies: ["4FCBF6C04F8FEE73"]
 			tasks: [
 				{
 					id: "581DFF4C0557AC58"
 					type: "advancement"
-					advancement: "nusmp:spirits/charm"
+					advancement: "anime_multiverse:spirits/charm"
 					criterion: ""
 				}
 			]
@@ -90,14 +90,14 @@
 			x: 3.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:spirit_core_fire"
+				id: "anime_multiverse:spirit_core_fire"
 			}
 			dependencies: ["0FAB31E2CA283C2D"]
 			tasks: [
 				{
 					id: "0A02921FBC3A4388"
 					type: "advancement"
-					advancement: "nusmp:spirits/meet_elemental"
+					advancement: "anime_multiverse:spirits/meet_elemental"
 					criterion: ""
 				}
 			]
@@ -124,13 +124,13 @@
 				{
 					id: "45A4E24AF5CA5526"
 					type: "advancement"
-					advancement: "nusmp:spirits/contract"
+					advancement: "anime_multiverse:spirits/contract"
 					criterion: ""
 				}
 				{
 					id: "306C6E9CFDAE3513"
 					type: "advancement"
-					advancement: "nusmp:arcs/heart_elf"
+					advancement: "anime_multiverse:arcs/heart_elf"
 					criterion: ""
 				}
 			]
@@ -155,14 +155,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:spirit_core_earth"
+				id: "anime_multiverse:spirit_core_earth"
 			}
 			dependencies: ["045FE7BC2CC14533"]
 			tasks: [
 				{
 					id: "0310D0D71FE19B20"
 					type: "advancement"
-					advancement: "nusmp:spirits/cores"
+					advancement: "anime_multiverse:spirits/cores"
 					criterion: ""
 				}
 			]
@@ -195,7 +195,7 @@
 				{
 					id: "63ADBA0220F995E1"
 					type: "advancement"
-					advancement: "nusmp:bosses/wind_spirit_lord"
+					advancement: "anime_multiverse:bosses/wind_spirit_lord"
 					criterion: ""
 				}
 			]
@@ -227,7 +227,7 @@
 				{
 					id: "5FC0E32CD10295EE"
 					type: "advancement"
-					advancement: "nusmp:future/heart_elf_boss"
+					advancement: "anime_multiverse:future/heart_elf_boss"
 					criterion: ""
 				}
 			]
@@ -252,14 +252,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:spirit_lord_skill"
+				id: "anime_multiverse:spirit_lord_skill"
 			}
 			dependencies: ["26BCB82926113C87"]
 			tasks: [
 				{
 					id: "4D56CA1FD3F08A84"
 					type: "advancement"
-					advancement: "nusmp:spirits/lord_skill"
+					advancement: "anime_multiverse:spirits/lord_skill"
 					criterion: ""
 				}
 			]

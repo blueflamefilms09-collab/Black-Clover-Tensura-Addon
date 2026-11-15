@@ -12,7 +12,7 @@ import java.util.Random;
  * the Director stays exactly as it was. The Director asks {@link #pick} for each kind of monster of an encounter entry it has just resolved: with the configured chance
  * ({@code weight}, default 60 percent) the answer is a foundry mob of the FLOOR's tier and the sector's road (Holy road: Holy mobs; Abyssal road: Abyssal ones), preferring the
  * faction the room or the entry asked for and the factions the region's theme likes; otherwise null, and the Director keeps its own pick (so the existing tables keep working
- * unchanged and keep 40 percent of the spawns). The answer is a {@link EncounterRoll.Pick} whose entity text is {@code nusmp:foundry_mob#<id>}; the Director passes that text on
+ * unchanged and keep 40 percent of the spawns). The answer is a {@link EncounterRoll.Pick} whose entity text is {@code anime_multiverse:foundry_mob#<id>}; the Director passes that text on
  * unchanged to the budget and the plan (the cost is the mob's health in weak-monster equivalents, so a tier-5 brute eats the budget of five goblins), {@link #baseId} gives the
  * registry id of the type to create, {@link #expect} remembers which mob the next spawn is for, and {@link #prepare} (called by the spawner right after it creates the mob, before it
  * looks for a place) turns the blank mob into that one, so its real size is what the placement checks. The remembered mob is a plain static: the Director runs on the server
@@ -58,7 +58,7 @@ public final class FoundryEncounters {
         return d == null ? "" : d.faction();
     }
 
-    /** The registry id of the entity type to create: {@code nusmp:foundry_mob} for a foundry key, the text itself otherwise. */
+    /** The registry id of the entity type to create: {@code anime_multiverse:foundry_mob} for a foundry key, the text itself otherwise. */
     public static String baseId(String key) { return FoundryDef.baseId(key); }
 
     private static FoundryDef defOf(String key) {

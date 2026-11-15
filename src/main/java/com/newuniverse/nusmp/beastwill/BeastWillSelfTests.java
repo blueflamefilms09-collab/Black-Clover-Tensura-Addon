@@ -59,8 +59,8 @@ public final class BeastWillSelfTests {
             String problem = d.problem();
             if (problem != null) return Result.fail(problem);
         }
-        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "beast_will_core"))) return Result.fail("the core item is not registered");
-        if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "beast_will_core"))) return Result.fail("the core component is not registered");
+        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beast_will_core"))) return Result.fail("the core item is not registered");
+        if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "beast_will_core"))) return Result.fail("the core component is not registered");
         if (!BeastWillConfig.enabled() && BeastWillConfig.dropScale() < 0) return Result.fail("the config answered nonsense");
         return Result.ok(BeastWillCatalog.size() + " wills loaded and valid; the core item, component and save attachment are registered");
     }

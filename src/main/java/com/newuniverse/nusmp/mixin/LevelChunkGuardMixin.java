@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LevelChunkGuardMixin {
     @Inject(method = "setBlockState(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$guardChunkWrite(BlockPos pos, BlockState state, boolean moved, CallbackInfoReturnable<BlockState> cir) {
+    private void anime_multiverse$guardChunkWrite(BlockPos pos, BlockState state, boolean moved, CallbackInfoReturnable<BlockState> cir) {
         if (DungeonGuard.refusesSet(((LevelChunk) (Object) this).getLevel(), pos, state)) cir.setReturnValue(null);
     }
 }

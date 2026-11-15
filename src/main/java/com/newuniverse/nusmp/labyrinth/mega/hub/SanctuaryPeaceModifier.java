@@ -27,8 +27,8 @@ import java.util.List;
  * modifier removes by CATEGORY: in the phase that runs last ({@link Phase#AFTER_EVERYTHING}) it empties every spawner list of the biome except the
  * creature list, and from that list any type registered as a monster; and it removes every placed feature whose id is not in one of the kept
  * namespaces (default only {@code minecraft}: the plains' own grass, flowers and trees), which is what keeps a mod's ruins, towers and ores, added to
- * "every overworld biome", out of Floor 0 when they arrive as features. It is registered under {@code nusmp:sanctuary_peace} and used by
- * {@code data/nusmp/neoforge/biome_modifier/sanctuary_peace.json} on {@code nusmp:sanctuary_plains} only. It is a belt, not the braces: the event
+ * "every overworld biome", out of Floor 0 when they arrive as features. It is registered under {@code anime_multiverse:sanctuary_peace} and used by
+ * {@code data/anime_multiverse/neoforge/biome_modifier/sanctuary_peace.json} on {@code anime_multiverse:sanctuary_plains} only. It is a belt, not the braces: the event
  * handlers in {@link HubRules} stay the guarantee for the mobs (they see spawns this data never lists), and the chunk generator is the guarantee for the
  * structures.
  */

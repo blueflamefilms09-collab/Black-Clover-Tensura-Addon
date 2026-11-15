@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * The self-test {@code visual.weapon_sizes} of the CI server smoke test: inside the booted mod, every dagger and katana of the reviewed class map ships its thickened mesh copies
- * (old, upgrade and Genesis meshes, with their level-of-detail meshes), the old files are still there, and each copy is inside the size ranges of assets/nusmp/weapon_sizes.json
+ * (old, upgrade and Genesis meshes, with their level-of-detail meshes), the old files are still there, and each copy is inside the size ranges of assets/anime_multiverse/weapon_sizes.json
  * (length, blade width and thickness in third and first person, a grip that fits a hand, no corner through the first-person camera). The same arithmetic as the JUnit data tests
  * ({@link WeaponSizeRule}); touches no client class, so it runs on the dedicated server.
  */
@@ -31,7 +31,7 @@ public final class WeaponSizesSelfTests {
     }
 
     private static String text(String path) throws Exception {
-        try (InputStream in = WeaponSizesSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) {
+        try (InputStream in = WeaponSizesSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path)) {
             return in == null ? null : MeshPack.text(in.readAllBytes());
         }
     }

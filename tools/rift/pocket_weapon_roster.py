@@ -1,7 +1,7 @@
 """The 13 boss weapons of the exclusive pocket tombs (1.99.0, wave 78): ONE table, in the format of tools/relics/new197_roster.py (read its header for the fields), so the generator
 (gen_pocket_weapons.py) and the model builders (pocket_weapon_models.py) work from the same rows, and the weapons are made by the same pipeline as the 35 weapons of 1.97.0 (relics/wave/Wave71*).
 
-Each weapon is the drop of ONE tomb's mega-boss and of nothing else (data/nusmp/loot_table/pocket/<tomb>/boss.json, gated: see docs/labyrinth/rift_pockets.md). Grades follow the depth a tomb first
+Each weapon is the drop of ONE tomb's mega-boss and of nothing else (data/anime_multiverse/loot_table/pocket/<tomb>/boss.json, gated: see docs/labyrinth/rift_pockets.md). Grades follow the depth a tomb first
 appears at (floor_min of tools/rift/pocket_roster.py): the four shallowest give Legend weapons, the eight in the middle God weapons, the deepest Genesis. Damage is relics/GradeDamage's table by grade
 and weapon type, as for every relic; the acts are the shapes of Wave71Acts (so the balance law, the safe-cast guard and the VFX checks of the 1.97.0 weapons apply to them too); the passive is a
 Wave71Rules rule applied by Wave78Events. The Tensura engravings are the relic engravings (RelicEngravings, the same marker as item/WeaponEngravings, CLAUDE.md rule 6).

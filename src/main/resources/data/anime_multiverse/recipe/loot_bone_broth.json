@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:bone_shard"
+    },
+    {
+      "item": "anime_multiverse:bone_shard"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:bone_broth",
+    "count": 1
+  }
+}

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * "I forgot a comma" into a test failure instead of a silent no-swap in game.
  */
 class CompatJsonTest {
-    private static final String DIR = "data/nusmp/mega/compat/";
+    private static final String DIR = "data/anime_multiverse/mega/compat/";
     private static final List<String> SHIPPED = List.of("farmersdelight.json", "refurbished_furniture.json");
 
     private static String read(String file) {

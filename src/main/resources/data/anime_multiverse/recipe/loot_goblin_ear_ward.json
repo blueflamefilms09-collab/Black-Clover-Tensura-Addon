@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:goblin_ear"
+    },
+    {
+      "item": "anime_multiverse:goblin_ear"
+    },
+    {
+      "item": "anime_multiverse:goblin_ear"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:goblin_ear_ward",
+    "count": 1
+  }
+}

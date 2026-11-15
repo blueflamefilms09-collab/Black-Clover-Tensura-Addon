@@ -19,7 +19,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  * grimoire cover, its glowing text and the rune trim.
  */
 public class GrimoireDaemonRenderer extends MobRenderer<GrimoireDaemonEntity, GrimoireDaemonModel> {
-    private static ResourceLocation tex(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + name + ".png"); }
+    private static ResourceLocation tex(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + name + ".png"); }
 
     static final ResourceLocation[] SKIN = {tex("grimoire_daemon_lesser"), tex("grimoire_daemon_greater"), tex("grimoire_daemon_arch"), tex("grimoire_daemon_arch")};
     static final ResourceLocation[] GLOW = {tex("grimoire_daemon_lesser_glow"), tex("grimoire_daemon_greater_glow"), tex("grimoire_daemon_arch_glow"), tex("grimoire_daemon_arch_glow")};

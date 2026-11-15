@@ -389,7 +389,7 @@ public final class TrapRuntime {
             Long prev = lv.hinted.get(p.getUUID());
             if (prev != null && now - prev < 600) continue;
             lv.hinted.put(p.getUUID(), now);
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.create.hint", "Gears grind behind the walls. A lever on the wall would stop them."), true);
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.create.hint", "Gears grind behind the walls. A lever on the wall would stop them."), true);
         }
     }
 }

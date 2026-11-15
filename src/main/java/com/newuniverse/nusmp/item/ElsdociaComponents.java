@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 
 /**
- * 1.97.0: the {@code nusmp:elsdocia_lineage} data component, the lineage of one Elsdocia ({@link ElsdociaLineage}) as a list of text lines: saved with the
+ * 1.97.0: the {@code anime_multiverse:elsdocia_lineage} data component, the lineage of one Elsdocia ({@link ElsdociaLineage}) as a list of text lines: saved with the
  * stack, synced to clients (tooltips and the held motes read it) and copied with the stack. A stack's component values are shared, so writing always
  * sets a fresh list. Register {@link #COMPONENTS} on the mod bus ({@link ElsdociaEvents#registerContent}).
  */

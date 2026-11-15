@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Why: nothing here can be heard by the author, so the in-game self-test {@code audio.mob_sounds} (run by the CI server smoke test) checks what a server can: every event of the
  * catalogue ({@link MobSoundSet}) is in the sound-event registry and is the very event {@link ModSounds} hands out; {@code sounds.json} is on the class path with an entry for each of them
- * whose files are all there ({@code assets/nusmp/sounds/mob/...}); every mob of the Foundry roster resolves to a family of the catalogue and every shipped boss profile to one too;
+ * whose files are all there ({@code assets/anime_multiverse/sounds/mob/...}); every mob of the Foundry roster resolves to a family of the catalogue and every shipped boss profile to one too;
  * and the vanilla-voice remap reads the sounds it must (a zombie's groan, a wolf's howl) and leaves the ones it must not (a bow, a door). Never throws: a broken part is a failed result.
  */
 public final class AudioSelfTests {
@@ -51,10 +51,10 @@ public final class AudioSelfTests {
         if (events < 160) bad.add("only " + events + " events (the spec asks for at least 8 cues x 20 families)");
 
         JsonObject doc;
-        try (Reader in = new InputStreamReader(AudioSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json"), StandardCharsets.UTF_8)) {
+        try (Reader in = new InputStreamReader(AudioSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json"), StandardCharsets.UTF_8)) {
             doc = JsonParser.parseReader(in).getAsJsonObject();
         } catch (NullPointerException | IllegalStateException ex) {
-            return SelfTests.Result.fail("assets/nusmp/sounds.json is not on the class path or not an object");
+            return SelfTests.Result.fail("assets/anime_multiverse/sounds.json is not on the class path or not an object");
         }
         for (String id : MobSoundSet.allEventIds()) {
             JsonElement entry = doc.get(id);

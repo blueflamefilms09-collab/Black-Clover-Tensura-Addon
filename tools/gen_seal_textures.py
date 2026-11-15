@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_seal_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/seal_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/seal_*.png
 
 Look reference: docs/attributes/art_reference/seal_circles_pack.jpg (arcane circle designs: concentric rings, rune bands, hexagrams, stars,
 tick rings, nodes on the vertices) and seal_inverse_release.webp (a hard white core with sharp rays). All textures are white / grey with
@@ -24,7 +24,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 class Cv:

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Why: the FUNGAL_UNDERDARK theme (1.59.0, THEME-D, docs/labyrinth/mega_v2_thd.md): the evil road's Underdark. A themed sector must read as a NEW place, so besides the
-palette swap of `data/nusmp/mega/themes/fungal_underdark.json` (packed mud walls with mud brick trim, polished blackstone floors, obsidian and crying obsidian trim, warped wood) it owns its signature
-rooms, which the assembler may draw only in sectors of this theme (`data/nusmp/mega/template_themes/fungal_underdark.json`, prefix `nusmp:mega/<folder>/fungal_underdark_`).
+palette swap of `data/anime_multiverse/mega/themes/fungal_underdark.json` (packed mud walls with mud brick trim, polished blackstone floors, obsidian and crying obsidian trim, warped wood) it owns its signature
+rooms, which the assembler may draw only in sectors of this theme (`data/anime_multiverse/mega/template_themes/fungal_underdark.json`, prefix `anime_multiverse:mega/<folder>/fungal_underdark_`).
 
     python3 tools/labyrinth/gen_mega_theme_fungal_underdark.py                 # build, check and write every room
     python3 tools/labyrinth/gen_mega_theme_fungal_underdark.py drow_enclave    # only this one

@@ -2,9 +2,9 @@
 the geometry stays low: a card is a cube that is flat in z (one quad, drawn from both sides by the no-cull render types), which is what the streaming hair ribbons, the strips of the gown and the
 waves are. Writes the files the other geo models of the mod use (read by client.geo.GeoModelData):
 
-    assets/nusmp/geo/entity/<id>.geo.json          the model (Bedrock / GeckoLib format 1.12.0)
-    assets/nusmp/animations/entity/<id>.animation.json
-    assets/nusmp/textures/entity/<sheet>.png        the colour sheet
+    assets/anime_multiverse/geo/entity/<id>.geo.json          the model (Bedrock / GeckoLib format 1.12.0)
+    assets/anime_multiverse/animations/entity/<id>.animation.json
+    assets/anime_multiverse/textures/entity/<sheet>.png        the colour sheet
 
 Frame of the files (client.geo.GeoDraw): units are 1/16 block, y UP, origin at the feet, the model's front on -z, +x is the model's LEFT. Cube coordinates are ABSOLUTE (the bone's pivot only
 centres its own rotation). Rotation angles are degrees; the loader turns a point by Rx first, then Ry, then Rz (M = Rz . Ry . Rx as plain right-handed matrices of the file frame), cubes about
@@ -21,7 +21,7 @@ import numpy as np
 from PIL import Image
 
 sys.dont_write_bytecode = True
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse")
 
 BEDROCK = {"west": "east", "north": "north", "east": "west", "south": "south", "up": "up", "down": "down"}    # Bedrock names its sides from the other end of x
 FACE_ORDER = ("up", "down", "west", "north", "east", "south")

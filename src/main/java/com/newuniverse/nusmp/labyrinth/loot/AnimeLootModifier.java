@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * the table gave (add the new, keep the old). It extends {@link LootModifier}, so the JSON carries the standard {@code conditions} list; the shipped entry has none, because
  * the place rules are code ({@link LootDrops}: the dungeon dimensions, or the mod's own monsters) and a condition list cannot say "a monster of ours". The decision is the
  * pure {@link KillLoot}; this class is the shell. The codec is registered on the mod bus by {@link LootRegistry#init} and switched on by the entry
- * {@code nusmp:anime_loot} in {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}. A fault is logged once and the loot goes through unchanged: a loot roll must
+ * {@code anime_multiverse:anime_loot} in {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}. A fault is logged once and the loot goes through unchanged: a loot roll must
  * never fail because of a goblin ear.
  */
 public final class AnimeLootModifier extends LootModifier {
@@ -37,7 +37,7 @@ public final class AnimeLootModifier extends LootModifier {
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> MODIFIERS =
             DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, NUSMP.MODID);
 
-    /** {@code nusmp:anime_loot}, the type id the JSON names. */
+    /** {@code anime_multiverse:anime_loot}, the type id the JSON names. */
     public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<AnimeLootModifier>> TYPE = MODIFIERS.register("anime_loot", () -> CODEC);
 
     public static void register(IEventBus modBus) { MODIFIERS.register(modBus); }
@@ -49,7 +49,7 @@ public final class AnimeLootModifier extends LootModifier {
         try {
             LootDrops.add(generatedLoot, context);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] The anime loot modifier failed once and is skipped for that kill", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] The anime loot modifier failed once and is skipped for that kill", ex);
         }
         return generatedLoot;
     }

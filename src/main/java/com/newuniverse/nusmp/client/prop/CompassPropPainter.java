@@ -46,7 +46,7 @@ public final class CompassPropPainter {
     }
 
     // ================================================================ the caster's compass
-    /** 1.112.0 (lag audit): the cost of painting the compasses and what comes out of them, one section (off by default: a flag read; {@code /nusmp perf on}). */
+    /** 1.112.0 (lag audit): the cost of painting the compasses and what comes out of them, one section (off by default: a flag read; {@code /anime_multiverse perf on}). */
     private static final com.newuniverse.nusmp.perf.PerfProbe.Section PROBE_PAINT = com.newuniverse.nusmp.perf.PerfProbe.section("c.compass.paint");
 
     private static void main(MagicPropEntity e, float partial, float age, PoseStack pose, MultiBufferSource buf, int light) {

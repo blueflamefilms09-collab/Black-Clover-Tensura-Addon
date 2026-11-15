@@ -112,7 +112,7 @@ class ManaZoneGateTest {
 
     @Test
     void theShippedDataFileParsesToTheDefaultsAndStaysLate() throws Exception {
-        String text = Files.readString(Path.of("src/main/resources/data/nusmp/mana_zone.json"));
+        String text = Files.readString(Path.of("src/main/resources/data/anime_multiverse/mana_zone.json"));
         ManaZoneRules r = ManaZoneRules.parse(text);
         assertEquals(ManaZoneRules.DEFAULT_GATE, r.gate(), "the file and the in-code defaults say the same");
         assertEquals(ManaZoneRules.DEFAULT_ZONE, r.zone());

@@ -1,5 +1,5 @@
 """Why: the rebuilt skills declare every name, description, mode name, message and chant line in Java with an English fallback
-(SkillText.of / SkillMsg.t / SkillMsg.mode / SkillMsg.chant). The shared lang file src/main/resources/assets/nusmp/lang/en_us.json is
+(SkillText.of / SkillMsg.t / SkillMsg.mode / SkillMsg.chant). The shared lang file src/main/resources/assets/anime_multiverse/lang/en_us.json is
 edited by another worker, so the skill keys are written to the flat fragment tools/skills/lang_fragment.json instead, and the lead merges
 it. This script reads the keys STRAIGHT FROM THE SOURCE so the fragment can never drift from the code.
 
@@ -15,9 +15,9 @@ import re
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "skill")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "skill")
 FRAGMENT = os.path.join(ROOT, "tools", "skills", "lang_fragment.json")
-EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "lang", "en_us.json")
+EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 
 S = r'"((?:[^"\\]|\\.)*)"'          # a Java string literal (group = its raw content)
 RX_TEXT = re.compile(r'SkillText\.of\(\s*' + S + r'\s*,\s*' + S + r'\s*,\s*' + S + r'\s*\)')
@@ -44,14 +44,14 @@ def collect():
             continue
         text = open(os.path.join(SRC, name), encoding="utf-8").read()
         for m in RX_TEXT.finditer(text):
-            put("nusmp.skill." + m.group(1), m.group(2), name)
-            put("nusmp.skill." + m.group(1) + ".description", m.group(3), name)
+            put("anime_multiverse.skill." + m.group(1), m.group(2), name)
+            put("anime_multiverse.skill." + m.group(1) + ".description", m.group(3), name)
         for m in RX_MSG.finditer(text):
-            put("nusmp.skill.msg." + m.group(1), m.group(2), name)
+            put("anime_multiverse.skill.msg." + m.group(1), m.group(2), name)
         for m in RX_MODE.finditer(text):
-            put("nusmp.skill.mode." + m.group(1), m.group(2), name)
+            put("anime_multiverse.skill.mode." + m.group(1), m.group(2), name)
         for m in RX_CHANT.finditer(text):
-            put("nusmp.skill.chant.%s.%s" % (m.group(1), m.group(2)), m.group(3), name)
+            put("anime_multiverse.skill.chant.%s.%s" % (m.group(1), m.group(2)), m.group(3), name)
     return {k: v[0] for k, v in sorted(keys.items())}
 
 

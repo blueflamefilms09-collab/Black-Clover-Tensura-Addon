@@ -134,7 +134,7 @@ public final class AvatarEvolution {
             ServerPlayer creator = a.creatorPlayer();
             if (creator != null && creator.level() == sl) creator.sendSystemMessage(Component.literal(a.avatarName() + " has evolved into a " + next.displayName() + "!").withStyle(ChatFormatting.GOLD));
         }
-        LOG.debug("[nusmp] Avatar {} evolved into {}", a.getUUID(), next.id());
+        LOG.debug("[anime_multiverse] Avatar {} evolved into {}", a.getUUID(), next.id());
     }
 
     // ---------------------------------------------------------------- Tensura's own festival
@@ -142,15 +142,15 @@ public final class AvatarEvolution {
     public static void registerTensuraHooks() {
         try {
             TensuraEntityEvents.ENTER_HARVEST_FESTIVAL_EVENT.register((entity, a, b) -> {
-                try { onNativeEnter(entity); } catch (RuntimeException soft) { LOG.debug("[nusmp] Avatar festival hook: {}", soft.toString()); }
+                try { onNativeEnter(entity); } catch (RuntimeException soft) { LOG.debug("[anime_multiverse] Avatar festival hook: {}", soft.toString()); }
                 return EventResult.pass();
             });
             TensuraEntityEvents.HARVEST_FESTIVAL_REWARD_EVENT.register(entity -> {
-                try { onNativeReward(entity); } catch (RuntimeException soft) { LOG.debug("[nusmp] Avatar festival reward hook: {}", soft.toString()); }
+                try { onNativeReward(entity); } catch (RuntimeException soft) { LOG.debug("[anime_multiverse] Avatar festival reward hook: {}", soft.toString()); }
                 return EventResult.pass();
             });
         } catch (Throwable t) {
-            LOG.warn("[nusmp] Could not hook Tensura's Harvest Festival events ({}); Avatars still evolve on their own EP", t.toString());
+            LOG.warn("[anime_multiverse] Could not hook Tensura's Harvest Festival events ({}); Avatars still evolve on their own EP", t.toString());
         }
     }
 

@@ -47,7 +47,7 @@
 				{
 					id: "7F8042B146ED4DE5"
 					type: "advancement"
-					advancement: "nusmp:challenges/ten_pages_boss"
+					advancement: "anime_multiverse:challenges/ten_pages_boss"
 					criterion: ""
 				}
 			]
@@ -80,7 +80,7 @@
 				{
 					id: "25E4461625689D54"
 					type: "advancement"
-					advancement: "nusmp:challenges/paladins_5"
+					advancement: "anime_multiverse:challenges/paladins_5"
 					criterion: ""
 				}
 			]
@@ -113,7 +113,7 @@
 				{
 					id: "1A7EE4DAAF825405"
 					type: "advancement"
-					advancement: "nusmp:challenges/corpses_10"
+					advancement: "anime_multiverse:challenges/corpses_10"
 					criterion: ""
 				}
 			]
@@ -146,7 +146,7 @@
 				{
 					id: "666D4FD6FE02FC14"
 					type: "advancement"
-					advancement: "nusmp:challenges/genesis_relic"
+					advancement: "anime_multiverse:challenges/genesis_relic"
 					criterion: ""
 				}
 			]
@@ -179,7 +179,7 @@
 				{
 					id: "2208BDB9DDDEBFE0"
 					type: "advancement"
-					advancement: "nusmp:challenges/all_magic"
+					advancement: "anime_multiverse:challenges/all_magic"
 					criterion: ""
 				}
 			]
@@ -204,7 +204,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:djinn_seal_paimon"
+				id: "anime_multiverse:djinn_seal_paimon"
 			}
 			dependencies: ["254F09629102C02C"]
 			optional: true
@@ -212,7 +212,7 @@
 				{
 					id: "51EBEEA608FBC3FA"
 					type: "advancement"
-					advancement: "nusmp:relics/djinn_seals"
+					advancement: "anime_multiverse:relics/djinn_seals"
 					criterion: ""
 				}
 			]
@@ -237,7 +237,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:hand_of_vecna"
+				id: "anime_multiverse:hand_of_vecna"
 			}
 			dependencies: ["5D57C2EFB5EF1EB0"]
 			optional: true
@@ -245,7 +245,7 @@
 				{
 					id: "576F1B58B9AEFCF3"
 					type: "advancement"
-					advancement: "nusmp:relics/vecna"
+					advancement: "anime_multiverse:relics/vecna"
 					criterion: ""
 				}
 			]
@@ -270,7 +270,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:the_infinity_gauntlet"
+				id: "anime_multiverse:the_infinity_gauntlet"
 			}
 			dependencies: ["4A23532E6C4AAC3C"]
 			optional: true
@@ -278,7 +278,7 @@
 				{
 					id: "4E86347B3C252075"
 					type: "advancement"
-					advancement: "nusmp:relics/stones_all"
+					advancement: "anime_multiverse:relics/stones_all"
 					criterion: ""
 				}
 			]
@@ -303,7 +303,7 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:devil_core_beelzebub"
+				id: "anime_multiverse:devil_core_beelzebub"
 			}
 			dependencies: ["1B69552CBBEB9513"]
 			optional: true
@@ -311,7 +311,7 @@
 				{
 					id: "54634F84296359E3"
 					type: "advancement"
-					advancement: "nusmp:spirits/devil_cores_all"
+					advancement: "anime_multiverse:spirits/devil_cores_all"
 					criterion: ""
 				}
 			]
@@ -336,7 +336,7 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:charter_grimoire_lucius"
+				id: "anime_multiverse:charter_grimoire_lucius"
 			}
 			dependencies: ["52B39607661D111F", "5B66BC36B528DAA1"]
 			dependency_requirement: "one_completed"
@@ -345,7 +345,7 @@
 				{
 					id: "25AC815D430224BE"
 					type: "advancement"
-					advancement: "nusmp:squads/charter_all"
+					advancement: "anime_multiverse:squads/charter_all"
 					criterion: ""
 				}
 			]
@@ -378,7 +378,7 @@
 				{
 					id: "4DA3E515D3D3D4F9"
 					type: "advancement"
-					advancement: "nusmp:spells/unite_all"
+					advancement: "anime_multiverse:spells/unite_all"
 					criterion: ""
 				}
 			]
@@ -412,7 +412,7 @@
 				{
 					id: "70878FDCF565212E"
 					type: "advancement"
-					advancement: "nusmp:spells/characters_all"
+					advancement: "anime_multiverse:spells/characters_all"
 					criterion: ""
 				}
 			]

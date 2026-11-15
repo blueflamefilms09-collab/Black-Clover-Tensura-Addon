@@ -69,12 +69,12 @@ public final class GeoModels {
     private static JsonObject read(ResourceLocation id, boolean required) {
         try (Reader in = source.apply(id)) {
             if (in == null) {
-                if (required) LOG.warn("[nusmp] geo file {} not found", id);
+                if (required) LOG.warn("[anime_multiverse] geo file {} not found", id);
                 return null;
             }
             return JsonParser.parseReader(in).getAsJsonObject();
         } catch (Exception ex) {
-            LOG.error("[nusmp] geo file {} failed to load; it is not drawn", id, ex);
+            LOG.error("[anime_multiverse] geo file {} failed to load; it is not drawn", id, ex);
             return null;
         }
     }

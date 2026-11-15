@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * equip animation, and every model, glow map and particle texture the rebuild names is there.
  */
 class ShakudoRebuildTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final File AURA_SRC = new File("src/main/java/com/newuniverse/nusmp/client/aura");
     private static final List<String> KEYS = List.of("shakudo", "scale", "spike", "nail", "hair");
     private static final List<String> PROPS = List.of("shakudo_golem", "shakudo_bulwark", "scale_serpent", "scale_shield", "spike_pillar", "spike_urchin",

@@ -34,7 +34,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
 MOD_ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets")
 BUILD = os.path.abspath(os.environ.get("RENDER_PREVIEW_BUILD") or os.path.join(ROOT, "build", "render_preview"))
 
@@ -188,7 +188,7 @@ def build(scenes, need_geo):
         for real in sc.get("realFiles", []):                                     # 1.99.0: real mod sources (relative to src/main/java/com/newuniverse/nusmp) an example needs
             files.append(os.path.join(SRC, real.replace("/", os.sep)))
     real_rel = {os.path.relpath(f, SRC).replace(os.sep, "/") for f in files if f.startswith(SRC)}                   # a stub of a class the real sources already provide would be a duplicate class
-    files = [f for f in files if not (f.startswith(os.path.join(HERE, "stubs")) and os.path.relpath(f, os.path.join(HERE, "stubs", "com", "newuniverse", "nusmp")).replace(os.sep, "/") in real_rel)]
+    files = [f for f in files if not (f.startswith(os.path.join(HERE, "stubs")) and os.path.relpath(f, os.path.join(HERE, "stubs", "com", "newuniverse", "anime_multiverse")).replace(os.sep, "/") in real_rel)]
     files = sorted(set(files))
     missing = [f for f in files if not os.path.isfile(f)]
     if missing:
@@ -231,7 +231,7 @@ def run_java(classes, joml, gson, job, tag):
         json.dump({"scenes": job, "modAssets": MOD_ASSETS, "previewDir": HERE}, f)
     if os.path.isfile(meta):
         os.remove(meta)
-    cp = os.pathsep.join([classes, joml] + ([gson] if gson else []) + [os.path.join(ROOT, "src", "main", "resources")])        # 4.x: the Wind remake reads its meshes (assets/nusmp/sdw3_meshes) from the class path
+    cp = os.pathsep.join([classes, joml] + ([gson] if gson else []) + [os.path.join(ROOT, "src", "main", "resources")])        # 4.x: the Wind remake reads its meshes (assets/anime_multiverse/sdw3_meshes) from the class path
     r = subprocess.run(["java", "-Xmx1g", "-Xss8m", "-XX:+UseSerialGC", "-XX:TieredStopAtLevel=1", "-cp", cp, "Preview", jobfile, meta, bindir],
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=600)
     out = "\n".join(l for l in r.stdout.decode("utf-8", "replace").splitlines() if "Picked up" not in l)
@@ -290,19 +290,19 @@ def prepare_geo(s):
         errs.append("argb / glow must be hex ARGB such as FFFFFFFF (%s)" % e)
     m = s.get("model")
     if not m:
-        return errs + ['a geo scene needs "model": "<key>_<name>" (assets/nusmp/geo/entity/<key>_<name>.geo.json) or a full path like "nusmp:geo/armor/robe.geo.json"']
+        return errs + ['a geo scene needs "model": "<key>_<name>" (assets/anime_multiverse/geo/entity/<key>_<name>.geo.json) or a full path like "anime_multiverse:geo/armor/robe.geo.json"']
     if re.fullmatch(r"[A-Za-z0-9]+_[A-Za-z0-9_]+", m):
         key, _, name = m.partition("_")
         s["modelKey"], s["modelName"] = key, name
-        model_rl = "nusmp:geo/entity/%s.geo.json" % m
+        model_rl = "anime_multiverse:geo/entity/%s.geo.json" % m
     else:
-        model_rl = m if ":" in m else "nusmp:" + m
+        model_rl = m if ":" in m else "anime_multiverse:" + m
         s["modelRl"] = model_rl
         tex = s.get("texture")
         if not tex:
-            errs.append('a geo scene with a full model path needs "texture" (e.g. "nusmp:textures/armor/black_bull_robe.png")')
+            errs.append('a geo scene with a full model path needs "texture" (e.g. "anime_multiverse:textures/armor/black_bull_robe.png")')
         else:
-            tex_rl = tex if ":" in tex else "nusmp:" + tex
+            tex_rl = tex if ":" in tex else "anime_multiverse:" + tex
             s["textureRl"] = tex_rl
             base = tex_rl[:-4] if tex_rl.endswith(".png") else tex_rl
             s["glowRl"] = s.get("glowTexture") or base + "_glow.png"
@@ -311,10 +311,10 @@ def prepare_geo(s):
         if anim == "none":
             anim = None
         elif not anim and mm:
-            cand = "nusmp:animations/%s.animation.json" % mm.group(1)
+            cand = "anime_multiverse:animations/%s.animation.json" % mm.group(1)
             anim = cand if find_asset(cand) else None
         if anim:
-            s["animationsRl"] = anim if ":" in anim else "nusmp:" + anim
+            s["animationsRl"] = anim if ":" in anim else "anime_multiverse:" + anim
     if not find_asset(model_rl):
         errs.append("model file not found: %s (looked in %s)" % (model_rl, "; ".join(os.path.relpath(p, ROOT) for p in texture_candidates(model_rl))))
     return errs
@@ -459,10 +459,10 @@ def texture_candidates(rl):
     if not path:
         ns, path = "minecraft", rl
     c = []
-    if ns == "nusmp":
-        c.append(os.path.join(MOD_ASSETS, "nusmp", path))
+    if ns == "anime_multiverse":
+        c.append(os.path.join(MOD_ASSETS, "anime_multiverse", path))
     c.append(os.path.join(HERE, "assets", ns, path))
-    if ns == "nusmp":
+    if ns == "anime_multiverse":
         c.append(os.path.join(HERE, "assets", path))
         c.append(os.path.join(HERE, "examples", path))
     return c

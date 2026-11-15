@@ -100,7 +100,7 @@ class LinkBuilderTest {
         assertTrue(t.pieces().isEmpty());
 
         SyntheticCatalog bad = SyntheticCatalog.standard();
-        bad.pool(MegaGrid.P_LINK, 0, MegaGrid.P_CAP, "nusmp:mega/trial/archway_3x3", 1, "nusmp:mega/corridor/straight_1x3", 1);   // opposite doors, but three modules apart
+        bad.pool(MegaGrid.P_LINK, 0, MegaGrid.P_CAP, "anime_multiverse:mega/trial/archway_3x3", 1, "anime_multiverse:mega/corridor/straight_1x3", 1);   // opposite doors, but three modules apart
         t = LinkBuilder.build(bad, new Vec(0, 65, 0), Facing.EAST, 3, 1, box -> true);
         assertFalse(t.ok());
         assertTrue(t.failure().contains("two opposite doors"), t.failure());
@@ -109,7 +109,7 @@ class LinkBuilderTest {
     @Test
     void onlyWaystationsStillMakeARun() {
         SyntheticCatalog c = SyntheticCatalog.standard();
-        c.pool(MegaGrid.P_LINK, 0, MegaGrid.P_CAP, "nusmp:mega/link/waystation_a", 1);
+        c.pool(MegaGrid.P_LINK, 0, MegaGrid.P_CAP, "anime_multiverse:mega/link/waystation_a", 1);
         LinkBuilder.Tunnel t = LinkBuilder.build(c, new Vec(0, 65, 0), Facing.SOUTH, 5, 1, box -> true);
         assertTrue(t.ok(), t.failure());
         List<String> ids = new ArrayList<>();

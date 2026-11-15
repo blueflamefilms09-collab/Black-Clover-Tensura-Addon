@@ -104,7 +104,7 @@ public final class SystemSync {
         try {
             PacketDistributor.sendToPlayer(p, payload);
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] System packet to {} not sent: {}", p.getGameProfile().getName(), e.toString());
+            LOG.debug("[anime_multiverse] System packet to {} not sent: {}", p.getGameProfile().getName(), e.toString());
         }
     }
 

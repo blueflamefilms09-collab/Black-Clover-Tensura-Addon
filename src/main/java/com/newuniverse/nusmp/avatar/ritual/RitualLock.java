@@ -19,7 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class RitualLock {
     private RitualLock() {}
 
-    private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("nusmp", "soul_forge_lock");
+    private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "soul_forge_lock");
 
     /** Freezes walking and jumping. Safe to call twice. */
     public static void apply(ServerPlayer p) {

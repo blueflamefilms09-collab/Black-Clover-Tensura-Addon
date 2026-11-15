@@ -38,10 +38,10 @@ public final class FloorAssigner implements SectorListener {
             MegaData data = MegaData.get(level.getServer());
             int changed = assign(sector, data);
             data.setDirty();
-            LOG.info("[nusmp] Sector {} ({} chain {}): {} of {} rooms numbered, floors {} to {}", sector.id, sector.polarity.id(), sector.chainIndex, changed, sector.rooms.size(),
+            LOG.info("[anime_multiverse] Sector {} ({} chain {}): {} of {} rooms numbered, floors {} to {}", sector.id, sector.polarity.id(), sector.chainIndex, changed, sector.rooms.size(),
                     FloorMap.label(sector.firstFloor()), FloorMap.label(sector.lastFloor()));
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] Floors of sector {} could not be numbered", sector.id, ex);
+            LOG.warn("[anime_multiverse] Floors of sector {} could not be numbered", sector.id, ex);
         }
     }
 
@@ -93,7 +93,7 @@ public final class FloorAssigner implements SectorListener {
             data.setDirty();
             return true;
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] Sector {} could not be numbered on first contact", s.id, ex);
+            LOG.warn("[anime_multiverse] Sector {} could not be numbered on first contact", s.id, ex);
             return false;
         }
     }

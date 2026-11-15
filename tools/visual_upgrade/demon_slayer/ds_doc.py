@@ -40,7 +40,7 @@ Everything the item does is unchanged (id, stats, acts, passives, engravings, Be
 
 ## What was built
 
-* **Mesh** `assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt` and `demon_slayer_sword_lod.txt` (the genesis_weapons dialect: layers 0 body, 1 void, 2 core glow, 3 veins, 4 halo cards, `g <group>`
+* **Mesh** `assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword.txt` and `demon_slayer_sword_lod.txt` (the genesis_weapons dialect: layers 0 body, 1 void, 2 core glow, 3 veins, 4 halo cards, `g <group>`
   animation groups, `fl` flares). **The old model is code** (`client/DemonSlayerMesh.java`, a pixel model of {st['rest']['quads']['body']} body quads), so the new mesh is built in the old
   model's own frame (1/64 block units) and carries the old renderer's placement as its `place` line (`translate(0.516, 0.523, 0.5), rotate z -45, scale 0.98/64, translate(0, -11.75, 0)`):
   every display transform of the item model, the third-person and first-person sizes and the 1.6 x growth of Black Divider fit unchanged (`DemonSlayerAssetsTest`).
@@ -54,7 +54,7 @@ Everything the item does is unchanged (id, stats, acts, passives, engravings, Be
     pommel (`leaves`).
 * **Skins** `textures/entity/weapon_vu/demon_slayer_sword.png` (2048 px: black iron with grime, rust, worn bright rims, an engraved lore sentence "FORGED AROUND NOTHING" / "WHERE MAGIC WANTS TO BE", rune
   rows, a clover at the foot, charred hole rims, crack networks), `_glow.png` and `_veins.png` (emissive maps at half size), `_lod.png` for the LOD mesh. The shared `halo.png` is the genesis_weapons sheet.
-* **Effect data** `assets/nusmp/visual_upgrade/demon_slayer_sword.json`: {n_groups} animation groups, {len(spec['layers'])} ambient layers, {len(spec['idle'])} idle animations, a draw animation, a swing trail,
+* **Effect data** `assets/anime_multiverse/visual_upgrade/demon_slayer_sword.json`: {n_groups} animation groups, {len(spec['layers'])} ambient layers, {len(spec['idle'])} idle animations, a draw animation, a swing trail,
   a signature burst for each of the three acts and the looped sound id `{spec['sound_loop']}` (a string only; the audio is another task).
 * **Renderer**: the Genesis weapon pipeline, `client/relics/item/vu/VuRenderer` (body, void, core glow, the vein wave, halo cards, flares, LOD, draw animation). New:
   * `client/relics/item/vu/DemonSlayerVu` (called from the top of `DemonSlayerRenderer#renderByItem`): reads the stack data the old renderer read (`MeteorUntil`, `Resonance`, `BladeGrowthUntil`) **without
@@ -127,7 +127,7 @@ count of passes cannot honestly grow 20-fold). Whether the sword looks 20 times 
 | Item id, stats, acts (Conceptual Severance, Black Meteorite, Black Divider), the Nullification Field, engravings, Better Combat files, display presets, relic grade, the inventory icon `demon_slayer_sword_icon` | KEPT, untouched |
 | Black Meteorite fracture, Resonance bloom, Black Divider growth | KEPT as behaviour, reimplemented on the new groups (`DsDynamics`); the old code path still runs with the flag off |
 | Ambient / swing / act particles on the item | NEW (the shared `VuFx` tick finds the item by its id; `DemonSlayerVu` adds the act bursts and embers) |
-| Tooltip | one added line (lang key `nusmp.demon_slayer_vu.tooltip`, fragment `tools/lang/demon_slayer_vu.json`) |
+| Tooltip | one added line (lang key `anime_multiverse.demon_slayer_vu.tooltip`, fragment `tools/lang/demon_slayer_vu.json`) |
 | Time Magic VFX | not touched |
 
 ## Edits to existing files (all additions)

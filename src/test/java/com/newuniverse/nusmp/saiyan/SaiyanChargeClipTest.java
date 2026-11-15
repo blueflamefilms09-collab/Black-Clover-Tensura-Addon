@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** 3.71.0: the power-up body clip {@code saiyan_charge} and the continuous envelopes of the power-up effects (nothing may pop). */
 class SaiyanChargeClipTest {
-    private static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     private static JsonObject clip() throws IOException {
         JsonObject all = JsonParser.parseString(Files.readString(RES.resolve("animations/player/cast.animation.json"))).getAsJsonObject().getAsJsonObject("animations");

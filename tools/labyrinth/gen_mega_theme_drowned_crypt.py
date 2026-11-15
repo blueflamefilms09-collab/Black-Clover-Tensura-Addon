@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Why: the DROWNED_CRYPT theme (1.59.0, THEME-D, docs/labyrinth/mega_v2_thd.md): a burial vault the sea took back. A themed sector must read as a NEW place, so besides the palette swap
-of `data/nusmp/mega/themes/drowned_crypt.json` (dark prismarine walls, mossy stone brick floors, deepslate brick pillars, cold soul lights) it owns its signature rooms, which the assembler
-may draw only in sectors of this theme (`data/nusmp/mega/template_themes/drowned_crypt.json`, prefix `nusmp:mega/<folder>/drowned_crypt_`).
+of `data/anime_multiverse/mega/themes/drowned_crypt.json` (dark prismarine walls, mossy stone brick floors, deepslate brick pillars, cold soul lights) it owns its signature rooms, which the assembler
+may draw only in sectors of this theme (`data/anime_multiverse/mega/template_themes/drowned_crypt.json`, prefix `anime_multiverse:mega/<folder>/drowned_crypt_`).
 
     python3 tools/labyrinth/gen_mega_theme_drowned_crypt.py                 # build, check and write every room
     python3 tools/labyrinth/gen_mega_theme_drowned_crypt.py flooded_nave    # only this one

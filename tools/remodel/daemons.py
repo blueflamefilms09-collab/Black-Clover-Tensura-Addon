@@ -1,4 +1,4 @@
-"""Why: the four tiers of Zagred's Grimoire Daemons (lesser, greater, arch, rule stone: entity nusmp:grimoire_daemon, one entity whose synced tier picks the look) share one design
+"""Why: the four tiers of Zagred's Grimoire Daemons (lesser, greater, arch, rule stone: entity anime_multiverse:grimoire_daemon, one entity whose synced tier picks the look) share one design
 (the old model's description: "a floating tattered robe and hood, thin arms holding a grimoire out in front that snaps open and flips its pages while it casts; horns from the
 greater tier, two pairs of membrane wings for the arch tier, or just a glyph slab for the Overwrite rule stones"), and differ in the palette of tools/gen_daemon_textures.py,
 the number of leaves of the grimoire and the size. Each tier is its own character file (tools/arc/char_grimoire_daemon*.py, the art kit wants one body per file); this module is the

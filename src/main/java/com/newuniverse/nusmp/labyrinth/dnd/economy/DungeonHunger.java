@@ -63,9 +63,9 @@ public final class DungeonHunger {
         if (now == GloomClock.State.GLOOM) {
             p.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 140, 0, false, false, true));
             p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false, true));
-            p.displayClientMessage(Component.translatable("message.nusmp.labyrinth_gloom"), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.labyrinth_gloom"), true);
         } else if (clock.warningEdge(now, before)) {
-            p.displayClientMessage(Component.translatable("message.nusmp.labyrinth_gloom_warning"), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.labyrinth_gloom_warning"), true);
         }
     }
 

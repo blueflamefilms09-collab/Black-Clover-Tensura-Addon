@@ -8,7 +8,7 @@ Usage:
     python tools/quests/gen_advancements.py            write the files
     python tools/quests/gen_advancements.py --check    exit 1 if a file on disk differs from the spec (CI / pre-commit)
     python tools/quests/gen_advancements.py --lang-copy PATH   also copy the lang fragment to PATH
-The 25 files under data/nusmp/advancement/convergence are never touched.
+The 25 files under data/anime_multiverse/advancement/convergence are never touched.
 """
 import json
 import os
@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import spec_lib as L  # noqa: E402
 import spec_adv  # noqa: E402
 
-OUT = os.path.join(L.RES, "data", "nusmp", "advancement")
+OUT = os.path.join(L.RES, "data", "anime_multiverse", "advancement")
 LANG_OUT = os.path.join(L.HERE, "lang", "qst.lang.json")
 OWNED_DIRS = {"start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon", "spirits", "squads", "world", "challenges",
               "future", "arc"}

@@ -22,9 +22,9 @@ public final class TierItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NUSMP.MODID);
 
     public static final DeferredItem<Item> DEVILS_CORE = ITEMS.register("devils_core",
-            () -> new CatalystItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant(), "item.nusmp.devils_core.tip", ChatFormatting.DARK_RED));
+            () -> new CatalystItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant(), "item.anime_multiverse.devils_core.tip", ChatFormatting.DARK_RED));
     public static final DeferredItem<Item> GENESIS_SEED = ITEMS.register("genesis_seed",
-            () -> new CatalystItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant(), "item.nusmp.genesis_seed.tip", ChatFormatting.WHITE));
+            () -> new CatalystItem(new Item.Properties().stacksTo(16).rarity(Rarity.EPIC).fireResistant(), "item.anime_multiverse.genesis_seed.tip", ChatFormatting.WHITE));
 
     /** 1.84.0: frees an attuned relic from its attunement (hold it with the relic in the other hand and use it). */
     public static final DeferredItem<Item> UNBINDING_SEAL = ITEMS.register("unbinding_seal",
@@ -46,7 +46,7 @@ public final class TierItems {
         @Override
         public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
             tip.add(Component.translatable(tipKey).withStyle(colour));
-            tip.add(Component.translatable("item.nusmp.catalyst.how").withStyle(ChatFormatting.GRAY));
+            tip.add(Component.translatable("item.anime_multiverse.catalyst.how").withStyle(ChatFormatting.GRAY));
         }
     }
 

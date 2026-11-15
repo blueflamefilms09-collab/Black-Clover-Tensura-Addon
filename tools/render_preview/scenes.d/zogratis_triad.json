@@ -4013,7 +4013,7 @@
  },
  "triad_disciple_lucifero": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/zogratis_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -4043,12 +4043,12 @@
     "dist": 4.2
    }
   ],
-  "texture": "nusmp:textures/entity/zogratis_disciple_lucifero.png",
-  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/zogratis_disciple_lucifero.png",
+  "animations": "anime_multiverse:animations/entity/zogratis_disciple.animation.json"
  },
  "triad_disciple_megicula": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/zogratis_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -4078,12 +4078,12 @@
     "dist": 4.2
    }
   ],
-  "texture": "nusmp:textures/entity/zogratis_disciple_megicula.png",
-  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/zogratis_disciple_megicula.png",
+  "animations": "anime_multiverse:animations/entity/zogratis_disciple.animation.json"
  },
  "triad_disciple_beelzebub": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/zogratis_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -4113,12 +4113,12 @@
     "dist": 4.2
    }
   ],
-  "texture": "nusmp:textures/entity/zogratis_disciple_beelzebub.png",
-  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/zogratis_disciple_beelzebub.png",
+  "animations": "anime_multiverse:animations/entity/zogratis_disciple.animation.json"
  },
  "triad_disciple_astaroth": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/zogratis_disciple.geo.json",
+  "model": "anime_multiverse:geo/entity/zogratis_disciple.geo.json",
   "space": "PROP",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -4148,8 +4148,8 @@
     "dist": 4.2
    }
   ],
-  "texture": "nusmp:textures/entity/zogratis_disciple_astaroth.png",
-  "animations": "nusmp:animations/entity/zogratis_disciple.animation.json"
+  "texture": "anime_multiverse:textures/entity/zogratis_disciple_astaroth.png",
+  "animations": "anime_multiverse:animations/entity/zogratis_disciple.animation.json"
  },
  "triad_blood_beast_views": {
   "kind": "geo",

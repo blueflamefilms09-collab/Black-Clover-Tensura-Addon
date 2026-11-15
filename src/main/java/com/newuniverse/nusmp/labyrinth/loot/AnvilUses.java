@@ -29,7 +29,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public final class AnvilUses {
     private AnvilUses() {}
 
-    private static final TagKey<Item> SHADOW_CORES = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("nusmp", "loot/shadow_cores"));
+    private static final TagKey<Item> SHADOW_CORES = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "loot/shadow_cores"));
     static final int VENOM_STRIKES = 20;
 
     public static void onAnvil(AnvilUpdateEvent e) {
@@ -48,7 +48,7 @@ public final class AnvilUses {
 
     private static String loot(ItemStack s) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(s.getItem());
-        return id != null && "nusmp".equals(id.getNamespace()) && LootItems.isLoot(id.getPath()) ? id.getPath() : null;
+        return id != null && "anime_multiverse".equals(id.getNamespace()) && LootItems.isLoot(id.getPath()) ? id.getPath() : null;
     }
 
     private static void temper(AnvilUpdateEvent e, ItemStack left) {

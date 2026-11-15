@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ClaimBlockRulesTest {
     @Test
     void theDefaultBlocksEveryDimensionOfTheMod() {
-        for (String n : DimensionAudit.NAMES) assertTrue(ClaimBlockRules.blocked("nusmp:" + n, ClaimBlockRules.DEFAULT_PATTERNS), n);
-        assertTrue(ClaimBlockRules.blocked("nusmp:some_future_dimension", ClaimBlockRules.DEFAULT_PATTERNS));
+        for (String n : DimensionAudit.NAMES) assertTrue(ClaimBlockRules.blocked("anime_multiverse:" + n, ClaimBlockRules.DEFAULT_PATTERNS), n);
+        assertTrue(ClaimBlockRules.blocked("anime_multiverse:some_future_dimension", ClaimBlockRules.DEFAULT_PATTERNS));
     }
 
     @Test
@@ -27,27 +27,27 @@ class ClaimBlockRulesTest {
     void exactIdsAndWildcardsInTheMiddle() {
         assertTrue(ClaimBlockRules.blocked("minecraft:the_nether", "minecraft:the_nether"));
         assertFalse(ClaimBlockRules.blocked("minecraft:the_end", "minecraft:the_nether"));
-        assertTrue(ClaimBlockRules.blocked("nusmp:arc_arena", "nusmp:*arena"));
-        assertTrue(ClaimBlockRules.blocked("nusmp:zogratis_arena", "nusmp:*arena"));
-        assertFalse(ClaimBlockRules.blocked("nusmp:dream", "nusmp:*arena"));
+        assertTrue(ClaimBlockRules.blocked("anime_multiverse:arc_arena", "anime_multiverse:*arena"));
+        assertTrue(ClaimBlockRules.blocked("anime_multiverse:zogratis_arena", "anime_multiverse:*arena"));
+        assertFalse(ClaimBlockRules.blocked("anime_multiverse:dream", "anime_multiverse:*arena"));
         assertTrue(ClaimBlockRules.blocked("anything:at_all", "*"));
         assertTrue(ClaimBlockRules.blocked("a:b", "x:y, a:* ,z:q"));
     }
 
     @Test
     void emptyOrBadListsBlockNothingAndNeverThrow() {
-        assertFalse(ClaimBlockRules.blocked("nusmp:mega_dungeon", ""));
-        assertFalse(ClaimBlockRules.blocked("nusmp:mega_dungeon", null));
-        assertFalse(ClaimBlockRules.blocked("nusmp:mega_dungeon", " , ,, "));
-        assertFalse(ClaimBlockRules.blocked("nusmp:mega_dungeon", "nusmp:(mega"), "an entry with regex characters is skipped, not compiled");
-        assertFalse(ClaimBlockRules.blocked(null, "nusmp:*"));
-        assertFalse(ClaimBlockRules.blocked("", "nusmp:*"));
-        assertEquals(1, ClaimBlockRules.parse("nusmp:*, (bad").size());
+        assertFalse(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", ""));
+        assertFalse(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", null));
+        assertFalse(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", " , ,, "));
+        assertFalse(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", "anime_multiverse:(mega"), "an entry with regex characters is skipped, not compiled");
+        assertFalse(ClaimBlockRules.blocked(null, "anime_multiverse:*"));
+        assertFalse(ClaimBlockRules.blocked("", "anime_multiverse:*"));
+        assertEquals(1, ClaimBlockRules.parse("anime_multiverse:*, (bad").size());
     }
 
     @Test
     void caseDoesNotMatter() {
-        assertTrue(ClaimBlockRules.blocked("NUSMP:Mega_Dungeon", "nusmp:*"));
-        assertTrue(ClaimBlockRules.blocked("nusmp:mega_dungeon", " NUSMP:* "));
+        assertTrue(ClaimBlockRules.blocked("NUSMP:Mega_Dungeon", "anime_multiverse:*"));
+        assertTrue(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", " NUSMP:* "));
     }
 }

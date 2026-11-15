@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The client cost rules of the Gnome: the distance bands, the frame budget, the owner's own companion, and the quads counted from the generated model files (so the doc's numbers are the files'). */
 class GnomeLodTest {
-    private static final Path GEO = Path.of("src/main/resources/assets/nusmp/geo/entity");
+    private static final Path GEO = Path.of("src/main/resources/assets/anime_multiverse/geo/entity");
 
     private static int quads(String id) throws IOException {
         JsonObject g = JsonParser.parseString(Files.readString(GEO.resolve(id + ".geo.json"))).getAsJsonObject().getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();

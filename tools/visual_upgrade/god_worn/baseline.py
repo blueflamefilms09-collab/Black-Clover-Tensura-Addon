@@ -2,7 +2,7 @@
 
     python3 -B tools/visual_upgrade/god_worn/baseline.py
 
-Reads assets/nusmp/relic_worn/catalog.txt (the `relic <id>` entry, else the look of the relic) and the model files, through metrics.py. Run it BEFORE build.py has written
+Reads assets/anime_multiverse/relic_worn/catalog.txt (the `relic <id>` entry, else the look of the relic) and the model files, through metrics.py. Run it BEFORE build.py has written
 anything: build.py never touches catalog.txt or the old model files (it adds new ones), so the numbers do not change afterwards, but the file is committed first anyway.
 """
 import json

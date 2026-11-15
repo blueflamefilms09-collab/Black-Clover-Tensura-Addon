@@ -130,9 +130,9 @@ public final class ManaZoneSelfTests {
         // the end: the speed bonus and the flight are taken back, a cooldown was not charged for a forced zone, and the hunger was never touched
         ManaZoneManager.end(p, ManaZoneManager.End.DIMENSION);
         if (ManaZoneManager.active(p) || ManaZoneManager.activeCount() != before) return Result.fail("the zone is still tracked after it ended");
-        if (p.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_speed"))) return Result.fail("the speed bonus outlived the zone");
+        if (p.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_speed"))) return Result.fail("the speed bonus outlived the zone");
         var fly = p.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
-        if (fly != null && fly.hasModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_foothold"))) return Result.fail("the footholds outlived the zone");
+        if (fly != null && fly.hasModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_foothold"))) return Result.fail("the footholds outlived the zone");
         if (p.getFoodData().getFoodLevel() != food || p.getFoodData().getExhaustionLevel() != exhaustion) return Result.fail("the zone touched the food bar");
 
         // the Grand Magic Zones: five named regions, found by position, hard on a weak player, bound and released by the dungeon's hook

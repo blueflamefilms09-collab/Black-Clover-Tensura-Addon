@@ -14,7 +14,7 @@ import java.util.List;
 final class TestLibrary {
     private TestLibrary() {}
 
-    static final Path DIR = Path.of("src/main/resources/data/nusmp/mega/mechanics");
+    static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/mega/mechanics");
     private static OpCatalog catalog;
     private static List<MechanicDef> defs;
     private static List<String> problems;

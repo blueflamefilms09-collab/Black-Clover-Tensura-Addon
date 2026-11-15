@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FloorCatalogTest {
 
     private static String missing(CatalogSource cat) {
-        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "nusmp:mega/side", "nusmp:mega/cap",
-                "nusmp:mega/arena", "nusmp:mega/antechamber", "nusmp:mega/vault_3", "nusmp:mega/onward"}) {
+        for (String id : new String[] {FloorPlan.P_UP, FloorPlan.P_DOWN, FloorPlan.P_GRAND_UP, FloorPlan.P_GRAND_DOWN, FloorPlan.P_STAIR_DOOR, "anime_multiverse:mega/side", "anime_multiverse:mega/cap",
+                "anime_multiverse:mega/arena", "anime_multiverse:mega/antechamber", "anime_multiverse:mega/vault_3", "anime_multiverse:mega/onward"}) {
             PoolDef p = cat.pool(id);
             boolean stocked = false;
             if (p != null) for (PoolEntry e : p.entries()) if (cat.shape(e.shape()) != null) stocked = true;

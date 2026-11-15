@@ -35,14 +35,14 @@ class WeaponLoanOverlayTest {
         e.put("unbreaking", 3);
         e.put("tensura:severance", 2);
         Map<String, String> c = new TreeMap<>();
-        c.put("nusmp:djinn_bound", "baal");
-        c.put("nusmp:djinn_serial", "0b5e8d57-0000-4000-8000-00000000c0de");
+        c.put("anime_multiverse:djinn_bound", "baal");
+        c.put("anime_multiverse:djinn_serial", "0b5e8d57-0000-4000-8000-00000000c0de");
         c.put("custom_name", "Warden's Edge");
         c.put("damage", "37");
         return new Stack(id, "vessel", e, c);
     }
 
-    private static final Stack WEAPON = new Stack(-1, "djinn_weapon", Map.of(), Map.of("nusmp:djinn_temp", "owner"));
+    private static final Stack WEAPON = new Stack(-1, "djinn_weapon", Map.of(), Map.of("anime_multiverse:djinn_temp", "owner"));
 
     private static final WeaponLoan.Ops<Stack> OPS = new WeaponLoan.Ops<Stack>() {
         public Stack empty() { return Stack.EMPTY; }

@@ -202,7 +202,7 @@ class Pages15Batch4Test {
     void theThreeCharacterSetsParseListFifteenPagesAndNameOnlyPagesOfTheirBook() throws Exception {
         Map<String, String> books = Map.of("nozel", "book_mercury", "klaus", "book_steel", "mars", "book_mineral");
         for (var e : books.entrySet()) {
-            JsonObject set = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/" + e.getKey() + ".json"))).getAsJsonObject();
+            JsonObject set = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/" + e.getKey() + ".json"))).getAsJsonObject();
             assertEquals(e.getValue(), set.get("book").getAsString());
             assertEquals(1, set.get("schema").getAsInt());
             Set<String> inBook = new LinkedHashSet<>();
@@ -229,7 +229,7 @@ class Pages15Batch4Test {
             }
         }
         // Klaus lists every new Steel page; Nozel seven of the Mercury pages; Mars eight of the Mineral pages plus three older ones
-        JsonObject klaus = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/klaus.json"))).getAsJsonObject();
+        JsonObject klaus = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/klaus.json"))).getAsJsonObject();
         Set<String> kl = new HashSet<>();
         klaus.getAsJsonArray("spells").forEach(x -> kl.add(x.getAsJsonObject().get("page").getAsString()));
         for (Page p : pages()) if (p.book().equals("book_steel")) assertTrue(kl.contains(p.id()), "Klaus lists " + p.id());

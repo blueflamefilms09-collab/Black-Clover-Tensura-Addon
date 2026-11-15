@@ -1,13 +1,13 @@
 """Custom particles for the effect tables of the upgraded weapons and relics (release 1.110.0).
 
-Every generator under tools/visual_upgrade writes tables (assets/nusmp/visual_upgrade/<id>.json, fx/<id>.json) whose layers name a particle. Those names used to be vanilla ones
+Every generator under tools/visual_upgrade writes tables (assets/anime_multiverse/visual_upgrade/<id>.json, fx/<id>.json) whose layers name a particle. Those names used to be vanilla ones
 ("minecraft:flame", "end_rod", "dust"), and the game turned them into vanilla particles: white square puffs, a flame sprite that filled the first-person view, cyan dust. The owner asked
 for the mod's own particles. The game now resolves every token to a custom particle (particle/fx/UpgradeParticleAlias.java), and this module makes the SHIPPED tables say so as well, so a
 re-run of any generator keeps the fix:
 
     "dust"                      -> "fx"                      (the hue-themed custom mote, dyed with the layer colour)
-    "minecraft:flame" / "flame" -> "nusmp:flame_tongue"      (the nearest custom particle, from particle_alias.json)
-    "nusmp:..." / "fx"          -> unchanged
+    "minecraft:flame" / "flame" -> "anime_multiverse:flame_tongue"      (the nearest custom particle, from particle_alias.json)
+    "anime_multiverse:..." / "fx"          -> unchanged
 
 `convert(obj)` rewrites a table in place (every "particle" string, at any depth); each generator calls it right before it writes its json. Run as a script it converts every table of the
 assets tree: `python3 -B tools/visual_upgrade/custom_particles.py` (add `--check` to fail when a table still holds a vanilla token). The alias table is particle_alias.json, which the unit
@@ -21,8 +21,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-TABLES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "visual_upgrade")
-CATALOG = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "particle_catalog.json")
+TABLES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "visual_upgrade")
+CATALOG = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "particle_catalog.json")
 
 with open(os.path.join(HERE, "particle_alias.json"), encoding="utf-8") as _f:
     ALIAS = json.load(_f)["alias"]
@@ -34,19 +34,19 @@ THEMED = ("", "fx", "dust")
 
 
 def token(t):
-    """The custom token that replaces a table token (a catalog id is written as nusmp:<id>); already-custom tokens are returned unchanged."""
+    """The custom token that replaces a table token (a catalog id is written as anime_multiverse:<id>); already-custom tokens are returned unchanged."""
     if not isinstance(t, str):
         return t
     path = t.split(":", 1)[-1].strip().lower()
     if path in THEMED:
         return "fx"
-    if t.startswith("nusmp:") and path in IDS:
+    if t.startswith("anime_multiverse:") and path in IDS:
         return t
     if path in ALIAS:
-        return "nusmp:" + ALIAS[path]
+        return "anime_multiverse:" + ALIAS[path]
     if path in IDS:
-        return "nusmp:" + path
-    return "nusmp:" + FALLBACK
+        return "anime_multiverse:" + path
+    return "anime_multiverse:" + FALLBACK
 
 
 def convert(obj):

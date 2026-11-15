@@ -43,8 +43,8 @@ public final class TalkScreen extends Screen implements TalkHost {
     public TalkScreen(int entityId, TalkView view) {
         super(Component.empty());
         this.entityId = entityId;
-        for (int i = 0; i < TalkLayout.TABS; i++) tabNames[i] = Component.translatable("nusmp.companion.tab." + new String[]{"talk", "interact", "bond", "pouch"}[i]).getString();
-        closeLabel = Component.translatable("nusmp.companion.close").getString();
+        for (int i = 0; i < TalkLayout.TABS; i++) tabNames[i] = Component.translatable("anime_multiverse.companion.tab." + new String[]{"talk", "interact", "bond", "pouch"}[i]).getString();
+        closeLabel = Component.translatable("anime_multiverse.companion.close").getString();
         update(view);
     }
 
@@ -57,10 +57,10 @@ public final class TalkScreen extends Screen implements TalkHost {
         title = v.name.getString();
         sub = v.sub.getString();
         text = v.text.getString();
-        tierName = v.rapport >= 0 ? Component.translatable("nusmp.companion.tier." + TIER_KEYS[tierOf(v.rapport)]).getString() : "";
-        if (v.stance >= 0 && v.stance < STANCE_KEYS.length) statusLine = Component.translatable("nusmp.companion.bond.stance_now", Component.translatable("nusmp.companion.stance." + STANCE_KEYS[v.stance])).getString();
+        tierName = v.rapport >= 0 ? Component.translatable("anime_multiverse.companion.tier." + TIER_KEYS[tierOf(v.rapport)]).getString() : "";
+        if (v.stance >= 0 && v.stance < STANCE_KEYS.length) statusLine = Component.translatable("anime_multiverse.companion.bond.stance_now", Component.translatable("anime_multiverse.companion.stance." + STANCE_KEYS[v.stance])).getString();
         else statusLine = "";
-        if (v.useIt >= 0) statusLine = (statusLine.isEmpty() ? "" : statusLine + "   ") + Component.translatable(v.useIt == 1 ? "nusmp.companion.bond.uses_on" : "nusmp.companion.bond.uses_off").getString();
+        if (v.useIt >= 0) statusLine = (statusLine.isEmpty() ? "" : statusLine + "   ") + Component.translatable(v.useIt == 1 ? "anime_multiverse.companion.bond.uses_on" : "anime_multiverse.companion.bond.uses_off").getString();
         rebuildRows();
     }
 

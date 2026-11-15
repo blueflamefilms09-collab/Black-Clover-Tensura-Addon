@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: thirty-odd characters must not mean thirty spawn egg items with thirty models and thirty registrations. There is ONE item, {@code nusmp:arc_spawn_egg},
- * and the character it makes is a data component on the stack ({@code nusmp:arc_character}, the roster id), exactly as the characters themselves are one
+ * Why: thirty-odd characters must not mean thirty spawn egg items with thirty models and thirty registrations. There is ONE item, {@code anime_multiverse:arc_spawn_egg},
+ * and the character it makes is a data component on the stack ({@code anime_multiverse:arc_character}, the roster id), exactly as the characters themselves are one
  * NPC entity with a synced id. A stack for every character of the roster is offered to the creative tab by {@link #creativeEggs()}; the egg is tinted with
  * the character's colours on the client. The component is persistent and network-synchronised, so a stack survives a world save and shows the right tint
  * and name on the client. The item goes on {@code NUItems.ITEMS}, so {@link ArcSystem#init} must run before that register is attached to the mod bus.

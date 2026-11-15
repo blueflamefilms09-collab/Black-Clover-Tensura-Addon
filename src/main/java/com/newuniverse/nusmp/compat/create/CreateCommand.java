@@ -26,7 +26,7 @@ import java.util.Map;
 public final class CreateCommand {
     private CreateCommand() {}
 
-    private static MutableComponent t(String key, String english, Object... args) { return Component.translatableWithFallback("message.nusmp.create." + key, english, args); }
+    private static MutableComponent t(String key, String english, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.create." + key, english, args); }
 
     public static void register(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("multiverse").then(Commands.literal("compat").then(node())));

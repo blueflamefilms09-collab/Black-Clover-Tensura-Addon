@@ -138,7 +138,7 @@ class SpiritSpaceSourceScanTest {
         for (String f : new String[]{"client/prop/SpiritSpaceDraw.java", "client/prop/SpiritSpacePropPainter.java"}) {
             String c = code(f).replaceAll("(?m)^.*static final.*$", "");           // static tables are built once
             assertFalse(Pattern.compile("new float\\[|new double\\[|new int\\[|new Vec3|new ArrayList|new HashMap|new Quaternionf|new Vector3f|Axis\\.[XYZ]P\\.rotation|WaterPropDraw\\.lazy|new LazyBuffers").matcher(c).find(), f + " allocates per frame");
-            for (String b : new String[]{"RenderType.eyes(", "RenderType.lightning(", "ADDITIVE_TRANSPARENCY", "RenderType.energySwirl(", "ResourceLocation.fromNamespaceAndPath(\"nusmp\", \"textures"})
+            for (String b : new String[]{"RenderType.eyes(", "RenderType.lightning(", "ADDITIVE_TRANSPARENCY", "RenderType.energySwirl(", "ResourceLocation.fromNamespaceAndPath(\"anime_multiverse\", \"textures"})
                 assertFalse(c.contains(b) && !(f.endsWith("Draw.java") && b.startsWith("Resource")), f + " uses " + b);
             assertFalse(c.contains("PropDraw.quad("), f + " draws no single flat quad of its own");
         }

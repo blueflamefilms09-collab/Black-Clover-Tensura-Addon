@@ -53,8 +53,8 @@ public final class GrimoireShelfClient {
     private static final double PICK_RADIUS = 0.3;
     private static final double MAX_DISTANCE = 6.0;
 
-    public static final KeyMapping KEY = new KeyMapping("key.nusmp.grimoire_shelf", InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), "key.categories.nusmp");
+    public static final KeyMapping KEY = new KeyMapping("key.anime_multiverse.grimoire_shelf", InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(), "key.categories.anime_multiverse");
 
     private static List<ItemStack> books = List.of();
     private static long openTime;
@@ -121,16 +121,16 @@ public final class GrimoireShelfClient {
                 .executes(ctx -> {
                     if (isOpen()) {
                         close();
-                        ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.grimoire_shelf.closed"), false);
+                        ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.grimoire_shelf.closed"), false);
                     } else {
                         int n = open();
-                        ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.grimoire_shelf.opened", n), false);
+                        ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.grimoire_shelf.opened", n), false);
                     }
                     return 1;
                 })
                 .then(Commands.literal("close").executes(ctx -> {
                     close();
-                    ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.grimoire_shelf.closed"), false);
+                    ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.grimoire_shelf.closed"), false);
                     return 1;
                 })));
     }

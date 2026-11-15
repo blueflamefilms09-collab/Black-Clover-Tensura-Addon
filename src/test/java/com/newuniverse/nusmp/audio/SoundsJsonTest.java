@@ -23,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: three things must say the same: the catalogue of mob voices ({@link MobSoundSet}, from which {@link ModSounds} registers one sound event per family and cue), the entries of
- * {@code assets/nusmp/sounds.json} (several variants per event, a subtitle key, {@code stream} for the long ones) and the {@code .ogg} files that {@code tools/gen_mob_sounds.py}
+ * {@code assets/anime_multiverse/sounds.json} (several variants per event, a subtitle key, {@code stream} for the long ones) and the {@code .ogg} files that {@code tools/gen_mob_sounds.py}
  * synthesises. A sound event without an entry plays nothing, an entry without a file logs an error in the game, a file nothing names is dead weight, a subtitle without a line shows its key.
  * This test walks all of it: every event has an entry whose files exist and are mono Ogg Vorbis between 0.3 and 3.0 seconds, no entry or file is an orphan, every subtitle has its line in
  * {@code tools/lang/mob_audio.json} (or in {@code en_us.json}), long files are streamed, the older entries (the Zagred voice lines) are still there, and the whole voice set is under 8 MB.
  */
 class SoundsJsonTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path SOUNDS = ASSETS.resolve("sounds");
     private static final Path LANG_FRAGMENT = Path.of("tools/lang/mob_audio.json");
     private static final Path EN_US = ASSETS.resolve("lang/en_us.json");
@@ -96,7 +96,7 @@ class SoundsJsonTest {
             if (sounds == null) continue;
             for (JsonElement s : sounds) {
                 String name = nameOf(s);
-                if (!name.startsWith("nusmp:mob/")) bad.add(id + ": odd sound name " + name);
+                if (!name.startsWith("anime_multiverse:mob/")) bad.add(id + ": odd sound name " + name);
                 Path f = fileOf(name);
                 if (!Files.exists(f)) {
                     bad.add(id + ": missing file " + f);

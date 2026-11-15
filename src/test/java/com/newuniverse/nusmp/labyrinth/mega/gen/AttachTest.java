@@ -17,12 +17,12 @@ class AttachTest {
 
     @Test
     void canAttachNeedsTheNameAndOppositeFacings() {
-        assertTrue(Socket.canAttach("nusmp:mega_door", Facing.NORTH, "nusmp:mega_door", Facing.SOUTH));
-        assertFalse(Socket.canAttach("nusmp:mega_door", Facing.NORTH, "nusmp:mega_door", Facing.NORTH), "same direction");
-        assertFalse(Socket.canAttach("nusmp:mega_door", Facing.NORTH, "nusmp:mega_door", Facing.EAST), "at right angles");
-        assertFalse(Socket.canAttach("nusmp:mega_door", Facing.EAST, "nusmp:mega_chain", Facing.WEST), "a door does not look for a chain socket");
-        assertFalse(Socket.canAttach("nusmp:mega_chain", Facing.EAST, "nusmp:mega_door", Facing.WEST), "the rule is one-way: target against name");
-        assertTrue(Socket.canAttach("nusmp:mega_chain", Facing.WEST, "nusmp:mega_chain", Facing.EAST));
+        assertTrue(Socket.canAttach("anime_multiverse:mega_door", Facing.NORTH, "anime_multiverse:mega_door", Facing.SOUTH));
+        assertFalse(Socket.canAttach("anime_multiverse:mega_door", Facing.NORTH, "anime_multiverse:mega_door", Facing.NORTH), "same direction");
+        assertFalse(Socket.canAttach("anime_multiverse:mega_door", Facing.NORTH, "anime_multiverse:mega_door", Facing.EAST), "at right angles");
+        assertFalse(Socket.canAttach("anime_multiverse:mega_door", Facing.EAST, "anime_multiverse:mega_chain", Facing.WEST), "a door does not look for a chain socket");
+        assertFalse(Socket.canAttach("anime_multiverse:mega_chain", Facing.EAST, "anime_multiverse:mega_door", Facing.WEST), "the rule is one-way: target against name");
+        assertTrue(Socket.canAttach("anime_multiverse:mega_chain", Facing.WEST, "anime_multiverse:mega_chain", Facing.EAST));
     }
 
     @Test
@@ -81,7 +81,7 @@ class AttachTest {
     @Test
     void shapesFindTheirExpansionSocketUnderTheMarker() {
         SyntheticCatalog c = SyntheticCatalog.standard();
-        Shape straight = c.shape("nusmp:mega/onward/straight_a");
+        Shape straight = c.shape("anime_multiverse:mega/onward/straight_a");
         assertNotNull(straight);
         assertTrue(straight.expansionMarked);
         assertEquals(1, straight.expansionSocket, "the north door under the marker at (4,10,0)");
@@ -89,11 +89,11 @@ class AttachTest {
         assertEquals(3, straight.sealW);
         assertEquals(4, straight.sealH);
         assertEquals(2, straight.sealD);
-        Shape hall = c.shape("nusmp:mega/hall/cell_1x1");
+        Shape hall = c.shape("anime_multiverse:mega/hall/cell_1x1");
         assertEquals(-1, hall.expansionSocket);
         assertFalse(hall.expansionMarked);
         assertEquals(4, hall.openSockets());
-        Shape cap = c.shape("nusmp:mega/cap/alcove_3");
+        Shape cap = c.shape("anime_multiverse:mega/cap/alcove_3");
         assertTrue(cap.isCap());
         assertEquals(0, cap.openSockets(), "a cap's only socket is a sealed end");
     }

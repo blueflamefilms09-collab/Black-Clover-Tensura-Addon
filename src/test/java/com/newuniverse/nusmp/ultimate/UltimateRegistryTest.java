@@ -53,7 +53,7 @@ class UltimateRegistryTest {
             assertTrue(d.id().matches("ultimate_[a-z]+"), d.id());
             assertSame(d, UltimateRegistry.byId(d.id()));
             assertTrue(UltimateRegistry.isUltimatePage(d.id()));
-            assertEquals("nusmp.page." + d.bookPath() + "." + d.id(), d.langKey());
+            assertEquals("anime_multiverse.page." + d.bookPath() + "." + d.id(), d.langKey());
         }
         assertFalse(UltimateRegistry.isUltimatePage("fire_ball"));
         assertFalse(UltimateRegistry.isUltimatePage(null));

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * is left to check is the Gateway (the rooms of the Mega-Dungeon have their own catalog test).
  */
 class LabyrinthDataTest {
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse");
     private static final Path POOLS = DATA.resolve("worldgen/template_pool");
     private static final Path GATEWAY_POOLS = POOLS.resolve("mega_gateway");
     private static final Path STRUCTURES = DATA.resolve("structure");
@@ -53,15 +53,15 @@ class LabyrinthDataTest {
         return out;
     }
 
-    /** nusmp:mega_gateway/base -> .../template_pool/mega_gateway/base.json */
+    /** anime_multiverse:mega_gateway/base -> .../template_pool/mega_gateway/base.json */
     private static Path poolFile(String id) {
-        assertTrue(id.startsWith("nusmp:"), "pool " + id + " is not in the nusmp namespace");
-        return POOLS.resolve(id.substring("nusmp:".length()) + ".json");
+        assertTrue(id.startsWith("anime_multiverse:"), "pool " + id + " is not in the anime_multiverse namespace");
+        return POOLS.resolve(id.substring("anime_multiverse:".length()) + ".json");
     }
 
     private static Path templateFile(String id) {
-        assertTrue(id.startsWith("nusmp:"), "template " + id + " is not in the nusmp namespace");
-        return STRUCTURES.resolve(id.substring("nusmp:".length()) + ".nbt");
+        assertTrue(id.startsWith("anime_multiverse:"), "template " + id + " is not in the anime_multiverse namespace");
+        return STRUCTURES.resolve(id.substring("anime_multiverse:".length()) + ".nbt");
     }
 
     @Test
@@ -90,7 +90,7 @@ class LabyrinthDataTest {
         for (Path pool : files(GATEWAY_POOLS, ".json")) {
             for (String proc : all(PROCESSORS, read(pool))) {
                 if (proc.equals("minecraft:empty")) continue;
-                assertTrue(proc.startsWith("nusmp:") && Files.exists(PROCESSOR_LISTS.resolve(proc.substring(6) + ".json")), pool.getFileName() + " uses processor list " + proc + " which does not exist");
+                assertTrue(proc.startsWith("anime_multiverse:") && Files.exists(PROCESSOR_LISTS.resolve(proc.substring(6) + ".json")), pool.getFileName() + " uses processor list " + proc + " which does not exist");
             }
         }
     }
@@ -106,7 +106,7 @@ class LabyrinthDataTest {
 
     @Test
     void theGatewayStartsInItsBasePoolAndTheRemovedStructuresStayRemoved() throws IOException {
-        assertEquals(List.of("nusmp:mega_gateway/base"), all(START_POOL, read(STRUCTURE_JSON.resolve("mega_gateway.json"))));
+        assertEquals(List.of("anime_multiverse:mega_gateway/base"), all(START_POOL, read(STRUCTURE_JSON.resolve("mega_gateway.json"))));
         assertFalse(Files.exists(STRUCTURE_JSON.resolve("labyrinth_spire.json")), "the Spire was removed in 1.58.0");
         assertFalse(Files.exists(STRUCTURE_JSON.resolve("dungeon_gate.json")), "the old Dungeon Gate arch was removed in 1.58.0");
     }

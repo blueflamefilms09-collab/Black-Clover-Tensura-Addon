@@ -33,7 +33,7 @@ public final class LightNet {
     public static volatile Consumer<Scene> CLIENT = s -> { };
 
     public record Payload(byte op, int light, int target, byte role) implements CustomPacketPayload {
-        public static final Type<Payload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "light_scene"));
+        public static final Type<Payload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "light_scene"));
         public static final StreamCodec<FriendlyByteBuf, Payload> STREAM_CODEC = StreamCodec.of(LightNet::write, LightNet::read);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
         public Scene scene() { return new Scene(op, light, target, role); }

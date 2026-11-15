@@ -1,8 +1,8 @@
 """Geo kit of the Sylph (docs/magic/sylph.md): hand-painted atlas + cubes with explicit uv windows, so a face, a hair strand card, a ruffle or a wing membrane
 is ONE painted picture and the geometry stays low. Writes the files client.geo (GeoModels / GeoDraw) reads:
 
-    assets/nusmp/geo/entity/<id>.geo.json         the model (Bedrock / GeckoLib format 1.12.0)
-    assets/nusmp/textures/entity/<sheet>.png      the colour sheet (RGBA, painted at 4x and reduced, so the line work is clean)
+    assets/anime_multiverse/geo/entity/<id>.geo.json         the model (Bedrock / GeckoLib format 1.12.0)
+    assets/anime_multiverse/textures/entity/<sheet>.png      the colour sheet (RGBA, painted at 4x and reduced, so the line work is clean)
 
 Frame of the files (client.geo.GeoDraw): units are 1/16 block, y UP, origin at the feet, the model's front on -z. Rotations are degrees (Z, then Y, then X on the point).
 A face of a cube is seen from OUTSIDE the cube, upright and not mirrored; on the up and down faces the bottom of the picture is the front (-z).

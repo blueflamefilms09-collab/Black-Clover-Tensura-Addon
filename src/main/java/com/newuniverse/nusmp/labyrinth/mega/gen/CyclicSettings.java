@@ -70,7 +70,7 @@ public final class CyclicSettings {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-gen-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The cyclic generation config could not be registered ({}); the defaults apply (generation.cyclic = true)", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The cyclic generation config could not be registered ({}); the defaults apply (generation.cyclic = true)", e.toString());
         }
     }
 }

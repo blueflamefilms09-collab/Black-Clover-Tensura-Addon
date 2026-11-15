@@ -156,7 +156,7 @@ public class DanteBoss extends ZogratisBoss {
             }
             if (surging() && tickCount % 6 == 0) Tells.gather(sl, position().add(0, 1.0, 0), 0.7, BODY_RGB, 5);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Dante's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Dante's tick failed: {}", e.toString());
         }
     }
 
@@ -172,7 +172,7 @@ public class DanteBoss extends ZogratisBoss {
         try {
             bodyAnswers(sl, source, amount);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Dante's Body Magic failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Dante's Body Magic failed: {}", e.toString());
         }
         return amount;
     }
@@ -238,10 +238,10 @@ public class DanteBoss extends ZogratisBoss {
             b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
                 if (base != null) base.tell(bs, t, left, total);
                 else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
-                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Dante's tell effect failed: {}", e.toString()); }
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Dante's tell effect failed: {}", e.toString()); }
             });
             out.add(b.run((bs, t) -> {
-                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Dante's strike effect failed: {}", e.toString()); }
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Dante's strike effect failed: {}", e.toString()); }
                 run.run(bs, t);
             }));
         }

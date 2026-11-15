@@ -56,7 +56,7 @@ public final class AvatarRaceParser {
         return new AvatarRace(id, display, description, scale, Map.copyOf(attrs), Map.copyOf(mult), cost, ep, evolves, dnd, selectable, List.copyOf(conditions), List.copyOf(allowed), Map.copyOf(hints));
     }
 
-    /** "nusmp:goblin" and "goblin" are the same race. */
+    /** "anime_multiverse:goblin" and "goblin" are the same race. */
     static String idOnly(String s) {
         int c = s.indexOf(':');
         return c >= 0 ? s.substring(c + 1) : s;

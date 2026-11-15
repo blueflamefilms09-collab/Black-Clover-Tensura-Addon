@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * Draws the Devil Avatar (tools/gen_devil_avatar.py writes assets/nusmp/geo|animations|textures/entity/devil_avatar_*) from its synced state,
+ * Draws the Devil Avatar (tools/gen_devil_avatar.py writes assets/anime_multiverse/geo|animations|textures/entity/devil_avatar_*) from its synced state,
  * on the pose clock and the glow of the Zogratis renderers:
  * <ul>
  *   <li><b>Model</b>: one body in two forms, {@code base} until the Gates open and {@code gates} after (a second halo, longer horns, more cracks),

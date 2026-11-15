@@ -72,8 +72,8 @@ public final class SpiritControl {
     /** Calls the spirit. */
     public static Verdict summon(ServerPlayer p, SpiritHandle h) {
         if (!SpiritControlConfig.enabled()) return Verdict.OFF;
-        if (h == null) { say(p, "nusmp.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
-        if (!h.eligible(p)) { say(p, "nusmp.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
+        if (h == null) { say(p, "anime_multiverse.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
+        if (!h.eligible(p)) { say(p, "anime_multiverse.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
         if (!allowed(p)) return Verdict.RATE;
         if (h.isOut(p)) return Verdict.DONE;
         return h.summon(p) ? Verdict.DONE : Verdict.REFUSED;
@@ -82,9 +82,9 @@ public final class SpiritControl {
     /** Sends the spirit away. */
     public static Verdict release(ServerPlayer p, SpiritHandle h) {
         if (!SpiritControlConfig.enabled()) return Verdict.OFF;
-        if (h == null) { say(p, "nusmp.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
+        if (h == null) { say(p, "anime_multiverse.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
         if (!allowed(p)) return Verdict.RATE;
-        if (!h.isOut(p)) { say(p, "nusmp.spirit_control.notout", "%s is not out.", ChatFormatting.GRAY, h.display()); return Verdict.NONE; }
+        if (!h.isOut(p)) { say(p, "anime_multiverse.spirit_control.notout", "%s is not out.", ChatFormatting.GRAY, h.display()); return Verdict.NONE; }
         h.release(p);
         return Verdict.DONE;
     }
@@ -98,11 +98,11 @@ public final class SpiritControl {
     /** One of the spirit's own abilities. {@code arg} is the 0-based waypoint slot (0 for abilities that take none). */
     public static Verdict ability(ServerPlayer p, SpiritHandle h, String abilityId, int arg) {
         if (!SpiritControlConfig.enabled()) return Verdict.OFF;
-        if (h == null) { say(p, "nusmp.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
+        if (h == null) { say(p, "anime_multiverse.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
         SpiritAbilityDef def = abilityOf(h, abilityId);
         if (def == null || arg < 0 || arg >= MAX_SLOT) return Verdict.NONE;
-        if (!h.eligible(p)) { say(p, "nusmp.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
-        if (!h.isOut(p)) { say(p, "nusmp.spirit_control.callfirst", "Call %s first.", ChatFormatting.GRAY, h.display()); return Verdict.NONE; }
+        if (!h.eligible(p)) { say(p, "anime_multiverse.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
+        if (!h.isOut(p)) { say(p, "anime_multiverse.spirit_control.callfirst", "Call %s first.", ChatFormatting.GRAY, h.display()); return Verdict.NONE; }
         if (!allowed(p)) return Verdict.RATE;
         return h.ability(p, def.id(), arg) ? Verdict.DONE : Verdict.REFUSED;
     }
@@ -117,8 +117,8 @@ public final class SpiritControl {
     /** Switches combat mode on or off for this player. */
     public static Verdict combat(ServerPlayer p, boolean on) {
         if (!SpiritControlConfig.enabled()) return Verdict.OFF;
-        if (on && !SpiritControlConfig.combat()) { say(p, "nusmp.spirit_control.combat_off", "Spirit combat mode is switched off on this server.", ChatFormatting.GRAY); return Verdict.OFF; }
-        if (on && eligible(p).isEmpty()) { say(p, "nusmp.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
+        if (on && !SpiritControlConfig.combat()) { say(p, "anime_multiverse.spirit_control.combat_off", "Spirit combat mode is switched off on this server.", ChatFormatting.GRAY); return Verdict.OFF; }
+        if (on && eligible(p).isEmpty()) { say(p, "anime_multiverse.spirit_control.none", "No spirit answers you.", ChatFormatting.GRAY); return Verdict.NONE; }
         if (!allowed(p)) return Verdict.RATE;
         SpiritCombat.set(p, on);
         return Verdict.DONE;

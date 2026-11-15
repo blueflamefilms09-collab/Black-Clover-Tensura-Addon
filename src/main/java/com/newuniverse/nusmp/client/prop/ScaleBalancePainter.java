@@ -158,11 +158,11 @@ public final class ScaleBalancePainter {
         a.text = true;
         a.textWord = word;
         a.textTarget = target;
-        String you = Component.translatableWithFallback("nusmp.scale.you", "You").getString(), who = foe == null ? Component.translatableWithFallback("nusmp.scale.foe", "Foe").getString() : foe.getName().getString();
+        String you = Component.translatableWithFallback("anime_multiverse.scale.you", "You").getString(), who = foe == null ? Component.translatableWithFallback("anime_multiverse.scale.foe", "Foe").getString() : foe.getName().getString();
         a.line1 = you + " " + ScaleCastRules.format(ScaleCastRules.dequantize(ScaleCastRules.casterQ(word))) + "   |   " + who + " " + ScaleCastRules.format(ScaleCastRules.dequantize(ScaleCastRules.foeQ(word)));
         int pct = ScaleCastRules.percent(word);
-        a.line2 = pct > 0 && ScaleCastRules.aura(word) ? Component.translatableWithFallback("nusmp.scale.pressed", "Pressed down: -%s%% blows", pct).getString()
-                : Component.translatableWithFallback("nusmp.scale.level", "Weighed, not pressed").getString();
+        a.line2 = pct > 0 && ScaleCastRules.aura(word) ? Component.translatableWithFallback("anime_multiverse.scale.pressed", "Pressed down: -%s%% blows", pct).getString()
+                : Component.translatableWithFallback("anime_multiverse.scale.level", "Weighed, not pressed").getString();
         Font font = Minecraft.getInstance().font;
         a.width1 = font.width(a.line1);
         a.width2 = font.width(a.line2);

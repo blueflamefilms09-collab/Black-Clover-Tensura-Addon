@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The self-test {@code item.weapon_grip} of the CI server smoke test (docs/weapon_grip.md): inside the booted mod, the grip table of assets/nusmp/weapon_grips.json parses,
+ * The self-test {@code item.weapon_grip} of the CI server smoke test (docs/weapon_grip.md): inside the booted mod, the grip table of assets/anime_multiverse/weapon_grips.json parses,
  * every class it names exists, every upgraded weapon states its grip point, and a sample of weapons (the owner's Elsdocia, a katana, a dagger, a spear, a hammer, a staff, a bow, a
  * held item) finds a grip inside its mesh and lands it in the hand in all four hand contexts under the real display block of its model json. The same maths as the JUnit tests
  * ({@link GripFinder}, {@link GripMath}); touches no client class and no game object, so it runs on the dedicated server.
@@ -35,7 +35,7 @@ public final class WeaponGripSelfTests {
     }
 
     private static String text(String path) throws Exception {
-        try (InputStream in = WeaponGripSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) {
+        try (InputStream in = WeaponGripSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path)) {
             return in == null ? null : MeshPack.text(in.readAllBytes());
         }
     }

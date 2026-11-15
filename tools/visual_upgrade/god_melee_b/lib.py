@@ -5,11 +5,11 @@ tools/relics/wave30_m_paradox.py) with three hooks, so the upgraded weapon is th
   2. the builder's own painting runs unchanged on every part (old and new); its `finish` is captured instead of written (the old files stay as they are);
   3. afterwards the slice paints on top (`detail_pass`: grain, ambient occlusion, bevel rim, scratches; the item's own engravings and the second emissive map)
      and writes NEW files only, under the sub-folder `up/`:
-        assets/nusmp/weapon_meshes/up/<id>.txt            the full-detail mesh (place / grip copied from the old mesh, `orient manual`)
-        assets/nusmp/weapon_meshes/up/<id>_lod.txt        the level-of-detail mesh (vertex clustering, <= 14% of the quads)
-        assets/nusmp/weapon_meshes/up/<id>_orbit.txt      one piece of the orbiting parts (drawn N times by the renderer)
-        assets/nusmp/textures/entity/weapon/up/<id>.png, _glow.png (core glow, additive), _glow2.png (energy veins, translucent emissive), <id>_orbit*.png
-        assets/nusmp/visual_upgrade/<id>.json             the data table of the effects (read by client/GodMeleeBRender and client/vupgrade/godb/*)
+        assets/anime_multiverse/weapon_meshes/up/<id>.txt            the full-detail mesh (place / grip copied from the old mesh, `orient manual`)
+        assets/anime_multiverse/weapon_meshes/up/<id>_lod.txt        the level-of-detail mesh (vertex clustering, <= 14% of the quads)
+        assets/anime_multiverse/weapon_meshes/up/<id>_orbit.txt      one piece of the orbiting parts (drawn N times by the renderer)
+        assets/anime_multiverse/textures/entity/weapon/up/<id>.png, _glow.png (core glow, additive), _glow2.png (energy veins, translucent emissive), <id>_orbit*.png
+        assets/anime_multiverse/visual_upgrade/<id>.json             the data table of the effects (read by client/GodMeleeBRender and client/vupgrade/godb/*)
 
 The renderer reaches them through the mesh id `up/<id>` (see WeaponRenderer.meshId); the old mesh <id> is still the fallback when `visual.upgrade` is off.
 """

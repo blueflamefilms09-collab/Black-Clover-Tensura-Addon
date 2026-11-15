@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:world/arena",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:arena_return_sigil"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.world.sigil.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.world.sigil.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_arena_return_sigil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:arena_return_sigil"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_arena_return_sigil"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

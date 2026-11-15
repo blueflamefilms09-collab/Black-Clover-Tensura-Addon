@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * kind of the later wills has a picture that is never a Time shape. Pure (file reads); the working directory is the project root.
  */
 class BeastWillNewTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/beast_will");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/beast_will");
     private static final List<String> LEGENDARY = List.of("typhon_will", "yamata_no_orochi_will", "apophis_will");
 
     private static BeastWillDef load(String id) throws Exception { return BeastWillSchemaTest.load(id); }
@@ -108,18 +108,18 @@ class BeastWillNewTest {
     @Test
     void everyAbilityOfTheLaterWillsHasAName() throws Exception {
         String lang = Files.readString(Path.of("tools/lang/beastwill_new.json"));
-        String en = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));
+        String en = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
         JsonObject frag = JsonParser.parseString(lang).getAsJsonObject();
         for (String id : BeastWillSchemaTest.LATER) {
-            assertTrue(frag.has("nusmp.beastwill." + id + ".name") || en.contains("\"nusmp.beastwill." + id + ".name\""), id + " has no lang name");
+            assertTrue(frag.has("anime_multiverse.beastwill." + id + ".name") || en.contains("\"anime_multiverse.beastwill." + id + ".name\""), id + " has no lang name");
             BeastWillDef d = load(id);
             assertEquals(d.name(), JsonParser.parseString(en).getAsJsonObject().get(d.langKey("name")).getAsString(), id + ": the lang name differs from the file name");
             for (var ph : List.of(d.acquire(), d.integrate())) for (var a : ph.abilities()) {
-                String key = "nusmp.beastwill.ability." + a.id();
+                String key = "anime_multiverse.beastwill.ability." + a.id();
                 assertTrue(frag.has(key) || en.contains("\"" + key + "\""), a.id() + " has no lang name");
             }
         }
-        for (String k : frag.keySet()) assertTrue(k.startsWith("nusmp.beastwill."), k);
+        for (String k : frag.keySet()) assertTrue(k.startsWith("anime_multiverse.beastwill."), k);
     }
 
     @Test

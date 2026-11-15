@@ -32,7 +32,7 @@ import java.util.UUID;
 /**
  * The Mod Boss Global Buff Engine: permanent Tensura barriers and thematic skills for THIS mod's registry-listed bosses, and nobody else.
  * <ul>
- *   <li><b>Who</b>: an entity joins a server level, {@link BossEntities#bossId} names it a boss (namespace {@code nusmp} and a row in
+ *   <li><b>Who</b>: an entity joins a server level, {@link BossEntities#bossId} names it a boss (namespace {@code anime_multiverse} and a row in
  *       {@link BossRegistry}), and only then is it tracked. Vanilla, base-Tensura and the God of Order never are.</li>
  *   <li><b>What</b>: the rows of {@link BossBuffTable}: infinite, ambient, particle-less Tensura effects (magic barrier, physical
  *       barrier, haki coat, instant regeneration), thematic Tensura skills lent to the boss itself, and a small anti-magic aura.</li>
@@ -100,7 +100,7 @@ public final class BossBuffEngine {
             } catch (Throwable x) {
                 if (!warned) {
                     warned = true;
-                    LogUtils.getLogger().warn("[nusmp] boss buff engine failed for {}: {}", t.id, x.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] boss buff engine failed for {}: {}", t.id, x.toString());
                 }
             }
         }

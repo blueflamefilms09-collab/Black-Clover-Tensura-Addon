@@ -10,7 +10,7 @@ package com.newuniverse.nusmp.heroweapon.bond;
 public final class HeroLoanPolicy {
     private HeroLoanPolicy() {}
 
-    /** Whose projection the stack says it is (its {@code nusmp:hero_owner} component) compared with the player holding it. */
+    /** Whose projection the stack says it is (its {@code anime_multiverse:hero_owner} component) compared with the player holding it. */
     public enum Owner { NONE, SELF, OTHER }
 
     /** The holder's bond compared with the stack's weapon. */

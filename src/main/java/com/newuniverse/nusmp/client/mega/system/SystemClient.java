@@ -53,7 +53,7 @@ public final class SystemClient {
         modBus.addListener((RegisterKeyMappingsEvent e) -> {
             for (KeyMapping k : KEYS) e.register(k);
         });
-        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "system_overlay"), SystemOverlay::render));
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_overlay"), SystemOverlay::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> {
             ClientSystem.clear();

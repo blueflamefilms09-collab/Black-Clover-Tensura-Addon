@@ -33,13 +33,13 @@ class CompatCatalogTest {
             toml = new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
         Set<String> required = new HashSet<>();
-        Matcher m = Pattern.compile("(?s)\\[\\[dependencies\\.nusmp]]\\s*modId=\"([^\"]+)\"\\s*type=\"([^\"]+)\"").matcher(toml);
+        Matcher m = Pattern.compile("(?s)\\[\\[dependencies\\.anime_multiverse]]\\s*modId=\"([^\"]+)\"\\s*type=\"([^\"]+)\"").matcher(toml);
         while (m.find()) if (m.group(2).equals("required")) required.add(m.group(1));
         Set<String> listed = new HashSet<>();
         for (CompatCatalog.Entry e : CompatCatalog.of(CompatCatalog.Kind.REQUIRED)) listed.add(e.modId());
         assertEquals(required, listed);
         Set<String> optional = new HashSet<>();
-        m = Pattern.compile("(?s)\\[\\[dependencies\\.nusmp]]\\s*modId=\"([^\"]+)\"\\s*type=\"([^\"]+)\"").matcher(toml);
+        m = Pattern.compile("(?s)\\[\\[dependencies\\.anime_multiverse]]\\s*modId=\"([^\"]+)\"\\s*type=\"([^\"]+)\"").matcher(toml);
         while (m.find()) if (m.group(2).equals("optional")) optional.add(m.group(1));
         for (String id : optional) assertTrue(CompatCatalog.entries().stream().anyMatch(e -> e.modId().equals(id)), "optional " + id + " must be in the codex");
     }

@@ -3,43 +3,43 @@ loaderVersion="[4,)"
 license="All rights reserved"
 
 [[mods]]
-modId="nusmp"
-version="3.83.9"
+modId="anime_multiverse"
+version="3.84.0"
 displayName="Anime Multiverse"
 logoFile="logo.png"
 logoBlur=false
 description='''Anime powers for Tensura: Reincarnated - Hell Mode, DanMachi, Black Clover grimoires, Fire Force, Jujutsu Kaisen, JoJo and more, with Unique to Ultimate evolutions.'''
 
-[[dependencies.nusmp]]
+[[dependencies.anime_multiverse]]
 modId="neoforge"
 type="required"
 versionRange="[21.1,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.nusmp]]
+[[dependencies.anime_multiverse]]
 modId="tensura"
 type="required"
 versionRange="[2.0.1.0,)"
 ordering="AFTER"
 side="BOTH"
 
-[[dependencies.nusmp]]
+[[dependencies.anime_multiverse]]
 modId="manascore_skill"
 type="required"
 versionRange="[4.0.0.2,)"
 ordering="AFTER"
 side="BOTH"
 
-[[dependencies.nusmp]]
+[[dependencies.anime_multiverse]]
 modId="manascore_storage"
 type="required"
 versionRange="[4.0.0.2,)"
 ordering="AFTER"
 side="BOTH"
 
-# 0.43: Better Combat support is data-only (data/nusmp/weapon_attributes); optional, so the mod runs with or without it
-[[dependencies.nusmp]]
+# 0.43: Better Combat support is data-only (data/anime_multiverse/weapon_attributes); optional, so the mod runs with or without it
+[[dependencies.anime_multiverse]]
 modId="bettercombat"
 type="optional"
 versionRange="[0,)"
@@ -47,7 +47,7 @@ ordering="NONE"
 side="BOTH"
 
 # 1.15.0: the weapons fit Curios slots (data tags under data/curios); optional, the weapons work in hand without it
-[[dependencies.nusmp]]
+[[dependencies.anime_multiverse]]
 modId="curios"
 type="optional"
 versionRange="[0,)"
@@ -55,4 +55,4 @@ ordering="AFTER"
 side="BOTH"
 
 [[mixins]]
-config="nusmp.mixins.json"
+config="anime_multiverse.mixins.json"

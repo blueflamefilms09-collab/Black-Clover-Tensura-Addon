@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Server to client: when an act of a relic is ready again (game time), for the HUD line and the tooltip. A time in the past clears it. */
 public record RelicCooldownPayload(String relicId, String actKey, long readyAt) implements CustomPacketPayload {
-    public static final Type<RelicCooldownPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_cooldown"));
+    public static final Type<RelicCooldownPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_cooldown"));
     public static final StreamCodec<RegistryFriendlyByteBuf, RelicCooldownPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, RelicCooldownPayload::relicId,
             ByteBufCodecs.STRING_UTF8, RelicCooldownPayload::actKey,

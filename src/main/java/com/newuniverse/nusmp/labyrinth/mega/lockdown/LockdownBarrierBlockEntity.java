@@ -243,7 +243,7 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
         for (Mob m : r.mobs()) spawned.add(new Spawned(m.getUUID(), m.blockPosition().asLong()));
         lastAlive = countAlive(level);
         lastHostileTick = now;
-        if (r.mobs().isEmpty()) LOG.warn("[nusmp] Lockdown of room {} in sector {}: wave {} of {} spawned nothing ({}): it counts as beaten", roomId, sectorId, wave, waves, r.text());
+        if (r.mobs().isEmpty()) LOG.warn("[anime_multiverse] Lockdown of room {} in sector {}: wave {} of {} spawned nothing ({}): it counts as beaten", roomId, sectorId, wave, waves, r.text());
         Component msg = LockdownMsg.text(LockdownText.WAVE, wave, waves).withStyle(ChatFormatting.GOLD);
         LockdownMsg.tellAll(inside, msg);
         LockdownMsg.toast(inside, com.newuniverse.nusmp.labyrinth.mega.system.ToastKind.INFO, LockdownText.TOAST_WAVE, Integer.toString(wave), Integer.toString(waves));
@@ -310,7 +310,7 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
         discardMobs(level);
         dropCells(level);
         LockdownDirector.coolDown(sid, rid, now);
-        LOG.info("[nusmp] Lockdown of room {} in sector {} was abandoned: the doorways open, the room is not cleared", rid, sid);
+        LOG.info("[anime_multiverse] Lockdown of room {} in sector {} was abandoned: the doorways open, the room is not cleared", rid, sid);
     }
 
     // ---------------------------------------------------------------- the escape rules: a Lockable
@@ -442,7 +442,7 @@ public final class LockdownBarrierBlockEntity extends BlockEntity implements Loc
                 BlockState s = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), tag.getCompound("previous"));
                 previous = s.isAir() ? null : s;
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] A lockdown barrier could not read the block it replaced: {}", e.toString());
+                LOG.warn("[anime_multiverse] A lockdown barrier could not read the block it replaced: {}", e.toString());
             }
         }
         if (!isMaster()) return;

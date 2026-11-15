@@ -173,7 +173,7 @@ public final class UndineCasting {
     static boolean link(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         if (!SPIRITS.acquire(p.getUUID(), UndineRules.SPIRITS_PER_PLAYER, UndineConfig.maxSpirits())) {
-            say(p, s, "nusmp.undine.spirit.full", "Undine cannot answer: too many spirits are out.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.undine.spirit.full", "Undine cannot answer: too many spirits are out.", ChatFormatting.RED);
             return false;
         }
         double[] a = UndineRules.companion(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -186,7 +186,7 @@ public final class UndineCasting {
         LIVE.add(p.getUUID());
         VfxSpawn.send(sl, VfxShape.WATER_RING, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.3, a[2]), 0xFF4FA8FF, 16, 0.7f);
         UndineAudio.play(sl, p.getUUID(), a[0], a[1] + 1.0, a[2], UndineSoundSet.Cue.LINK, false);
-        say(p, s, "nusmp.undine.spirit.linked", "Undine rises from the water beside you.", ChatFormatting.AQUA);
+        say(p, s, "anime_multiverse.undine.spirit.linked", "Undine rises from the water beside you.", ChatFormatting.AQUA);
         mood(p, s, UndineMoodRules.Event.LINK);
         return true;
     }
@@ -210,7 +210,7 @@ public final class UndineCasting {
         }
         if (s.spirit != null) SPIRITS.release(p.getUUID());
         s.spirit = null;
-        if (say) say(p, s, "nusmp.undine.spirit.unlinked", "Undine sinks back into the water.", ChatFormatting.GRAY);
+        if (say) say(p, s, "anime_multiverse.undine.spirit.unlinked", "Undine sinks back into the water.", ChatFormatting.GRAY);
     }
 
     // ================================================================================================ the mood (poses, faces, spoken lines)

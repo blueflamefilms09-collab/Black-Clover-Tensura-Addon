@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The grimoire's geometry and looks, headless: every quad wound outward, inside the item cube, on a texture that exists. */
 class GrimoireBookPlanTest {
-    private static final File TEXTURES = new File("src/main/resources/assets/nusmp/textures/item/grimoire_book");
+    private static final File TEXTURES = new File("src/main/resources/assets/anime_multiverse/textures/item/grimoire_book");
 
     private static float[] normalOf(GrimoireBookPlan.Face f) {
         return switch (f) {

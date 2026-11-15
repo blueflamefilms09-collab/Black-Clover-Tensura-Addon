@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Wave 0 (the sixteen items the mod already had, remade onto the relic system): writes the lang fragment
-scratchpad/frag_relics/relics_wave0.lang.json (item.nusmp.<id>.card = the card as game rules, item.nusmp.<id>.desc = the short text,
-item.nusmp.devil_contract = the card's name). The short text is read from Wave0.java so the two never drift apart.
+scratchpad/frag_relics/relics_wave0.lang.json (item.anime_multiverse.<id>.card = the card as game rules, item.anime_multiverse.<id>.desc = the short text,
+item.anime_multiverse.devil_contract = the card's name). The short text is read from Wave0.java so the two never drift apart.
 Idempotent: python tools/relics/wave0_lang.py [output-path]"""
 import json
 import os
@@ -10,7 +10,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave0.java")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave0.java")
 DEFAULT_OUT = "/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/frag_relics/relics_wave0.lang.json"
 
 CARDS = {
@@ -106,9 +106,9 @@ def main():
         d = descs.get(rid)
         if d is None:
             raise SystemExit("no .desc found for " + rid + " in Wave0.java")
-        out["item.nusmp." + rid + ".card"] = card
-        out["item.nusmp." + rid + ".desc"] = d.replace('\\"', '"')
-    out["item.nusmp.devil_contract"] = "Infernal Contract"
+        out["item.anime_multiverse." + rid + ".card"] = card
+        out["item.anime_multiverse." + rid + ".desc"] = d.replace('\\"', '"')
+    out["item.anime_multiverse.devil_contract"] = "Infernal Contract"
     path = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_OUT
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:

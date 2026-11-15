@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:world/kingdoms",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.world.kingdom_diamond.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.world.kingdom_diamond.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_grimoire_kingdom_diamond": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_grimoire_kingdom_diamond"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

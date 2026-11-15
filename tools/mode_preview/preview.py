@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUT = os.path.join(ROOT, "build", "mode_preview")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 JOML = os.path.join(ROOT, "tools", "vfx_preview", "lib", "joml-1.10.5.jar")
 W, H = 300, 340
 
@@ -35,8 +35,8 @@ def build():
     vstub = os.path.join(ROOT, "tools", "vfx_preview", "stubs", "net", "minecraft")
     files += [os.path.join(vstub, "util", "Mth.java"), os.path.join(vstub, "resources", "ResourceLocation.java"),
               os.path.join(vstub, "world", "phys", "Vec3.java")]
-    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "mode", "ModeArmorLayer.java"))
-    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "mode", "ModeArmorWindV2.java"))     # Yuno's overlay v2 (the pure meshes and rules come from the sourcepath)
+    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "mode", "ModeArmorLayer.java"))
+    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "mode", "ModeArmorWindV2.java"))     # Yuno's overlay v2 (the pure meshes and rules come from the sourcepath)
     files.append(os.path.join(HERE, "Preview.java"))
     subprocess.run(["javac", "-nowarn", "-cp", JOML, "-sourcepath", os.path.join(ROOT, "src", "main", "java"), "-d", cls] + files, check=True)
     return cls
@@ -128,7 +128,7 @@ def render(quads, eye, target):
 
 
 # ------------------------------------------------------------------------------------------------ the Devil Unite modes (1.43.0)
-# Their overlays are GeoLite models (assets/nusmp/geo/devils, see tools/gen_devil_assets.py) attached to the player's bones, drawn by
+# Their overlays are GeoLite models (assets/anime_multiverse/geo/devils, see tools/gen_devil_assets.py) attached to the player's bones, drawn by
 # client/shadow/DevilOverlay.java. The Java preview above can not load GeoLite (it needs the game's resource manager), so this reads the same
 # .geo.json files and textures, ports GeoDraw's bone and cube maths (vanilla layer space, y down) and rasterises them in the player's rest pose
 # next to the same figure. The animation clips are not played (rest pose); the pieces are authored in the standing pose, so rest is the pose

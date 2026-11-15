@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * puzzles keep the share the file gives them; and every word the puzzles can say has an English text and no text carries a banned name.
  */
 class PuzzlePlanTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/mega/puzzles/weights.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/mega/puzzles/weights.json");
 
     private static PuzzleWeights shipped() throws IOException {
         List<String> problems = new ArrayList<>();
@@ -56,7 +56,7 @@ class PuzzlePlanTest {
             assertTrue(t.weight() > 0 && t.tierLo() >= 1 && t.tierHi() <= 5 && t.tierLo() <= t.tierHi(), id);
         }
         Set<String> themes = new HashSet<>();
-        try (var dir = Files.list(Path.of("src/main/resources/data/nusmp/mega/themes"))) {
+        try (var dir = Files.list(Path.of("src/main/resources/data/anime_multiverse/mega/themes"))) {
             dir.forEach(f -> themes.add(f.getFileName().toString().replace(".json", "")));
         }
         assertTrue(themes.size() >= 27);
@@ -89,7 +89,7 @@ class PuzzlePlanTest {
     void thePlanIsAPureFunctionOfTheSeedAndKeepsItsCaps() throws IOException {
         PuzzleWeights w = shipped();
         for (int i = 0; i < 80; i++) {
-            PuzzlePlanner.FloorInfo f = floor(1 + i * 12, 900L + i, "necropolis", i % 2 == 0, rooms("hall", 14, "nusmp:mega/hall/crypt_a"));
+            PuzzlePlanner.FloorInfo f = floor(1 + i * 12, 900L + i, "necropolis", i % 2 == 0, rooms("hall", 14, "anime_multiverse:mega/hall/crypt_a"));
             List<PuzzlePlanner.Slot> a = PuzzlePlanner.plan(f, w), b = PuzzlePlanner.plan(f, w);
             assertEquals(a, b);
             assertTrue(a.size() <= w.maxPerFloor, "cap");
@@ -103,11 +103,11 @@ class PuzzlePlanTest {
         PuzzleWeights w = shipped();
         for (int i = 0; i < 200; i++) {
             List<PuzzlePlanner.RoomInfo> rs = new ArrayList<>();
-            rs.add(new PuzzlePlanner.RoomInfo(0, "puzzle", "nusmp:mega/puzzle/sigil_hall_a", 20, true, false, false, ""));
-            rs.add(new PuzzlePlanner.RoomInfo(1, "hall", "nusmp:mega/hall/crypt_a", 20, true, true, false, ""));
-            rs.add(new PuzzlePlanner.RoomInfo(2, "hall", "nusmp:mega/hall/crypt_b", 9, true, false, false, ""));
-            rs.add(new PuzzlePlanner.RoomInfo(3, "safe", "nusmp:mega/safe/hearth_hall", 20, false, false, false, ""));
-            rs.add(new PuzzlePlanner.RoomInfo(4, "puzzle", "nusmp:mega/puzzle/confessional", 20, true, false, false, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(0, "puzzle", "anime_multiverse:mega/puzzle/sigil_hall_a", 20, true, false, false, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(1, "hall", "anime_multiverse:mega/hall/crypt_a", 20, true, true, false, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(2, "hall", "anime_multiverse:mega/hall/crypt_b", 9, true, false, false, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(3, "safe", "anime_multiverse:mega/safe/hearth_hall", 20, false, false, false, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(4, "puzzle", "anime_multiverse:mega/puzzle/confessional", 20, true, false, false, ""));
             for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(10, i, "holy_church", false, rs), w)) fail("a protected room got a puzzle: " + s);
         }
     }
@@ -119,8 +119,8 @@ class PuzzlePlanTest {
         PuzzleWeights w = shipped();
         for (int i = 0; i < 100; i++) {
             List<PuzzlePlanner.RoomInfo> rs = new ArrayList<>();
-            rs.add(new PuzzlePlanner.RoomInfo(0, "trial", "nusmp:mega/trial/x", 20, true, false, true, ""));
-            rs.add(new PuzzlePlanner.RoomInfo(1, "hall", "nusmp:mega/hall/y", 20, true, false, true, "lights_out"));
+            rs.add(new PuzzlePlanner.RoomInfo(0, "trial", "anime_multiverse:mega/trial/x", 20, true, false, true, ""));
+            rs.add(new PuzzlePlanner.RoomInfo(1, "hall", "anime_multiverse:mega/hall/y", 20, true, false, true, "lights_out"));
             List<PuzzlePlanner.Slot> plan = PuzzlePlanner.plan(floor(30, i, "frost", false, rs), w);
             assertEquals(2, plan.size());
             for (PuzzlePlanner.Slot s : plan) if (s.roomId() == 1) assertEquals("lights_out", s.type());
@@ -134,12 +134,12 @@ class PuzzlePlanTest {
         for (int i = 0; i < 600; i++) {
             int floor = 1 + (i % 5) * 200 + 5;
             int tier = (floor - 1) / 200 + 1;
-            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(floor, 4000L + i, "radiant", true, rooms("puzzle", 2, "nusmp:mega/puzzle/gallery_a")), w)) {
+            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(floor, 4000L + i, "radiant", true, rooms("puzzle", 2, "anime_multiverse:mega/puzzle/gallery_a")), w)) {
                 PuzzleWeights.TypeW t = w.types.get(s.type());
                 assertTrue(tier >= t.tierLo() && tier <= t.tierHi(), s.type() + " at tier " + tier);
                 some++;
             }
-            if (PuzzlePlanner.plan(floor(floor, 4000L + i, "radiant", true, rooms("puzzle", 2, "nusmp:mega/puzzle/gallery_a")), w).size() < 2) none++;
+            if (PuzzlePlanner.plan(floor(floor, 4000L + i, "radiant", true, rooms("puzzle", 2, "anime_multiverse:mega/puzzle/gallery_a")), w).size() < 2) none++;
         }
         assertTrue(some > 100, "open galleries should usually hold a puzzle: " + some);
         assertTrue(none > 0, "the old puzzles should win some draws (legacy weight)");
@@ -151,7 +151,7 @@ class PuzzlePlanTest {
         double legacy = w.legacy.getOrDefault("puzzle", 0.0);
         int rooms = 0, got = 0;
         for (int i = 0; i < 2000; i++) {
-            List<PuzzlePlanner.RoomInfo> rs = List.of(new PuzzlePlanner.RoomInfo(0, "puzzle", "nusmp:mega/puzzle/gallery_a", 20, true, false, false, ""));
+            List<PuzzlePlanner.RoomInfo> rs = List.of(new PuzzlePlanner.RoomInfo(0, "puzzle", "anime_multiverse:mega/puzzle/gallery_a", 20, true, false, false, ""));
             rooms++;
             got += PuzzlePlanner.plan(floor(40, 100L + i, "frost", false, rs), w).size();
         }
@@ -167,8 +167,8 @@ class PuzzlePlanTest {
         // sundial likes sky/holy/mind and dislikes grave; torch_order likes fire/grave and dislikes water
         Map<String, Integer> sky = new HashMap<>(), grave = new HashMap<>();
         for (int i = 0; i < 3000; i++) {
-            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(50, 10L + i, "sky_citadel", false, rooms("hall", 1, "nusmp:mega/hall/a")), w)) sky.merge(s.type(), 1, Integer::sum);
-            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(50, 10L + i, "necropolis", false, rooms("hall", 1, "nusmp:mega/hall/a")), w)) grave.merge(s.type(), 1, Integer::sum);
+            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(50, 10L + i, "sky_citadel", false, rooms("hall", 1, "anime_multiverse:mega/hall/a")), w)) sky.merge(s.type(), 1, Integer::sum);
+            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(50, 10L + i, "necropolis", false, rooms("hall", 1, "anime_multiverse:mega/hall/a")), w)) grave.merge(s.type(), 1, Integer::sum);
         }
         assertTrue(sky.getOrDefault("sundial", 0) > grave.getOrDefault("sundial", 0) * 1.5, "sundial: sky " + sky.get("sundial") + " grave " + grave.get("sundial"));
         assertTrue(grave.getOrDefault("torch_order", 0) > sky.getOrDefault("torch_order", 0) * 1.3, "torch order: grave " + grave.get("torch_order") + " sky " + sky.get("torch_order"));
@@ -179,8 +179,8 @@ class PuzzlePlanTest {
         PuzzleWeights w = shipped();
         Set<String> shallow = new HashSet<>(), deep = new HashSet<>();
         for (int i = 0; i < 4000; i++) {
-            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(3, i, "storm", false, rooms("hall", 2, "nusmp:mega/hall/a")), w)) shallow.add(s.type());
-            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(950, i, "storm", false, rooms("hall", 2, "nusmp:mega/hall/a")), w)) deep.add(s.type());
+            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(3, i, "storm", false, rooms("hall", 2, "anime_multiverse:mega/hall/a")), w)) shallow.add(s.type());
+            for (PuzzlePlanner.Slot s : PuzzlePlanner.plan(floor(950, i, "storm", false, rooms("hall", 2, "anime_multiverse:mega/hall/a")), w)) deep.add(s.type());
         }
         assertFalse(shallow.contains("chain_reaction"));
         assertFalse(shallow.contains("pendulum_crossing"));
@@ -192,7 +192,7 @@ class PuzzlePlanTest {
     void switchingThePuzzlesOffPlansNothing() {
         List<String> problems = new ArrayList<>();
         PuzzleWeights off = PuzzleWeights.parse("{\"enabled\": false}", problems);
-        assertTrue(PuzzlePlanner.plan(floor(10, 1, "frost", false, rooms("hall", 10, "nusmp:mega/hall/a")), off).isEmpty());
+        assertTrue(PuzzlePlanner.plan(floor(10, 1, "frost", false, rooms("hall", 10, "anime_multiverse:mega/hall/a")), off).isEmpty());
     }
 
     // ---------------------------------------------------------------- the words

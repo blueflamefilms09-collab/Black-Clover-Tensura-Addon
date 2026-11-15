@@ -4,9 +4,9 @@ so every face can carry its own cel-shaded painting and thin dark linework: the 
 
 Writes the files the other geo models of the mod use (client.geo.GeoModelData / GeoDraw):
 
-    assets/nusmp/geo/entity/<id>.geo.json            the model (Bedrock / GeckoLib format 1.12.0)
-    assets/nusmp/textures/entity/<id>.png            its sheet (colour sheet; for a glow-only model the ADDITIVE sheet, nothing under a fully transparent pixel)
-    assets/nusmp/animations/entity/<id>.animation.json   the clips of the full model (the levels of detail and the glow model are driven by the same file)
+    assets/anime_multiverse/geo/entity/<id>.geo.json            the model (Bedrock / GeckoLib format 1.12.0)
+    assets/anime_multiverse/textures/entity/<id>.png            its sheet (colour sheet; for a glow-only model the ADDITIVE sheet, nothing under a fully transparent pixel)
+    assets/anime_multiverse/animations/entity/<id>.animation.json   the clips of the full model (the levels of detail and the glow model are driven by the same file)
 
 Frame of the files: units are 1/16 block, y UP, origin at the feet, the model's front on -z, +x is the model's LEFT. Rotations are degrees. A region may be shared between faces by a `key` (the left
 and right wing use one painting, the right one mirrored by the uv).
@@ -20,7 +20,7 @@ import numpy as np
 from PIL import Image
 
 sys.dont_write_bytecode = True
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse")
 
 BEDROCK = {"west": "east", "north": "north", "east": "west", "south": "south", "up": "up", "down": "down"}    # Bedrock names its sides from the other end of x
 FACE_ORDER = ("up", "down", "west", "north", "east", "south")

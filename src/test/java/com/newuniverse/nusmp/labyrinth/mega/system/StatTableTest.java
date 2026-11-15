@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * a point and its ceiling, and feeds the parser broken rows to prove each check fires.
  */
 class StatTableTest {
-    static final Path STATS = Path.of("src/main/resources/data/nusmp/mega/system/stats.json");
+    static final Path STATS = Path.of("src/main/resources/data/anime_multiverse/mega/system/stats.json");
 
     static Map<String, Object> tree() throws IOException { return MiniJson.object(Files.readString(STATS, StandardCharsets.UTF_8)); }
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Points the chests of the Mega-Dungeon's treasure rooms (data/nusmp/structure/mega/treasure/*.nbt) at the hidden cache loot table (1.75.0).
+"""Points the chests of the Mega-Dungeon's treasure rooms (data/anime_multiverse/structure/mega/treasure/*.nbt) at the hidden cache loot table (1.75.0).
 
 Why: the owner wants relics to be findable in hidden rooms of ordinary floors, not only in the Crucible. The treasure rooms are those hidden rooms. Their chests rolled
-`nusmp:chests/labyrinth_trial`; this swaps that reference for `nusmp:chests/hidden_cache`, which rolls the same trial loot (it includes that table) plus a 30% chance of one relic of
+`anime_multiverse:chests/labyrinth_trial`; this swaps that reference for `anime_multiverse:chests/hidden_cache`, which rolls the same trial loot (it includes that table) plus a 30% chance of one relic of
 Normal to Rare grade (the grades that are not hard-capped, so the Crucible stays the only source of the capped ones: RelicExclusivity.allowsWildRoll(inMega, maxGrade)).
 The old table is kept. Idempotent; run it after regenerating the rooms (the generators still name the old table). `--check` exits 1 when a template would change (RelicCacheTemplatesTest is the CI guard).
 """
@@ -15,7 +15,7 @@ sys.path.insert(0, HERE)
 import nbt  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OLD, NEW = "nusmp:chests/labyrinth_trial", "nusmp:chests/hidden_cache"
+OLD, NEW = "anime_multiverse:chests/labyrinth_trial", "anime_multiverse:chests/hidden_cache"
 
 
 def walk(v):
@@ -40,7 +40,7 @@ def walk(v):
 
 def main(check):
     changed = 0
-    for f in sorted(glob.glob(os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "structure", "mega", "treasure", "*.nbt"))):
+    for f in sorted(glob.glob(os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "structure", "mega", "treasure", "*.nbt"))):
         name, data = nbt.load(f)
         n = walk(data)
         if n:

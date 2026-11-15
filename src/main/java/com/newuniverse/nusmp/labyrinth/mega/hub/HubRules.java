@@ -278,8 +278,8 @@ public final class HubRules {
         data.putLong(HubKeys.TOLD, now);
         boolean readOnly = !HubConfig.get(HubConfig.BUILD_ENABLED) && !HubProtect.isProtected(pos.getX(), pos.getY(), pos.getZ());
         p.displayClientMessage(readOnly
-                ? Component.translatableWithFallback("message.nusmp.mega.mhb.readonly", "The Sanctuary is not open to building.")
-                : Component.translatableWithFallback("message.nusmp.mega.mhb.protected", "This ground is protected: the square, the way home and the gates cannot be changed."), true);
+                ? Component.translatableWithFallback("message.anime_multiverse.mega.mhb.readonly", "The Sanctuary is not open to building.")
+                : Component.translatableWithFallback("message.anime_multiverse.mega.mhb.protected", "This ground is protected: the square, the way home and the gates cannot be changed."), true);
     }
 
     // ---------------------------------------------------------------- no foreign structures (the alarm)

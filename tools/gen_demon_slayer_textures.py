@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_arcane_vfx_textures import fbm, grey  # noqa: E402
 
 SS = 4
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures")
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures")
 
 # ---------------------------------------------------------------- shared with DemonSlayerRenderer (keep in sync)
 BLADE_Y0, BLADE_Y1, TIP_RIGHT_Y = 1.0, 49.0, 46.0          # the tip is cut on a slant: 49 on the left edge, 46 on the right

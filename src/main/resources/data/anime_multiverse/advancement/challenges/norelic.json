@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:challenges/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.challenges.norelic.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.challenges.norelic.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arena_victory_norelic": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "arena.victory",
+        "arg": "norelic"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arena_victory_norelic"
+    ]
+  ],
+  "rewards": {
+    "experience": 1500
+  }
+}

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * texture with colour under alpha 0 would show as a box when drawn additive, a blue tint would leave the wind palette, a missing file would only show up in a running game. This test reads the real files.
  */
 class SpiritDiveWind3AssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage png(String tex) throws IOException { return ImageIO.read(ASSETS.resolve("textures/" + tex + ".png").toFile()); }
 

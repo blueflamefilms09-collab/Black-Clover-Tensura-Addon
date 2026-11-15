@@ -12,7 +12,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave101.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave101.java")
 OUT = os.path.join(ROOT, "tools", "lang", "genesis_new.json")
 
 SLOT = {"NECK": "worn in the Neck slot", "HEAD": "worn as a helmet", "HANDS": "worn in the Hands slot", "BELT": "worn in the Belt slot", "CHARM": "worn in the Charm slot",
@@ -161,9 +161,9 @@ def main():
         if eng:
             names = [e.strip().strip('"').split("@")[0].replace("_", " ") for e in eng.group(1).split(",")]
             lines.append("Tensura engravings: %s." % ", ".join(names))
-        out["item.nusmp.%s" % rid] = name
-        out["item.nusmp.%s.desc" % rid] = desc
-        out["item.nusmp.%s.card" % rid] = "\n".join(lines)
+        out["item.anime_multiverse.%s" % rid] = name
+        out["item.anime_multiverse.%s.desc" % rid] = desc
+        out["item.anime_multiverse.%s.card" % rid] = "\n".join(lines)
         count += 1
     assert count == 15, count
     with open(OUT, "w", newline="\n", encoding="utf-8") as f:

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * the preview images and the doc are there.
  */
 class UndineAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 

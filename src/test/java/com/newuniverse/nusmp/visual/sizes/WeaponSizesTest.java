@@ -19,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: the owner saw a tiny dagger and katanas that looked like a thin line. Data tests over the REAL mesh files: every dagger and katana mesh (the old ones, the upgraded
- * {@code up} ones and the Genesis {@code vu} ones) has a thickened copy whose in-hand size is inside the ranges of assets/nusmp/weapon_sizes.json for its class: length in
+ * {@code up} ones and the Genesis {@code vu} ones) has a thickened copy whose in-hand size is inside the ranges of assets/anime_multiverse/weapon_sizes.json for its class: length in
  * third and first person, blade width in first person at least 1/8 block (a vanilla sword's blade is 2.5 pixels), a visible spine, a grip that fits a hand, and no corner of
  * the mesh through the first-person camera. The old files must stay and must show the problem (a negative control), and no weapon is made shorter.
  */
 class WeaponSizesTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
 
     record Variant(String id, String tag, String name, Path old, Path sz) {}
 

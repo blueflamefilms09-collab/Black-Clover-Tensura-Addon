@@ -6,7 +6,7 @@
     python3 -B tools/relics/djinn36_build.py --only armor|base|skins|weapons|seals|lang|ids   one stage
     python3 -B tools/relics/djinn36_build.py --preview OUT_DIR         mannequin sheets (half, full, back, weapon; light and dark)
 
-Writes under src/main/resources/assets/nusmp (the same names as the first twelve, so the client's name-keyed loaders find them with no code):
+Writes under src/main/resources/assets/anime_multiverse (the same names as the first twelve, so the client's name-keyed loaders find them with no code):
     djinn/u_<id>/*.txt, djinn/d_<id>/*.txt                   the unique and the Dark Djinn armour pieces
     djinn/<id>/*.txt                                         the shared-rig fallback (512 px skin)
     textures/entity/djinn/<id>_{u,d}_armor[_glow].png, <id>_{,u_,d_}rune.png, <id>_d_art.png, <id>_{,d_}bust.png, <id>_armor[_glow].png

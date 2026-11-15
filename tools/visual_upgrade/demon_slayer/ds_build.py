@@ -3,9 +3,9 @@
     python3 -B tools/visual_upgrade/demon_slayer/ds_build.py [--measure] [--previews] [--quick]
 
 Writes (all NEW, next to the old files):
-    src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt and demon_slayer_sword_lod.txt
-    src/main/resources/assets/nusmp/textures/entity/weapon_vu/demon_slayer_sword{,_glow,_veins}.png and demon_slayer_sword_lod{,_glow,_veins}.png   (the shared halo.png is the genesis_weapons one)
-    src/main/resources/assets/nusmp/visual_upgrade/demon_slayer_sword.json
+    src/main/resources/assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword.txt and demon_slayer_sword_lod.txt
+    src/main/resources/assets/anime_multiverse/textures/entity/weapon_vu/demon_slayer_sword{,_glow,_veins}.png and demon_slayer_sword_lod{,_glow,_veins}.png   (the shared halo.png is the genesis_weapons one)
+    src/main/resources/assets/anime_multiverse/visual_upgrade/demon_slayer_sword.json
 Deterministic. The hook line in tools/gen_weapon_models.py (end of main) calls main() of this module.
 """
 import importlib

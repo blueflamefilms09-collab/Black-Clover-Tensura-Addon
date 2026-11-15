@@ -16,8 +16,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public final class RelicKeys {
     private RelicKeys() {}
 
-    public static final KeyMapping USE = new KeyMapping("key.nusmp.use_relic", InputConstants.Type.KEYSYM,
-            org.lwjgl.glfw.GLFW.GLFW_KEY_R, "key.categories.nusmp");
+    public static final KeyMapping USE = new KeyMapping("key.anime_multiverse.use_relic", InputConstants.Type.KEYSYM,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_R, "key.categories.anime_multiverse");
 
     /** Mod bus: puts the key in the Controls screen. */
     public static void register(RegisterKeyMappingsEvent e) { e.register(USE); }

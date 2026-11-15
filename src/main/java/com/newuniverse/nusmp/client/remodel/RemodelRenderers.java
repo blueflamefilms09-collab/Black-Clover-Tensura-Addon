@@ -42,13 +42,13 @@ public final class RemodelRenderers {
         for (RemodelTable.Entry en : RemodelTable.ENTRIES) {
             EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, en.entityId())).orElse(null);
             if (type == null) {
-                LOG.warn("[nusmp] the remodelled mob {} is not registered: no art-kit renderer for it", en.entityId());
+                LOG.warn("[anime_multiverse] the remodelled mob {} is not registered: no art-kit renderer for it", en.entityId());
                 continue;
             }
             try {
                 registerOne(e, en, type);
             } catch (RuntimeException ex) {
-                LOG.error("[nusmp] the art-kit renderer of {} could not be registered: {}", en.entityId(), ex.toString());
+                LOG.error("[anime_multiverse] the art-kit renderer of {} could not be registered: {}", en.entityId(), ex.toString());
             }
         }
     }

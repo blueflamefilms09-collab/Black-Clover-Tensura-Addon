@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * its pocket), {@code rift enter [player]} steps a player through the nearest one at once, {@code rift roll [shortcut|pocket]} rolls for a rift at the sender's feet (the spawner's own code, with the reason when
  * nothing opened), {@code rift why} says which of the spawner's conditions holds at the sender's feet, {@code rift closeall} closes them, {@code rift pocket list|collapse <slot>|clear <slot>|enter <slot>}
  * shows, ends, skips (opens the vault of) and visits the instanced realms, {@code rift waypoint show|save|clear|return [player]} reads and drives the waypoint (the first questions when "the crystal does
- * not take me back"), and {@code rift status} shows the switches. All text goes through lang keys {@code message.nusmp.mega.rift.cmd.*} with an English fallback.
+ * not take me back"), and {@code rift status} shows the switches. All text goes through lang keys {@code message.anime_multiverse.mega.rift.cmd.*} with an English fallback.
  */
 public final class RiftCommand {
     private RiftCommand() {}
@@ -220,7 +220,7 @@ public final class RiftCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.rift.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.rift.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {

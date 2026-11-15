@@ -31,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class HairAttachedTest {
     static final double GAP = 0.1, EMBED = 0.4, SIDE_Y = -8.0, COPLANAR_TOL = 0.02, MIN_AREA = 0.5;
     static final int QUAD_BUDGET = 200;
-    private static final String HAIR = "src/main/resources/assets/nusmp/playermodel/hair_styles.json";
-    private static final String SHEETS = "src/main/resources/assets/nusmp/textures/entity/playermodel/";
+    private static final String HAIR = "src/main/resources/assets/anime_multiverse/playermodel/hair_styles.json";
+    private static final String SHEETS = "src/main/resources/assets/anime_multiverse/textures/entity/playermodel/";
 
     /** The haircuts the owner's hair brief names; every one must exist. */
     static final List<String> CONTRACT = List.of("anime_short", "anime_short_open", "anime_swept", "anime_long", "anime_long_open", "anime_afro", "anime_topknot", "anime_mane", "anime_hood",

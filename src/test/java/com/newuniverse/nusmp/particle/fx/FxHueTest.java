@@ -39,7 +39,7 @@ class FxHueTest {
 
     @Test
     void everyAnswerIsARelicElementThemeOfTheTable() throws IOException {
-        ParticleThemes.Table t = ParticleThemes.parse(JsonParser.parseString(Files.readString(Path.of("").toAbsolutePath().resolve("src/main/resources/data/nusmp/particle_themes.json"), StandardCharsets.UTF_8)));
+        ParticleThemes.Table t = ParticleThemes.parse(JsonParser.parseString(Files.readString(Path.of("").toAbsolutePath().resolve("src/main/resources/data/anime_multiverse/particle_themes.json"), StandardCharsets.UTF_8)));
         Set<String> seen = new HashSet<>();
         for (int r = 0; r < 256; r += 17)
             for (int g = 0; g < 256; g += 17)

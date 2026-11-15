@@ -31,7 +31,7 @@ final class TraitsPage extends ForgePage {
 
     @Override int accent() { return 0xE8C468; }
 
-    @Override String title() { return ForgeText.s("nusmp.avatar.forge.page.traits", "Personality"); }
+    @Override String title() { return ForgeText.s("anime_multiverse.avatar.forge.page.traits", "Personality"); }
 
     @Override
     void layout(Rect area) {
@@ -91,10 +91,10 @@ final class TraitsPage extends ForgePage {
     void render(GuiGraphics g, int mx, int my, float partial) {
         var font = h.font();
         ForgeState st = h.state();
-        ForgeUi.chip(g, font, modeRects[0], ForgeText.s("nusmp.avatar.forge.traits.primary", "Primary"), !secondaryMode, h.hover("mode0", modeRects[0].contains(mx, my)), 0xE8C468);
-        ForgeUi.chip(g, font, modeRects[1], ForgeText.s("nusmp.avatar.forge.traits.secondary", "Secondary"), secondaryMode, h.hover("mode1", modeRects[1].contains(mx, my)), 0x9A7CFF);
-        if (modeRects[0].contains(mx, my)) h.tooltip(List.of(Component.translatable("nusmp.avatar.gui.primary").withStyle(ChatFormatting.GOLD)));
-        if (modeRects[1].contains(mx, my)) h.tooltip(List.of(Component.translatable("nusmp.avatar.gui.secondary").withStyle(ChatFormatting.LIGHT_PURPLE)));
+        ForgeUi.chip(g, font, modeRects[0], ForgeText.s("anime_multiverse.avatar.forge.traits.primary", "Primary"), !secondaryMode, h.hover("mode0", modeRects[0].contains(mx, my)), 0xE8C468);
+        ForgeUi.chip(g, font, modeRects[1], ForgeText.s("anime_multiverse.avatar.forge.traits.secondary", "Secondary"), secondaryMode, h.hover("mode1", modeRects[1].contains(mx, my)), 0x9A7CFF);
+        if (modeRects[0].contains(mx, my)) h.tooltip(List.of(Component.translatable("anime_multiverse.avatar.gui.primary").withStyle(ChatFormatting.GOLD)));
+        if (modeRects[1].contains(mx, my)) h.tooltip(List.of(Component.translatable("anime_multiverse.avatar.gui.secondary").withStyle(ChatFormatting.LIGHT_PURPLE)));
         AvatarPersonality hovered = null;
         for (int i = 0; i < ALL.length; i++) {
             if (!inView(i)) continue;
@@ -112,23 +112,23 @@ final class TraitsPage extends ForgePage {
         if (hovered != null) {
             h.leanTo(colourOf(hovered));
             h.tooltip(List.of(Component.literal(hovered.displayName).withStyle(ChatFormatting.GOLD),
-                    Component.translatable("nusmp.avatar.persona." + hovered.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY)));
+                    Component.translatable("anime_multiverse.avatar.persona." + hovered.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GRAY)));
         }
         // what the chosen personality means
         AvatarPersonality p = st.primary(), s = st.secondary();
         if (text.h() >= 10) {
             int y = text.y();
-            if (p == null) ForgeUi.text(g, font, ForgeUi.fit(font, ForgeText.s("nusmp.avatar.forge.traits.hint", "Choose how your Avatar behaves."), text.w()), text.x(), y, UiTheme.TEXT_DIM);
+            if (p == null) ForgeUi.text(g, font, ForgeUi.fit(font, ForgeText.s("anime_multiverse.avatar.forge.traits.hint", "Choose how your Avatar behaves."), text.w()), text.x(), y, UiTheme.TEXT_DIM);
             else {
-                List<String> lines = ForgeUi.wrapLines(font, Component.translatable("nusmp.avatar.persona." + p.name().toLowerCase(Locale.ROOT)).getString(), text.w(), Math.max(1, text.h() / 10 - (s != null ? 1 : 0)));
+                List<String> lines = ForgeUi.wrapLines(font, Component.translatable("anime_multiverse.avatar.persona." + p.name().toLowerCase(Locale.ROOT)).getString(), text.w(), Math.max(1, text.h() / 10 - (s != null ? 1 : 0)));
                 for (String l : lines) { ForgeUi.text(g, font, l, text.x(), y, UiTheme.TEXT_DIM); y += 10; }
-                if (s != null && y + 9 <= text.bottom() + 1) ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("nusmp.avatar.gui.hybrid", p.displayName, s.displayName).getString(), text.w()), text.x(), y, UiTheme.VIOLET);
+                if (s != null && y + 9 <= text.bottom() + 1) ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("anime_multiverse.avatar.gui.hybrid", p.displayName, s.displayName).getString(), text.w()), text.x(), y, UiTheme.VIOLET);
             }
         }
         boolean can = st.primary() != null;
         boolean over = hear.contains(mx, my);
-        ForgeUi.button(g, font, hear, ForgeText.s("nusmp.avatar.forge.traits.hear", "Hear a sample line"), can, h.hover("hear", over && can), 0xE8C468);
-        if (over && !can) h.tooltip(List.of(ForgeText.t("nusmp.avatar.forge.traits.hear_tip", "Choose a primary personality first.").withStyle(ChatFormatting.GRAY)));
+        ForgeUi.button(g, font, hear, ForgeText.s("anime_multiverse.avatar.forge.traits.hear", "Hear a sample line"), can, h.hover("hear", over && can), 0xE8C468);
+        if (over && !can) h.tooltip(List.of(ForgeText.t("anime_multiverse.avatar.forge.traits.hear_tip", "Choose a primary personality first.").withStyle(ChatFormatting.GRAY)));
     }
 
     @Override

@@ -5,7 +5,7 @@
     python3 -B tools/relics/new_special_normal_a/gen.py --check    # exit 1 when a file on disk differs
 
 From rows.py (67 gear and trinkets) and weapons.py (8 melee weapons) it writes: relics/wave/Wave103.java, the sprites (textures/item/<id>.png) and item models of the 67 gear relics, the lang
-fragment tools/lang/special_normal_a.json (en_us.json is not touched), and the weapon class rows (assets/nusmp/weapon_classes.json and tools/relics/weapon_classes.json, appended).
+fragment tools/lang/special_normal_a.json (en_us.json is not touched), and the weapon class rows (assets/anime_multiverse/weapon_classes.json and tools/relics/weapon_classes.json, appended).
 The worn ornaments (relic_worn/uq_<id>.txt) and the catalog lines come from gen_worn_all.py (the rows are fed to it by gen_relic_waves.all_rows), the Curios tags from gen_curios_tags.py,
 the meshes, skins and sprites of the weapons from models.py. Deterministic and re-runnable."""
 import hashlib
@@ -22,8 +22,8 @@ from new_special_normal_a import rows as ROWS_MOD  # noqa: E402
 from new_special_normal_a import weapons as WEAPONS_MOD  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-WAVE = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave103.java")
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
+WAVE = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave103.java")
 LANG = os.path.join(ROOT, "tools", "lang", "special_normal_a.json")
 ROWS = ROWS_MOD.ROWS
 WEAPONS = WEAPONS_MOD.WEAPONS
@@ -135,10 +135,10 @@ public final class Wave103 {
                 int[] range = GradeDamage.range(d.grade().name().toLowerCase(java.util.Locale.ROOT));
                 if (d.meleeDamage() < range[0] || d.meleeDamage() > range[1]) bad.add(id + " damage " + d.meleeDamage() + " is outside " + range[0] + "-" + range[1]);
                 for (String f : new String[]{"weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id + ".png"})
-                    if (Wave103.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
-            } else if (Wave103.class.getResource("/assets/nusmp/relic_worn/uq_" + id + ".txt") == null) bad.add(id + ": its worn model is not in the jar");
+                    if (Wave103.class.getResource("/assets/anime_multiverse/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+            } else if (Wave103.class.getResource("/assets/anime_multiverse/relic_worn/uq_" + id + ".txt") == null) bad.add(id + ": its worn model is not in the jar");
             for (String f : new String[]{"textures/item/" + id + ".png", "models/item/" + id + ".json", "models/item/" + id + "_icon.json"})
-                if (Wave103.class.getResource("/assets/nusmp/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
+                if (Wave103.class.getResource("/assets/anime_multiverse/" + f) == null) bad.add(id + ": " + f + " is not in the jar");
         }
         if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
         if (normal != %d || special != %d) return SelfTests.Result.fail("grades " + normal + " Normal / " + special + " Special (wanted %d / %d)");
@@ -181,18 +181,18 @@ def other_sprite_digests(mine):
 def lang():
     d = {}
     for r in ROWS:
-        d["item.nusmp." + r["id"]] = r["name"]
-        d["item.nusmp." + r["id"] + ".card"] = "%s Grade. %s" % (r["grade"].title(), r["desc"])
-        d["item.nusmp." + r["id"] + ".desc"] = r["desc"]
+        d["item.anime_multiverse." + r["id"]] = r["name"]
+        d["item.anime_multiverse." + r["id"] + ".card"] = "%s Grade. %s" % (r["grade"].title(), r["desc"])
+        d["item.anime_multiverse." + r["id"] + ".desc"] = r["desc"]
     for w in WEAPONS:
-        d["item.nusmp." + w["id"]] = w["name"]
-        d["item.nusmp." + w["id"] + ".desc"] = weapon_desc(w)
+        d["item.anime_multiverse." + w["id"]] = w["name"]
+        d["item.anime_multiverse." + w["id"] + ".desc"] = weapon_desc(w)
         lines = ["%s Grade %s (%s damage, %g attacks a second)." % (w["grade"].title(), w["cls"], DAMAGE[w["id"]], w["speed"])]
         for i, a in enumerate(w["acts"]):
             bits = ["cooldown %d s" % a[1], "%d%% magicules" % a[2]]
             lines.append("%s (%s; %s): %s" % (a[0], "sneak + use" if (len(a) > 6 and a[6]) else "use", ", ".join(bits), a[4]))
         lines.append("Tensura engravings: " + ", ".join(e.replace("_", " ") for e in w["engr"]) + ".")
-        d["item.nusmp." + w["id"] + ".card"] = "\n".join(lines)
+        d["item.anime_multiverse." + w["id"] + ".card"] = "\n".join(lines)
     return json.dumps(d, indent=2, ensure_ascii=True) + "\n"
 
 
@@ -295,9 +295,9 @@ def main(check):
             raise SystemExit("no distinct sprite for " + r["id"])
         taken.add(dig)
         bad += write(os.path.join(RES, "textures", "item", r["id"] + ".png"), icon, check, binary=True)
-        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        model = json.dumps({"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         bad += write(os.path.join(RES, "models", "item", r["id"] + ".json"), model, check)
-        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + r["id"]}}, indent=2) + "\n"
+        icon_model = json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + r["id"]}}, indent=2) + "\n"
         bad += write(os.path.join(RES, "models", "item", r["id"] + "_icon.json"), icon_model, check)
     bad += write(LANG, lang(), check)
     bad += class_rows(check)

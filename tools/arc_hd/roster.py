@@ -1,7 +1,7 @@
 """Which kit characters the HD arc pass owns (docs/arc/hd_arc.md).
 
 Owner decision (3.40.0): the Seven Deadly Sins and the Black Clover characters become HD (256x256 skins, the same UV layout as the 64x64 ones); DanMachi, the generic NPCs, the merchants and the
-other franchises are NOT touched. The ids below are the look names of assets/nusmp/playermodel/looks.json (a second form is `<id>_form2`, a Dark Disciple devil is `dark_disciple_<devil>`).
+other franchises are NOT touched. The ids below are the look names of assets/anime_multiverse/playermodel/looks.json (a second form is `<id>_form2`, a Dark Disciple devil is `dark_disciple_<devil>`).
 
 Franchise source (CLAUDE.md rule 10): the repo's own franchise map, docs/arc/sdsa.md and docs/arc/midnight_sun.md (the Seven Deadly Sins arcs and the Eye of the Midnight Sun arc) and
 docs/arc/npcb.md (the Black Clover knights and the Zogratis family), which in turn cite the Black Clover and Seven Deadly Sins wikis. No wiki page was fetched for this tool.

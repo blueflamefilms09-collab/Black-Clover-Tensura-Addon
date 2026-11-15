@@ -35,7 +35,7 @@ class RelicEnumTest {
         assertEquals(Relic.Slot.RELIC, a.slot);
         assertEquals("Muffled Mana", a.curse);
         assertSame(a, Relic.byName("amulet_of_the_juggernauts_blindness"));
-        assertSame(a, Relic.byName("nusmp:amulet_of_the_juggernauts_blindness"));
+        assertSame(a, Relic.byName("anime_multiverse:amulet_of_the_juggernauts_blindness"));
         assertSame(a, Relic.byName("AMULET_OF_THE_JUGGERNAUTS_BLINDNESS"));
         assertTrue(Relic.ids().contains("amulet_of_the_juggernauts_blindness"), "the give command suggests it");
     }
@@ -73,14 +73,14 @@ class RelicEnumTest {
 
     @Test
     void theSlotDataGivesExactlyTwoDungeonRelicSlots() throws IOException {
-        String slot = compact(resource("/data/nusmp/curios/slots/dungeon_relic.json"));
+        String slot = compact(resource("/data/anime_multiverse/curios/slots/dungeon_relic.json"));
         assertTrue(slot.contains("\"size\":2"), slot);
         assertTrue(slot.contains("\"validators\":[\"curios:tag\"]"), slot);
         assertTrue(slot.contains("\"icon\":\"curios:slot/empty_curio_slot\""), slot);
         // Worn counts the first two relics in Curios order (slot order, ties by id); the generic "curio" slot is order 20 and sorts before
         // "dungeon_relic" on a tie, so the relic slots must be strictly lower for them to win the two places.
         assertTrue(slot.contains("\"order\":10"), slot);
-        String entity = compact(resource("/data/nusmp/curios/entities/dungeon_relic.json"));
+        String entity = compact(resource("/data/anime_multiverse/curios/entities/dungeon_relic.json"));
         assertTrue(entity.contains("\"entities\":[\"player\"]"), entity);
         assertTrue(entity.contains("\"slots\":[\"dungeon_relic\"]"), entity);
     }
@@ -88,23 +88,23 @@ class RelicEnumTest {
     @Test
     void theDungeonRelicTagListsEveryRelicAndNothingElse() throws IOException {
         String tag = compact(resource("/data/curios/tags/item/dungeon_relic.json"));
-        for (Relic r : Relic.values()) assertTrue(tag.contains("\"nusmp:" + r.id + "\""), "the dungeon_relic tag lists " + r.id);
-        assertEquals(Relic.values().length, tag.split("nusmp:", -1).length - 1, "six items and no others: " + tag);
+        for (Relic r : Relic.values()) assertTrue(tag.contains("\"anime_multiverse:" + r.id + "\""), "the dungeon_relic tag lists " + r.id);
+        assertEquals(Relic.values().length, tag.split("anime_multiverse:", -1).length - 1, "six items and no others: " + tag);
     }
 
     @Test
     void noOtherCuriosSlotTakesARelic() throws IOException {
         for (String slot : new String[]{"ring", "charm", "back", "belt", "curio", "hands"}) {
             String tag = resource("/data/curios/tags/item/" + slot + ".json");
-            for (Relic r : Relic.values()) assertFalse(tag.contains("nusmp:" + r.id + "\""), r.id + " must not fit the " + slot + " slot");
+            for (Relic r : Relic.values()) assertFalse(tag.contains("anime_multiverse:" + r.id + "\""), r.id + " must not fit the " + slot + " slot");
         }
     }
 
     @Test
     void theWeaponsKeepTheirSlots() throws IOException {
-        assertTrue(resource("/data/curios/tags/item/belt.json").contains("nusmp:demon_slayer_sword"));
-        assertTrue(resource("/data/curios/tags/item/back.json").contains("nusmp:severing_greatsword"));
-        assertTrue(resource("/data/curios/tags/item/charm.json").contains("nusmp:brooch_pin"));
-        assertTrue(resource("/data/curios/tags/item/hands.json").contains("nusmp:hand_of_providence"));
+        assertTrue(resource("/data/curios/tags/item/belt.json").contains("anime_multiverse:demon_slayer_sword"));
+        assertTrue(resource("/data/curios/tags/item/back.json").contains("anime_multiverse:severing_greatsword"));
+        assertTrue(resource("/data/curios/tags/item/charm.json").contains("anime_multiverse:brooch_pin"));
+        assertTrue(resource("/data/curios/tags/item/hands.json").contains("anime_multiverse:hand_of_providence"));
     }
 }

@@ -25,7 +25,7 @@ from template import load  # noqa: E402
 def open_template(name):
     if name.endswith(".nbt"):
         return load(name, "preview/" + os.path.basename(name)[:-4].lower().replace(" ", "_"))
-    return load(os.path.join(L.RES, "data", "nusmp", "structure", name + ".nbt"), name)
+    return load(os.path.join(L.RES, "data", "anime_multiverse", "structure", name + ".nbt"), name)
 
 
 def roof_rows(t):

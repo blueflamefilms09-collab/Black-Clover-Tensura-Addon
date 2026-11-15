@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "kind=warden,open=false,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_warden_lower"
+    },
+    "kind=warden,open=true,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=warden,open=false,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_warden_upper"
+    },
+    "kind=warden,open=true,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=boss,open=false,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_boss_lower"
+    },
+    "kind=boss,open=true,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=boss,open=false,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_boss_upper"
+    },
+    "kind=boss,open=true,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=puzzle,open=false,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_puzzle_lower"
+    },
+    "kind=puzzle,open=true,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=puzzle,open=false,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_puzzle_upper"
+    },
+    "kind=puzzle,open=true,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=sector,open=false,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_sector_lower"
+    },
+    "kind=sector,open=true,half=lower": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    },
+    "kind=sector,open=false,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_sector_upper"
+    },
+    "kind=sector,open=true,half=upper": {
+      "model": "anime_multiverse:block/gatekeeper_door_open"
+    }
+  }
+}

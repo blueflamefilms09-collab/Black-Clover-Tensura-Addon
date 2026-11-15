@@ -1,5 +1,5 @@
 """crossbow_states: the worked example of tools/relics/ranged_meshes.py on a BAKED mesh: the state meshes of the two crossbows the mod already had, the
-Bolt Thrower and the Crossbow of Swift Death (assets/nusmp/weapon_meshes/bolt_thrower.txt, crossbow_of_swift_death.txt, built by tools/gen_weapon_models.py).
+Bolt Thrower and the Crossbow of Swift Death (assets/anime_multiverse/weapon_meshes/bolt_thrower.txt, crossbow_of_swift_death.txt, built by tools/gen_weapon_models.py).
 
 Those two are self-loading (item/BoltArts: a right-click looses a bolt, no ammunition, then the item cooldown runs), so their states are not a draw:
 

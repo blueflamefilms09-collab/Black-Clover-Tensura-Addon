@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Why: the SERVER settings of the Beast Will system ({@code serverconfig/nusmp-beastwill-server.toml}, 3.45.0). Every value changes gameplay, so every value is a server setting (rule 9); each one is
  * clamped again when it is read, so a hand-edited file cannot go past a bound. {@code enabled = false} restores the game as it was before the feature: no core drops, no core works, a form in progress ends.
- * The numbers of the four wills themselves (costs, strain, cooldowns, stat bonuses) live in {@code data/nusmp/beast_will/*.json}; the scales here multiply them all at once.
+ * The numbers of the four wills themselves (costs, strain, cooldowns, stat bonuses) live in {@code data/anime_multiverse/beast_will/*.json}; the scales here multiply them all at once.
  */
 public final class BeastWillConfig {
     public static final ModConfigSpec SPEC;
@@ -62,7 +62,7 @@ public final class BeastWillConfig {
         b.push("rules");
         EXCLUSIVE_INTEGRATE = b.comment("The second phase (Integrate) cannot be held together with another transformation of this mod (a spirit dive, a mode armour, a devil form). The first phase stacks, its bonuses capped.").define("exclusiveIntegrate", true);
         HIT_PLAYERS = b.comment("Abilities may hit other players (they must still be foes: the server's PvP setting, teams and allies are respected). false = creatures only.").define("abilitiesHitPlayers", true);
-        CLASSIC_WILLS = b.comment("3.60.0: true = the 27 wills as they were before the Beast Will remake (the files in data/nusmp/beast_will_classic). Read at the next data reload (restart or /reload).").define("classicWills", false);
+        CLASSIC_WILLS = b.comment("3.60.0: true = the 27 wills as they were before the Beast Will remake (the files in data/anime_multiverse/beast_will_classic). Read at the next data reload (restart or /reload).").define("classicWills", false);
         STEALTH = b.comment("The Shadow Panther's stealth lowers how far creatures notice the player. false = no stealth at all.").define("stealth", true);
         b.pop();
         b.pop();

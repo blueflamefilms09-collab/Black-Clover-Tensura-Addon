@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Why: the Hub adds three items: the Dungeon Map ({@code nusmp:dungeon_map}, the brief's item) and a spawn egg for each NPC (so an admin can place a second Merchant or put one back with a
+ * Why: the Hub adds three items: the Dungeon Map ({@code anime_multiverse:dungeon_map}, the brief's item) and a spawn egg for each NPC (so an admin can place a second Merchant or put one back with a
  * click; the automatic placement does the rest). They live on the Hub's own item register, registered on the mod bus before the registry freezes, so no existing item list is touched; the
  * creative tab entries are added with the tab-contents event (the Dungeon Map under Tools and Utilities, the eggs under Spawn Eggs).
  */

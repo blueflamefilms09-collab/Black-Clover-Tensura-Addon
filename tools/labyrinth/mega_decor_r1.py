@@ -716,7 +716,7 @@ def multiblock_problems(t):
                 o = cells.get((x - dx, y, z - dz))
                 if not (o and o.block == c.block and o.props.get("part") == "foot" and o.props.get("facing") == p["facing"]):
                     out.append("bed head at %s has no foot" % ((x, y, z),))
-        elif n.endswith("_door") and not c.block.startswith("nusmp:"):
+        elif n.endswith("_door") and not c.block.startswith("anime_multiverse:"):
             if p.get("half") == "lower":
                 o = cells.get((x, y + 1, z))
                 if not (o and o.block == c.block and o.props.get("half") == "upper" and all(o.props.get(k) == p.get(k) for k in ("facing", "hinge", "open"))):
@@ -880,7 +880,7 @@ class Hall:
                               "CookTimeTotal": _nbt.Short(100 if kind in ("blast_furnace", "smoker") else 200)})
         return self.set(x, y, z, "minecraft:%s" % kind, {"facing": facing, "lit": True}, nbt=data)
 
-    def loot_chest(self, x, y, z, facing, table="nusmp:chests/labyrinth_trial"):
+    def loot_chest(self, x, y, z, facing, table="anime_multiverse:chests/labyrinth_trial"):
         """A chest that rolls `table` on first open (LootTableSeed 0 = random per world), written the way Template.chest does."""
         import nbt as _nbt
         data = _nbt.Compound({"id": "minecraft:chest", "LootTable": table, "LootTableSeed": _nbt.Long(0)})
@@ -1795,7 +1795,7 @@ def upper_dress(h, items, sides="nsew", step=(4, 6), door_gap=1, tag="upper", lo
     import random
     n = 0
     for side in sides:
-        rng = random.Random("nusmp:mega:%s:%s:%s" % (h.name, tag, side))
+        rng = random.Random("anime_multiverse:mega:%s:%s:%s" % (h.name, tag, side))
         n += dress_wall(h, side, items, lo=lo, hi=hi, step=step, rng=rng, door_gap=door_gap)
     return n
 

@@ -1,5 +1,5 @@
 {
- "_doc": "hart2 (the Seven Star weapons): id -> a class of assets/nusmp/weapon_classes.json. No new class is needed. Merge into the `weapons` map of tools/relics/weapon_classes.json (then python tools/relics/audit_weapon_scale.py --write copies it to the game).",
+ "_doc": "hart2 (the Seven Star weapons): id -> a class of assets/anime_multiverse/weapon_classes.json. No new class is needed. Merge into the `weapons` map of tools/relics/weapon_classes.json (then python tools/relics/audit_weapon_scale.py --write copies it to the game).",
  "classes": {},
  "weapons": {
   "vassal_axe": "battleaxe",

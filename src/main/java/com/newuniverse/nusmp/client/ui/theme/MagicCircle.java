@@ -45,13 +45,13 @@ public final class MagicCircle {
     private static final String DIR = "textures/gui/theme/";
     private static final ResourceLocation[] OUTER = tiers("circle_outer"), STAR = tiers("circle_star"), POLY = tiers("circle_poly"),
             INNER = tiers("circle_inner"), ARCS = tiers("circle_arcs");
-    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", DIR + "circle_glow.png");
+    private static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", DIR + "circle_glow.png");
     private static final Quaternionf Q = new Quaternionf();
 
     private static ResourceLocation[] tiers(String base) {
-        return new ResourceLocation[]{ResourceLocation.fromNamespaceAndPath("nusmp", DIR + base + ".png"),
-                ResourceLocation.fromNamespaceAndPath("nusmp", DIR + base + "_128.png"),
-                ResourceLocation.fromNamespaceAndPath("nusmp", DIR + base + "_64.png")};
+        return new ResourceLocation[]{ResourceLocation.fromNamespaceAndPath("anime_multiverse", DIR + base + ".png"),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", DIR + base + "_128.png"),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", DIR + base + "_64.png")};
     }
 
     /** 0 for the 256 px tier, 1 for 128, 2 for 64, by the diameter that layer is drawn at. */

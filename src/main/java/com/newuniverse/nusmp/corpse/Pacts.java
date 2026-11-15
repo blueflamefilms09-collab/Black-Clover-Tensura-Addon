@@ -43,7 +43,7 @@ public final class Pacts {
     /** Caster id -> game time until which a pet of theirs that dies is re-raised on the spot. */
     private static final Map<UUID, Long> PET_WINDOW = new HashMap<>();
 
-    private static final ResourceLocation CUT_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "soul_corpse_revived");
+    private static final ResourceLocation CUT_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "soul_corpse_revived");
     private static final String UNTIL = "nusmp_corpse_revived_until";
 
     // ---------------------------------------------------------------- arming and tapping

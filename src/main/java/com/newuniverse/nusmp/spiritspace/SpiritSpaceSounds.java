@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Why: the Spirit of Space has its own voice, apart from the basic spirits and apart from the mob voices: a deep cosmic hum, a glassy ping, the spatial "tear" whoosh, the swell of a portal opening.
- * One sound event per {@link SoundGate.Kind} ({@code nusmp:spirit_space.hum} and so on), each with two variants synthesised by tools/gen_spirit_space_sounds.py (files under
+ * One sound event per {@link SoundGate.Kind} ({@code anime_multiverse:spirit_space.hum} and so on), each with two variants synthesised by tools/gen_spirit_space_sounds.py (files under
  * {@code sounds/spirit_space/}, entries in {@code sounds.json}; {@code SpiritSpaceSoundsTest} keeps the three in step). The register is its own (the mob voice register is not edited) and is handed to the
  * mod bus by {@link SpiritSpaceBoot}.
  *

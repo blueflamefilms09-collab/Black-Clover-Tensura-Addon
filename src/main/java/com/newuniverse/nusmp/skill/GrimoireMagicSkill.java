@@ -56,7 +56,7 @@ public class GrimoireMagicSkill extends Skill {
         super(SkillType.UNIQUE);
         this.fixed = fixed;
         this.icon = fixed == null ? LEGACY_ICON
-                : ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/" + fixed.name().toLowerCase() + ".png");
+                : ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/" + fixed.name().toLowerCase() + ".png");
     }
 
     @Override public ResourceLocation getSkillIcon() { return icon; }

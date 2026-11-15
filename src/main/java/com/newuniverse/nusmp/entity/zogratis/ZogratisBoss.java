@@ -289,7 +289,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (!refill.begin(modeId, getHealth(), getMaxHealth(), ticks)) return false;
         refillDeadline = sl.getGameTime() + Math.max(1, ticks) + 40;      // the shield can never outlast this, whatever happens to the AI tick
         com.newuniverse.nusmp.boss.refill.RefillFx.start(sl, position(), getBbHeight(), styleColor(), styleAccent(), ticks);
-        broadcast(Component.translatable("nusmp.boss.refill.second_bar", bossName()).withStyle(chatColor(), ChatFormatting.BOLD));
+        broadcast(Component.translatable("anime_multiverse.boss.refill.second_bar", bossName()).withStyle(chatColor(), ChatFormatting.BOLD));
         refreshBar();
         return true;
     }
@@ -332,7 +332,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     private MoveBook<Move> moveBook() {
         if (book == null) {
             book = MoveBook.of(moves());
-            for (String d : book.dropped()) LogUtils.getLogger().warn("[nusmp] {}: duplicate or empty move dropped: {}", getClass().getSimpleName(), d);
+            for (String d : book.dropped()) LogUtils.getLogger().warn("[anime_multiverse] {}: duplicate or empty move dropped: {}", getClass().getSimpleName(), d);
         }
         return book;
     }
@@ -801,7 +801,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
                 if (m.tell() != null) m.tell().tell(this, target, left, entityData.get(PHASE_TOTAL));
                 else defaultTell(sl, m, target, left);
             } catch (Throwable e) {
-                LogUtils.getLogger().warn("[nusmp] {} tell of {} failed: {}", bossName(), m.id(), e.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] {} tell of {} failed: {}", bossName(), m.id(), e.toString());
             }
         }
         if (left <= 0) release(sl, target, t);
@@ -826,7 +826,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         try {
             m.run().run(this, target);
         } catch (Throwable e) {
-            LogUtils.getLogger().warn("[nusmp] {} move {} failed: {}", bossName(), m.id(), e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] {} move {} failed: {}", bossName(), m.id(), e.toString());
         }
         recoveryUntil = t + m.recoveryTicks();
         nextThink = Math.max(nextThink, recoveryUntil);

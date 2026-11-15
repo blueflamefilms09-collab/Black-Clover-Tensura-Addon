@@ -110,7 +110,7 @@ public final class BossSkillRules {
         } catch (Throwable noSkills) {
             if (!warned) {
                 warned = true;
-                LogUtils.getLogger().warn("[nusmp] boss skill sweep failed for {}: {}", boss.getName().getString(), noSkills.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] boss skill sweep failed for {}: {}", boss.getName().getString(), noSkills.toString());
             }
         }
         return removed;

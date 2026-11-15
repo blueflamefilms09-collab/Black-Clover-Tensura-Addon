@@ -1,10 +1,10 @@
 """Generates the custom particle library of the mod (docs/custom_particles.md).
 
 For every particle of tools/particles/lib_*.py it writes
-  * src/main/resources/assets/nusmp/textures/particle/<id>_<n>.png   (the animation frames, 16x16 or 32x32)
-  * src/main/resources/assets/nusmp/particles/<id>.json              (the sprite list the particle engine reads)
+  * src/main/resources/assets/anime_multiverse/textures/particle/<id>_<n>.png   (the animation frames, 16x16 or 32x32)
+  * src/main/resources/assets/anime_multiverse/particles/<id>.json              (the sprite list the particle engine reads)
 and, once for all, the catalog the game reads for the physics profiles:
-  * src/main/resources/data/nusmp/particle_catalog.json
+  * src/main/resources/data/anime_multiverse/particle_catalog.json
 plus the preview sheet docs/previews/custom_particles/sheet.png (every particle's frames on a dark and on a light background).
 
 Deterministic (seeded per id and frame), numpy + Pillow only.
@@ -42,9 +42,9 @@ def render(spec, frame):
 
 
 def write_all(root_res, only=None):
-    tex = os.path.join(root_res, "assets", "nusmp", "textures", "particle")
-    pjs = os.path.join(root_res, "assets", "nusmp", "particles")
-    dat = os.path.join(root_res, "data", "nusmp")
+    tex = os.path.join(root_res, "assets", "anime_multiverse", "textures", "particle")
+    pjs = os.path.join(root_res, "assets", "anime_multiverse", "particles")
+    dat = os.path.join(root_res, "data", "anime_multiverse")
     for d in (tex, pjs, dat):
         os.makedirs(d, exist_ok=True)
     catalog = []
@@ -54,7 +54,7 @@ def write_all(root_res, only=None):
             for f in range(spec["frames"]):
                 Image.fromarray(render(spec, f), "RGBA").save(os.path.join(tex, "%s_%d.png" % (pid, f)))
             with open(os.path.join(pjs, pid + ".json"), "w", encoding="utf-8", newline="\n") as fh:
-                json.dump({"textures": ["nusmp:%s_%d" % (pid, f) for f in range(spec["frames"])]}, fh, indent=2)
+                json.dump({"textures": ["anime_multiverse:%s_%d" % (pid, f) for f in range(spec["frames"])]}, fh, indent=2)
                 fh.write("\n")
         catalog.append({"id": pid, "family": spec["family"], "group": spec["group"], "frames": spec["frames"], "px": spec["px"], "tint": spec["tint"],
                         "behaviour": spec["behaviour"], "profile": spec["profile"]})
@@ -108,7 +108,7 @@ def main():
     res = os.path.join(a.out, "src", "main", "resources") if a.out else RES
     docs = os.path.join(a.out, "docs") if a.out else os.path.join(ROOT, "docs")
     if a.sheet_only:
-        tex = os.path.join(res, "assets", "nusmp", "textures", "particle")
+        tex = os.path.join(res, "assets", "anime_multiverse", "textures", "particle")
     else:
         tex = write_all(res, a.only)
     p = sheet(tex, os.path.join(docs, "previews", "custom_particles", "sheet.png"))

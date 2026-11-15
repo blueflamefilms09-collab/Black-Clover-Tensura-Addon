@@ -3,7 +3,7 @@ import os
 
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "item", "grimoire_summons.png")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "grimoire_summons.png")
 im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
 px = im.load()
 INK = (60, 40, 24, 255)

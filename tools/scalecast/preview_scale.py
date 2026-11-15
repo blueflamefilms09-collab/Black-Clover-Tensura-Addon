@@ -26,11 +26,11 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "compass"))
 import preview_compass3d as pc          # noqa: E402  (the rasteriser: Canvas, Prim, card, look, matrices, stand-in figures)
 
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "scalecast")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "scalecast")
 JAVA = [os.path.join(SRC, "ScaleMesh.java"), os.path.join(SRC, "ScaleCastRules.java"), os.path.join(HERE, "ScaleMeshDump.java")]
 BUILD = os.path.join(ROOT, "build", "scale_preview")
 OUT = os.path.join(ROOT, "docs", "previews", "scale_casting")
-pc.TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures")
+pc.TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures")
 pc._cache.clear()
 W, H = pc.W, pc.H
 

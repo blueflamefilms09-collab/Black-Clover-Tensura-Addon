@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: which monsters stand for "undead", "swarm" or "knight" at which depth is data ({@code data/nusmp/mega/mechanic_groups.json}), read again on every data reload. A missing or
+ * Why: which monsters stand for "undead", "swarm" or "knight" at which depth is data ({@code data/anime_multiverse/mega/mechanic_groups.json}), read again on every data reload. A missing or
  * broken file leaves the built-in roster in place ({@link MobGroups}), and every problem is logged, so a typo in a datapack never takes the monsters away.
  */
 final class MobGroupsReload implements ResourceManagerReloadListener {
-    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/mechanic_groups.json");
+    private static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/mechanic_groups.json");
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
@@ -33,6 +33,6 @@ final class MobGroupsReload implements ResourceManagerReloadListener {
             problems.add("mechanic_groups.json could not be read: " + e);
         }
         MobGroups.install(groups);
-        for (String p : problems) LogUtils.getLogger().warn("[nusmp] mechanic groups: {}", p);
+        for (String p : problems) LogUtils.getLogger().warn("[anime_multiverse] mechanic groups: {}", p);
     }
 }

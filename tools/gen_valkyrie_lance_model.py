@@ -35,8 +35,8 @@ sys.path.insert(0, os.path.join(HERE, "relics"))
 import gen_valkyrie_lance as gl                                                     # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
-DATA = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
+DATA = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse")
 PREVIEW = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie")
 ID = "valkyrie_drill_lance"
 REAL = 3.0                                                                          # metres in hand (spear class 2.8 to 3.6; 1 block = 1 m, the hand scale is 0.85)

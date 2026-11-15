@@ -1,4 +1,4 @@
-"""Why: the Basilisk (entity nusmp:basilisk, dungeon/BasiliskEntity), a tier-3 predator of the Living Dungeon: a low, heavy armoured lizard in overlapping forest-green and near-black scales,
+"""Why: the Basilisk (entity anime_multiverse:basilisk, dungeon/BasiliskEntity), a tier-3 predator of the Living Dungeon: a low, heavy armoured lizard in overlapping forest-green and near-black scales,
 a bone crest down the back, a wedge head, venom-green eyes and a faint green glow along the crest; its bite poisons, and it sleeps when it has eaten. The hand-built model is replaced by
 the art kit's version: a creature becomes an anthropomorphic character on the player's rig with its features kept, so this is a lizard-folk serpent: a scaled humanoid body whose
 legs vanish into three stacked coils of serpent body (made in `extra`), a wedge snout and a bone crest for hair, venom-green eyes, a scale cuirass over the green hide, a long

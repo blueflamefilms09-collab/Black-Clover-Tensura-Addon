@@ -98,7 +98,7 @@ class WindMcTest {
         assertEquals(32, new HashSet<>(all).size());
         assertTrue(all.contains("textures/particle/wmc_crescent_0.png") && all.contains("textures/particle/wmc_flash_1_t.png"));
         for (String p : all) assertTrue(WindMc.isPixelTexture(p), p);
-        assertTrue(WindMc.isPixelTexture("nusmp:textures/particle/wmc_ring_0.png"));
+        assertTrue(WindMc.isPixelTexture("anime_multiverse:textures/particle/wmc_ring_0.png"));
         for (String p : new String[]{"textures/particle/wind_slash.png", "textures/particle/wind_swallow.png", "textures/particle/time_clock.png", "textures/entity/wmc_x.png", "", null})
             assertFalse(WindMc.isPixelTexture(p), String.valueOf(p));
         assertEquals("wmc_ribbon_1_t", WindMc.fileName("ribbon", 1, true));

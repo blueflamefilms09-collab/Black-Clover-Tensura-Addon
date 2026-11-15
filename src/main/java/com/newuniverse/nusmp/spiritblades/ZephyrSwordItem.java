@@ -76,6 +76,6 @@ public class ZephyrSwordItem extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.spirit_of_zephyr.lore", "The long green blade of the Wind Spirit Zephyr.").withStyle(ChatFormatting.GREEN));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.spirit_of_zephyr.lore", "The long green blade of the Wind Spirit Zephyr.").withStyle(ChatFormatting.GREEN));
     }
 }

@@ -121,8 +121,8 @@ class ManaZoneWiringTest {
         }
         assertTrue(keys.size() >= 8, "the code builds its texts with a fallback: " + keys);
         for (String k : keys) if (!k.endsWith(".")) assertTrue(frag.contains("\"" + k + "\""), "lang fragment lacks " + k);
-        for (String e : new String[]{"cancel", "collapse", "expired", "death", "dimension", "mount", "logout", "admin"}) assertTrue(frag.contains("\"nusmp.mana_zone.end." + e + "\""), "end text for " + e);
-        for (String k : new String[]{"haven", "crushing", "heavy", "pressing", "fed", "balanced"}) assertTrue(frag.contains("\"nusmp.zone.feel." + k + "\""), k);
+        for (String e : new String[]{"cancel", "collapse", "expired", "death", "dimension", "mount", "logout", "admin"}) assertTrue(frag.contains("\"anime_multiverse.mana_zone.end." + e + "\""), "end text for " + e);
+        for (String k : new String[]{"haven", "crushing", "heavy", "pressing", "fed", "balanced"}) assertTrue(frag.contains("\"anime_multiverse.zone.feel." + k + "\""), k);
     }
 
     @Test

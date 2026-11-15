@@ -50,12 +50,12 @@ public final class HubConfig {
         b.pop();
 
         b.push("shop");
-        SHOP_ENABLED = b.comment("The Merchant sells (data/nusmp/elite/hub/shop.json). Every price is in coins.").define("enabled", true);
+        SHOP_ENABLED = b.comment("The Merchant sells (data/anime_multiverse/elite/hub/shop.json). Every price is in coins.").define("enabled", true);
         PRICE_SCALE = b.comment("Multiplier on every shop price.").defineInRange("priceScale", 1.0, 0.0, 100.0);
         b.pop();
 
         b.push("quests");
-        QUESTS_ENABLED = b.comment("The Quest Giver offers quests (data/nusmp/elite/hub/quests/*.json) and kills, floors and deliveries are counted.").define("enabled", true);
+        QUESTS_ENABLED = b.comment("The Quest Giver offers quests (data/anime_multiverse/elite/hub/quests/*.json) and kills, floors and deliveries are counted.").define("enabled", true);
         MAX_ACTIVE_QUESTS = b.comment("How many quests a player can have accepted at once.").defineInRange("maxActive", 5, 1, 20);
         DAILY_COUNT = b.comment("How many daily quests the board shows each day.").defineInRange("dailyCount", 4, 0, 20);
         REWARD_SCALE = b.comment("Multiplier on every quest reward.").defineInRange("rewardScale", 1.0, 0.0, 100.0);

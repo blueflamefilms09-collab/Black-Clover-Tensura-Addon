@@ -206,5 +206,5 @@ final class ArenaPlacer {
         for (BossArenaStructure.Placed c : plan.sealCells()) setCell(sl, f, c.x(), c.y(), c.z(), closed ? c.spec() : BossArenaStructure.AIR);
     }
 
-    static void log(String what) { LOG.info("[nusmp] decennial: {}", what); }
+    static void log(String what) { LOG.info("[anime_multiverse] decennial: {}", what); }
 }

@@ -23,7 +23,7 @@ public record Socket(Vec cell, Facing facing, String name, String target, String
     /** A sealed end: the pool is {@code minecraft:empty}, so the generator neither fills it nor puts a cap on it. */
     public boolean sealed() { return MegaGrid.P_EMPTY.equals(pool); }
 
-    /** Is this an ordinary door ({@code nusmp:mega_door}) rather than one of the boss-chain sockets? */
+    /** Is this an ordinary door ({@code anime_multiverse:mega_door}) rather than one of the boss-chain sockets? */
     public boolean isDoor() { return MegaGrid.DOOR.equals(name); }
 
     /** Is this one of the boss-chain sockets ({@code mega_chain}, {@code mega_vault}, {@code mega_onward}) that only the Sector Recipe fills? */

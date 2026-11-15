@@ -233,9 +233,9 @@ public final class Clearance7 {
     // ---------------------------------------------------------------------------------------------------------------------------- what may be removed
 
     /** Blocks that belong to a mechanism and are never cut away (the Gatekeeper, an altar, a gate, a sealed archway, a trap tile ...). */
-    private static final Set<String> PROTECTED = Set.of("nusmp:gatekeeper_door", "nusmp:peak_altar", "nusmp:relic_pedestal", "nusmp:labyrinth_exit", "nusmp:labyrinth_gate",
-            "nusmp:sealed_archway", "nusmp:magic_barrier", "nusmp:ward_rune", "nusmp:spawn_glyph", "nusmp:pitfall_tile", "nusmp:snuffer_glyph", "nusmp:sigil_plate",
-            "nusmp:riddle_stone", "nusmp:guardian_altar", "minecraft:bedrock", "minecraft:barrier", "minecraft:structure_block", "minecraft:jigsaw", "minecraft:spawner",
+    private static final Set<String> PROTECTED = Set.of("anime_multiverse:gatekeeper_door", "anime_multiverse:peak_altar", "anime_multiverse:relic_pedestal", "anime_multiverse:labyrinth_exit", "anime_multiverse:labyrinth_gate",
+            "anime_multiverse:sealed_archway", "anime_multiverse:magic_barrier", "anime_multiverse:ward_rune", "anime_multiverse:spawn_glyph", "anime_multiverse:pitfall_tile", "anime_multiverse:snuffer_glyph", "anime_multiverse:sigil_plate",
+            "anime_multiverse:riddle_stone", "anime_multiverse:guardian_altar", "minecraft:bedrock", "minecraft:barrier", "minecraft:structure_block", "minecraft:jigsaw", "minecraft:spawner",
             "minecraft:trial_spawner", "minecraft:vault", "minecraft:end_portal", "minecraft:end_portal_frame", "minecraft:nether_portal", "minecraft:end_gateway");
 
     /** Is the block a fluid (it has no collision, so it is not a clearance problem, and removing it would let the neighbours flow in)? */
@@ -259,7 +259,7 @@ public final class Clearance7 {
      */
     public static boolean carvable(String id, boolean blockEntity) {
         if (isAir(id) || isFluid(id) || PROTECTED.contains(id)) return false;
-        if (id.startsWith("nusmp:") && blockEntity) return false;
+        if (id.startsWith("anime_multiverse:") && blockEntity) return false;
         return !blockEntity || decorationEntity(id);
     }
 

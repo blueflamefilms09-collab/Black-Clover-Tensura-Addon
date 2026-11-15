@@ -1,6 +1,6 @@
 """Generates the Copper Magic VFX textures (Red Shine Mace and friends).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/copper_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/copper_*.png
 
     python3 -B tools/gen_copper_textures.py
 
@@ -16,7 +16,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

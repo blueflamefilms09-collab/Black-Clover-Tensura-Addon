@@ -44,12 +44,12 @@ public final class CompatPacks {
             Pack pack = Pack.readMetaAndCreate(where, new PathPackResources.PathResourcesSupplier(root), PackType.SERVER_DATA,
                     new PackSelectionConfig(true, Pack.Position.TOP, false));
             if (pack == null) {
-                LOG.warn("[nusmp] The Tensura No Index compatibility pack could not be read; it is not loaded");
+                LOG.warn("[anime_multiverse] The Tensura No Index compatibility pack could not be read; it is not loaded");
                 return;
             }
             event.addRepositorySource(consumer -> consumer.accept(pack));
         } catch (RuntimeException | LinkageError failure) {
-            LOG.warn("[nusmp] The Tensura No Index compatibility pack could not be added", failure);
+            LOG.warn("[anime_multiverse] The Tensura No Index compatibility pack could not be added", failure);
         }
     }
 }

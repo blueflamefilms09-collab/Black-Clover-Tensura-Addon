@@ -45,7 +45,7 @@ import java.util.UUID;
  * Why: this is the whole server side of a converted creature in one place, so the three things that must never disagree stay together:
  * what is stored on the creature, what the roster ({@link PaladinRoster}) remembers, and what the creature does. A Paladin is an
  * ordinary mob with (1) a compound {@value #TAG} in its persistent data (owner id, conversion time, the follower cap at the time), which
- * is what saves it, (2) the {@code nusmp:paladin} marker effect, which is what the client sees, (3) six saved attribute modifiers, which
+ * is what saves it, (2) the {@code anime_multiverse:paladin} marker effect, which is what the client sees, (3) six saved attribute modifiers, which
  * are the buffs, and (4) a roster entry, which is the limit. Releasing undoes all four. No entity class is added.
  * <ul>
  *   <li><b>One conversion heal.</b> At conversion the creature is set to its new full health once. That is the owner-requested
@@ -66,7 +66,7 @@ public final class Paladins {
     /** The compound in the creature's persistent data: Owner (uuid), Time (game time of the conversion), Cap (follower limit then). */
     public static final String TAG = "nusmp_paladin";
     private static final String RELIC_OWNER = "nusmp_relic_owner";
-    /** Entity types that can never be purified (data: data/nusmp/tags/entity_type/paladin_immune.json). */
+    /** Entity types that can never be purified (data: data/anime_multiverse/tags/entity_type/paladin_immune.json). */
     public static final TagKey<EntityType<?>> IMMUNE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "paladin_immune"));
 
     static final PaladinRoster<UUID> ROSTER = new PaladinRoster<>();

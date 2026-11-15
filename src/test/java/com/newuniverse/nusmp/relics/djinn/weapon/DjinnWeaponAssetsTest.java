@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The generated art of the 24 Djinn weapons (tools/relics/djinn_weapons.py) is all there, well formed, and in the size band of the size rule. */
 class DjinnWeaponAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     private static final Path TOOL = Path.of("tools", "relics", "djinn_weapons.py");
 
     private static List<String> ids() {
@@ -122,7 +122,7 @@ class DjinnWeaponAssetsTest {
             double fp = disp.getAsJsonObject("firstperson_righthand").getAsJsonArray("scale").get(0).getAsDouble();
             assertTrue(fp > 0.2 && fp <= 0.68, id + ": first-person scale " + fp);
             JsonObject icon = JsonParser.parseString(Files.readString(ASSETS.resolve("models/item").resolve(id + "_icon.json"))).getAsJsonObject();
-            assertEquals("nusmp:item/" + id, icon.getAsJsonObject("textures").get("layer0").getAsString(), id);
+            assertEquals("anime_multiverse:item/" + id, icon.getAsJsonObject("textures").get("layer0").getAsString(), id);
         }
     }
 

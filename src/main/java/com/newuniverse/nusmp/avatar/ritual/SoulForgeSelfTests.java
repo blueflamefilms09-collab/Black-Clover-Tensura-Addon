@@ -54,14 +54,14 @@ public final class SoulForgeSelfTests {
         SelfTests.register("avatar.forge_ritual", SoulForgeSelfTests::ritual);
     }
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     // ---------------------------------------------------------------- the block, the item, the menu
     private static Result registry(MinecraftServer server) {
-        if (!BuiltInRegistries.BLOCK.containsKey(id("soul_forge"))) return Result.fail("block nusmp:soul_forge is not registered");
-        if (!BuiltInRegistries.ITEM.containsKey(id("soul_forge"))) return Result.fail("item nusmp:soul_forge is not registered");
-        if (!BuiltInRegistries.MENU.containsKey(id("soul_forge"))) return Result.fail("menu nusmp:soul_forge is not registered");
-        if (!BuiltInRegistries.ITEM.containsKey(id("genesis_core"))) return Result.fail("item nusmp:genesis_core is not registered");
+        if (!BuiltInRegistries.BLOCK.containsKey(id("soul_forge"))) return Result.fail("block anime_multiverse:soul_forge is not registered");
+        if (!BuiltInRegistries.ITEM.containsKey(id("soul_forge"))) return Result.fail("item anime_multiverse:soul_forge is not registered");
+        if (!BuiltInRegistries.MENU.containsKey(id("soul_forge"))) return Result.fail("menu anime_multiverse:soul_forge is not registered");
+        if (!BuiltInRegistries.ITEM.containsKey(id("genesis_core"))) return Result.fail("item anime_multiverse:genesis_core is not registered");
         int light = SoulForgeBlocks.SOUL_FORGE.get().defaultBlockState().getLightEmission();
         if (light <= 0) return Result.fail("the Soul Forge gives no light (" + light + ")");
         return Result.ok("block, item, menu and Genesis Core registered; light " + light);
@@ -82,10 +82,10 @@ public final class SoulForgeSelfTests {
     private static Result recipes(MinecraftServer server) {
         for (String name : new String[]{"soul_forge", "genesis_core"}) {
             Optional<RecipeHolder<?>> holder = server.getRecipeManager().byKey(id(name));
-            if (holder.isEmpty()) return Result.fail("recipe nusmp:" + name + " is not loaded");
+            if (holder.isEmpty()) return Result.fail("recipe anime_multiverse:" + name + " is not loaded");
             Recipe<?> r = holder.get().value();
             ItemStack out = r.getResultItem(server.registryAccess());
-            if (out.isEmpty() || !BuiltInRegistries.ITEM.getKey(out.getItem()).equals(id(name))) return Result.fail("recipe nusmp:" + name + " makes " + out);
+            if (out.isEmpty() || !BuiltInRegistries.ITEM.getKey(out.getItem()).equals(id(name))) return Result.fail("recipe anime_multiverse:" + name + " makes " + out);
         }
         Recipe<?> forge = server.getRecipeManager().byKey(id("soul_forge")).orElseThrow().value();
         ItemStack core = AvatarItems.coreStack();
@@ -107,7 +107,7 @@ public final class SoulForgeSelfTests {
             if (r.kind() == ForgeSkill.Kind.UNIQUE) uniques++; else ultimates++;
         }
         for (ForgeSkill s : all) {
-            if (!s.id().startsWith("nusmp:")) continue;
+            if (!s.id().startsWith("anime_multiverse:")) continue;
             if (ForgeSkillResolver.resolve(s) == null) return Result.fail("this mod's own skill " + s.id() + " does not resolve (the registry or the id is wrong)");
         }
         if (ok < 8 || uniques == 0) return Result.fail(ok + " of " + all.size() + " skills resolve (" + uniques + " unique, " + ultimates + " ultimate); missing " + shorten(missing));

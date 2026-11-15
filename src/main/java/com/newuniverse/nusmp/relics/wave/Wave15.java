@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 /**
  * Relics of Many Worlds, second set, wave 15: one pair of boots, eight cloaks, capes and mantles, and eight bracers and bracelets (plus the Crest of
- * Foresight, which hangs at the neck). The long card text of each, as game rules, is in the lang keys {@code item.nusmp.<id>.card}; the numbers and
+ * Foresight, which hangs at the neck). The long card text of each, as game rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the numbers and
  * small state machines are in {@link Wave15Rules} (pure), the abilities in {@link Wave15Wear} and {@link Wave15Hands}, what stays in the world in
  * {@link Wave15Field}, the handlers in {@link Wave15Events}.
  * <p>

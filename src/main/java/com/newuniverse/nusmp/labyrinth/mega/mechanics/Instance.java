@@ -408,6 +408,6 @@ public final class Instance {
 
     private void warn(String what, Throwable e) {
         errors++;
-        if (WARNED.add(def.id() + ":" + what)) LOG.warn("[nusmp] mechanic {} failed in {}: {}", def.id(), what, e.toString());
+        if (WARNED.add(def.id() + ":" + what)) LOG.warn("[anime_multiverse] mechanic {} failed in {}: {}", def.id(), what, e.toString());
     }
 }

@@ -59,7 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class SocketEngine {
     private SocketEngine() {}
 
-    private static final String MOD_NS = "nusmp";
+    private static final String MOD_NS = "anime_multiverse";
     private static final int SKILL_LEASE = 60, PASS_PHASE = 5;
     private static final String SPENT = "nusmp_socket_ls", SPENT_T = "nusmp_socket_ls_t";
 
@@ -135,7 +135,7 @@ public final class SocketEngine {
         Act act = SocketActs.of(entry.id());
         if (d == null || act == null) return false;
         if (!SocketRules.usable(d.kind(), Bonds.mask(p), Bonds.multiBond(p))) {
-            p.displayClientMessage(Component.translatable("socket.nusmp.msg.silenced").withStyle(ChatFormatting.RED), true);
+            p.displayClientMessage(Component.translatable("socket.anime_multiverse.msg.silenced").withStyle(ChatFormatting.RED), true);
             return false;
         }
         return RelicEngine.activate(p, relic, def, act, p.isShiftKeyDown(), 0);
@@ -152,7 +152,7 @@ public final class SocketEngine {
                 if (++i == Math.max(1, n)) return cast(p, w.stack(), w.def(), e);
             }
         }
-        p.displayClientMessage(Component.translatable("socket.nusmp.msg.nothing_bound").withStyle(ChatFormatting.GRAY), true);
+        p.displayClientMessage(Component.translatable("socket.anime_multiverse.msg.nothing_bound").withStyle(ChatFormatting.GRAY), true);
         return false;
     }
 

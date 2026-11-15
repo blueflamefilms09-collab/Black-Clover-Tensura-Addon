@@ -24,7 +24,7 @@ public final class RecombAnimeRules {
     public static final float[] CHIMNEY_PX = {27.5f, 119f, -5f};
     public static final float[] EYE_PX = {5.4f, 108f, -10f};
 
-    /** The models (assets/nusmp/geo/entity/recombanime_*.geo.json) and the clips each must carry; a test and the self-test read them. */
+    /** The models (assets/anime_multiverse/geo/entity/recombanime_*.geo.json) and the clips each must carry; a test and the self-test read them. */
     public static final String[] MODELS = {"golem", "house", "ring", "drill", "golem_lod"};
     public static final String[][] CLIPS = {{"idle", "walk", "punch", "fire", "assemble", "collapse", "stomp"}, {"idle", "rise", "swap"}, {"idle"}, {"idle"},
             {"idle", "walk", "punch", "fire", "assemble", "collapse", "stomp"}};

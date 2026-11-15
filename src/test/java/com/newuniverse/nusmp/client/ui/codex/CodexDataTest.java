@@ -24,13 +24,13 @@ class CodexDataTest {
     // ---------------------------------------------------------------- parsing
     @Test
     void parsesAllFields() {
-        CodexEntryData d = parse("rules", "nusmp:relics", "{\"title\":\"Relics\",\"text\":\"Only here.\",\"keys\":\"item:nusmp:a|mob:nusmp:b\",\"icon\":\"item:nusmp:foo\",\"order\":7}");
+        CodexEntryData d = parse("rules", "anime_multiverse:relics", "{\"title\":\"Relics\",\"text\":\"Only here.\",\"keys\":\"item:anime_multiverse:a|mob:anime_multiverse:b\",\"icon\":\"item:anime_multiverse:foo\",\"order\":7}");
         assertEquals("rules", d.section());
-        assertEquals("nusmp:relics", d.id());
+        assertEquals("anime_multiverse:relics", d.id());
         assertEquals("Relics", d.title());
         assertEquals("Only here.", d.text());
-        assertEquals("item:nusmp:a|mob:nusmp:b", d.keys());
-        assertEquals("item:nusmp:foo", d.icon());
+        assertEquals("item:anime_multiverse:a|mob:anime_multiverse:b", d.keys());
+        assertEquals("item:anime_multiverse:foo", d.icon());
         assertEquals(7, d.order());
         assertFalse(d.remove());
     }
@@ -75,9 +75,9 @@ class CodexDataTest {
     @Test
     void theLaterPackOverridesAnEarlierEntryOfTheSameId() {
         List<CodexEntryData> in = new ArrayList<>();
-        in.add(new CodexEntryData("rules", "nusmp:x", "Old title", "old", "", "", 1, false));
-        in.add(new CodexEntryData("rules", "nusmp:y", "Other", "o", "", "", 2, false));
-        in.add(new CodexEntryData("rules", "nusmp:x", "New title", "new", "", "", 1, false));
+        in.add(new CodexEntryData("rules", "anime_multiverse:x", "Old title", "old", "", "", 1, false));
+        in.add(new CodexEntryData("rules", "anime_multiverse:y", "Other", "o", "", "", 2, false));
+        in.add(new CodexEntryData("rules", "anime_multiverse:x", "New title", "new", "", "", 1, false));
         Map<String, List<CodexEntryData>> m = CodexMerger.merge(in);
         assertEquals(2, m.get("rules").size());
         assertEquals("New title", m.get("rules").get(0).title());
@@ -86,16 +86,16 @@ class CodexDataTest {
 
     @Test
     void sameNameInAnotherNamespaceIsAnotherEntry() {
-        Map<String, List<CodexEntryData>> m = CodexMerger.merge(List.of(e("rules", "nusmp:x", "A", 0), e("rules", "othermod:x", "B", 0)));
+        Map<String, List<CodexEntryData>> m = CodexMerger.merge(List.of(e("rules", "anime_multiverse:x", "A", 0), e("rules", "othermod:x", "B", 0)));
         assertEquals(2, m.get("rules").size());
     }
 
     @Test
     void aRemoveEntryDeletesAndASectionWithNothingLeftDisappears() {
         List<CodexEntryData> in = new ArrayList<>();
-        in.add(e("lore", "nusmp:a", "A", 0));
-        in.add(new CodexEntryData("lore", "nusmp:a", "", "", "", "", 0, true));
-        in.add(e("rules", "nusmp:b", "B", 0));
+        in.add(e("lore", "anime_multiverse:a", "A", 0));
+        in.add(new CodexEntryData("lore", "anime_multiverse:a", "", "", "", "", 0, true));
+        in.add(e("rules", "anime_multiverse:b", "B", 0));
         Map<String, List<CodexEntryData>> m = CodexMerger.merge(in);
         assertFalse(m.containsKey("lore"));
         assertTrue(m.containsKey("rules"));
@@ -156,9 +156,9 @@ class CodexDataTest {
         assertTrue(CodexData.shown("", k -> false));
         assertTrue(CodexData.shown("  ", k -> false));
         assertTrue(CodexData.shown(null, k -> false));
-        assertFalse(CodexData.shown("item:nusmp:a|mob:nusmp:b", k -> false));
-        Set<String> known = Set.of("item:nusmp:a|mob:nusmp:b");
-        assertTrue(CodexData.shown("item:nusmp:a|mob:nusmp:b", known::contains));
+        assertFalse(CodexData.shown("item:anime_multiverse:a|mob:anime_multiverse:b", k -> false));
+        Set<String> known = Set.of("item:anime_multiverse:a|mob:anime_multiverse:b");
+        assertTrue(CodexData.shown("item:anime_multiverse:a|mob:anime_multiverse:b", known::contains));
     }
 
     @Test
@@ -175,21 +175,21 @@ class CodexDataTest {
 
     @Test
     void langKeysAreRecognisedButPlainTextIsNot() {
-        assertTrue(CodexData.looksLikeLangKey("nusmp.codex.rule.relics.title"));
-        assertTrue(CodexData.looksLikeLangKey("block.nusmp.some_block"));
+        assertTrue(CodexData.looksLikeLangKey("anime_multiverse.codex.rule.relics.title"));
+        assertTrue(CodexData.looksLikeLangKey("block.anime_multiverse.some_block"));
         assertFalse(CodexData.looksLikeLangKey("Relics belong to the Labyrinth"));
         assertFalse(CodexData.looksLikeLangKey("Done."));
         assertFalse(CodexData.looksLikeLangKey("hello"));
         assertFalse(CodexData.looksLikeLangKey(""));
         assertFalse(CodexData.looksLikeLangKey(null));
-        assertEquals("nusmp.codex.section.rules", CodexData.sectionKey("rules"));
+        assertEquals("anime_multiverse.codex.section.rules", CodexData.sectionKey("rules"));
     }
 
     @Test
     void iconIdsComeOnlyFromTheItemPrefix() {
-        assertEquals("nusmp:foo", CodexData.iconItemId("item:nusmp:foo"));
-        assertEquals("nusmp:foo", CodexData.iconItemId("ITEM: nusmp:foo"));
-        assertNull(CodexData.iconItemId("block:nusmp:foo"));
+        assertEquals("anime_multiverse:foo", CodexData.iconItemId("item:anime_multiverse:foo"));
+        assertEquals("anime_multiverse:foo", CodexData.iconItemId("ITEM: anime_multiverse:foo"));
+        assertNull(CodexData.iconItemId("block:anime_multiverse:foo"));
         assertNull(CodexData.iconItemId("item:"));
         assertNull(CodexData.iconItemId(""));
         assertNull(CodexData.iconItemId(null));
@@ -198,14 +198,14 @@ class CodexDataTest {
     // ---------------------------------------------------------------- the stock rule files are valid
     @Test
     void everyStockRuleFileParsesAndHasATitleAndText() throws Exception {
-        java.nio.file.Path dir = java.nio.file.Path.of("src/main/resources/assets/nusmp/codex/rules");
+        java.nio.file.Path dir = java.nio.file.Path.of("src/main/resources/assets/anime_multiverse/codex/rules");
         if (!java.nio.file.Files.isDirectory(dir)) return;                       // run from another working directory: nothing to check
         int n = 0;
         try (var files = java.nio.file.Files.list(dir)) {
             for (java.nio.file.Path p : (Iterable<java.nio.file.Path>) files::iterator) {
                 if (!p.toString().endsWith(".json")) continue;
                 String name = p.getFileName().toString().replace(".json", "");
-                CodexEntryData d = parse("rules", "nusmp:" + name, java.nio.file.Files.readString(p));
+                CodexEntryData d = parse("rules", "anime_multiverse:" + name, java.nio.file.Files.readString(p));
                 assertFalse(d.title().isBlank(), name);
                 assertFalse(d.text().isBlank(), name);
                 n++;

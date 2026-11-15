@@ -9,7 +9,7 @@ sys.path.insert(0, HERE)
 from new197_roster import ROSTER                                    # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ICONS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item")
+ICONS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
 
 
 def meshes(out, only):
@@ -17,7 +17,7 @@ def meshes(out, only):
     import numpy as np
     import preview_mesh as pm
     ids = [e["id"] for e in ROSTER if not only or e["id"] in only or ("grade:" + e["grade"]) in only]
-    ids = [i for i in ids if os.path.exists(os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_meshes", i + ".txt"))]
+    ids = [i for i in ids if os.path.exists(os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "weapon_meshes", i + ".txt"))]
     tiles = []
     tmp = out + ".part.png"
     for i in ids:

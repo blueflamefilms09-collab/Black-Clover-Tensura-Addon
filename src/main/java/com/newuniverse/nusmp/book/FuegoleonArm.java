@@ -42,7 +42,7 @@ public final class FuegoleonArm {
             }
             boolean wasOn = PlayerAuras.active(p, Aura.FUEGOLEON_ARM);
             PlayerAuras.set(p, Aura.FUEGOLEON_ARM, FuegoleonArmRules.LEASE_TICKS, FuegoleonArmRules.styleOf(r));
-            if (!wasOn) p.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("nusmp.spiritdive.arm.on", "The Salamander's flame runs down your right arm.")
+            if (!wasOn) p.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("anime_multiverse.spiritdive.arm.on", "The Salamander's flame runs down your right arm.")
                     .withStyle(net.minecraft.ChatFormatting.GOLD), true);
         } catch (NullPointerException noConnection) { /* a stand-in player without a connection: the server table is already written */ }
         return r != FuegoleonArmRules.Reason.NONE;

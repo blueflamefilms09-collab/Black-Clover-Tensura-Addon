@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Which models a worn relic wears, read from assets/nusmp/relic_worn/catalog.txt (written by tools/relics/gen_worn_all.py). Pure.
+ * Which models a worn relic wears, read from assets/anime_multiverse/relic_worn/catalog.txt (written by tools/relics/gen_worn_all.py). Pure.
  * <pre>
  * look HEAD CROWN crown_spired            the models of every relic of that slot and look
  * relic tiny_duck_crown crown_duck        a signature relic's own models (they replace the look's)

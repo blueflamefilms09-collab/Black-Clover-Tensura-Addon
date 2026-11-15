@@ -35,7 +35,7 @@ public class DarkRukhShardItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatable("item.nusmp.dark_rukh_shard.desc1").withStyle(ChatFormatting.DARK_PURPLE));
-        tip.add(Component.translatable("item.nusmp.dark_rukh_shard.desc2").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("item.anime_multiverse.dark_rukh_shard.desc1").withStyle(ChatFormatting.DARK_PURPLE));
+        tip.add(Component.translatable("item.anime_multiverse.dark_rukh_shard.desc2").withStyle(ChatFormatting.GRAY));
     }
 }

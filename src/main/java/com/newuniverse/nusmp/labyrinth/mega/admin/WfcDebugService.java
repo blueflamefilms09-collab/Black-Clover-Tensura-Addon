@@ -146,7 +146,7 @@ public final class WfcDebugService {
                 burst(p, s);
             } catch (RuntimeException e) {
                 SESSIONS.remove(s.id);
-                LOG.warn("[nusmp] /dungeon debug wfc stopped for {}: {}", p.getGameProfile().getName(), e.toString());
+                LOG.warn("[anime_multiverse] /dungeon debug wfc stopped for {}: {}", p.getGameProfile().getName(), e.toString());
                 AdminMsg.tell(p, AdminMsg.red(AdminText.FAILED, e.getClass().getSimpleName()));
             }
         }

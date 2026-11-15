@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The worn model parser, the animation maths and the catalog, and every model file the generator wrote. */
 class WornMeshTest {
-    static final Path ROOT = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path ROOT = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
 
     static String quad(int g, int slot, int flags, float x) {
         StringBuilder b = new StringBuilder("q " + g + " " + slot + " " + flags);

@@ -91,8 +91,8 @@ public final class FormsSchema {
     private static final double EPS = 1e-9;
     private static final Pattern ID = Pattern.compile("[a-z][a-z0-9_]{1,31}");
     private static final Pattern RESOURCE = Pattern.compile("[a-z0-9_.-]+:[a-z0-9_./-]+");
-    private static final Set<String> ITEM_NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
-    private static final Set<String> TAG_NAMESPACES = Set.of("minecraft", "c", "nusmp");
+    private static final Set<String> ITEM_NAMESPACES = Set.of("minecraft", "tensura", "anime_multiverse");
+    private static final Set<String> TAG_NAMESPACES = Set.of("minecraft", "c", "anime_multiverse");
 
     /** Vanilla items a survival player cannot hold; a requirement on one could never be met. */
     private static final Set<String> UNOBTAINABLE = Set.of("minecraft:barrier", "minecraft:bedrock", "minecraft:command_block", "minecraft:chain_command_block",
@@ -194,7 +194,7 @@ public final class FormsSchema {
             for (Object k : root.keySet()) unknownKey(String.valueOf(k), ROOT_KEYS, "the file");
             Object weapon = root.get("weapon");
             if (weapon == null) warnings.add("the file has no \"weapon\" key; add \"weapon\": \"" + kind.itemId() + "\" so a copied file is noticed");
-            else if (!(weapon instanceof String w) || !w.replaceFirst("^nusmp:", "").equals(kind.itemId())) {
+            else if (!(weapon instanceof String w) || !w.replaceFirst("^anime_multiverse:", "").equals(kind.itemId())) {
                 reject("\"weapon\" says " + weapon + " but this file belongs to " + kind.itemId() + " (a copied file?)");
                 return;
             }
@@ -421,7 +421,7 @@ public final class FormsSchema {
             }
             String ns = s.substring(0, s.indexOf(':'));
             if (tag ? !TAG_NAMESPACES.contains(ns) : !ITEM_NAMESPACES.contains(ns)) {
-                bad(r, at + "'" + s + "' is in the namespace '" + ns + "'; " + (tag ? "tags must be minecraft:, c: or nusmp:" : "items must be minecraft:, tensura: or nusmp:"));
+                bad(r, at + "'" + s + "' is in the namespace '" + ns + "'; " + (tag ? "tags must be minecraft:, c: or anime_multiverse:" : "items must be minecraft:, tensura: or anime_multiverse:"));
                 return null;
             }
             if (!tag && (UNOBTAINABLE.contains(s) || s.endsWith("_spawn_egg"))) {

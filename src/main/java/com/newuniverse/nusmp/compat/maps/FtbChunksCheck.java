@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  *
  * <p>Certainty: the key name {@code claim_dimension_blacklist} and the SNBT list shape are from memory of FTB Chunks' config; the file name {@code ftbchunks-world.snbt}
  * and its folders are the usual FTB layout ({@code <world>/serverconfig}, {@code <game>/config/ftbchunks}, {@code <game>/defaultconfigs}), not verified. A
- * {@code claim_dimension_whitelist} is honoured if present (an assumption). Wildcard entries such as {@code nusmp:*} are understood by THIS check; whether FTB Chunks
+ * {@code claim_dimension_whitelist} is honoured if present (an assumption). Wildcard entries such as {@code anime_multiverse:*} are understood by THIS check; whether FTB Chunks
  * itself understands them is not known, so exact ids are what the warning recommends.
  */
 public final class FtbChunksCheck {

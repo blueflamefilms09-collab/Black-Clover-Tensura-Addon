@@ -171,18 +171,18 @@ public final class SectorGenerator {
             prevFacing = facing(prev.expansionFacing);
             prevRegion = box(prev.region);
         } else if (s.chainIndex != 0) {
-            LOG.warn("[nusmp] Mega sector {} ({} road, chain index {}) has no predecessor that points at it; it is planned as a free-standing sector.", s.id, s.polarity.id(), s.chainIndex);
+            LOG.warn("[anime_multiverse] Mega sector {} ({} road, chain index {}) has no predecessor that points at it; it is planned as a free-standing sector.", s.id, s.polarity.id(), s.chainIndex);
         }
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, recipe, MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
                 entryJigsaw, forward, region, prevSeal, prevFacing, prevRegion, obstacles(data, s.id, -1, s.polarity, s.party), s.relicCount, s.theme.id(), pools.themes(), null);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
-        for (String n : prep.notes()) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, n);
+        for (String n : prep.notes()) LOG.warn("[anime_multiverse] Mega sector {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
         if (s.cyclic) prep.request().cyclic = CyclicSettings.loopConfig();            // 1.83.0: a sector created while generation.cyclic was on is planned cyclic, for ever (also on regen and repair); older sectors never are
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no sector could be assembled: " + SectorSolver.summary(solved.failures(), 4));
-        for (String w : solved.result().warnings) LOG.warn("[nusmp] Mega sector {} plan: {}", s.id, w);
+        for (String w : solved.result().warnings) LOG.warn("[anime_multiverse] Mega sector {} plan: {}", s.id, w);
         return new Planned(prep, solved, dt, null);
     }
 
@@ -198,13 +198,13 @@ public final class SectorGenerator {
         SectorRequests.Inputs in = new SectorRequests.Inputs(pools, pools.floorRecipe(), MegaConfig.get(MegaConfig.MAX_PIECES), MegaConfig.get(MegaConfig.MAX_LINK_MODULES), s.seed,
                 entryJigsaw, facing(s.forward), box(s.region), null, null, null, List.of(), s.relicCount, s.theme.id(), pools.themes(), spec);
         SectorRequests.Prepared prep = SectorRequests.prepare(in);
-        for (String n : prep.notes()) LOG.warn("[nusmp] Mega floor {} plan: {}", s.id, n);
+        for (String n : prep.notes()) LOG.warn("[anime_multiverse] Mega floor {} plan: {}", s.id, n);
         if (!prep.ok()) return new Planned(prep, null, System.nanoTime() - t0, prep.failure());
         if (s.cyclic) prep.request().cyclic = CyclicSettings.loopConfig();            // 1.83.0: a sector created while generation.cyclic was on is planned cyclic, for ever (also on regen and repair); older sectors never are
         SectorSolver.Solved solved = SectorSolver.solve(prep.request(), MegaConfig.get(MegaConfig.ASSEMBLE_TRIES));
         long dt = System.nanoTime() - t0;
         if (!solved.ok()) return new Planned(prep, solved, dt, "no floor could be assembled: " + SectorSolver.summary(solved.failures(), 4));
-        for (String w : solved.result().warnings) LOG.warn("[nusmp] Mega floor {} plan: {}", s.id, w);
+        for (String w : solved.result().warnings) LOG.warn("[anime_multiverse] Mega floor {} plan: {}", s.id, w);
         return new Planned(prep, solved, dt, null);
     }
 
@@ -305,7 +305,7 @@ public final class SectorGenerator {
         if (id.equals(fallback)) return id;
         ResourceLocation rl = ResourceLocation.tryParse(id);
         if (rl != null && mgr.get(rl).isPresent()) return id;
-        if (WARNED_VARIANTS.add(id)) LOG.warn("[nusmp] Rebuilt room {} cannot be read; the shipped template {} is built instead.", id, fallback);
+        if (WARNED_VARIANTS.add(id)) LOG.warn("[anime_multiverse] Rebuilt room {} cannot be read; the shipped template {} is built instead.", id, fallback);
         return fallback;
     }
 
@@ -316,7 +316,7 @@ public final class SectorGenerator {
             Optional<Holder.Reference<StructureProcessorList>> h = registry.getHolder(ResourceKey.create(Registries.PROCESSOR_LIST, rl));
             if (h.isPresent()) return h.get();
         }
-        if (WARNED_PROCESSORS.add(id)) LOG.warn("[nusmp] Processor list {} does not exist; Mega pieces that name it are placed without processors.", id);
+        if (WARNED_PROCESSORS.add(id)) LOG.warn("[anime_multiverse] Processor list {} does not exist; Mega pieces that name it are placed without processors.", id);
         return Holder.direct(new StructureProcessorList(List.of()));
     }
 

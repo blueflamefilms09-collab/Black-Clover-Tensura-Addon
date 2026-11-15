@@ -13,12 +13,12 @@
 File frame (same as Blockbench): pixels (1/16 block), y UP, origin at the feet, the model's front on -z, +x is the model's left.
 Animation rotation values are DEGREES added to the bone's own rotation, positions in pixels, scale multiplies.
 Textures: use Model.paint() to get a PIL image of tex_w x tex_h (+ a glow image), draw on it, then m.save_texture(img, glow).
-Run python as `python3 -B`. Files are written under src/main/resources/assets/nusmp/.
+Run python as `python3 -B`. Files are written under src/main/resources/assets/anime_multiverse/.
 """
 import json
 import os
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse")
 
 
 class Model:

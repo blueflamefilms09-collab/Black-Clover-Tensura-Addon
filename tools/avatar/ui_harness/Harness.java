@@ -61,7 +61,7 @@ public final class Harness {
 
     // ================================================================ the world the screen is shown
     private static void loadWorld() throws Exception {
-        Path aptDir = repo.resolve("src/main/resources/data/nusmp/avatar_aptitudes"), skillDir = repo.resolve("src/main/resources/data/nusmp/avatar_skills");
+        Path aptDir = repo.resolve("src/main/resources/data/anime_multiverse/avatar_aptitudes"), skillDir = repo.resolve("src/main/resources/data/anime_multiverse/avatar_skills");
         List<ForgeAptitudeRow> apt = new ArrayList<>();
         try (var s = Files.list(aptDir)) {
             for (Path f : s.filter(p -> p.toString().endsWith(".json")).sorted().toList()) {
@@ -80,7 +80,7 @@ public final class Harness {
         SoulForgeClientData.load(ForgeRules.DEFAULT, ctx, 3, apt, skills);
 
         List<RaceEntry> races = new ArrayList<>();
-        Path raceDir = repo.resolve("src/main/resources/data/nusmp/avatar_races");
+        Path raceDir = repo.resolve("src/main/resources/data/anime_multiverse/avatar_races");
         try (var s = Files.list(raceDir)) {
             for (Path f : s.filter(p -> p.toString().endsWith(".json")).sorted().toList()) {
                 JsonObject o = JsonParser.parseString(Files.readString(f)).getAsJsonObject();

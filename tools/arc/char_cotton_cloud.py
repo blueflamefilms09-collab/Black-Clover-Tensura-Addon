@@ -1,4 +1,4 @@
-"""Why: Charmy's cotton cloud (entity nusmp:cotton_cloud, entity/CottonCloudEntity), the one prop most of Cotton Magic's spells use: a flat cumulus under someone's feet (the kitchen, the place a
+"""Why: Charmy's cotton cloud (entity anime_multiverse:cotton_cloud, entity/CottonCloudEntity), the one prop most of Cotton Magic's spells use: a flat cumulus under someone's feet (the kitchen, the place a
 sheep leaps out of), a ride that carries up to four riders, a cocoon of three heaps round a foe (Sheep Bondage), a puff that swells and fades where a strike lands. It is a prop, not a body, so
 the art kit's version is the smallest thing that is still a character on the player's rig: the HEAD of a child of cotton (every cube but the head's is stripped in `extra`), drawn twice as
 big and set at the front rim of a heap of wool puffs that the `extra` builds on its own bone (about 2.6 blocks across and 0.6 high, the cumulus the old cube model was), so the cloud is a

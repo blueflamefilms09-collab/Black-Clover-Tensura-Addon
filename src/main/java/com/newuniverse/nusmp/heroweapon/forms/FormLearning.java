@@ -51,7 +51,7 @@ public final class FormLearning {
                 FormsSync.markDirty(player);
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: learning failed", e);
+            LOG.warn("[anime_multiverse] hero forms: learning failed", e);
         }
         return out;
     }

@@ -207,7 +207,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
             if (s.stuckTooLong()) putBack(sl);
             if (tickCount % 5 == 0) CharybdisMinions.drive(this);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The Charybdis Spawn's tick failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] The Charybdis Spawn's tick failed: {}", e.toString());
         }
     }
 
@@ -367,7 +367,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
             sl.getServer().getPlayerList().broadcastSystemMessage(Component.literal(CharybdisText.slain(who)).withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD), false);
             DjinnSources.floorBossFell(sl, arena(), "CHARYBDIS_BASIN", slayer);
         } catch (RuntimeException | LinkageError failure) {
-            LOG.warn("[nusmp] Could not announce the fall of the Charybdis Spawn", failure);
+            LOG.warn("[anime_multiverse] Could not announce the fall of the Charybdis Spawn", failure);
         }
     }
 

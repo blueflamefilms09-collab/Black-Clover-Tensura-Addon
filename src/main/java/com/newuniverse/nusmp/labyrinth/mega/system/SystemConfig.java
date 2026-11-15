@@ -38,7 +38,7 @@ public final class SystemConfig {
                 .defineInRange("shadowCoreWeight", 30, 0, 1000);
         RECHARGE_FIRST = b.comment("A Shadow Core reward first recharges a core the player holds (by one charge) and only gives a new core when every held core is full.")
                 .define("rechargeFirst", true);
-        MAX_STAT_POINTS = b.comment("The most points one stat can hold. The strength of a point is in data/nusmp/mega/system/stats.json.")
+        MAX_STAT_POINTS = b.comment("The most points one stat can hold. The strength of a point is in data/anime_multiverse/mega/system/stats.json.")
                 .defineInRange("maxStatPoints", 30, 1, 1000);
         EXTRACT_WINDOW_TICKS = b.comment("How long (ticks) a slain creature stays extractable by its killer. 100 = five seconds.")
                 .defineInRange("extractWindowTicks", 100, 20, 600);

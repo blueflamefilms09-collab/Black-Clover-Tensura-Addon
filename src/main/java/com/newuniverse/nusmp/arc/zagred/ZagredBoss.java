@@ -63,11 +63,11 @@ import java.util.UUID;
 /**
  * Why: the owner asked for Zagred to be remade ("remake Zagred over since he sucks, but leave his magic"), and the remake is a raid boss in the sense
  * that the party must READ what he says and ANSWER it. This is the boss itself: it stands on the shared boss framework (power steps at 20, 40, 60, 80 and
- * the Gates at 100, the per-second damage budget, the second health bar) under the SAME entity id as the old one ({@code nusmp:zagred}), and it adds only
+ * the Gates at 100, the per-second damage budget, the second health bar) under the SAME entity id as the old one ({@code anime_multiverse:zagred}), and it adds only
  * what is Zagred's own: his Words as telegraphed commands with counters ({@link ZagredTable}, {@link ZagredDecrees}), the ward he writes round himself
  * in the first four acts ({@link ZagredWard}), the heart he hides in the fifth ({@link ZagredHeart}), the verdicts that put a word of their own over
  * several players ({@link ZagredVerdict}), and Overwrite, the ultimate that writes a rule over the arena. The book magic of Kotodama (the players' words,
- * counters and skills) is NOT touched by any of this; the old cubiform boss ({@code entity/ZagredBossEntity}) stays in the tree as {@code nusmp:zagred_legacy}.
+ * counters and skills) is NOT touched by any of this; the old cubiform boss ({@code entity/ZagredBossEntity}) stays in the tree as {@code anime_multiverse:zagred_legacy}.
  *
  * <p>The five acts are the framework's power steps: I the Reader (20%), II the Speaker (40%), III the Judge (60%), IV the Author (80%), V the Heart (the
  * Gates, 100%, the devil form). Every rule that keeps the fight fair is stated where it is enforced: no healing in combat (only the Gates' second bar,
@@ -91,7 +91,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
             .lines(ZagredLines.OPENING, ZagredLines.GATES, ZagredLines.DEATH)
             .build();
 
-    /** The entity type {@code nusmp:zagred}: the hitbox and how it is drawn (the numbers come from the art kit's manifest, the bigger of the two forms). */
+    /** The entity type {@code anime_multiverse:zagred}: the hitbox and how it is drawn (the numbers come from the art kit's manifest, the bigger of the two forms). */
     public static final DeferredHolder<EntityType<?>, EntityType<ZagredBoss>> TYPE = ArcEntities.boss("zagred", ZagredBoss::new, 0.55f, 2.31f,
             new ArcLook("zagred", 2.31f, 1.05f, 1.95f, 1.07f, 2.05f, 2.27f, true), ZagredBoss::createAttributes);
 
@@ -166,7 +166,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         try {
             body.run();
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Zagred's {} failed: {}", what, e.toString());
+            LOG.warn("[anime_multiverse] Zagred's {} failed: {}", what, e.toString());
         }
     }
 
@@ -374,7 +374,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         try {
             return judge(sl, source, amount);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Zagred's damage filter failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] Zagred's damage filter failed: {}", e.toString());
             return amount;
         }
     }
@@ -417,7 +417,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         if (!composure.cut(t)) {
             if (cutter instanceof ServerPlayer sp && t - lastCutHint > 40) {
                 lastCutHint = t;
-                sp.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.composed", "He is composed: he cannot be cut again yet.", 0xB8B0C8, true), true);
+                sp.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.composed", "He is composed: he cannot be cut again yet.", 0xB8B0C8, true), true);
             }
             return;
         }
@@ -427,8 +427,8 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         Vec3 mouth = getEyePosition();
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, mouth, mouth.add(0, 0.3, 0), 0xFFFFFFFF, 14, 1.8f);
         sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 1.6f, 1.3f);
-        ZagredScreen.title(sl, position(), ZagredScreen.text("message.nusmp.zagred.cut", "CUT", 0xFFFFFF, true),
-                ZagredScreen.text("message.nusmp.zagred.cut.sub", "He cannot speak for three seconds", 0xE8E0F8, false), 2, 24, 8);
+        ZagredScreen.title(sl, position(), ZagredScreen.text("message.anime_multiverse.zagred.cut", "CUT", 0xFFFFFF, true),
+                ZagredScreen.text("message.anime_multiverse.zagred.cut.sub", "He cannot speak for three seconds", 0xE8E0F8, false), 2, 24, 8);
         say(ZagredLines.CUT[getRandom().nextInt(ZagredLines.CUT.length)]);
         if (cutter instanceof ServerPlayer sp) NusmpEvents.fire(sp, "zagred.cut", spec.word().id());
     }
@@ -454,7 +454,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         if (t < tr.punishAt) return;
         tr.punishAt = t + 20;
         ZagredDecrees.punish(this, sl, who);
-        if (who instanceof Player p) p.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.forbidden", "The rule forbids it.", RED, true), true);
+        if (who instanceof Player p) p.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.forbidden", "The rule forbids it.", RED, true), true);
     }
 
     /** After the filter, and not while he is exposed: the ward (acts I to IV) or the heart (act V). */
@@ -464,7 +464,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         try {
             return shell(sl, source, amount);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Zagred's shell failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] Zagred's shell failed: {}", e.toString());
             return amount;
         }
     }
@@ -477,7 +477,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
             float k = heart.factor(t, anti);
             if (k < 1f && source.getEntity() instanceof ServerPlayer sp && t - lastClosedHint > 60) {
                 lastClosedHint = t;
-                sp.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.heart.closed", "His heart is closed: strike when he finishes a Word.", 0xB8B0C8, true), true);
+                sp.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.heart.closed", "His heart is closed: strike when he finishes a Word.", 0xB8B0C8, true), true);
             }
             return a * k;
         }
@@ -510,8 +510,8 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         Vec3 c = getBoundingBox().getCenter();
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, c, c.add(0, 1, 0), 0xFFFFFFFF, 20, 2.6f);
         sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.HOSTILE, 2f, 0.6f);
-        ZagredScreen.title(sl, position(), ZagredScreen.text("message.nusmp.zagred.unwritten", "UNWRITTEN", 0xFFD060, true),
-                ZagredScreen.text("message.nusmp.zagred.unwritten.sub", "He cannot act and takes half again: strike now", 0xE8E0F8, false), 2, 50, 10);
+        ZagredScreen.title(sl, position(), ZagredScreen.text("message.anime_multiverse.zagred.unwritten", "UNWRITTEN", 0xFFD060, true),
+                ZagredScreen.text("message.anime_multiverse.zagred.unwritten.sub", "He cannot act and takes half again: strike now", 0xE8E0F8, false), 2, 50, 10);
         say(ZagredLines.UNWRITTEN[getRandom().nextInt(ZagredLines.UNWRITTEN.length)]);
     }
 
@@ -547,7 +547,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
             }
             if (tickCount % 20 == 0) everySecond(sl, t);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] Zagred's tick failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] Zagred's tick failed: {}", e.toString());
         }
     }
 
@@ -629,7 +629,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         lockTargetUntil = 0;
         setTarget(p);
         lockTargetUntil = t + 100;
-        p.displayClientMessage(ZagredScreen.text("message.nusmp.zagred.turns", "He turns on you.", RED, true), true);
+        p.displayClientMessage(ZagredScreen.text("message.anime_multiverse.zagred.turns", "He turns on you.", RED, true), true);
         Tells.ring(sl, p.position(), 1.4, RED, 1.2f, 20);
     }
 
@@ -741,8 +741,8 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         Vec3 c = getBoundingBox().getCenter();
         VfxSpawn.send(sl, VfxShape.KOTO_SHATTER, c, c.add(0, 1, 0), 0xFFFFFFFF, 24, 3f);
         sl.playSound(null, blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 2f, 0.6f);
-        ZagredScreen.title(sl, position(), ZagredScreen.text("message.nusmp.zagred.stones", "THE SENTENCE BREAKS", 0xFFFFFF, true),
-                ZagredScreen.text("message.nusmp.zagred.stones.sub", "He is staggered: strike now", 0xE8E0F8, false), 2, 40, 10);
+        ZagredScreen.title(sl, position(), ZagredScreen.text("message.anime_multiverse.zagred.stones", "THE SENTENCE BREAKS", 0xFFFFFF, true),
+                ZagredScreen.text("message.anime_multiverse.zagred.stones.sub", "He is staggered: strike now", 0xE8E0F8, false), 2, 40, 10);
         say(ZagredLines.STONES);
     }
 
@@ -757,7 +757,7 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         long t = sl.getGameTime();
         ward.set(ZagredMath.wardLayers(stage()), getMaxHealth(), ZagredMath.wardLayerShare(), t);
         nextWordAt = t + 60;                                                   // three seconds to read the opening lines before the first Word
-        ZagredScreen.notice(sl, position(), "message.nusmp.zagred.act.1", "ACT I", VIOLET, "message.nusmp.zagred.act.1.name", "The Reader");
+        ZagredScreen.notice(sl, position(), "message.anime_multiverse.zagred.act.1", "ACT I", VIOLET, "message.anime_multiverse.zagred.act.1.name", "The Reader");
         announce("Zagred speaks his Words aloud. Read the title on your screen and answer it: keep moving, jump, raise a shield, break his line of sight, or hold anti-magic.");
         announce("His ward has layers. Violet ones wear down to spells, red ones to swords and arrows, and anti-magic breaks through both. When the last one falls he is unwritten.");
     }
@@ -819,8 +819,8 @@ public class ZagredBoss extends ArcBoss implements DaemonMaster {
         if (after < 4) {
             ward.set(ZagredMath.wardLayers(after), getMaxHealth(), ZagredMath.wardLayerShare(), t);            // each act he writes a fresh ward
             String name = ZagredMath.actName(act);
-            ZagredScreen.notice(sl, position(), "message.nusmp.zagred.act." + act, "ACT " + roman(act), after >= 3 ? RED : VIOLET,
-                    "message.nusmp.zagred.act." + act + ".name", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+            ZagredScreen.notice(sl, position(), "message.anime_multiverse.zagred.act." + act, "ACT " + roman(act), after >= 3 ? RED : VIOLET,
+                    "message.anime_multiverse.zagred.act." + act + ".name", Character.toUpperCase(name.charAt(0)) + name.substring(1));
         } else {
             ward.set(0, getMaxHealth(), 0f, t);
         }

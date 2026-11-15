@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * Why: nothing of the hero weapons can be played by its author, so the catalogue has a SELF-TEST that the CI server smoke test runs in the real game
  * ({@code /multiverse mega selftest}, key {@code hero.catalog}; the smoke script expects the prefix {@code hero}): every weapon of the enum has a registered
- * item under {@code nusmp:<itemId>}, a logic whose {@code kind()} matches, skills whose ids start with the weapon's short name and are not repeated, and a
+ * item under {@code anime_multiverse:<itemId>}, a logic whose {@code kind()} matches, skills whose ids start with the weapon's short name and are not repeated, and a
  * non-empty list of forms that starts with the base form and whose parents all exist, and at least the design's number of techniques (14 for a Holy Weapon,
  * 6 for a Vassal weapon). Each system adds its own tests under {@code hero.<system>.*} in its own
  * {@code init}. The lead owns this file.
@@ -36,7 +36,7 @@ public final class HeroSelfTests {
         int skills = 0, forms = 0;
         for (HeroKind k : HeroKind.values()) {
             if (!items.add(k.itemId())) bad.add("item id " + k.itemId() + " is used twice");
-            if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", k.itemId()))) bad.add(k + " has no registered item nusmp:" + k.itemId());
+            if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", k.itemId()))) bad.add(k + " has no registered item anime_multiverse:" + k.itemId());
             if (!HeroLogics.has(k)) bad.add(k + " has no registered logic");
             else if (HeroLogics.of(k).kind() != k) bad.add(k + " has a logic that says it is " + HeroLogics.of(k).kind());
             String prefix = k.name().toLowerCase() + ".";

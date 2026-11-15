@@ -10,7 +10,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "shishou", "akashic.png")
+ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "shishou", "akashic.png")
 OUT = os.path.join(ROOT, "docs", "previews", "shishou")
 SC = 4
 

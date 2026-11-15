@@ -355,7 +355,7 @@ class PerfSourceScanTest {
     @Test
     void theCommandsExistOnBothSides() throws IOException {
         assertTrue(read("perf/PerfCommands.java").contains("Commands.literal(\"multiverse\")") && read("perf/PerfCommands.java").contains("Commands.literal(\"perf\")"));
-        assertTrue(read("client/perf/PerfClient.java").contains("Commands.literal(\"nusmp\")") && read("client/perf/PerfClient.java").contains("Commands.literal(\"perf\")"));
+        assertTrue(read("client/perf/PerfClient.java").contains("Commands.literal(\"anime_multiverse\")") && read("client/perf/PerfClient.java").contains("Commands.literal(\"perf\")"));
     }
 
     @Test

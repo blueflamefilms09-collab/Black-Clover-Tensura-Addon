@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Appends the English lang keys of the 24 rank Mana Cores (3.51.0) to assets/nusmp/lang/en_us.json (textual append, idempotent).
-Keys: item.nusmp.core_<rank>_<variant>, manacore.core_<rank>_<variant>.{passive,a1,a2}, manacore.tooltip.*, manacore.variant.*, manacore.msg.*.
+"""Appends the English lang keys of the 24 rank Mana Cores (3.51.0) to assets/anime_multiverse/lang/en_us.json (textual append, idempotent).
+Keys: item.anime_multiverse.core_<rank>_<variant>, manacore.core_<rank>_<variant>.{passive,a1,a2}, manacore.tooltip.*, manacore.variant.*, manacore.msg.*.
 Run from the repo root: python tools/manacore/gen_lang.py"""
 import json, pathlib, sys
 
-LANG = pathlib.Path("src/main/resources/assets/nusmp/lang/en_us.json")
+LANG = pathlib.Path("src/main/resources/assets/anime_multiverse/lang/en_us.json")
 
 C = {  # id: (name, passive, a1, a2)   a1/a2 end with the cost placeholder
  "core_e_standard": ("Crude Mana Pebble (E-Class Core)", "Mana Leak: a trickle of regeneration, but a little stored MP leaks away. Fragile Resonance: +5% attack speed.",
@@ -71,7 +71,7 @@ MSG = {
 def main():
     entries = {}
     for cid, (name, passive, a1, a2) in C.items():
-        entries["item.nusmp." + cid] = name
+        entries["item.anime_multiverse." + cid] = name
         entries["manacore." + cid + ".passive"] = "Passive - " + passive
         entries["manacore." + cid + ".a1"] = a1
         entries["manacore." + cid + ".a2"] = a2

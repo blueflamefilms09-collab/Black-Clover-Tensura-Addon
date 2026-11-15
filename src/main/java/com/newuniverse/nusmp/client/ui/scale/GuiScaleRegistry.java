@@ -18,7 +18,7 @@ public final class GuiScaleRegistry {
 
     /**
      * @param designW  screens: the panel width the layout was built for; 0 = the whole window, -1 = the container's own image size
-     * @param layer    HUD in LAYER mode: the path of the layer id in the nusmp namespace
+     * @param layer    HUD in LAYER mode: the path of the layer id in the anime_multiverse namespace
      */
     public record Entry(String id, Kind kind, Mode mode, String className, String layer, int designW, int designH, GuiScaleMath.Anchor anchor, String english) {}
 

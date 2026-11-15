@@ -4,7 +4,7 @@
 Synthesises the sound set of the Gnome, the Earth Spirit (docs/magic/gnome.md): NOT the basic Tensura spirit sounds but a deep rumble, stone grinding and crashing, and a low resonant earth tone.
 No recording was used: numpy writes every sample and ffmpeg encodes mono Ogg Vorbis. Reproducible: every variant is seeded from its own name.
 
-  python3 -B tools/gen_gnome_sounds.py              write assets/nusmp/sounds/gnome/<cue>_<n>.ogg, the gnome.* entries of sounds.json and the subtitle lines of tools/lang/gnome.json
+  python3 -B tools/gen_gnome_sounds.py              write assets/anime_multiverse/sounds/gnome/<cue>_<n>.ogg, the gnome.* entries of sounds.json and the subtitle lines of tools/lang/gnome.json
   python3 -B tools/gen_gnome_sounds.py --preview D  also write a .wav and a spectrogram .png per file into D
   python3 -B tools/gen_gnome_sounds.py --check      verify that the files exist, are mono Ogg, short and not clipped
 
@@ -30,8 +30,8 @@ import numpy as np
 
 sys.dont_write_bytecode = True
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-SOUND_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "gnome")
-SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
+SOUND_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "gnome")
+SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 LANG_OUT = os.path.join(ROOT, "tools", "lang", "gnome.json")
 SR = 32000
 PEAK = 0.80                        # -2 dBFS: the Vorbis encoder overshoots a little
@@ -366,8 +366,8 @@ def entries_text():
         for k in range(1, nvar + 1):
             ogg = os.path.join(SOUND_DIR, "%s_%d.ogg" % (cue, k))
             dur = decoded_peak(ogg)[1] if os.path.exists(ogg) else 0.0
-            sounds.append('{ "name": "nusmp:gnome/%s_%d", "stream": %s }' % (cue, k, "true" if dur >= STREAM_OVER else "false"))
-        lines.append('  "gnome.%s": {\n    "subtitle": "subtitles.nusmp.gnome.%s",\n    "sounds": [ %s ]\n  }' % (cue, cue, ", ".join(sounds)))
+            sounds.append('{ "name": "anime_multiverse:gnome/%s_%d", "stream": %s }' % (cue, k, "true" if dur >= STREAM_OVER else "false"))
+        lines.append('  "gnome.%s": {\n    "subtitle": "subtitles.anime_multiverse.gnome.%s",\n    "sounds": [ %s ]\n  }' % (cue, cue, ", ".join(sounds)))
     return ",\n".join(lines)
 
 
@@ -388,7 +388,7 @@ def update_sounds_json():
     json.loads(out)
     open(SOUNDS_JSON, "w", newline="").write(out)
     lang = json.load(open(LANG_OUT)) if os.path.exists(LANG_OUT) else {}
-    lang.update({"subtitles.nusmp.gnome.%s" % c: s for c, (_, s, _) in CUES.items()})        # the subtitles join the other text of the Gnome in the one fragment
+    lang.update({"subtitles.anime_multiverse.gnome.%s" % c: s for c, (_, s, _) in CUES.items()})        # the subtitles join the other text of the Gnome in the one fragment
     with open(LANG_OUT, "w", newline="\n") as f:
         json.dump(lang, f, indent=2, ensure_ascii=False)
         f.write("\n")

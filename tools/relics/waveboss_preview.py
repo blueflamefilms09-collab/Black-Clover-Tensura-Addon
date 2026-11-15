@@ -14,7 +14,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 S = 14   # pixels per model pixel
 
 

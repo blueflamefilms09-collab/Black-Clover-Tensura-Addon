@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.relics.tier;
 /**
  * The numbers of tier ascension, with no Minecraft types so they are unit-tested (docs/relic_tiers_and_scaling.md explains every choice).
  * <p>
- * A relic has a base grade (its def) and may carry the data component {@code nusmp:tier}: the ABSOLUTE grade ordinal it has been raised to
+ * A relic has a base grade (its def) and may carry the data component {@code anime_multiverse:tier}: the ABSOLUTE grade ordinal it has been raised to
  * (0 NORMAL ... 6 GENESIS; 0 or missing means "never raised"). The effective grade is {@code max(base, tier)}. Every multiplier below is a function of
  * the number of STEPS the effective grade stands above the base grade, not of the absolute grade: a Genesis relic is never raised further, and a
  * Normal blade raised to Genesis gets the full six steps. Step 0 is always exactly 1.0, so an unraised relic behaves as it did before.
@@ -94,8 +94,8 @@ public final class TierRules {
             {new Catalyst("tensura:high_magisteel_ingot", 2)},                                             // to RARE
             {new Catalyst("tensura:mithril_ingot", 3)},                                                    // to UNIQUE
             {new Catalyst("tensura:adamantite_ingot", 3)},                                                 // to LEGEND
-            {new Catalyst("tensura:hihiirokane_ingot", 4), new Catalyst("nusmp:devils_core", 1)},         // to GOD
-            {new Catalyst("nusmp:genesis_seed", 1)},                                                       // to GENESIS
+            {new Catalyst("tensura:hihiirokane_ingot", 4), new Catalyst("anime_multiverse:devils_core", 1)},         // to GOD
+            {new Catalyst("anime_multiverse:genesis_seed", 1)},                                                       // to GENESIS
     };
 
     /** The catalysts that raise an item to this grade ordinal (any ONE of them does it); empty for NORMAL or out of range. */

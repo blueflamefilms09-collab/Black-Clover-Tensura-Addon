@@ -40,7 +40,7 @@ public class FoundryIndexTest {
 
     @Test
     public void readsTheShippedIndex() throws Exception {
-        String text = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/assets/nusmp/foundry/index.json"));
+        String text = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/assets/anime_multiverse/foundry/index.json"));
         Map<String, FoundryIndex.Entry> m = FoundryIndex.parse(text);
         assertTrue(m.size() >= 8);
         for (Map.Entry<String, FoundryIndex.Entry> e : m.entrySet()) {

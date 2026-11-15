@@ -19,21 +19,21 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Why: Better Combat finds a weapon by its registry id in data/nusmp/weapon_attributes/ and a missing file fails SILENTLY (the weapon just keeps
+ * Why: Better Combat finds a weapon by its registry id in data/anime_multiverse/weapon_attributes/ and a missing file fails SILENTLY (the weapon just keeps
  * the vanilla swing), a bad animation reference is only logged by Better Combat at resource load, and none of that is a compile error. This test
  * is the compile step for the data, so adding a melee weapon without giving it a file fails the build instead of shipping a weapon that ignores
  * the combat mod. It is pure: java.nio and a tiny JSON reader (no JSON library is on the test class path), CWD = repo root.
  *
- * <p>1.46.0: weapons use ONLY Better Combat's own presets and animations (the custom nusmp: animation files stay in the repo, unreferenced), and
- * this test enforces it: every {@code parent} is a built-in preset, every {@code animation} is a built-in id, nothing says {@code nusmp:}.
+ * <p>1.46.0: weapons use ONLY Better Combat's own presets and animations (the custom anime_multiverse: animation files stay in the repo, unreferenced), and
+ * this test enforces it: every {@code parent} is a built-in preset, every {@code animation} is a built-in id, nothing says {@code anime_multiverse:}.
  *
  * <p>Fix for a new weapon: run {@code python tools/bettercombat/gen_attributes.py} (it refreshes the inventory and writes the file), then commit it.
  */
 class WeaponAttributesTest {
     private static final Path ROOT = Path.of(".");
-    private static final Path ATTRS = ROOT.resolve("src/main/resources/data/nusmp/weapon_attributes");
-    private static final Path ANIMS = ROOT.resolve("src/main/resources/assets/nusmp/player_animations");
-    private static final Path CLASSES = ROOT.resolve("src/main/resources/assets/nusmp/weapon_classes.json");
+    private static final Path ATTRS = ROOT.resolve("src/main/resources/data/anime_multiverse/weapon_attributes");
+    private static final Path ANIMS = ROOT.resolve("src/main/resources/assets/anime_multiverse/player_animations");
+    private static final Path CLASSES = ROOT.resolve("src/main/resources/assets/anime_multiverse/weapon_classes.json");
     private static final Path MANIFEST = ROOT.resolve("tools/bettercombat/manifest.json");
     /** Better Combat's own animation ids and weapon presets, extracted from its source by tools/bettercombat/extract_builtin.py (1.46.0). */
     private static final Path BUILTIN = ROOT.resolve("tools/bettercombat/builtin_animations.json");
@@ -75,7 +75,7 @@ class WeaponAttributesTest {
     void everyMeleeWeaponHasAFile() throws IOException {
         List<String> missing = new ArrayList<>();
         for (String id : meleeIds()) if (!Files.exists(ATTRS.resolve(id + ".json"))) missing.add(id);
-        assertTrue(missing.isEmpty(), "melee weapons without a Better Combat file in data/nusmp/weapon_attributes: " + missing + FIX);
+        assertTrue(missing.isEmpty(), "melee weapons without a Better Combat file in data/anime_multiverse/weapon_attributes: " + missing + FIX);
     }
 
     @Test
@@ -147,9 +147,9 @@ class WeaponAttributesTest {
         List<String> bad = new ArrayList<>();
         try (Stream<Path> files = Files.list(ATTRS)) {
             for (Path f : (Iterable<Path>) files.filter(p -> p.toString().endsWith(".json"))::iterator)
-                if (read(f).contains("nusmp:")) bad.add(f.getFileName().toString());
+                if (read(f).contains("anime_multiverse:")) bad.add(f.getFileName().toString());
         }
-        assertTrue(bad.isEmpty(), "weapon_attributes files that reference nusmp: (custom animations are not used since 1.46.0): " + bad);
+        assertTrue(bad.isEmpty(), "weapon_attributes files that reference anime_multiverse: (custom animations are not used since 1.46.0): " + bad);
     }
 
     @Test

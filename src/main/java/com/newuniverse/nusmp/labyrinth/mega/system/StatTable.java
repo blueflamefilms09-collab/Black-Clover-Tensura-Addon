@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Why: what a stat point DOES is a balance decision the owner will want to change (a point of strength is +0.2 attack damage, a point of intelligence +2 % of the
  * magicule pool ...), and which attribute carries it depends on which mods are installed (Tensura's magicule pool exists only with Tensura). So the effect of a
- * stat is a table row in {@code data/nusmp/mega/system/stats.json}: an attribute id, how the modifier combines, how much one point adds and a ceiling on the total.
+ * stat is a table row in {@code data/anime_multiverse/mega/system/stats.json}: an attribute id, how the modifier combines, how much one point adds and a ceiling on the total.
  * This pure class is that table and the arithmetic over it ({@link Effect#amount}); the game-side {@link SystemStats} resolves each attribute id at runtime
  * and simply skips one that does not exist. A stat may have several effects (Sense lengthens the presence sense AND adds luck).
  */

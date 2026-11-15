@@ -1,6 +1,6 @@
 """Generates the Eye Magic VFX textures (iris, lid, slit pupil, lens flare, tracking reticle, gaze rays, ground sigil ...).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/eye_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/eye_*.png
 White / grey with alpha so the vertex colour tints them; the iris keeps a dark pupil (opaque) so it reads with ALPHA blending
 and vanishes with ADD blending.
 
@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

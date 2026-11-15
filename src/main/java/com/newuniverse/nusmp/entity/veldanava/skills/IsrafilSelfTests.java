@@ -96,17 +96,17 @@ public final class IsrafilSelfTests {
             if (VeldanavaGuard.spatiallyFree(p) || VeldanavaGuard.mindImmune(p)) return Result.fail("Sandalphon's toggles switched Israfil's guards on");
             JudgmentState.write(p, 0);
 
-            String icon = "assets/nusmp/textures/skill/veldanava/israfil.png";
+            String icon = "assets/anime_multiverse/textures/skill/veldanava/israfil.png";
             if (IsrafilSelfTests.class.getClassLoader().getResource(icon) == null) return Result.fail("missing " + icon);
             JsonObject lang;
-            try (InputStream in = IsrafilSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+            try (InputStream in = IsrafilSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
                 if (in == null) return Result.fail("no en_us.json");
                 lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
             }
-            String[] need = {"nusmp.skill.israfil", "nusmp.skill.israfil.description", "nusmp.skill.israfil.mastered", "effect.nusmp.gravity_crush", "effect.nusmp.nihility_collapse"};
+            String[] need = {"anime_multiverse.skill.israfil", "anime_multiverse.skill.israfil.description", "anime_multiverse.skill.israfil.mastered", "effect.anime_multiverse.gravity_crush", "effect.anime_multiverse.nihility_collapse"};
             for (String k : need) if (!lang.has(k)) return Result.fail("missing lang key " + k);
             for (JudgmentRules.Mode m : IsrafilRules.ISRAFIL.modes())
-                if (!lang.has("nusmp.skill.mode.israfil." + m.id())) return Result.fail("missing lang key for mode " + m.id());
+                if (!lang.has("anime_multiverse.skill.mode.israfil." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             return Result.ok("registered, learned once, 10 modes named, the mask keeps the two skills apart, icon and lang are in the jar");
         } finally {
             JudgmentState.write(p, 0);
@@ -116,7 +116,7 @@ public final class IsrafilSelfTests {
 
     /** Dimensional Labyrinth's pocket dimension: the dimension is loaded, a maze is painted, shifted thirty times and taken down block-exact, and the setting and the old cage are still there. */
     private static Result pocket(MinecraftServer server) {
-        if (server.getLevel(com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.DIMENSION) == null) return Result.fail("the nusmp:trial dimension is not loaded");
+        if (server.getLevel(com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.DIMENSION) == null) return Result.fail("the anime_multiverse:trial dimension is not loaded");
         if (!JudgmentConfig.pocketDimension()) return Result.fail("pocketDimension is not on by default");
         if (com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.sessions() != 0) return Result.fail("a labyrinth is open on a fresh world");
         String bad = com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.check(server);

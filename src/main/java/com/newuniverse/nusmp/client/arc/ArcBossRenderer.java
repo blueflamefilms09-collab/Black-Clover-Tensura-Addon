@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
 
 /**
  * Why: thirty bosses must not mean thirty renderers. This ONE class draws every {@link ArcBoss} from the model the art kit wrote for it
- * ({@code assets/nusmp/geo|animations|textures/entity/arc_<model>*}, see tools/gen_arc_kit.py and docs/arc/art_kit.md), using exactly the machinery the Zogratis family
+ * ({@code assets/anime_multiverse/geo|animations|textures/entity/arc_<model>*}, see tools/gen_arc_kit.py and docs/arc/art_kit.md), using exactly the machinery the Zogratis family
  * already trusts: the pose clock {@link ZogratisPose} (idle, walk and run paced by the ground covered, attack on a swing, cast while winding up and cast_big for an
  * ultimate, hurt, transform, death, and the optional chest_gem_reveal and spawn clips), the glow curve {@link ZogratisGlow} (the glow layer brightens with the power
  * drawn, swells over a cast, starves while exposed) and the clean fade of a dying body. The size is the hitbox over the model's own height ({@link ArcRenderMath#scale}), the

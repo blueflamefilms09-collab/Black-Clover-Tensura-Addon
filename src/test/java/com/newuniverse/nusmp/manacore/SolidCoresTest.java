@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 16x16 icons have no semi-transparent pixel and no hole inside the circle. Pure file reads; the working directory is the project root.
  */
 class SolidCoresTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static List<String> ids() {
         List<String> out = new ArrayList<>();
@@ -96,7 +96,7 @@ class SolidCoresTest {
         JsonObject model = JsonParser.parseString(Files.readString(ASSETS.resolve("models/item/beast_will_core.json"))).getAsJsonObject();
         assertEquals("minecraft:builtin/entity", model.get("parent").getAsString());
         JsonObject icon = JsonParser.parseString(Files.readString(ASSETS.resolve("models/item/beast_will_core_icon.json"))).getAsJsonObject();
-        assertEquals("nusmp:item/beast_will_core", icon.getAsJsonObject("textures").get("layer0").getAsString());
+        assertEquals("anime_multiverse:item/beast_will_core", icon.getAsJsonObject("textures").get("layer0").getAsString());
         assertTrue(Files.readString(ASSETS.resolve("weapon_classes.json")).contains("\"beast_will_core\": \"handitem\""));
         String renderer = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/WeaponRenderer.java"));
         assertTrue(renderer.contains("BeastWillItems.renderables()") && renderer.contains("CoreItems.renderables()"), "WeaponRenderer draws both core families");

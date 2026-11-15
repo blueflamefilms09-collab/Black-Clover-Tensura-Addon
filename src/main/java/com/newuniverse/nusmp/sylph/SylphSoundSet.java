@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Why: the Sylph must not sound like the basic Tensura Spirit Lord, so she has a sound set of her own: wind chimes, light wing flutter, a giggle that tinkles, and gust whooshes. This is the
  * CATALOGUE, pure data with no Minecraft type so JUnit can pin it: the cues, how many variants each has, their loudness, pitch range, cooldown per listener and the id of the sound event
- * ({@code nusmp:sylph.<cue>}), which {@link SylphSounds} registers one by one. {@code tools/gen_sylph_sounds.py} writes the {@code .ogg} files and the {@code sounds.json} entries from the same
+ * ({@code anime_multiverse:sylph.<cue>}), which {@link SylphSounds} registers one by one. {@code tools/gen_sylph_sounds.py} writes the {@code .ogg} files and the {@code sounds.json} entries from the same
  * table; {@code SylphSoundsTest} keeps the three in step (a cue without an entry plays nothing, an entry without a file logs an error, a file nothing names is dead weight).
  */
 public final class SylphSoundSet {
@@ -18,7 +18,7 @@ public final class SylphSoundSet {
     public record Cue(String id, String what, int variants, float volume, float pitch, float spread, int cooldown) {
         public String event() { return eventId(id); }
 
-        public String subtitleKey() { return "subtitles.nusmp.sylph." + id; }
+        public String subtitleKey() { return "subtitles.anime_multiverse.sylph." + id; }
 
         /** The variant file path inside the sounds folder: {@code sylph/chime_1}. */
         public String file(int variant) { return "sylph/" + id + "_" + variant; }

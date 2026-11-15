@@ -47,7 +47,7 @@ public class ForbiddenBook extends GrimoireBook {
             BookPage.zone("curse_misfortune", "Curse of Misfortune", ForbiddenBook::curse),
             BookPage.signature("reincarnation", "Forbidden Reincarnation", ForbiddenBook::reincarnation));
 
-    public ForbiddenBook() { super(MagicType.ANTI_MAGIC, DARK, ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/forbidden.png")); }
+    public ForbiddenBook() { super(MagicType.ANTI_MAGIC, DARK, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/forbidden.png")); }
     @Override protected List<BookPage> familyPages() { return pages; }
     @Override public ResourceKey<DamageType> damageType() { return TensuraDamageTypes.CURSE; }
 

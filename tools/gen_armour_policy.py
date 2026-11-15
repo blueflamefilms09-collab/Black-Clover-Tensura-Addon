@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the armour policy of 1.99.0: src/main/resources/data/nusmp/armour_policy.json (read by book.ArmourPolicy) and the table of
+"""Generates the armour policy of 1.99.0: src/main/resources/data/anime_multiverse/armour_policy.json (read by book.ArmourPolicy) and the table of
 docs/rebuild/armour_policy.md.
 
 The policy says, for EVERY MagicType, whether the magic has an armour at all (NONE / TOGGLE / FORM), which explicit page puts it on, what it gives
@@ -15,7 +15,7 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 MAGIC_TYPE = os.path.join(ROOT, 'src/main/java/com/newuniverse/nusmp/blackclover/MagicType.java')
-OUT_JSON = os.path.join(ROOT, 'src/main/resources/data/nusmp/armour_policy.json')
+OUT_JSON = os.path.join(ROOT, 'src/main/resources/data/anime_multiverse/armour_policy.json')
 OUT_MD = os.path.join(ROOT, 'docs/rebuild/armour_policy.md')
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ NOTE_MARK = '## 1.99.0 armour policy'
 
 def doc_note(key, display, e):
     """The short append-only note for docs/attributes/<key>_rebuild.md."""
-    pol = 'See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).'
+    pol = 'See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/anime_multiverse/armour_policy.json`).'
     if e['kind'] == 'NONE':
         look = ''
         if e.get('shimmer'):

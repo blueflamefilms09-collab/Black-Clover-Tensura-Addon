@@ -53,10 +53,10 @@ import java.util.function.Supplier;
 
 /**
  * 0.50: every Black Clover weapon (and the relics) in 3D, to the Genesis Demon-Slayer's standard ({@link DemonSlayerRenderer}). The inventory
- * keeps each weapon's old icon (nusmp:item/&lt;id&gt;_icon, the old item model unchanged); in hand, on the ground, in frames and
+ * keeps each weapon's old icon (anime_multiverse:item/&lt;id&gt;_icon, the old item model unchanged); in hand, on the ground, in frames and
  * on mobs the weapon is a pixel-built model:
  * <ul>
- *   <li><b>Mesh:</b> assets/nusmp/weapon_meshes/&lt;id&gt;.txt from tools/gen_weapon_models.py (beveled blades with a ridge,
+ *   <li><b>Mesh:</b> assets/anime_multiverse/weapon_meshes/&lt;id&gt;.txt from tools/gen_weapon_models.py (beveled blades with a ridge,
  *       extruded pixel guards, boxed grips and pommels), placed on the old sprite's diagonal so the old display transforms fit.</li>
  *   <li><b>Skin:</b> textures/entity/weapon/&lt;id&gt;.png (cutout, with the enchantment glint).</li>
  *   <li><b>Glow:</b> textures/entity/weapon/&lt;id&gt;_glow.png drawn additive and full bright, its tint pulsing (runes, edges,
@@ -67,7 +67,7 @@ import java.util.function.Supplier;
  * <p>
  * 1.29.0, size and orientation: every mesh follows one convention (mesh -x is forward, the tip is up-forward; docs/weapon_scale_orientation.md,
  * {@link WeaponOrientation}). tools/relics/weapon_fixes.json corrects the shipped meshes offline; {@link WeaponNormaliser} is the per-game
- * safety net: when a mesh loads it is checked against its class ({@link WeaponClasses}, assets/nusmp/weapon_classes.json, else a keyword guess of
+ * safety net: when a mesh loads it is checked against its class ({@link WeaponClasses}, assets/anime_multiverse/weapon_classes.json, else a keyword guess of
  * the id) and, if it is far too small, tip-down or has its head toward the player, it is scaled up to the class minimum / turned over / mirrored, with
  * one log line per corrected mesh. 1.34.0 (the owner's screenshot 68: a sword held by its blade): a sword-like mesh with its hilt at the far end is turned over
  * along its length (the directive {@code grip <fraction>} states where the grip is; without it the thin-end geometry decides), and the size table is the
@@ -103,7 +103,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     private static WeaponRenderer instance;
     private static final Map<String, Mesh> MESHES = new HashMap<>();
-    /** The class table and the id to class map (assets/nusmp/weapon_classes.json), read once per resource reload. */
+    /** The class table and the id to class map (assets/anime_multiverse/weapon_classes.json), read once per resource reload. */
     private static WeaponClasses classes;
 
     public WeaponRenderer() {
@@ -207,7 +207,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float time = mc.level == null ? 0 : mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
         pose.pushPose();
         int gripCtx = mesh.grip != null && mesh.shield == null ? WeaponGrip.index(ctx) : -1;
-        float[] gripShift = gripCtx < 0 ? null : mesh.grip.shift(gripCtx, mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin);      // null: the old placement (other contexts, a shield, no grip found, -Dnusmp.weaponGrip=off)
+        float[] gripShift = gripCtx < 0 ? null : mesh.grip.shift(gripCtx, mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin);      // null: the old placement (other contexts, a shield, no grip found, -Danime_multiverse.weaponGrip=off)
         HandWrap.Wrap wrap = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND ? HandWrap.of(id) : null;
         if (wrap != null) gripShift = null;                                         // 1.111.0: a worn glove has its own origin
         if (wrap != null) {                                                        // 1.71.0: worn on the hand, not held (client/relics/item/HandWrap)
@@ -421,7 +421,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 if (mesh.shield == null && !HandWrap.isWrapped(id)) mesh.grip = WeaponGrip.resolve(id, mesh.layers[BODY].isEmpty() ? mesh.layers[GLOW] : mesh.layers[BODY], classes(), mesh.gripAt, mesh.gripFlipped, mesh.explicitGrip);      // 1.111.0
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] weapon mesh {} failed to load; its icon is used instead", id, ex);
+            LogUtils.getLogger().error("[anime_multiverse] weapon mesh {} failed to load; its icon is used instead", id, ex);
             mesh = null;
         }
         return mesh;
@@ -479,7 +479,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 }
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] weapon_classes.json failed to load; the built-in class table is used", ex);
+            LogUtils.getLogger().error("[anime_multiverse] weapon_classes.json failed to load; the built-in class table is used", ex);
             table.clear();
             weapons.clear();
         }
@@ -550,9 +550,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             mesh.angle = place[2];
             mesh.scale = place[3];
             mesh.ymax = maxY(mesh);
-            LogUtils.getLogger().info("[nusmp] weapon mesh {} ({}) normalised: {}", id, cls.name(), r.log());
+            LogUtils.getLogger().info("[anime_multiverse] weapon mesh {} ({}) normalised: {}", id, cls.name(), r.log());
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] weapon mesh {} could not be normalised; it is drawn as it is", id, ex);
+            LogUtils.getLogger().error("[anime_multiverse] weapon mesh {} could not be normalised; it is drawn as it is", id, ex);
         }
     }
 

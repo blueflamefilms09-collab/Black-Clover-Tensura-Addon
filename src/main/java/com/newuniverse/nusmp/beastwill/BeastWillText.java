@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.beastwill;
 
 import net.minecraft.network.chat.Component;
 
-/** Why: the one place a will's name is turned into text (3.45.0): the lang key {@code nusmp.beastwill.<id>.name} when the pack has it, else the name written in the data file. */
+/** Why: the one place a will's name is turned into text (3.45.0): the lang key {@code anime_multiverse.beastwill.<id>.name} when the pack has it, else the name written in the data file. */
 public final class BeastWillText {
     private BeastWillText() {}
 
@@ -10,6 +10,6 @@ public final class BeastWillText {
 
     public static Component name(String id) {
         BeastWillDef d = BeastWillCatalog.get(id);
-        return d == null ? Component.translatableWithFallback("nusmp.beastwill." + id + ".name", id) : name(d);
+        return d == null ? Component.translatableWithFallback("anime_multiverse.beastwill." + id + ".name", id) : name(d);
     }
 }

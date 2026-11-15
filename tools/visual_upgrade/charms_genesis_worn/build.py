@@ -67,7 +67,7 @@ def write_data(items):
         acts += SP.act_lines(it)
     with open(os.path.join(MT.VU_DIR, "overrides.txt"), "w", newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
-    act_dir = os.path.join(MT.ROOT, "src", "main", "resources", "data", "nusmp", "visual_upgrade")
+    act_dir = os.path.join(MT.ROOT, "src", "main", "resources", "data", "anime_multiverse", "visual_upgrade")
     os.makedirs(act_dir, exist_ok=True)
     with open(os.path.join(act_dir, "act_vfx.txt"), "w", newline="\n") as fh:
         fh.write("\n".join(acts) + "\n")
@@ -83,7 +83,7 @@ def wave_acts():
     """relic id -> the act keys its RelicDef declares, read from the wave sources (the generator checks its act effects against them)."""
     import glob
     import re
-    root = os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
+    root = os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
     src = {f: open(f, encoding="utf8").read() for f in glob.glob(root + "/*.java")}
     consts = {}
     for t in src.values():

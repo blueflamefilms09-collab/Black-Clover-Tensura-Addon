@@ -43,7 +43,7 @@ import java.util.function.Predicate;
 /**
  * Why: the Region Theme processor is the one piece of the theme builder that sits in the middle of the sector generator, and everything that can go
  * wrong with it is an integration fault no unit test sees: the processor type not registered (the pool JSON then fails to load), the processor list
- * {@code nusmp:mega_interior} not naming it, a theme file that did not load (a sector would silently keep its deepslate), a swap that drops a stair's
+ * {@code anime_multiverse:mega_interior} not naming it, a theme file that did not load (a sector would silently keep its deepslate), a swap that drops a stair's
  * facing, or a relic count outside its theme's range. The CI server smoke test runs these two self-tests in the real game ({@link SelfTests}); both are
  * pure reads and finish in milliseconds. {@code theme.processor} asserts the registration, the processor list, that every theme of RegionTheme is loaded, that
  * every theme's table maps only to blocks that exist, and then pushes a sample of palette blocks (stairs turned east and upside down, a log lying on its
@@ -63,19 +63,19 @@ public final class ThemeSelfTests {
 
     // ---------------------------------------------------------------- theme.processor
     private static SelfTests.Result processor(MinecraftServer server) {
-        ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath("nusmp", "region_theme");
-        if (!BuiltInRegistries.STRUCTURE_PROCESSOR.containsKey(typeId)) return SelfTests.Result.fail("nusmp:region_theme is not in the structure processor registry");
-        if (BuiltInRegistries.STRUCTURE_PROCESSOR.get(typeId) != ThemeRegistry.REGION_THEME.get()) return SelfTests.Result.fail("nusmp:region_theme is registered as a different type than ThemeRegistry.REGION_THEME");
+        ResourceLocation typeId = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "region_theme");
+        if (!BuiltInRegistries.STRUCTURE_PROCESSOR.containsKey(typeId)) return SelfTests.Result.fail("anime_multiverse:region_theme is not in the structure processor registry");
+        if (BuiltInRegistries.STRUCTURE_PROCESSOR.get(typeId) != ThemeRegistry.REGION_THEME.get()) return SelfTests.Result.fail("anime_multiverse:region_theme is registered as a different type than ThemeRegistry.REGION_THEME");
 
         Registry<StructureProcessorList> lists = server.registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
-        StructureProcessorList interior = lists.get(ResourceLocation.fromNamespaceAndPath("nusmp", "mega_interior"));
-        if (interior == null) return SelfTests.Result.fail("the processor list nusmp:mega_interior does not exist (every Mega pool names it)");
+        StructureProcessorList interior = lists.get(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_interior"));
+        if (interior == null) return SelfTests.Result.fail("the processor list anime_multiverse:mega_interior does not exist (every Mega pool names it)");
         boolean named = false;
         for (StructureProcessor p : interior.list()) if (p instanceof RegionThemeProcessor) named = true;
-        if (!named) return SelfTests.Result.fail("the processor list nusmp:mega_interior does not contain nusmp:region_theme");
+        if (!named) return SelfTests.Result.fail("the processor list anime_multiverse:mega_interior does not contain anime_multiverse:region_theme");
 
         for (RegionTheme t : RegionTheme.values()) {
-            if (ThemeDefs.byId(t.id()) == null) return SelfTests.Result.fail("no theme file was loaded for '" + t.id() + "' (data/nusmp/mega/themes/" + t.id() + ".json): the reload listener is not registered or the file is missing");
+            if (ThemeDefs.byId(t.id()) == null) return SelfTests.Result.fail("no theme file was loaded for '" + t.id() + "' (data/anime_multiverse/mega/themes/" + t.id() + ".json): the reload listener is not registered or the file is missing");
         }
 
         LevelReader reader = server.overworld();
@@ -134,7 +134,7 @@ public final class ThemeSelfTests {
             if (t != RegionTheme.GRAVITY && changed < 8) return SelfTests.Result.fail(t.id() + " changed only " + changed + " of the sample blocks");
             if (t != RegionTheme.GRAVITY) detail.append(detail.length() == 0 ? "" : ", ").append(t.id()).append('=').append(changed);
         }
-        return SelfTests.Result.ok("processor registered and in nusmp:mega_interior, " + RegionTheme.values().length + " themes loaded, samples rewritten per theme (" + detail + "), properties kept, nothing changed outside the generator");
+        return SelfTests.Result.ok("processor registered and in anime_multiverse:mega_interior, " + RegionTheme.values().length + " themes loaded, samples rewritten per theme (" + detail + "), properties kept, nothing changed outside the generator");
     }
 
     /** Palette blocks with non-default properties (so a lost property shows), and blocks no theme may touch. */

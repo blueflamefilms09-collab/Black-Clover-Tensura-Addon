@@ -1,5 +1,5 @@
-"""Why: the Floor Warden (entity nusmp:floor_warden, labyrinth/seal/FloorWardenEntity) is the Labyrinth's mini-boss, the thing that drops the Shadow Key, and the Labyrinth Guardian
-(nusmp:labyrinth_guardian, labyrinth/mega/guard) is the same body grown colossal, so ONE model serves both (the renderer scales the Guardian by its own size attribute). The lore
+"""Why: the Floor Warden (entity anime_multiverse:floor_warden, labyrinth/seal/FloorWardenEntity) is the Labyrinth's mini-boss, the thing that drops the Shadow Key, and the Labyrinth Guardian
+(anime_multiverse:labyrinth_guardian, labyrinth/mega/guard) is the same body grown colossal, so ONE model serves both (the renderer scales the Guardian by its own size attribute). The lore
 the entity class states: "the Dungeon's own armour grown huge on the Spire's magicules". It was the vanilla zombie model in a violet re-tint of the Living Armor's skin; this is the art
 kit's version, a huge player-proportioned knight of empty armour: a closed helm with a single slit of light, heavy plate in dark violet with gold seal-trim, a tabard that carries the
 Labyrinth's seal, a ragged cape and the great hammer its Ground Slam is struck with. There is nobody inside (the face under the helm is not shown; the slit glows). Colours: the

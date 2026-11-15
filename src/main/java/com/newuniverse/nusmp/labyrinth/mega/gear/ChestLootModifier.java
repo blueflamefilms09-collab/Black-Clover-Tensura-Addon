@@ -34,11 +34,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * ALREADY been rolled, whoever rolled it: a plain chest, a Lootr container (which rolls the table once per opening player), a chest minecart, a mod's own container,
  * a table that is added later by another builder or a data pack. No template, no chest block and no loot-table JSON has to be edited, and nothing in the original
  * tables is replaced (the new stack is added beside what the table gave: add the new, keep the old). It extends {@link LootModifier}, NeoForge's base class,
- * so the JSON carries the standard {@code conditions} list: the shipped {@code nusmp:gear_chests} only applies where the vanilla {@code location_check} says the
- * dimension is {@code nusmp:mega_dungeon}, and the code asks {@code MegaDungeon.in} as well (belt and braces: a pack that edits the conditions still cannot make gear
+ * so the JSON carries the standard {@code conditions} list: the shipped {@code anime_multiverse:gear_chests} only applies where the vanilla {@code location_check} says the
+ * dimension is {@code anime_multiverse:mega_dungeon}, and the code asks {@code MegaDungeon.in} as well (belt and braces: a pack that edits the conditions still cannot make gear
  * appear in the Overworld, the Spire, or the Sanctuary Hub, which is a different dimension and is not a Labyrinth). The decision itself is the pure
  * {@link ChestGear} over the pure {@link ChestRules}: the table must be a chest table, never one of the two relic tables, and the roll adds AT MOST ONE standard-gear
- * stack. It never rolls a table, never touches the relic ledger and never adds a relic (the stack carries only the {@code nusmp:gear_grade} component), so it cannot loop
+ * stack. It never rolls a table, never touches the relic ledger and never adds a relic (the stack carries only the {@code anime_multiverse:gear_grade} component), so it cannot loop
  * and cannot leak a Unique-or-higher relic: the Crucible stays their only source. The floor comes from the chest's own position ({@code ORIGIN}), the Luck from the
  * context, and when a player opened the chest the quest key {@code mega.gear} fires for the grade (first of each grade only; a fake player is ignored). Server side;
  * the codec is registered on the mod bus by {@link GearRegistry#init} and switched on by the entry in {@code data/neoforge/loot_modifiers/global_loot_modifiers.json}.
@@ -53,7 +53,7 @@ public final class ChestLootModifier extends LootModifier {
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> MODIFIERS =
             DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, NUSMP.MODID);
 
-    /** {@code nusmp:gear_chests}, the type id the JSON names. */
+    /** {@code anime_multiverse:gear_chests}, the type id the JSON names. */
     public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<ChestLootModifier>> TYPE = MODIFIERS.register("gear_chests", () -> CODEC);
 
     /** Registers the modifier type (mod bus; called from {@link GearRegistry#init}). */
@@ -66,7 +66,7 @@ public final class ChestLootModifier extends LootModifier {
         try {
             add(generatedLoot, context);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon chest gear failed once and is skipped for that roll", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon chest gear failed once and is skipped for that roll", ex);
         }
         return generatedLoot;
     }

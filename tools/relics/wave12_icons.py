@@ -251,12 +251,12 @@ def main():
         img = fn()
         img.save(os.path.join(TEX, rid + ".png"))
         em = dict(entity_model)
-        em["textures"] = {"particle": "nusmp:item/" + rid}
+        em["textures"] = {"particle": "anime_multiverse:item/" + rid}
         with open(os.path.join(MODELS, rid + ".json"), "w", newline="\n") as f:
             json.dump(em, f, indent=2)
             f.write("\n")
         with open(os.path.join(MODELS, rid + "_icon.json"), "w", newline="\n") as f:
-            json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + rid}}, f, indent=2)
+            json.dump({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + rid}}, f, indent=2)
             f.write("\n")
         made[rid] = img
     if "--sheet" in sys.argv:

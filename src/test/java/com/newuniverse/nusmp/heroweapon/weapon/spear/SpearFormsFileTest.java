@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * A deliberately broken copy proves the checker rejects what it should.
  */
 class SpearFormsFileTest {
-    private static final String FILE = "src/main/resources/data/nusmp/hero/forms/legendary_spear.json";
+    private static final String FILE = "src/main/resources/data/anime_multiverse/hero/forms/legendary_spear.json";
 
     private static Spec spec() {
         Set<String> ultimates = new HashSet<>();

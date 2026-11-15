@@ -32,9 +32,9 @@ import java.util.EnumSet;
  * because {@code registerGoals} runs before the Avatar's synced personality is set.
  */
 public final class AvatarWatcherGoal extends Goal {
-    private static final ResourceLocation PERSONALITY_ATK = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_personality_attack_speed");
-    private static final ResourceLocation PROTECT_DMG = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_protective_damage");
-    private static final ResourceLocation PROTECT_SPD = ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_protective_speed");
+    private static final ResourceLocation PERSONALITY_ATK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_personality_attack_speed");
+    private static final ResourceLocation PROTECT_DMG = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_protective_damage");
+    private static final ResourceLocation PROTECT_SPD = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_protective_speed");
     private static final double FEAR_RADIUS = 24.0;
 
     private final AvatarEntity avatar;

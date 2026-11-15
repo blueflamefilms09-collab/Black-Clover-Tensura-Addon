@@ -1,6 +1,6 @@
 """Wave 79: the primary artifacts of the 13 exclusive pocket tombs (1.99.0). Each is the relic that stands on the pedestal of its tomb's sealed treasury, and TAKING IT brings the tomb down
-(labyrinth/mega/rift/pocket/ExclusivePockets: the primary relic is `relics.primary` of data/nusmp/mega/pockets/<tomb>.json). They drop nowhere else: the loot gate
-(`nusmp:in_pocket`, `nusmp:pocket_relic`) refuses a roll outside the tomb of the relic, and the relic pools of the vaults and the Crucible exclude them (RelicLoot.candidates).
+(labyrinth/mega/rift/pocket/ExclusivePockets: the primary relic is `relics.primary` of data/anime_multiverse/mega/pockets/<tomb>.json). They drop nowhere else: the loot gate
+(`anime_multiverse:in_pocket`, `anime_multiverse:pocket_relic`) refuses a roll outside the tomb of the relic, and the relic pools of the vaults and the Crucible exclude them (RelicLoot.candidates).
 Every ability is one of the shapes of Wave31Acts (the vocabulary of relic_rows_lib.py); the passives are attribute modifiers, resistances and lent Tensura skills of the older waves' own kinds.
 The boss weapons of the same tombs are wave 78 (tools/rift/pocket_weapon_roster.py)."""
 from relic_rows_lib import R

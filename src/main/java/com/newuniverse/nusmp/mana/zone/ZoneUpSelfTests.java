@@ -34,7 +34,7 @@ public final class ZoneUpSelfTests {
         SelfTests.register("magic.zone_up.cast", ZoneUpSelfTests::cast);
     }
 
-    private static final ResourceLocation ATTACK = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_attack"), KNOCKBACK = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_knockback");
+    private static final ResourceLocation ATTACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_attack"), KNOCKBACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_knockback");
 
     private static Result rules(MinecraftServer server) {
         ZoneUpRules.Rules r = ManaZoneConfig.upgrade();

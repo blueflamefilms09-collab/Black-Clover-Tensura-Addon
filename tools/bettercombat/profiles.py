@@ -18,7 +18,7 @@ HORIZ, VERT, FWD = "HORIZONTAL_PLANE", "VERTICAL_PLANE", "FORWARD_BOX"
 
 def atk(hitbox, anim, angle, upswing, mult=1.0):
     """One attack of a combo: keys exactly as Better Combat's schema names them."""
-    return {"hitbox": hitbox, "damage_multiplier": mult, "angle": angle, "upswing": upswing, "animation": "nusmp:" + anim}
+    return {"hitbox": hitbox, "damage_multiplier": mult, "angle": angle, "upswing": upswing, "animation": "anime_multiverse:" + anim}
 
 
 # Combos shared by several classes (each is a list of attacks, played in order, then the combo starts again).
@@ -44,7 +44,7 @@ def P(parent, rng, two=None, attacks=None):
     return {"parent": parent, "range_bonus": rng, "two_handed": two, "attacks": attacks}
 
 
-# 1.39.0 profiles with OUR animations (nusmp:*). Kept, unused by default (gen_attributes.py --custom writes them); see docs/better_combat.md 1.46.0.
+# 1.39.0 profiles with OUR animations (anime_multiverse:*). Kept, unused by default (gen_attributes.py --custom writes them); see docs/better_combat.md 1.46.0.
 # class -> profile. range_bonus follows the in-hand size of the 1.30-1.34 weapon-size classes (tools/relics/weapon_classes.json).
 CUSTOM_CLASS_PROFILES = {
     "dagger": P("dagger", -0.25, None, DAGGER_COMBO),

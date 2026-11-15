@@ -332,7 +332,7 @@ public final class SpellSeal {
             note(user, "Your skill falls silent: the domain has severed your mana.");
             return true;
         } catch (RuntimeException failed) {           // a skill event must never break because of the seal: when in doubt the skill works
-            LogUtils.getLogger().warn("[nusmp] the spell seal could not judge a skill: {}", failed.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the spell seal could not judge a skill: {}", failed.toString());
             return false;
         }
     }
@@ -353,7 +353,7 @@ public final class SpellSeal {
             e.setAmount(e.getAmount() * SPELL_FACTOR);
             note(attacker, "Your spell unravels in the domain.");
         } catch (RuntimeException failed) {
-            LogUtils.getLogger().warn("[nusmp] the spell seal could not judge a blow: {}", failed.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the spell seal could not judge a blow: {}", failed.toString());
         }
     }
 
@@ -389,7 +389,7 @@ public final class SpellSeal {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] Zenon's {} stopped: {}", what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] Zenon's {} stopped: {}", what, t.toString());
             }
         };
     }

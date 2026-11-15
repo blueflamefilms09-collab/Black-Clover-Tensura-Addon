@@ -32,30 +32,30 @@ class HubDataFilesTest {
         JsonObject list = JsonParser.parseString(read("resources/data/neoforge/loot_modifiers/global_loot_modifiers.json")).getAsJsonObject();
         Set<String> entries = new HashSet<>();
         for (JsonElement e : list.getAsJsonArray("entries")) entries.add(e.getAsString());
-        assertTrue(entries.contains("nusmp:hub_coins"), "the global loot modifier list must name nusmp:hub_coins");
-        for (String old : new String[] {"nusmp:relic_chests", "nusmp:gear_chests"}) assertTrue(entries.contains(old), "the old modifier " + old + " is still listed (add the new, keep the old)");
-        JsonObject mod = JsonParser.parseString(read("resources/data/nusmp/loot_modifiers/hub_coins.json")).getAsJsonObject();
-        assertTrue(mod.get("type").getAsString().equals("nusmp:hub_coins"));
+        assertTrue(entries.contains("anime_multiverse:hub_coins"), "the global loot modifier list must name anime_multiverse:hub_coins");
+        for (String old : new String[] {"anime_multiverse:relic_chests", "anime_multiverse:gear_chests"}) assertTrue(entries.contains(old), "the old modifier " + old + " is still listed (add the new, keep the old)");
+        JsonObject mod = JsonParser.parseString(read("resources/data/anime_multiverse/loot_modifiers/hub_coins.json")).getAsJsonObject();
+        assertTrue(mod.get("type").getAsString().equals("anime_multiverse:hub_coins"));
         assertTrue(read("java/com/newuniverse/nusmp/elite/hub/CoinLootModifier.java").contains("MODIFIERS.register(\"hub_coins\""), "the codec is registered under the id the JSON names");
     }
 
     @Test
     void theItemModelsAndTexturesExist() throws IOException {
         for (String m : new String[] {"dungeon_map", "dungeon_map_2d", "dungeon_map_3d", "quest_giver_npc_spawn_egg", "merchant_npc_spawn_egg"}) {
-            JsonObject o = JsonParser.parseString(read("resources/assets/nusmp/models/item/" + m + ".json")).getAsJsonObject();
+            JsonObject o = JsonParser.parseString(read("resources/assets/anime_multiverse/models/item/" + m + ".json")).getAsJsonObject();
             assertTrue(o.size() > 0, m);
         }
-        for (String t : new String[] {"item/dungeon_map", "entity/hub/quest_giver_npc", "entity/hub/merchant_npc"}) assertTrue(Files.exists(MAIN.resolve("resources/assets/nusmp/textures/" + t + ".png")), t);
-        JsonObject threeD = JsonParser.parseString(read("resources/assets/nusmp/models/item/dungeon_map_3d.json")).getAsJsonObject();
+        for (String t : new String[] {"item/dungeon_map", "entity/hub/quest_giver_npc", "entity/hub/merchant_npc"}) assertTrue(Files.exists(MAIN.resolve("resources/assets/anime_multiverse/textures/" + t + ".png")), t);
+        JsonObject threeD = JsonParser.parseString(read("resources/assets/anime_multiverse/models/item/dungeon_map_3d.json")).getAsJsonObject();
         JsonArray elements = threeD.getAsJsonArray("elements");
         assertTrue(elements.size() >= 5, "the held map is a real 3D model made of several cuboids");
-        assertTrue(read("resources/assets/nusmp/models/item/dungeon_map.json").contains("separate_transforms"), "3D in the hand, the sprite as the icon");
+        assertTrue(read("resources/assets/anime_multiverse/models/item/dungeon_map.json").contains("separate_transforms"), "3D in the hand, the sprite as the icon");
     }
 
     @Test
     void everyMessageKeyUsedInCodeHasEnglishText() throws IOException {
         JsonObject lang = JsonParser.parseString(Files.readString(Path.of("tools/elite/hub_lang.json"))).getAsJsonObject();
-        Pattern key = Pattern.compile("\"((?:message|item|entity|key)\\.(?:categories\\.)?nusmp\\.[a-z0-9_.]+)\"");
+        Pattern key = Pattern.compile("\"((?:message|item|entity|key)\\.(?:categories\\.)?anime_multiverse\\.[a-z0-9_.]+)\"");
         Set<String> used = new HashSet<>();
         try (Stream<Path> files = Stream.concat(Files.walk(MAIN.resolve("java/com/newuniverse/nusmp/elite/hub")), Files.walk(MAIN.resolve("java/com/newuniverse/nusmp/client/elite/hub")))) {
             for (Path p : files.filter(f -> f.toString().endsWith(".java")).toList()) {
@@ -65,7 +65,7 @@ class HubDataFilesTest {
         }
         assertTrue(used.size() >= 25, "found the keys: " + used.size());
         for (String k : used) assertTrue(lang.has(k), "tools/elite/hub_lang.json lacks " + k);
-        assertTrue(lang.has("entity.nusmp.quest_giver_npc") && lang.has("entity.nusmp.merchant_npc") && lang.has("item.nusmp.dungeon_map"));
+        assertTrue(lang.has("entity.anime_multiverse.quest_giver_npc") && lang.has("entity.anime_multiverse.merchant_npc") && lang.has("item.anime_multiverse.dungeon_map"));
     }
 
     @Test

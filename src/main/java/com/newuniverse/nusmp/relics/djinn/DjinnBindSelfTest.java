@@ -46,13 +46,13 @@ public final class DjinnBindSelfTest {
     /** Better Combat 2.4.0's presets with {@code two_handed: true} (tools/bettercombat/builtin_animations.json), the ones this mod's weapon files use. */
     private static final Set<String> TWO_HANDED_PRESETS = Set.of("claymore", "double_axe", "heavy_axe", "glaive", "halberd", "hammer", "katana", "scythe", "spear", "staff", "battlestaff");
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** Does this stack's item have a weapon file that makes it two-handed under Better Combat (its own flag, else its parent preset's)? */
     static boolean twoHanded(ItemStack s) {
         if (s == null || s.isEmpty()) return false;
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(s.getItem());
-        if (!"nusmp".equals(key.getNamespace())) return false;
+        if (!"anime_multiverse".equals(key.getNamespace())) return false;
         JsonObject o = file(key.getPath());
         if (o == null) return false;
         JsonObject a = o.has("attributes") && o.get("attributes").isJsonObject() ? o.getAsJsonObject("attributes") : new JsonObject();
@@ -62,7 +62,7 @@ public final class DjinnBindSelfTest {
     }
 
     private static JsonObject file(String path) {
-        try (InputStream in = DjinnBindSelfTest.class.getResourceAsStream("/data/nusmp/weapon_attributes/" + path + ".json")) {
+        try (InputStream in = DjinnBindSelfTest.class.getResourceAsStream("/data/anime_multiverse/weapon_attributes/" + path + ".json")) {
             return in == null ? null : JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (Exception e) {
             return null;

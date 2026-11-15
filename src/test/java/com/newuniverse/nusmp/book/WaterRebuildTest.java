@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class WaterRebuildTest {
     private static final String[] KEYS = {"water", "dark", "lightning", "flame"};
     private static final String[] PASCAL = {"Water", "Dark", "Lightning", "Flame"};
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final File JAVA = new File("src/main/java/com/newuniverse/nusmp");
 
     private static String read(File f) throws Exception { return new String(Files.readAllBytes(f.toPath()), StandardCharsets.UTF_8); }
@@ -220,7 +220,7 @@ class WaterRebuildTest {
             assertTrue(f.isFile(), "missing lang fragment " + f);
             JsonObject o = json(f);
             for (int i = 2; i < p.length; i++) {
-                String key = "nusmp.page." + p[1] + "." + p[i];
+                String key = "anime_multiverse.page." + p[1] + "." + p[i];
                 assertTrue(o.has(key) && o.get(key).getAsString().length() > 20, "missing text for " + key);
             }
             for (var e : o.entrySet()) assertFalse(e.getValue().getAsString().contains("\n"), e.getKey() + " has a line break");

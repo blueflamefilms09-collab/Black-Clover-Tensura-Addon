@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Why: Tensura Reincarnated's own code is not part of this mod, so the Engravement Codex needs one honest line for each Tensura engraving the mod puts on its items. The lines live in
- * {@code data/nusmp/engraving_codex/tensura_engravings.json} (words only, never a number: the numbers are Tensura's). The Codex prefers Tensura's own description text from the language
+ * {@code data/anime_multiverse/engraving_codex/tensura_engravings.json} (words only, never a number: the numbers are Tensura's). The Codex prefers Tensura's own description text from the language
  * file when the game has it; this table is only the fallback. Pure (no Minecraft types), unit tested.
  */
 public final class TensuraNotes {
@@ -29,7 +29,7 @@ public final class TensuraNotes {
         public boolean has(String id) { return id != null && lines.containsKey(id); }
     }
 
-    private static final String RESOURCE = "/data/nusmp/engraving_codex/tensura_engravings.json";
+    private static final String RESOURCE = "/data/anime_multiverse/engraving_codex/tensura_engravings.json";
     private static volatile Table table;
 
     /** The table, loaded once; an unreadable file gives an empty table with a generic line (the unit test catches it). */

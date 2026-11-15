@@ -233,8 +233,8 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "C070FF", "groups": ["souls", "seal"], "note": "the seal circle unfolds behind the head and the souls spiral in as the scythe is drawn"}
     it.swing = {"trail": "reaping_arc", "rgb": "C070FF", "rgb2": "1C0E2C", "length": 2.4, "width": 0.5, "life": 13, "particles": "soul_mote"}
-    it.sound = "nusmp:item.genesis.pact_scythe.whisper_loop"
+    it.sound = "anime_multiverse:item.genesis.pact_scythe.whisper_loop"
     it.acts = {
-        "pact_breaking_reap": {"burst": "pact_reap", "pattern": "cone", "rgb": "C070FF", "ring": 7.0, "particles": 46, "sound": "nusmp:item.genesis.pact_scythe.reap"},
-        "soul_tithe": {"burst": "soul_tithe", "pattern": "inward", "rgb": "A04AFF", "ring": 4.5, "particles": 40, "sound": "nusmp:item.genesis.pact_scythe.tithe"},
+        "pact_breaking_reap": {"burst": "pact_reap", "pattern": "cone", "rgb": "C070FF", "ring": 7.0, "particles": 46, "sound": "anime_multiverse:item.genesis.pact_scythe.reap"},
+        "soul_tithe": {"burst": "soul_tithe", "pattern": "inward", "rgb": "A04AFF", "ring": 4.5, "particles": 40, "sound": "anime_multiverse:item.genesis.pact_scythe.tithe"},
     }

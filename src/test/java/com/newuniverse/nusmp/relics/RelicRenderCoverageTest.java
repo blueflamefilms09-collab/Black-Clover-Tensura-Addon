@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class RelicRenderCoverageTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path TAGS = Path.of("src/main/resources/data/curios/tags/item");
     private static final Pattern CONST = Pattern.compile("(\\w+)\\s*=\\s*\"([a-z0-9_]+)\"");
     private static final Pattern DEF = Pattern.compile("RelicDef\\s*\\.\\s*of\\s*\\(\\s*([^,]+?)\\s*,\\s*(?:\"(?:[^\"\\\\]|\\\\.)*\"|[^,]+),\\s*Grade\\.\\w+\\s*,\\s*RelicSlot\\.(\\w+)");
@@ -90,7 +90,7 @@ class RelicRenderCoverageTest {
         for (Def d : defs()) {
             String t = tag.get(d.slot());
             if (t == null || d.adopted()) continue;
-            if (!tagText.get(t).contains("\"nusmp:" + d.id() + "\"")) missing.add(d.id() + " not in " + t);
+            if (!tagText.get(t).contains("\"anime_multiverse:" + d.id() + "\"")) missing.add(d.id() + " not in " + t);
         }
         assertTrue(missing.isEmpty(), "not wearable in a Curios slot: " + missing + " (run tools/relics/gen_curios_tags.py)");
     }

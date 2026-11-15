@@ -3,7 +3,7 @@
     python3 -B tools/relics/wave11_icons.py [id ...]       (idempotent)
 
 Same method as wave1_icons.py (primitives on a 16 x 16 canvas, one pixel dark outline, a grade-coloured pixel at the pommel, glow pixels at gems
-and edges). Writes, per id, assets/nusmp/textures/item/<id>.png (the old-style sprite, kept as the inventory icon),
+and edges). Writes, per id, assets/anime_multiverse/textures/item/<id>.png (the old-style sprite, kept as the inventory icon),
 models/item/<id>_icon.json (the flat model of the sprite) and models/item/<id>.json (the in-hand model: builtin/entity drawn by
 client/WeaponRenderer from weapon_meshes/<id>.txt, with the display transforms of the Bloodbound Katana).
 """

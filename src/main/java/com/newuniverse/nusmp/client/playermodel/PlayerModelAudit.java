@@ -17,14 +17,14 @@ import java.util.function.Function;
 /**
  * Why: a look that names a skin that is not in the jar, a hair style with a box outside its 64x64 sheet, an extras model with no {@code x_<anchor>} root, or an arc boss with no look is drawn as
  * nothing (or with the default look) and nobody notices until a boss walks out wrong. This reads the kit's data files through any opener (the classpath in the unit test and in the CI server's
- * self-test {@code render.playermodel}, the resources folder in a tool) and returns every problem it finds, with no game class. Opener: a path under {@code assets/nusmp/} to a stream, or null
+ * self-test {@code render.playermodel}, the resources folder in a tool) and returns every problem it finds, with no game class. Opener: a path under {@code assets/anime_multiverse/} to a stream, or null
  * when the file does not exist.
  */
 public final class PlayerModelAudit {
     private PlayerModelAudit() {}
 
-    /** The classpath opener: {@code assets/nusmp/<path>} from the jar. */
-    public static InputStream classpath(String path) { return PlayerModelAudit.class.getResourceAsStream("/assets/nusmp/" + path); }
+    /** The classpath opener: {@code assets/anime_multiverse/<path>} from the jar. */
+    public static InputStream classpath(String path) { return PlayerModelAudit.class.getResourceAsStream("/assets/anime_multiverse/" + path); }
 
     public static List<String> run(Function<String, InputStream> open) {
         List<String> bad = new ArrayList<>();

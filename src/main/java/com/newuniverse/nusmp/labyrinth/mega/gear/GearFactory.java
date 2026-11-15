@@ -20,7 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import java.util.Optional;
 
 /**
- * Why: the roller decides WHAT a drop is and this makes it a real {@code ItemStack}: the vanilla base item, stamped with the {@code nusmp:gear_grade}
+ * Why: the roller decides WHAT a drop is and this makes it a real {@code ItemStack}: the vanilla base item, stamped with the {@code anime_multiverse:gear_grade}
  * component (which is what makes it standard gear and nothing else: no relic component is ever added, so the Order's ledger never sees it), a durability
  * bonus, the percentage bonus as an attribute modifier, the vanilla enchantments and, when the config allows, the Tensura engravings, then the look.
  * The percentage bonus is the delicate part. In 1.21 an item's attribute modifiers are a data component, and SETTING that component REPLACES the item's
@@ -28,7 +28,7 @@ import java.util.Optional;
  * component): so the factory first takes the stack's current modifiers (the component, or when that is empty the item's own default list, which is
  * exactly the fallback the game itself uses) and ADDS one modifier to them with {@code withModifierAdded}. The bonus is a share of the item's own value
  * (attack damage including the player's base 1, or the armour points), added as a flat amount, so it does not depend on what else the wearer has; its id is
- * fixed per slot ({@code nusmp:mega_gear/<slot>}) because in 1.21 two equipment pieces applying the same id to the same attribute would replace each other
+ * fixed per slot ({@code anime_multiverse:mega_gear/<slot>}) because in 1.21 two equipment pieces applying the same id to the same attribute would replace each other
  * and a set of four armour pieces would keep only one bonus. Every id (item, enchantment, engraving) is resolved here at the last moment and an absent one
  * is skipped: an optional mod or an older Tensura costs one enchantment, never the drop. Server side; no client code.
  */
@@ -119,6 +119,6 @@ public final class GearFactory {
 
     /** The fixed id of the bonus of a slot: unique per slot so four armour pieces worn together each keep their own. */
     static ResourceLocation modifierId(GearSlot slot) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "mega_gear/" + slot.id());
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_gear/" + slot.id());
     }
 }

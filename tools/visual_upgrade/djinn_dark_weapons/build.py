@@ -4,7 +4,7 @@
 
 For every dark Djinn weapon: reads the shipped mesh and skins (the old files stay untouched), builds the new parts on its frame (dkit / ditems), lays the enlarged old islands and the new
 parts out on a new 1024 skin, paints, and writes the NEW files under up/ (mesh, level-of-detail mesh, orbiting piece, skin, core glow, vein glow) and the data table
-assets/nusmp/visual_upgrade/<item>.json (read by client/GodMeleeBRender and client/vupgrade/godb).
+assets/anime_multiverse/visual_upgrade/<item>.json (read by client/GodMeleeBRender and client/vupgrade/godb).
 Hook: tools/relics/djinn_weapons.py ends with one line that runs this script for the same ids (the old assets are made by that tool; these are made next to them).
 """
 import json

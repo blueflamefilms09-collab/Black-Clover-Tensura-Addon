@@ -16,7 +16,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 /**
- * Why: a window needs a menu type that both sides know ({@code nusmp:avatar_inventory}) and, on the client, a screen bound to it. The Avatar creation system's own
+ * Why: a window needs a menu type that both sides know ({@code anime_multiverse:avatar_inventory}) and, on the client, a screen bound to it. The Avatar creation system's own
  * entry point is not mine to change, so this registers itself: {@link #init()} is called from the Avatar AI's event wiring while the mod is being constructed, takes
  * the mod's event bus from the active mod container, registers the menu type there and (on the client only) the screen. Called twice it does nothing the second time,
  * and the lead may also call {@link #init(IEventBus)} with the bus from the mod constructor, which is the same thing done explicitly. If the bus cannot be found the
@@ -39,7 +39,7 @@ public final class AvatarInventoryMenus {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             init(container == null ? null : container.getEventBus());
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] The Avatar inventory window could not find the mod event bus ({}); it will not open", e.toString());
+            LOG.warn("[anime_multiverse] The Avatar inventory window could not find the mod event bus ({}); it will not open", e.toString());
         }
     }
 

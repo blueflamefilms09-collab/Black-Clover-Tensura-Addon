@@ -21,9 +21,9 @@ final class ShopPainter {
     static final int PLUM = 0xFFB878E0, AMBER = 0xFFF0B650, PAPER = 0xFFEADFCB, DIM = 0xFFA09080, FAINT = 0xFF6A6070, GOOD = 0xFF9CE8A8, BAD = 0xFFE87868;
 
     /** The texture sheet of four cobwebs (96x96: one 48x48 web per corner, top-left, top-right, bottom-left, bottom-right). */
-    static final ResourceLocation WEBS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/black_market/cobwebs.png");
+    static final ResourceLocation WEBS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/black_market/cobwebs.png");
     /** The witch's portrait (40x42). */
-    static final ResourceLocation PORTRAIT = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/black_market/witch.png");
+    static final ResourceLocation PORTRAIT = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/black_market/witch.png");
     static final int PORTRAIT_W = 40, PORTRAIT_H = 42;
 
     /** The four webs, one in each corner of the rectangle, drawn over its body. The webs are mostly see-through, so blending is switched on first (nothing before this draw promises it is). */

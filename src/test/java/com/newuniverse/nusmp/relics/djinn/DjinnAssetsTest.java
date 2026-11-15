@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The generated art (tools/relics/gen_djinn_art.py) is all there and well formed: meshes, skins, icons and models of all twelve Djinn. */
 class DjinnAssetsTest {
-    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "nusmp");
+    private static final Path ASSETS = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     private static final Set<String> ALWAYS = Set.of("helm", "chest", "belt", "pauldron_l", "pauldron_r", "vambrace_l", "vambrace_r", "gauntlet_l", "gauntlet_r",
             "greave_l", "greave_r", "crest", "sheath", "wing_in_l", "wing_in_r", "wing_out_l", "wing_out_r");
 
@@ -91,7 +91,7 @@ class DjinnAssetsTest {
             assertEquals(16, icon.getHeight());
             Path model = ASSETS.resolve("models").resolve("item").resolve("djinn_seal_" + d.id() + ".json");
             String json = Files.readString(model);
-            assertTrue(json.contains("minecraft:item/generated") && json.contains("nusmp:item/djinn_seal_" + d.id()), model.toString());
+            assertTrue(json.contains("minecraft:item/generated") && json.contains("anime_multiverse:item/djinn_seal_" + d.id()), model.toString());
         }
     }
 

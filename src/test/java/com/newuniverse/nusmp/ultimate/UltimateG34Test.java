@@ -179,9 +179,9 @@ class UltimateG34Test {
             assertTrue(listed.add(d.id()));
             assertTrue(doc.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | original |"), "docs/magic/ultimate_g34.md has no row for " + d.id());
         }
-        for (var e : lang.entrySet()) assertTrue(e.getKey().startsWith("nusmp.page.book_"), e.getKey());
+        for (var e : lang.entrySet()) assertTrue(e.getKey().startsWith("anime_multiverse.page.book_"), e.getKey());
         // no other file of the mod lists these ids as a page (they are appended by UltimatePages, never an armour)
-        String policy = read(ROOT.resolve("src/main/resources/data/nusmp/armour_policy.json"));
+        String policy = read(ROOT.resolve("src/main/resources/data/anime_multiverse/armour_policy.json"));
         for (String id : listed) assertFalse(policy.contains(id), "the armour policy names " + id + ": an Ultimate never equips an armour");
         assertFalse(doc.contains("TIME_"), "no Time Magic in the doc's pictures");
     }

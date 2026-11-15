@@ -20,7 +20,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
  * and its roster character is a {@code BOSS} whose source work is "Black Clover" ({@link BossStatMath#applies}): the Dark Triad, Lucius, the Devil Avatar, Zagred, the Midnight Sun
  * elves, the early-arc and Spade Kingdom bosses. Nobody else is touched.
  * <ul>
- * <li><b>Health</b>: when the boss joins a level it gets one permanent maximum-health modifier (fixed id {@code nusmp:boss_stat/health}, +2.0 multiplied-total = x3). It is saved with the
+ * <li><b>Health</b>: when the boss joins a level it gets one permanent maximum-health modifier (fixed id {@code anime_multiverse:boss_stat/health}, +2.0 multiplied-total = x3). It is saved with the
  * boss, so a reload keeps the bar; a changed setting replaces it. The health keeps its share of the bar, written through the boss's heal guard and damage budget like the boss's own refills.
  * The other health systems (arena scaling, floor scaling) are separate modifiers and multiply with it.</li>
  * <li><b>Damage</b>: every hit whose attacker is such a boss is multiplied ({@link BossStatMath#damage}), whether melee, a spell or Lucius's percent true damage, since all of them arrive as an
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 public final class BossStatBuff {
     private BossStatBuff() {}
 
-    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "boss_stat/health");
+    static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss_stat/health");
 
     /** The multiplier for this entity: 1 unless it is a registered boss of the Black Clover roster. */
     static double multiplier(Entity e) {

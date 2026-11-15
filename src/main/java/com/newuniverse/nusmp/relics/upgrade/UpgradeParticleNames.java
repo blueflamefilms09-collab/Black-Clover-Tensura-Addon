@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Why: the effect tables of the upgraded relics ({@code assets/nusmp/visual_upgrade/<id>.json}, {@link UpgradeFxData}) name their particles with the old vanilla ids ({@code minecraft:end_rod},
+ * Why: the effect tables of the upgraded relics ({@code assets/anime_multiverse/visual_upgrade/<id>.json}, {@link UpgradeFxData}) name their particles with the old vanilla ids ({@code minecraft:end_rod},
  * {@code minecraft:flame}, ...) or {@code "dust"}. Since 1.108.0 those never reach the game as vanilla particles any more: the client layers ({@code client/relics/fx/UpgradeFxClient}) and the act
  * bursts ({@link UpgradeActFx}) turn every name into the mod's own custom particle through {@code particle.fx.Fx} / {@code FxRelic}. This pure class (no game types, so a test can check it
  * against the shipped tables) holds the one decision: a data name becomes the name of an {@code FxOld} constant (the slot of the theme that replaces that vanilla particle), or {@code null} for

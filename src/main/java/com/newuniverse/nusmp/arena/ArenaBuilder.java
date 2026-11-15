@@ -74,7 +74,7 @@ public final class ArenaBuilder {
                 }
             }
         });
-        LOG.info("[nusmp] The Zogratis arena courtyard {}: {} blocks set", onlyMissing ? "repaired" : "built", set[0]);
+        LOG.info("[anime_multiverse] The Zogratis arena courtyard {}: {} blocks set", onlyMissing ? "repaired" : "built", set[0]);
         return set[0];
     }
 }

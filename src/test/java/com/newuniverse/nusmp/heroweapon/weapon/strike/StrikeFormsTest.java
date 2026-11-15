@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
  * have and that only the Claw and the Axe carry a (single, small) curse form.
  */
 class StrikeFormsTest {
-    private static final Path FORMS = Path.of("src/main/resources/data/nusmp/hero/forms");
+    private static final Path FORMS = Path.of("src/main/resources/data/anime_multiverse/hero/forms");
 
     private static JsonObject read(String itemId) throws IOException {
         return JsonParser.parseString(Files.readString(FORMS.resolve(itemId + ".json"), StandardCharsets.UTF_8)).getAsJsonObject();

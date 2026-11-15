@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Why: every system that cares about factions asks the same question, "which faction is this creature?", thousands of times a minute (every
  * mob that joins, every target change, every candidate of every turf-war scan), so the answer comes from one place that is cheap. A creature's
- * faction is its entity TYPE's membership in one of the entity-type tags {@code nusmp:mega/<faction>} (the tags are the contract with the
+ * faction is its entity TYPE's membership in one of the entity-type tags {@code anime_multiverse:mega/<faction>} (the tags are the contract with the
  * encounter director, which spawns "faction X" from the same tag), resolved once per type and cached; the cache is dropped whenever tags or the
  * faction files reload, because a stale "no faction" would silently switch the wars off for a type a datapack just added. The loaded
  * {@link FactionGraph} is swapped in one assignment so a reload in progress never exposes a half-built graph. A type listed in two faction tags
@@ -41,7 +41,7 @@ public final class FactionRegistry {
         Map<String, TagKey<EntityType<?>>> t = new LinkedHashMap<>();
         for (String id : g.ids()) {
             ResourceLocation rl = ResourceLocation.tryParse(g.def(id).tag());
-            if (rl == null) rl = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/" + id);
+            if (rl == null) rl = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/" + id);
             t.put(id, TagKey.create(Registries.ENTITY_TYPE, rl));
         }
         tags = t;
@@ -92,10 +92,10 @@ public final class FactionRegistry {
         return BuiltInRegistries.ENTITY_TYPE.getTag(key).map(HolderSet::size).orElse(0);
     }
 
-    /** The faction's name in its own colour: the lang key {@code message.nusmp.mega.mec.faction.<id>}, falling back to the English name in the file. */
+    /** The faction's name in its own colour: the lang key {@code message.anime_multiverse.mega.mec.faction.<id>}, falling back to the English name in the file. */
     public static MutableComponent name(String id) {
         FactionDef d = graph.def(id);
-        MutableComponent c = Component.translatableWithFallback("message.nusmp.mega.mec.faction." + id, d != null ? d.name() : String.valueOf(id));
+        MutableComponent c = Component.translatableWithFallback("message.anime_multiverse.mega.mec.faction." + id, d != null ? d.name() : String.valueOf(id));
         return d == null ? c : c.withStyle(s -> s.withColor(d.color()));
     }
 }

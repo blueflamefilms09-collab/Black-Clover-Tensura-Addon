@@ -1,6 +1,6 @@
 """Textures for Barrier Magic: refractive honeycomb glass. Deterministic, Pillow + numpy only.
 
-    python3 -B tools/gen_barrier_textures.py  ->  src/main/resources/assets/nusmp/textures/particle/barrier_*.png
+    python3 -B tools/gen_barrier_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/particle/barrier_*.png
 
     barrier_hex_cell   one bevelled hexagonal pane: bright rim, faint refractive body, glossy sheen
     barrier_hex_grid   a honeycomb pane, cells lit at random, vignetted (walls, floors, plates)

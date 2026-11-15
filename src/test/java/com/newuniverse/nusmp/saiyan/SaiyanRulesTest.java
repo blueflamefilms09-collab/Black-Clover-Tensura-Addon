@@ -17,7 +17,7 @@ class SaiyanRulesTest {
         assertEquals(SaiyanRules.Rank.DIVINE, SaiyanRules.rankOf(1_000_000));
         assertEquals(SaiyanRules.Rank.TRANSCENDENT, SaiyanRules.rankOf(10_000_000));
         assertEquals(SaiyanRules.Rank.TRANSCENDENT, SaiyanRules.Rank.byOrdinal(99));
-        assertEquals("nusmp.saiyan.rank.super_elite", SaiyanRules.Rank.SUPER_ELITE.key());
+        assertEquals("anime_multiverse.saiyan.rank.super_elite", SaiyanRules.Rank.SUPER_ELITE.key());
     }
 
     @Test

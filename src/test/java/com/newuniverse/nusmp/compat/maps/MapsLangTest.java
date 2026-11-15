@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The lang fragment tools/compat/maps_lang.json: it covers every message key the map code uses, says what the code's fallback says, and adds no key en_us.json already has. */
 class MapsLangTest {
-    private static final Path FRAGMENT = Paths.get("tools/compat/maps_lang.json"), EN_US = Paths.get("src/main/resources/assets/nusmp/lang/en_us.json");
+    private static final Path FRAGMENT = Paths.get("tools/compat/maps_lang.json"), EN_US = Paths.get("src/main/resources/assets/anime_multiverse/lang/en_us.json");
     private static final Path DIR = Paths.get("src/main/java/com/newuniverse/nusmp/compat/maps");
 
     private static JsonObject read(Path p) throws IOException { return JsonParser.parseString(Files.readString(p, StandardCharsets.UTF_8)).getAsJsonObject(); }
@@ -35,10 +35,10 @@ class MapsLangTest {
         String src = sources();
         List<String> bad = new ArrayList<>();
         int seen = 0;
-        Matcher full = Pattern.compile("translatableWithFallback\\(\\s*\"(message\\.nusmp\\.maps\\.[a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
+        Matcher full = Pattern.compile("translatableWithFallback\\(\\s*\"(message\\.anime_multiverse\\.maps\\.[a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
         while (full.find()) { seen++; check(frag, full.group(1), full.group(2), bad); }
         Matcher t = Pattern.compile("\\bt\\(\\s*\"([a-z_.]+)\"\\s*,\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(src);
-        while (t.find()) { seen++; check(frag, "message.nusmp.maps." + t.group(1), t.group(2), bad); }
+        while (t.find()) { seen++; check(frag, "message.anime_multiverse.maps." + t.group(1), t.group(2), bad); }
         assertTrue(seen >= 20, "the scan should find the messages, found " + seen);
         assertTrue(bad.isEmpty(), "lang fragment out of step with the code: " + bad);
     }
@@ -52,7 +52,7 @@ class MapsLangTest {
     @Test
     void theTernaryShareMessagesAreInTheFragment() throws IOException {
         JsonObject frag = read(FRAGMENT);
-        for (String k : List.of("share.on", "share.off")) assertTrue(frag.has("message.nusmp.maps." + k), k);
+        for (String k : List.of("share.on", "share.off")) assertTrue(frag.has("message.anime_multiverse.maps." + k), k);
     }
 
     @Test
@@ -67,10 +67,10 @@ class MapsLangTest {
     void everyBiomeAndDimensionOfTheModHasAName() throws IOException {
         JsonObject en = read(EN_US), frag = read(FRAGMENT);
         List<String> missing = new ArrayList<>();
-        try (var s = Files.list(Paths.get("src/main/resources/data/nusmp/worldgen/biome"))) {
-            for (Path p : s.toList()) { String k = "biome.nusmp." + p.getFileName().toString().replace(".json", ""); if (!en.has(k) && !frag.has(k)) missing.add(k); }
+        try (var s = Files.list(Paths.get("src/main/resources/data/anime_multiverse/worldgen/biome"))) {
+            for (Path p : s.toList()) { String k = "biome.anime_multiverse." + p.getFileName().toString().replace(".json", ""); if (!en.has(k) && !frag.has(k)) missing.add(k); }
         }
-        for (String n : DimensionAudit.NAMES) { String k = "dimension.nusmp." + n; if (!en.has(k) && !frag.has(k)) missing.add(k); }
+        for (String n : DimensionAudit.NAMES) { String k = "dimension.anime_multiverse." + n; if (!en.has(k) && !frag.has(k)) missing.add(k); }
         assertTrue(missing.isEmpty(), "a map mod would show these raw: " + missing);
     }
 }

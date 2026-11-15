@@ -10,7 +10,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import java.util.function.Consumer;
 
 /**
- * Why: Shishou talks over three tiny packets and nothing else (2.1.0: the key packet is gone: his abilities are the Tensura Ultimate skill {@code nusmp:shishou}, whose presses travel in the skill system's own
+ * Why: Shishou talks over three tiny packets and nothing else (2.1.0: the key packet is gone: his abilities are the Tensura Ultimate skill {@code anime_multiverse:shishou}, whose presses travel in the skill system's own
  * packets). One goes UP and is only an ask: an Appraisal request (the id of the entity under the crosshair, at most one answered a second). The server decides everything: the sender must be a real player,
  * hold the sword, and every ask is rate limited. Two go DOWN, only to the wielder: the sword's state for the HUD (once a second while he is held, and when a cast changes it) and the answer
  * of an Appraisal. The client side is hooked in by {@link #clientSync} and {@link #clientAppraisal} (set by the client class), so this common file names no client class. Both directions are optional.
@@ -27,7 +27,7 @@ public final class ShishouNet {
     // ---------------------------------------------------------------- client to server
     /** What is under the crosshair: an entity id, or -1 for the item in the off hand. */
     public record AppraiseRequest(int entityId) implements CustomPacketPayload {
-        public static final Type<AppraiseRequest> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_appraise"));
+        public static final Type<AppraiseRequest> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_appraise"));
         public static final StreamCodec<FriendlyByteBuf, AppraiseRequest> STREAM_CODEC = StreamCodec.of((buf, p) -> buf.writeVarInt(p.entityId() + 1), buf -> new AppraiseRequest(buf.readVarInt() - 1));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
@@ -36,7 +36,7 @@ public final class ShishouNet {
     /** The sword's state for the HUD: level, mana, the selected skill's ordinal (-1 none) and its cooldown share, the window flags, the share of the way to the next level (all 0..100). */
     public record Sync(int level, int mana, int maxMana, int selected, int cooldownShare, int flags, int expShare) implements CustomPacketPayload {
         public static final int F_BARRIER = 1, F_SENSE = 2, F_STEALTH = 4, F_RELEASED = 8, F_LOW = 16;
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeVarInt(p.level());
             buf.writeVarInt(p.mana());
@@ -52,7 +52,7 @@ public final class ShishouNet {
     /** The Appraisal readout: kind 0 a mob, 1 an item, 2 nothing found. */
     public record AppraisalReply(int entityId, int kind, String nameKey, float health, float maxHealth, int levelish, int manaish, int weakMask, String skillKey, boolean concealed)
             implements CustomPacketPayload {
-        public static final Type<AppraisalReply> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "shishou_appraisal"));
+        public static final Type<AppraisalReply> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "shishou_appraisal"));
         public static final StreamCodec<FriendlyByteBuf, AppraisalReply> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeVarInt(p.entityId() + 1);
             buf.writeByte(p.kind());

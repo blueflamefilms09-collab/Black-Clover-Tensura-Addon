@@ -62,7 +62,7 @@ public final class MagicKeys {
         return out.isEmpty() ? "Unknown Magic" : out;
     }
 
-    /** Texture path (inside assets/nusmp) of the magic's grimoire / skill icon. */
+    /** Texture path (inside assets/anime_multiverse) of the magic's grimoire / skill icon. */
     public static String iconPath(String id) {
         return "textures/skill/grimoire/" + enumKey(id).toLowerCase(Locale.ROOT) + ".png";
     }
@@ -88,10 +88,10 @@ public final class MagicKeys {
     }
 
     /** Lang key of the book's skill name, as ManasCore builds it from the registry id. */
-    public static String bookNameKey(String bookPath) { return "nusmp.skill." + bookPath; }
+    public static String bookNameKey(String bookPath) { return "anime_multiverse.skill." + bookPath; }
 
-    public static String bookDescriptionKey(String bookPath) { return "nusmp.skill." + bookPath + ".description"; }
+    public static String bookDescriptionKey(String bookPath) { return "anime_multiverse.skill." + bookPath + ".description"; }
 
     /** Lang key of one page's description (multiverse.MasteryPages shows it when the page opens). */
-    public static String pageKey(String bookPath, String pageId) { return "nusmp.page." + bookPath + "." + pageId; }
+    public static String pageKey(String bookPath, String pageId) { return "anime_multiverse.page." + bookPath + "." + pageId; }
 }

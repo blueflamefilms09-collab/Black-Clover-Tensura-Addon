@@ -65,7 +65,7 @@ public final class UltimateSelfTests {
 
     private static Set<String> langKeys() {
         Set<String> keys = new HashSet<>();
-        try (InputStream in = UltimateSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+        try (InputStream in = UltimateSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
             if (in != null) {
                 var o = com.google.gson.JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
                 for (var e : o.entrySet()) keys.add(e.getKey());
@@ -127,7 +127,7 @@ public final class UltimateSelfTests {
         if (!UltimateConfig.kingdomAnimations()) return Result.fail("ultimate.kingdomAnimations does not default to true");
         // the clips of every kingdom are in the shipped animation file with the shape the client needs
         com.google.gson.JsonObject all;
-        try (InputStream in = UltimateSelfTests.class.getResourceAsStream("/assets/nusmp/animations/player/cast.animation.json")) {
+        try (InputStream in = UltimateSelfTests.class.getResourceAsStream("/assets/anime_multiverse/animations/player/cast.animation.json")) {
             if (in == null) return Result.fail("cast.animation.json is not in the jar");
             all = com.google.gson.JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonObject("animations");
         } catch (Exception e) {
@@ -228,7 +228,7 @@ public final class UltimateSelfTests {
         if (UltimateManager.activeCount() != before + Math.min(cap, started)) return Result.fail("the global cap " + cap + " did not hold: " + UltimateManager.activeCount() + " casts for " + started + " starts");
         if (started > cap) return Result.fail(started + " casts started with a cap of " + cap);
         var speed = a.getAttribute(Attributes.MOVEMENT_SPEED);
-        if (!speed.hasModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_speed"))) return Result.fail("the caster is not held in place during the wind-up");
+        if (!speed.hasModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_speed"))) return Result.fail("the caster is not held in place during the wind-up");
 
         // every cancel reason: the hold is taken off, the entry is gone, a lockout is set (not for a server stop)
         for (Cancel why : new Cancel[]{Cancel.DEATH, Cancel.DIMENSION, Cancel.DAMAGE, Cancel.SEALED, Cancel.SNEAK, Cancel.LOW_MANA, Cancel.LOGOUT}) {
@@ -236,8 +236,8 @@ public final class UltimateSelfTests {
             UltimateManager.cancel(a, why);
             canceled++;
             if (UltimateManager.casting(a)) return Result.fail("the entry outlived the cancel " + why);
-            if (speed.hasModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_speed"))) return Result.fail("the movement hold outlived the cancel " + why);
-            if (a.getAttribute(Attributes.JUMP_STRENGTH).hasModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_jump"))) return Result.fail("the jump hold outlived the cancel " + why);
+            if (speed.hasModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_speed"))) return Result.fail("the movement hold outlived the cancel " + why);
+            if (a.getAttribute(Attributes.JUMP_STRENGTH).hasModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_jump"))) return Result.fail("the jump hold outlived the cancel " + why);
             if (UltimatePlayer.lockUntil(a) <= level.getGameTime()) return Result.fail("no lockout after " + why);
             if (UltimatePlayer.cooldownUntil(a) != cd0) return Result.fail("a cancelled cast started the long cooldown (" + why + ")");
         }
@@ -297,7 +297,7 @@ public final class UltimateSelfTests {
             if (creative.getHealth() < creativeHealth) return Result.fail("a creative player was hurt");
             if (a.getHealth() < selfHealth) return Result.fail("the caster was hurt by their own Ultimate");
             if (UltimateManager.casting(a) || UltimateManager.activeCount() != before) return Result.fail("the entry outlived the last pulse");
-            if (speed.hasModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "ultimate_lock_speed"))) return Result.fail("the movement hold outlived the release");
+            if (speed.hasModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "ultimate_lock_speed"))) return Result.fail("the movement hold outlived the release");
             // the cooldown refuses a second cast at once (the gate refuses it first for a stand-in: both are a refusal with nothing started)
             if (UltimateManager.begin(fire, inst, a, 0, def) || UltimateManager.casting(a)) return Result.fail("a second Ultimate began during the cooldown");
             return Result.ok("one entry per caster, cap " + cap + ", hold on and off, " + canceled + " cancel reasons clean, release took all magicule" + (mana ? "" : " (stand-in has no magicule data: that check skipped)")

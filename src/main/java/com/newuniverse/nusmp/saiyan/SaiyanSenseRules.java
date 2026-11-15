@@ -17,7 +17,7 @@ public final class SaiyanSenseRules {
 
         Tier(double radius) { this.radius = radius; }
 
-        public String key() { return "nusmp.saiyan.sense." + name().toLowerCase(Locale.ROOT); }
+        public String key() { return "anime_multiverse.saiyan.sense." + name().toLowerCase(Locale.ROOT); }
 
         public static Tier of(int i) { return values()[Math.max(0, Math.min(values().length - 1, i))]; }
     }

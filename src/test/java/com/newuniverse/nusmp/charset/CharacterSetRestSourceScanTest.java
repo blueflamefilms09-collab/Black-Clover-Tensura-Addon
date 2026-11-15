@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class CharacterSetRestSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/character_spells");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/character_spells");
     private static final List<String> REST = List.of("charlotte", "jack", "rill", "dorothy", "zenon", "vanica", "dante", "lucius", "rades", "gadjah", "mars", "kahono", "kiato");
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
@@ -143,10 +143,10 @@ class CharacterSetRestSourceScanTest {
     @Test
     void everyAddedPageHasItsTextAndItsPolicyLine() throws IOException {
         JsonObject lang = JsonParser.parseString(read(Path.of("tools/lang/character_spells_rest.json"))).getAsJsonObject();
-        String policy = read(Path.of("src/main/resources/data/nusmp/armour_policy.json"));
+        String policy = read(Path.of("src/main/resources/data/anime_multiverse/armour_policy.json"));
         for (String book : List.of("book_briar", "book_painting", "book_blood", "book_lightning", "book_mineral", "book_song"))
             for (String id : added(book)) {
-                assertTrue(lang.has("nusmp.page." + book + "." + id), "lang fragment: nusmp.page." + book + "." + id);
+                assertTrue(lang.has("anime_multiverse.page." + book + "." + id), "lang fragment: anime_multiverse.page." + book + "." + id);
                 assertTrue(policy.contains("\"" + id + "\""), "armour_policy.json new_pages: " + id);
             }
     }

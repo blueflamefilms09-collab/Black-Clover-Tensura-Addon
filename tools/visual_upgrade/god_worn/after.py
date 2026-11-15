@@ -2,7 +2,7 @@
 
     python3 -B tools/visual_upgrade/god_worn/after.py
 
-Reads assets/nusmp/visual_upgrade/catalog.txt (the `up`, `lod` and `held` pieces), the model files, the skins and glow maps, and the effect tables. The numbers are proxies, counted from
+Reads assets/anime_multiverse/visual_upgrade/catalog.txt (the `up`, `lod` and `held` pieces), the model files, the skins and glow maps, and the effect tables. The numbers are proxies, counted from
 the files the game reads (see metrics.py for every definition); they say how much was built, not how it looks. The targets of the God brief are checked and written next to them:
 quads >= 5 x baseline (floor 900), painted texels >= 4 x baseline, a separate glow map, >= 3 ambient layers, an idle animation, an act visual for every act of the relic that has one,
 a LOD of at most 15% and a held form of at most 2500 vertices, V_after >= 5 x V_before.
@@ -39,7 +39,7 @@ def act_keys(rid):
     import glob
     alias = {"hand_of_vecna": "Wave30Tune.ID_HAND", "eye_of_vecna": "Wave30Tune.ID_EYE"}
     ident = '"%s"' % rid if rid not in alias else alias[rid]
-    for f in glob.glob(os.path.join(M.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "*.java")):
+    for f in glob.glob(os.path.join(M.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "*.java")):
         t = open(f, encoding="utf8").read()
         m = re.search(r'RelicDef\.of\(%s,.*?(?=out\.accept|\Z)' % re.escape(ident), t, re.S)
         if m:

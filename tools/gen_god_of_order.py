@@ -12,10 +12,10 @@ Models (GeoSpec.of("god_of_order", "<name>")):
     gates    the same body with the ledger open (100% authority): a second, larger counter-turning ring and six floating pages that orbit it, more gold
 
 Writes (through tools/geo_builder.py):
-    assets/nusmp/geo/entity/god_of_order_<name>.geo.json
-    assets/nusmp/animations/entity/god_of_order_<name>.animation.json
-    assets/nusmp/textures/entity/god_of_order_<name>.png          512 wide at 2 texels per model pixel (the mask, the halo, the staff ring and the pages at 4)
-    assets/nusmp/textures/entity/god_of_order_<name>_glow.png     eye slits, glyphs, the brow balance, trims (additive, full bright)
+    assets/anime_multiverse/geo/entity/god_of_order_<name>.geo.json
+    assets/anime_multiverse/animations/entity/god_of_order_<name>.animation.json
+    assets/anime_multiverse/textures/entity/god_of_order_<name>.png          512 wide at 2 texels per model pixel (the mask, the halo, the staff ring and the pages at 4)
+    assets/anime_multiverse/textures/entity/god_of_order_<name>_glow.png     eye slits, glyphs, the brow balance, trims (additive, full bright)
 and tools/render_preview/scenes.d/god_of_order.json (python3 -B tools/render_preview/preview.py god_base_front god_gates_read ...; the scenes are named
 god_<model>_<front|back|face|idle|walk|run|attack|cast|cast_big|hurt|transform|death|read|beam|bow>).
 

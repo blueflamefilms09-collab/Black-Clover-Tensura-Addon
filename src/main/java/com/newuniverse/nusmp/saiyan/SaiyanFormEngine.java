@@ -51,7 +51,7 @@ final class SaiyanFormEngine {
     }
 
     private static void msg(ServerPlayer p, String key, SaiyanForms.Form f, boolean overlay) {
-        p.displayClientMessage(Component.translatable("nusmp.saiyan.msg." + key, Component.translatable(f.key())), overlay);
+        p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg." + key, Component.translatable(f.key())), overlay);
     }
 
     // ------------------------------------------------------------------ the keys

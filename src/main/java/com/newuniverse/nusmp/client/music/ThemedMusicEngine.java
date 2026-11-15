@@ -33,7 +33,7 @@ import java.util.Map;
  * (no streaming of a file nobody can hear). Outside the Mega-Dungeon and the Hub, with the switch off, or after a logout, every voice fades out or is dropped and vanilla music is
  * back. A loop that the sound engine dropped (a resource reload, F3+S) is started again.
  * <p>
- * The tracks are plain files ({@code assets/nusmp/sounds/music/<track>.ogg}), so a resource pack replaces them with real music without any change here; see docs/audio/themed_music.md.
+ * The tracks are plain files ({@code assets/anime_multiverse/sounds/music/<track>.ogg}), so a resource pack replaces them with real music without any change here; see docs/audio/themed_music.md.
  * Client only; started from the client block of the mod class.
  */
 public final class ThemedMusicEngine {

@@ -458,7 +458,7 @@ final class DndBoss {
                 execDamage = 0;
                 p.addEffect(new MobEffectInstance(MobEffects.GLOWING, DndRules.EXECUTION_CAST_TICKS + 10, 0, false, false));
                 sl.playSound(null, g.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.HOSTILE, 2.0f, 0.6f);
-                if (p instanceof ServerPlayer sp) sp.displayClientMessage(Component.translatable("message.nusmp.mega.dnd.exec_mark").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
+                if (p instanceof ServerPlayer sp) sp.displayClientMessage(Component.translatable("message.anime_multiverse.mega.dnd.exec_mark").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), true);
                 say(sl, g, "exec_cast", p.getName());
                 return;
             }
@@ -503,7 +503,7 @@ final class DndBoss {
 
     private static void say(ServerLevel sl, LabyrinthGuardianEntity g, String key, Object... args) {
         for (Player p : sl.getEntitiesOfClass(Player.class, g.getBoundingBox().inflate(48.0), Player::isAlive)) {
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.dnd." + key, args).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.dnd." + key, args).withStyle(ChatFormatting.LIGHT_PURPLE), true);
         }
     }
 

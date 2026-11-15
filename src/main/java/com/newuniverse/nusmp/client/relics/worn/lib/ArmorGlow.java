@@ -33,7 +33,7 @@ public final class ArmorGlow {
                 model = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR));
             } catch (RuntimeException ex) {
                 failed = true;
-                LogUtils.getLogger().error("[nusmp] the armour glow model could not be baked; armour relics do not glow", ex);
+                LogUtils.getLogger().error("[anime_multiverse] the armour glow model could not be baked; armour relics do not glow", ex);
                 return;
             }
         }

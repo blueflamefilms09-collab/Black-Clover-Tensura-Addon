@@ -46,7 +46,7 @@ public final class Request {
     public int maxPieces = 450;
     public int capMargin = MegaGrid.CAP_MARGIN;
     public Recipe recipe = new Recipe();
-    /** Pool overrides by socket name, e.g. {@code nusmp:mega_vault} to {@code nusmp:mega/vault_2}. */
+    /** Pool overrides by socket name, e.g. {@code anime_multiverse:mega_vault} to {@code anime_multiverse:mega/vault_2}. */
     public Map<String, String> forced = Map.of();
     /** How the Way Onward is chosen and checked; null means "use the pool written in the template and accept any seal". */
     public OnwardPolicy onward;

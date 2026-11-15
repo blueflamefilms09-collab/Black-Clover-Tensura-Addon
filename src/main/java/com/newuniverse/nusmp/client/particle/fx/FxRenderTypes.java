@@ -33,7 +33,7 @@ public final class FxRenderTypes {
 
         @Override
         public String toString() {
-            return "nusmp:fx_additive";
+            return "anime_multiverse:fx_additive";
         }
     };
 }

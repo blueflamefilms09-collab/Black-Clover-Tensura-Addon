@@ -51,7 +51,7 @@ final class AptitudesPage extends ForgePage {
 
     @Override int accent() { return 0xE8C468; }
 
-    @Override String title() { return ForgeText.s("nusmp.avatar.forge.page.aptitudes", "Magic Aptitude"); }
+    @Override String title() { return ForgeText.s("anime_multiverse.avatar.forge.page.aptitudes", "Magic Aptitude"); }
 
     private void resort() {
         sorted = new ArrayList<>(SoulForgeClientData.aptitudes);
@@ -87,7 +87,7 @@ final class AptitudesPage extends ForgePage {
         if (st.rollPending()) {
             if (++waitTicks > 70) {                                    // the answer never came
                 st.rollFailed();
-                h.say(ForgeText.t("nusmp.avatar.forge.apt.noanswer", "The Soul Forge did not answer the roll."), false);
+                h.say(ForgeText.t("anime_multiverse.avatar.forge.apt.noanswer", "The Soul Forge did not answer the roll."), false);
                 waitTicks = 0;
             }
         } else waitTicks = 0;
@@ -172,7 +172,7 @@ final class AptitudesPage extends ForgePage {
                 float pop = rolled && popAge < 14f ? 1f - popAge / 14f : 0f;
                 ForgeUi.medallion(g, font, s, ForgeIcons.aptitudeTexture(row), row.name(), row.tint(), frame, Math.max(hv, pop), true, false);
                 // the price tag of a hand pick, the "free" tag of the roll
-                String tag = rolled ? ForgeText.s("nusmp.avatar.forge.apt.free", "FREE") : taxText(row);
+                String tag = rolled ? ForgeText.s("anime_multiverse.avatar.forge.apt.free", "FREE") : taxText(row);
                 int tagRgb = rolled ? 0x7CF0B0 : (row.taxPercent() > 0 ? 0xE8C468 : 0x7CF0B0);
                 int tw = font.width(tag) + 4;
                 int tx = s.cx() - tw / 2, ty = s.bottom() - 4;
@@ -211,7 +211,7 @@ final class AptitudesPage extends ForgePage {
 
     private String taxText(ForgeAptitudeRow row) {
         double pct = row.taxPercent() * h.rules().aptitudeTaxScale();
-        return pct <= 0.0 ? ForgeText.s("nusmp.avatar.forge.apt.notax", "free") : "-" + (pct == Math.rint(pct) ? String.valueOf((long) pct) : String.format(Locale.ROOT, "%.1f", pct)) + "%";
+        return pct <= 0.0 ? ForgeText.s("anime_multiverse.avatar.forge.apt.notax", "free") : "-" + (pct == Math.rint(pct) ? String.valueOf((long) pct) : String.format(Locale.ROOT, "%.1f", pct)) + "%";
     }
 
     private void drawButton(GuiGraphics g, int mx, int my) {
@@ -219,9 +219,9 @@ final class AptitudesPage extends ForgePage {
         ForgeState st = h.state();
         boolean can = st.canRoll(h.rules(), h.rollsLeft());
         boolean over = button.contains(mx, my);
-        ForgeUi.button(g, font, button, ForgeText.s("nusmp.avatar.forge.apt.randomize", "Randomize Aptitude"), can, h.hover("aroll", over && can), 0xE8C468);
-        String caption = h.rollsLeft() <= 0 ? ForgeText.s("nusmp.avatar.forge.apt.none_left", "No free rolls left")
-                : ForgeText.s("nusmp.avatar.forge.apt.caption", "Free: %s rolls left. No tax.", h.rollsLeft());
+        ForgeUi.button(g, font, button, ForgeText.s("anime_multiverse.avatar.forge.apt.randomize", "Randomize Aptitude"), can, h.hover("aroll", over && can), 0xE8C468);
+        String caption = h.rollsLeft() <= 0 ? ForgeText.s("anime_multiverse.avatar.forge.apt.none_left", "No free rolls left")
+                : ForgeText.s("anime_multiverse.avatar.forge.apt.caption", "Free: %s rolls left. No tax.", h.rollsLeft());
         ForgeUi.centered(g, font, ForgeUi.fit(font, caption, action.w()), action.cx(), button.bottom() + 3, h.rollsLeft() <= 0 ? 0xFF6A6A : 0x8FA3BF);
         if (over || (action.contains(mx, my) && my > button.bottom())) h.tooltip(rollTooltip(can));
     }
@@ -257,12 +257,12 @@ final class AptitudesPage extends ForgePage {
         List<Component> t = new ArrayList<>();
         if (row == null) {
             t.add(Component.literal(title()).withStyle(ChatFormatting.GOLD));
-            t.add(ForgeText.t("nusmp.avatar.forge.apt.slot.empty", "An empty slot: pick an aptitude below, or use the free roll.").withStyle(ChatFormatting.GRAY));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.slot.empty", "An empty slot: pick an aptitude below, or use the free roll.").withStyle(ChatFormatting.GRAY));
             return t;
         }
         t.add(Component.literal(row.name()).withStyle(rarityFormat(SoulForgeClientData.aptitude(row.id()) == null ? Aptitude.Rarity.COMMON : SoulForgeClientData.aptitude(row.id()).rarity())));
-        t.add(rolled ? ForgeText.t("nusmp.avatar.forge.apt.slot.rolled", "Won from the free roll: no tax. Click to let it go.").withStyle(ChatFormatting.GREEN)
-                : ForgeText.t("nusmp.avatar.forge.apt.slot.picked", "Taken by hand. Click to give it back.").withStyle(ChatFormatting.GRAY));
+        t.add(rolled ? ForgeText.t("anime_multiverse.avatar.forge.apt.slot.rolled", "Won from the free roll: no tax. Click to let it go.").withStyle(ChatFormatting.GREEN)
+                : ForgeText.t("anime_multiverse.avatar.forge.apt.slot.picked", "Taken by hand. Click to give it back.").withStyle(ChatFormatting.GRAY));
         return t;
     }
 
@@ -270,8 +270,8 @@ final class AptitudesPage extends ForgePage {
         ForgeRules rules = h.rules();
         ForgeContext c = h.reserves();
         List<Component> t = new ArrayList<>();
-        t.add(ForgeText.t("nusmp.avatar.forge.apt.randomize.title", "Randomize Aptitude").withStyle(ChatFormatting.GOLD));
-        t.add(ForgeText.t("nusmp.avatar.forge.apt.randomize.tip", "A free gamble, decided by the server. What it gives you costs no tax at all.").withStyle(ChatFormatting.GRAY));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.randomize.title", "Randomize Aptitude").withStyle(ChatFormatting.GOLD));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.randomize.tip", "A free gamble, decided by the server. What it gives you costs no tax at all.").withStyle(ChatFormatting.GRAY));
         List<Aptitude> pool = new ArrayList<>();
         for (ForgeAptitudeRow r : sorted) { Aptitude a = SoulForgeClientData.aptitude(r.id()); if (a != null && !h.state().picks().contains(a.id())) pool.add(a); }
         double[] odds = AptitudeRoll.odds(pool, c.luck(), rules.luckStrength());
@@ -280,10 +280,10 @@ final class AptitudesPage extends ForgePage {
             if (odds[i] <= 0.0) continue;
             t.add(Component.literal(" " + cap(all[i].name()) + "  " + String.format(Locale.ROOT, "%.1f", odds[i] * 100.0) + "%").withStyle(rarityFormat(all[i])));
         }
-        t.add(ForgeText.t("nusmp.avatar.forge.apt.randomize.luck", "Your luck (%s) lifts the rarer ones.", String.format(Locale.ROOT, "%.1f", c.luck())).withStyle(ChatFormatting.DARK_GRAY));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.randomize.luck", "Your luck (%s) lifts the rarer ones.", String.format(Locale.ROOT, "%.1f", c.luck())).withStyle(ChatFormatting.DARK_GRAY));
         if (!can) {
-            if (h.rollsLeft() <= 0) t.add(ForgeText.t("nusmp.avatar.forge.apt.randomize.out", "You have no free rolls left.").withStyle(ChatFormatting.RED));
-            else if (h.state().picks().size() >= rules.maxAptitudes()) t.add(ForgeText.t("nusmp.avatar.forge.apt.randomize.full", "Your hand picks fill every slot. Give one back to roll.").withStyle(ChatFormatting.RED));
+            if (h.rollsLeft() <= 0) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.randomize.out", "You have no free rolls left.").withStyle(ChatFormatting.RED));
+            else if (h.state().picks().size() >= rules.maxAptitudes()) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.randomize.full", "Your hand picks fill every slot. Give one back to roll.").withStyle(ChatFormatting.RED));
         }
         return t;
     }
@@ -299,27 +299,27 @@ final class AptitudesPage extends ForgePage {
         List<Component> t = new ArrayList<>();
         t.add(Component.literal(r.name()).withStyle(rarityFormat(rar)));
         t.add(Component.literal(cap(rar.name())).withStyle(ChatFormatting.GRAY)
-                .append(r.magic().isEmpty() ? Component.empty() : Component.literal("  -  ").append(ForgeText.t("nusmp.avatar.forge.apt.magic", "%s magic", ForgeUi.titleCase(r.magic()))).withStyle(ChatFormatting.DARK_GRAY)));
+                .append(r.magic().isEmpty() ? Component.empty() : Component.literal("  -  ").append(ForgeText.t("anime_multiverse.avatar.forge.apt.magic", "%s magic", ForgeUi.titleCase(r.magic()))).withStyle(ChatFormatting.DARK_GRAY)));
         if (!r.description().isEmpty()) for (String line : ForgeUi.wrapLines(h.font(), r.description(), 190, 4)) t.add(Component.literal(line).withStyle(ChatFormatting.GRAY));
         if (!r.skills().isEmpty()) {
             List<String> names = new ArrayList<>();
             for (String s : r.skills()) names.add(ForgeIcons.skillLabel(s));
-            t.add(ForgeText.t("nusmp.avatar.forge.apt.lends", "Lends:").withStyle(ChatFormatting.AQUA));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.lends", "Lends:").withStyle(ChatFormatting.AQUA));
             for (String line : ForgeUi.wrapLines(h.font(), String.join(", ", names), 190, 4)) t.add(Component.literal(" " + line).withStyle(ChatFormatting.AQUA));
         }
         double pct = r.taxPercent() * rules.aptitudeTaxScale();
         if (pct <= 0.0) {
-            t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.free", "Costs no tax, however you get it.").withStyle(ChatFormatting.GREEN));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.free", "Costs no tax, however you get it.").withStyle(ChatFormatting.GREEN));
         } else {
-            t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.tax", "Taken by hand: %s%% of your maximum magicule, for good.", String.format(Locale.ROOT, "%.1f", pct)).withStyle(ChatFormatting.GOLD));
-            if (c.maxMagicule() > 0) t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.pay", "That is about %s magicule gone for good, and about %s now.",
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.tax", "Taken by hand: %s%% of your maximum magicule, for good.", String.format(Locale.ROOT, "%.1f", pct)).withStyle(ChatFormatting.GOLD));
+            if (c.maxMagicule() > 0) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.pay", "That is about %s magicule gone for good, and about %s now.",
                     Math.round(pct / 100.0 * c.maxMagicule()), Math.round(pct / 100.0 * rules.upfrontFactor() * c.maxMagicule())).withStyle(ChatFormatting.YELLOW));
-            t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.roll", "Won from the free roll, it costs nothing.").withStyle(ChatFormatting.GREEN));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.roll", "Won from the free roll, it costs nothing.").withStyle(ChatFormatting.GREEN));
         }
-        if (st.picks().contains(r.id())) t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.remove", "Click to give it back.").withStyle(ChatFormatting.DARK_GRAY));
-        else if (st.useRoll() && r.id().equals(st.rolledId())) t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.have", "You hold it from the roll.").withStyle(ChatFormatting.DARK_GRAY));
-        else if (st.aptitudeCount() >= rules.maxAptitudes()) t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.full", "Every slot is taken.").withStyle(ChatFormatting.RED));
-        else t.add(ForgeText.t("nusmp.avatar.forge.apt.tip.pick", "Click to take it (%s of %s slots used).", st.aptitudeCount(), rules.maxAptitudes()).withStyle(ChatFormatting.DARK_GRAY));
+        if (st.picks().contains(r.id())) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.remove", "Click to give it back.").withStyle(ChatFormatting.DARK_GRAY));
+        else if (st.useRoll() && r.id().equals(st.rolledId())) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.have", "You hold it from the roll.").withStyle(ChatFormatting.DARK_GRAY));
+        else if (st.aptitudeCount() >= rules.maxAptitudes()) t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.full", "Every slot is taken.").withStyle(ChatFormatting.RED));
+        else t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.tip.pick", "Click to take it (%s of %s slots used).", st.aptitudeCount(), rules.maxAptitudes()).withStyle(ChatFormatting.DARK_GRAY));
         return t;
     }
 
@@ -340,14 +340,14 @@ final class AptitudesPage extends ForgePage {
         if (button != 0 || !gridArea.contains(mx, my)) return false;
         int idx = grid.indexAt(mx, my, scroll);
         if (idx < 0 || idx >= sorted.size()) return true;
-        if (busy) { h.say(ForgeText.t("nusmp.avatar.forge.apt.busy", "Wait for the roll to finish."), false); return true; }
+        if (busy) { h.say(ForgeText.t("anime_multiverse.avatar.forge.apt.busy", "Wait for the roll to finish."), false); return true; }
         ForgeAptitudeRow r = sorted.get(idx);
         ForgeState.Pick res = st.togglePick(r.id(), h.rules());
         switch (res) {
             case ADDED -> { h.click(); h.pulse(r.tint()); h.changed(); }
             case REMOVED -> { h.click(); h.changed(); }
-            case FULL -> h.say(ForgeText.t("nusmp.avatar.forge.apt.full", "Every aptitude slot is taken. Give one back first."), false);
-            case ROLLED -> h.say(ForgeText.t("nusmp.avatar.forge.apt.have", "You already hold it from the roll."), false);
+            case FULL -> h.say(ForgeText.t("anime_multiverse.avatar.forge.apt.full", "Every aptitude slot is taken. Give one back first."), false);
+            case ROLLED -> h.say(ForgeText.t("anime_multiverse.avatar.forge.apt.have", "You already hold it from the roll."), false);
         }
         return true;
     }

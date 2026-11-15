@@ -30,7 +30,7 @@ import java.util.Optional;
  * The self-test {@code visual.armor_slot_relics} (run by the CI server smoke test, see {@link SelfTests}; it reads only registries, files in the jar and pure classes, so it runs on a
  * dedicated server): every item of the mod that can be worn in a vanilla armour slot has a way onto the body.
  * <ul>
- *   <li>every HEAD, CHEST and FEET relic is a registered {@link RelicArmorItem} whose armour material names the layer {@code nusmp:relic_<id>}, resolves through the real catalogs to a
+ *   <li>every HEAD, CHEST and FEET relic is a registered {@link RelicArmorItem} whose armour material names the layer {@code anime_multiverse:relic_<id>}, resolves through the real catalogs to a
  *       worn model that hangs on the right body part ({@link ArmorSlotCoverage}), and has a painted layer (old painter and 1.110.0 painter cover the same, non-empty pixels, and the
  *       glow channel lies on covered pixels);</li>
  *   <li>every other armour item of the mod (robes, dungeon armour) resolves to library models whose files exist;</li>
@@ -56,16 +56,16 @@ public final class ArmorSlotSelfTests {
     }
 
     static SelfTests.Result run() throws IOException {
-        UpgradeCatalog up = UpgradeCatalog.parse(lines("/assets/nusmp/visual_upgrade/catalog.txt"));
+        UpgradeCatalog up = UpgradeCatalog.parse(lines("/assets/anime_multiverse/visual_upgrade/catalog.txt"));
         int relics = 0, upgraded = 0, items = 0;
         for (RelicDef d : Relics.all()) {
             if (!d.slot().isArmor() || d.isAdopted()) continue;
             relics++;
-            ResourceLocation key = ResourceLocation.fromNamespaceAndPath("nusmp", d.id());
+            ResourceLocation key = ResourceLocation.fromNamespaceAndPath("anime_multiverse", d.id());
             Optional<Item> item = BuiltInRegistries.ITEM.getOptional(key);
             if (item.isEmpty() || !(item.get() instanceof RelicArmorItem a)) return SelfTests.Result.fail(d.id() + " is a " + d.slot() + " relic but is not a registered RelicArmorItem");
             String layer = a.getMaterial().value().layers().isEmpty() ? "" : a.getMaterial().value().layers().get(0).texture(false).toString();
-            if (!layer.equals("nusmp:textures/models/armor/" + RelicArmorMaterials.name(d.id()) + "_layer_1.png")) return SelfTests.Result.fail(d.id() + " names the armour layer '" + layer + "', expected nusmp:" + RelicArmorMaterials.name(d.id()));
+            if (!layer.equals("anime_multiverse:textures/models/armor/" + RelicArmorMaterials.name(d.id()) + "_layer_1.png")) return SelfTests.Result.fail(d.id() + " names the armour layer '" + layer + "', expected anime_multiverse:" + RelicArmorMaterials.name(d.id()));
             ArmorSlotCoverage.Resolution res = ArmorSlotCoverage.resolve(d.id(), d.slot().name(), d.look().name(), WornAssets.catalog(), up, n -> {
                 Optional<WornMesh> m = WornAssets.mesh(n);
                 return m.isPresent() ? m.get().anchor : (WornAnchor) null;
@@ -96,7 +96,7 @@ public final class ArmorSlotSelfTests {
         for (Item item : BuiltInRegistries.ITEM) {
             if (!(item instanceof ArmorItem a) || item instanceof RelicArmorItem) continue;
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            if (!"nusmp".equals(id.getNamespace())) continue;
+            if (!"anime_multiverse".equals(id.getNamespace())) continue;
             ArmorLooks.Slot slot = switch (a.getEquipmentSlot()) {
                 case HEAD -> ArmorLooks.Slot.HEAD;
                 case CHEST -> ArmorLooks.Slot.CHEST;

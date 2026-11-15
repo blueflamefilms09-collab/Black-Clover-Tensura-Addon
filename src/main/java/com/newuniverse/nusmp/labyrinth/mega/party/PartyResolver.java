@@ -76,7 +76,7 @@ public final class PartyResolver {
         } catch (RuntimeException | LinkageError e) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The party of {} could not be read (further failures are not logged); the player is a party of one: {}", p.getGameProfile().getName(), e.toString());
+                LOG.warn("[anime_multiverse] The party of {} could not be read (further failures are not logged); the player is a party of one: {}", p.getGameProfile().getName(), e.toString());
             }
             return PartyKey.solo(p.getUUID());
         }

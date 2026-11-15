@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.List;
 
 /**
- * Why: the registrations of the sample companion, on registers of their own so the feature is one self-contained unit (rule 12): one entity type {@code nusmp:arc_companion} (a subclass of the arcs' friendly
+ * Why: the registrations of the sample companion, on registers of their own so the feature is one self-contained unit (rule 12): one entity type {@code anime_multiverse:arc_companion} (a subclass of the arcs' friendly
  * character, set to Charmy Pappitson) and its creative spawn egg. The egg is the only way to get one (it is not placed by the Hub or by any world generation), and it works only while {@code companions.enabled}
  * is on (a companion that spawns while the system is off simply falls back to the arcs' old chat talk).
  */

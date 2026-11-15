@@ -70,7 +70,7 @@ public abstract class ArcBoss extends ZogratisBoss {
             try {
                 l.accept(this);
             } catch (RuntimeException e) {
-                com.mojang.logging.LogUtils.getLogger().error("[nusmp] an arc defeat listener failed for {}: {}", character().id(), e.toString());
+                com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] an arc defeat listener failed for {}: {}", character().id(), e.toString());
             }
         }
     }

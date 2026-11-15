@@ -28,8 +28,8 @@ public final class SocketCoreItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         tip.add(Component.translatable(def.nameKey()).withColor(def.rgb()));
-        tip.add(Component.translatable("socket.nusmp.core." + def.kind().prefix()).withStyle(ChatFormatting.GRAY));
-        tip.add(Component.translatable("socket.nusmp.core.how").withStyle(ChatFormatting.DARK_GRAY));
-        tip.add(Component.translatable("socket.nusmp.core.act", def.act().name()).withStyle(ChatFormatting.DARK_AQUA));
+        tip.add(Component.translatable("socket.anime_multiverse.core." + def.kind().prefix()).withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("socket.anime_multiverse.core.how").withStyle(ChatFormatting.DARK_GRAY));
+        tip.add(Component.translatable("socket.anime_multiverse.core.act", def.act().name()).withStyle(ChatFormatting.DARK_AQUA));
     }
 }

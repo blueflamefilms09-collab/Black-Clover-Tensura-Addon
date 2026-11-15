@@ -21,7 +21,7 @@ import java.util.Set;
 final class GearFx {
     private GearFx() {}
 
-    static final Path TABLES = Path.of("src/main/resources/data/nusmp/mega/gear/tables.json");
+    static final Path TABLES = Path.of("src/main/resources/data/anime_multiverse/mega/gear/tables.json");
     private static GearTablesParser.Result shipped;
 
     /** The shipped file, parsed once with the real parser. */

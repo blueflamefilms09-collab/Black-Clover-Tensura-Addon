@@ -25,7 +25,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
 OUT = os.path.join(TEX, "icons")
 PREVIEW = os.path.join(ROOT, "build", "skill_icons")
 DOCS = os.path.join(ROOT, "docs")

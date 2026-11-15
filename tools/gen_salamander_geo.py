@@ -4,7 +4,7 @@ finger bones) and the big golden dragon that hangs over the caster while a big p
 mouth, huge veined wings with finger bones, clawed hands, legs tucked, a spiny tail). Models (Bedrock geo, 1/16 block units, y up, front -z), a hand-painted sheet each (tools/gen_salamander_art.py),
 animations, three levels of detail per form and a glow-only model:
 
-    python3 -B tools/gen_salamander_geo.py            writes assets/nusmp/{geo,animations,textures}/entity/firecast_{salamander,dragon}[_lod1|_lod2|_fx]*
+    python3 -B tools/gen_salamander_geo.py            writes assets/anime_multiverse/{geo,animations,textures}/entity/firecast_{salamander,dragon}[_lod1|_lod2|_fx]*
     python3 -B tools/gen_salamander_geo.py --count    prints the quads of every model
 
     firecast_salamander      LOD 0 (full)           firecast_dragon      LOD 0
@@ -761,7 +761,7 @@ def animations(form):
 
 
 # ====================================================================================================================== main
-LOD_JAVA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "java", "com", "newuniverse", "nusmp", "firecast", "FireCastLod.java")
+LOD_JAVA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "firecast", "FireCastLod.java")
 
 
 def sync_java(counts):

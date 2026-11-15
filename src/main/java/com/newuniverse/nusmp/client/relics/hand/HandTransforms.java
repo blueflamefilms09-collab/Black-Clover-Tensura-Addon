@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Why: a relic carried in the hand, lying on the ground or hanging in an item frame has to sit in the world the way that kind of thing is held (a necklace dangles from
  * the fingers, a hood is held by the brim, a flask is gripped round the neck), and doing that per item in Java would make every new relic a code change. This class is
- * the data side of it: it parses assets/nusmp/relic_hand/transforms.txt into named hold styles (how big the object is, which point of it sits in the hand, how it is
+ * the data side of it: it parses assets/anime_multiverse/relic_hand/transforms.txt into named hold styles (how big the object is, which point of it sits in the hand, how it is
  * turned, how much it sways, and a display transform per context) and says which style a relic uses, by its id, by its slot and look, or by its slot. Pure (no Minecraft
  * types), so the file is checked in tests without a game.
  * <pre>

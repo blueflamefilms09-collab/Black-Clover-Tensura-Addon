@@ -31,7 +31,7 @@ final class Wave25Kit {
 
     /** Switches a transient modifier of this wave on (with this amount) or off. Transient: never saved, the once-a-second step puts it back. */
     static void setMod(LivingEntity e, String attributeId, String name, double amount, AttributeModifier.Operation op, boolean on) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "w25_" + name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w25_" + name);
         attribute(attributeId).ifPresent(h -> {
             AttributeInstance inst = e.getAttribute(h);
             if (inst == null) return;

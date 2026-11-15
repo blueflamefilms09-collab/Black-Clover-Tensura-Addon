@@ -142,10 +142,10 @@ CLASSES = {"millennium_rod": "staff", "ea_sword_of_rupture": "longsword", "requi
 
 
 def write_classes():
-    """The class row of each weapon in assets/nusmp/weapon_classes.json and tools/relics/weapon_classes.json (appended; the other rows stay)."""
+    """The class row of each weapon in assets/anime_multiverse/weapon_classes.json and tools/relics/weapon_classes.json (appended; the other rows stay)."""
     import json
     from new197_lib import ROOT
-    pa = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_classes.json")
+    pa = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "weapon_classes.json")
     pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
     a = json.load(open(pa))
     t = json.load(open(pt))

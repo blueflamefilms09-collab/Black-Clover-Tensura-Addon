@@ -107,7 +107,7 @@ final class Wave2Events {
     static final double TOME_RANGE = Wave2Rules.blocks(30);
     static final long ARMED_TICKS = 600;                // an advance petition waits thirty seconds
     private static final String FLY_KEY = "nusmp_w2_flight", DAY_KEY = "nusmp_w2_mimic_day";
-    private static final ResourceLocation CAT_CURSE = ResourceLocation.fromNamespaceAndPath("nusmp", "w2_cat_curse");
+    private static final ResourceLocation CAT_CURSE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w2_cat_curse");
     private static final double HOLY_RADIUS = 3.0;
 
     // ---------------------------------------------------------------- helpers
@@ -135,7 +135,7 @@ final class Wave2Events {
         if (rl != null) BuiltInRegistries.MOB_EFFECT.getHolder(rl).ifPresent(h -> e.removeEffect(h));
     }
 
-    private static void warn(String what, RuntimeException ex) { LOG.warn("[nusmp] Relics wave 2: {} failed: {}", what, ex.toString()); }
+    private static void warn(String what, RuntimeException ex) { LOG.warn("[anime_multiverse] Relics wave 2: {} failed: {}", what, ex.toString()); }
 
     // ---------------------------------------------------------------- the per-second work
     public static void onPlayerTick(PlayerTickEvent.Post e) {

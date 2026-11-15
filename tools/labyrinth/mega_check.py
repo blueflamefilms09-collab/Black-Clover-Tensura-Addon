@@ -12,7 +12,7 @@ Why each rule exists (see docs/labyrinth/mega.md "Connector contract"):
     one of the four allowed names; an unused socket becomes its `final_state`, so a socket that finishes as air must have a clear 3x4x2 hole;
   * pools: every pool a jigsaw names exists and every template a pool names exists (a missing one crashes the structure at world load);
   * blocks: vanilla only (the Vanilla Block Primacy Rule), except the few custom blocks listed in mega_lib.CUSTOM;
-  * markers: a data marker must parse with the grammar `nusmp:<kind>[;key=value]*` and name a known kind;
+  * markers: a data marker must parse with the grammar `anime_multiverse:<kind>[;key=value]*` and name a known kind;
   * processors: a processor list may only name processor types that some Java class registers (an unknown one fails the datapack load).
 Exit status 1 when any ERROR was found (warnings never fail).
 """
@@ -27,14 +27,14 @@ sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
 from template import load  # noqa: E402
 
-DATA = os.path.join(L.RES, "data", "nusmp")
+DATA = os.path.join(L.RES, "data", "anime_multiverse")
 STRUCT = os.path.join(DATA, "structure")
 POOLS = os.path.join(DATA, "worldgen", "template_pool", "mega")
 PROCS = os.path.join(DATA, "worldgen", "processor_list")
 LOOT = os.path.join(DATA, "loot_table")
 JAVA = os.path.join(L.ROOT, "src", "main", "java")
 ALLOWED_NAMES = {L.DOOR, L.CHAIN, L.VAULT, L.ONWARD}
-MARKER_RE = re.compile(r"^nusmp:[a-z_]+(;[a-z_]+(=[^;]*)?)*$")
+MARKER_RE = re.compile(r"^anime_multiverse:[a-z_]+(;[a-z_]+(=[^;]*)?)*$")
 VANILLA_PROCESSORS = {"minecraft:rule", "minecraft:block_ignore", "minecraft:block_rot", "minecraft:gravity", "minecraft:protected_blocks",
                       "minecraft:capped", "minecraft:nop", "minecraft:block_age", "minecraft:blackstone_replace", "minecraft:lava_submerged_block"}
 #: architecture-like vanilla blocks outside the palette: a theme swap would not reach them, so a template that leans on them stays grey in every sector
@@ -54,14 +54,14 @@ def registered_nusmp_blocks():
     for path in glob.glob(os.path.join(JAVA, "**", "*.java"), recursive=True):
         try:
             for m in pat.finditer(open(path, encoding="utf-8", errors="replace").read()):
-                out.add("nusmp:" + m.group(1))
+                out.add("anime_multiverse:" + m.group(1))
         except OSError:
             pass
     return out
 
 
 #: processor types the contract promises (registered by the theme and safe builders); a missing registration is only a warning here and an error at integration
-CONTRACT_PROCESSORS = {"nusmp:region_theme", "nusmp:mod_compat"}
+CONTRACT_PROCESSORS = {"anime_multiverse:region_theme", "anime_multiverse:mod_compat"}
 
 
 def registered_processor_types():
@@ -70,7 +70,7 @@ def registered_processor_types():
     for path in glob.glob(os.path.join(JAVA, "**", "*.java"), recursive=True):
         try:
             for m in pat.finditer(open(path, encoding="utf-8", errors="replace").read()):
-                out.add("nusmp:" + m.group(1))
+                out.add("anime_multiverse:" + m.group(1))
         except OSError:
             pass
     return out
@@ -117,19 +117,19 @@ def check_template(path, known_blocks, errors, warns, pools):
                 bad[b] = bad.get(b, 0) + 1
             elif ARCH_NON_PALETTE.fullmatch(b):
                 non_palette[b] = non_palette.get(b, 0) + 1
-        elif b.startswith("nusmp:"):
+        elif b.startswith("anime_multiverse:"):
             if b not in L.CUSTOM:
                 errors.append("%s: custom block %s is not allowed in a Mega template (Vanilla Block Primacy Rule; see mega_lib.CUSTOM)" % (name, b))
-            elif b not in known_blocks["nusmp"]:
+            elif b not in known_blocks["anime_multiverse"]:
                 errors.append("%s: custom block %s is not registered by any BLOCKS.register(\"...\") in the Java sources" % (name, b))
         else:
-            errors.append("%s: block %s is neither minecraft: nor nusmp:" % (name, b))
+            errors.append("%s: block %s is neither minecraft: nor anime_multiverse:" % (name, b))
         err = L.check_state(b, c.props)
         if err:
             errors.append("%s: (%d,%d,%d) %s" % (name, pos[0], pos[1], pos[2], err))
         if b == "minecraft:chest" and c.nbt is not None and "LootTable" in c.nbt:
             lt = str(c.nbt["LootTable"])
-            if lt.startswith("nusmp:") and not os.path.exists(os.path.join(LOOT, lt[6:] + ".json")):
+            if lt.startswith("anime_multiverse:") and not os.path.exists(os.path.join(LOOT, lt[6:] + ".json")):
                 errors.append("%s: loot table %s does not exist" % (name, lt))
     for b, n in sorted(bad.items()):
         errors.append("%s: %d x %s is not a vanilla 1.21.1 block id" % (name, n, b))
@@ -144,7 +144,7 @@ def check_template(path, known_blocks, errors, warns, pools):
             if mode != "DATA":
                 errors.append("%s: structure block at %s is not in DATA mode" % (name, pos))
             elif not MARKER_RE.match(meta) or meta.split(";")[0][6:] not in L.MARKER_KINDS:
-                errors.append("%s: marker %r at %s is not `nusmp:<known kind>[;key=value]*`" % (name, meta, pos))
+                errors.append("%s: marker %r at %s is not `anime_multiverse:<known kind>[;key=value]*`" % (name, meta, pos))
     # jigsaws
     for (x, y, z), o, data in t.jigsaws():
         where = "%s: jigsaw at (%d,%d,%d)" % (name, x, y, z)
@@ -190,7 +190,7 @@ def check_template(path, known_blocks, errors, warns, pools):
 def check_pools(errors, warns, only=None):
     pools = {}
     for path in sorted(glob.glob(os.path.join(POOLS, "*.json"))):
-        pid = "nusmp:mega/" + os.path.basename(path)[:-5]
+        pid = "anime_multiverse:mega/" + os.path.basename(path)[:-5]
         try:
             pools[pid] = json.load(open(path))
         except Exception as e:  # noqa: BLE001
@@ -214,7 +214,7 @@ def check_pool_contents(pools, templates_present, errors, warns, proc_lists):
                 continue
             loc = el.get("location", "")
             referenced.add(loc)
-            if loc.startswith("nusmp:") and loc[6:] not in templates_present:
+            if loc.startswith("anime_multiverse:") and loc[6:] not in templates_present:
                 errors.append("%s: template %s does not exist (structure/%s.nbt)" % (pid, loc, loc[6:]))
             proc = el.get("processors", "minecraft:empty")
             if isinstance(proc, str) and proc != "minecraft:empty" and proc not in proc_lists:
@@ -227,7 +227,7 @@ def check_pool_contents(pools, templates_present, errors, warns, proc_lists):
 
 
 THEME_DIR = os.path.join(DATA, "mega", "template_themes")
-REGION_THEME_JAVA = os.path.join(JAVA, "com", "newuniverse", "nusmp", "labyrinth", "mega", "RegionTheme.java")
+REGION_THEME_JAVA = os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "RegionTheme.java")
 
 
 def region_theme_ids():
@@ -240,7 +240,7 @@ def region_theme_ids():
 
 
 def check_template_themes(all_names, errors, warns):
-    """1.58.0 (docs/labyrinth/mega_v2.md section 5.1): every data/nusmp/mega/template_themes/*.json must be valid JSON of the documented shape, name a theme that is
+    """1.58.0 (docs/labyrinth/mega_v2.md section 5.1): every data/anime_multiverse/mega/template_themes/*.json must be valid JSON of the documented shape, name a theme that is
     a RegionTheme id (a typo would make its rooms unreachable: no sector ever wears that theme), list prefixes that match at least one template (a wrong prefix leaves
     the rooms free for every theme), and give `relative` weights only to prefixes it also claims. Returns the number of files read."""
     themes = region_theme_ids()
@@ -271,9 +271,9 @@ def check_template_themes(all_names, errors, warns):
             if not isinstance(pre, str) or not pre.strip():
                 errors.append("template_themes/%s: a prefix is not a non-empty text" % fname)
                 continue
-            full = pre.strip() if ":" in pre else "nusmp:" + pre.strip()
-            claimed.append(full[len("nusmp:"):] if full.startswith("nusmp:") else full)
-            if not any(("nusmp:" + n).startswith(full) for n in all_names):
+            full = pre.strip() if ":" in pre else "anime_multiverse:" + pre.strip()
+            claimed.append(full[len("anime_multiverse:"):] if full.startswith("anime_multiverse:") else full)
+            if not any(("anime_multiverse:" + n).startswith(full) for n in all_names):
                 errors.append("template_themes/%s: the prefix %r matches no template (a wrong prefix would leave the rooms free for every theme)" % (fname, pre))
         rel = doc.get("relative", {})
         if not isinstance(rel, dict):
@@ -291,7 +291,7 @@ def main(argv):
     quiet = "--quiet" in argv
     only = [a for a in argv if not a.startswith("--")]
     errors, warns = [], []
-    known = {"vanilla": vanilla_blocks(), "nusmp": registered_nusmp_blocks()}
+    known = {"vanilla": vanilla_blocks(), "anime_multiverse": registered_nusmp_blocks()}
     pools = check_pools(errors, warns)
     paths = template_paths(only or None)
     all_names = {name_of(p) for p in template_paths()}
@@ -299,7 +299,7 @@ def main(argv):
     for p in paths:
         check_template(p, known, errors, warns, pools)
         seen += 1
-    proc_lists = {"nusmp:" + os.path.basename(p)[:-5] for p in glob.glob(os.path.join(PROCS, "*.json"))}
+    proc_lists = {"anime_multiverse:" + os.path.basename(p)[:-5] for p in glob.glob(os.path.join(PROCS, "*.json"))}
     types = registered_processor_types()
     for p in glob.glob(os.path.join(PROCS, "*.json")):
         try:
@@ -314,7 +314,7 @@ def main(argv):
         check_template_themes(all_names, errors, warns)
     if not only:
         for n in sorted(all_names):
-            if "nusmp:" + n not in referenced and not n.startswith("mega/link/"):
+            if "anime_multiverse:" + n not in referenced and not n.startswith("mega/link/"):
                 warns.append("%s: not referenced by any pool (orphan)" % n)
     for e in errors:
         print("ERROR  " + e)

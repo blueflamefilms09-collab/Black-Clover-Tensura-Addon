@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * spirit that is secretly a stack of boxes or a crown that is not the small distinct shape would only show up in a running game. This test reads the real files. The old meshes (sdm_meshes, sdw4_meshes) must still be there.
  */
 class SpiritDiveMerge2AssetTest {
-    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse");
 
     private static void unitNormals(SpiritDiveWind3Mesh m, List<String> bad, String n) {
         for (int l = 0; l < SpiritDiveWind3Mesh.LAYERS; l++) {

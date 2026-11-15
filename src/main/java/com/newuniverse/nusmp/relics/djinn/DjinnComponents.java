@@ -29,7 +29,7 @@ public final class DjinnComponents {
             COMPONENTS.registerComponentType("djinn_serial", b -> b.persistent(UUIDUtil.CODEC).networkSynchronized(UUIDUtil.STREAM_CODEC));
 
     /**
-     * {@code nusmp:djinn_temp}: marks a Djinn weapon as the temporary item of a Half or Full Equip: {@code {owner: <uuid>, djinn: "baal", expires: <game
+     * {@code anime_multiverse:djinn_temp}: marks a Djinn weapon as the temporary item of a Half or Full Equip: {@code {owner: <uuid>, djinn: "baal", expires: <game
      * time or 0>, admin: <bool>}}. Saved and synced (the tooltip reads it). See {@code relics.djinn.weapon.DjinnTemp}.
      */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CompoundTag>> TEMP =

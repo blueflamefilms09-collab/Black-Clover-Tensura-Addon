@@ -96,7 +96,7 @@ public final class Gnome {
         s.lastPacket = now;
         if (s.spirit != null) { unlink(p, s, true); return; }
         if (!eligible(p)) {
-            say(p, s, "nusmp.gnome.need_earth", "The Gnome answers only an Earth Magic mage.", ChatFormatting.GRAY);
+            say(p, s, "anime_multiverse.gnome.need_earth", "The Gnome answers only an Earth Magic mage.", ChatFormatting.GRAY);
             if (!LIVE.contains(p.getUUID())) STATES.remove(p.getUUID(), s);
             return;
         }
@@ -106,7 +106,7 @@ public final class Gnome {
     static boolean link(ServerPlayer p, State s) {
         ServerLevel sl = p.serverLevel();
         if (!SPIRITS.acquire(p.getUUID(), GnomeRules.SPIRITS_PER_PLAYER, GnomeConfig.maxSpirits())) {
-            say(p, s, "nusmp.gnome.full", "The Gnome cannot answer: too many spirits are out.", ChatFormatting.RED);
+            say(p, s, "anime_multiverse.gnome.full", "The Gnome cannot answer: too many spirits are out.", ChatFormatting.RED);
             return false;
         }
         double[] a = GnomeRules.companion(p.getX(), p.getY(), p.getZ(), p.yBodyRot);
@@ -120,7 +120,7 @@ public final class Gnome {
         VfxSpawn.send(sl, VfxShape.EARTHFAM_BURST, new Vec3(a[0], a[1], a[2]), new Vec3(a[0], a[1] + 0.6, a[2]), EARTH_COLOR, 20, 0.5f);
         playCue(sl, p.getUUID(), "link", a[0], a[1], a[2]);
         react(p, s, Situation.LINK, e, -1);                                                         // it kneels and rises out of the earth, and greets
-        say(p, s, "nusmp.gnome.linked", "The Gnome rises beside you.", ChatFormatting.GOLD);
+        say(p, s, "anime_multiverse.gnome.linked", "The Gnome rises beside you.", ChatFormatting.GOLD);
         return true;
     }
 
@@ -138,7 +138,7 @@ public final class Gnome {
         }
         if (s.spirit != null) SPIRITS.release(p.getUUID());
         s.spirit = null;
-        if (speak) say(p, s, "nusmp.gnome.unlinked", "The Gnome sinks back into the earth.", ChatFormatting.GRAY);
+        if (speak) say(p, s, "anime_multiverse.gnome.unlinked", "The Gnome sinks back into the earth.", ChatFormatting.GRAY);
     }
 
     // ================================================================================================ moods

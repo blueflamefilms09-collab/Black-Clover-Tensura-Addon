@@ -28,7 +28,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 /**
  * Every player-facing command lives under /multiverse. Admin commands need permission level 2; squad, rank info, stars info,
- * spirit info and locate are open to players (about themselves). The old /nusmp commands stay registered for old habits.
+ * spirit info and locate are open to players (about themselves). The old /anime_multiverse commands stay registered for old habits.
  */
 public final class MultiverseCommands {
     private MultiverseCommands() {}

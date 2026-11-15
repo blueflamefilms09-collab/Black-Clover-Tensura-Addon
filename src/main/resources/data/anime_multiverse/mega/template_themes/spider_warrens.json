@@ -1,0 +1,17 @@
+{
+  "theme": "spider_warrens",
+  "templates": [
+    "anime_multiverse:mega/hall/spider_warrens_",
+    "anime_multiverse:mega/set/spider_warrens_",
+    "anime_multiverse:mega/trial/spider_warrens_",
+    "anime_multiverse:mega/safe/spider_warrens_",
+    "anime_multiverse:mega/treasure/spider_warrens_"
+  ],
+  "relative": {
+    "mega/hall/spider_warrens_": 30,
+    "mega/set/spider_warrens_": 20,
+    "mega/trial/spider_warrens_": 20,
+    "mega/safe/spider_warrens_": 20,
+    "mega/treasure/spider_warrens_": 20
+  }
+}

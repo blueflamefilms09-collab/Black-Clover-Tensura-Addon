@@ -8,7 +8,7 @@ rough stone and the bulged purple orb. SS has no GLB: it re-uses the golden S or
     pip install trimesh numpy pillow scipy
     python3 -B tools/gen_mana_core_models.py [--src DIR_WITH_THE_GLBS] [--sheet /tmp/claude-0/out/mana_core_sheet.png]
 
-Writes (all under src/main/resources/assets/nusmp/, nothing existing is touched):
+Writes (all under src/main/resources/assets/anime_multiverse/, nothing existing is touched):
   weapon_meshes/core_<rank>_<variant>.txt        the orb, in the dialect client/WeaponRenderer reads (placed on the item's centre, `orient manual`)
   textures/entity/weapon/core_<rank>_<variant>.png  the 256x128 skin;  ..._glow.png  the additive glow skin (D and up)
   textures/item/core_<rank>_<variant>.png        the 16x16 inventory icon
@@ -30,7 +30,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 DEFAULT_SRC = "/root/.claude/uploads/2c8ee7c0-aec7-5d43-b651-54cec528bb71"
 
 SEG, RING = 24, 12            # longitude / latitude segments of the low-poly sphere
@@ -367,10 +367,10 @@ def main():
             write(os.path.join(ASSETS, "weapon_meshes", cid + ".txt"), mesh_text(cid, rank, rfield, gstr > 0))
             os.makedirs(os.path.join(ASSETS, "textures", "item"), exist_ok=True)
             icon(skin).save(os.path.join(ASSETS, "textures", "item", cid + ".png"), optimize=True)
-            m = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + cid}, "display": DISPLAY}
+            m = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + cid}, "display": DISPLAY}
             write(os.path.join(ASSETS, "models", "item", cid + ".json"), json.dumps(m, indent=2) + "\n")
             write(os.path.join(ASSETS, "models", "item", cid + "_icon.json"),
-                  json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + cid}}, indent=2) + "\n")
+                  json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + cid}}, indent=2) + "\n")
             sheet[cid] = (skin, glow_map(skin, gstr) if gstr > 0 else None, RANKS[rank][2])
     log("classes added:", add_classes(ids))
     if args.sheet:

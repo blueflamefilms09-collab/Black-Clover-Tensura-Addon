@@ -18,7 +18,7 @@ import net.minecraft.util.Mth;
  * Why: draws the 3D Compass Magic models ({@link CompassMesh}, the same geometry tools/compass/preview_compass3d.py shows) into the game: the solid passes (cutout, or alpha blended while the
  * compass fades), the glow passes (the dial's gold lines, the rose and the needle, additive through {@link SafeAdditive}, so no transparent corner can show as a square), the glass dome (translucent),
  * the spiky yellow aura card that always sits on the far side of the compass from the camera, the glint that runs round the rim, and the field ring of the guard mode. Render thread only. Textures:
- * assets/nusmp/textures/entity/compass3d (tools/compass/gen_compass3d_textures.py).
+ * assets/anime_multiverse/textures/entity/compass3d (tools/compass/gen_compass3d_textures.py).
  */
 public final class CompassRender {
     private CompassRender() {}

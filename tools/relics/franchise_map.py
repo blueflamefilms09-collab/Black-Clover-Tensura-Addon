@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes src/main/resources/data/nusmp/relics/franchise_map.json: which franchise (anime / world) each item of the mod comes from.
+"""Writes src/main/resources/data/anime_multiverse/relics/franchise_map.json: which franchise (anime / world) each item of the mod comes from.
 
 The map drives the franchise engravings (franchise/FranchiseEngravings): an item with a franchise carries that franchise's engravings. Deterministic (sorted keys,
 no clock, no random) and re-runnable after any wave is added or changed. An item whose origin is not clear gets NO franchise: it is simply not in the map.
@@ -10,7 +10,7 @@ Where the franchise of an item comes from, strongest first:
   2. a roster that names the source of each weapon (tools/relics/new197_roster.py: src="Black Clover"), matched against the franchise aliases.
   3. the wave: the class comment of a generated wave says "inspired by <work>" (an alias match; several works in one wave are told apart by 4.); the cards of the
      waves listed in "dnd_waves" are D&D items unless 4. finds another franchise in their own text.
-  4. (items that are no relic) the item's own text: its name, the .desc("...") in the wave source, and the lang keys item.nusmp.<id>[.desc|.card|.lore]; the franchise whose words (data/nusmp/
+  4. (items that are no relic) the item's own text: its name, the .desc("...") in the wave source, and the lang keys item.anime_multiverse.<id>[.desc|.card|.lore]; the franchise whose words (data/anime_multiverse/
      franchise/engravings.json "words") occur most wins, a tie gives none.
   5. nothing: no franchise.
 Consumables (relic slot CONSUMABLE) are never mapped (an engraving on something you drink means nothing). A pair's left half (<id>_left) follows its right half.
@@ -27,13 +27,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 WAVES = ROOT / "src/main/java/com/newuniverse/nusmp/relics/wave"
-LANG = ROOT / "src/main/resources/assets/nusmp/lang/en_us.json"
+LANG = ROOT / "src/main/resources/assets/anime_multiverse/lang/en_us.json"
 LANG_FRAGMENTS = ROOT / "tools/lang"
-ENGRAVINGS = ROOT / "src/main/resources/data/nusmp/franchise/engravings.json"
+ENGRAVINGS = ROOT / "src/main/resources/data/anime_multiverse/franchise/engravings.json"
 OVERRIDES = Path(__file__).resolve().parent / "franchise_overrides.json"
 ROSTERS = [ROOT / "tools/relics/new197_roster.py"]
 WEAPON_ENGRAVINGS = ROOT / "src/main/java/com/newuniverse/nusmp/item/WeaponEngravings.java"
-OUT = ROOT / "src/main/resources/data/nusmp/relics/franchise_map.json"
+OUT = ROOT / "src/main/resources/data/anime_multiverse/relics/franchise_map.json"
 
 DEF = re.compile(r'RelicDef\s*\.\s*of\s*\(\s*([^,]+?)\s*,\s*"((?:[^"\\]|\\.)*)"\s*,\s*Grade\s*\.\s*(\w+)\s*,\s*RelicSlot\s*\.\s*(\w+)\s*\)', re.S)
 CONST_DECL = re.compile(r'static\s+final\s+String\s+([^;]+);')
@@ -168,7 +168,7 @@ def roster_sources(fr):
 def main():
     fr = franchises()
     if not fr:
-        print("warning: data/nusmp/franchise/engravings.json is missing; run tools/franchise/gen_engravings.py first")
+        print("warning: data/anime_multiverse/franchise/engravings.json is missing; run tools/franchise/gen_engravings.py first")
     fids = {f["id"] for f in fr}
     ov = load_json(OVERRIDES, {})
     exact, prefixes = ov.get("exact", {}), ov.get("prefixes", {})
@@ -188,7 +188,7 @@ def main():
 
     universe = set(defs)
     for k in lang:
-        m = re.fullmatch(r"item\.nusmp\.([a-z0-9_]+)", k)
+        m = re.fullmatch(r"item\.anime_multiverse\.([a-z0-9_]+)", k)
         if m:
             universe.add(m.group(1))
     for m in re.finditer(r'Map\.entry\("([a-z0-9_]+)"', read(WEAPON_ENGRAVINGS)):
@@ -201,7 +201,7 @@ def main():
         if d and d["slot"] == "CONSUMABLE":
             continue
         text = " ".join([rid.replace("_", " "), d["name"] if d else "", d["desc"] if d else ""] +
-                        [lang.get(f"item.nusmp.{rid}{s}", "") for s in ("", ".desc", ".card", ".lore")])
+                        [lang.get(f"item.anime_multiverse.{rid}{s}", "") for s in ("", ".desc", ".card", ".lore")])
         choice, how = None, ""
         if rid in exact:
             choice, how = exact[rid], "override"

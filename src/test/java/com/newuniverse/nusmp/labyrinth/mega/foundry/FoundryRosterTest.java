@@ -16,15 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: "400 different mobs, 200 for each road" is the owner's promise, and the files that SHIP are the proof: this test reads {@code data/nusmp/mega/foundry/*.json} from the source
+ * Why: "400 different mobs, 200 for each road" is the owner's promise, and the files that SHIP are the proof: this test reads {@code data/anime_multiverse/mega/foundry/*.json} from the source
  * tree exactly as the loader does and runs the same pure check the admin command and the in-game self-test run ({@link FoundryVerify}): 200 + 200 mobs, 40 per tier per road, every
  * file parses with no problem, every ability and archetype named exists, unique names and ids, a source on every row, at least 30 sources and none above 8 percent. It also checks
- * the files against the asset index the client reads ({@code assets/nusmp/foundry/index.json}: every mob has an entry whose animation class file exists, and the model, texture and
+ * the files against the asset index the client reads ({@code assets/anime_multiverse/foundry/index.json}: every mob has an entry whose animation class file exists, and the model, texture and
  * glow files exist), so a mob that would be invisible in game fails the build instead. (The LOOK uniqueness of the 400 is checked by the generator's guard, tools/foundry/guard.py.)
  */
 public class FoundryRosterTest {
-    private static final Path DATA = Path.of("src/main/resources/data/nusmp/mega/foundry");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path DATA = Path.of("src/main/resources/data/anime_multiverse/mega/foundry");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static FoundryLibrary library() throws IOException {
         return new FoundryLibrary(FoundryLibrary.parseAbilities(Files.readString(DATA.resolve("_abilities.json"))).rows(),

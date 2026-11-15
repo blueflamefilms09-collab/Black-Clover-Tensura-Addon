@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.client.relics.djinn.tiny;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 
 /**
- * Where the files of a Tiny Djinn live (paths under {@code assets/nusmp/}, as strings so the data test can read them without Minecraft) and what each must hold.
+ * Where the files of a Tiny Djinn live (paths under {@code assets/anime_multiverse/}, as strings so the data test can read them without Minecraft) and what each must hold.
  * {@code tools/gen_tiny_djinn.py} writes exactly these; {@link TinyDjinnLayer} turns them into resource locations.
  */
 public final class TinyDjinnAssets {

@@ -86,7 +86,7 @@ class AppearanceTest {
 
     @Test
     void raceGroupsFollowTheRaceName() {
-        assertEquals(AvatarRaceGroup.BULKY, AvatarRaceGroup.of("nusmp:ogre"));
+        assertEquals(AvatarRaceGroup.BULKY, AvatarRaceGroup.of("anime_multiverse:ogre"));
         assertEquals(AvatarRaceGroup.BULKY, AvatarRaceGroup.of("Orc_Disaster"));
         assertEquals(AvatarRaceGroup.SMALL, AvatarRaceGroup.of("goblin"));
         assertEquals(AvatarRaceGroup.HUMAN, AvatarRaceGroup.of("demon_host"));
@@ -96,7 +96,7 @@ class AppearanceTest {
     /** The counts in AppearanceData are the contract with tools/avatar/gen_avatar_client_assets.py: every id has its model and texture. */
     @Test
     void everyIdHasItsAsset() {
-        File root = new File("src/main/resources/assets/nusmp");
+        File root = new File("src/main/resources/assets/anime_multiverse");
         if (!root.isDirectory()) return;                       // run from another folder: nothing to compare against
         for (int i = 0; i < AppearanceData.HAIR_COUNT; i++) assertAsset(root, "avatar_hair_" + i);
         for (int i = 0; i < AppearanceData.HORN_COUNT; i++) assertAsset(root, "avatar_horn_" + i);

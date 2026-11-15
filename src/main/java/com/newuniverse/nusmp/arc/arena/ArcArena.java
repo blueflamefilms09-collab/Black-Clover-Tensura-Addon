@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Why: the story arenas live in one dimension of their own, {@code nusmp:arc_arena} (the pattern of the Final Hour's {@code nusmp:zogratis_arena}), and the
+ * Why: the story arenas live in one dimension of their own, {@code anime_multiverse:arc_arena} (the pattern of the Final Hour's {@code anime_multiverse:zogratis_arena}), and the
  * builder, the director, the travel, the events, the dungeon guard and the commands all compare against the same key and convert between a SLOT of the grid
  * and a world position the same way. This class is that one place: the dimension key, {@code in(Level)} and {@code in(Entity)} (null safe, both sides), the
  * world positions an arena's formula maps to (the floor centre, the boss's footing, the travellers' footing), and the operator's edit switch that lets the
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 public final class ArcArena {
     private ArcArena() {}
 
-    /** The dimension of the story arenas (data/nusmp/dimension/arc_arena.json). */
+    /** The dimension of the story arenas (data/anime_multiverse/dimension/arc_arena.json). */
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "arc_arena"));
 
     /** The persistent-data key (an int) that marks a boss as the one fighting in a slot's arena; the value is the slot. */

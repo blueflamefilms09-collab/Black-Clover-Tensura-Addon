@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Why: the definition of ONE Beast Will, a plain record with no Minecraft types (3.45.0). A will is a data file ({@code data/nusmp/beast_will/<id>.json}, read by {@link BeastWillSchema}); this record is what the
+ * Why: the definition of ONE Beast Will, a plain record with no Minecraft types (3.45.0). A will is a data file ({@code data/anime_multiverse/beast_will/<id>.json}, read by {@link BeastWillSchema}); this record is what the
  * rest of the system reads, so a new will is a new file and no new rule. Everything a will may do comes from this record and the bounds in {@link BeastWillRules}; what a kind of ability DOES is Java
  * ({@code BeastWillAbilities}), what it costs, how often and how strongly is data.
  *
  * @param id               the file name and the save key (lower snake_case), never renamed
- * @param name             what the player reads (the lang key {@code nusmp.beastwill.<id>.name} wins when it exists)
+ * @param name             what the player reads (the lang key {@code anime_multiverse.beastwill.<id>.name} wins when it exists)
  * @param beast            the creature the will comes from, for the preview and the core
  * @param affinity         the element or theme the will leans on (a label for the preview)
  * @param legendary        true = a legendary will (rarer, slower to assimilate); false = a rare one
@@ -70,7 +70,7 @@ public record BeastWillDef(String id, String name, String beast, String affinity
         return false;
     }
 
-    public String langKey(String part) { return "nusmp.beastwill." + id + "." + part; }
+    public String langKey(String part) { return "anime_multiverse.beastwill." + id + "." + part; }
 
     /** The first problem with this row, or null when it is fine (used by the tests, the validator and the self-test). */
     public String problem() {

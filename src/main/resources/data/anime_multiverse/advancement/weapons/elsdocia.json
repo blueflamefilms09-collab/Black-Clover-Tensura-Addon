@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:weapons/first",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:elsdocia"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.weapons.elsdocia.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.weapons.elsdocia.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_elsdocia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:elsdocia"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_elsdocia"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

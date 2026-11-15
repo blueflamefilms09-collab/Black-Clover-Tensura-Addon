@@ -18,7 +18,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import java.util.List;
 
 /**
- * Fuegoleon's flame arm, Djinn look (3.1): the sparks drifting off the arm into the world, the custom particles of the theme {@code fuegoleon_arm.sparks} (data/nusmp/particle_themes.json, written
+ * Fuegoleon's flame arm, Djinn look (3.1): the sparks drifting off the arm into the world, the custom particles of the theme {@code fuegoleon_arm.sparks} (data/anime_multiverse/particle_themes.json, written
  * by tools/particles/gen_themes.py), spawned on the CLIENT from the lease the server already sent (no packet of its own). Bounded three times over: only arms within
  * {@link FuegoleonArmDjinnRules#SPARK_RANGE} blocks, at most {@link FuegoleonArmDjinnRules#SPARK_ARMS} arms per tick, one particle every 10 / 5 / 2 ticks per arm (quiet / out / flare, staggered by
  * entity id), and every particle goes through {@code Fx} (the client particle budget, the effect quality and the distance bands). Only for the DJINN look and only while the arm is drawn

@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Why: nothing here can be profiled by the author, so the owner needs to SEE which part of the mod is slow on their own machine. The probe samples {@code System.nanoTime} around named
  * sections of the biggest handlers and renderers and keeps, per section, the number of calls, the total time, the rolling average and the rolling maximum. It is OFF by default and costs
  * one read of a static flag per section when it is off ({@link #begin} returns 0 and {@link #end} returns at once on a 0). It is switched on by the config
- * ({@code probe.enabled} in nusmp-performance-common.toml) or by the commands {@code /multiverse perf on|off|report|reset} (server sections) and {@code /nusmp perf on|off|report|reset} (client
+ * ({@code probe.enabled} in nusmp-performance-common.toml) or by the commands {@code /multiverse perf on|off|report|reset} (server sections) and {@code /anime_multiverse perf on|off|report|reset} (client
  * sections). Section names start with {@code s.} (server thread) or {@code c.} (client thread) so each command prints its own side.
  *
  * <pre>

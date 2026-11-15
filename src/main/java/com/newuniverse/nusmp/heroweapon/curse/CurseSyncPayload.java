@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * Why: the core's own sync packet carries the bond (the weapon, its level, the forms) but not the curse, and the screen tint, the corruption bar, the whispers and
- * the heartbeat all need the curse's numbers on the CLIENT. This is the curse's own small packet, server to the wielder only ({@code nusmp:hero_curse_sync}): the
+ * the heartbeat all need the curse's numbers on the CLIENT. This is the curse's own small packet, server to the wielder only ({@code anime_multiverse:hero_curse_sync}): the
  * despair and the corruption (0 to 1000), the sin of the open offer and of the active curse form (a wire number, 0 for none, see {@link CurseWire}), the ticks the
  * Overrun and the offer have left (0 for none) and the bit mask of the series embraced. It carries numbers, never text, so every player reads the messages in their
  * own language. The reader clamps everything it reads, so a damaged packet becomes a quiet screen and never an exception on the network thread.
@@ -21,7 +21,7 @@ import net.minecraft.resources.ResourceLocation;
  * @param series      bit mask of the embraced series (bit n = the sin at enum position n)
  */
 public record CurseSyncPayload(int despair, int corruption, int offered, int active, int overrunLeft, int offerLeft, int series) implements CustomPacketPayload {
-    public static final Type<CurseSyncPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_curse_sync"));
+    public static final Type<CurseSyncPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_curse_sync"));
     public static final StreamCodec<FriendlyByteBuf, CurseSyncPayload> CODEC = StreamCodec.of(CurseSyncPayload::write, CurseSyncPayload::read);
 
     /** The packet that says "no curse": everything off (sent when a weapon is bound or released and after a death). */

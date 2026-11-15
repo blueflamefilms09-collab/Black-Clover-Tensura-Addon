@@ -30,6 +30,6 @@ public class BoreasBowItem extends BowItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.spirit_of_boreas.lore", "The leaf bow of the Wind Spirit Boreas; its arrows trail light.").withStyle(ChatFormatting.GREEN));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.spirit_of_boreas.lore", "The leaf bow of the Wind Spirit Boreas; its arrows trail light.").withStyle(ChatFormatting.GREEN));
     }
 }

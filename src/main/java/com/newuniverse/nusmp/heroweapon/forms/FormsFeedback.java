@@ -42,7 +42,7 @@ final class FormsFeedback {
     private static void failed(RuntimeException e) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] hero forms feedback failed once (shown no more)", e);
+        LOG.warn("[anime_multiverse] hero forms feedback failed once (shown no more)", e);
     }
 
     static void chat(ServerPlayer p, Component c) {

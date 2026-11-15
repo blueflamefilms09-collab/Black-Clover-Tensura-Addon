@@ -1,7 +1,7 @@
 """Generates the Key Magic VFX textures (ornate golden keys, keyholes, ethereal doors, spatial rifts, sigils).
 
 Deterministic (fixed seeds, no fonts). White / grey with alpha, so the vertex colour tints them gold.
-Output: src/main/resources/assets/nusmp/textures/particle/key_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/key_*.png
 
     python3 -B tools/gen_key_textures.py
 
@@ -15,7 +15,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

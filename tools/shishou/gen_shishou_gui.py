@@ -21,8 +21,8 @@ import random
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-OUT_ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "shishou", "akashic.png")
-OUT_ICON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "shishou.png")
+OUT_ATLAS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "shishou", "akashic.png")
+OUT_ICON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "shishou.png")
 
 CYAN = (92, 216, 255)
 CYAN_HI = (127, 235, 255)

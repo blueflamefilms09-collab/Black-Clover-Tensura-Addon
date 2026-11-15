@@ -27,7 +27,7 @@ import java.util.List;
  * blow of the Meteor Sword, the carapace of the Spirit Tortoise, the plunder of Greed and the fangs of Gluttony). This is its one logic object: it lists the techniques
  * ({@link SwordSkills}), keeps the {@link HitLedger} in step with the wielder's blows and implements the hooks the machinery calls. Every hook catches what it should
  * not throw and reports it once; none changes a block; a blow earns at most ONE bonus strike, never above {@link SwordNumbers#BONUS_MAX}, and it goes through the
- * balance law. The numbers are {@link SwordNumbers}'s, the forms are {@code data/nusmp/hero/forms/legendary_sword.json}, the whole is described in
+ * balance law. The numbers are {@link SwordNumbers}'s, the forms are {@code data/anime_multiverse/hero/forms/legendary_sword.json}, the whole is described in
  * {@code docs/heroweapon/weapon_sword.md}. The sins of the curse series (what Greed and Gluttony cost the wielder) belong to the curse system; the forms here only
  * carry the techniques and the passives that go with them.
  */

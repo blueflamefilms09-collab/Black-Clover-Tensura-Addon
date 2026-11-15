@@ -1,6 +1,6 @@
 """Generates the Curse-Warding Magic VFX textures (pale-violet warding runes, silver seals, broken curse rings).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/curse_warding_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/curse_warding_*.png
 White / grey with alpha so the vertex colour tints them.
 
     python3 -B tools/gen_curse_warding_textures.py
@@ -24,7 +24,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

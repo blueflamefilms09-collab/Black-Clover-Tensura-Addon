@@ -62,7 +62,7 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
     /** Markers are rescanned at most every ten seconds while a player stands inside an idle box: the piece is static, but an admin may edit it. */
     private static final int RESCAN_TICKS = 200;
-    private static final String MSG_SEALED = "message.nusmp.trial.sealed", MSG_FADES = "message.nusmp.trial.fades";
+    private static final String MSG_SEALED = "message.anime_multiverse.trial.sealed", MSG_FADES = "message.anime_multiverse.trial.fades";
     private static final Set<String> WARNED = new HashSet<>();
 
     /** One line of the template's {@code mobs} list: an entity id, how many for one player, and optional NBT merged onto each. */
@@ -318,14 +318,14 @@ public final class SealedArchwayBlockEntity extends BlockEntity implements com.n
         lastPlayerTick = now;
         activatedTick = now;
         lastAlive = spawned.size();
-        if (spawned.isEmpty()) LOG.warn("[nusmp] Sealed Archway at {} activated but spawned nothing (mob list: {} entries): it will clear at once", pos, mobs.size());
+        if (spawned.isEmpty()) LOG.warn("[anime_multiverse] Sealed Archway at {} activated but spawned nothing (mob list: {} entries): it will clear at once", pos, mobs.size());
     }
 
     /** One mob: created and finalized as a structure spawn, the template's extra NBT merged on top, tagged, made persistent, added. */
     private void spawnOne(ServerLevel level, MobEntry entry, BlockPos at) {
         Optional<EntityType<?>> type = EntityType.byString(entry.id);
         if (type.isEmpty()) {
-            if (WARNED.add(entry.id)) LOG.warn("[nusmp] Sealed Archway: unknown entity id '{}' in a trial's mob list", entry.id);
+            if (WARNED.add(entry.id)) LOG.warn("[anime_multiverse] Sealed Archway: unknown entity id '{}' in a trial's mob list", entry.id);
             return;
         }
         Entity e = type.get().create(level, null, at, MobSpawnType.STRUCTURE, false, false);

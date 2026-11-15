@@ -27,7 +27,7 @@ def load_kit():
 
 
 KIT = load_kit()
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "heroweapon", "forms", "BookLayout.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "heroweapon", "forms", "BookLayout.java")
 
 
 def constants():

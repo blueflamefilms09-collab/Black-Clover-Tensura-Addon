@@ -27,7 +27,7 @@ public final class SaiyanRules {
         Rank(double from) { this.from = from; }
 
         /** The lang key of the rank's name. */
-        public String key() { return "nusmp.saiyan.rank." + name().toLowerCase(Locale.ROOT); }
+        public String key() { return "anime_multiverse.saiyan.rank." + name().toLowerCase(Locale.ROOT); }
 
         public static Rank byOrdinal(int i) { return values()[(int) clamp(i, 0, values().length - 1)]; }
     }

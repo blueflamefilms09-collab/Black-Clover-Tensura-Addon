@@ -6,7 +6,7 @@ import java.util.Locale;
  * Why: the brief's own example quest is "Clear 5 rooms WITHOUT TAKING MAGIC DAMAGE", and the game has no single flag for "this was magic": vanilla has the
  * damage types {@code magic} and {@code indirect_magic}, and Tensura's spells have damage types of their own whose ids name the family
  * ({@code darkness_elemental}, {@code holy_magic} ...). The decision is made from the damage type's id alone, so it can be unit tested without a game, and a
- * datapack can widen it with the damage-type tag {@code nusmp:mega_system_magic} (checked by the game side before this). The word list is the family the
+ * datapack can widen it with the damage-type tag {@code anime_multiverse:mega_system_magic} (checked by the game side before this). The word list is the family the
  * mod's Anti-Magic rules already treat as magic (so the System and the rest of the mod agree on what "magic damage" is): a quest that says "no magic damage"
  * fails on anything the mod itself would call magic.
  */

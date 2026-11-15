@@ -111,14 +111,14 @@ public final class BossBarSources {
 
         @Override public List<Integer> phaseThresholds() { return POWER_THRESHOLDS; }
 
-        @Override public String phaseName() { return z.gatesOpen() ? "@nusmp.bossbar.gates_open" : z.power() + "%"; }
+        @Override public String phaseName() { return z.gatesOpen() ? "@anime_multiverse.bossbar.gates_open" : z.power() + "%"; }
 
         @Override public boolean invulnerable() { return z.refilling() || z.transforming(); }
 
         @Override public boolean enraged() { return BossBarThemes.rage(z.power()); }
 
         @Override public String castName() {
-            if (z.transforming()) return "@nusmp.bossbar.transforming";
+            if (z.transforming()) return "@anime_multiverse.bossbar.transforming";
             return z.state() == ZogratisBoss.STATE_CASTING ? z.castLabel() : "";
         }
 

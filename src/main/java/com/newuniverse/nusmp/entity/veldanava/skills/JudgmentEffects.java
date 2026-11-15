@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Why: the Veldanava skills put six conditions on a creature that a player must SEE (an icon and a timer), that end by themselves, that a milk bucket or a death clears, and that other
- * code can ask about with one call. They are this mod's own effects, written from scratch under {@code nusmp}; what each one DOES lives in {@link JudgmentEvents} (the rules that need a
+ * code can ask about with one call. They are this mod's own effects, written from scratch under {@code anime_multiverse}; what each one DOES lives in {@link JudgmentEvents} (the rules that need a
  * hook on the game) and here (what an attribute modifier or a tick can do alone). Wire it in NUSMP: call {@link #init()} and {@code EFFECTS.register(modEventBus)}.
  * <ul>
  *   <li><b>Temporal Stutter</b>: time catches. Slower to move and to swing, and for three ticks of every second the body does not move at all.</li>

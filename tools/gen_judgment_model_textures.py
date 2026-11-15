@@ -3,7 +3,7 @@
 Deterministic and font-free (every machine writes the same pixels). Written for this mod, same palette as the layer and tools/gen_judgment_vfx_textures.py: pale white-gold light, pale steel, hairline black. It only
 ADDS one file; the 14 flat textures of gen_judgment_vfx_textures.py stay and are still drawn when the setting `judgmentModels` is off. The pseudo-script of the glyph panels is the one of the flat glyph band
 (`glyph_cell` of gen_judgment_vfx_textures.py, imported, not changed).
-Output: src/main/resources/assets/nusmp/textures/particle/judgment_model_atlas.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/judgment_model_atlas.png
 
     python tools/gen_judgment_model_textures.py
 

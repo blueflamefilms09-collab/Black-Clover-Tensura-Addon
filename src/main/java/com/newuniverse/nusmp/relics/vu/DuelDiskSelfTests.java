@@ -25,7 +25,7 @@ import java.util.Set;
 public final class DuelDiskSelfTests {
     private DuelDiskSelfTests() {}
 
-    private static final String ASSETS = "/assets/nusmp/";
+    private static final String ASSETS = "/assets/anime_multiverse/";
 
     public static void register() { SelfTests.register("visual.duel_disk", server -> run()); }
 

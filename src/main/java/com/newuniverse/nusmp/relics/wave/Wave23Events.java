@@ -45,9 +45,9 @@ final class Wave23Events {
     static final String K_RIPOSTE = "nusmp_w23_riposte", K_DEATHSAVE = "nusmp_w23_deathsave", K_AEGIS_DAY = "nusmp_w23_aegis_day", K_AEGIS_USED = "nusmp_w23_aegis_used",
             K_AEGIS_BROKEN = "nusmp_w23_aegis_broken";
 
-    private static final ResourceLocation EYE_ARMOR = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w23_eye_hide"),
-            EYE_REGEN = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w23_eye_mind"),
-            LEROY_LUCK = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w23_leroy_charisma");
+    private static final ResourceLocation EYE_ARMOR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w23_eye_hide"),
+            EYE_REGEN = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w23_eye_mind"),
+            LEROY_LUCK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w23_leroy_charisma");
 
     static void register() {
         NeoForge.EVENT_BUS.addListener(Wave23Events::onIncoming);

@@ -66,7 +66,7 @@ public final class FloorInfo implements FloorListener {
         try {
             show(player, floor, previous, FloorInfoRules.reasonFor(previous, floor));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The floor report failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] The floor report failed: {}", e.toString());
         }
     }
 
@@ -101,7 +101,7 @@ public final class FloorInfo implements FloorListener {
             }
             show(p, floor, 0, FloorInfoRules.Reason.REQUEST);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The floor report request failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] The floor report request failed: {}", e.toString());
         }
     }
 
@@ -246,7 +246,7 @@ public final class FloorInfo implements FloorListener {
             try {
                 watch(p);
             } catch (RuntimeException e) {
-                LOG.debug("[nusmp] floor report watcher: {}", e.toString());
+                LOG.debug("[anime_multiverse] floor report watcher: {}", e.toString());
             }
         }
     }

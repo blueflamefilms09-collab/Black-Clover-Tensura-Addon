@@ -19,7 +19,7 @@ public final class QuestsConfig {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("quests");
         AUTO_INSTALL_ON_FIRST_RUN = b.comment("When FTB Quests is installed and the folder config/ftbquests/quests does not exist at all, install the bundled",
-                        "Multiverse of Anime questline on server start. Never touches an existing quest folder. (Use /nusmp quests install for the rest.)")
+                        "Multiverse of Anime questline on server start. Never touches an existing quest folder. (Use /anime_multiverse quests install for the rest.)")
                 .define("autoInstallOnFirstRun", false);
         SHARE_SQUAD_CREDIT = b.comment("A boss defeat or arena victory is also reported for the online members of the killer's FTB team who are close by,",
                         "so a squad kill counts for the whole squad's advancements and quests. false = only the killer.")

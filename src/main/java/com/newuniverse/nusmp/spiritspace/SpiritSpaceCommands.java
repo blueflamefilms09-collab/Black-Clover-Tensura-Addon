@@ -34,8 +34,8 @@ public final class SpiritSpaceCommands {
     private static int slot(CommandContext<CommandSourceStack> c) { return IntegerArgumentType.getInteger(c, "slot") - 1; }
 
     private static boolean ready(ServerPlayer p, boolean needLink) {
-        if (!SpiritSpace.allowed(p)) { p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_space.refused", "The Spirit of Space does not answer you."), true); return false; }
-        if (needLink && !SpiritSpace.stateOf(p).linked) { p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_space.notlinked", "Link the spirit first."), true); return false; }
+        if (!SpiritSpace.allowed(p)) { p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_space.refused", "The Spirit of Space does not answer you."), true); return false; }
+        if (needLink && !SpiritSpace.stateOf(p).linked) { p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_space.notlinked", "Link the spirit first."), true); return false; }
         return true;
     }
 

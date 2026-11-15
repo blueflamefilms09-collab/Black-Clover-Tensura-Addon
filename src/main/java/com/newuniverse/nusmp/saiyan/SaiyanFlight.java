@@ -105,7 +105,7 @@ final class SaiyanFlight {
         }
         SaiyanFlightRules.Tier t = tier(s);
         if (t.ordinal() != r.flightTier) {
-            if (t.ordinal() > r.flightTier) p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.flight_tier", Component.translatable(t.key())), true);
+            if (t.ordinal() > r.flightTier) p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.flight_tier", Component.translatable(t.key())), true);
             r.flightTier = t.ordinal();
             grant(p, s);
             r.dirty = true;

@@ -1,7 +1,7 @@
 """vu: the model builder of the visual upgrade. One `VU` is one model (its parts, animation groups, additive fx quads, starfield parts), laid out on its own skin and
 written in the quad format of the worn relic library (tools/relics/gen_worn_lib.py) with the extra header records the game reads for a visual upgrade model:
 
-    skin <path>  glowtex <path>  startex <path>  lod <model>          (paths under assets/nusmp/textures/, the lod model as vu/<name>)
+    skin <path>  glowtex <path>  startex <path>  lod <model>          (paths under assets/anime_multiverse/textures/, the lod model as vu/<name>)
     q <group> <slot> <flags> x y z u v nx ny nz (x4)                    flags 1 emissive 2 shell 4 hot (pulses) 8 GLOWMAP 16 STAR 32 HALO (see WornMesh)
 
 A part is a mesh_lib Part drawn with the skin (+ the glow map where its quads have light under them); a star part is drawn only in the scrolling nebula pass; an fx quad is
@@ -232,7 +232,7 @@ class VU:
         return int((skin[..., 3] > 0).sum()), int(((gl[..., :3].max(axis=2) > 8) & (gl[..., 3] > 0)).sum())
 
     def write_model(self, file_name, tex_name, anchor="body", scale=1.0, offset=(0, 0, 0), star_tex=None, lod_name=None, comment=""):
-        """Writes assets/nusmp/visual_upgrade/models/<file_name>.txt. scale/offset move the model (a worn copy of a hand model)."""
+        """Writes assets/anime_multiverse/visual_upgrade/models/<file_name>.txt. scale/offset move the model (a worn copy of a hand model)."""
         os.makedirs(MODEL_DIR, exist_ok=True)
         qs = self.quads()
         off = geo.v3(offset)

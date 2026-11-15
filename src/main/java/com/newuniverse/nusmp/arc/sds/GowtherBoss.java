@@ -192,7 +192,7 @@ public class GowtherBoss extends ArcBoss {
                 if (domeCentre != null && tickCount % 10 == 0) Tells.ring(sl, domeCentre.add(0, 0.1, 0), GowtherTable.NIGHTMARE_RADIUS, RGB, 1.3f, 64);
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Gowther's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Gowther's tick failed: {}", e.toString());
         }
     }
 
@@ -221,7 +221,7 @@ public class GowtherBoss extends ArcBoss {
             if (now < domeUntil && domeGauge.hit(now, a, GowtherTable.BREAK_FRACTION * getMaxHealth(), anti)) breakDome(sl, now);
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Gowther's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Gowther's defence failed: {}", e.toString());
             return amount;
         }
     }

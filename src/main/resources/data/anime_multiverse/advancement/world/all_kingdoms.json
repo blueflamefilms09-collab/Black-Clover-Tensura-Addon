@@ -1,0 +1,65 @@
+{
+  "parent": "anime_multiverse:world/kingdoms",
+  "display": {
+    "icon": {
+      "id": "minecraft:beacon"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.world.all_kingdoms.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.world.all_kingdoms.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_grimoire_kingdom_clover": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "clover"
+      }
+    },
+    "e_grimoire_kingdom_spade": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "spade"
+      }
+    },
+    "e_grimoire_kingdom_heart": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "heart"
+      }
+    },
+    "e_grimoire_kingdom_diamond": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "grimoire.kingdom",
+        "arg": "diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_grimoire_kingdom_clover"
+    ],
+    [
+      "e_grimoire_kingdom_spade"
+    ],
+    [
+      "e_grimoire_kingdom_heart"
+    ],
+    [
+      "e_grimoire_kingdom_diamond"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

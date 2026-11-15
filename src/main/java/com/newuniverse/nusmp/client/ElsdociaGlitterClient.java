@@ -41,7 +41,7 @@ public final class ElsdociaGlitterClient {
     }
 
     private static ParticleOptions spark() {
-        if (spark == null) spark = UpgradeParticleOptions.of("nusmp:mote", 0xCFEFFF, 0.6f);
+        if (spark == null) spark = UpgradeParticleOptions.of("anime_multiverse:mote", 0xCFEFFF, 0.6f);
         return spark;
     }
 

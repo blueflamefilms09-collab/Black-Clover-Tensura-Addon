@@ -115,12 +115,12 @@ public final class PartyService {
             if (!a.ok()) {
                 if (!warnedFull) {
                     warnedFull = true;
-                    LOG.warn("[nusmp] The dungeon has no free lane for the party of {} ({} parties are allowed: party.maxParties); further refusals are not logged.", p.getGameProfile().getName(), maxParties());
+                    LOG.warn("[anime_multiverse] The dungeon has no free lane for the party of {} ({} parties are allowed: party.maxParties); further refusals are not logged.", p.getGameProfile().getName(), maxParties());
                 }
                 return -1;
             }
             if (a.created()) {
-                LOG.info("[nusmp] Party {} ({} {}) was given lane {}{}.", a.index(), r.key().team() ? "team" : "solo", r.label(), a.index(),
+                LOG.info("[anime_multiverse] Party {} ({} {}) was given lane {}{}.", a.index(), r.key().team() ? "team" : "solo", r.label(), a.index(),
                         a.inherited() ? ", the floors that " + a.inheritedFrom() + " explored alone" : "");
             } else {
                 book.relabel(r.key().id(), r.label());
@@ -128,7 +128,7 @@ public final class PartyService {
             store(p, a.index());
             return a.index();
         } catch (RuntimeException e) {
-            LOG.error("[nusmp] The party of {} could not be decided: {}", p.getGameProfile().getName(), e.toString(), e);
+            LOG.error("[anime_multiverse] The party of {} could not be decided: {}", p.getGameProfile().getName(), e.toString(), e);
             return -1;
         }
     }
@@ -210,7 +210,7 @@ public final class PartyService {
             store(q, index);
             if (PartyGuard.check(q)) moved++;
         }
-        LOG.info("[nusmp] An admin put party {} on lane {} (it was {}).", key, index, before < 0 ? "new" : Integer.toString(before));
+        LOG.info("[anime_multiverse] An admin put party {} on lane {} (it was {}).", key, index, before < 0 ? "new" : Integer.toString(before));
         return new SetResult(true, null, key, before, index, moved);
     }
 

@@ -47,8 +47,8 @@ import java.util.Locale;
 public final class AvatarGear {
     private AvatarGear() {}
 
-    /** The item tag a data pack can add its own staves, wands and tomes to ({@code nusmp:avatar_magic_focus}); the grimoire items of this mod are in it. */
-    public static final TagKey<Item> MAGIC_FOCUS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("nusmp", "avatar_magic_focus"));
+    /** The item tag a data pack can add its own staves, wands and tomes to ({@code anime_multiverse:avatar_magic_focus}); the grimoire items of this mod are in it. */
+    public static final TagKey<Item> MAGIC_FOCUS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "avatar_magic_focus"));
     private static final List<String> FOCUS_WORDS = List.of("staff", "wand", "scepter", "sceptre", "tome", "spellbook", "grimoire", "codex");
 
     // ---------------------------------------------------------------- reading a stack

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * explicitly (the owner's screenshot showed a giant white column and diamond around it), and the clamp scales an oversized card down about its centre.
  */
 class VuCardLimitsTest {
-    private static final Path DIR = Path.of("src/main/resources/assets/nusmp/weapon_meshes_vu");
+    private static final Path DIR = Path.of("src/main/resources/assets/anime_multiverse/weapon_meshes_vu");
 
     private static VuMesh read(Path p) throws IOException {
         try (BufferedReader in = Files.newBufferedReader(p)) { return VuMesh.parse(in); }

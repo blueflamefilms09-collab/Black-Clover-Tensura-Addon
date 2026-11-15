@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 /**
  * Why: the server owns the lock, but a client that wants to draw a hint on a gate, a line in a window or a tooltip needs to know which road its player is
  * bound to, and NeoForge sends no player attachment to the client on its own unless told to. So this module sends its own small server-to-client packet,
- * {@code nusmp:alignment_sync} (the id the contract fixed), on login, respawn, dimension change and every time the state changes, and the handler fills
+ * {@code anime_multiverse:alignment_sync} (the id the contract fixed), on login, respawn, dimension change and every time the state changes, and the handler fills
  * {@link ClientAlignment}. The packet carries exactly what a client can use (the road id or empty, whether it is locked, the deepest distance on each road)
  * and not the lock time, which nobody on a client needs. It is the registration pattern of the discovery system's packet ({@code StreamCodec.of}, a
  * {@code RegisterPayloadHandlersEvent} listener on the mod bus, {@code optional()} so a client without the mod can still join a server that has it); the
@@ -33,7 +33,7 @@ public final class AlignmentNet {
      * real registry-aware buffer and back). Distances are written as var-ints and clamped to 0 or more on both ends.
      */
     public record Sync(String chosen, boolean locked, int deepestHoly, int deepestAbyssal) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "alignment_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "alignment_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUtf(p.chosen() == null ? "" : p.chosen(), MAX_ID);
@@ -71,7 +71,7 @@ public final class AlignmentNet {
         try {
             PacketDistributor.sendToPlayer(player, Sync.of(AlignmentAttachments.get(player)));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The alignment of {} could not be sent: {}", player.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] The alignment of {} could not be sent: {}", player.getGameProfile().getName(), e.toString());
         }
     }
 }

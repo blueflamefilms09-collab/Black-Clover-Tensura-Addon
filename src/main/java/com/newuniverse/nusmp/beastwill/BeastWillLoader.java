@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: reads every {@code data/nusmp/beast_will/<id>.json} at each data reload (3.45.0), hands the text to {@link BeastWillSchema} (the validator the unit test runs too) and installs the result into
+ * Why: reads every {@code data/anime_multiverse/beast_will/<id>.json} at each data reload (3.45.0), hands the text to {@link BeastWillSchema} (the validator the unit test runs too) and installs the result into
  * {@link BeastWillCatalog} in one step. A rejected file is logged with its reasons and left out; nothing here is ever fatal. A data pack can add a will or replace one of the four by shipping a file
  * with the same name. Registered through {@code AddReloadListenerEvent} by {@link BeastWillBoot}.
  */
@@ -33,7 +33,7 @@ public final class BeastWillLoader implements ResourceManagerReloadListener {
         List<String> rejected = new ArrayList<>();
         try {
             String root = BeastWillConfig.classicWills() ? CLASSIC_ROOT : ROOT;
-            Map<ResourceLocation, Resource> files = manager.listResources(root, rl -> rl.getNamespace().equals("nusmp") && rl.getPath().endsWith(".json"));
+            Map<ResourceLocation, Resource> files = manager.listResources(root, rl -> rl.getNamespace().equals("anime_multiverse") && rl.getPath().endsWith(".json"));
             List<ResourceLocation> keys = new ArrayList<>(files.keySet());
             keys.sort(Comparator.comparing(ResourceLocation::toString));
             for (ResourceLocation rl : keys) {
@@ -48,15 +48,15 @@ public final class BeastWillLoader implements ResourceManagerReloadListener {
                 if (p.ok()) out.put(id, p.def());
                 else {
                     rejected.add(id);
-                    LOG.warn("[nusmp] beast will file {} was REJECTED and the will is left out:\n  {}", rl, String.join("\n  ", p.problems()));
+                    LOG.warn("[anime_multiverse] beast will file {} was REJECTED and the will is left out:\n  {}", rl, String.join("\n  ", p.problems()));
                 }
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] beast wills could not scan their data folder", e);
+            LOG.warn("[anime_multiverse] beast wills could not scan their data folder", e);
         }
         BeastWillCatalog.install(out);
         BeastWillManager.onReload();
-        LOG.info("[nusmp] beast wills: {} loaded, {} rejected", out.size(), rejected.size());
+        LOG.info("[anime_multiverse] beast wills: {} loaded, {} rejected", out.size(), rejected.size());
     }
 
     /** {@code beast_will/lion_will.json} gives {@code lion_will}; a file in a sub-folder is not a will's. */

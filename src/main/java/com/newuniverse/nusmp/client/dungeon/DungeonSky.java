@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 
 /**
  * Why: the dimension special effects (no sky, thick fog, constant ambient light) that the Mega-Dungeon's dimension type names with
- * {@code "effects": "nusmp:living_dungeon"}. The id keeps its old spelling on purpose: the dimension type JSON of the Mega-Dungeon (and of the
+ * {@code "effects": "anime_multiverse:living_dungeon"}. The id keeps its old spelling on purpose: the dimension type JSON of the Mega-Dungeon (and of the
  * old dimension that stays registered so a world that remembers it still decodes) points at it, and an id that no client registers falls back
  * to the Overworld's sky and a daylight horizon inside a sealed dungeon. Until 1.58.0 this class also eased the fog colour toward the mood of
  * the Living Dungeon's tiers and drifted its particles round the player; that mood layer belonged to the removed dungeon and went with it

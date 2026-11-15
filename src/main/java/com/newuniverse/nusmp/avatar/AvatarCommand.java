@@ -28,23 +28,23 @@ import java.util.Random;
 
 /**
  * Why: testing and running the Avatar system needs admin handles: spawn an Avatar of any race without a Genesis Core, see what exists, read one's state,
- * force an outcome to see betrayal or awakening without waiting three days, and hand out the core. Plain Brigadier under {@code /nusmp avatar}, operators only
+ * force an outcome to see betrayal or awakening without waiting three days, and hand out the core. Plain Brigadier under {@code /anime_multiverse avatar}, operators only
  * (permission level 2).
  * <pre>
- *   /nusmp avatar spawn &lt;race&gt; [player]        make an Avatar of that race for the player (default: you); no core, no cost, no limit
- *   /nusmp avatar list                          every Avatar the world knows (creator, state, dimension)
- *   /nusmp avatar info                          the Avatar nearest to you
- *   /nusmp avatar kill                          kill the Avatar nearest to you
- *   /nusmp avatar outcome now|reset             decide the nearest Avatar's fate now / start a fresh timer
- *   /nusmp avatar outcome force betrayal|awaken|ordinary
- *   /nusmp avatar give genesis_core [player]    hand out a Genesis Core
+ *   /anime_multiverse avatar spawn &lt;race&gt; [player]        make an Avatar of that race for the player (default: you); no core, no cost, no limit
+ *   /anime_multiverse avatar list                          every Avatar the world knows (creator, state, dimension)
+ *   /anime_multiverse avatar info                          the Avatar nearest to you
+ *   /anime_multiverse avatar kill                          kill the Avatar nearest to you
+ *   /anime_multiverse avatar outcome now|reset             decide the nearest Avatar's fate now / start a fresh timer
+ *   /anime_multiverse avatar outcome force betrayal|awaken|ordinary
+ *   /anime_multiverse avatar give genesis_core [player]    hand out a Genesis Core
  * </pre>
  */
 public final class AvatarCommand {
     private AvatarCommand() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> d) {
-        d.register(Commands.literal("nusmp").requires(s -> s.hasPermission(2)).then(Commands.literal("avatar").requires(s -> s.hasPermission(2))
+        d.register(Commands.literal("anime_multiverse").requires(s -> s.hasPermission(2)).then(Commands.literal("avatar").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("spawn").then(Commands.argument("race", StringArgumentType.word())
                         .suggests((c, b) -> SharedSuggestionProvider.suggest(AvatarRaces.all().stream().map(AvatarRace::id).toList(), b))
                         .executes(c -> spawn(c, c.getSource().getPlayerOrException()))

@@ -28,7 +28,7 @@ public final class SpiritDiveMergeSelfTests {
     }
 
     private static boolean asset(String path) {
-        return SpiritDiveMergeSelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null;
+        return SpiritDiveMergeSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null;
     }
 
     private static Result merge(MinecraftServer server) {

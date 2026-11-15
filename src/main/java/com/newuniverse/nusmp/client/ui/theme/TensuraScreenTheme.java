@@ -63,7 +63,7 @@ public final class TensuraScreenTheme {
         } catch (RuntimeException | LinkageError ex) {
             if (!warned) {
                 warned = true;
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The anime overlay skipped a Tensura screen it could not read", ex);
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The anime overlay skipped a Tensura screen it could not read", ex);
             }
         }
     }
@@ -77,7 +77,7 @@ public final class TensuraScreenTheme {
         } catch (RuntimeException | LinkageError ex) {
             if (!warned) {
                 warned = true;
-                com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The anime overlay skipped a Tensura screen it could not read", ex);
+                com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The anime overlay skipped a Tensura screen it could not read", ex);
             }
         }
     }
@@ -101,10 +101,10 @@ public final class TensuraScreenTheme {
         if (inst != null) {
             frac = describe(font, inst, tw, now);
         } else if (name.equals(SELECT)) {
-            SAGE.set(font, UiLang.get(UiLang.ANALYZING), UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.tensura.select")), "", tw, now);
+            SAGE.set(font, UiLang.get(UiLang.ANALYZING), UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.tensura.select")), "", tw, now);
         } else {
             SAGE.set(font, UiLang.get(UiLang.ANALYSIS_COMPLETE),
-                    UiLang.get(UiLang.NOTICE, UiLang.get(name.equals(MODE) ? "nusmp.ui.tensura.mode" : "nusmp.ui.tensura.category")), "", tw, now);
+                    UiLang.get(UiLang.NOTICE, UiLang.get(name.equals(MODE) ? "anime_multiverse.ui.tensura.mode" : "anime_multiverse.ui.tensura.category")), "", tw, now);
         }
         int rh = 12 + SAGE.height(font) + (inst != null ? 8 : 0);
         int rx = cx - rw / 2;
@@ -123,13 +123,13 @@ public final class TensuraScreenTheme {
         int max = inst.getMaxMastery();
         double mastery = inst.getMastery();
         float frac = max > 0 ? (float) Math.min(1.0, Math.max(0.0, mastery / max)) : 0f;
-        String result = max > 0 ? UiLang.get(UiLang.RESULT, UiLang.get("nusmp.ui.tensura.mastery", (int) mastery, max))
-                : UiLang.get(UiLang.RESULT, UiLang.get("nusmp.ui.tensura.no_mastery"));
-        if (max > 0 && frac >= 1f) result = UiLang.get(UiLang.NOTICE, UiLang.get("nusmp.ui.tensura.mastery_full"));
+        String result = max > 0 ? UiLang.get(UiLang.RESULT, UiLang.get("anime_multiverse.ui.tensura.mastery", (int) mastery, max))
+                : UiLang.get(UiLang.RESULT, UiLang.get("anime_multiverse.ui.tensura.no_mastery"));
+        if (max > 0 && frac >= 1f) result = UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.tensura.mastery_full"));
         ResourceLocation id = inst.getSkillId();
-        if (id != null && "nusmp".equals(id.getNamespace()) && id.getPath().contains("grimoire")) {
+        if (id != null && "anime_multiverse".equals(id.getNamespace()) && id.getPath().contains("grimoire")) {
             CompoundTag gr = MultiverseStatusClient.status().getCompound("Grimoire");
-            if (gr.getInt("Pages") > 0) result = result + "  " + UiLang.get("nusmp.ui.tensura.pages", gr.getInt("Unlocked"), gr.getInt("Pages"));
+            if (gr.getInt("Pages") > 0) result = result + "  " + UiLang.get("anime_multiverse.ui.tensura.pages", gr.getInt("Unlocked"), gr.getInt("Pages"));
         }
         SAGE.set(font, UiLang.get(UiLang.ANALYSIS_COMPLETE), skill, result, w, now);
         return frac;

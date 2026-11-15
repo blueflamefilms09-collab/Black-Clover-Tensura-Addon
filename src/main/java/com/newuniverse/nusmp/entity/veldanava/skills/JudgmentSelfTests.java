@@ -116,17 +116,17 @@ public final class JudgmentSelfTests {
             Mob mob = EntityType.ZOMBIE.create(sl);
             if (mob == null || JudgmentState.mask(mob) != 0) return Result.fail("a mob has a toggle mask");
 
-            String icon = "assets/nusmp/textures/skill/veldanava/sandalphon.png";
+            String icon = "assets/anime_multiverse/textures/skill/veldanava/sandalphon.png";
             if (JudgmentSelfTests.class.getClassLoader().getResource(icon) == null) return Result.fail("missing " + icon);
             JsonObject lang;
-            try (InputStream in = JudgmentSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+            try (InputStream in = JudgmentSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
                 if (in == null) return Result.fail("no en_us.json");
                 lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
             }
-            String[] need = {"nusmp.skill.sandalphon", "nusmp.skill.sandalphon.description", "effect.nusmp.temporal_debt", "effect.nusmp.action_lock", "nusmp.veldanava.skills.title"};
+            String[] need = {"anime_multiverse.skill.sandalphon", "anime_multiverse.skill.sandalphon.description", "effect.anime_multiverse.temporal_debt", "effect.anime_multiverse.action_lock", "anime_multiverse.veldanava.skills.title"};
             for (String k : need) if (!lang.has(k)) return Result.fail("missing lang key " + k);
             for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes())
-                if (!lang.has("nusmp.skill.mode.sandalphon." + m.id())) return Result.fail("missing lang key for mode " + m.id());
+                if (!lang.has("anime_multiverse.skill.mode.sandalphon." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             for (JudgmentRules.Card c : JudgmentRules.CARDS) if (c.title().isBlank() || c.epithet().isBlank()) return Result.fail("card " + c.id() + " has no title");
             return Result.ok("registered, learned once, 10 modes named, toggles and mask hold, icon and lang are in the jar");
         } finally {

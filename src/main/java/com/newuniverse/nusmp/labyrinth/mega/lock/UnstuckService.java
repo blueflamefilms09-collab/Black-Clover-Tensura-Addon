@@ -170,7 +170,7 @@ public final class UnstuckService {
         if (cost > 0 && !p.isCreative()) LockMsg.tell(p, LockMsg.text(LockText.UNSTUCK_COST, cost).withStyle(ChatFormatting.GRAY));
         else if (sealed) LockMsg.tell(p, LockMsg.text(LockText.UNSTUCK_FREE).withStyle(ChatFormatting.GRAY));
         SystemSync.toast(p, ToastKind.INFO, LockText.TOAST_RESCUED);
-        LOG.info("[nusmp] {} used /dungeon unstuck{} -> {}", p.getGameProfile().getName(), party ? " party" : "", t.kind());
+        LOG.info("[anime_multiverse] {} used /dungeon unstuck{} -> {}", p.getGameProfile().getName(), party ? " party" : "", t.kind());
         if (party) {
             int moved = 0;
             for (ServerPlayer m : SystemParty.members(p)) {

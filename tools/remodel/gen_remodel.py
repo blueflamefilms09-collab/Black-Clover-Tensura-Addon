@@ -1,5 +1,5 @@
 """Why: builds the remodelled mobs (docs/arc/remodel.md). The models themselves are ordinary art-kit characters (tools/arc/char_<id>.py, built by
-tools/gen_arc_characters.py into assets/nusmp/{geo,animations,textures}/entity/arc_<id>*); this driver adds the one thing the kit's driver does not do: SKINS. A mob that comes
+tools/gen_arc_characters.py into assets/anime_multiverse/{geo,animations,textures}/entity/arc_<id>*); this driver adds the one thing the kit's driver does not do: SKINS. A mob that comes
 in several colours (the Dark Disciple of each devil, the Devil Avatar of Megicula, the Guardian that wears the Warden's body) is one body repainted, so its character file lists
 `VARIANTS = {name: spec-or-callable}` and this driver builds each variant with the same extra() and writes ONLY its two textures (arc_<id>_<name>.png and _glow.png). The
 geometry and the clips are shared (the renderer draws the base model with `GeoSpec.skin("arc_<id>_<name>")`), which is how a variant costs 10 KB instead of 310 KB.
@@ -106,9 +106,9 @@ def write_skin_scenes(mods):
                 continue
             sc = json.load(open(base))["arc_%s%s_front" % (cid, "_form2" if form == 2 else "")]
             sc = dict(sc)
-            sc["model"] = "nusmp:geo/entity/arc_%s%s.geo.json" % (cid, "_form2" if form == 2 else "")
-            sc["texture"] = "nusmp:textures/entity/arc_%s_%s.png" % (cid, name)
-            sc["animations"] = "nusmp:animations/entity/arc_%s%s.animation.json" % (cid, "_form2" if form == 2 else "")
+            sc["model"] = "anime_multiverse:geo/entity/arc_%s%s.geo.json" % (cid, "_form2" if form == 2 else "")
+            sc["texture"] = "anime_multiverse:textures/entity/arc_%s_%s.png" % (cid, name)
+            sc["animations"] = "anime_multiverse:animations/entity/arc_%s%s.animation.json" % (cid, "_form2" if form == 2 else "")
             scenes["remodel_%s_%s" % (cid, name)] = sc
     path = os.path.join(D.SCENES_DIR, "remodel_skins.json")
     with open(path, "w") as f:
@@ -121,7 +121,7 @@ def check():
     bad = D.check()
     tmp = tempfile.mkdtemp(prefix="remodel_check_")
     try:
-        root = os.path.join(tmp, "assets", "nusmp")
+        root = os.path.join(tmp, "assets", "anime_multiverse")
         n = 0
         for cid, mod in mods.items():
             for name, (raw, form) in variants_of(mod).items():

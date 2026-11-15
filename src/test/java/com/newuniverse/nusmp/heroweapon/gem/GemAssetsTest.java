@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
  * show the four jewel colours. All of it is read from the source tree, so a new weapon appended to the catalogue fails here until its Seal has a model and an icon.
  */
 class GemAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static BufferedImage icon(String id) throws Exception {
         Path file = ASSETS.resolve("textures/item/" + id + ".png");
@@ -59,7 +59,7 @@ class GemAssetsTest {
                 m = JsonParser.parseReader(r).getAsJsonObject();
             }
             assertEquals("minecraft:item/generated", m.get("parent").getAsString(), id);
-            assertEquals("nusmp:item/" + id, m.getAsJsonObject("textures").get("layer0").getAsString(), id);
+            assertEquals("anime_multiverse:item/" + id, m.getAsJsonObject("textures").get("layer0").getAsString(), id);
             assertFalse(m.has("overrides"), id + ": one item, one look (the Seals are items of their own)");
         }
     }

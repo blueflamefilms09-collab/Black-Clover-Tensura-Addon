@@ -5,7 +5,7 @@ Deterministic; refuses to finish if two icons are identical."""
 import hashlib, math, os
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "skill")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
 S = 256
 
 # id: (main colour, second colour, stars)

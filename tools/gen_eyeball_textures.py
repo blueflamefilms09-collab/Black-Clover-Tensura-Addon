@@ -1,7 +1,7 @@
 """Generates the Eyeball Magic VFX textures (wet fleshy eyeballs, capillary veins, eyelids, optic-nerve tendrils, gaze reticles).
 
 Deterministic (fixed seeds, no fonts, no external images, numpy + Pillow only).
-Output: src/main/resources/assets/nusmp/textures/particle/eyeball_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/eyeball_*.png
 
     python3 -B tools/gen_eyeball_textures.py
 
@@ -22,7 +22,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for line work
 
 

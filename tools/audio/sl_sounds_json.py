@@ -1,8 +1,8 @@
-"""Shared by tools/audio/spirit_light_voice.py and tools/gen_spirit_light_sounds.py: keeps the Spirit of Light's entries in assets/nusmp/sounds.json as ONE block of single-line entries right after
+"""Shared by tools/audio/spirit_light_voice.py and tools/gen_spirit_light_sounds.py: keeps the Spirit of Light's entries in assets/anime_multiverse/sounds.json as ONE block of single-line entries right after
 the first entry ("zagred_word"), so the rest of the hand-formatted file is never rewritten and the block merges cleanly. Entries are written as
 
-  "spirit_light.link": { "subtitle": "...", "sounds": [ { "name": "nusmp:spirit_light/link_1" }, ... ] },
-  "spirit_light.voice.spiritlight_greet_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_greet_1", "stream": false } ] },
+  "spirit_light.link": { "subtitle": "...", "sounds": [ { "name": "anime_multiverse:spirit_light/link_1" }, ... ] },
+  "spirit_light.voice.spiritlight_greet_1": { "sounds": [ { "name": "anime_multiverse:spirit_light/voice/spiritlight_greet_1", "stream": false } ] },
 
 (the spoken lines have no subtitle, like every other spoken voice line of the mod: the line's text is shown on the owner's action bar instead).
 """
@@ -11,7 +11,7 @@ import os
 import re
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds.json")
+SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 PREFIX = "spirit_light."
 ENTRY = re.compile(r'^\s*"(spirit_light\.[^"]+)":\s*(\{.*\}),?\s*$')
 

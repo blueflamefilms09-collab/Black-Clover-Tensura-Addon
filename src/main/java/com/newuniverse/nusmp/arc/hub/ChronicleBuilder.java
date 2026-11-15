@@ -61,7 +61,7 @@ public final class ChronicleBuilder {
             build(hub, false);
             save.version(BUILD_VERSION);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the Chronicle could not be laid in the Hub: {}", ex.toString());
+            LOG.error("[anime_multiverse] the Chronicle could not be laid in the Hub: {}", ex.toString());
         }
     }
 
@@ -132,7 +132,7 @@ public final class ChronicleBuilder {
                 }
             }
         });
-        LOG.info("[nusmp] The Chronicle and the Promenade of the Hub {}: {} blocks set", onlyMissing ? "repaired" : "laid", set[0]);
+        LOG.info("[anime_multiverse] The Chronicle and the Promenade of the Hub {}: {} blocks set", onlyMissing ? "repaired" : "laid", set[0]);
         return set[0];
     }
 }

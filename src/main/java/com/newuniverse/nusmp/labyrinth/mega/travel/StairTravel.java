@@ -67,14 +67,14 @@ public final class StairTravel {
                 } catch (RuntimeException ex) {
                     if (!warned) {
                         warned = true;
-                        LOG.warn("[nusmp] The stair travel failed for {} (further failures are not logged): {}", p.getGameProfile().getName(), ex.toString());
+                        LOG.warn("[anime_multiverse] The stair travel failed for {} (further failures are not logged): {}", p.getGameProfile().getName(), ex.toString());
                     }
                 }
             }
         } catch (RuntimeException ex) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The stair travel failed (further failures are not logged): {}", ex.toString());
+                LOG.warn("[anime_multiverse] The stair travel failed (further failures are not logged): {}", ex.toString());
             }
         }
     }
@@ -109,7 +109,7 @@ public final class StairTravel {
         Sector t = data.chainSector(s.party, s.polarity, d.chainIndex());
         if (t == null) {                                                      // not built yet: say so, and make it so
             String why = ExpansionQueue.get().tryNext(level, s);
-            if (why != null) LOG.info("[nusmp] The stairs of sector {} lead nowhere yet and the next floor was not queued: {}", s.id, why);
+            if (why != null) LOG.info("[anime_multiverse] The stairs of sector {} lead nowhere yet and the next floor was not queued: {}", s.id, why);
             say(p, "stairs.forming", "The stairs are still forming. Wait here: the next floor will be ready soon.", ChatFormatting.GRAY);
             cool(level, p, REFUSED_COOLDOWN);
             return;
@@ -127,8 +127,8 @@ public final class StairTravel {
         StairLinks.Dest d = StairLinks.back(s.chainIndex);
         if (d.hub()) {                                                        // the first floor's stairs lead out of the Labyrinth: to Floor 0
             cool(level, p, USED_COOLDOWN);
-            title(p, Component.translatableWithFallback("message.nusmp.mega.gen2.stairs.hub", "Floor 0"),
-                    Component.translatableWithFallback("message.nusmp.mega.gen2.stairs.hub.sub", "You leave the Labyrinth by the stairs."));
+            title(p, Component.translatableWithFallback("message.anime_multiverse.mega.gen2.stairs.hub", "Floor 0"),
+                    Component.translatableWithFallback("message.anime_multiverse.mega.gen2.stairs.hub.sub", "You leave the Labyrinth by the stairs."));
             LabyrinthTravel.leaveAny(p);
             return;
         }
@@ -153,8 +153,8 @@ public final class StairTravel {
         LabyrinthTravel.arrive(p, level, pad, null);
         MegaTravel.remember(p, t);
         cool(level, p, USED_COOLDOWN);
-        title(p, Component.translatableWithFallback("message.nusmp.mega.gen2.stairs.floor", "Floor %s", floor),
-                Component.translatableWithFallback(climbing ? "message.nusmp.mega.gen2.stairs.climb" : "message.nusmp.mega.gen2.stairs.descend",
+        title(p, Component.translatableWithFallback("message.anime_multiverse.mega.gen2.stairs.floor", "Floor %s", floor),
+                Component.translatableWithFallback(climbing ? "message.anime_multiverse.mega.gen2.stairs.climb" : "message.anime_multiverse.mega.gen2.stairs.descend",
                         climbing ? "You climb the stairs." : "You go down the stairs."));
         NusmpEvents.fire(p, "mega.stairs", floor);
     }
@@ -171,7 +171,7 @@ public final class StairTravel {
 
     private static void say(ServerPlayer p, String key, String english, ChatFormatting colour, Object... args) {
         if (p.connection == null) return;                                      // a stand-in player of a self-test has no connection
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.gen2." + key, english, args).withStyle(colour), true);
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.gen2." + key, english, args).withStyle(colour), true);
     }
 
     private static void cool(ServerLevel level, ServerPlayer p, long ticks) {

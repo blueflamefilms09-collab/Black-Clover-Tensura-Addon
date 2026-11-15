@@ -6,7 +6,7 @@ Stitches the REAL template files of a sector plan into one top-down picture (a f
     python3 tools/labyrinth/mega_compose.py plan.json map.png --scale 6 --rows 9:14
     python3 tools/labyrinth/mega_compose.py plan.json map.png --root <resources root>   # templates of another worktree
 
-`plan.json` is what the Java `MegaSim` / `/multiverse mega plan` writes: `{"region": [x1, z1, x2, z2], "pieces": [{"template": "nusmp:mega/hall/crypt_a",
+`plan.json` is what the Java `MegaSim` / `/multiverse mega plan` writes: `{"region": [x1, z1, x2, z2], "pieces": [{"template": "anime_multiverse:mega/hall/crypt_a",
 "rotation": 0..3, "x": ox, "y": oy, "z": oz}, ...], "entry": [x, y, z, "east"]}`; a piece's world cell for local cell c is `origin + rotate(rotation, c)` with
 the vanilla CLOCKWISE_90 transform (x, z) -> (-z, x), applied about the template origin (so a rotated piece reaches into negative local coordinates, exactly as
 `StructureTemplate.transform` does with a zero pivot).
@@ -45,7 +45,7 @@ def load_template(root, name, cache):
     key = name
     if key not in cache:
         rel = name.split(":", 1)[1] if ":" in name else name
-        path = os.path.join(root, "data", "nusmp", "structure", *rel.split("/")) + ".nbt"
+        path = os.path.join(root, "data", "anime_multiverse", "structure", *rel.split("/")) + ".nbt"
         cache[key] = load(path, rel) if os.path.exists(path) else None
     return cache[key]
 

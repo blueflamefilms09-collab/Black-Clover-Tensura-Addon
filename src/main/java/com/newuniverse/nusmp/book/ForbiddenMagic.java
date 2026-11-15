@@ -136,8 +136,8 @@ public final class ForbiddenMagic {
         return true;
     }
 
-    private static final ResourceLocation MAXHP_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "devil_price_hp");
-    private static final ResourceLocation REWIND_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "rewind_price_hp");
+    private static final ResourceLocation MAXHP_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_price_hp");
+    private static final ResourceLocation REWIND_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "rewind_price_hp");
 
     static void applyMaxHpPrice(ServerPlayer p, double hp) {
         var a = p.getAttribute(Attributes.MAX_HEALTH);

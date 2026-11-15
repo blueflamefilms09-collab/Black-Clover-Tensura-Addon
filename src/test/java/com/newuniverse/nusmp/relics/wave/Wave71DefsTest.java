@@ -160,9 +160,9 @@ class Wave71DefsTest {
         String lang = Files.readString(LANG);
         assertTrue(lang.startsWith("{"));
         for (Def d : defs()) {
-            for (String k : new String[]{"item.nusmp." + d.id(), "item.nusmp." + d.id() + ".desc", "item.nusmp." + d.id() + ".card"})
+            for (String k : new String[]{"item.anime_multiverse." + d.id(), "item.anime_multiverse." + d.id() + ".desc", "item.anime_multiverse." + d.id() + ".card"})
                 assertTrue(lang.contains("\"" + k + "\": \""), "no lang key " + k);
-            assertTrue(lang.contains("\"item.nusmp." + d.id() + "\": " + "\"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
+            assertTrue(lang.contains("\"item.anime_multiverse." + d.id() + "\": " + "\"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
         }
         for (int i = 0; i < lang.length(); i++) assertTrue(lang.charAt(i) < 128, "ASCII only: char " + (int) lang.charAt(i) + " at " + i);
         assertFalse(lang.toLowerCase().contains("claude") || lang.toLowerCase().contains("anthropic"), "no assistant names in text");

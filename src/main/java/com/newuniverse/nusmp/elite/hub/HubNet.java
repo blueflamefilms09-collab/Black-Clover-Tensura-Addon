@@ -33,7 +33,7 @@ public final class HubNet {
 
     static String clip(String s, int max) { return s == null ? "" : s.length() <= max ? s : s.substring(0, max); }
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     // ================================================================ server to client
     /** One line of the overlay. {@code state}: 0 active, 1 ready to hand in. */
@@ -238,7 +238,7 @@ public final class HubNet {
         try {
             r.run();
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] elite hub: a client packet could not be applied", e);
+            LOG.warn("[anime_multiverse] elite hub: a client packet could not be applied", e);
         }
     }
 
@@ -246,7 +246,7 @@ public final class HubNet {
         try {
             if (player instanceof ServerPlayer sp && sp.isAlive() && ActionGate.allow(sp)) QuestService.handle(sp, p.action(), p.questId());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] elite hub: a quest request failed", e);
+            LOG.warn("[anime_multiverse] elite hub: a quest request failed", e);
         }
     }
 
@@ -254,7 +254,7 @@ public final class HubNet {
         try {
             if (player instanceof ServerPlayer sp && sp.isAlive() && ActionGate.allow(sp)) ShopService.buy(sp, p.offerId());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] elite hub: a purchase request failed", e);
+            LOG.warn("[anime_multiverse] elite hub: a purchase request failed", e);
         }
     }
 }

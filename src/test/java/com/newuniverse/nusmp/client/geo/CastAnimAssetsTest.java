@@ -10,14 +10,14 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** The casting body animations (assets/nusmp/animations/player/cast.animation.json): every clip the server can name exists and only drives the player model's bones. */
+/** The casting body animations (assets/anime_multiverse/animations/player/cast.animation.json): every clip the server can name exists and only drives the player model's bones. */
 class CastAnimAssetsTest {
     private static final Set<String> BONES = Set.of("body", "head", "left_arm", "right_arm", "left_leg", "right_leg");
 
     @Test
     void everyCastClipExistsAndDrivesRealBones() throws Exception {
         GeoAnim a;
-        try (Reader r = new FileReader(new File("src/main/resources/assets/nusmp/animations/player/cast.animation.json"))) {
+        try (Reader r = new FileReader(new File("src/main/resources/assets/anime_multiverse/animations/player/cast.animation.json"))) {
             a = GeoAnim.parse(JsonParser.parseReader(r).getAsJsonObject());
         }
         for (String name : new String[]{"cast_chant", "cast_mana_zone", "cast_release_thrust", "cast_release_sweep", "cast_release_side",

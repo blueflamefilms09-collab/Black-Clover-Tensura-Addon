@@ -1,7 +1,7 @@
 """Generates the Fungus Magic VFX textures (spore clouds, spores, mycelium, cap gills, fairy rings, mushrooms ...).
 
 Deterministic (fixed seeds), font-free, Pillow + numpy only.
-Output: src/main/resources/assets/nusmp/textures/particle/fungus_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/fungus_*.png
 
     python3 -B tools/gen_fungus_textures.py              # everything
     python3 -B tools/gen_fungus_textures.py puff gills   # only some of them (names of the functions in MAKERS)
@@ -26,7 +26,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4          # supersampling of the PIL-drawn line work
 HS = 3          # supersampling of the analytically shaded mushrooms
 TAU = math.tau

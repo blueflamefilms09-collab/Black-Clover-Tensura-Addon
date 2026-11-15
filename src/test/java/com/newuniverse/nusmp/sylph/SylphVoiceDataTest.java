@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * ({@code tools/lang/sylph_voice.json}) and the report must say the same; a line that was not generated is not registered; the whole set stays small.
  */
 class SylphVoiceDataTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DIR = ASSETS.resolve("sounds/voice/sylph");
     private static final Path MANIFEST = Path.of("tools/audio/sylph_lines.json");
     private static final Path LANG = Path.of("tools/lang/sylph_voice.json");
@@ -89,7 +89,7 @@ class SylphVoiceDataTest {
             }
         }
         for (String key : sounds.keySet()) if (key.startsWith("voice.sylph_") && !SylphVoiceLines.ids().contains(key.substring("voice.".length()))) bad.add("an entry for a line that is not registered: " + key);
-        for (String key : lang.keySet()) assertTrue(key.startsWith("subtitles.nusmp.voice.sylph_"), "the fragment holds Sylph's subtitles only: " + key);
+        for (String key : lang.keySet()) assertTrue(key.startsWith("subtitles.anime_multiverse.voice.sylph_"), "the fragment holds Sylph's subtitles only: " + key);
         assertTrue(bad.isEmpty(), bad.toString());
         assertTrue(total < 3_000_000, "her spoken lines stay under 3 MB: " + total);
         assertEquals(SylphVoiceLines.ids().size(), report.size(), "the report covers exactly the registered lines");

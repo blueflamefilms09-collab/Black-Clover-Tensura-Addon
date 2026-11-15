@@ -2,14 +2,14 @@
 wings, aura. Every choice must be a real model or texture in the game, so this script makes all of them, deterministically, from code (no
 hand-painted files to lose). It writes (key "avatar"):
 
-    assets/nusmp/geo/entity/avatar_hair_<0..15>.geo.json      + animation + texture   (GeoLite, drawn on the head by client/avatar/AvatarFeatureLayer)
-    assets/nusmp/geo/entity/avatar_horn_<0..7>.geo.json       + texture + glow
-    assets/nusmp/geo/entity/avatar_wing_<0..5>.geo.json       + animation + texture + glow
-    assets/nusmp/geo/entity/avatar_extra_<n>.geo.json         capes / pauldrons / skirts of the outfits that have 3D parts
-    assets/nusmp/geo/entity/avatar_aura_ring.geo.json         the aura ring under the avatar's feet (white, tinted by the aura colour at draw time)
-    assets/nusmp/textures/entity/avatar/base_<human|bulky|small>.png   + _mask.png   body skin templates (grey flesh, tinted at runtime)
-    assets/nusmp/textures/entity/avatar/outfit_<0..11>.png    64x64 overlays over the player skin layout
-    assets/nusmp/textures/entity/avatar/eyes_glow.png         the iris pixels only (emissive layer; tinted by the eye colour, red in a frenzy)
+    assets/anime_multiverse/geo/entity/avatar_hair_<0..15>.geo.json      + animation + texture   (GeoLite, drawn on the head by client/avatar/AvatarFeatureLayer)
+    assets/anime_multiverse/geo/entity/avatar_horn_<0..7>.geo.json       + texture + glow
+    assets/anime_multiverse/geo/entity/avatar_wing_<0..5>.geo.json       + animation + texture + glow
+    assets/anime_multiverse/geo/entity/avatar_extra_<n>.geo.json         capes / pauldrons / skirts of the outfits that have 3D parts
+    assets/anime_multiverse/geo/entity/avatar_aura_ring.geo.json         the aura ring under the avatar's feet (white, tinted by the aura colour at draw time)
+    assets/anime_multiverse/textures/entity/avatar/base_<human|bulky|small>.png   + _mask.png   body skin templates (grey flesh, tinted at runtime)
+    assets/anime_multiverse/textures/entity/avatar/outfit_<0..11>.png    64x64 overlays over the player skin layout
+    assets/anime_multiverse/textures/entity/avatar/eyes_glow.png         the iris pixels only (emissive layer; tinted by the eye colour, red in a frenzy)
 
     python3 -B tools/avatar/gen_avatar_client_assets.py             # write everything
     python3 -B tools/avatar/gen_avatar_client_assets.py --check     # read every geo/texture back (uv inside sheet, clips, parents)
@@ -714,7 +714,7 @@ def view(name, yaw, pitch, target, dist):
 
 
 def scene(model, anim, ages, views, tile, glow="FFFFFFFF"):
-    return {"kind": "geo", "model": "nusmp:geo/entity/avatar_%s.geo.json" % model, "texture": "nusmp:textures/entity/avatar_%s.png" % model,
+    return {"kind": "geo", "model": "anime_multiverse:geo/entity/avatar_%s.geo.json" % model, "texture": "anime_multiverse:textures/entity/avatar_%s.png" % model,
             "space": "PLAYER", "layer": "CUTOUT", "argb": "FFFFFFFF", "glow": glow, "ages": ages, "tile": list(tile), "floor": False, "figure": False,
             "expect": [], "anim": anim, "views": views}
 
@@ -730,7 +730,7 @@ def scenes():
         sc["avatar_wing_%d" % i] = scene("wing_%d" % i, "idle", [0, 40], [view("from behind", 180, 4, (0, 1.2, 0), 4.0), view("3/4 back", 150, 12, (0, 1.2, 0), 4.0)], (320, 300))
     for n in EXTRA_OUTFITS:
         sc["avatar_extra_%d" % n] = scene("extra_%d" % n, "idle", [0], [view("front", 0, 8, (0, 1.2, 0), 3.4), view("3/4 back", 150, 12, (0, 1.2, 0), 3.4)], (300, 300))
-    sc["avatar_aura_ring"] = {"kind": "geo", "model": "nusmp:geo/entity/avatar_aura_ring.geo.json", "texture": "nusmp:textures/entity/avatar_aura_ring.png",
+    sc["avatar_aura_ring"] = {"kind": "geo", "model": "anime_multiverse:geo/entity/avatar_aura_ring.geo.json", "texture": "anime_multiverse:textures/entity/avatar_aura_ring.png",
                               "space": "PROP", "layer": "ADDITIVE", "argb": "CC66CCFF", "glow": "00000000", "ages": [0, 80], "tile": [320, 260], "floor": False,
                               "figure": False, "expect": [], "anim": "idle", "views": [view("3/4", 30, 28, (0, 0.2, 0), 2.6)]}
     return sc

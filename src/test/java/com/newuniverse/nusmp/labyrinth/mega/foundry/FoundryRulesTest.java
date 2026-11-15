@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class FoundryRulesTest {
     private static FoundryLibrary library() throws Exception {
-        String a = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/nusmp/mega/foundry/_abilities.json"));
-        String b = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/nusmp/mega/foundry/_archetypes.json"));
+        String a = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_abilities.json"));
+        String b = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_archetypes.json"));
         return new FoundryLibrary(FoundryLibrary.parseAbilities(a).rows(), FoundryLibrary.parseArchetypes(b).rows());
     }
 
@@ -99,8 +99,8 @@ public class FoundryRulesTest {
     // ---------------------------------------------------------------- abilities
     @Test
     public void theShippedLibraryParsesCleanAndHasTheWholeSet() throws Exception {
-        String a = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/nusmp/mega/foundry/_abilities.json"));
-        String b = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/nusmp/mega/foundry/_archetypes.json"));
+        String a = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_abilities.json"));
+        String b = java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/anime_multiverse/mega/foundry/_archetypes.json"));
         FoundryLibrary.Parsed<FoundryAbility> pa = FoundryLibrary.parseAbilities(a);
         FoundryLibrary.Parsed<FoundryArchetype> pb = FoundryLibrary.parseArchetypes(b);
         assertEquals(List.of(), pa.problems());
@@ -260,10 +260,10 @@ public class FoundryRulesTest {
     @Test
     public void aFoundryKeyRoundTripsAndNothingElseIsOne() {
         FoundryDef d = def("tunnel_kobold", com.newuniverse.nusmp.labyrinth.mega.Polarity.HOLY, 1, "beast");
-        assertEquals("nusmp:foundry_mob#tunnel_kobold", d.entityKey());
+        assertEquals("anime_multiverse:foundry_mob#tunnel_kobold", d.entityKey());
         assertEquals("tunnel_kobold", FoundryDef.idOfKey(d.entityKey()));
         assertEquals(null, FoundryDef.idOfKey("minecraft:zombie"));
-        assertEquals(null, FoundryDef.idOfKey("nusmp:foundry_mob#Bad Id"));
+        assertEquals(null, FoundryDef.idOfKey("anime_multiverse:foundry_mob#Bad Id"));
         assertEquals(null, FoundryDef.idOfKey(null));
     }
 }

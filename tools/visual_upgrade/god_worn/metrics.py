@@ -1,7 +1,7 @@
 """Measures a worn relic's visuals (before and after the 1.102.0 upgrade) and scores them: the proxies the owner's "5x better looking" is made measurable with.
 
 Everything is counted from the files the game reads, not guessed:
-  quads / vertices   the model files of the pieces the relic wears (assets/nusmp/relic_worn/<model>.txt; a mirrored copy on the other arm or leg counts again, as it is drawn again)
+  quads / vertices   the model files of the pieces the relic wears (assets/anime_multiverse/relic_worn/<model>.txt; a mirrored copy on the other arm or leg counts again, as it is drawn again)
   pieces             how many model files are drawn (pairs count twice)
   glow passes        the draw passes beyond the lit solid pass that THIS relic's models take part in: the emissive model pass, the glow-map pass (after), the rim and
                      the shimmer pass (when the models have shell quads). The procedural motes / rune ring / halo of the grade plan are the same for every God relic before
@@ -10,7 +10,7 @@ Everything is counted from the files the game reads, not guessed:
                      the shared 128 x 256 atlas; new: 64 x 64 cells of its own skin), plus the painted armour layer (64 x 32) a chest relic keeps; glow-map texels are
                      counted separately (`glow_map_texels`: non-black texels of the emissive map)
   ambient layers     the effect layers THIS relic brings while it is merely worn: every emissive model group that moves on its own (orbit, spin, pulse, bob), a
-                     particle theme the catalog names for it (`fx <id> <theme>`), and, after, every layer of its data table (assets/nusmp/visual_upgrade/<id>.json).
+                     particle theme the catalog names for it (`fx <id> <theme>`), and, after, every layer of its data table (assets/anime_multiverse/visual_upgrade/<id>.json).
                      The grade plan (motes, rune ring, halo band, the generic ambient particles, the head particle halo) is shared by every God relic and unchanged: it is
                      listed under `shared_grade_plan` and not counted, for either state
   animation groups   the animation groups of the pieces (swing, sway, wave, bob, spin, orbit, pulse)
@@ -27,7 +27,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 WORN = os.path.join(ASSETS, "relic_worn")
 HAND = os.path.join(ASSETS, "relic_hand")
 UPG = os.path.join(ASSETS, "visual_upgrade")

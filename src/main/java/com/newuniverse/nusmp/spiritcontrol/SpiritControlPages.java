@@ -156,7 +156,7 @@ public final class SpiritControlPages {
             if (p.isShiftKeyDown()) {                                                  // sneak: pick the next waypoint slot instead of casting (the old cycle key)
                 slot = (slot + 1) % count;
                 p.getPersistentData().putInt(SLOT_KEY, slot);
-                p.displayClientMessage(Component.translatableWithFallback("nusmp.spirit_control.slot", "Waypoint slot %s selected.", slot + 1).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.spirit_control.slot", "Waypoint slot %s selected.", slot + 1).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 refund(book, inst, p, mode);
                 return false;
             }

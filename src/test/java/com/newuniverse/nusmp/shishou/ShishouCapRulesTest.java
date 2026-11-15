@@ -230,7 +230,7 @@ class ShishouCapRulesTest {
     void theStomachRefusesLivingThingsContainersAndItself() {
         assertEquals(ShishouStorageRules.Refusal.NONE, ShishouStorageRules.refusal("minecraft:diamond", false, false, false, false));
         assertEquals(ShishouStorageRules.Refusal.EMPTY, ShishouStorageRules.refusal("minecraft:air", true, false, false, false));
-        assertEquals(ShishouStorageRules.Refusal.SELF, ShishouStorageRules.refusal("nusmp:shishou", false, false, false, false));
+        assertEquals(ShishouStorageRules.Refusal.SELF, ShishouStorageRules.refusal("anime_multiverse:shishou", false, false, false, false));
         assertEquals(ShishouStorageRules.Refusal.LIVING, ShishouStorageRules.refusal("minecraft:pig_spawn_egg", false, false, false, true));
         assertEquals(ShishouStorageRules.Refusal.LIVING, ShishouStorageRules.refusal("minecraft:axolotl_bucket", false, false, false, true));
         assertEquals(ShishouStorageRules.Refusal.BUNDLE, ShishouStorageRules.refusal("minecraft:bundle", false, false, false, false));
@@ -238,7 +238,7 @@ class ShishouCapRulesTest {
         assertEquals(ShishouStorageRules.Refusal.CONTAINER, ShishouStorageRules.refusal("minecraft:red_shulker_box", false, false, false, false));
         assertEquals(ShishouStorageRules.Refusal.CONTAINER, ShishouStorageRules.refusal("x:anything", false, true, false, false), "any item with a container component");
         assertEquals(ShishouStorageRules.Refusal.CONTAINER, ShishouStorageRules.refusal("sophisticatedbackpacks:backpack", false, false, false, false));
-        assertEquals(ShishouStorageRules.Refusal.CONTAINER, ShishouStorageRules.refusal("nusmp:bag_of_holding", false, false, false, false));
+        assertEquals(ShishouStorageRules.Refusal.CONTAINER, ShishouStorageRules.refusal("anime_multiverse:bag_of_holding", false, false, false, false));
         assertEquals(3, ShishouStorageRules.rows(1));
         assertEquals(6, ShishouStorageRules.rows(40));
         assertTrue(ShishouRules.STORAGE_SLOTS >= 27 && ShishouRules.STORAGE_SLOTS <= 54);
@@ -246,7 +246,7 @@ class ShishouCapRulesTest {
 
     @Test
     void aStrangerSeesARustySwordAndOnlyTheWielderSeesTheTruth() {
-        ShishouConcealment.Readout truth = new ShishouConcealment.Readout("item.nusmp.shishou", 40f, 40f, 77, 300, 900, List.of("shishou.skill.skill_eater"), false);
+        ShishouConcealment.Readout truth = new ShishouConcealment.Readout("item.anime_multiverse.shishou", 40f, 40f, 77, 300, 900, List.of("shishou.skill.skill_eater"), false);
         ShishouConcealment.Readout mine = ShishouConcealment.view(true, true, truth);
         assertEquals(77, mine.level());
         assertFalse(mine.concealed());

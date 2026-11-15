@@ -137,6 +137,6 @@ class StarAccessTest {
         JsonObject old = JsonParser.parseString(read("tools/lang/star_magic.json")).getAsJsonObject();
         assertTrue(old.get(Pages15Rules.langKey("book_star", StarRules.BLACK_NEVERLAND)).getAsString().contains("Needs the Grinberryall heir mark"), "Black Neverland keeps its gate text");
         assertTrue(read("tools/lang/merge_pages15.py").contains("star_all.json"), "the lang merge knows the replace fragment");
-        assertEquals(0, new com.google.gson.Gson().toJsonTree(all).getAsJsonObject().keySet().stream().filter(k -> !k.startsWith("nusmp.page.book_star.")).count());
+        assertEquals(0, new com.google.gson.Gson().toJsonTree(all).getAsJsonObject().keySet().stream().filter(k -> !k.startsWith("anime_multiverse.page.book_star.")).count());
     }
 }

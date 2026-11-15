@@ -8,8 +8,8 @@ import java.util.function.BiFunction;
  */
 public final class GuiLabels {
     public static final String[] KEYS = {
-            "nusmp.djinn_gui.phase.0", "nusmp.djinn_gui.phase.1", "nusmp.djinn_gui.phase.2", "nusmp.djinn_gui.phase.3", "nusmp.djinn_gui.phase.4",
-            "nusmp.djinn_gui.trust", "nusmp.djinn_gui.maso", "nusmp.djinn_gui.extreme", "nusmp.djinn_gui.dark"};
+            "anime_multiverse.djinn_gui.phase.0", "anime_multiverse.djinn_gui.phase.1", "anime_multiverse.djinn_gui.phase.2", "anime_multiverse.djinn_gui.phase.3", "anime_multiverse.djinn_gui.phase.4",
+            "anime_multiverse.djinn_gui.trust", "anime_multiverse.djinn_gui.maso", "anime_multiverse.djinn_gui.extreme", "anime_multiverse.djinn_gui.dark"};
     public static final String[] FALLBACK = {"Sealed", "Lesser Summon", "Djinn Weapon", "Full Equip", "Extreme Magic", "Trust", "Maso", "Ext", "Dark"};
 
     public static final GuiLabels DEFAULT = new GuiLabels(FALLBACK);

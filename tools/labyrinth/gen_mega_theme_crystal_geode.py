@@ -2,7 +2,7 @@
 """
 Why: THEME-B (1.59.0, docs/labyrinth/mega_v2_thb.md section 3) gives the Holy road a giant geode: a white calcite shell, a dark basalt floor, amethyst everywhere the crystals grew, light
 that comes out of the stone itself (sea lanterns in the lining, the glow of the Heart), echoing galleries, crystal bridges and a puzzle that is a chime. This script writes its rooms
-(`structure/mega/<folder>/crystal_geode_*.nbt`, the prefix `data/nusmp/mega/template_themes/crystal_geode.json` claims for the theme), so only a sector of the Crystal Geode theme ever
+(`structure/mega/<folder>/crystal_geode_*.nbt`, the prefix `data/anime_multiverse/mega/template_themes/crystal_geode.json` claims for the theme), so only a sector of the Crystal Geode theme ever
 draws them.
 
     python3 tools/labyrinth/gen_mega_theme_crystal_geode.py                       # builds, checks and writes every room (a room with a defect is not written)
@@ -724,7 +724,7 @@ def shatter_trial(path):
         h.marker(x, GROUND, z, "patrol")
     D.auto_light(h, max_lamps=10)
     h.explicit_defaults()
-    R2.trial_core(h.mt, [("nusmp:living_armor", 2), ("minecraft:vex", 3), ("minecraft:silverfish", 4)], rng, [("w", 13), ("e", 13)], FR + 12, glyphs)
+    R2.trial_core(h.mt, [("anime_multiverse:living_armor", 2), ("minecraft:vex", 3), ("minecraft:silverfish", 4)], rng, [("w", 13), ("e", 13)], FR + 12, glyphs)
     return h.mt
 
 

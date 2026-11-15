@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:demon_slayer_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:demon_dweller_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:demon_destroyer_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:severing_greatsword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:licht_dweller_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:licht_destroyer_sword",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:rimeheart_runeblade",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:thundercleave",
+      "required": false
+    }
+  ]
+}

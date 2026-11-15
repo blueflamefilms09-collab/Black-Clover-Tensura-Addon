@@ -218,7 +218,7 @@ def problems(t, name):
 
 
 def main(argv):
-    root = os.path.join(L.RES, "data", "nusmp", "structure")
+    root = os.path.join(L.RES, "data", "anime_multiverse", "structure")
     files = sorted(glob.glob(os.path.join(root, "mega", "**", "*.nbt"), recursive=True) + glob.glob(os.path.join(root, "mega_gateway", "*.nbt")))
     total = 0
     n = 0

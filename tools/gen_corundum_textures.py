@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_corundum_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/corundum_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/corundum_*.png
 
 Look reference (owner art: the Ideal Closer stills): corundum reads as flat-shaded, angular, faceted pale lavender-grey stone, every
 facet a single flat tone with a thin dark outline drawn round it, a mottled grain over the lit faces, hard planar highlights on the
@@ -20,7 +20,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 LIGHT = np.array([-0.45, -0.6, 0.66], dtype=np.float32)
 LIGHT /= np.linalg.norm(LIGHT)
 INK = 26  # outline luminance

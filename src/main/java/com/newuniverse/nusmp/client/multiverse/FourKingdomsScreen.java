@@ -51,8 +51,8 @@ import java.util.List;
  * ink-to-matrix compile animation on the page text each time a spread opens. Geometry, clicks, keys and the page turn are unchanged.
  */
 public class FourKingdomsScreen extends Screen {
-    public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/four_kingdoms_logo.png");
-    static final ResourceLocation PAGE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/grimoire_page.png");
+    public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/four_kingdoms_logo.png");
+    static final ResourceLocation PAGE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/grimoire_page.png");
     static final int PANEL_W = 340, PANEL_H = 236, PAGE_W = 138, PAGE_H = 160;
     static final long FLIP_NS = 450_000_000L;
     static final int INK = 0xFF3A2A1A, TITLE = 0xFF6A3A10, FAINT = 0xFF8A7A60, GOLD = 0xFFE8C060;

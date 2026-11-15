@@ -1,7 +1,7 @@
 """Generates the Veldanava "Hercules, Lord of Martial Prowess" VFX textures (vfx.client.layer.HerculesLayer).
 
 Deterministic and font-free (every machine writes the same pixels). Written from scratch for this mod; shares no code or asset with any other mod.
-Output: src/main/resources/assets/nusmp/textures/particle/hercules_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/hercules_*.png
 
     python tools/gen_hercules_vfx_textures.py             # all
     python tools/gen_hercules_vfx_textures.py fist leaf   # only these
@@ -40,7 +40,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 SS = 3   # supersampling of the line art
 

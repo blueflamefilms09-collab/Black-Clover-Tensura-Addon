@@ -2,14 +2,14 @@
 """Why: writes the Soul Forge's shipped datapack files from the tables in forge_tables.py, after checking every id against its real source, so a typo
 can never ship as a "skill that does not exist". Output (deterministic, rerun-safe):
 
-    src/main/resources/data/nusmp/avatar_aptitudes/<id>.json   one per Magic Aptitude (format: AptitudeParser)
-    src/main/resources/data/nusmp/avatar_skills/<file>.json    one per Unique / Ultimate skill (format: ForgeSkillParser)
+    src/main/resources/data/anime_multiverse/avatar_aptitudes/<id>.json   one per Magic Aptitude (format: AptitudeParser)
+    src/main/resources/data/anime_multiverse/avatar_skills/<file>.json    one per Unique / Ultimate skill (format: ForgeSkillParser)
 
     python3 -B tools/avatar/gen_forge_data.py            # validate and write
     python3 -B tools/avatar/gen_forge_data.py --check    # validate and compare with what is in the repo (exit 1 on any difference)
 
 Checks: aptitude ids are snake_case and unique; rarity is a Rarity name; tax rises with rarity; `magic` is empty or a MagicType name (read from
-MagicType.java); every `tensura:` id is in the owner's id reference; every `nusmp:` skill is registered in NUSkills.java; Anti-Magic and Time are
+MagicType.java); every `tensura:` id is in the owner's id reference; every `anime_multiverse:` skill is registered in NUSkills.java; Anti-Magic and Time are
 EPIC or LEGENDARY; at least 24 aptitudes; every skill file name is unique.
 """
 import json
@@ -23,11 +23,11 @@ sys.path.insert(0, HERE)
 import forge_tables as T  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT_APT = os.path.join(REPO, "src", "main", "resources", "data", "nusmp", "avatar_aptitudes")
-OUT_SKL = os.path.join(REPO, "src", "main", "resources", "data", "nusmp", "avatar_skills")
-IDS = os.path.join(REPO, "src", "test", "resources", "com", "newuniverse", "nusmp", "charter", "tensura_skill_ids.txt")
-MAGIC = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp", "blackclover", "MagicType.java")
-NUSKILLS = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp", "skill", "NUSkills.java")
+OUT_APT = os.path.join(REPO, "src", "main", "resources", "data", "anime_multiverse", "avatar_aptitudes")
+OUT_SKL = os.path.join(REPO, "src", "main", "resources", "data", "anime_multiverse", "avatar_skills")
+IDS = os.path.join(REPO, "src", "test", "resources", "com", "newuniverse", "anime_multiverse", "charter", "tensura_skill_ids.txt")
+MAGIC = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "blackclover", "MagicType.java")
+NUSKILLS = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "skill", "NUSkills.java")
 RARITY = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"]
 
 
@@ -87,8 +87,8 @@ def validate():
         ids.add(sid)
         ns, _, p = sid.partition(":")
         if ns == "tensura" and p not in tid: bad.append(sid + " is not in the Tensura id reference")
-        elif ns == "nusmp" and p not in nus: bad.append(sid + " is not registered in NUSkills")
-        elif ns not in ("tensura", "nusmp"): bad.append(sid + ": unknown namespace")
+        elif ns == "anime_multiverse" and p not in nus: bad.append(sid + " is not registered in NUSkills")
+        elif ns not in ("tensura", "anime_multiverse"): bad.append(sid + ": unknown namespace")
         if kind not in ("unique", "ultimate"): bad.append(sid + ": kind")
         if ns == "tensura" and p in ("usurper", "anti_skill"): bad.append(sid + " steals or erases skills and is never offered")
     return bad

@@ -148,7 +148,7 @@ public final class HubSelfTests {
         if (!Currency.coins()) return ok("skipped: economy.currency is not tensura_coins");
         if (!CoinWallet.available()) return fail("a Tensura coin item is missing");
         ShopTable shop = HubCatalogs.shop();
-        if (shop.isEmpty()) return fail("the shop is empty: data/nusmp/elite/hub/shop.json did not load");
+        if (shop.isEmpty()) return fail("the shop is empty: data/anime_multiverse/elite/hub/shop.json did not load");
         if (shop.get("dungeon_map") == null || shop.get("bread") == null) return fail("the shipped shop lacks the Dungeon Map or the bread");
         FakePlayer p = tester(server);
         try {
@@ -184,7 +184,7 @@ public final class HubSelfTests {
     private static SelfTests.Result quests(MinecraftServer server) {
         if (!QuestService.on()) return ok("skipped: the quests are switched off");
         QuestCatalog catalog = HubCatalogs.quests();
-        if (catalog.size() < 30) return fail("only " + catalog.size() + " quests loaded (data/nusmp/elite/hub/quests/*.json)");
+        if (catalog.size() < 30) return fail("only " + catalog.size() + " quests loaded (data/anime_multiverse/elite/hub/quests/*.json)");
         FakePlayer p = tester(server);
         try {
             QuestDef reach = catalog.get("road_holy_reach_5");

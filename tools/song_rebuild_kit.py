@@ -10,7 +10,7 @@ Why: every one of the five magics gets a set of armour pieces and summon models 
 glow map. The pieces share one painter: each cube gets its own box-UV rectangle on a shelf-packed atlas and every face is painted from a
 material (a 4 step colour ramp plus a pattern: brass with engraving, speaker cones, piano keys, bone, stitched cloth, film strip, spirit
 flame ...). The pattern decides which pixels also go into the glow map (strings, VU bars, flames, sprocket frames ...). Files are written by
-tools/geo_builder.py under src/main/resources/assets/nusmp/ (geo/entity, animations/entity, textures/entity), so everything can be redone
+tools/geo_builder.py under src/main/resources/assets/anime_multiverse/ (geo/entity, animations/entity, textures/entity), so everything can be redone
 by running the magic's own generator (tools/gen_<key>_rebuild_geo.py). File frame as in geo_builder: pixels, y up, feet at the origin,
 the model's front on -z, +x is the model's left; a humanoid armour piece is authored on the standing player (head cube y 24..32,
 body 12..24, arms at x +-4..8, legs 0..12).

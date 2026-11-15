@@ -34,12 +34,12 @@ public class AdaptabilitySkill extends NUSkill {
 
     @Override
     public void onToggleOn(ManasSkillInstance instance, LivingEntity entity) {
-        if (entity instanceof ServerPlayer p) p.displayClientMessage(Component.translatableWithFallback("nusmp.skill.msg.adaptability.on", "Adaptability: ON").withStyle(ChatFormatting.GREEN), true);
+        if (entity instanceof ServerPlayer p) p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.skill.msg.adaptability.on", "Adaptability: ON").withStyle(ChatFormatting.GREEN), true);
     }
 
     @Override
     public void onToggleOff(ManasSkillInstance instance, LivingEntity entity) {
-        if (entity instanceof ServerPlayer p) p.displayClientMessage(Component.translatableWithFallback("nusmp.skill.msg.adaptability.off", "Adaptability: OFF").withStyle(ChatFormatting.GRAY), true);
+        if (entity instanceof ServerPlayer p) p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.skill.msg.adaptability.off", "Adaptability: OFF").withStyle(ChatFormatting.GRAY), true);
     }
 
     @Override

@@ -32,14 +32,14 @@ public final class ShopNet {
             try {
                 ShopClient.open(payload.snapshot());
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] black market: the shop screen could not open", e);
+                LOG.warn("[anime_multiverse] black market: the shop screen could not open", e);
             }
         }));
         r.playToClient(ShopSyncPayload.TYPE, ShopSyncPayload.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> {
             try {
                 ShopClient.sync(payload);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] black market: the shop screen could not take the new picture", e);
+                LOG.warn("[anime_multiverse] black market: the shop screen could not take the new picture", e);
             }
         }));
         r.playToServer(BuyPayload.TYPE, BuyPayload.STREAM_CODEC, (payload, ctx) -> ctx.enqueueWork(() -> onBuy(ctx.player(), payload)));
@@ -52,7 +52,7 @@ public final class ShopNet {
             if (!(player instanceof ServerPlayer sp) || !sp.isAlive() || !ShopGate.allow(sp)) return;
             ShopService.reply(sp, ShopService.buy(sp, p.offer(), p.price()));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a purchase request failed", e);
+            LOG.warn("[anime_multiverse] black market: a purchase request failed", e);
         }
     }
 
@@ -61,7 +61,7 @@ public final class ShopNet {
             if (!(player instanceof ServerPlayer sp) || !sp.isAlive() || !ShopGate.allow(sp)) return;
             ShopService.reply(sp, ShopService.sell(sp, p.slot(), p.item(), p.count()));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a sale request failed", e);
+            LOG.warn("[anime_multiverse] black market: a sale request failed", e);
         }
     }
 
@@ -70,7 +70,7 @@ public final class ShopNet {
             if (!(player instanceof ServerPlayer sp) || !sp.isAlive() || !ShopGate.allow(sp)) return;
             ShopService.reply(sp, ShopService.sellAll(sp, p.category()));
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a bulk sale request failed", e);
+            LOG.warn("[anime_multiverse] black market: a bulk sale request failed", e);
         }
     }
 }

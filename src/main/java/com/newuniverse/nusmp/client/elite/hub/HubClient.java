@@ -30,7 +30,7 @@ public final class HubClient {
     private HubClient() {}
 
     /** Toggle the quest tracker (default apostrophe: no other key of the game or the mod uses it). */
-    public static final KeyMapping TOGGLE_TRACKER = new KeyMapping("key.nusmp.hub.toggle_tracker", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_APOSTROPHE, "key.categories.nusmp.hub");
+    public static final KeyMapping TOGGLE_TRACKER = new KeyMapping("key.anime_multiverse.hub.toggle_tracker", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_APOSTROPHE, "key.categories.anime_multiverse.hub");
 
     // what the server last said
     static volatile List<HubNet.HudEntry> hud = List.of();
@@ -48,7 +48,7 @@ public final class HubClient {
             e.registerEntityRenderer(HubNpcs.MERCHANT.get(), ctx -> new HubNpcRenderer(ctx, "merchant_npc"));
         });
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(TOGGLE_TRACKER));
-        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "hub_quest_tracker"), QuestOverlay::render));
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hub_quest_tracker"), QuestOverlay::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
     }
@@ -58,7 +58,7 @@ public final class HubClient {
         while (TOGGLE_TRACKER.consumeClick()) {
             trackerShown = !trackerShown;
             if (mc.player != null) {
-                mc.player.displayClientMessage(Component.translatableWithFallback(trackerShown ? "message.nusmp.hub.tracker.shown" : "message.nusmp.hub.tracker.hidden",
+                mc.player.displayClientMessage(Component.translatableWithFallback(trackerShown ? "message.anime_multiverse.hub.tracker.shown" : "message.anime_multiverse.hub.tracker.hidden",
                         trackerShown ? "Quest tracker shown." : "Quest tracker hidden."), true);
             }
         }

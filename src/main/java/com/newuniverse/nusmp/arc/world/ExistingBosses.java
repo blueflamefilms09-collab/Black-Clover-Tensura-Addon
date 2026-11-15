@@ -110,7 +110,7 @@ public final class ExistingBosses {
     /** Is this id one of the seven (a boss that stands on an old class, not on {@code ArcBoss})? Null-safe. */
     public static boolean owns(String id) { return id != null && PATHS.containsKey(id); }
 
-    /** The entity type path ({@code nusmp:<path>}) of an existing boss, or null. */
+    /** The entity type path ({@code anime_multiverse:<path>}) of an existing boss, or null. */
     public static String entityPath(String id) { return id == null ? null : PATHS.get(id); }
 
     /** The roster id of the boss whose entity type has this path, or null. */

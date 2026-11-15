@@ -6,7 +6,7 @@ import com.newuniverse.nusmp.arc.ArcSaga;
 
 /**
  * Why: the owner's shop is "hidden, dusty, run by an old witch", and in this mod every friendly face of the arcs is a plain record for the ONE shared NPC entity
- * ({@code nusmp:arc_npc}), so the witch needs no entity class, no renderer and no registration of her own: this record gives her a name, two colours (the plum of her robe
+ * ({@code anime_multiverse:arc_npc}), so the witch needs no entity class, no renderer and no registration of her own: this record gives her a name, two colours (the plum of her robe
  * and the amber of her lantern, both lifted so her name reads on a dark chat), a place in the story (she stands in the Hub only once somebody has beaten the first boss of the
  * roster, because the shop is hidden until the dungeon has proven itself), and a magic, while her words are a dialogue file and her look is a model spec of the art kit. The
  * shop itself is not part of the NPC class either: the entity asks {@link ShopHook} and the hook recognises her by {@link #ID}, so no other character can ever open a shop.
@@ -18,7 +18,7 @@ public final class BlackMarketWitch {
     /** The character id: the roster key, the dialogue file name, the model name ({@code arc_black_market_witch}) and the id {@link ShopHook} looks for. */
     public static final String ID = "black_market_witch";
 
-    /** The shop she keeps: the file {@code data/nusmp/black_market/shops/witch.json}, or the older {@code stock.json}; its type is {@code general}. */
+    /** The shop she keeps: the file {@code data/anime_multiverse/black_market/shops/witch.json}, or the older {@code stock.json}; its type is {@code general}. */
     public static final String SHOP = "witch";
 
     /** The boss whose defeat brings her to the Hub: the first of the roster, so that the shop is found only once the dungeon has been survived by somebody. */

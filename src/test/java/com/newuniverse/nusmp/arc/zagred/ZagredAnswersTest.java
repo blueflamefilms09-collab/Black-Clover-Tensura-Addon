@@ -74,7 +74,7 @@ class ZagredAnswersTest {
 
     @Test
     void theAnswersHaveLanguageKeys() {
-        for (ZagredAnswers.Answer a : ZagredAnswers.Answer.values()) assertTrue(a.hintKey().startsWith("message.nusmp.zagred.answer."));
-        assertEquals("message.nusmp.zagred.answer.keep_moving", ZagredAnswers.Answer.KEEP_MOVING.hintKey());
+        for (ZagredAnswers.Answer a : ZagredAnswers.Answer.values()) assertTrue(a.hintKey().startsWith("message.anime_multiverse.zagred.answer."));
+        assertEquals("message.anime_multiverse.zagred.answer.keep_moving", ZagredAnswers.Answer.KEEP_MOVING.hintKey());
     }
 }

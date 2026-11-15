@@ -72,7 +72,7 @@ final class ClearanceCarver {
             try {
                 total = total.plus(cut(level, c, standSet));
             } catch (Throwable t) {
-                LOG.error("[nusmp] Mega clearance: the cut {} of {} failed: {}", c.box(), p.shape.id, t.toString());
+                LOG.error("[anime_multiverse] Mega clearance: the cut {} of {} failed: {}", c.box(), p.shape.id, t.toString());
             }
         }
         PIECES.incrementAndGet();

@@ -9,7 +9,7 @@ decorates; the layer attaches each to the player's posed part (head, body, arms,
 on the standing player (file frame: pixels, y up, feet at the origin, neck line y = 24, front on -z; the right arm is at x = -5), like the
 corundum armour (tools/gen_corundum_geo.py).
 
-Files (assets/nusmp/...):
+Files (assets/anime_multiverse/...):
     geo/devils/devil_<mode>_<part>.geo.json          the model
     animations/devils/devil_<mode>_<part>.animation.json   only when the part moves (the tail, the wings, the crest, the wolf)
     textures/entity/devils/devil_<mode>_<part>.png   its texture, and _glow.png its emissive layer (drawn additive and full bright)

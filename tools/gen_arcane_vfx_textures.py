@@ -1,7 +1,7 @@
 """Textures for the 0.34 magic VFX (Thread, Seal, Lightning, Transmutation, Poison, Spatial, Ash, Mirror, Cotton / Food, Shadow,
 Recombination). Deterministic, no fonts, no external images.
 
-    python tools/gen_arcane_vfx_textures.py   ->  src/main/resources/assets/nusmp/textures/particle/arc_*.png
+    python tools/gen_arcane_vfx_textures.py   ->  src/main/resources/assets/anime_multiverse/textures/particle/arc_*.png
 
 Convention (same as the rest of textures/particle): white / greyscale with alpha, so one vertex colour tints each quad.
 Fire, Water, Wind, Earth and Time keep their own textures (tools/gen_element_vfx_textures.py, tools/gen_time_vfx_textures.py).
@@ -12,7 +12,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

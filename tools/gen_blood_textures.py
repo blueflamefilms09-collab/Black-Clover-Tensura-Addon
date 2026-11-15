@@ -1,6 +1,6 @@
 """Generates the Blood Magic VFX textures (blood_*.png) for BloodLayer.
 
-Deterministic (fixed seeds), Pillow + numpy only. Output: src/main/resources/assets/nusmp/textures/particle/blood_*.png
+Deterministic (fixed seeds), Pillow + numpy only. Output: src/main/resources/assets/anime_multiverse/textures/particle/blood_*.png
 
     python3 -B tools/gen_blood_textures.py
 
@@ -13,7 +13,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 def save(name, rgba):

@@ -14,7 +14,7 @@ import java.util.List;
  * Why: the owner cannot guess which part of the mod is slow. {@code /multiverse perf on|off|report|reset} (operators, permission level 2) switches the server-side {@link PerfProbe} and
  * prints its ten most expensive sections (name, calls, average, rolling average, maximum, milliseconds of work per second), the state of the per-tick budgets (how much was asked, granted and
  * dropped) and the active settings. It adds a {@code perf} child to the {@code /multiverse} root that {@code MultiverseCommands} registers: the command dispatcher merges two registrations of
- * the same literal, so that file does not change. The client has the twin {@code /nusmp perf} ({@code client.perf.PerfClient}) for the client sections.
+ * the same literal, so that file does not change. The client has the twin {@code /anime_multiverse perf} ({@code client.perf.PerfClient}) for the client sections.
  */
 public final class PerfCommands {
     private PerfCommands() {}
@@ -32,14 +32,14 @@ public final class PerfCommands {
 
     private static int switchTo(CommandContext<CommandSourceStack> ctx, boolean on) {
         PerfProbe.setEnabled(on);
-        sayKey(ctx, on ? "nusmp.perf.server.on" : "nusmp.perf.server.off", on ? "Performance probe ON. Let the server run for a minute, then use /multiverse perf report." : "Performance probe OFF.", ChatFormatting.GOLD);
+        sayKey(ctx, on ? "anime_multiverse.perf.server.on" : "anime_multiverse.perf.server.off", on ? "Performance probe ON. Let the server run for a minute, then use /multiverse perf report." : "Performance probe OFF.", ChatFormatting.GOLD);
         return 1;
     }
 
     private static int reset(CommandContext<CommandSourceStack> ctx) {
         PerfProbe.reset();
         PerfBudgets.resetStats();
-        sayKey(ctx, "nusmp.perf.server.reset", "Performance probe cleared.", ChatFormatting.GOLD);
+        sayKey(ctx, "anime_multiverse.perf.server.reset", "Performance probe cleared.", ChatFormatting.GOLD);
         return 1;
     }
 

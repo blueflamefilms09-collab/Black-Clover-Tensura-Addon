@@ -20,9 +20,9 @@ public final class SquareBugAudit {
     /** A decoded texture: width, height and ARGB texels row by row. */
     public record Pixels(int w, int h, int[] argb) {}
 
-    /** Reads {@code assets/nusmp/textures/particle/<name>.png} from the class path; null when it is not there. */
+    /** Reads {@code assets/anime_multiverse/textures/particle/<name>.png} from the class path; null when it is not there. */
     public static Pixels particle(String name) throws IOException {
-        try (InputStream in = SquareBugAudit.class.getResourceAsStream("/assets/nusmp/textures/particle/" + name + ".png")) {
+        try (InputStream in = SquareBugAudit.class.getResourceAsStream("/assets/anime_multiverse/textures/particle/" + name + ".png")) {
             if (in == null) return null;
             BufferedImage img = ImageIO.read(in);
             if (img == null) return null;

@@ -17,13 +17,13 @@ import java.util.Map;
 /**
  * Why: there are eighty items, and each is named in a dozen places (the registry, the drop tables, the sell prices, the recipes, the icons, the models, the lang file, the
  * tests). Writing them in a dozen places is how one of them gets lost, so they are written in ONE place, {@code tools/loot/roster.py}, which generates
- * {@code data/nusmp/loot/roster.json}; this class reads that file (from the class path, the way {@code GradeDamage} reads its weapon table, so it works when the registry is
+ * {@code data/anime_multiverse/loot/roster.json}; this class reads that file (from the class path, the way {@code GradeDamage} reads its weapon table, so it works when the registry is
  * built at mod construction, long before any data pack loads) into plain immutable records with no Minecraft type in them. The registry, the tables, the selling code and the
  * data tests all iterate THIS roster, so adding an item to the python list adds it to every one of them. A missing or broken file gives an empty roster and one log line, never
  * an exception at start-up.
  */
 public final class LootRoster {
-    public static final String RESOURCE = "/data/nusmp/loot/roster.json";
+    public static final String RESOURCE = "/data/anime_multiverse/loot/roster.json";
 
     public record DropRow(String family, double chance, int minBand) {}
 

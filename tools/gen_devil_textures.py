@@ -3,7 +3,7 @@
 
     python3 tools/gen_devil_textures.py
 
-Writes to src/main/resources/assets/nusmp/textures/entity/devil/:
+Writes to src/main/resources/assets/anime_multiverse/textures/entity/devil/:
   weg_<tier>[_slim].png, weg_<tier>[_slim]_glow.png   tier = low | mid | high | supreme   (64x64 RGBA, standard player skin layout)
   horns.png (32x32), wings.png + wings_glow.png (64x64)
 and the preview sheets docs/previews/devil/weg_sheet.png + parts_sheet.png (not part of the mod).
@@ -20,7 +20,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "src/main/resources/assets/nusmp/textures/entity/devil"
+OUT = ROOT / "src/main/resources/assets/anime_multiverse/textures/entity/devil"
 PREV = ROOT / "docs/previews/devil"
 
 TIERS = ["low", "mid", "high", "supreme"]

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: a race is data, not code (owner section 7): a datapack file under {@code data/nusmp/avatar_races/} (the owner wrote {@code multiverse_mod}, the real
- * mod id is {@code nusmp}) describes how big the Avatar is, what its scores are multiplied by, what the creator must have to pick it, and what it evolves into
+ * Why: a race is data, not code (owner section 7): a datapack file under {@code data/anime_multiverse/avatar_races/} (the owner wrote {@code multiverse_mod}, the real
+ * mod id is {@code anime_multiverse}) describes how big the Avatar is, what its scores are multiplied by, what the creator must have to pick it, and what it evolves into
  * when named. This record is the parsed, immutable form; {@link AvatarRaceParser} builds it and {@link AvatarRaces} holds the loaded set. Pure (no Minecraft).
  *
  * @param id                    the file name without extension ("demon_host")

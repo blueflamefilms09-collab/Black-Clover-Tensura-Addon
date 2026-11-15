@@ -218,9 +218,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "FF2A4A", "groups": ["crown", "drops"], "note": "the crown of thorns snaps open and the drops fall into their orbit as the spear is drawn"}
     it.swing = {"trail": "blood_thorn", "rgb": "FF2A4A", "rgb2": "8A1A2A", "length": 1.8, "width": 0.3, "life": 10, "particles": "blood_mote"}
-    it.sound = "nusmp:item.genesis.gae_bolg.heartbeat_loop"
+    it.sound = "anime_multiverse:item.genesis.gae_bolg.heartbeat_loop"
     it.acts = {
-        "heart_thrust": {"burst": "heart_thrust", "pattern": "line", "rgb": "FF2A4A", "ring": 6.0, "particles": 30, "sound": "nusmp:item.genesis.gae_bolg.thrust"},
-        "thirty_barbs": {"burst": "thirty_barbs", "pattern": "cone", "rgb": "FF4A6A", "ring": 7.0, "particles": 30, "sound": "nusmp:item.genesis.gae_bolg.barbs"},
-        "wound_that_will_not_close": {"burst": "open_wound", "pattern": "inward", "rgb": "8A1A2A", "ring": 4.0, "particles": 40, "sound": "nusmp:item.genesis.gae_bolg.wound"},
+        "heart_thrust": {"burst": "heart_thrust", "pattern": "line", "rgb": "FF2A4A", "ring": 6.0, "particles": 30, "sound": "anime_multiverse:item.genesis.gae_bolg.thrust"},
+        "thirty_barbs": {"burst": "thirty_barbs", "pattern": "cone", "rgb": "FF4A6A", "ring": 7.0, "particles": 30, "sound": "anime_multiverse:item.genesis.gae_bolg.barbs"},
+        "wound_that_will_not_close": {"burst": "open_wound", "pattern": "inward", "rgb": "8A1A2A", "ring": 4.0, "particles": 40, "sound": "anime_multiverse:item.genesis.gae_bolg.wound"},
     }

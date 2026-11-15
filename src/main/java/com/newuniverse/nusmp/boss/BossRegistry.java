@@ -21,7 +21,7 @@ import java.util.Optional;
 public final class BossRegistry {
     private BossRegistry() {}
 
-    public static final String NAMESPACE = "nusmp";
+    public static final String NAMESPACE = "anime_multiverse";
 
     public static final String DANTE = "dante", VANICA = "vanica", ZENON = "zenon", LUCIUS = "lucius",
             DEVIL_AVATAR = "devil_avatar", GOLIATH = "goliath", CHARYBDIS_SPAWN = "charybdis_spawn";
@@ -60,7 +60,7 @@ public final class BossRegistry {
     public static boolean known(String bossId) { return byPath.containsValue(bossId); }
 
     /**
-     * Makes an arc boss a boss of this table: {@code path} is its entity type path in the {@code nusmp} namespace. Returns false (and changes nothing) when
+     * Makes an arc boss a boss of this table: {@code path} is its entity type path in the {@code anime_multiverse} namespace. Returns false (and changes nothing) when
      * the path or the id is already taken, so one of the older bosses can never be overwritten; true when the row was added or was already there.
      */
     public static synchronized boolean addArc(String path, String bossId) {

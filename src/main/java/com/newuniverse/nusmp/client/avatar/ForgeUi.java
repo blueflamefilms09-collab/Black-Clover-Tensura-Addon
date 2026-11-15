@@ -24,7 +24,7 @@ final class ForgeUi {
     static final ResourceLocation RING = gui("ring"), DISC = gui("disc"), SLOT = gui("slot");
     private static final String[] CATEGORY = {"cat_identity", "cat_appearance", "cat_traits", "cat_skills", "cat_aptitudes"};
 
-    static ResourceLocation gui(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/soulforge/" + name + ".png"); }
+    static ResourceLocation gui(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/soulforge/" + name + ".png"); }
 
     static ResourceLocation category(int page) { return gui(CATEGORY[Math.max(0, Math.min(CATEGORY.length - 1, page))]); }
 

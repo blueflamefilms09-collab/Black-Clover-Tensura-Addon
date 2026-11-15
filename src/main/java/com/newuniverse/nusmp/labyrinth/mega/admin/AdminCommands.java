@@ -53,7 +53,7 @@ final class AdminCommands {
         try {
             return body.getAsInt();
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] /dungeon {} failed: {}", what, e.toString(), e);
+            LOG.warn("[anime_multiverse] /dungeon {} failed: {}", what, e.toString(), e);
             return AdminMsg.fail(src, AdminMsg.red(AdminText.FAILED, e.getClass().getSimpleName()));
         }
     }

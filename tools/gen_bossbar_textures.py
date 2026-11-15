@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Textures of the animated boss bar (client/gui/bossbar, docs: the MAS phase 5 boss bar). Original pixel art, neutral grey so that the game
-tints it per boss (the primary / secondary colours of the boss bar sync). Everything lives in assets/nusmp/textures/gui/bossbar/:
+tints it per boss (the primary / secondary colours of the boss bar sync). Everything lives in assets/anime_multiverse/textures/gui/bossbar/:
 
     frame.png   210x15  ornate metal frame with a transparent 182x7 window at (14, 4); glow lanes in rows 1-3 and 11-13
     bg.png      182x7   dark inside of the window
@@ -26,7 +26,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "gui", "bossbar")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "bossbar")
 
 CAP = 14                      # width of each end piece of the frame
 W, FRAME_W, FRAME_H, FILL_H = 182, 182 + 2 * CAP, 15, 7

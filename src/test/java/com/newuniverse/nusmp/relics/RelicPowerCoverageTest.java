@@ -91,7 +91,7 @@ class RelicPowerCoverageTest {
 
     @Test void langFragmentHasTheThreeLines() throws IOException {
         String json = Files.readString(Paths.get("tools/lang/attune_lock.json"));
-        for (String k : new String[]{"tooltip.nusmp.relic.unattuned_power", "tooltip.nusmp.relic.attuned_other", "message.nusmp.relic.attune_lock.hit"})
+        for (String k : new String[]{"tooltip.anime_multiverse.relic.unattuned_power", "tooltip.anime_multiverse.relic.attuned_other", "message.anime_multiverse.relic.attune_lock.hit"})
             assertTrue(json.contains("\"" + k + "\""), k);
     }
 }

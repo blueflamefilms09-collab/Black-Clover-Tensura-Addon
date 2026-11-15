@@ -1,0 +1,17 @@
+{
+  "theme": "crystal_geode",
+  "templates": [
+    "anime_multiverse:mega/hall/crystal_geode_",
+    "anime_multiverse:mega/set/crystal_geode_",
+    "anime_multiverse:mega/puzzle/crystal_geode_",
+    "anime_multiverse:mega/trial/crystal_geode_",
+    "anime_multiverse:mega/treasure/crystal_geode_"
+  ],
+  "relative": {
+    "mega/hall/crystal_geode_": 30,
+    "mega/set/crystal_geode_": 20,
+    "mega/puzzle/crystal_geode_": 20,
+    "mega/trial/crystal_geode_": 20,
+    "mega/treasure/crystal_geode_": 20
+  }
+}

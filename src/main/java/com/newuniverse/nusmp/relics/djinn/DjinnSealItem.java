@@ -100,7 +100,7 @@ public class DjinnSealItem extends Item {
         tip.add(Component.literal(djinn.affinity().label + " Djinn, asleep in this seal").withStyle(ChatFormatting.GRAY));
         for (String line : wrap("Use it with a Legend-grade Metal Vessel, attuned to you, in your other hand.", 38)) tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY));
         for (String line : wrap("Price: a full Magoi bar, a quarter of your EP, three high-quality magic crystals.", 38)) tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY));
-        for (String line : wrap(Component.translatableWithFallback("tooltip.nusmp.djinn_seal.bind_hint",
+        for (String line : wrap(Component.translatableWithFallback("tooltip.anime_multiverse.djinn_seal.bind_hint",
                 "No free hand? Right-click the vessel with this Seal in the inventory screen, or use /multiverse djinn bind.").getString(), 38))
             tip.add(Component.literal(line).withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         tip.add(Component.literal("Only one of each Djinn exists.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));

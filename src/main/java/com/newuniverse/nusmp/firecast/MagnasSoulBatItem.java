@@ -29,8 +29,8 @@ public class MagnasSoulBatItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.magnas_soul_bat.lore", "A flame-studded club. Magna Swing casts through it: the spell is a ball tossed ahead, the swing sends it.")
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.magnas_soul_bat.lore", "A flame-studded club. Magna Swing casts through it: the spell is a ball tossed ahead, the swing sends it.")
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        tip.add(Component.translatableWithFallback("item.nusmp.magnas_soul_bat.use", "Hold it in the main hand to cast the Fire pages of Magna's grimoire.").withStyle(ChatFormatting.GOLD));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.magnas_soul_bat.use", "Hold it in the main hand to cast the Fire pages of Magna's grimoire.").withStyle(ChatFormatting.GOLD));
     }
 }

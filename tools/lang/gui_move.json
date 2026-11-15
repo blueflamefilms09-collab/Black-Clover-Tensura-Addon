@@ -1,5 +1,5 @@
 {
-  "key.nusmp.gui_move": "Move GUIs (edit mode)",
+  "key.anime_multiverse.gui_move": "Move GUIs (edit mode)",
   "gui_move.title": "Move GUIs",
   "gui_move.open": "Move GUIs",
   "gui_move.hint": "Drag a GUI to move it. Wheel or + / -: size. Arrows: nudge (Shift: 8 px). R: reset it. H or right click: hide / show. Tab: next. Alt: no snapping. Esc or Done: save and close.",

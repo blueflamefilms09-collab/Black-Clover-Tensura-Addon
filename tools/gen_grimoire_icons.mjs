@@ -4,7 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const output = join(root, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "grimoire");
+const output = join(root, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "grimoire");
 const entries = [
   ["air", "#9fe8ff", "wind"], ["hair", "#ff6e9a", "strand"], ["memory", "#bca8ff", "orbit"],
   ["mineral", "#78a8c8", "facet"], ["modification", "#ff9b58", "geometry"], ["mucus", "#72d6b4", "fluid"],

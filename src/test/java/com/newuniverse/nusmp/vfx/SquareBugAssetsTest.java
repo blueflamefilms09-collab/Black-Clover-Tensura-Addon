@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * additive render type goes through the audit.
  */
 class SquareBugAssetsTest {
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp/textures");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse/textures");
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Pattern SPRITE_NAME = Pattern.compile("(ring|circle|halo|glow|ripple|sigil|haze|puff|bloom|flare|mote|spark|glint)");
 

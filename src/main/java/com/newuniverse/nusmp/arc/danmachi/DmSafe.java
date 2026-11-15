@@ -21,7 +21,7 @@ final class DmSafe {
                 step.accept(age);
             } catch (RuntimeException | LinkageError e) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] A DanMachi monster's {} stopped: {}", what, e.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] A DanMachi monster's {} stopped: {}", what, e.toString());
             }
         };
     }

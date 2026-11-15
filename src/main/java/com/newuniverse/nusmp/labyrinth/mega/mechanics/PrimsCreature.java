@@ -248,7 +248,7 @@ final class PrimsCreature {
         m.put("speed", Prims.timed(r -> r.ticks("secs"), r -> { }, r -> {
             @SuppressWarnings("unchecked")
             Set<UUID> have = (Set<UUID>) r.mem.computeIfAbsent("have", k -> new HashSet<UUID>());
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "mech_speed_" + Integer.toHexString(r.inst.key.hashCode()));
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mech_speed_" + Integer.toHexString(r.inst.key.hashCode()));
             for (LivingEntity t : r.targets("players")) {
                 if (!have.add(t.getUUID())) continue;
                 AttributeInstance a = t.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -258,7 +258,7 @@ final class PrimsCreature {
             @SuppressWarnings("unchecked")
             Set<UUID> have = (Set<UUID>) r.mem.get("have");
             if (have == null) return;
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "mech_speed_" + Integer.toHexString(r.inst.key.hashCode()));
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mech_speed_" + Integer.toHexString(r.inst.key.hashCode()));
             for (UUID u : have) {
                 LivingEntity t = r.level().getEntity(u) instanceof LivingEntity found ? found : null;
                 for (ServerPlayer p : r.inst.inside) if (p.getUUID().equals(u)) t = p;

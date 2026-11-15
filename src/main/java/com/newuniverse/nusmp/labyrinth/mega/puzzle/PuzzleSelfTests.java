@@ -148,9 +148,9 @@ public final class PuzzleSelfTests {
     private static SelfTests.Result plan(MinecraftServer server) {
         PuzzleWeights w = PuzzleWeights.get();
         List<PuzzlePlanner.RoomInfo> rooms = new ArrayList<>();
-        for (int i = 0; i < 14; i++) rooms.add(new PuzzlePlanner.RoomInfo(i, i % 3 == 0 ? "puzzle" : "hall", i % 3 == 0 ? "nusmp:mega/puzzle/gallery_a" : "nusmp:mega/hall/crypt_a", 20, true, false, false, ""));
-        rooms.add(new PuzzlePlanner.RoomInfo(20, "puzzle", "nusmp:mega/puzzle/sigil_hall_a", 20, true, false, false, ""));
-        rooms.add(new PuzzlePlanner.RoomInfo(21, "hall", "nusmp:mega/hall/crypt_b", 20, true, true, false, ""));
+        for (int i = 0; i < 14; i++) rooms.add(new PuzzlePlanner.RoomInfo(i, i % 3 == 0 ? "puzzle" : "hall", i % 3 == 0 ? "anime_multiverse:mega/puzzle/gallery_a" : "anime_multiverse:mega/hall/crypt_a", 20, true, false, false, ""));
+        rooms.add(new PuzzlePlanner.RoomInfo(20, "puzzle", "anime_multiverse:mega/puzzle/sigil_hall_a", 20, true, false, false, ""));
+        rooms.add(new PuzzlePlanner.RoomInfo(21, "hall", "anime_multiverse:mega/hall/crypt_b", 20, true, true, false, ""));
         for (int floor : new int[] {1, 250, 500, 750, 999}) {
             PuzzlePlanner.FloorInfo f = new PuzzlePlanner.FloorInfo(floor, floor % 2 == 0, "necropolis", 77L + floor, false, rooms);
             List<PuzzlePlanner.Slot> a = PuzzlePlanner.plan(f, w), b = PuzzlePlanner.plan(f, w);

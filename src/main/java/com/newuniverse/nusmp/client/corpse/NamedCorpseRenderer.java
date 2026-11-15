@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 
 /**
- * Why: Jimmy, Alfredo and Carl are GeoLite models (tools/gen_corpse_assets.py writes assets/nusmp/geo|animations|textures/entity/
+ * Why: Jimmy, Alfredo and Carl are GeoLite models (tools/gen_corpse_assets.py writes assets/anime_multiverse/geo|animations|textures/entity/
  * corpse_*), and their decay look is part of the texture: four skins per puppet (stage 0 to 3, the same stage the marker effect carries
  * for every other Soul Corpse), each with its own glow map (eyes, stitch light). The animation clock, hurt tint and culling box come
  * from the Zogratis renderer base; this class only picks the model, the stage skin and the clip (idle, walk, run, attack, and a

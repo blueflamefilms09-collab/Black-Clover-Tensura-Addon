@@ -1,4 +1,4 @@
-"""Builds the God worn upgrade (slice `god_worn`): skins, models (full, held, LOD), the catalog `assets/nusmp/visual_upgrade/catalog.txt` and the per-relic effect tables.
+"""Builds the God worn upgrade (slice `god_worn`): skins, models (full, held, LOD), the catalog `assets/anime_multiverse/visual_upgrade/catalog.txt` and the per-relic effect tables.
 
     python3 -B tools/visual_upgrade/god_worn/build.py [--ids a,b] [--check] [--no-skin]
 

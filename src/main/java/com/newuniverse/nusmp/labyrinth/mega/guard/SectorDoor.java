@@ -48,7 +48,7 @@ public final class SectorDoor {
         boolean core = stack.getItem() instanceof ManaCoreItem, key = stack.getItem() instanceof ShadowKeyItem;
         if (level.isClientSide) return core || key ? ItemInteractionResult.SUCCESS : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (key) {                                                                          // the Shadow Key does nothing here
-            tell(player, "message.nusmp.gatekeeper.sector_sealed");
+            tell(player, "message.anime_multiverse.gatekeeper.sector_sealed");
             return ItemInteractionResult.CONSUME;
         }
         if (!core || !(level instanceof ServerLevel sl)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -60,9 +60,9 @@ public final class SectorDoor {
         boolean ready = sector != null && sector.state != Sector.State.GENERATING && sector.state != Sector.State.FAILED;
         SectorDoorRules.Verdict verdict = SectorDoorRules.check(ManaCoreItem.sectorOf(stack), sector == null ? -1 : sector.id, ready);
         switch (verdict) {
-            case DORMANT -> { tell(player, "message.nusmp.mega.mgd.core_dormant"); return ItemInteractionResult.CONSUME; }
-            case NOT_HERE, WRONG_SECTOR -> { tell(player, "message.nusmp.mega.mgd.core_wrong_seal"); return ItemInteractionResult.CONSUME; }
-            case NOT_READY -> { tell(player, "message.nusmp.mega.mgd.core_not_ready"); return ItemInteractionResult.CONSUME; }
+            case DORMANT -> { tell(player, "message.anime_multiverse.mega.mgd.core_dormant"); return ItemInteractionResult.CONSUME; }
+            case NOT_HERE, WRONG_SECTOR -> { tell(player, "message.anime_multiverse.mega.mgd.core_wrong_seal"); return ItemInteractionResult.CONSUME; }
+            case NOT_READY -> { tell(player, "message.anime_multiverse.mega.mgd.core_not_ready"); return ItemInteractionResult.CONSUME; }
             default -> { }
         }
         int opened = GatekeeperDoorBlock.openConnected(sl, pos);
@@ -73,7 +73,7 @@ public final class SectorDoor {
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 40, 1.2, 1.4, 0.8, 0.02);
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 1.0, 1.4, 0.6, 0.04);
         Fx.spray(sl, FxThemes.DUNGEON_GUARDIAN, FxOld.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 60, 1.4, 1.6, 1.0, 0.8);
-        tell(player, "message.nusmp.mega.mgd.door_open");
+        tell(player, "message.anime_multiverse.mega.mgd.door_open");
         creditParty(sl, pos, player, sector.id);
         try {
             MegaDungeon.unseal(sl, sector.id);

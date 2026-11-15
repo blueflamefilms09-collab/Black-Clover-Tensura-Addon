@@ -29,7 +29,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  *       tools/gen_zagred_true_form.py.</li>
  *   <li>Glow pass (full-bright, additive): the red eyes, horn and hair tips, ribcage cracks, rune lines and wing veins, pulsing
  *       faster each phase.</li>
- *   <li>Aura pass: the model again, slightly larger, through the nusmp:rendertype_zagred_aura core shader: a fresnel rim pulsing
+ *   <li>Aura pass: the model again, slightly larger, through the anime_multiverse:rendertype_zagred_aura core shader: a fresnel rim pulsing
  *       blood red to crimson (0.49). If the shader can't load, an additive eyes pass stands in.</li>
  *   <li>Target reticle: while it fights or telegraphs a word, a turning rune ring (and inward marks when casting) is projected at
  *       its target's feet (state from ZagredStatePayload).</li>
@@ -37,9 +37,9 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  * </ul>
  */
 public class ZagredRenderer extends MobRenderer<ZagredBossEntity, ZagredModel> {
-    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/zagred_true.png");
-    static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/zagred_true_glow.png");
-    static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/koto_ring.png");
+    static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/zagred_true.png");
+    static final ResourceLocation GLOW = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/zagred_true_glow.png");
+    static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/koto_ring.png");
 
     private final ItemInHandRenderer items;
 

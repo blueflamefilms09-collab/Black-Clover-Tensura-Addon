@@ -23,7 +23,7 @@ public enum Stat {
     /** How many stats there are (the length of the saved list). */
     public static final int COUNT = values().length;
 
-    /** The lower-case id used in the fixed attribute-modifier ids ({@code nusmp:system/str}), in commands and in JSON. */
+    /** The lower-case id used in the fixed attribute-modifier ids ({@code anime_multiverse:system/str}), in commands and in JSON. */
     public String id() { return name().toLowerCase(Locale.ROOT); }
 
     /** The stat with this id or name (case-insensitive, surrounding spaces ignored), or null for null or an unknown word (an old save or a typo in a datapack). */

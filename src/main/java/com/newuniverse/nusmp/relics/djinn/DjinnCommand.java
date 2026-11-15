@@ -152,7 +152,7 @@ public final class DjinnCommand {
         }
         boolean isDark = djinnName == null ? DarkDjinn.active(s) : dark;
         com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.giveAdmin(target, d, isDark);
-        ctx.getSource().sendSuccess(() -> Component.translatable("djinn_weapon.cmd.given", Component.translatable("item.nusmp." + com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponRules.itemPath(d, isDark)), target.getName()), true);
+        ctx.getSource().sendSuccess(() -> Component.translatable("djinn_weapon.cmd.given", Component.translatable("item.anime_multiverse." + com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponRules.itemPath(d, isDark)), target.getName()), true);
         return 1;
     }
 

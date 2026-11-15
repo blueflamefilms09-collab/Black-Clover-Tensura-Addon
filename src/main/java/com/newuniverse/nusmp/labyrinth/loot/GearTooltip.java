@@ -26,27 +26,27 @@ final class GearTooltip {
         if (roll == null) return;
         LootRarity r = roll.rarity();
         ChatFormatting colour = ChatFormatting.valueOf(r.colour());
-        tip.add(LootText.text("tooltip.nusmp.loot.header", LootText.text("tooltip.nusmp.loot.rarity." + r.id()), roll.depth() == 0 ? "?" : Integer.toString(roll.depth())).withStyle(colour));
+        tip.add(LootText.text("tooltip.anime_multiverse.loot.header", LootText.text("tooltip.anime_multiverse.loot.rarity." + r.id()), roll.depth() == 0 ? "?" : Integer.toString(roll.depth())).withStyle(colour));
         if (g.gearKind() == GearKind.WEAPON) {
             double dmg = GearRollMath.totalDamage(r, g.weaponType(), roll);
             String grade = r.grade() == 0 ? "normal" : r.grade() == 1 ? "special" : "rare";
-            tip.add(LootText.text("tooltip.nusmp.loot.damage", trim(dmg), LootText.text("tooltip.nusmp.loot.grade." + grade)).withStyle(ChatFormatting.GRAY));
-            tip.add(LootText.text("tooltip.nusmp.loot.speed", trim(g.attackSpeed() + roll.sum(StatKind.ATTACK_SPEED))).withStyle(ChatFormatting.GRAY));
+            tip.add(LootText.text("tooltip.anime_multiverse.loot.damage", trim(dmg), LootText.text("tooltip.anime_multiverse.loot.grade." + grade)).withStyle(ChatFormatting.GRAY));
+            tip.add(LootText.text("tooltip.anime_multiverse.loot.speed", trim(g.attackSpeed() + roll.sum(StatKind.ATTACK_SPEED))).withStyle(ChatFormatting.GRAY));
         }
         for (GearRoll.Line l : roll.lines()) {
             if (g.gearKind() == GearKind.WEAPON && (l.kind() == StatKind.ATTACK_DAMAGE || l.kind() == StatKind.ATTACK_SPEED)) continue;
-            tip.add(LootText.text("tooltip.nusmp.loot.stat." + l.kind().id(), GearRollMath.format(l.kind(), l.value())).withStyle(ChatFormatting.BLUE));
+            tip.add(LootText.text("tooltip.anime_multiverse.loot.stat." + l.kind().id(), GearRollMath.format(l.kind(), l.value())).withStyle(ChatFormatting.BLUE));
         }
-        if (roll.tempered()) tip.add(LootText.text("tooltip.nusmp.loot.tempered").withStyle(ChatFormatting.DARK_PURPLE));
+        if (roll.tempered()) tip.add(LootText.text("tooltip.anime_multiverse.loot.tempered").withStyle(ChatFormatting.DARK_PURPLE));
         int venom = venom(stack);
-        if (venom > 0) tip.add(LootText.text("tooltip.nusmp.loot.venom", venom).withStyle(ChatFormatting.DARK_GREEN));
+        if (venom > 0) tip.add(LootText.text("tooltip.anime_multiverse.loot.venom", venom).withStyle(ChatFormatting.DARK_GREEN));
         value(stack, tip, roll);
     }
 
     static void value(ItemStack stack, List<Component> tip, GearRoll roll) {
         String id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         long v = LootValue.unit(LootRoster.get(), id, roll);
-        if (v > 0L) tip.add(LootText.text("tooltip.nusmp.loot.value", CoinMath.describe(v)).withStyle(ChatFormatting.DARK_GRAY));
+        if (v > 0L) tip.add(LootText.text("tooltip.anime_multiverse.loot.value", CoinMath.describe(v)).withStyle(ChatFormatting.DARK_GRAY));
     }
 
     static int venom(ItemStack stack) {

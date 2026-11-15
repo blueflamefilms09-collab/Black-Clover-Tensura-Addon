@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Why: the client's table of boss bar styles, read from {@code assets/nusmp/boss_bars/*.json} (so a resource pack can restyle or add one) and rebuilt on every resource reload. Each loaded style
+ * Why: the client's table of boss bar styles, read from {@code assets/anime_multiverse/boss_bars/*.json} (so a resource pack can restyle or add one) and rebuilt on every resource reload. Each loaded style
  * keeps the locations of its textures, built once here so the painter never builds a {@link ResourceLocation} in a frame. A file that does not parse is logged and skipped: that style then
  * falls back to the animated bar. Names that start with an underscore ({@code _index.json}) are not styles.
  */
@@ -32,7 +32,7 @@ public final class BarStyles implements ResourceManagerReloadListener {
 
         Loaded(BarStyle style) {
             this.style = style;
-            this.atlas = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/boss_bar/frame_" + style.id() + ".png");
+            this.atlas = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/boss_bar/frame_" + style.id() + ".png");
             int i = Math.max(0, style.emblemIndex());
             this.emblemU = (i % 8) * 32;
             this.emblemV = (i / 8) * 32;
@@ -45,7 +45,7 @@ public final class BarStyles implements ResourceManagerReloadListener {
 
     private static volatile Map<String, Loaded> styles = Map.of();
 
-    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/boss_bar/" + n + ".png"); }
+    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/boss_bar/" + n + ".png"); }
 
     /** The style of an id, or null when it is not loaded. */
     public static Loaded get(String id) { return styles.get(id); }
@@ -63,7 +63,7 @@ public final class BarStyles implements ResourceManagerReloadListener {
                 BarStyle s = BarStyle.parse(new String(readAll(r)));
                 next.put(s.id(), new Loaded(s));
             } catch (IOException | RuntimeException ex) {
-                LOGGER.warn("[nusmp] boss bar style {} skipped: {}", e.getKey(), ex.getMessage());
+                LOGGER.warn("[anime_multiverse] boss bar style {} skipped: {}", e.getKey(), ex.getMessage());
             }
         }
         styles = Map.copyOf(next);

@@ -224,9 +224,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 14, "flash": "6AE0FF", "groups": ["rifts", "tsuba_disc"], "note": "a tear of space opens round the blade as it is drawn; the rings spiral in"}
     it.swing = {"trail": "dimension_cut", "rgb": "6AE0FF", "rgb2": "101828", "length": 2.0, "width": 0.4, "life": 12, "particles": "void_mote"}
-    it.sound = "nusmp:item.genesis.void_origin.absence_loop"
+    it.sound = "anime_multiverse:item.genesis.void_origin.absence_loop"
     it.acts = {
-        "dimension_cut": {"burst": "dimension_cut", "pattern": "line", "rgb": "6AE0FF", "ring": 7.0, "particles": 40, "sound": "nusmp:item.genesis.void_origin.cut"},
-        "void_step": {"burst": "void_step", "pattern": "inward", "rgb": "40C8FF", "ring": 4.0, "particles": 36, "sound": "nusmp:item.genesis.void_origin.step"},
-        "world_sever": {"burst": "world_sever", "pattern": "nova", "rgb": "BFF4FF", "ring": 7.0, "particles": 50, "sound": "nusmp:item.genesis.void_origin.sever"},
+        "dimension_cut": {"burst": "dimension_cut", "pattern": "line", "rgb": "6AE0FF", "ring": 7.0, "particles": 40, "sound": "anime_multiverse:item.genesis.void_origin.cut"},
+        "void_step": {"burst": "void_step", "pattern": "inward", "rgb": "40C8FF", "ring": 4.0, "particles": 36, "sound": "anime_multiverse:item.genesis.void_origin.step"},
+        "world_sever": {"burst": "world_sever", "pattern": "nova", "rgb": "BFF4FF", "ring": 7.0, "particles": 50, "sound": "anime_multiverse:item.genesis.void_origin.sever"},
     }

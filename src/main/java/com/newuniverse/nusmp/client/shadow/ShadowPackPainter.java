@@ -21,7 +21,7 @@ public final class ShadowPackPainter {
     private static final GeoSpec WOLF = new GeoSpec(rl("geo/devils/devil_shadow_wolf.geo.json"), rl("animations/devils/devil_shadow_wolf.animation.json"),
             rl("textures/entity/devils/devil_shadow_wolf.png"), rl("textures/entity/devils/devil_shadow_wolf_glow.png"));
 
-    private static ResourceLocation rl(String p) { return ResourceLocation.fromNamespaceAndPath("nusmp", p); }
+    private static ResourceLocation rl(String p) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", p); }
 
     /** Called once on the client by PropPainterRegistry. */
     public static void register() {

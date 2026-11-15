@@ -1,6 +1,6 @@
 """Spatial Magic textures (1.93.0 rebuild): the particle sprites of the SPATIAL_FX1..3 layer, the Spatial armour's ground rings and glints, and the props.
 
-    python3 -B tools/gen_spatial_textures.py     # -> src/main/resources/assets/nusmp/textures/particle/spatial_*.png
+    python3 -B tools/gen_spatial_textures.py     # -> src/main/resources/assets/anime_multiverse/textures/particle/spatial_*.png
 
 White (or a light tint) with the shape in the alpha, so the effect colour (the grimoire's 0xB088FF violet) tints them:
   spatial_ring    a gate ring: two rims, 48 ticks, a band of runes, a soft inner glow (ground ring of the armour, the FX2 field wall)

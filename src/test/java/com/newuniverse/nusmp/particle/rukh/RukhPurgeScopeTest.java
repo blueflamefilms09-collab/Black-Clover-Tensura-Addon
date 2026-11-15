@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * cannot disagree) is scanned for vanilla particle types, Dust/Item/Block particle options and for addParticle/sendParticles calls whose first
  * argument is not a variable or a Rukh type. A deliberate exception carries {@code // rukh-allow: <reason>} on its line. While the purge is
  * still running the enforcing part is switched off: it only runs when the marker file {@code docs/rukh/purge_enforced} exists (the lead
- * creates it when the purge is done) or {@code -Dnusmp.rukh.enforce=true} is given, so CI stays green meanwhile. The scope-file parsing and the
+ * creates it when the purge is done) or {@code -Danime_multiverse.rukh.enforce=true} is given, so CI stays green meanwhile. The scope-file parsing and the
  * glob rules are tested unconditionally.
  * <p>
  * 1.103.0: the purge itself stands (the scope still spawns no vanilla particle), but the allowed Rukh scope shrank: the Rukh now belong to the Djinn users and the dungeons ONLY, and every
@@ -34,7 +34,7 @@ class RukhPurgeScopeTest {
 
     private static final Pattern BAD = Pattern.compile("ParticleTypes\\.|DustParticleOptions|new\\s+DustColorTransitionOptions|ItemParticleOption|BlockParticleOption");
     // first argument of addParticle( / sendParticles( must be a plain variable (then a comma) or a RukhParticles type
-    private static final Pattern CALL = Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.nusmp\\.particle\\.rukh\\.)?RukhParticles\\.))");
+    private static final Pattern CALL = Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.anime_multiverse\\.particle\\.rukh\\.)?RukhParticles\\.))");
 
     /** Glob to regex: {@code **} crosses folders, {@code *} and {@code ?} stay in one, {@code [..]} / {@code [!..]} are classes. */
     static Pattern glob(String g) {
@@ -133,7 +133,7 @@ class RukhPurgeScopeTest {
 
     @Test
     void noScopedFileSpawnsAVanillaParticleOnceThePurgeIsEnforced() throws IOException {
-        boolean enforced = Files.exists(ROOT.resolve("docs/rukh/purge_enforced")) || Boolean.getBoolean("nusmp.rukh.enforce");
+        boolean enforced = Files.exists(ROOT.resolve("docs/rukh/purge_enforced")) || Boolean.getBoolean("anime_multiverse.rukh.enforce");
         if (!enforced) {
             System.out.println("RukhPurgeScopeTest: purge not enforced yet (docs/rukh/purge_enforced missing); skipping the file scan");
             return;

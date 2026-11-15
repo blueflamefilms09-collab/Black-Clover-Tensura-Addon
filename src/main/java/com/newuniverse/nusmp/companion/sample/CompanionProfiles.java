@@ -18,7 +18,7 @@ public final class CompanionProfiles {
     /** One sample companion's data. {@code characterId} is her record in the arcs' roster (the model, the name and the colour come from it). */
     public record Profile(String characterId, String bondKey, String langPrefix, int fallbackColor, List<Item> loves, List<Item> accepts, List<Item> hates) {}
 
-    public static final Profile CHARMY = new Profile("charmy_pappitson", "nusmp_charmy_pappitson", "nusmp.companion.charmy.", 0xF4EAD0,
+    public static final Profile CHARMY = new Profile("charmy_pappitson", "nusmp_charmy_pappitson", "anime_multiverse.companion.charmy.", 0xF4EAD0,
             List.of(Items.CAKE, Items.PUMPKIN_PIE, Items.COOKIE, Items.BREAD, Items.COOKED_BEEF),
             List.of(Items.SUGAR, Items.WHEAT),
             List.of(Items.ROTTEN_FLESH, Items.SPIDER_EYE, Items.POISONOUS_POTATO, Items.PUFFERFISH));

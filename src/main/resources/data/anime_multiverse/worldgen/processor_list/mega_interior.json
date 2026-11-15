@@ -1,0 +1,10 @@
+{
+  "processors": [
+    {
+      "processor_type": "anime_multiverse:region_theme"
+    },
+    {
+      "processor_type": "anime_multiverse:mod_compat"
+    }
+  ]
+}

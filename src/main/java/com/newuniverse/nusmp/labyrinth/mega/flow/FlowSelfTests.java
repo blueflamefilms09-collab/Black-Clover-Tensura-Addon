@@ -73,7 +73,7 @@ public final class FlowSelfTests {
 
     private static SelfTests.Result classify(MinecraftServer server) {
         MagicAlignments t = AlignmentRegistry.current();
-        if (t.isEmpty()) return fail("the classification table is empty: data/nusmp/mega/flow/alignments.json was not loaded by the data reload (is the reload listener registered?)");
+        if (t.isEmpty()) return fail("the classification table is empty: data/anime_multiverse/mega/flow/alignments.json was not loaded by the data reload (is the reload listener registered?)");
         List<String> bad = new ArrayList<>();
         expect(bad, t, Alignment.LIGHT, "light");
         expect(bad, t, Alignment.LIGHT, "judgment", "light");

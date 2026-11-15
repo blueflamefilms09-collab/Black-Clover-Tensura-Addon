@@ -1,13 +1,13 @@
 {
-  "nusmp.skill.shishou": "Shishou, the Teacher",
-  "nusmp.skill.shishou.description": "Ultimate. The talking sword's abilities as one skill: switch modes (Telekinesis, Sensory, Defence, Offence, Storage, Magic, Counsel) with the mode key, press the skill key to use the mode, sneak and press to pick the next ability of a mode. Hold him in your hand to cast; his own mana pays.",
-  "nusmp.skill.mode.shishou.telekinesis": "Shishou: Telekinesis",
-  "nusmp.skill.mode.shishou.sensory": "Shishou: Sensory",
-  "nusmp.skill.mode.shishou.defence": "Shishou: Defence",
-  "nusmp.skill.mode.shishou.offence": "Shishou: Offence",
-  "nusmp.skill.mode.shishou.storage": "Shishou: Storage",
-  "nusmp.skill.mode.shishou.magic": "Shishou: Magic",
-  "nusmp.skill.mode.shishou.counsel": "Shishou: Counsel",
+  "anime_multiverse.skill.shishou": "Shishou, the Teacher",
+  "anime_multiverse.skill.shishou.description": "Ultimate. The talking sword's abilities as one skill: switch modes (Telekinesis, Sensory, Defence, Offence, Storage, Magic, Counsel) with the mode key, press the skill key to use the mode, sneak and press to pick the next ability of a mode. Hold him in your hand to cast; his own mana pays.",
+  "anime_multiverse.skill.mode.shishou.telekinesis": "Shishou: Telekinesis",
+  "anime_multiverse.skill.mode.shishou.sensory": "Shishou: Sensory",
+  "anime_multiverse.skill.mode.shishou.defence": "Shishou: Defence",
+  "anime_multiverse.skill.mode.shishou.offence": "Shishou: Offence",
+  "anime_multiverse.skill.mode.shishou.storage": "Shishou: Storage",
+  "anime_multiverse.skill.mode.shishou.magic": "Shishou: Magic",
+  "anime_multiverse.skill.mode.shishou.counsel": "Shishou: Counsel",
   "shishou.mode.telekinesis": "Telekinesis",
   "shishou.mode.sensory": "Sensory",
   "shishou.mode.defence": "Defence",
@@ -28,5 +28,5 @@
   "shishou.feed.full": "I can grow no more. Keep it.",
   "shishou.feed.ate": "Ate %s: +%s experience.",
   "shishou.gui.stomach": "Stomach",
-  "nusmp.gui_scale.gui.shishou_stomach": "Shishou Stomach"
+  "anime_multiverse.gui_scale.gui.shishou_stomach": "Shishou Stomach"
 }

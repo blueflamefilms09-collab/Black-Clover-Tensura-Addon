@@ -16,8 +16,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 /**
  * Why: the registration entry point of the Safe-Zone builder of the Mega-Dungeon (1.54.0): one structure processor type
- * ({@code nusmp:mod_compat}, which swaps marked vanilla furniture for Farmer's Delight and Refurbished Furniture blocks when those mods are
- * loaded), one player attachment ({@code nusmp:mega_rest}, the resting capability), the game-bus handlers of resting and of the end of easy
+ * ({@code anime_multiverse:mod_compat}, which swaps marked vanilla furniture for Farmer's Delight and Refurbished Furniture blocks when those mods are
+ * loaded), one player attachment ({@code anime_multiverse:mega_rest}, the resting capability), the game-bus handlers of resting and of the end of easy
  * regeneration, and the reload listener of the compat tables. {@code MegaSystem} calls {@link #init} (mod bus: the two DeferredRegisters, which
  * must be handed to the bus while the mod is still being constructed) and {@link #register} (game bus: handlers added with {@code addListener},
  * no {@code @SubscribeEvent} scanning, like the rest of the mod). The register NAMED {@code PROCESSORS} is a contract: the template checker
@@ -28,12 +28,12 @@ public final class SafeRegistry {
     private SafeRegistry() {}
 
     public static final DeferredRegister<StructureProcessorType<?>> PROCESSORS = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, NUSMP.MODID);
-    /** {@code nusmp:mod_compat}: swaps the blocks under {@code as=} markers for the compat mods' blocks (see {@link ModCompatProcessor}). */
+    /** {@code anime_multiverse:mod_compat}: swaps the blocks under {@code as=} markers for the compat mods' blocks (see {@link ModCompatProcessor}). */
     public static final DeferredHolder<StructureProcessorType<?>, StructureProcessorType<ModCompatProcessor>> MOD_COMPAT =
             PROCESSORS.register("mod_compat", () -> (StructureProcessorType<ModCompatProcessor>) () -> ModCompatProcessor.CODEC);
 
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, NUSMP.MODID);
-    /** {@code nusmp:mega_rest}: the player's resting state (see {@link RestState}); a default state is not saved, and it does not survive death. */
+    /** {@code anime_multiverse:mega_rest}: the player's resting state (see {@link RestState}); a default state is not saved, and it does not survive death. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<RestState>> REST_STATE =
             ATTACHMENTS.register("mega_rest", () -> AttachmentType.builder(() -> new RestState()).serialize(RestState.CODEC, s -> !s.isDefault()).build());
 

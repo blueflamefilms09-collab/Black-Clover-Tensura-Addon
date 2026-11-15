@@ -1,0 +1,59 @@
+{
+  "parent": "anime_multiverse:magic/awakening",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.magic.soul_flame.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.magic.soul_flame.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_flame": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "flame"
+      }
+    },
+    "e_spell_cast_explosion": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "explosion"
+      }
+    },
+    "e_spell_cast_magma": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "magma"
+      }
+    },
+    "e_spell_cast_ash": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "ash"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_flame",
+      "e_spell_cast_explosion",
+      "e_spell_cast_magma",
+      "e_spell_cast_ash"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  }
+}

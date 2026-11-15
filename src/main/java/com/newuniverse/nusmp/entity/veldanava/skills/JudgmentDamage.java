@@ -22,7 +22,7 @@ import java.util.UUID;
  * and the rules around them (the Balance Law's per-hit limits, the player and boss settings, the one flag that tells the passives "this hit is already an ability") belong in one place.
  * Server thread only.
  *
- * <p>A true hit is the mod's {@code nusmp:conceptual_severance} damage: it bypasses armour, enchantments, effects, shields and the invulnerability frames. It is still an ordinary
+ * <p>A true hit is the mod's {@code anime_multiverse:conceptual_severance} damage: it bypasses armour, enchantments, effects, shields and the invulnerability frames. It is still an ordinary
  * {@code hurt} call, so it goes through the Balance Law first (a player takes at most the per-hit share of their maximum health) and through every other mod's listeners; only
  * Veldanava's own Michael barrier steps aside while {@link #trueActive()} is set.
  */

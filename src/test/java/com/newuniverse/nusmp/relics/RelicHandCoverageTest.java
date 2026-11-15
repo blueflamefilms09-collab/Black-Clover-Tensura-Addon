@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class RelicHandCoverageTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Pattern DEF = Pattern.compile("RelicDef\\s*\\.\\s*of\\s*\\(\\s*([^,]+?)\\s*,\\s*(?:\"(?:[^\"\\\\]|\\\\.)*\"|[^,]+),\\s*Grade\\.\\w+\\s*,\\s*RelicSlot\\.(\\w+)");
     private static final Pattern CONST = Pattern.compile("(\\w+)\\s*=\\s*\"([a-z0-9_]+)\"");
     private static final Pattern NOTEBOOK = Pattern.compile("notebook\\(out,\\s*\"([a-z0-9_]+)\"");
@@ -125,7 +125,7 @@ class RelicHandCoverageTest {
             if (!model.contains("\"minecraft:builtin/entity\"")) bad.add(d.id() + " is not builtin/entity (run tools/relics/gen_hand_item_models.py)");
             if (model.contains("\"display\"")) bad.add(d.id() + " still has a display block: the style in relic_hand/transforms.txt places it");
             if (!Files.exists(ASSETS.resolve("models/item/" + d.id() + "_icon.json"))) bad.add(d.id() + " has no _icon json (its sprite for the inventory)");
-            else if (!json("models/item/" + d.id() + "_icon.json").contains("\"nusmp:item/" + d.id() + "\"")) bad.add(d.id() + "_icon.json does not show nusmp:item/" + d.id());
+            else if (!json("models/item/" + d.id() + "_icon.json").contains("\"anime_multiverse:item/" + d.id() + "\"")) bad.add(d.id() + "_icon.json does not show anime_multiverse:item/" + d.id());
             if (!Files.exists(ASSETS.resolve("textures/item/" + d.id() + ".png"))) bad.add(d.id() + " has no sprite png");
         }
         assertTrue(bad.isEmpty(), "item models: " + bad);

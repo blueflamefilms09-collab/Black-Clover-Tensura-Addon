@@ -83,7 +83,7 @@ def template_of(ref):
     """A Template from a saved file ('mega/hall/x') or an in-memory one (anything with .cells)."""
     if hasattr(ref, "cells"):
         return copy.deepcopy(ref)
-    path = os.path.join(L.RES, "data", "nusmp", "structure", ref + ".nbt")
+    path = os.path.join(L.RES, "data", "anime_multiverse", "structure", ref + ".nbt")
     return load(path, ref)
 
 

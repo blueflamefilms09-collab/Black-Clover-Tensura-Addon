@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.client.companion.gs;
 
 /**
  * What a line the server sent MEANS, read from its lang key alone (never from the wording, so every language works): the bond system and the companion records answer in {@code <prefix>gift.love},
- * {@code <prefix>act.five}, {@code <prefix>a.join}, {@code nusmp.companion.bond.pouch.put} and so on. The Great Spirit screen turns those keys into a mood for the portrait, a line in the bond story
+ * {@code <prefix>act.five}, {@code <prefix>a.join}, {@code anime_multiverse.companion.bond.pouch.put} and so on. The Great Spirit screen turns those keys into a mood for the portrait, a line in the bond story
  * and a crest notice. Nothing is sent or decided here: it only labels something the client already has. Pure, unit tested.
  */
 public final class CompanionCues {
@@ -11,11 +11,11 @@ public final class CompanionCues {
     /** What happened. The constants are only ever appended. */
     public enum Cue { NONE, GREET, FIVE, GIFT_LOVE, GIFT_OK, GIFT_HATE, GIFT_NO, FOOD_TALK, JOIN_OK, JOIN_NO, WAIT, USE, STANCE, PUT, TOOK, REFUSED, LIKES }
 
-    private static final String ROOT = "nusmp.companion.";
+    private static final String ROOT = "anime_multiverse.companion.";
     /** The third segment of the keys that belong to the mod's common wording, not to one companion. */
     private static final String[] COMMON = {"bond.", "tab.", "tier.", "stance.", "close", "join.", "disabled", "gs."};
 
-    /** The companion's own prefix ("nusmp.companion.charmy.") of a key, or null for a common key or one that is not a companion key. */
+    /** The companion's own prefix ("anime_multiverse.companion.charmy.") of a key, or null for a common key or one that is not a companion key. */
     public static String prefixOf(String key) {
         if (key == null || !key.startsWith(ROOT) || key.length() > 160) return null;
         String rest = key.substring(ROOT.length());

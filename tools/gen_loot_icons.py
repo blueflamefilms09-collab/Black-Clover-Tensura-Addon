@@ -1,7 +1,7 @@
 """16 x 16 icons of the functional anime loot (procedural pixel art, one consistent palette method), the armour layer textures and the effect icon. Deterministic.
 
-    python3 -B tools/gen_loot_icons.py            writes assets/nusmp/textures/item/<id>.png for the 30 foods, 26 materials and 8 armour pieces,
-                                                 assets/nusmp/textures/models/armor/loot_<set>_layer_1/2.png, assets/nusmp/textures/mob_effect/mana_surge.png
+    python3 -B tools/gen_loot_icons.py            writes assets/anime_multiverse/textures/item/<id>.png for the 30 foods, 26 materials and 8 armour pieces,
+                                                 assets/anime_multiverse/textures/models/armor/loot_<set>_layer_1/2.png, assets/anime_multiverse/textures/mob_effect/mana_surge.png
     python3 -B tools/gen_loot_icons.py sheet X   also writes a contact sheet (8x) of every icon to X (for a look; not part of the build)
 
 The weapons and trinkets have no icon here: their sprite is rendered from the finished 3D mesh by tools/gen_loot_models.py (the inventory keeps a sprite, the hand shows the model).
@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.join(HERE, "loot"))
 import roster as R  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 S = 16
 
 

@@ -1,6 +1,6 @@
 """Generates the Food Magic VFX textures (Glutton's Banquet look: manga ink, a furred beast with a gaping maw, giant cutlery).
 
-Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/nusmp/textures/particle/food_*.png
+Deterministic (fixed seeds, no fonts). Output: src/main/resources/assets/anime_multiverse/textures/particle/food_*.png
 
     python3 -B tools/gen_food_textures.py
 
@@ -15,7 +15,7 @@ import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 3
 
 

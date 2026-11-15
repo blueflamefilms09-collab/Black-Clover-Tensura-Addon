@@ -64,7 +64,7 @@ class UpgradeCoreTest {
                 + "\"lod\":{\"mesh\":\"up/x_lod\",\"near\":10,\"glow_off\":20,\"skin\":\"up/x_lod.png\",\"glow\":\"up/x_lod_glow.png\"},\"passes\":[\"skin\",\"glow_core\"],"
                 + "\"pass_cfg\":{\"veins\":{\"rgb\":[10,20,30],\"speed\":0.5,\"wavelength\":12,\"min\":0.2,\"max\":0.9}},\"idle\":[\"glow_breath\",\"rune_flicker\"],"
                 + "\"ambient\":[{\"type\":\"motes\",\"rgb\":[300,-5,16]}],\"hand\":{\"length\":2.0,\"tilt\":10},\"swing\":{\"pattern\":\"arc\",\"count\":4},"
-                + "\"acts\":[{\"act\":\"a\",\"id\":77,\"recipe\":[{\"t\":\"ring\",\"dur\":10,\"delay\":4},{\"t\":\"flash\",\"dur\":6}]}],\"ambient_sound\":\"nusmp:s\"}";
+                + "\"acts\":[{\"act\":\"a\",\"id\":77,\"recipe\":[{\"t\":\"ring\",\"dur\":10,\"delay\":4},{\"t\":\"flash\",\"dur\":6}]}],\"ambient_sound\":\"anime_multiverse:s\"}";
         UpgradeSpec s = UpgradeSpec.parse(new StringReader(json));
         assertEquals("x", s.id);
         assertEquals(0xFF0010, s.primary);

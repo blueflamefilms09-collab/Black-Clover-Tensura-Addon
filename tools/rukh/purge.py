@@ -38,7 +38,7 @@ OPTION_CLASSES = re.compile(r"DustParticleOptions|DustColorTransitionOptions|Ite
 PT = re.compile(r"\bParticleTypes\.([A-Z][A-Z0-9_]*)")
 # same rules as RukhPurgeScopeTest
 BAD = re.compile(r"ParticleTypes\.|DustParticleOptions|new\s+DustColorTransitionOptions|ItemParticleOption|BlockParticleOption")
-CALL = re.compile(r"\b(?:addParticle|sendParticles)\(\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\s*,|(?:com\.newuniverse\.nusmp\.particle\.rukh\.)?RukhParticles\.))")
+CALL = re.compile(r"\b(?:addParticle|sendParticles)\(\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\s*,|(?:com\.newuniverse\.anime_multiverse\.particle\.rukh\.)?RukhParticles\.))")
 
 
 def glob_re(g):

@@ -194,7 +194,7 @@ public class KingBoss extends ArcBoss {
             if (now < fieldUntil && fieldCentre != null && tickCount % 10 == 0)
                 Tells.ring(sl, fieldCentre.add(0, 0.1, 0), fieldUlt ? KingTable.DISASTER_RADIUS : KingTable.POLLEN_RADIUS, DEATH, 1.3f, 64);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] King's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] King's tick failed: {}", e.toString());
         }
     }
 
@@ -284,7 +284,7 @@ public class KingBoss extends ArcBoss {
             if (now < fieldUntil && fieldGauge.hit(now, a, KingTable.BREAK_FRACTION * getMaxHealth(), anti)) breakField(sl, now);
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] King's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] King's defence failed: {}", e.toString());
             return amount;
         }
     }

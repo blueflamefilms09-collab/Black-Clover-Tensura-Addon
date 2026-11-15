@@ -44,10 +44,10 @@ public final class SocketService {
         boolean multi = force || Bonds.multiBond(p);
         SocketRules.Outcome o = SocketRules.insert(cur, slots, core, held, multi);
         switch (o) {
-            case NO_SLOTS -> say(p, ChatFormatting.RED, "socket.nusmp.msg.no_slots", def.cardName());
-            case FULL -> say(p, ChatFormatting.RED, "socket.nusmp.msg.full", def.cardName());
-            case DUPLICATE -> say(p, ChatFormatting.RED, "socket.nusmp.msg.duplicate", Component.translatable(core.nameKey()));
-            case BOND_CONFLICT -> say(p, ChatFormatting.RED, "socket.nusmp.msg.conflict");
+            case NO_SLOTS -> say(p, ChatFormatting.RED, "socket.anime_multiverse.msg.no_slots", def.cardName());
+            case FULL -> say(p, ChatFormatting.RED, "socket.anime_multiverse.msg.full", def.cardName());
+            case DUPLICATE -> say(p, ChatFormatting.RED, "socket.anime_multiverse.msg.duplicate", Component.translatable(core.nameKey()));
+            case BOND_CONFLICT -> say(p, ChatFormatting.RED, "socket.anime_multiverse.msg.conflict");
             case OK -> {
                 SocketData next = cur.with(new SocketData.Entry(core.id(), p.level().getGameTime()));
                 SocketComponents.set(relic, next);
@@ -55,7 +55,7 @@ public final class SocketService {
                 p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, core.kind() == SocketKind.DEVIL ? 0.6f : 1.1f);
                 FxRelic.ring(p.serverLevel(), p.position(), 1.4, core.rgb());
                 com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "relic.socketed", core.key());
-                say(p, ChatFormatting.AQUA, "socket.nusmp.msg.bound", Component.translatable(core.nameKey()), def.cardName(), next.size(), slots);
+                say(p, ChatFormatting.AQUA, "socket.anime_multiverse.msg.bound", Component.translatable(core.nameKey()), def.cardName(), next.size(), slots);
             }
         }
         return o;
@@ -69,7 +69,7 @@ public final class SocketService {
         RelicDef def = Relics.defOf(relic);
         SocketData cur = SocketComponents.get(relic);
         if (def == null || index < 0 || index >= cur.size()) {
-            say(p, ChatFormatting.RED, "socket.nusmp.msg.empty_socket");
+            say(p, ChatFormatting.RED, "socket.anime_multiverse.msg.empty_socket");
             return ItemStack.EMPTY;
         }
         SocketData.Entry e = cur.entries().get(index);
@@ -79,7 +79,7 @@ public final class SocketService {
         ItemStack core = SocketItems.stack(e.id());
         if (d != null) {
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.PLAYERS, 1.2f, 0.8f);
-            say(p, ChatFormatting.AQUA, "socket.nusmp.msg.freed", Component.translatable(d.nameKey()), def.cardName());
+            say(p, ChatFormatting.AQUA, "socket.anime_multiverse.msg.freed", Component.translatable(d.nameKey()), def.cardName());
         }
         return core;
     }

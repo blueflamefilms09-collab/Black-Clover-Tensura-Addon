@@ -13,8 +13,8 @@ import java.util.Map;
 
 /**
  * Why: registers the mod's own particle types on {@code Registries.PARTICLE_TYPE} through a DeferredRegister, one {@link TintedParticleType} per entry of the catalog
- * ({@link FxCatalog}: 70 particles in themed families), so NeoForge binds them at the right moment and the packet codec can send their ids. The ids are the catalog ids ({@code nusmp:ember},
- * {@code nusmp:rune_sol}, ...). Lookups never throw: before the registry is bound (a call from a static initialiser) {@link #type} answers null and the facade falls back to its vanilla
+ * ({@link FxCatalog}: 70 particles in themed families), so NeoForge binds them at the right moment and the packet codec can send their ids. The ids are the catalog ids ({@code anime_multiverse:ember},
+ * {@code anime_multiverse:rune_sol}, ...). Lookups never throw: before the registry is bound (a call from a static initialiser) {@link #type} answers null and the facade falls back to its vanilla
  * particle. The holders are collected in a map built once, in catalog order.
  */
 public final class FxTypes {

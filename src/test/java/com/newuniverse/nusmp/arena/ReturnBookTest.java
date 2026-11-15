@@ -21,7 +21,7 @@ class ReturnBookTest {
         ReturnBook b = new ReturnBook();
         UUID a = UUID.randomUUID(), c = UUID.randomUUID();
         b.put(a, new ReturnBook.Entry("minecraft:overworld", 1, 2, 3, 4, 5));
-        b.put(c, new ReturnBook.Entry("nusmp:dream", -1e7, 300.125, 0.5, -90f, 0f));
+        b.put(c, new ReturnBook.Entry("anime_multiverse:dream", -1e7, 300.125, 0.5, -90f, 0f));
         Map<String, String> saved = b.toStrings();
         ReturnBook loaded = new ReturnBook();
         loaded.fromStrings(saved);

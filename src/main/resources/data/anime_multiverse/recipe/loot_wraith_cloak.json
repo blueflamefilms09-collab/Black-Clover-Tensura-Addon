@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "item": "anime_multiverse:wraith_essence"
+    },
+    "C": {
+      "item": "anime_multiverse:cursed_cloth"
+    }
+  },
+  "pattern": [
+    "WCW",
+    "CCC",
+    "C C"
+  ],
+  "result": {
+    "id": "anime_multiverse:wraith_cloak",
+    "count": 1
+  }
+}

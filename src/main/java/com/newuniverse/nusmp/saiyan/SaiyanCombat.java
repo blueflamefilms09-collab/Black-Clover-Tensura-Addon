@@ -158,7 +158,7 @@ final class SaiyanCombat {
         s.zenkaiAt = now;
         s.setBattlePower(s.battlePower + gain);
         r.dirty = true;
-        p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.zenkai", Math.round(gain)), false);
+        p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.zenkai", Math.round(gain)), false);
         Fx.spray(p.serverLevel(), FxThemes.WORLD, FxOld.FIREWORK, p.getX(), p.getY() + 1.0, p.getZ(), 24, 0.6, 0.9, 0.6, 0.15);
         p.serverLevel().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 0.8f);
         return gain;

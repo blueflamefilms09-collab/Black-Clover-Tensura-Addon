@@ -87,7 +87,7 @@ public final class FloorInfoText {
     public static final String CMD_HEAD = put("cmd.head", "[SYSTEM] Floor report");
 
     // ---- the key
-    public static final String KEY_FLOOR = "key.nusmp.system_floor";
+    public static final String KEY_FLOOR = "key.anime_multiverse.system_floor";
     static {
         EN.put(KEY_FLOOR, "Show the floor report (theme and mechanics)");
     }

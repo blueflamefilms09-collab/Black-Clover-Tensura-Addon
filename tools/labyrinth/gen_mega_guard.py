@@ -3,7 +3,7 @@
 The boss-chain templates of the Mega-Dungeon (1.54.0, builder GUARD): the Labyrinth Guardian's hall, the antechamber behind its Gatekeeper and
 the Way Onward corridors. Thirteen templates (the first nine of 1.54.0, then a mirrored antechamber and three compact Way Onwards that the assembler needs
 where a region is nearly used up), built with `mega_lib.MT` and the helpers of `mega_guard_lib.py`, written to
-`src/main/resources/data/nusmp/structure/mega/{arena,antechamber,onward}/`:
+`src/main/resources/data/anime_multiverse/structure/mega/{arena,antechamber,onward}/`:
 
     python3 tools/labyrinth/gen_mega_guard.py                 # (re)writes every template
     python3 tools/labyrinth/gen_mega_guard.py --only mega/arena/guardian_hall_a
@@ -98,7 +98,7 @@ def dais(mt, norm=round_norm):
                 G.slab(mt, x, FLOOR + 2, z, L.POLISHED_SLAB)
             elif r <= 2.8:
                 mt.set(x, FLOOR + 2, z, L.POLISHED if (x, z) != (C, C) else L.CHISELED)
-    mt.set(C, FLOOR + 3, C, "nusmp:guardian_altar")
+    mt.set(C, FLOOR + 3, C, "anime_multiverse:guardian_altar")
     mt.marker(C, FLOOR + 4, C, "guardian_spawn")
 
 
@@ -708,7 +708,7 @@ def onward(name, kind, style):
 def _marker_cells(mt, kind):
     out = []
     for pos, c in mt.t.cells.items():
-        if c.block == "minecraft:structure_block" and c.nbt is not None and str(c.nbt.get("metadata", "")).split(";")[0] == "nusmp:" + kind:
+        if c.block == "minecraft:structure_block" and c.nbt is not None and str(c.nbt.get("metadata", "")).split(";")[0] == "anime_multiverse:" + kind:
             out.append((pos, str(c.nbt.get("metadata", ""))))
     return out
 
@@ -739,7 +739,7 @@ def verify(name, mt):
                 problems.append("the doorway on %s at %d is not reachable from inside the room" % (side, offset))
     jigs = t.jigsaws()
     if kind == "arena":
-        altar = [pos for pos, c in t.cells.items() if c.block == "nusmp:guardian_altar"]
+        altar = [pos for pos, c in t.cells.items() if c.block == "anime_multiverse:guardian_altar"]
         if altar != [(C, FLOOR + 3, C)]:
             problems.append("the Guardian Altar must be the one block at the centre, row %d (found %s)" % (FLOOR + 3, altar))
         spawn = _marker_cells(mt, "guardian_spawn")
@@ -750,9 +750,9 @@ def verify(name, mt):
                 problems.append("the cell %d above the altar is filled: the colossal Guardian needs room" % k)
                 break
         gate = _marker_cells(mt, "gatekeeper")
-        if gate != [((C, FLOOR + 2, 2), "nusmp:gatekeeper;facing=north")]:
+        if gate != [((C, FLOOR + 2, 2), "anime_multiverse:gatekeeper;facing=north")]:
             problems.append("the gatekeeper marker must be at (%d, %d, 2) facing north (found %s)" % (C, FLOOR + 2, gate))
-        doors = [pos for pos, c in t.cells.items() if c.block == "nusmp:gatekeeper_door"]
+        doors = [pos for pos, c in t.cells.items() if c.block == "anime_multiverse:gatekeeper_door"]
         if len(doors) != 23:
             problems.append("the Gatekeeper slab has %d blocks besides its jigsaw cell, expected 23" % len(doors))
         if any(c.props != {"kind": "sector", "open": "false", "half": "lower" if pos[1] < FLOOR + 3 else "upper"} for pos, c in ((p, t.get(*p)) for p in doors)):

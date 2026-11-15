@@ -28,7 +28,7 @@ import java.util.Optional;
 
 /**
  * Why: the SPIRIT catastrophe summons "a massive Cursed Spirit" (the owner's words), and what that is must be data the owner can extend: the roster
- * file {@code data/nusmp/mega/cursed_spirits.json}, read by this reload listener into {@link SpiritRoster} entries (the pure parser and the weighted,
+ * file {@code data/anime_multiverse/mega/cursed_spirits.json}, read by this reload listener into {@link SpiritRoster} entries (the pure parser and the weighted,
  * seeded, skip-the-missing draw live there and are tested). The creature is chosen when the pick is made, from the sector's seed and the chooser, so
  * the same vault always summons the same kind; it is created like the Peak Altar creates its boss (by id, finalised, persistent, tagged) and then made
  * a spirit: renamed with its roster name, glowing, tagged {@value #TAG}, its health and attack scaled by the sector's threat on top of its roster
@@ -48,9 +48,9 @@ public final class CursedSpirits implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
     /** The persistent entity tag every spirit carries; the heal rule, the no-drops rule and the orphan sweep read it. */
     public static final String TAG = "nusmp_cursed_spirit";
-    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("nusmp", "mega/cursed_spirits.json");
-    private static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "cursed_spirit_health"),
-            DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "cursed_spirit_damage");
+    static final ResourceLocation FILE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/cursed_spirits.json");
+    private static final ResourceLocation HEALTH_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cursed_spirit_health"),
+            DAMAGE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cursed_spirit_damage");
     private static volatile List<SpiritRoster.Entry> ROSTER = List.of();
 
     public static List<SpiritRoster.Entry> roster() { return ROSTER; }
@@ -66,17 +66,17 @@ public final class CursedSpirits implements ResourceManagerReloadListener {
             if (res.isPresent()) {
                 try (Reader reader = res.get().openAsReader()) {
                     SpiritRoster.Parsed p = SpiritRoster.parse(JsonTrees.read(reader));
-                    for (String w : p.warnings()) LOG.warn("[nusmp] mega spirits: {}", w);
+                    for (String w : p.warnings()) LOG.warn("[anime_multiverse] mega spirits: {}", w);
                     entries = p.entries();
                 }
             } else {
-                LOG.warn("[nusmp] mega spirits: {} not found: the SPIRIT catastrophe is off", FILE);
+                LOG.warn("[anime_multiverse] mega spirits: {} not found: the SPIRIT catastrophe is off", FILE);
             }
         } catch (Exception e) {
-            LOG.warn("[nusmp] mega spirits: {} could not be read: {}", FILE, e.toString());
+            LOG.warn("[anime_multiverse] mega spirits: {} could not be read: {}", FILE, e.toString());
         }
         replace(entries);
-        LOG.info("[nusmp] mega spirits: {} roster entries", entries.size());
+        LOG.info("[anime_multiverse] mega spirits: {} roster entries", entries.size());
     }
 
     /** Does an entity type with this id exist in this game (an optional mod may be missing)? */

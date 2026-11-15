@@ -126,14 +126,14 @@ def expand_party(road, party):
 
 def handle(cmd):
     c = cmd.strip()
-    if c.startswith("execute in nusmp:mega_dungeon run forceload add"):
+    if c.startswith("execute in anime_multiverse:mega_dungeon run forceload add"):
         return "Marked chunk 0, 0 to be force loaded"
-    if c.startswith("execute in nusmp:mega_dungeon run setblock"):
+    if c.startswith("execute in anime_multiverse:mega_dungeon run setblock"):
         return "Changed the block at 0, 70, 0"
-    if c.startswith("execute in nusmp:mega_dungeon run forceload remove"):
+    if c.startswith("execute in anime_multiverse:mega_dungeon run forceload remove"):
         return "All chunks are no longer being force loaded"
-    if c.startswith("locate structure nusmp:mega_gateway"):
-        return "The nearest nusmp:mega_gateway is at [310, ~, 55] (314 blocks away)"
+    if c.startswith("locate structure anime_multiverse:mega_gateway"):
+        return "The nearest anime_multiverse:mega_gateway is at [310, ~, 55] (314 blocks away)"
     if "place jigsaw" in c:
         return "Generated jigsaw at 300, 64, 0"
     if c == "multiverse mega status" or c.startswith("multiverse mega status party "):
@@ -169,7 +169,7 @@ def handle(cmd):
     if c.startswith("multiverse mega plan "):
         sid = int(c.split()[-1])
         path = os.path.join(RUN, "mega_plan_%d.json" % sid)
-        json.dump({"region": [0, 0, 1, 1], "pieces": [{"template": "nusmp:mega/hall/x", "rotation": 1, "x": 3, "y": 56, "z": 4}]}, open(path, "w"))
+        json.dump({"region": [0, 0, 1, 1], "pieces": [{"template": "anime_multiverse:mega/hall/x", "rotation": 1, "x": 3, "y": 56, "z": 4}]}, open(path, "w"))
         return "plan: " + path
     if c.startswith("multiverse mega unseal "):
         k = int(c.split()[-1])

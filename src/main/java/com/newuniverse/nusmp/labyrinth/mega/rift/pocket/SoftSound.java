@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 
 /**
- * Why: the pockets name sounds by string ({@code nusmp:rift.crackle}, {@code nusmp:pocket.ember_sanctum.ambient}) because the mod's sound engine is another builder's, filled in as the audio is made;
+ * Why: the pockets name sounds by string ({@code anime_multiverse:rift.crackle}, {@code anime_multiverse:pocket.ember_sanctum.ambient}) because the mod's sound engine is another builder's, filled in as the audio is made;
  * a string is resolved at the moment of use, and when the registry does not know it yet the vanilla fallback plays, so the tombs are never silent and never crash on a sound that is not there.
  * The strings the data uses are listed in docs/labyrinth/rift_pockets.md for the audio builder.
  */
@@ -19,7 +19,7 @@ public final class SoftSound {
     /** The vanilla sounds that stand in for the mod's own while they are absent. */
     public static final SoundEvent CRACKLE_FALLBACK = SoundEvents.AMETHYST_BLOCK_RESONATE;
     /** The id of the ambient crackle of a mega-rare tear (the audio builder's list in docs/labyrinth/rift_pockets.md). */
-    public static final String CRACKLE = "nusmp:rift.crackle";
+    public static final String CRACKLE = "anime_multiverse:rift.crackle";
 
     /** The sound event of a registry id, or the fallback when the id is unknown or malformed. */
     public static SoundEvent resolve(String id, SoundEvent fallback) {

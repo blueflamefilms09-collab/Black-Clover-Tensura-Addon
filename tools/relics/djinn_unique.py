@@ -2,10 +2,10 @@
 
 djinn_parts.py builds ONE rig for all twelve Djinn and varies it by palette and a style row. This module gives every Djinn its OWN builders:
 its own headgear (horns / crest / crown / mask), wings, weapon, back piece, tail, halo, mantle, pauldron and chest emblem. The old rig and
-its meshes (assets/nusmp/djinn/<id>/*.txt) stay in the repo untouched as the fallback the game uses when a unique piece is missing.
+its meshes (assets/anime_multiverse/djinn/<id>/*.txt) stay in the repo untouched as the fallback the game uses when a unique piece is missing.
 
 Coordinates: "author space" exactly as in djinn_parts.py (pixels = 1/16 block, x to the viewer's right = the character's left, y UP, z toward
-the viewer = the front), each piece authored in the frame of the model part it is drawn on. Pieces written to assets/nusmp/djinn/u_<id>/ (the
+the viewer = the front), each piece authored in the frame of the model part it is drawn on. Pieces written to assets/anime_multiverse/djinn/u_<id>/ (the
 unique look) and d_<id>/ (the Dark Djinn look). The WEAPON piece is the one exception to the author -> model flip: it is drawn in the held item's
 own space (y up, the grip at the origin, the blade along +y), so it is written as authored.
 

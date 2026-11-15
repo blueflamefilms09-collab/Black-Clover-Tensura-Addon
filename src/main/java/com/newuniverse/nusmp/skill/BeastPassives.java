@@ -33,7 +33,7 @@ public final class BeastPassives {
 
     private static final ResourceLocation SPEED = id("bw_speed"), ATTACK_SPEED = id("bw_attack_speed"), DAMAGE = id("bw_damage"), ARMOR = id("bw_armor"), KNOCK = id("bw_knock");
 
-    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("nusmp", p); }
+    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", p); }
 
     public static void register(IEventBus bus) { bus.addListener(BeastPassives::onDamage); }
 

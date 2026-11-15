@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * The Tower Wizard in his own model (tools/gen_tower_wizard.py -> assets/nusmp/geo/entity/tower_wizard.geo.json, its animations and textures),
+ * The Tower Wizard in his own model (tools/gen_tower_wizard.py -> assets/anime_multiverse/geo/entity/tower_wizard.geo.json, its animations and textures),
  * drawn with client.geo.GeoDraw like the Spirit Lords: an old wizard in a wide-brimmed hat holding a green orb. The green orb and the glint in
  * his eyes are the additive glow layer, pulsing with the orb. Clips: idle (breathing, beard and hat sway, orb bob) and talk (a nod and a hand
  * gesture), played while a player stands close. He turns with the entity's yaw (he looks at whoever speaks to him).

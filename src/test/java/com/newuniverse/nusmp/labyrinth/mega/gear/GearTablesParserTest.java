@@ -39,14 +39,14 @@ class GearTablesParserTest {
     void theChestsSectionIsReadAndAbsentMeansTheDefaults() {
         Map<String, Object> grades = obj("normal", gradeWith("sword", List.of("minecraft:wooden_sword")));
         assertSame(ChestRules.DEFAULT, GearTablesParser.parse(obj("grades", grades)).tables().chests(), "no section: the defaults, so the vault tables stay protected");
-        Object root = obj("grades", grades, "chests", obj("why", "w", "excluded", List.of("nusmp:chests/reserve", "Bad Id"), "treasureWords", List.of("hoard", "", 5.0)));
+        Object root = obj("grades", grades, "chests", obj("why", "w", "excluded", List.of("anime_multiverse:chests/reserve", "Bad Id"), "treasureWords", List.of("hoard", "", 5.0)));
         GearTablesParser.Result r = GearTablesParser.parse(root);
-        assertEquals(ChestRules.Kind.NONE, r.tables().chests().classify("nusmp", "chests/reserve"));
-        assertEquals(ChestRules.Kind.TREASURE, r.tables().chests().classify("nusmp", "chests/dragon_hoard"));
-        assertEquals(ChestRules.Kind.STANDARD, r.tables().chests().classify("nusmp", "chests/boss_loot"), "a file that lists words replaces the default words");
+        assertEquals(ChestRules.Kind.NONE, r.tables().chests().classify("anime_multiverse", "chests/reserve"));
+        assertEquals(ChestRules.Kind.TREASURE, r.tables().chests().classify("anime_multiverse", "chests/dragon_hoard"));
+        assertEquals(ChestRules.Kind.STANDARD, r.tables().chests().classify("anime_multiverse", "chests/boss_loot"), "a file that lists words replaces the default words");
         assertTrue(mentions(r.problems(), "'Bad Id' is not an id"));
         assertEquals(2, r.problems().stream().filter(s -> s.contains("treasureWords")).count(), "a blank and a number are not words");
-        assertEquals(ChestRules.Kind.NONE, r.tables().chests().classify("nusmp", "chests/dungeon_relic_vault"), "the two relic tables stay excluded");
+        assertEquals(ChestRules.Kind.NONE, r.tables().chests().classify("anime_multiverse", "chests/dungeon_relic_vault"), "the two relic tables stay excluded");
         ChestRules empty = GearTablesParser.parse(obj("grades", grades, "chests", obj("treasureWords", List.of()))).tables().chests();
         assertEquals(ChestRules.DEFAULT_TREASURE_WORDS, empty.treasureWords(), "an empty list keeps the default words");
     }
@@ -57,7 +57,7 @@ class GearTablesParserTest {
         assertTrue(mentions(problems(obj("grades", grades, "chests", List.of())), "chests is not an object"));
         assertSame(ChestRules.DEFAULT, GearTablesParser.parse(obj("grades", grades, "chests", "x")).tables().chests());
         assertTrue(mentions(problems(obj("grades", grades, "chests", obj("bogus", 1.0))), "chests: unknown key 'bogus'"));
-        assertTrue(mentions(problems(obj("grades", grades, "chests", obj("excluded", "nusmp:x"))), "chests.excluded is not a list"));
+        assertTrue(mentions(problems(obj("grades", grades, "chests", obj("excluded", "anime_multiverse:x"))), "chests.excluded is not a list"));
         assertTrue(mentions(problems(obj("grades", grades, "chests", obj("treasureWords", 3.0))), "chests.treasureWords is not a list"));
     }
 

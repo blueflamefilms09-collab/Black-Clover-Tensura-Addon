@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class PocketBossBridge {
     private PocketBossBridge() {}
 
-    private static final ResourceLocation DAMAGE = ResourceLocation.fromNamespaceAndPath("nusmp", "pocket_boss_damage"), SCALE = ResourceLocation.fromNamespaceAndPath("nusmp", "pocket_boss_scale");
+    private static final ResourceLocation DAMAGE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket_boss_damage"), SCALE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "pocket_boss_scale");
 
     /** Puts {@code profile} on the Guardian, with its damage multiplied by {@code damage} and its body by {@code scale} (both 1 or more). */
     public static void apply(LabyrinthGuardianEntity g, DndProfile profile, double damage, double scale) {

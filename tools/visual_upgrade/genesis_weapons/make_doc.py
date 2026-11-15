@@ -51,13 +51,13 @@ Not touched: the Genesis Demon-Slayer (see "Cut" below), the worn Genesis items 
 
 ## What was built
 
-* **Meshes** `assets/nusmp/weapon_meshes_vu/<mesh id>.txt` and `<mesh id>_lod.txt` (the old `weapon_meshes/<id>.txt` stay untouched): a superset of the game's mesh dialect with five layers
+* **Meshes** `assets/anime_multiverse/weapon_meshes_vu/<mesh id>.txt` and `<mesh id>_lod.txt` (the old `weapon_meshes/<id>.txt` stay untouched): a superset of the game's mesh dialect with five layers
   (0 body, 1 void, 2 core glow, 3 energy veins, 4 halo cards), `g <group>` animation groups and `fl` flares. Same unit frame and the same `place` line as the old mesh (checked by
   `VuAssetsTest`), so every display transform, the oversize rule, the bow display and the two-hand poses fit unchanged.
 * **Skins** `textures/entity/weapon_vu/<id>.png` (2048 px, hand-authored look from maths: hammered / brushed / glassy materials, enamel inlays, engraved lore text and runes, caustics, wear),
   `<id>_glow.png` and `<id>_veins.png` (emissive maps at half size), `<id>_lod.png` for the LOD mesh and one shared `halo.png` (16 additive sprites).
-* **Effect data** `assets/nusmp/visual_upgrade/<id>.json`: the animation groups (spin, bob, sway, pulse, breathe, flicker with pivots), the ambient effect layers, the idle animations,
-  the draw animation, the swing trail and a signature burst for every act, and the looped sound id (a string only: `nusmp:item.genesis.<item>.<loop>`; the audio files are another task).
+* **Effect data** `assets/anime_multiverse/visual_upgrade/<id>.json`: the animation groups (spin, bob, sway, pulse, breathe, flicker with pivots), the ambient effect layers, the idle animations,
+  the draw animation, the swing trail and a signature burst for every act, and the looped sound id (a string only: `anime_multiverse:item.genesis.<item>.<loop>`; the audio files are another task).
 * **Renderer** `client/relics/item/vu/VuRenderer` (called once from `WeaponRenderer.renderByItem`): body, void, core glow, a vein wave flowing along the weapon, halo cards with their own
   tint and breathing alpha, camera-facing flares; groups posed by the pure `visual/genesis/VuPose`; a draw animation when a weapon first appears; LOD by distance; every matrix and
   vector is a scratch object. `client/relics/item/vu/VuFx` is the client tick: ambient particles, the swing trail and the signature burst of an act (from the cooldown packet).

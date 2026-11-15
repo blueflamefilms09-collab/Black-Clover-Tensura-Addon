@@ -107,7 +107,7 @@ final class Wave3Util {
     }
 
     // ---------------------------------------------------------------- attribute modifiers of this wave (transient: gone with a relog or a death)
-    static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "w3/" + name); }
+    static ResourceLocation modId(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w3/" + name); }
 
     static void setMod(LivingEntity e, Holder<Attribute> attr, String name, double amount, AttributeModifier.Operation op) {
         if (e == null || attr == null) return;

@@ -10,8 +10,8 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 from gs_kit import (Canvas, SERIF, SERIF_BOLD, SERIF_ITALIC, bilinear, clamp01, hearts_row, hotbar, lerp, mixc, smooth, with_a, world_backdrop, ROOT)
 from gs_sprites import (clover_frame, core_swirl, crest, filigree_corner, flow_strip, ring_bezel, ripple_ring)
 
-SKILL = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill")
-THEME_TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "theme")
+SKILL = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
+THEME_TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "theme")
 
 ELEMENTS = {"fire": (255, 126, 52), "water": (70, 164, 255), "wind": (112, 240, 176), "earth": (214, 168, 92), "time": (255, 214, 110), "dark": (190, 110, 255)}
 

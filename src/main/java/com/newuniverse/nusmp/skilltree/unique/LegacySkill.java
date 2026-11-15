@@ -19,9 +19,9 @@ public final class LegacySkill extends Skill {
 
     @Override public ResourceLocation getSkillIcon() { return ICON; }
 
-    @Override public MutableComponent getName() { return Component.translatableWithFallback("nusmp.skill.legacy", "Forgotten Magic"); }
+    @Override public MutableComponent getName() { return Component.translatableWithFallback("anime_multiverse.skill.legacy", "Forgotten Magic"); }
 
-    @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback("nusmp.skill.legacy.description", "A magic that was removed from this world. It does nothing and is forgotten when you next log in."); }
+    @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback("anime_multiverse.skill.legacy.description", "A magic that was removed from this world. It does nothing and is forgotten when you next log in."); }
 
     @Override public boolean canInteractSkill(ManasSkillInstance instance, LivingEntity entity) { return false; }
 

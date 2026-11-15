@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * the generated text class and the lang fragment say the same words; the global modifier is switched on; and nothing in the loot or squad code can touch hunger.
  */
 class LootAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DATA = Path.of("src/main/resources/data");
     private static final Path JAVA = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final LootRoster ROSTER = LootRoster.parse(new InputStreamReader(LootAssetsTest.class.getResourceAsStream(LootRoster.RESOURCE), StandardCharsets.UTF_8));
@@ -52,8 +52,8 @@ class LootAssetsTest {
         JsonObject lang = json(Path.of("tools/lang/squad_loot.json"));
         List<String> bad = new ArrayList<>();
         for (String id : ROSTER.ids()) {
-            if (!lang.has("item.nusmp." + id)) bad.add(id + " name");
-            if (!lang.has("item.nusmp." + id + ".lore")) bad.add(id + " lore");
+            if (!lang.has("item.anime_multiverse." + id)) bad.add(id + " name");
+            if (!lang.has("item.anime_multiverse." + id + ".lore")) bad.add(id + " lore");
         }
         assertTrue(bad.isEmpty(), bad.toString());
     }
@@ -81,10 +81,10 @@ class LootAssetsTest {
         Set<String> mine = new HashSet<>(ROSTER.ids());
         Pattern banned = Pattern.compile("\\b(claude|anthropic|gemini|sonnet|opus|chatgpt)\\b", Pattern.CASE_INSENSITIVE);
         for (String key : lang.keySet()) {
-            if (key.startsWith("item.nusmp.")) {
-                String rest = key.substring("item.nusmp.".length());
+            if (key.startsWith("item.anime_multiverse.")) {
+                String rest = key.substring("item.anime_multiverse.".length());
                 String id = rest.endsWith(".lore") ? rest.substring(0, rest.length() - 5) : rest;
-                assertTrue(mine.contains(id) || id.equals("mana_surge") || key.startsWith("item.nusmp.loot"), "an item key that is not in the roster: " + key);
+                assertTrue(mine.contains(id) || id.equals("mana_surge") || key.startsWith("item.anime_multiverse.loot"), "an item key that is not in the roster: " + key);
             }
             assertFalse(banned.matcher(lang.get(key).getAsString()).find(), key + " names a tool");
         }
@@ -114,7 +114,7 @@ class LootAssetsTest {
         String engravings = Files.readString(JAVA.resolve("item/WeaponEngravings.java"));
         List<String> bad = new ArrayList<>();
         for (LootRoster.WeaponDef w : ROSTER.weapons()) {
-            if (!Files.exists(DATA.resolve("nusmp/weapon_attributes/" + w.id() + ".json"))) bad.add(w.id() + " Better Combat attributes");
+            if (!Files.exists(DATA.resolve("anime_multiverse/weapon_attributes/" + w.id() + ".json"))) bad.add(w.id() + " Better Combat attributes");
             if (!engravings.contains("Map.entry(\"" + w.id() + "\"")) bad.add(w.id() + " engraving row");
             for (LootRoster.Engraving e : w.engravings()) {
                 String row = rowOf(engravings, w.id());
@@ -136,17 +136,17 @@ class LootAssetsTest {
         Set<String> mine = new HashSet<>(ROSTER.ids());
         List<String> bad = new ArrayList<>();
         int n = 0;
-        try (Stream<Path> files = Files.list(DATA.resolve("nusmp/recipe"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("anime_multiverse/recipe"))) {
             for (Path p : files.filter(f -> f.getFileName().toString().startsWith("loot_")).toList()) {
                 n++;
                 JsonObject r = json(p);
                 String result = r.getAsJsonObject("result").get("id").getAsString();
-                if (!result.startsWith("nusmp:") || !mine.contains(result.substring(6))) bad.add(p.getFileName() + " makes " + result);
+                if (!result.startsWith("anime_multiverse:") || !mine.contains(result.substring(6))) bad.add(p.getFileName() + " makes " + result);
                 List<String> items = new ArrayList<>(), tags = new ArrayList<>();
                 ingredients(r, items, tags);
                 for (String item : items) if (!exists(item, mine)) bad.add(p.getFileName() + " ingredient " + item);
                 for (String tag : tags) {
-                    if (tag.startsWith("nusmp:") && !Files.exists(DATA.resolve("nusmp/tags/item/" + tag.substring(6) + ".json"))) bad.add(p.getFileName() + " tag " + tag);
+                    if (tag.startsWith("anime_multiverse:") && !Files.exists(DATA.resolve("anime_multiverse/tags/item/" + tag.substring(6) + ".json"))) bad.add(p.getFileName() + " tag " + tag);
                 }
             }
         }
@@ -156,7 +156,7 @@ class LootAssetsTest {
 
     private static boolean exists(String item, Set<String> mine) {
         if (item.startsWith("minecraft:")) return true;
-        if (!item.startsWith("nusmp:")) return false;
+        if (!item.startsWith("anime_multiverse:")) return false;
         String id = item.substring(6);
         return mine.contains(id) || Files.exists(ASSETS.resolve("models/item/" + id + ".json"));
     }
@@ -178,17 +178,17 @@ class LootAssetsTest {
     @Test
     void everyMaterialHasAUse() throws IOException {
         Set<String> used = new HashSet<>(ROSTER.codeUses().keySet());
-        try (Stream<Path> files = Files.list(DATA.resolve("nusmp/recipe"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("anime_multiverse/recipe"))) {
             for (Path p : files.filter(f -> f.getFileName().toString().startsWith("loot_")).toList()) {
                 List<String> items = new ArrayList<>(), tags = new ArrayList<>();
                 ingredients(json(p), items, tags);
-                for (String item : items) if (item.startsWith("nusmp:")) used.add(item.substring(6));
+                for (String item : items) if (item.startsWith("anime_multiverse:")) used.add(item.substring(6));
                 for (String tag : tags) {
-                    Path tp = DATA.resolve("nusmp/tags/item/" + tag.substring(tag.indexOf(':') + 1) + ".json");
-                    if (!tag.startsWith("nusmp:") || !Files.exists(tp)) continue;
+                    Path tp = DATA.resolve("anime_multiverse/tags/item/" + tag.substring(tag.indexOf(':') + 1) + ".json");
+                    if (!tag.startsWith("anime_multiverse:") || !Files.exists(tp)) continue;
                     for (JsonElement v : json(tp).getAsJsonArray("values")) {
                         String id = v.isJsonObject() ? v.getAsJsonObject().get("id").getAsString() : v.getAsString();
-                        if (id.startsWith("nusmp:")) used.add(id.substring(6));
+                        if (id.startsWith("anime_multiverse:")) used.add(id.substring(6));
                     }
                 }
             }
@@ -201,15 +201,15 @@ class LootAssetsTest {
 
     @Test
     void theGlobalModifierIsSwitchedOnAndItsFileIsThere() throws IOException {
-        assertTrue(Files.readString(DATA.resolve("neoforge/loot_modifiers/global_loot_modifiers.json")).contains("\"nusmp:anime_loot\""));
-        assertEquals("nusmp:anime_loot", json(DATA.resolve("nusmp/loot_modifiers/anime_loot.json")).get("type").getAsString());
+        assertTrue(Files.readString(DATA.resolve("neoforge/loot_modifiers/global_loot_modifiers.json")).contains("\"anime_multiverse:anime_loot\""));
+        assertEquals("anime_multiverse:anime_loot", json(DATA.resolve("anime_multiverse/loot_modifiers/anime_loot.json")).get("type").getAsString());
     }
 
     @Test
     void theTrinketsFitTheirCuriosSlots() throws IOException {
         for (LootRoster.TrinketDef t : ROSTER.trinkets()) {
             String tag = Files.readString(DATA.resolve("curios/tags/item/" + t.slot() + ".json"));
-            assertTrue(tag.contains("\"nusmp:" + t.id() + "\""), t.id() + " is not in the " + t.slot() + " slot tag");
+            assertTrue(tag.contains("\"anime_multiverse:" + t.id() + "\""), t.id() + " is not in the " + t.slot() + " slot tag");
         }
     }
 

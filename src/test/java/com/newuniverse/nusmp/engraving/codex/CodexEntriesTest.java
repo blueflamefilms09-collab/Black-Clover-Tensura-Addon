@@ -22,7 +22,7 @@ class CodexEntriesTest {
         CodexEntries.Book book = CodexTestData.book(CodexTestData.english());
         Map<String, Integer> seen = new HashMap<>();
         for (CodexEntries.Entry e : book.entries()) seen.merge(e.key(), 1, Integer::sum);
-        for (String id : CodexTestData.allEnchantmentIds()) assertEquals(1, seen.getOrDefault("nusmp:" + id, 0).intValue(), "nusmp:" + id + " must be in the book exactly once");
+        for (String id : CodexTestData.allEnchantmentIds()) assertEquals(1, seen.getOrDefault("anime_multiverse:" + id, 0).intValue(), "anime_multiverse:" + id + " must be in the book exactly once");
         for (Map.Entry<String, Integer> e : seen.entrySet()) assertEquals(1, e.getValue().intValue(), "duplicate " + e.getKey());
         FranchiseData.Table table = CodexTestData.table();
         assertEquals(71, table.engravings().size(), "the franchise table");
@@ -31,7 +31,7 @@ class CodexEntriesTest {
         long mod = book.entries().stream().filter(e -> e.kind() == CodexEntries.Kind.MOD).count();
         assertEquals(CodexTestData.ownIds().size(), mod);
         assertTrue(CodexTestData.ownIds().contains("anti_magic") && CodexTestData.ownIds().contains("legacy_of_the_wizard_kings"));
-        // every file of data/nusmp/enchantment is either a franchise engraving of the table or one of the mod's own
+        // every file of data/anime_multiverse/enchantment is either a franchise engraving of the table or one of the mod's own
         for (String id : CodexTestData.allEnchantmentIds()) assertTrue(table.engravings().containsKey(id) || CodexTestData.ownIds().contains(id), id);
     }
 
@@ -60,7 +60,7 @@ class CodexEntriesTest {
             assertFalse(e.name().isBlank(), e.key());
             assertFalse(e.text().isBlank(), e.key());
         }
-        CodexEntries.Entry falna = book.entries().stream().filter(e -> e.key().equals("nusmp:fr_falna")).findFirst().orElseThrow();
+        CodexEntries.Entry falna = book.entries().stream().filter(e -> e.key().equals("anime_multiverse:fr_falna")).findFirst().orElseThrow();
         assertEquals("Falna", falna.name(), "the name falls back to the table's name");
         assertTrue(falna.text().contains("kill stacks"), "the fallback text says what the effect is");
     }
@@ -71,9 +71,9 @@ class CodexEntriesTest {
         CodexEntries.Book book = CodexTestData.book(lang::get);
         for (CodexEntries.Entry e : book.entries()) {
             if (e.kind() == CodexEntries.Kind.TENSURA) continue;
-            String path = e.key().substring("nusmp:".length());
-            assertEquals(lang.get("enchantment.nusmp." + path), e.name(), e.key() + " name");
-            String desc = lang.get("enchantment.nusmp." + path + ".desc");
+            String path = e.key().substring("anime_multiverse:".length());
+            assertEquals(lang.get("enchantment.anime_multiverse." + path), e.name(), e.key() + " name");
+            String desc = lang.get("enchantment.anime_multiverse." + path + ".desc");
             assertEquals(e.kind() == CodexEntries.Kind.FRANCHISE ? CodexFacts.trimBoilerplate(desc) : desc, e.text(), e.key() + " text");
             assertTrue(desc.startsWith(e.text()), e.key() + ": the book's text is the description, only its generated closing sentences left off");
             assertFalse(e.text().contains("Works while") || e.text().contains("Effects are capped"), e.key() + " keeps boilerplate");
@@ -84,13 +84,13 @@ class CodexEntriesTest {
     void everyEnchantmentHasLangNameAndDescription() throws Exception {
         Map<String, String> lang = CodexTestData.lang();
         for (String id : CodexTestData.allEnchantmentIds()) {
-            assertTrue(lang.containsKey("enchantment.nusmp." + id), id + " has no name");
-            String desc = lang.get("enchantment.nusmp." + id + ".desc");
+            assertTrue(lang.containsKey("enchantment.anime_multiverse." + id), id + " has no name");
+            String desc = lang.get("enchantment.anime_multiverse." + id + ".desc");
             assertTrue(desc != null && desc.length() > 40, id + " has no description");
         }
-        for (FranchiseData.Franchise f : CodexTestData.table().franchises()) assertTrue(lang.containsKey("franchise.nusmp." + f.id()), f.id());
-        for (String key : new String[]{"item.nusmp.engraving_codex", "nusmp.engraving_codex.all", "nusmp.engraving_codex.search", "nusmp.engraving_codex.found", "nusmp.engraving_codex.more",
-                "nusmp.engraving_codex.group.nusmp", "nusmp.engraving_codex.group.tensura", "nusmp.engraving_codex.cmd.given", "nusmp.engraving_codex.cmd.where", "nusmp.gui_scale.gui.engraving_codex"})
+        for (FranchiseData.Franchise f : CodexTestData.table().franchises()) assertTrue(lang.containsKey("franchise.anime_multiverse." + f.id()), f.id());
+        for (String key : new String[]{"item.anime_multiverse.engraving_codex", "anime_multiverse.engraving_codex.all", "anime_multiverse.engraving_codex.search", "anime_multiverse.engraving_codex.found", "anime_multiverse.engraving_codex.more",
+                "anime_multiverse.engraving_codex.group.anime_multiverse", "anime_multiverse.engraving_codex.group.tensura", "anime_multiverse.engraving_codex.cmd.given", "anime_multiverse.engraving_codex.cmd.where", "anime_multiverse.gui_scale.gui.engraving_codex"})
             assertTrue(lang.containsKey(key), key);
     }
 
@@ -98,7 +98,7 @@ class CodexEntriesTest {
     void theLangTextStillSaysWhatTheDataSaysSoItNeverGoesStale() throws Exception {
         Map<String, String> lang = CodexTestData.lang();
         for (FranchiseData.Engraving en : CodexTestData.table().engravings().values()) {
-            String desc = lang.get("enchantment.nusmp." + en.id() + ".desc");
+            String desc = lang.get("enchantment.anime_multiverse." + en.id() + ".desc");
             for (FranchiseData.Effect e : en.effects()) {
                 if (e.num().containsKey("cd")) assertTrue(desc.contains(CodexFacts.seconds(e.d("cd", 0))), en.id() + ": the cooldown " + CodexFacts.seconds(e.d("cd", 0)) + " is not in the text: " + desc);
                 if (e.num().containsKey("window")) assertTrue(desc.contains(CodexFacts.seconds(e.d("window", 0))), en.id() + ": the window is not in the text");
@@ -113,9 +113,9 @@ class CodexEntriesTest {
     @Test
     void foundOnListsComeFromTheItemTablesAndAreSorted() throws Exception {
         CodexEntries.Book book = CodexTestData.book(CodexTestData.english());
-        CodexEntries.Entry anti = book.entries().stream().filter(e -> e.key().equals("nusmp:anti_magic")).findFirst().orElseThrow();
+        CodexEntries.Entry anti = book.entries().stream().filter(e -> e.key().equals("anime_multiverse:anti_magic")).findFirst().orElseThrow();
         assertTrue(anti.foundOn().contains("Item demon_slayer_sword") && anti.foundOn().contains("Item demon_slasher_katana"), "the anti-magic mark is on the Demon-Slayer and the Demon-Slasher: " + anti.foundOn());
-        CodexEntries.Entry legacy = book.entries().stream().filter(e -> e.key().equals("nusmp:legacy_of_the_wizard_kings")).findFirst().orElseThrow();
+        CodexEntries.Entry legacy = book.entries().stream().filter(e -> e.key().equals("anime_multiverse:legacy_of_the_wizard_kings")).findFirst().orElseThrow();
         assertEquals(List.of("Item elsdocia"), legacy.foundOn());
         CodexEntries.Entry swift = book.entries().stream().filter(e -> e.key().equals("tensura:swift")).findFirst().orElseThrow();
         assertTrue(swift.foundOn().size() > 5, "swift is on many weapons");
@@ -123,7 +123,7 @@ class CodexEntriesTest {
         sorted.sort(String.CASE_INSENSITIVE_ORDER);
         assertEquals(sorted, swift.foundOn(), "found-on names are sorted");
         // a franchise engraving lists the items of its franchise
-        CodexEntries.Entry surge = book.entries().stream().filter(e -> e.key().equals("nusmp:fr_grimoire_surge")).findFirst().orElseThrow();
+        CodexEntries.Entry surge = book.entries().stream().filter(e -> e.key().equals("anime_multiverse:fr_grimoire_surge")).findFirst().orElseThrow();
         assertFalse(surge.foundOn().isEmpty(), "Black Clover has mapped items");
         assertEquals(new TreeSet<>(surge.foundOn()).size(), surge.foundOn().size(), "no duplicates");
         // every franchise engraving lists exactly the items the franchise map gives its franchise; a franchise with no mapped item yet (the map is the truth) lists none and says so
@@ -132,7 +132,7 @@ class CodexEntriesTest {
             long mapped = com.newuniverse.nusmp.franchise.FranchiseMap.map().items().values().stream().filter(f -> f.equals(e.groupId())).count();
             assertEquals(mapped, (long) e.foundOn().size(), e.key() + " lists the items of " + e.groupId());
         }
-        CodexEntries.Entry bankai = book.entries().stream().filter(e -> e.key().equals("nusmp:fr_bankai")).findFirst().orElseThrow();
+        CodexEntries.Entry bankai = book.entries().stream().filter(e -> e.key().equals("anime_multiverse:fr_bankai")).findFirst().orElseThrow();
         if (bankai.foundOn().isEmpty()) assertTrue(CodexEntries.foundOnLine(bankai.foundOn(), 6, null, null, null).endsWith("carries it yet"));
     }
 
@@ -253,7 +253,7 @@ class CodexEntriesTest {
 
     @Test
     void theShippedFileNamesAreWhereTheCodeLooks() {
-        assertTrue(new File(CodexTestData.RES, "data/nusmp/engraving_codex/tensura_engravings.json").isFile());
-        assertTrue(new File(CodexTestData.RES, "data/nusmp/franchise/engravings.json").isFile());
+        assertTrue(new File(CodexTestData.RES, "data/anime_multiverse/engraving_codex/tensura_engravings.json").isFile());
+        assertTrue(new File(CodexTestData.RES, "data/anime_multiverse/franchise/engravings.json").isFile());
     }
 }

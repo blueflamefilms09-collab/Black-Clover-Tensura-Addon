@@ -27,7 +27,7 @@ public final class BeastWillAcquire {
 
     private static final Map<UUID, Pending> PENDING = new ConcurrentHashMap<>();
 
-    /** The answer of the eligibility check: ok, or the lang suffix of the reason ({@code nusmp.beastwill.no.<reason>}). */
+    /** The answer of the eligibility check: ok, or the lang suffix of the reason ({@code anime_multiverse.beastwill.no.<reason>}). */
     public record Verdict(boolean ok, String reason, double compat, double havEp, double needEp) {
         static Verdict no(String reason, double compat, double have, double need) { return new Verdict(false, reason, compat, have, need); }
     }

@@ -123,7 +123,7 @@ class RuneGeneratorUtilTest {
     // ---------------------------------------------------------------- the particles are real
     @Test
     void everyParticleTheRuneUsesIsInTheCatalog() throws IOException {
-        JsonArray ps = JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/nusmp/particle_catalog.json"), StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("particles");
+        JsonArray ps = JsonParser.parseString(Files.readString(Path.of("src/main/resources/data/anime_multiverse/particle_catalog.json"), StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonArray("particles");
         Set<String> ids = new HashSet<>();
         for (JsonElement e : ps) ids.add(e.getAsJsonObject().get("id").getAsString());
         assertTrue(ids.contains(RuneElement.RING_PARTICLE), RuneElement.RING_PARTICLE);

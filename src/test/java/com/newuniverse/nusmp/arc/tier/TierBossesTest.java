@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** 3.33.0: the Tier List bosses of tiers F and D obey the house rules, stand on their floors, are all different and have their skins and names. */
 class TierBossesTest {
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static List<TierRow> all() {
         List<TierRow> out = new java.util.ArrayList<>(TierRosterF.rows());
@@ -147,7 +147,7 @@ class TierBossesTest {
     @Test
     void everyCharacterHasANameInTheLanguageFile() throws Exception {
         String lang = Files.readString(RES.resolve("lang/en_us.json"));
-        for (TierRow row : all()) assertTrue(lang.contains("\"entity.nusmp." + row.id() + "\""), "no name for " + row.id());
+        for (TierRow row : all()) assertTrue(lang.contains("\"entity.anime_multiverse." + row.id() + "\""), "no name for " + row.id());
     }
 
     @Test

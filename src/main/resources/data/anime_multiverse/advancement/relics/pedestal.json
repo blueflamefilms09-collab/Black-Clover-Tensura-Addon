@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:relics/first",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:relic_pedestal"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.relics.pedestal.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.relics.pedestal.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_relic_pedestal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:relic_pedestal"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_relic_pedestal"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

@@ -5,7 +5,7 @@ A Kit is one geo model plus its texture atlas and glow map:
   * cubes are added with Kit.box / Kit.pair; the box UV is packed into the atlas automatically (shelf packing) and the six faces are
     painted by a material (a function that returns the face colour and the face glow), so the texture can always be redone;
   * Kit.pair builds a right-hand cube and its mirrored left-hand twin (the mirror flag of the geo format, one painting for both);
-  * Kit.save(anim) writes assets/nusmp/geo/entity/<key>_<name>.geo.json, animations/entity/..., textures/entity/<key>_<name>.png + _glow.png.
+  * Kit.save(anim) writes assets/anime_multiverse/geo/entity/<key>_<name>.geo.json, animations/entity/..., textures/entity/<key>_<name>.png + _glow.png.
 
 File frame (see geo_builder): pixels, y up, feet at y = 0, the front on -z, the player's right on -x. The humanoid frame used by every armour:
 head 8x8x8 at (-4, 24, -4); body 8x12x4 at (-4, 12, -2); right arm at x -8..-4 (pivot -5, 22), left arm x 4..8 (pivot 5, 22); legs 4x12x4 at

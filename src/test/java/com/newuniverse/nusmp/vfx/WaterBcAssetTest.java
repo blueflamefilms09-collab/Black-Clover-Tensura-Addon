@@ -26,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class WaterBcAssetTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path PARTICLE = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
-    private static final Path MESHES = ROOT.resolve("src/main/resources/assets/nusmp/" + WaterBc.MESH_FOLDER);
+    private static final Path PARTICLE = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
+    private static final Path MESHES = ROOT.resolve("src/main/resources/assets/anime_multiverse/" + WaterBc.MESH_FOLDER);
 
     private static BufferedImage image(String file) throws IOException {
         BufferedImage img = ImageIO.read(PARTICLE.resolve(file + ".png").toFile());

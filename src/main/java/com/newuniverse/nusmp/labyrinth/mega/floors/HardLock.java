@@ -61,7 +61,7 @@ public final class HardLock {
             LabyrinthTravel.leaveAny(p);
             return true;
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The hard guard of the Directional Lock failed for {}: {}", p == null ? "?" : p.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] The hard guard of the Directional Lock failed for {}: {}", p == null ? "?" : p.getGameProfile().getName(), e.toString());
             return false;
         }
     }

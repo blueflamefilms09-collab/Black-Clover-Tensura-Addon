@@ -3,9 +3,9 @@
 
     python tools/tier_bosses/gen_tier_skins.py [--sheet out.png]
 
-Writes assets/nusmp/textures/entity/arc_<id>.png and arc_<id>_glow.png (the accent pixels only, so the buckle / the eyes burn). The body keeps its shading:
+Writes assets/anime_multiverse/textures/entity/arc_<id>.png and arc_<id>_glow.png (the accent pixels only, so the buckle / the eyes burn). The body keeps its shading:
 every region (hair, skin, outfit, trousers) is recoloured so that a pixel keeps its brightness relative to the region's mean. Regions come from the model's UV rectangles
-(assets/nusmp/geo/entity/arc_npc_default.geo.json), so a new tier only needs a new row in PALETTES. Existing files are only ever overwritten for the ids listed here.
+(assets/anime_multiverse/geo/entity/arc_npc_default.geo.json), so a new tier only needs a new row in PALETTES. Existing files are only ever overwritten for the ids listed here.
 """
 import json
 import sys
@@ -13,7 +13,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets/nusmp"
+ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets/anime_multiverse"
 GEO = ROOT / "geo/entity/arc_npc_default.geo.json"
 BASE = ROOT / "textures/entity/arc_npc_default.png"
 OUT = ROOT / "textures/entity"

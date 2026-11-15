@@ -1,4 +1,4 @@
-"""Why: Salamander, the fire Spirit Lord of Black Clover (entities nusmp:elemental_spirit_lord kind SALAMANDER, nusmp:spirit_lord kind SALAMANDER, the companion). Its old model was a winged
+"""Why: Salamander, the fire Spirit Lord of Black Clover (entities anime_multiverse:elemental_spirit_lord kind SALAMANDER, anime_multiverse:spirit_lord kind SALAMANDER, the companion). Its old model was a winged
 fire dragon (red-orange scales, flames down the spine and along the tail, tools/gen_spirit_lords.py); the owner wants every mob of the mod on the player's rig with the art kit, and a
 creature becomes an anthropomorphic design that keeps its features, so this is a dragonfolk spirit: a broad, red-orange scaled body with a mane of living flame for hair, ram-curled
 dragon horns, bat-membrane dragon wings that glow along their veins, a long scaled tail whose tip is a flame, a scale cuirass and glowing slit eyes. It hovers (the spirit flies).

@@ -30,7 +30,7 @@ class FranchiseDataTest {
 
     private static JsonObject json(String path) throws Exception { return JsonParser.parseString(read(path)).getAsJsonObject(); }
 
-    private static FranchiseData.Table table() throws Exception { return FranchiseData.parse(read("src/main/resources/data/nusmp/franchise/engravings.json")); }
+    private static FranchiseData.Table table() throws Exception { return FranchiseData.parse(read("src/main/resources/data/anime_multiverse/franchise/engravings.json")); }
 
     @Test
     void theTableIsWhole() throws Exception {
@@ -54,11 +54,11 @@ class FranchiseDataTest {
     @Test
     void everyEngravingIsAWellFormedDatapackEnchantment() throws Exception {
         for (FranchiseData.Engraving e : table().engravings().values()) {
-            File f = new File(RES, "data/nusmp/enchantment/" + e.id() + ".json");
+            File f = new File(RES, "data/anime_multiverse/enchantment/" + e.id() + ".json");
             assertTrue(f.isFile(), "missing " + f);
             JsonObject o = JsonParser.parseString(Files.readString(f.toPath())).getAsJsonObject();
             // the fields a 1.21.1 enchantment requires
-            assertEquals("enchantment.nusmp." + e.id(), o.getAsJsonObject("description").get("translate").getAsString());
+            assertEquals("enchantment.anime_multiverse." + e.id(), o.getAsJsonObject("description").get("translate").getAsString());
             assertTrue(o.has("supported_items"), e.id());
             assertTrue(o.get("weight").getAsInt() >= 1, e.id());
             assertTrue(o.get("max_level").getAsInt() >= 3, e.id() + " must reach level 3 (a god relic is engraved at 3)");
@@ -77,8 +77,8 @@ class FranchiseDataTest {
         assertFalse(tag.get("replace").getAsBoolean(), "the tag adds to Tensura's, it never replaces");
         Set<String> values = new HashSet<>();
         for (JsonElement v : tag.getAsJsonArray("values")) values.add(v.getAsString());
-        assertTrue(values.contains("nusmp:anti_magic") && values.contains("nusmp:legacy_of_the_wizard_kings"), "the older entries stay");
-        for (FranchiseData.Engraving e : table().engravings().values()) assertTrue(values.contains("nusmp:" + e.id()), e.id() + " is not in the tag");
+        assertTrue(values.contains("anime_multiverse:anti_magic") && values.contains("anime_multiverse:legacy_of_the_wizard_kings"), "the older entries stay");
+        for (FranchiseData.Engraving e : table().engravings().values()) assertTrue(values.contains("anime_multiverse:" + e.id()), e.id() + " is not in the tag");
         assertEquals(values.size(), tag.getAsJsonArray("values").size(), "no duplicate in the tag");
     }
 
@@ -87,14 +87,14 @@ class FranchiseDataTest {
         JsonObject lang = json("tools/lang/franchise_engravings.json");
         FranchiseData.Table t = table();
         for (FranchiseData.Engraving e : t.engravings().values()) {
-            String name = lang.has("enchantment.nusmp." + e.id()) ? lang.get("enchantment.nusmp." + e.id()).getAsString() : "";
-            String desc = lang.has("enchantment.nusmp." + e.id() + ".desc") ? lang.get("enchantment.nusmp." + e.id() + ".desc").getAsString() : "";
+            String name = lang.has("enchantment.anime_multiverse." + e.id()) ? lang.get("enchantment.anime_multiverse." + e.id()).getAsString() : "";
+            String desc = lang.has("enchantment.anime_multiverse." + e.id() + ".desc") ? lang.get("enchantment.anime_multiverse." + e.id() + ".desc").getAsString() : "";
             assertEquals(e.name(), name, e.id() + " name");
             assertTrue(desc.length() > 40, e.id() + " description");
             assertFalse(desc.toLowerCase().contains("hunger"), e.id() + " mentions hunger");
         }
-        for (FranchiseData.Franchise f : t.franchises()) assertTrue(lang.has("franchise.nusmp." + f.id()), f.id() + " has no lang name");
-        assertTrue(lang.has("tooltip.nusmp.franchise"));
+        for (FranchiseData.Franchise f : t.franchises()) assertTrue(lang.has("franchise.anime_multiverse." + f.id()), f.id() + " has no lang name");
+        assertTrue(lang.has("tooltip.anime_multiverse.franchise"));
     }
 
     @Test
@@ -131,14 +131,14 @@ class FranchiseDataTest {
 
     @Test
     void noEngravingTouchesTheFoodBar() throws Exception {
-        String data = read("src/main/resources/data/nusmp/franchise/engravings.json").toLowerCase();
+        String data = read("src/main/resources/data/anime_multiverse/franchise/engravings.json").toLowerCase();
         for (String bad : new String[]{"hunger", "saturation", "exhaustion", "food"}) assertFalse(data.contains(bad), "the table mentions " + bad);
     }
 
     @Test
     void everyFranchiseOfTheMapHasAtLeastTwoEngravings() throws Exception {
         FranchiseData.Table t = table();
-        JsonObject map = json("src/main/resources/data/nusmp/relics/franchise_map.json");
+        JsonObject map = json("src/main/resources/data/anime_multiverse/relics/franchise_map.json");
         JsonObject counts = map.getAsJsonObject("franchises");
         assertTrue(counts.size() >= 15, "the map has " + counts.size() + " franchises");
         Set<String> known = new HashSet<>();
@@ -159,7 +159,7 @@ class FranchiseDataTest {
 
     @Test
     void mapLookupFollowsExactPairAndPrefix() throws Exception {
-        FranchiseMap.Map2 m = FranchiseMap.parse(read("src/main/resources/data/nusmp/relics/franchise_map.json"));
+        FranchiseMap.Map2 m = FranchiseMap.parse(read("src/main/resources/data/anime_multiverse/relics/franchise_map.json"));
         assertEquals("black_clover", m.franchiseOf("demon_slayer_sword"));
         assertEquals("black_clover", m.franchiseOf("charter_grimoire_ban"), "by prefix");
         assertEquals("magi", m.franchiseOf("djinn_weapon_bael_dark"), "by prefix");
@@ -176,7 +176,7 @@ class FranchiseDataTest {
 
     @Test
     void theProcThemesExist() throws Exception {
-        JsonObject themes = json("src/main/resources/data/nusmp/particle_themes.json").getAsJsonObject("themes");
+        JsonObject themes = json("src/main/resources/data/anime_multiverse/particle_themes.json").getAsJsonObject("themes");
         for (FranchiseData.Franchise f : table().franchises()) assertTrue(themes.has(f.theme()), f.id() + " names the particle theme " + f.theme() + " that does not exist");
     }
 
@@ -210,8 +210,8 @@ class FranchiseDataTest {
 
     @Test
     void theGeneratorIsInSyncWithTheShippedFiles() throws Exception {
-        JsonArray arr = json("src/main/resources/data/nusmp/franchise/engravings.json").getAsJsonArray("engravings");
-        File[] files = new File(RES, "data/nusmp/enchantment").listFiles((d, n) -> n.startsWith("fr_") && n.endsWith(".json"));
+        JsonArray arr = json("src/main/resources/data/anime_multiverse/franchise/engravings.json").getAsJsonArray("engravings");
+        File[] files = new File(RES, "data/anime_multiverse/enchantment").listFiles((d, n) -> n.startsWith("fr_") && n.endsWith(".json"));
         assertNotNull(files);
         assertEquals(arr.size(), files.length, "one enchantment file per engraving, none left over");
     }

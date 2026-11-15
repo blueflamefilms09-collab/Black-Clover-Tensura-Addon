@@ -12,7 +12,7 @@ import os
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "models", "item")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item")
 
 
 def el(name, frm, to, faces):
@@ -40,7 +40,7 @@ def build_3d(display):
     elements += [roller("top_roller", 13.4), roller("bottom_roller", 1.2),
                  knob("knob_top_left", 1.4, 2.2, 13.2, 15.0), knob("knob_top_right", 13.8, 14.6, 13.2, 15.0),
                  knob("knob_bottom_left", 1.4, 2.2, 1.0, 2.8), knob("knob_bottom_right", 13.8, 14.6, 1.0, 2.8)]
-    return {"textures": {"map": "nusmp:item/dungeon_map", "paper": "nusmp:item/dungeon_map", "wood": "minecraft:block/dark_oak_planks", "particle": "nusmp:item/dungeon_map"},
+    return {"textures": {"map": "anime_multiverse:item/dungeon_map", "paper": "anime_multiverse:item/dungeon_map", "wood": "minecraft:block/dark_oak_planks", "particle": "anime_multiverse:item/dungeon_map"},
             "elements": elements, "display": display}
 
 
@@ -54,10 +54,10 @@ def main():
     with open(os.path.join(OUT, "dungeon_map_3d.json")) as f:   # the display block was copied from the (removed) Skill Book model; it now lives in this file
         display = json.load(f)["display"]
     write("dungeon_map_3d.json", build_3d(display))
-    write("dungeon_map_2d.json", {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/dungeon_map"}})
-    write("dungeon_map.json", {"loader": "neoforge:separate_transforms", "gui_light": "front", "textures": {"particle": "nusmp:item/dungeon_map"},
-                               "base": {"parent": "nusmp:item/dungeon_map_3d"},
-                               "perspectives": {"gui": {"parent": "nusmp:item/dungeon_map_2d"}, "ground": {"parent": "nusmp:item/dungeon_map_2d"}, "fixed": {"parent": "nusmp:item/dungeon_map_2d"}}})
+    write("dungeon_map_2d.json", {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/dungeon_map"}})
+    write("dungeon_map.json", {"loader": "neoforge:separate_transforms", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/dungeon_map"},
+                               "base": {"parent": "anime_multiverse:item/dungeon_map_3d"},
+                               "perspectives": {"gui": {"parent": "anime_multiverse:item/dungeon_map_2d"}, "ground": {"parent": "anime_multiverse:item/dungeon_map_2d"}, "fixed": {"parent": "anime_multiverse:item/dungeon_map_2d"}}})
     for n in ("quest_giver_npc_spawn_egg", "merchant_npc_spawn_egg"):
         write(n + ".json", {"parent": "minecraft:item/template_spawn_egg"})
     print("wrote the Hub item models into", OUT)

@@ -30,8 +30,8 @@ public final class UndineDraw {
     private UndineDraw() {}
 
     private static GeoSpec spec(String id) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + id + ".geo.json"), ResourceLocation.fromNamespaceAndPath("nusmp", "animations/entity/undine_body.animation.json"),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + id + ".png"), null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + id + ".geo.json"), ResourceLocation.fromNamespaceAndPath("anime_multiverse", "animations/entity/undine_body.animation.json"),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + id + ".png"), null);
     }
 
     private static final GeoSpec[] BODY = {spec("undine_body"), spec("undine_body_lod1"), spec("undine_body_lod2")};
@@ -49,7 +49,7 @@ public final class UndineDraw {
         }
         return out;
     }
-    private static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/undine_ring.png");
+    private static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/undine_ring.png");
 
     /** The size the companion is drawn at (about 1.8 blocks) and the size of the full form (about 3.2 blocks), of the model that is authored at 3.1 blocks. */
     public static final float COMPANION_SCALE = 0.60f, FULL_SCALE = 1.04f;

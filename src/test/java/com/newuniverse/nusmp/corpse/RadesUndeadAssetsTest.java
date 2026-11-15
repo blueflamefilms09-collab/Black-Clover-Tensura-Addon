@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class RadesUndeadAssetsTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = ROOT.resolve("src/main/resources/assets/anime_multiverse");
     private static final Path DATA = ROOT.resolve("src/main/resources/data");
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
     private static final String[] MODELS = {"jimmy", "david", "alfredo", "carl", "michael"};
@@ -114,19 +114,19 @@ class RadesUndeadAssetsTest {
     @Test
     void theLangFragmentNamesEveryBodyAndPage() throws IOException {
         JsonObject lang = json(ROOT.resolve("tools/lang/rades_undead.json"));
-        for (String k : new String[]{"entity.nusmp.soul_zombie", "entity.nusmp.corpse_david", "entity.nusmp.corpse_michael_caesal",
-                "nusmp.page.book_soul_corpse.corpse_jimmy", "nusmp.page.book_soul_corpse.corpse_david", "nusmp.page.book_soul_corpse.corpse_alfredo",
-                "nusmp.page.book_soul_corpse.corpse_carl", "nusmp.page.book_soul_corpse.corpse_michael_caesal", "nusmp.page.book_soul_corpse.corpse_reanimate",
-                "nusmp.page.book_soul_corpse.corpse_marionette", "nusmp.page.book_soul_corpse.corpse_legion", "nusmp.skill.book_soul_corpse.description"})
+        for (String k : new String[]{"entity.anime_multiverse.soul_zombie", "entity.anime_multiverse.corpse_david", "entity.anime_multiverse.corpse_michael_caesal",
+                "anime_multiverse.page.book_soul_corpse.corpse_jimmy", "anime_multiverse.page.book_soul_corpse.corpse_david", "anime_multiverse.page.book_soul_corpse.corpse_alfredo",
+                "anime_multiverse.page.book_soul_corpse.corpse_carl", "anime_multiverse.page.book_soul_corpse.corpse_michael_caesal", "anime_multiverse.page.book_soul_corpse.corpse_reanimate",
+                "anime_multiverse.page.book_soul_corpse.corpse_marionette", "anime_multiverse.page.book_soul_corpse.corpse_legion", "anime_multiverse.skill.book_soul_corpse.description"})
             assertTrue(lang.has(k) && !lang.get(k).getAsString().isBlank(), "missing lang key " + k);
-        assertTrue(lang.get("nusmp.page.book_soul_corpse.corpse_michael_caesal").getAsString().startsWith("No.0 - Michael Caesal"));
-        assertTrue(lang.get("nusmp.page.book_soul_corpse.corpse_david").getAsString().startsWith("No.3 - David"));
+        assertTrue(lang.get("anime_multiverse.page.book_soul_corpse.corpse_michael_caesal").getAsString().startsWith("No.0 - Michael Caesal"));
+        assertTrue(lang.get("anime_multiverse.page.book_soul_corpse.corpse_david").getAsString().startsWith("No.3 - David"));
         for (String k : lang.keySet()) assertFalse(lang.get(k).getAsString().toLowerCase().contains("claude"), k);
     }
 
     @Test
     void theTagsListEveryBody() throws IOException {
-        String[] bodies = {"nusmp:soul_zombie", "nusmp:corpse_jimmy", "nusmp:corpse_david", "nusmp:corpse_alfredo", "nusmp:corpse_carl", "nusmp:corpse_michael_caesal"};
+        String[] bodies = {"anime_multiverse:soul_zombie", "anime_multiverse:corpse_jimmy", "anime_multiverse:corpse_david", "anime_multiverse:corpse_alfredo", "anime_multiverse:corpse_carl", "anime_multiverse:corpse_michael_caesal"};
         for (String tag : new String[]{"minecraft/tags/entity_type/undead.json", "minecraft/tags/entity_type/sensitive_to_smite.json"}) {
             JsonObject t = json(DATA.resolve(tag));
             assertFalse(t.get("replace").getAsBoolean(), tag + " must only add");
@@ -134,9 +134,9 @@ class RadesUndeadAssetsTest {
             for (JsonElement v : t.getAsJsonArray("values")) have.add(v.getAsString());
             for (String b : bodies) assertTrue(have.contains(b), tag + " misses " + b);
         }
-        String immune = text(DATA.resolve("nusmp/tags/entity_type/corpse_immune.json"));
+        String immune = text(DATA.resolve("anime_multiverse/tags/entity_type/corpse_immune.json"));
         for (String b : bodies) assertTrue(immune.contains(b), "corpse_immune misses " + b);
-        for (String old : new String[]{"minecraft:ender_dragon", "minecraft:wither", "nusmp:floor_warden"}) assertTrue(immune.contains(old), "an old entry of corpse_immune was removed: " + old);
+        for (String old : new String[]{"minecraft:ender_dragon", "minecraft:wither", "anime_multiverse:floor_warden"}) assertTrue(immune.contains(old), "an old entry of corpse_immune was removed: " + old);
     }
 
     @Test
@@ -151,7 +151,7 @@ class RadesUndeadAssetsTest {
         assertTrue(book.indexOf("\"corpse_legion\"") < book.indexOf("latePages()"), "the two late pages come after every page that already existed, so no mode number moves");
         String locks = text(SRC.resolve("book/CharacterSpells.java"));
         for (String id : new String[]{"corpse_jimmy", "corpse_david", "corpse_alfredo", "corpse_carl", "corpse_michael_caesal", "true_soul_corpse"}) assertTrue(locks.contains("\"book_soul_corpse\", \"" + id + "\", CanonBook.RADES"), id);
-        String policy = text(DATA.resolve("nusmp/armour_policy.json"));
+        String policy = text(DATA.resolve("anime_multiverse/armour_policy.json"));
         assertTrue(policy.contains("\"corpse_david\"") && policy.contains("\"corpse_michael_caesal\""), "the armour policy lists the appended pages");
     }
 

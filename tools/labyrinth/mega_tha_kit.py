@@ -50,7 +50,7 @@ def _strict_state_problems(t):
     out = []
     for msg in _orig_strict(t):
         m = re.match(r"(\S+) has no property (\S+) ", msg)
-        if m and (m.group(1).startswith("nusmp:") or m.group(2) in real.get(m.group(1)[len("minecraft:"):], {})):
+        if m and (m.group(1).startswith("anime_multiverse:") or m.group(2) in real.get(m.group(1)[len("minecraft:"):], {})):
             continue                                          # the mod's own blocks carry the states the mod gives them; the game's table covers the vanilla ones
         out.append(msg)
     return out
@@ -313,12 +313,12 @@ def bench(h, x, z, facing, length=1, y0=GROUND, stairs=L.PLANKS_STAIRS):
 
 
 # ===================================================================================================================
-# the mod's puzzle blocks (1.36.0 `nusmp:sigil_plate`, `nusmp:riddle_stone`, `nusmp:gatekeeper_door[kind=puzzle]`), written the way the Spire's templates write them
+# the mod's puzzle blocks (1.36.0 `anime_multiverse:sigil_plate`, `anime_multiverse:riddle_stone`, `anime_multiverse:gatekeeper_door[kind=puzzle]`), written the way the Spire's templates write them
 # ===================================================================================================================
-PLATE = "nusmp:sigil_plate"
-RIDDLE = "nusmp:riddle_stone"
-GATE = "nusmp:gatekeeper_door"
-LOOT_TRIAL = "nusmp:chests/labyrinth_trial"
+PLATE = "anime_multiverse:sigil_plate"
+RIDDLE = "anime_multiverse:riddle_stone"
+GATE = "anime_multiverse:gatekeeper_door"
+LOOT_TRIAL = "anime_multiverse:chests/labyrinth_trial"
 
 
 def sigil_plate(h, x, y, z, color):
@@ -495,14 +495,14 @@ def dome(h, cx, cz, r0, y_spring, y_top, r_top=3.0, stairs=L.POLISHED_STAIRS, fi
 # ===================================================================================================================
 # the Sealed Archway trial (1.36.0): written the way the Spire's and ROOMS-2's trial halls write it
 # ===================================================================================================================
-ARCHWAY = "nusmp:sealed_archway"
-WARD_RUNE = "nusmp:ward_rune"
-SPAWN_GLYPH = "nusmp:spawn_glyph"
+ARCHWAY = "anime_multiverse:sealed_archway"
+WARD_RUNE = "anime_multiverse:ward_rune"
+SPAWN_GLYPH = "anime_multiverse:spawn_glyph"
 
 
 def trial_core(h, mobs, glyphs, radius, reset=60, eye_row=None):
     """What every trial hall has: a ward rune in the floor of each doorway (the inner wall layer), a spawn glyph on the floor wherever the wave should appear, and the
-    keystone (`nusmp:sealed_archway`, its block entity names the watched box, the roster and the reset time) hanging from the ceiling in the middle of the hall on a
+    keystone (`anime_multiverse:sealed_archway`, its block entity names the watched box, the roster and the reset time) hanging from the ceiling in the middle of the hall on a
     chain. `radius` is the half edge of the watched box (13 for a 27 x 27 hall); `mobs` is [(entity id, count)]. The hall must have a doorway on every side the party
     can come in by: the keystone seals every ward rune inside its box."""
     import nbt as _nbt

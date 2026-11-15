@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * Why: {@link TemplateThemes} is the rule that lets a room belong to a theme; this is how the rule is filled from the data pack. Each theme's builder ships ONE file,
- * {@code data/nusmp/mega/template_themes/<theme>.json} ({@code {"theme": "holy_church", "templates": ["nusmp:mega/hall/holy_church_"], "relative": {"mega/hall/holy_church_": 8}}}),
+ * {@code data/anime_multiverse/mega/template_themes/<theme>.json} ({@code {"theme": "holy_church", "templates": ["anime_multiverse:mega/hall/holy_church_"], "relative": {"mega/hall/holy_church_": 8}}}),
  * and a mistake in such a file must be loud, not silent: a theme id that names no theme would make the rooms unreachable (no sector ever wears it), a prefix with
  * the wrong spelling would leave the rooms free for every theme (a Holy Church nave in a Spider Warren), and a typo in a key would be ignored. So the pure parser
  * takes the files as plain Java (the game-side loader turns the JSON into maps), builds the rule set and returns what it did not understand as sentences, which the
@@ -19,8 +19,8 @@ import java.util.Map;
 public final class TemplateThemeFiles {
     private TemplateThemeFiles() {}
 
-    /** The namespace a prefix gets when the file does not write one (all Mega templates live in {@code nusmp}). */
-    private static final String NAMESPACE = "nusmp:";
+    /** The namespace a prefix gets when the file does not write one (all Mega templates live in {@code anime_multiverse}). */
+    private static final String NAMESPACE = "anime_multiverse:";
 
     /**
      * The rule set the files describe. {@code docs} is one parsed JSON object per file (each may be a {@code Map<String,Object>}; anything else is reported and
@@ -67,7 +67,7 @@ public final class TemplateThemeFiles {
         return rules;
     }
 
-    /** A prefix as the pool entries spell templates: with the namespace ({@code mega/hall/x_} becomes {@code nusmp:mega/hall/x_}). */
+    /** A prefix as the pool entries spell templates: with the namespace ({@code mega/hall/x_} becomes {@code anime_multiverse:mega/hall/x_}). */
     public static String normalise(String prefix) {
         String p = prefix.trim();
         return p.indexOf(':') >= 0 ? p : NAMESPACE + p;

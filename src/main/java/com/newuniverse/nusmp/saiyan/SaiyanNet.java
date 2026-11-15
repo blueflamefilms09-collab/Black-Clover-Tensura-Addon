@@ -34,7 +34,7 @@ public final class SaiyanNet {
 
     /** What the player asked: {@code op} (see OP_*). */
     public record Action(int op) implements CustomPacketPayload {
-        public static final Type<Action> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan_action"));
+        public static final Type<Action> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "saiyan_action"));
         public static final StreamCodec<FriendlyByteBuf, Action> STREAM_CODEC = StreamCodec.of((buf, p) -> buf.writeByte(p.op()), buf -> new Action(buf.readByte()));
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
@@ -49,7 +49,7 @@ public final class SaiyanNet {
     public record Sync(boolean saiyan, float ki, float kiMax, float stamina, float staminaMax, double battlePower, int rank, boolean awakened, int blastCd, int barrageCd, int meditate,
                        int form, int selected, int flightTier, boolean flying, int senseTier, boolean suppressed, boolean goku, int charge, int combo, int formMastery, int strain, int kameCd, int senseCd)
             implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "saiyan_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeBoolean(p.saiyan());
             buf.writeFloat(p.ki());
@@ -86,7 +86,7 @@ public final class SaiyanNet {
 
     /** The radar: how many seconds it stays on, the radius it covers, and the presences (at most {@link SaiyanSenseRules#MAX_ENTRIES}). */
     public record Ping(int seconds, int radius, List<Entry> entries) implements CustomPacketPayload {
-        public static final Type<Ping> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan_ping"));
+        public static final Type<Ping> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "saiyan_ping"));
         public static final StreamCodec<FriendlyByteBuf, Ping> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeByte(p.seconds());
             buf.writeShort(p.radius());

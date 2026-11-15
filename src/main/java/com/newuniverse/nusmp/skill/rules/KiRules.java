@@ -11,7 +11,7 @@ public final class KiRules {
 
     public static final int BLAST = 0, KAME = 1, TELEPORT = 2, FLARE = 3, AFTERIMAGE = 4, SSJ = 5, SPIRIT = 6, KAIOKEN = 7, UI = 8, SENSE = 9;
     public static final int MODES = 10;
-    /** The ids of the modes, in order (the lang keys are nusmp.skill.mode.ki.&lt;id&gt;). */
+    /** The ids of the modes, in order (the lang keys are anime_multiverse.skill.mode.ki.&lt;id&gt;). */
     public static final String[] IDS = {"blast", "kame", "teleport", "flare", "afterimage", "ssj", "spirit", "kaioken", "ui", "sense"};
 
     public static boolean valid(int mode) { return mode >= 0 && mode < MODES; }

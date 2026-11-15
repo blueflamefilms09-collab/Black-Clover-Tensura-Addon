@@ -23,14 +23,14 @@ import java.util.Set;
  * shipped template, this class names the rebuilt one that stands in its place. The choice is a pure function of the plan and its seed, so a regeneration or a repair gives the same
  * rooms, and the first N pieces of one template in a plan get N different variants (no two rooms of a floor look alike while variants last).
  * <p>
- * The table of which shipped template has how many variants is {@code data/nusmp/mega/rooms_rebuilt.json}, read from the class path (it is the mod's own data; no data pack is needed
+ * The table of which shipped template has how many variants is {@code data/anime_multiverse/mega/rooms_rebuilt.json}, read from the class path (it is the mod's own data; no data pack is needed
  * and it works while the registry is still being built). A missing or unreadable file is an empty table: nothing is swapped, the old rooms are built. Pure: no Minecraft type.
  */
 public final class RoomVariants {
     private RoomVariants() {}
 
     /** The resource the table is read from. */
-    public static final String RESOURCE = "/data/nusmp/mega/rooms_rebuilt.json";
+    public static final String RESOURCE = "/data/anime_multiverse/mega/rooms_rebuilt.json";
     /** The folder under {@code structure/} that holds the rebuilt files. */
     public static final String FOLDER = "mega_r";
     /** No template has more variants than this (the file names are {@code _v1} to {@code _v5} at most). */
@@ -91,7 +91,7 @@ public final class RoomVariants {
         return new Table(Map.copyOf(counts), Set.copyOf(stands), "");
     }
 
-    /** {@code nusmp:mega/hall/x} and {@code mega/hall/x} are the same template. */
+    /** {@code anime_multiverse:mega/hall/x} and {@code mega/hall/x} are the same template. */
     public static String bare(String id) {
         if (id == null) return "";
         int c = id.indexOf(':');
@@ -100,7 +100,7 @@ public final class RoomVariants {
 
     /**
      * The id of variant {@code k} (1-based) of a shipped template: {@code mega/hall/library_a} becomes {@code mega_r/hall/library_a_v2}. The namespace of the argument is kept
-     * ({@code nusmp:mega/hall/library_a} becomes {@code nusmp:mega_r/hall/library_a_v2}). A template that is not under {@code mega/} has no variant: the argument comes back.
+     * ({@code anime_multiverse:mega/hall/library_a} becomes {@code anime_multiverse:mega_r/hall/library_a_v2}). A template that is not under {@code mega/} has no variant: the argument comes back.
      */
     public static String variantId(String shippedId, int k) {
         String ns = "";

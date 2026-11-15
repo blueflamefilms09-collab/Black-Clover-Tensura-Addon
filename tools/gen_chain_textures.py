@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_chain_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/chain_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/chain_*.png
 
 Look reference: docs/attributes/art_reference/pack_chain.webp : long bright steel chains (every link catching a highlight) that whip and
 coil round a white burst of light with grey smoke inside it; each chain ends in a flat grey-blue kunai / spear blade. So:
@@ -25,7 +25,7 @@ import os
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

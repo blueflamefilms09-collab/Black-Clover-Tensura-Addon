@@ -46,7 +46,7 @@ public final class PartResolver {
     /** Logs a line the first time a key is seen, and returns whether it did. */
     public static boolean logOnce(String key, String line) {
         if (!LOGGED.add(key)) return false;
-        LOG.warn("[nusmp] Create compat: {}", line);
+        LOG.warn("[anime_multiverse] Create compat: {}", line);
         return true;
     }
 

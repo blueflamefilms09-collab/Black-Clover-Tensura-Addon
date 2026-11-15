@@ -4,7 +4,7 @@ Relics of Many Worlds, wave 14 (heads and footwear): the 16x16 inventory icons o
 
     python3 tools/relics/wave14_icons.py [--sheet PATH]
 
-Writes src/main/resources/assets/nusmp/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
+Writes src/main/resources/assets/anime_multiverse/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
 gold_circlet, silver_circlet, steel_circlet, tiny_duck_crown, unicorn_crown, circlet_of_the_phoenix, crown_of_the_conjurer,
 diadem_of_fabulous_truthiness, dark_unicorn_crown, ruby_boots_of_planestriding, boots_of_the_indomitable, mudwalkers,
 boots_of_the_high_ground, greaves_of_the_wind_walker, waterwalkers, sandals_of_sneaking, dragon_fire_boots.
@@ -21,7 +21,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -377,7 +377,7 @@ def write_model(iid):
     path = os.path.join(MODELS, iid + ".json")
     os.makedirs(MODELS, exist_ok=True)
     with open(path, "w") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + iid}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + iid}}, f, indent=2)
         f.write("\n")
 
 

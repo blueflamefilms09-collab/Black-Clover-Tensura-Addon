@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": {
+    "item": "anime_multiverse:raw_basilisk_fillet"
+  },
+  "result": {
+    "id": "anime_multiverse:roast_basilisk_fillet"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The Region Theme processor, seen without the game: renders a Mega-Dungeon template in every theme of `data/nusmp/mega/themes/*.json` (1.54.0, 1.55.0,
+The Region Theme processor, seen without the game: renders a Mega-Dungeon template in every theme of `data/anime_multiverse/mega/themes/*.json` (1.54.0, 1.55.0,
 docs/labyrinth/mega_theme.md section 3 and 4).
 
     python3 tools/labyrinth/mega_theme_preview.py mega/vault/three_b out_prefix                  # one PNG per theme and a sheet of all of them
@@ -25,7 +25,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import mega_lib as L  # noqa: E402
 
-THEMES = os.path.join(L.RES, "data", "nusmp", "mega", "themes")
+THEMES = os.path.join(L.RES, "data", "anime_multiverse", "mega", "themes")
 STATES = os.path.join(HERE, "vanilla_block_states_1_21_1.json")
 BLOCKS = os.path.join(HERE, "vanilla_blocks_1_21_1.txt")
 ORDER = ["gravity", "blood", "spatial", "flame", "frost", "verdant", "storm", "shadow", "astral", "radiant", "abyss"]
@@ -196,7 +196,7 @@ def render_all(template_id, prefix, cam, yaw, pitch, fov, size):
     V._COMPILED[0:0] = [(re.compile(p), c, e) for p, c, e in EXTRA_COLOURS]
     exists = vanilla_ids().__contains__
     states = json.load(open(STATES, encoding="utf-8"))
-    path = os.path.join(L.RES, "data", "nusmp", "structure", template_id + ".nbt")
+    path = os.path.join(L.RES, "data", "anime_multiverse", "structure", template_id + ".nbt")
     shots = []
     for tid in theme_ids():
         tpl = load(path, template_id)

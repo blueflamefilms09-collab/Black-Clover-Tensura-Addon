@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * on every act, a looped sound id). The ratios of docs/visual_upgrade/genesis_weapons_after.json are checked against the floors the generator wrote and the baseline it started from.
  */
 class VuAssetsTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
-    static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
+    static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave");
     static final Path DOCS = Path.of("docs", "visual_upgrade");
 
     static VuMesh mesh(String dir, String id) throws IOException {
@@ -144,7 +144,7 @@ class VuAssetsTest {
             if (s.idle.size() < 6) bad.add(id + ": " + s.idle.size() + " idle animations (a full set is at least 6)");
             if (s.draw == null) bad.add(id + ": no draw animation");
             if (s.swing == null) bad.add(id + ": no swing trail");
-            if (s.soundLoop == null || !s.soundLoop.startsWith("nusmp:")) bad.add(id + ": no looped sound id");
+            if (s.soundLoop == null || !s.soundLoop.startsWith("anime_multiverse:")) bad.add(id + ": no looped sound id");
             if (s.acts.isEmpty()) bad.add(id + ": no signature bursts");
             for (VuSpec.Act a : s.acts.values()) if (!VuBurst.known(a.pattern())) bad.add(id + ": unknown burst pattern " + a.pattern());
             Set<String> used = new HashSet<>();

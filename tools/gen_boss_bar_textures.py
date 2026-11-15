@@ -3,15 +3,15 @@
 Textures and style data of the custom boss bars (client/gui/bossbar/Custom*, docs/boss_bars.md). Original art, deterministic: running it again
 rewrites byte-identical files.
 
-    assets/nusmp/textures/gui/boss_bar/frame_<style>.png   512x268 atlas per style: three layers of 512x84 (= the 256x42 widget at 2x)
+    assets/anime_multiverse/textures/gui/boss_bar/frame_<style>.png   512x268 atlas per style: three layers of 512x84 (= the 256x42 widget at 2x)
                                                            y=0 back (track, name banner, socket disc), y=92 frame (opaque ornaments, window and
                                                            socket cut out), y=184 glow (white + alpha, tinted by the game and drawn additively)
-    assets/nusmp/textures/gui/boss_bar/frame_<style>.png.mcmeta   blur on (the 2x art is drawn at half size)
-    assets/nusmp/textures/gui/boss_bar/emblems.png          256x160, 32x32 emblems, 8 per row (+ .mcmeta)
-    assets/nusmp/textures/gui/boss_bar/fillfx.png           64x(16 x 13) tileable overlays of the fill: one row per effect of styles.FX
-    assets/nusmp/textures/gui/boss_bar/chains.png           64x16 tileable chains, drawn over the bar while the boss cannot be hurt
-    assets/nusmp/boss_bars/<style>.json                     the data of each style (with --json; the committed files are the source of truth, edit them by hand)
-    assets/nusmp/boss_bars/_index.json                      style ids, emblem names, effect names, the layout numbers (a JUnit test compares them with the Java side)
+    assets/anime_multiverse/textures/gui/boss_bar/frame_<style>.png.mcmeta   blur on (the 2x art is drawn at half size)
+    assets/anime_multiverse/textures/gui/boss_bar/emblems.png          256x160, 32x32 emblems, 8 per row (+ .mcmeta)
+    assets/anime_multiverse/textures/gui/boss_bar/fillfx.png           64x(16 x 13) tileable overlays of the fill: one row per effect of styles.FX
+    assets/anime_multiverse/textures/gui/boss_bar/chains.png           64x16 tileable chains, drawn over the bar while the boss cannot be hurt
+    assets/anime_multiverse/boss_bars/<style>.json                     the data of each style (with --json; the committed files are the source of truth, edit them by hand)
+    assets/anime_multiverse/boss_bars/_index.json                      style ids, emblem names, effect names, the layout numbers (a JUnit test compares them with the Java side)
 
     python3 tools/gen_boss_bar_textures.py            # textures + _index.json
     python3 tools/gen_boss_bar_textures.py --json     # also (re)write the style json files
@@ -34,7 +34,7 @@ import lib                    # noqa: E402
 import motifs as MO           # noqa: E402
 from styles import STYLES, FX  # noqa: E402
 
-ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ASSETS, "textures", "gui", "boss_bar")
 DATA = os.path.join(ASSETS, "boss_bars")
 

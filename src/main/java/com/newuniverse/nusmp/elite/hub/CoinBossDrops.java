@@ -35,7 +35,7 @@ public final class CoinBossDrops {
         try {
             process(event, null, HubConfig.lootParams(), null);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] the Guardian's coin drop failed once and is skipped for that death", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] the Guardian's coin drop failed once and is skipped for that death", ex);
         }
     }
 

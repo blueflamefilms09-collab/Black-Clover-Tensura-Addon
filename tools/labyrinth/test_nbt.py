@@ -19,7 +19,7 @@ class NbtRoundTrip(unittest.TestCase):
             "short": nbt.Short(-30000), "int": nbt.Int(2 ** 31 - 1), "plain_int": 42, "long": nbt.Long(-(2 ** 63)),
             "float": nbt.Float(1.5), "double": nbt.Double(-2.25), "plain_float": 0.125,
             "bytes": nbt.ByteArray(b"\x00\x01\xff\x7f"), "plain_bytes": b"ab",
-            "string": "nusmp:labyrinth/base", "unicode": "ümlaut é 中 \U0001F600 nul\x00end",
+            "string": "anime_multiverse:labyrinth/base", "unicode": "ümlaut é 中 \U0001F600 nul\x00end",
             "ints": nbt.IntArray([1, -2, 3]), "longs": nbt.LongArray([2 ** 40, -1]),
             "list_int": nbt.List([nbt.Int(1), nbt.Int(2)]), "list_str": ["a", "b"],
             "list_compound": nbt.List([nbt.Compound({"a": nbt.Int(1)}), nbt.Compound({"b": "x"})]),
@@ -98,15 +98,15 @@ class NbtRoundTrip(unittest.TestCase):
 class TemplateTest(unittest.TestCase):
     def build(self):
         t = template.Template("test/piece", 5, 4, 5)
-        t.fill((0, 0, 0), (4, 0, 4), "nusmp:labyrinth_tiles")
-        t.hollow_box((0, 1, 0), (4, 3, 4), "nusmp:labyrinth_bricks")
-        t.set(2, 1, 2, "nusmp:labyrinth_pillar", {"axis": "y"})
+        t.fill((0, 0, 0), (4, 0, 4), "anime_multiverse:labyrinth_tiles")
+        t.hollow_box((0, 1, 0), (4, 3, 4), "anime_multiverse:labyrinth_bricks")
+        t.set(2, 1, 2, "anime_multiverse:labyrinth_pillar", {"axis": "y"})
         t.set(2, 2, 2, "labyrinth_glyph")  # namespace defaults to minecraft like a command would
-        t.chest(1, 1, 1, "nusmp:chests/labyrinth_trial", facing="east")
-        t.jigsaw(2, 3, 2, "up_north", "nusmp:up", "nusmp:down", "nusmp:labyrinth/ascent_1", joint="rollable", selection_priority=2)
-        t.jigsaw(4, 1, 2, "east_up", "nusmp:side_out", "nusmp:side_in", "nusmp:labyrinth/side",
-                 final_state="nusmp:labyrinth_bricks", placement_priority=1)
-        t.be(3, 1, 3, "nusmp:sealed_archway", {"id": "nusmp:sealed_archway", "radius": nbt.Int(9),
+        t.chest(1, 1, 1, "anime_multiverse:chests/labyrinth_trial", facing="east")
+        t.jigsaw(2, 3, 2, "up_north", "anime_multiverse:up", "anime_multiverse:down", "anime_multiverse:labyrinth/ascent_1", joint="rollable", selection_priority=2)
+        t.jigsaw(4, 1, 2, "east_up", "anime_multiverse:side_out", "anime_multiverse:side_in", "anime_multiverse:labyrinth/side",
+                 final_state="anime_multiverse:labyrinth_bricks", placement_priority=1)
+        t.be(3, 1, 3, "anime_multiverse:sealed_archway", {"id": "anime_multiverse:sealed_archway", "radius": nbt.Int(9),
                                                  "mobs": [nbt.Compound({"id": "minecraft:zombie", "count": nbt.Int(3)})]})
         return t
 
@@ -123,7 +123,7 @@ class TemplateTest(unittest.TestCase):
         self.assertEqual(len(data["blocks"]), len(t.cells))
         self.assertEqual(data["entities"].tag_type, nbt.TAG_COMPOUND)
         chest = [b for b in data["blocks"] if "nbt" in b and b["nbt"]["id"] == "minecraft:chest"][0]
-        self.assertEqual(chest["nbt"]["LootTable"], "nusmp:chests/labyrinth_trial")
+        self.assertEqual(chest["nbt"]["LootTable"], "anime_multiverse:chests/labyrinth_trial")
         self.assertIsInstance(chest["nbt"]["LootTableSeed"], nbt.Long)
         self.assertEqual(list(chest["pos"]), [1, 1, 1])
         jig = [b for b in data["blocks"] if "nbt" in b and b["nbt"]["id"] == "minecraft:jigsaw" and list(b["pos"]) == [2, 3, 2]][0]
@@ -138,7 +138,7 @@ class TemplateTest(unittest.TestCase):
         t = self.build()
         with tempfile.TemporaryDirectory() as d:
             p = t.save(d)
-            self.assertEqual(p, os.path.join(d, "data", "nusmp", "structure", "test", "piece.nbt"))
+            self.assertEqual(p, os.path.join(d, "data", "anime_multiverse", "structure", "test", "piece.nbt"))
             back = template.load(p)
             self.assertEqual(back.name, "test/piece")
             self.assertEqual(back, t)
@@ -155,16 +155,16 @@ class TemplateTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             t.set(3, 0, 0, "minecraft:stone")
         with self.assertRaises(ValueError):
-            t.jigsaw(1, 1, 1, "sideways", "nusmp:a", "nusmp:b", "nusmp:p")
+            t.jigsaw(1, 1, 1, "sideways", "anime_multiverse:a", "anime_multiverse:b", "anime_multiverse:p")
         with self.assertRaises(ValueError):
-            t.jigsaw(1, 1, 1, "north_up", "nusmp:a", "b", "nusmp:p")
+            t.jigsaw(1, 1, 1, "north_up", "anime_multiverse:a", "b", "anime_multiverse:p")
         with self.assertRaises(ValueError):
-            t.jigsaw(1, 1, 1, "north_up", "nusmp:a", "nusmp:b", "nusmp:p", joint="loose")
+            t.jigsaw(1, 1, 1, "north_up", "anime_multiverse:a", "anime_multiverse:b", "anime_multiverse:p", joint="loose")
         with self.assertRaises(ValueError):
-            t.jigsaw(1, 1, 1, "north_up", "nusmp:a", "nusmp:b", "nusmp:p", final_state="air block")
+            t.jigsaw(1, 1, 1, "north_up", "anime_multiverse:a", "anime_multiverse:b", "anime_multiverse:p", final_state="air block")
         with self.assertRaises(ValueError):
             t.chest(0, 0, 0, "chests/x")
-        t.jigsaw(1, 1, 1, "north_up", "nusmp:a", "nusmp:b", "nusmp:p")
+        t.jigsaw(1, 1, 1, "north_up", "anime_multiverse:a", "anime_multiverse:b", "anime_multiverse:p")
         t.set(1, 1, 0, "minecraft:stone")  # the cell the jigsaw faces into
         self.assertTrue(any("faces" in m for m in template.validate(t)))
         self.assertEqual(template.facing("north_up"), (0, 0, -1))
@@ -177,7 +177,7 @@ class TemplateTest(unittest.TestCase):
         self.assertIn("J", text)
         self.assertIn("C", text)
         self.assertIn("legend:", text)
-        self.assertIn("pool=nusmp:labyrinth/side", text)
+        self.assertIn("pool=anime_multiverse:labyrinth/side", text)
 
 
 if __name__ == "__main__":

@@ -314,7 +314,7 @@ public final class MegaCommand {
         VanillaPools pools = VanillaPools.get();
         if (level != null) pools.bind(level.getStructureManager());
         List<String> ids = pools.poolIds();
-        if (ids.isEmpty()) return no(src, CommandLines.refused("pools", "the data pack has no data/nusmp/worldgen/template_pool/mega pools"));
+        if (ids.isEmpty()) return no(src, CommandLines.refused("pools", "the data pack has no data/anime_multiverse/worldgen/template_pool/mega pools"));
         say(src, "pools: " + ids.size() + " pools, recipe minRooms=" + pools.recipe().minRooms + " minLoops=" + pools.recipe().minLoops);
         Recipe fr = pools.floorRecipe();
         say(src, "floors: " + MegaConfig.get(MegaConfig.FLOOR_ROOMS) + " rooms per floor (config), floor recipe minRooms=" + fr.minRooms + " minLoops=" + fr.minLoops + " stairMinWalk=" + fr.stairMinWalk

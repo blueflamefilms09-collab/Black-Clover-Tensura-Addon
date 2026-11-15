@@ -5,22 +5,22 @@ usage: python3 tools/audio/undine_voice_convert.py <raw_dir> [--no-json]
 
 For every line of tools/audio/undine_lines.json that has <raw_dir>/<id>.mp3:
   * ffmpeg: mono, 32 kHz, trim leading / trailing silence, loudnorm (about -16 LUFS, true peak <= -1.5 dB), Ogg Vorbis q3
-    -> src/main/resources/assets/nusmp/sounds/voice/undine/<id>.ogg   (the project's voice format, same chain as tools/audio/voice_convert.py)
+    -> src/main/resources/assets/anime_multiverse/sounds/voice/undine/<id>.ogg   (the project's voice format, same chain as tools/audio/voice_convert.py)
   * ffprobe: the duration; written with the size to tools/audio/undine_voice_report.json (converted ids, missing ids, bytes)
 Then it keeps four things in step, so a line is registered if and only if its file exists:
-  * assets/nusmp/sounds.json gets 'voice.<id>' (appended as text, the rest of the file is not reformatted; an existing entry is kept) with a subtitle key
-  * tools/lang/undine.json gets 'subtitles.nusmp.voice.<id>' = the spoken text (the owner merges the fragment into en_us.json)
+  * assets/anime_multiverse/sounds.json gets 'voice.<id>' (appended as text, the rest of the file is not reformatted; an existing entry is kept) with a subtitle key
+  * tools/lang/undine.json gets 'subtitles.anime_multiverse.voice.<id>' = the spoken text (the owner merges the fragment into en_us.json)
   * src/main/java/com/newuniverse/nusmp/undine/UndineLines.java: the REGISTERED array between its two marker comments is rewritten
 A line with no take and no file is simply not registered (its moment falls back to the sung hum cue); a file made by an earlier run stays registered even when its take is not in <raw_dir>; the raw takes stay outside the repository. Needs ffmpeg and ffprobe on the path."""
 import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ASSETS, "sounds", "voice", "undine")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 LANG = os.path.join(ROOT, "tools", "lang", "undine.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "undine", "UndineLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "undine", "UndineLines.java")
 REPORT = os.path.join(HERE, "undine_voice_report.json")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"
@@ -44,7 +44,7 @@ def seconds(path):
 
 
 def sounds_entry(i):
-    return ('  "voice.%s": {\n    "subtitle": "subtitles.nusmp.voice.%s",\n    "sounds": [\n      { "name": "nusmp:voice/undine/%s", "stream": false }\n    ]\n  }' % (i, i, i))
+    return ('  "voice.%s": {\n    "subtitle": "subtitles.anime_multiverse.voice.%s",\n    "sounds": [\n      { "name": "anime_multiverse:voice/undine/%s", "stream": false }\n    ]\n  }' % (i, i, i))
 
 
 def main():
@@ -86,9 +86,9 @@ def main():
             with open(SOUNDS_JSON, "w", encoding="utf-8", newline="\n") as f:
                 f.write(text)
         lang = json.load(open(LANG, encoding="utf-8")) if os.path.exists(LANG) else {}
-        lang = {k: v for k, v in lang.items() if not k.startswith("subtitles.nusmp.voice.undine_")}
+        lang = {k: v for k, v in lang.items() if not k.startswith("subtitles.anime_multiverse.voice.undine_")}
         for i in done:
-            lang["subtitles.nusmp.voice." + i] = "Undine: “%s”" % report[i]["text"]
+            lang["subtitles.anime_multiverse.voice." + i] = "Undine: “%s”" % report[i]["text"]
         with open(LANG, "w", encoding="utf-8", newline="\n") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False)
             f.write("\n")

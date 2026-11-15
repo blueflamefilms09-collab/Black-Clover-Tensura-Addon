@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * paving, and the cell where the home gate stands once the template's corner is put at {@link HubPlazaLayout#originX()}. If the gate were one block off,
  * {@code hub.plaza} would fail in the CI game, and a player would walk into an arch with a gate-shaped hole; so the test opens {@code plaza.nbt} (a
  * minimal NBT reader, no Minecraft classes) and checks every promise the Java makes about it: the size, that the 3 x 4 plane of {@code
- * nusmp:labyrinth_gate} is exactly where {@link HubLayout} says, that nothing else in the file is a mod block, that the paving is whole, that the arrival
+ * anime_multiverse:labyrinth_gate} is exactly where {@link HubLayout} says, that nothing else in the file is a mod block, that the paving is whole, that the arrival
  * column is free, that the data version is 1.21.1's. The arithmetic of {@link HubPlazaLayout} is pinned against {@link HubLayout} too.
  */
 class HubPlazaLayoutTest {
     private static final Path FILE = HubTestIo.DATA.resolve("structure/hub/plaza.nbt");
-    private static final String GATE = "nusmp:labyrinth_gate";
+    private static final String GATE = "anime_multiverse:labyrinth_gate";
 
     @Test
     void theOriginPutsTheMiddleOfTheTemplateOnThePlazaCentreAndItsPavingOnTheGround() {

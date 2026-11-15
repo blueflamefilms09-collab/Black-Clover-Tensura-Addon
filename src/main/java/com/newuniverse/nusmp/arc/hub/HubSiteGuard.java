@@ -156,6 +156,6 @@ public final class HubSiteGuard {
         CompoundTag data = p.getPersistentData();
         if (now - data.getLong(TOLD) < MESSAGE_INTERVAL && data.getLong(TOLD) <= now) return;
         data.putLong(TOLD, now);
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.protected", "The Chronicle and the Promenade are protected."), true);
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.protected", "The Chronicle and the Promenade are protected."), true);
     }
 }

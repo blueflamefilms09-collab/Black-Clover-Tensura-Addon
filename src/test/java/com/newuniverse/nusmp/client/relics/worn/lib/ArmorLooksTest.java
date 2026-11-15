@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The generic fallback of the armour models, the item entries of the catalog, and the coverage of every armour item and armour relic of the mod. */
 class ArmorLooksTest {
-    static final Path ROOT = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path ROOT = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
     static final Path JAVA = Path.of("src/main/java/com/newuniverse/nusmp");
 
     static Set<String> modelNames() throws IOException {

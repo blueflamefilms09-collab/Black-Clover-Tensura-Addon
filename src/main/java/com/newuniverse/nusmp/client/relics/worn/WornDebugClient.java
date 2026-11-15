@@ -27,7 +27,7 @@ import java.util.UUID;
 public final class WornDebugClient {
     private WornDebugClient() {}
 
-    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.nusmp.relic_debug." + key, fallback, args); }
+    private static Component t(String key, String fallback, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.relic_debug." + key, fallback, args); }
 
     private static Component lit(String s) { return Component.literal(s); }
 

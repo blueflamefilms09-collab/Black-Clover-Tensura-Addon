@@ -34,10 +34,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class FactionDataTest {
     private static final Path DATA = Path.of("src/main/resources/data");
-    private static final Path FACTIONS = DATA.resolve("nusmp/mega/factions");
-    private static final Path TAGS = DATA.resolve("nusmp/tags/entity_type/mega");
-    private static final Path DUNGEON = DATA.resolve("nusmp/tags/entity_type/dungeon");
-    private static final Path RECIPES = DATA.resolve("nusmp/recipe");
+    private static final Path FACTIONS = DATA.resolve("anime_multiverse/mega/factions");
+    private static final Path TAGS = DATA.resolve("anime_multiverse/tags/entity_type/mega");
+    private static final Path DUNGEON = DATA.resolve("anime_multiverse/tags/entity_type/dungeon");
+    private static final Path RECIPES = DATA.resolve("anime_multiverse/recipe");
     private static final Path JAVA = Path.of("src/main/java");
     private static final Pattern LOCATION = Pattern.compile("[a-z0-9_.-]+:[a-z0-9_./-]+");
     private static final List<String> THEMES = new ArrayList<>();
@@ -124,7 +124,7 @@ class FactionDataTest {
         for (Map.Entry<String, FactionDef> e : defs().entrySet()) {
             FactionDef d = e.getValue();
             assertEquals(e.getKey(), d.id());
-            assertEquals("nusmp:mega/" + e.getKey(), d.tag(), "the tag of " + e.getKey() + " is the contract's name");
+            assertEquals("anime_multiverse:mega/" + e.getKey(), d.tag(), "the tag of " + e.getKey() + " is the contract's name");
             assertTrue(Files.exists(TAGS.resolve(e.getKey() + ".json")), "the entity-type tag file of " + e.getKey() + " is missing");
             assertTrue(d.name().length() >= 6, e.getKey() + " needs a real display name");
             Map<String, Object> raw = json(FACTIONS.resolve(e.getKey() + ".json"));
@@ -264,7 +264,7 @@ class FactionDataTest {
                 boolean ok = switch (id.substring(0, id.indexOf(':'))) {
                     case "minecraft" -> vanilla.contains(id);
                     case "tensura" -> tensura.contains(id);
-                    case "nusmp" -> ours.contains(id.substring(6));
+                    case "anime_multiverse" -> ours.contains(id.substring(6));
                     case "iceandfire" -> iceAndFire.contains(id);
                     default -> false;
                 };
@@ -294,7 +294,7 @@ class FactionDataTest {
         for (String boss : new String[] {"floor_warden", "goliath", "charybdis_spawn", "devil_avatar", "dante_zogratis", "vanica_zogratis", "zenon_zogratis", "lucius_zogratis",
                 "zagred", "grimoire_daemon", "spirit_lord", "elemental_spirit_lord", "wind_spirit_lord", "god_of_order", "mirror_double", "zogratis_clone", "blood_beast",
                 "rouge", "painted_construct", "tower_wizard", "player_avatar", "magicule_scale", "cotton_sheep", "cotton_cloud"})
-            banned.add("nusmp:" + boss);
+            banned.add("anime_multiverse:" + boss);
         banned.addAll(List.of("minecraft:ender_dragon", "minecraft:wither", "minecraft:warden", "minecraft:player", "tensura:orc_lord", "tensura:orc_disaster", "tensura:ifrit"));
         for (Map.Entry<String, List<String>> e : members().entrySet())
             for (String id : e.getValue()) assertFalse(banned.contains(id), id + " in " + e.getKey() + " is a boss, a servant type, an NPC or excluded from the roster");
@@ -319,7 +319,7 @@ class FactionDataTest {
         assertTrue(m.get("elemental").contains("minecraft:blaze"));
         assertTrue(m.get("aquatic").contains("minecraft:guardian"));
         assertTrue(m.get("goblin").contains("tensura:goblin"));
-        assertTrue(m.get("construct").contains("nusmp:living_armor"));
+        assertTrue(m.get("construct").contains("anime_multiverse:living_armor"));
         assertTrue(m.get("beast").contains("tensura:direwolf"));
         assertTrue(m.get("ogre").contains("tensura:orc"));
         assertTrue(m.get("demon").contains("tensura:lesser_daemon"));
@@ -336,7 +336,7 @@ class FactionDataTest {
             }
         }
         for (String cut : FactionDef.CUTS) {
-            Set<String> types = typesByCut.getOrDefault("nusmp:" + cut, Set.of());
+            Set<String> types = typesByCut.getOrDefault("anime_multiverse:" + cut, Set.of());
             assertTrue(types.contains("minecraft:campfire_cooking"), cut + " has no campfire_cooking recipe (Farmer's Delight's stove and skillet use the same recipe type): " + types);
             assertTrue(types.contains("minecraft:smoking"), cut + " has no smoking recipe: " + types);
         }
@@ -357,7 +357,7 @@ class FactionDataTest {
             assertEquals(Boolean.FALSE, tag.get("replace"), file);
             Set<String> values = toStrings((List<?>) tag.get("values"));
             Set<String> expected = new TreeSet<>();
-            for (String cut : FactionDef.CUTS) expected.add("nusmp:" + cut);
+            for (String cut : FactionDef.CUTS) expected.add("anime_multiverse:" + cut);
             assertEquals(expected, values, file);
         }
     }

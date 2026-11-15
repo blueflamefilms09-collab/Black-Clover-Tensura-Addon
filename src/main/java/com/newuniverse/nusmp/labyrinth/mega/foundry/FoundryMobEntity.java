@@ -37,7 +37,7 @@ import net.minecraft.world.level.Level;
 import java.util.UUID;
 
 /**
- * Why: ONE entity type, {@code nusmp:foundry_mob}, is all 400 mobs of the Mob Foundry; which mob it is, is a synced string (the pattern of {@code arc/ArcNpcEntity}, which does the
+ * Why: ONE entity type, {@code anime_multiverse:foundry_mob}, is all 400 mobs of the Mob Foundry; which mob it is, is a synced string (the pattern of {@code arc/ArcNpcEntity}, which does the
  * same for the friendly characters). Its stats come from the definition's tier, archetype and the floor it was born on ({@link FoundryScaling}), its behaviour from goals that
  * look at the archetype's style ({@link FoundryGoals}), its special moves from the ability library ({@link FoundryBrain}, {@link FoundryAbilityRunner}), and its look from the model
  * the art kit wrote for the id (client: {@code FoundryRenderer}). It carries the Dungeon Master's tag ({@link MegaDungeon#DM_TAG}) when the Director or the admin command made it,
@@ -315,7 +315,7 @@ public class FoundryMobEntity extends PathfinderMob implements Enemy, SoundFamil
     }
 
     /**
-     * A blank mob (made by {@code /summon nusmp:foundry_mob}, which cannot name an identity) would be hostile and INVISIBLE: it becomes a random mob of the roster instead, so the
+     * A blank mob (made by {@code /summon anime_multiverse:foundry_mob}, which cannot name an identity) would be hostile and INVISIBLE: it becomes a random mob of the roster instead, so the
      * plain summon command is safe and the admin sees something. The Director and {@code /multiverse mega foundry spawn} always give an identity, so this never runs for them.
      */
     private void becomeSomeone() {

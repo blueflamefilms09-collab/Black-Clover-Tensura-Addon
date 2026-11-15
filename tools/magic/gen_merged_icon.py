@@ -2,7 +2,7 @@
 
     python tools/magic/gen_merged_icon.py
 
-Writes src/main/resources/assets/nusmp/textures/skill/grimoire/merged.png (32x32, like every grimoire icon): two interlocking rune
+Writes src/main/resources/assets/anime_multiverse/textures/skill/grimoire/merged.png (32x32, like every grimoire icon): two interlocking rune
 circles in warm and cool light on a midnight card with a gold frame. Drawn at 8x with Pillow and reduced; deterministic.
 """
 import math
@@ -11,7 +11,7 @@ import os
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "..")
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "grimoire", "merged.png")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "grimoire", "merged.png")
 N, SS = 32, 8
 S = N * SS
 

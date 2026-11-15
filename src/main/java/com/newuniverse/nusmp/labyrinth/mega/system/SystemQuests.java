@@ -34,7 +34,7 @@ import java.util.UUID;
  * counting quest still ACTIVE fails, a "reach the next floor" quest still ACTIVE succeeds), rolls the new one (never on a boss floor, never twice for the same
  * depth: {@code maxFloor} remembers the deepest, so walking back up and down cannot farm quests) and pops up the news. Between floors it is fed by bounded work
  * only: every five ticks of a player with an ACTIVE quest (the clock, and the room they stand in), and by the rare events (a kill, a hit). Rooms count after 40
- * ticks inside with no hostile alive in them; magic damage is recognised by {@link MagicDamage} and the tag {@code nusmp:mega_system_magic}; everything is
+ * ticks inside with no hostile alive in them; magic damage is recognised by {@link MagicDamage} and the tag {@code anime_multiverse:mega_system_magic}; everything is
  * counted on the quest's own floor only, so wandering back down to rest cannot spoil a quest and cannot advance it. Server thread only; per-player scratch state
  * (the room timer, the last known floor) lives in maps that are cleared when the server stops.
  */
@@ -45,7 +45,7 @@ public final class SystemQuests implements FloorListener {
     public static final SystemQuests LISTENER = new SystemQuests();
 
     /** Damage types a datapack adds to the ones the "no magic damage" quests recognise. */
-    public static final TagKey<DamageType> MAGIC_TAG = TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "mega_system_magic"));
+    public static final TagKey<DamageType> MAGIC_TAG = TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega_system_magic"));
 
     /** The entity tag the Dungeon Master puts on the creatures of its encounters (the ambush quest counts them). */
     public static final String AMBUSH_TAG = "nusmp_dm";
@@ -104,7 +104,7 @@ public final class SystemQuests implements FloorListener {
         try {
             enter(player, floor, previous);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] System floor handler failed: {}", e.toString());
+            LOG.warn("[anime_multiverse] System floor handler failed: {}", e.toString());
         }
     }
 

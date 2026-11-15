@@ -196,7 +196,7 @@ class FloorAssemblerTest {
 
     @Test
     void roomsReservedForAnotherThemeAreNeverDrawn() {
-        TemplateThemes only = TemplateThemes.of(java.util.Map.of("nusmp:mega/hall/hall_2x2", List.of("frost"), "nusmp:mega/corridor/ribs_1x3", List.of("frost", "storm")));
+        TemplateThemes only = TemplateThemes.of(java.util.Map.of("anime_multiverse:mega/hall/hall_2x2", List.of("frost"), "anime_multiverse:mega/corridor/ribs_1x3", List.of("frost", "storm")));
         int frostDrew = 0;
         for (long seed = 1; seed <= 40; seed++) {
             for (String theme : new String[] {"gravity", "frost", "blood"}) {
@@ -204,8 +204,8 @@ class FloorAssemblerTest {
                 q.themeId = theme;
                 Result r = MegaAssembler.assemble(q);
                 if (!r.assembled()) continue;
-                boolean hasHall = r.pieces.stream().anyMatch(p -> p.shape.id.equals("nusmp:mega/hall/hall_2x2"));
-                boolean hasRibs = r.pieces.stream().anyMatch(p -> p.shape.id.equals("nusmp:mega/corridor/ribs_1x3"));
+                boolean hasHall = r.pieces.stream().anyMatch(p -> p.shape.id.equals("anime_multiverse:mega/hall/hall_2x2"));
+                boolean hasRibs = r.pieces.stream().anyMatch(p -> p.shape.id.equals("anime_multiverse:mega/corridor/ribs_1x3"));
                 if (!theme.equals("frost")) assertFalse(hasHall, theme + " never draws the frost hall");
                 if (!theme.equals("frost") && !theme.equals("storm")) assertFalse(hasRibs, theme + " never draws the corridor of frost and storm");
                 if (theme.equals("frost") && hasHall) frostDrew++;

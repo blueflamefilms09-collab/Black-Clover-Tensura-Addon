@@ -112,17 +112,17 @@ public final class SoulForgeRitual {
      * Opens the classic screen when the config says so, otherwise starts the ritual if the player may.
      */
     public static void interact(ServerPlayer p, BlockPos forge) {
-        if (!AvatarConfig.enabled()) { p.displayClientMessage(note("message.nusmp.avatar.disabled", "Avatars are disabled on this server.", ChatFormatting.RED), true); return; }
+        if (!AvatarConfig.enabled()) { p.displayClientMessage(note("message.anime_multiverse.avatar.disabled", "Avatars are disabled on this server.", ChatFormatting.RED), true); return; }
         if (!AvatarSoulForgeConfig.soulForgeUi()) { AvatarBuilderMenu.open(p); return; }
         if (ACTIVE.containsKey(p.getUUID()) || !p.isAlive() || p.isSpectator() || p.isPassenger() || p.isSleeping()) return;
         int have = AvatarManager.get(p.getServer()).count(p.getUUID());
         if (have >= AvatarConfig.maxAvatarsPerPlayer()) {
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.avatar.forge.limit", "You already have %s Avatar(s): the Soul Forge has nothing more for you.", have)
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.avatar.forge.limit", "You already have %s Avatar(s): the Soul Forge has nothing more for you.", have)
                     .withStyle(ChatFormatting.RED), true);
             return;
         }
         if (!GenesisCoreItem.hasCore(p)) {
-            p.displayClientMessage(note("message.nusmp.avatar.forge.hungry", "The Soul Forge hungers for a Genesis Core.", ChatFormatting.LIGHT_PURPLE), true);
+            p.displayClientMessage(note("message.anime_multiverse.avatar.forge.hungry", "The Soul Forge hungers for a Genesis Core.", ChatFormatting.LIGHT_PURPLE), true);
             return;
         }
         // only a real start uses up the gap: a refusal above must not make the next try, a moment after the core arrives, fail without a word
@@ -137,7 +137,7 @@ public final class SoulForgeRitual {
         p.getData(AvatarSystem.SESSION).clear();
         RitualLock.apply(p);
         if (p.level() instanceof ServerLevel sl) RitualFx.begin(sl, center, AvatarSoulForgeConfig.chargeTicks());
-        p.displayClientMessage(note("message.nusmp.avatar.forge.begin", "The Soul Forge awakens. Stand still.", ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(note("message.anime_multiverse.avatar.forge.begin", "The Soul Forge awakens. Stand still.", ChatFormatting.LIGHT_PURPLE), true);
         NusmpEvents.fire(p, "avatar.ritual_started");
     }
 
@@ -161,7 +161,7 @@ public final class SoulForgeRitual {
     public static void onMenuRemoved(ServerPlayer p, SoulForgeMenu menu) {
         Ritual r = ACTIVE.get(p.getUUID());
         if (r == null || r.token != menu.ritualToken()) return;
-        if (r.open()) end(p, r, true, note("message.nusmp.avatar.forge.abandoned", "You leave the ritual. Nothing was taken.", ChatFormatting.GRAY), false);
+        if (r.open()) end(p, r, true, note("message.anime_multiverse.avatar.forge.abandoned", "You leave the ritual. Nothing was taken.", ChatFormatting.GRAY), false);
     }
 
     // ================================================================ the free aptitude roll
@@ -235,17 +235,17 @@ public final class SoulForgeRitual {
             if (p == null) { ACTIVE.remove(r.player); continue; }
             if (!p.isAlive() || p.level().dimension() != r.dimension) { end(p, r, true, null); continue; }
             if (p.position().distanceToSqr(r.anchor) > AvatarSoulForgeConfig.reach() * AvatarSoulForgeConfig.reach()) {
-                end(p, r, true, note("message.nusmp.avatar.forge.strayed", "You moved away from the circle: the ritual breaks. Nothing was taken.", ChatFormatting.RED));
+                end(p, r, true, note("message.anime_multiverse.avatar.forge.strayed", "You moved away from the circle: the ritual breaks. Nothing was taken.", ChatFormatting.RED));
                 continue;
             }
             if (r.forge != null && !p.level().getBlockState(r.forge).is(SoulForgeBlocks.SOUL_FORGE.get())) {
-                end(p, r, true, note("message.nusmp.avatar.forge.gone", "The Soul Forge is gone: the ritual breaks.", ChatFormatting.RED));
+                end(p, r, true, note("message.anime_multiverse.avatar.forge.gone", "The Soul Forge is gone: the ritual breaks.", ChatFormatting.RED));
                 continue;
             }
             RitualClock.Event e = r.clock.tick();
             switch (e) {
                 case OPEN_MENU -> openScreen(p, r);
-                case TIMEOUT -> end(p, r, true, note("message.nusmp.avatar.forge.timeout", "The ritual has waited too long and fades. Nothing was taken.", ChatFormatting.GRAY));
+                case TIMEOUT -> end(p, r, true, note("message.anime_multiverse.avatar.forge.timeout", "The ritual has waited too long and fades. Nothing was taken.", ChatFormatting.GRAY));
                 case TELL -> { if (p.level() instanceof ServerLevel sl) RitualFx.tell(sl, r.center, r.clock.birth().strike(), plansAntiMagic(r)); }
                 case STRIKE -> strike(p, r);
                 case SPAWN -> commit(p, r);
@@ -264,9 +264,9 @@ public final class SoulForgeRitual {
 
     private static void openScreen(ServerPlayer p, Ritual r) {
         OptionalInt id = p.openMenu(new SimpleMenuProvider((cid, inv, pl) -> new SoulForgeMenu(cid, r.token),
-                Component.translatableWithFallback("nusmp.avatar.forge.menu_title", "The Soul Forge")));
+                Component.translatableWithFallback("anime_multiverse.avatar.forge.menu_title", "The Soul Forge")));
         if (id.isEmpty()) {
-            end(p, r, true, note("message.nusmp.avatar.forge.noscreen", "The Soul Forge could not open its screen.", ChatFormatting.RED));
+            end(p, r, true, note("message.anime_multiverse.avatar.forge.noscreen", "The Soul Forge could not open its screen.", ChatFormatting.RED));
             return;
         }
         PacketDistributor.sendToPlayer(p, new S2C_RacesPayload(RaceEntryFactory.build(p)));
@@ -293,7 +293,7 @@ public final class SoulForgeRitual {
         r.avatar = res.avatar();
         r.plan = res.plan();
         if (p.level() instanceof ServerLevel sl) RitualFx.emerge(sl, r.avatar.position(), BirthSpectacle.colour(r.avatar, r.plan));
-        LOG.debug("[nusmp] Soul Forge: {} created Avatar {}", p.getGameProfile().getName(), r.avatar.getUUID());
+        LOG.debug("[anime_multiverse] Soul Forge: {} created Avatar {}", p.getGameProfile().getName(), r.avatar.getUUID());
     }
 
     // ================================================================ ending

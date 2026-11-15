@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 
 /**
  * The strict limit of the Dungeon Relic slots (the owner's design, section 3): a player never has more than {@link #CAP} relics working at
- * once. The two Curios slots {@code dungeon_relic} (data/nusmp/curios/slots) already hold no more; this is the same rule in code, for a pack whose
+ * once. The two Curios slots {@code dungeon_relic} (data/anime_multiverse/curios/slots) already hold no more; this is the same rule in code, for a pack whose
  * datapack was overridden and for the off-hand, which is the way a relic is worn without Curios. Pure: {@link Worn} hands it what it found.
  */
 public final class RelicLimit {

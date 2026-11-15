@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FactionParserTest {
     private static Map<String, Object> briefExample() {
         return MiniJson.object("""
-                {"id": "goblin", "name": "Goblin Warrens", "color": "#5C8A3A", "tag": "nusmp:mega/goblin", "rivals": ["ogre", "beast"], "allies": [],
+                {"id": "goblin", "name": "Goblin Warrens", "color": "#5C8A3A", "tag": "anime_multiverse:mega/goblin", "rivals": ["ogre", "beast"], "allies": [],
                  "aggro": {"range": 14, "nativeBonus": 8}, "themeWeights": {"gravity": 3, "blood": 1, "verdant": 4},
                  "drops": {"meat": "raw_monster_meat", "meatChance": 0.5}}""");
     }
@@ -27,7 +27,7 @@ class FactionParserTest {
         assertEquals("goblin", d.id());
         assertEquals("Goblin Warrens", d.name());
         assertEquals(0x5C8A3A, d.color());
-        assertEquals("nusmp:mega/goblin", d.tag());
+        assertEquals("anime_multiverse:mega/goblin", d.tag());
         assertEquals(List.of("ogre", "beast"), d.rivals());
         assertTrue(d.allies().isEmpty());
         assertEquals(14, d.range());
@@ -45,7 +45,7 @@ class FactionParserTest {
         assertTrue(r.problems().isEmpty(), "problems: " + r.problems());
         FactionDef d = r.def();
         assertEquals("Ogre", d.name());
-        assertEquals("nusmp:mega/ogre", d.tag());
+        assertEquals("anime_multiverse:mega/ogre", d.tag());
         assertEquals(FactionParser.DEFAULT_COLOR, d.color());
         assertEquals(FactionDef.UNSET, d.range());
         assertEquals(FactionDef.UNSET, d.nativeBonus());
@@ -81,7 +81,7 @@ class FactionParserTest {
         assertTrue(all.contains("drops.meat 'steak'"), all);
         assertTrue(all.contains("lists the faction itself"), all);
         assertEquals(List.of("undead"), r.def().rivals(), "duplicates and the faction itself are dropped");
-        assertEquals("nusmp:mega/ogre", r.def().tag());
+        assertEquals("anime_multiverse:mega/ogre", r.def().tag());
         assertEquals(FactionParser.DEFAULT_COLOR, r.def().color());
         assertEquals(FactionParser.DEFAULT_CUT, r.def().meat());
         assertTrue(r.def().themeWeights().isEmpty());
@@ -139,7 +139,7 @@ class FactionParserTest {
         assertEquals(0, FactionDef.cutKindOf("raw_slime_jelly"));
         assertEquals(1, FactionDef.cutKindOf("raw_armor_flank"));
         assertEquals(2, FactionDef.cutKindOf("raw_basilisk_fillet"));
-        assertEquals(3, FactionDef.cutKindOf("nusmp:raw_direwolf_haunch"));
+        assertEquals(3, FactionDef.cutKindOf("anime_multiverse:raw_direwolf_haunch"));
         assertEquals(4, FactionDef.cutKindOf("raw_monster_meat"));
         assertEquals(4, FactionDef.cutKindOf("steak"));
         assertEquals(4, FactionDef.cutKindOf(null));

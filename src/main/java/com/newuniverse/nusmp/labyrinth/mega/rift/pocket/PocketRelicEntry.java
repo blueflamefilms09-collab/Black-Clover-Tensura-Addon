@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Why: the loot entry {@code nusmp:pocket_relic}: {@code {"type":"nusmp:pocket_relic","relic":"ignareths_forge_hammer","pocket":"ember_sanctum"}} is one named relic of one tomb. A relic is not an
- * ordinary item in a table: a unique relic must be issued through the God of Order's ledger (one copy in the world, stamped with a serial), exactly as {@code nusmp:relic} does for the random
+ * Why: the loot entry {@code anime_multiverse:pocket_relic}: {@code {"type":"anime_multiverse:pocket_relic","relic":"ignareths_forge_hammer","pocket":"ember_sanctum"}} is one named relic of one tomb. A relic is not an
+ * ordinary item in a table: a unique relic must be issued through the God of Order's ledger (one copy in the world, stamped with a serial), exactly as {@code anime_multiverse:relic} does for the random
  * ones, so this entry goes through {@link UniqueLedger#issue}. It is also the SECOND lock of the hard gate: the entry itself refuses (answers "nothing here", so a sibling in an
  * {@code alternatives} composite can run) unless {@link PocketGate} says the roll is inside the live tomb of its {@code pocket}, whatever the pool's conditions say. And it never throws:
  * loot must not fail because of a relic.

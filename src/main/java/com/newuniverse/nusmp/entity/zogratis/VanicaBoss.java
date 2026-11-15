@@ -151,7 +151,7 @@ public class VanicaBoss extends ZogratisBoss {
         try {
             if (frenzied() && tickCount % 6 == 0) Tells.gather(sl, position().add(0, 1.0, 0), 0.7, BLOOD, 6);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Vanica's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Vanica's tick failed: {}", e.toString());
         }
     }
 
@@ -170,10 +170,10 @@ public class VanicaBoss extends ZogratisBoss {
             b.tell((bs, t, left, total) -> {                                  // 1.35.0: the dust telegraph (kept) and the effect that goes with it
                 if (base != null) base.tell(bs, t, left, total);
                 else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
-                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Vanica's tell effect failed: {}", e.toString()); }
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Vanica's tell effect failed: {}", e.toString()); }
             });
             out.add(b.run((bs, t) -> {
-                try { fxRun(mid); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Vanica's strike effect failed: {}", e.toString()); }
+                try { fxRun(mid); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Vanica's strike effect failed: {}", e.toString()); }
                 run.run(bs, t);
             }));
         }

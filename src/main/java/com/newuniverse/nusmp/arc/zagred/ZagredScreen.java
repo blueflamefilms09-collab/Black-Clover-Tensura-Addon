@@ -53,7 +53,7 @@ final class ZagredScreen {
     /** A verdict for one player: the word over their head, and what THEY must do about it. */
     static void personal(ServerPlayer p, ZagredWord w, ZagredAnswers.Answer answer, int windowTicks) {
         MutableComponent how = text(answer.hintKey(), answer.hint(), 0xFFB0B8, true);
-        MutableComponent sub = Component.translatableWithFallback("message.nusmp.zagred.verdict.answer", "Your answer: %s", how).withStyle(Style.EMPTY.withColor(0xFFD8DC));
+        MutableComponent sub = Component.translatableWithFallback("message.anime_multiverse.zagred.verdict.answer", "Your answer: %s", how).withStyle(Style.EMPTY.withColor(0xFFD8DC));
         send(p, text(w.titleKey(), w.title(), w.rgb(), true), sub, 2, windowTicks, 8);
     }
 

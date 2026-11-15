@@ -8,7 +8,7 @@ time_decay: a gold hourglass with a crack. Run from the repository root: python 
 from pathlib import Path
 from PIL import Image
 
-OUT = Path("src/main/resources/assets/nusmp/textures/mob_effect")
+OUT = Path("src/main/resources/assets/anime_multiverse/textures/mob_effect")
 EDGE = (14, 10, 26, 255)
 
 RING = [

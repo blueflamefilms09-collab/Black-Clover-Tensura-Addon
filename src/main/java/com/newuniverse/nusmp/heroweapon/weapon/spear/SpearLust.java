@@ -36,7 +36,7 @@ import java.util.List;
 final class SpearLust {
     private SpearLust() {}
 
-    private static final ResourceLocation FERVOR_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "spear_fervor");
+    private static final ResourceLocation FERVOR_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "spear_fervor");
 
     // ================================================================ the blows grow
     /** A melee blow landed: one more stack of fervor, kept for a few seconds. */

@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * 1.110.0: every particle token of the effect tables of the upgraded items resolves to one of the mod's own custom particles, and none to a vanilla one. Three things are pinned: the resolver
  * ({@link UpgradeParticleAlias}: all vanilla names of 1.21.1 have an alias, every alias target is in the particle catalog, a token that is nothing known falls back to a custom mote), the
- * shipped tables (every {@code particle} string of {@code assets/nusmp/visual_upgrade/**} is {@code fx} or {@code nusmp:<catalog id>}, so no loader even needs the alias), and the emitters'
+ * shipped tables (every {@code particle} string of {@code assets/anime_multiverse/visual_upgrade/**} is {@code fx} or {@code anime_multiverse:<catalog id>}, so no loader even needs the alias), and the emitters'
  * sources (no vanilla dust, no lookup in the vanilla particle registry, no raw {@code addParticle} that skips the gate).
  */
 class UpgradeParticleAliasTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
-    private static final Path TABLES = ROOT.resolve("src/main/resources/assets/nusmp/visual_upgrade");
+    private static final Path TABLES = ROOT.resolve("src/main/resources/assets/anime_multiverse/visual_upgrade");
 
     /** The simple particle types and the data-carrying ones of vanilla 1.21.1 (paths). */
     private static final List<String> VANILLA = List.of("angry_villager", "block", "block_marker", "bubble", "cloud", "crit", "damage_indicator", "dragon_breath", "dripping_lava", "falling_lava",
@@ -74,7 +74,7 @@ class UpgradeParticleAliasTest {
         }
         for (FxCatalog.Def d : FxCatalog.all()) {
             assertEquals(d.id(), UpgradeParticleAlias.resolve(d.id()), d.id());
-            assertEquals(d.id(), UpgradeParticleAlias.resolve("nusmp:" + d.id()), d.id());
+            assertEquals(d.id(), UpgradeParticleAlias.resolve("anime_multiverse:" + d.id()), d.id());
         }
         assertEquals("flame_tongue", UpgradeParticleAlias.resolve("minecraft:flame"));
         assertEquals("flame_tongue", UpgradeParticleAlias.resolve("flame"));
@@ -134,7 +134,7 @@ class UpgradeParticleAliasTest {
             String token = w.substring(w.indexOf('|') + 1);
             String id = UpgradeParticleAlias.resolve(token);
             boolean themed = token.equals("fx");
-            boolean catalog = token.startsWith("nusmp:") && custom.contains(token.substring(6));
+            boolean catalog = token.startsWith("anime_multiverse:") && custom.contains(token.substring(6));
             if (!themed && !catalog) bad.add(w + " (a vanilla or unknown token: run tools/visual_upgrade/custom_particles.py)");
             if (!themed && (id == null || !custom.contains(id))) bad.add(w + " resolves to " + id);
         }

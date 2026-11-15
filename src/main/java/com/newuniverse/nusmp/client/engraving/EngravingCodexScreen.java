@@ -58,7 +58,7 @@ public class EngravingCodexScreen extends Screen {
     private CodexLayout.Words words = CodexLayout.Words.ENGLISH;
 
     public EngravingCodexScreen(Screen parent, CodexEntries.Book book) {
-        super(Component.translatableWithFallback("item.nusmp.engraving_codex", "Engravement Codex"));
+        super(Component.translatableWithFallback("item.anime_multiverse.engraving_codex", "Engravement Codex"));
         this.parent = parent;
         this.book = book;
     }
@@ -80,20 +80,20 @@ public class EngravingCodexScreen extends Screen {
         vPageH = Math.round(pageH / ts);
         vGap = Math.round(GAP / ts);
         titleText = getTitle().getString();
-        allLabel = tr("nusmp.engraving_codex.all", "All engravings");
-        noneText = tr("nusmp.engraving_codex.none", "No engraving matches your search.");
-        closeText = tr("nusmp.engraving_codex.close", "Close");
-        footerHint = tr("nusmp.engraving_codex.hint", "Wheel, arrows or PageUp / PageDown turn the page.");
-        words = new CodexLayout.Words(tr("nusmp.engraving_codex.found", "Found on"), tr("nusmp.engraving_codex.more", "+%d more"),
-                tr("nusmp.engraving_codex.found_none", "no item of this mod carries it yet"), "...");
+        allLabel = tr("anime_multiverse.engraving_codex.all", "All engravings");
+        noneText = tr("anime_multiverse.engraving_codex.none", "No engraving matches your search.");
+        closeText = tr("anime_multiverse.engraving_codex.close", "Close");
+        footerHint = tr("anime_multiverse.engraving_codex.hint", "Wheel, arrows or PageUp / PageDown turn the page.");
+        words = new CodexLayout.Words(tr("anime_multiverse.engraving_codex.found", "Found on"), tr("anime_multiverse.engraving_codex.more", "+%d more"),
+                tr("anime_multiverse.engraving_codex.found_none", "no item of this mod carries it yet"), "...");
         layout();
         buildRows();
         String keep = search == null ? query : search.getValue();
-        search = new EditBox(font, bx + 8 + 4, by + 24, STRIP_W - 8, 12, Component.translatableWithFallback("nusmp.engraving_codex.search", "Search"));
+        search = new EditBox(font, bx + 8 + 4, by + 24, STRIP_W - 8, 12, Component.translatableWithFallback("anime_multiverse.engraving_codex.search", "Search"));
         search.setBordered(false);
         search.setMaxLength(CodexFilter.MAX_QUERY);
         search.setTextColor(UiTheme.TEXT);
-        search.setHint(Component.translatableWithFallback("nusmp.engraving_codex.search_hint", "Search...").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        search.setHint(Component.translatableWithFallback("anime_multiverse.engraving_codex.search_hint", "Search...").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         search.setValue(keep);
         search.setResponder(this::onQuery);                                         // the filter runs on a text change only
         addRenderableWidget(search);
@@ -170,8 +170,8 @@ public class EngravingCodexScreen extends Screen {
 
     /** Rebuilds the footer strings and their positions (on a filter change or a page turn, not per frame). */
     private void updateLines() {
-        countLine = shown.length == book.entries().size() ? tr("nusmp.engraving_codex.count", "%s engravings", shown.length)
-                : tr("nusmp.engraving_codex.count_filtered", "%s of %s shown", shown.length, book.entries().size());
+        countLine = shown.length == book.entries().size() ? tr("anime_multiverse.engraving_codex.count", "%s engravings", shown.length)
+                : tr("anime_multiverse.engraving_codex.count_filtered", "%s of %s shown", shown.length, book.entries().size());
         pageLine = (spread + 1) + " / " + spreadCount();
         countW = font.width(countLine);
         pageW = font.width(pageLine);

@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Draws the upgraded Genesis weapons (assets/nusmp/weapon_meshes_vu, tools/visual_upgrade/genesis_weapons), called once from {@code WeaponRenderer#renderByItem} for a
+ * Draws the upgraded Genesis weapons (assets/anime_multiverse/weapon_meshes_vu, tools/visual_upgrade/genesis_weapons), called once from {@code WeaponRenderer#renderByItem} for a
  * mesh id that has an upgraded mesh; false means "draw the old mesh" (the flag {@code visual.upgrade} is off, or the weapon ships no upgrade for this mesh).
  * <p>
  * Passes, in this order (one buffer at a time, as the old renderer does): body (cutout, with the enchantment glint), the void (the dimensional void shader through rifts
@@ -53,7 +53,7 @@ public final class VuRenderer {
     private VuRenderer() {}
 
     private static final org.slf4j.Logger LOG = LogUtils.getLogger();
-    private static final ResourceLocation HALO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon_vu/halo.png");
+    private static final ResourceLocation HALO = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon_vu/halo.png");
 
     /** One weapon's loaded data: the meshes, the effect data and the texture locations (all built once). */
     static final class Entry {
@@ -133,7 +133,7 @@ public final class VuRenderer {
             }
             return e;
         } catch (Exception ex) {
-            LOG.error("[nusmp] upgraded weapon mesh {} failed to load; the old mesh is used", meshId, ex);
+            LOG.error("[anime_multiverse] upgraded weapon mesh {} failed to load; the old mesh is used", meshId, ex);
             return null;
         }
     }
@@ -158,7 +158,7 @@ public final class VuRenderer {
         return mc.getResourceManager().getResource(rl(path)).isPresent();
     }
 
-    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** Does an upgraded mesh exist for this mesh id (and is the flag on)? Cheap after the first call. */
     public static boolean has(String meshId) { return VuOptions.upgrade() && entry(meshId) != null; }

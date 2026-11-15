@@ -10,7 +10,7 @@ sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOOLS = os.path.abspath(os.path.join(HERE, ".."))
 ROOT = os.path.abspath(os.path.join(TOOLS, ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 SKINS = os.path.join(ASSETS, "textures", "entity", "playermodel")
 GEO = os.path.join(ASSETS, "geo", "entity")
 ANIM = os.path.join(ASSETS, "animations", "entity")
@@ -42,7 +42,7 @@ def foundry_rows():
 
 
 def foundry_index():
-    """assets/nusmp/foundry/index.json 'mobs': id -> {anim, glow, height, size, tier}."""
+    """assets/anime_multiverse/foundry/index.json 'mobs': id -> {anim, glow, height, size, tier}."""
     with open(os.path.join(ASSETS, "foundry", "index.json")) as f:
         return json.load(f)["mobs"]
 

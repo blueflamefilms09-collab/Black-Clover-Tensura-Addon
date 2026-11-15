@@ -6,7 +6,7 @@
 
 Look (after Magna Swing's baseball bat of the anime): a long baseball bat of dark, charred wood with a red grain, a black leather grip bound with a glowing red cord and a knob holding a glowing ember
 soul in a gold ring; three iron bands round the barrel studded with rows of iron studs, six tongues of flame inlaid along the barrel in glowing orange, a crown of six flame spikes round the hitting end,
-and cracks of magma spiralling round the neck. It writes (through new197_lib.finish): assets/nusmp/weapon_meshes/magnas_soul_bat.txt (+ a `gripxyz` line: the hand holds the middle of the wrapped
+and cracks of magma spiralling round the neck. It writes (through new197_lib.finish): assets/anime_multiverse/weapon_meshes/magnas_soul_bat.txt (+ a `gripxyz` line: the hand holds the middle of the wrapped
 grip), textures/entity/weapon/magnas_soul_bat.png and _glow.png, textures/item/magnas_soul_bat.png (the 16 x 16 inventory sprite rendered from the finished mesh, kept as the inventory icon),
 models/item/magnas_soul_bat.json and _icon.json, then the class row ("club", both copies of weapon_classes.json) and the display preset of the long weapon (the oversize rule). The json files with other
 weapons' rows are changed by text insertion only: every other row stays byte for byte.
@@ -28,7 +28,7 @@ from new197_god import helix_pts                                           # noq
 from new197_legend import glow_parts                                       # noqa: E402
 
 REPO = os.path.abspath(os.path.join(_TOOLS, ".."))
-GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 ITEM_ID = "magnas_soul_bat"
 GRIP_Y = 20.0                                                              # the middle of the wrapped grip (cm, mesh space): the hand holds the bat here
 

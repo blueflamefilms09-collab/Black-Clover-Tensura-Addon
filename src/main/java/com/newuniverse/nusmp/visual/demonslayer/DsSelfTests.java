@@ -35,7 +35,7 @@ public final class DsSelfTests {
         SelfTests.register("visual.demon_slayer", DsSelfTests::run);
     }
 
-    static InputStream open(String path) { return DsSelfTests.class.getResourceAsStream("/assets/nusmp/" + path); }
+    static InputStream open(String path) { return DsSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path); }
 
     private static SelfTests.Result run(MinecraftServer server) throws Exception {
         if (VuRules.useUpgrade(false, true) || VuRules.useUpgrade(true, false) || !VuRules.useUpgrade(true, true)) return SelfTests.Result.fail("the flag fallback decides wrongly");
@@ -72,7 +72,7 @@ public final class DsSelfTests {
         if (spec.layers.size() < 6) return SelfTests.Result.fail("fewer than 6 ambient effect layers");
         if (spec.idle.size() < 6) return SelfTests.Result.fail("fewer than 6 idle animations");
         if (spec.draw == null || spec.swing == null) return SelfTests.Result.fail("no draw animation or swing trail");
-        if (spec.soundLoop == null || !spec.soundLoop.startsWith("nusmp:")) return SelfTests.Result.fail("no looped sound id");
+        if (spec.soundLoop == null || !spec.soundLoop.startsWith("anime_multiverse:")) return SelfTests.Result.fail("no looped sound id");
         for (String act : DsCatalog.ACTS) if (spec.act(act) == null) return SelfTests.Result.fail("act " + act + " has no signature burst");
         for (String g : DsCatalog.SHARDS) if (!hasKind(spec, g, DsDynamics.FRACTURE)) return SelfTests.Result.fail("shard " + g + " has no fracture animation");
         for (String g : DsCatalog.CRACKS) if (!hasKind(spec, g, DsDynamics.FRACTURE_GLOW)) return SelfTests.Result.fail("crack light " + g + " has no fracture_glow animation");

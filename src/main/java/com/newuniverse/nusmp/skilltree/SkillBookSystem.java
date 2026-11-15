@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Why: the Skill Books (the Skill Book and the SP Book items), the 284 unique skills they taught, the line engine that ran those skills and the book loot were removed at the owner's request (see
- * {@code docs/skill_books_removed.md}); the mod constructor still has exactly ONE line for what is left of this package, and this is it. What stays, in this order: the attachment {@code nusmp:skill_tree} (old worlds
+ * {@code docs/skill_books_removed.md}); the mod constructor still has exactly ONE line for what is left of this package, and this is it. What stays, in this order: the attachment {@code anime_multiverse:skill_tree} (old worlds
  * hold it and the Black Market keeps its gold in it); the four data component ids the books carried ({@link SkillItems}); the inert stubs of the retired skill ids ({@link LegacySkills}) and the login hook that
  * forgets them from a player ({@link LegacyMigration}); and the Black Market ({@link ShopSystem}), whose witch buys goods for gold. Safe to call twice.
  */

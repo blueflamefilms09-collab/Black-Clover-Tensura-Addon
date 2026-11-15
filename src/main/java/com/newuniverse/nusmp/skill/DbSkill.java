@@ -60,7 +60,7 @@ public class DbSkill extends NUSkill {
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
         Mode m = at(mode);
-        Component name = Component.translatableWithFallback("nusmp.skill.mode." + spec.id() + "." + m.id(), m.name());
+        Component name = Component.translatableWithFallback("anime_multiverse.skill.mode." + spec.id() + "." + m.id(), m.name());
         int cd = i.getCoolDown(Math.floorMod(mode, wheel.size()));
         return cd > 0 ? name.copy().append(Component.literal(" (" + cd + "s)")) : name;
     }

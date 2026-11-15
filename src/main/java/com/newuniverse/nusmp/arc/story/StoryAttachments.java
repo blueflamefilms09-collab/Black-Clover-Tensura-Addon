@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Why: the story progress of a player has to live with the player, survive death and the trip through the End, and stay out of the save file of anyone who
- * never touched the arcs. A NeoForge attachment {@code nusmp:arc_story} does exactly that (it is also how the dungeon alignment and the discovery list are
+ * never touched the arcs. A NeoForge attachment {@code anime_multiverse:arc_story} does exactly that (it is also how the dungeon alignment and the discovery list are
  * stored). It is serialised with a codec of four optional fields, so a save written by an older build, edited by hand, or missing a field still loads, and
  * the predicate on the serializer skips an empty story. The attachment is not synced to the client: nothing on the client reads it (the dialogue is chosen
  * on the server and sent as chat). Register {@link #ATTACHMENTS} on the mod bus ({@code ArcStory.init} does).
@@ -32,7 +32,7 @@ public final class StoryAttachments {
 
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, NUSMP.MODID);
 
-    /** {@code nusmp:arc_story}: saved with the player (unless still empty), copied to the new body on death and on the End return. */
+    /** {@code anime_multiverse:arc_story}: saved with the player (unless still empty), copied to the new body on death and on the End return. */
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<StoryData>> STORY = ATTACHMENTS.register("arc_story",
             () -> AttachmentType.builder(() -> new StoryData()).serialize(CODEC, d -> !d.isEmpty()).copyOnDeath().build());
 

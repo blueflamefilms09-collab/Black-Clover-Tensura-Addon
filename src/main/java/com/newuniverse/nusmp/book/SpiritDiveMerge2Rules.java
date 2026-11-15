@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Spirit Dive MERGE 2 (the owner asked for four improvements), the pure rules, common code with no Minecraft class so the tests, the self-test and the preview scripts count the numbers the client draws:
  * <ol>
- *   <li><b>Slim spirit models</b> ({@link #slimMesh}): smooth low-poly meshes (tapered limbs, curved bodies, real wings, fins, tail) in {@code assets/nusmp/sdm2_meshes} made by
+ *   <li><b>Slim spirit models</b> ({@link #slimMesh}): smooth low-poly meshes (tapered limbs, curved bodies, real wings, fins, tail) in {@code assets/anime_multiverse/sdm2_meshes} made by
  *       {@code tools/gen_sdm2_models.py}, a solid layer and a glow shell; the old boxy meshes ({@code sdm_meshes}) stay and come back with the client option {@code spiritDive.mergeModels = BOXY}.</li>
  *   <li><b>Calm entry</b> ({@link #flashAlpha}, {@link #flashSizeK}, {@link #ribbonK}): the look's own entry (white flash sphere, spiral ribbons, cage of circles) is turned down to a third while the
  *       spirit merges (clock 8..17) so the merge reads; the flash at the very start (0..4) and a short final burst after the contact (17..20) stay. Option {@code spiritDive.calmEntry}.</li>

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * Why: the Vassal Carriage is the one hero weapon that adds an entity to the game (the carriage you ride), and an entity type has to be registered on the mod
  * event bus before the registries open. The weapon's logic is built inside the mod constructor, after the shared start-up has stored the bus
  * ({@code HeroWeaponSystem.modBus()}), so its constructor calls {@link #init} once: it attaches this register and the attributes event to that bus. The type
- * is {@code nusmp:vassal_carriage_wagon}, 2.2 blocks wide and 1.7 high (the model is drawn larger, 3.2 blocks long), tracked by clients within 10 chunks, fire
+ * is {@code anime_multiverse:vassal_carriage_wagon}, 2.2 blocks wide and 1.7 high (the model is drawn larger, 3.2 blocks long), tracked by clients within 10 chunks, fire
  * immune, never saved with the world (a carriage is called, not kept: a restart has none), not available to {@code /summon}, and it seats its riders at the three
  * places of {@link CarriageNumbers#SEATS}.
  */

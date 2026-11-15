@@ -5,9 +5,9 @@ usage:  python3 -B tools/audio/spirit_light_voice.py <raw_dir>        convert ev
         python3 -B tools/audio/spirit_light_voice.py --refresh        only refresh the registrations from the files that exist (and list the lines that are missing)
 
 For every line with a take: ffmpeg mono, 32 kHz, leading and trailing silence trimmed, loudnorm about -16 LUFS (true peak <= -1.5 dB), Ogg Vorbis q3 ->
-src/main/resources/assets/nusmp/sounds/spirit_light/voice/<id>.ogg (the same chain as tools/audio/voice_convert.py). Then, for exactly the lines whose file exists (nothing is faked, no entry
+src/main/resources/assets/anime_multiverse/sounds/spirit_light/voice/<id>.ogg (the same chain as tools/audio/voice_convert.py). Then, for exactly the lines whose file exists (nothing is faked, no entry
 without a file):
-  * assets/nusmp/sounds.json: the event spirit_light.voice.<id> (through tools/audio/sl_sounds_json.py, one block of single-line entries),
+  * assets/anime_multiverse/sounds.json: the event spirit_light.voice.<id> (through tools/audio/sl_sounds_json.py, one block of single-line entries),
   * src/main/java/.../spiritlight/SpiritLightVoiceLines.java: the list of lines that have a file and the text of every manifest line (the registry, the picker and the tests read it),
   * tools/audio/spirit_light_voice_report.json: seconds and bytes per file.
 The raw mp3 takes stay outside the repository. A line that is missing is spoken as a synthesised cue instead (the server asks the picker, which answers null for a cue without a line).
@@ -22,10 +22,10 @@ sys.path.insert(0, HERE)
 import sl_sounds_json as SJ  # noqa: E402
 
 ROOT = SJ.ROOT
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sounds", "spirit_light", "voice")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "spirit_light", "voice")
 MANIFEST = os.path.join(HERE, "spirit_light_lines.json")
 REPORT = os.path.join(HERE, "spirit_light_voice_report.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "spiritlight", "SpiritLightVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "spiritlight", "SpiritLightVoiceLines.java")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"
          "loudnorm=I=-16:TP=-1.5:LRA=7")
@@ -98,7 +98,7 @@ def main():
     json.dump(report, open(REPORT, "w", encoding="utf-8"), indent=1, sort_keys=True)
     entries = SJ.read_block()
     sfx, _ = SJ.split(entries)
-    voice = {"spirit_light.voice." + ln["id"]: {"sounds": [{"name": "nusmp:spirit_light/voice/" + ln["id"], "stream": False, "attenuation_distance": 32}]} for ln in lines if ln["id"] in have}
+    voice = {"spirit_light.voice." + ln["id"]: {"sounds": [{"name": "anime_multiverse:spirit_light/voice/" + ln["id"], "stream": False, "attenuation_distance": 32}]} for ln in lines if ln["id"] in have}
     SJ.write_block({**sfx, **voice})
     write_java(lines, have)
     total = sum(v["bytes"] for v in report.values())

@@ -4,13 +4,13 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Why: the effect tables of the upgraded weapons and relics ({@code assets/nusmp/visual_upgrade/**.json}) name their particles with a short token, and until 1.110.0 half of the loaders turned
+ * Why: the effect tables of the upgraded weapons and relics ({@code assets/anime_multiverse/visual_upgrade/**.json}) name their particles with a short token, and until 1.110.0 half of the loaders turned
  * the token into a VANILLA particle (a registry lookup of {@code minecraft:flame}, a coloured vanilla dust): white square puffs, a flame sprite that fills the first-person view, cyan dust.
  * This pure class (no game types, so a test can walk the shipped tables with it) holds the one decision every loader now uses: a token becomes the id of one of the mod's own particles
  * ({@link FxCatalog}), never a vanilla one.
  * <ul>
  *   <li>{@code "fx"}, {@code "dust"}, empty or null: the hue-themed custom mote dyed with the layer's colour ({@link FxRelic#dust}); {@link #resolve} answers {@code null} for them.</li>
- *   <li>a catalog id ({@code flame_tongue}, {@code nusmp:ember}): itself.</li>
+ *   <li>a catalog id ({@code flame_tongue}, {@code anime_multiverse:ember}): itself.</li>
  *   <li>a vanilla particle name ({@code minecraft:end_rod}, {@code flame}, ...): the nearest custom particle of the {@link #ALIAS} table. Every vanilla particle of 1.21.1 is in the table, and
  *       an unknown name falls back to {@link #FALLBACK}, so no token can ever reach the game as a vanilla particle.</li>
  * </ul>

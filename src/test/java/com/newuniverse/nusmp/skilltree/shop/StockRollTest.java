@@ -19,7 +19,7 @@ class StockRollTest {
     private static final long SEED = 123456789012345L;
 
     private static StockEntry book(long min, long max, double bandLow, int stockMin, int stockMax, int weight) {
-        return new StockEntry("e", StockEntry.Kind.ROUTE_BOOK, "nusmp:x", false, "", min, max, bandLow, stockMin, stockMax, weight, false);
+        return new StockEntry("e", StockEntry.Kind.ROUTE_BOOK, "anime_multiverse:x", false, "", min, max, bandLow, stockMin, stockMax, weight, false);
     }
 
     private static final StockEntry FULL = book(2_000_000, 3_000_000, 0.0, 1, 1, 100);

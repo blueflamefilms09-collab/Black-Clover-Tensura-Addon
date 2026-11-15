@@ -60,7 +60,7 @@ public class HeroWeaponItem extends Item {
                 .add(Attributes.ATTACK_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_speed"), row.speedModifier(),
                         AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         if (row.reach() > 0.0)
-            mods.add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_weapon_reach"), row.reach(),
+            mods.add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_weapon_reach"), row.reach(),
                     AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         return new Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant().component(DataComponents.UNBREAKABLE, new Unbreakable(false)).attributes(mods.build());
     }

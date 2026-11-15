@@ -38,7 +38,7 @@ import java.util.function.Consumer;
 final class Wave30Bond {
     private Wave30Bond() {}
 
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("nusmp");
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger("anime_multiverse");
 
     static boolean isVecna(RelicDef d) { return d != null && (Wave30Tune.ID_HAND.equals(d.id()) || Wave30Tune.ID_EYE.equals(d.id())); }
 
@@ -94,7 +94,7 @@ final class Wave30Bond {
 
     /** A bearer's death frees their relics: they drop, and the graft is forgotten. */
     static void onDeath(ServerPlayer p) {
-        if (release(p) > 0) LOG.debug("[nusmp] relics: the graft of {} ended with their death", p.getGameProfile().getName());
+        if (release(p) > 0) LOG.debug("[anime_multiverse] relics: the graft of {} ended with their death", p.getGameProfile().getName());
     }
 
     // ---------------------------------------------------------------- Curios' veto and the command
@@ -131,7 +131,7 @@ final class Wave30Bond {
         } catch (ClassNotFoundException none) {
             // Curios is not installed: no relic in a Curios slot works anyway
         } catch (ReflectiveOperationException | RuntimeException | LinkageError odd) {
-            LOG.debug("[nusmp] relics: the Hand of Vecna could not join Curios' unequip event", odd);
+            LOG.debug("[anime_multiverse] relics: the Hand of Vecna could not join Curios' unequip event", odd);
         }
     }
 

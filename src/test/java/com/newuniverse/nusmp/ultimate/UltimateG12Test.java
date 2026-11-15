@@ -162,7 +162,7 @@ class UltimateG12Test {
             String t = lang.get(d.langKey()).getAsString();
             assertTrue(t.startsWith(d.name() + " - ") && t.length() >= 120 && t.contains("(original)") && t.contains("cooldown") && t.contains("ALL") && t.contains(((int) d.radius()) + "-block"), d.langKey() + ": " + t);
         }
-        for (var e : lang.entrySet()) assertTrue(e.getKey().startsWith("nusmp.page.book_"), e.getKey());
+        for (var e : lang.entrySet()) assertTrue(e.getKey().startsWith("anime_multiverse.page.book_"), e.getKey());
         JsonObject pol = JsonParser.parseString(read(ROOT.resolve("src/test/resources/armour_policy/ultimate_g12_new_pages.json"))).getAsJsonObject();
         assertEquals(48, pol.size());
         for (UltimateDef d : G12) {

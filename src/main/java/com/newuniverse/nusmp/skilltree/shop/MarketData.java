@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 /**
- * Why: the witch's prices and shelf are data ({@code data/nusmp/black_market/prices.json} and {@code stock.json}) so the owner can retune the economy and a server owner can
+ * Why: the witch's prices and shelf are data ({@code data/anime_multiverse/black_market/prices.json} and {@code stock.json}) so the owner can retune the economy and a server owner can
  * replace it with a datapack and {@code /reload}, with no rebuild. A single-file-per-kind listener is enough here: each file is one small table, the top-most data pack wins by
  * the normal resource rule, and the validation is the pure {@link StockSchema} and {@link PriceTable} readers. The result is two immutable snapshots held in volatile statics
  * (a cache of immutable data, replaced whole on a reload and cleared when the server stops), so the packet handlers read them without a lock and never see a half-loaded table.
@@ -31,11 +31,11 @@ import java.util.TreeMap;
  */
 public final class MarketData implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
-    public static final ResourceLocation PRICES = ResourceLocation.fromNamespaceAndPath("nusmp", "black_market/prices.json");
+    public static final ResourceLocation PRICES = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_market/prices.json");
     /** The witch's own file, kept from before shops had files of their own; it is the shelf of the shop {@value #WITCH_SHOP} unless {@code shops/witch.json} exists. */
-    public static final ResourceLocation STOCK = ResourceLocation.fromNamespaceAndPath("nusmp", "black_market/stock.json");
+    public static final ResourceLocation STOCK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_market/stock.json");
     /** The shop types: type id to the tags, namespaces and item ids it sells. */
-    public static final ResourceLocation TYPES = ResourceLocation.fromNamespaceAndPath("nusmp", "black_market/types.json");
+    public static final ResourceLocation TYPES = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_market/types.json");
     /** The folder with one file per shop, {@code shops/<shop_id>.json}. */
     public static final String SHOPS_DIR = "black_market/shops";
     /** The id of the Black Market witch's shop. */
@@ -91,15 +91,15 @@ public final class MarketData implements ResourceManagerReloadListener {
         GENERATION.incrementAndGet();                                              // the pools of the ITEM lines are resolved again from the new data (see ShopPools)
         problems = List.copyOf(bad);
         unknownItems = List.copyOf(unknown);
-        if (!bad.isEmpty()) LOG.warn("[nusmp] black market data: {} problem(s): {}", bad.size(), String.join(" | ", bad.subList(0, Math.min(6, bad.size()))));
-        if (!unknown.isEmpty()) LOG.info("[nusmp] black market: {} priced item(s) are not in this game and were dropped: {}", unknown.size(), String.join(", ", unknown));
+        if (!bad.isEmpty()) LOG.warn("[anime_multiverse] black market data: {} problem(s): {}", bad.size(), String.join(" | ", bad.subList(0, Math.min(6, bad.size()))));
+        if (!unknown.isEmpty()) LOG.info("[anime_multiverse] black market: {} priced item(s) are not in this game and were dropped: {}", unknown.size(), String.join(", ", unknown));
     }
 
     /** Reads {@code shops/<id>.json} of the mod's namespace, in name order, at most {@link #MAX_SHOPS}. */
     private static void readShopFiles(ResourceManager manager, ShopType.Parsed ty, Map<String, Shop> into, List<String> bad) {
         Map<String, Resource> files = new TreeMap<>();
         try {
-            for (Map.Entry<ResourceLocation, Resource> e : manager.listResources(SHOPS_DIR, rl -> rl.getNamespace().equals("nusmp") && rl.getPath().endsWith(".json")).entrySet()) {
+            for (Map.Entry<ResourceLocation, Resource> e : manager.listResources(SHOPS_DIR, rl -> rl.getNamespace().equals("anime_multiverse") && rl.getPath().endsWith(".json")).entrySet()) {
                 files.put(e.getKey().getPath(), e.getValue());
             }
         } catch (RuntimeException e) {

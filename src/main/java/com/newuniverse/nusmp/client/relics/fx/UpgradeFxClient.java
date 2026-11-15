@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * The ambient effect layers of the upgraded God relics (1.102.0): drifting motes, rotating halo rings, energy lines along an edge, orbiting sparks, ground glow, stride trails. The layers of
- * each relic are data ({@code assets/nusmp/visual_upgrade/<id>.json}, {@link UpgradeFxData}); this class only turns them into client particles, inside the performance guards of the mod:
+ * each relic are data ({@code assets/anime_multiverse/visual_upgrade/<id>.json}, {@link UpgradeFxData}); this class only turns them into client particles, inside the performance guards of the mod:
  * <ul>
  *   <li>off with {@code visual.upgrade} and with {@code relicfx.particles}; nothing for a spectator, an invisible wearer, a hidden Curios slot or hidden armour relics;</li>
  *   <li>only wearers within {@link UpgradeFxMath#FAR} blocks of the camera, at most eight per tick, and beyond 4 blocks only those in front of the camera;</li>
@@ -56,7 +56,7 @@ public final class UpgradeFxClient {
 
     /**
      * The particle a data entry names, always one of the mod's own custom particles (1.110.0, {@link UpgradeParticleOptions}, decided by the pure {@link UpgradeParticleAlias}): "dust" and "fx" are
-     * the hue-themed custom mote dyed with the layer's colour, a catalog id ({@code nusmp:flame_tongue}) is itself, and a vanilla name ({@code minecraft:end_rod}, {@code flame}, ...) goes through
+     * the hue-themed custom mote dyed with the layer's colour, a catalog id ({@code anime_multiverse:flame_tongue}) is itself, and a vanilla name ({@code minecraft:end_rod}, {@code flame}, ...) goes through
      * the alias table to the nearest custom particle. Never a vanilla particle, never null.
      */
     public static ParticleOptions options(String particle, int color, float size) {

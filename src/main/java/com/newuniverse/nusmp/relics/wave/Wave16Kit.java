@@ -119,7 +119,7 @@ final class Wave16Kit {
     static void boost(LivingEntity e, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, String name, double amount) {
         AttributeInstance inst = e.getAttribute(attribute);
         if (inst == null) return;
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", "w16_" + name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w16_" + name);
         if (!inst.hasModifier(id)) inst.addPermanentModifier(new AttributeModifier(id, amount, AttributeModifier.Operation.ADD_VALUE));
     }
 

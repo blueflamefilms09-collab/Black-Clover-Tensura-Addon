@@ -70,13 +70,13 @@ public final class LordSpirit extends AbstractSpirit {
     @Override
     public boolean summon(ServerPlayer p) {
         if (isOut(p)) return true;
-        if (Severance.isSevered(p)) { say(p, "nusmp.spirit_control.severed", "Your spirit is severed from you for a moment.", ChatFormatting.DARK_PURPLE); return false; }
-        if (!SpiritBond.willAnswer(p)) { say(p, "nusmp.spirit_control.wont", "Your spirit will not answer you.", ChatFormatting.RED); return false; }
+        if (Severance.isSevered(p)) { say(p, "anime_multiverse.spirit_control.severed", "Your spirit is severed from you for a moment.", ChatFormatting.DARK_PURPLE); return false; }
+        if (!SpiritBond.willAnswer(p)) { say(p, "anime_multiverse.spirit_control.wont", "Your spirit will not answer you.", ChatFormatting.RED); return false; }
         String type = type(p);
         if ("-".equals(type)) return false;
         boolean anti = "Anti".equalsIgnoreCase(type);
         if (!anti && !SpiritBond.incarnate(p)) {
-            say(p, "nusmp.spirit_control.nobody", "%s has no body yet. Earn its full trust and give it a True Name (Spirit Charm).", ChatFormatting.GRAY, type);
+            say(p, "anime_multiverse.spirit_control.nobody", "%s has no body yet. Earn its full trust and give it a True Name (Spirit Charm).", ChatFormatting.GRAY, type);
             return false;
         }
         ElementalSpiritLordEntity.Kind bodyKind = anti ? null : ElementalSpiritLordEntity.Kind.forSpirit(type);

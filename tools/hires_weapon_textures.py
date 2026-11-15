@@ -6,7 +6,7 @@ tools/gen_weapon_models.py paints each weapon's atlas on a 128x128 grid. The ren
 so the PNG may be any size: this script raises every weapon skin (and its _glow layer) to 512x512, and Elsdocia to 1024x1024 with a
 real faceted blue-crystal blade, without touching the meshes.
 
-  python tools/hires_weapon_textures.py            every skin in assets/nusmp/textures/entity/weapon that is still 128x128
+  python tools/hires_weapon_textures.py            every skin in assets/anime_multiverse/textures/entity/weapon that is still 128x128
   python tools/hires_weapon_textures.py elsdocia   only those ids
 
 The 128 originals are kept in tools/weapon_tex_128/ (nothing is thrown away) and the run is repeatable: a freshly generated 128 skin is
@@ -19,7 +19,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity", "weapon")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "weapon")
 SRC = os.path.join(HERE, "weapon_tex_128")
 SPECIAL = {"elsdocia": 8, "elsdocia_legacy": 8}          # id -> scale; everything else 4
 DEFAULT_SCALE = 4

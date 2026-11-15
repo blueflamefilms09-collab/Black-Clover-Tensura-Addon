@@ -36,7 +36,7 @@ public final class TrapEvents {
         if (!player || !TrapMath.refusesLight(e.getPlacedBlock().getLightEmission(), creative, spectator, DndConfig.get(DndConfig.TRAPS))) return;
         if (!glyphNear(level, e.getPos())) return;
         e.setCanceled(true);
-        ((Player) e.getEntity()).displayClientMessage(Component.translatable("message.nusmp.trap.no_light").withStyle(ChatFormatting.DARK_GRAY), true);
+        ((Player) e.getEntity()).displayClientMessage(Component.translatable("message.anime_multiverse.trap.no_light").withStyle(ChatFormatting.DARK_GRAY), true);
     }
 
     /** Is a snuffer glyph within {@link TrapMath#PLACE_RADIUS} of this position? Scans only chunks that are already loaded. */

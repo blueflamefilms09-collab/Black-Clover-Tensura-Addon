@@ -96,7 +96,7 @@ public final class ModeArmor {
     // ---------------------------------------------------------------- network
     /** Player {@code entityId} wears {@code mode} (ordinal; 0 = none) for {@code ticks} more ticks. */
     public record ModePayload(int entityId, int mode, int ticks) implements CustomPacketPayload {
-        public static final Type<ModePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mode_armor"));
+        public static final Type<ModePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mode_armor"));
         public static final StreamCodec<RegistryFriendlyByteBuf, ModePayload> STREAM_CODEC = StreamCodec.composite(
                 ByteBufCodecs.VAR_INT, ModePayload::entityId,
                 ByteBufCodecs.VAR_INT, ModePayload::mode,

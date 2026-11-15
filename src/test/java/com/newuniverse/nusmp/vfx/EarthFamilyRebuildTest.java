@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * effect palettes, armour style numbers), the page ids the books must keep, and the assets every piece, construct and sprite needs.
  */
 class EarthFamilyRebuildTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final String[] KEYS = {"sandstone", "rock", "red_ochre", "stone", "earth", "mineral"};
     private static final String[] PIECES = {"helm", "chest", "belt", "mantle", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "gauntlet_r", "gauntlet_l", "greave_r", "greave_l", "back", "extra"};
     private static final String[] CONSTRUCTS = {"earth_golem", "rock_titan", "stone_sentinel", "sandstone_sphinx", "sandstone_cage", "red_ochre_totem", "mineral_spire", "rock_boulder", "mineral_lance"};
@@ -193,7 +193,7 @@ class EarthFamilyRebuildTest {
                 {"sandstone_sphinx", "idle", "walk", "attack"}, {"sandstone_cage", "idle", "form", "crumble"}, {"red_ochre_totem", "idle", "attack"}, {"mineral_spire", "idle", "grow", "pulse"},
                 {"rock_boulder", "idle"}, {"mineral_lance", "idle"}};
         for (String[] row : need) {
-            String json = read("src/main/resources/assets/nusmp/animations/entity/" + row[0] + ".animation.json");
+            String json = read("src/main/resources/assets/anime_multiverse/animations/entity/" + row[0] + ".animation.json");
             for (int k = 1; k < row.length; k++) assertTrue(json.contains("\"" + row[k] + "\""), row[0] + " has the clip " + row[k]);
         }
     }

@@ -14,13 +14,13 @@ public final class WizardNet {
     private WizardNet() {}
 
     public record OpenPayload(CompoundTag sheet) implements CustomPacketPayload {
-        public static final Type<OpenPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "wizard_open"));
+        public static final Type<OpenPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "wizard_open"));
         public static final StreamCodec<FriendlyByteBuf, OpenPayload> CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, OpenPayload::sheet, OpenPayload::new);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
     public record AnswerPayload(CompoundTag answers) implements CustomPacketPayload {
-        public static final Type<AnswerPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "wizard_answer"));
+        public static final Type<AnswerPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "wizard_answer"));
         public static final StreamCodec<FriendlyByteBuf, AnswerPayload> CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, AnswerPayload::answers, AnswerPayload::new);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }

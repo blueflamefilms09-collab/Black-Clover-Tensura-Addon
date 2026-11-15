@@ -62,7 +62,7 @@ def make_icon(dj, assets):
     name = "djinn_seal_" + dj["id"]
     im.save(os.path.join(tex, name + ".png"))
     with open(os.path.join(mod, name + ".json"), "w", newline="\n") as fh:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + name}}, fh, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + name}}, fh, indent=2)
         fh.write("\n")
     return name
 

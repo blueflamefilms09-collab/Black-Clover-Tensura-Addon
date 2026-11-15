@@ -1,12 +1,12 @@
 """Textures and models of the Compatibility Codex item (1.34.0): a grimoire in the grimoire design system, its cover showing two interlocking rings.
 
     python tools/compat/gen_compat_codex_assets.py
-        -> src/main/resources/assets/nusmp/textures/item/grimoire_book/emblem_compat.png      (32x32, white, tinted by the emblem colour)
-           src/main/resources/assets/nusmp/textures/item/grimoire_book/cover_base_compat.png  (64x80, greyscale shading, tinted by the cover colour)
-           src/main/resources/assets/nusmp/textures/item/grimoire_book/cover_art_compat.png   (64x80, the ornament in its own gold / cyan)
-           src/main/resources/assets/nusmp/textures/item/compat_codex.png                     (16x16 inventory icon)
-           src/main/resources/assets/nusmp/models/item/compat_codex.json                      (loader nusmp:grimoire, the grimoire's display block)
-           src/main/resources/assets/nusmp/models/item/compat_codex_icon.json                 (flat 16x16 variant)
+        -> src/main/resources/assets/anime_multiverse/textures/item/grimoire_book/emblem_compat.png      (32x32, white, tinted by the emblem colour)
+           src/main/resources/assets/anime_multiverse/textures/item/grimoire_book/cover_base_compat.png  (64x80, greyscale shading, tinted by the cover colour)
+           src/main/resources/assets/anime_multiverse/textures/item/grimoire_book/cover_art_compat.png   (64x80, the ornament in its own gold / cyan)
+           src/main/resources/assets/anime_multiverse/textures/item/compat_codex.png                     (16x16 inventory icon)
+           src/main/resources/assets/anime_multiverse/models/item/compat_codex.json                      (loader anime_multiverse:grimoire, the grimoire's display block)
+           src/main/resources/assets/anime_multiverse/models/item/compat_codex_icon.json                 (flat 16x16 variant)
            build/compat_codex/textures.png                                                    (preview of the textures, not shipped)
 
 The three grimoire_book textures follow the conventions of tools/gen_grimoire_book_textures.py and tools/gen_cover_art_textures.py: the emblem is
@@ -22,7 +22,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-RES = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(RES, "textures", "item", "grimoire_book")
 ITEM_TEX = os.path.join(RES, "textures", "item")
 MODELS = os.path.join(RES, "models", "item")
@@ -238,7 +238,7 @@ def icon():
     return im
 
 
-DISPLAY = {   # the grimoire's own display block (assets/nusmp/models/item/grimoire.json), so hand, gui, ground and frame match the grimoires
+DISPLAY = {   # the grimoire's own display block (assets/anime_multiverse/models/item/grimoire.json), so hand, gui, ground and frame match the grimoires
     "gui": {"rotation": [20, 35, 0], "translation": [0, 0, 0], "scale": [1.0, 1.0, 1.0]},
     "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.55, 0.55, 0.55]},
     "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [0.95, 0.95, 0.95]},
@@ -265,12 +265,12 @@ def main():
     save(art, os.path.join(TEX, "cover_art_compat.png"))
     save(ic, os.path.join(ITEM_TEX, "compat_codex.png"))
     write_json(os.path.join(MODELS, "compat_codex.json"), {
-        "loader": "nusmp:grimoire",
+        "loader": "anime_multiverse:grimoire",
         "_comment": "Compatibility Codex: the grimoire geometry (GrimoireBookPlan) with the fixed look compat/CompatCodexLook (cover COMPAT, two linked rings). "
                     "Tint layers: 0 cover, 1 trim, 2 emblem (client/compat/CompatCodexClient). Textures: textures/item/grimoire_book/*_compat.png "
                     "(tools/compat/gen_compat_codex_assets.py).",
         "display": DISPLAY})
-    write_json(os.path.join(MODELS, "compat_codex_icon.json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/compat_codex"}})
+    write_json(os.path.join(MODELS, "compat_codex_icon.json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/compat_codex"}})
 
     # preview sheet: the textures on a neutral ground, and tinted the way the colour handler does
     os.makedirs(PREVIEW, exist_ok=True)

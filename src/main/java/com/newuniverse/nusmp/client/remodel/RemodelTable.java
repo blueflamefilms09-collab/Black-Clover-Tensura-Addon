@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Why: which mob is drawn by which art-kit model, in ONE pure place (no game classes), so the renderer registration, the tests and the doc agree. Every custom mob of the mod that is not the
  * Old Witch (an arc NPC), a boss that already has a kit model (the arc bosses), the Mirror Double or the Player Avatar (those two are meant to look like the player) is listed here with the
- * models its renderer may draw: the art kit writes {@code assets/nusmp/{geo,animations}/entity/arc_<model>.*} and {@code textures/entity/arc_<model>[_glow].png} (tools/arc/char_<model>.py,
+ * models its renderer may draw: the art kit writes {@code assets/anime_multiverse/{geo,animations}/entity/arc_<model>.*} and {@code textures/entity/arc_<model>[_glow].png} (tools/arc/char_<model>.py,
  * docs/arc/remodel.md), a second form is {@code arc_<model>_form2}, and a skin is a texture {@code arc_<model>_<skin>} that tools/remodel/gen_remodel.py repaints from the same body.
  * A mob that is added to the mod and remodelled gets a row here, a character file, and nothing else (the registration loops over this table).
  */
@@ -19,7 +19,7 @@ public final class RemodelTable {
     /** Which renderer draws it: a framework boss, any other living mob, the cotton cloud (not a living entity), or the legacy Zagred (aura shader and target ring kept). */
     public enum Family { BOSS, MOB, CLOUD, ZAGRED }
 
-    /** One mob: the registered entity id ({@code nusmp:<id>}), its renderer family, and every model name its renderer may draw (the first is the default). */
+    /** One mob: the registered entity id ({@code anime_multiverse:<id>}), its renderer family, and every model name its renderer may draw (the first is the default). */
     public record Entry(String entityId, Family family, List<String> models) {
         public Entry {
             models = List.copyOf(models);

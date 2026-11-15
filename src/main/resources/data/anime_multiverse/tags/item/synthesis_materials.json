@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:goblin_dagger",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:kobold_fang",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:slime_core",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:aqua_slime_gel",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:direwolf_pelt",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:lizardman_scale",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:water_spirit_essence",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:megalodon_tooth",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:devil_horn",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:disciple_sigil",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:beast_hide",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:juggernaut_heart",
+      "required": false
+    }
+  ]
+}

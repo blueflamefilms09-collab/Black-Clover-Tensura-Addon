@@ -29,11 +29,11 @@ public final class LightSceneClient {
     private static final int FADE_TICKS = 10;
 
     private static final LightFrame FRAME = new LightFrame();
-    private static final Component CAPTION_CHIP = Component.translatable("nusmp.light_yagami.caption.chip");
-    private static final Component CAPTION_WRITING = Component.translatable("nusmp.light_yagami.caption.writing");
-    private static final Component CARD_CHIP = Component.translatable("nusmp.light_yagami.card.chip");
-    private static final Component CARD_PEN = Component.translatable("nusmp.light_yagami.card.pen");
-    private static final Component CARD_NOTE = Component.translatable("nusmp.light_yagami.card.note");
+    private static final Component CAPTION_CHIP = Component.translatable("anime_multiverse.light_yagami.caption.chip");
+    private static final Component CAPTION_WRITING = Component.translatable("anime_multiverse.light_yagami.caption.writing");
+    private static final Component CARD_CHIP = Component.translatable("anime_multiverse.light_yagami.card.chip");
+    private static final Component CARD_PEN = Component.translatable("anime_multiverse.light_yagami.card.pen");
+    private static final Component CARD_NOTE = Component.translatable("anime_multiverse.light_yagami.card.note");
 
     private static boolean active, target;
     private static int light, targetId, age, out;

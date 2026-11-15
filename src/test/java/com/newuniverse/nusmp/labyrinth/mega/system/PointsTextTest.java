@@ -33,7 +33,7 @@ class PointsTextTest {
 
     @Test void everyKeyHasTheModulePrefixOrIsAKeyBindingAndAnEnglishText() {
         for (Map.Entry<String, String> e : PointsText.all().entrySet()) {
-            assertTrue(e.getKey().startsWith(SystemText.PREFIX) || e.getKey().startsWith("key.nusmp."), e.getKey());
+            assertTrue(e.getKey().startsWith(SystemText.PREFIX) || e.getKey().startsWith("key.anime_multiverse."), e.getKey());
             assertFalse(e.getValue().isBlank(), e.getKey());
             assertEquals(e.getValue(), SystemText.english(e.getKey()), "SystemText.english finds " + e.getKey());
         }

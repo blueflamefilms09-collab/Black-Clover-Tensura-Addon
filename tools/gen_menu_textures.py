@@ -1,6 +1,6 @@
 """Textures for the 0.46 Four Kingdoms menu (the button in Tensura's magic screen and the custom menu).
 
-    python tools/gen_menu_textures.py  ->  src/main/resources/assets/nusmp/textures/gui/{four_kingdoms_logo,grimoire_page}.png
+    python tools/gen_menu_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/gui/{four_kingdoms_logo,grimoire_page}.png
 
 four_kingdoms_logo.png is a stand-in emblem drawn after the owner's "Four Kingdoms Tensura" logo: a stone ring, a four-leaf clover
 of heart-shaped leaves, one per kingdom (Clover green, Diamond blue, Heart green/violet, Spade red), a blue slime at the foot.
@@ -13,7 +13,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "gui")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui")
 SS = 4
 
 

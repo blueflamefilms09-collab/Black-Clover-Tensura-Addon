@@ -86,7 +86,7 @@ def build_key(vm, info):
 add(Item("millennium_key", build_key_canon, dict(style="swirl", dark=(10, 6, 0), mid=(150, 104, 20), hot=(255, 232, 160)), hand_size=1.0, hand_style="coil", seed=104, worn="pieces",
          pieces=[("", "body", False)], anchor="body",
          layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
-                 PL("soul glints", "glints", "nusmp:gem_sparkle", 0xFFD060, count=1, every=7, radius=0.4, rise=0.012)],
+                 PL("soul glints", "glints", "anime_multiverse:gem_sparkle", 0xFFD060, count=1, every=7, radius=0.4, rise=0.012)],
          acts={"open_the_soul_room": [ST("SPACE_PORTAL", 0xFFD060, 3.0, 70, "front"), ST("DIVINE_SIGIL", 0xE4AE3C, 3.2, 60, "ground"), ST("SPIRIT_AURA", 0x2C46A8, 2.6, 50, "self")],
                "mind_garden": [ST("DIVINE_HALO", 0xFFD060, 3.4, 80, "sky"), ST("MAGIC_CIRCLE", 0x2C46A8, 3.4, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
                "redecorate_the_soul": [ST("SOUL_VORTEX", 0xFFD060, 3.0, 70, "front"), ST("DIVINE_SIGIL", 0xE4AE3C, 3.0, 60, "ground"), ST("SPIRIT_AURA", 0xFFE890, 2.4, 50, "self")]}))
@@ -169,7 +169,7 @@ def build_scale(vm, info):
 
 add(Item("millennium_scale", build_scale_canon, dict(style="swirl", dark=(0, 14, 16), mid=(24, 130, 120), hot=(190, 255, 240)), hand_size=1.0, hand_style="palm", seed=105,
          layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
-                 PL("verdict glints", "glints", "nusmp:gem_sparkle", 0x78F0D8, count=1, every=7, radius=0.4, rise=0.012)],
+                 PL("verdict glints", "glints", "anime_multiverse:gem_sparkle", 0x78F0D8, count=1, every=7, radius=0.4, rise=0.012)],
          acts={"weigh_the_heart": [ST("MIRROR_FRAME", 0x78F0D8, 3.0, 40, "front"), ST("DIVINE_SIGIL", 0xF4C85A, 3.0, 60, "ground")],
                "ammits_verdict": [ST("SEAL_CHAINS", 0xF4C85A, 4.0, 80, "ground"), ST("DIVINE_PILLAR", 0x78F0D8, 3.6, 80, "ground"), ST("SOUL_VORTEX", 0xF4C85A, 3.0, 60, "self")],
                "fuse_monsters": [ST("GRAVITY_WELL", 0xF4C85A, 3.4, 60, "front"), ST("ALCHEMY_CIRCLE", 0x78F0D8, 3.2, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 2.0, 16, "front")]},
@@ -260,7 +260,7 @@ def build_necklace(vm, info):
 add(Item("millennium_necklace", build_necklace_canon, dict(style="void", dark=(0, 8, 20), mid=(20, 100, 150), hot=(190, 255, 250)), hand_size=1.0, hand_style="garment", seed=106, worn="pieces",
          pieces=[("", "body", False)], anchor="body",
          layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
-                 PL("collar glints", "glints", "nusmp:glint", 0xEBBB52, count=1, every=7, radius=0.4, rise=0.01)],
+                 PL("collar glints", "glints", "anime_multiverse:glint", 0xEBBB52, count=1, every=7, radius=0.4, rise=0.01)],
          acts={"foresight": [ST("MAGIC_CIRCLE", 0x62E6F0, 3.0, 70, "ground"), ST("SPIRIT_AURA", 0xEBBB52, 2.8, 50, "self"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
                "prophecy": [ST("DIVINE_SIGIL", 0x62E6F0, 3.0, 90, "ground"), ST("DIVINE_HALO", 0xEBBB52, 3.4, 80, "sky"), ST("SPACE_RINGGATE", 0x62E6F0, 3.0, 60, "ground")],
                "sight_of_the_past": [ST("MIRROR_FRAME", 0x62E6F0, 3.0, 60, "front"), ST("MAGIC_CIRCLE", 0xEBBB52, 3.0, 60, "ground"), ST("LIGHT_FLARE", 0xFFFFFF, 1.6, 16, "self")]}))

@@ -10,11 +10,11 @@ public final class NUSkills {
     public static final DeferredRegister<ManasSkill> SKILLS =
             DeferredRegister.create(SkillAPI.getSkillRegistryKey(), NUSMP.MODID);
 
-    /** Grant in game with: /tensura edit <player> ability grant nusmp:summoner */
+    /** Grant in game with: /tensura edit <player> ability grant anime_multiverse:summoner */
     public static final DeferredHolder<ManasSkill, SummonerSkill> SUMMONER =
             SKILLS.register("summoner", SummonerSkill::new);
 
-    /** Grant in game with: /tensura edit <player> ability grant nusmp:faith */
+    /** Grant in game with: /tensura edit <player> ability grant anime_multiverse:faith */
     public static final DeferredHolder<ManasSkill, FaithSkill> FAITH =
             SKILLS.register("faith", FaithSkill::new);
 
@@ -66,7 +66,7 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);
     public static final DeferredHolder<ManasSkill, TheVisionarySkill> THE_VISIONARY = SKILLS.register("the_visionary", TheVisionarySkill::new);
 
-    // ---- 3.46.0: Hunter x Hunter (Ultimate; grant with /tensura edit <player> ability grant nusmp:nen) ----
+    // ---- 3.46.0: Hunter x Hunter (Ultimate; grant with /tensura edit <player> ability grant anime_multiverse:nen) ----
     public static final DeferredHolder<ManasSkill, NenSkill> NEN = SKILLS.register("nen", NenSkill::new);
     public static final DeferredHolder<ManasSkill, GateOfBabylonSkill> GATE_OF_BABYLON = SKILLS.register("gate_of_babylon", GateOfBabylonSkill::new);
     public static final DeferredHolder<ManasSkill, KiSkill> KI = SKILLS.register("ki", KiSkill::new);
@@ -74,7 +74,7 @@ public final class NUSkills {
     // ---- Black Clover ----
     /** Granted automatically with a grimoire. Magic, leaves and devil are stored on the skill. */
     public static final DeferredHolder<ManasSkill, GrimoireMagicSkill> GRIMOIRE_MAGIC = SKILLS.register("grimoire_magic", () -> new GrimoireMagicSkill()); // legacy
-    /** One skill per magic type (nusmp:grimoire_flame, nusmp:grimoire_water, ...) so each has its own name and icon. */
+    /** One skill per magic type (anime_multiverse:grimoire_flame, anime_multiverse:grimoire_water, ...) so each has its own name and icon. */
     public static final java.util.Map<com.newuniverse.nusmp.blackclover.MagicType, DeferredHolder<ManasSkill, GrimoireMagicSkill>> GRIMOIRES = new java.util.EnumMap<>(com.newuniverse.nusmp.blackclover.MagicType.class);
     static {
         for (com.newuniverse.nusmp.blackclover.MagicType m : com.newuniverse.nusmp.blackclover.MagicType.values()) {
@@ -184,7 +184,7 @@ public final class NUSkills {
                     () -> com.newuniverse.nusmp.book.WikiBooks.attribute(magic)));
         }
     }
-    /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /nusmp grimoire awaken_anti). */
+    /** Anti-Magic Spirit Lord: awakened by mastering the Anti-Magic grimoire (or /anime_multiverse grimoire awaken_anti). */
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.antimagic.AntiMagicLordSkill> ANTI_MAGIC_LORD =
             SKILLS.register("anti_magic_spirit_lord", () -> new com.newuniverse.nusmp.antimagic.AntiMagicLordSkill());
     /** 1.6.0: the Wizard King's own skill (only the holder of the crown has it; multiverse.WizardKing). */
@@ -238,7 +238,7 @@ public final class NUSkills {
         return ids;
     }
 
-    /** The 64 retired merged-magic skill ids (nusmp:merged_00..63), kept registered as inert placeholders so old saves load (core.magic.profile.RetiredMagic); forgotten at login. Registered LAST so the registry order of everything else is unchanged. */
+    /** The 64 retired merged-magic skill ids (anime_multiverse:merged_00..63), kept registered as inert placeholders so old saves load (core.magic.profile.RetiredMagic); forgotten at login. Registered LAST so the registry order of everything else is unchanged. */
     public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.profile.RetiredMagic.RetiredBook>> MERGED_BOOKS =
             com.newuniverse.nusmp.core.magic.profile.RetiredMagic.registerAll(SKILLS);
 
@@ -271,7 +271,7 @@ public final class NUSkills {
     // ---- 3.58.0: the 27 Beast Will skill pairs (Unique -> Ultimate), after the Dragon Ball ones so no older order changes ----
     public static final int BEAST_SKILLS = BeastSkills.registerAll(SKILLS);
 
-    // ---- 3.70.0: Adaptability (Unique, toggle): learns every kind of damage it survives. Grant: /multiverse adaptability give <player> (or /tensura edit <player> ability grant nusmp:adaptability). Registered last so no older order changes ----
+    // ---- 3.70.0: Adaptability (Unique, toggle): learns every kind of damage it survives. Grant: /multiverse adaptability give <player> (or /tensura edit <player> ability grant anime_multiverse:adaptability). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.adaptability.AdaptabilitySkill> ADAPTABILITY =
             SKILLS.register("adaptability", com.newuniverse.nusmp.adaptability.AdaptabilitySkill::new);
 }

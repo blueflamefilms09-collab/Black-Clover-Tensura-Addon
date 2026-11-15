@@ -60,7 +60,7 @@ public final class GearDrops {
         try {
             process(e, null);
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] Mega-Dungeon gear drops failed once and are skipped for that death", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] Mega-Dungeon gear drops failed once and are skipped for that death", ex);
         }
     }
 

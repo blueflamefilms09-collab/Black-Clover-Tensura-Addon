@@ -4,7 +4,7 @@
     python3 -B tools/gen_beast_geo.py spirit_beast  # only the named ones (see MODELS)
     python3 -B tools/gen_beast_geo.py --sheets      # also writes the unwrapped texture sheets to build/beast_sheets/ (uv check)
 
-Models (key "beast"; assets/nusmp/geo/entity/beast_<name>.geo.json, animations/entity/..., textures/entity/beast_<name>.png + _glow.png):
+Models (key "beast"; assets/anime_multiverse/geo/entity/beast_<name>.geo.json, animations/entity/..., textures/entity/beast_<name>.png + _glow.png):
   spirit_beast  the summoned spectral lion-wolf hybrid made of beast-fire: cel-shaded orange fur with dark stripes, a ragged flame mane
                 and tail, claws, glowing slit eyes. Clips idle / run / attack (pounce and bite) / appear / vanish.
   spirit_bear   the same rig as a heavy bear (hump, round ears, shaggy flame fur, short tail)           (PropKind.BEAST_1 param 1)

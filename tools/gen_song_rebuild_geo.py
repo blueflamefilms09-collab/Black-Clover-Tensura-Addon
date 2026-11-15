@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_song_rebuild_geo.py        # writes every model, animation and texture, runs tools/geo_check.py
 
-Models (assets/nusmp/geo/entity/song_<name>.geo.json, animations/entity/..., textures/entity/song_<name>.png + _glow.png):
+Models (assets/anime_multiverse/geo/entity/song_<name>.geo.json, animations/entity/..., textures/entity/song_<name>.png + _glow.png):
   armour     (Space.PLAYER, one root bone per piece, drawn piece by piece by client/aura/SongArmourKit with the Djinn equip animation)
              helm (circlet, treble-clef crest, two trumpet-bell ear horns, plume), chest (brass breastplate with a lyre of glowing strings),
              back (a staff cape: five glowing staff lines on ivory cloth), tails (conductor's tails), lyre (an upright lyre halo behind the

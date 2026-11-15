@@ -6,7 +6,7 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 /**
  * Why: particle providers are a client-only, mod-bus event ({@code RegisterParticleProvidersEvent}); {@code registerSpriteSet} hands the
- * provider the {@code SpriteSet} the engine built from {@code assets/nusmp/particles/<id>.json}, so the six wing-pose textures are stitched
+ * provider the {@code SpriteSet} the engine built from {@code assets/anime_multiverse/particles/<id>.json}, so the six wing-pose textures are stitched
  * into the particle atlas and reloaded with resource packs. Call {@code init} only on the client dist (the lead's registration line sits
  * with the other client inits).
  */

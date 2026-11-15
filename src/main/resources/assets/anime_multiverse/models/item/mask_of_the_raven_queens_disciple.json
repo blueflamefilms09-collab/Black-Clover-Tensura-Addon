@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "anime_multiverse:item/mask_of_the_raven_queens_disciple"
+  }
+}

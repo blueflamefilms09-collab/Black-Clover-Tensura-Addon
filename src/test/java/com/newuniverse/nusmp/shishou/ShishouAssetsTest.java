@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The files Shishou needs exist and say the same: the 3D mesh, the two skins, the inventory icon, the item models, the animation clips of the four states, the far-LOD proxy and the lang text of every skill. */
 class ShishouAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 
@@ -44,8 +44,8 @@ class ShishouAssetsTest {
         assertEquals("minecraft:builtin/entity", m.get("parent").getAsString(), "the in-hand model is drawn by the mod's weapon renderer (the mesh)");
         assertTrue(m.getAsJsonObject("display").has("gui") && m.getAsJsonObject("display").has("thirdperson_righthand"), "display transforms for the hand and the inventory");
         JsonObject icon = json(ASSETS.resolve("models/item/shishou_icon.json"));
-        assertEquals("nusmp:item/shishou", icon.getAsJsonObject("textures").get("layer0").getAsString(), "the icon model is the sprite");
-        assertTrue(Files.isRegularFile(Path.of("src/main/resources/data/nusmp/weapon_attributes/shishou.json")), "the Better Combat attributes");
+        assertEquals("anime_multiverse:item/shishou", icon.getAsJsonObject("textures").get("layer0").getAsString(), "the icon model is the sprite");
+        assertTrue(Files.isRegularFile(Path.of("src/main/resources/data/anime_multiverse/weapon_attributes/shishou.json")), "the Better Combat attributes");
     }
 
     @Test
@@ -71,7 +71,7 @@ class ShishouAssetsTest {
     @Test
     void everySkillHasItsLangTextAndAJapaneseName() throws IOException {
         JsonObject lang = json(Path.of("tools/lang/shishou.json"));
-        for (String k : new String[]{"item.nusmp.shishou", "entity.nusmp.shishou", "effect.nusmp.black_flame", "shishou.grade", "key.nusmp.shishou_throw", "key.nusmp.shishou_cast", "key.nusmp.shishou_next"})
+        for (String k : new String[]{"item.anime_multiverse.shishou", "entity.anime_multiverse.shishou", "effect.anime_multiverse.black_flame", "shishou.grade", "key.anime_multiverse.shishou_throw", "key.anime_multiverse.shishou_cast", "key.anime_multiverse.shishou_next"})
             assertTrue(lang.has(k), "lang: " + k);
         assertEquals("Akashic Relic - Grade: EX-Singularity", lang.get("shishou.grade").getAsString().replace("–", "-").replace("—", "-"));
         for (ShishouSkill s : ShishouSkill.values()) {

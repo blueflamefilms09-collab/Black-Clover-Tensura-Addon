@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * Why (docs/solid_cores.md): the Beast Will Core is ONE solid 3D orb (neutral grey stone, white-hot fissures; tools/beastwill/gen_beast_core_model.py) and the colour of the will is a tint the renderer
- * multiplies in: this table is that colour per will id, the same value as the {@code tint} of each {@code data/nusmp/beast_will/<id>.json} (a unit test keeps them equal). The client has no will catalog of its
+ * multiplies in: this table is that colour per will id, the same value as the {@code tint} of each {@code data/anime_multiverse/beast_will/<id>.json} (a unit test keeps them equal). The client has no will catalog of its
  * own (the data pack is loaded by the server), so it cannot read the data file: the core's stack carries the will id, and this class turns the id into a colour. A will this table does not know (a data-pack
  * will) gets a stable colour from its id's hash, so it never looks like another will. Pure, no Minecraft type, no allocation (a map lookup and integer maths): safe on both sides and every frame.
  */
@@ -16,7 +16,7 @@ public final class BeastCoreLook {
     /** How far the body skin is pulled toward the will's colour (0 = untinted stone, 1 = the colour itself), and the same for the flat inventory icon. */
     public static final float BODY_MIX = 0.6f, ICON_MIX = 0.85f;
 
-    /** 3.60.0 (Beast Will remake): the colours are the remade palette (tools/beastwill/remake/palette.json); the pre-remake colours are the {@code tint} of data/nusmp/beast_will_classic. */
+    /** 3.60.0 (Beast Will remake): the colours are the remade palette (tools/beastwill/remake/palette.json); the pre-remake colours are the {@code tint} of data/anime_multiverse/beast_will_classic. */
     private static final Map<String, Integer> TINT = tints(Map.of(
             "dragon_will", 12166399, "shadow_panther_will", 5921376, "elderwood_guardian_will", 2080602, "lion_will", 15249440, "thunder_fang_chimera_will", 16052828, "ridge_wolf_will", 7975354, "crested_boar_will", 9336129, "wind_skimmer_will", 2947839, "flame_serpent_will", 16726528),
             // the 18 later wills (docs/beastwill_new.md), appended: fenrir .. apophis

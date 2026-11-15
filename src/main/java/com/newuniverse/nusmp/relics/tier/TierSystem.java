@@ -5,7 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 /**
  * The entry points the mod constructor calls (the lead wires them):
  * <pre>
- *   TierSystem.registerContent(modEventBus);        // the nusmp:tier component and the two catalyst items
+ *   TierSystem.registerContent(modEventBus);        // the anime_multiverse:tier component and the two catalyst items
  *   TierSystem.registerGame(NeoForge.EVENT_BUS);    // the attribute event and the ritual
  *   // commands: TierCommands.addTo(root) next to RelicCommands.addTo(root)
  * </pre>

@@ -25,7 +25,7 @@ public final class UpgradeSelfTest {
 
     public static void register() { SelfTests.register("visual.god_melee_a", server -> run()); }
 
-    private static boolean has(String file) { return UpgradeSelfTest.class.getResource("/assets/nusmp/" + file) != null; }
+    private static boolean has(String file) { return UpgradeSelfTest.class.getResource("/assets/anime_multiverse/" + file) != null; }
 
     static SelfTests.Result run() {
         List<String> bad = new ArrayList<>();
@@ -42,7 +42,7 @@ public final class UpgradeSelfTest {
                 bad.add(id + " is not registered");
                 continue;
             }
-            try (Reader in = new InputStreamReader(UpgradeSelfTest.class.getResourceAsStream("/assets/nusmp/visual_upgrade/" + id + ".json"), StandardCharsets.UTF_8)) {
+            try (Reader in = new InputStreamReader(UpgradeSelfTest.class.getResourceAsStream("/assets/anime_multiverse/visual_upgrade/" + id + ".json"), StandardCharsets.UTF_8)) {
                 UpgradeSpec spec = UpgradeSpec.parse(in);
                 if (spec.ambient.size() < 3 || spec.passes.size() < 3) bad.add(id + ": the spec has " + spec.ambient.size() + " ambient layers / " + spec.passes.size() + " passes");
                 for (Act a : def.acts()) {

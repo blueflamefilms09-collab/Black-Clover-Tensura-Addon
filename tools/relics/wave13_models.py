@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave13_models.py palladion      (also renders the preview beside the card)
 
 Run tools/relics/wave13_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon). Per id it writes
-assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png (512 px) and <id>_glow.png.
+assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png (512 px) and <id>_glow.png.
 The helpers (wave1_models: add, paint_part, finish ...) are shared with wave 1; the reference cards are the second card set's images.
 Each weapon stays under 14 named parts and 2800 quads (the first wave's 5000 to 7000 quad meshes were flagged as heavy).
 """

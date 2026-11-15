@@ -13,7 +13,7 @@ import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
- * Why: the Exit Gate ({@code nusmp:labyrinth_exit}) stands on the Spire's arrival pad (the base piece puts it three blocks east of the pad centre,
+ * Why: the Exit Gate ({@code anime_multiverse:labyrinth_exit}) stands on the Spire's arrival pad (the base piece puts it three blocks east of the pad centre,
  * see the contract) and is the one honest way out that is not death: walking into it returns the player to the exact spot they stepped in
  * from, in whatever dimension that was. It is a {@link GateBlock} with the direction turned round so both share the no-collision, bedrock-hard,
  * translucent set-up and the cooldown; it is placed by the structure template, never crafted, and in a legacy-engine world (where nobody is

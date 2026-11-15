@@ -47,7 +47,7 @@ public final class PocketMobs {
     private static final ResourceLocation HP = id("pocket_hp"), DMG = id("pocket_damage"), ARMOR = id("pocket_armor"), SPEED = id("pocket_speed"), SCALE = id("pocket_scale"), KB = id("pocket_knockback"),
             KEEPER = id("pocket_keeper");
 
-    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("nusmp", p); }
+    private static ResourceLocation id(String p) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", p); }
 
     /** The tag a mob of a profile carries (so the aura and the sweeps know which profile it is). */
     public static String tagOf(PocketDef.Mob m) { return TAG + "_" + m.id(); }
@@ -81,7 +81,7 @@ public final class PocketMobs {
         modify(mob, Attributes.SCALE, SCALE, m.scale() - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         modify(mob, Attributes.KNOCKBACK_RESISTANCE, KB, m.knockback(), AttributeModifier.Operation.ADD_VALUE);
         mob.setHealth(mob.getMaxHealth());
-        mob.setCustomName(Component.translatableWithFallback("pocket.nusmp." + def.id() + ".mob." + m.id(), m.name()));
+        mob.setCustomName(Component.translatableWithFallback("pocket.anime_multiverse." + def.id() + ".mob." + m.id(), m.name()));
         mob.setCustomNameVisible(false);
         mob.setPersistenceRequired();
         mob.addTag(TAG);
@@ -98,7 +98,7 @@ public final class PocketMobs {
         try {
             return type.create(level) instanceof Mob mob ? mob : null;
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] pocket mob type {} could not be created: {}", typeId, ex.toString());
+            LOG.debug("[anime_multiverse] pocket mob type {} could not be created: {}", typeId, ex.toString());
             return null;
         }
     }
@@ -117,7 +117,7 @@ public final class PocketMobs {
             try {
                 mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.TRIGGERED, null);
             } catch (RuntimeException ex) {
-                LOG.debug("[nusmp] finalizeSpawn failed for a pocket mob: {}", ex.toString());
+                LOG.debug("[anime_multiverse] finalizeSpawn failed for a pocket mob: {}", ex.toString());
             }
             mob.setPersistenceRequired();
         }
@@ -172,8 +172,8 @@ public final class PocketMobs {
         mob.setHealth(mob.getMaxHealth());
         mob.addTag(TAG_KEEPER);
         mob.setGlowingTag(true);
-        mob.setCustomName(Component.translatableWithFallback("message.nusmp.mega.pocket.keeper", "%s, Keeper of the Sigil",
-                Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".mob." + pick.id(), pick.name())));
+        mob.setCustomName(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.keeper", "%s, Keeper of the Sigil",
+                Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".mob." + pick.id(), pick.name())));
         mob.setCustomNameVisible(true);
         return place(level, mob, rt.keySpawn.getX() + 0.5, rt.keySpawn.getY(), rt.keySpawn.getZ() + 0.5, new Random(rt.seed ^ 0x4B3EL)) ? mob : null;
     }

@@ -1,4 +1,4 @@
-"""0.102: the Black Clover Spirit Lords, built from the reference art (assets/nusmp/geo/entity/spirit_<kind>.geo.json + animations + textures).
+"""0.102: the Black Clover Spirit Lords, built from the reference art (assets/anime_multiverse/geo/entity/spirit_<kind>.geo.json + animations + textures).
 
     python3 -B tools/gen_spirit_lords.py [salamander undine sylph gnome]
 

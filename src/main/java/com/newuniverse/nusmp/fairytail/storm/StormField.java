@@ -98,7 +98,7 @@ public final class StormField {
      * is made. Nothing is spent when the answer is "no".
      */
     public static Cast cast(ServerPlayer p, StormSpell spell) {
-        if (p == null || spell == null || !p.isAlive() || p.isSpectator()) return Cast.no("nusmp.storm.cannot");
+        if (p == null || spell == null || !p.isAlive() || p.isSpectator()) return Cast.no("anime_multiverse.storm.cannot");
         ServerLevel level = p.serverLevel();
         long now = level.getGameTime();
         String key = p.getUUID().toString();
@@ -107,7 +107,7 @@ public final class StormField {
         List<StormCaps.Live> live = new ArrayList<>();
         for (StormCell c : LIVE) live.add(new StormCaps.Live(c.ownerKey(), c.start));
         StormCaps.Verdict verdict = StormCaps.decide(live, key, StormConfig.perPlayer(), StormConfig.global());
-        if (!verdict.admit()) return Cast.no("nusmp.storm.sky_full");
+        if (!verdict.admit()) return Cast.no("anime_multiverse.storm.sky_full");
         if (!StormCost.pay(p, spell)) return Cast.no(null);
         if (verdict.evicts()) end(LIVE.get(verdict.evictIndex()), true, level.getServer());
 
@@ -179,7 +179,7 @@ public final class StormField {
                     if (!tick(server, c)) end(c, false, server);
                 } catch (Throwable ex) {
                     SafeCast.fault("storm.tick", ex);
-                    LOG.warn("[nusmp] a storm failed and was ended: {}", ex.toString());
+                    LOG.warn("[anime_multiverse] a storm failed and was ended: {}", ex.toString());
                     end(c, true, server);
                 }
             }
@@ -355,8 +355,8 @@ public final class StormField {
         if (result == null || result.done() || result.message() == null) return;
         String m = result.message();
         Component text;
-        if (m.startsWith("cooldown:")) text = Component.translatableWithFallback("nusmp.storm.cooldown", "The sky is not ready: %s s.", m.substring(9));
-        else if ("nusmp.storm.sky_full".equals(m)) text = Component.translatableWithFallback(m, "The sky is full of storms; wait for one to pass.");
+        if (m.startsWith("cooldown:")) text = Component.translatableWithFallback("anime_multiverse.storm.cooldown", "The sky is not ready: %s s.", m.substring(9));
+        else if ("anime_multiverse.storm.sky_full".equals(m)) text = Component.translatableWithFallback(m, "The sky is full of storms; wait for one to pass.");
         else text = Component.translatableWithFallback(m, "The storm will not answer.");
         p.displayClientMessage(text.copy().withStyle(ChatFormatting.GRAY), true);
     }

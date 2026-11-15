@@ -82,7 +82,7 @@ final class CatalogSource implements PoolSource {
         List<PoolEntry> entries = new ArrayList<>();
         for (Object o : MiniJson.array(p.getOrDefault("elements", List.of()))) {
             Map<String, Object> e = MiniJson.object(o);
-            entries.add(new PoolEntry(String.valueOf(e.get("template")), i(e.getOrDefault("weight", 1L)), "nusmp:mega_interior"));
+            entries.add(new PoolEntry(String.valueOf(e.get("template")), i(e.getOrDefault("weight", 1L)), "anime_multiverse:mega_interior"));
         }
         return new PoolDef(id, entries, i(p.getOrDefault("emptyWeight", 0L)), String.valueOf(p.getOrDefault("fallback", "minecraft:empty")));
     }
@@ -112,7 +112,7 @@ final class CatalogSource implements PoolSource {
 
     /**
      * The theme rules the catalog was exported with: every template that is reserved for themes becomes a rule whose prefix is its own full id (the longest prefix wins,
-     * so a template whose id is the start of another's still resolves to its own entry). Exactly what {@code data/nusmp/mega/template_themes} says, as the game would load it.
+     * so a template whose id is the start of another's still resolves to its own entry). Exactly what {@code data/anime_multiverse/mega/template_themes} says, as the game would load it.
      */
     TemplateThemes themes() {
         Map<String, List<String>> rules = new LinkedHashMap<>(themes);

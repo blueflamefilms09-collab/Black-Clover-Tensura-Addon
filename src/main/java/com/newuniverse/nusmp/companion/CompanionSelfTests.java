@@ -108,9 +108,9 @@ public final class CompanionSelfTests {
 
     // ================================================================ wiring
     private static Result wiring(MinecraftServer server) throws Exception {
-        if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "arc_companion"))) return Result.fail("the entity type nusmp:arc_companion is not registered");
+        if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "arc_companion"))) return Result.fail("the entity type anime_multiverse:arc_companion is not registered");
         if (!DefaultAttributes.hasSupplier(CompanionEntities.CHARMY.get())) return Result.fail("the companion has no attributes");
-        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "companion_charmy_spawn_egg"))) return Result.fail("the spawn egg is not registered");
+        if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "companion_charmy_spawn_egg"))) return Result.fail("the spawn egg is not registered");
         if (ArcRoster.byId(CompanionProfiles.CHARMY.characterId()) == null) return Result.fail("Charmy is not in the arcs' roster");
         for (CompanionProfiles.Profile pr : CompanionProfiles.all()) if (!Favourites.has(pr.bondKey())) return Result.fail("the tastes of " + pr.bondKey() + " are not registered");
         if (CompanionConfig.maxFollowers() < 1) return Result.fail("companions.maxFollowersPerPlayer is below 1");
@@ -466,12 +466,12 @@ public final class CompanionSelfTests {
         ServerLevel level = server.overworld();
         Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 2, 0);
         List<Entity> mess = new ArrayList<>();
-        String key = "nusmp.companion.selftest.line";
+        String key = "anime_multiverse.companion.selftest.line";
         try {
             Bubble.clear();
             ArcCompanionEntity c = spawn(level, at);
             mess.add(c);
-            Component line = Component.translatable("nusmp.companion.charmy.greet", "x");
+            Component line = Component.translatable("anime_multiverse.companion.charmy.greet", "x");
             if (!Bubble.say(c, line)) return Result.fail("the first bubble was refused");
             if (Bubble.say(c, line)) return Result.fail("a second bubble in the same instant was sent (no per-speaker gap)");
             if (Bubble.recorded() != 1) return Result.fail("the record count is " + Bubble.recorded());

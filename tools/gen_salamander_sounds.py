@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_mob_sounds as M  # noqa: E402  (the DSP kit: Ctx, filters, reverb, encoder, Ogg reader)
 
 ROOT = M.ROOT
-SOUND_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'nusmp', 'sounds', 'salamander')
+SOUND_DIR = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'anime_multiverse', 'sounds', 'salamander')
 SOUNDS_JSON = M.SOUNDS_JSON
 LANG_OUT = os.path.join(ROOT, 'tools', 'lang', 'salamander_moods.json')
 SR = 44100
@@ -264,14 +264,14 @@ def generate(preview=None, quality=3):
 def manifest():
     entries, lang = {}, {}
     for cue, (variants, _l, text) in CUES.items():
-        sub = 'subtitles.nusmp.salamander.' + cue
+        sub = 'subtitles.anime_multiverse.salamander.' + cue
         lang[sub] = text
         sounds = []
         for i in range(1, variants + 1):
             path = os.path.join(SOUND_DIR, '%s_%d.ogg' % (cue, i))
             if not os.path.exists(path):
                 raise SystemExit('missing %s (run the generator first)' % path)
-            s = {'name': 'nusmp:salamander/%s_%d' % (cue, i)}
+            s = {'name': 'anime_multiverse:salamander/%s_%d' % (cue, i)}
             if M.ogg_seconds(path) >= M.STREAM_OVER:
                 s['stream'] = True
             sounds.append(s)
@@ -297,7 +297,7 @@ def write_manifest():
             old = json.load(f)
     except FileNotFoundError:
         old = {}
-    old = {k: v for k, v in old.items() if not k.startswith('subtitles.nusmp.salamander.')}
+    old = {k: v for k, v in old.items() if not k.startswith('subtitles.anime_multiverse.salamander.')}
     old.update(lang)
     with open(LANG_OUT, 'w', encoding='utf-8') as f:
         json.dump(old, f, indent=2, ensure_ascii=False)

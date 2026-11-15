@@ -1,0 +1,38 @@
+{
+  "parent": "anime_multiverse:world/kingdoms",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:compat_codex"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.world.codex.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.world.codex.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_compat_codex": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:compat_codex"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_compat_codex"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

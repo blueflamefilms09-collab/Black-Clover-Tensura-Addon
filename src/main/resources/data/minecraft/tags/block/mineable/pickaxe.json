@@ -1,17 +1,17 @@
 {
   "replace": false,
   "values": [
-    "nusmp:labyrinth_bricks",
-    "nusmp:labyrinth_tiles",
-    "nusmp:labyrinth_pillar",
-    "nusmp:labyrinth_glyph",
-    "nusmp:labyrinth_lantern",
-    "nusmp:magicule_vein",
-    "nusmp:pitfall_tile",
-    "nusmp:snuffer_glyph",
-    "nusmp:sigil_plate",
-    "nusmp:riddle_stone",
-    "nusmp:relic_forge",
-    "nusmp:soul_forge"
+    "anime_multiverse:labyrinth_bricks",
+    "anime_multiverse:labyrinth_tiles",
+    "anime_multiverse:labyrinth_pillar",
+    "anime_multiverse:labyrinth_glyph",
+    "anime_multiverse:labyrinth_lantern",
+    "anime_multiverse:magicule_vein",
+    "anime_multiverse:pitfall_tile",
+    "anime_multiverse:snuffer_glyph",
+    "anime_multiverse:sigil_plate",
+    "anime_multiverse:riddle_stone",
+    "anime_multiverse:relic_forge",
+    "anime_multiverse:soul_forge"
   ]
 }

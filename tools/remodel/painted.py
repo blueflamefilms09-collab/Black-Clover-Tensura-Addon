@@ -1,4 +1,4 @@
-"""Why: the Painted Constructs (entity nusmp:painted_construct, Painting Magic's living illustrations) come in three kinds (a hound, an einherjar knight, a giant) and seven paints (ink, fire, water,
+"""Why: the Painted Constructs (entity anime_multiverse:painted_construct, Painting Magic's living illustrations) come in three kinds (a hound, an einherjar knight, a giant) and seven paints (ink, fire, water,
 ice, wind, earth, lightning), and the old renderer drew the paint as a texture per paint. Here the body is painted ONCE in a pale, almost white brush-stroke paint and the renderer
 tints it with the paint's colour (the tint multiplies the pale texture, which keeps its brush strokes), so three characters serve the seven paints instead of twenty-one. Each kind is its own
 character file (the kit builds one body per file); this module holds what they share, and only returns spec dicts. See docs/arc/remodel.md.

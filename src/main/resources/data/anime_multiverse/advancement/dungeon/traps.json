@@ -1,0 +1,60 @@
+{
+  "parent": "anime_multiverse:dungeon/mega",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:pitfall_tile"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.dungeon.traps.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.dungeon.traps.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "have_pitfall_tile": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:pitfall_tile"
+          }
+        ]
+      }
+    },
+    "have_snuffer_glyph": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:snuffer_glyph"
+          }
+        ]
+      }
+    },
+    "have_riddle_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:riddle_stone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_pitfall_tile",
+      "have_snuffer_glyph",
+      "have_riddle_stone"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

@@ -22,7 +22,7 @@ DEFAULT_SAGA = {"boss": "ELF_REINCARNATION", "npc": "ALLIES"}
 
 def found():
     out = {}
-    for root, _dirs, files in os.walk(os.path.join(SRC, "com", "newuniverse", "nusmp", "arc")):
+    for root, _dirs, files in os.walk(os.path.join(SRC, "com", "newuniverse", "anime_multiverse", "arc")):
         for f in sorted(files):
             if not f.endswith(".java"):
                 continue

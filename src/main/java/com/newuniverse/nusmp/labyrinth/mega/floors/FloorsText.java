@@ -10,13 +10,13 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 /**
  * Why: every sentence this module says to a player or an operator comes from here, in one place, as a translation key with an English fallback
  * ({@code Component.translatableWithFallback}): a language file can change the wording without touching code, and the sentence still reads fine before the
- * lead has merged the language fragment (the keys live under {@code message.nusmp.mega.mfl.*}). Road names are their own keys so a sentence can name "your
+ * lead has merged the language fragment (the keys live under {@code message.anime_multiverse.mega.mfl.*}). Road names are their own keys so a sentence can name "your
  * road" in the player's language. Nothing here decides anything; it only builds components and says whether a player is a person who can be spoken to.
  */
 final class FloorsText {
     private FloorsText() {}
 
-    static final String PREFIX = "message.nusmp.mega.mfl.";
+    static final String PREFIX = "message.anime_multiverse.mega.mfl.";
 
     static MutableComponent text(String key, String english, Object... args) {
         return Component.translatableWithFallback(PREFIX + key, english, args);

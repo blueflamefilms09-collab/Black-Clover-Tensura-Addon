@@ -37,17 +37,17 @@ public final class ForgeSkillResolver {
             ResourceLocation rl = ResourceLocation.tryParse(data.id());
             ManasSkill skill = rl == null ? null : SkillAPI.getSkillRegistry().get(rl);
             if (skill == null) {
-                once(data.id() + ":missing", "[nusmp] Soul Forge skill {} is not registered in this game: left out", data.id());
+                once(data.id() + ":missing", "[anime_multiverse] Soul Forge skill {} is not registered in this game: left out", data.id());
                 return null;
             }
             String category = BossSkillRules.categoryOf(skill);
             ForgeSkill.Kind kind = "unique".equals(category) ? ForgeSkill.Kind.UNIQUE : "ultimate".equals(category) ? ForgeSkill.Kind.ULTIMATE
                     : "unknown".equals(category) ? data.kind() : null;
             if (kind == null) {
-                once(data.id() + ":category", "[nusmp] Soul Forge skill {} is a '{}' skill, not Unique or Ultimate: left out", data.id(), category);
+                once(data.id() + ":category", "[anime_multiverse] Soul Forge skill {} is a '{}' skill, not Unique or Ultimate: left out", data.id(), category);
                 return null;
             }
-            if (kind != data.kind()) once(data.id() + ":kind", "[nusmp] Soul Forge skill {} is {} in the registry (the data said {}): the registry wins", data.id(), kind, data.kind());
+            if (kind != data.kind()) once(data.id() + ":kind", "[anime_multiverse] Soul Forge skill {} is {} in the registry (the data said {}): the registry wins", data.id(), kind, data.kind());
             return kind == data.kind() ? data : data.withKind(kind);
         } catch (Throwable noSkills) {
             return null;

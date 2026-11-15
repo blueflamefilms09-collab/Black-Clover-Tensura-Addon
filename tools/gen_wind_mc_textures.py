@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Wind, "Minecraft style" pixel textures.  PHASE A (preview): all three looks to docs/previews.  PHASE B (in the game; the owner picked C "pixel-anime"): the C subset that the
-four shipped effects use (Slash, Emperor, Gale / Gust Lane, Ring) goes to src/main/resources/assets/nusmp/textures/particle/wmc_*.png, in two sets:
+four shipped effects use (Slash, Emperor, Gale / Gust Lane, Ring) goes to src/main/resources/assets/anime_multiverse/textures/particle/wmc_*.png, in two sets:
   wmc_<name>_<frame>.png     the pack palette (white / mint / lime / deep green + a dark green outline), drawn with a white vertex colour
   wmc_<name>_<frame>_t.png   the same shapes in five greys, drawn with the effect's tint (the six non-wind melee pages that reuse Crescent Slash, and any other book colour)
 
@@ -23,7 +23,7 @@ from PIL import Image, ImageDraw
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "mc", "wind_tex")
-GAME = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+GAME = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 # ---------------------------------------------------------------------------------------------------------------- palettes
 PAL_A = {"W": (247, 247, 247), "L": (213, 221, 211), "M": (163, 175, 161), "D": (107, 120, 106), "G": (142, 212, 90), "H": (79, 154, 53)}

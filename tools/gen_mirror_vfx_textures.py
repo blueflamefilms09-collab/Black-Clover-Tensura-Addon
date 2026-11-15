@@ -1,7 +1,7 @@
 """Textures for the 0.42 Mirror Magic overhaul (Gauche Adlai): ornate antique mirror frames and their glass, a mana corona,
 a light-distortion ripple and a prismatic streak. Deterministic, no fonts, no external images.
 
-    python tools/gen_mirror_vfx_textures.py  ->  src/main/resources/assets/nusmp/textures/particle/mirror_*.png
+    python tools/gen_mirror_vfx_textures.py  ->  src/main/resources/assets/anime_multiverse/textures/particle/mirror_*.png
 
 Every frame shape (oval, arch, round, crest, diamond) has a pair:
     mirror_frame_<shape>  silver frame with bevel shading, scrollwork and a crest at the top; transparent where the glass is

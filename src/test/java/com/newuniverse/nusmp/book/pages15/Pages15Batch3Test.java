@@ -40,7 +40,7 @@ class Pages15Batch3Test {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
     private static final Path BATCH = SRC.resolve("book/pages15/Batch3.java");
-    private static final Path SETS = ROOT.resolve("src/main/resources/data/nusmp/character_spells");
+    private static final Path SETS = ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells");
 
     /** book -> new pages the plan asks for (docs/magic/page_counts.md section 8, batch 3). */
     private static final Map<String, Integer> NEW = new LinkedHashMap<>();

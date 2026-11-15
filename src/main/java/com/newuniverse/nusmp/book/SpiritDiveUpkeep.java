@@ -2,7 +2,7 @@ package com.newuniverse.nusmp.book;
 
 /**
  * Why: the once-a-second upkeep of a Spirit Dive decides in one place, as pure arithmetic, whether the dive goes on and, if not, WHY (the reason is logged once per dive at INFO as
- * {@code nusmp spirit dive ended: <reason>}). A creative player pays no magicule upkeep (his pool is not used in creative, so it can be empty: before this the first upkeep second ended the dive
+ * {@code anime_multiverse spirit dive ended: <reason>}). A creative player pays no magicule upkeep (his pool is not used in creative, so it can be empty: before this the first upkeep second ended the dive
  * every time with "The spirit slips away.", while {@code ArmourRules.drop} already spares creative players).
  */
 public final class SpiritDiveUpkeep {

@@ -34,13 +34,13 @@ public final class SpiritLightSelfTests {
     }
 
     private static boolean resource(String path) {
-        try (InputStream in = SpiritLightSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) { return in != null; } catch (java.io.IOException e) { return false; }
+        try (InputStream in = SpiritLightSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path)) { return in != null; } catch (java.io.IOException e) { return false; }
     }
 
     private static Result run(MinecraftServer server) throws Exception {
         if (PropKind.valueOf("SPIRIT_LIGHT_1") == null || PropKind.valueOf("SPIRIT_LIGHT_2") == null) return Result.fail("a spirit light prop kind is missing");
         for (String id : SpiritLightRules.SOUND_IDS)
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", id))) return Result.fail("sound event " + id + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", id))) return Result.fail("sound event " + id + " is not registered");
         for (String form : new String[]{"cub", "seraph"}) {
             for (String suffix : new String[]{"", "_lod1", "_lod2", "_fx"}) if (!resource("geo/entity/spiritlight_" + form + suffix + ".geo.json")) return Result.fail("model spiritlight_" + form + suffix + " is missing");
             if (!resource("animations/entity/spiritlight_" + form + ".animation.json")) return Result.fail("animation file of " + form + " is missing");
@@ -65,7 +65,7 @@ public final class SpiritLightSelfTests {
                 if (LightMoodRules.poseId(seraph, LightMoodRules.poseName(seraph, pose)) != pose) return Result.fail("the pose table is not consistent at " + pose);
         for (LightMoodRules.Situation sit : LightMoodRules.Situation.values()) if (LightMoodRules.cueFor(false, sit, 0) != null) return Result.fail("the cub speaks on " + sit);
         for (String id : SpiritLightVoiceLines.AVAILABLE) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", SpiritLightSounds.voiceEventId(id)))) return Result.fail("the spoken line " + id + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", SpiritLightSounds.voiceEventId(id)))) return Result.fail("the spoken line " + id + " is not registered");
             if (!resource("sounds/spirit_light/voice/" + id + ".ogg")) return Result.fail("the spoken line " + id + " has no file");
         }
         for (String id : SpiritLightRules.SOUND_IDS) if (!resource("sounds/" + id.replace("spirit_light.", "spirit_light/") + "_1.ogg")) return Result.fail("no file for the sound " + id);

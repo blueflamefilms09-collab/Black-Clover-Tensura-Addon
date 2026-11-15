@@ -28,7 +28,7 @@ public final class SoulForgeBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(NUSMP.MODID);
 
-    /** {@code nusmp:soul_forge}: the altar that starts the Avatar ritual. */
+    /** {@code anime_multiverse:soul_forge}: the altar that starts the Avatar ritual. */
     public static final DeferredBlock<SoulForgeBlock> SOUL_FORGE = BLOCKS.register("soul_forge", () -> new SoulForgeBlock(
             BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.DEEPSLATE_BRICKS).strength(4.0f, 24.0f).noOcclusion().lightLevel(s -> 12)));
 

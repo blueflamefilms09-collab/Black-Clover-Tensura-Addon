@@ -52,13 +52,13 @@ public class ForgeScreen extends AbstractContainerScreen<RelicForgeMenu> {
         super.init();
         buttons.clear();
         int x = leftPos + 8, w = (imageWidth - 16 - 4) / 2;
-        add(Button.UPGRADE, x, topPos + 112, w, 14, "nusmp.forge.button.upgrade");
-        add(Button.SOCKET, x + w + 4, topPos + 112, w, 14, "nusmp.forge.button.socket");
-        add(Button.DRAW_OUT, x, topPos + 128, w, 14, "nusmp.forge.button.draw_out");
-        add(Button.CYCLE, x + w + 4, topPos + 128, w, 14, "nusmp.forge.button.cycle");
-        add(Button.ENGRAVE, x, topPos + 112, imageWidth - 16, 14, "nusmp.forge.button.engrave");
-        tabUpgrade = addRenderableWidget(new ThemedButton(leftPos, topPos - 16, 84, 14, Component.translatable("nusmp.forge.tab.upgrade"), b -> setTab(TAB_UPGRADE)));
-        tabEngrave = addRenderableWidget(new ThemedButton(leftPos + 88, topPos - 16, 88, 14, Component.translatable("nusmp.forge.tab.engrave"), b -> setTab(TAB_ENGRAVE)));
+        add(Button.UPGRADE, x, topPos + 112, w, 14, "anime_multiverse.forge.button.upgrade");
+        add(Button.SOCKET, x + w + 4, topPos + 112, w, 14, "anime_multiverse.forge.button.socket");
+        add(Button.DRAW_OUT, x, topPos + 128, w, 14, "anime_multiverse.forge.button.draw_out");
+        add(Button.CYCLE, x + w + 4, topPos + 128, w, 14, "anime_multiverse.forge.button.cycle");
+        add(Button.ENGRAVE, x, topPos + 112, imageWidth - 16, 14, "anime_multiverse.forge.button.engrave");
+        tabUpgrade = addRenderableWidget(new ThemedButton(leftPos, topPos - 16, 84, 14, Component.translatable("anime_multiverse.forge.tab.upgrade"), b -> setTab(TAB_UPGRADE)));
+        tabEngrave = addRenderableWidget(new ThemedButton(leftPos + 88, topPos - 16, 88, 14, Component.translatable("anime_multiverse.forge.tab.engrave"), b -> setTab(TAB_ENGRAVE)));
         setTab(tab);
     }
 
@@ -105,10 +105,10 @@ public class ForgeScreen extends AbstractContainerScreen<RelicForgeMenu> {
                 g.fill(sx + 1, sy + 1, sx + 17, sy + 17, SLOT);
             }
         }
-        slotLabel(g, "nusmp.forge.slot.relic", RelicForgeMenu.RELIC_X + 8, RelicForgeMenu.RELIC_Y + 20);
-        slotLabel(g, "nusmp.forge.slot.catalyst", RelicForgeMenu.CAT_A_X + 8, RelicForgeMenu.CAT_B_Y + 20);
-        slotLabel(g, "nusmp.forge.slot.core", RelicForgeMenu.CORE_X + 8, RelicForgeMenu.CORE_Y + 20);
-        slotLabel(g, "nusmp.forge.slot.hint", RelicForgeMenu.PREVIEW_X + 8, RelicForgeMenu.PREVIEW_Y + 20);
+        slotLabel(g, "anime_multiverse.forge.slot.relic", RelicForgeMenu.RELIC_X + 8, RelicForgeMenu.RELIC_Y + 20);
+        slotLabel(g, "anime_multiverse.forge.slot.catalyst", RelicForgeMenu.CAT_A_X + 8, RelicForgeMenu.CAT_B_Y + 20);
+        slotLabel(g, "anime_multiverse.forge.slot.core", RelicForgeMenu.CORE_X + 8, RelicForgeMenu.CORE_Y + 20);
+        slotLabel(g, "anime_multiverse.forge.slot.hint", RelicForgeMenu.PREVIEW_X + 8, RelicForgeMenu.PREVIEW_Y + 20);
 
         int bx = x + 13, bw = imageWidth - 26;
         if (tab == TAB_UPGRADE) {
@@ -132,8 +132,8 @@ public class ForgeScreen extends AbstractContainerScreen<RelicForgeMenu> {
             if (cd != null) g.drawString(font, t(cd), bx, y + 104, anime ? UiTheme.RED : 0xFFFF6A6A, false);
         } else {
             g.drawString(font, t(v.engraveLine()), bx, y + 66, anime ? UiTheme.TEXT : TEXT, false);
-            g.drawString(font, Component.translatable("nusmp.forge.engrave.help1"), bx, y + 80, anime ? UiTheme.TEXT_DIM : DIM, false);
-            g.drawString(font, Component.translatable("nusmp.forge.engrave.help2"), bx, y + 90, anime ? UiTheme.TEXT_DIM : DIM, false);
+            g.drawString(font, Component.translatable("anime_multiverse.forge.engrave.help1"), bx, y + 80, anime ? UiTheme.TEXT_DIM : DIM, false);
+            g.drawString(font, Component.translatable("anime_multiverse.forge.engrave.help2"), bx, y + 90, anime ? UiTheme.TEXT_DIM : DIM, false);
         }
         renderSage(g, v, now);
     }
@@ -149,7 +149,7 @@ public class ForgeScreen extends AbstractContainerScreen<RelicForgeMenu> {
         String head, body, result = "";
         if (m == ForgeRules.Msg.OK) {
             head = UiLang.get(UiLang.ANALYZING);
-            body = UiLang.get("nusmp.forge.msg.idle");
+            body = UiLang.get("anime_multiverse.forge.msg.idle");
         } else if (m.good()) {
             head = UiLang.get(UiLang.ANALYSIS_COMPLETE);
             body = "";

@@ -18,9 +18,9 @@ final class AxeBrawn {
     private AxeBrawn() {}
 
     private static final String STACKS = "nusmp_ax_bn", STAMP = "nusmp_ax_bt";
-    private static final ResourceLocation MELEE = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_axe_brawn_melee");
-    private static final ResourceLocation KNOCK = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_axe_brawn_knock");
-    private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_axe_brawn_speed");
+    private static final ResourceLocation MELEE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_axe_brawn_melee");
+    private static final ResourceLocation KNOCK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_axe_brawn_knock");
+    private static final ResourceLocation SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_axe_brawn_speed");
     /** The green of the gem, used for every effect of the weapon. */
     static final int GREEN = 0x35E07C;
 

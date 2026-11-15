@@ -45,7 +45,7 @@ public final class TierMoves {
                 try {
                     TierTraits.onTell(tb, m);                       // 3.39.0: the Balance's window opens with the wind-up of its move
                 } catch (RuntimeException e) {
-                    LOG.debug("[nusmp] tier trait telegraph hook {} failed: {}", m.id(), e.toString());
+                    LOG.debug("[anime_multiverse] tier trait telegraph hook {} failed: {}", m.id(), e.toString());
                 }
             }
         });
@@ -55,7 +55,7 @@ public final class TierMoves {
                 try {
                     TierTraits.afterMove(tb, m, target);            // 3.39.0: the traits that hang on this move
                 } catch (RuntimeException e) {
-                    LOG.warn("[nusmp] tier trait hook of move {} of {} failed: {}", m.id(), boss.bossName(), e.toString());
+                    LOG.warn("[anime_multiverse] tier trait hook of move {} of {} failed: {}", m.id(), boss.bossName(), e.toString());
                 }
             }
         });
@@ -66,7 +66,7 @@ public final class TierMoves {
         try {
             run(m, boss, target);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] tier move {} of {} failed: {}", m.id(), boss.bossName(), e.toString());
+            LOG.warn("[anime_multiverse] tier move {} of {} failed: {}", m.id(), boss.bossName(), e.toString());
         }
     }
 
@@ -74,7 +74,7 @@ public final class TierMoves {
         try {
             tell(m, boss, target, left);
         } catch (RuntimeException e) {
-            LOG.debug("[nusmp] tier move telegraph {} failed: {}", m.id(), e.toString());
+            LOG.debug("[anime_multiverse] tier move telegraph {} failed: {}", m.id(), e.toString());
         }
     }
 

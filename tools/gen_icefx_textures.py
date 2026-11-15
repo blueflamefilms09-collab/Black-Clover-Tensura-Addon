@@ -3,7 +3,7 @@
     python3 -B tools/gen_icefx_textures.py            # all textures
     python3 -B tools/gen_icefx_textures.py fang wall  # only the named ones
 
-Output: src/main/resources/assets/nusmp/textures/particle/icefx_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/icefx_*.png
 
 Look: the Heavenly Ice Fang of the art pack. Clear pale ice (NOT the black glass of Demon Ice): long faceted spikes whose facets run
 from deep blue shade to white, hard white edges that glow, frost ferns and six-fold snowflakes, breath mist and fine crack lines.
@@ -23,7 +23,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for clean edges
 
 

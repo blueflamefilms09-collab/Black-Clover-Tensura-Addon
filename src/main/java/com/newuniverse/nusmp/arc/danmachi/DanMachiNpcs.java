@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Why: the friends of the Dungeon are six characters of the DanMachi saga that the player talks to, not fights: the white-haired boy, his goddess, the Sword Princess,
  * the supporter, the smith and the Guild adviser. An NPC of the arc layer is only data (an {@link ArcCharacter} record: its name, title, colours and saga) plus a model
- * the art kit builds from {@code tools/arc/char_<id>.py} and a dialogue file {@code data/nusmp/arc/dialogue/<id>.json}, all of which live under the character's id; so
+ * the art kit builds from {@code tools/arc/char_<id>.py} and a dialogue file {@code data/anime_multiverse/arc/dialogue/<id>.json}, all of which live under the character's id; so
  * the six are six records here, listed in the order the story meets them (the adviser first: she is at the Guild door; then the boy and his goddess; then the others), and
  * one call registers them all. The requests four of them make are in {@link QuestBook}; their roles are their dialogue (the shared NPC entity has no shop yet).
  */

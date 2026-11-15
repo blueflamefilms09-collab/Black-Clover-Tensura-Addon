@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class GsSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static String read(String rel) throws IOException { return Files.readString(SRC.resolve(rel)); }
 

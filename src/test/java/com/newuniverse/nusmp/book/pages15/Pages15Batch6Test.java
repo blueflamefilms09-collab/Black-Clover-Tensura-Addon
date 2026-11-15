@@ -180,7 +180,7 @@ class Pages15Batch6Test {
         Set<String> mine = new HashSet<>();
         for (Page p : pages()) mine.add(p.id());
         for (var e : SETS.entrySet()) {
-            JsonObject d = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/character_spells/" + e.getKey() + ".json"))).getAsJsonObject();
+            JsonObject d = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells/" + e.getKey() + ".json"))).getAsJsonObject();
             assertEquals(e.getValue(), d.get("book").getAsString());
             JsonArray spells = d.getAsJsonArray("spells");
             Set<String> seen = new HashSet<>();

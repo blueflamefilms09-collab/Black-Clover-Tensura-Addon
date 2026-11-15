@@ -1,0 +1,50 @@
+{
+  "parent": "anime_multiverse:bosses/first",
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.bosses.wind_spirit_lord.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.bosses.wind_spirit_lord.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "wind_spirit_lord"
+      }
+    },
+    "kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:wind_spirit_lord"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "event",
+      "kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 120
+  }
+}

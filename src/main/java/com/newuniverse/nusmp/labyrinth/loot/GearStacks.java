@@ -19,12 +19,12 @@ import java.util.SplittableRandom;
 
 /**
  * Why: a roll is only worth something if the game APPLIES it, in any slot, and in 1.21 that is the vanilla attribute-modifier component of the stack. So when a piece is made,
- * this writes the roll into the {@code nusmp:gear_roll} component AND turns every stat line into a modifier of the stack, so the numbers in the tooltip are the numbers on
+ * this writes the roll into the {@code anime_multiverse:gear_roll} component AND turns every stat line into a modifier of the stack, so the numbers in the tooltip are the numbers on
  * the wearer. A weapon gets its base damage and speed as the two vanilla "base" modifiers (the damage is the owner's grade table plus the rolled line, never above the top
  * of the grade's range), so the item reads and fights like any weapon; a piece of armour keeps the armour, toughness and knockback resistance of its material (setting the
  * component REPLACES the item's own modifiers, so the factory starts from the item's default list) and adds its lines; a trinket gets no vanilla modifiers at all, because
  * nothing in vanilla applies a modifier for an item in a Curios slot: {@link TrinketBridge} reads the roll and applies it. Every modifier id carries the slot group
- * ({@code nusmp:loot/<slot>/<stat>}) so four armour pieces worn together each keep their own line. The critical chance has no vanilla attribute, so it is read from the roll
+ * ({@code anime_multiverse:loot/<slot>/<stat>}) so four armour pieces worn together each keep their own line. The critical chance has no vanilla attribute, so it is read from the roll
  * by {@link CritHandler}. Server side; no client code.
  */
 public final class GearStacks {
@@ -139,6 +139,6 @@ public final class GearStacks {
     }
 
     static ResourceLocation modifierId(EquipmentSlotGroup group, StatKind k) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "loot/" + group.getSerializedName() + "/" + k.id());
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "loot/" + group.getSerializedName() + "/" + k.id());
     }
 }

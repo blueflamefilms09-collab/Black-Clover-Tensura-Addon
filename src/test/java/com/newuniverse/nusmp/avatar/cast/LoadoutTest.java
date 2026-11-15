@@ -41,7 +41,7 @@ class LoadoutTest {
     @Test
     void theNamespaceAndTheCaseDoNotMatter() {
         assertEquals(SkillRoles.role("tensura:berserk"), SkillRoles.role("BERSERK"));
-        assertEquals(SkillRoles.role("nusmp:berserk"), SkillRoles.role("berserk"));
+        assertEquals(SkillRoles.role("anime_multiverse:berserk"), SkillRoles.role("berserk"));
     }
 
     @Test

@@ -64,7 +64,7 @@ public class TierBoss extends ArcBoss {
     private void traitFailed(String hook, RuntimeException e) {
         if (traitWarned) return;
         traitWarned = true;
-        LOG.warn("[nusmp] tier trait hook {} of {} failed (further failures are not logged): {}", hook, row.id(), e.toString());
+        LOG.warn("[anime_multiverse] tier trait hook {} of {} failed (further failures are not logged): {}", hook, row.id(), e.toString());
     }
 
     @Override public ArcCharacter character() { return row.character(); }
@@ -172,7 +172,7 @@ public class TierBoss extends ArcBoss {
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean recentlyHit) {
         super.dropCustomDeathLoot(level, source, recentlyHit);
-        Item stone = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("nusmp", "magic_stone"));
+        Item stone = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "magic_stone"));
         if (stone == null || stone == net.minecraft.world.item.Items.AIR) return;
         int max = row.letter().stones();
         int n = Math.max(1, max / 2 + getRandom().nextInt(max / 2 + 1));

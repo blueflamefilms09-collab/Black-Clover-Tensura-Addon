@@ -1,4 +1,4 @@
-"""Why: Undine, the water Spirit Lord of Black Clover (entities nusmp:elemental_spirit_lord kind UNDINE and nusmp:spirit_lord kind UNDINE). The old model was a woman of water: foam hair and a wave
+"""Why: Undine, the water Spirit Lord of Black Clover (entities anime_multiverse:elemental_spirit_lord kind UNDINE and anime_multiverse:spirit_lord kind UNDINE). The old model was a woman of water: foam hair and a wave
 dress that spill into waves, fin ears (tools/gen_spirit_lords.py, with a second translucent water model). This is the art kit's version on the player's rig: a slim woman with sea-blue
 skin, long wavy foam-white hair, fin ears, a layered dress of rippled blue cloth with a frothed hem, a flowing mantle, and a ball of water held in her hand. It hovers. The renderer
 draws her slightly translucent (the old water overlay's job). The colours are the old model's. See docs/arc/remodel.md.

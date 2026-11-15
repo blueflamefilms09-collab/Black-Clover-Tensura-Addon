@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why (docs/beastwill_remake.md): 3.60.0 remakes all 27 Beast Wills (Acquire = a human with borrowed strengths and ONE equipped piece, Integrate = a full armoured beast-humanoid with a signature weapon).
- * The old wills stay as data ({@code data/nusmp/beast_will_classic}, switched on by the server setting {@code beastwill.classicWills}), so this pins: the classic folder is whole and valid, the remade folder
+ * The old wills stay as data ({@code data/anime_multiverse/beast_will_classic}, switched on by the server setting {@code beastwill.classicWills}), so this pins: the classic folder is whole and valid, the remade folder
  * has the same 27 ids (they are save keys), every remade will names its piece, form and weapon and has lore, every ability and every finisher incantation has a lang line, and the switches are wired.
  * Pure (file reads); the working directory is the project root.
  */
 class BeastWillRemakeTest {
-    private static final Path NEW = Path.of("src/main/resources/data/nusmp/beast_will");
-    private static final Path OLD = Path.of("src/main/resources/data/nusmp/beast_will_classic");
+    private static final Path NEW = Path.of("src/main/resources/data/anime_multiverse/beast_will");
+    private static final Path OLD = Path.of("src/main/resources/data/anime_multiverse/beast_will_classic");
 
     private static String[] ids(Path dir) {
         File[] f = dir.toFile().listFiles((d, n) -> n.endsWith(".json"));
@@ -66,16 +66,16 @@ class BeastWillRemakeTest {
 
     @Test
     void everyWillHasALoreLineAndEveryFinisherAnIncantationInTheLang() throws Exception {
-        JsonObject en = json(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));
+        JsonObject en = json(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
         for (String id : ids(NEW)) {
-            assertTrue(en.has("nusmp.beastwill." + id + ".lore"), id + ": no lore line (shown on the core)");
-            assertTrue(en.has("nusmp.beastwill." + id + ".name"), id + ": no name");
+            assertTrue(en.has("anime_multiverse.beastwill." + id + ".lore"), id + ": no lore line (shown on the core)");
+            assertTrue(en.has("anime_multiverse.beastwill." + id + ".name"), id + ": no name");
             for (String ph : new String[]{"acquire", "integrate"})
                 for (var a : json(NEW.resolve(id + ".json")).getAsJsonObject(ph).getAsJsonArray("abilities"))
-                    assertTrue(en.has("nusmp.beastwill.ability." + a.getAsJsonObject().get("id").getAsString()), id + ": ability without a lang name");
+                    assertTrue(en.has("anime_multiverse.beastwill.ability." + a.getAsJsonObject().get("id").getAsString()), id + ": ability without a lang name");
         }
         for (BeastSkillRules.Spec s : BeastSkillRules.SPECS) {
-            assertTrue(en.has("nusmp.beastwill.incant." + s.key()), s.key() + ": the mastery finisher has no incantation");
+            assertTrue(en.has("anime_multiverse.beastwill.incant." + s.key()), s.key() + ": the mastery finisher has no incantation");
             assertTrue(Files.exists(NEW.resolve(s.willId() + ".json")), s.willId());
         }
     }
@@ -90,6 +90,6 @@ class BeastWillRemakeTest {
         assertTrue(client.contains("\"classicSpirits\"") && client.contains("ModConfig.Type.CLIENT") && client.contains("nusmp-beastwill-spirit-client.toml"), "a look-only setting is a CLIENT config");
         assertTrue(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUSMP.java")).contains("BeastWillSpiritClientConfig.init("), "registered on the client");
         String skill = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/skill/BeastSkill.java"));
-        assertTrue(skill.contains("nusmp.beastwill.incant.") && skill.contains("m.mastery()"), "only the mastery finisher speaks, one action-bar line to the caster");
+        assertTrue(skill.contains("anime_multiverse.beastwill.incant.") && skill.contains("m.mastery()"), "only the mastery finisher speaks, one action-bar line to the caster");
     }
 }

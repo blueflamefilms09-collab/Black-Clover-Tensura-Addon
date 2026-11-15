@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Why: everything a character says lives in one data file ({@code data/nusmp/arc/dialogue/<character_id>.json}), so the people who write the characters
+ * Why: everything a character says lives in one data file ({@code data/anime_multiverse/arc/dialogue/<character_id>.json}), so the people who write the characters
  * write words, not Java, and a datapack can replace any of it. This class is the pure half: it parses such a file into a book of {@link DialogueLine}s per
  * {@link DialogueContext} and picks the line a player hears. It never throws on a bad file: every problem (a typo in a context name, a line without text,
  * a number that is not one) is returned as a readable message and the rest of the file is still used, so one wrong line does not make a character mute.
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  * winners the choice is random, weighted by {@code weight}, and the line shown last time is skipped when there is another.
  */
 public final class DialogueBook {
-    /** The id of the file every character without a file of its own says (data/nusmp/arc/dialogue/_fallback.json). */
+    /** The id of the file every character without a file of its own says (data/anime_multiverse/arc/dialogue/_fallback.json). */
     public static final String FALLBACK_ID = "_fallback";
 
     private static final Pattern PLACEHOLDER = Pattern.compile("\\{([A-Za-z_]+)}");

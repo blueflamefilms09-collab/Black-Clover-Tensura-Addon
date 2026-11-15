@@ -171,7 +171,7 @@ public final class LuciusProfile {
                 rainbow(b, sl, p, now);
                 usurper(b, p, now);
             } catch (Throwable t) {
-                LogUtils.getLogger().warn("[nusmp] Lucius's blow riders failed: {}", t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] Lucius's blow riders failed: {}", t.toString());
             }
         }
         return landed;

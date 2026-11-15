@@ -89,7 +89,7 @@ class FanaTest {
         assertEquals(PhoenixRobe.Element.FIRE, PhoenixRobe.classify("minecraft:lava"));
         assertEquals(PhoenixRobe.Element.COOL, PhoenixRobe.classify("tensura:water_elemental"));
         assertEquals(PhoenixRobe.Element.COOL, PhoenixRobe.classify("minecraft:freeze"));
-        assertEquals(PhoenixRobe.Element.COOL, PhoenixRobe.classify("nusmp:ice_wedge"));
+        assertEquals(PhoenixRobe.Element.COOL, PhoenixRobe.classify("anime_multiverse:ice_wedge"));
         assertEquals(PhoenixRobe.Element.COOL, PhoenixRobe.classify("tensura:steam_fire_water"), "a cool word wins over a fire word");
         assertEquals(PhoenixRobe.Element.OTHER, PhoenixRobe.classify("tensura:light_elemental"));
         assertEquals(PhoenixRobe.Element.OTHER, PhoenixRobe.classify("minecraft:generic"));

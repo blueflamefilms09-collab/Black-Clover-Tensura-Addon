@@ -93,7 +93,7 @@ class Wave5PureTest {
         Map<String, Integer> rec = new HashMap<>();
         rec.put("minecraft:iron_sword", 1);
         rec.put("minecraft:cobblestone", 64);
-        String[] ids = {"minecraft:iron_sword", "minecraft:cobblestone", "minecraft:cobblestone", "minecraft:diamond", "nusmp:relic", null};
+        String[] ids = {"minecraft:iron_sword", "minecraft:cobblestone", "minecraft:cobblestone", "minecraft:diamond", "anime_multiverse:relic", null};
         int[] counts = {1, 64, 40, 3, 1, 0};
         boolean[] exempt = {false, false, false, false, true, false};
         int[] out = Wave5Pure.excess(ids, counts, exempt, rec);

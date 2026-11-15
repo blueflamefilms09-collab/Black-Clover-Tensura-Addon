@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_gel_textures.py [name ...]        # no names = all
 
-Writes src/main/resources/assets/nusmp/textures/particle/gel_*.png.
+Writes src/main/resources/assets/anime_multiverse/textures/particle/gel_*.png.
 
 Look (Black Clover, Gel Magic; the Sticky Salamander spell): a semi-translucent, thick, jiggling jelly that refracts light. Mint and
 teal glass-like blobs with a darker, denser rim, a glossy window highlight, a bright caustic net floating inside, little trapped
@@ -31,7 +31,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4  # supersampling for clean edges
 
 

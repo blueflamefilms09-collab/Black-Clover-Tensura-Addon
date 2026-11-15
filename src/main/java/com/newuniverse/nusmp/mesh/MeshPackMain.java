@@ -29,7 +29,7 @@ public final class MeshPackMain {
         int packed = 0, kept = 0, capped = 0, quadsDropped = 0;
         double worstLoss = 0;
         String worst = "";
-        int cap = Integer.getInteger("nusmp.meshQuadCap", 0);                           // build.gradle -PmeshQuadCap (default 3000, 0 = no cut)
+        int cap = Integer.getInteger("anime_multiverse.meshQuadCap", 0);                           // build.gradle -PmeshQuadCap (default 3000, 0 = no cut)
         for (int i = 2; i < args.length; i++) {
             Path dir = root.resolve(args[i]);
             if (!Files.isDirectory(dir)) continue;
@@ -54,7 +54,7 @@ public final class MeshPackMain {
                             worst = root.relativize(f) + " " + cut.quadsBefore() + " -> " + cut.quadsAfter() + " quads";
                         }
                         text = cut.text();
-                        String dump = System.getProperty("nusmp.meshCapDump");           // tools/mesh_cap/preview_cap.py: the cut meshes as plain text, to look at
+                        String dump = System.getProperty("anime_multiverse.meshCapDump");           // tools/mesh_cap/preview_cap.py: the cut meshes as plain text, to look at
                         if (dump != null) {
                             Path d = Paths.get(dump).resolve(root.relativize(f).toString());
                             Files.createDirectories(d.getParent());
@@ -73,9 +73,9 @@ public final class MeshPackMain {
                 packed++;
             }
         }
-        System.out.println("[nusmp] packMeshes: " + packed + " meshes packed (" + (before >> 20) + " MB of text -> " + (after >> 20) + " MB), " + kept + " left as text");
+        System.out.println("[anime_multiverse] packMeshes: " + packed + " meshes packed (" + (before >> 20) + " MB of text -> " + (after >> 20) + " MB), " + kept + " left as text");
         if (cap > 0)
-            System.out.println("[nusmp] packMeshes: detail limit " + cap + " quads (" + 2 * cap + " triangles): " + capped + " meshes cut, " + quadsDropped + " small quads left out"
+            System.out.println("[anime_multiverse] packMeshes: detail limit " + cap + " quads (" + 2 * cap + " triangles): " + capped + " meshes cut, " + quadsDropped + " small quads left out"
                     + (capped > 0 ? ", most surface lost " + Math.round(worstLoss * 1000) / 10.0 + "% (" + worst + ")" : ""));
     }
 }

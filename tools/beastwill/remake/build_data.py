@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Why: builds the 27 remade Beast Will data files (3.60.0) from the approved design (beastwill_remake_v3.json) and the classic files.
-Operational numbers the design does not touch (host races, caps, unlock levels, passive stat, keywords) are KEPT from the classic file in data/nusmp/beast_will_classic;
+Operational numbers the design does not touch (host races, caps, unlock levels, passive stat, keywords) are KEPT from the classic file in data/anime_multiverse/beast_will_classic;
 everything the design changes (name, beast, rank, drop chance, EP, tint, costs, stats, abilities) comes from the design. Extra text fields (lore, pitch, spirit, equip, ...) ride along for the docs and the codex.
 Run from the repo root: python3 tools/beastwill/remake/build_data.py"""
 import json, os
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..")
-DATA = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp")
+DATA = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse")
 design = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "beastwill_remake_v3.json")))
 
 def hexint(s):

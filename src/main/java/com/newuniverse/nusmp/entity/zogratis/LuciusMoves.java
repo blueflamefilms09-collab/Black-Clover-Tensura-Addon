@@ -196,7 +196,7 @@ final class LuciusMoves {
             Holder<MobEffect> h = i.getEffect();
             if (!h.value().isBeneficial()) continue;
             String key = h.unwrapKey().map(k -> k.location().toString()).orElse("");
-            if (key.startsWith("nusmp:") || key.contains("devil") || key.contains("contract") || key.contains("attun") || key.contains("union")) {
+            if (key.startsWith("anime_multiverse:") || key.contains("devil") || key.contains("contract") || key.contains("attun") || key.contains("union")) {
                 e.removeEffect(h);
                 n++;
             }

@@ -4,7 +4,7 @@
     python3 -B tools/gen_loot_models.py [id ...]             no ids = all sixteen; idempotent and deterministic
     LOOT_PREVIEW=<dir> python3 -B tools/gen_loot_models.py goblin_fang_dagger     also renders a preview sheet of each
 
-For each id it writes (through new197_lib.finish): assets/nusmp/weapon_meshes/<id>.txt (the mesh WeaponRenderer draws), textures/entity/weapon/<id>.png and _glow.png (the
+For each id it writes (through new197_lib.finish): assets/anime_multiverse/weapon_meshes/<id>.txt (the mesh WeaponRenderer draws), textures/entity/weapon/<id>.png and _glow.png (the
 painted skin and the additive glow skin), textures/item/<id>.png (the 16 x 16 inventory sprite rendered from the finished mesh) and models/item/<id>.json plus <id>_icon.json (the
 3D hand model and the flat icon). Then it writes the display presets of the long weapons (the oversize rule) and the class rows (weapon_classes.json, both copies).
 The weapons follow the Genesis Demon-Slayer's method: real cross-sections (blades are lofted, hafts are lathed), named parts, a painted skin, an additive glow skin and,
@@ -33,7 +33,7 @@ from new197_legend import fuller_pair, glow_parts                               
 import roster as R                                                                  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(_TOOLS, ".."))                    # (the star imports above bring HERE, ROOT and ASSETS of the kit: these names are this file's own)
-GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 
 
 def finish_item(item_id, m, atlas, cls, **kw):

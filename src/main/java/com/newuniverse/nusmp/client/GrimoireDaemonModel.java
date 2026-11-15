@@ -21,7 +21,7 @@ import net.minecraft.util.Mth;
  * part table in tools/gen_daemon_textures.py (128x128).
  */
 public class GrimoireDaemonModel extends EntityModel<GrimoireDaemonEntity> {
-    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_daemon"), "main");
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_daemon"), "main");
 
     private final ModelPart root, robeLow, robeMid, robeTop, head, hoodTip, armR, armL, hornR, hornL, book, coverL, coverR, pages,
             wingR, wingL, wing2R, wing2L, slab;

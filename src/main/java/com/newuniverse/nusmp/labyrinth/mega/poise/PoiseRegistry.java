@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 /**
  * Why: the registration entry point of the poise layer, the pattern of every package of the Mega-Dungeon: one {@link #init} (mod bus: the attachment type, the in-game self-tests) and one
  * {@link #register} (game bus: the telegraph table's reload listener, the damage and knockback handlers, the bearers' tick, the passivity handlers), both called from {@code MegaSystem}
- * (an append-only pair of lines). The config is the {@code [foundry.poise]} section of {@code FoundryConfig}, so no new config file needs registering. The attachment {@code nusmp:mega_poise}
+ * (an append-only pair of lines). The config is the {@code [foundry.poise]} section of {@code FoundryConfig}, so no new config file needs registering. The attachment {@code anime_multiverse:mega_poise}
  * is written only for bearers, so a world with no elite or captain stores nothing.
  */
 public final class PoiseRegistry {

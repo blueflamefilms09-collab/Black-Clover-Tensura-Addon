@@ -82,6 +82,6 @@ public final class Safe {
 
     /** Logs a failed effect once per kind of effect, so one broken technique cannot flood the log. */
     private static void told(String what, Throwable e) {
-        if (TOLD.size() < 200 && TOLD.add(what)) LogUtils.getLogger().warn("[nusmp] A vassal weapon technique ({}) stopped: {}", what, e.toString());
+        if (TOLD.size() < 200 && TOLD.add(what)) LogUtils.getLogger().warn("[anime_multiverse] A vassal weapon technique ({}) stopped: {}", what, e.toString());
     }
 }

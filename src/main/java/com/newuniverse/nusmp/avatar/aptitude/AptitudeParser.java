@@ -22,7 +22,7 @@ import java.util.Locale;
  *   "magic": "flame",                                 [""]      a MagicType name in lower case ("flame", "spatial", "anti_magic"), "" for a Tensura-only aptitude
  *   "skills": ["tensura:flame_manipulation"],         [[]]      Tensura skill ids the Avatar may use because of it
  *   "tint": "#FF6A1E",                                [rarity colour]
- *   "icon": "nusmp:textures/gui/soulforge/apt/fire.png",  [that path]
+ *   "icon": "anime_multiverse:textures/gui/soulforge/apt/fire.png",  [that path]
  *   "description": "One line of flavour." }           [""]
  * </pre>
  */

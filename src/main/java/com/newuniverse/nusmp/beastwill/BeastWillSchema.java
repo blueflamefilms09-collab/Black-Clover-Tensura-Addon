@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Why: reads one will file ({@code data/nusmp/beast_will/<id>.json}) into a {@link BeastWillDef} and checks it against {@link BeastWillRules} (3.45.0). The game's loader and the unit tests call the same
+ * Why: reads one will file ({@code data/anime_multiverse/beast_will/<id>.json}) into a {@link BeastWillDef} and checks it against {@link BeastWillRules} (3.45.0). The game's loader and the unit tests call the same
  * function, so a file that passes the test is a file the game accepts. A file with any problem is rejected as a whole (a half-read will would be a will with the wrong cost), and the problem is reported in
  * words. Pure: Gson only.
  */

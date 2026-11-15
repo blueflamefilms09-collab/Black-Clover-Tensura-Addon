@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class BeastWillLookTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
-    private static final Path DATA = ROOT.resolve("src/main/resources/data/nusmp/beast_will");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
+    private static final Path DATA = ROOT.resolve("src/main/resources/data/anime_multiverse/beast_will");
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
 
     private static String code(Path p) throws IOException {

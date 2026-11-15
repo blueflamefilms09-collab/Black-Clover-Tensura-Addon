@@ -64,6 +64,6 @@ public class RelicCrossbowItem extends CrossbowItem implements RelicBearer {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tip, flag);
-        RelicRangedSupport.hint(tip, def, "tooltip.nusmp.relic.crossbow_acts");
+        RelicRangedSupport.hint(tip, def, "tooltip.anime_multiverse.relic.crossbow_acts");
     }
 }

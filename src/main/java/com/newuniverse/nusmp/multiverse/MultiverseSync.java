@@ -98,7 +98,7 @@ public final class MultiverseSync {
                     CompoundTag e = new CompoundTag();
                     e.putString("Id", page.id());
                     e.putString("Name", page.name());
-                    e.putString("Key", "nusmp.page." + book.getRegistryName().getPath() + "." + page.id());
+                    e.putString("Key", "anime_multiverse.page." + book.getRegistryName().getPath() + "." + page.id());
                     e.putInt("Cost", (int) Math.round(page.costPercent()));
                     e.putInt("Cooldown", page.cooldown() / 20);
                     e.putInt("Mode", m);
@@ -160,7 +160,7 @@ public final class MultiverseSync {
 
     // ---------------------------------------------------------------- network
     public record StatusPayload(CompoundTag status) implements CustomPacketPayload {
-        public static final Type<StatusPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "multiverse_status"));
+        public static final Type<StatusPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "multiverse_status"));
         public static final StreamCodec<FriendlyByteBuf, StatusPayload> STREAM_CODEC =
                 StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, StatusPayload::status, StatusPayload::new);
 

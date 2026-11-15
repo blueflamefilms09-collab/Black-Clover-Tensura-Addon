@@ -145,7 +145,7 @@ public final class ShopService {
             ArcCharacter c = BlackMarketWitch.CHARACTER;
             DialogueBook book = DialogueLoader.bookOrFallback(c.id());
             DialogueBook.Pick pick = book.pick(topic, ArcStory.situation(p, c), witch == null ? -1 : witch.lastLine(topic), n -> ThreadLocalRandom.current().nextInt(n));
-            if (pick == null) return Component.translatable("gui.nusmp.shop.welcome");
+            if (pick == null) return Component.translatable("gui.anime_multiverse.shop.welcome");
             if (witch != null) witch.rememberLine(topic, pick.index());
             DialogueLine line = pick.line();
             String player = p.getGameProfile().getName();
@@ -153,8 +153,8 @@ public final class ShopService {
             return line.key().isEmpty() ? Component.literal(line.plain(player, c.name(), saga))
                     : Component.translatableWithFallback(line.key(), line.template(), player, c.name(), saga);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] the witch could not find her words: {}", e.toString());
-            return Component.translatable("gui.nusmp.shop.welcome");
+            LOG.warn("[anime_multiverse] the witch could not find her words: {}", e.toString());
+            return Component.translatable("gui.anime_multiverse.shop.welcome");
         }
     }
 
@@ -177,7 +177,7 @@ public final class ShopService {
             PacketDistributor.sendToPlayer(p, new ShopSyncPayload(snap, r.reply().ordinal(), p.getRandom().nextInt(256)));
             cue(witch, r.reply());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: could not answer {}: {}", p.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] black market: could not answer {}: {}", p.getGameProfile().getName(), e.toString());
         }
     }
 
@@ -204,7 +204,7 @@ public final class ShopService {
             NusmpEvents.fire(p, "tree.shop.buy", offer.id());                     // never throws (the quest door swallows its own errors)
             return new Result(ShopRules.Reply.BOUGHT, price, 1);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a purchase by {} failed: {}", p.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] black market: a purchase by {} failed: {}", p.getGameProfile().getName(), e.toString());
             return Result.of(ShopRules.Reply.FAILED);
         }
     }
@@ -226,7 +226,7 @@ public final class ShopService {
             syncTree(p);
             return new Result(ShopRules.Reply.SOLD, sale.gold(), sale.count());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a sale by {} failed: {}", p.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] black market: a sale by {} failed: {}", p.getGameProfile().getName(), e.toString());
             return Result.of(ShopRules.Reply.FAILED);
         }
     }
@@ -266,7 +266,7 @@ public final class ShopService {
             syncTree(p);
             return new Result(ShopRules.Reply.SOLD, gained, items);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] black market: a bulk sale by {} failed: {}", p.getGameProfile().getName(), e.toString());
+            LOG.warn("[anime_multiverse] black market: a bulk sale by {} failed: {}", p.getGameProfile().getName(), e.toString());
             return Result.of(ShopRules.Reply.FAILED);
         }
     }

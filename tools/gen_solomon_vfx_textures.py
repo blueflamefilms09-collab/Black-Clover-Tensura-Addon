@@ -1,7 +1,7 @@
 """Generates the Veldanava "Solomon, Lord of Sorcery" VFX textures (vfx.client.layer.SolomonLayer).
 
 Deterministic and font-free (every machine writes the same pixels). Written from scratch for this mod; shares no code or asset with any other mod.
-Output: src/main/resources/assets/nusmp/textures/particle/solomon_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/solomon_*.png
 
     python tools/gen_solomon_vfx_textures.py             # all
     python tools/gen_solomon_vfx_textures.py ring page   # only these
@@ -41,7 +41,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 SS = 2   # supersampling of the line art
 

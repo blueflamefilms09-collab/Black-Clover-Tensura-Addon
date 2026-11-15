@@ -249,8 +249,8 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "5EC8FF", "groups": ["shards", "circle"], "note": "the shards spiral out of the blade and the rune circle opens behind the guard as the sword is drawn"}
     it.swing = {"trail": "crystal_arc", "rgb": "5EC8FF", "rgb2": "DFF6FF", "length": 2.3, "width": 0.5, "life": 12, "particles": "crystal_glint"}
-    it.sound = "nusmp:item.genesis.elsdocia.crystal_hum_loop"
+    it.sound = "anime_multiverse:item.genesis.elsdocia.crystal_hum_loop"
     it.acts = {
-        "legacy_release": {"burst": "legacy_release", "pattern": "nova", "rgb": "5EC8FF", "ring": 6.0, "particles": 46, "sound": "nusmp:item.genesis.elsdocia.release"},
-        "legacy_gate": {"burst": "legacy_gate", "pattern": "ring", "rgb": "DFF6FF", "ring": 4.5, "particles": 40, "sound": "nusmp:item.genesis.elsdocia.gate"},
+        "legacy_release": {"burst": "legacy_release", "pattern": "nova", "rgb": "5EC8FF", "ring": 6.0, "particles": 46, "sound": "anime_multiverse:item.genesis.elsdocia.release"},
+        "legacy_gate": {"burst": "legacy_gate", "pattern": "ring", "rgb": "DFF6FF", "ring": 4.5, "particles": 40, "sound": "anime_multiverse:item.genesis.elsdocia.gate"},
     }

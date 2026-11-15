@@ -21,7 +21,7 @@ chains, skulls, cobwebs, bone blocks, lightning rods, banners), so the Region Th
 marks of the trial: wall skulls over the torches and in the niches, cobwebs under the vault, the remains of earlier parties against the walls, cracked blocks,
 rubble and stalactites; none of it is ever on the carpeted route. The only custom block is the Relic
 Pedestal, placed WITHOUT block-entity data: the Crucible fills it when the first person comes in. Every template has ONE socket, the door on the south face
-at offset 13 (`nusmp:mega_vault`, an open hole: the vault is attached TO the antechamber), one `vault_center` marker, one `pedestal;slot=i` marker in the air
+at offset 13 (`anime_multiverse:mega_vault`, an open hole: the vault is attached TO the antechamber), one `vault_center` marker, one `pedestal;slot=i` marker in the air
 cell directly above each pedestal, no spawn marker and no other door: the way out is the way in.
 
 Deterministic: every template draws from its own name-seeded random (`MT.rng`), so the same script writes the same bytes. `--check` also runs the analysis

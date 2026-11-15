@@ -115,10 +115,10 @@ public final class ArcFloorBosses {
             if (boss == null) return null;
             dress(boss, c, sector, floor, altar);
             HOSTED.put(boss.getUUID(), altar.asLong());
-            LOG.info("[nusmp] {} stands in the Guardian's place on floor {} (sector {})", c.id(), floor, sector.id);
+            LOG.info("[anime_multiverse] {} stands in the Guardian's place on floor {} (sector {})", c.id(), floor, sector.id);
             return boss;
         } catch (RuntimeException e) {
-            LOG.error("[nusmp] an arc boss could not take the Guardian's place; the Guardian is called instead: {}", e.toString());
+            LOG.error("[anime_multiverse] an arc boss could not take the Guardian's place; the Guardian is called instead: {}", e.toString());
             return null;
         }
     }
@@ -169,7 +169,7 @@ public final class ArcFloorBosses {
             HOSTED.remove(dead.getUUID());
             if (sl.isLoaded(anchor) && sl.getBlockEntity(anchor) instanceof GuardianAltarBlockEntity altar) altar.onBossDied(dead.getUUID());
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the altar could not be told that its hosted boss died (it will see the body on its next poll): {}", ex.toString());
+            LOG.error("[anime_multiverse] the altar could not be told that its hosted boss died (it will see the body on its next poll): {}", ex.toString());
         }
     }
 
@@ -180,7 +180,7 @@ public final class ArcFloorBosses {
             if (boss.getTags().contains(TAG) && boss.getPersistentData().contains(ANCHOR_KEY)) HOSTED.put(boss.getUUID(), boss.getPersistentData().getLong(ANCHOR_KEY));
             if (boss.getTags().contains(WandererDirector.TAG)) WANDERING.add(boss.getUUID());
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] could not track a boss of the arcs: {}", ex.toString());
+            LOG.error("[anime_multiverse] could not track a boss of the arcs: {}", ex.toString());
         }
     }
 
@@ -216,7 +216,7 @@ public final class ArcFloorBosses {
                 if (level.getEntity(id) instanceof ZogratisBoss boss && boss.isAlive() && !boss.fightActive()) boss.setArena(boss.blockPosition());
             }
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the floor boss upkeep failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] the floor boss upkeep failed: {}", ex.toString());
         }
     }
 

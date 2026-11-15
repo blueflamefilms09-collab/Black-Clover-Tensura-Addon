@@ -38,7 +38,7 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 SRC = os.path.join(ROOT, 'src/main/java/com/newuniverse/nusmp')
-SETS = os.path.join(ROOT, 'src/main/resources/data/nusmp/character_spells')
+SETS = os.path.join(ROOT, 'src/main/resources/data/anime_multiverse/character_spells')
 GOAL = 15
 
 # ------------------------------------------------------------------------------------------------ source helpers
@@ -250,7 +250,7 @@ def registered_books():
     """[(registry path, class, factory or '')] in NUSkills order, then the generic wiki attributes (MagicType names)."""
     t = read(os.path.join(SRC, 'skill/NUSkills.java'))
     out = []
-    for m in re.finditer(r'book\("(book_[a-z_]+|forbidden_magic)",\s*com\.newuniverse\.nusmp\.book\.(\w+)(?:::(\w+))?\)', t):
+    for m in re.finditer(r'book\("(book_[a-z_]+|forbidden_magic)",\s*com\.newuniverse\.anime_multiverse\.book\.(\w+)(?:::(\w+))?\)', t):
         out.append((m.group(1), m.group(2), m.group(3) or ''))
     return out
 

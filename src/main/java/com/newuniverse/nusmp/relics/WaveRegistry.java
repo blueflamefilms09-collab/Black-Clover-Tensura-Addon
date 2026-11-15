@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 final class WaveRegistry {
     private WaveRegistry() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static final String PKG = "com.newuniverse.nusmp.relics.wave.";
     static final int FIRST = 8, LAST = 80;
 
@@ -35,14 +35,14 @@ final class WaveRegistry {
         } catch (ClassNotFoundException absent) {
             return;
         } catch (LinkageError broken) {
-            LOG.error("[nusmp] relics: {} could not be loaded", cls, broken);
+            LOG.error("[anime_multiverse] relics: {} could not be loaded", cls, broken);
             return;
         }
         try {
             Method m = out == null ? c.getMethod(method) : c.getMethod(method, Consumer.class);
             if (out == null) m.invoke(null); else m.invoke(null, out);
         } catch (ReflectiveOperationException | RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] relics: {}.{} failed; its relics may be missing", cls, method, failed);
+            LOG.error("[anime_multiverse] relics: {}.{} failed; its relics may be missing", cls, method, failed);
         }
     }
 }

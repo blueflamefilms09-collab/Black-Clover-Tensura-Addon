@@ -25,7 +25,7 @@ public final class FtbClaimBlock {
 
     private static final Logger LOG = LogUtils.getLogger();
     /** The translation key FTB shows for a blocked claim (FTB translates {@code ClaimResult.getResultId()} on the client, so the key is in this mod's lang file). */
-    public static final String MESSAGE_KEY = "message.nusmp.maps.ftb_claims_blocked";
+    public static final String MESSAGE_KEY = "message.anime_multiverse.maps.ftb_claims_blocked";
 
     private static volatile boolean registered, active;
     private static volatile boolean warnedHandler;
@@ -57,15 +57,15 @@ public final class FtbClaimBlock {
                 return switch (method.getName()) {
                     case "hashCode" -> System.identityHashCode(proxy);
                     case "equals" -> proxy == args[0];
-                    case "toString" -> "nusmp FTB Chunks claim block";
+                    case "toString" -> "anime_multiverse FTB Chunks claim block";
                     default -> null;
                 };
             });
             for (String field : new String[]{"BEFORE_CLAIM", "BEFORE_LOAD"}) register.invoke(events.getField(field).get(null), handler);
             active = true;
-            LOG.info("[nusmp] FTB Chunks: claiming and force-loading are blocked in {}", MapsConfig.get(MapsConfig.FTB_BLOCKED_DIMENSIONS));
+            LOG.info("[anime_multiverse] FTB Chunks: claiming and force-loading are blocked in {}", MapsConfig.get(MapsConfig.FTB_BLOCKED_DIMENSIONS));
         } catch (ReflectiveOperationException | RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] Could not hook FTB Chunks' claim events (claims in the dungeons are NOT blocked; add \"nusmp:*\" to claim_dimension_blacklist instead): {}", ex.toString());
+            LOG.warn("[anime_multiverse] Could not hook FTB Chunks' claim events (claims in the dungeons are NOT blocked; add \"anime_multiverse:*\" to claim_dimension_blacklist instead): {}", ex.toString());
         }
     }
 
@@ -80,7 +80,7 @@ public final class FtbClaimBlock {
         } catch (InvocationTargetException | RuntimeException ex) {
             if (!warnedHandler) {
                 warnedHandler = true;
-                LOG.warn("[nusmp] The FTB Chunks claim check failed (the claim is allowed; further failures are not logged)", ex);
+                LOG.warn("[anime_multiverse] The FTB Chunks claim check failed (the claim is allowed; further failures are not logged)", ex);
             }
         }
         return pass.invoke(null);

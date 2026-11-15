@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The plaza of Floor 0, the Sanctuary Hub (1.55.0, docs/labyrinth/mega_hub.md): one Structure Template, `data/nusmp/structure/hub/plaza.nbt`,
+The plaza of Floor 0, the Sanctuary Hub (1.55.0, docs/labyrinth/mega_hub.md): one Structure Template, `data/anime_multiverse/structure/hub/plaza.nbt`,
 generated from this script so the numbers cannot drift from the Java that places it.
 
     python3 tools/labyrinth/gen_mega_hub.py                 # (re)write plaza.nbt
@@ -17,7 +17,7 @@ instead of keeping a second copy, and `--check` fails when the file on disk is n
 choice comes from one seeded generator and the NBT writer sorts its cells, so two runs write the same file.
 
 The template lives under `structure/hub/`, NOT under `structure/mega/`, so the Mega-Dungeon checker (`mega_check.py`, grid and jigsaw rules) ignores it.
-Vanilla Block Primacy: the only mod block is `nusmp:labyrinth_gate`, the plane that leads home. Everything else is a vanilla block, none of them
+Vanilla Block Primacy: the only mod block is `anime_multiverse:labyrinth_gate`, the plane that leads home. Everything else is a vanilla block, none of them
 harmful to a passive animal (no fire, lava, cactus, berry bush, cobweb, campfire, powder snow), and nothing is a hole a player could fall into.
 Frame: plaza coordinates (px, pz) have the middle of the plaza at (0, 0), x to the east, z to the south (the way the world's axes run); `row` is the
 template row (FLOOR is the paving, STAND = FLOOR + 1 is where feet stand). Every part of the build is a `feature`; a feature may overwrite the
@@ -38,11 +38,11 @@ from template import Template, load  # noqa: E402
 
 ROOT = L.ROOT
 RES = L.RES
-JAVA_MEGA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega")
+JAVA_MEGA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega")
 JAVA_FILES = (os.path.join(JAVA_MEGA, "HubLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubPlazaLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubProtect.java"))
 TEMPLATE_NAME = "hub/plaza"
-GATE = "nusmp:labyrinth_gate"
-SEED = "nusmp:hub:plaza"
+GATE = "anime_multiverse:labyrinth_gate"
+SEED = "anime_multiverse:hub:plaza"
 
 
 # ------------------------------------------------------------------ the numbers (parsed from the Java, never copied)
@@ -775,7 +775,7 @@ def check(verbose=True):
 
 # ------------------------------------------------------------------ files
 def path_of(root=RES):
-    return os.path.join(root, "data", "nusmp", "structure", "hub", "plaza.nbt")
+    return os.path.join(root, "data", "anime_multiverse", "structure", "hub", "plaza.nbt")
 
 
 def bytes_of(t):

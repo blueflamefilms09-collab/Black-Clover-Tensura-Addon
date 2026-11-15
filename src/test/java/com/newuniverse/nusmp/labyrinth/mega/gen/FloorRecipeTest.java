@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: the recipe of a floor is data the owner will edit, exactly like the sector recipe, and it has the same two silent failures (a typo that keeps the default, a
- * shipped file that drifts from the numbers compiled into {@link Recipe#forFloors}). So the shipped {@code data/nusmp/mega/recipe/floor.json} is read with the reader the
+ * shipped file that drifts from the numbers compiled into {@link Recipe#forFloors}). So the shipped {@code data/anime_multiverse/mega/recipe/floor.json} is read with the reader the
  * game uses, laid over the same base, and compared with the compiled numbers; and the floor numbers are checked against what a small floor can keep (a floor of 28
  * rooms cannot promise two treasure closets and three traps).
  */
 class FloorRecipeTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/mega/recipe/floor.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/mega/recipe/floor.json");
 
     @Test
     @SuppressWarnings("unchecked")

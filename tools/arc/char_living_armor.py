@@ -1,4 +1,4 @@
-"""Why: the Living Armor (entity nusmp:living_armor, dungeon/LivingArmorEntity), the tier-2 armour colony of the Living Dungeon: "a humanoid mass of dark mollusk flesh wearing whatever
+"""Why: the Living Armor (entity anime_multiverse:living_armor, dungeon/LivingArmorEntity), the tier-2 armour colony of the Living Dungeon: "a humanoid mass of dark mollusk flesh wearing whatever
 armour it found". It was the vanilla zombie model with a dark skin and the game's armour layer; this is the art kit's player-proportioned version of the same idea: a body of wet
 dark-violet flesh (a slick, ridged skin with a pale pit of an eye) packed into mismatched scavenged plate, a dented breastplate and one big pauldron, a cracked helm that does not
 close over the face, rusty greaves, and a notched sword. The armour the entity picks up is no longer drawn on it (the kit model is one piece); the painted plate stands for it. The

@@ -29,8 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class Wave78DefsTest {
     private static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
     private static final Path LANG = Path.of("tools/lang/rift_pockets.json");
-    private static final Path POCKETS = Path.of("src/main/resources/data/nusmp/mega/pockets");
-    private static final Path LOOT = Path.of("src/main/resources/data/nusmp/loot_table");
+    private static final Path POCKETS = Path.of("src/main/resources/data/anime_multiverse/mega/pockets");
+    private static final Path LOOT = Path.of("src/main/resources/data/anime_multiverse/loot_table");
     private static final Set<String> TENSURA_ENGRAVINGS = Set.of("barrier_piercing", "breathing_support", "crushing", "dead_end_rainbow", "elemental_boost", "elemental_resistance",
             "energy_protection", "energy_steal", "enervation", "growth", "holy_coat", "holy_weapon", "intangibility", "lethargy", "magic_capacity", "magic_interference",
             "magic_protection", "magic_weapon", "magicule_absorption", "restoration", "ruination", "sealing", "severance", "severance_protection", "slotting", "soul_eater",
@@ -147,9 +147,9 @@ class Wave78DefsTest {
     void everyWeaponHasItsLangEntriesAndItsActNamesAreInTheCard() throws IOException {
         String lang = Files.readString(LANG);
         for (Def d : defs()) {
-            for (String k : new String[]{"item.nusmp." + d.id(), "item.nusmp." + d.id() + ".desc", "item.nusmp." + d.id() + ".card"})
+            for (String k : new String[]{"item.anime_multiverse." + d.id(), "item.anime_multiverse." + d.id() + ".desc", "item.anime_multiverse." + d.id() + ".card"})
                 assertTrue(lang.contains("\"" + k + "\": \""), "no lang key " + k);
-            assertTrue(lang.contains("\"item.nusmp." + d.id() + "\": " + "\"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
+            assertTrue(lang.contains("\"item.anime_multiverse." + d.id() + "\": " + "\"" + d.name() + "\""), "the lang name of " + d.id() + " is " + d.name());
             Matcher m = Pattern.compile("Act\\.of\\(\"[a-z_]+\", \"([^\"]+)\"").matcher(d.block());
             int found = 0;
             while (m.find()) {

@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * Why: every act of an upgraded relic gets a signature effect that is visibly its own (a golden gate for the Gate of Babylon, a sealing cube for the Prison Realm, a drowned tide for
- * the orrery ...), and which effect is data, not a line of Java per act: data/nusmp/visual_upgrade/act_vfx.txt, written by tools/visual_upgrade/charms_genesis_worn. Pure (no Minecraft
+ * the orrery ...), and which effect is data, not a line of Java per act: data/anime_multiverse/visual_upgrade/act_vfx.txt, written by tools/visual_upgrade/charms_genesis_worn. Pure (no Minecraft
  * types), so the file is checked in tests. The effects themselves are the mod's own VFX shapes; only shapes that take a point and a size are allowed ({@link #SHAPES}), none of the
  * zone or Time Magic ones.
  * <pre>

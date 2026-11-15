@@ -18,7 +18,7 @@ class ResetRulesTest {
 
     @Test
     void onlyOurNamespaceIsOurs() {
-        assertTrue(ResetRules.isOurs("nusmp"));
+        assertTrue(ResetRules.isOurs("anime_multiverse"));
         assertFalse(ResetRules.isOurs("tensura"));
         assertFalse(ResetRules.isOurs("manascore"));
         assertFalse(ResetRules.isOurs("NUSMP"));
@@ -47,11 +47,11 @@ class ResetRulesTest {
     @Test
     void theDecisionTable() {
         // guard on, our skill, from a scroll: refused
-        assertTrue(ResetRules.refuses(true, "nusmp", true));
+        assertTrue(ResetRules.refuses(true, "anime_multiverse", true));
         // guard off: the old behaviour
-        assertFalse(ResetRules.refuses(false, "nusmp", true));
+        assertFalse(ResetRules.refuses(false, "anime_multiverse", true));
         // not from a scroll (a grimoire swap, /multiverse take, revoking Shishou, the admin command): passes
-        assertFalse(ResetRules.refuses(true, "nusmp", false));
+        assertFalse(ResetRules.refuses(true, "anime_multiverse", false));
         // somebody else's skill: the scroll still resets it
         assertFalse(ResetRules.refuses(true, "tensura", true));
         assertFalse(ResetRules.refuses(true, "othermod", true));

@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerModel.class)
 public abstract class PlayerModelMixin {
     @Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At("TAIL"), require = 0)
-    private void nusmp$swordDraw(LivingEntity e, float limbSwing, float limbAmount, float age, float yaw, float pitch, CallbackInfo ci) {
+    private void anime_multiverse$swordDraw(LivingEntity e, float limbSwing, float limbAmount, float age, float yaw, float pitch, CallbackInfo ci) {
         SwordDrawClient.pose((PlayerModel<?>) (Object) this, e, age);
         com.newuniverse.nusmp.client.CastAnimClient.pose((PlayerModel<?>) (Object) this, e, age);       // 0.54: the casting body animations
         com.newuniverse.nusmp.client.ui.UiPoses.apply((PlayerModel<?>) (Object) this, e, age);           // 0.100: the Codex figure's pose (only its own entity)

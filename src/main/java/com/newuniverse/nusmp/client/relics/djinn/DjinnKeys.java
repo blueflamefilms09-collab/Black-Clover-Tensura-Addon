@@ -17,11 +17,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public final class DjinnKeys {
     private DjinnKeys() {}
 
-    public static final KeyMapping UP = new KeyMapping("key.nusmp.djinn_up", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_J, "key.categories.nusmp");
-    public static final KeyMapping DOWN = new KeyMapping("key.nusmp.djinn_down", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_K, "key.categories.nusmp");
+    public static final KeyMapping UP = new KeyMapping("key.anime_multiverse.djinn_up", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_J, "key.categories.anime_multiverse");
+    public static final KeyMapping DOWN = new KeyMapping("key.anime_multiverse.djinn_down", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_K, "key.categories.anime_multiverse");
 
     /** Draw Rukh (default H): stand still with the bonded vessel on you, no Djinn out, and draw the Rukh of the place into your magicules; press again to stop. */
-    public static final KeyMapping RUKH = new KeyMapping("key.nusmp.djinn_rukh", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_H, "key.categories.nusmp");
+    public static final KeyMapping RUKH = new KeyMapping("key.anime_multiverse.djinn_rukh", InputConstants.Type.KEYSYM, org.lwjgl.glfw.GLFW.GLFW_KEY_H, "key.categories.anime_multiverse");
 
     /** Mod bus. */
     public static void register(RegisterKeyMappingsEvent e) {

@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UltimateAnimTest {
     private static final Set<String> BONES = Set.of("body", "head", "left_arm", "right_arm", "left_leg", "right_leg");
     private static final String[] DRIVEN = {"left_arm", "right_arm", "left_leg", "right_leg"};     // the bones client/CastAnimClient applies (the body is kept in the clips for the Blockbench master)
-    private static final String FILE = "src/main/resources/assets/nusmp/animations/player/cast.animation.json";
+    private static final String FILE = "src/main/resources/assets/anime_multiverse/animations/player/cast.animation.json";
 
     private static JsonObject json() throws Exception {
         try (Reader r = new FileReader(new File(FILE))) {

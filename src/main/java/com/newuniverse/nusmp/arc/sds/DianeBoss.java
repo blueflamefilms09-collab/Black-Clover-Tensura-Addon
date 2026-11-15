@@ -267,7 +267,7 @@ public class DianeBoss extends ArcBoss {
             }
             if (stacks.stacks(now) > 0 && tickCount % 20 == 0) Tells.gather(sl, position().add(0, getBbHeight() + 0.3, 0), 0.4, AMBER, 2 + stacks.stacks(now));
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Diane's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Diane's tick failed: {}", e.toString());
         }
     }
 
@@ -317,7 +317,7 @@ public class DianeBoss extends ArcBoss {
             if (giant() && cutGauge.hit(now, a, DianeTable.cutFraction(gatesOpen()) * getMaxHealth(), anti)) cutDownNow(sl, now);
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Diane's defence failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Diane's defence failed: {}", e.toString());
             return amount;
         }
     }

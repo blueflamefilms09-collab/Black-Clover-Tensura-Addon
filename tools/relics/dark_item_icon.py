@@ -2,7 +2,7 @@
 
 A black crystal splinter with a violet core and a thin gold edge, a few wisps of black rukh round it. Pure PIL, deterministic, idempotent:
     python tools/relics/dark_item_icon.py
-writes src/main/resources/assets/nusmp/textures/item/dark_rukh_shard.png and models/item/dark_rukh_shard.json.
+writes src/main/resources/assets/anime_multiverse/textures/item/dark_rukh_shard.png and models/item/dark_rukh_shard.json.
 """
 import json
 import os
@@ -10,7 +10,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp"))
+ASSETS = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse"))
 
 BLACK = (14, 8, 24)
 DEEP = (34, 14, 58)
@@ -75,7 +75,7 @@ def main():
     os.makedirs(mod, exist_ok=True)
     build().save(os.path.join(tex, "dark_rukh_shard.png"))
     with open(os.path.join(mod, "dark_rukh_shard.json"), "w", encoding="utf-8") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/dark_rukh_shard"}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/dark_rukh_shard"}}, f, indent=2)
         f.write("\n")
 
 

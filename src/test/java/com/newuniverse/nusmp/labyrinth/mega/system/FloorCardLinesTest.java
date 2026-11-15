@@ -124,7 +124,7 @@ class FloorCardLinesTest {
     }
 
     @Test void aTranslatorWithTheLangFileWinsOverTheFallback() {
-        Map<String, String> lang = Map.of("mechanic.nusmp.floor.rim_curse.name", "Fluch des Randes", "message.nusmp.mega.mgd.theme.holy_church", "Heilige Kirche");
+        Map<String, String> lang = Map.of("mechanic.anime_multiverse.floor.rim_curse.name", "Fluch des Randes", "message.anime_multiverse.mega.mgd.theme.holy_church", "Heilige Kirche");
         FloorCardLines.Tr de = (key, fallback, args) -> FloorCardLines.format(lang.getOrDefault(key, fallback), args);
         String t = text(FloorCardLines.compose(holy(), de, "", false));
         assertTrue(t.contains("Fluch des Randes"), t);

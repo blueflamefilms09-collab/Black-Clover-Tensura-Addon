@@ -23,7 +23,7 @@ class UsurperPolicyTest {
             new UsurperPolicy.Seen("tensura:body_armor", UsurperPolicy.Kind.INTRINSIC),
             new UsurperPolicy.Seen("tensura:magic_nullification", UsurperPolicy.Kind.RESISTANCE),
             new UsurperPolicy.Seen("tensura:usurper", UsurperPolicy.Kind.UNIQUE),
-            new UsurperPolicy.Seen("nusmp:book_time", UsurperPolicy.Kind.OTHER));
+            new UsurperPolicy.Seen("anime_multiverse:book_time", UsurperPolicy.Kind.OTHER));
 
     @Test
     void thePlanHasNothingThatRemovesAnything() {

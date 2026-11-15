@@ -39,19 +39,19 @@ public final class GnomeSelfTests {
     private static Result run(MinecraftServer server) throws Exception {
         if (PropKind.valueOf("GNOME_1") == null) return Result.fail("the GNOME_1 prop kind is missing");
         for (GnomeSoundRules.Cue c : GnomeSoundRules.CUES) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.event()))) return Result.fail("sound event not registered: " + c.event());
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.event()))) return Result.fail("sound event not registered: " + c.event());
             for (int v = 1; v <= c.variants(); v++)
-                try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/gnome/" + c.id() + "_" + v + ".ogg")) {
+                try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds/gnome/" + c.id() + "_" + v + ".ogg")) {
                     if (in == null) return Result.fail("missing sound file " + c.id() + "_" + v + ".ogg");
                 }
         }
-        try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json")) {
+        try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json")) {
             if (in == null) return Result.fail("sounds.json is missing");
             String text = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
             for (GnomeSoundRules.Cue c : GnomeSoundRules.CUES) if (!text.contains("\"" + c.event() + "\"")) return Result.fail("sounds.json has no entry " + c.event());
         }
         for (String f : new String[]{"gnome_full", "gnome_full_lod1", "gnome_full_lod2", "gnome_full_fx", "gnome_companion", "gnome_companion_lod1", "gnome_companion_lod2", "gnome_companion_fx"})
-            try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/nusmp/geo/entity/" + f + ".geo.json")) {
+            try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/anime_multiverse/geo/entity/" + f + ".geo.json")) {
                 if (in == null) return Result.fail("missing model " + f);
             }
 
@@ -82,7 +82,7 @@ public final class GnomeSelfTests {
             if (!grouped) return Result.fail("the voice line " + line + " belongs to no group");
         }
         for (String line : VoiceCatalog.GNOME_LINES)
-            try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/nusmp/sounds/voice/gnome/" + VoiceCatalog.gnomeId(line) + ".ogg")) {
+            try (InputStream in = GnomeSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds/voice/gnome/" + VoiceCatalog.gnomeId(line) + ".ogg")) {
                 if (in == null) return Result.fail("missing voice file " + line);
             }
         GnomeLedger l = new GnomeLedger();

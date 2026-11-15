@@ -15,7 +15,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 /**
  * 0.39: a grimoire skill belongs to the mage the grimoire chose. It cannot be copied (Analyst, clones, mimicry), plundered
  * (Predator, Gluttony, Usurper), bestowed or learned any other way: it is only ever given by the world (an anomaly's awakening,
- * the Acceptance Ceremony, a Grimoire Altar) or by an admin (/multiverse grimoire give | canon, the old /nusmp grimoire commands,
+ * the Acceptance Ceremony, a Grimoire Altar) or by an admin (/multiverse grimoire give | canon, the old /anime_multiverse grimoire commands,
  * binding a creative grimoire). All of those go through {@link GrimoireAcceptance#grantExact}, which marks the player as the
  * rightful owner.
  *

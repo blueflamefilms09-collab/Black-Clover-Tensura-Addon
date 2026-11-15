@@ -28,9 +28,9 @@ public final class SylphDraw {
     private SylphDraw() {}
 
     private static GeoSpec lod(GeoSpec base, String modelId, boolean glow) {
-        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("nusmp", "geo/entity/" + modelId + ".geo.json"), base.animations(),
-                ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + ".png"),
-                glow ? ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/" + modelId + "_glow.png") : null);
+        return new GeoSpec(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "geo/entity/" + modelId + ".geo.json"), base.animations(),
+                ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + modelId + ".png"),
+                glow ? ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/" + modelId + "_glow.png") : null);
     }
 
     private static final GeoSpec SMALL = GeoSpec.of("sylph", "small"), POWERED = GeoSpec.of("sylph", "powered");
@@ -38,7 +38,7 @@ public final class SylphDraw {
     private static final GeoSpec[] POWERED_LOD = {POWERED, lod(POWERED, "sylph_powered_lod1", false), lod(POWERED, "sylph_powered_lod2", false)};
     private static final GeoSpec SMALL_WINGS = lod(SMALL, "sylph_small_wings", true), POWERED_WINGS = lod(POWERED, "sylph_powered_wings", true);
     private static final GeoSpec SMALL_FX = lod(SMALL, "sylph_small_fx", false), POWERED_FX = lod(POWERED, "sylph_powered_fx", false);
-    private static final ResourceLocation HALO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/sylph_halo.png");
+    private static final ResourceLocation HALO = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/sylph_halo.png");
     static final int FB = PropDraw.FULL_BRIGHT;
     /** The models are built in 1/16 block units; the small fairy is drawn at this scale (about 0.5 of a block seated, 0.6 standing), the powered form at its own. */
     public static final float SMALL_SCALE = 0.24f, POWERED_SCALE = 0.36f;

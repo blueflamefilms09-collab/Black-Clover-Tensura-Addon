@@ -2,7 +2,7 @@
 """Why: the Soul Forge shows every Magic Aptitude as a circular icon (the Sims-style grid of page 5). This draws all of them, deterministically, from the
 table in forge_tables.py and the glyphs of forge_art.py, so no hand-painted file can be lost and a retint is one edit.
 
-    python3 -B tools/avatar/gen_aptitude_icons.py                 # write assets/nusmp/textures/gui/soulforge/apt/<id>.png (32 x 32, RGBA)
+    python3 -B tools/avatar/gen_aptitude_icons.py                 # write assets/anime_multiverse/textures/gui/soulforge/apt/<id>.png (32 x 32, RGBA)
     python3 -B tools/avatar/gen_aptitude_icons.py --check         # rendering again must give byte-identical files
     python3 -B tools/avatar/gen_aptitude_icons.py --sheet out.png # also a contact sheet (x6) on the screen's panel colour, for looking at
 
@@ -19,7 +19,7 @@ import forge_art as A  # noqa: E402
 from PIL import Image, ImageDraw  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "soulforge", "apt")
+OUT = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "soulforge", "apt")
 
 
 def render(a):

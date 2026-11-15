@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Why: four things must say the same about the Spirit of Light's sounds: the kinds of {@link SpiritLightRules#SOUND_IDS} (the events {@link SpiritLightSounds} registers), the entries
- * {@code spirit_light.*} of {@code assets/nusmp/sounds.json}, the {@code .ogg} files under {@code sounds/spirit_light/}, and the spoken lines (the manifest tools/audio/spirit_light_lines.json, the
+ * {@code spirit_light.*} of {@code assets/anime_multiverse/sounds.json}, the {@code .ogg} files under {@code sounds/spirit_light/}, and the spoken lines (the manifest tools/audio/spirit_light_lines.json, the
  * {@link SpiritLightVoiceLines} data). A sound event without an entry plays nothing, an entry without a file logs an error in the game, a file nothing names is dead weight, a subtitle without a line shows its
  * key, and a spoken line without a file must never be registered at all (nothing is faked). Mono Ogg Vorbis only, short, and the whole set small.
  */
 class SpiritLightSoundsDataTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp"), SOUNDS = ASSETS.resolve("sounds"), SL = SOUNDS.resolve("spirit_light");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse"), SOUNDS = ASSETS.resolve("sounds"), SL = SOUNDS.resolve("spirit_light");
     private static final long BUDGET = 3L * 1024 * 1024;
 
     record Ogg(int channels, int sampleRate, double seconds) {}
@@ -76,12 +76,12 @@ class SpiritLightSoundsDataTest {
             JsonElement entry = doc.get(id);
             if (entry == null || !entry.isJsonObject()) { bad.add("no sounds.json entry " + id); continue; }
             JsonObject e = entry.getAsJsonObject();
-            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.nusmp." + id)) bad.add(id + ": subtitle key");
+            if (!e.has("subtitle") || !e.get("subtitle").getAsString().equals("subtitles.anime_multiverse." + id)) bad.add(id + ": subtitle key");
             JsonArray sounds = e.getAsJsonArray("sounds");
             if (sounds == null || sounds.size() < 2) { bad.add(id + ": needs at least two variants"); continue; }
             for (JsonElement s : sounds) {
                 String name = nameOf(s);
-                if (!name.startsWith("nusmp:spirit_light/") || name.startsWith("nusmp:spirit_light/voice/")) bad.add(id + ": odd sound name " + name);
+                if (!name.startsWith("anime_multiverse:spirit_light/") || name.startsWith("anime_multiverse:spirit_light/voice/")) bad.add(id + ": odd sound name " + name);
                 Path f = fileOf(name);
                 if (!Files.exists(f)) { bad.add(id + ": missing file " + f); continue; }
                 Ogg ogg = readOgg(f);
@@ -114,7 +114,7 @@ class SpiritLightSoundsDataTest {
             JsonArray sounds = e.getAsJsonArray("sounds");
             assertEquals(1, sounds.size(), key);
             String name = nameOf(sounds.get(0));
-            assertEquals("nusmp:spirit_light/voice/" + id, name);
+            assertEquals("anime_multiverse:spirit_light/voice/" + id, name);
             assertEquals(32, sounds.get(0).getAsJsonObject().get("attenuation_distance").getAsInt(), key + " carries 32 blocks, as far as the seraph speaks");
             Path f = fileOf(name);
             assertTrue(Files.exists(f), key + " has its file " + f);

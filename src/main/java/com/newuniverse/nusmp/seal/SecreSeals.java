@@ -47,7 +47,7 @@ public final class SecreSeals {
     private SecreSeals() {}
 
     public static final int CYAN = 0xFF5AD8FF;
-    private static final ResourceLocation BIND_MOD = ResourceLocation.fromNamespaceAndPath("nusmp", "orbital_bind");
+    private static final ResourceLocation BIND_MOD = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "orbital_bind");
     private static boolean registered;
 
     /** The four pages, appended to the Sealing book (the page ids are save keys). */

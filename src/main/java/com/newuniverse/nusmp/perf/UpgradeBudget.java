@@ -245,7 +245,7 @@ public final class UpgradeBudget {
 
     public int trackedPlayers() { return players.size(); }
 
-    /** One line for {@code /nusmp perf report}. */
+    /** One line for {@code /anime_multiverse perf report}. */
     public String line(long tick, VfxQuality q, int clientParticlesPerTick) {
         return "upgrade particles: live " + live(tick) + "/" + liveCap(q, clientParticlesPerTick) + ", granted " + granted + " of " + asked + " asked, " + items.size() + " items / " + players.size() + " holders tracked";
     }

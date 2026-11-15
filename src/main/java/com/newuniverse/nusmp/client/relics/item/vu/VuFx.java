@@ -201,7 +201,7 @@ public final class VuFx {
 
     /** The mod's own light mote (the old end-rod spark of the trails). */
     private static ParticleOptions glint() {
-        if (glint == null) glint = UpgradeParticleOptions.of("nusmp:mote", -1, 0.6f);
+        if (glint == null) glint = UpgradeParticleOptions.of("anime_multiverse:mote", -1, 0.6f);
         return glint;
     }
 

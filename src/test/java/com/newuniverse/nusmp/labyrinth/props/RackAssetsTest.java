@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * loot tables exist for the six families, name only vanilla items from the known list, and have positive weights; the recipe gives the rack; the lang fragment names the block.
  */
 class RackAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/", DATA = "src/main/resources/data/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/", DATA = "src/main/resources/data/anime_multiverse/";
 
     private static JsonObject json(String path) throws Exception {
         try (Reader r = new FileReader(new File(path))) {
@@ -36,13 +36,13 @@ class RackAssetsTest {
         JsonObject state = json(ASSETS + "blockstates/weapon_rack.json").getAsJsonObject("variants");
         for (String f : new String[]{"south", "west", "north", "east"}) {
             assertTrue(state.has("facing=" + f), "variant for " + f);
-            assertEquals("nusmp:block/weapon_rack", state.getAsJsonObject("facing=" + f).get("model").getAsString());
+            assertEquals("anime_multiverse:block/weapon_rack", state.getAsJsonObject("facing=" + f).get("model").getAsString());
         }
         assertEquals(90, state.getAsJsonObject("facing=west").get("y").getAsInt());
         assertEquals(270, state.getAsJsonObject("facing=east").get("y").getAsInt());
         JsonObject model = json(ASSETS + "models/block/weapon_rack.json");
         assertTrue(new File(ASSETS + "textures/block/weapon_rack.png").isFile());
-        assertEquals("nusmp:block/weapon_rack", model.getAsJsonObject("textures").get("t").getAsString());
+        assertEquals("anime_multiverse:block/weapon_rack", model.getAsJsonObject("textures").get("t").getAsString());
         JsonArray els = model.getAsJsonArray("elements");
         assertTrue(els.size() >= 8);
         double top = 0;
@@ -53,7 +53,7 @@ class RackAssetsTest {
             assertEquals(6, o.getAsJsonObject("faces").size());
         }
         assertEquals(RackLayout.FRAME_HEIGHT * 16.0, top, 0.001, "the model is as tall as the layout says");
-        assertEquals("nusmp:block/weapon_rack", json(ASSETS + "models/item/weapon_rack.json").get("parent").getAsString());
+        assertEquals("anime_multiverse:block/weapon_rack", json(ASSETS + "models/item/weapon_rack.json").get("parent").getAsString());
     }
 
     @Test
@@ -81,18 +81,18 @@ class RackAssetsTest {
     @Test
     void theRecipeTheDropTheTagAndTheLangFragmentAreThere() throws Exception {
         JsonObject recipe = json(DATA + "recipe/weapon_rack.json");
-        assertEquals("nusmp:weapon_rack", recipe.getAsJsonObject("result").get("id").getAsString());
+        assertEquals("anime_multiverse:weapon_rack", recipe.getAsJsonObject("result").get("id").getAsString());
         JsonArray pattern = recipe.getAsJsonArray("pattern");
         assertEquals(3, pattern.size());
         for (JsonElement row : pattern) for (char c : row.getAsString().toCharArray()) if (c != ' ') assertTrue(recipe.getAsJsonObject("key").has(String.valueOf(c)), "key " + c);
         JsonObject drop = json(DATA + "loot_table/blocks/weapon_rack.json");
-        assertEquals("nusmp:weapon_rack", drop.getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries").get(0).getAsJsonObject().get("name").getAsString());
+        assertEquals("anime_multiverse:weapon_rack", drop.getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries").get(0).getAsJsonObject().get("name").getAsString());
         JsonObject tag = json("src/main/resources/data/minecraft/tags/block/mineable/axe.json");
         boolean listed = false;
-        for (JsonElement e : tag.getAsJsonArray("values")) listed |= e.getAsString().equals("nusmp:weapon_rack");
+        for (JsonElement e : tag.getAsJsonArray("values")) listed |= e.getAsString().equals("anime_multiverse:weapon_rack");
         assertTrue(listed);
         JsonObject lang = json("tools/lang/weapon_racks.json");
-        assertEquals("Weapon Rack", lang.get("block.nusmp.weapon_rack").getAsString());
-        assertFalse(lang.get("nusmp.weapon_rack.decor").getAsString().isEmpty());
+        assertEquals("Weapon Rack", lang.get("block.anime_multiverse.weapon_rack").getAsString());
+        assertFalse(lang.get("anime_multiverse.weapon_rack.decor").getAsString().isEmpty());
     }
 }

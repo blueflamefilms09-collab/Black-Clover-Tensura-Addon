@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Why: pre-rolled stats must live ON the item, saved with it and sent to the client for the tooltip, and in 1.21 that is a data component (the 1.20 NBT blob is gone).
- * {@code nusmp:gear_roll} holds a {@link GearRoll}: the rarity, the seed and floor it was rolled from and its stat lines. The saved form is
+ * {@code anime_multiverse:gear_roll} holds a {@link GearRoll}: the rarity, the seed and floor it was rolled from and its stat lines. The saved form is
  * {@code {rarity:"rare", seed:123, depth:40, lines:[{stat:"armor", value:1.5}], tempered:false}} with every field optional and a safe default, and a line whose stat id this
  * version does not know is dropped on load rather than failing the stack (a stack written by a future version must still open in this one: an item that cannot load is an
  * item lost). The network form is compact because the component is synced to every client that can see the stack. The id is fixed by the contract and the
@@ -67,7 +67,7 @@ public final class LootComponents {
             ByteBufCodecs.BOOL, GearRoll::tempered,
             LootComponents::build);
 
-    /** {@code nusmp:gear_roll}: a stack that has it is a pre-rolled piece of dungeon gear. */
+    /** {@code anime_multiverse:gear_roll}: a stack that has it is a pre-rolled piece of dungeon gear. */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearRoll>> GEAR_ROLL =
             COMPONENTS.registerComponentType("gear_roll", b -> b.persistent(CODEC).networkSynchronized(STREAM_CODEC));
 }

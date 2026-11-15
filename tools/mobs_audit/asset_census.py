@@ -5,12 +5,12 @@ Counts files and bytes of geo models, textures and animations per group, plus wh
 (deflate of every file, the way a jar stores them), so the plan can estimate size impacts.
 
 Usage: python3 -B tools/mobs_audit/asset_census.py [--csv docs/mobs/inventory.csv]
-Writes nothing unless --csv is given. Reads only src/main/resources/assets/nusmp.
+Writes nothing unless --csv is given. Reads only src/main/resources/assets/anime_multiverse.
 """
 import os, sys, re, zlib, csv, collections
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-A = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+A = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 # group of a geo / texture / animation stem. Order matters: first match wins.
 GROUPS = [

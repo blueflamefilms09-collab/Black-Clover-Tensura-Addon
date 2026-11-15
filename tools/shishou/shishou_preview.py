@@ -2,7 +2,7 @@
 
     python3 -B tools/shishou/shishou_preview.py [name ...]      names: compare, closeup, states, dormant, hand, icon, hud   (none = all)
 
-What is drawn: the REAL mesh file the game draws (assets/nusmp/weapon_meshes/shishou.txt) and its skins, through the software rasteriser of tools/relics/preview_mesh.py (the same rules as the game's
+What is drawn: the REAL mesh file the game draws (assets/anime_multiverse/weapon_meshes/shishou.txt) and its skins, through the software rasteriser of tools/relics/preview_mesh.py (the same rules as the game's
 renderer: counter-clockwise quads, back faces culled, cutout alpha, the glow layer added). The four animation states use the SAME pose maths as client/shishou/ShishouRenderer (the clip's rotation and
 position of the bone 'sword', then the entity's yaw and pitch, then the blade laid along +z), sampled from the real animation file; the sky, the ground and the HUD panel are stand-ins (the HUD is drawn
 with the same rows as client/shishou/ShishouHud). Not a game screenshot: the lighting is the rasteriser's.
@@ -21,7 +21,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "relics"))
 import preview_mesh as pm                                                   # noqa: E402
 
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT = os.path.join(ROOT, "docs", "previews", "shishou")
 REF = os.path.join(HERE, "shishou_reference.webp")
 ITEM = "shishou"

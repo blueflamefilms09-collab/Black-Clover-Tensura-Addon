@@ -26,7 +26,7 @@ class ArmourStandRarityTest {
         int x = 0;
         for (int i = 0; i < rooms; i++) {
             boolean eligible = i % eligibleEvery == 0;
-            String t = eligible ? (i % 2 == 0 ? "nusmp:mega/hall/armory_forge_a" : "nusmp:mega/treasure/closet_b") : (i % 3 == 0 ? "nusmp:mega/corridor/straight_1x3_a" : "nusmp:mega/hall/library_a");
+            String t = eligible ? (i % 2 == 0 ? "anime_multiverse:mega/hall/armory_forge_a" : "anime_multiverse:mega/treasure/closet_b") : (i % 3 == 0 ? "anime_multiverse:mega/corridor/straight_1x3_a" : "anime_multiverse:mega/hall/library_a");
             int w = 27;
             out.add(new ArmourStandRarity.Piece(i, t, x, 0, x + w - 1, 17));
             x += w;                                 // face to face: every room touches its neighbours
@@ -103,15 +103,15 @@ class ArmourStandRarityTest {
 
     @Test
     void onlyArmouryBarracksGuardTrainingAndTreasureTypeRoomsAreEligible() {
-        for (String yes : List.of("nusmp:mega/hall/armory_forge_a", "nusmp:mega/hall/barracks_b", "nusmp:mega/hall/guard_post_a", "nusmp:mega/hall/training_hall_a", "mega/treasure/closet_c",
-                "nusmp:mega/treasure/dwarven_forgehold_hoard_nook", "nusmp:mega/treasure/infernal_foundry_counting_house", "nusmp:mega/treasure/sky_citadel_pantry", "nusmp:mega/hall/drowned_crypt_sarcophagus_vault",
-                "nusmp:mega_r/hall/armory_forge_b_v3", "nusmp:mega_r/treasure/closet_a_v1")) {
+        for (String yes : List.of("anime_multiverse:mega/hall/armory_forge_a", "anime_multiverse:mega/hall/barracks_b", "anime_multiverse:mega/hall/guard_post_a", "anime_multiverse:mega/hall/training_hall_a", "mega/treasure/closet_c",
+                "anime_multiverse:mega/treasure/dwarven_forgehold_hoard_nook", "anime_multiverse:mega/treasure/infernal_foundry_counting_house", "anime_multiverse:mega/treasure/sky_citadel_pantry", "anime_multiverse:mega/hall/drowned_crypt_sarcophagus_vault",
+                "anime_multiverse:mega_r/hall/armory_forge_b_v3", "anime_multiverse:mega_r/treasure/closet_a_v1")) {
             assertTrue(ArmourStandRarity.eligibleTemplate(yes), yes);
         }
-        for (String no : List.of("nusmp:mega/corridor/straight_1x2_a", "nusmp:mega/corridor/bend_1x1_a", "nusmp:mega/junction/plaza_2x2_a", "nusmp:mega/link/waystation", "nusmp:mega/stairwell/up_a",
-                "nusmp:mega/vault/one_a", "nusmp:mega/landing/landing_a", "nusmp:mega/antechamber/antechamber_a", "nusmp:mega/arena/arena_a", "nusmp:mega/trap/pit_hall_a", "nusmp:mega/puzzle/sigil_hall_a",
-                "nusmp:mega/trial/trial_hall_a", "nusmp:mega/safe/hearth_hall", "nusmp:mega/hall/library_a", "nusmp:mega/hall/crypt_a", "nusmp:mega/set/cathedral_rotunda", "nusmp:mega/cap/plain_wall_a",
-                "nusmp:mega_r/corridor/straight_1x2_a_v1", "", "nusmp:hub/plaza")) {
+        for (String no : List.of("anime_multiverse:mega/corridor/straight_1x2_a", "anime_multiverse:mega/corridor/bend_1x1_a", "anime_multiverse:mega/junction/plaza_2x2_a", "anime_multiverse:mega/link/waystation", "anime_multiverse:mega/stairwell/up_a",
+                "anime_multiverse:mega/vault/one_a", "anime_multiverse:mega/landing/landing_a", "anime_multiverse:mega/antechamber/antechamber_a", "anime_multiverse:mega/arena/arena_a", "anime_multiverse:mega/trap/pit_hall_a", "anime_multiverse:mega/puzzle/sigil_hall_a",
+                "anime_multiverse:mega/trial/trial_hall_a", "anime_multiverse:mega/safe/hearth_hall", "anime_multiverse:mega/hall/library_a", "anime_multiverse:mega/hall/crypt_a", "anime_multiverse:mega/set/cathedral_rotunda", "anime_multiverse:mega/cap/plain_wall_a",
+                "anime_multiverse:mega_r/corridor/straight_1x2_a_v1", "", "anime_multiverse:hub/plaza")) {
             assertFalse(ArmourStandRarity.eligibleTemplate(no), no);
         }
         assertFalse(ArmourStandRarity.eligibleTemplate(null));
@@ -121,12 +121,12 @@ class ArmourStandRarityTest {
     void ofTheRealShippedTemplatesOnlyAMinorityIsEligible() throws IOException {
         int all = 0, eligible = 0;
         for (String folder : List.of("hall", "treasure", "corridor", "junction", "link", "stairwell", "landing", "vault", "arena", "antechamber", "trap", "puzzle", "trial", "set", "cavern", "safe", "onward")) {
-            Path dir = Path.of("src/main/resources/data/nusmp/structure/mega/" + folder);
+            Path dir = Path.of("src/main/resources/data/anime_multiverse/structure/mega/" + folder);
             if (!Files.isDirectory(dir)) continue;
             try (Stream<Path> w = Files.list(dir)) {
                 for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".nbt"))::iterator) {
                     all++;
-                    String id = "nusmp:mega/" + folder + "/" + p.getFileName().toString().replace(".nbt", "");
+                    String id = "anime_multiverse:mega/" + folder + "/" + p.getFileName().toString().replace(".nbt", "");
                     if (ArmourStandRarity.eligibleTemplate(id)) {
                         eligible++;
                         assertTrue(folder.equals("hall") || folder.equals("treasure"), id + " is not a hall or a treasure room");

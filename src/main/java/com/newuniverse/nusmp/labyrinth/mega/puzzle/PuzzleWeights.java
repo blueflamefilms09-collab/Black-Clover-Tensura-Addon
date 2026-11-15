@@ -16,7 +16,7 @@ import java.util.Set;
 
 /**
  * Why: the owner asked that the room generator choose among the old and the new puzzles by theme and depth with weights he can tune, so every number of that choice is in ONE data file
- * ({@code data/nusmp/mega/puzzles/weights.json}, a datapack may replace it) and this class is its pure reader. It holds: whether puzzles are on, how many a floor may carry, how big a room
+ * ({@code data/anime_multiverse/mega/puzzles/weights.json}, a datapack may replace it) and this class is its pure reader. It holds: whether puzzles are on, how many a floor may carry, how big a room
  * must be, how likely a room of each kind is to hold a puzzle at all, how much weight the OLD puzzles (the library's puzzle mechanics, the Spire's sigil rooms) keep in that draw, which
  * themes carry which flavour tags, and per puzzle its weight, the tiers it appears in, the roads it likes, the flavours it likes and dislikes and how well it suits each kind of room. A bad
  * file never breaks the game: unknown keys and bad numbers are reported and skipped, and the built-in defaults (every puzzle, equal weight) stay in force. Pure (Gson only).

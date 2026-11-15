@@ -32,12 +32,12 @@ public final class ArcEntities {
 
     private static final List<Entry> BOSSES = new ArrayList<>();
 
-    /** The one entity type of every friendly character ({@code nusmp:arc_npc}); which character it is is its synced id. */
+    /** The one entity type of every friendly character ({@code anime_multiverse:arc_npc}); which character it is is its synced id. */
     public static final DeferredHolder<EntityType<?>, EntityType<ArcNpcEntity>> NPC = TYPES.register("arc_npc",
             () -> EntityType.Builder.of(ArcNpcEntity::new, MobCategory.MISC).sized(0.6f, 1.95f).clientTrackingRange(10).build("arc_npc"));
 
     /**
-     * Registers a boss type: {@code id} is the entity path ({@code nusmp:<id>}), {@code width} and {@code height} its hitbox, {@code look} how it is drawn,
+     * Registers a boss type: {@code id} is the entity path ({@code anime_multiverse:<id>}), {@code width} and {@code height} its hitbox, {@code look} how it is drawn,
      * {@code attributes} its stats ({@code ZogratisBoss.bossAttributes(...)} plus whatever it adds).
      */
     public static <T extends ArcBoss> DeferredHolder<EntityType<?>, EntityType<T>> boss(String id, EntityType.EntityFactory<T> factory, float width, float height,
@@ -66,7 +66,7 @@ public final class ArcEntities {
                 @SuppressWarnings({"unchecked", "rawtypes"}) EntityType<? extends net.minecraft.world.entity.LivingEntity> type = (EntityType) b.type().get();
                 e.put(type, b.attributes().get().build());
             } catch (RuntimeException ex) {
-                com.mojang.logging.LogUtils.getLogger().error("[nusmp] arc boss {} has no attributes: {}", b.id(), ex.toString());
+                com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] arc boss {} has no attributes: {}", b.id(), ex.toString());
             }
         }
     }

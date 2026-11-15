@@ -230,7 +230,7 @@ public final class TransmutationProps {
         for (PropKind k : new PropKind[]{PropKind.TRANSMUTATION_1, PropKind.TRANSMUTATION_2, PropKind.TRANSMUTATION_3})
             if (MagicProps.behavior(k) == null) return SelfTests.Result.fail("no behaviour for " + k);
         for (String n : new String[]{"helm", "chest", "tasset", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "greave_r", "greave_l", "back", "halo", "spike", "sentinel", "blade"})
-            if (TransmutationProps.class.getResource("/assets/nusmp/geo/entity/transmutation_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
+            if (TransmutationProps.class.getResource("/assets/anime_multiverse/geo/entity/transmutation_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
         return SelfTests.Result.ok(total + " pages in order, 3 behaviours, 14 geo models");
     }
 }

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * {@code textures/item/<id>.png} (the 16x16 sprite), {@code weapon_meshes/<id>.txt}, {@code textures/entity/weapon/<id>.png} and {@code <id>_glow.png}.
  */
 class HeroAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
 
     @Test
     void everyWeaponHasItsModelFiles() {

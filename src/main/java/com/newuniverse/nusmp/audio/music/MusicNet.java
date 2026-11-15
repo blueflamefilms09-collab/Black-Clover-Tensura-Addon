@@ -17,7 +17,7 @@ public final class MusicNet {
 
     /** Server to client: the current music state of the player. */
     public record State(MusicState state) implements CustomPacketPayload {
-        public static final Type<State> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "music_state"));
+        public static final Type<State> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "music_state"));
         public static final StreamCodec<FriendlyByteBuf, State> CODEC = StreamCodec.of(MusicNet::write, MusicNet::read);
 
         @Override

@@ -73,16 +73,16 @@ public final class RelicWear {
         List<String> all = new ArrayList<>(RELIC_SLOTS);
         all.addAll(OTHER_SLOTS);
         for (String id : all) {
-            if (!d.slotSizes().containsKey(id)) out.add("slot type \"" + id + "\" has no file in data/nusmp/curios/slots (the mod would rely on another mod to define it)");
+            if (!d.slotSizes().containsKey(id)) out.add("slot type \"" + id + "\" has no file in data/anime_multiverse/curios/slots (the mod would rely on another mod to define it)");
             else if (!d.defines(id)) out.add("slot type \"" + id + "\" is defined with a size below one: nothing can be worn in it");
-            if (!d.assigned().contains(id)) out.add("slot type \"" + id + "\" is not given to the player by any data/nusmp/curios/entities file");
+            if (!d.assigned().contains(id)) out.add("slot type \"" + id + "\" is not given to the player by any data/anime_multiverse/curios/entities file");
             if (!d.tags().containsKey(id)) out.add("slot type \"" + id + "\" has no item tag file data/curios/tags/item/" + id + ".json");
         }
         return out;
     }
 
     /**
-     * What is wrong for these relics (item id such as {@code nusmp:ring_of_x} to {@link RelicSlot} name): each Curios relic's slot must be defined (by the mod, or at least a slot Curios is known to ship), given to the
+     * What is wrong for these relics (item id such as {@code anime_multiverse:ring_of_x} to {@link RelicSlot} name): each Curios relic's slot must be defined (by the mod, or at least a slot Curios is known to ship), given to the
      * player, and list the relic in its tag; an armour relic's slot must have an equipment slot. Hand and consumable relics need none of this. Empty means every relic can be put on.
      */
     public static List<String> checkRelics(Map<String, String> relicSlots, Data d) {
@@ -112,7 +112,7 @@ public final class RelicWear {
         InputStream open(String path) throws IOException;
     }
 
-    private static final String SLOTS = "data/nusmp/curios/slots/", ENTITIES = "data/nusmp/curios/entities/", TAGS = "data/curios/tags/item/";
+    private static final String SLOTS = "data/anime_multiverse/curios/slots/", ENTITIES = "data/anime_multiverse/curios/entities/", TAGS = "data/curios/tags/item/";
 
     /** The entity files the mod ships. A new one is added here and nowhere else. */
     public static final List<String> ENTITY_FILES = List.of("relics", "dungeon_relic");

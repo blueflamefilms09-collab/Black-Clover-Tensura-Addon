@@ -13,7 +13,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * Why: the loot-table half of the hard gate. {@code {"condition":"nusmp:in_pocket","pocket":"ember_sanctum","stage":"boss"}} is true only when the roll happens inside the live exclusive pocket
+ * Why: the loot-table half of the hard gate. {@code {"condition":"anime_multiverse:in_pocket","pocket":"ember_sanctum","stage":"boss"}} is true only when the roll happens inside the live exclusive pocket
  * of that id (and, for the stage, after its boss died or with its seal open): see {@link PocketGate}. Every pool of every table under {@code loot_table/pocket/} carries it, so the relics and the
  * tomb's treasure cannot be rolled anywhere else even if someone copies the table into another chest; the data test walks all of them. It needs the roll's origin, which every chest and entity
  * loot context has.

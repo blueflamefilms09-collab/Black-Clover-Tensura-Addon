@@ -1,4 +1,4 @@
-"""Why: the Goliath (entity nusmp:goliath, dungeon/floor/goliath/GoliathBoss), the Upper Catacombs' floor boss: a colossal pale-stone giant, six blocks tall, built out of the ruin's own
+"""Why: the Goliath (entity anime_multiverse:goliath, dungeon/floor/goliath/GoliathBoss), the Upper Catacombs' floor boss: a colossal pale-stone giant, six blocks tall, built out of the ruin's own
 masonry, with bedrock-grey joints, moss in the creases, a heavy brow, tiny amber eyes, boulder fists and cracks that glow faintly amber. The hand-built model (tools/gen_goliath.py,
 kept) is replaced by the art kit's player-proportioned giant: a `huge` body stretched to 6 blocks and widened, skin of pale cut stone, plates of masonry for armour with moss on the
 trims, a hollow-eyed face under a heavy brow ridge, bare boulder fists, and cracks that glow. `form2` is the Gates: every crack opened and burning (the old model's "cracked" skin, the

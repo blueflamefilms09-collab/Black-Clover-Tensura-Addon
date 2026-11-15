@@ -1,7 +1,7 @@
 """The Spirit of Light, both forms (docs/magic/spirit_light.md): the golden lion cub (the companion form) and the miniature seraph (the powered form). Models (Bedrock geo, 1/16 block units, y up,
 front -z), a hand-painted cel-shaded sheet each (tools/gen_spirit_light_art.py), animations, three levels of detail per form and a glow-only (additive) model:
 
-    python3 -B tools/gen_spirit_light_geo.py            writes assets/nusmp/{geo,animations,textures}/entity/spiritlight_{cub,seraph}[_lod1|_lod2|_fx]*
+    python3 -B tools/gen_spirit_light_geo.py            writes assets/anime_multiverse/{geo,animations,textures}/entity/spiritlight_{cub,seraph}[_lod1|_lod2|_fx]*
     python3 -B tools/gen_spirit_light_geo.py --count    prints the quads of every model without writing anything
     python3 -B tools/gen_spirit_light_geo.py cub        only one form
 

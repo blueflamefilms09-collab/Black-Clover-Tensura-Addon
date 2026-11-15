@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** 3.36.0: Light Yagami (the gag boss): his row, his look, his lang keys, sounds, damage type and server setting are all in place, and the common code stays server-safe. */
 class LightYagamiDataTest {
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DATA = Path.of("src/main/resources/data");
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
 
@@ -95,10 +95,10 @@ class LightYagamiDataTest {
         JsonObject frag = json(Path.of("tools/lang/light_yagami.json"));
         JsonObject en = json(RES.resolve("lang/en_us.json"));
         for (String k : frag.keySet()) assertEquals(frag.get(k).getAsString(), en.has(k) ? en.get(k).getAsString() : null, k);
-        for (String k : new String[]{"entity.nusmp.light_yagami", "death.attack.nusmp.death_note", "nusmp.light_yagami.caption.chip", "nusmp.light_yagami.card.note", "nusmp.light_yagami.joke",
-                "item.nusmp.light_potato_chip", "subtitles.nusmp.light_yagami.chip_line", "subtitles.nusmp.light_yagami.death_just_as_planned", "subtitles.nusmp.light_yagami.death_i_am_justice"})
+        for (String k : new String[]{"entity.anime_multiverse.light_yagami", "death.attack.anime_multiverse.death_note", "anime_multiverse.light_yagami.caption.chip", "anime_multiverse.light_yagami.card.note", "anime_multiverse.light_yagami.joke",
+                "item.anime_multiverse.light_potato_chip", "subtitles.anime_multiverse.light_yagami.chip_line", "subtitles.anime_multiverse.light_yagami.death_just_as_planned", "subtitles.anime_multiverse.light_yagami.death_i_am_justice"})
             assertTrue(en.has(k), k);
-        assertEquals("%1$s died of a heart attack", en.get("death.attack.nusmp.death_note").getAsString());
+        assertEquals("%1$s died of a heart attack", en.get("death.attack.anime_multiverse.death_note").getAsString());
     }
 
     @Test
@@ -118,7 +118,7 @@ class LightYagamiDataTest {
             assertEquals(1, sounds.size());
             JsonElement s = sounds.get(0);
             String name = s.isJsonObject() ? s.getAsJsonObject().get("name").getAsString() : s.getAsString();
-            assertEquals("nusmp:" + p[1], name);
+            assertEquals("anime_multiverse:" + p[1], name);
             Path f = RES.resolve("sounds/" + p[1] + ".ogg");
             assertTrue(Files.isRegularFile(f) && Files.size(f) > 1000, "missing or empty " + f);
             byte[] head = Files.readAllBytes(f);
@@ -129,11 +129,11 @@ class LightYagamiDataTest {
 
     @Test
     void theDamageTypeExistsAndBypassesDefencesButNotTheTotem() throws Exception {
-        JsonObject t = json(DATA.resolve("nusmp/damage_type/death_note.json"));
-        assertEquals("nusmp.death_note", t.get("message_id").getAsString());
+        JsonObject t = json(DATA.resolve("anime_multiverse/damage_type/death_note.json"));
+        assertEquals("anime_multiverse.death_note", t.get("message_id").getAsString());
         for (String tag : new String[]{"bypasses_armor", "bypasses_effects", "bypasses_enchantments", "bypasses_shield", "bypasses_cooldown", "bypasses_resistance"}) {
             JsonObject j = json(DATA.resolve("minecraft/tags/damage_type/" + tag + ".json"));
-            assertTrue(j.getAsJsonArray("values").contains(JsonParser.parseString("\"nusmp:death_note\"")), tag);
+            assertTrue(j.getAsJsonArray("values").contains(JsonParser.parseString("\"anime_multiverse:death_note\"")), tag);
         }
         Path inv = DATA.resolve("minecraft/tags/damage_type/bypasses_invulnerability.json");
         if (Files.exists(inv)) assertFalse(Files.readString(inv).contains("death_note"), "the Totem of Undying must keep working");

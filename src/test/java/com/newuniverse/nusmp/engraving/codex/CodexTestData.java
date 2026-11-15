@@ -28,22 +28,22 @@ final class CodexTestData {
 
     static String read(File f) throws Exception { return Files.readString(f.toPath()); }
 
-    static FranchiseData.Table table() throws Exception { return FranchiseData.parse(read(new File(RES, "data/nusmp/franchise/engravings.json"))); }
+    static FranchiseData.Table table() throws Exception { return FranchiseData.parse(read(new File(RES, "data/anime_multiverse/franchise/engravings.json"))); }
 
     /** en_us.json overlaid with the lang fragments the Codex reads (the franchise engravings' and its own). */
     static Map<String, String> lang() throws Exception {
         Map<String, String> out = new HashMap<>();
-        for (File f : new File[]{new File(RES, "assets/nusmp/lang/en_us.json"), new File("tools/lang/franchise_engravings.json"), new File("tools/lang/engraving_codex.json")}) {
+        for (File f : new File[]{new File(RES, "assets/anime_multiverse/lang/en_us.json"), new File("tools/lang/franchise_engravings.json"), new File("tools/lang/engraving_codex.json")}) {
             JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
             for (Map.Entry<String, JsonElement> e : o.entrySet()) out.put(e.getKey(), e.getValue().getAsString());
         }
         return out;
     }
 
-    /** The enchantments of the mod that are not franchise engravings: every file of data/nusmp/enchantment whose name does not start with fr_. */
+    /** The enchantments of the mod that are not franchise engravings: every file of data/anime_multiverse/enchantment whose name does not start with fr_. */
     static List<String> ownIds() {
         List<String> out = new ArrayList<>();
-        File[] files = new File(RES, "data/nusmp/enchantment").listFiles((d, n) -> n.endsWith(".json"));
+        File[] files = new File(RES, "data/anime_multiverse/enchantment").listFiles((d, n) -> n.endsWith(".json"));
         Arrays.sort(files);
         for (File f : files) {
             String id = f.getName().substring(0, f.getName().length() - 5);
@@ -55,7 +55,7 @@ final class CodexTestData {
     /** Every enchantment file of the mod, ids without the namespace. */
     static List<String> allEnchantmentIds() {
         List<String> out = new ArrayList<>();
-        File[] files = new File(RES, "data/nusmp/enchantment").listFiles((d, n) -> n.endsWith(".json"));
+        File[] files = new File(RES, "data/anime_multiverse/enchantment").listFiles((d, n) -> n.endsWith(".json"));
         Arrays.sort(files);
         for (File f : files) out.add(f.getName().substring(0, f.getName().length() - 5));
         return out;
@@ -105,10 +105,10 @@ final class CodexTestData {
         Map<String, TreeSet<String>> carriers = new HashMap<>();
         for (Map.Entry<String, List<String>> w : weapons.entrySet()) for (String id : w.getValue()) carriers.computeIfAbsent(id, k -> new TreeSet<>()).add("Item " + w.getKey());
         List<CodexEntries.Own> own = new ArrayList<>();
-        for (String id : ownIds()) own.add(new CodexEntries.Own(id, "main", 1, carriers.getOrDefault("nusmp:" + id, new TreeSet<>())));
+        for (String id : ownIds()) own.add(new CodexEntries.Own(id, "main", 1, carriers.getOrDefault("anime_multiverse:" + id, new TreeSet<>())));
         List<CodexEntries.TensuraRef> tensura = new ArrayList<>();
         for (String id : referencedTensuraIds()) tensura.add(new CodexEntries.TensuraRef(id, null, 0, carriers.getOrDefault(id, new TreeSet<>())));
-        return CodexEntries.build(new CodexEntries.Input(table, franchiseItems, own, tensura, TensuraNotes.parse(read(new File(RES, "data/nusmp/engraving_codex/tensura_engravings.json"))), lang));
+        return CodexEntries.build(new CodexEntries.Input(table, franchiseItems, own, tensura, TensuraNotes.parse(read(new File(RES, "data/anime_multiverse/engraving_codex/tensura_engravings.json"))), lang));
     }
 
     static Function<String, String> english() throws Exception {

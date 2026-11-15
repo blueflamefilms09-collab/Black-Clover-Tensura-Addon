@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 final class Wave5Attr {
     private Wave5Attr() {}
 
-    static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", "w5_" + path); }
+    static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "w5_" + path); }
 
     /** Make the modifier present (with this amount) or absent. Cheap when nothing changes. */
     static void sync(LivingEntity e, Holder<Attribute> attribute, ResourceLocation id, double amount, Operation op, boolean on) {

@@ -212,11 +212,11 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         canvasW = Math.max(1, (width + ui - 1) / ui);           // rounded up: the canvas covers the whole window (the last pixel row or column may be cut)
         canvasH = Math.max(1, (height + ui - 1) / ui);
         lay = ForgeLayout.compute(canvasW, canvasH);
-        nameBox = new EditBox(font, 0, 0, 100, 10, Component.translatable("nusmp.avatar.gui.confirm.name"));
+        nameBox = new EditBox(font, 0, 0, 100, 10, Component.translatable("anime_multiverse.avatar.gui.confirm.name"));
         nameBox.setBordered(false);
         nameBox.setMaxLength(BuilderState.NAME_MAX);
         nameBox.setValue(state.name());
-        nameBox.setHint(ForgeText.t("nusmp.avatar.forge.name_hint", "Type a name"));
+        nameBox.setHint(ForgeText.t("anime_multiverse.avatar.forge.name_hint", "Type a name"));
         nameBox.setResponder(s -> { state.setName(s); dirty = true; });
         addWidget(nameBox);
         for (ForgePage p : pages) p.layout(lay.leftBody());
@@ -293,7 +293,7 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         for (ForgePage p : pages) p.tickAlways();
         pages[slide.shown()].tick();
         if (sayTicks > 0) sayTicks--;
-        if (state.busy() && ++busyTicks > 100) { state.setBusy(false); say(ForgeText.t("nusmp.avatar.forge.noanswer", "The Soul Forge did not answer."), false); }
+        if (state.busy() && ++busyTicks > 100) { state.setBusy(false); say(ForgeText.t("anime_multiverse.avatar.forge.noanswer", "The Soul Forge did not answer."), false); }
         if (!state.busy()) busyTicks = 0;
         dirty = true;                                  // the reserves can change under us: the panel is cheap to rebuild
     }
@@ -387,8 +387,8 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         g.fillGradient(t.x(), t.y(), t.right(), t.bottom(), ForgeUi.argb(0x0E1830, 0.95f), ForgeUi.argb(0x070C1A, 0.95f));
         g.fill(t.x(), t.bottom() - 1, t.right(), t.bottom(), ForgeUi.argb(0x5CD8FF, 0.35f));
         if (canvasW >= 380) {
-            ForgeUi.textShadow(g, font, ForgeText.s("nusmp.avatar.forge.title", "SOUL FORGE"), lay.margin() + 4, t.cy() - font.lineHeight / 2, 0xE8C468);
-            String cores = ForgeText.s("nusmp.avatar.forge.cores", "Genesis Cores: %s", reserves().creative() ? "inf" : String.valueOf(reserves().cores()));
+            ForgeUi.textShadow(g, font, ForgeText.s("anime_multiverse.avatar.forge.title", "SOUL FORGE"), lay.margin() + 4, t.cy() - font.lineHeight / 2, 0xE8C468);
+            String cores = ForgeText.s("anime_multiverse.avatar.forge.cores", "Genesis Cores: %s", reserves().creative() ? "inf" : String.valueOf(reserves().cores()));
             ForgeUi.text(g, font, cores, canvasW - lay.margin() - 4 - font.width(cores), t.cy() - font.lineHeight / 2, 0x9A7CFF);
         }
         hoveredCategory = -1;
@@ -423,11 +423,11 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
 
     private static net.minecraft.network.chat.MutableComponent categoryHint(int page) {
         return switch (page) {
-            case 0 -> ForgeText.t("nusmp.avatar.forge.hint.identity", "Roll your Avatar's six scores and give it a name.");
-            case 1 -> ForgeText.t("nusmp.avatar.forge.hint.appearance", "Choose its race and shape how it looks.");
-            case 2 -> ForgeText.t("nusmp.avatar.forge.hint.traits", "Choose its personality and hear how it speaks.");
-            case 3 -> ForgeText.t("nusmp.avatar.forge.hint.skills", "Bind one Unique and one Ultimate skill, at a price.");
-            default -> ForgeText.t("nusmp.avatar.forge.hint.aptitudes", "Pick a magic aptitude by hand, or gamble for one for free.");
+            case 0 -> ForgeText.t("anime_multiverse.avatar.forge.hint.identity", "Roll your Avatar's six scores and give it a name.");
+            case 1 -> ForgeText.t("anime_multiverse.avatar.forge.hint.appearance", "Choose its race and shape how it looks.");
+            case 2 -> ForgeText.t("anime_multiverse.avatar.forge.hint.traits", "Choose its personality and hear how it speaks.");
+            case 3 -> ForgeText.t("anime_multiverse.avatar.forge.hint.skills", "Bind one Unique and one Ultimate skill, at a price.");
+            default -> ForgeText.t("anime_multiverse.avatar.forge.hint.aptitudes", "Pick a magic aptitude by hand, or gamble for one for free.");
         };
     }
 
@@ -529,9 +529,9 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
     }
 
     private void drawPlate(GuiGraphics g, Rect st, int plateH) {
-        String name = state.name().isBlank() ? ForgeText.s("nusmp.avatar.forge.unnamed", "Your Avatar") : state.name().strip();
+        String name = state.name().isBlank() ? ForgeText.s("anime_multiverse.avatar.forge.unnamed", "Your Avatar") : state.name().strip();
         RaceEntry re = raceEntry();
-        String race = re == null ? ForgeText.s("nusmp.avatar.forge.norace", "no race yet") : Component.translatableWithFallback(re.name(), re.name()).getString();
+        String race = re == null ? ForgeText.s("anime_multiverse.avatar.forge.norace", "no race yet") : Component.translatableWithFallback(re.name(), re.name()).getString();
         String trait = state.primary() == null ? "" : state.primary().displayName + (state.secondary() == null ? "" : " / " + state.secondary().displayName);
         int y = st.bottom() - plateH + 1;
         g.fillGradient(st.x() + 1, y - 3, st.right() - 1, st.bottom() - 1, 0x00000000, ForgeUi.argb(0x000000, 0.45f));
@@ -551,7 +551,7 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         if (roll != null && !dice.rolling()) {
             int best = 0;
             for (int s : roll.stats()) best = Math.max(best, s);
-            ForgeUi.centered(g, font, ForgeText.s("nusmp.avatar.forge.dice.best", "Best score %s", best), Math.round(dx), Math.round(dy + r * 1.35f), 0x8FA3BF);
+            ForgeUi.centered(g, font, ForgeText.s("anime_multiverse.avatar.forge.dice.best", "Best score %s", best), Math.round(dx), Math.round(dy + r * 1.35f), 0x8FA3BF);
         }
     }
 
@@ -577,11 +577,11 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
 
     private static String barkTag(String event) {
         return switch (event == null ? "" : event) {
-            case "COMBAT_START" -> ForgeText.s("nusmp.avatar.forge.bark.combat_start", "Entering a fight");
-            case "SKILL_CAST" -> ForgeText.s("nusmp.avatar.forge.bark.skill_cast", "Casting a skill");
-            case "CREATOR_LOW_HP" -> ForgeText.s("nusmp.avatar.forge.bark.creator_low_hp", "Seeing you hurt");
-            case "IDLE" -> ForgeText.s("nusmp.avatar.forge.bark.idle", "Between fights");
-            default -> ForgeText.s("nusmp.avatar.forge.bark.other", "It says");
+            case "COMBAT_START" -> ForgeText.s("anime_multiverse.avatar.forge.bark.combat_start", "Entering a fight");
+            case "SKILL_CAST" -> ForgeText.s("anime_multiverse.avatar.forge.bark.skill_cast", "Casting a skill");
+            case "CREATOR_LOW_HP" -> ForgeText.s("anime_multiverse.avatar.forge.bark.creator_low_hp", "Seeing you hurt");
+            case "IDLE" -> ForgeText.s("anime_multiverse.avatar.forge.bark.idle", "Between fights");
+            default -> ForgeText.s("anime_multiverse.avatar.forge.bark.other", "It says");
         };
     }
 
@@ -618,25 +618,25 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         if (beside) UiPanel.panel(g, r.x(), r.y(), r.w(), r.h(), 0xE8C468, 0.7f, 1f);
         else { g.fill(r.x(), r.y(), r.right(), r.bottom(), ForgeUi.argb(0x050914, 0.7f)); g.renderOutline(r.x(), r.y(), r.w(), r.h(), ForgeUi.argb(0xE8C468, 0.35f)); }
         int x = r.x() + 6, w = r.w() - 12, y = r.y() + (beside ? 5 : 3), bottom = r.bottom() - 3;
-        if (beside) y = UiPanel.heading(g, font, ForgeText.s("nusmp.avatar.forge.price", "The Price"), x, y, w, 0xE8C468);
+        if (beside) y = UiPanel.heading(g, font, ForgeText.s("anime_multiverse.avatar.forge.price", "The Price"), x, y, w, 0xE8C468);
         ForgeState.Ledger l = ledger;
         int dim = 0x8FA3BF, bright = 0xE6F2FF;
-        y = entry(g, ForgeText.s("nusmp.avatar.forge.price.tax", "Permanent tax"), "-" + pct(l.quote().permanentTax()), x, y, w, bright,
+        y = entry(g, ForgeText.s("anime_multiverse.avatar.forge.price.tax", "Permanent tax"), "-" + pct(l.quote().permanentTax()), x, y, w, bright,
                 l.taxOver() ? 0xFF6A6A : l.quote().taxed() ? 0xE8C468 : 0x7CF0B0, bottom);
         if (beside && y + 14 <= bottom) {
             float cap = (float) l.taxCap();
             ForgeUi.gauge(g, new Rect(x, y + 1, w, 4), cap <= 0 ? 0f : (float) Math.min(1.0, l.totalTax() / cap), 1f, l.taxOver() ? 0xFF6A6A : 0xE8C468);
             y += 9;
             if (l.quote().taxed() && y + font.lineHeight <= bottom) {
-                String parts = ForgeText.s("nusmp.avatar.forge.price.parts", "aptitudes %s, skills %s, awakening %s", pct(l.quote().aptitudeTax()), pct(l.quote().skillTax()), pct(l.quote().awakeningTax()));
+                String parts = ForgeText.s("anime_multiverse.avatar.forge.price.parts", "aptitudes %s, skills %s, awakening %s", pct(l.quote().aptitudeTax()), pct(l.quote().skillTax()), pct(l.quote().awakeningTax()));
                 y = ForgeUi.wrapped(g, font, parts, x, y, w, dim, 2) + 1;
             }
-            if (y + font.lineHeight <= bottom) y = ForgeUi.wrapped(g, font, ForgeText.s("nusmp.avatar.forge.price.cap", "Limit %s, %s used already", pct(l.taxCap()), pct(l.existingTax())), x, y, w, dim, 2) + 2;
+            if (y + font.lineHeight <= bottom) y = ForgeUi.wrapped(g, font, ForgeText.s("anime_multiverse.avatar.forge.price.cap", "Limit %s, %s used already", pct(l.taxCap()), pct(l.existingTax())), x, y, w, dim, 2) + 2;
         }
-        y = entry(g, ForgeText.s("nusmp.avatar.forge.price.magicule", "Magicule now"), n(l.magiculeNeeded()) + " / " + n(l.magiculeHeld()), x, y, w, bright, l.magiculeShort() ? 0xFF6A6A : bright, bottom);
-        y = entry(g, ForgeText.s("nusmp.avatar.forge.price.cores", "Genesis Cores"), l.coresNeeded() + " of " + (l.creative() ? "inf" : String.valueOf(l.coresHeld())), x, y, w, bright, l.coresShort() ? 0xFF6A6A : bright, bottom);
+        y = entry(g, ForgeText.s("anime_multiverse.avatar.forge.price.magicule", "Magicule now"), n(l.magiculeNeeded()) + " / " + n(l.magiculeHeld()), x, y, w, bright, l.magiculeShort() ? 0xFF6A6A : bright, bottom);
+        y = entry(g, ForgeText.s("anime_multiverse.avatar.forge.price.cores", "Genesis Cores"), l.coresNeeded() + " of " + (l.creative() ? "inf" : String.valueOf(l.coresHeld())), x, y, w, bright, l.coresShort() ? 0xFF6A6A : bright, bottom);
         boolean sure = l.awakeningChance() >= 0.999;
-        y = entry(g, ForgeText.s("nusmp.avatar.forge.price.awaken", "Awakening"), sure ? ForgeText.s("nusmp.avatar.forge.price.awaken_sure", "guaranteed") : ForgeText.s("nusmp.avatar.forge.price.awaken_free", "%s free", pct(l.awakeningChance())),
+        y = entry(g, ForgeText.s("anime_multiverse.avatar.forge.price.awaken", "Awakening"), sure ? ForgeText.s("anime_multiverse.avatar.forge.price.awaken_sure", "guaranteed") : ForgeText.s("anime_multiverse.avatar.forge.price.awaken_free", "%s free", pct(l.awakeningChance())),
                 x, y, w, bright, sure ? 0xE8C468 : 0x9A7CFF, bottom);
         if (beside) {
             for (ForgeState.Problem p : problems) {
@@ -644,8 +644,8 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
                 y = ForgeUi.wrapped(g, font, p.text(), x, y + 2, w, p.soft() ? 0xE8C468 : 0xFF6A6A, 3) + 1;
             }
         }
-        if (r.contains(mx, my)) tooltip(List.of(ForgeText.t("nusmp.avatar.forge.price.tip1", "The tax is a share of your maximum magicule, taken for good while this Avatar lives.").withStyle(net.minecraft.ChatFormatting.GRAY),
-                ForgeText.t("nusmp.avatar.forge.price.tip2", "The magicule is also paid once, now, out of what you hold. The server checks all of this again.").withStyle(net.minecraft.ChatFormatting.GRAY)));
+        if (r.contains(mx, my)) tooltip(List.of(ForgeText.t("anime_multiverse.avatar.forge.price.tip1", "The tax is a share of your maximum magicule, taken for good while this Avatar lives.").withStyle(net.minecraft.ChatFormatting.GRAY),
+                ForgeText.t("anime_multiverse.avatar.forge.price.tip2", "The magicule is also paid once, now, out of what you hold. The server checks all of this again.").withStyle(net.minecraft.ChatFormatting.GRAY)));
     }
 
     // ---------------------------------------------------------------- the bottom bar
@@ -656,13 +656,13 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
         int page = slide.wanted();
         Rect back = lay.back(), next = lay.next(), fin = lay.finalizeButton();
         boolean canBack = page > 0 && !state.busy(), canNext = page < ForgeState.PAGES - 1 && !state.busy();
-        ForgeUi.button(g, font, back, Component.translatable("nusmp.avatar.gui.back").getString(), canBack, hover("back", back.contains(mx, my) && canBack), 0x5CD8FF);
-        ForgeUi.button(g, font, next, Component.translatable("nusmp.avatar.gui.next").getString(), canNext, hover("next", next.contains(mx, my) && canNext), 0x5CD8FF);
+        ForgeUi.button(g, font, back, Component.translatable("anime_multiverse.avatar.gui.back").getString(), canBack, hover("back", back.contains(mx, my) && canBack), 0x5CD8FF);
+        ForgeUi.button(g, font, next, Component.translatable("anime_multiverse.avatar.gui.next").getString(), canNext, hover("next", next.contains(mx, my) && canNext), 0x5CD8FF);
         boolean can = state.canFinalize(problems);
         boolean over = fin.contains(mx, my);
         float hv = hover("fin", over && can);
         if (can) ForgeUi.glow(g, fin.cx(), fin.cy(), fin.w() * 0.55f, 0x7CF0B0, 0.10f + 0.06f * (float) Math.sin(age * 0.12f) + 0.1f * hv);
-        String label = state.busy() ? ForgeText.s("nusmp.avatar.forge.finalizing", "Binding...") : ForgeText.s("nusmp.avatar.forge.finalize", "Finalize");
+        String label = state.busy() ? ForgeText.s("anime_multiverse.avatar.forge.finalizing", "Binding...") : ForgeText.s("anime_multiverse.avatar.forge.finalize", "Finalize");
         ForgeUi.button(g, font, fin, label, can, hv, 0x7CF0B0);
         // the one line between the buttons
         Rect m = lay.message();
@@ -673,14 +673,14 @@ public class SoulForgeScreen extends AbstractContainerScreen<SoulForgeMenu> impl
             else {
                 for (ForgeState.Problem p : problems) if (!p.soft()) { text = Component.literal(p.text()); break; }
                 if (text == null) for (ForgeState.Problem p : problems) { text = Component.literal(p.text()); rgb = 0xE8C468; break; }
-                if (text == null) { text = ForgeText.t("nusmp.avatar.forge.ready", "Ready. Press Finalize."); rgb = 0x7CF0B0; }
+                if (text == null) { text = ForgeText.t("anime_multiverse.avatar.forge.ready", "Ready. Press Finalize."); rgb = 0x7CF0B0; }
             }
             String s = ForgeUi.fit(font, text.getString(), m.w());
             ForgeUi.text(g, font, s, m.x(), m.cy() - font.lineHeight / 2, rgb);
         }
         if (over && !can) {
             List<Component> lines = new ArrayList<>();
-            lines.add(ForgeText.t("nusmp.avatar.forge.finalize.blocked", "Not yet:").withStyle(net.minecraft.ChatFormatting.RED));
+            lines.add(ForgeText.t("anime_multiverse.avatar.forge.finalize.blocked", "Not yet:").withStyle(net.minecraft.ChatFormatting.RED));
             for (ForgeState.Problem p : problems) if (!p.soft()) lines.add(Component.literal("- " + p.text()).withStyle(net.minecraft.ChatFormatting.GRAY));
             tooltip(lines);
         }

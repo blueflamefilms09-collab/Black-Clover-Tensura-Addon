@@ -59,7 +59,7 @@ public final class MobRelics {
     private MobRelics() {}
 
     private static final String PACK = "nusmp_mob_relics", GIVER = "nusmp_mob_relic_giver";
-    private static final String MOD_NS = "nusmp";
+    private static final String MOD_NS = "anime_multiverse";
     /** Attribute modifiers this class put on a mob: mob uuid -> modifier id -> attribute, so a removed relic's numbers go away. */
     private static final Map<UUID, Map<ResourceLocation, Holder<Attribute>>> APPLIED = new HashMap<>();
 

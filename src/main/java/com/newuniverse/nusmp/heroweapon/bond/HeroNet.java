@@ -17,7 +17,7 @@ import java.util.List;
  * (summon or put away, change form); the server decides what each means and re-checks everything. Two go down: the {@link Sync} of the bond (what the HUD, the
  * tooltip and the Weapon Book need to draw: which weapon, its experience, the form, whether it is out, what is learned, the mastery, a short summary of what
  * the gem has absorbed, and the techniques on the active form's inputs) and a {@link Cooldown} (a technique was cast: the HUD starts its bar). Register
- * {@link #register} on the mod bus. The ids are {@code nusmp:hero_key}, {@code hero_act}, {@code hero_sync} and {@code hero_cooldown}.
+ * {@link #register} on the mod bus. The ids are {@code anime_multiverse:hero_key}, {@code hero_act}, {@code hero_sync} and {@code hero_cooldown}.
  */
 public final class HeroNet {
     private HeroNet() {}
@@ -37,7 +37,7 @@ public final class HeroNet {
     // ================================================================ client to server
     /** A hero key: {@code slot} 0 to 2 (keys one to three), {@code phase} one of {@link #PRESS}, {@link #HOLD}, {@link #RELEASE}. */
     public record Key(int slot, int phase) implements CustomPacketPayload {
-        public static final Type<Key> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_key"));
+        public static final Type<Key> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_key"));
         public static final StreamCodec<FriendlyByteBuf, Key> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeByte(p.slot());
@@ -51,7 +51,7 @@ public final class HeroNet {
 
     /** A key action that is not a technique: one of the {@code ACT_} constants. */
     public record Act(int action) implements CustomPacketPayload {
-        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_act"));
+        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_act"));
         public static final StreamCodec<FriendlyByteBuf, Act> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> buf.writeByte(p.action()),
                 buf -> new Act(buf.readByte()));
@@ -72,7 +72,7 @@ public final class HeroNet {
      */
     public record Sync(String weapon, long exp, String form, String formName, boolean summoned, int flags, List<String> unlocked, List<Entry> mastery,
                        int absorbedKinds, long absorbedTotal, List<Entry> absorbed, List<String> slots) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of(Sync::write, Sync::read);
 
         /** The message that tells the client the player has no weapon. */
@@ -117,7 +117,7 @@ public final class HeroNet {
 
     /** A technique was cast: its id and its cooldown in ticks, so the HUD can run its bar. */
     public record Cooldown(String skill, int ticks) implements CustomPacketPayload {
-        public static final Type<Cooldown> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_cooldown"));
+        public static final Type<Cooldown> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_cooldown"));
         public static final StreamCodec<FriendlyByteBuf, Cooldown> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUtf(p.skill());

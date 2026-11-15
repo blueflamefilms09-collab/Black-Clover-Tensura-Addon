@@ -14,7 +14,7 @@ File frame (see geo_builder.py): pixels, y UP, feet at the origin, front on -z, 
 A material is a dict: kind in plate / metal / facet / glass / void / energy / wisp, ramp = five RGB tones (outline, dark, base, light, spec), and the glow
 keys: glow = RGB of the emissive layer, edge = glow alpha along the face border (0..255), core = glow alpha filling the face, dots = chance of a glowing
 pixel, alpha = base opacity (glass / wisp are written translucent, so they are drawn with the TRANSLUCENT layer).
-Run python as `python3 -B`. Files are written under src/main/resources/assets/nusmp/ through geo_builder.
+Run python as `python3 -B`. Files are written under src/main/resources/assets/anime_multiverse/ through geo_builder.
 """
 import math
 import os

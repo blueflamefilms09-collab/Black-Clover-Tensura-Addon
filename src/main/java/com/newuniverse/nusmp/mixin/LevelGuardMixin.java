@@ -20,23 +20,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Level.class)
 public abstract class LevelGuardMixin {
     @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$guardSetBlock(BlockPos pos, BlockState state, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
+    private void anime_multiverse$guardSetBlock(BlockPos pos, BlockState state, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
         if (DungeonGuard.refusesSet((Level) (Object) this, pos, state)) cir.setReturnValue(false);
     }
 
     /** 1.107.0: after a successful write, a player-placed block that was taken away loses its mark (removeBlock and destroyBlock end here too). */
     @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z", at = @At("RETURN"), require = 0)
-    private void nusmp$placedReleased(BlockPos pos, BlockState state, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
+    private void anime_multiverse$placedReleased(BlockPos pos, BlockState state, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValueZ()) DungeonGuard.afterSet((Level) (Object) this, pos, state);
     }
 
     @Inject(method = "removeBlock(Lnet/minecraft/core/BlockPos;Z)Z", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$guardRemoveBlock(BlockPos pos, boolean moving, CallbackInfoReturnable<Boolean> cir) {
+    private void anime_multiverse$guardRemoveBlock(BlockPos pos, boolean moving, CallbackInfoReturnable<Boolean> cir) {
         if (DungeonGuard.refusesRemoval((Level) (Object) this, pos)) cir.setReturnValue(false);
     }
 
     @Inject(method = "destroyBlock(Lnet/minecraft/core/BlockPos;ZLnet/minecraft/world/entity/Entity;I)Z", at = @At("HEAD"), cancellable = true, require = 0)
-    private void nusmp$guardDestroyBlock(BlockPos pos, boolean drop, Entity breaker, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
+    private void anime_multiverse$guardDestroyBlock(BlockPos pos, boolean drop, Entity breaker, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
         if (DungeonGuard.refusesRemoval((Level) (Object) this, pos)) {
             DungeonGuard.tell(breaker);
             cir.setReturnValue(false);

@@ -1,8 +1,8 @@
 {
  "paladin_halo": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/paladin_halo.geo.json",
-  "texture": "nusmp:textures/entity/paladin_halo.png",
+  "model": "anime_multiverse:geo/entity/paladin_halo.geo.json",
+  "texture": "anime_multiverse:textures/entity/paladin_halo.png",
   "space": "PLAYER",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -48,8 +48,8 @@
  },
  "paladin_wings_back": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/paladin_wings.geo.json",
-  "texture": "nusmp:textures/entity/paladin_wings.png",
+  "model": "anime_multiverse:geo/entity/paladin_wings.geo.json",
+  "texture": "anime_multiverse:textures/entity/paladin_wings.png",
   "space": "PLAYER",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",
@@ -95,8 +95,8 @@
  },
  "paladin_wings_side": {
   "kind": "geo",
-  "model": "nusmp:geo/entity/paladin_wings.geo.json",
-  "texture": "nusmp:textures/entity/paladin_wings.png",
+  "model": "anime_multiverse:geo/entity/paladin_wings.geo.json",
+  "texture": "anime_multiverse:textures/entity/paladin_wings.png",
   "space": "PLAYER",
   "layer": "CUTOUT",
   "argb": "FFFFFFFF",

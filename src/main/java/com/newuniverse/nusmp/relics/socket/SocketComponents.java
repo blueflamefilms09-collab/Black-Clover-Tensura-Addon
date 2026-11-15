@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The {@code nusmp:socket} data component: {@code {b: [{id: "spirit:fire", t: <game time bound>}, ...]}}, saved and synced (tooltips and the client
+ * The {@code anime_multiverse:socket} data component: {@code {b: [{id: "spirit:fire", t: <game time bound>}, ...]}}, saved and synced (tooltips and the client
  * particles read it). It is a compound so the shape can grow without a new component, like {@code relic_uses}. Register {@link #COMPONENTS} on the
  * mod bus. Reading never changes the stack; writing sets a fresh compound (a stack's component values are shared, never mutated in place).
  */

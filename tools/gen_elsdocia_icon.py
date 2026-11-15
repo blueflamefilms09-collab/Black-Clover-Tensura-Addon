@@ -10,7 +10,7 @@ import os
 import sys
 from PIL import Image
 
-ITEM_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "item")
+ITEM_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
 NAVY, DEEP, MID, LIGHT, ICE, WHITE = (12, 26, 82), (28, 70, 190), (52, 128, 238), (110, 204, 255), (190, 236, 255), (246, 252, 255)
 GOLD, GOLD_HI, GOLD_LO, GRIP = (226, 178, 62), (255, 226, 120), (150, 104, 30), (30, 34, 52)
 BRONZE, BRONZE_HI, BRONZE_LO, BRONZE_DK = (176, 128, 58), (222, 176, 96), (112, 76, 34), (70, 48, 26)

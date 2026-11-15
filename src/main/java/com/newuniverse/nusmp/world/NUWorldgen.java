@@ -7,7 +7,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** Worldgen features. Placement/rarity live in data/nusmp/worldgen + neoforge/biome_modifier JSON. */
+/** Worldgen features. Placement/rarity live in data/anime_multiverse/worldgen + neoforge/biome_modifier JSON. */
 public final class NUWorldgen {
     private NUWorldgen() {}
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, NUSMP.MODID);

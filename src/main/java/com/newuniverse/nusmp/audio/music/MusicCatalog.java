@@ -14,8 +14,8 @@ import java.util.Map;
  * The 27 Region Themes are grouped into TEN musical families (stone, storm, blood, flame, frost, verdant, spatial, holy, deep, crypt): composing 27 pairs of loops would only make
  * the files bigger, and a family already gives each place its own key, scale, tempo and instruments. A theme that has no entry here (a datapack theme) is given a family by a
  * stable hash of its id, so it still sounds like SOMETHING and always the same thing. Each family has two loops (explore, battle), the Holy and the Abyssal road each have a boss
- * loop, and the safe zone, the hub and the rift have one each: 25 tracks. The track name is the file name ({@code assets/nusmp/sounds/music/<track>.ogg}) and the sound event is
- * {@code nusmp:music.<family>.<layer>} ({@link #eventId}); a resource pack that ships the same file names replaces the music without a line of code.
+ * loop, and the safe zone, the hub and the rift have one each: 25 tracks. The track name is the file name ({@code assets/anime_multiverse/sounds/music/<track>.ogg}) and the sound event is
+ * {@code anime_multiverse:music.<family>.<layer>} ({@link #eventId}); a resource pack that ships the same file names replaces the music without a line of code.
  */
 public final class MusicCatalog {
     private MusicCatalog() {}
@@ -106,9 +106,9 @@ public final class MusicCatalog {
         return Collections.unmodifiableList(out);
     }
 
-    /** The resource path of the sound file of a track, relative to {@code assets/nusmp/sounds/}, with the extension: {@code music/stone_explore.ogg}. */
+    /** The resource path of the sound file of a track, relative to {@code assets/anime_multiverse/sounds/}, with the extension: {@code music/stone_explore.ogg}. */
     public static String filePath(String track) { return "music/" + track + ".ogg"; }
 
     /** The lang key of a track's title (the optional "now playing" line). */
-    public static String titleKey(String track) { return "music.nusmp.track." + track; }
+    public static String titleKey(String track) { return "music.anime_multiverse.track." + track; }
 }

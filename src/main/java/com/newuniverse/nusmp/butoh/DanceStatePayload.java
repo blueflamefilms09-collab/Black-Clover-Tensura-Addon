@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
  * and once when it ends; each client then walks the same {@link DanceChoreographer} sequence on its own clock.
  */
 public record DanceStatePayload(int entity, boolean on, long seed, long startTick) implements CustomPacketPayload {
-    public static final Type<DanceStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "butoh_dance_state"));
+    public static final Type<DanceStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "butoh_dance_state"));
     public static final StreamCodec<FriendlyByteBuf, DanceStatePayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeBoolean(p.on()); buf.writeLong(p.seed()); buf.writeLong(p.startTick()); },
             buf -> new DanceStatePayload(buf.readVarInt(), buf.readBoolean(), buf.readLong(), buf.readLong()));

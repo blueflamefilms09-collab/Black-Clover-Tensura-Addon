@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * 1.111.0 (docs/weapon_grip.md): the grip table against every shipped weapon mesh. For every mesh of weapon_meshes, weapon_meshes_sz, weapon_meshes_vu and weapon_meshes_vu_sz:
  * <ul>
- *   <li>it has a grip class (weapon_classes.json lists it, or assets/nusmp/weapon_grips.json {@code classOf} does): a new weapon with only a keyword guess fails here;</li>
+ *   <li>it has a grip class (weapon_classes.json lists it, or assets/anime_multiverse/weapon_grips.json {@code classOf} does): a new weapon with only a keyword guess fails here;</li>
  *   <li>its grip point resolves and lies within the mesh's bounds;</li>
  *   <li>after the placement and the shift, the grip point is at the hand under the real display block of its model json, in all four hand contexts (third and first person,
  *       right and left hand), computed with an independent step-by-step chain: exactly in third person; in first person at the sword-hilt spot, or, where that would take the
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * No Minecraft types: the meshes are read here the way WeaponRenderer and VuMesh read them.
  */
 class GripTableTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     static final Path GOLDEN = Path.of("tools", "weapon_grip", "grip_golden.json");
     static final String[][] DIRS = {{"weapon_meshes", ""}, {"weapon_meshes_sz", "sz/"}, {"weapon_meshes_vu", "vu/"}, {"weapon_meshes_vu_sz", "vu_sz/"},
             {"weapon_meshes/up", "up/"}, {"weapon_meshes_sz/up", "sz_up/"}};
@@ -44,7 +44,7 @@ class GripTableTest {
     /** One mesh as the game reads it. */
     record Mesh(String key, String id, boolean vu, float[] place, List<float[]> body, float gripLine, float[] explicit) {}
 
-    /** The class table of assets/nusmp/weapon_classes.json (rows and the reviewed id to class map), the way WeaponRenderer reads it. */
+    /** The class table of assets/anime_multiverse/weapon_classes.json (rows and the reviewed id to class map), the way WeaponRenderer reads it. */
     static WeaponClasses classes() throws IOException {
         JsonObject root = JsonParser.parseString(Files.readString(RES.resolve("weapon_classes.json"))).getAsJsonObject();
         java.util.Map<String, WeaponClasses.Cls> table = new java.util.HashMap<>();
@@ -156,7 +156,7 @@ class GripTableTest {
         WeaponClasses classes = classes();
         List<String> missing = new ArrayList<>();
         for (Mesh m : meshes()) if (!t.hasGripClass(m.id(), classes)) missing.add(m.key());
-        assertTrue(missing.isEmpty(), "weapon meshes without a grip class (list them in weapon_classes.json, or in assets/nusmp/weapon_grips.json classOf via tools/weapon_grip/grip_table.py): " + missing);
+        assertTrue(missing.isEmpty(), "weapon meshes without a grip class (list them in weapon_classes.json, or in assets/anime_multiverse/weapon_grips.json classOf via tools/weapon_grip/grip_table.py): " + missing);
     }
 
     @Test

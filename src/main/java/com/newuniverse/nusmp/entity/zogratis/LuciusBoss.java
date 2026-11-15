@@ -482,7 +482,7 @@ public class LuciusBoss extends ZogratisBoss {
                 return i;
             }
         } catch (RuntimeException planner) {
-            LogUtils.getLogger().warn("[nusmp] Lucius's combo planner failed, using the old chooser: {}", planner.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucius's combo planner failed, using the old chooser: {}", planner.toString());
         }
         return super.chooseMove(bk, s, t);
     }
@@ -574,7 +574,7 @@ public class LuciusBoss extends ZogratisBoss {
             }
             if (tickCount % 20 == 0) bodyMends(sl, now);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Lucius's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucius's tick failed: {}", e.toString());
         }
     }
 
@@ -757,7 +757,7 @@ public class LuciusBoss extends ZogratisBoss {
                 default -> { }
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Lucius's precognition failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucius's precognition failed: {}", e.toString());
         }
         return amount;
     }
@@ -841,12 +841,12 @@ public class LuciusBoss extends ZogratisBoss {
             mb.tell((bs, t, left, total) -> {                                 // 1.35.0: the dust telegraph (kept) and the effect that goes with it
                 if (base != null) base.tell(bs, t, left, total);
                 else if (level() instanceof ServerLevel sl && castingMoveOrNull() != null) defaultTell(sl, castingMoveOrNull(), t, left);
-                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Lucius's tell effect failed: {}", e.toString()); }
+                try { fxTell(mid, t, left, total); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Lucius's tell effect failed: {}", e.toString()); }
             });
             final Move.MoveRun code = runOf(mid);
             out.add(mb.run((boss, t) -> {
                 if (fizzles()) return;
-                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[nusmp] Lucius's strike effect failed: {}", e.toString()); }
+                try { fxRun(mid, t); } catch (RuntimeException e) { LogUtils.getLogger().warn("[anime_multiverse] Lucius's strike effect failed: {}", e.toString()); }
                 code.run(boss, t);
             }));
         }

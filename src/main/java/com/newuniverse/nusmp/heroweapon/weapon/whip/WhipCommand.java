@@ -172,7 +172,7 @@ final class WhipCommand {
             ServerPlayer owner = ownerOf(m);
             if (next instanceof Player || owner == null || next == owner || SongTargets.isAlly(owner, next) || isCommanded(next)) e.setCanceled(true);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] the whip's command could not judge a new target", ex);
+            LOG.warn("[anime_multiverse] the whip's command could not judge a new target", ex);
         }
     }
 
@@ -184,7 +184,7 @@ final class WhipCommand {
             ServerPlayer owner = ownerOf(m);
             if (victim instanceof Player || owner == null || victim == owner || SongTargets.isAlly(owner, victim)) e.setCanceled(true);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] the whip's command could not judge a blow", ex);
+            LOG.warn("[anime_multiverse] the whip's command could not judge a blow", ex);
         }
     }
 }

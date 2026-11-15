@@ -39,14 +39,14 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
  * ground to full height, so it reads as the drawing standing up off the canvas.
  */
 public class PaintedConstructRenderer extends MobRenderer<PaintedConstructEntity, EntityModel<PaintedConstructEntity>> {
-    public static final ModelLayerLocation BEAST_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "painted_beast"), "main");
+    public static final ModelLayerLocation BEAST_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "painted_beast"), "main");
 
     private static final ResourceLocation[][] TEX = new ResourceLocation[2][PaintStudio.Paint.values().length];
     static {
         for (PaintStudio.Paint p : PaintStudio.Paint.values()) {
             String n = p.name().toLowerCase(java.util.Locale.ROOT);
-            TEX[0][p.ordinal()] = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/painted/beast_" + n + ".png");
-            TEX[1][p.ordinal()] = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/painted/humanoid_" + n + ".png");
+            TEX[0][p.ordinal()] = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/painted/beast_" + n + ".png");
+            TEX[1][p.ordinal()] = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/painted/humanoid_" + n + ".png");
         }
     }
 

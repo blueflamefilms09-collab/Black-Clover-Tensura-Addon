@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Why: one {@code SoundEvent} per music track ({@code nusmp:music.stone.explore} and so on, 25 in all), registered in a loop from {@link MusicCatalog} so the registry, the catalogue,
+ * Why: one {@code SoundEvent} per music track ({@code anime_multiverse:music.stone.explore} and so on, 25 in all), registered in a loop from {@link MusicCatalog} so the registry, the catalogue,
  * {@code sounds.json} and the files cannot drift apart (the tests and the self-test {@code dungeon.music} compare them). It is a third register next to
  * {@link com.newuniverse.nusmp.sound.NUSounds} and {@link com.newuniverse.nusmp.audio.ModSounds}, so none of the files that other builders append to is touched. The client engine plays
  * the events with the MUSIC category ({@code client/music/ThemedMusicInstance}); a server never plays them.

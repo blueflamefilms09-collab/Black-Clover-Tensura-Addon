@@ -41,7 +41,7 @@ class UpgradeParticleNamesTest {
         assertEquals("ENCHANT", UpgradeParticleNames.oldName("minecraft:note"));
         assertEquals("BUBBLE", UpgradeParticleNames.oldName("minecraft:nautilus"));
         assertTrue(UpgradeParticleNames.isVanilla("minecraft:flame") && UpgradeParticleNames.isVanilla("flame"));
-        assertFalse(UpgradeParticleNames.isVanilla("nusmp:mote"));
+        assertFalse(UpgradeParticleNames.isVanilla("anime_multiverse:mote"));
         assertEquals("flame", UpgradeParticleNames.path("minecraft:flame"));
     }
 
@@ -49,7 +49,7 @@ class UpgradeParticleNamesTest {
     void everyNameInEveryShippedTableResolvesToACustomParticle() throws IOException {
         Set<String> constants = fxOldConstants();
         assertTrue(constants.size() > 30 && constants.contains("END_ROD"), "FxOld constants parsed: " + constants.size());
-        Path dir = ROOT.resolve("src/main/resources/assets/nusmp/visual_upgrade");
+        Path dir = ROOT.resolve("src/main/resources/assets/anime_multiverse/visual_upgrade");
         int names = 0;
         try (Stream<Path> files = Files.list(dir)) {
             for (Path f : (Iterable<Path>) files.filter(p -> p.toString().endsWith(".json"))::iterator) {
@@ -58,7 +58,7 @@ class UpgradeParticleNamesTest {
                     String n = m.group(1);
                     names++;
                     if (n.equals("fx") || UpgradeParticleNames.isDust(n)) continue;
-                    if (n.startsWith("nusmp:")) {                                          // 1.110.0: the shipped tables name the mod's own particles directly
+                    if (n.startsWith("anime_multiverse:")) {                                          // 1.110.0: the shipped tables name the mod's own particles directly
                         assertTrue(com.newuniverse.nusmp.particle.fx.FxCatalog.has(n.substring(6)), f.getFileName() + ": '" + n + "' is not a particle of the catalog");
                         continue;
                     }

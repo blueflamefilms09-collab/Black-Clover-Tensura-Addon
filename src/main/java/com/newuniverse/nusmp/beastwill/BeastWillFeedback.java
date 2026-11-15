@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Why: the messages of the Beast Will system (3.45.0) without chat flooding. Every message is a lang key {@code nusmp.beastwill.msg.<key>}; most go to the action bar (one line that replaces itself), only
+ * Why: the messages of the Beast Will system (3.45.0) without chat flooding. Every message is a lang key {@code anime_multiverse.beastwill.msg.<key>}; most go to the action bar (one line that replaces itself), only
  * the big moments (absorbed, phase unlocked, rejection) go to chat. The same key is never repeated inside its window ({@link #SAME_TICKS}), and one player gets at most {@link #BUDGET} lines per
  * {@link #WINDOW} ticks, the rest is dropped: a bug or a spammed key can not fill a chat. Per-player memory is a few entries, dropped at logout ({@link #forget}). Server thread only.
  */
@@ -36,7 +36,7 @@ public final class BeastWillFeedback {
         use[1]++;
         if (mine.size() > 24) mine.clear();
         mine.put(key, now);
-        p.displayClientMessage(Component.translatable("nusmp.beastwill.msg." + key, args), !chat);
+        p.displayClientMessage(Component.translatable("anime_multiverse.beastwill.msg." + key, args), !chat);
     }
 
     public static void forget(UUID player) {

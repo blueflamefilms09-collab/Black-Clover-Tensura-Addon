@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * Why: the registration entry point of the themes and the Crucible of Choice, the one class {@code MegaSystem} calls for them (it was a contract stub
  * with two empty methods; the bodies are filled in now and nothing else changes). {@link #init} runs on the mod bus before {@code NUItems.ITEMS.register}
- * and does four things: it registers the structure processor type {@code nusmp:region_theme} (the processor list {@code nusmp:mega_interior} names it,
+ * and does four things: it registers the structure processor type {@code anime_multiverse:region_theme} (the processor list {@code anime_multiverse:mega_interior} names it,
  * so it MUST be registered before the datapack is read), it puts the Crucible in front of the Relic Pedestal's pick and drop ({@link CrucibleRegistry}),
  * it tells the Mega-Dungeon that the relic taken in a Crucible decides the theme of the next sector ({@code MegaDungeon.setThemeOverride}, answered by
  * {@link NextTheme}), and it registers the in-game self-tests the CI server smoke test runs. {@link #register} receives the game bus and registers the reload listeners
@@ -28,7 +28,7 @@ public final class ThemeRegistry {
 
     public static final DeferredRegister<StructureProcessorType<?>> PROCESSORS = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, NUSMP.MODID);
 
-    /** {@code nusmp:region_theme}: swaps the deepslate and dark oak palette blocks for the family of the region's theme (see {@link RegionThemeProcessor}). */
+    /** {@code anime_multiverse:region_theme}: swaps the deepslate and dark oak palette blocks for the family of the region's theme (see {@link RegionThemeProcessor}). */
     public static final DeferredHolder<StructureProcessorType<?>, StructureProcessorType<RegionThemeProcessor>> REGION_THEME =
             PROCESSORS.register("region_theme", () -> (StructureProcessorType<RegionThemeProcessor>) () -> RegionThemeProcessor.CODEC);
 

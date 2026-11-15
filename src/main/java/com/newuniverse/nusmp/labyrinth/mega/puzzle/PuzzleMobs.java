@@ -71,7 +71,7 @@ final class PuzzleMobs {
             if (!level.addFreshEntity(mob)) { mob.discard(); return null; }
             return mob;
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] puzzle could not spawn {}: {}", e.id(), ex.toString());
+            LOG.warn("[anime_multiverse] puzzle could not spawn {}: {}", e.id(), ex.toString());
             if (mob != null) mob.discard();
             return null;
         }

@@ -46,13 +46,13 @@ public final class QuestHooks {
 
     // ---------------------------------------------------------------- relics
     /**
-     * The discovery system just marked something as found for the player ({@code key} like {@code item:nusmp:thing}). If it is a relic, reports
+     * The discovery system just marked something as found for the player ({@code key} like {@code item:anime_multiverse:thing}). If it is a relic, reports
      * {@code relic.obtained} (arg = relic id), {@code relic.grade} (arg = the grade, lower case) and, for a world-unique relic that the God of
      * Order's ledger tracks, {@code relic.unique_ledger}.
      */
     public static void onDiscovered(ServerPlayer p, String key) {
-        if (key == null || !key.startsWith("item:nusmp:")) return;
-        RelicDef def = Relics.byId(key.substring("item:nusmp:".length()));
+        if (key == null || !key.startsWith("item:anime_multiverse:")) return;
+        RelicDef def = Relics.byId(key.substring("item:anime_multiverse:".length()));
         if (def == null) return;
         NusmpEvents.fire(p, "relic.obtained", def.id());
         NusmpEvents.fire(p, "relic.grade", def.grade().name().toLowerCase(Locale.ROOT));

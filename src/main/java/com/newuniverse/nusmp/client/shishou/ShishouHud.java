@@ -56,7 +56,7 @@ public final class ShishouHud {
             AkashicTheme.emblem(g, PAD, y - 3, 12);
             String level = Component.translatableWithFallback("shishou.hud.level", "Lv %s", s == null ? 1 : s.level()).getString();
             int lw = font.width(level);
-            g.drawString(font, Component.translatableWithFallback("item.nusmp.shishou", "Shishou").getString(), PAD + 15, y, 0xFF000000 | ShishouGuiLayout.CYAN_HI, true);
+            g.drawString(font, Component.translatableWithFallback("item.anime_multiverse.shishou", "Shishou").getString(), PAD + 15, y, 0xFF000000 | ShishouGuiLayout.CYAN_HI, true);
             g.drawString(font, level, W - PAD - lw, y, 0xFF000000 | ShishouGuiLayout.GOLD, true);
             y += ROW + 3;
             AkashicTheme.gauge(g, PAD, y, W - 2 * PAD, BAR, s == null ? 0f : s.expShare() / 100f, ShishouGuiLayout.EXP_LOW, ShishouGuiLayout.EXP_HIGH, now, flat);

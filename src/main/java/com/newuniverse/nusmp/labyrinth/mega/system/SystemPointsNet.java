@@ -29,7 +29,7 @@ public final class SystemPointsNet {
 
     /** Client to server: move {@code amount} points between the free pool and the stat with this index ({@link Stat#ordinal()}). Negative = back to the pool. */
     public record Allocate(int stat, int amount) implements CustomPacketPayload {
-        public static final Type<Allocate> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_allocate"));
+        public static final Type<Allocate> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_allocate"));
         public static final StreamCodec<FriendlyByteBuf, Allocate> CODEC = StreamCodec.of(Allocate::write, Allocate::read);
 
         @Override
@@ -49,7 +49,7 @@ public final class SystemPointsNet {
 
     /** Client to server: move every placed point back into the free pool (when the server allows it). */
     public record Reset() implements CustomPacketPayload {
-        public static final Type<Reset> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_reset_points"));
+        public static final Type<Reset> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_reset_points"));
         public static final StreamCodec<FriendlyByteBuf, Reset> CODEC = StreamCodec.of((b, p) -> { }, b -> new Reset());
 
         @Override
@@ -69,7 +69,7 @@ public final class SystemPointsNet {
      * @param effects      what one point of each stat does
      */
     public record PointsSync(int free, int cap, boolean allowRespec, int mode, List<Effect> effects) implements CustomPacketPayload {
-        public static final Type<PointsSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "system_points"));
+        public static final Type<PointsSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_points"));
         public static final StreamCodec<FriendlyByteBuf, PointsSync> CODEC = StreamCodec.of(PointsSync::write, PointsSync::read);
 
         /** An empty picture (no free points, the defaults): what the client holds before the server has spoken. */

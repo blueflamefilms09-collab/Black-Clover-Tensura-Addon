@@ -24,7 +24,7 @@ public final class AdaptabilitySelfTests {
     }
 
     private static Result rules(MinecraftServer server) {
-        if (!"nusmp:adaptability".equals(NUSkills.ADAPTABILITY.getId().toString())) return Result.fail("the skill is not registered as nusmp:adaptability");
+        if (!"anime_multiverse:adaptability".equals(NUSkills.ADAPTABILITY.getId().toString())) return Result.fail("the skill is not registered as anime_multiverse:adaptability");
         double perHit = AdaptabilityConfig.perHit(), floor = AdaptabilityConfig.minimumMultiplier();
         if (perHit < 0.0 || perHit > 1.0 || floor < 0.0 || floor > 1.0) return Result.fail("a config value is out of its range");
         for (int s : new int[] {0, 1, 35, 100, 100000, Integer.MAX_VALUE}) {

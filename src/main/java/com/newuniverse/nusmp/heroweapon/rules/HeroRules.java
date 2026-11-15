@@ -52,12 +52,12 @@ import java.util.UUID;
  * owner's "small magic hit and a slowing" and nothing more: the blow is cancelled by the caller, the damage is magic, configured, never lethal and at most once a
  * second, the slowness lasts a second by default, and the line "The Legendary X rejects the weapon" shows at most once every three seconds. Tools used as
  * tools are never affected (a pickaxe is not a weapon), creative and spectator players are exempt, and so is every wielder of a Seven Star or Vassal Weapon.
- * The shipped tag {@code #nusmp:hero_allowed} lists items that are never rejected (a datapack can add to it).
+ * The shipped tag {@code #anime_multiverse:hero_allowed} lists items that are never rejected (a datapack can add to it).
  */
 public final class HeroRules {
     private HeroRules() {}
 
-    private static final TagKey<Item> ALLOWED = tag("nusmp", "hero_allowed");
+    private static final TagKey<Item> ALLOWED = tag("anime_multiverse", "hero_allowed");
     private static final TagKey<Item> C_SPEAR = tag("c", "tools/spear"), C_BOW = tag("c", "tools/bow"), C_CROSSBOW = tag("c", "tools/crossbow"),
             C_SHIELD = tag("c", "tools/shield"), C_MACE = tag("c", "tools/mace");
 
@@ -188,7 +188,7 @@ public final class HeroRules {
         }
         if (Spacing.due(now, last[1], MESSAGE_SPACING)) {
             last[1] = now;
-            if (HeroConfig.showMessages()) p.displayClientMessage(Component.translatable("hero.msg.rejects", Component.translatable("item.nusmp." + kind.itemId())), true);
+            if (HeroConfig.showMessages()) p.displayClientMessage(Component.translatable("hero.msg.rejects", Component.translatable("item.anime_multiverse." + kind.itemId())), true);
         }
     }
 

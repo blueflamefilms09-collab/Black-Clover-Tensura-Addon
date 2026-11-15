@@ -1,0 +1,51 @@
+{
+  "parent": "anime_multiverse:relics/equipped",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:twin_hook_swords"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.relics.pair.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.relics.pair.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "have_twin_hook_swords": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:twin_hook_swords"
+          }
+        ]
+      }
+    },
+    "have_twin_hook_swords_left": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "anime_multiverse:twin_hook_swords_left"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "have_twin_hook_swords"
+    ],
+    [
+      "have_twin_hook_swords_left"
+    ]
+  ],
+  "rewards": {
+    "experience": 60
+  }
+}

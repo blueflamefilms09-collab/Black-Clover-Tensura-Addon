@@ -19,7 +19,7 @@ import java.util.Locale;
  *
  * <p>Two tiers, the same as the other looks ({@link SpiritDiveTier}): the STANDARD set of every mage (a plain full armour, a quieter glow) and the CHARACTER set of Yuno (Wind), Fuegoleon (Fire) and
  * Noelle (Water): the ornate armour with gorget, cuisses and skirt, the signature crest, plume, mantle and wings. Earth has no character: its set is always the standard one (heavier: cuisses and a
- * crystal cluster on the back). The files are {@code assets/nusmp/geo/entity/sdj_<element>_<s|c>_arm_<piece>.geo.json} (+ texture, {@code _glow} map, animation), written by
+ * crystal cluster on the back). The files are {@code assets/anime_multiverse/geo/entity/sdj_<element>_<s|c>_arm_<piece>.geo.json} (+ texture, {@code _glow} map, animation), written by
  * {@code tools/gen_spirit_dive_djinn.py}.</p>
  *
  * <p><b>Stages.</b> HALF is the Djinn's Half Equip: the crest and the arms (Wind: the LEFT half of the body, as in the series: the left crest, arm, hip and leg); FULL is the whole set; UPGRADE forges
@@ -170,7 +170,7 @@ public final class SpiritDiveDjinnPieces {
     /** The key of a set: {@code sdj_<element>_<s|c>}. */
     public static String key(Element e, boolean character) { return "sdj_" + e.name().toLowerCase(Locale.ROOT) + "_" + (character ? "c" : "s"); }
 
-    /** The geo model id of a piece (the file stem under assets/nusmp/geo/entity). */
+    /** The geo model id of a piece (the file stem under assets/anime_multiverse/geo/entity). */
     public static String modelId(Element e, boolean character, String name) { return key(e, character) + "_arm_" + name; }
 
     /** The name part of the model for {@code GeoSpec.of(key, "arm_" + name)}. */
@@ -202,7 +202,7 @@ public final class SpiritDiveDjinnPieces {
     public static int passes(Def p, Lod lod) { return lod == Lod.FAR ? 1 : p.passes(); }
 
     // ------------------------------------------------------------------ the budgets (rule 11): bounded by the Djinn Full Equip's own numbers
-    /** The Djinn Full Equip's quads, counted from its mesh files (assets/nusmp/djinn, tools/relics): the largest and the smallest of the 36 unique sets (the look a Djinn is drawn with), body plus glow quads. */
+    /** The Djinn Full Equip's quads, counted from its mesh files (assets/anime_multiverse/djinn, tools/relics): the largest and the smallest of the 36 unique sets (the look a Djinn is drawn with), body plus glow quads. */
     public static final int DJINN_QUADS_MAX = 4351, DJINN_QUADS_MIN = 2856;
     /** Vertices a quad takes. */
     public static final int VERTICES_PER_QUAD = 4;

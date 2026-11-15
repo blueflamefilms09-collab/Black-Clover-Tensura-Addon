@@ -17,7 +17,7 @@ class TurfMarksTest {
         for (String t : new String[] {"nusmp_peak_boss", "nusmp_wanderer", "nusmp_floor_boss", "nusmp_juggernaut", "nusmp_charybdis", "nusmp_cursed_spirit"})
             assertTrue(TurfMarks.BOSS_TAGS.contains(t), t);
         assertEquals(6, TurfMarks.BOSS_TAGS.size());
-        assertEquals("nusmp:floor_warden", TurfMarks.WARDEN_ID);
+        assertEquals("anime_multiverse:floor_warden", TurfMarks.WARDEN_ID);
     }
 
     @Test void servantMarkersAreTheOnesTheModSets() {

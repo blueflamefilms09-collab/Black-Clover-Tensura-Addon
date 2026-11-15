@@ -32,7 +32,7 @@ public final class NoelleFormsSelfTests {
         SelfTests.register("magic.noelle_forms", NoelleFormsSelfTests::check);
     }
 
-    private static boolean has(String path) { return NoelleFormsSelfTests.class.getResource("/assets/nusmp/" + path) != null; }
+    private static boolean has(String path) { return NoelleFormsSelfTests.class.getResource("/assets/anime_multiverse/" + path) != null; }
 
     private static Result check(MinecraftServer server) {
         List<String> bad = new ArrayList<>();

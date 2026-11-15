@@ -45,7 +45,7 @@ public final class SafeConfig {
                 .defineInRange("passiveRegenScale", 0.25, 0.0, 1.0);
         PROTECT_BEDS = b.comment("Right-clicking a bed in the Mega-Dungeon never explodes it (the dimension has bed_works = false, where vanilla blows the bed up in the player's face). Beds that are rest anchors start a long rest, every other bed refuses politely.")
                 .define("protectBeds", true);
-        COMPAT_ENABLED = b.comment("The nusmp:mod_compat processor swaps marked vanilla furniture for Farmer's Delight and MrCrayfish's Furniture Mod: Refurbished blocks when those mods are loaded. false = always vanilla.")
+        COMPAT_ENABLED = b.comment("The anime_multiverse:mod_compat processor swaps marked vanilla furniture for Farmer's Delight and MrCrayfish's Furniture Mod: Refurbished blocks when those mods are loaded. false = always vanilla.")
                 .define("compatEnabled", true);
         b.pop();
         SPEC = b.build();

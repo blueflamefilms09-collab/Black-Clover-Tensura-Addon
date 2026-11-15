@@ -87,7 +87,7 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
             try {
                 form = HandForms.of(b.relic());
             } catch (RuntimeException ex) {
-                if (REPORTED.add(path)) LogUtils.getLogger().error("[nusmp] the hand form of relic {} failed; its sprite is used", path, ex);
+                if (REPORTED.add(path)) LogUtils.getLogger().error("[anime_multiverse] the hand form of relic {} failed; its sprite is used", path, ex);
             }
         }
         if (form != null && form.ensemble().pieces.isEmpty()) form = null;
@@ -96,7 +96,7 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
                 drawForm(form, hc, pose, buffers, light);
                 return;
             } catch (RuntimeException ex) {
-                if (REPORTED.add(path)) LogUtils.getLogger().error("[nusmp] drawing the hand form of relic {} failed; its sprite is used", path, ex);
+                if (REPORTED.add(path)) LogUtils.getLogger().error("[anime_multiverse] drawing the hand form of relic {} failed; its sprite is used", path, ex);
             }
         }
         if (hc == null && ctx == ItemDisplayContext.GUI && stack.getItem() instanceof RelicBearer b && com.newuniverse.nusmp.client.relics.vu.VuCharmsOptions.guiModel()
@@ -108,7 +108,7 @@ public final class HandItemRenderer extends BlockEntityWithoutLevelRenderer {
                     return;
                 }
             } catch (RuntimeException ex) {
-                if (REPORTED.add(path + "#gui")) LogUtils.getLogger().error("[nusmp] drawing the gui model of relic {} failed; its sprite is used", path, ex);
+                if (REPORTED.add(path + "#gui")) LogUtils.getLogger().error("[anime_multiverse] drawing the gui model of relic {} failed; its sprite is used", path, ex);
             }
         }
         sprite(stack, hc, path, pose, buffers, light, overlay);

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 final class Wave12Hooks {
     private Wave12Hooks() {}
 
-    private static final Logger LOG = LoggerFactory.getLogger("nusmp");
+    private static final Logger LOG = LoggerFactory.getLogger("anime_multiverse");
     private static boolean registered;
 
     static synchronized void register() {
@@ -67,7 +67,7 @@ final class Wave12Hooks {
                 default -> { }
             }
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 12 damage hook failed", failed);
+            LOG.error("[anime_multiverse] wave 12 damage hook failed", failed);
         }
     }
 
@@ -96,7 +96,7 @@ final class Wave12Hooks {
                 default -> { }
             }
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 12 hit hook failed", failed);
+            LOG.error("[anime_multiverse] wave 12 hit hook failed", failed);
         }
     }
 
@@ -108,7 +108,7 @@ final class Wave12Hooks {
         try {
             if (Wave12Magic.DAGGER.equals(Wave12Data.heldId(atk)) && RelicFlags.has(atk, Wave12Magic.DAGGER_FLAG)) Wave12Magic.daggerKill(atk, e.getEntity());
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 12 death hook failed", failed);
+            LOG.error("[anime_multiverse] wave 12 death hook failed", failed);
         }
     }
 
@@ -124,7 +124,7 @@ final class Wave12Hooks {
             }
             if ((p.tickCount + p.getId()) % 20 == 3) slow(p);
         } catch (RuntimeException | LinkageError failed) {
-            LOG.error("[nusmp] wave 12 tick failed", failed);
+            LOG.error("[anime_multiverse] wave 12 tick failed", failed);
         }
     }
 

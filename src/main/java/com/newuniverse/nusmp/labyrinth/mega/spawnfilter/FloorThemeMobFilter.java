@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Why: a floor of the Mega-Dungeon has a Region Theme (a Necropolis, a Sunken Temple, a Spider Warren ...), and a creature that does not belong to it breaks
  * the picture: drowned things walking a dry crypt, slimes in a forge of fire. The shipped data already says who belongs where: every faction file
- * ({@code data/nusmp/mega/factions/*.json}) lists a weight per theme, and a weight of 0 means "this faction is never native here". This class is the PALETTE
+ * ({@code data/anime_multiverse/mega/factions/*.json}) lists a weight per theme, and a weight of 0 means "this faction is never native here". This class is the PALETTE
  * of one theme made from those weights: the factions whose weight is above zero and at least the configured minimum are the floor's palette, and a creature
  * of any other faction is out of place. A creature that belongs to no faction (a vanilla zombie, a one-off boss) is never filtered, and a theme whose palette
  * would be empty (a broken data set: every faction at 0) filters nothing, because a datapack typo must never empty a floor. Pure: the game glue only feeds

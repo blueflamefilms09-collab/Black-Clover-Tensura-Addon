@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Why: every word the System shows (the overlay's labels, the pop-up lines, the chat lines, the item tooltip, the command output) goes through a lang key
- * {@code message.nusmp.mega.system.*}, so it can be translated; but the lead merges the lang file after the code, and a datapack quest may have no lang entry,
+ * {@code message.anime_multiverse.mega.system.*}, so it can be translated; but the lead merges the lang file after the code, and a datapack quest may have no lang entry,
  * so every consumer also needs the English text to fall back on. Keeping the English in ONE pure map, next to the keys, means the server (chat, command), the
  * client (overlay, toasts) and the tooltip all read the same fallback, a test can pin that no key is empty, and the lang fragment the lead merges is written
  * from this very map (so the file and the code cannot drift). The sync payload never carries a translated string: it carries keys and numbers, and the
@@ -15,8 +15,8 @@ import java.util.Map;
 public final class SystemText {
     private SystemText() {}
 
-    /** The prefix of every key of this module (the contract: {@code message.nusmp.mega.<key>.*}). */
-    public static final String PREFIX = "message.nusmp.mega.system.";
+    /** The prefix of every key of this module (the contract: {@code message.anime_multiverse.mega.<key>.*}). */
+    public static final String PREFIX = "message.anime_multiverse.mega.system.";
 
     private static final Map<String, String> EN = new LinkedHashMap<>();
 
@@ -92,7 +92,7 @@ public final class SystemText {
     public static final String CMD_ON = put("cmd.on", "on");
     public static final String CMD_OFF = put("cmd.off", "off");
     public static final String CMD_QUEST_ROLLED = put("cmd.quest.rolled", "%1$s now has the quest '%2$s' (%3$s) on floor %4$s.");
-    public static final String CMD_QUEST_NONE = put("cmd.quest.none", "Nothing could be rolled: no quest template fits this floor (data/nusmp/mega/system/quests.json).");
+    public static final String CMD_QUEST_NONE = put("cmd.quest.none", "Nothing could be rolled: no quest template fits this floor (data/anime_multiverse/mega/system/quests.json).");
     public static final String CMD_QUEST_COMPLETED = put("cmd.quest.completed", "The quest of %1$s is completed.");
     public static final String CMD_QUEST_FAILED = put("cmd.quest.failed", "The quest of %1$s is failed.");
     public static final String CMD_QUEST_NOACTIVE = put("cmd.quest.noactive", "%1$s has no active quest.");
@@ -129,11 +129,11 @@ public final class SystemText {
             "The System window can be moved. Press %1$s to enter edit mode: the arrow keys move it (Shift: 10 pixels), %2$s changes its corner, %3$s resets it.");
 
     // ---- the key bindings and the item name (the lang fragment carries them too)
-    public static final String KEY_TOGGLE = "key.nusmp.system_toggle";
-    public static final String ITEM_NAME = "item.nusmp.shadow_core";
+    public static final String KEY_TOGGLE = "key.anime_multiverse.system_toggle";
+    public static final String ITEM_NAME = "item.anime_multiverse.shadow_core";
     /** The Controls category of every key of the System (1.58.0): "Multiverse: System". */
-    public static final String KEY_CATEGORY = "key.categories.nusmp.system";
-    public static final String KEY_EDIT = "key.nusmp.system_edit";
+    public static final String KEY_CATEGORY = "key.categories.anime_multiverse.system";
+    public static final String KEY_EDIT = "key.anime_multiverse.system_edit";
 
     static {
         EN.put(KEY_TOGGLE, "Toggle the System window");

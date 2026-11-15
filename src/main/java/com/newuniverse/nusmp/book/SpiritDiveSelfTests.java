@@ -48,7 +48,7 @@ public final class SpiritDiveSelfTests {
         return SpiritDiveSelfTests.class.getClassLoader().getResource(path) != null;
     }
 
-    private static boolean asset(String path) { return has("assets/nusmp/" + path); }
+    private static boolean asset(String path) { return has("assets/anime_multiverse/" + path); }
 
     // ------------------------------------------------------------------ magic.spirit_dive_looks
     private static Result looks(MinecraftServer server) {
@@ -64,7 +64,7 @@ public final class SpiritDiveSelfTests {
                 "spirit2_wind_veins", "spirit2_water_veins", "spirit2_fire_veins", "spirit2_earth_veins", "spirit2_fire_shell", "spirit2_fire_shell_glow"})
             if (!asset("textures/aura/" + s + ".png")) bad.add("missing aura/" + s);
         if (!asset("animations/entity/spiritdive_arm_flame_arm_r.animation.json")) bad.add("the flame arm has no animation");
-        String themes = "data/nusmp/particle_themes.json";
+        String themes = "data/anime_multiverse/particle_themes.json";
         if (!has(themes)) bad.add("no particle themes file");
         else {
             try (var in = SpiritDiveSelfTests.class.getClassLoader().getResourceAsStream(themes)) {
@@ -180,7 +180,7 @@ public final class SpiritDiveSelfTests {
 
     /** The faces (quads) a model file draws in one pass: the entries of every cube's uv object (0 when the file cannot be read: the missing-file check reports that). */
     private static int faces(String stem) {
-        try (var in = SpiritDiveSelfTests.class.getClassLoader().getResourceAsStream("assets/nusmp/geo/entity/" + stem + ".geo.json")) {
+        try (var in = SpiritDiveSelfTests.class.getClassLoader().getResourceAsStream("assets/anime_multiverse/geo/entity/" + stem + ".geo.json")) {
             if (in == null) return 0;
             com.google.gson.JsonObject root = com.google.gson.JsonParser.parseString(new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
             int n = 0;

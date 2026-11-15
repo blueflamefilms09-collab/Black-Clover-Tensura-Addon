@@ -233,9 +233,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "FF4A8A", "groups": ["triad", "clover_rune"], "note": "the three orbs spiral out from the socket and the clover opens behind the guard"}
     it.swing = {"trail": "dead_star", "rgb": "FF4A8A", "rgb2": "14101C", "length": 2.2, "width": 0.45, "life": 11, "particles": "dark_mote"}
-    it.sound = "nusmp:item.genesis.black_halberd.void_hum_loop"
+    it.sound = "anime_multiverse:item.genesis.black_halberd.void_hum_loop"
     it.acts = {
-        "emperors_sweep": {"burst": "emperor_sweep", "pattern": "cone", "rgb": "FF4A8A", "ring": 6.0, "particles": 40, "sound": "nusmp:item.genesis.black_halberd.sweep"},
-        "dimensional_rift": {"burst": "dimension_rift", "pattern": "column", "rgb": "C02A5A", "ring": 5.0, "particles": 40, "sound": "nusmp:item.genesis.black_halberd.rift"},
-        "dark_triad": {"burst": "dark_triad", "pattern": "spiral", "rgb": "FF8ABA", "ring": 4.5, "particles": 45, "sound": "nusmp:item.genesis.black_halberd.triad"},
+        "emperors_sweep": {"burst": "emperor_sweep", "pattern": "cone", "rgb": "FF4A8A", "ring": 6.0, "particles": 40, "sound": "anime_multiverse:item.genesis.black_halberd.sweep"},
+        "dimensional_rift": {"burst": "dimension_rift", "pattern": "column", "rgb": "C02A5A", "ring": 5.0, "particles": 40, "sound": "anime_multiverse:item.genesis.black_halberd.rift"},
+        "dark_triad": {"burst": "dark_triad", "pattern": "spiral", "rgb": "FF8ABA", "ring": 4.5, "particles": 45, "sound": "anime_multiverse:item.genesis.black_halberd.triad"},
     }

@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Why: every Hub quest is DATA ({@code data/nusmp/elite/hub/quests/*.json}), not a branch in code, so the owner's example ("Defeat 50 Corrupted Foundations mobs") is one row, a datapack can retune
+ * Why: every Hub quest is DATA ({@code data/anime_multiverse/elite/hub/quests/*.json}), not a branch in code, so the owner's example ("Defeat 50 Corrupted Foundations mobs") is one row, a datapack can retune
  * or add a quest without a mod update, and the pure state machine ({@link PlayerQuestData}) works on this one record whatever the quest asks. A quest has a TYPE (a daily one is on the board for a
  * day and can be done once a day; a progression one is a chain that is done once, in order) and an OBJECTIVE of one of four kinds (kill N, clear K floors, deliver items, reach floor F), each
  * narrowed by filters (tier 1..5, road, faction, which kind of mob). {@code reward} is in bronze coins ({@link CoinKind}). {@code minFloor} is the deepest floor (absolute value) the player must have
@@ -15,7 +15,7 @@ import java.util.Objects;
  * @param tier    0 = any, else 1..5 (the same tiers as the Mob Foundry: 200 floors each)
  * @param road    "" = any, "holy" or "abyssal"
  * @param faction "" = any, else one of the dungeon's faction ids
- * @param mob     "any", "foundry" (only {@code nusmp:foundry_mob}) or "boss" (only decennial Guardians)
+ * @param mob     "any", "foundry" (only {@code anime_multiverse:foundry_mob}) or "boss" (only decennial Guardians)
  * @param item    the item id of a delivery quest ("" for the others)
  * @param floor   the signed floor of a reach-floor quest (0 for the others)
  */

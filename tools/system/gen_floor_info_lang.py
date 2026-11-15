@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Why: the words of the System's floor report (theme, mechanics, depth) and of the escape rules (release rune, rescue, /dungeon unstuck) are written once, in FloorInfoText
 and LockText (the code's own English fallback), and the lang fragment must say the same. This writes the flat fragment tools/lang/system_floor_info.json from those two maps (run
-through FloorInfoLangDump.java). The fragment is merged into assets/nusmp/lang/en_us.json by the lead; keys that exist are never overwritten. A unit test
+through FloorInfoLangDump.java). The fragment is merged into assets/anime_multiverse/lang/en_us.json by the lead; keys that exist are never overwritten. A unit test
 (FloorInfoTextTest) fails when the file and the maps differ, so run this again after changing a text.
 
     python3 -B tools/system/gen_floor_info_lang.py [--out FILE] [--work DIR]

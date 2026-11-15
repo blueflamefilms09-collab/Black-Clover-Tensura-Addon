@@ -17,15 +17,15 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import java.util.Optional;
 
 /**
- * /nusmp faith get <player>
- * /nusmp faith set <player> <amount>
- * /nusmp faith add <player> <amount>
+ * /anime_multiverse faith get <player>
+ * /anime_multiverse faith set <player> <amount>
+ * /anime_multiverse faith add <player> <amount>
  */
 public final class FaithCommand {
     private FaithCommand() {}
 
     public static void register(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("nusmp")
+        event.getDispatcher().register(Commands.literal("anime_multiverse")
                 .requires(src -> src.hasPermission(2))
                 .then(Commands.literal("faith")
                         .then(Commands.literal("get")

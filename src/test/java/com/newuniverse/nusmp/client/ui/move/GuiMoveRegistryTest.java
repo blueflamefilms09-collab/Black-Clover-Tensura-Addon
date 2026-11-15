@@ -148,13 +148,13 @@ class GuiMoveRegistryTest {
         Set<String> keys = new HashSet<>();
         Matcher m = Pattern.compile("\"([^\"]+)\"\\s*:").matcher(json);
         while (m.find()) keys.add(m.group(1));
-        assertTrue(keys.contains("key.nusmp.gui_move"), "the key's name is not translated");
+        assertTrue(keys.contains("key.anime_multiverse.gui_move"), "the key's name is not translated");
         for (Element e : GuiMoveRegistry.all()) assertTrue(keys.contains(e.nameKey()), "no text for " + e.nameKey());
         for (String file : new String[]{"client/ui/move/GuiMoveScreen.java", "client/ui/move/GuiMove.java", "client/ui/GuiSizeScreen.java"}) {
             Matcher u = Pattern.compile("(?:tr|translatableWithFallback)\\(\\s*\"(gui_move\\.[a-z_.]+)\"").matcher(code(MAIN.resolve(file)));
             while (u.find()) assertTrue(keys.contains(u.group(1)), file + " uses " + u.group(1) + " which the fragment lacks");
         }
-        assertTrue(Files.readString(MAIN.resolve("client/ui/move/GuiMove.java")).contains("\"key.nusmp.gui_move\""));
+        assertTrue(Files.readString(MAIN.resolve("client/ui/move/GuiMove.java")).contains("\"key.anime_multiverse.gui_move\""));
     }
 
     @Test

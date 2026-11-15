@@ -60,12 +60,12 @@ public final class RelicLayerGuard {
                     lastHealed = r.getClass().getName();
                     WornOnce.log(WornOnce.Cause.RENDERER_NOT_PLAYER_MODEL, r.getClass().getName());
                 } catch (RuntimeException | LinkageError failed) {
-                    LogUtils.getLogger().error("[nusmp] the humanoid worn relic layer could not be attached to {}", r.getClass().getName(), failed);
+                    LogUtils.getLogger().error("[anime_multiverse] the humanoid worn relic layer could not be attached to {}", r.getClass().getName(), failed);
                 }
                 return;
             }
             WornOnce.log(WornOnce.Cause.RENDERER_NOT_HUMANOID, r.getClass().getName() + " (model " + r.getModel().getClass().getName() + ")");
-            LogUtils.getLogger().warn("[nusmp] a player is drawn by {} whose model is neither a PlayerModel nor a HumanoidModel: worn relics cannot be attached to it", r.getClass().getName());
+            LogUtils.getLogger().warn("[anime_multiverse] a player is drawn by {} whose model is neither a PlayerModel nor a HumanoidModel: worn relics cannot be attached to it", r.getClass().getName());
             return;
         }
         try {
@@ -74,9 +74,9 @@ public final class RelicLayerGuard {
             healed++;
             lastHealed = r.getClass().getName();
             WornOnce.log(WornOnce.Cause.LAYER_LATE, lastHealed);
-            LogUtils.getLogger().warn("[nusmp] the renderer {} drew a player without the worn relic layer (the layer event never reached it); the layer was attached at the first frame", lastHealed);
+            LogUtils.getLogger().warn("[anime_multiverse] the renderer {} drew a player without the worn relic layer (the layer event never reached it); the layer was attached at the first frame", lastHealed);
         } catch (RuntimeException | LinkageError failed) {
-            LogUtils.getLogger().error("[nusmp] the worn relic layer could not be attached to {}", r.getClass().getName(), failed);
+            LogUtils.getLogger().error("[anime_multiverse] the worn relic layer could not be attached to {}", r.getClass().getName(), failed);
         }
     }
 }

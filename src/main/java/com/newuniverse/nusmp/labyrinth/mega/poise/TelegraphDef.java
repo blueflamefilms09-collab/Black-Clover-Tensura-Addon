@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.labyrinth.mega.poise;
 import com.newuniverse.nusmp.labyrinth.mega.foundry.FoundryAbility;
 
 /**
- * Why: one row of the telegraph table ({@code data/nusmp/mega/poise/telegraphs.json}): HOW an existing Foundry ability warns before it lands. The ability itself (damage, cooldown, radius,
+ * Why: one row of the telegraph table ({@code data/anime_multiverse/mega/poise/telegraphs.json}): HOW an existing Foundry ability warns before it lands. The ability itself (damage, cooldown, radius,
  * wind-up) stays in {@code _abilities.json}; this row only adds what the ability did not have: the shape drawn on the floor, whether the mob has super armor while it winds up, the shortest
  * wind-up that is fair to read, and whether the shape sits on the TARGET (a leap's landing, a curse) instead of on the mob. Numbers the ability already has win over the row's own
  * fallbacks: the radius is the ability's {@code r} (the row's only if the ability has none), a cleave's cone is the ability's {@code amp} degrees, a dash is as long as it travels.

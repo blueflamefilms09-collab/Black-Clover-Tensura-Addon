@@ -4,7 +4,7 @@
     python3 tools/gen_sdw4_models.py
 
 Writes
-  src/main/resources/assets/nusmp/sdw4_meshes/<name>.txt     one mesh each
+  src/main/resources/assets/anime_multiverse/sdw4_meshes/<name>.txt     one mesh each
   docs/previews/spirit_dive_wind_final/models.txt            vertex counts per mesh and layer (the numbers the budgets use)
 
 Meshes (mesh space: y runs UP from the ring, x and z across the head; the painter turns +y to the head's up and spins the mesh about y):
@@ -24,7 +24,7 @@ sys.path.insert(0, HERE)
 import gen_sdw3_models as g  # noqa: E402  (the Mesh class, the atlas regions and the palette of the Wind remake)
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdw4_meshes")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdw4_meshes")
 DOC = os.path.join(ROOT, "docs", "previews", "spirit_dive_wind_final", "models.txt")
 
 R_RING = 5.3            # radius of the upper ring (the head is 4 px, the hat layer 4.5)

@@ -41,7 +41,7 @@ public final class QuestsInstall {
             Path p = self.getFile().findResource("quest_pack");
             return p != null && Files.isDirectory(p) ? p : null;
         } catch (RuntimeException | LinkageError e) {
-            LOG.warn("[nusmp] could not locate the bundled quest pack", e);
+            LOG.warn("[anime_multiverse] could not locate the bundled quest pack", e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public final class QuestsInstall {
         try {
             source.getServer().getCommands().performPrefixedCommand(source, "ftbquests reload quests");
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] could not ask FTB Quests to reload", e);
+            LOG.warn("[anime_multiverse] could not ask FTB Quests to reload", e);
         }
     }
 
@@ -76,9 +76,9 @@ public final class QuestsInstall {
             Path pack = packRoot();
             if (pack == null) return;
             PackInstaller.Result r = PackInstaller.install(pack, dir, modVersion(), false, System.currentTimeMillis());
-            LOG.info("[nusmp] quests.autoInstallOnFirstRun: {}", r.message());
+            LOG.info("[anime_multiverse] quests.autoInstallOnFirstRun: {}", r.message());
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] quest pack auto-install failed", ex);
+            LOG.warn("[anime_multiverse] quest pack auto-install failed", ex);
         }
     }
 }

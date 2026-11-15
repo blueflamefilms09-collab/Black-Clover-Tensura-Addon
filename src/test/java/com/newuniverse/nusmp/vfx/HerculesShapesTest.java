@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HerculesShapesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYER = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer/HerculesLayer.java");
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
 
     private static final List<String> TEN = List.of("HERCULES_LEAP", "HERCULES_TREMOR", "HERCULES_INVICTUS", "HERCULES_GRIP", "HERCULES_THROW", "HERCULES_ROAR", "HERCULES_STRIKE", "HERCULES_SHOCKWAVE", "HERCULES_BODY", "HERCULES_MOMENTUM");
 

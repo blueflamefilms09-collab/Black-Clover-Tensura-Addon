@@ -29,7 +29,7 @@ public final class FloorGrowth implements FloorListener {
             Sector s = MegaDungeon.sectorAt(level, player.blockPosition());
             if (s != null) ExpansionQueue.get().onFloorReached(level, s);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] The next floor could not be queued when a player entered floor {}: {}", floor, e.toString());
+            LOG.warn("[anime_multiverse] The next floor could not be queued when a player entered floor {}: {}", floor, e.toString());
         }
     }
 }

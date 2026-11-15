@@ -67,7 +67,7 @@ public final class CodexGather {
         Map<String, TreeSet<String>> byFranchise = new LinkedHashMap<>();
         for (Map.Entry<net.minecraft.resources.ResourceKey<Item>, Item> en : BuiltInRegistries.ITEM.entrySet()) {
             ResourceLocation id = en.getKey().location();
-            if (!"nusmp".equals(id.getNamespace())) continue;
+            if (!"anime_multiverse".equals(id.getNamespace())) continue;
             String franchise = FranchiseMap.franchiseOf(id.getPath());
             if (franchise == null) continue;
             Item item = en.getValue();
@@ -98,14 +98,14 @@ public final class CodexGather {
         Map<String, CodexEntries.Own> own = new TreeMap<>();
         lookup.listElements().forEach(ref -> {
             ResourceLocation id = ref.key().location();
-            if (!"nusmp".equals(id.getNamespace()) || table.engravings().containsKey(id.getPath())) return;
+            if (!"anime_multiverse".equals(id.getNamespace()) || table.engravings().containsKey(id.getPath())) return;
             boolean mainOnly = !ref.value().definition().slots().isEmpty() && ref.value().definition().slots().stream().allMatch(s -> s == EquipmentSlotGroup.MAINHAND);
-            own.put(id.getPath(), new CodexEntries.Own(id.getPath(), mainOnly ? "main" : "any", ref.value().getMaxLevel(), carriers.getOrDefault("nusmp:" + id.getPath(), new TreeSet<>())));
+            own.put(id.getPath(), new CodexEntries.Own(id.getPath(), mainOnly ? "main" : "any", ref.value().getMaxLevel(), carriers.getOrDefault("anime_multiverse:" + id.getPath(), new TreeSet<>())));
         });
         // an own enchantment named by an item table but not (yet) registered still gets its page
         for (String key : carriers.keySet()) {
-            if (!key.startsWith("nusmp:")) continue;
-            String path = key.substring("nusmp:".length());
+            if (!key.startsWith("anime_multiverse:")) continue;
+            String path = key.substring("anime_multiverse:".length());
             if (!table.engravings().containsKey(path) && !own.containsKey(path)) own.put(path, new CodexEntries.Own(path, "main", 0, carriers.get(key)));
         }
 
@@ -136,7 +136,7 @@ public final class CodexGather {
     }
 
     private static void addCarrier(Map<String, TreeSet<String>> carriers, Map<String, String> names, String itemPath, List<String> specs) {
-        Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("nusmp", itemPath));
+        Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("anime_multiverse", itemPath));
         if (item.isEmpty()) return;
         String name = nameOf(names, itemPath, item.get());
         for (String spec : specs) {

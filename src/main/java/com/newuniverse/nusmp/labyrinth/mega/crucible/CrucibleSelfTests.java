@@ -355,11 +355,11 @@ public final class CrucibleSelfTests {
         ServerLevel overworld = server.overworld();
         boolean control = RelicLoot.anyUnissued(overworld, Grade.NORMAL, Grade.GENESIS);            // the same question one dimension over: the guard is what differs
         for (String path : List.of("chests/labyrinth_pedestal", "chests/dungeon_relic_vault")) {
-            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("nusmp", path));
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", path));
             LootTable table = server.reloadableRegistries().getLootTable(key);
             for (int i = 0; i < 4; i++) {
                 LootParams params = new LootParams.Builder(mega).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(r.center)).create(LootContextParamSets.CHEST);
-                for (ItemStack st : table.getRandomItems(params, 7000L + i)) check(Relics.defOf(st) == null, "the table nusmp:" + path + " rolled the relic " + st.getHoverName().getString() + " in the Mega-Dungeon");
+                for (ItemStack st : table.getRandomItems(params, 7000L + i)) check(Relics.defOf(st) == null, "the table anime_multiverse:" + path + " rolled the relic " + st.getHoverName().getString() + " in the Mega-Dungeon");
             }
         }
         check(UniqueLedger.liveIds(server).equals(live0), "rolling the vault loot tables in the Mega-Dungeon changed the ledger");

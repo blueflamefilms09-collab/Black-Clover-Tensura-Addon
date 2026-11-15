@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the eleven factions are fixed by the Mega-Dungeon contract because three builders meet on their ids: the room templates write
- * {@code nusmp:faction;faction=<id>} markers, the encounter director reads the entity-type tags {@code nusmp:mega/<id>}, and this package ships
+ * {@code anime_multiverse:faction;faction=<id>} markers, the encounter director reads the entity-type tags {@code anime_multiverse:mega/<id>}, and this package ships
  * the data and the tags. The loader takes whatever files it finds (a datapack may add a twelfth faction), so production code never needs this
  * list; it exists so the data test can insist that the eleven agreed ids are all there, in the agreed spelling. Pure (no Minecraft types).
  */

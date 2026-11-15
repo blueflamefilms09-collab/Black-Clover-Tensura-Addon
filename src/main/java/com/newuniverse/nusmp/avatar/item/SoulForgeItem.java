@@ -20,7 +20,7 @@ public class SoulForgeItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         super.appendHoverText(stack, ctx, tip, flag);
-        tip.add(Component.translatableWithFallback("item.nusmp.soul_forge.desc1", "Place it, hold a Genesis Core and use it: the ritual of the Avatar begins.").withStyle(ChatFormatting.GRAY));
-        tip.add(Component.translatableWithFallback("item.nusmp.soul_forge.desc2", "Each Avatar costs one Genesis Core. The forge itself is never used up.").withStyle(ChatFormatting.DARK_PURPLE));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.soul_forge.desc1", "Place it, hold a Genesis Core and use it: the ritual of the Avatar begins.").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.soul_forge.desc2", "Each Avatar costs one Genesis Core. The forge itself is never used up.").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

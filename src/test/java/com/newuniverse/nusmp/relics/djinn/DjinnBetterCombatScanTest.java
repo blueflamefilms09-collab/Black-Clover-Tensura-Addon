@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DjinnBetterCombatScanTest {
     private static final Path ROOT = Path.of(".");
     private static final Path JAVA = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
-    private static final Path ATTRS = ROOT.resolve("src/main/resources/data/nusmp/weapon_attributes");
+    private static final Path ATTRS = ROOT.resolve("src/main/resources/data/anime_multiverse/weapon_attributes");
     private static final Path BUILTIN = ROOT.resolve("tools/bettercombat/builtin_animations.json");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
@@ -157,6 +157,6 @@ class DjinnBetterCombatScanTest {
             assertTrue(m.find(), "no lang entry for " + w.key());
             assertEquals(w.fallback(), m.group(1), "the lang text and the fallback of " + w + " differ");
         }
-        assertTrue(frag.contains("tooltip.nusmp.djinn_seal.bind_hint"));
+        assertTrue(frag.contains("tooltip.anime_multiverse.djinn_seal.bind_hint"));
     }
 }

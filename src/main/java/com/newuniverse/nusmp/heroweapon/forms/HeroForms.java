@@ -88,7 +88,7 @@ public final class HeroForms {
             HeroCtx c = HeroCtx.of(player);
             if (c != null) HeroLogics.of(bond.kind()).onFormChanged(c, from, to);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: onFormChanged of {} failed", bond.kind(), e);
+            LOG.warn("[anime_multiverse] hero forms: onFormChanged of {} failed", bond.kind(), e);
         }
         return null;
     }
@@ -123,7 +123,7 @@ public final class HeroForms {
 
     /**
      * Re-applies everything the active form puts on the wielder: the attribute modifiers while the weapon is summoned (and none when it is not), the permanent ability
-     * bonuses of finished forms (always), and the {@code nusmp:hero_look} component of the summoned stack. Idempotent and cheap; the core calls it on summon,
+     * bonuses of finished forms (always), and the {@code anime_multiverse:hero_look} component of the summoned stack. Idempotent and cheap; the core calls it on summon,
      * dismiss, login, respawn and after any change of form or bond (this system also calls it on those events itself).
      */
     public static void refresh(ServerPlayer player) { FormLoadout.refresh(player); }

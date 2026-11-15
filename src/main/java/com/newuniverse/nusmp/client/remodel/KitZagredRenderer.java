@@ -22,14 +22,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Why: the legacy Zagred (entity nusmp:zagred_legacy) has two things the generic mob renderer does not: the FRESNEL AURA, its model drawn again a little larger through the
- * {@code nusmp:rendertype_zagred_aura} core shader (blood red to crimson, pulsing faster each phase; if the shader cannot load, a dim additive pass stands in), and the TARGET RETICLE, a
+ * Why: the legacy Zagred (entity anime_multiverse:zagred_legacy) has two things the generic mob renderer does not: the FRESNEL AURA, its model drawn again a little larger through the
+ * {@code anime_multiverse:rendertype_zagred_aura} core shader (blood red to crimson, pulsing faster each phase; if the shader cannot load, a dim additive pass stands in), and the TARGET RETICLE, a
  * turning rune ring projected at its target's feet (with four marks closing in while it casts a word). Both were the old renderer's ({@code client/ZagredRenderer}, kept); they are
  * reproduced here around the art kit's model so the boss loses nothing of its presence. The old renderer drew the trident as an item in the hand at the fourth phase; the kit model for that
  * phase (zagred_legacy_form2) carries it. The glow layer is the kit's own (the red eyes, horns, runes and wing veins), pulsing like the old one.
  */
 public class KitZagredRenderer extends KitMobRenderer<ZagredBossEntity> {
-    private static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/koto_ring.png");
+    private static final ResourceLocation RING = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/koto_ring.png");
 
     public KitZagredRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, "zagred_legacy", Size.fit(), KitProbes.ZAGRED);

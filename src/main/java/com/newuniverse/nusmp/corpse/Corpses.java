@@ -52,7 +52,7 @@ import com.newuniverse.nusmp.particle.fx.FxTone;
  * compound {@value #TAG} (owner, birth tick, life, kind) and is listed in a {@link CorpseRoster}; the rest of the package only asks
  * questions of it. It owns the ledger of the dead ({@link CorpseLedger}, one per Soul Corpse mage, kept in the player's persistent
  * data so a relog does not lose the last minute), the raising of a body from a ledger entry (a fresh body of the same type, never a
- * boss, player, NPC or anything in {@code nusmp:corpse_immune}), the half-second sweep that drives every body (target, path, a blow
+ * boss, player, NPC or anything in {@code anime_multiverse:corpse_immune}), the half-second sweep that drives every body (target, path, a blow
  * in reach, the slow bleed of health, the decay stage, the wisps, the end of its life) and the rules about who counts as a foe.
  * <p>
  * Tensura's mobs are brain-driven, so a body is pointed at a foe from outside and strikes when in reach, the same way
@@ -392,7 +392,7 @@ public final class Corpses {
 
     /** One INFO line when a numbered body stands (a page cooldown of 8 s or more bounds it): the id and the place, so "only a circle" can be told from "a body nobody could see". */
     static void diagStood(ServerPlayer owner, NamedCorpseEntity n) {
-        if (CorpseConfig.diagnose()) LOG.info("[nusmp] numbered undead: {} of {} stands (entity {} at {} {} {}, life {} ticks)", n.kind().id, owner.getGameProfile().getName(), n.getId(),
+        if (CorpseConfig.diagnose()) LOG.info("[anime_multiverse] numbered undead: {} of {} stands (entity {} at {} {} {}, life {} ticks)", n.kind().id, owner.getGameProfile().getName(), n.getId(),
                 Math.round(n.getX()), Math.round(n.getY()), Math.round(n.getZ()), n.getPersistentData().getCompound(TAG).getInt("Life"));
     }
 
@@ -454,7 +454,7 @@ public final class Corpses {
     }
 
     // ================================================================ the decay mark
-    /** Puts (or updates) the {@code nusmp:soul_corpse} marker on a creature and tells everyone who sees it. The amplifier is the decay stage. */
+    /** Puts (or updates) the {@code anime_multiverse:soul_corpse} marker on a creature and tells everyone who sees it. The amplifier is the decay stage. */
     public static void mark(LivingEntity e, int stage) { mark(e, stage, false); }
 
     /** The same; 'resend' also repeats the packet when the stage did not change (every five seconds, so a client that missed one catches up). */

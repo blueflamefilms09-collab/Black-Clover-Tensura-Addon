@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * free rolls remain, and a seed for the slot-machine reel so the decoys that spin past are the same every time this roll is replayed.
  */
 public record S2C_AptitudeRollPayload(String aptitudeId, long token, int rollsLeft, int reelSeed) implements CustomPacketPayload {
-    public static final Type<S2C_AptitudeRollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_roll_result"));
+    public static final Type<S2C_AptitudeRollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_roll_result"));
     public static final StreamCodec<RegistryFriendlyByteBuf, S2C_AptitudeRollPayload> CODEC = StreamCodec.of(
             (b, p) -> { b.writeUtf(NetText.clean(p.aptitudeId, NetText.ID_MAX), NetText.ID_MAX); b.writeLong(p.token); b.writeVarInt(p.rollsLeft); b.writeInt(p.reelSeed); },
             b -> new S2C_AptitudeRollPayload(b.readUtf(NetText.ID_MAX), b.readLong(), b.readVarInt(), b.readInt()));

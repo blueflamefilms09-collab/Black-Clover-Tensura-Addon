@@ -107,25 +107,25 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
         String[] tabs = {"stats", "race", "look", "confirm"};
         for (int i = 0; i < tabs.length; i++) {
             final int target = i;
-            addRenderableWidget(new ThemedButton(x + 10 + i * 62, y + 8, 60, 14, Component.translatable("nusmp.avatar.gui.tab." + tabs[i]), b -> { if (state.goTo(target)) buildPage(); }));
+            addRenderableWidget(new ThemedButton(x + 10 + i * 62, y + 8, 60, 14, Component.translatable("anime_multiverse.avatar.gui.tab." + tabs[i]), b -> { if (state.goTo(target)) buildPage(); }));
         }
         // page controls
         switch (pg) {
             case BuilderState.PAGE_STATS -> {
-                addRenderableWidget(new ThemedButton(x + 10, y + H - 24, 96, 16, Component.translatable(state.rolled() ? "nusmp.avatar.gui.reroll" : "nusmp.avatar.gui.roll"), b -> requestRoll()));
+                addRenderableWidget(new ThemedButton(x + 10, y + H - 24, 96, 16, Component.translatable(state.rolled() ? "anime_multiverse.avatar.gui.reroll" : "anime_multiverse.avatar.gui.roll"), b -> requestRoll()));
             }
             case BuilderState.PAGE_RACE -> buildRacePage(x, y);
             case BuilderState.PAGE_LOOK -> buildLookPage(x, y);
             default -> buildConfirmPage(x, y);
         }
         // back / next / create
-        if (pg > 0) addRenderableWidget(new ThemedButton(x + W - 168, y + H - 24, 50, 16, Component.translatable("nusmp.avatar.gui.back"), b -> { if (state.back()) buildPage(); }));
+        if (pg > 0) addRenderableWidget(new ThemedButton(x + W - 168, y + H - 24, 50, 16, Component.translatable("anime_multiverse.avatar.gui.back"), b -> { if (state.back()) buildPage(); }));
         if (pg < BuilderState.PAGE_CONFIRM) {
-            ThemedButton next = new ThemedButton(x + W - 112, y + H - 24, 100, 16, Component.translatable("nusmp.avatar.gui.next"), b -> { if (state.next()) buildPage(); });
+            ThemedButton next = new ThemedButton(x + W - 112, y + H - 24, 100, 16, Component.translatable("anime_multiverse.avatar.gui.next"), b -> { if (state.next()) buildPage(); });
             next.active = state.canNext();
             addRenderableWidget(next);
         } else {
-            ThemedButton create = new ThemedButton(x + W - 112, y + H - 24, 100, 16, Component.translatable("nusmp.avatar.gui.create"), b -> finalizeAvatar());
+            ThemedButton create = new ThemedButton(x + W - 112, y + H - 24, 100, 16, Component.translatable("anime_multiverse.avatar.gui.create"), b -> finalizeAvatar());
             create.active = state.canCreate();
             addRenderableWidget(create);
         }
@@ -186,9 +186,9 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
         cycler(x + 10, row + 80, d -> look = look.withWing(Math.floorMod(look.wingId() + 1 + d, AppearanceData.WING_COUNT + 1) - 1));
         float lo = DynamicAppearanceEngine.minScale(base), hi = DynamicAppearanceEngine.maxScale(base);
         addRenderableWidget(new ValueSlider(x + 10, row + 102, 118, 14, hi > lo ? (look.scale() - lo) / (hi - lo) : 0.5, UiTheme.GREEN,
-                v -> Component.translatable("nusmp.avatar.gui.look.scale", String.format(java.util.Locale.ROOT, "%.2f", lo + v * (hi - lo))),
+                v -> Component.translatable("anime_multiverse.avatar.gui.look.scale", String.format(java.util.Locale.ROOT, "%.2f", lo + v * (hi - lo))),
                 v -> look = look.withScale((float) (lo + v * (hi - lo)))));
-        addRenderableWidget(new ThemedButton(x + 10, row + 122, 118, 14, Component.translatable("nusmp.avatar.gui.look.random"),
+        addRenderableWidget(new ThemedButton(x + 10, row + 122, 118, 14, Component.translatable("anime_multiverse.avatar.gui.look.random"),
                 b -> { look = DynamicAppearanceEngine.defaultsFor(state.race(), base, rng.nextLong()); buildPage(); }));
         // colours: aura and eyes as three sliders each
         int cx = x + 138;
@@ -196,7 +196,7 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
         addColour(cx, row + 62, "eyes", look.eyeRgb(), c -> look = look.withEye(c));
         // skin shade
         addRenderableWidget(new ValueSlider(cx, row + 124, 120, 12, shadeOf(look.skinTone()), UiTheme.GOLD,
-                v -> Component.translatable("nusmp.avatar.gui.look.shade"), v -> look = look.withSkin(shaded(look.skinTone(), v))));
+                v -> Component.translatable("anime_multiverse.avatar.gui.look.shade"), v -> look = look.withSkin(shaded(look.skinTone(), v))));
     }
 
     private static double shadeOf(int rgb) {
@@ -231,16 +231,16 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
 
     // ---- page 4: confirm
     private void buildConfirmPage(int x, int y) {
-        nameBox = new EditBox(font, x + 10, y + 150, 150, 14, Component.translatable("nusmp.avatar.gui.confirm.name"));
+        nameBox = new EditBox(font, x + 10, y + 150, 150, 14, Component.translatable("anime_multiverse.avatar.gui.confirm.name"));
         nameBox.setMaxLength(BuilderState.NAME_MAX);
         nameBox.setValue(state.name());
-        nameBox.setHint(Component.translatable("nusmp.avatar.gui.confirm.name_hint"));
+        nameBox.setHint(Component.translatable("anime_multiverse.avatar.gui.confirm.name_hint"));
         nameBox.setResponder(s -> { state.setName(s); updateCreateButton(); });
         addRenderableWidget(nameBox);
     }
 
     private void updateCreateButton() {
-        for (var w : children()) if (w instanceof ThemedButton tb && tb.getMessage().equals(Component.translatable("nusmp.avatar.gui.create"))) tb.active = state.canCreate();
+        for (var w : children()) if (w instanceof ThemedButton tb && tb.getMessage().equals(Component.translatable("anime_multiverse.avatar.gui.create"))) tb.active = state.canCreate();
     }
 
     // ================================================================ input
@@ -311,7 +311,7 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
         spin = (age + partial) * 3f;                  // a function of the clock, not of the frame rate
         AvatarPreview.draw(g, x + PREVIEW_X + PREVIEW_W / 2, y + H - 52, 52f, look, state.race(), spin, age + partial);
         String pn = state.primary() == null ? "?" : state.primary().displayName;
-        g.drawCenteredString(font, Component.translatable("nusmp.avatar.gui.preview"), x + PREVIEW_X + PREVIEW_W / 2, y + 32, UiTheme.TEXT_DIM);
+        g.drawCenteredString(font, Component.translatable("anime_multiverse.avatar.gui.preview"), x + PREVIEW_X + PREVIEW_W / 2, y + 32, UiTheme.TEXT_DIM);
         switch (state.page()) {
             case BuilderState.PAGE_STATS -> drawStats(g, x, y, now);
             case BuilderState.PAGE_RACE -> drawRace(g, x, y, mx, my);
@@ -324,11 +324,11 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
 
     private void drawStats(GuiGraphics g, int x, int y, float now) {
         S2C_RollPayload r = AvatarClientData.roll;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.stats.title"), x + 10, y + 30, UiTheme.GOLD);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.stats.title"), x + 10, y + 30, UiTheme.GOLD);
         for (int i = 0; i < 6; i++) {
             int bx = x + 10 + (i % 3) * 82, by = y + 46 + (i / 3) * 56;
             UiPanel.well(g, bx, by, 76, 48, UiTheme.CYAN, 0.9f);
-            g.drawCenteredString(font, Component.translatable("nusmp.avatar.gui.stat." + STATS[i]), bx + 38, by + 5, UiTheme.TEXT_DIM);
+            g.drawCenteredString(font, Component.translatable("anime_multiverse.avatar.gui.stat." + STATS[i]), bx + 38, by + 5, UiTheme.TEXT_DIM);
             String num;
             int col = UiTheme.TEXT;
             if (r == null) { num = "--"; col = UiTheme.TEXT_FAINT; }
@@ -350,17 +350,17 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
         }
         int ty = y + 164;
         if (r == null) {
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.stats.hint"), x + 10, ty, UiTheme.TEXT_DIM);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.stats.hint"), x + 10, ty, UiTheme.TEXT_DIM);
         } else {
-            g.drawString(font, Component.translatable(r.fiveDice() ? "nusmp.avatar.gui.dice.five" : "nusmp.avatar.gui.dice.four"), x + 10, ty, r.fiveDice() ? UiTheme.GOLD : UiTheme.TEXT);
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.luck", String.format(java.util.Locale.ROOT, "%.1f", r.luck())), x + 10, ty + 12, UiTheme.VIOLET);
-            if (r.rerollCost() > 0) g.drawString(font, Component.translatable("nusmp.avatar.gui.reroll_cost", r.rerollCost()), x + 10, ty + 24, UiTheme.TEXT_DIM);
+            g.drawString(font, Component.translatable(r.fiveDice() ? "anime_multiverse.avatar.gui.dice.five" : "anime_multiverse.avatar.gui.dice.four"), x + 10, ty, r.fiveDice() ? UiTheme.GOLD : UiTheme.TEXT);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.luck", String.format(java.util.Locale.ROOT, "%.1f", r.luck())), x + 10, ty + 12, UiTheme.VIOLET);
+            if (r.rerollCost() > 0) g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.reroll_cost", r.rerollCost()), x + 10, ty + 24, UiTheme.TEXT_DIM);
         }
     }
 
     private void drawRace(GuiGraphics g, int x, int y, int mx, int my) {
         List<RaceEntry> rs = AvatarClientData.races;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.race.title"), x + 10, y + 26 - 0, UiTheme.GOLD);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.title"), x + 10, y + 26 - 0, UiTheme.GOLD);
         UiPanel.well(g, x + 10, y + 36 - 6 + 0, 116, 8 * 14 + 2, UiTheme.CYAN, 0.9f);
         RaceEntry hover = null;
         for (int i = 0; i < 8; i++) {
@@ -375,80 +375,80 @@ public class AvatarBuilderScreen extends AbstractContainerScreen<AvatarBuilderMe
             int col = !r.available() ? UiTheme.TEXT_FAINT : sel ? UiTheme.WHITE : UiTheme.TEXT;
             g.drawString(font, font.plainSubstrByWidth(Component.translatableWithFallback(r.name(), r.name()).getString(), 108), x + 14, ry + 3, col);
         }
-        if (rs.isEmpty()) g.drawString(font, Component.translatable("nusmp.avatar.gui.race.none"), x + 14, y + 36, UiTheme.TEXT_DIM);
+        if (rs.isEmpty()) g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.none"), x + 14, y + 36, UiTheme.TEXT_DIM);
         // details of the selected (or hovered) race
         RaceEntry d = hover != null ? hover : race();
         int dx = x + 134;
         if (d != null) {
             g.drawString(font, Component.translatableWithFallback(d.name(), d.name()), dx, y + 30, d.available() ? UiTheme.GOLD : UiTheme.TEXT_DIM);
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.race.scale", String.format(java.util.Locale.ROOT, "%.2f", d.scale())), dx, y + 42, UiTheme.TEXT);
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.race.ep", (long) d.ep()), dx, y + 53, UiTheme.TEXT);
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.race.magicule", (long) d.magicule()), dx, y + 64, UiTheme.TEXT);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.scale", String.format(java.util.Locale.ROOT, "%.2f", d.scale())), dx, y + 42, UiTheme.TEXT);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.ep", (long) d.ep()), dx, y + 53, UiTheme.TEXT);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.magicule", (long) d.magicule()), dx, y + 64, UiTheme.TEXT);
             int ly = y + 75;
             if (!d.statMults().isEmpty()) g.drawString(font, font.plainSubstrByWidth(String.join(" ", d.statMults()).toUpperCase(java.util.Locale.ROOT), 124), dx, ly, UiTheme.TEXT_DIM);
             ly += 11;
-            if (!d.evolvesTo().isEmpty()) { g.drawString(font, Component.translatable("nusmp.avatar.gui.race.evolves", d.evolvesTo()), dx, ly, UiTheme.VIOLET); ly += 11; }
-            if (d.requiresDnd()) { g.drawString(font, Component.translatable("nusmp.avatar.gui.race.dnd"), dx, ly, UiTheme.GOLD); ly += 11; }
+            if (!d.evolvesTo().isEmpty()) { g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.evolves", d.evolvesTo()), dx, ly, UiTheme.VIOLET); ly += 11; }
+            if (d.requiresDnd()) { g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.dnd"), dx, ly, UiTheme.GOLD); ly += 11; }
             if (!d.available()) {
-                g.drawString(font, Component.translatable("nusmp.avatar.gui.race.locked"), dx, ly, (raceFlash > 0 && raceFlash % 6 < 3) ? UiTheme.WHITE : UiTheme.RED); ly += 11;
-                for (String f : d.failed()) { g.drawString(font, font.plainSubstrByWidth("- " + Component.translatableWithFallback("nusmp.avatar.cond." + f.replace(':', '.'), f).getString(), 124), dx, ly, UiTheme.TEXT_FAINT); ly += 10; }
+                g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.race.locked"), dx, ly, (raceFlash > 0 && raceFlash % 6 < 3) ? UiTheme.WHITE : UiTheme.RED); ly += 11;
+                for (String f : d.failed()) { g.drawString(font, font.plainSubstrByWidth("- " + Component.translatableWithFallback("anime_multiverse.avatar.cond." + f.replace(':', '.'), f).getString(), 124), dx, ly, UiTheme.TEXT_FAINT); ly += 10; }
             }
         }
         // personalities
         int py = y + 150;
         AvatarPersonality p = state.primary(), s = state.secondary();
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.primary"), x + 10, py - 11, UiTheme.GOLD);
-        g.drawCenteredString(font, p == null ? Component.translatable("nusmp.avatar.gui.choose") : Component.literal(p.displayName), x + 75, py + 3, p == null ? UiTheme.TEXT_DIM : UiTheme.TEXT);
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.secondary"), x + 10, py + 11, UiTheme.GOLD);
-        g.drawCenteredString(font, s == null ? Component.translatable("nusmp.avatar.gui.look.none") : Component.literal(s.displayName), x + 75, py + 25, s == null ? UiTheme.TEXT_DIM : UiTheme.TEXT);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.primary"), x + 10, py - 11, UiTheme.GOLD);
+        g.drawCenteredString(font, p == null ? Component.translatable("anime_multiverse.avatar.gui.choose") : Component.literal(p.displayName), x + 75, py + 3, p == null ? UiTheme.TEXT_DIM : UiTheme.TEXT);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.secondary"), x + 10, py + 11, UiTheme.GOLD);
+        g.drawCenteredString(font, s == null ? Component.translatable("anime_multiverse.avatar.gui.look.none") : Component.literal(s.displayName), x + 75, py + 25, s == null ? UiTheme.TEXT_DIM : UiTheme.TEXT);
         AvatarPersonality show = p;
-        if (show != null) g.drawString(font, font.plainSubstrByWidth(Component.translatable("nusmp.avatar.persona." + show.name().toLowerCase(java.util.Locale.ROOT)).getString(), 112), x + 148, py + 3, UiTheme.TEXT_DIM);
+        if (show != null) g.drawString(font, font.plainSubstrByWidth(Component.translatable("anime_multiverse.avatar.persona." + show.name().toLowerCase(java.util.Locale.ROOT)).getString(), 112), x + 148, py + 3, UiTheme.TEXT_DIM);
         if (p != null && s != null)
-            g.drawString(font, font.plainSubstrByWidth(Component.translatable("nusmp.avatar.gui.hybrid", p.displayName, s.displayName).getString(), 112), x + 148, py + 25, UiTheme.VIOLET);
+            g.drawString(font, font.plainSubstrByWidth(Component.translatable("anime_multiverse.avatar.gui.hybrid", p.displayName, s.displayName).getString(), 112), x + 148, py + 25, UiTheme.VIOLET);
         else if (s != null)
-            g.drawString(font, font.plainSubstrByWidth(Component.translatable("nusmp.avatar.persona." + s.name().toLowerCase(java.util.Locale.ROOT)).getString(), 112), x + 148, py + 25, UiTheme.TEXT_DIM);
+            g.drawString(font, font.plainSubstrByWidth(Component.translatable("anime_multiverse.avatar.persona." + s.name().toLowerCase(java.util.Locale.ROOT)).getString(), 112), x + 148, py + 25, UiTheme.TEXT_DIM);
     }
 
     private void drawLook(GuiGraphics g, int x, int y) {
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.look.title"), x + 10, y + 26, UiTheme.GOLD);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.look.title"), x + 10, y + 26, UiTheme.GOLD);
         int row = y + 32;
         String[] labels = {"skin", "hair", "outfit", "horn", "wing"};
         for (int i = 0; i < 5; i++) {
             int ry = row + i * 20;
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.look." + labels[i]), x + 10, ry + 3, UiTheme.TEXT_DIM);
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.look." + labels[i]), x + 10, ry + 3, UiTheme.TEXT_DIM);
         }
         // current values between the arrows
         g.fill(x + 60, row + 1, x + 70, row + 13, 0xFF000000 | look.skinTone());
         g.renderOutline(x + 60, row + 1, 10, 12, 0xFFFFFFFF);
-        g.drawCenteredString(font, Component.translatable("nusmp.avatar.hair." + look.hairId()), x + 93, row + 23, UiTheme.TEXT);
-        g.drawCenteredString(font, Component.translatable("nusmp.avatar.outfit." + look.outfitId()), x + 93, row + 43, UiTheme.TEXT);
-        g.drawCenteredString(font, look.hornId() < 0 ? Component.translatable("nusmp.avatar.gui.look.none") : Component.translatable("nusmp.avatar.horn." + look.hornId()), x + 93, row + 63, UiTheme.TEXT);
-        g.drawCenteredString(font, look.wingId() < 0 ? Component.translatable("nusmp.avatar.gui.look.none") : Component.translatable("nusmp.avatar.wing." + look.wingId()), x + 93, row + 83, UiTheme.TEXT);
+        g.drawCenteredString(font, Component.translatable("anime_multiverse.avatar.hair." + look.hairId()), x + 93, row + 23, UiTheme.TEXT);
+        g.drawCenteredString(font, Component.translatable("anime_multiverse.avatar.outfit." + look.outfitId()), x + 93, row + 43, UiTheme.TEXT);
+        g.drawCenteredString(font, look.hornId() < 0 ? Component.translatable("anime_multiverse.avatar.gui.look.none") : Component.translatable("anime_multiverse.avatar.horn." + look.hornId()), x + 93, row + 63, UiTheme.TEXT);
+        g.drawCenteredString(font, look.wingId() < 0 ? Component.translatable("anime_multiverse.avatar.gui.look.none") : Component.translatable("anime_multiverse.avatar.wing." + look.wingId()), x + 93, row + 83, UiTheme.TEXT);
         int cx = x + 138;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.look.aura"), cx, row + 2, UiTheme.TEXT_DIM);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.look.aura"), cx, row + 2, UiTheme.TEXT_DIM);
         g.fill(cx + 100, row + 1, cx + 120, row + 11, 0xFF000000 | look.auraRgb());
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.look.eyes"), cx, row + 64, UiTheme.TEXT_DIM);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.look.eyes"), cx, row + 64, UiTheme.TEXT_DIM);
         g.fill(cx + 100, row + 63, cx + 120, row + 73, 0xFF000000 | look.eyeRgb());
     }
 
     private void drawConfirm(GuiGraphics g, int x, int y) {
         S2C_RollPayload r = AvatarClientData.roll;
         RaceEntry re = race();
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.title"), x + 10, y + 26, UiTheme.GOLD);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.title"), x + 10, y + 26, UiTheme.GOLD);
         int ly = y + 40;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.race", re == null ? "?" : Component.translatableWithFallback(re.name(), re.name()).getString()), x + 10, ly, UiTheme.TEXT); ly += 12;
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.race", re == null ? "?" : Component.translatableWithFallback(re.name(), re.name()).getString()), x + 10, ly, UiTheme.TEXT); ly += 12;
         AvatarPersonality p = state.primary(), s = state.secondary();
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.persona", p == null ? "?" : p.displayName, s == null ? "-" : s.displayName), x + 10, ly, UiTheme.TEXT); ly += 12;
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.persona", p == null ? "?" : p.displayName, s == null ? "-" : s.displayName), x + 10, ly, UiTheme.TEXT); ly += 12;
         if (r != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < 6; i++) sb.append(STATS[i].toUpperCase(java.util.Locale.ROOT)).append(' ').append(r.stats()[i]).append(i < 5 ? "  " : "");
             g.drawString(font, sb.toString(), x + 10, ly, UiTheme.TEXT); ly += 12;
-            g.drawString(font, Component.translatable("nusmp.avatar.gui.luck", String.format(java.util.Locale.ROOT, "%.1f", r.luck())), x + 10, ly, UiTheme.VIOLET); ly += 12;
+            g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.luck", String.format(java.util.Locale.ROOT, "%.1f", r.luck())), x + 10, ly, UiTheme.VIOLET); ly += 12;
         }
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.look", look.hairId() + 1, look.outfitId() + 1, String.format(java.util.Locale.ROOT, "%.2f", look.scale())), x + 10, ly, UiTheme.TEXT_DIM); ly += 16;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.warn"), x + 10, ly, UiTheme.TEXT_DIM); ly += 11;
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.warn2"), x + 10, ly, UiTheme.TEXT_DIM);
-        g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.name"), x + 10, y + 139, UiTheme.GOLD);
-        if (!BuilderState.nameOk(state.name())) g.drawString(font, Component.translatable("nusmp.avatar.gui.confirm.name_bad"), x + 166, y + 153, UiTheme.RED);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.look", look.hairId() + 1, look.outfitId() + 1, String.format(java.util.Locale.ROOT, "%.2f", look.scale())), x + 10, ly, UiTheme.TEXT_DIM); ly += 16;
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.warn"), x + 10, ly, UiTheme.TEXT_DIM); ly += 11;
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.warn2"), x + 10, ly, UiTheme.TEXT_DIM);
+        g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.name"), x + 10, y + 139, UiTheme.GOLD);
+        if (!BuilderState.nameOk(state.name())) g.drawString(font, Component.translatable("anime_multiverse.avatar.gui.confirm.name_bad"), x + 166, y + 153, UiTheme.RED);
     }
 }

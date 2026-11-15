@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Why: the legacy Zagred has two things no other character has, and the old renderers kept them: the FRESNEL AURA (his body drawn again a little larger through the
- * {@code nusmp:rendertype_zagred_aura} shader, blood red to crimson, pulsing faster each phase; a dim additive pass stands in when the shader cannot load) and the TARGET RETICLE (a turning rune
+ * {@code anime_multiverse:rendertype_zagred_aura} shader, blood red to crimson, pulsing faster each phase; a dim additive pass stands in when the shader cannot load) and the TARGET RETICLE (a turning rune
  * ring at his target's feet, with four marks closing in while he casts a word). The aura is this layer, drawn with the posed player model itself; the reticle is {@link #reticle}, drawn at the
  * entity's feet by his {@link PlayerBodies.LegacyZagred} body through the kit's decoration hook, using the old renderer's own drawing.
  */

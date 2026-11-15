@@ -17,7 +17,7 @@ class NenTexturesTest {
     @Test
     void everyTextureExistsAndIsCleanUnderItsAlpha() throws Exception {
         for (String n : NAMES) {
-            Path p = Path.of("src/main/resources/assets/nusmp/textures/particle/" + n + ".png");
+            Path p = Path.of("src/main/resources/assets/anime_multiverse/textures/particle/" + n + ".png");
             assertTrue(Files.isRegularFile(p), n + " is missing");
             BufferedImage img = ImageIO.read(p.toFile());
             int w = img.getWidth(), h = img.getHeight();

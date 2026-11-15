@@ -98,7 +98,7 @@ public final class EcoSelfTests {
         List<String> empty = new ArrayList<>();
         StringBuilder counts = new StringBuilder();
         for (String id : FactionIds.CONTRACT) {
-            TagKey<EntityType<?>> key = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "mega/" + id));
+            TagKey<EntityType<?>> key = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/" + id));
             int n = BuiltInRegistries.ENTITY_TYPE.getTag(key).map(HolderSet::size).orElse(0);
             if (counts.length() > 0) counts.append(' ');
             counts.append(id).append('=').append(n);

@@ -41,7 +41,7 @@ public final class RelicCurioEquip {
         if (!CurioEquipRules.tryOnUse(curio, p.isShiftKeyDown(), inHand.isEmpty())) return;
         CurioEquipRules.Result r = tryEquip(p, e.getHand());
         if (r == CurioEquipRules.Result.SLOT_FULL && headFeet) {                      // 3.12.0: the Curios place is taken; it is not put on as armour behind the player's back (take the worn one off first)
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.relic_wear.slot_full", "The %s slot is full: take the relic in it off first", HeadFeetMoveRules.curiosSlot(def.slot().name())), true);
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.relic_wear.slot_full", "The %s slot is full: take the relic in it off first", HeadFeetMoveRules.curiosSlot(def.slot().name())), true);
             e.setCancellationResult(InteractionResult.FAIL);
             e.setCanceled(true);
             return;
@@ -91,7 +91,7 @@ public final class RelicCurioEquip {
         Relics.invalidate(p);
         CuriosLink.forget(p.getUUID());
         p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.PLAYERS, 0.8f, 1.0f);
-        p.displayClientMessage(Component.translatableWithFallback("message.nusmp.relic_wear.equipped", "%s put on (%s slot)", def.cardName(), want), true);
+        p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.relic_wear.equipped", "%s put on (%s slot)", def.cardName(), want), true);
         return CurioEquipRules.Result.EQUIPPED;
     }
 }

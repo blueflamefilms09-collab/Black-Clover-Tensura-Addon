@@ -35,7 +35,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 /**
- * Why: the friendly characters of the arcs (thirty of them) are ONE entity type, {@code nusmp:arc_npc}, whose identity is a synced string, exactly like a
+ * Why: the friendly characters of the arcs (thirty of them) are ONE entity type, {@code anime_multiverse:arc_npc}, whose identity is a synced string, exactly like a
  * villager's profession. Their look (a model of the art kit), their lines and their quests are data keyed by that id, so adding an NPC is a record in the
  * roster, a Python model spec and a dialogue file, never a new Java class, a new registration or a new renderer. This class is everything an NPC does in
  * the world: it persists and never despawns; it cannot be hurt (only {@code /kill}, the void and creative players can, unless {@code arc.npcsMortal}); it
@@ -140,7 +140,7 @@ public class ArcNpcEntity extends PathfinderMob {
         try {
             ArcDialogue.farewell(sp, this);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] {} could not say farewell: {}", characterId(), e.toString());
+            LOG.warn("[anime_multiverse] {} could not say farewell: {}", characterId(), e.toString());
         }
     }
 
@@ -156,7 +156,7 @@ public class ArcNpcEntity extends PathfinderMob {
             try {
                 ArcDialogue.talk(sp, this);
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] a conversation with {} failed: {}", characterId(), e.toString());       // never out of an interaction handler: the player must not be kicked for a line of text
+                LOG.warn("[anime_multiverse] a conversation with {} failed: {}", characterId(), e.toString());       // never out of an interaction handler: the player must not be kicked for a line of text
             }
         }
         return InteractionResult.CONSUME;

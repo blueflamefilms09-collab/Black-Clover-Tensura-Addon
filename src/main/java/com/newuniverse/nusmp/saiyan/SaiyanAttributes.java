@@ -12,13 +12,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 /**
  * Why: the few racial bonuses that are real attribute modifiers (3.63.0), applied and removed in ONE place so cleanup can never miss one. Strength and durability are NOT attributes (they are the damage
  * calculations in {@link SaiyanManager}); speed, attack speed, jump and knockback resistance are small modifiers cut by the hard caps of the config, and the Ki capacity is a modifier on Tensura's maximum
- * magicule, because Ki is the magicule pool. All are TRANSIENT (never saved: a crash can not leave a permanent one), each has a fixed id {@code nusmp:saiyan/<name>} so applying again replaces instead of
+ * magicule, because Ki is the magicule pool. All are TRANSIENT (never saved: a crash can not leave a permanent one), each has a fixed id {@code anime_multiverse:saiyan/<name>} so applying again replaces instead of
  * stacking, and {@link #clear} removes every one (death, logout, race removal).
  */
 public final class SaiyanAttributes {
     private SaiyanAttributes() {}
 
-    private static ResourceLocation id(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan/" + name); }
+    private static ResourceLocation id(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "saiyan/" + name); }
 
     private static final ResourceLocation SPEED = id("speed"), ATTACK_SPEED = id("attack_speed"), JUMP = id("jump"), KNOCKBACK = id("knockback"), KI_CAPACITY = id("ki_capacity"), KI_BASE = id("ki_base"),
             FORM_SPEED = id("form_speed"), FORM_ATTACK_SPEED = id("form_attack_speed");

@@ -45,7 +45,7 @@ final class Wave101SelfTest {
                 if (d.needsAttunement()) bad.add(id + " needs attunement, so the whole set could not be worn together");
             }
             String[] files = {"textures/item/" + id + ".png", "models/item/" + id + ".json", "models/item/" + id + "_icon.json"};
-            for (String file : files) if (Wave101SelfTest.class.getResource("/assets/nusmp/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
+            for (String file : files) if (Wave101SelfTest.class.getResource("/assets/anime_multiverse/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
             if (d.slot() == RelicSlot.MAIN_HAND) {
                 weapons++;
                 if (!d.hasModel3d()) bad.add(id + " has no 3D model");
@@ -54,7 +54,7 @@ final class Wave101SelfTest {
                 int[] range = GradeDamage.range("genesis");
                 if (d.meleeDamage() < range[0] || d.meleeDamage() > range[1]) bad.add(id + " damage " + d.meleeDamage() + " is outside " + range[0] + "-" + range[1]);
                 for (String file : new String[]{"weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id + ".png", "textures/entity/weapon/" + id + "_glow.png"}) {
-                    if (Wave101SelfTest.class.getResource("/assets/nusmp/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
+                    if (Wave101SelfTest.class.getResource("/assets/anime_multiverse/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
                 }
             }
         }

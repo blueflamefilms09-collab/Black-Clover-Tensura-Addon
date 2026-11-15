@@ -27,11 +27,11 @@ from mega_lib import Frame  # noqa: E402
 
 FR = L.FLOOR_ROW
 
-# mega_lib's block-state schema tries `.*_door` (the vanilla door properties) BEFORE its `nusmp:.*` rule, and it matches the path of `nusmp:gatekeeper_door`
+# mega_lib's block-state schema tries `.*_door` (the vanilla door properties) BEFORE its `anime_multiverse:.*` rule, and it matches the path of `anime_multiverse:gatekeeper_door`
 # first, so the puzzle door's `kind` property would be rejected as "not a door property". The rule order is the lead's file (mega_lib.py must not be
-# edited by a room builder), so this module puts the `nusmp:` rule first at import time; the one-line fix for mega_lib is in docs/labyrinth/mega_rooms2.md.
-if not L._SCHEMA or L._SCHEMA[0][0] != r"nusmp:.*":
-    L._SCHEMA.insert(0, (r"nusmp:.*", None))
+# edited by a room builder), so this module puts the `anime_multiverse:` rule first at import time; the one-line fix for mega_lib is in docs/labyrinth/mega_rooms2.md.
+if not L._SCHEMA or L._SCHEMA[0][0] != r"anime_multiverse:.*":
+    L._SCHEMA.insert(0, (r"anime_multiverse:.*", None))
     L._check_cached.cache_clear()
 
 
@@ -917,7 +917,7 @@ def classify(cell, open_gates=False):
         return "air"
     b = cell.block
     n = _path(b)
-    if b.startswith("nusmp:"):
+    if b.startswith("anime_multiverse:"):
         if n == "sigil_plate":
             return "ground"                                     # a 2-pixel plate on the floor
         if n == "gatekeeper_door":
@@ -951,7 +951,7 @@ def is_transparent(cell):
     if cell is None:
         return True
     n = _path(cell.block)
-    if cell.block.startswith("nusmp:"):
+    if cell.block.startswith("anime_multiverse:"):
         return n in ("sigil_plate", "magic_barrier", "relic_pedestal", "pitfall_tile") or (n == "gatekeeper_door" and cell.props.get("open") == "true")
     if n in ("glass", "tinted_glass", "water", "ice", "light", "chain") or n.endswith("glass") or n.endswith("glass_pane") or n.endswith("_leaves") or n in ("iron_bars", "cobweb"):
         return n != "tinted_glass"
@@ -965,7 +965,7 @@ def light_emission(cell):
         return 0
     n = _path(cell.block)
     p = cell.props
-    if cell.block.startswith("nusmp:"):
+    if cell.block.startswith("anime_multiverse:"):
         if n == "sigil_plate":
             return 9 if p.get("lit") == "true" else 2
         return {"labyrinth_lantern": 15, "labyrinth_glyph": 8, "magicule_vein": 6, "ward_rune": 3, "spawn_glyph": 3, "magic_barrier": 7, "sealed_archway": 4,
@@ -1031,7 +1031,7 @@ def face_sturdy(cell, face):
         return True
     n = _path(cell.block)
     p = cell.props
-    if cell.block.startswith("nusmp:"):
+    if cell.block.startswith("anime_multiverse:"):
         return False
     if n == "magma_block":
         return True                                       # a full cube that `classify` files under hazards (it burns the feet, it still holds a torch)
@@ -1071,7 +1071,7 @@ def attachment_problem(cells, pos, cell):
     'warn' for a rule vanilla only prefers. `cells` is the template's cell dict."""
     n = _path(cell.block)
     p = cell.props
-    if cell.block.startswith("nusmp:"):
+    if cell.block.startswith("anime_multiverse:"):
         return None
 
     def at(direction):
@@ -1392,7 +1392,7 @@ class Analysis:
                     probs.append("%s at %s has an open side at %s" % (fl, pos, q))
                 elif self.fluid_of(o) == fl:
                     continue
-                elif classify(o) != "solid" or o.block.startswith("nusmp:"):
+                elif classify(o) != "solid" or o.block.startswith("anime_multiverse:"):
                     probs.append("%s at %s: neighbour %s at %s is not a full block" % (fl, pos, o.block, q))
             for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 0, 1), (0, 0, -1), (0, 1, 0), (0, -1, 0)):
                 if (x + dx, y + dy, z + dz) in hole or pos in hole:

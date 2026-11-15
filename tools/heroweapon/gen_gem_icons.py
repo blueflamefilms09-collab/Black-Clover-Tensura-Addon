@@ -4,8 +4,8 @@
     python3 -B tools/heroweapon/gen_gem_icons.py [--sheet PATH]        (idempotent)
 
 Writes, per item id (the list is derived from the weapon catalogue in HeroKind.java, never typed here),
-  assets/nusmp/textures/item/<id>.png     the 16 x 16 sprite
-  assets/nusmp/models/item/<id>.json      the flat inventory model (minecraft:item/generated), like the Djinn Seals
+  assets/anime_multiverse/textures/item/<id>.png     the 16 x 16 sprite
+  assets/anime_multiverse/models/item/<id>.json      the flat inventory model (minecraft:item/generated), like the Djinn Seals
 The gems are small items, not weapons, so they have no 3D mesh. The look, in the owner's icon method (tools/relics/wave1_icons.py: primitives on a
 16 x 16 canvas, a one pixel dark outline, light from the upper left):
   calling_gem          the Holy Calling Gem: a cut jewel in the four colours of the four Holy Weapons (green Shield, blue Sword, red Spear, yellow Bow)
@@ -26,7 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "relics"))
 from wave1_icons import Canvas, rgb, shade, mix, ICONS, MODELS, ROOT, S   # noqa: E402
 
-JAVA_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon")
+JAVA_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon")
 HOLY_ID = "calling_gem"
 FRAGMENT_ID = "gem_fragment"
 SEAL_PREFIX = "vassal_seal_"
@@ -355,7 +355,7 @@ def seal(name, klass, col):
 
 # ---------------------------------------------------------------- files
 def model_json(item_id):
-    return {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + item_id}}
+    return {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
 
 
 def write_all():

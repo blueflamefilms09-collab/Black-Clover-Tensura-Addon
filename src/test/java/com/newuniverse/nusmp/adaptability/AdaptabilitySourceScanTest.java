@@ -58,7 +58,7 @@ class AdaptabilitySourceScanTest {
         assertTrue(read(MAIN + "skill/NUSkills.java").contains("SKILLS.register(\"adaptability\""), "registered");
         assertTrue(read(MAIN + "multiverse/MultiverseCommands.java").contains("AdaptabilityCommand.node()"), "command");
         assertTrue(read(MAIN + "adaptability/AdaptabilityBoot.java").contains("\"nusmp-adaptability-server.toml\"") && read(MAIN + "adaptability/AdaptabilityBoot.java").contains("ModConfig.Type.SERVER"), "a SERVER config");
-        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/nusmp/textures/skill/adaptability.png")), "icon");
-        assertTrue(read("src/main/resources/assets/nusmp/lang/en_us.json").contains("\"nusmp.skill.adaptability\""), "lang");
+        assertTrue(Files.exists(ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/skill/adaptability.png")), "icon");
+        assertTrue(read("src/main/resources/assets/anime_multiverse/lang/en_us.json").contains("\"anime_multiverse.skill.adaptability\""), "lang");
     }
 }

@@ -53,7 +53,7 @@ public final class FourSinsKit {
                 step.accept(age);
             } catch (Throwable t) {
                 dead[0] = true;
-                LogUtils.getLogger().warn("[nusmp] {}'s {} stopped: {}", who, what, t.toString());
+                LogUtils.getLogger().warn("[anime_multiverse] {}'s {} stopped: {}", who, what, t.toString());
             }
         };
     }

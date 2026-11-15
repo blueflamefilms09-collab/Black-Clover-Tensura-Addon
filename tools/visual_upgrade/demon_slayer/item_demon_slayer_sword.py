@@ -447,11 +447,11 @@ def build(it, state=""):
     it.draw = {"ticks": 16, "flash": "DC122E", "groups": ["orbit", "leaves", "ring_guard", "field", "rags", "fragments"],
                "note": "the shards and the leaves spiral out of the blade, the rune disc and the field unfold, the cloth drops; a crimson flash"}
     it.swing = {"trail": "absence_cut", "rgb": "DC122E", "rgb2": "070305", "length": 2.2, "width": 0.5, "life": 11, "particles": "void_mote"}
-    it.sound = "nusmp:item.genesis.demon_slayer.absence_hum_loop"
+    it.sound = "anime_multiverse:item.genesis.demon_slayer.absence_hum_loop"
     it.acts = {
-        "conceptual_severance": {"burst": "severance", "pattern": "line", "rgb": "DC122E", "ring": 6.0, "particles": 40, "sound": "nusmp:item.genesis.demon_slayer.severance"},
-        "black_meteorite": {"burst": "meteor_charge", "pattern": "cone", "rgb": "FF3A4A", "ring": 7.0, "particles": 52, "sound": "nusmp:item.genesis.demon_slayer.meteorite"},
-        "black_divider": {"burst": "divider", "pattern": "nova", "rgb": "9A1028", "ring": 5.5, "particles": 44, "sound": "nusmp:item.genesis.demon_slayer.divider"},
+        "conceptual_severance": {"burst": "severance", "pattern": "line", "rgb": "DC122E", "ring": 6.0, "particles": 40, "sound": "anime_multiverse:item.genesis.demon_slayer.severance"},
+        "black_meteorite": {"burst": "meteor_charge", "pattern": "cone", "rgb": "FF3A4A", "ring": 7.0, "particles": 52, "sound": "anime_multiverse:item.genesis.demon_slayer.meteorite"},
+        "black_divider": {"burst": "divider", "pattern": "nova", "rgb": "9A1028", "ring": 5.5, "particles": 44, "sound": "anime_multiverse:item.genesis.demon_slayer.divider"},
     }
 
 

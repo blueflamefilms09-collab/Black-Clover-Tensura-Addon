@@ -4,7 +4,7 @@ Relics of Many Worlds, wave 3 (head, hands, belt and consumables): the 16x16 inv
 
     python3 tools/relics/wave3_icons.py [--sheet PATH]
 
-Writes src/main/resources/assets/nusmp/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
+Writes src/main/resources/assets/anime_multiverse/textures/item/<id>.png and models/item/<id>.json (parent item/generated) for:
 arcanists_circlet, prides_crown, dreamwalker_cowl, captains_tricorn, godking_crown, claws_of_greed, gloves_of_instant_cleanliness,
 elemental_hand_wraps, thermo_gloves, gauntlets_of_eldritch_ferocity, alchemists_belt, genie_gin, mad_marbles.
 
@@ -20,7 +20,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse")
 TEX = os.path.join(ASSETS, "textures", "item")
 MODELS = os.path.join(ASSETS, "models", "item")
 
@@ -381,7 +381,7 @@ def write_model(iid):
     path = os.path.join(MODELS, iid + ".json")
     os.makedirs(MODELS, exist_ok=True)
     with open(path, "w") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + iid}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + iid}}, f, indent=2)
         f.write("\n")
 
 

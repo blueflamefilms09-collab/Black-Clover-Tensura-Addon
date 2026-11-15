@@ -4,7 +4,7 @@ An icon script supplies ONE function  draw(t, S) -> PIL.Image (RGBA, S x S)  tha
 (t = 0 and t = 1 must look the same: the loop is seamless). The helpers render N frames, write the vertical strips
 and the .mcmeta files the game reads, a still hero frame, and preview GIFs / contact sheets.
 
-Files written for an icon <id> (all under assets/nusmp/textures/skill/veldanava/):
+Files written for an icon <id> (all under assets/anime_multiverse/textures/skill/veldanava/):
   <id>_anim_hd.png   128 x (128*N)  the HD strip, drawn on the Will of the Creator card screen
   <id>_anim.png      32  x (32*N)   the 32 px strip, served in place of <id>.png in every ManasCore skill list
   <id>.png           32 x 32        the hero (still) frame; what the game shows with animatedUltimateIcons = false
@@ -25,7 +25,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "skill", "veldanava")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill", "veldanava")
 FRAMES = 32
 FRAMETIME = 2          # game ticks per frame -> 32 * 2 = 64 ticks = 3.2 s loop
 HD = 128

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The Grand Magic Zones as places: the shipped data, the shapes, the exposure of a player against a zone, and the capped, deterministic effects. */
 class GrandZoneTest {
-    private static final File DIR = new File("src/main/resources/data/nusmp/grand_magic_zones");
+    private static final File DIR = new File("src/main/resources/data/anime_multiverse/grand_magic_zones");
 
     private static List<GrandZoneRegion> shipped() throws Exception {
         List<GrandZoneRegion> out = new ArrayList<>();
@@ -73,8 +73,8 @@ class GrandZoneTest {
         assertTrue(b.box() && b.contains(50, 20, 30) && !b.contains(101, 20, 30) && !b.contains(50, 41, 30));
         assertEquals(10.0, b.depth(10, 20, 30), 1e-9);
         assertEquals(50.0, b.effectiveRadius(), 1e-9);
-        GrandZoneRegion floor = s.withBox("floor_3", "nusmp:mega_dungeon", 0, 0, 0, 64, 32, 64);
-        assertTrue(floor.box() && floor.theme() == s.theme() && floor.has(Effect.PRESSURE) && floor.dimension().equals("nusmp:mega_dungeon") && floor.id().equals("floor_3"));
+        GrandZoneRegion floor = s.withBox("floor_3", "anime_multiverse:mega_dungeon", 0, 0, 0, 64, 32, 64);
+        assertTrue(floor.box() && floor.theme() == s.theme() && floor.has(Effect.PRESSURE) && floor.dimension().equals("anime_multiverse:mega_dungeon") && floor.id().equals("floor_3"));
         assertTrue(floor.contains(32, 16, 32) && !floor.contains(100, 16, 32), "the dungeon's hook keeps a zone's theme and gives it a floor's box");
     }
 

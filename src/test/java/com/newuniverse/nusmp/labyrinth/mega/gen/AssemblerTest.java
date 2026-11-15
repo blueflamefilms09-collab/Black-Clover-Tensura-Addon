@@ -305,7 +305,7 @@ class AssemblerTest {
     void aPoolsEmptyElementOnlyEndsThePrimaryCandidatesNotTheCaps() {
         SyntheticCatalog c = SyntheticCatalog.standard();
         // the side pool is now almost always "empty": hardly any room is ever drawn, but every doorway must still be capped
-        c.pool(MegaGrid.P_SIDE, 100000, MegaGrid.P_CAP, "nusmp:mega/hall/cell_1x1", 1);
+        c.pool(MegaGrid.P_SIDE, 100000, MegaGrid.P_CAP, "anime_multiverse:mega/hall/cell_1x1", 1);
         Request q = TestPlans.first(c, 5);
         q.fallback = true;                                                    // only the Landing and the chain are needed here
         Result r = MegaAssembler.assemble(q);
@@ -343,11 +343,11 @@ class AssemblerTest {
     @Test
     void aPoolNamingAMissingTemplateIsAWarningAndTheRestStillWorks() {
         SyntheticCatalog c = SyntheticCatalog.standard();
-        c.pool(MegaGrid.P_SIDE, 2, MegaGrid.P_CAP, "nusmp:mega/hall/ghost", 50, "nusmp:mega/hall/hall_2x2", 5, "nusmp:mega/corridor/straight_1x3", 5, "nusmp:mega/hall/cell_1x1", 5,
-                "nusmp:mega/trial/archway_3x3", 3, "nusmp:mega/treasure/closet_1x1", 5, "nusmp:mega/safe/hearth_2x2", 2);
+        c.pool(MegaGrid.P_SIDE, 2, MegaGrid.P_CAP, "anime_multiverse:mega/hall/ghost", 50, "anime_multiverse:mega/hall/hall_2x2", 5, "anime_multiverse:mega/corridor/straight_1x3", 5, "anime_multiverse:mega/hall/cell_1x1", 5,
+                "anime_multiverse:mega/trial/archway_3x3", 3, "anime_multiverse:mega/treasure/closet_1x1", 5, "anime_multiverse:mega/safe/hearth_2x2", 2);
         Request q = TestPlans.first(c, 8);
         Result r = MegaAssembler.assemble(q);
-        assertTrue(r.warnings.stream().anyMatch(w -> w.contains("nusmp:mega/hall/ghost")), r.warnings.toString());
+        assertTrue(r.warnings.stream().anyMatch(w -> w.contains("anime_multiverse:mega/hall/ghost")), r.warnings.toString());
         if (r.assembled()) assertEquals(List.of(), TestPlans.brute(r, q));
     }
 

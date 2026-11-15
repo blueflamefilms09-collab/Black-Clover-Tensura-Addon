@@ -1,5 +1,5 @@
 """Why: the old witch of the Black Market, the keeper of the hidden, dusty shop the owner asked for ("run by an old witch selling high-tier / rare skill books at exorbitant prices"),
-a friend of the Sanctuary Hub (an NPC; the record is in skilltree/shop/BlackMarketWitch.java, her words in data/nusmp/arc/dialogue/black_market_witch.json, her shop in
+a friend of the Sanctuary Hub (an NPC; the record is in skilltree/shop/BlackMarketWitch.java, her words in data/anime_multiverse/arc/dialogue/black_market_witch.json, her shop in
 skilltree/shop/). The owner's text gives no name and no description beyond "old witch", so the look is a design, not canon: a stooped crone in a crooked pointed hat, a dusty plum
 robe patched with soot-grey cloth under a ragged soot-grey shawl, stringy ash-white hair, a sallow face with a hooked nose, a wart, one amber eye and an eyepatch over the other, a
 clay pipe, a belt of dusty books and coin pouches (she sells books and takes coin), and a gnarled staff that carries a lantern on a chain (her lamplight is the only glow, amber, the

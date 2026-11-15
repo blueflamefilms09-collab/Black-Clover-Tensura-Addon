@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Merge the lang fragment of Ultimate Magic (tools/lang/ultimate.json) into en_us.json  (run by the COORDINATOR, once, after the branches are merged).
 
-    python3 -B tools/lang/merge_ultimate.py           merge tools/lang/ultimate.json into src/main/resources/assets/nusmp/lang/en_us.json (new keys are appended at the end)
+    python3 -B tools/lang/merge_ultimate.py           merge tools/lang/ultimate.json into src/main/resources/assets/anime_multiverse/lang/en_us.json (new keys are appended at the end)
     python3 -B tools/lang/merge_ultimate.py --check   change nothing; exit 1 if a fragment key is missing from en_us.json or differs from it
 
-A fragment is a flat json object {"nusmp.page.<book registry path>.<page id>": "one or two sentences", "nusmp.ultimate.<message>": "text"}.  An existing key of en_us.json is never changed by the merge
+A fragment is a flat json object {"anime_multiverse.page.<book registry path>.<page id>": "one or two sentences", "anime_multiverse.ultimate.<message>": "text"}.  An existing key of en_us.json is never changed by the merge
 (rule 2: nothing is replaced); a key that is already there with another text is reported.  The builder does not run this: it only writes the fragment.
 """
 import glob
@@ -13,7 +13,7 @@ import os
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-LANG = os.path.join(ROOT, 'src/main/resources/assets/nusmp/lang/en_us.json')
+LANG = os.path.join(ROOT, 'src/main/resources/assets/anime_multiverse/lang/en_us.json')
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
         with open(p, encoding='utf-8') as f:
             frag = json.load(f)
         for k, v in frag.items():
-            if not (k.startswith('nusmp.page.') or k.startswith('nusmp.ultimate.')) or not isinstance(v, str) or not v.strip():
+            if not (k.startswith('anime_multiverse.page.') or k.startswith('anime_multiverse.ultimate.')) or not isinstance(v, str) or not v.strip():
                 print('bad key or text in %s: %r' % (os.path.basename(p), k))
                 return 1
             if k in lang and lang[k] != v:

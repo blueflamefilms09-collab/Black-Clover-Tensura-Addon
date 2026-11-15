@@ -27,8 +27,8 @@ public final class ShopRules {
         /** True when nothing went wrong. */
         public boolean ok() { return ok; }
 
-        /** The language key stem of the witch's line for this reply ({@code gui.nusmp.shop.reply.sold_out}; the screen adds {@code .1} or {@code .2}). */
-        public String key() { return "gui.nusmp.shop.reply." + name().toLowerCase(java.util.Locale.ROOT); }
+        /** The language key stem of the witch's line for this reply ({@code gui.anime_multiverse.shop.reply.sold_out}; the screen adds {@code .1} or {@code .2}). */
+        public String key() { return "gui.anime_multiverse.shop.reply." + name().toLowerCase(java.util.Locale.ROOT); }
 
         /** The reply with this wire number, or {@link #NONE} for a number from a newer or damaged packet. */
         public static Reply byOrdinal(int n) {

@@ -26,7 +26,7 @@ class DjinnLookTest {
     }
 
     @Test void everyElementHasItsOwnThemeAndTheThemeExists() throws Exception {
-        String themes = Files.readString(ROOT.resolve("resources/data/nusmp/particle_themes.json"));
+        String themes = Files.readString(ROOT.resolve("resources/data/anime_multiverse/particle_themes.json"));
         Set<String> seen = new HashSet<>();
         for (Affinity a : Affinity.values()) {
             assertTrue(themes.contains("\"" + DjinnLook.theme(a) + "\""), "no particle theme " + DjinnLook.theme(a));

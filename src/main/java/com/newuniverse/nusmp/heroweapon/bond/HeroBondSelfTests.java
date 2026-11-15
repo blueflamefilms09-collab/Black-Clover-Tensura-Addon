@@ -96,7 +96,7 @@ public final class HeroBondSelfTests {
                 bad.add("the bond changed on the way through its NBT");
             if (HeroBond.fromTag(new CompoundTag()).isBound()) bad.add("an empty tag reads as a bound weapon");
             CompoundTag unknown = new CompoundTag();
-            unknown.putString("kind", "nusmp:not_a_weapon");
+            unknown.putString("kind", "anime_multiverse:not_a_weapon");
             if (HeroBond.fromTag(unknown).isBound()) bad.add("a tag of an unknown weapon reads as a bound weapon");
             CompoundTag onlyKind = new CompoundTag();
             onlyKind.putString("kind", HeroKind.FAN.itemId());

@@ -2,7 +2,7 @@
 """Checks the rename Charter Grimoire -> Canon Grimoire.
 
   1. Greps the repo for player-visible "Charter" text that is left (exit code 1 if any):
-       - Java string literals of src/main/java that are text and not an id (an id is lower case with no space: `charter`, `charter_grimoire_`, `nusmp:charter_sync`, `has_dropped_charter_...`),
+       - Java string literals of src/main/java that are text and not an id (an id is lower case with no space: `charter`, `charter_grimoire_`, `anime_multiverse:charter_sync`, `has_dropped_charter_...`),
        - data/ and quest_pack/ json and snbt text, the quest and advancement generators in tools/quests, the dialogue source,
        - en_us.json, EXCEPT the keys of the fragment (those are the lead's merge; they are listed as "waiting for the merge").
   2. Verifies tools/canon/lang_canon.json: every value is free of "Charter", every key exists in en_us.json (no invented keys) and the fragment covers every en_us entry that still names it.
@@ -17,7 +17,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 RES = os.path.join(ROOT, "src", "main", "resources")
-LANG = os.path.join(RES, "assets", "nusmp", "lang", "en_us.json")
+LANG = os.path.join(RES, "assets", "anime_multiverse", "lang", "en_us.json")
 FRAG = os.path.join(HERE, "lang_canon.json")
 
 ID_LIKE = re.compile(r"^[a-z0-9_:./\-\[\]{}%$#@ ]*$")          # lower case, no capital letter: an id, a command word, a file name

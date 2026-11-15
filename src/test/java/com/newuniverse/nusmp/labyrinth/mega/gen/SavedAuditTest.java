@@ -165,7 +165,7 @@ class SavedAuditTest {
         ensure();
         SectorFill.RoomOut landing = first(good, RoomKind.LANDING);
         List<SectorFill.RoomOut> rs = new ArrayList<>(good.rooms());
-        rs.add(new SectorFill.RoomOut(9999, "nusmp:mega/link/straight", RoomKind.LINK, shifted(landing.box(), -3000, 0)));
+        rs.add(new SectorFill.RoomOut(9999, "anime_multiverse:mega/link/straight", RoomKind.LINK, shifted(landing.box(), -3000, 0)));
         List<int[]> es = new ArrayList<>(good.edges());
         es.add(new int[] {9999, landing.id()});
         assertEquals(List.of(), run(edges(rooms(good, rs), es)));

@@ -20,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 /**
  * Why: a Soul Corpse has to look like one on ANY body (a zombie, a wolf, a player), not only on our own models, and its decay must be
  * readable at a glance. This layer is added to every living-entity renderer; it does nothing unless the entity carries the
- * {@code nusmp:soul_corpse} marker, and then it draws the parent's own model once more with a stitched, patchwork, bone-showing overlay
+ * {@code anime_multiverse:soul_corpse} marker, and then it draws the parent's own model once more with a stitched, patchwork, bone-showing overlay
  * texture, tinted pale green-grey, and (from the second stage on) a faint additive soul-glow pass. The stage (0 to 3) is the effect's
  * amplifier, so the client needs no packet of its own. The overlay textures are patterned, not laid out for one model, so they read as
  * rot on any UV layout (tools/gen_corpse_assets.py draws them; the humanoid 64x64 layout gets extra stitches where a human has joints).
@@ -33,8 +33,8 @@ public final class CorpseDecayLayer<T extends LivingEntity, M extends EntityMode
     private static final RenderType WISP;
 
     static {
-        for (int i = 0; i < STAGES; i++) BODY[i] = RenderType.entityTranslucent(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/corpse_decay_" + i + ".png"));
-        WISP = com.newuniverse.nusmp.client.SafeAdditive.additive(ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/corpse_soul.png"));
+        for (int i = 0; i < STAGES; i++) BODY[i] = RenderType.entityTranslucent(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/corpse_decay_" + i + ".png"));
+        WISP = com.newuniverse.nusmp.client.SafeAdditive.additive(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/corpse_soul.png"));
     }
 
     public CorpseDecayLayer(RenderLayerParent<T, M> parent) { super(parent); }

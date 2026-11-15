@@ -42,7 +42,7 @@ final class Wave71SelfTest {
             if (d.meleeDamage() < range[0] || d.meleeDamage() > range[1]) bad.add(id + " damage " + d.meleeDamage() + " is outside " + range[0] + "-" + range[1]);
             for (String file : new String[]{"weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id + ".png", "textures/entity/weapon/" + id + "_glow.png",
                     "textures/item/" + id + ".png", "models/item/" + id + ".json", "models/item/" + id + "_icon.json"}) {
-                if (Wave71SelfTest.class.getResource("/assets/nusmp/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
+                if (Wave71SelfTest.class.getResource("/assets/anime_multiverse/" + file) == null) bad.add(id + ": " + file + " is not in the jar");
             }
         }
         if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));

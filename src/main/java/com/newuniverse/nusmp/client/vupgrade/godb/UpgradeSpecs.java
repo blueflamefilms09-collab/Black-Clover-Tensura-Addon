@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The tables of the upgraded weapons, read from assets/nusmp/visual_upgrade/&lt;item id&gt;.json the first time an item is asked for and kept until the next resource reload
+ * The tables of the upgraded weapons, read from assets/anime_multiverse/visual_upgrade/&lt;item id&gt;.json the first time an item is asked for and kept until the next resource reload
  * ({@link GodBUpgrade} clears it). A missing table is remembered too, so an item that is not upgraded costs one hash lookup per frame and nothing else. Client thread only.
  * Next to each table it keeps what the renderer and the particle tick would otherwise rebuild every frame: the glow-map location of the vein pass and one {@link ParticleOptions}
  * per particle layer.
@@ -30,7 +30,7 @@ public final class UpgradeSpecs {
 
         Entry(UpgradeSpec spec) {
             this.spec = spec;
-            this.veinTexture = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/" + spec.mesh() + "_glow2.png");
+            this.veinTexture = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon/" + spec.mesh() + "_glow2.png");
             this.particles = new ParticleOptions[spec.layers().size()];
             for (int i = 0; i < particles.length; i++) particles[i] = options(spec.layers().get(i));
         }
@@ -63,14 +63,14 @@ public final class UpgradeSpecs {
 
     private static Entry load(String itemId) {
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("nusmp", "visual_upgrade/" + itemId + ".json"));
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "visual_upgrade/" + itemId + ".json"));
             if (res.isEmpty()) return null;
             try (BufferedReader in = res.get().openAsReader()) {
                 JsonObject o = JsonParser.parseReader(in).getAsJsonObject();
                 return new Entry(UpgradeSpec.parse(o));
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] visual upgrade table of {} is broken; the old model is drawn", itemId, ex);
+            LogUtils.getLogger().error("[anime_multiverse] visual upgrade table of {} is broken; the old model is drawn", itemId, ex);
             return null;
         }
     }

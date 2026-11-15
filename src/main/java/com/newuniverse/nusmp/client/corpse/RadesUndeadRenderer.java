@@ -81,7 +81,7 @@ public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
         try {
             m = new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE));
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] numbered undead: the zombie stand-in model could not be built, a failed geo model will draw nothing: {}", ex.toString());
+            LOG.error("[anime_multiverse] numbered undead: the zombie stand-in model could not be built, a failed geo model will draw nothing: {}", ex.toString());
         }
         this.standIn = m;
     }
@@ -101,7 +101,7 @@ public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
         CorpseLookRules.Draw d = CorpseLookRules.draw(parts, tex, CorpseClientConfig.fallbackLook());
         DRAW[i] = d;
         String what = k.id + " is drawn as " + CorpseLookRules.describe(d) + " (model " + spec.model() + ": " + (parts ? "ok" : "EMPTY or missing") + ", texture " + spec.texture() + ": " + (tex ? "ok" : "MISSING") + ")";
-        if (d == CorpseLookRules.Draw.GEO) LOG.info("[nusmp] numbered undead look: {}", what); else LOG.error("[nusmp] numbered undead look: {}", what);
+        if (d == CorpseLookRules.Draw.GEO) LOG.info("[anime_multiverse] numbered undead look: {}", what); else LOG.error("[anime_multiverse] numbered undead look: {}", what);
         return d;
     }
 

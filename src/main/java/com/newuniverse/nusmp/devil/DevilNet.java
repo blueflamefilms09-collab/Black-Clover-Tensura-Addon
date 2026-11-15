@@ -33,7 +33,7 @@ public final class DevilNet {
 
     // ---------------------------------------------------------------- client to server
     public record Toggle() implements CustomPacketPayload {
-        public static final Type<Toggle> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "devil_toggle"));
+        public static final Type<Toggle> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_toggle"));
         public static final StreamCodec<FriendlyByteBuf, Toggle> STREAM_CODEC = StreamCodec.of((buf, p) -> {}, buf -> new Toggle());
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
@@ -41,7 +41,7 @@ public final class DevilNet {
     // ---------------------------------------------------------------- server to client
     /** The owner's state. {@code unionSec} and {@code coolSec} are whole seconds at the moment of sending. */
     public record Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "devil_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeByte(p.tier());
             buf.writeByte(p.attribute());
@@ -57,7 +57,7 @@ public final class DevilNet {
 
     /** What one player looks like to those who can see them: {@code level} 0 to 100 (already rounded to a step), {@code union} the Devil Union. */
     public record Visual(int entity, int tier, int level, boolean union) implements CustomPacketPayload {
-        public static final Type<Visual> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "devil_visual"));
+        public static final Type<Visual> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_visual"));
         public static final StreamCodec<FriendlyByteBuf, Visual> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeVarInt(p.entity());
             buf.writeByte(p.tier());

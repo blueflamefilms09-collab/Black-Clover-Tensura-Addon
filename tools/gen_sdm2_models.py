@@ -9,7 +9,7 @@ Spirits (kinds: `char` = the canon pose of the character tier, `std` = the stand
   Undine      water mermaid: a long S-curved tail with a scalloped fluke, flowing hair and ribbons, fins
   Gnome       small sturdy earth spirit, round body, rock shoulder pads, a crystal cluster on the back (standard only)
 
-Writes src/main/resources/assets/nusmp/sdm2_meshes/<element>_<kind>.txt in the quad line format of book/SpiritDiveWind3Mesh (the loader getIn("sdm2_meshes", name)):
+Writes src/main/resources/assets/anime_multiverse/sdm2_meshes/<element>_<kind>.txt in the quad line format of book/SpiritDiveWind3Mesh (the loader getIn("sdm2_meshes", name)):
   q <layer> (x y z u v) x 4  nx ny nz  r g b
   layer 0 = the solid body (drawn additive at the ghost's alpha), layer 1 = the soft glow shell (drawn additive, lower alpha: wing margins, fluke, flame, crystals)
 Mesh space as the old sdm meshes: model pixels, origin = the centre of the bounding box, +y DOWN, front = -z, the longest side normalised to NORM px. The painter scales the mesh.
@@ -22,7 +22,7 @@ import sys
 import numpy as np
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdm2_meshes")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdm2_meshes")
 DOC = os.path.join(ROOT, "docs", "previews", "spirit_dive_merge2", "models.txt")
 
 NORM = 32.0

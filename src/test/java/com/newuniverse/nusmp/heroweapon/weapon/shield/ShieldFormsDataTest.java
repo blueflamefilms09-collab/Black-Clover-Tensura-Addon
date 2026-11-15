@@ -16,14 +16,14 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
- * Why: the Legendary Shield's forms file ({@code data/nusmp/hero/forms/legendary_shield.json}) is read by the forms system, the Weapon Book and the dispatcher, and a
+ * Why: the Legendary Shield's forms file ({@code data/anime_multiverse/hero/forms/legendary_shield.json}) is read by the forms system, the Weapon Book and the dispatcher, and a
  * wrong id in it fails there, in the game, long after the commit. This test holds the shipped file to the rules of design.md section 6 and to the Shield's own
  * logic: every skill id it lists is one the Shield has, every passive is one the Shield implements, every skill and passive is used by some form, the Wrath series is
  * there, and no form uses the use slot (the use key raises the guard). The checker itself is proved against deliberately wrong files first, so a green test means
  * something.
  */
 class ShieldFormsDataTest {
-    static final Path FILE = Path.of("src/main/resources/data/nusmp/hero/forms/legendary_shield.json");
+    static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/hero/forms/legendary_shield.json");
 
     /** The Tensura items the file uses, each found in the owner's Tensura 2.0.1.3 id reference (items part) when the file was written. */
     static final Set<String> TENSURA_ITEMS = Set.of("tensura:low_magisteel_ingot", "tensura:daemon_essence");

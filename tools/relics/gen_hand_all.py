@@ -2,7 +2,7 @@
 
     python3 tools/relics/gen_hand_all.py [--check] [--only name,name]
 
-Writes src/main/resources/assets/nusmp/relic_hand/<model>.txt and relic_hand/catalog.txt (the `sig <relic id> <model>` lines; transforms.txt is hand-written data and is
+Writes src/main/resources/assets/anime_multiverse/relic_hand/<model>.txt and relic_hand/catalog.txt (the `sig <relic id> <model>` lines; transforms.txt is hand-written data and is
 never touched). With --check it only reports the vertex count of every model and fails when one is over the cap or when a relic is assigned a model that does not exist.
 A new relic gets its hand model with one function in a gen_hand_*.py module and one line in its ASSIGN table (docs/relic_hand_models.md).
 """

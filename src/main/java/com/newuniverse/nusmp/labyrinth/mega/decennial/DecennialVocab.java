@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Why: a boss file names things the code must know how to do (a lair action, a signature mechanic, a kind of add), and a typo in a name must fail a test and not make a boss silently do nothing.
- * So the vocabulary is one table: {@code data/nusmp/mega/decennial/lairs.json} (every lair action: how it is laid out, what it does to whoever stands in it, how hard, how long it warns, and the
+ * So the vocabulary is one table: {@code data/anime_multiverse/mega/decennial/lairs.json} (every lair action: how it is laid out, what it does to whoever stands in it, how hard, how long it warns, and the
  * line the party reads), {@code signatures.json} (the signature mechanics) and the closed lists below (effects, patterns, adds). The lair table is data so a server owner can retune a number
  * (damage share, radius, warning time) without a rebuild, but its ids are the code's own: an id the code has no pattern for is refused when the file is read. Every number is clamped through
  * {@link DecennialRules}, which is what keeps "NO hunger" a property of the TABLE: the effect list has no hunger entry and no entry here can invent one.
@@ -74,7 +74,7 @@ public final class DecennialVocab {
     public static final List<String> CREATURES = List.of("undead", "spirit", "fiend", "demon", "devil", "dragon", "construct", "aberration", "celestial", "humanoid", "fey", "elemental", "giant",
             "monstrosity", "plant", "beast", "hag", "vampire", "cultist");
 
-    private static final String LAIRS = "/data/nusmp/mega/decennial/lairs.json", SIGNATURES = "/data/nusmp/mega/decennial/signatures.json";
+    private static final String LAIRS = "/data/anime_multiverse/mega/decennial/lairs.json", SIGNATURES = "/data/anime_multiverse/mega/decennial/signatures.json";
     private static volatile Map<String, Lair> lairs;
     private static volatile Map<String, Signature> signatures;
 

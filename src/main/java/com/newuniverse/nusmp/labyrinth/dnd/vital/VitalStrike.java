@@ -99,7 +99,7 @@ public final class VitalStrike {
     }
 
     private static void spectacle(ServerLevel level, ServerPlayer player, LivingEntity target) {
-        player.displayClientMessage(Component.translatable("message.nusmp.vital_strike"), true);
+        player.displayClientMessage(Component.translatable("message.anime_multiverse.vital_strike"), true);
         if (!DndConfig.get(DndConfig.VITAL_SHOWY)) return;
         Vec3 at = target.position().add(0, target.getBbHeight() * 0.5, 0);
         level.playSound(null, target.blockPosition(), SoundEvents.TRIDENT_THUNDER.value(), SoundSource.PLAYERS, 0.9f, 0.6f);

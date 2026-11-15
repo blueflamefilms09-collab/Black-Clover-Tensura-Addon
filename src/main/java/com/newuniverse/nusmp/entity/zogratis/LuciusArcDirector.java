@@ -305,7 +305,7 @@ final class LuciusArcDirector {
                 default -> { }
             }
         } catch (RuntimeException ex) {
-            LogUtils.getLogger().warn("[nusmp] Lucius's chain step {} failed: {}", e.kind(), ex.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Lucius's chain step {} failed: {}", e.kind(), ex.toString());
             runner.abort();
         }
     }

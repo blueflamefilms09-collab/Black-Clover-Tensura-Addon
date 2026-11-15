@@ -25,7 +25,7 @@ from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 sys.path.insert(0, HERE)
 
 # ---------------------------------------------------------------------------------------------------------- maths
@@ -77,7 +77,7 @@ def load_model(name, seen=None):
     data = json.load(open(path, encoding="utf-8"))
     parent = data.get("parent")
     out = {"textures": {}, "elements": None, "display": {}}
-    if parent and parent.startswith("nusmp:item/"):
+    if parent and parent.startswith("anime_multiverse:item/"):
         out = load_model(parent.split("/", 1)[1])
     out["textures"] = {**out["textures"], **data.get("textures", {})}
     if "elements" in data:

@@ -28,7 +28,7 @@ import java.util.Optional;
 /**
  * 3.56.0: the 15 Dragon Ball skill pairs (a Unique that evolves into an Ultimate, {@link DbSkill}): registration, the evolution check and the admin command. The evolution is the same rule as
  * {@link SkillEvolution} (a MASTERED Unique plus the server's minimum EP), run from the same 5-second player check; the table is kept apart so the older evolution table stays exactly as it was.
- * Obtain: {@code /multiverse dragonball give <player> <id> [unique|ultimate]} (permission 2), or {@code /tensura edit <player> ability grant nusmp:<id>_unique}.
+ * Obtain: {@code /multiverse dragonball give <player> <id> [unique|ultimate]} (permission 2), or {@code /tensura edit <player> ability grant anime_multiverse:<id>_unique}.
  */
 public final class DbSkills {
     private DbSkills() {}

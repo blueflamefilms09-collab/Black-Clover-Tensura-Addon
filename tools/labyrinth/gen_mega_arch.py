@@ -377,7 +377,7 @@ def gallery(variant):
 
 
 # =====================================================================================================================
-# link pieces: straight tunnel segments between two sectors (9x9, sockets N and S with the pool nusmp:mega/link)
+# link pieces: straight tunnel segments between two sectors (9x9, sockets N and S with the pool anime_multiverse:mega/link)
 # =====================================================================================================================
 def link_straight(variant):
     """A plain 5-wide corridor module: a coved rib and two lanterns in the middle, a lit niche in each side wall, a runner. `a` is stone, `b` timber.

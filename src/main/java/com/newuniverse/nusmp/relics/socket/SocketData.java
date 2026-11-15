@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * What the {@code nusmp:socket} component says, as plain data: the bound ids in order and the game time each was bound at. Immutable; every change
+ * What the {@code anime_multiverse:socket} component says, as plain data: the bound ids in order and the game time each was bound at. Immutable; every change
  * returns a new value. Pure (the NBT form is {@link SocketComponents}'s).
  */
 public record SocketData(List<Entry> entries) {

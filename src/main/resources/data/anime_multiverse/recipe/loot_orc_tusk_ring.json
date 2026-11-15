@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "T": {
+      "item": "anime_multiverse:orc_tusk"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " T ",
+    "I I",
+    " I "
+  ],
+  "result": {
+    "id": "anime_multiverse:orc_tusk_ring",
+    "count": 1
+  }
+}

@@ -96,7 +96,7 @@ final class CoreSelfTests {
         if (level == null) return fail("no mega dimension");
         VanillaPools pools = VanillaPools.get();
         pools.bind(level.getStructureManager());
-        if (pools.poolIds().isEmpty()) return fail("no Mega pools are loaded (data/nusmp/worldgen/template_pool/mega)");
+        if (pools.poolIds().isEmpty()) return fail("no Mega pools are loaded (data/anime_multiverse/worldgen/template_pool/mega)");
         MegaData data = MegaData.get(server);
         int pieces = 0, rooms = 0, loops = 0, tries = 0, probes = 0, bosses = 0;
         long nanos = 0;

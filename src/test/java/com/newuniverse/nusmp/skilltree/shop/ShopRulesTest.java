@@ -143,7 +143,7 @@ class ShopRulesTest {
         for (ShopRules.Reply r : ShopRules.Reply.values()) assertEquals(r, ShopRules.Reply.byOrdinal(r.ordinal()));
         assertEquals(ShopRules.Reply.NONE, ShopRules.Reply.byOrdinal(-1));
         assertEquals(ShopRules.Reply.NONE, ShopRules.Reply.byOrdinal(999));
-        assertEquals("gui.nusmp.shop.reply.sold_out", ShopRules.Reply.SOLD_OUT.key());
+        assertEquals("gui.anime_multiverse.shop.reply.sold_out", ShopRules.Reply.SOLD_OUT.key());
         assertTrue(ShopRules.Reply.BOUGHT.ok() && ShopRules.Reply.SOLD.ok() && ShopRules.Reply.OPENED.ok() && ShopRules.Reply.NONE.ok());
         assertFalse(ShopRules.Reply.POOR.ok() || ShopRules.Reply.FAR.ok() || ShopRules.Reply.FAILED.ok());
         assertEquals(0, ShopRules.Reply.NONE.ordinal(), "NONE is the zero default of a packet");

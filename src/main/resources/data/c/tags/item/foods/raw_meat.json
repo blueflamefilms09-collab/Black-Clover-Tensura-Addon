@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "nusmp:raw_slime_jelly",
-    "nusmp:raw_armor_flank",
-    "nusmp:raw_basilisk_fillet",
-    "nusmp:raw_direwolf_haunch",
-    "nusmp:raw_monster_meat"
+    "anime_multiverse:raw_slime_jelly",
+    "anime_multiverse:raw_armor_flank",
+    "anime_multiverse:raw_basilisk_fillet",
+    "anime_multiverse:raw_direwolf_haunch",
+    "anime_multiverse:raw_monster_meat"
   ]
 }

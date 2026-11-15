@@ -53,7 +53,7 @@ import java.util.UUID;
  * dreamers' minds down until they break; and the only ways out are to break the dream itself, with enough coordinated damage
  * from the inside or with spatial / time / anti-magic that tears its fabric, or to outlast it.
  *
- * <p><b>The dimension:</b> {@code nusmp:dream} (data/nusmp/dimension), an empty void with a fixed starry dusk sky and a pastel
+ * <p><b>The dimension:</b> {@code anime_multiverse:dream} (data/anime_multiverse/dimension), an empty void with a fixed starry dusk sky and a pastel
  * fog (client {@code DreamSkyClient}). Each dream gets its own arena in it, 512 blocks apart: a disc of pastel wool and lanterns,
  * cotton-candy trees, flowers and cakes, under a dome of iridescent stained glass, all rebuilt when the arena is reused.
  *
@@ -75,7 +75,7 @@ import java.util.UUID;
  * Bosses cannot be pulled in. A dream holds at most 8 dreamers.
  */
 public final class DreamWorld {
-    public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("nusmp", "dream"));
+    public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "dream"));
     public static final int PASTEL = 0xFFF4A8E0;
     private static final int SLOTS = 64, SPACING = 512, FLOOR_Y = 100;
     private static final String RETURN = "nusmp_dream_return";
@@ -127,7 +127,7 @@ public final class DreamWorld {
     public static boolean open(GrimoireBook b, ManasSkillInstance i, ServerPlayer caster, int mode, boolean grand) {
         MinecraftServer server = caster.getServer();
         ServerLevel dream = server.getLevel(DIMENSION);
-        if (dream == null) { GrimoireBook.fail(caster, "The dream world will not open here (the nusmp:dream dimension is missing)."); return false; }
+        if (dream == null) { GrimoireBook.fail(caster, "The dream world will not open here (the anime_multiverse:dream dimension is missing)."); return false; }
         if (inDream(caster) || BY_CASTER.containsKey(caster.getUUID()) || BY_MEMBER.containsKey(caster.getUUID())) {
             GrimoireBook.fail(caster, "You are already dreaming.");
             return false;

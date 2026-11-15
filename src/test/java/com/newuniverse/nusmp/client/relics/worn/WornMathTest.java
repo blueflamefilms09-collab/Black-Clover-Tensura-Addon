@@ -110,7 +110,7 @@ class WornMathTest {
     /** The clip lengths in the Mimic's animation file (written by tools/relics/waveboss_mimic_geo.py) are the ones this class plays by. */
     @Test
     void theAnimationFileHasTheClipsAndLengthsTheClassPlays() throws Exception {
-        try (InputStream in = WornMathTest.class.getResourceAsStream("/assets/nusmp/animations/entity/relic_mimic_belt.animation.json")) {
+        try (InputStream in = WornMathTest.class.getResourceAsStream("/assets/anime_multiverse/animations/entity/relic_mimic_belt.animation.json")) {
             assertNotNull(in, "the Mimic's animation file is a resource");
             String json = new String(in.readAllBytes(), StandardCharsets.UTF_8);
             assertEquals(WornMath.BITE_TICKS / 20.0, length(json, WornMath.BITE), 1e-4);

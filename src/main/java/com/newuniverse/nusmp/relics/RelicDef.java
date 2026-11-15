@@ -86,7 +86,7 @@ public final class RelicDef {
     /** A 3D hand mesh exists (weapon_meshes/&lt;id&gt;.txt, textures/entity/weapon/&lt;id&gt;.png and _glow.png, models/item/&lt;id&gt;_icon.json). */
     public RelicDef model3d() { RelicDef d = copy(); d.model3d = true; return d; }
 
-    /** One to three sentences shown in the tooltip (the long card text lives in the lang file under item.nusmp.&lt;id&gt;.card). */
+    /** One to three sentences shown in the tooltip (the long card text lives in the lang file under item.anime_multiverse.&lt;id&gt;.card). */
     public RelicDef desc(String shortText) { RelicDef d = copy(); d.desc = shortText == null ? "" : shortText; return d; }
 
     public RelicDef passive(Passive p) {

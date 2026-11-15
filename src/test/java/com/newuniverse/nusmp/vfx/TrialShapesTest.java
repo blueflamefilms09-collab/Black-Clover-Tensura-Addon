@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrialShapesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYER = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer/TrialLayer.java");
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
 
     private static final List<String> SIX = List.of("TRIAL_LABYRINTH", "TRIAL_GRAVITY", "TRIAL_COLLAPSE", "TRIAL_SHIFT", "TRIAL_TRUMPET", "TRIAL_RIFT");
 

@@ -1,7 +1,7 @@
 """djinn_weapons: builds the 24 temporary Djinn weapons' assets from the Djinn armour set's own weapon piece (1.34.0).
 
 For each of the twelve Djinn and each look (light = set u_<id>, dark = set d_<id>) it reads the held weapon piece
-(assets/nusmp/djinn/<set>/weapon.txt: item space, the grip at the origin, the blade along +y, UV in 128 units of the set's armour skin) and writes
+(assets/anime_multiverse/djinn/<set>/weapon.txt: item space, the grip at the origin, the blade along +y, UV in 128 units of the set's armour skin) and writes
 
   weapon_meshes/djinn_weapon_<id>[_dark].txt          the baked mesh in WeaponRenderer's format (same quads, `place` lines the weapon on the sprite diagonal
                                                       with the hand where the armour layer holds it, the directive `orient manual`, white glow so the
@@ -35,7 +35,7 @@ import display_presets as dp       # noqa: E402
 import weapon_orientation as wo    # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 
 DJINN = ["baal", "amon", "vinea", "focalor", "zagan", "zepar", "furfur", "marchosias", "sitri", "bifron", "paimon", "vassago"]
 # the target apparent length (third-person blocks) of each weapon: the long ones in the 2.2 - 3.6 band of the size rule
@@ -188,14 +188,14 @@ def display_json(d, dark, b):
     }
     for k in ("ground", "head", "fixed", "gui"):
         disp[k]["scale"] = [int(v) if float(v) == int(v) else v for v in disp[k]["scale"]]
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id(d, dark)},
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id(d, dark)},
              "display": disp, "nusmp_display_preset": "manual",
              "nusmp_djinn_weapon": {"length_blocks": round(info.length * sc3, 3), "first_person_scale": s, "tip_in_view": ok}}
     return json.dumps(model, indent=2) + "\n"
 
 
 def icon_model_json(d, dark):
-    return json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id(d, dark)}}, indent=2) + "\n"
+    return json.dumps({"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id(d, dark)}}, indent=2) + "\n"
 
 
 # ================================================================ the 16 x 16 icon
@@ -411,22 +411,22 @@ ACTS.update({
 })
 
 def lang_fragment():
-    """The English strings of the weapons (the lead merges them into assets/nusmp/lang/en_us.json)."""
+    """The English strings of the weapons (the lead merges them into assets/anime_multiverse/lang/en_us.json)."""
     out = {}
     for d in DJINN:
         for dark in (False, True):
-            out["item.nusmp." + item_id(d, dark)] = NAMES[d][1 if dark else 0]
+            out["item.anime_multiverse." + item_id(d, dark)] = NAMES[d][1 if dark else 0]
     for key, (name, desc) in ACTS.items():
         out["djinn_weapon.act." + key] = name
         out["djinn_weapon.act." + key + ".desc"] = desc
     out.update({
-        "tooltip.nusmp.djinn_weapon.temp": "A temporary weapon: %s's Djinn Equip made it. It lasts as long as the Equip; your own item is kept safe and returns when it ends.",
-        "tooltip.nusmp.djinn_weapon.admin": "A weapon of %s's Djinn (admin). It does not depend on a Djinn Equip.",
-        "tooltip.nusmp.djinn_weapon.dark": "Black rukh: it hits harder and drinks more Magoi.",
-        "tooltip.nusmp.djinn_weapon.act1": "Right-click: %s (%s%% of your Magoi, %s s)",
-        "tooltip.nusmp.djinn_weapon.act2": "Sneak + right-click, Full Equip only: %s (%s%% of your Magoi, %s s)",
-        "tooltip.nusmp.djinn_weapon.onhit": "Every blow: %s",
-        "tooltip.nusmp.djinn_weapon.rules": "It cannot be dropped, stored or moved away from its slot; it is always back in your hand.",
+        "tooltip.anime_multiverse.djinn_weapon.temp": "A temporary weapon: %s's Djinn Equip made it. It lasts as long as the Equip; your own item is kept safe and returns when it ends.",
+        "tooltip.anime_multiverse.djinn_weapon.admin": "A weapon of %s's Djinn (admin). It does not depend on a Djinn Equip.",
+        "tooltip.anime_multiverse.djinn_weapon.dark": "Black rukh: it hits harder and drinks more Magoi.",
+        "tooltip.anime_multiverse.djinn_weapon.act1": "Right-click: %s (%s%% of your Magoi, %s s)",
+        "tooltip.anime_multiverse.djinn_weapon.act2": "Sneak + right-click, Full Equip only: %s (%s%% of your Magoi, %s s)",
+        "tooltip.anime_multiverse.djinn_weapon.onhit": "Every blow: %s",
+        "tooltip.anime_multiverse.djinn_weapon.rules": "It cannot be dropped, stored or moved away from its slot; it is always back in your hand.",
         "djinn_weapon.msg.summoned": "%s is in your hand.",
         "djinn_weapon.msg.returned": "The Djinn weapon fades. Your own items are back.",
         "djinn_weapon.msg.busy": "The Djinn is gathering an Extreme Magic: the weapon is still.",
@@ -443,7 +443,7 @@ def lang_fragment():
 
 # ================================================================ writing
 def outputs(d, dark):
-    """-> {relative path under assets/nusmp: bytes or str} for one weapon."""
+    """-> {relative path under assets/anime_multiverse: bytes or str} for one weapon."""
     b = build(d, dark)
     iid = item_id(d, dark)
     files = {

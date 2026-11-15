@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "phase=idle": {
+      "model": "anime_multiverse:block/sealed_archway_idle"
+    },
+    "phase=active": {
+      "model": "anime_multiverse:block/sealed_archway_active"
+    },
+    "phase=cleared": {
+      "model": "anime_multiverse:block/sealed_archway_cleared"
+    }
+  }
+}

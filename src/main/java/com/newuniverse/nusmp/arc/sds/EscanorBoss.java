@@ -209,7 +209,7 @@ public class EscanorBoss extends ArcBoss {
                 SdsaStrikes.fx(sl, VfxShape.LIGHT_FLARE, head, head.add(0, 1, 0), PALE, 36, 2.2f, false);
             }
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Escanor's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Escanor's tick failed: {}", e.toString());
         }
     }
 
@@ -273,7 +273,7 @@ public class EscanorBoss extends ArcBoss {
                 try {
                     tellOf(id, t, left, total);
                 } catch (RuntimeException e) {
-                    LogUtils.getLogger().warn("[nusmp] Escanor's tell of {} failed: {}", id, e.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] Escanor's tell of {} failed: {}", id, e.toString());
                 }
             });
             out.add(b.run((bs, t) -> {
@@ -477,7 +477,7 @@ public class EscanorBoss extends ArcBoss {
                 try {
                     if (who instanceof ServerPlayer p) NusmpEvents.fire(p, "sds.cruel_sun_broken");
                 } catch (RuntimeException e) {
-                    LogUtils.getLogger().warn("[nusmp] the quest hook sds.cruel_sun_broken failed: {}", e.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] the quest hook sds.cruel_sun_broken failed: {}", e.toString());
                 }
             }
             quip("N-no...", "My sun!", "Impossible.");

@@ -24,7 +24,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /**
  * 0.102: the Black Clover Spirit Lords in their true bodies, drawn with client.geo.GeoDraw from the models tools/gen_spirit_lords.py writes
- * (assets/nusmp/geo/entity/spirit_*.geo.json): the Salamander dragon, Undine and her water, Sylph and her wings, the Gnome. Undine's water and
+ * (assets/anime_multiverse/geo/entity/spirit_*.geo.json): the Salamander dragon, Undine and her water, Sylph and her wings, the Gnome. Undine's water and
  * Sylph's wings and bubbles are a second, translucent model drawn over the body. Clips: idle, move (walk or fly), cast, hit.
  *
  * <p>1.99.0 (Great Spirits, docs/rebuild/great_spirits.md): with {@link SpiritLooks#CANON} (the default) Sylph is drawn as the tiny winged fairy of the canon (honeycomb wings, hands on the

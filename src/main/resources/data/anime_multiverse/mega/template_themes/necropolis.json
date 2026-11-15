@@ -1,0 +1,15 @@
+{
+  "theme": "necropolis",
+  "templates": [
+    "anime_multiverse:mega/hall/necropolis_",
+    "anime_multiverse:mega/set/necropolis_",
+    "anime_multiverse:mega/trap/necropolis_",
+    "anime_multiverse:mega/treasure/necropolis_"
+  ],
+  "relative": {
+    "mega/hall/necropolis_": 30,
+    "mega/set/necropolis_": 20,
+    "mega/trap/necropolis_": 20,
+    "mega/treasure/necropolis_": 20
+  }
+}

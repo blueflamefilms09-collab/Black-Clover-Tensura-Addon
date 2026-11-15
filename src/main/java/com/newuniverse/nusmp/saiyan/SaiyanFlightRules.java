@@ -14,7 +14,7 @@ public final class SaiyanFlightRules {
     public enum Tier {
         NOVICE, APPRENTICE, ADEPT, EXPERT, MASTER;
 
-        public String key() { return "nusmp.saiyan.flight." + name().toLowerCase(Locale.ROOT); }
+        public String key() { return "anime_multiverse.saiyan.flight." + name().toLowerCase(Locale.ROOT); }
 
         public static Tier of(int i) { return values()[Math.max(0, Math.min(values().length - 1, i))]; }
     }

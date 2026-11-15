@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "textures": {
+    "particle": "anime_multiverse:item/martels_magical_bag_of_candy"
+  }
+}

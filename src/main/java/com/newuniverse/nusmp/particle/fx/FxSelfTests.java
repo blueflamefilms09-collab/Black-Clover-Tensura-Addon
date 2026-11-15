@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 
 /**
  * Why: what the unit tests cannot prove (they run without the game), {@code particles.custom} proves inside the booted mod on the CI server: every particle of the catalog is registered under
- * {@code nusmp:<id>} and bound; the options of a type survive the real network codec (encode, decode, same colour and size); the theme table references only registered particles and
+ * {@code anime_multiverse:<id>} and bound; the options of a type survive the real network codec (encode, decode, same colour and size); the theme table references only registered particles and
  * resolves an unknown key to the default; the facade sends with the switch on and with it off (the old vanilla particle of the mapping); and the per-tick budget is respected however many
  * hundred particles are asked for. It touches no client class, so it runs on the dedicated server, and it puts the switch back the way it found it.
  */
@@ -31,7 +31,7 @@ public final class FxSelfTests {
         // ---- types registered and bound
         if (FxCatalog.all().size() < 60) return SelfTests.Result.fail("the catalog has only " + FxCatalog.all().size() + " particles");
         for (FxCatalog.Def d : FxCatalog.all()) {
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("nusmp", d.id());
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", d.id());
             if (!BuiltInRegistries.PARTICLE_TYPE.containsKey(id)) return SelfTests.Result.fail("particle type not registered: " + id);
             if (FxTypes.type(d.id()) == null) return SelfTests.Result.fail("particle type not bound: " + id);
         }

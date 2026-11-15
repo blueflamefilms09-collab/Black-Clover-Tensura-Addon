@@ -277,9 +277,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "9A4AFF", "groups": ["wisps", "rune_disc"], "note": "the souls spiral out of the blade and the rune disc unfolds as it is drawn"}
     it.swing = {"trail": "violet_glass", "rgb": "9A4AFF", "rgb2": "0C0A12", "length": 1.35, "width": 0.34, "life": 9, "particles": "soul_wisp"}
-    it.sound = "nusmp:item.genesis.blackrazor.hunger_loop"
+    it.sound = "anime_multiverse:item.genesis.blackrazor.hunger_loop"
     it.acts = {
-        "devour_soul": {"burst": "soul_drain", "rgb": "9A4AFF", "ring": 3.0, "particles": 26, "sound": "nusmp:item.genesis.blackrazor.devour"},
-        "void_cleave": {"burst": "void_rift_slash", "rgb": "5A2A8A", "ring": 4.5, "particles": 34, "sound": "nusmp:item.genesis.blackrazor.void_cleave"},
-        "hunger_eternal": {"burst": "souls_rise", "rgb": "C890FF", "ring": 5.5, "particles": 40, "sound": "nusmp:item.genesis.blackrazor.hunger_eternal"},
+        "devour_soul": {"burst": "soul_drain", "rgb": "9A4AFF", "ring": 3.0, "particles": 26, "sound": "anime_multiverse:item.genesis.blackrazor.devour"},
+        "void_cleave": {"burst": "void_rift_slash", "rgb": "5A2A8A", "ring": 4.5, "particles": 34, "sound": "anime_multiverse:item.genesis.blackrazor.void_cleave"},
+        "hunger_eternal": {"burst": "souls_rise", "rgb": "C890FF", "ring": 5.5, "particles": 40, "sound": "anime_multiverse:item.genesis.blackrazor.hunger_eternal"},
     }

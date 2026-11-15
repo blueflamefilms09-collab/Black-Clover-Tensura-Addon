@@ -110,7 +110,7 @@ public class GatekeeperDoorBlock extends Block {
             return ItemInteractionResult.CONSUME;
         }
         if (state.getValue(KIND) != Kind.WARDEN) {
-            tell(player, "message.nusmp.gatekeeper.boss_sealed");
+            tell(player, "message.anime_multiverse.gatekeeper.boss_sealed");
             return ItemInteractionResult.CONSUME;
         }
         if (!player.isCreative()) stack.shrink(1);                                        // one key per run; creative keeps testing freely
@@ -121,7 +121,7 @@ public class GatekeeperDoorBlock extends Block {
             Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.WITCH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 24, 0.6, 0.9, 0.6, 0.02);
             Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.END_ROD, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, 12, 0.5, 0.8, 0.5, 0.03);
         }
-        tell(player, "message.nusmp.gatekeeper.warden_open");
+        tell(player, "message.anime_multiverse.gatekeeper.warden_open");
         return opened > 0 ? ItemInteractionResult.CONSUME : ItemInteractionResult.FAIL;
     }
 
@@ -131,8 +131,8 @@ public class GatekeeperDoorBlock extends Block {
         if (state.getValue(OPEN) || player.isShiftKeyDown()) return InteractionResult.PASS;
         if (!level.isClientSide) {
             if (state.getValue(KIND) == Kind.PUZZLE) puzzleClick(state, level, pos, player);
-            else if (state.getValue(KIND) == Kind.SECTOR) tell(player, "message.nusmp.gatekeeper.sector_sealed");
-            else tell(player, state.getValue(KIND) == Kind.WARDEN ? "message.nusmp.gatekeeper.warden_sealed" : "message.nusmp.gatekeeper.boss_sealed");
+            else if (state.getValue(KIND) == Kind.SECTOR) tell(player, "message.anime_multiverse.gatekeeper.sector_sealed");
+            else tell(player, state.getValue(KIND) == Kind.WARDEN ? "message.anime_multiverse.gatekeeper.warden_sealed" : "message.anime_multiverse.gatekeeper.boss_sealed");
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -148,7 +148,7 @@ public class GatekeeperDoorBlock extends Block {
             if (opened) level.playSound(null, pos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0f, 0.8f);
             return opened;
         }
-        tell(player, "message.nusmp.gatekeeper.puzzle_sealed");
+        tell(player, "message.anime_multiverse.gatekeeper.puzzle_sealed");
         return false;
     }
 

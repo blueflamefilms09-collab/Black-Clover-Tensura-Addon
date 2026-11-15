@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:spells/special",
+  "display": {
+    "icon": {
+      "id": "minecraft:note_block"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.spells.art_butoh.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.spells.art_butoh.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_butoh_dance": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "butoh.dance"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_butoh_dance"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

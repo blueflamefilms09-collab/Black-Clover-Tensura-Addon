@@ -34,23 +34,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * with a typo in its entity id is skipped, a cue with a misspelled sound plays nothing, a table that lacks a band quietly rolls "no usable entry"). So
  * the files that SHIP are read here, from the source tree, exactly as the loader reads them: every file must parse with zero problems, every theme must
  * have its table, every table must have 8 to 14 entries and every band, every id must be one that exists (vanilla entities, simple particles and the
- * cue sounds from the API dump, Tensura entities from its id list, nusmp entities from the registrations in the source tree), every message must be a
+ * cue sounds from the API dump, Tensura entities from its id list, anime_multiverse entities from the registrations in the source tree), every message must be a
  * key of the Dungeon Master's namespace, and the dice must be able to answer: for every threat, party size and state of the party, every band finds an
  * entry. It also checks the two promises the tables make to a new player: at threat one nothing harder than a standard fight is on offer, and no entry
  * asks for a first monster that costs more than the entry's own band can pay at the threat where it first appears.
  */
 class EncounterDataTest {
-    private static final Path ENC = Path.of("src/main/resources/data/nusmp/mega/encounters");
-    private static final Path WANDERERS = Path.of("src/main/resources/data/nusmp/mega/wanderers.json");
+    private static final Path ENC = Path.of("src/main/resources/data/anime_multiverse/mega/encounters");
+    private static final Path WANDERERS = Path.of("src/main/resources/data/anime_multiverse/mega/wanderers.json");
     private static final Path KNOWN = Path.of("src/test/resources/mega/enc/known_ids.txt");
-    private static final Path LANG = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
+    private static final Path LANG = Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json");
     private static final Path SOURCE = Path.of("src/main/java");
     /** 1.59.0: every theme of the enum has a table, so a theme appended to {@link RegionTheme} without one fails here (the list used to be written out and had to be edited by every builder of a theme). */
     private static final List<String> THEMES = themeIds();
-    private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "nusmp");
-    private static final String MESSAGE_PREFIX = "message.nusmp.mega.enc.";
+    private static final Set<String> NAMESPACES = Set.of("minecraft", "tensura", "anime_multiverse");
+    private static final String MESSAGE_PREFIX = "message.anime_multiverse.mega.enc.";
 
-    /** Default maximum health of the vanilla and nusmp bodies the tables name explicitly, to check that an entry's first monster fits its band's budget. */
+    /** Default maximum health of the vanilla and anime_multiverse bodies the tables name explicitly, to check that an entry's first monster fits its band's budget. */
     private static final Map<String, Double> HEALTH = new HashMap<>();
 
     static {
@@ -59,8 +59,8 @@ class EncounterDataTest {
                 {"illusioner", "32"}, {"piglin_brute", "50"}, {"hoglin", "40"}, {"zoglin", "40"}, {"ravager", "100"}, {"magma_cube", "20"}, {"phantom", "20"},
                 {"enderman", "40"}, {"vex", "14"}, {"shulker", "30"}, {"iron_golem", "100"}, {"polar_bear", "30"}, {"bat", "6"}, {"drowned", "20"}};
         for (String[] e : h) HEALTH.put("minecraft:" + e[0], Double.parseDouble(e[1]));
-        HEALTH.put("nusmp:living_armor", 22.0);
-        HEALTH.put("nusmp:floor_warden", 200.0);
+        HEALTH.put("anime_multiverse:living_armor", 22.0);
+        HEALTH.put("anime_multiverse:floor_warden", 200.0);
     }
 
     // ---------------------------------------------------------------- reading the shipped files
@@ -117,7 +117,7 @@ class EncounterDataTest {
         try (Stream<Path> files = Files.walk(SOURCE)) {
             for (Path f : (Iterable<Path>) files.filter(x -> x.toString().endsWith(".java"))::iterator) {
                 Matcher m = p.matcher(read(f));
-                while (m.find()) out.add("nusmp:" + m.group(1));
+                while (m.find()) out.add("anime_multiverse:" + m.group(1));
             }
         } catch (IOException e) {
             throw new IllegalStateException("cannot walk the source tree: " + e.getMessage());
@@ -125,10 +125,10 @@ class EncounterDataTest {
         return out;
     }
 
-    private static boolean entityExists(String id, Set<String> vanilla, Set<String> tensura, Set<String> nusmp) {
+    private static boolean entityExists(String id, Set<String> vanilla, Set<String> tensura, Set<String> anime_multiverse) {
         if (id.startsWith("minecraft:")) return vanilla.contains(id);
         if (id.startsWith("tensura:")) return tensura.contains(id);
-        if (id.startsWith("nusmp:")) return nusmp.contains(id);
+        if (id.startsWith("anime_multiverse:")) return anime_multiverse.contains(id);
         return false;
     }
 
@@ -200,7 +200,7 @@ class EncounterDataTest {
 
     @Test
     void everyEntityIdExists() {
-        Set<String> vanilla = known("entity"), tensura = new HashSet<>(), nusmp = nusmpEntities();
+        Set<String> vanilla = known("entity"), tensura = new HashSet<>(), anime_multiverse = nusmpEntities();
         for (String id : vanilla) if (id.startsWith("tensura:")) tensura.add(id);
         vanilla.removeIf(id -> id.startsWith("tensura:"));
         Set<String> used = new TreeSet<>();
@@ -209,8 +209,8 @@ class EncounterDataTest {
                 for (EncounterTable.MobSpec m : e.mobs()) {
                     if (m.kind() != EncounterTable.Kind.ENTITY) continue;
                     String ns = m.entity().substring(0, m.entity().indexOf(':'));
-                    assertTrue(NAMESPACES.contains(ns), t.getKey() + "/" + e.id() + ": '" + m.entity() + "' is not a vanilla, Tensura or nusmp entity");
-                    assertTrue(entityExists(m.entity(), vanilla, tensura, nusmp), t.getKey() + "/" + e.id() + ": no such entity type as '" + m.entity() + "'");
+                    assertTrue(NAMESPACES.contains(ns), t.getKey() + "/" + e.id() + ": '" + m.entity() + "' is not a vanilla, Tensura or anime_multiverse entity");
+                    assertTrue(entityExists(m.entity(), vanilla, tensura, anime_multiverse), t.getKey() + "/" + e.id() + ": no such entity type as '" + m.entity() + "'");
                     used.add(m.entity());
                 }
             }
@@ -432,18 +432,18 @@ class EncounterDataTest {
         assertTrue(p.problems().isEmpty(), p.problems().toString());
         List<WandererRoster.Entry> entries = p.roster().entries();
         assertTrue(entries.size() >= 10, "only " + entries.size() + " wandering bosses");
-        Set<String> vanilla = known("entity"), tensura = new HashSet<>(), nusmp = nusmpEntities();
+        Set<String> vanilla = known("entity"), tensura = new HashSet<>(), anime_multiverse = nusmpEntities();
         for (String id : vanilla) if (id.startsWith("tensura:")) tensura.add(id);
         vanilla.removeIf(id -> id.startsWith("tensura:"));
         WandererRoster.Entry warden = null;
         Set<String> used = new TreeSet<>();
         for (WandererRoster.Entry e : entries) {
             String ns = e.entity().substring(0, e.entity().indexOf(':'));
-            assertTrue(NAMESPACES.contains(ns), "'" + e.entity() + "' is not a vanilla, Tensura or nusmp entity");
-            assertTrue(entityExists(e.entity(), vanilla, tensura, nusmp), "no such entity type as '" + e.entity() + "'");
+            assertTrue(NAMESPACES.contains(ns), "'" + e.entity() + "' is not a vanilla, Tensura or anime_multiverse entity");
+            assertTrue(entityExists(e.entity(), vanilla, tensura, anime_multiverse), "no such entity type as '" + e.entity() + "'");
             assertFalse(e.name().isEmpty());
             used.add(e.entity());
-            if (e.entity().equals("nusmp:floor_warden")) warden = e;
+            if (e.entity().equals("anime_multiverse:floor_warden")) warden = e;
         }
         assertNotNull(warden, "the Floor Warden is the signature wanderer");
         assertEquals(5, warden.weight());

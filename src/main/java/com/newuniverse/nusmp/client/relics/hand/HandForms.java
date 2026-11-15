@@ -49,7 +49,7 @@ public final class HandForms {
         if (!xf.complete()) return null;
         HandTransforms.Style style = xf.styleFor(def.id(), def.slot().name(), def.look().name());
         if (style == null) return null;
-        VuOverrides.Entry upgrade = VuModels.handEntry(def.id());                      // the visual upgrade: the override table of assets/nusmp/visual_upgrade (null: the older catalog)
+        VuOverrides.Entry upgrade = VuModels.handEntry(def.id());                      // the visual upgrade: the override table of assets/anime_multiverse/visual_upgrade (null: the older catalog)
         List<WornCatalog.Piece> sig = VuModels.handPieces(def.id());
         if (sig == null) {
             sig = HandModels.catalog().sigFor(def.id());

@@ -59,7 +59,7 @@ def main():
         if javac.returncode != 0:
             sys.stderr.write(javac.stdout + javac.stderr)
             return 2
-        lang = ",".join([os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "lang", "en_us.json"), frag])
+        lang = ",".join([os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json"), frag])
         run = subprocess.run(["java", "-Djava.awt.headless=true", "-Dharness.assets=" + os.path.join(ROOT, "src", "main", "resources", "assets"), "-Dharness.lang=" + lang,
                               "-cp", os.pathsep.join([classes, gson, joml]), "com.newuniverse.nusmp.client.avatar.Harness", out, ROOT],
                              env=env, capture_output=True, text=True)

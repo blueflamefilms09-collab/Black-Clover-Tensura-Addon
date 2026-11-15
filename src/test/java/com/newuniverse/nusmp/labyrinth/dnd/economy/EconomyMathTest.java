@@ -84,7 +84,7 @@ class EconomyMathTest {
 
     @Test void lightIdsAreRecognised() {
         assertTrue(LightItems.isLight("minecraft", "torch"));
-        assertTrue(LightItems.isLight("nusmp", "ki_resonance_lantern"));
+        assertTrue(LightItems.isLight("anime_multiverse", "ki_resonance_lantern"));
         assertTrue(LightItems.isLight("othermod", "crystal_lamp"));
         assertFalse(LightItems.isLight("minecraft", "stick"));
     }

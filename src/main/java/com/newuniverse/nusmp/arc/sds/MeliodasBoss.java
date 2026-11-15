@@ -202,7 +202,7 @@ public class MeliodasBoss extends ArcBoss {
             }
             if (counter.up(now) && tickCount % 16 == 0) showStance(sl, now);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Meliodas's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Meliodas's tick failed: {}", e.toString());
         }
     }
 
@@ -245,7 +245,7 @@ public class MeliodasBoss extends ArcBoss {
             if (tickCount < staggerUntil && !exposed()) a *= EXPOSED_BONUS;
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Meliodas's guard failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Meliodas's guard failed: {}", e.toString());
             return amount;
         }
     }
@@ -279,7 +279,7 @@ public class MeliodasBoss extends ArcBoss {
         try {
             if (who instanceof ServerPlayer p) NusmpEvents.fire(p, key);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] the quest hook {} failed: {}", key, e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the quest hook {} failed: {}", key, e.toString());
         }
     }
 
@@ -358,7 +358,7 @@ public class MeliodasBoss extends ArcBoss {
                 try {
                     tellOf(id, t, left, total);
                 } catch (RuntimeException e) {
-                    LogUtils.getLogger().warn("[nusmp] Meliodas's tell of {} failed: {}", id, e.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] Meliodas's tell of {} failed: {}", id, e.toString());
                 }
             });
             out.add(b.run((bs, t) -> {

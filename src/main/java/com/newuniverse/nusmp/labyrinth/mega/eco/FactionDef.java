@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: one faction of the Mega-Dungeon as the data file {@code data/nusmp/mega/factions/<id>.json} describes it, held as plain values so the
+ * Why: one faction of the Mega-Dungeon as the data file {@code data/anime_multiverse/mega/factions/<id>.json} describes it, held as plain values so the
  * rivalry graph, the room assignment, the turf-war rules and the drop table can all be written and tested without Minecraft. The file name is the
  * id; membership is NOT stored here (the entity-type tag {@link #tag()} is the membership, so a pack author adds a mob to a faction in a tag
  * and never touches this record). {@code range} and {@code nativeBonus} are {@link #UNSET} when the file has no {@code aggro} block, which
@@ -16,9 +16,9 @@ import java.util.Map;
  * reload runs before the server config is read. Immutable.
  *
  * @param id          lower-case id, the file name ({@code goblin})
- * @param name        English display name, the fallback of the lang key {@code message.nusmp.mega.mec.faction.<id>}
+ * @param name        English display name, the fallback of the lang key {@code message.anime_multiverse.mega.mec.faction.<id>}
  * @param color       RGB colour of the faction in messages
- * @param tag         the entity-type tag that lists its members ({@code nusmp:mega/goblin})
+ * @param tag         the entity-type tag that lists its members ({@code anime_multiverse:mega/goblin})
  * @param rivals      factions whose members this faction's members hunt (made symmetric by the graph unless {@code oneWay})
  * @param allies      factions this faction never fights (always symmetric; an ally beats a rival if both are listed)
  * @param range       blocks within which a member notices a rival, or {@link #UNSET}
@@ -49,9 +49,9 @@ public record FactionDef(String id, String name, int color, String tag, List<Str
         return cutKindOf(meat);
     }
 
-    /** The {@link EconomyMath} kind of a cut name, with or without the {@code nusmp:} prefix. */
+    /** The {@link EconomyMath} kind of a cut name, with or without the {@code anime_multiverse:} prefix. */
     public static int cutKindOf(String cut) {
-        String c = cut == null ? "" : (cut.startsWith("nusmp:") ? cut.substring(6) : cut);
+        String c = cut == null ? "" : (cut.startsWith("anime_multiverse:") ? cut.substring(6) : cut);
         return switch (c) {
             case "raw_slime_jelly" -> EconomyMath.JELLY;
             case "raw_armor_flank" -> EconomyMath.FLANK;

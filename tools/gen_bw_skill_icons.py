@@ -7,7 +7,7 @@ Deterministic; refuses to finish if two icons are identical or one is not opaque
 import hashlib, math, os, sys
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "skill")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "skill")
 S = 256
 
 # key: (tint, emblem)

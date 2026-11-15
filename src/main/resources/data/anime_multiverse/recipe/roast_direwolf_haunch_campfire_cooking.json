@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "anime_multiverse:raw_direwolf_haunch"
+  },
+  "result": {
+    "id": "anime_multiverse:roast_direwolf_haunch"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

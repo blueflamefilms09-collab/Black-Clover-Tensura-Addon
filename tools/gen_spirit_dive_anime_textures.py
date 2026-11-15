@@ -1,4 +1,4 @@
-"""Spirit Dive, ANIME look: writes the textures of the look to src/main/resources/assets/nusmp/textures/aura/ (all deterministic, redo with `python3 -B tools/gen_spirit_dive_anime_textures.py`).
+"""Spirit Dive, ANIME look: writes the textures of the look to src/main/resources/assets/anime_multiverse/textures/aura/ (all deterministic, redo with `python3 -B tools/gen_spirit_dive_anime_textures.py`).
 
 Everything is cel-shaded: flat bands (a dark outline where the art has one, a base, a mid band, a bright core), no noise gradients:
 
@@ -26,7 +26,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
 ELS = ["wind", "water", "fire", "earth"]
 
 

@@ -47,7 +47,7 @@ import java.util.Random;
 import java.util.UUID;
 
 /**
- * Why: Dimensional Labyrinth (Israfil) is a real pocket dimension. The target (and, with the skill mastered, up to two creatures next to it) is taken out of the world into {@code nusmp:trial}: a
+ * Why: Dimensional Labyrinth (Israfil) is a real pocket dimension. The target (and, with the skill mastered, up to two creatures next to it) is taken out of the world into {@code anime_multiverse:trial}: a
  * sealed maze of black stone under a ceiling, dimly lit from the floor, where the walls NEVER stand still. Every few seconds a wall that is shut opens and a wall on the new loop shuts (see
  * {@link PocketMaze}: the maze stays one connected maze with a single way between two places, so it can never trap anyone for good), after a warning in the form of a flash between the two walls. A
  * glowing exit of crying obsidian waits in the maze and moves every few shifts; reaching it lets the creature out at once. When the time runs out, or the caster dies or leaves, everyone is put back
@@ -148,7 +148,7 @@ public final class PocketLabyrinth {
      */
     public static String open(ServerPlayer caster, LivingEntity target, boolean mastered) {
         MinecraftServer server = caster.getServer();
-        if (server == null || server.getLevel(DIMENSION) == null) return "The labyrinth will not open here (the nusmp:trial dimension is missing).";
+        if (server == null || server.getLevel(DIMENSION) == null) return "The labyrinth will not open here (the anime_multiverse:trial dimension is missing).";
         if (inPocket(caster) || BY_CASTER.containsKey(caster.getUUID()) || BY_MEMBER.containsKey(caster.getUUID())) return "Your labyrinth still stands.";
         String why = refusal(target);
         if (why != null) return why;
@@ -567,7 +567,7 @@ public final class PocketLabyrinth {
      */
     public static String check(MinecraftServer server) {
         ServerLevel pocket = server.getLevel(DIMENSION);
-        if (pocket == null) return "the nusmp:trial dimension is not loaded";
+        if (pocket == null) return "the anime_multiverse:trial dimension is not loaded";
         int slot = freeSlot();
         if (slot < 0) return "no free room for the test";
         USED[slot] = true;

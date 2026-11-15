@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Why: the INFERNAL_FOUNDRY theme (1.59.0, THEME-D, docs/labyrinth/mega_v2_thd.md): the Nine Hells as a factory, the evil road's industrial level. A themed sector must read as a NEW place,
-so besides the palette swap of `data/nusmp/mega/themes/infernal_foundry.json` (red nether brick walls on deepslate-tile floors, polished blackstone brick trim, gilded blackstone keystones)
-it owns its signature rooms, which the assembler may draw only in sectors of this theme (`data/nusmp/mega/template_themes/infernal_foundry.json`, prefix
-`nusmp:mega/<folder>/infernal_foundry_`).
+so besides the palette swap of `data/anime_multiverse/mega/themes/infernal_foundry.json` (red nether brick walls on deepslate-tile floors, polished blackstone brick trim, gilded blackstone keystones)
+it owns its signature rooms, which the assembler may draw only in sectors of this theme (`data/anime_multiverse/mega/template_themes/infernal_foundry.json`, prefix
+`anime_multiverse:mega/<folder>/infernal_foundry_`).
 
     python3 tools/labyrinth/gen_mega_theme_infernal_foundry.py                 # build, check and write every room
     python3 tools/labyrinth/gen_mega_theme_infernal_foundry.py grand_furnace   # only this one

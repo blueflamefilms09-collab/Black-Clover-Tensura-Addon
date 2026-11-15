@@ -5,7 +5,7 @@ Sizes are APPARENT blocks: the mesh length along its axis times the third-person
 of the head across. `grip` is the share of the length (from the butt) where the hand is: scaling a weapon keeps that point fixed.
 
 The table is the one source of truth: tools/relics/weapon_classes.json holds it (plus the reviewed id -> class map) and
-src/main/resources/assets/nusmp/weapon_classes.json is the copy the game reads (audit_weapon_scale.py --write keeps them equal);
+src/main/resources/assets/anime_multiverse/weapon_classes.json is the copy the game reads (audit_weapon_scale.py --write keeps them equal);
 client/relics/item/WeaponClasses.java carries the same numbers as its built-in fallback and the same keyword guess. A test checks all three.
 """
 import json
@@ -15,7 +15,7 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 CLASSES_JSON = os.path.join(HERE, "weapon_classes.json")
-ASSET_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "weapon_classes.json")
+ASSET_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "weapon_classes.json")
 
 # name: (min, max, head_min, grip)   (head_min 0 = not checked)
 # 1.34.0: the owner's size rule ("unless the weapon should be small, make it bigger; a great sword should be massive"). Apparent blocks.

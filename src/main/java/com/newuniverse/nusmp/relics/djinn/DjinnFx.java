@@ -153,10 +153,10 @@ final class DjinnFx {
         }
     }
 
-    /** A mob effect by id, or a fire for the pseudo id "nusmp:burn" (ticks/20 seconds). "" does nothing. */
+    /** A mob effect by id, or a fire for the pseudo id "anime_multiverse:burn" (ticks/20 seconds). "" does nothing. */
     static void effect(LivingEntity t, String id, int ticks, int amp) {
         if (id == null || id.isEmpty() || ticks <= 0 || t == null || !t.isAlive()) return;
-        if (id.equals("nusmp:burn")) {
+        if (id.equals("anime_multiverse:burn")) {
             t.setRemainingFireTicks(Math.max(t.getRemainingFireTicks(), Math.min(ticks, 200)));
             return;
         }

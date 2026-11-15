@@ -1,6 +1,6 @@
 """Textures of the Relic Pedestal (the Labyrinth's Treasure Vault, 1.35.0). Deterministic, Pillow only.
 
-    python3 -B tools/gen_relic_pedestal_textures.py          -> src/main/resources/assets/nusmp/textures/block/relic_pedestal*.png
+    python3 -B tools/gen_relic_pedestal_textures.py          -> src/main/resources/assets/anime_multiverse/textures/block/relic_pedestal*.png
     python3 -B tools/gen_relic_pedestal_textures.py --check  -> exit 1 if a shipped PNG differs from what this script makes
 
     relic_pedestal       one vertical slice of the pedestal, read by the block model's UVs row by row:
@@ -15,7 +15,7 @@ import sys
 
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "block")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "block")
 
 STONE = [(38, 36, 44), (44, 42, 51), (33, 31, 39), (49, 47, 56)]       # dark stone, four shades
 GOLD = (214, 172, 72)

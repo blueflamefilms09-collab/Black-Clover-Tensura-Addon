@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
  * ask, not in each relic. The question is this one function. It is asked by {@link Relics#loadout} and {@link Relics#loadoutFresh}
  * (everything the waves, the sockets and the passive pass read), by {@code dungeon.nexus.relic.Worn.mask/stack} (the Treasury relics)
  * and by {@link RelicEngine#activate} (every act, held or socketed). Nothing is unequipped, dropped or damaged: the items stay where
- * they are and simply stop counting; the mob effect {@code nusmp:relic_nullified} ends by itself, on death, with milk, and when the boss
+ * they are and simply stop counting; the mob effect {@code anime_multiverse:relic_nullified} ends by itself, on death, with milk, and when the boss
  * clears it. Not covered, honestly: the Tensura engraving enchantments on armour and weapons are Tensura's own and are read by Tensura.
  */
 public final class RelicNullification {

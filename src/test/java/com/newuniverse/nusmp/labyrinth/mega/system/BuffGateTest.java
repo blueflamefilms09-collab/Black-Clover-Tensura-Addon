@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BuffGateTest {
     @Test void theDungeonDimensionsHaveTheBuff() {
-        assertTrue(BuffGate.active("nusmp:mega_dungeon", true));
-        assertTrue(BuffGate.active("nusmp:sanctuary", true), "the Hub counts as the dungeon");
+        assertTrue(BuffGate.active("anime_multiverse:mega_dungeon", true));
+        assertTrue(BuffGate.active("anime_multiverse:sanctuary", true), "the Hub counts as the dungeon");
         assertTrue(BuffGate.isDungeonDimension(BuffGate.MEGA));
         assertTrue(BuffGate.isDungeonDimension(BuffGate.HUB));
     }
@@ -21,15 +21,15 @@ class BuffGateTest {
         assertFalse(BuffGate.active("minecraft:overworld", true));
         assertFalse(BuffGate.active("minecraft:the_nether", true));
         assertFalse(BuffGate.active("minecraft:the_end", true));
-        assertFalse(BuffGate.active("nusmp:labyrinth", true), "the old Spire is not a dungeon dimension of the System");
-        assertFalse(BuffGate.active("nusmp:mega_dungeon_2", true), "an id that only starts like the dungeon's is not it");
+        assertFalse(BuffGate.active("anime_multiverse:labyrinth", true), "the old Spire is not a dungeon dimension of the System");
+        assertFalse(BuffGate.active("anime_multiverse:mega_dungeon_2", true), "an id that only starts like the dungeon's is not it");
         assertFalse(BuffGate.active("", true));
         assertFalse(BuffGate.active(null, true), "an unknown dimension is not the dungeon");
     }
 
     @Test void theSwitchOffRestoresTheOldAlwaysOnBehaviour() {
         assertTrue(BuffGate.active("minecraft:overworld", false));
-        assertTrue(BuffGate.active("nusmp:mega_dungeon", false));
+        assertTrue(BuffGate.active("anime_multiverse:mega_dungeon", false));
         assertTrue(BuffGate.active(null, false));
     }
 

@@ -115,7 +115,7 @@ public final class PitfallTileBlock extends Block {
         for (ServerPlayer p : players) {
             if (p.isCreative() || p.isSpectator()) continue;
             if (dmg > 0f) p.hurt(level.damageSources().fall(), dmg);
-            p.displayClientMessage(Component.translatable("message.nusmp.trap.pitfall").withStyle(ChatFormatting.DARK_GRAY), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.trap.pitfall").withStyle(ChatFormatting.DARK_GRAY), true);
         }
     }
 

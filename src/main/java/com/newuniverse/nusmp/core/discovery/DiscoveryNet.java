@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The one packet of the discovery system, {@code nusmp:discovery_sync} (server to client). The first packet of a login carries
+ * The one packet of the discovery system, {@code anime_multiverse:discovery_sync} (server to client). The first packet of a login carries
  * {@code replace = true} and the first chunk of the player's keys; the next chunks (if any) and every later change are deltas
  * ({@code replace = false}). Every packet carries the viewer's show-all state (creative mode, the config). {@code announce} marks a delta of
  * things found just now. Register {@link #registerPayloads} on the mod bus.
@@ -21,7 +21,7 @@ public final class DiscoveryNet {
     private DiscoveryNet() {}
 
     public record Sync(boolean replace, boolean showAll, boolean announce, List<String> keys) implements CustomPacketPayload {
-        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "discovery_sync"));
+        public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "discovery_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeBoolean(p.replace());

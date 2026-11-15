@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Why: the library is data (a datapack may add or replace a file), so the game reads it again whenever data reloads and must never crash on a bad file. This class owns the one
  * immutable snapshot everything else reads (the catalogue, every definition sorted by id, an index by id) and the reload listener that swaps it. Files are
- * {@code data/nusmp/mega/mechanics/ops.json} (the catalogue) and every other {@code *.json} in that folder (a category file written by the generator, or a datapack's own). A
+ * {@code data/anime_multiverse/mega/mechanics/ops.json} (the catalogue) and every other {@code *.json} in that folder (a category file written by the generator, or a datapack's own). A
  * mechanic whose id repeats is skipped with a warning (the first, in file-name order, wins); every parser problem is logged with the file's name. Snapshots are swapped as a
  * whole (volatile), so the server thread never sees a half-read library.
  */
@@ -78,11 +78,11 @@ public final class MechanicLibrary {
             OpCatalog cat = null;
             List<MechanicDef> defs = new ArrayList<>();
             try {
-                Map<ResourceLocation, List<Resource>> files = manager.listResourceStacks("mega", rl -> rl.getNamespace().equals("nusmp") && rl.getPath().startsWith(DIR) && rl.getPath().endsWith(".json")
+                Map<ResourceLocation, List<Resource>> files = manager.listResourceStacks("mega", rl -> rl.getNamespace().equals("anime_multiverse") && rl.getPath().startsWith(DIR) && rl.getPath().endsWith(".json")
                         && rl.getPath().indexOf('/', DIR.length()) < 0);
                 List<ResourceLocation> keys = new ArrayList<>(files.keySet());
                 keys.sort(Comparator.comparing(ResourceLocation::toString));
-                ResourceLocation opsKey = ResourceLocation.fromNamespaceAndPath("nusmp", DIR + "ops.json");
+                ResourceLocation opsKey = ResourceLocation.fromNamespaceAndPath("anime_multiverse", DIR + "ops.json");
                 List<Resource> opsStack = files.get(opsKey);
                 if (opsStack != null && !opsStack.isEmpty()) {
                     String text = read(opsStack.get(opsStack.size() - 1), opsKey);
@@ -109,15 +109,15 @@ public final class MechanicLibrary {
                 probs.add("the mechanics could not be listed: " + e);
             }
             install(cat, defs, probs);
-            for (String s : probs) LOG.warn("[nusmp] mechanics: {}", s);
-            LOG.info("[nusmp] Dungeon mechanics: {} loaded{}", defs.size(), cat != null && cat.total() > 0 && cat.total() != defs.size() ? " (the generator wrote " + cat.total() + ")" : "");
+            for (String s : probs) LOG.warn("[anime_multiverse] mechanics: {}", s);
+            LOG.info("[anime_multiverse] Dungeon mechanics: {} loaded{}", defs.size(), cat != null && cat.total() > 0 && cat.total() != defs.size() ? " (the generator wrote " + cat.total() + ")" : "");
         }
 
         private static String read(Resource res, ResourceLocation key) {
             try (InputStream in = res.open()) {
                 return new String(in.readAllBytes(), StandardCharsets.UTF_8);
             } catch (IOException | RuntimeException e) {
-                LOG.warn("[nusmp] {} could not be read: {}", key, e.toString());
+                LOG.warn("[anime_multiverse] {} could not be read: {}", key, e.toString());
                 return null;
             }
         }

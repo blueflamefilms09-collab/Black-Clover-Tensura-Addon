@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Why: the brief says 'a themed sector should be about half signature rooms; tune with the real pool maths of gen_mega_pools.py', and the pool maths has changed twice while the themes were built, so
-this script reproduces all three versions of the arithmetic from the real files (the folders, mega_pools.json, every data/nusmp/mega/template_themes/*.json) and answers the question that matters:
+this script reproduces all three versions of the arithmetic from the real files (the folders, mega_pools.json, every data/anime_multiverse/mega/template_themes/*.json) and answers the question that matters:
 in a sector of theme T, which share of the templates that the `side` pool can draw is a signature room of T?
 
     absolute (the default): the lead's patch of 1.59.0 (`tha_pools_absolute.patch`). A room that a template_themes file claims is drawn with the weight written in that file, as it stands (1..150),
@@ -35,7 +35,7 @@ def load_themes():
     out = {}
     for path in sorted(glob.glob(os.path.join(GP.THEME_DIR, "*.json"))):
         doc = json.load(open(path))
-        out[doc["theme"]] = ([p.replace("nusmp:", "") for p in doc.get("templates", [])], doc.get("relative", {}))
+        out[doc["theme"]] = ([p.replace("anime_multiverse:", "") for p in doc.get("templates", [])], doc.get("relative", {}))
     return out
 
 

@@ -143,10 +143,10 @@ public final class CatastropheRunner {
             try {
                 spirit = CursedSpirits.spawn(level, s, at, chooser);
             } catch (RuntimeException e) {                                              // a borrowed body may refuse to be built: that is a collapse, not a crash
-                LOG.warn("[nusmp] mega crucible: the Cursed Spirit of sector {} could not be built: {}", s.id, e.toString());
+                LOG.warn("[anime_multiverse] mega crucible: the Cursed Spirit of sector {} could not be built: {}", s.id, e.toString());
             }
             if (spirit == null) {
-                LOG.warn("[nusmp] mega crucible: no Cursed Spirit could be summoned in sector {}: it becomes a collapse", s.id);
+                LOG.warn("[anime_multiverse] mega crucible: no Cursed Spirit could be summoned in sector {}: it becomes a collapse", s.id);
                 k = CrucibleRules.COLLAPSE;
             }
         }
@@ -164,7 +164,7 @@ public final class CatastropheRunner {
         try {
             intro(level, a);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] mega crucible: the opening of the {} in sector {} failed: {}", a.kind, s.id, e.toString());
+            LOG.warn("[anime_multiverse] mega crucible: the opening of the {} in sector {} failed: {}", a.kind, s.id, e.toString());
         }
         return true;
     }
@@ -185,15 +185,15 @@ public final class CatastropheRunner {
         List<ServerPlayer> all = CruciblePedestals.playersInBox(level, c);
         switch (a.kind) {
             case CrucibleRules.COLLAPSE -> {
-                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.collapse").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), true);
+                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.collapse").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), true);
                 level.playSound(null, c, SoundEvents.DEEPSLATE_TILES_FALL, SoundSource.BLOCKS, 1.5f, 0.5f);
             }
             case CrucibleRules.FLOOD -> {
-                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.flood_start").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
+                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.flood_start").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
                 level.playSound(null, c, SoundEvents.SCULK_BLOCK_CHARGE, SoundSource.BLOCKS, 1.5f, 0.5f);
             }
             default -> {
-                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.spirit").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
+                for (ServerPlayer p : all) p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.spirit").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
                 level.playSound(null, c, SoundEvents.WARDEN_EMERGE, SoundSource.HOSTILE, 1.5f, 0.8f);
             }
         }
@@ -231,7 +231,7 @@ public final class CatastropheRunner {
                     default -> spirit(level, s, a, elapsed, now);
                 };
             } catch (RuntimeException e) {
-                LOG.warn("[nusmp] mega crucible: the {} of sector {} failed and ends: {}", a.kind, a.sectorId, e.toString());
+                LOG.warn("[anime_multiverse] mega crucible: the {} of sector {} failed and ends: {}", a.kind, a.sectorId, e.toString());
                 done = true;
             }
             if (done) {
@@ -248,7 +248,7 @@ public final class CatastropheRunner {
     private static void finish(ServerLevel level, Sector s, Active a) {
         if (!a.resolves) return;
         for (ServerPlayer p : CruciblePedestals.playersInBox(level, a.center))
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.resolved").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.resolved").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
     }
 
     // ---------------------------------------------------------------- collapse
@@ -364,7 +364,7 @@ public final class CatastropheRunner {
         int left = CatastropheRules.floodSecondsLeft(elapsed, total);
         for (ServerPlayer p : victims) {
             floodEffects(p, amp);
-            p.displayClientMessage(Component.translatable("message.nusmp.mega.crucible.flood", left).withStyle(ChatFormatting.DARK_PURPLE), true);
+            p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.crucible.flood", left).withStyle(ChatFormatting.DARK_PURPLE), true);
         }
         return false;
     }

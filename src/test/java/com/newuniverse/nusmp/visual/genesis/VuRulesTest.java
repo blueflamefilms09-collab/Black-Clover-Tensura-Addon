@@ -17,8 +17,8 @@ class VuRulesTest {
              "layers":[{"id":"a","kind":"orbit_shards","group":"orbit"},{"id":"m","kind":"motes","particle":"dust","rgb":"9A4AFF","rate":0.5,"where":"blade"}],
              "idle":[{"id":"i","kind":"group_spin","group":"orbit"}],
              "draw":{"ticks":16,"flash":"9A4AFF"},"swing":{"trail":"x","rgb":"9A4AFF","rgb2":"0C0A12","length":1.35,"width":0.3,"life":9},
-             "acts":{"devour_soul":{"burst":"soul_drain","pattern":"inward","rgb":"9A4AFF","ring":3.0,"particles":26,"sound":"nusmp:item.x"}},
-             "sound_loop":"nusmp:item.genesis.t.loop"}""";
+             "acts":{"devour_soul":{"burst":"soul_drain","pattern":"inward","rgb":"9A4AFF","ring":3.0,"particles":26,"sound":"anime_multiverse:item.x"}},
+             "sound_loop":"anime_multiverse:item.genesis.t.loop"}""";
 
     @Test
     void specParsesEveryField() {
@@ -38,7 +38,7 @@ class VuRulesTest {
         assertEquals(1, s.particleLayers().size());
         assertEquals(0x9A4AFF, s.particleLayers().get(0).rgb());
         assertEquals("inward", s.act("devour_soul").pattern());
-        assertEquals("nusmp:item.genesis.t.loop", s.soundLoop);
+        assertEquals("anime_multiverse:item.genesis.t.loop", s.soundLoop);
         assertEquals(16, s.draw.ticks());
         assertTrue(s.swing.length() > 1f);
     }

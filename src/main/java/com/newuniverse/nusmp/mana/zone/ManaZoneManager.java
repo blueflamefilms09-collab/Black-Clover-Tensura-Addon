@@ -106,8 +106,8 @@ public final class ManaZoneManager {
     private static long serialCounter = (System.nanoTime() & 0xFFFFFFL) << 16 | 1L;
     private static final Predicate<Projectile> LIVE_PROJECTILE = pr -> pr.isAlive() && !pr.isRemoved();
 
-    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_speed"), FLY_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_foothold");
-    private static final ResourceLocation ATTACK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_attack"), KNOCKBACK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_knockback");
+    private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_speed"), FLY_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_foothold");
+    private static final ResourceLocation ATTACK_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_attack"), KNOCKBACK_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_zone_knockback");
     private static final String SLOWED = "nusmp_mz_slow";
 
     // ---------------------------------------------------------------- queries
@@ -175,12 +175,12 @@ public final class ManaZoneManager {
     }
 
     private static void refuse(ServerPlayer p, Verdict v) {
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.refused", "The mana of the land is beyond you. The Mana Zone still needs: %s.", v.summary()).withStyle(ChatFormatting.RED), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.refused", "The mana of the land is beyond you. The Mana Zone still needs: %s.", v.summary()).withStyle(ChatFormatting.RED), true);
         long now = p.level().getGameTime();
         var d = ManaZonePlayer.data(p);
         if (now - d.getLong("RefusedAt") < 200 && now >= d.getLong("RefusedAt")) return;       // the full list goes to the chat at most every ten seconds
         d.putLong("RefusedAt", now);
-        p.sendSystemMessage(Component.translatableWithFallback("nusmp.mana_zone.refused_head", "Mana Zone: a technique for the end of the road, after mana skin and reinforcement. You are missing:").withStyle(ChatFormatting.GRAY));
+        p.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.refused_head", "Mana Zone: a technique for the end of the road, after mana skin and reinforcement. You are missing:").withStyle(ChatFormatting.GRAY));
         for (Check c : v.unmet())
             p.sendSystemMessage(Component.literal(" - " + ManaZoneGate.label(c.req()) + ": " + c.have() + " of " + c.need()).withStyle(ChatFormatting.DARK_GRAY));
     }
@@ -197,13 +197,13 @@ public final class ManaZoneManager {
         if (!v.open()) { refuse(p, v); return false; }
         long now = p.level().getGameTime();
         if (now < ManaZonePlayer.cooldownUntil(p)) {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.cooldown", "The ambient mana has not settled yet (%s s).", (ManaZonePlayer.cooldownUntil(p) - now + 19) / 20).withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.cooldown", "The ambient mana has not settled yet (%s s).", (ManaZonePlayer.cooldownUntil(p) - now + 19) / 20).withStyle(ChatFormatting.GRAY), true);
             return false;
         }
         ManaZoneRules.Zone zr = ManaZoneData.zone();
         var ex = TensuraStorages.getExistenceFrom(p);
         if (ex != null && !p.isCreative() && ex.getMagicule() < EnergyHelper.getMaxMagicule(p) * zr.startMinPercent() / 100.0) {
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.low_mana", "You need at least %s%% of your mana to open a Mana Zone.", (int) zr.startMinPercent()).withStyle(ChatFormatting.RED), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.low_mana", "You need at least %s%% of your mana to open a Mana Zone.", (int) zr.startMinPercent()).withStyle(ChatFormatting.RED), true);
             return false;
         }
         if (!p.isCreative() && ex != null) EnergyHelper.isOutOfMagiculeConsuming(p, EnergyHelper.getMaxMagicule(p) * zr.openCostPercent() / 100.0);
@@ -263,7 +263,7 @@ public final class ManaZoneManager {
         sync(p, payload(z, ManaZoneNet.START, now));
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.3f, 1.6f);
         if (!free) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.MANA_ZONE);
-        p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.open", "Mana Zone: the mana around you answers (radius up to %s).", (int) cap).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+        p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.open", "Mana Zone: the mana around you answers (radius up to %s).", (int) cap).withStyle(ChatFormatting.LIGHT_PURPLE), true);
     }
 
     /** Sends to everyone who tracks the caster and to the caster; a stand-in player (CI self-test) has no connection and is skipped. */
@@ -324,7 +324,7 @@ public final class ManaZoneManager {
                 case DIMENSION -> "Your Mana Zone does not follow you across the dimensions.";
                 default -> "Your Mana Zone fades.";
             };
-            p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.end." + why.name().toLowerCase(java.util.Locale.ROOT), fb).withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.end." + why.name().toLowerCase(java.util.Locale.ROOT), fb).withStyle(ChatFormatting.GRAY), true);
         }
     }
 
@@ -600,7 +600,7 @@ public final class ManaZoneManager {
                 double before = ManaZonePlayer.attuneSeconds(p);
                 ManaZonePlayer.addAttune(p, gain);
                 if (before < need && ManaZonePlayer.attuneSeconds(p) >= need) {
-                    p.sendSystemMessage(Component.translatableWithFallback("nusmp.mana_zone.attuned", "The mana of this place has taught you all it can: your attunement is complete.").withStyle(ChatFormatting.LIGHT_PURPLE));
+                    p.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.mana_zone.attuned", "The mana of this place has taught you all it can: your attunement is complete.").withStyle(ChatFormatting.LIGHT_PURPLE));
                     NusmpEvents.fire(p, "mana_zone.attuned");
                     CACHE.remove(p.getUUID());
                 }

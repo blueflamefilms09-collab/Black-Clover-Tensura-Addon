@@ -121,17 +121,17 @@ final class CustomBarPainter {
             int ph = s.phase();
             if (st.roman.differs(ph)) st.roman.setNum(font, Component.literal(PhaseMarkers.roman(ph)), ph);
             if (st.phaseLine.differs(ph * 1000L + (s.phaseName().hashCode() & 0x3FF)))
-                st.phaseLine.setNum(font, s.phaseName().isEmpty() ? Component.translatableWithFallback("nusmp.bossbar.phase", "Phase %s", PhaseMarkers.roman(ph))
-                        : Component.translatableWithFallback("nusmp.bossbar.phase_named", "Phase %s: %s", PhaseMarkers.roman(ph), CustomBarState.resolve(s.phaseName())), ph * 1000L + (s.phaseName().hashCode() & 0x3FF));
+                st.phaseLine.setNum(font, s.phaseName().isEmpty() ? Component.translatableWithFallback("anime_multiverse.bossbar.phase", "Phase %s", PhaseMarkers.roman(ph))
+                        : Component.translatableWithFallback("anime_multiverse.bossbar.phase_named", "Phase %s: %s", PhaseMarkers.roman(ph), CustomBarState.resolve(s.phaseName())), ph * 1000L + (s.phaseName().hashCode() & 0x3FF));
         }
         int pc = BarLayoutMath.percent(hp);
         if (st.pct.differs(pc)) st.pct.setNum(font, Component.literal(pc + "%"), pc);
-        if (s.adds() >= 0 && st.adds.differs(s.adds())) st.adds.setNum(font, Component.translatableWithFallback("nusmp.bossbar.adds", "Adds %s", s.adds()), s.adds());
+        if (s.adds() >= 0 && st.adds.differs(s.adds())) st.adds.setNum(font, Component.translatableWithFallback("anime_multiverse.bossbar.adds", "Adds %s", s.adds()), s.adds());
         if (s.fighters() > 0 && st.fighters.differs(s.fighters()))
-            st.fighters.setNum(font, s.fighters() == 1 ? Component.translatableWithFallback("nusmp.bossbar.fighter", "1 fighter") : Component.translatableWithFallback("nusmp.bossbar.fighters", "%s fighters", s.fighters()), s.fighters());
+            st.fighters.setNum(font, s.fighters() == 1 ? Component.translatableWithFallback("anime_multiverse.bossbar.fighter", "1 fighter") : Component.translatableWithFallback("anime_multiverse.bossbar.fighters", "%s fighters", s.fighters()), s.fighters());
         if (s.casting()) st.cast.set(font, CustomBarState.resolve(s.castName()), s.castName());
-        if (s.invulnerable() && !st.invulnerable.isSet()) st.invulnerable.set(font, Component.translatableWithFallback("nusmp.bossbar.invulnerable", "Invulnerable"), BarStyles.class);
-        if (s.enraged() && !st.enraged.isSet()) st.enraged.set(font, Component.translatableWithFallback("nusmp.bossbar.enraged", "Enraged"), BarStyles.class);
+        if (s.invulnerable() && !st.invulnerable.isSet()) st.invulnerable.set(font, Component.translatableWithFallback("anime_multiverse.bossbar.invulnerable", "Invulnerable"), BarStyles.class);
+        if (s.enraged() && !st.enraged.isSet()) st.enraged.set(font, Component.translatableWithFallback("anime_multiverse.bossbar.enraged", "Enraged"), BarStyles.class);
         if (BossBarOptions.showHp() && st.portrait != null && !st.portrait.isRemoved()) {
             int cur = Math.round(st.portrait.getHealth()), max = Math.round(st.portrait.getMaxHealth());
             long k = cur * 1000003L + max;
@@ -139,7 +139,7 @@ final class CustomBarPainter {
         }
         if (BossBarOptions.showDps()) {
             int d = Math.round(st.dps.percentPerSecond());
-            if (st.dpsText.differs(d)) st.dpsText.setNum(font, Component.translatableWithFallback("nusmp.bossbar.dps", "-%s%%/s", d), d);
+            if (st.dpsText.differs(d)) st.dpsText.setNum(font, Component.translatableWithFallback("anime_multiverse.bossbar.dps", "-%s%%/s", d), d);
         }
     }
 
@@ -336,8 +336,8 @@ final class CustomBarPainter {
             if (left >= 0 && left <= BossBarState.LAIR_WARNING_TICKS) {       // the lair action about to fire: its name flashes, a ring counts the time down
                 int tenths = (int) (left / 2);
                 if (st.lair.differs(tenths + (s.lairId().hashCode() & 0xFFFF) * 1000L)) {
-                    Component name = Component.translatableWithFallback("nusmp.bossbar.lair." + s.lairId(), CustomBarState.humanize(s.lairId()));
-                    st.lair.setNum(font, Component.translatableWithFallback("nusmp.bossbar.lair_warning", "%s  %ss", name, String.format("%.1f", left / 20.0)),
+                    Component name = Component.translatableWithFallback("anime_multiverse.bossbar.lair." + s.lairId(), CustomBarState.humanize(s.lairId()));
+                    st.lair.setNum(font, Component.translatableWithFallback("anime_multiverse.bossbar.lair_warning", "%s  %ss", name, String.format("%.1f", left / 20.0)),
                             tenths + (s.lairId().hashCode() & 0xFFFF) * 1000L);
                 }
                 float blink = 0.55f + 0.45f * (float) Math.sin(time * 0.9);
@@ -424,7 +424,7 @@ final class CustomBarPainter {
             return true;
         } catch (RuntimeException | LinkageError ex) {
             portraitFailed = true;
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] the boss bar portrait is off: drawing the boss failed", ex);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] the boss bar portrait is off: drawing the boss failed", ex);
             return false;
         }
     }

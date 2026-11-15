@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * pieces) stays within the God cap of 2500 welded vertices, the floor of 600 quads holds, the skins are bigger and the old files the fallback draws are still shipped.
  */
 class GodMeleeBBudgetTest {
-    static final Path RES = Path.of("src", "main", "resources", "assets", "nusmp");
+    static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
     static final List<String> IDS = UpgradeSpecTest.IDS;
     /** The God cap of the brief (2500 vertices of one item in hand), read as welded vertices of the full-detail mesh including the orbiting pieces. */
     static final int GOD_WELDED_CAP = 2500;

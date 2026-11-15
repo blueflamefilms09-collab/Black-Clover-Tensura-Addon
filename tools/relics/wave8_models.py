@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave8_models.py shadow_burn      (also renders the preview beside the card)
 
 Run tools/relics/wave8_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon). Per id it writes
-assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
+assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png (512 px skins).
 
 The method, in order (see COMMON_R.md): 0 target, 1 measure the reference (a known length -> centimetres; every proportion a NAMED CONSTANT with
 a comment where it came from), 2 geometry from real cross-sections (loft / sweep / lathe), 3 the small raised parts each their own named Part,

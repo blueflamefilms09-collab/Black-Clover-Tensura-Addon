@@ -1,6 +1,6 @@
 """0.54: the spell-casting body animations (docs/cast_animation_guide.md) as a Blockbench / GeckoLib style .animation.json for the player.
 
-    python3 tools/gen_cast_animations.py        ->  src/main/resources/assets/nusmp/animations/player/cast.animation.json
+    python3 tools/gen_cast_animations.py        ->  src/main/resources/assets/anime_multiverse/animations/player/cast.animation.json
 
 Bones are the player template's: head, body, right_arm, left_arm, right_leg, left_leg. Angles are the PLAYER MODEL'S OWN rotations in degrees
 (xRot, yRot, zRot as in vanilla's HumanoidModel, the same convention as docs/grimoire_sword_draw.md): arm X -90 points straight forward and
@@ -16,7 +16,7 @@ import json
 import os
 import sys
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "animations", "player", "cast.animation.json")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "animations", "player", "cast.animation.json")
 
 REST = (0, 0, 0)
 

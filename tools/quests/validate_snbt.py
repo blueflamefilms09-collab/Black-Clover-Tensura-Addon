@@ -21,7 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 KEYS_JSON = os.path.join(HERE, "ftbq_keys.json")
 DEFAULT_PACK = os.path.join(ROOT, "src", "main", "resources", "quest_pack")
-ADV_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "advancement")
+ADV_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "advancement")
 
 
 # ---------------------------------------------------------------------------------------------------- SNBT parser
@@ -542,7 +542,7 @@ def _check_item(tag, where, err, single=False):
 
 def adv_exists(rl):
     ns, path = rl.split(":", 1)
-    if ns == "nusmp":
+    if ns == "anime_multiverse":
         return os.path.exists(os.path.join(ADV_DIR, *path.split("/")) + ".json")
     return rl in ("minecraft:story/root",)
 

@@ -14,7 +14,7 @@ Generates the Landing and Safe Zone templates of the Mega-Dungeon (1.54.0, docs/
     python3 tools/labyrinth/gen_mega_safe.py --list             # build and verify, print the numbers, write nothing
     python3 tools/labyrinth/gen_mega_safe.py --render out/      # also draw each room (four isometric views, a plan, a light map) into out/ (needs Pillow)
 
-After a change, run `python3 tools/labyrinth/mega_check.py` (the contract: only "pool nusmp:mega/side does not exist" and "not referenced by any pool"
+After a change, run `python3 tools/labyrinth/mega_check.py` (the contract: only "pool anime_multiverse:mega/side does not exist" and "not referenced by any pool"
 may remain for these rooms) and `python3 tools/labyrinth/mega_catalog.py` (the catalog the JUnit tests read).
 
 Why a generator and not hand-built NBT: the rooms are deterministic code (same script, same bytes, reviewable in a diff, regenerated with one command

@@ -7,11 +7,11 @@ Why this file exists: the owner's rule 7 says every weapon is a real 3D model in
 Genesis Demon-Slayer is the visual standard. The four Holy (Cardinal) Weapons are the face of the Shield Hero job, so each has two looks: the base look
 (noble, plain, strong: clean steel, white-gold fittings and ONE bright colour, the gem) and the curse look (the same weapon corrupted by its sin: the same
 grip and footprint, a more monstrous silhouette, a hotter glow). Per look it writes
-  assets/nusmp/weapon_meshes/<id>.txt                  the mesh (smoothed per-vertex "qn" normals), placed like every other mesh
-  assets/nusmp/textures/entity/weapon/<id>.png         the painted skin (512 px) and <id>_glow.png the additive glow skin (the gem, cracks, runes)
+  assets/anime_multiverse/weapon_meshes/<id>.txt                  the mesh (smoothed per-vertex "qn" normals), placed like every other mesh
+  assets/anime_multiverse/textures/entity/weapon/<id>.png         the painted skin (512 px) and <id>_glow.png the additive glow skin (the gem, cracks, runes)
 and, for the four base looks only,
-  assets/nusmp/textures/item/<id>.png                  the 16 x 16 sprite (the inventory icon; hand-built pixels, not a downscaled render)
-  assets/nusmp/models/item/<id>.json, <id>_icon.json   the in-hand model (builtin/entity + display transforms) and the flat inventory model
+  assets/anime_multiverse/textures/item/<id>.png                  the 16 x 16 sprite (the inventory icon; hand-built pixels, not a downscaled render)
+  assets/anime_multiverse/models/item/<id>.json, <id>_icon.json   the in-hand model (builtin/entity + display transforms) and the flat inventory model
 plus tools/heroweapon/classes_hart1.json (the size class of every id, for the lead to merge into weapon_classes.json).
 
 The method, in order, for every look (each build_* below follows it):
@@ -399,8 +399,8 @@ def write_item_models(item_id):
         with open(os.path.join(MODEL_DIR, "magebane_shield_blocking.json"), encoding="utf-8") as f:
             raised = json.load(f)
         model["display"] = src["display"]
-        model["overrides"] = [{"predicate": {"blocking": 1}, "model": "nusmp:item/" + item_id + "_blocking"}]
-        raised["textures"] = {"particle": "nusmp:item/" + item_id}
+        model["overrides"] = [{"predicate": {"blocking": 1}, "model": "anime_multiverse:item/" + item_id + "_blocking"}]
+        raised["textures"] = {"particle": "anime_multiverse:item/" + item_id}
         dump(item_id + "_blocking", raised)
     elif item_id == "legendary_bow":
         model["display"] = BOW_DISPLAY

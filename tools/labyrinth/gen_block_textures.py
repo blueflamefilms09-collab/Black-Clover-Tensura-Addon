@@ -17,7 +17,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.normpath(os.path.join(HERE, "..", "..", "src", "main", "resources"))
-ASSETS = os.path.join(RES, "assets", "nusmp")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
 DATA = os.path.join(RES, "data")
 N = 16
 
@@ -233,22 +233,22 @@ def write_models():
         if b == "labyrinth_pillar":
             write_json(os.path.join(ASSETS, "models", "block", b + ".json"),
                        {"parent": "minecraft:block/cube_column",
-                        "textures": {"end": "nusmp:block/labyrinth_pillar_top", "side": "nusmp:block/labyrinth_pillar_side"}})
+                        "textures": {"end": "anime_multiverse:block/labyrinth_pillar_top", "side": "anime_multiverse:block/labyrinth_pillar_side"}})
             write_json(os.path.join(ASSETS, "models", "block", b + "_horizontal.json"),
                        {"parent": "minecraft:block/cube_column_horizontal",
-                        "textures": {"end": "nusmp:block/labyrinth_pillar_top", "side": "nusmp:block/labyrinth_pillar_side"}})
+                        "textures": {"end": "anime_multiverse:block/labyrinth_pillar_top", "side": "anime_multiverse:block/labyrinth_pillar_side"}})
             write_json(os.path.join(ASSETS, "blockstates", b + ".json"),
-                       {"variants": {"axis=y": {"model": "nusmp:block/labyrinth_pillar"},
-                                     "axis=z": {"model": "nusmp:block/labyrinth_pillar_horizontal", "x": 90},
-                                     "axis=x": {"model": "nusmp:block/labyrinth_pillar_horizontal", "x": 90, "y": 90}}})
+                       {"variants": {"axis=y": {"model": "anime_multiverse:block/labyrinth_pillar"},
+                                     "axis=z": {"model": "anime_multiverse:block/labyrinth_pillar_horizontal", "x": 90},
+                                     "axis=x": {"model": "anime_multiverse:block/labyrinth_pillar_horizontal", "x": 90, "y": 90}}})
         else:
             write_json(os.path.join(ASSETS, "models", "block", b + ".json"),
-                       {"parent": "minecraft:block/cube_all", "textures": {"all": "nusmp:block/" + b}})
-            write_json(os.path.join(ASSETS, "blockstates", b + ".json"), {"variants": {"": {"model": "nusmp:block/" + b}}})
-        write_json(os.path.join(ASSETS, "models", "item", b + ".json"), {"parent": "nusmp:block/" + b})
-        write_json(os.path.join(DATA, "nusmp", "loot_table", "blocks", b + ".json"),
+                       {"parent": "minecraft:block/cube_all", "textures": {"all": "anime_multiverse:block/" + b}})
+            write_json(os.path.join(ASSETS, "blockstates", b + ".json"), {"variants": {"": {"model": "anime_multiverse:block/" + b}}})
+        write_json(os.path.join(ASSETS, "models", "item", b + ".json"), {"parent": "anime_multiverse:block/" + b})
+        write_json(os.path.join(DATA, "anime_multiverse", "loot_table", "blocks", b + ".json"),
                    {"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
-                                                          "entries": [{"type": "minecraft:item", "name": "nusmp:" + b}],
+                                                          "entries": [{"type": "minecraft:item", "name": "anime_multiverse:" + b}],
                                                           "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
 
 
@@ -260,8 +260,8 @@ def write_tags():
         with open(p) as f:
             values = list(json.load(f).get("values", []))
     for b in BLOCKS:
-        if "nusmp:" + b not in values:
-            values.append("nusmp:" + b)
+        if "anime_multiverse:" + b not in values:
+            values.append("anime_multiverse:" + b)
     write_json(p, {"replace": False, "values": values})
 
 
@@ -279,7 +279,7 @@ def check():
             bad += 1
     for b in BLOCKS:
         for p in (os.path.join(ASSETS, "blockstates", b + ".json"), os.path.join(ASSETS, "models", "block", b + ".json"),
-                  os.path.join(ASSETS, "models", "item", b + ".json"), os.path.join(DATA, "nusmp", "loot_table", "blocks", b + ".json")):
+                  os.path.join(ASSETS, "models", "item", b + ".json"), os.path.join(DATA, "anime_multiverse", "loot_table", "blocks", b + ".json")):
             if not os.path.exists(p):
                 print("missing", p)
                 bad += 1

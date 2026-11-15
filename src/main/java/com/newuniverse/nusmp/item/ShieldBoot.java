@@ -116,7 +116,7 @@ public final class ShieldBoot {
     /** The model jsons inside the running jar are the vanilla shield preset with the blocking override. */
     private static SelfTests.Result models(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        for (String id : ShieldSet.IDS) bad.addAll(ShieldModelCheck.problems(id, json("/assets/nusmp/models/item/" + id + ".json"), json("/assets/nusmp/models/item/" + id + "_blocking.json")));
+        for (String id : ShieldSet.IDS) bad.addAll(ShieldModelCheck.problems(id, json("/assets/anime_multiverse/models/item/" + id + ".json"), json("/assets/anime_multiverse/models/item/" + id + "_blocking.json")));
         return result(bad, ShieldSet.IDS.size() + " shield models carry vanilla's display and the blocking override");
     }
 

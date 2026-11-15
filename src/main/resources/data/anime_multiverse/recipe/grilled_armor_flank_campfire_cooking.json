@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "anime_multiverse:raw_armor_flank"
+  },
+  "result": {
+    "id": "anime_multiverse:grilled_armor_flank"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

@@ -32,7 +32,7 @@ import java.util.TreeMap;
  * alignment and what the lock would let them do, {@code set / lock / unlock / reset <target>} are the repair tools (a player who locked themselves out
  * by mistake, a test of the second road, a wiped world), and {@code bands <sector>} / {@code assign <sector>} show and redo the numbering of a sector
  * (the only way to look at the banding without a game's worth of walking). Every change also resyncs the player's client. All text goes through lang keys
- * {@code message.nusmp.mega.mfl.cmd.*} with an English fallback, so the command reads fine before the lang fragment is merged. A translatable argument is
+ * {@code message.anime_multiverse.mega.mfl.cmd.*} with an English fallback, so the command reads fine before the lang fragment is merged. A translatable argument is
  * always a string, a number or a component (never an enum or another object): the game cannot send any other kind to a client, and the sender of a
  * command is usually a client.
  */

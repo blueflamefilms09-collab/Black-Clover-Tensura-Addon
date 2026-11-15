@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The catalog of the visual upgrade (1.102.0), read from assets/nusmp/visual_upgrade/catalog.txt (written by tools/visual_upgrade/god_worn/build.py). Pure.
+ * The catalog of the visual upgrade (1.102.0), read from assets/anime_multiverse/visual_upgrade/catalog.txt (written by tools/visual_upgrade/god_worn/build.py). Pure.
  * <pre>
  * up   &lt;relic id&gt; &lt;model[@anchor][~]&gt; ...   the worn models of an upgraded relic: they replace its {@code relic} / {@code look} entry of relic_worn/catalog.txt
  *                                             while the client option {@code visual.upgrade} is on

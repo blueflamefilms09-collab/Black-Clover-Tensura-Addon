@@ -160,7 +160,7 @@ public final class SaiyanManager {
         s.awakened = true;
         r.still = 0;
         r.dirty = true;
-        p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.awakened"), false);
+        p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.awakened"), false);
     }
 
     // ================================================================== the asks
@@ -271,7 +271,7 @@ public final class SaiyanManager {
         if (given > 0.0) {
             runOf(p).dirty = true;
             SaiyanRules.Rank after = s.rank();
-            if (after.ordinal() > before.ordinal()) p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.rank_up", Component.translatable(after.key())), false);
+            if (after.ordinal() > before.ordinal()) p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.rank_up", Component.translatable(after.key())), false);
         }
         return given;
     }

@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class WaypointShareTest {
     @Test
     void theXaeroStringHasTheDocumentedLayout() {
-        String s = WaypointShare.xaero("Hub Gate", 12, 70, -30, 14, "nusmp:sanctuary");
-        assertEquals("xaero-waypoint:Hub Gate:H:12:70:-30:14:false:0:Internal-dim%nusmp$sanctuary-waypoints", s);
+        String s = WaypointShare.xaero("Hub Gate", 12, 70, -30, 14, "anime_multiverse:sanctuary");
+        assertEquals("xaero-waypoint:Hub Gate:H:12:70:-30:14:false:0:Internal-dim%anime_multiverse$sanctuary-waypoints", s);
         assertEquals(10, s.split(":", -1).length, "prefix, name, initials, x, y, z, colour, disabled, type, set");
     }
 
@@ -25,8 +25,8 @@ class WaypointShareTest {
 
     @Test
     void customDimensionsUseDimPercentNamespaceDollarPath() {
-        assertEquals("dim%nusmp$mega_dungeon", WaypointShare.xaeroDimensionKey("nusmp:mega_dungeon"));
-        assertEquals("Internal-dim%nusmp$mega_dungeon-waypoints", WaypointShare.xaeroSet("nusmp:mega_dungeon"));
+        assertEquals("dim%anime_multiverse$mega_dungeon", WaypointShare.xaeroDimensionKey("anime_multiverse:mega_dungeon"));
+        assertEquals("Internal-dim%anime_multiverse$mega_dungeon-waypoints", WaypointShare.xaeroSet("anime_multiverse:mega_dungeon"));
         assertEquals("dim%mod$a%b", WaypointShare.xaeroDimensionKey("mod:a/b"));
         assertEquals("dim%minecraft$something", WaypointShare.xaeroDimensionKey("minecraft:something"));
         assertEquals("overworld", WaypointShare.xaeroDimensionKey(null));
@@ -35,7 +35,7 @@ class WaypointShareTest {
 
     @Test
     void colonsInANameAreEscapedAndTheStringStaysColonSeparated() {
-        String s = WaypointShare.xaero("Floor 3: Gate", 1, 2, 3, 11, "nusmp:mega_dungeon");
+        String s = WaypointShare.xaero("Floor 3: Gate", 1, 2, 3, 11, "anime_multiverse:mega_dungeon");
         assertTrue(s.contains("Floor 3^col^ Gate"), s);
         assertEquals(10, s.split(":", -1).length, s);
         Optional<WaypointShare.Waypoint> back = WaypointShare.parse(s);
@@ -64,7 +64,7 @@ class WaypointShareTest {
 
     @Test
     void roundTrip() {
-        String s = WaypointShare.xaero("Return Waypoint", -5, 64, 4000100, WaypointShare.Kind.RETURN, "nusmp:mega_dungeon");
+        String s = WaypointShare.xaero("Return Waypoint", -5, 64, 4000100, WaypointShare.Kind.RETURN, "anime_multiverse:mega_dungeon");
         WaypointShare.Waypoint w = WaypointShare.parse(s).orElseThrow();
         assertEquals("Return Waypoint", w.name());
         assertEquals("R", w.initials());
@@ -74,8 +74,8 @@ class WaypointShareTest {
         assertEquals(WaypointShare.Kind.RETURN.colour, w.colour());
         assertFalse(w.disabled());
         assertEquals(0, w.type());
-        assertTrue(WaypointShare.setMatches(w.set(), "nusmp:mega_dungeon"));
-        assertFalse(WaypointShare.setMatches(w.set(), "nusmp:sanctuary"));
+        assertTrue(WaypointShare.setMatches(w.set(), "anime_multiverse:mega_dungeon"));
+        assertFalse(WaypointShare.setMatches(w.set(), "anime_multiverse:sanctuary"));
     }
 
     @Test
@@ -101,7 +101,7 @@ class WaypointShareTest {
     @Test
     void journeyMapForm() {
         assertEquals("[name:\"Gate\", x:12, y:64, z:-30, dim:minecraft:overworld]", WaypointShare.journeyMap("Gate", 12, 64, -30, "minecraft:overworld"));
-        assertEquals("[name:\"Say 'hi'\", x:0, y:0, z:0, dim:nusmp:sanctuary]", WaypointShare.journeyMap("Say \"hi\"", 0, 0, 0, "nusmp:sanctuary"));
+        assertEquals("[name:\"Say 'hi'\", x:0, y:0, z:0, dim:anime_multiverse:sanctuary]", WaypointShare.journeyMap("Say \"hi\"", 0, 0, 0, "anime_multiverse:sanctuary"));
         assertTrue(WaypointShare.journeyMap(null, 0, 0, 0, null).contains("name:\"Waypoint\""));
     }
 }

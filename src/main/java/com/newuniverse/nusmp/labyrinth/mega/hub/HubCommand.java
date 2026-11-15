@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
  * there, whether and with which build the plaza was stamped, what the switches are and which volumes are protected (the first questions when "the Hub does
  * not work"), {@code hub plaza} re-stamps the plaza from the template on purpose (the one way it is ever rebuilt: nothing re-stamps by itself), and
  * {@code hub gates} lists the three gate centres and what {@link HubLayout#gateNear} makes of the place the sender stands on, which is how a gate that
- * does not answer is diagnosed. All text goes through lang keys {@code message.nusmp.mega.mhb.cmd.*} with an English fallback, so the command reads fine
+ * does not answer is diagnosed. All text goes through lang keys {@code message.anime_multiverse.mega.mhb.cmd.*} with an English fallback, so the command reads fine
  * before the lang fragment is merged.
  */
 public final class HubCommand {
@@ -35,7 +35,7 @@ public final class HubCommand {
     }
 
     private static MutableComponent text(String key, String english, Object... args) {
-        return Component.translatableWithFallback("message.nusmp.mega.mhb.cmd." + key, english, args);
+        return Component.translatableWithFallback("message.anime_multiverse.mega.mhb.cmd." + key, english, args);
     }
 
     private static int ok(CommandSourceStack s, MutableComponent c) {
@@ -51,7 +51,7 @@ public final class HubCommand {
     private static String at(int x, int y, int z) { return x + " " + y + " " + z; }
 
     private static int tp(CommandSourceStack src, ServerPlayer who) {
-        if (HubTravel.level(src.getServer()) == null) return fail(src, text("nolevel", "The Sanctuary dimension (nusmp:sanctuary) is not loaded."));
+        if (HubTravel.level(src.getServer()) == null) return fail(src, text("nolevel", "The Sanctuary dimension (anime_multiverse:sanctuary) is not loaded."));
         HubTravel.returnToPlaza(who);
         return ok(src, text("tp", "Sent %s to the plaza of Floor 0.", who.getDisplayName()));
     }
@@ -59,8 +59,8 @@ public final class HubCommand {
     private static int status(CommandSourceStack src) {
         ServerLevel hub = HubTravel.level(src.getServer());
         ok(src, text("status.head", "Floor 0, the Sanctuary Hub (hub.enabled = %s):", HubTravel.enabled()));
-        if (hub == null) return fail(src, text("nolevel", "The Sanctuary dimension (nusmp:sanctuary) is not loaded."));
-        ok(src, text("status.level", "Dimension nusmp:sanctuary is loaded, %s player(s) inside.", hub.players().size()));
+        if (hub == null) return fail(src, text("nolevel", "The Sanctuary dimension (anime_multiverse:sanctuary) is not loaded."));
+        ok(src, text("status.level", "Dimension anime_multiverse:sanctuary is loaded, %s player(s) inside.", hub.players().size()));
         HubData data = HubData.get(hub);
         if (!data.built()) ok(src, text("status.plaza.no", "The plaza has not been stamped yet: it is built when the first player arrives, or by /multiverse mega hub plaza."));
         else ok(src, text("status.plaza", "The plaza was stamped from %s, build version %s (current %s).",
@@ -75,7 +75,7 @@ public final class HubCommand {
 
     private static int plaza(CommandSourceStack src) {
         ServerLevel hub = HubTravel.level(src.getServer());
-        if (hub == null) return fail(src, text("nolevel", "The Sanctuary dimension (nusmp:sanctuary) is not loaded."));
+        if (hub == null) return fail(src, text("nolevel", "The Sanctuary dimension (anime_multiverse:sanctuary) is not loaded."));
         HubPlaza.How how = HubPlaza.stamp(hub);
         return ok(src, text("plaza", "The plaza was stamped again from %s (build version %s).",
                 how == HubPlaza.How.TEMPLATE ? text("template", "the template") : text("fallback", "the programmatic fallback"), HubPlazaLayout.BUILD_VERSION));

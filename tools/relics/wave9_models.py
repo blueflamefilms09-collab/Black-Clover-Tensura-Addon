@@ -4,7 +4,7 @@
     W1_PREVIEW=<dir> python3 -B tools/relics/wave9_models.py caesars_gladius      (also renders the preview beside the card)
 
 Run tools/relics/wave9_icons.py first: every mesh is placed on its 16 x 16 sprite (the sprite stays the inventory icon).
-Per id it writes assets/nusmp/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png; the crossbow also
+Per id it writes assets/anime_multiverse/weapon_meshes/<id>.txt (smoothed per-vertex "qn" normals), textures/entity/weapon/<id>.png and <id>_glow.png; the crossbow also
 writes <id>_pull1..3 and <id>_charged (the draw and loaded states), sharing its skin.
 
 Budget (the game's first wave was flagged for 5000 to 7000 quads per mesh): 8 to 14 named parts per weapon, at most 2800 quads, one 512 px skin and glow.

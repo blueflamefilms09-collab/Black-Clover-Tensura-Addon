@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 /**
  * Why: this is the "IPlayerQuestData" of the brief, the player's quest memory, and the state machine that goes with it. In NeoForge 1.21 a capability is not the place for saved per-player data;
- * the data ATTACHMENT is ({@link HubAttachments}, id {@code nusmp:hub_quests}, the same way the System's {@code SystemState} does it), so this class is the pure value inside the attachment: no
+ * the data ATTACHMENT is ({@link HubAttachments}, id {@code anime_multiverse:hub_quests}, the same way the System's {@code SystemState} does it), so this class is the pure value inside the attachment: no
  * Minecraft type, tested without a game. A quest is ACTIVE from the moment it is accepted, becomes READY when its objective is met (a kill count reached, a floor entered, or enough of the
  * item in the bag), and ends exactly once when it is handed in at the Quest Giver (reward paid, daily marked done for today or progression marked done for good); after that every method is a
  * no-op for it, so a duplicated event or two kills in one tick can never pay twice. Daily quests belong to a day (the world's day count): on a new day the done-today set is cleared and a daily

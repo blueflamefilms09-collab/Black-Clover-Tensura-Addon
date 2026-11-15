@@ -2,7 +2,7 @@
 
     python3 -B tools/gen_spade_effect_icons.py
 
-Writes assets/nusmp/textures/mob_effect/{flattened_air,kneeling,specimen}.png (18 x 18, the size of the other effect icons). Original pixel art, drawn from
+Writes assets/anime_multiverse/textures/mob_effect/{flattened_air,kneeling,specimen}.png (18 x 18, the size of the other effect icons). Original pixel art, drawn from
 simple shapes (a mask per part, an outline round the union, a vertical gradient inside), so every icon has the same light from the top left.
 Why: a player must SEE what a boss did to them, and the icons are the first thing the HUD shows; a missing texture would be the purple-black square.
 """
@@ -12,7 +12,7 @@ import os
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "mob_effect")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "mob_effect")
 SIZE = 18
 
 

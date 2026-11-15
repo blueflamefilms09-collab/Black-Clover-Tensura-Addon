@@ -19,7 +19,7 @@ import java.util.Set;
  * in some form, and the tiers climb from the Apprentice Staff to the Archmage Staff.
  */
 class StaffFormsTest {
-    private static final Path FILE = Path.of("src/main/resources/data/nusmp/hero/forms/vassal_staff.json");
+    private static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/hero/forms/vassal_staff.json");
 
     @Test
     void theShippedFileIsSoundAndUsesEverythingTheStaffBuilt() throws Exception {

@@ -209,7 +209,7 @@ class Pages15SourceScanTest {
             Set<String> mine = new HashSet<>();
             for (Page p : pages) mine.add(p.book() + "/" + p.id());
             for (String key : keys.keySet()) {
-                Matcher m = Pattern.compile("nusmp\\.page\\.([a-z_]+)\\.([a-z0-9_]+)").matcher(key);
+                Matcher m = Pattern.compile("anime_multiverse\\.page\\.([a-z_]+)\\.([a-z0-9_]+)").matcher(key);
                 assertTrue(m.matches() && mine.contains(m.group(1) + "/" + m.group(2)), "tools/lang/pages15_batch" + b + ".json has a key for a page Batch" + b + " does not define: " + key);
             }
             for (String key : rows.keySet()) assertTrue(mine.contains(key), "docs/magic/pages15_batch" + b + ".md lists a page Batch" + b + " does not define: " + key);

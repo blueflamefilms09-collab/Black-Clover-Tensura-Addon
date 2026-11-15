@@ -36,7 +36,7 @@ OPP = L.OPPOSITE
 RIGHT = L.RIGHT_OF
 LEFT = L.LEFT_OF
 ROOF_MAX = 45              # the highest row a roof may START at; two layers keep the top under row 47 (the template is 48 high)
-STRUCT = os.path.join(L.RES, "data", "nusmp", "structure")
+STRUCT = os.path.join(L.RES, "data", "anime_multiverse", "structure")
 
 PAL_WALL = {L.BRICK, L.CRACKED_BRICK, L.COBBLED, L.POLISHED, L.CHISELED, L.TILE, L.CRACKED_TILE, L.ROCK}
 PAL_FLOOR = {L.TILE, L.CRACKED_TILE, L.POLISHED, L.CHISELED, L.BRICK, L.CRACKED_BRICK, L.COBBLED}
@@ -97,7 +97,7 @@ class Room:
         self.base_entities = list(self.base_t.entities)
         self.cells = self.t.cells
         self.W, self.H, self.D = self.t.size
-        self.rng = random.Random("nusmp:rooms_rebuilt:%s:%s" % (name, seed))
+        self.rng = random.Random("anime_multiverse:rooms_rebuilt:%s:%s" % (name, seed))
         self.x0, self.x1, self.z0, self.z1 = interior if interior else (2, self.W - 3, 2, self.D - 3)
         self.cx, self.cz = self.W // 2, self.D // 2
         self.added = 0
@@ -192,7 +192,7 @@ class Room:
         for (x, y, z), c in self.base.items():
             if c.block in ("minecraft:structure_block", "minecraft:jigsaw"):
                 continue
-            r = 2 if c.block.startswith("nusmp:") else (1 if c.nbt is not None else 0)
+            r = 2 if c.block.startswith("anime_multiverse:") else (1 if c.nbt is not None else 0)
             if r:
                 for dx in range(-r, r + 1):
                     for dz in range(-r, r + 1):
@@ -230,7 +230,7 @@ class Room:
         err = L.check_state(block, props)
         if err:
             raise ValueError("%s: %s at %s" % (self.name, err, (x, y, z)))
-        if block.startswith("nusmp:") and block not in L.CUSTOM:
+        if block.startswith("anime_multiverse:") and block not in L.CUSTOM:
             raise ValueError("%s: %s is not allowed in a template" % (self.name, block))
         be = is_block_entity(block)
         if be:

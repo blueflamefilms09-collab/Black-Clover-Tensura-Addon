@@ -45,24 +45,24 @@ public final class MagicAuditRuntime {
     public static void runAtStartup() {
         try {
             MagicAudit.Report r = run();
-            for (MagicAudit.Finding f : r.of(MagicAudit.Severity.ERROR)) LOG.error("[nusmp] magic audit: {}", f);
-            if (r.warnings() > 0) LOG.warn("[nusmp] magic audit: {} magics, {} warnings ({}); the full list: /multiverse magic audit", r.checked(), r.warnings(), r.summary());
-            else LOG.info("[nusmp] magic audit: {} magics, {} errors, {} warnings", r.checked(), r.errors(), r.warnings());
+            for (MagicAudit.Finding f : r.of(MagicAudit.Severity.ERROR)) LOG.error("[anime_multiverse] magic audit: {}", f);
+            if (r.warnings() > 0) LOG.warn("[anime_multiverse] magic audit: {} magics, {} warnings ({}); the full list: /multiverse magic audit", r.checked(), r.warnings(), r.summary());
+            else LOG.info("[anime_multiverse] magic audit: {} magics, {} errors, {} warnings", r.checked(), r.errors(), r.warnings());
         } catch (Throwable t) {
-            LOG.error("[nusmp] magic audit could not run", t);
+            LOG.error("[anime_multiverse] magic audit could not run", t);
         }
     }
 
     private static synchronized Set<String> lang() {
         if (langKeys != null) return langKeys;
         Set<String> keys = new HashSet<>();
-        try (InputStream in = MagicAuditRuntime.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+        try (InputStream in = MagicAuditRuntime.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
             if (in != null) {
                 JsonObject o = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
                 for (var e : o.entrySet()) { JsonElement v = e.getValue(); if (v != null && v.isJsonPrimitive()) keys.add(e.getKey()); }
             }
         } catch (Exception e) {
-            LOG.warn("[nusmp] magic audit could not read en_us.json: {}", e.toString());
+            LOG.warn("[anime_multiverse] magic audit could not read en_us.json: {}", e.toString());
         }
         langKeys = keys;
         return keys;
@@ -72,7 +72,7 @@ public final class MagicAuditRuntime {
         private final List<MagicAudit.Finding> extra;
         RuntimeProbe(List<MagicAudit.Finding> extra) { this.extra = extra; }
 
-        @Override public boolean hasResource(String assetPath) { return MagicAuditRuntime.class.getResource("/assets/nusmp/" + assetPath) != null; }
+        @Override public boolean hasResource(String assetPath) { return MagicAuditRuntime.class.getResource("/assets/anime_multiverse/" + assetPath) != null; }
         @Override public boolean hasLang(String key) { return lang().contains(key); }
 
         private static GrimoireBook book(String id) {

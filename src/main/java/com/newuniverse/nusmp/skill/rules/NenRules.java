@@ -16,7 +16,7 @@ public final class NenRules {
     /** 3.49.0, appended: the advanced techniques the first version left out (Shu, In, Ryu) and the four hatsu types it did not have. */
     public static final int SHU = 10, IN = 11, RYU = 12, TRANS = 13, CONJ = 14, MANIP = 15, SPEC = 16;
     public static final int MODES = 17;
-    /** The ids of the modes, in order (the lang keys are nusmp.skill.mode.nen.&lt;id&gt;). */
+    /** The ids of the modes, in order (the lang keys are anime_multiverse.skill.mode.nen.&lt;id&gt;). */
     public static final String[] IDS = {"ten", "zetsu", "ren", "gyo", "en", "ken", "ko", "enhance", "emit", "vow", "shu", "in", "ryu", "trans", "conj", "manip", "spec"};
 
     public static boolean valid(int mode) { return mode >= 0 && mode < MODES; }

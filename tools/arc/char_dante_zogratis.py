@@ -1,4 +1,4 @@
-"""Why: Dante Zogratis, the eldest of the Dark Triad of the Spade Kingdom (entity nusmp:dante_zogratis, entity/zogratis/DanteBoss): a crowned, broad-shouldered Body Magic
+"""Why: Dante Zogratis, the eldest of the Dark Triad of the Spade Kingdom (entity anime_multiverse:dante_zogratis, entity/zogratis/DanteBoss): a crowned, broad-shouldered Body Magic
 brawler. It was a hand-built cube model; the owner wants every mob of the mod built like the Old Witch, on the player's proportions with the art kit, so this is the same man
 rebuilt: from the old design (and the manga) a swept-back dark head of hair, a crown, scars crossed on the face, a goatee, green eyes, a brown tunic and the red scarf. `form2`
 is the hybrid the Gates open (100% Lucifero: violet skin, horns through the crown, glowing violet eyes, the gravity halo), the model the old renderer called dante_hybrid.

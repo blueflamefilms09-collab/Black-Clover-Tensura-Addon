@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * textures, the lang fragments, the previews and the doc. Pure file and JSON checks, no Minecraft class.
  */
 class SpiritLightAssetsTest {
-    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/nusmp");
+    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/anime_multiverse");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 
@@ -174,13 +174,13 @@ class SpiritLightAssetsTest {
     @Test
     void theLangFragmentsHaveEveryStringAndTheVoiceTextIsInThere() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "spirit_light.json"));
-        for (String k : new String[]{"key.nusmp.spirit_light_link", "key.nusmp.spirit_light_command", "nusmp.spiritlight.need", "nusmp.spiritlight.full", "nusmp.spiritlight.linked", "nusmp.spiritlight.unlinked",
-                "nusmp.spiritlight.recharge", "nusmp.spiritlight.powered_full", "nusmp.spiritlight.risen", "nusmp.spiritlight.fallen"})
+        for (String k : new String[]{"key.anime_multiverse.spirit_light_link", "key.anime_multiverse.spirit_light_command", "anime_multiverse.spiritlight.need", "anime_multiverse.spiritlight.full", "anime_multiverse.spiritlight.linked", "anime_multiverse.spiritlight.unlinked",
+                "anime_multiverse.spiritlight.recharge", "anime_multiverse.spiritlight.powered_full", "anime_multiverse.spiritlight.risen", "anime_multiverse.spiritlight.fallen"})
             assertTrue(lang.has(k), k);
         JsonObject voice = json(Path.of("tools", "lang", "spirit_light_voice.json"));
-        for (String[] l : SpiritLightVoiceLines.ALL) assertEquals(l[2], voice.get("nusmp.spiritlight.say." + l[0]).getAsString(), l[0]);
+        for (String[] l : SpiritLightVoiceLines.ALL) assertEquals(l[2], voice.get("anime_multiverse.spiritlight.say." + l[0]).getAsString(), l[0]);
         JsonObject snd = json(Path.of("tools", "lang", "spirit_light_sounds.json"));
-        for (String id : SpiritLightRules.SOUND_IDS) assertTrue(snd.has("subtitles.nusmp." + id), "subtitle of " + id);
+        for (String id : SpiritLightRules.SOUND_IDS) assertTrue(snd.has("subtitles.anime_multiverse." + id), "subtitle of " + id);
         for (JsonObject o : new JsonObject[]{lang, voice, snd})
             for (var e : o.entrySet()) {
                 String v = e.getValue().getAsString().toLowerCase();

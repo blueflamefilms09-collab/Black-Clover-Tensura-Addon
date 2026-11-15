@@ -5,7 +5,7 @@ STAR V2 (docs/vfx_remake/star_ingame.md): the game textures of the Star Magic lo
     python tools/gen_star_v2_textures.py            # Pillow + numpy only, deterministic (fixed seeds)
 
 The pictures are the ones of the preview round (tools/gen_star_new_textures.py, docs/previews/vfx_remake/star/tex/); this script runs those generators unchanged and writes the 24 that the game draws into
-src/main/resources/assets/nusmp/textures/particle/stv_<name>.png, with one extra step: the colour of every visible texel is bled 4 texels into the clear ones, so linear filtering never draws a dark
+src/main/resources/assets/anime_multiverse/textures/particle/stv_<name>.png, with one extra step: the colour of every visible texel is bled 4 texels into the clear ones, so linear filtering never draws a dark
 edge (the same rule as the Fire V2 textures). The palette is a PLACEHOLDER (gold-white and starlight blue): no canon still of Star Magic was available.
 The list below must equal vfx/StarV2.TEXTURE_NAMES (a test pins it).
 """
@@ -20,7 +20,7 @@ sys.path.insert(0, HERE)
 import gen_star_new_textures as g  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 PREFIX = "stv_"
 
 # preview name -> game name

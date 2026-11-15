@@ -23,9 +23,9 @@ import java.util.Optional;
 /**
  * Why: the encounter tables name monsters by entity id and by faction, and the game must turn both into entity TYPES without ever assuming that
  * an optional mod is installed or that a tag is filled. This is the one place that does it. An id is looked up in the registry (absent = the
- * entry is not usable, never an exception). A faction is the entity-type tag {@code nusmp:mega/<faction>} (written by the ecology; every member
+ * entry is not usable, never an exception). A faction is the entity-type tag {@code anime_multiverse:mega/<faction>} (written by the ecology; every member
  * optional), and its members are filtered to things that can really stand in a dungeon room and fight: no bosses (the {@code c:bosses} tag, our
- * {@code nusmp:boss} tag and the dungeon's own {@code excluded} tag), nothing that is not a living creature with attributes, nothing that
+ * {@code anime_multiverse:boss} tag and the dungeon's own {@code excluded} tag), nothing that is not a living creature with attributes, nothing that
  * needs water to live, no marker entities. Each member's toughness is its default maximum health, read from {@code DefaultAttributes} (20 when
  * the type has none), which is what {@link MobPicker} sorts by. Member lists are cached for a minute and are dropped whenever the data reloads,
  * because a tag can change without a restart and a stale list would spawn things the pack just removed.
@@ -33,8 +33,8 @@ import java.util.Optional;
 final class Bestiary {
     private Bestiary() {}
 
-    private static final TagKey<EntityType<?>> BOSS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "boss"));
-    private static final TagKey<EntityType<?>> EXCLUDED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "dungeon/excluded"));
+    private static final TagKey<EntityType<?>> BOSS = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "boss"));
+    private static final TagKey<EntityType<?>> EXCLUDED = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "dungeon/excluded"));
     private static final long KEEP_MS = 60_000L;
 
     private record Cached(List<MobPicker.Candidate> members, long at, int version) {}
@@ -83,7 +83,7 @@ final class Bestiary {
         if (c != null && c.version() == EncData.version() && now - c.at() < KEEP_MS && !(c.members().isEmpty() && now - c.at() > 5_000L)) return c.members();
         List<MobPicker.Candidate> out = new ArrayList<>();
         try {
-            TagKey<EntityType<?>> tag = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", "mega/" + faction));
+            TagKey<EntityType<?>> tag = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mega/" + faction));
             Optional<HolderSet.Named<EntityType<?>>> set = BuiltInRegistries.ENTITY_TYPE.getTag(tag);
             if (set.isPresent()) {
                 for (Holder<EntityType<?>> h : set.get()) {

@@ -3,8 +3,8 @@
 
     python tools/mesh_cap/preview_cap.py <cut dir> [ids...] [--out file.png]
 
-<cut dir> holds the cut meshes as plain text, written by the packer with -Dnusmp.meshCapDump=<dir> (gradle packMeshes -PmeshCapDump=<dir>);
-ids are paths relative to assets/nusmp without .txt, e.g. weapon_meshes_vu/blackrazor. No ids: every mesh found in the cut dir (max 6).
+<cut dir> holds the cut meshes as plain text, written by the packer with -Danime_multiverse.meshCapDump=<dir> (gradle packMeshes -PmeshCapDump=<dir>);
+ids are paths relative to assets/anime_multiverse without .txt, e.g. weapon_meshes_vu/blackrazor. No ids: every mesh found in the cut dir (max 6).
 Quads are flat shaded; body = grey, core glow = orange, veins = cyan, void = dark violet. Halo cards (layer 4) are left out.
 """
 import math
@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets/nusmp"
+ROOT = Path(__file__).resolve().parents[2] / "src/main/resources/assets/anime_multiverse"
 COLORS = {0: (150, 160, 175), 1: (90, 50, 140), 2: (255, 150, 60), 3: (80, 220, 230)}
 CELL = 260
 

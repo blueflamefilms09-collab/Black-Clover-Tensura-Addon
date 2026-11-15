@@ -2,7 +2,7 @@
 
     python3 -B tools/relics/wave13_icons.py [id ...]            (idempotent)
 
-Per id it writes assets/nusmp/textures/item/<id>.png (the sprite, kept as the inventory icon), models/item/<id>_icon.json (the flat inventory model)
+Per id it writes assets/anime_multiverse/textures/item/<id>.png (the sprite, kept as the inventory icon), models/item/<id>_icon.json (the flat inventory model)
 and models/item/<id>.json (the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt, with the display transforms of
 the Bloodbound Katana). Icons are drawn from primitives, given a one pixel dark outline; the grade shows as a coloured pixel at the pommel and the glow
 as bright pixels at gems, runes and edges.

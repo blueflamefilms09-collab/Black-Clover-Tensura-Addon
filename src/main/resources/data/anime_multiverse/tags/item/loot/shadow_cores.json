@@ -1,0 +1,9 @@
+{
+  "values": [
+    "anime_multiverse:shadow_core_shard",
+    {
+      "id": "anime_multiverse:shadow_core",
+      "required": false
+    }
+  ]
+}

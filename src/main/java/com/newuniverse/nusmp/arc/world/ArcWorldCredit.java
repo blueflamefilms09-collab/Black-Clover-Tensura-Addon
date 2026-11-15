@@ -84,12 +84,12 @@ public final class ArcWorldCredit {
                     ArcStory.Credit cr = ArcStory.defeated(p, id);
                     if (cr.fresh() && c != null) tell(p, c, cr);
                 } catch (RuntimeException ex) {
-                    LOG.error("[nusmp] could not give {} the story credit for {}: {}", p.getGameProfile().getName(), id, ex.toString());
+                    LOG.error("[anime_multiverse] could not give {} the story credit for {}: {}", p.getGameProfile().getName(), id, ex.toString());
                 }
             }
             settleAll(credited);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the story credit for an older boss failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] the story credit for an older boss failed: {}", ex.toString());
         }
     }
 
@@ -112,14 +112,14 @@ public final class ArcWorldCredit {
 
     /** The same three lines the core says for its own bosses (same message keys, so one translation serves both). */
     private static void tell(ServerPlayer p, ArcCharacter c, ArcStory.Credit cr) {
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.fallen", "[Story] %s has fallen.", c.fullName()).withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.fallen", "[Story] %s has fallen.", c.fullName()).withStyle(ChatFormatting.GOLD));
         if (!cr.opened().isEmpty()) {
             List<String> names = new ArrayList<>();
             for (ArcCharacter o : cr.opened()) names.add(o.fullName());
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.opened", "[Story] Now open: %s", String.join(", ", names)).withStyle(ChatFormatting.AQUA));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.opened", "[Story] Now open: %s", String.join(", ", names)).withStyle(ChatFormatting.AQUA));
         }
         if (cr.sagaChanged()) {
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.saga", "[Story] A new saga begins: %s", cr.sagaNow().title()).withStyle(ChatFormatting.LIGHT_PURPLE));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.saga", "[Story] A new saga begins: %s", cr.sagaNow().title()).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
     }
 
@@ -131,7 +131,7 @@ public final class ArcWorldCredit {
             try {
                 settle(p);
             } catch (RuntimeException ex) {
-                LOG.error("[nusmp] could not settle the saga reward of {}: {}", p.getGameProfile().getName(), ex.toString());
+                LOG.error("[anime_multiverse] could not settle the saga reward of {}: {}", p.getGameProfile().getName(), ex.toString());
             }
         }
     }
@@ -150,13 +150,13 @@ public final class ArcWorldCredit {
     }
 
     private static void give(ServerPlayer p, ArcSaga saga) {
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.saga_clear", "[Story] %s is cleared. The Chronicle pays its reward.", saga.title())
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.saga_clear", "[Story] %s is cleared. The Chronicle pays its reward.", saga.title())
                 .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         for (SagaRewards.Stack s : SagaRewards.reward(saga)) {
             ResourceLocation id = ResourceLocation.tryParse(s.item());
             Item item = id == null ? null : BuiltInRegistries.ITEM.getOptional(id).orElse(null);
             if (item == null || item == Items.AIR) {
-                LOG.warn("[nusmp] the reward of {} names the item {}, which does not exist: skipped", saga.id(), s.item());
+                LOG.warn("[anime_multiverse] the reward of {} names the item {}, which does not exist: skipped", saga.id(), s.item());
                 continue;
             }
             int left = s.count();

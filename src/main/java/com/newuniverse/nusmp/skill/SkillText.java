@@ -11,7 +11,7 @@ public record SkillText(String id, String name, String description) {
     }
 
     /** The key the skill's display name is under (unchanged from the first release, so existing lang files keep working). */
-    public String nameKey() { return "nusmp.skill." + id; }
+    public String nameKey() { return "anime_multiverse.skill." + id; }
 
     public String descriptionKey() { return nameKey() + ".description"; }
 }

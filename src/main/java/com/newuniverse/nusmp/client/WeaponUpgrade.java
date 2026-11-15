@@ -125,7 +125,7 @@ final class WeaponUpgrade {
                 }
             }
         } catch (Exception ex) {
-            com.mojang.logging.LogUtils.getLogger().error("[nusmp] upgraded weapon mesh {} failed to load; the old one is used", id, ex);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] upgraded weapon mesh {} failed to load; the old one is used", id, ex);
             m = null;
         }
         UP.put(id, m == null ? NONE : m);

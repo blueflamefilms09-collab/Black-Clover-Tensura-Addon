@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 /**
  * Relics of Many Worlds, second set, wave 19: the scrolls, potions and other consumables (and one spellbook). The long card text of each, as game
- * rules, is in the lang keys {@code item.nusmp.<id>.card}; the numbers are in {@link Wave19Rules} (pure), the scrolls in {@link Wave19Scrolls}, the
+ * rules, is in the lang keys {@code item.anime_multiverse.<id>.card}; the numbers are in {@link Wave19Rules} (pure), the scrolls in {@link Wave19Scrolls}, the
  * drinks in {@link Wave19Goods}, the book in {@link Wave19Book}, the wild magic table in {@link Wave19Surge}, what stays in the world in
  * {@link Wave19Field} and the handlers in {@link Wave19Events}.
  * <p>

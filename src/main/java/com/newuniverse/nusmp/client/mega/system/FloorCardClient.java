@@ -57,7 +57,7 @@ public final class FloorCardClient {
     /** Called from {@code SystemClient.init}: the layer, the key, the logout clean-up. */
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(KEY));
-        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("nusmp", "system_floor_card"), FloorCardClient::render));
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system_floor_card"), FloorCardClient::render));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
     }
@@ -136,7 +136,7 @@ public final class FloorCardClient {
             }
         } catch (RuntimeException | LinkageError e) {
             broken = true;
-            LOG.warn("[nusmp] The System floor report failed to draw and is switched off until the server sends the next one", e);
+            LOG.warn("[anime_multiverse] The System floor report failed to draw and is switched off until the server sends the next one", e);
         }
     }
 

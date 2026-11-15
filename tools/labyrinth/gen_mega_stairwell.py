@@ -22,8 +22,8 @@ is written (`verify`): the door is walked to the arrival cell and on to the stai
 two free cells of headroom), the exit stands at the level the geometry promises, the light never drops below 6 on a walked cell, and the survival rules of
 `mega_arch_check` hold.
 
-How a stairwell works in the game (docs/labyrinth/mega_v2.md section 1): it is a room of kind STAIRWELL with ONE door (a `nusmp:mega_door` socket on its east face,
-drawing its first room from `nusmp:mega/stair_door`), an ARRIVAL marker on the platform inside the door (where a party stands when it comes to the floor) and a
+How a stairwell works in the game (docs/labyrinth/mega_v2.md section 1): it is a room of kind STAIRWELL with ONE door (a `anime_multiverse:mega_door` socket on its east face,
+drawing its first room from `anime_multiverse:mega/stair_door`), an ARRIVAL marker on the platform inside the door (where a party stands when it comes to the floor) and a
 STAIR_EXIT marker above the middle of the landing pad at the far end of the staircase (walking onto the pad takes the party to the linked floor). A stairwell does not
 know whether it is the arrival or the forward one of its floor: the generator decides that from the sector. Stairs that climb are `up_*`, stairs that drop are
 `down_*`: on the Holy road the forward stairs climb and the stairs that lead back drop, on the Abyssal road the other way round.
@@ -46,7 +46,7 @@ import mega_arch_kit as K  # noqa: E402
 import mega_arch_check as AC  # noqa: E402
 import mega_shape_preview as SP  # noqa: E402
 
-POOL_DOOR = "nusmp:mega/stair_door"
+POOL_DOOR = "anime_multiverse:mega/stair_door"
 FLOOR = L.FLOOR_ROW        # 8
 ROW0 = L.DOOR_ROW          # 9: the first standing row above the floor
 DIR = {(1, 0): "east", (-1, 0): "west", (0, 1): "south", (0, -1): "north"}
@@ -455,7 +455,7 @@ def marker_cells(t, kind):
     for p, c in t.cells.items():
         if c.block == "minecraft:structure_block" and c.nbt is not None:
             meta = str(c.nbt.get("metadata", ""))
-            if meta.split(";")[0] == "nusmp:" + kind:
+            if meta.split(";")[0] == "anime_multiverse:" + kind:
                 out.append((p, meta))
     return out
 

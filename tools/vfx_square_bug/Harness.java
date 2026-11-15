@@ -23,7 +23,7 @@ import java.util.Random;
 public final class Harness {
     private static final String[] NAMES = {"glow", "flamefx_ring", "air_ring", "magic_circle", "spark", "time_sparkle"};
 
-    private static ResourceLocation tex(int i) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/" + NAMES[i] + ".png"); }   // a new object every call, equal by value
+    private static ResourceLocation tex(int i) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/" + NAMES[i] + ".png"); }   // a new object every call, equal by value
 
     private static int randomColour(Random r) { return (r.nextInt(256) << 24) | r.nextInt(0x1000000); }
 

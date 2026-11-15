@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 /** 0.52: "this player is drawing a sword from their grimoire" (style 0 Anti-Magic, 1 Sword Magic), sent to everyone who sees them. */
 public record SwordDrawPayload(int entity, int style) implements CustomPacketPayload {
-    public static final Type<SwordDrawPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "sword_draw"));
+    public static final Type<SwordDrawPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "sword_draw"));
     public static final StreamCodec<FriendlyByteBuf, SwordDrawPayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.style()); },
             buf -> new SwordDrawPayload(buf.readVarInt(), buf.readByte()));

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "anime_multiverse:block/gatekeeper_door_boss_bottom",
+    "down": "anime_multiverse:block/gatekeeper_door_end",
+    "up": "anime_multiverse:block/gatekeeper_door_end",
+    "north": "anime_multiverse:block/gatekeeper_door_boss_bottom",
+    "south": "anime_multiverse:block/gatekeeper_door_boss_bottom",
+    "east": "anime_multiverse:block/gatekeeper_door_boss_bottom",
+    "west": "anime_multiverse:block/gatekeeper_door_boss_bottom"
+  }
+}

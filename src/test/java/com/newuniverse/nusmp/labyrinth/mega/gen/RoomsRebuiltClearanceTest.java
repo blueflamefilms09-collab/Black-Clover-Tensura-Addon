@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * fungus farm). Uses the shipped sockets (the sockets of a rebuilt file are proved equal in {@link RoomsRebuiltFilesTest}).
  */
 class RoomsRebuiltClearanceTest {
-    private static Placed turned(Shape s) { return new Placed(0, s, "nusmp:mega_interior", 0, Vec.ZERO, 0, -1, -1, -1, false); }
+    private static Placed turned(Shape s) { return new Placed(0, s, "anime_multiverse:mega_interior", 0, Vec.ZERO, 0, -1, -1, -1, false); }
 
     private static boolean[] allDoors(Shape s) {
         boolean[] c = new boolean[s.sockets.size()];
@@ -63,7 +63,7 @@ class RoomsRebuiltClearanceTest {
         System.out.println("ROOMS REBUILT clearance: " + files + " rebuilt files, " + doorways + " doorways, " + lanes + " lane cuts; stuck " + stuck + "; lanes not empty " + dirty);
         assertTrue(files >= 400, "rebuilt files found: " + files);
         assertTrue(dirty.isEmpty(), "a lane or chamber of a rebuilt piece is not empty (the 7 x 7 cut would have to remove blocks): " + dirty);
-        for (String s : stuck) assertTrue(s.startsWith("nusmp:mega_r/hall/fungal_underdark_fungus_farm_v"), "a transition of a rebuilt room is below 7 x 7 after the cuts: " + s);
+        for (String s : stuck) assertTrue(s.startsWith("anime_multiverse:mega_r/hall/fungal_underdark_fungus_farm_v"), "a transition of a rebuilt room is below 7 x 7 after the cuts: " + s);
         assertTrue(stuck.size() <= 4, "only the fungus farm's chest may stay in a doorway: " + stuck);
     }
 }

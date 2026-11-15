@@ -9,7 +9,7 @@
   "conditions": [
     {
       "condition": "neoforge:loot_table_id",
-      "loot_table_id": "nusmp:chests/grimoire_tower"
+      "loot_table_id": "anime_multiverse:chests/grimoire_tower"
     }
   ],
   "table": "nusmp_tni_compat:chests/tni_stone"

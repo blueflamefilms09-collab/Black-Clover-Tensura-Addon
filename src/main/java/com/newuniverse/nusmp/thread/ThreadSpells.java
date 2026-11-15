@@ -47,8 +47,8 @@ public final class ThreadSpells {
 
     public static final int RED = 0xFFFF3355;
     public static final String REINFORCE_TAG = "Reinforce", REINFORCE_UNTIL = "nusmp_reinforce_until";
-    private static final ResourceLocation SKIN_ATTACK = ResourceLocation.fromNamespaceAndPath("nusmp", "reinforce_attack"),
-            SKIN_ARMOR = ResourceLocation.fromNamespaceAndPath("nusmp", "reinforce_armor");
+    private static final ResourceLocation SKIN_ATTACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "reinforce_attack"),
+            SKIN_ARMOR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "reinforce_armor");
 
     // ================================================================ Rouge (entity mode)
     /** The Rouge page when {@code thread.rougeEntity} is on. Sneak + cast on a player or pet toggles them on Rouge's list instead. */

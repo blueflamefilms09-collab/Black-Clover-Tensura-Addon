@@ -24,12 +24,12 @@ class MissionStarRulesTest {
     @Test
     void onlyOurShownAdvancementsOutsideTheExcludeListCount() {
         List<String> ex = List.of("root", "magic/");
-        assertTrue(MissionStarRules.counts("nusmp", "bosses/zogratis", true, ex));
+        assertTrue(MissionStarRules.counts("anime_multiverse", "bosses/zogratis", true, ex));
         assertFalse(MissionStarRules.counts("minecraft", "story/mine_stone", true, ex));
-        assertFalse(MissionStarRules.counts("nusmp", "root", true, ex));
-        assertFalse(MissionStarRules.counts("nusmp", "magic/cast_cotton", true, ex));
-        assertFalse(MissionStarRules.counts("nusmp", "bosses/zogratis", false, ex));
-        assertTrue(MissionStarRules.counts("nusmp", "rootless/x", true, ex));
+        assertFalse(MissionStarRules.counts("anime_multiverse", "root", true, ex));
+        assertFalse(MissionStarRules.counts("anime_multiverse", "magic/cast_cotton", true, ex));
+        assertFalse(MissionStarRules.counts("anime_multiverse", "bosses/zogratis", false, ex));
+        assertTrue(MissionStarRules.counts("anime_multiverse", "rootless/x", true, ex));
     }
 
     @Test

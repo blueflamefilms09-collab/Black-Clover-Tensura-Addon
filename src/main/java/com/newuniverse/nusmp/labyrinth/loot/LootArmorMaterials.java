@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Why: a vanilla armour piece needs an {@code ArmorMaterial}: the armour points of each piece, the enchantability, the equip sound, what mends it, the layer texture and the
  * toughness and knockback resistance. The two sets (Drake-Scale, Shadowsteel) get one each, built from the roster so the armour points of a piece are the number written in
- * {@code tools/loot/roster.py} (the material is a map of piece to points, not a copy of anyone else's). The layer is {@code nusmp:loot_<set>}, whose textures
+ * {@code tools/loot/roster.py} (the material is a map of piece to points, not a copy of anyone else's). The layer is {@code anime_multiverse:loot_<set>}, whose textures
  * ({@code loot_<set>_layer_1/2.png}) {@code tools/gen_loot_icons.py} paints. The repair ingredient is looked up when it is asked for (the item may not be registered yet when the
  * material is), and falls back to leather if the item is missing.
  */

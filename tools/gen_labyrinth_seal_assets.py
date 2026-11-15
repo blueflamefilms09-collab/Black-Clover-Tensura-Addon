@@ -17,7 +17,7 @@ import sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEX = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures")
+TEX = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures")
 
 VIOLET = (138, 77, 224)
 CRIMSON = (196, 22, 28)

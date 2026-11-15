@@ -29,7 +29,7 @@ class BeastSkillRulesTest {
     private static final List<String> NEW = List.of("fenrir", "jormungandr", "cerberus", "minotaur", "hydra", "kraken", "hafgufa", "typhon", "scylla_charybdis", "sphinx", "pegasus", "cu_sith", "nidhoggr",
             "yamata_no_orochi", "kitsune", "nue", "ammit", "apophis");
     private static final List<String> LEGENDARY = List.of("dragon", "typhon", "yamata_no_orochi", "apophis", "jormungandr", "fenrir", "nidhoggr");
-    private static final String ICONS = "src/main/resources/assets/nusmp/textures/skill/";
+    private static final String ICONS = "src/main/resources/assets/anime_multiverse/textures/skill/";
 
     private static String read(String path) throws Exception { return Files.readString(Path.of(path), StandardCharsets.UTF_8); }
 
@@ -143,10 +143,10 @@ class BeastSkillRulesTest {
     @Test void theLangFileHasEveryNameDescriptionAndMode() throws Exception {
         String lang = read("tools/lang/beastskills.json");
         for (Spec s : BeastSkillRules.SPECS) {
-            for (String k : new String[] {"nusmp.skill." + s.id(), "nusmp.skill." + s.id() + ".description", "nusmp.skill." + s.uniqueId(), "nusmp.skill." + s.uniqueId() + ".description"})
+            for (String k : new String[] {"anime_multiverse.skill." + s.id(), "anime_multiverse.skill." + s.id() + ".description", "anime_multiverse.skill." + s.uniqueId(), "anime_multiverse.skill." + s.uniqueId() + ".description"})
                 assertTrue(lang.contains("\"" + k + "\""), "lang " + k);
-            for (Passive p : s.passives()) assertTrue(lang.contains("\"nusmp.skill.mode." + s.id() + "." + p.id() + "\""), "lang passive " + p.id());
-            for (Mode m : s.actives()) assertTrue(lang.contains("\"nusmp.skill.mode." + s.id() + "." + m.id() + "\""), "lang mode " + m.id());
+            for (Passive p : s.passives()) assertTrue(lang.contains("\"anime_multiverse.skill.mode." + s.id() + "." + p.id() + "\""), "lang passive " + p.id());
+            for (Mode m : s.actives()) assertTrue(lang.contains("\"anime_multiverse.skill.mode." + s.id() + "." + m.id() + "\""), "lang mode " + m.id());
         }
     }
 

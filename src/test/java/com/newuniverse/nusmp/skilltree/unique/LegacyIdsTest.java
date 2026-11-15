@@ -42,19 +42,19 @@ class LegacyIdsTest {
 
     @Test
     void theBookOfARemovedMagicIsRecognised() {
-        assertTrue(LegacyIds.isRemovedBook("nusmp:fire_dragon_slayer_book"));
+        assertTrue(LegacyIds.isRemovedBook("anime_multiverse:fire_dragon_slayer_book"));
         assertTrue(LegacyIds.isRemovedBook(LegacyIds.bookId("celestial_spirit_magic")));
-        assertFalse(LegacyIds.isRemovedBook("nusmp:lady_luck_book"));
+        assertFalse(LegacyIds.isRemovedBook("anime_multiverse:lady_luck_book"));
         assertFalse(LegacyIds.isRemovedBook("othermod:fire_dragon_slayer_book"));
         assertFalse(LegacyIds.isRemovedBook(null));
         assertFalse(LegacyIds.isRemovedBook(""));
-        assertFalse(LegacyIds.isRemovedBook("nusmp:_book"));
+        assertFalse(LegacyIds.isRemovedBook("anime_multiverse:_book"));
     }
 
     @Test
     void aRemovedLineIsRecognisedBareOrNamespaced() {
         assertTrue(LegacyIds.isRemovedLine("ice_make"));
-        assertTrue(LegacyIds.isRemovedLine("nusmp:ice_make"));
+        assertTrue(LegacyIds.isRemovedLine("anime_multiverse:ice_make"));
         assertFalse(LegacyIds.isRemovedLine("lady_luck"));
         assertFalse(LegacyIds.isRemovedLine(null));
     }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge tools/quests/lang/qst.lang.json into assets/nusmp/lang/en_us.json (idempotent; existing keys are never overwritten).
+"""Merge tools/quests/lang/qst.lang.json into assets/anime_multiverse/lang/en_us.json (idempotent; existing keys are never overwritten).
 
 Why: the advancement titles live in a fragment the generator owns; the lead (or a maintainer) runs this once per regeneration so en_us.json
 stays the single lang file the game reads. Keys already present with a different text are reported and kept (the owner's text wins).
@@ -10,7 +10,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-LANG = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "lang", "en_us.json")
+LANG = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 FRAG = os.path.join(HERE, "lang", "qst.lang.json")
 
 

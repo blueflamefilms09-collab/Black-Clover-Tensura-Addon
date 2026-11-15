@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * entries, the budget, and the per listener limits. A line without a recording must never be registered; a recording must always be registered.
  */
 class SpiritDarkVoiceTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path VOICE_DIR = ASSETS.resolve("sounds/spirit/dark/voice");
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
@@ -72,7 +72,7 @@ class SpiritDarkVoiceTest {
             assertTrue(lines.has(id), id + " has a recording but the game's data file does not list it (run tools/audio/spirit_dark_voice.py sync)");
             assertTrue(sounds.has("spirit.dark.voice." + id), id + " has no sounds.json entry");
             JsonObject s = sounds.getAsJsonObject("spirit.dark.voice." + id).getAsJsonArray("sounds").get(0).getAsJsonObject();
-            assertEquals("nusmp:spirit/dark/voice/" + id, s.get("name").getAsString());
+            assertEquals("anime_multiverse:spirit/dark/voice/" + id, s.get("name").getAsString());
             assertEquals(32, s.get("attenuation_distance").getAsInt(), "carries 32 blocks and no farther");
         }
         for (var e : lines.entrySet()) assertTrue(files.contains(e.getKey()), "the data file lists " + e.getKey() + " but no recording exists: a line without a recording must never be registered");

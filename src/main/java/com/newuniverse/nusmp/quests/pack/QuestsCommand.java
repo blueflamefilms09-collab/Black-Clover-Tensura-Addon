@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 /**
  * Why: the operator needs one place to install, check, update and remove the bundled FTB Quests questline without copying files by hand:
- * {@code /nusmp quests status|install [force]|update|uninstall}, operator level 2. Each subcommand only calls {@link PackInstaller} and prints
+ * {@code /anime_multiverse quests status|install [force]|update|uninstall}, operator level 2. Each subcommand only calls {@link PackInstaller} and prints
  * its message; all safety rules (refuse over foreign quests, backups, only our own files) live there. With FTB Quests missing, every
  * subcommand except {@code status} refuses and touches nothing.
  */
@@ -19,7 +19,7 @@ public final class QuestsCommand {
     private QuestsCommand() {}
 
     public static void register(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal("nusmp").then(Commands.literal("quests").requires(s -> s.hasPermission(2))
+        event.getDispatcher().register(Commands.literal("anime_multiverse").then(Commands.literal("quests").requires(s -> s.hasPermission(2))
                 .then(Commands.literal("status").executes(ctx -> status(ctx)))
                 .then(Commands.literal("install").executes(ctx -> install(ctx, false))
                         .then(Commands.literal("force").executes(ctx -> install(ctx, true))))
@@ -46,7 +46,7 @@ public final class QuestsCommand {
         } else {
             boolean current = st.installed().hash().equals(st.packHash());
             say(ctx, "Installed: yes, pack " + st.installed().hash() + " from mod " + st.installed().version() + ", " + st.installed().files().size()
-                    + " files" + (current ? " (up to date)" : " (a newer pack is bundled: /nusmp quests update)"), true);
+                    + " files" + (current ? " (up to date)" : " (a newer pack is bundled: /anime_multiverse quests update)"), true);
         }
         return 1;
     }

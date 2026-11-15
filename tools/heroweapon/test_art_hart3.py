@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.join(ROOT, "tools", "relics"))
 import audit_weapon_scale as aud           # noqa: E402
 import weapon_classes as wc                # noqa: E402
 
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 IDS = ["vassal_scythe", "vassal_katana", "vassal_fan", "vassal_carriage", "vassal_book"]
 MAX_QUADS = 2800
 PARTS = (8, 14)
@@ -78,7 +78,7 @@ class FilesTest(unittest.TestCase):
             with open(os.path.join(ASSETS, "models", "item", i + ".json"), encoding="utf-8") as f:
                 model = json.load(f)
             self.assertEqual(model["parent"], "minecraft:builtin/entity", i)
-            self.assertEqual(model["textures"]["particle"], "nusmp:item/" + i)
+            self.assertEqual(model["textures"]["particle"], "anime_multiverse:item/" + i)
             for k in ("thirdperson_righthand", "firstperson_righthand", "ground", "head", "fixed", "gui"):
                 self.assertIn(k, model["display"], i + " " + k)
                 d = model["display"][k]
@@ -88,7 +88,7 @@ class FilesTest(unittest.TestCase):
             with open(os.path.join(ASSETS, "models", "item", i + "_icon.json"), encoding="utf-8") as f:
                 icon = json.load(f)
             self.assertIn(icon["parent"], ("minecraft:item/handheld", "minecraft:item/generated"))
-            self.assertEqual(icon["textures"]["layer0"], "nusmp:item/" + i)
+            self.assertEqual(icon["textures"]["layer0"], "anime_multiverse:item/" + i)
 
 
 class MeshTest(unittest.TestCase):

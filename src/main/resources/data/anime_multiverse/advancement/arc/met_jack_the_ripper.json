@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.arc.met_jack_the_ripper.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.arc.met_jack_the_ripper.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_met_jack_the_ripper": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "arc.met",
+        "arg": "jack_the_ripper"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_met_jack_the_ripper"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

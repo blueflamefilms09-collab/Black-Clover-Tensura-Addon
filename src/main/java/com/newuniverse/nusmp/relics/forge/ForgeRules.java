@@ -31,7 +31,7 @@ public final class ForgeRules {
     public enum Subject { NONE, RELIC, WEAPON, OTHER }
 
     /**
-     * Every line the table can show, in the Great Sage's voice (lang key {@code nusmp.forge.msg.<lower name>}). OK is "nothing to refuse". The tier
+     * Every line the table can show, in the Great Sage's voice (lang key {@code anime_multiverse.forge.msg.<lower name>}). OK is "nothing to refuse". The tier
      * ritual's own refusals are mapped onto the UPGRADE_* entries by the menu so the screen can show them inside the window.
      */
     public enum Msg {
@@ -40,7 +40,7 @@ public final class ForgeRules {
         UPGRADE_OK, UPGRADE_COOLDOWN, UPGRADE_UNATTUNED, UPGRADE_WRONG_CATALYST, UPGRADE_NEED_COUNT, UPGRADE_NO_ENERGY, UPGRADE_FAILED_KEPT, UPGRADE_FAILED_LOST,
         SOCKET_REFUSED, SOCKET_OK, DRAWN_OUT, ENGRAVED;
 
-        public String langKey() { return "nusmp.forge.msg." + name().toLowerCase(java.util.Locale.ROOT); }
+        public String langKey() { return "anime_multiverse.forge.msg." + name().toLowerCase(java.util.Locale.ROOT); }
 
         public static Msg of(int ordinal) { return ordinal < 0 || ordinal >= values().length ? OK : values()[ordinal]; }
 

@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class Pages15Batch5Test {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path SRC = ROOT.resolve("src/main/java/com/newuniverse/nusmp");
-    private static final Path SETS = ROOT.resolve("src/main/resources/data/nusmp/character_spells");
+    private static final Path SETS = ROOT.resolve("src/main/resources/data/anime_multiverse/character_spells");
     private static final int BATCH = 5;
 
     /** The basic grimoire's shown pages BEFORE this batch (the plan table of docs/magic/page_counts.md section 8, the "Now (total / basic)" column) and the pages the plan asks for. */

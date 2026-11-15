@@ -45,8 +45,8 @@ final class Wave8Events {
 
     private static final String K_CT = "nusmp_w8_combo_t", K_CTICK = "nusmp_w8_combo_tick", K_CN = "nusmp_w8_combo_n",
             K_FRENZY = "nusmp_w8_frenzy_until", K_FRENZY_LV = "nusmp_w8_frenzy_lv", K_WHISPER = "nusmp_w8_whisper";
-    private static final ResourceLocation LICH_HP = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w8_lich_hp"),
-            LICH_ATK = ResourceLocation.fromNamespaceAndPath("nusmp", "relic_w8_lich_atk");
+    private static final ResourceLocation LICH_HP = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w8_lich_hp"),
+            LICH_ATK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_w8_lich_atk");
     private static final String[] WHISPERS = {
             "Come to me, my knight.", "Another soul for the hoard. Good.", "You were never alone in that blade.",
             "Rest is for the living. Rise.", "Every kill, I grow. Every kill, you are mine."};

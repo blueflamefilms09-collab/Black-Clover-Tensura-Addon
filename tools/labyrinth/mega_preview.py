@@ -140,7 +140,7 @@ def main(argv):
         print("wrote", args[0])
         return 0
     name, out = args[0], args[1]
-    path = os.path.join(L.RES, "data", "nusmp", "structure", name + ".nbt")
+    path = os.path.join(L.RES, "data", "anime_multiverse", "structure", name + ".nbt")
     t = load(path, name)
     scale = int(opts.get("--scale", 5))
     render_iso(t, out, parse_range(opts.get("--x"), 0, t.size[0] - 1), parse_range(opts.get("--y"), 0, t.size[1] - 1), parse_range(opts.get("--z"), 0, t.size[2] - 1), scale, top)

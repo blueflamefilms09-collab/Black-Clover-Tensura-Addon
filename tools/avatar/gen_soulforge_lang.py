@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Why: every line of the Soul Forge is written once, in the Java code, as a translation key together with its English words (ForgeText.t / ForgeText.s,
 Component.translatableWithFallback, and the ritual's note(...)), so the screen is readable even before a language file knows the key. The language file is
-a flat JSON that the lead merges into assets/nusmp/lang/en_us.json; this tool WRITES that fragment from the code, so the two can never drift apart. It also
+a flat JSON that the lead merges into assets/anime_multiverse/lang/en_us.json; this tool WRITES that fragment from the code, so the two can never drift apart. It also
 refuses to write when the code contradicts itself (one key with two different English texts) and lists every plain Component.translatable("literal") key of
 the Avatar code that is in neither en_us.json nor the fragment, which would show up as a raw key in game.
 
@@ -21,13 +21,13 @@ sys.dont_write_bytecode = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
-EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "lang", "en_us.json")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 SCAN = [os.path.join(JAVA, "avatar"), os.path.join(JAVA, "client", "avatar")]
 
 # texts that are not in code at all (names of registered things)
 MANUAL = {
-    "block.nusmp.soul_forge": "Soul Forge",
+    "block.anime_multiverse.soul_forge": "Soul Forge",
 }
 
 LIT = r'"((?:[^"\\]|\\.)*)"'
@@ -90,7 +90,7 @@ def collect():
             for m in rx.finditer(text):
                 if m.start() not in starts:
                     key = unescape(m.group(1))
-                    if key.endswith("."):                    # "nusmp.avatar.cond." + id: a family of keys the language file already holds
+                    if key.endswith("."):                    # "anime_multiverse.avatar.cond." + id: a family of keys the language file already holds
                         continue
                     line = text.count("\n", 0, m.start()) + 1
                     problems.append("%s:%d: key %r has no plain-literal fallback (use one string literal)" % (rel, line, key))

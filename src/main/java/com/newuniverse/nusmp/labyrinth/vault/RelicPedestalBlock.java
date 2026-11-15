@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * Why: the Relic Pedestal is the anime vault reveal: one relic floating over a dark stone column, taken with a right click. It is a
  * {@link BaseEntityBlock} because the held stack and the loot table must live in a block entity (the template places the block with
- * {@code {LootTable:"nusmp:chests/labyrinth_pedestal"}} exactly like a chest, and the client needs the stack to draw it). The render shape is
+ * {@code {LootTable:"anime_multiverse:chests/labyrinth_pedestal"}} exactly like a chest, and the client needs the stack to draw it). The render shape is
  * {@code MODEL}, not the BaseEntityBlock default {@code INVISIBLE}: the stone is the baked JSON model, only the floating relic and its glow are
  * drawn by the block entity renderer. There is no menu, no container and no hopper access: a pedestal is a one-time pick, not storage.
  * The ticker exists only on the client (a float phase for the bob and the turn); the server never ticks a pedestal.

@@ -5,9 +5,9 @@
     python3 -B tools/gen_anime_goliath.py --sheets                # compose the labelled contact sheets into docs/mobs/phaseE/goliath_*.png
 
 Writes (all new files):
-    src/main/resources/assets/nusmp/geo/entity/anime_goliath.geo.json
-    src/main/resources/assets/nusmp/animations/entity/anime_goliath.animation.json       idle walk slam stomp roar rise hurt death transform (+ attack)
-    src/main/resources/assets/nusmp/textures/entity/anime_goliath.png, anime_goliath_glow.png       (palettised; the glow sheet is half size, same uv)
+    src/main/resources/assets/anime_multiverse/geo/entity/anime_goliath.geo.json
+    src/main/resources/assets/anime_multiverse/animations/entity/anime_goliath.animation.json       idle walk slam stomp roar rise hurt death transform (+ attack)
+    src/main/resources/assets/anime_multiverse/textures/entity/anime_goliath.png, anime_goliath_glow.png       (palettised; the glow sheet is half size, same uv)
     tools/render_preview/scenes.d/anime_goliath.json
 
 The model: a 6.4 block stone giant (the hit box is 6.0 tall and stays as it is), 3.7 heads tall, a small head sunk between huge stepped pauldrons, fists 1.5x, a glowing eye slit under
@@ -32,7 +32,7 @@ from anime_goliath_kit import Mat, stone, card, seed_of  # noqa: E402
 
 KEY, NAME = "anime", "goliath"
 REPO = os.path.abspath(os.path.join(HERE, ".."))
-ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 SCENES_OUT = os.path.join(HERE, "render_preview", "scenes.d", "anime_goliath.json")
 SCRATCH = os.environ.get("AG_SCRATCH", "/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad")
 PREVIEW_OUT = os.path.join(SCRATCH, "previews_anime_goliath")

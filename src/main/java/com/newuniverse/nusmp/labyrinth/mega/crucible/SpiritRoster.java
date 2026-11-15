@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
- * Why: which creature a Cursed Spirit is must be DATA ({@code data/nusmp/mega/cursed_spirits.json}), the way the Peak Altar's boss roster is,
+ * Why: which creature a Cursed Spirit is must be DATA ({@code data/anime_multiverse/mega/cursed_spirits.json}), the way the Peak Altar's boss roster is,
  * because the best candidates are other mods' monsters (the Tensura daemons, hounds and wraiths) whose ids and strength the owner will want to
  * tune or extend without a mod update, and because an id that no loaded mod registers must simply be skipped rather than crash the catastrophe.
  * This class is the pure half: it parses the file's tree (maps, lists, strings, numbers: the same tree {@code ThemeDef.parse} reads, so no JSON

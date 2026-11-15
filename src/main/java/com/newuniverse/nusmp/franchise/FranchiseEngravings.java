@@ -21,8 +21,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import java.util.Optional;
 
 /**
- * The franchise engravings on the items. An item of the mod that has a franchise in {@code data/nusmp/relics/franchise_map.json} carries that franchise's engravings (the 2 or 3
- * datapack enchantments {@code nusmp:fr_*} of {@link FranchiseData}), put on the stack once, the first time it sits in a player's inventory, like the Tensura engravings of
+ * The franchise engravings on the items. An item of the mod that has a franchise in {@code data/anime_multiverse/relics/franchise_map.json} carries that franchise's engravings (the 2 or 3
+ * datapack enchantments {@code anime_multiverse:fr_*} of {@link FranchiseData}), put on the stack once, the first time it sits in a player's inventory, like the Tensura engravings of
  * {@code item.WeaponEngravings}; it has its OWN marker ({@value #FLAG}) so the older marker ("NUEngraved") and the older engravings are untouched. A relic's engraving level follows
  * its grade (1 up to rare, 2 unique and legend, 3 from god), every other item gets level 1. Food, potions and spawn eggs are never engraved.
  * <p>
@@ -49,7 +49,7 @@ public final class FranchiseEngravings {
         String f = BY_ITEM.get(item);
         if (f == null) {
             ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
-            String found = "nusmp".equals(key.getNamespace()) ? FranchiseMap.franchiseOf(key.getPath()) : null;
+            String found = "anime_multiverse".equals(key.getNamespace()) ? FranchiseMap.franchiseOf(key.getPath()) : null;
             f = found == null ? NONE : found;
             BY_ITEM.put(item, f);
         }
@@ -85,7 +85,7 @@ public final class FranchiseEngravings {
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         int level = levelOf(stack);
         for (FranchiseData.Engraving en : FranchiseData.table().of(fid)) {
-            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("nusmp", en.id())));
+            Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("anime_multiverse", en.id())));
             if (h.isEmpty()) continue;                                              // a datapack without it: skipped, nothing breaks
             int lv = Math.max(1, Math.min(level, h.get().value().getMaxLevel()));
             if (stack.getEnchantments().getLevel(h.get()) < lv) stack.enchant(h.get(), lv);
@@ -102,8 +102,8 @@ public final class FranchiseEngravings {
         if (line == null) {
             FranchiseData.Franchise f = FranchiseData.table().franchise(fid);
             if (f == null) return null;
-            Component name = Component.translatableWithFallback("franchise.nusmp." + fid, f.name());
-            line = Component.translatableWithFallback("tooltip.nusmp.franchise", "Franchise: %s", name).withColor(f.colour());
+            Component name = Component.translatableWithFallback("franchise.anime_multiverse." + fid, f.name());
+            line = Component.translatableWithFallback("tooltip.anime_multiverse.franchise", "Franchise: %s", name).withColor(f.colour());
             LINES.put(fid, line);
         }
         return line;

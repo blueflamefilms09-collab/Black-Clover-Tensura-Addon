@@ -40,7 +40,7 @@ import java.util.TreeMap;
 
 /**
  * Why: this is the seam between the pure assembler and the game. The assembler asks two questions ("what is in this pool?", "what does this template look
- * like?") and the answers come from the data pack in the live game: the pool JSON files of {@code data/nusmp/worldgen/template_pool/mega} read with the
+ * like?") and the answers come from the data pack in the live game: the pool JSON files of {@code data/anime_multiverse/worldgen/template_pool/mega} read with the
  * resource manager (not through the vanilla pool registry, whose element lists are private, so the order of the elements and their weights are exactly the
  * file's and the draw is the assembler's own), and the structure templates read with the structure template manager, reduced to what the planner needs: size,
  * kind (from the folder), the Jigsaw sockets and the DATA structure blocks (markers). Everything is read at template-local coordinates with no rotation, and
@@ -57,7 +57,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
     private static final ResourceLocation RECIPE_FILE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega/recipe/default.json");
     private static final ResourceLocation FLOOR_RECIPE_FILE = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "mega/recipe/floor.json");
     private static final String THEME_DIR = "mega/template_themes";
-    private static final String DEFAULT_PROCESSORS = "nusmp:mega_interior";
+    private static final String DEFAULT_PROCESSORS = "anime_multiverse:mega_interior";
 
     private volatile Map<String, PoolDef> pools = Map.of();
     private volatile Recipe recipe = new Recipe();
@@ -75,10 +75,10 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
     /** The Sector Recipe as loaded from the data pack (the defaults until the first reload). */
     public Recipe recipe() { return recipe; }
 
-    /** 1.58.0: the recipe of a floor of the floor model ({@code data/nusmp/mega/recipe/floor.json} laid over {@link Recipe#forFloors}; the built-in numbers until the first reload). */
+    /** 1.58.0: the recipe of a floor of the floor model ({@code data/anime_multiverse/mega/recipe/floor.json} laid over {@link Recipe#forFloors}; the built-in numbers until the first reload). */
     public Recipe floorRecipe() { return floorRecipe; }
 
-    /** 1.58.0: which templates are reserved for which themes ({@code data/nusmp/mega/template_themes/*.json}); nothing is reserved until a theme ships a file. */
+    /** 1.58.0: which templates are reserved for which themes ({@code data/anime_multiverse/mega/template_themes/*.json}); nothing is reserved until a theme ships a file. */
     public TemplateThemes themes() { return themes; }
 
     /** The ids of the pools read from the data pack, sorted. */
@@ -115,7 +115,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
         s = load(id);
         if (s == null) {
             unreadable.add(id);
-            LOG.warn("[nusmp] Mega template {} cannot be read (missing or not a structure); pools that name it skip it.", id);
+            LOG.warn("[anime_multiverse] Mega template {} cannot be read (missing or not a structure); pools that name it skip it.", id);
             return null;
         }
         shapes.put(id, s);
@@ -146,7 +146,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
         if (size.getX() <= 0 || size.getY() <= 0 || size.getZ() <= 0) return null;
         RoomKind kind = RoomKind.of(id);
         if (kind != RoomKind.CAP && (size.getX() % MegaGrid.MODULE != 0 || size.getZ() % MegaGrid.MODULE != 0 || size.getY() != MegaGrid.HEIGHT)) {
-            LOG.warn("[nusmp] Mega template {} is {}x{}x{}: pieces must be whole modules of {} and {} high; the plan will be wrong for it.", id, size.getX(), size.getY(), size.getZ(), MegaGrid.MODULE, MegaGrid.HEIGHT);
+            LOG.warn("[anime_multiverse] Mega template {} is {}x{}x{}: pieces must be whole modules of {} and {} high; the plan will be wrong for it.", id, size.getX(), size.getY(), size.getZ(), MegaGrid.MODULE, MegaGrid.HEIGHT);
         }
         StructurePlaceSettings settings = new StructurePlaceSettings();
         List<Socket> sockets = new ArrayList<>();
@@ -155,7 +155,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
             Facing f = front.getAxis().isHorizontal() ? Facing.byName(front.getName()) : null;
             CompoundTag n = info.nbt();
             if (f == null || n == null) {
-                LOG.warn("[nusmp] Mega template {} has a jigsaw at {} that is vertical or has no data; it is ignored.", id, info.pos());
+                LOG.warn("[anime_multiverse] Mega template {} has a jigsaw at {} that is vertical or has no data; it is ignored.", id, info.pos());
                 continue;
             }
             sockets.add(new Socket(new Vec(info.pos().getX(), info.pos().getY(), info.pos().getZ()), f, n.getString("name"), n.getString("target"), n.getString("pool"),
@@ -172,7 +172,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
             if (n == null || !"DATA".equals(n.getString("mode"))) continue;
             MarkerSpec spec = MarkerSpec.parse(n.getString("metadata"));
             if (spec == null) {
-                if (n.getString("metadata").startsWith("nusmp:")) LOG.warn("[nusmp] Mega template {} has an unknown marker '{}' at {}; it is skipped.", id, n.getString("metadata"), info.pos());
+                if (n.getString("metadata").startsWith("anime_multiverse:")) LOG.warn("[anime_multiverse] Mega template {} has an unknown marker '{}' at {}; it is skipped.", id, n.getString("metadata"), info.pos());
                 continue;
             }
             markers.add(new ShapeMarker(spec, new Vec(info.pos().getX(), info.pos().getY(), info.pos().getZ())));
@@ -200,7 +200,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
             try (Reader reader = new InputStreamReader(top.open(), StandardCharsets.UTF_8)) {
                 loaded.put(id, parsePool(id, JsonParser.parseReader(reader).getAsJsonObject()));
             } catch (Exception ex) {
-                LOG.warn("[nusmp] Skipping Mega pool {}: {}", key, ex.toString());
+                LOG.warn("[anime_multiverse] Skipping Mega pool {}: {}", key, ex.toString());
             }
         }
         Recipe r = new Recipe();
@@ -210,13 +210,13 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
                 @SuppressWarnings("unchecked")
                 Map<String, Object> values = (Map<String, Object>) toJava(JsonParser.parseReader(reader));
                 r = Recipe.fromMap(values);
-                for (String k : r.unknownKeys()) LOG.warn("[nusmp] Mega recipe: unknown key '{}' (a typo keeps the default)", k);
+                for (String k : r.unknownKeys()) LOG.warn("[anime_multiverse] Mega recipe: unknown key '{}' (a typo keeps the default)", k);
             } catch (Exception ex) {
-                LOG.warn("[nusmp] The Mega recipe {} cannot be read ({}); the built-in defaults are used.", RECIPE_FILE, ex.toString());
+                LOG.warn("[anime_multiverse] The Mega recipe {} cannot be read ({}); the built-in defaults are used.", RECIPE_FILE, ex.toString());
                 r = new Recipe();
             }
         } else {
-            LOG.info("[nusmp] No Mega recipe file ({}); the built-in defaults are used.", RECIPE_FILE);
+            LOG.info("[anime_multiverse] No Mega recipe file ({}); the built-in defaults are used.", RECIPE_FILE);
         }
         recipe = r;
         floorRecipe = readFloorRecipe(manager);
@@ -225,7 +225,7 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
         shapes.clear();
         unreadable.clear();
         rebuildWarmQueue();
-        LOG.info("[nusmp] Loaded {} Mega pools and the Sector Recipe.", loaded.size());
+        LOG.info("[anime_multiverse] Loaded {} Mega pools and the Sector Recipe.", loaded.size());
     }
 
     /** The floor recipe: the shipped file laid over the built-in floor numbers; a missing or unreadable file keeps the built-in ones (logged). */
@@ -233,20 +233,20 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
     private static Recipe readFloorRecipe(ResourceManager manager) {
         List<Resource> stack = manager.listResourceStacks(RECIPE_DIR, rl -> rl.equals(FLOOR_RECIPE_FILE)).get(FLOOR_RECIPE_FILE);
         if (stack == null || stack.isEmpty()) {
-            LOG.info("[nusmp] No floor recipe file ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE);
+            LOG.info("[anime_multiverse] No floor recipe file ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE);
             return Recipe.forFloors();
         }
         try (Reader reader = new InputStreamReader(stack.get(stack.size() - 1).open(), StandardCharsets.UTF_8)) {
             Recipe r = Recipe.fromMap((Map<String, Object>) toJava(JsonParser.parseReader(reader)), Recipe.forFloors());
-            for (String k : r.unknownKeys()) LOG.warn("[nusmp] Mega floor recipe: unknown key '{}' (a typo keeps the default)", k);
+            for (String k : r.unknownKeys()) LOG.warn("[anime_multiverse] Mega floor recipe: unknown key '{}' (a typo keeps the default)", k);
             return r;
         } catch (Exception ex) {
-            LOG.warn("[nusmp] The Mega floor recipe {} cannot be read ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE, ex.toString());
+            LOG.warn("[anime_multiverse] The Mega floor recipe {} cannot be read ({}); the built-in floor numbers are used.", FLOOR_RECIPE_FILE, ex.toString());
             return Recipe.forFloors();
         }
     }
 
-    /** The theme rules of every {@code data/nusmp/mega/template_themes/*.json} (the top file of each stack); what is not understood is logged and skipped. */
+    /** The theme rules of every {@code data/anime_multiverse/mega/template_themes/*.json} (the top file of each stack); what is not understood is logged and skipped. */
     private static TemplateThemes readThemes(ResourceManager manager) {
         List<Object> docs = new ArrayList<>();
         for (Map.Entry<ResourceLocation, List<Resource>> e : new TreeMap<>(manager.listResourceStacks(THEME_DIR, rl -> rl.getPath().endsWith(".json"))).entrySet()) {
@@ -254,13 +254,13 @@ public final class VanillaPools implements PoolSource, ResourceManagerReloadList
             try (Reader reader = new InputStreamReader(e.getValue().get(e.getValue().size() - 1).open(), StandardCharsets.UTF_8)) {
                 docs.add(toJava(JsonParser.parseReader(reader)));
             } catch (Exception ex) {
-                LOG.warn("[nusmp] Skipping Mega theme rooms file {}: {}", e.getKey(), ex.toString());
+                LOG.warn("[anime_multiverse] Skipping Mega theme rooms file {}: {}", e.getKey(), ex.toString());
             }
         }
         List<String> problems = new ArrayList<>();
         TemplateThemes rules = TemplateThemeFiles.parse(docs, problems);
-        for (String p : problems) LOG.warn("[nusmp] Mega theme rooms: {}", p);
-        LOG.info("[nusmp] Loaded {} theme room file(s): {} template prefix(es) reserved for a theme.", docs.size(), rules.size());
+        for (String p : problems) LOG.warn("[anime_multiverse] Mega theme rooms: {}", p);
+        LOG.info("[anime_multiverse] Loaded {} theme room file(s): {} template prefix(es) reserved for a theme.", docs.size(), rules.size());
         return rules;
     }
 

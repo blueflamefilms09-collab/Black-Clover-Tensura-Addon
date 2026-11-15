@@ -71,7 +71,7 @@ public final class ExclusiveEvents {
         try {
             ExclusivePockets.fast(e.getServer());
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The tomb tick failed (further detail at debug): {}", ex.toString());
+            LOG.warn("[anime_multiverse] The tomb tick failed (further detail at debug): {}", ex.toString());
             LOG.debug("tomb tick", ex);
         }
     }
@@ -109,9 +109,9 @@ public final class ExclusiveEvents {
             } else if (how.equals("magic")) {
                 ExclusivePockets.openSeal(level, realm, pk, rt, p, "magic");
             } else {
-                p.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("message.nusmp.mega.pocket.seal.deny", "The seal does not answer you. It wants %s magic, the %s, or force.",
-                        net.minecraft.network.chat.Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".seal", rt.def.seal().label()),
-                        net.minecraft.network.chat.Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".sigil", rt.def.seal().sigil())).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE), true);
+                p.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("message.anime_multiverse.mega.pocket.seal.deny", "The seal does not answer you. It wants %s magic, the %s, or force.",
+                        net.minecraft.network.chat.Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".seal", rt.def.seal().label()),
+                        net.minecraft.network.chat.Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".sigil", rt.def.seal().sigil())).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE), true);
             }
             return;
         }
@@ -213,7 +213,7 @@ public final class ExclusiveEvents {
                 ie.setUnlimitedLifetime();
                 e.getDrops().add(ie);
                 for (ServerPlayer m : PocketRealm.playersIn(level, pk.slot))
-                    m.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("message.nusmp.mega.pocket.keeper.dead", "The keeper falls and drops the Sigil of the seal.").withStyle(net.minecraft.ChatFormatting.GOLD), true);
+                    m.displayClientMessage(net.minecraft.network.chat.Component.translatableWithFallback("message.anime_multiverse.mega.pocket.keeper.dead", "The keeper falls and drops the Sigil of the seal.").withStyle(net.minecraft.ChatFormatting.GOLD), true);
             }
         } else if (e.getEntity() instanceof ServerPlayer p && RiftConfig.get(RiftConfig.KEEP_ITEMS)) {
             PocketRealm.Pocket pk = tombAt(level, p.blockPosition());

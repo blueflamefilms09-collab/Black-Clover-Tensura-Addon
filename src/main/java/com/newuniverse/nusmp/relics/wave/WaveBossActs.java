@@ -279,7 +279,7 @@ final class WaveBossActs {
             try {
                 step.accept(age);
             } catch (RuntimeException failed) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] boss relics: {} failed", what, failed);
+                org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] boss relics: {} failed", what, failed);
             }
         };
     }
@@ -289,7 +289,7 @@ final class WaveBossActs {
             try {
                 run.run();
             } catch (RuntimeException failed) {
-                org.slf4j.LoggerFactory.getLogger("nusmp").error("[nusmp] boss relics: {} failed", what, failed);
+                org.slf4j.LoggerFactory.getLogger("anime_multiverse").error("[anime_multiverse] boss relics: {} failed", what, failed);
             }
         };
     }

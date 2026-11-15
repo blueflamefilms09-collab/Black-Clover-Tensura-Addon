@@ -21,10 +21,10 @@ class ForgeViewTest {
         assertFalse(v.hasSubject());
         assertFalse(v.isRelic());
         assertEquals(0f, v.tierFraction());
-        assertEquals("nusmp.forge.tier.none", v.tierLine().key());
-        assertEquals("nusmp.forge.sockets.none", v.socketLine().key());
-        assertEquals("nusmp.forge.cost.none", v.costLine().key());
-        assertEquals("nusmp.forge.chance.none", v.chanceLine().key());
+        assertEquals("anime_multiverse.forge.tier.none", v.tierLine().key());
+        assertEquals("anime_multiverse.forge.sockets.none", v.socketLine().key());
+        assertEquals("anime_multiverse.forge.cost.none", v.costLine().key());
+        assertEquals("anime_multiverse.forge.chance.none", v.chanceLine().key());
         assertNull(v.cooldownLine());
         assertSame(Msg.OK, v.msg());
         assertNotNull(ForgeView.decode(null));
@@ -61,9 +61,9 @@ class ForgeViewTest {
         d[ForgeView.D_TARGET] = -1;
         ForgeView.View v = ForgeView.decode(d);
         assertEquals(1f, v.tierFraction());
-        assertEquals("nusmp.forge.cost.none", v.costLine().key());
-        assertEquals("nusmp.forge.sockets.zero", v.socketLine().key());
-        assertEquals("nusmp.forge.cycle.none", v.cycleLine().key());
+        assertEquals("anime_multiverse.forge.cost.none", v.costLine().key());
+        assertEquals("anime_multiverse.forge.sockets.zero", v.socketLine().key());
+        assertEquals("anime_multiverse.forge.cycle.none", v.cycleLine().key());
     }
 
     @Test
@@ -87,7 +87,7 @@ class ForgeViewTest {
         assertTrue(v.enabled(Button.SOCKET));
         assertTrue(v.enabled(Button.ENGRAVE));
         assertFalse(v.enabled(Button.UPGRADE));
-        assertEquals("nusmp.forge.msg.sockets_full", v.messageLine().key());
+        assertEquals("anime_multiverse.forge.msg.sockets_full", v.messageLine().key());
     }
 
     @Test

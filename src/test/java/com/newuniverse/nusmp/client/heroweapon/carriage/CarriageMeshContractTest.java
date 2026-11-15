@@ -19,7 +19,7 @@ import java.nio.file.Path;
  * narrower than the tail end (the hull), and under every seat point there is a bench surface at the seat's height.
  */
 class CarriageMeshContractTest {
-    private static final Path MESH = Path.of("src/main/resources/assets/nusmp/weapon_meshes/vassal_carriage.txt");
+    private static final Path MESH = Path.of("src/main/resources/assets/anime_multiverse/weapon_meshes/vassal_carriage.txt");
 
     @Test
     void theShippedMeshFollowsTheMeshSpaceContractOfTheCarriagePage() throws Exception {

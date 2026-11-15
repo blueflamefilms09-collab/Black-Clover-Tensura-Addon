@@ -29,7 +29,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.List;
 
 /**
- * 1.11.0: the Tower Wizard's library, a pocket dimension in the void (data/nusmp/dimension/grimoire_library.json): a round reading room
+ * 1.11.0: the Tower Wizard's library, a pocket dimension in the void (data/anime_multiverse/dimension/grimoire_library.json): a round reading room
  * with shelves, lanterns and a central rug, hung with books that fly around whoever stands in it. Right-clicking the Grimoire Summons
  * carries you here; the wizard waits at the centre; when your grimoire has come to you (or you ask him, sneaking) he sends you back
  * to where you stood. The room is built the first time it is entered; the flying books exist only while somebody is inside.
@@ -37,7 +37,7 @@ import java.util.List;
 public final class WizardLibrary {
     private WizardLibrary() {}
 
-    public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_library"));
+    public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "grimoire_library"));
     private static final String BOOK_TAG = "nusmp_library_book";
     private static final int FLOOR_Y = 64, BOOKS = 26, SETTLE_TICKS = 60, MAX_NEW_BOOKS_PER_RUN = 8;
     /** 3.59.1: game time the library last became occupied (-1 = empty). Books are only added once saved entities have had time to load, or a restart stacked a new set on the old one. */

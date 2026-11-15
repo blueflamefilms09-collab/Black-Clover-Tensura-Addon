@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * children), what a ban beats, how a TAG line is judged without a world, and that the real {@code types.json} loads clean and holds the types the docs promise.
  */
 class ShopTypeTest {
-    private static final Path TYPES = Path.of("src/main/resources/data/nusmp/black_market/types.json");
+    private static final Path TYPES = Path.of("src/main/resources/data/anime_multiverse/black_market/types.json");
 
     private static ShopType food() {
         return new ShopType("food", false, Set.of("c:foods", "c:crops"), Set.of(), Set.of("minecraft:sugar"), Set.of("minecraft:enchanted_golden_apple"));
@@ -119,7 +119,7 @@ class ShopTypeTest {
         for (String id : List.of("general", "food", "ores", "potions", "tools", "armor", "magic", "building", "materials")) assertNotNull(p.get(id), id);
         ShopType general = p.get("general");
         assertTrue(general.all());
-        for (String banned : List.of("minecraft:barrier", "minecraft:command_block", "tensura:mithril_ingot", "nusmp:devils_core", "nusmp:genesis_seed", "tensura:hihiirokane_ingot")) {
+        for (String banned : List.of("minecraft:barrier", "minecraft:command_block", "tensura:mithril_ingot", "anime_multiverse:devils_core", "anime_multiverse:genesis_seed", "tensura:hihiirokane_ingot")) {
             assertTrue(general.isBanned(banned), banned + " must never be bought for gold");
         }
         assertFalse(p.get("food").allows("minecraft:netherite_block", List.of("c:storage_blocks")), "the baker does not sell netherite");

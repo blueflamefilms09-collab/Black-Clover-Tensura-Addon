@@ -18,8 +18,8 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "src", "main", "resources")
-TEX = os.path.join(RES, "assets", "nusmp", "textures", "item")
-MODELS = os.path.join(RES, "assets", "nusmp", "models", "item")
+TEX = os.path.join(RES, "assets", "anime_multiverse", "textures", "item")
+MODELS = os.path.join(RES, "assets", "anime_multiverse", "models", "item")
 
 N = 16
 
@@ -123,7 +123,7 @@ def save(name, sp):
     sp.image().save(os.path.join(TEX, name + ".png"))
     os.makedirs(MODELS, exist_ok=True)
     with open(os.path.join(MODELS, name + ".json"), "w") as f:
-        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + name}}, f, indent=2)
+        json.dump({"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + name}}, f, indent=2)
         f.write("\n")
 
 

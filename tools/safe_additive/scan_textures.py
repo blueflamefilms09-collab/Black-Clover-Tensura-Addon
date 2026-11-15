@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEX = os.path.abspath(os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp", "textures"))
+TEX = os.path.abspath(os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse", "textures"))
 
 # (directory below textures/, substrings of the file name that make it an additive texture; "" = every png)
 SCOPE = [

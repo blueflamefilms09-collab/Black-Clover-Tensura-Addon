@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:miasma_infused_katana",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:demon_slasher_katana",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dark_katana",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:ceremonial_katana",
+      "required": false
+    }
+  ]
+}

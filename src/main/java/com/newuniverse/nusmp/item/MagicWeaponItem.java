@@ -105,7 +105,7 @@ public class MagicWeaponItem extends SwordItem {
     }
 
     private static final net.minecraft.resources.ResourceLocation RIMEHEART_STANCE =
-            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "rimeheart_stance");
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "rimeheart_stance");
 
     /** Sword attributes; the Rimeheart also roots its wielder a little (knockback resistance while held). */
     private static net.minecraft.world.item.component.ItemAttributeModifiers attributes(Kind kind) {

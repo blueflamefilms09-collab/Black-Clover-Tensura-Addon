@@ -4,7 +4,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
  * Server config of the Mana Zone and the Grand Magic Zones: {@code serverconfig/nusmp-mana-zone-server.toml}. The numbers of the technique itself live
- * in {@code data/nusmp/mana_zone.json} (datapack-overridable); this file holds the few switches an owner may want to turn without a datapack. The gate
+ * in {@code data/anime_multiverse/mana_zone.json} (datapack-overridable); this file holds the few switches an owner may want to turn without a datapack. The gate
  * strictness can only make the gate stricter than the shipped numbers or a little easier (never under the floors of {@link ManaZoneGate}).
  */
 public final class ManaZoneConfig {
@@ -20,7 +20,7 @@ public final class ManaZoneConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("manaZone");
-        GATE_STRICTNESS = b.comment("Multiplier on the EP, boss, depth and attunement numbers of the Mana Zone gate (data/nusmp/mana_zone.json). 1 = as shipped; "
+        GATE_STRICTNESS = b.comment("Multiplier on the EP, boss, depth and attunement numbers of the Mana Zone gate (data/anime_multiverse/mana_zone.json). 1 = as shipped; "
                 + "0.5 is the easiest it can get (the floors of 1,000,000 EP, Senior 5th Class and 5 boss kills still hold); 4 makes it four times harder.")
                 .defineInRange("gateStrictness", 1.0, ManaZoneGate.MIN_STRICTNESS, ManaZoneGate.MAX_STRICTNESS);
         MAX_RADIUS = b.comment("The largest radius (blocks) any Mana Zone may reach, whatever the caster's EP.").defineInRange("maxRadius", 40.0, 8.0, 64.0);

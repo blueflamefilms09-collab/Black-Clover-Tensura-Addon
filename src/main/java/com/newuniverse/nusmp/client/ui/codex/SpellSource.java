@@ -23,7 +23,7 @@ import java.util.Map;
  * skill whose instance (with its "Unlocked" page mask) the client already holds, because Tensura's own skill list draws the mode names from it.
  * The server's status summary ({@code Grimoire.PageList}, built by {@code MultiverseSync} for the Four Kingdoms menu) is the fallback when the
  * skills are not readable yet, so the tab never shows less than that menu does. Pages still sealed are only counted, never named (the discovery
- * rule). The description of a page is its written lang line {@code nusmp.page.<book>.<page>} when there is one, else a generated line of its cost
+ * rule). The description of a page is its written lang line {@code anime_multiverse.page.<book>.<page>} when there is one, else a generated line of its cost
  * and cooldown.
  */
 public final class SpellSource {
@@ -82,7 +82,7 @@ public final class SpellSource {
             if (!GrimoireBook.isUnlocked(inst, m)) { sealed.merge(magicId, 1, Integer::sum); continue; }
             int mastery = m == 0 ? 0 : (int) Math.round(MasteryPages.needed(book, page, m, n) * 100.0);
             spells.add(new SpellModel.Spell(magicId, label, page.id(), page.name(), m, (int) Math.round(page.costPercent()), page.cooldown() / 20, mastery,
-                    "nusmp.page." + bookPath + "." + page.id()));
+                    "anime_multiverse.page." + bookPath + "." + page.id()));
         }
     }
 

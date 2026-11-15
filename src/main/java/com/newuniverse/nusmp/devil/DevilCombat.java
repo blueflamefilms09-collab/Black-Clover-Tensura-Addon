@@ -45,7 +45,7 @@ public final class DevilCombat {
             if (target instanceof Player) bonus = (float) Math.min(bonus, target.getMaxHealth() * 0.15);       // no one-shots between players
             e.setAmount(blow + bonus);
             if (!fx.effectId().isEmpty()) {
-                if (fx.effectId().equals("nusmp:burn")) target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), Math.min(fx.ticks(), 200)));
+                if (fx.effectId().equals("anime_multiverse:burn")) target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), Math.min(fx.ticks(), 200)));
                 else com.newuniverse.nusmp.relics.Fx.addEffect(target, fx.effectId(), fx.amp() >= 2 ? BalanceLaw.controlTicks(target, fx.ticks()) : fx.ticks(), fx.amp());
             }
             if (fx.strip()) {

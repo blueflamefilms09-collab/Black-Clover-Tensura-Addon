@@ -229,7 +229,7 @@ class RecombAnimeRulesTest {
 
     @Test
     void clipLengthsMatchTheServersTicks() throws Exception {
-        JsonObject a = json(new File(ROOT, "assets/nusmp/animations/entity/recombanime_golem.animation.json")).getAsJsonObject("animations");
+        JsonObject a = json(new File(ROOT, "assets/anime_multiverse/animations/entity/recombanime_golem.animation.json")).getAsJsonObject("animations");
         assertEquals(RecombAnimeRules.ASSEMBLE_TICKS, Math.round(a.getAsJsonObject("assemble").get("animation_length").getAsFloat() * 20f));
         assertEquals(RecombAnimeRules.COLLAPSE_TICKS, Math.round(a.getAsJsonObject("collapse").get("animation_length").getAsFloat() * 20f));
         assertEquals(RecombAnimeRules.RAM_TICKS, Math.round(a.getAsJsonObject("punch").get("animation_length").getAsFloat() * 20f));
@@ -246,7 +246,7 @@ class RecombAnimeRulesTest {
 
     @Test
     void particleIdsExistInTheCatalog() throws Exception {
-        JsonObject cat = json(new File(ROOT, "data/nusmp/particle_catalog.json"));
+        JsonObject cat = json(new File(ROOT, "data/anime_multiverse/particle_catalog.json"));
         java.util.Set<String> ids = new java.util.HashSet<>();
         for (var e : cat.getAsJsonArray("particles")) ids.add(e.getAsJsonObject().get("id").getAsString());
         for (String id : RecombAnimeRules.PARTICLE_IDS) assertTrue(ids.contains(id), "particle " + id + " is not in the catalog");

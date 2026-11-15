@@ -60,7 +60,7 @@ public final class ClearanceSettings {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-clearance-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The clearance config could not be registered ({}); the defaults apply (gen.clearance7 = true)", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The clearance config could not be registered ({}); the defaults apply (gen.clearance7 = true)", e.toString());
         }
     }
 }

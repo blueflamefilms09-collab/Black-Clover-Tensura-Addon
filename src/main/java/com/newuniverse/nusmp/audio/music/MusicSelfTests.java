@@ -49,10 +49,10 @@ public final class MusicSelfTests {
         }
 
         JsonObject doc;
-        try (Reader in = new InputStreamReader(MusicSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json"), StandardCharsets.UTF_8)) {
+        try (Reader in = new InputStreamReader(MusicSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json"), StandardCharsets.UTF_8)) {
             doc = JsonParser.parseReader(in).getAsJsonObject();
         } catch (NullPointerException | IllegalStateException ex) {
-            return SelfTests.Result.fail("assets/nusmp/sounds.json is not on the class path or not an object");
+            return SelfTests.Result.fail("assets/anime_multiverse/sounds.json is not on the class path or not an object");
         }
         long bytes = 0;
         for (String track : MusicCatalog.trackNames()) {
@@ -69,7 +69,7 @@ public final class MusicSelfTests {
             }
             for (JsonElement s : sounds) {
                 String name = s.isJsonObject() ? s.getAsJsonObject().get("name").getAsString() : s.getAsString();
-                String path = "/assets/nusmp/sounds/" + name.substring(name.indexOf(':') + 1) + ".ogg";
+                String path = "/assets/anime_multiverse/sounds/" + name.substring(name.indexOf(':') + 1) + ".ogg";
                 try (InputStream in = MusicSelfTests.class.getResourceAsStream(path)) {
                     if (in == null) {
                         bad.add(id + ": missing file " + path);

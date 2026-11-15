@@ -2,7 +2,7 @@
 """
 Why: THEME-B (1.59.0, docs/labyrinth/mega_v2_thb.md section 2) gives the Holy road a dwarven hold: dressed stone, waxed copper and iron, lava that is kept behind glass, anvils
 and forges that never went cold, mine carts on rails and a vault for dead kings. This script writes its rooms (`structure/mega/<folder>/dwarven_forgehold_*.nbt`, the prefix
-`data/nusmp/mega/template_themes/dwarven_forgehold.json` claims for the theme), so only a sector of the Dwarven Forgehold theme ever draws them.
+`data/anime_multiverse/mega/template_themes/dwarven_forgehold.json` claims for the theme), so only a sector of the Dwarven Forgehold theme ever draws them.
 
     python3 tools/labyrinth/gen_mega_theme_dwarven_forgehold.py                      # builds, checks and writes every room (a room with a defect is not written)
     python3 tools/labyrinth/gen_mega_theme_dwarven_forgehold.py hall_of_pillars --preview   # one room, then render it in its own theme into $THB_PREVIEWS
@@ -913,7 +913,7 @@ def anvil_trial(path):
         h.marker(x, GROUND, z, "patrol")
     D.auto_light(h, max_lamps=8)
     h.explicit_defaults()
-    R2.trial_core(h.mt, [("nusmp:living_armor", 2), ("minecraft:vindicator", 2), ("minecraft:magma_cube", 2)], rng, [("n", 13), ("s", 13)], FR + 12, glyphs)
+    R2.trial_core(h.mt, [("anime_multiverse:living_armor", 2), ("minecraft:vindicator", 2), ("minecraft:magma_cube", 2)], rng, [("n", 13), ("s", 13)], FR + 12, glyphs)
     return h.mt
 
 

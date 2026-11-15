@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 /**
  * Why: the witch BUYS the dungeon's goods, and what she pays for each item is the whole economy of the shop (it is how a player earns the millions a route book costs), so the
- * numbers are DATA in {@code data/nusmp/black_market/prices.json} that the owner can retune or a server owner can replace with a datapack, never constants in code. This class
+ * numbers are DATA in {@code data/anime_multiverse/black_market/prices.json} that the owner can retune or a server owner can replace with a datapack, never constants in code. This class
  * is that table as an immutable value with no game types (the items are plain resource-location strings, so a price may name an item of an addon that is not installed: the game
  * side drops the rows whose item does not exist), plus the reader that validates the file. It never throws on a bad file: a broken row is skipped with a readable sentence and
  * the rest still loads. A row is either a bare number (gold per item) or {@code {"gold": n, "category": "stones"}}; the category only groups rows and has no effect on the price.

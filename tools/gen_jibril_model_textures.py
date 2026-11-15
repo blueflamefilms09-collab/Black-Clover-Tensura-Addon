@@ -2,7 +2,7 @@
 
 Deterministic and font-free (every machine writes the same pixels). Written for this mod, same palette as tools/gen_jibril_vfx_textures.py (pearl white, peach and rose gold, amber, azure and lavender
 shadow, the prismatic rim). It only ADDS one file; the 22 flat sprites of gen_jibril_vfx_textures.py stay and are still drawn when the setting `jibrilModels` is off.
-Output: src/main/resources/assets/nusmp/textures/particle/jibril_model_atlas.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/jibril_model_atlas.png
 
     python tools/gen_jibril_model_textures.py
 

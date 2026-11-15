@@ -18,7 +18,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 /**
  * Why: the D&amp;D half of the owner's "Lethality vs HP buffers" brief: the Labyrinth's hostile mobs carry a big hit-point pool, so a fight is
  * attrition and not a one-shot. It is a permanent attribute modifier on MAX_HEALTH, operation ADD_MULTIPLIED_TOTAL with value
- * {@code HP_SCALE - 1}, id {@code nusmp:labyrinth_hp_buffer}. A modifier (and not a {@code setBaseValue}) is the NeoForge-friendly way:
+ * {@code HP_SCALE - 1}, id {@code anime_multiverse:labyrinth_hp_buffer}. A modifier (and not a {@code setBaseValue}) is the NeoForge-friendly way:
  * it is saved with the entity, shows in tooltips and /attribute, composes with other mods' modifiers instead of overwriting the mob's own
  * base health, and it can be removed by id if the owner turns the buffer off. ADD_MULTIPLIED_TOTAL multiplies the final sum, so a modded mob
  * that already has +health modifiers is scaled as a whole. The hook is {@link EntityJoinLevelEvent} (server side only) and not

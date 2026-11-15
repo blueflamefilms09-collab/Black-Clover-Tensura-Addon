@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Why: client feedback without a renderer: when a delver walks into the area of a mechanic they see its name and, if it can be beaten, a one-line hint of how, in the action bar;
  * when it is overcome they get a title. Every string is a lang key with an English fallback in code ({@code Component.translatableWithFallback}), so the messages read fine before
- * the lang fragment ({@code tools/mechanics/lang_fragment.json}) is merged. The names and descriptions of the thousand mechanics are {@code mechanic.nusmp.<id>.name / .desc}.
+ * the lang fragment ({@code tools/mechanics/lang_fragment.json}) is merged. The names and descriptions of the thousand mechanics are {@code mechanic.anime_multiverse.<id>.name / .desc}.
  */
 public final class Messages {
     private Messages() {}
@@ -42,7 +42,7 @@ public final class Messages {
 
     public static MutableComponent name(MechanicDef d) { return Component.translatableWithFallback(d.nameKey(), d.name()); }
 
-    public static MutableComponent text(String key, String english, Object... args) { return Component.translatableWithFallback("message.nusmp.mega.mech." + key, english, args); }
+    public static MutableComponent text(String key, String english, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.mega.mech." + key, english, args); }
 
     public static MutableComponent hint(String counterKind) {
         String h = HINT.get(counterKind);

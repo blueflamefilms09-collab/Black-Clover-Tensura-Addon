@@ -17,13 +17,13 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /**
- * Why: the Legendary Sword's forms file ({@code data/nusmp/hero/forms/legendary_sword.json}) is read by the forms system, the Weapon Book and the dispatcher, and a
+ * Why: the Legendary Sword's forms file ({@code data/anime_multiverse/hero/forms/legendary_sword.json}) is read by the forms system, the Weapon Book and the dispatcher, and a
  * wrong id in it fails there, in the game, long after the commit. This test holds the shipped file to the rules of design.md section 6 (through the same checker the
  * Shield's test uses) and to the Sword's own logic: every skill id it lists is one the Sword has, every passive is one the Sword implements, every skill and passive is
  * used by some form, and both curse series are there with two forms each. The checker is proved against deliberately wrong copies of the file first.
  */
 class SwordFormsDataTest {
-    static final Path FILE = Path.of("src/main/resources/data/nusmp/hero/forms/legendary_sword.json");
+    static final Path FILE = Path.of("src/main/resources/data/anime_multiverse/hero/forms/legendary_sword.json");
 
     /** The Tensura items the file uses, each found in the owner's Tensura 2.0.1.3 id reference (items part) when the file was written. */
     static final Set<String> TENSURA_ITEMS = Set.of("tensura:armorsaurus_scale", "tensura:armorsaurus_shell", "tensura:giant_ant_carapace", "tensura:mithril_ingot",

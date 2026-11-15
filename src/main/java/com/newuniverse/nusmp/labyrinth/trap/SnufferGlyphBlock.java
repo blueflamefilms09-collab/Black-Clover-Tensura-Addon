@@ -88,7 +88,7 @@ public final class SnufferGlyphBlock extends Block {
             int out = snuffAround(level, pos);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.8f, 0.5f);
             RukhFx.burst(level, new Vec3(pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5), RukhFx.Alignment.DARK, 10);
-            for (ServerPlayer p : near) p.displayClientMessage(Component.translatable("message.nusmp.trap.snuffer", out).withStyle(ChatFormatting.DARK_GRAY), true);
+            for (ServerPlayer p : near) p.displayClientMessage(Component.translatable("message.anime_multiverse.trap.snuffer", out).withStyle(ChatFormatting.DARK_GRAY), true);
         }
     }
 

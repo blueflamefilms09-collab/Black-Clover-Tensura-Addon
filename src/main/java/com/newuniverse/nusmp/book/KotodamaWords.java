@@ -465,7 +465,7 @@ public final class KotodamaWords {
         return true;
     }
 
-    static final net.minecraft.resources.ResourceLocation REVEALED = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "koto_reveal");
+    static final net.minecraft.resources.ResourceLocation REVEALED = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "koto_reveal");
 
     /** "Reveal": the hidden are dragged into the light for 20 s (glowing, invisibility gone, presence concealment off). */
     static boolean reveal(LivingEntity c, float pw) {

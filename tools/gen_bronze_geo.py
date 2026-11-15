@@ -7,7 +7,7 @@ Look: cast bronze (warm brown-gold, hammered, with polished highlights) with ver
 rims, the lower folds and the joints. Reference: the owner's still of Sekke's tiny cyan-green bronze figurine, and the Bronze Magic spec
 ("a tarnished green-and-brown metal look; heavy physical weaponry").
 
-Files (all under src/main/resources/assets/nusmp/):
+Files (all under src/main/resources/assets/anime_multiverse/):
     geo/entity/bronze_<name>.geo.json, animations/entity/bronze_<name>.animation.json,
     textures/entity/bronze_<name>.png + bronze_<name>_glow.png                 name = statue, lizard, pauldron_r, pauldron_l, crest, breast
     textures/aura/bronze_plate.png (+ _glow)      the plate-and-rivet armour laid over the player's skin layout (64x64, cutout)

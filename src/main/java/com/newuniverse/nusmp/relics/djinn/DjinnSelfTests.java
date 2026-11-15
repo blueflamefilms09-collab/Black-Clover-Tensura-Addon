@@ -66,7 +66,7 @@ public final class DjinnSelfTests {
         TinyDjinnSelfTest.register();                                                            // 1.105.0: djinn.tiny
     }
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     static SelfTests.Result coreRebuild(MinecraftServer server) throws Exception {
         SelfTests.Result wired = wiring(server);
@@ -82,7 +82,7 @@ public final class DjinnSelfTests {
         if (all.length != 36) return SelfTests.Result.fail("expected 36 Djinn, found " + all.length);
         List<String> bad = new ArrayList<>();
         JsonObject lang;
-        try (InputStream in = DjinnSelfTests.class.getResourceAsStream("/assets/nusmp/lang/en_us.json")) {
+        try (InputStream in = DjinnSelfTests.class.getResourceAsStream("/assets/anime_multiverse/lang/en_us.json")) {
             if (in == null) return SelfTests.Result.fail("en_us.json is not in the jar");
             lang = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
         }
@@ -97,9 +97,9 @@ public final class DjinnSelfTests {
                 if (!BuiltInRegistries.ITEM.containsKey(id(path))) bad.add("no weapon item " + path);
                 if (!(DjinnWeaponItems.item(d, dark) instanceof DjinnWeaponItem w) || w.djinn() != d || w.dark() != dark) bad.add("weapon " + path);
                 else weapons++;
-                if (!lang.has("item.nusmp." + path)) bad.add("no lang for " + path);
+                if (!lang.has("item.anime_multiverse." + path)) bad.add("no lang for " + path);
             }
-            if (!lang.has("item.nusmp.djinn_seal_" + d.id())) bad.add("no lang for the seal of " + d.id());
+            if (!lang.has("item.anime_multiverse.djinn_seal_" + d.id())) bad.add("no lang for the seal of " + d.id());
             DjinnWeaponRules.Spec spec = DjinnWeaponRules.spec(d);
             if (spec == null) {
                 bad.add("no weapon row for " + d.id());

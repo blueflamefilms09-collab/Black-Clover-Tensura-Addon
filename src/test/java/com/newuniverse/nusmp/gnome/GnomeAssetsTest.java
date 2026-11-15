@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * constants, the glow sheets (no colour under a transparent pixel: the safe additive rule), the lang text, the previews and the doc.
  */
 class GnomeAssetsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final String[] FORMS = {"companion", "full"};
 
     private static JsonObject json(Path p) throws IOException { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
@@ -235,7 +235,7 @@ class GnomeAssetsTest {
     @Test
     void theLangFragmentAndThePicturesAndTheDocAreThere() throws IOException {
         JsonObject lang = json(Path.of("tools/lang/gnome.json"));
-        for (String k : new String[]{"key.nusmp.gnome", "nusmp.gnome.linked", "nusmp.gnome.unlinked", "nusmp.gnome.need_earth", "nusmp.gnome.full"}) assertTrue(lang.has(k), k);
+        for (String k : new String[]{"key.anime_multiverse.gnome", "anime_multiverse.gnome.linked", "anime_multiverse.gnome.unlinked", "anime_multiverse.gnome.need_earth", "anime_multiverse.gnome.full"}) assertTrue(lang.has(k), k);
         for (var e : lang.entrySet()) {
             String v = e.getValue().getAsString().toLowerCase();
             assertFalse(v.contains("hunger") || v.contains("starv") || v.contains("food"), e.getKey());

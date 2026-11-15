@@ -1,0 +1,15 @@
+{
+  "theme": "vampire_castle",
+  "templates": [
+    "anime_multiverse:mega/hall/vampire_castle_",
+    "anime_multiverse:mega/set/vampire_castle_",
+    "anime_multiverse:mega/trial/vampire_castle_",
+    "anime_multiverse:mega/treasure/vampire_castle_"
+  ],
+  "relative": {
+    "mega/hall/vampire_castle_": 30,
+    "mega/set/vampire_castle_": 10,
+    "mega/trial/vampire_castle_": 20,
+    "mega/treasure/vampire_castle_": 20
+  }
+}

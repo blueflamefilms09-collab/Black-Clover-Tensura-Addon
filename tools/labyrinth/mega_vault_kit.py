@@ -30,7 +30,7 @@ import mega_arch_check as A  # noqa: E402  (the game's survival rules: what a ch
 
 GROUND = L.FLOOR_ROW + 1        # the first interior row: the cell a person stands in
 FLOOR = L.FLOOR_ROW
-PEDESTAL = "nusmp:relic_pedestal"
+PEDESTAL = "anime_multiverse:relic_pedestal"
 GOLD = "minecraft:gold_block"
 RED_CARPET = "minecraft:red_carpet"
 DIRS = {"north": (0, -1), "south": (0, 1), "west": (-1, 0), "east": (1, 0)}
@@ -591,15 +591,15 @@ def analyze(t, entry, n_pedestals, clear=None):
         if c.block == "minecraft:structure_block" and c.nbt is not None:
             markers.append((pos, str(c.nbt.get("metadata", ""))))
     kinds = [meta.split(";")[0] for _, meta in markers]
-    if kinds.count("nusmp:vault_center") != 1:
-        problems.append("exactly one vault_center marker expected, found %d" % kinds.count("nusmp:vault_center"))
-    for bad in ("nusmp:spawn", "nusmp:patrol", "nusmp:faction", "nusmp:trap", "nusmp:arrival"):
+    if kinds.count("anime_multiverse:vault_center") != 1:
+        problems.append("exactly one vault_center marker expected, found %d" % kinds.count("anime_multiverse:vault_center"))
+    for bad in ("anime_multiverse:spawn", "anime_multiverse:patrol", "anime_multiverse:faction", "anime_multiverse:trap", "anime_multiverse:arrival"):
         if bad in kinds:
             problems.append("a vault carries no %s marker" % bad)
     peds = {pos: c for pos, c in t.cells.items() if c.block == PEDESTAL}
     pm = {}
     for pos, meta in markers:
-        if meta.startswith("nusmp:pedestal"):
+        if meta.startswith("anime_multiverse:pedestal"):
             args = dict(a.split("=", 1) for a in meta.split(";")[1:] if "=" in a)
             pm[pos] = args.get("slot")
     if len(peds) != n_pedestals:
@@ -649,7 +649,7 @@ def analyze(t, entry, n_pedestals, clear=None):
             if not any(n in reach for n in near):
                 problems.append("a person cannot walk to the pedestal at (%d,%d,%d)" % (x, y, z))
         for (pos, meta) in markers:
-            if meta.startswith("nusmp:vault_center"):
+            if meta.startswith("anime_multiverse:vault_center"):
                 below = (pos[0], pos[1] - 1, pos[2])
                 if pos not in reach and not any((pos[0], pos[1] + dy, pos[2]) in reach for dy in (-1, 0, 1)):
                     problems.append("the vault centre %s cannot be reached on foot" % (pos,))

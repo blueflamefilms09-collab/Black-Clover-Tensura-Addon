@@ -201,9 +201,9 @@ public class ChronicleSigilItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.nusmp.chronicle_sigil.tip.kind").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("item.nusmp.chronicle_sigil.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("item.nusmp.chronicle_sigil.tip.use").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("item.nusmp.chronicle_sigil.tip.rules").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.chronicle_sigil.tip.kind").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("item.anime_multiverse.chronicle_sigil.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.anime_multiverse.chronicle_sigil.tip.use").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.chronicle_sigil.tip.rules").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

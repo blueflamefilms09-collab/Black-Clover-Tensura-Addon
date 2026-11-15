@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "nusmp:item/guild_banner_of_ainz_ooal_gown"
-  }
-}

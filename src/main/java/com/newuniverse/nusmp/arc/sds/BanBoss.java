@@ -248,7 +248,7 @@ public class BanBoss extends ArcBoss {
             }
             if (tickCount % 20 == 0 && fightActive() && !fountain.falling()) snatchUpkeep(sl, now);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Ban's tick failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Ban's tick failed: {}", e.toString());
         }
     }
 
@@ -342,7 +342,7 @@ public class BanBoss extends ArcBoss {
             }
             return a;
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] Ban's guard failed: {}", e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] Ban's guard failed: {}", e.toString());
             return amount;
         }
     }
@@ -351,7 +351,7 @@ public class BanBoss extends ArcBoss {
         try {
             if (who instanceof ServerPlayer p) NusmpEvents.fire(p, key);
         } catch (RuntimeException e) {
-            LogUtils.getLogger().warn("[nusmp] the quest hook {} failed: {}", key, e.toString());
+            LogUtils.getLogger().warn("[anime_multiverse] the quest hook {} failed: {}", key, e.toString());
         }
     }
 
@@ -432,7 +432,7 @@ public class BanBoss extends ArcBoss {
                 try {
                     tellOf(id, t, left, total);
                 } catch (RuntimeException e) {
-                    LogUtils.getLogger().warn("[nusmp] Ban's tell of {} failed: {}", id, e.toString());
+                    LogUtils.getLogger().warn("[anime_multiverse] Ban's tell of {} failed: {}", id, e.toString());
                 }
             });
             out.add(b.run((bs, t) -> {

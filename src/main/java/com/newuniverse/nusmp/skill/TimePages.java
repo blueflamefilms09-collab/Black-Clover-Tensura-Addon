@@ -183,7 +183,7 @@ public final class TimePages {
     // ------------------------------------------------------------------ Stolen Time
     /** A slash that steals the target's time: they age (wither, slowness, armor shred); you pay with brief weakness. */
     public static class StolenTime extends GrimoirePageSkill {
-        private static final ResourceLocation SHRED = ResourceLocation.fromNamespaceAndPath("nusmp", "stolen_time_shred");
+        private static final ResourceLocation SHRED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "stolen_time_shred");
         public StolenTime() { super(MagicType.TIME); }
 
         @Override

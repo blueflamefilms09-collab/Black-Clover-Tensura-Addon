@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "anime_multiverse:block/labyrinth_pillar"
+    },
+    "axis=z": {
+      "model": "anime_multiverse:block/labyrinth_pillar_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "anime_multiverse:block/labyrinth_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * The data component of tier ascension: {@code nusmp:tier}, the absolute grade ordinal (0 NORMAL ... 6 GENESIS) a relic has been raised to.
+ * The data component of tier ascension: {@code anime_multiverse:tier}, the absolute grade ordinal (0 NORMAL ... 6 GENESIS) a relic has been raised to.
  * Saved with the stack, synced to clients (tooltips and renderers read it), and copied by {@code ItemStack.copy()} like every component.
  * Register {@link #COMPONENTS} on the mod bus (see {@link TierSystem}).
  */

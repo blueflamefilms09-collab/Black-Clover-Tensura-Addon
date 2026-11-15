@@ -11,7 +11,7 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 RES = os.path.join(ROOT, "src", "main", "resources")
-MOD = "nusmp"
+MOD = "anime_multiverse"
 
 
 # ---------------------------------------------------------------------------------------------------------------- ids
@@ -38,7 +38,7 @@ def _crit(mode, items):
 
 
 def ev(key, count=1, arg=None, name=None):
-    """The mod's own trigger: nusmp:event (key, optional count, optional arg). See QST_TRG.md for the contract."""
+    """The mod's own trigger: anime_multiverse:event (key, optional count, optional arg). See QST_TRG.md for the contract."""
     cond = {"key": key}
     if count and count != 1:
         cond["count"] = int(count)
@@ -83,7 +83,7 @@ def _item_cond(item):
 
 
 def have(*items, mode="all"):
-    """Carry the item (inventory_changed). Items are 'nusmp:id' or 'minecraft:id'; mode 'all' needs every one, 'any' needs one."""
+    """Carry the item (inventory_changed). Items are 'anime_multiverse:id' or 'minecraft:id'; mode 'all' needs every one, 'any' needs one."""
     out = []
     for it in items:
         nm = "have_" + it.split(":")[1]
@@ -130,7 +130,7 @@ def placed(block):
 
 # --------------------------------------------------------------------------------------------------- advancement
 class Adv:
-    """One advancement of the spec. Fields mirror the JSON; `path` is the id below nusmp: ('start/first_grimoire')."""
+    """One advancement of the spec. Fields mirror the JSON; `path` is the id below anime_multiverse: ('start/first_grimoire')."""
     def __init__(self, path, parent, title, desc, icon, crit, frame="task", xp=0, hidden=False, toast=True, chat=None,
                  background=None, tag=None):
         self.path = path
@@ -181,7 +181,7 @@ def slug(s):
 
 # ------------------------------------------------------------------------------------------------------ vocabulary
 def known_items():
-    """Every nusmp item or block id the mod ships: the lang file keys (item.nusmp.x / block.nusmp.x) with a models/item json."""
+    """Every anime_multiverse item or block id the mod ships: the lang file keys (item.anime_multiverse.x / block.anime_multiverse.x) with a models/item json."""
     lang = json.load(open(os.path.join(RES, "assets", MOD, "lang", "en_us.json"), encoding="utf-8"))
     models = {f[:-5] for f in os.listdir(os.path.join(RES, "assets", MOD, "models", "item"))}
     ids = set()

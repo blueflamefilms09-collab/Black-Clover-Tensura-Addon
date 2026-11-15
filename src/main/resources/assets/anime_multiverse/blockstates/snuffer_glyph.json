@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "anime_multiverse:block/snuffer_glyph"
+    },
+    "active=true": {
+      "model": "anime_multiverse:block/snuffer_glyph"
+    }
+  }
+}

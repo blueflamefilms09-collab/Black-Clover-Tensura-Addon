@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 
 /** 0.49: Rouge, a small cat of red thread sitting upright (geometry and texture from tools/gen_rouge_cat.py). */
 public class RougeCatModel {
-    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", "rouge_cat"), "main");
+    public static final ModelLayerLocation LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "rouge_cat"), "main");
 
     private final ModelPart root, head, tail;
 

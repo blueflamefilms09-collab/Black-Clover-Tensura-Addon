@@ -66,12 +66,12 @@ public final class ChronicleLectern {
         MinecraftServer server = p.getServer();
         ArcCharacter c = id == null ? null : ArcRoster.byId(id);
         if (server == null || c == null || !ChroniclePick.pickable(rows(p), c.id(), ArcWorldConfig.arenaReplay())) {
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.cannot_pick", "The Chronicle cannot carry you to that one yet.").withStyle(ChatFormatting.GRAY));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.cannot_pick", "The Chronicle cannot carry you to that one yet.").withStyle(ChatFormatting.GRAY));
             return null;
         }
         ArcArenaSave save = ArcArenaSave.get(server);
         save.pick(p.getUUID(), c.id());
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.picked", "The Chronicle Sigil will carry you to %s.", c.fullName()).withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.picked", "The Chronicle Sigil will carry you to %s.", c.fullName()).withStyle(ChatFormatting.GOLD));
         return c;
     }
 
@@ -83,12 +83,12 @@ public final class ChronicleLectern {
         ArcCharacter now = pickOf(p);
         String next = ChroniclePick.cycle(rows(p), now == null ? save.pick(p.getUUID()) : now.id(), ArcWorldConfig.arenaReplay());
         if (next == null) {
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.nobody", "The Chronicle has nobody to carry you to.").withStyle(ChatFormatting.GRAY), true);
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.nobody", "The Chronicle has nobody to carry you to.").withStyle(ChatFormatting.GRAY), true);
             return null;
         }
         save.pick(p.getUUID(), next);
         ArcCharacter c = ArcRoster.byId(next);
-        if (c != null) p.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.picked_short", "The sigil now carries you to %s.", c.fullName()).withStyle(ChatFormatting.GOLD), true);
+        if (c != null) p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.picked_short", "The sigil now carries you to %s.", c.fullName()).withStyle(ChatFormatting.GOLD), true);
         return c;
     }
 
@@ -101,13 +101,13 @@ public final class ChronicleLectern {
             e.setCanceled(true);
             e.setCancellationResult(InteractionResult.SUCCESS);
             if (!ArcWorldConfig.arenas()) {
-                sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.off", "The Chronicle is closed.").withStyle(ChatFormatting.GRAY), true);
+                sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.off", "The Chronicle is closed.").withStyle(ChatFormatting.GRAY), true);
                 return;
             }
             List<ChronicleView.Page> pages = ChronicleView.pages(rows(sp));
             show(sp, ChronicleView.firstPage(pages, ArcStory.sagaOf(sp)));
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the Chronicle lectern failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] the Chronicle lectern failed: {}", ex.toString());
         }
     }
 
@@ -117,7 +117,7 @@ public final class ChronicleLectern {
         List<ChronicleView.Row> rows = rows(p);
         List<ChronicleView.Page> pages = ChronicleView.pages(rows);
         if (pages.isEmpty()) {
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.chronicle.empty", "The Chronicle is blank: no boss is written in it yet.").withStyle(ChatFormatting.GRAY));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.chronicle.empty", "The Chronicle is blank: no boss is written in it yet.").withStyle(ChatFormatting.GRAY));
             return;
         }
         int idx = Math.max(0, Math.min(pages.size() - 1, pageIndex));

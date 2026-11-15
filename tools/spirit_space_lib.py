@@ -1,9 +1,9 @@
 """Geo model kit of the Spirit of Space (docs/magic/spirit_space.md): the same kit the fire casting spirits use (a model whose cubes take their faces from a HAND-PAINTED atlas, so the detail is texture and the
 geometry stays low), kept as its own file so the spirit's tools never depend on another feature's files. Writes the files the other geo models of the mod use:
 
-    assets/nusmp/geo/entity/<id>.geo.json        the model (Bedrock / GeckoLib format 1.12.0, read by client.geo.GeoModelData)
-    assets/nusmp/textures/entity/<sheet>.png     the colour sheet
-    assets/nusmp/textures/entity/<sheet>_glow.png the glow sheet (additive), same layout
+    assets/anime_multiverse/geo/entity/<id>.geo.json        the model (Bedrock / GeckoLib format 1.12.0, read by client.geo.GeoModelData)
+    assets/anime_multiverse/textures/entity/<sheet>.png     the colour sheet
+    assets/anime_multiverse/textures/entity/<sheet>_glow.png the glow sheet (additive), same layout
 
 Frame of the files (client.geo.GeoDraw): units are 1/16 block, y UP, origin at the feet, the model's front on -z, +x is the model's LEFT. Rotations are degrees.
 Several models (the LODs and the glow-only model) share ONE sheet: the same regions, the same uv, so they are drawn with the same textures.
@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image
 
 sys.dont_write_bytecode = True
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse")
 
 BEDROCK = {"west": "east", "north": "north", "east": "west", "south": "south", "up": "up", "down": "down"}    # Bedrock names its sides from the other end of x
 FACE_ORDER = ("up", "down", "west", "north", "east", "south")

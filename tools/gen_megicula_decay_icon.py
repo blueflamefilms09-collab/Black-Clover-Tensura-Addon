@@ -2,14 +2,14 @@
 
     python3 -B tools/gen_megicula_decay_icon.py
 
-Writes assets/nusmp/textures/mob_effect/megicula_decay.png (18 x 18, the size of the other effect icons). Original pixel art.
+Writes assets/anime_multiverse/textures/mob_effect/megicula_decay.png (18 x 18, the size of the other effect icons). Original pixel art.
 """
 import os
 
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "mob_effect", "megicula_decay.png")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "mob_effect", "megicula_decay.png")
 
 # half width of the drop on each row (row 1 is the tip, row 16 the round bottom)
 HALF = {1: 0.5, 2: 1.0, 3: 1.6, 4: 2.1, 5: 2.7, 6: 3.3, 7: 3.9, 8: 4.4, 9: 4.9, 10: 5.2, 11: 5.4, 12: 5.4, 13: 5.2, 14: 4.7, 15: 3.8, 16: 2.5}

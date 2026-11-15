@@ -38,7 +38,7 @@ public final class HubNpcSpawner {
             if (!(e.getLevel() instanceof ServerLevel level) || !Labyrinth.inSanctuary(level) || level.getGameTime() % 100 != 11) return;
             if (HubConfig.enabled() && HubConfig.get(HubConfig.NPC_SPAWN)) ensure(level);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] the Hub NPCs could not be looked after: {}", ex.toString());
+            LOG.warn("[anime_multiverse] the Hub NPCs could not be looked after: {}", ex.toString());
         }
     }
 
@@ -75,7 +75,7 @@ public final class HubNpcSpawner {
         npc.setYBodyRot(spot.yaw());
         npc.setHome(BlockPos.containing(spot.x(), y, spot.z()));
         level.addFreshEntity(npc);
-        LOG.info("[nusmp] placed {} on the Hub plaza at {} {} {}", type.getDescriptionId(), spot.x(), y, spot.z());
+        LOG.info("[anime_multiverse] placed {} on the Hub plaza at {} {} {}", type.getDescriptionId(), spot.x(), y, spot.z());
         return 1;
     }
 

@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class AkashicTheme {
     private AkashicTheme() {}
 
-    public static final ResourceLocation ATLAS = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/shishou/akashic.png");
+    public static final ResourceLocation ATLAS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/shishou/akashic.png");
 
     private static int argb(int rgb, float a) { return UiMath.withAlpha(rgb & 0xFFFFFF, a); }
 

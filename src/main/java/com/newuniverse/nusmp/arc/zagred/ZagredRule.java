@@ -41,7 +41,7 @@ public enum ZagredRule {
     /** The element whose blows on him are forbidden ("fire"), or null for a rule about movement or healing. */
     public String element() { return element; }
 
-    public String textKey() { return "message.nusmp.zagred.rule." + name().toLowerCase(Locale.ROOT); }
+    public String textKey() { return "message.anime_multiverse.zagred.rule." + name().toLowerCase(Locale.ROOT); }
 
     public String hintKey() { return textKey() + ".hint"; }
 

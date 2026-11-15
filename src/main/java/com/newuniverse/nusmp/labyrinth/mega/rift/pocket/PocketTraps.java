@@ -92,7 +92,7 @@ public final class PocketTraps {
                 if (h != null) return new DamageSource(h);
             }
         } catch (RuntimeException ex) {
-            LOG.debug("[nusmp] damage type {} not usable: {}", e.damageType(), ex.toString());
+            LOG.debug("[anime_multiverse] damage type {} not usable: {}", e.damageType(), ex.toString());
         }
         return level.damageSources().magic();
     }

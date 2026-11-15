@@ -1,5 +1,5 @@
 """Sprite helper of the nature-magic rebuild (Tree, Vine, Plant, Poison Plant, Mud, Mucus): a supersampled RGBA canvas with shapes, gradients, glows and noise, and the writer
-into src/main/resources/assets/nusmp/textures/particle. The generators gen_<key>_rebuild_textures.py import this file. Deterministic (fixed seeds). Run python as `python3 -B`.
+into src/main/resources/assets/anime_multiverse/textures/particle. The generators gen_<key>_rebuild_textures.py import this file. Deterministic (fixed seeds). Run python as `python3 -B`.
 
     from tree_rebuild_fxlib import *
     cv = Canvas(64, 64)
@@ -16,7 +16,7 @@ sys.dont_write_bytecode = True
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """NUSMP magic rune generator.
 Makes a rune ring (512x512) and rune band (512x32, tileable) texture for every magic type.
-Output goes to assets/nusmp/textures/particle/ names: <id>_rune_ring.png / <id>_rune_band.png
+Output goes to assets/anime_multiverse/textures/particle/ names: <id>_rune_ring.png / <id>_rune_band.png
 Usage: python3 rune_gen.py [out_dir] [--only id,id]   (needs Pillow)
 Edit MAGICS below to add types or recolor. Same id -> same runes every time (seeded).
 """
@@ -286,7 +286,7 @@ def main():
     if "--only" in sys.argv:
         only = sys.argv[sys.argv.index("--only") + 1].split(",")
     default_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources",
-                               "assets", "nusmp", "textures", "particle", "magic_runes")
+                               "assets", "anime_multiverse", "textures", "particle", "magic_runes")
     out = args[0] if args and (not only or args[0] != ",".join(only)) else default_out
     os.makedirs(out, exist_ok=True)
     for mid, spec in MAGICS.items():

@@ -2,7 +2,7 @@
 
 A small data pack that joins two mods:
 
-- Multiverse of Anime (`nusmp`)
+- Multiverse of Anime (`anime_multiverse`)
 - Tensura No Index (`tensuranoindex`, a Toaru Majutsu no Index crossover for Tensura Reincarnated)
 
 Built against Minecraft 1.21.1 / NeoForge 21.1 (`pack_format` 48). Everything in it is optional: it only
@@ -25,14 +25,14 @@ game (see "Honest status").
 
 | Part | File | Effect |
 |---|---|---|
-| Chest loot | `loot_modifiers/library_chests.json` + `loot_table/chests/tni_shelf.json` | The chests of our Library Ruins (`nusmp:chests/library_ruins`) and Grimoire Tower (`nusmp:chests/grimoire_tower`) get one extra 25% roll: Phase Dust (1-2), Name Slip or Canalis Relic. |
+| Chest loot | `loot_modifiers/library_chests.json` + `loot_table/chests/tni_shelf.json` | The chests of our Library Ruins (`anime_multiverse:chests/library_ruins`) and Grimoire Tower (`anime_multiverse:chests/grimoire_tower`) get one extra 25% roll: Phase Dust (1-2), Name Slip or Canalis Relic. |
 | Tower stone | `loot_modifiers/tower_stone.json` + `loot_table/chests/tni_stone.json` | Grimoire Tower chests also have a 3% chance of The Philosopher's Stone. |
 | Boss loot | `loot_modifiers/boss_extras.json` + `loot_table/entities/boss_extras.json` | When one of our eight bosses (tag `nusmp_tni_compat:bosses`) rolls a loot table: 15% Phase Dust (1-4) or Canalis Relic, and 4% The Philosopher's Stone. |
 | Loot registration | `data/neoforge/loot_modifiers/global_loot_modifiers.json` | Lists the three modifiers. NeoForge only runs a loot modifier that is listed in this file. |
 | Tags | `data/tensura/tags/entity_type/no_max_ep_plunder.json` | Our eight bosses and the seven bosses of Tensura No Index are added to `tensura:no_max_ep_plunder`. |
 | Tag | `data/nusmp_tni_compat/tags/entity_type/bosses.json` | The list of our bosses used by the boss loot condition. |
 
-Our bosses: `nusmp:dante_zogratis`, `vanica_zogratis`, `zenon_zogratis`, `lucius_zogratis`, `devil_avatar`,
+Our bosses: `anime_multiverse:dante_zogratis`, `vanica_zogratis`, `zenon_zogratis`, `lucius_zogratis`, `devil_avatar`,
 `goliath`, `charybdis_spawn`, `zagred`. Theirs: `tensuranoindex:coronzon`, `fuse_kazakiri`, `sasha_kruschev`,
 `auriel`, `nokth`, `warden_of_the_even`, `innocentius`. Items added: `tensuranoindex:phase_dust`, `name_slip`,
 `canalis_relic`, `relic_philosophers_stone` (all four exist in Tensura No Index 0.71.0).
@@ -60,14 +60,14 @@ loot table of its own is unverified; if it does not, only the chest loot works.
 ## Overlap with the bridge pack Tensura No Index carries
 
 Tensura No Index 0.71.0 already ships `resourcepacks/multiverse_bridge` (pack `mod/tensuranoindex_multiverse_bridge`),
-active when `nusmp` is loaded. Read against the current mod, it has these problems, found by reading its files:
+active when `anime_multiverse` is loaded. Read against the current mod, it has these problems, found by reading its files:
 
 1. It writes loot modifiers under `data/tni_multiverse/loot_modifiers/` but has no
    `data/neoforge/loot_modifiers/global_loot_modifiers.json`, so NeoForge never runs them. (The mod's own
    `global_loot_modifiers.json` is also an empty list, so its Croce di Pietro modifier is off too.)
-2. Its boss modifier targets `nusmp:entities/riven_remake` and `nusmp:entities/marquis_remake`. Those loot tables do
+2. Its boss modifier targets `anime_multiverse:entities/riven_remake` and `anime_multiverse:entities/marquis_remake`. Those loot tables do
    not exist in Multiverse of Anime.
-3. Its chest modifier targets `nusmp:chests/library_ruins` and `nusmp:chests/grimoire_tower`, which do exist, but the
+3. Its chest modifier targets `anime_multiverse:chests/library_ruins` and `anime_multiverse:chests/grimoire_tower`, which do exist, but the
    table it adds (`tni_multiverse:chests/index_shelf`) names `tensuranoindex:church_manuscript`, an item removed
    from that mod in 0.51; a table with an unknown item fails to load.
 4. Its boss tag sits in `data/tensura/tags/entity_types/`. Minecraft 1.21 reads `entity_type` (singular), so that

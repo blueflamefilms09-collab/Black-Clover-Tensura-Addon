@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:arc/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:nether_star"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.arc.saga_wizard_king.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.arc.saga_wizard_king.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_arc_saga_clear_wizard_king": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "arc.saga_clear",
+        "arg": "wizard_king"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_arc_saga_clear_wizard_king"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  }
+}

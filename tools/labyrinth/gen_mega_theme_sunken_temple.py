@@ -3,7 +3,7 @@
 Why: THEME-B (1.59.0, docs/labyrinth/mega_v2_thb.md section 4) gives the Holy road the temple of a forgotten good god that the sea took back: prismarine walls, dark prismarine floors,
 sea lanterns where the keystones were (the god's light still burns), canals and basins of knee-deep water that the party wades through, drowned shrines with their offerings, a well that
 a party can fall into and climb out of, a set piece where the tide meets at the heart of the temple and a sluice that is a puzzle. This script writes its rooms
-(`structure/mega/<folder>/sunken_temple_*.nbt`, the prefix `data/nusmp/mega/template_themes/sunken_temple.json` claims for the theme), so only a sector of the Sunken Temple theme ever
+(`structure/mega/<folder>/sunken_temple_*.nbt`, the prefix `data/anime_multiverse/mega/template_themes/sunken_temple.json` claims for the theme), so only a sector of the Sunken Temple theme ever
 draws them.
 
     python3 tools/labyrinth/gen_mega_theme_sunken_temple.py                       # builds, checks and writes every room (a room with a defect is not written)

@@ -9,7 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
 /**
- * Why: the dungeon's monsters are listed by <b>entity-type tags</b> (data/nusmp/tags/entity_type/dungeon/: tier1, tier2, tier3, legendary, and
+ * Why: the dungeon's monsters are listed by <b>entity-type tags</b> (data/anime_multiverse/tags/entity_type/dungeon/: tier1, tier2, tier3, legendary, and
  * excluded as a veto), not by code, so a modpack edits the roster without touching a class, and every entry of a tag that belongs to another
  * mod (Tensura, Ice and Fire) is optional: a missing mod or a wrong id never breaks loading. This class is the one reader of those tags, and
  * what the economy needs from them is the tier ({@link #tierOf}): it grades the Magic Stone a kill leaves. Until 1.58.0 it was also the roster
@@ -25,7 +25,7 @@ public final class Wildlife {
             LEGENDARY = tag("dungeon/legendary"), EXCLUDED = tag("dungeon/excluded");
 
     private static TagKey<EntityType<?>> tag(String path) {
-        return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("nusmp", path));
+        return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", path));
     }
 
     // ---------------------------------------------------------------- the contract other packages call

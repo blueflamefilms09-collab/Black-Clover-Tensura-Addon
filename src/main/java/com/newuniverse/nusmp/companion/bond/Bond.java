@@ -42,7 +42,7 @@ import java.util.UUID;
 public final class Bond {
     private Bond() {}
 
-    private static final String K = "nusmp.companion.bond.";
+    private static final String K = "anime_multiverse.companion.bond.";
     public static final String FIVE = "k:five", GIFT = "k:gift", LIKES = "k:likes", STANCE = "k:stance:", PUT = "k:put", TAKE = "k:take:", TAKE_ALL = "k:takeall", USE_ON = "k:use:on", USE_OFF = "k:use:off";
 
     // ================================================================ the screen

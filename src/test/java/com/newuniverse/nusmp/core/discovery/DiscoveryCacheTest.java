@@ -13,20 +13,20 @@ class DiscoveryCacheTest {
     void notSyncedShowsEverythingSoTheOldBehaviourSurvives() {
         DiscoveryCache.clear();
         assertFalse(DiscoveryCache.synced());
-        assertTrue(DiscoveryCache.visible("item:nusmp:anything"));
-        assertEquals("Name", DiscoveryCache.label("item:nusmp:x", "Name"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:anything"));
+        assertEquals("Name", DiscoveryCache.label("item:anime_multiverse:x", "Name"));
     }
 
     @Test
     void afterTheFirstSyncOnlyKnownKeysShow() {
         DiscoveryCache.clear();
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:a", "page:b:c"));
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:a", "page:b:c"));
         assertTrue(DiscoveryCache.synced());
-        assertTrue(DiscoveryCache.visible("item:nusmp:a"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:a"));
         assertTrue(DiscoveryCache.visible("page:b:c"));
-        assertFalse(DiscoveryCache.visible("item:nusmp:z"));
-        assertEquals("???", DiscoveryCache.label("item:nusmp:z", "Secret"));
-        assertEquals("Secret", DiscoveryCache.label("item:nusmp:a", "Secret"));
+        assertFalse(DiscoveryCache.visible("item:anime_multiverse:z"));
+        assertEquals("???", DiscoveryCache.label("item:anime_multiverse:z", "Secret"));
+        assertEquals("Secret", DiscoveryCache.label("item:anime_multiverse:a", "Secret"));
         assertEquals(2, DiscoveryCache.count());
         DiscoveryCache.clear();
     }
@@ -34,35 +34,35 @@ class DiscoveryCacheTest {
     @Test
     void deltasAddAndAReplaceReplaces() {
         DiscoveryCache.clear();
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:a"));
-        DiscoveryCache.receive(false, false, true, List.of("item:nusmp:b"));
-        assertTrue(DiscoveryCache.visible("item:nusmp:a"));
-        assertTrue(DiscoveryCache.visible("item:nusmp:b"));
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:c"));
-        assertFalse(DiscoveryCache.visible("item:nusmp:a"), "a full sync replaces the old set");
-        assertTrue(DiscoveryCache.visible("item:nusmp:c"));
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:a"));
+        DiscoveryCache.receive(false, false, true, List.of("item:anime_multiverse:b"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:a"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:b"));
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:c"));
+        assertFalse(DiscoveryCache.visible("item:anime_multiverse:a"), "a full sync replaces the old set");
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:c"));
         DiscoveryCache.clear();
     }
 
     @Test
     void showAllMakesEverythingVisibleAndTheKeysStillCount() {
         DiscoveryCache.clear();
-        DiscoveryCache.receive(true, true, false, List.of("item:nusmp:a"));
+        DiscoveryCache.receive(true, true, false, List.of("item:anime_multiverse:a"));
         assertTrue(DiscoveryCache.showsAll());
-        assertTrue(DiscoveryCache.visible("item:nusmp:never_found"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:never_found"));
         DiscoveryCache.receive(false, false, false, List.of());                // creative left: only the state changes
         assertFalse(DiscoveryCache.showsAll());
-        assertFalse(DiscoveryCache.visible("item:nusmp:never_found"));
-        assertTrue(DiscoveryCache.visible("item:nusmp:a"));
+        assertFalse(DiscoveryCache.visible("item:anime_multiverse:never_found"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:a"));
         DiscoveryCache.clear();
     }
 
     @Test
     void multipleKeysShowAnEntryIfAnyIsKnown() {
         DiscoveryCache.clear();
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:b"));
-        assertTrue(DiscoveryCache.visibleAny("item:nusmp:a|item:nusmp:b"));
-        assertFalse(DiscoveryCache.visibleAny("item:nusmp:a|item:nusmp:c"));
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:b"));
+        assertTrue(DiscoveryCache.visibleAny("item:anime_multiverse:a|item:anime_multiverse:b"));
+        assertFalse(DiscoveryCache.visibleAny("item:anime_multiverse:a|item:anime_multiverse:c"));
         assertTrue(DiscoveryCache.visibleAny(""), "no keys: not gated");
         DiscoveryCache.clear();
     }
@@ -70,7 +70,7 @@ class DiscoveryCacheTest {
     @Test
     void invalidKeysFromTheWireAreIgnored() {
         DiscoveryCache.clear();
-        DiscoveryCache.receive(true, false, false, List.of("junk", "item:nusmp:ok", "item:nusmp:bad key"));
+        DiscoveryCache.receive(true, false, false, List.of("junk", "item:anime_multiverse:ok", "item:anime_multiverse:bad key"));
         assertEquals(1, DiscoveryCache.count());
         DiscoveryCache.clear();
     }
@@ -80,22 +80,22 @@ class DiscoveryCacheTest {
         DiscoveryCache.clear();
         List<List<String>> heard = new ArrayList<>();
         DiscoveryCache.addListener(heard::add);
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:a"));            // the login sync: silent
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:a"));            // the login sync: silent
         assertTrue(heard.isEmpty());
-        DiscoveryCache.receive(false, false, true, List.of("item:nusmp:b", "item:nusmp:a"));
+        DiscoveryCache.receive(false, false, true, List.of("item:anime_multiverse:b", "item:anime_multiverse:a"));
         assertEquals(1, heard.size());
-        assertEquals(List.of("item:nusmp:b"), heard.get(0), "only the keys that were new");
-        DiscoveryCache.receive(false, false, true, List.of("item:nusmp:b"));            // nothing new: silent
+        assertEquals(List.of("item:anime_multiverse:b"), heard.get(0), "only the keys that were new");
+        DiscoveryCache.receive(false, false, true, List.of("item:anime_multiverse:b"));            // nothing new: silent
         assertEquals(1, heard.size());
         DiscoveryCache.clear();
     }
 
     @Test
     void clearGoesBackToNotSynced() {
-        DiscoveryCache.receive(true, false, false, List.of("item:nusmp:a"));
+        DiscoveryCache.receive(true, false, false, List.of("item:anime_multiverse:a"));
         DiscoveryCache.clear();
         assertFalse(DiscoveryCache.synced());
         assertEquals(0, DiscoveryCache.count());
-        assertTrue(DiscoveryCache.visible("item:nusmp:whatever"));
+        assertTrue(DiscoveryCache.visible("item:anime_multiverse:whatever"));
     }
 }

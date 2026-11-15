@@ -1,0 +1,325 @@
+{
+  "parent": "anime_multiverse:bosses/count_25",
+  "display": {
+    "icon": {
+      "id": "minecraft:dragon_egg"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.bosses.all.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.bosses.all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a0_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "dante_zogratis"
+      }
+    },
+    "a1_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:dante_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "b2_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "vanica_zogratis"
+      }
+    },
+    "b3_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:vanica_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "c4_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "zenon_zogratis"
+      }
+    },
+    "c5_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:zenon_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "d6_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "lucius_zogratis"
+      }
+    },
+    "d7_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:lucius_zogratis"
+            }
+          }
+        ]
+      }
+    },
+    "e8_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "zagred"
+      }
+    },
+    "e9_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:zagred"
+            }
+          }
+        ]
+      }
+    },
+    "f10_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "devil_avatar"
+      }
+    },
+    "f11_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:devil_avatar"
+            }
+          }
+        ]
+      }
+    },
+    "g12_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "goliath"
+      }
+    },
+    "g13_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:goliath"
+            }
+          }
+        ]
+      }
+    },
+    "h14_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "charybdis_spawn"
+      }
+    },
+    "h15_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:charybdis_spawn"
+            }
+          }
+        ]
+      }
+    },
+    "i16_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "floor_warden"
+      }
+    },
+    "i17_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:floor_warden"
+            }
+          }
+        ]
+      }
+    },
+    "j18_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "god_of_order"
+      }
+    },
+    "j19_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:god_of_order"
+            }
+          }
+        ]
+      }
+    },
+    "k20_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "wind_spirit_lord"
+      }
+    },
+    "k21_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:wind_spirit_lord"
+            }
+          }
+        ]
+      }
+    },
+    "l22_event": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "boss.defeated",
+        "arg": "grimoire_daemon"
+      }
+    },
+    "l23_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "anime_multiverse:grimoire_daemon"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "a0_event",
+      "a1_kill"
+    ],
+    [
+      "b2_event",
+      "b3_kill"
+    ],
+    [
+      "c4_event",
+      "c5_kill"
+    ],
+    [
+      "d6_event",
+      "d7_kill"
+    ],
+    [
+      "e8_event",
+      "e9_kill"
+    ],
+    [
+      "f10_event",
+      "f11_kill"
+    ],
+    [
+      "g12_event",
+      "g13_kill"
+    ],
+    [
+      "h14_event",
+      "h15_kill"
+    ],
+    [
+      "i16_event",
+      "i17_kill"
+    ],
+    [
+      "j18_event",
+      "j19_kill"
+    ],
+    [
+      "k20_event",
+      "k21_kill"
+    ],
+    [
+      "l22_event",
+      "l23_kill"
+    ]
+  ],
+  "rewards": {
+    "experience": 1500
+  }
+}

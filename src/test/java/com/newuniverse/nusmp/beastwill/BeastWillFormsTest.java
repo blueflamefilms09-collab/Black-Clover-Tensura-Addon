@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * piece at most 16); the body, head, both arms and both legs exist for every will; and the painter and the switch are wired. Pure (file reads); the working directory is the project root.
  */
 class BeastWillFormsTest {
-    private static final Path RES = Path.of("src/main/resources/assets/nusmp");
+    private static final Path RES = Path.of("src/main/resources/assets/anime_multiverse");
 
     private static JsonObject json(Path p) throws Exception { return JsonParser.parseString(Files.readString(p)).getAsJsonObject(); }
 

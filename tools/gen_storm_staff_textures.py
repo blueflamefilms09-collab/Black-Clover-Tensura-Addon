@@ -1,6 +1,6 @@
 """Textures of the Storm Magic effects (the Stormcaller Staff): the cloud puff, the rain curtain, the bolt strip, the hail stone, the surge wave and the funnel band.
 
-    python3 -B tools/gen_storm_staff_textures.py            writes src/main/resources/assets/nusmp/textures/particle/storm_*.png (deterministic)
+    python3 -B tools/gen_storm_staff_textures.py            writes src/main/resources/assets/anime_multiverse/textures/particle/storm_*.png (deterministic)
 
 All are luminance + alpha (mode LA), like the other effect textures of the mod: the layer tints them with the vertex colour. Where a texture is drawn additively (the bolt) the
 colour under the transparent texels is black, so it can never show as a square (docs/vfx_square_bug.md); the alpha-blended ones (cloud, rain, wave, funnel, hail) carry colour
@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 
 
 def smooth(x, a, b):

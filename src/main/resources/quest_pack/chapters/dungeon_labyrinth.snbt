@@ -4,7 +4,7 @@
 	order_index: 3
 	filename: "dungeon_labyrinth"
 	icon: {
-		id: "nusmp:labyrinth_gate"
+		id: "anime_multiverse:labyrinth_gate"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:labyrinth_gate"
+				id: "anime_multiverse:labyrinth_gate"
 			}
 			tasks: [
 				{
@@ -44,7 +44,7 @@
 				{
 					id: "63550B2878E70977"
 					type: "advancement"
-					advancement: "nusmp:dungeon/entered"
+					advancement: "anime_multiverse:dungeon/entered"
 					criterion: ""
 				}
 			]
@@ -62,14 +62,14 @@
 			x: 6.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:purified_monster_meat"
+				id: "anime_multiverse:purified_monster_meat"
 			}
 			dependencies: ["41E08F0487487078"]
 			tasks: [
 				{
 					id: "34DE39A240ED2AB3"
 					type: "advancement"
-					advancement: "nusmp:dungeon/meat"
+					advancement: "anime_multiverse:dungeon/meat"
 					criterion: ""
 				}
 			]
@@ -96,7 +96,7 @@
 			y: 0.75d
 			shape: "square"
 			icon: {
-				id: "nusmp:roast_basilisk_fillet"
+				id: "anime_multiverse:roast_basilisk_fillet"
 			}
 			dependencies: ["7255FC8CE48C2825"]
 			optional: true
@@ -104,7 +104,7 @@
 				{
 					id: "5D169B1A84A30E77"
 					type: "advancement"
-					advancement: "nusmp:dungeon/basilisk"
+					advancement: "anime_multiverse:dungeon/basilisk"
 					criterion: ""
 				}
 			]
@@ -123,7 +123,7 @@
 			y: 2.25d
 			shape: "square"
 			icon: {
-				id: "nusmp:roast_direwolf_haunch"
+				id: "anime_multiverse:roast_direwolf_haunch"
 			}
 			dependencies: ["7255FC8CE48C2825"]
 			optional: true
@@ -131,7 +131,7 @@
 				{
 					id: "7BED51C6572C4FD1"
 					type: "advancement"
-					advancement: "nusmp:dungeon/direwolf"
+					advancement: "anime_multiverse:dungeon/direwolf"
 					criterion: ""
 				}
 			]
@@ -158,7 +158,7 @@
 				{
 					id: "610F4EC6F5FF5EBC"
 					type: "advancement"
-					advancement: "nusmp:dungeon/goliath"
+					advancement: "anime_multiverse:dungeon/goliath"
 					criterion: ""
 				}
 			]
@@ -190,7 +190,7 @@
 				{
 					id: "44EC91EF81B1B187"
 					type: "advancement"
-					advancement: "nusmp:dungeon/charybdis"
+					advancement: "anime_multiverse:dungeon/charybdis"
 					criterion: ""
 				}
 			]
@@ -222,7 +222,7 @@
 				{
 					id: "626A32AACFDED3E5"
 					type: "advancement"
-					advancement: "nusmp:dungeon/both_floors"
+					advancement: "anime_multiverse:dungeon/both_floors"
 					criterion: ""
 				}
 			]
@@ -247,14 +247,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:labyrinth_gate"
+				id: "anime_multiverse:labyrinth_gate"
 			}
 			dependencies: ["352F989AD5CC7E21"]
 			tasks: [
 				{
 					id: "6FCD4DEF87CE0256"
 					type: "dimension"
-					dimension: "nusmp:mega_dungeon"
+					dimension: "anime_multiverse:mega_dungeon"
 				}
 			]
 			rewards: [
@@ -276,14 +276,14 @@
 			x: 3.0d
 			y: 9.0d
 			icon: {
-				id: "nusmp:labyrinth_gate"
+				id: "anime_multiverse:labyrinth_gate"
 			}
 			dependencies: ["3C2CF535A17DF8FD"]
 			tasks: [
 				{
 					id: "00B48BD291F8ADD4"
 					type: "advancement"
-					advancement: "nusmp:dungeon/labyrinth_event"
+					advancement: "anime_multiverse:dungeon/labyrinth_event"
 					criterion: ""
 				}
 			]
@@ -302,7 +302,7 @@
 			y: 7.5d
 			shape: "square"
 			icon: {
-				id: "nusmp:sealed_archway"
+				id: "anime_multiverse:sealed_archway"
 			}
 			dependencies: ["7D725C620B7D2C76"]
 			optional: true
@@ -310,7 +310,7 @@
 				{
 					id: "7BE94C48C9B22C8E"
 					type: "advancement"
-					advancement: "nusmp:dungeon/archway"
+					advancement: "anime_multiverse:dungeon/archway"
 					criterion: ""
 				}
 			]
@@ -329,7 +329,7 @@
 			y: 10.5d
 			shape: "square"
 			icon: {
-				id: "nusmp:pitfall_tile"
+				id: "anime_multiverse:pitfall_tile"
 			}
 			dependencies: ["7D725C620B7D2C76"]
 			optional: true
@@ -337,7 +337,7 @@
 				{
 					id: "44C96680917355EF"
 					type: "advancement"
-					advancement: "nusmp:dungeon/traps"
+					advancement: "anime_multiverse:dungeon/traps"
 					criterion: ""
 				}
 			]
@@ -364,7 +364,7 @@
 				{
 					id: "48677C75B7C76476"
 					type: "advancement"
-					advancement: "nusmp:dungeon/warden"
+					advancement: "anime_multiverse:dungeon/warden"
 					criterion: ""
 				}
 			]
@@ -389,14 +389,14 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:shadow_key"
+				id: "anime_multiverse:shadow_key"
 			}
 			dependencies: ["49A7C95B69B6EC4B"]
 			tasks: [
 				{
 					id: "2DA1955A3E4B2C2B"
 					type: "advancement"
-					advancement: "nusmp:dungeon/shadow_key"
+					advancement: "anime_multiverse:dungeon/shadow_key"
 					criterion: ""
 				}
 			]
@@ -428,7 +428,7 @@
 				{
 					id: "4736B5B2255C957F"
 					type: "advancement"
-					advancement: "nusmp:dungeon/seal"
+					advancement: "anime_multiverse:dungeon/seal"
 					criterion: ""
 				}
 			]
@@ -452,7 +452,7 @@
 			y: 7.5d
 			shape: "square"
 			icon: {
-				id: "nusmp:peak_altar"
+				id: "anime_multiverse:peak_altar"
 			}
 			dependencies: ["55CD84DDD1BBB2C3"]
 			optional: true
@@ -460,7 +460,7 @@
 				{
 					id: "1D580DDBE66F6A5D"
 					type: "advancement"
-					advancement: "nusmp:dungeon/peak_altar"
+					advancement: "anime_multiverse:dungeon/peak_altar"
 					criterion: ""
 				}
 			]
@@ -480,14 +480,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:relic_pedestal"
+				id: "anime_multiverse:relic_pedestal"
 			}
 			dependencies: ["55CD84DDD1BBB2C3"]
 			tasks: [
 				{
 					id: "1F655E20885ABBA2"
 					type: "advancement"
-					advancement: "nusmp:dungeon/vault"
+					advancement: "anime_multiverse:dungeon/vault"
 					criterion: ""
 				}
 			]

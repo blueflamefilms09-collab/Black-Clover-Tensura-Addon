@@ -79,7 +79,7 @@ public final class LockConfig {
             ModContainer container = ModLoadingContext.get().getActiveContainer();
             container.registerConfig(ModConfig.Type.SERVER, SPEC, "nusmp-labyrinth-mega-lock-server.toml");
         } catch (RuntimeException | LinkageError e) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] The escape rules config could not be registered ({}); the defaults apply", e.toString());
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] The escape rules config could not be registered ({}); the defaults apply", e.toString());
         }
     }
 }

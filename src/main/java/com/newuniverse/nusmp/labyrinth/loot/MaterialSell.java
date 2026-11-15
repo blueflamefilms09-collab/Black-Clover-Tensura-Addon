@@ -34,7 +34,7 @@ public final class MaterialSell {
             long coins = price(hand);
             if (coins <= 0L) return;
             if (!ShopService.on()) {
-                sp.sendSystemMessage(LootText.text("message.nusmp.loot.shop_off"));
+                sp.sendSystemMessage(LootText.text("message.anime_multiverse.loot.shop_off"));
                 e.setCanceled(true);
                 e.setCancellationResult(InteractionResult.SUCCESS);
                 return;
@@ -43,7 +43,7 @@ public final class MaterialSell {
             int count = hand.getCount();
             hand.shrink(count);
             Currency.give(sp, coins);
-            sp.sendSystemMessage(LootText.text("message.nusmp.loot.sold", Component.literal(count + " x ").append(name), CoinMath.describe(coins)));
+            sp.sendSystemMessage(LootText.text("message.anime_multiverse.loot.sold", Component.literal(count + " x ").append(name), CoinMath.describe(coins)));
             e.setCanceled(true);
             e.setCancellationResult(InteractionResult.SUCCESS);
         } catch (RuntimeException ignored) {
@@ -55,7 +55,7 @@ public final class MaterialSell {
     public static long price(ItemStack stack) {
         if (stack.isEmpty()) return 0L;
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
-        if (!"nusmp".equals(BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace()) || !LootItems.isLoot(id)) return 0L;
+        if (!"anime_multiverse".equals(BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace()) || !LootItems.isLoot(id)) return 0L;
         double factor = LootConfig.get(LootConfig.SELL_FACTOR);
         return Math.round(LootValue.stack(LootRoster.get(), id, GearStacks.rollOf(stack), stack.getCount()) * factor);
     }

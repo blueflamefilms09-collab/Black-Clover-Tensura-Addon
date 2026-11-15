@@ -3,7 +3,7 @@
 
     python3 -B tools/tier_bosses/preview_tier.py out.png [--back | --close | --trio] [--cols N] [--aa N] [--skin-dir DIR] [id ...]
 
-Uses the software renderer of tools/playermodel (a review tool: lighting differs from the game). Reads assets/nusmp/playermodel/looks_tier.json.
+Uses the software renderer of tools/playermodel (a review tool: lighting differs from the game). Reads assets/anime_multiverse/playermodel/looks_tier.json.
 3.38.0 (HD outfits, docs/bosses/hd_outfits.md): `--trio` draws front, back and a three-quarter close-up of every id in one row; `--aa N` renders at N times the size and averages down (default 1
 for a 64x64 skin, 2 for an HD skin: the renderer samples nearest, so an HD skin needs it to show its detail); `--skin-dir DIR` reads the skins (and glow maps) from another folder, for example the
 64x64 version made with `gen_tier_looks.py --size 64`, to put the two side by side.

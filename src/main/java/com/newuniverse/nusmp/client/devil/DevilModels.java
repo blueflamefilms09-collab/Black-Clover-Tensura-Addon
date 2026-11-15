@@ -27,7 +27,7 @@ public final class DevilModels {
 
     public static final ModelLayerLocation HORNS = loc("devil_horns", "main"), WINGS = loc("devil_wings", "main"), WEG_WIDE = loc("devil_weg", "wide"), WEG_SLIM = loc("devil_weg", "slim");
 
-    private static ModelLayerLocation loc(String name, String part) { return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("nusmp", name), part); }
+    private static ModelLayerLocation loc(String name, String part) { return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", name), part); }
 
     /** Game bus on the mod bus: registers the four layer definitions. */
     static void register(EntityRenderersEvent.RegisterLayerDefinitions e) {

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * parts are wound front-facing (a back-face-culling render type draws nothing else). Reads the sources of the jar; no game.
  */
 class WornAssetsTest {
-    static final Path WORN = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path WORN = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
 
     static List<Path> models() throws IOException {
         try (Stream<Path> s = Files.list(WORN)) {

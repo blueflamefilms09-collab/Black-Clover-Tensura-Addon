@@ -19,7 +19,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(NUSMP.MODID)
 public class NUSMP {
-    public static final String MODID = "nusmp";
+    public static final String MODID = "anime_multiverse";
 
     /** ManasCore cooldowns tick down once per SECOND (every 20 ticks). Convert our tick numbers. */
     public static int ticksToSeconds(int ticks) { return ticks <= 0 ? 0 : Math.max(1, (ticks + 19) / 20); }
@@ -58,7 +58,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.DbPassives.register(NeoForge.EVENT_BUS);                                   // 3.56.0: the Dragon Ball passives (damage events)
         com.newuniverse.nusmp.skill.BeastPassives.register(NeoForge.EVENT_BUS);                                // 3.58.0: the Beast Will skill passives (illusion dodge)
         com.newuniverse.nusmp.entity.veldanava.skills.HerculesEvents.register(NeoForge.EVENT_BUS);            // 3.19.0: Hercules' passives (adamantine body, strength, momentum, vigor)
-        com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (nusmp:trial)
+        com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (anime_multiverse:trial)
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
@@ -172,7 +172,7 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.aura.PlayerAuraPayload::register);                     // 0.53: player render layers
         com.newuniverse.nusmp.prop.MagicProps.init();                                                      // 0.53: props of the attribute expansion
         com.newuniverse.nusmp.client.playermodel.PlayerModelSelfTests.register();                            // 1.94.0: self-test render.playermodel (data only, runs on the dedicated server)
-        com.newuniverse.nusmp.tooltip.UnifiedTooltipSelfTests.register();                                    // 1.110.0: self-test ui.unified_tooltips (every nusmp item resolves to a tooltip style)
+        com.newuniverse.nusmp.tooltip.UnifiedTooltipSelfTests.register();                                    // 1.110.0: self-test ui.unified_tooltips (every anime_multiverse item resolves to a tooltip style)
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
@@ -253,7 +253,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.ElsdociaGlitterClient.init();
             com.newuniverse.nusmp.client.gui.bossbar.ModBossBarOverlay.init();                                                      // 1.25.0: animated boss bar
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.gui.bossbar.BossBarOptions.SPEC, "nusmp-bossbar-client.toml");
-            com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.init(modEventBus);                                          // 1.106.0: the custom boss bars (styles from assets/nusmp/boss_bars, overlay, /nusmp bossbar)
+            com.newuniverse.nusmp.client.gui.bossbar.CustomBarClient.init(modEventBus);                                          // 1.106.0: the custom boss bars (styles from assets/anime_multiverse/boss_bars, overlay, /anime_multiverse bossbar)
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compat.maps.MapsClientConfig.SPEC, "nusmp-compat-maps-client.toml");      // compat-maps: minimap size / avoidance
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compass3d.CompassVisualConfig.SPEC, "nusmp-compass3d-client.toml");      // 3D Compass Magic: visual.compass3d (the old flat effects when off)
@@ -273,7 +273,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
             com.newuniverse.nusmp.client.relics.RelicClient.init(modEventBus);                                                   // 1.24.0
-            com.newuniverse.nusmp.client.debug.ClientShot.init();                                                                // 3.9.2: CI only, does nothing without -Dnusmp.clientshot
+            com.newuniverse.nusmp.client.debug.ClientShot.init();                                                                // 3.9.2: CI only, does nothing without -Danime_multiverse.clientshot
             modEventBus.addListener(com.newuniverse.nusmp.client.relics.order.OrderClient::register);
             com.newuniverse.nusmp.client.relics.djinn.DjinnClient.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.goliath.GoliathClient::register);                            // 1.23.0
@@ -297,7 +297,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.remodel.RemodelRenderers.init(modEventBus);                       // the art-kit renderers of every remodelled mob (lowest priority: they replace the old renderers above, which stay as legacy)
             com.newuniverse.nusmp.client.playermodel.PlayerModelRegistry.init(modEventBus);                  // 1.94.0: the player-model kit: every person of the arcs, the Zogratis family, the Avatars and the Hub on the vanilla player model (registered after the remodel's, so it is the last renderer of those types)
             com.newuniverse.nusmp.client.playermodel.PlayerModelRegistry.extend(com.newuniverse.nusmp.client.corpse.CorpseClient::registerLooks);      // 3.7.1: the new looks of Jimmy, Alfredo and Carl are registered INSIDE the kit's own listener, after its dungeon puppets (the two LOWEST listeners ran in constructor order and the kit's won: docs/magic/rades_cast_fix.md)
-            com.newuniverse.nusmp.client.perf.PerfClient.init(modEventBus, modContainer);                       // 1.99.0: performance pass: nusmp-performance-client.toml, /nusmp perf, the client probe
+            com.newuniverse.nusmp.client.perf.PerfClient.init(modEventBus, modContainer);                       // 1.99.0: performance pass: nusmp-performance-client.toml, /anime_multiverse perf, the client probe
             com.newuniverse.nusmp.client.vupgrade.godb.GodBUpgrade.init(modEventBus, modContainer);              // 1.102.0: visual upgrade of the God melee weapons (slice god_melee_b): nusmp-visualupgrade-god_melee_b-client.toml, ambient particles
             com.newuniverse.nusmp.client.upgrade.UpgradeClient.init(modEventBus, modContainer);                // 1.102.0: visual upgrade: nusmp-visual-upgrade-client.toml, ambient layers and swing trails of the upgraded weapons
         }

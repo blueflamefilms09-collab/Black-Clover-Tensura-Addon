@@ -7,12 +7,12 @@ that glow faintly amber. One model, two skins: the whole stone body, and the cra
     python3 -B tools/gen_goliath.py --preview [scene ...]    # the headless render of tools/render_preview (needs JOML_JAR / GSON_JAR or the usual lib folders)
 
 Writes (GeoSpec.of("goliath", "body"), skin "goliath_cracked"):
-    assets/nusmp/geo/entity/goliath_body.geo.json
-    assets/nusmp/animations/entity/goliath_body.animation.json
-    assets/nusmp/textures/entity/goliath_body.png            the stone skin, 512 wide at 2 texels per model pixel (the face at 3)
-    assets/nusmp/textures/entity/goliath_body_glow.png       eyes, mouth, a few faint cracks, the rune on the fauld (additive, full bright)
-    assets/nusmp/textures/entity/goliath_cracked.png         the same boxes, the skin of the Gates
-    assets/nusmp/textures/entity/goliath_cracked_glow.png    every crack alight, the core in the chest, brighter eyes
+    assets/anime_multiverse/geo/entity/goliath_body.geo.json
+    assets/anime_multiverse/animations/entity/goliath_body.animation.json
+    assets/anime_multiverse/textures/entity/goliath_body.png            the stone skin, 512 wide at 2 texels per model pixel (the face at 3)
+    assets/anime_multiverse/textures/entity/goliath_body_glow.png       eyes, mouth, a few faint cracks, the rune on the fauld (additive, full bright)
+    assets/anime_multiverse/textures/entity/goliath_cracked.png         the same boxes, the skin of the Gates
+    assets/anime_multiverse/textures/entity/goliath_cracked_glow.png    every crack alight, the core in the chest, brighter eyes
 and tools/render_preview/scenes.d/goliath.json.
 
 Clips: idle walk attack cast cast_big hurt transform death rise, and one per move that has its own: slam stomp roar fist line rubble (a one-shot clip is
@@ -680,7 +680,7 @@ def view(name, yaw, pitch, target, dist):
 
 
 def scene(anim, ages, views, tile=(420, 600), texture="goliath_body", sunk=0.0):
-    s = {"kind": "geo", "model": "nusmp:geo/entity/goliath_body.geo.json", "texture": "nusmp:textures/entity/%s.png" % texture, "space": "PROP", "layer": "CUTOUT",
+    s = {"kind": "geo", "model": "anime_multiverse:geo/entity/goliath_body.geo.json", "texture": "anime_multiverse:textures/entity/%s.png" % texture, "space": "PROP", "layer": "CUTOUT",
          "argb": "FFFFFFFF", "glow": "FFFFFFFF", "ages": list(ages), "tile": list(tile), "floor": True, "figure": False, "expect": [], "anim": anim, "views": views}
     return s
 

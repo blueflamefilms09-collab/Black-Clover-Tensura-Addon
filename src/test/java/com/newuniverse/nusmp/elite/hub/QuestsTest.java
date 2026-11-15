@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * that can be started), the kill/floor matching, the day-seeded board, and the full life of a quest (accept, progress, ready, hand in, once) including the save round trip.
  */
 class QuestsTest {
-    private static final Path QUEST_DIR = Path.of("src/main/resources/data/nusmp/elite/hub/quests");
+    private static final Path QUEST_DIR = Path.of("src/main/resources/data/anime_multiverse/elite/hub/quests");
 
     private static QuestDef kill(String id, int target, int tier, String road, String faction, String mob) {
         return new QuestDef(id, QuestType.DAILY, ObjectiveKind.KILL, "", "", target, tier, road, faction, mob, "", 0, 100, 0, List.of(), 10);

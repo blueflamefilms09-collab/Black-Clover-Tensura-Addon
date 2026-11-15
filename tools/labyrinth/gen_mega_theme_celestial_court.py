@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CELESTIAL_COURT (1.59.0, docs/labyrinth/mega_v2_tha.md): the signature rooms of the heavenly court of the Holy road: law and light in white and grey stone with
-gold and a cyan accent. Rooms (all `celestial_court_*`, drawn ONLY in sectors of the theme through `data/nusmp/mega/template_themes/celestial_court.json`):
+gold and a cyan accent. Rooms (all `celestial_court_*`, drawn ONLY in sectors of the theme through `data/anime_multiverse/mega/template_themes/celestial_court.json`):
 
     hall/celestial_court_terrace      three marble terraces climbing to a halo window, a fountain on each, colonnaded side walks, a glass roof
     hall/celestial_court_colonnade    the processional hall of the Golden Gate: a double colonnade, a gate of gold and bars, banners, a long carpet
@@ -443,7 +443,7 @@ def tribunal():
     for k in range(8):
         gx, gz = polar(c, c, 5.0, 22.5 + 45 * k)
         glyphs.append((gx, gz))
-    K.trial_core(h, [("nusmp:living_armor", 3), ("minecraft:vex", 2)], glyphs, radius=13)
+    K.trial_core(h, [("anime_multiverse:living_armor", 3), ("minecraft:vex", 2)], glyphs, radius=13)
     # ---- the judges' dais at the north end: two steps, a long bench with lecterns, the High Judge's seat with a crown of gold and a halo window above it
     for x in range(7, 20):
         for z in range(2, 6):

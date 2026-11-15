@@ -94,7 +94,7 @@ public final class VbSkill implements HeroSkill {
         } catch (RuntimeException | LinkageError e) {
             FAULTS.incrementAndGet();
             lastFault = spec.id() + " threw " + e;
-            if (LOGGED.add(spec.id())) LogUtils.getLogger().error("[nusmp] hero skill {} failed and was refused", spec.id(), e);
+            if (LOGGED.add(spec.id())) LogUtils.getLogger().error("[anime_multiverse] hero skill {} failed and was refused", spec.id(), e);
             return false;
         }
     }

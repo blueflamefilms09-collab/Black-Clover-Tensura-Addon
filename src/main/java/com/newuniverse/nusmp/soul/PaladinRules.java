@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.soul;
 /**
  * Why: whether a mob may be purified, and with what chance, is the part of Paladin Conversion that has to be fair and must never
  * depend on Minecraft types or on dice a test cannot fix. The owner's rules: never a player, never a boss (of this mod or any), never
- * a creature on the {@code nusmp:paladin_immune} tag, never a named Tensura boss-like, never another caster's Paladin, never the
+ * a creature on the {@code anime_multiverse:paladin_immune} tag, never a named Tensura boss-like, never another caster's Paladin, never the
  * Soul Paladins of Lucius's fight, never someone's tamed pet. The chance comes from the target's health fraction, the gap between
  * its energy and the caster's, its magic resistance and the caster's mastery; a hostile mob below half health converts reliably.
  * The glue reads the facts off the entity into a {@link Subject} and rolls once; this class decides.

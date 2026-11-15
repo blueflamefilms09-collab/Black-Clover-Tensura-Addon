@@ -46,38 +46,38 @@ public final class SylphSelfTests {
 
         // her sounds: every cue is a registered event, has its entry and its files
         String sounds;
-        try (InputStream in = SylphSelfTests.class.getResourceAsStream("/assets/nusmp/sounds.json")) {
+        try (InputStream in = SylphSelfTests.class.getResourceAsStream("/assets/anime_multiverse/sounds.json")) {
             if (in == null) return Result.fail("sounds.json is missing");
             sounds = new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
         for (SylphSoundSet.Cue c : SylphSoundSet.cues()) {
-            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", c.event()))) return Result.fail("sound event " + c.event() + " is not registered");
+            if (!BuiltInRegistries.SOUND_EVENT.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", c.event()))) return Result.fail("sound event " + c.event() + " is not registered");
             if (SylphSounds.event(c.id()) == null) return Result.fail("SylphSounds has no event for " + c.id());
             if (!sounds.contains("\"" + c.event() + "\"")) return Result.fail("sounds.json has no entry " + c.event());
-            for (int v = 1; v <= c.variants(); v++) if (!onClassPath("/assets/nusmp/sounds/" + c.file(v) + ".ogg")) return Result.fail("missing sound file " + c.file(v));
+            for (int v = 1; v <= c.variants(); v++) if (!onClassPath("/assets/anime_multiverse/sounds/" + c.file(v) + ".ogg")) return Result.fail("missing sound file " + c.file(v));
         }
 
         // her looks: models, sheets, animations
         for (String form : new String[]{"small", "powered"}) {
             for (String suffix : new String[]{"", "_lod1", "_lod2", "_wings", "_fx"}) {
                 String id = "sylph_" + form + suffix;
-                if (!onClassPath("/assets/nusmp/geo/entity/" + id + ".geo.json")) return Result.fail("missing model " + id);
-                if (!onClassPath("/assets/nusmp/textures/entity/" + id + ".png")) return Result.fail("missing sheet " + id);
+                if (!onClassPath("/assets/anime_multiverse/geo/entity/" + id + ".geo.json")) return Result.fail("missing model " + id);
+                if (!onClassPath("/assets/anime_multiverse/textures/entity/" + id + ".png")) return Result.fail("missing sheet " + id);
             }
-            if (!onClassPath("/assets/nusmp/animations/entity/sylph_" + form + ".animation.json")) return Result.fail("missing animations of " + form);
+            if (!onClassPath("/assets/anime_multiverse/animations/entity/sylph_" + form + ".animation.json")) return Result.fail("missing animations of " + form);
         }
 
         // her moods: every clip a pose names is in her animation files, every spoken line is a registered event with its entry and its file, the fallbacks are real cues
         for (String form : new String[]{"small", "powered"}) {
             String anim;
-            try (InputStream in = SylphSelfTests.class.getResourceAsStream("/assets/nusmp/animations/entity/sylph_" + form + ".animation.json")) { anim = new String(in.readAllBytes(), StandardCharsets.UTF_8); }
+            try (InputStream in = SylphSelfTests.class.getResourceAsStream("/assets/anime_multiverse/animations/entity/sylph_" + form + ".animation.json")) { anim = new String(in.readAllBytes(), StandardCharsets.UTF_8); }
             for (String clip : form.equals("small") ? SylphRules.SMALL_CLIPS : SylphRules.POWERED_CLIPS) if (!anim.contains("\"" + clip + "\"")) return Result.fail("the " + form + " animation file has no clip " + clip);
         }
         for (String line : SylphVoiceLines.ids()) {
             if (!com.newuniverse.nusmp.audio.voice.VoiceCatalog.has(line)) return Result.fail("the voice catalogue lacks her line " + line);
             if (com.newuniverse.nusmp.audio.voice.VoiceSounds.event(line) == null) return Result.fail("no sound event for her line " + line);
             if (!sounds.contains("\"voice." + line + "\"")) return Result.fail("sounds.json has no entry for her line " + line);
-            if (!onClassPath("/assets/nusmp/sounds/voice/sylph/" + line + ".ogg")) return Result.fail("missing file of her line " + line);
+            if (!onClassPath("/assets/anime_multiverse/sounds/voice/sylph/" + line + ".ogg")) return Result.fail("missing file of her line " + line);
         }
         for (String g : new String[]{"hurt", "worry", "idle", "cheer", "pout", "sad", "smug", "giggle"}) {
             String cue = SylphVoiceLines.fallbackCue(g);

@@ -55,7 +55,7 @@ final class SaiyanSenses {
         SaiyanSenseRules.Tier before = tier(s);
         s.use("sense", 1);
         SaiyanSenseRules.Tier after = tier(s);
-        if (after != before) p.displayClientMessage(Component.translatable("nusmp.saiyan.msg.sense_tier", Component.translatable(after.key())), true);
+        if (after != before) p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.sense_tier", Component.translatable(after.key())), true);
         return true;
     }
 

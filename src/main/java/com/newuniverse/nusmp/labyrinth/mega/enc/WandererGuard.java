@@ -25,7 +25,7 @@ import java.util.Iterator;
 public final class WandererGuard {
     private WandererGuard() {}
 
-    private static final String SHADOW_KEY = "nusmp:shadow_key";
+    private static final String SHADOW_KEY = "anime_multiverse:shadow_key";
     /** A heal of a boss struck within this many ticks is refused. */
     private static final int COMBAT_TICKS = 200;
 

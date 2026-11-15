@@ -1,0 +1,34 @@
+{
+  "parent": "anime_multiverse:start/open_book",
+  "display": {
+    "icon": {
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.start.first_spell.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.start.first_spell.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

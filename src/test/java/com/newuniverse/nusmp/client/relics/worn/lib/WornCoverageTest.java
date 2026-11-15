@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** Every relic worn on the body has a worn model (or the default look of its slot), read from the wave sources and the catalog. */
 class WornCoverageTest {
     static final Path WAVES = Path.of("src/main/java/com/newuniverse/nusmp/relics/wave");
-    static final Path WORN = Path.of("src/main/resources/assets/nusmp/relic_worn");
+    static final Path WORN = Path.of("src/main/resources/assets/anime_multiverse/relic_worn");
     static final Pattern DEF = Pattern.compile("RelicDef\\s*\\.\\s*of\\s*\\(\\s*([^,]+?)\\s*,\\s*\"(?:[^\"\\\\]|\\\\.)*\"\\s*,\\s*Grade\\s*\\.\\s*(\\w+)\\s*,\\s*RelicSlot\\s*\\.\\s*(\\w+)\\s*\\)", Pattern.DOTALL);
     static final Pattern CONST_DECL = Pattern.compile("static\\s+final\\s+String\\s+([^;]+);");
     static final Pattern CONST_PAIR = Pattern.compile("(\\w+)\\s*=\\s*\"([a-z0-9_]+)\"");

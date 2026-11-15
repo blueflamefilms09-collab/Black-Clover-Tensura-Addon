@@ -65,8 +65,8 @@ class MagicDamageTest {
 
     @Test
     void otherNamespacesAndNullsAreNotMagic() {
-        assertFalse(MagicDamage.isMagicType("nusmp", "conceptual_severance"));
-        assertFalse(MagicDamage.isMagicType("nusmp", "magic"));
+        assertFalse(MagicDamage.isMagicType("anime_multiverse", "conceptual_severance"));
+        assertFalse(MagicDamage.isMagicType("anime_multiverse", "magic"));
         assertFalse(MagicDamage.isMagicType("othermod", "fire_elemental"));
         assertFalse(MagicDamage.isMagicType(null, "magic"));
         assertFalse(MagicDamage.isMagicType("minecraft", null));

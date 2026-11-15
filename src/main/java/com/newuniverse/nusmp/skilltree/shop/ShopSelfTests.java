@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Why: nothing of the shop can be played by its author, so the CI server smoke test runs checks in the real game ({@code /multiverse mega selftest}, keys
  * {@code skillbook.shop.*}; {@code items} and {@code buy_item} cover the item goods and the shop types, see {@code docs/black_market_goods.md}). {@code skillbook.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
- * every {@code minecraft:} and {@code nusmp:} item the witch buys exists, and the shelf is deterministic and changes with the restock period (the Skill Books were removed, so the shelf is empty and
+ * every {@code minecraft:} and {@code anime_multiverse:} item the witch buys exists, and the shelf is deterministic and changes with the restock period (the Skill Books were removed, so the shelf is empty and
  * {@code stock.json} lists no line; any line a datapack adds must still make a real item). {@code skillbook.shop.buy} proves the DEAL with a stand-in player and a real witch entity: a sale refused when far,
  * a purchase of an unknown offer refused, a sale, a bulk sale and the refusal of a bulk sale of a valuable. It passes with a message when the shop is switched off in the config (a closed shop would refuse every
  * step, which proves nothing), and puts the world back as it found it.
@@ -45,11 +45,11 @@ public final class ShopSelfTests {
     // ================================================================ the data and the shelf
     private static SelfTests.Result stock(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (MarketData.prices().isEmpty()) bad.add("no price loaded (data/nusmp/black_market/prices.json)");
+        if (MarketData.prices().isEmpty()) bad.add("no price loaded (data/anime_multiverse/black_market/prices.json)");
         if (!MarketData.problems().isEmpty()) bad.add("data problems: " + String.join("; ", MarketData.problems().subList(0, Math.min(4, MarketData.problems().size()))));
         int foreign = 0;
         for (String id : MarketData.unknownItems()) {
-            if (id.startsWith("minecraft:") || id.startsWith("nusmp:")) bad.add("the price table names " + id + ", which is not an item");
+            if (id.startsWith("minecraft:") || id.startsWith("anime_multiverse:")) bad.add("the price table names " + id + ", which is not an item");
             else foreign++;
         }
         if (!bad.isEmpty()) return fail(String.join(" | ", bad));
@@ -73,13 +73,13 @@ public final class ShopSelfTests {
 
     // ================================================================ the item pools of the witch's shelf
     /**
-     * {@code skillbook.shop.items}: the witch's ITEM lines in the real game. Every line that names a {@code minecraft:}, {@code c:} or {@code nusmp:} tag or item must resolve to a non-empty pool (a typo
+     * {@code skillbook.shop.items}: the witch's ITEM lines in the real game. Every line that names a {@code minecraft:}, {@code c:} or {@code anime_multiverse:} tag or item must resolve to a non-empty pool (a typo
      * there is a bug; a line that names another mod's item may be empty when that mod is absent); every pool item exists, is allowed by the shop's type, is not banned or excluded and is sold for
      * more than the witch pays for it; the shelf is deterministic, changes with the restock period, never lists an item twice, and every offer can be made into a real stack within the item's stack size.
      */
     private static SelfTests.Result items(MinecraftServer server) {
         MarketData.Shop shop = MarketData.shop(MarketData.WITCH_SHOP);
-        if (shop == null) return fail("no shop 'witch' loaded (data/nusmp/black_market/stock.json)");
+        if (shop == null) return fail("no shop 'witch' loaded (data/anime_multiverse/black_market/stock.json)");
         ShopType type = MarketData.types().get(shop.type());
         if (type == null) return fail("the witch's shop type '" + shop.type() + "' is not in types.json");
         if (!"general".equals(type.id())) return fail("the witch is the general store but her file says type '" + type.id() + "'");
@@ -95,7 +95,7 @@ public final class ShopSelfTests {
             String id = e.itemOrTagId();
             String ns = id.substring(0, Math.max(0, id.indexOf(':')));
             if (pool.isEmpty()) {
-                if (ns.equals("minecraft") || ns.equals("c") || ns.equals("nusmp")) bad.add(e.id() + ": " + e.item() + " gave an empty pool in this game");
+                if (ns.equals("minecraft") || ns.equals("c") || ns.equals("anime_multiverse")) bad.add(e.id() + ": " + e.item() + " gave an empty pool in this game");
                 else foreignEmpty++;
                 continue;
             }
@@ -254,7 +254,7 @@ public final class ShopSelfTests {
             MarketGold.set(fp, 0);
             PriceTable table = MarketData.prices();
             PriceTable.Price diamond = table.get("minecraft:diamond");
-            PriceTable.Price meat = table.get("nusmp:raw_monster_meat");
+            PriceTable.Price meat = table.get("anime_multiverse:raw_monster_meat");
             if (diamond == null || meat == null) return fail("the price table has no diamond or no raw monster meat");
             long diamondUnit = ShopRules.sellUnit(diamond.gold(), ShopConfig.sellScale());
             long meatUnit = ShopRules.sellUnit(meat.gold(), ShopConfig.sellScale());

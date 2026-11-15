@@ -22,7 +22,7 @@ import org.joml.Vector3f;
 import java.util.List;
 
 /**
- * The extra look of the nine upgraded God melee weapons (release 1.102.0, slice god_melee_b; assets/nusmp/visual_upgrade/&lt;id&gt;.json, docs/visual_upgrade/god_melee_b.md). It lives in
+ * The extra look of the nine upgraded God melee weapons (release 1.102.0, slice god_melee_b; assets/anime_multiverse/visual_upgrade/&lt;id&gt;.json, docs/visual_upgrade/god_melee_b.md). It lives in
  * the package of {@link WeaponRenderer} because it draws with that class's meshes; WeaponRenderer calls it from five places (the mesh id, the tier of a draw, the glow flicker, the
  * extra passes, the inventory model) and nothing else of the renderer changed. Everything is switched by the client option {@code visual.upgrade}
  * ({@link UpgradeConfig}); with it off every weapon is drawn from its old mesh as before 1.102.0.

@@ -14,7 +14,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "grimoire_preview"))
 import preview  # noqa: E402  (its render() draws the plan's quads with the real textures and tints)
 
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
 OUT = os.path.join(ROOT, "build", "engraving_codex")
 DOCS = os.path.join(ROOT, "docs", "previews", "engraving_codex")
 
@@ -50,7 +50,7 @@ def main():
         tile = Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8))
         sheet.paste(tile, (i * W, 18))
         ImageDraw.Draw(sheet).text((i * W + 6, 3), label, fill=(240, 220, 160))
-    icon = Image.open(os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item", "engraving_codex.png")).convert("RGBA")
+    icon = Image.open(os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item", "engraving_codex.png")).convert("RGBA")
     bg = Image.new("RGBA", (128, 128), (110, 110, 120, 255))
     bg.alpha_composite(icon.resize((128, 128), Image.NEAREST))
     sheet.paste(bg.convert("RGB"), (W * len(views) + 10, 40))

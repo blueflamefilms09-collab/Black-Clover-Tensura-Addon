@@ -31,7 +31,7 @@ public final class SpiritDiveWind4SelfTests {
     private static Result windFinal(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
         for (String n : SpiritDiveWind4Rules.NAMES) {
-            if (SpiritDiveWind4SelfTests.class.getClassLoader().getResource("assets/nusmp/sdw4_meshes/" + n + ".txt") == null) { bad.add("missing mesh " + n); continue; }
+            if (SpiritDiveWind4SelfTests.class.getClassLoader().getResource("assets/anime_multiverse/sdw4_meshes/" + n + ".txt") == null) { bad.add("missing mesh " + n); continue; }
             SpiritDiveWind3Mesh m = SpiritDiveWind3Mesh.getIn(SpiritDiveWind3Mesh.FOLDER4, n);
             if (m.quads(SpiritDiveWind3Mesh.SOLID) < 20 || m.quads(SpiritDiveWind3Mesh.GLOW) < 8) bad.add("mesh " + n + " has no body or no glow shell");
             if (!(m.radius > 5f && m.radius < 25f)) bad.add("mesh " + n + " has a bad radius " + m.radius);

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** The files the fire casting styles need: the Salamander models (three levels and a glow-only model per form) with their sheets and animations, the cast clips, Magna's Soul Bat (3D model, class, grip, Better Combat, engravings, franchise), the lang text, the previews. */
 class FireCastAssetsTest {
-    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/nusmp");
+    private static final Path RES = Path.of("src", "main", "resources"), ASSETS = RES.resolve("assets/anime_multiverse");
     private static final String BAT = "magnas_soul_bat";
 
     private static String read(Path p) throws IOException { return Files.readString(p); }
@@ -314,7 +314,7 @@ class FireCastAssetsTest {
             if (!Files.exists(ASSETS.resolve(f))) missing.add(f);
         assertTrue(missing.isEmpty(), "missing " + missing);
         assertEquals("minecraft:builtin/entity", json(ASSETS.resolve("models/item/" + BAT + ".json")).get("parent").getAsString(), "the 3D model draws through the weapon renderer");
-        assertEquals("nusmp:item/" + BAT, json(ASSETS.resolve("models/item/" + BAT + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the old sprite is the inventory icon");
+        assertEquals("anime_multiverse:item/" + BAT, json(ASSETS.resolve("models/item/" + BAT + "_icon.json")).getAsJsonObject("textures").get("layer0").getAsString(), "the old sprite is the inventory icon");
         BufferedImage icon = javax.imageio.ImageIO.read(ASSETS.resolve("textures/item/" + BAT + ".png").toFile());
         assertEquals(16, icon.getWidth());
         assertEquals(16, icon.getHeight());
@@ -336,7 +336,7 @@ class FireCastAssetsTest {
 
     @Test
     void betterCombatKnowsTheBatAsAClub() throws IOException {
-        JsonObject bc = json(RES.resolve("data/nusmp/weapon_attributes/" + BAT + ".json"));
+        JsonObject bc = json(RES.resolve("data/anime_multiverse/weapon_attributes/" + BAT + ".json"));
         assertEquals("bettercombat:mace", bc.get("parent").getAsString());
         String manifest = read(Path.of("tools", "bettercombat", "manifest.json"));
         int at = manifest.indexOf("\"" + BAT + "\": {");
@@ -346,8 +346,8 @@ class FireCastAssetsTest {
 
     @Test
     void theBatIsBlackCloverAndEngravedWithTensuraEngravings() throws IOException {
-        assertTrue(read(RES.resolve("data/nusmp/relics/franchise_map.json")).contains("\"" + BAT + "\": \"black_clover\""));
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
+        assertTrue(read(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).contains("\"" + BAT + "\": \"black_clover\""));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + BAT + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -358,10 +358,10 @@ class FireCastAssetsTest {
     @Test
     void theLangFragmentHasEveryString() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "fire_casting.json"));
-        for (String k : new String[]{"item.nusmp." + BAT, "item.nusmp." + BAT + ".lore", "item.nusmp." + BAT + ".use", "key.nusmp.fire_salamander", "nusmp.firecast.spent", "nusmp.firecast.spirit.full",
-                "nusmp.firecast.spirit.linked", "nusmp.firecast.spirit.unlinked"})
+        for (String k : new String[]{"item.anime_multiverse." + BAT, "item.anime_multiverse." + BAT + ".lore", "item.anime_multiverse." + BAT + ".use", "key.anime_multiverse.fire_salamander", "anime_multiverse.firecast.spent", "anime_multiverse.firecast.spirit.full",
+                "anime_multiverse.firecast.spirit.linked", "anime_multiverse.firecast.spirit.unlinked"})
             assertTrue(lang.has(k), k);
-        assertEquals("Magna's Soul Bat", lang.get("item.nusmp." + BAT).getAsString());
+        assertEquals("Magna's Soul Bat", lang.get("item.anime_multiverse." + BAT).getAsString());
         for (var e : lang.entrySet()) {
             String v = e.getValue().getAsString().toLowerCase();
             assertFalse(v.contains("hunger") || v.contains("starv") || v.contains("food"), e.getKey());

@@ -14,6 +14,6 @@ public final class MagicKeyItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("item.nusmp.magic_key.tooltip"));
+        tooltip.add(Component.translatable("item.anime_multiverse.magic_key.tooltip"));
     }
 }

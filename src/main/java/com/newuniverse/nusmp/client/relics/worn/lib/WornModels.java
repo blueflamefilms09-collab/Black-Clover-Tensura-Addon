@@ -21,7 +21,7 @@ public final class WornModels {
     private static final Map<String, Optional<WornMesh>> MESHES = new HashMap<>();
     private static WornCatalog catalog;
 
-    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     private static final WornCatalog EMPTY = WornCatalog.parse(List.of());
     private static long retryAt;
@@ -43,10 +43,10 @@ public final class WornModels {
                     catalog = WornCatalog.parse(in.lines().toList());
                 }
             } else {
-                LogUtils.getLogger().error("[nusmp] the worn relic catalog assets/nusmp/relic_worn/catalog.txt is missing; relics keep their plain look");
+                LogUtils.getLogger().error("[anime_multiverse] the worn relic catalog assets/anime_multiverse/relic_worn/catalog.txt is missing; relics keep their plain look");
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] the worn relic catalog could not be read; relics keep their plain look", ex);
+            LogUtils.getLogger().error("[anime_multiverse] the worn relic catalog could not be read; relics keep their plain look", ex);
         }
         if (catalog == null) {
             retryAt = System.currentTimeMillis() + 3000L;
@@ -58,7 +58,7 @@ public final class WornModels {
     private static UpgradeCatalog upgrade;
 
     /**
-     * The catalog of the visual upgrade (assets/nusmp/visual_upgrade/catalog.txt), read on first use after a reload; empty when the file is missing or cannot be read (every relic then
+     * The catalog of the visual upgrade (assets/anime_multiverse/visual_upgrade/catalog.txt), read on first use after a reload; empty when the file is missing or cannot be read (every relic then
      * keeps its 1.101 look). A read that failed because the resource manager was not ready is not remembered.
      */
     public static UpgradeCatalog upgrade() {
@@ -75,7 +75,7 @@ public final class WornModels {
         } catch (IllegalStateException | NullPointerException notReady) {
             return UpgradeCatalog.EMPTY;
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] the visual upgrade catalog could not be read; relics keep their 1.101 look", ex);
+            LogUtils.getLogger().error("[anime_multiverse] the visual upgrade catalog could not be read; relics keep their 1.101 look", ex);
             upgrade = UpgradeCatalog.EMPTY;
         }
         return upgrade;
@@ -84,7 +84,7 @@ public final class WornModels {
     private static java.util.Set<String> x3Index;
 
     /**
-     * 3.9.0: the models that have a blocky detailed version (assets/nusmp/relic_worn_x3/index.txt, written by tools/relics/gen_worn_x3.py), read once after a reload; empty when the file
+     * 3.9.0: the models that have a blocky detailed version (assets/anime_multiverse/relic_worn_x3/index.txt, written by tools/relics/gen_worn_x3.py), read once after a reload; empty when the file
      * is missing (every armour relic then wears its 3.8 models). A read that failed because the resource manager was not ready is not remembered.
      */
     public static java.util.Set<String> x3Models() {
@@ -101,7 +101,7 @@ public final class WornModels {
         } catch (IllegalStateException | NullPointerException notReady) {
             return java.util.Set.of();
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] the x3 model index could not be read; armour relics keep their 3.8 models", ex);
+            LogUtils.getLogger().error("[anime_multiverse] the x3 model index could not be read; armour relics keep their 3.8 models", ex);
             x3Index = java.util.Set.of();
         }
         return x3Index;
@@ -113,8 +113,8 @@ public final class WornModels {
         if (cached != null) return cached.orElse(null);
         WornMesh mesh = null;
         try {
-            // 1.102.0: a name starting with "vu/" is a visual upgrade model (assets/nusmp/visual_upgrade/models/<rest>.txt); every other name is a library model as before
-            // 3.9.0: a name starting with "x3/" is the blocky detailed version of an armour relic model (assets/nusmp/relic_worn_x3/<rest>.txt)
+            // 1.102.0: a name starting with "vu/" is a visual upgrade model (assets/anime_multiverse/visual_upgrade/models/<rest>.txt); every other name is a library model as before
+            // 3.9.0: a name starting with "x3/" is the blocky detailed version of an armour relic model (assets/anime_multiverse/relic_worn_x3/<rest>.txt)
             String file = name.startsWith("vu/") ? "visual_upgrade/models/" + name.substring(3) : name.startsWith("x3/") ? "relic_worn_x3/" + name.substring(3) : "relic_worn/" + name;
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl(file + ".txt"));
             if (res.isPresent()) {
@@ -122,10 +122,10 @@ public final class WornModels {
                     mesh = WornMesh.parse(name, in.lines().toList());
                 }
             } else {
-                LogUtils.getLogger().warn("[nusmp] worn model {} is missing", name);
+                LogUtils.getLogger().warn("[anime_multiverse] worn model {} is missing", name);
             }
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[nusmp] worn model {} failed to load", name, ex);
+            LogUtils.getLogger().error("[anime_multiverse] worn model {} failed to load", name, ex);
             mesh = null;
             if (ex instanceof IllegalStateException || ex instanceof NullPointerException) return null;      // the resource manager was not ready: ask again next time
         }

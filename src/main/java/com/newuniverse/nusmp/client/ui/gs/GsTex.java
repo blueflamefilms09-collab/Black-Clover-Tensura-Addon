@@ -4,13 +4,13 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * Every texture of the Great Spirit look, built once (so no frame ever builds a location from a string). Files:
- * {@code assets/nusmp/textures/gui/gs/<b|c>/...}, written by {@code tools/gen_gs_gui_textures.py}.
+ * {@code assets/anime_multiverse/textures/gui/gs/<b|c>/...}, written by {@code tools/gen_gs_gui_textures.py}.
  */
 public final class GsTex {
     private GsTex() {}
 
     private static ResourceLocation rl(String skin, String name) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/gs/" + skin + "/" + name + ".png");
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/gui/gs/" + skin + "/" + name + ".png");
     }
 
     private static ResourceLocation[] both(String name) { return new ResourceLocation[]{rl("b", name), rl("c", name)}; }

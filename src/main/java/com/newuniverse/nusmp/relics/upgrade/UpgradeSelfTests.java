@@ -29,7 +29,7 @@ public final class UpgradeSelfTests {
     public static final int MODEL_VERTICES = UpgradeCaps.GOD_MODEL_VERTICES, ENSEMBLE_VERTICES = UpgradeCaps.GOD_ENSEMBLE_VERTICES, HELD_VERTICES = UpgradeCaps.GOD_HELD_VERTICES;
     public static final double LOD_FRACTION = UpgradeCaps.GOD_LOD_FRACTION;
 
-    private static final String WORN = "/assets/nusmp/relic_worn/", UPG = "/assets/nusmp/visual_upgrade/", SKINS = "/assets/nusmp/textures/relic_worn/god/";
+    private static final String WORN = "/assets/anime_multiverse/relic_worn/", UPG = "/assets/anime_multiverse/visual_upgrade/", SKINS = "/assets/anime_multiverse/textures/relic_worn/god/";
 
     public static void register() { SelfTests.register("visual.god_worn", server -> run()); }
 

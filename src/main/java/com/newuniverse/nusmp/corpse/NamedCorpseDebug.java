@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.corpse;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * CI only (3.10.1): lets the client screenshot run ({@code client/debug/ClientShot}, started with {@code -Dnusmp.clientshot}) cast a numbered undead on the integrated server so the real
+ * CI only (3.10.1): lets the client screenshot run ({@code client/debug/ClientShot}, started with {@code -Danime_multiverse.clientshot}) cast a numbered undead on the integrated server so the real
  * client can be asked whether the body arrived and is drawn. Server thread only; it does exactly what the page cast does ({@link Corpses#summonNamedChecked}) and nothing else.
  */
 public final class NamedCorpseDebug {

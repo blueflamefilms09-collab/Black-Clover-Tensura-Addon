@@ -76,7 +76,7 @@ public final class DjinnEngine {
         return r != null && r.charging;
     }
 
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     private static final ResourceLocation STRAIN = id("djinn_strain"), VESSEL_REGEN = id("djinn_vessel_regen");
     private static final ResourceLocation M_SPEED = id("djinn_maso_speed"), M_ATTACK = id("djinn_maso_attack"), M_ARMOR = id("djinn_maso_armor"),

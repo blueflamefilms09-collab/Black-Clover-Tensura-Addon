@@ -6,14 +6,14 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
- * Why: which dimensions players may not claim chunks in is a list of ids with wildcards in a config key ({@code nusmp:*} by default: every dimension of this mod, the dungeons, the
+ * Why: which dimensions players may not claim chunks in is a list of ids with wildcards in a config key ({@code anime_multiverse:*} by default: every dimension of this mod, the dungeons, the
  * Hub, the arenas and the pocket realms), and the matching is plain string work, so it is a pure class a unit test can pin: an exact id, a {@code *} anywhere in the id, an empty list
  * blocks nothing, a bad entry is skipped and never throws.
  */
 public final class ClaimBlockRules {
     private ClaimBlockRules() {}
 
-    public static final String DEFAULT_PATTERNS = "nusmp:*";
+    public static final String DEFAULT_PATTERNS = "anime_multiverse:*";
 
     /** The compiled entries of a comma separated list (blank entries and entries with characters no dimension id has are dropped). */
     public static List<Pattern> parse(String patterns) {
@@ -33,7 +33,7 @@ public final class ClaimBlockRules {
         return out;
     }
 
-    /** Is a claim in this dimension (an id such as {@code nusmp:mega_dungeon}) blocked by the list? */
+    /** Is a claim in this dimension (an id such as {@code anime_multiverse:mega_dungeon}) blocked by the list? */
     public static boolean blocked(String dimensionId, String patterns) {
         if (dimensionId == null || dimensionId.isEmpty()) return false;
         String id = dimensionId.toLowerCase(Locale.ROOT);

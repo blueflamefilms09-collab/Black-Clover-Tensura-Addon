@@ -22,7 +22,7 @@ sys.dont_write_bytecode = True
 import hd_core as C  # noqa: E402
 import hdlib as H  # noqa: E402
 
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 SKINS = os.path.join(ASSETS, "textures", "entity", "playermodel")
 LOOKS_TIER = os.path.join(ASSETS, "playermodel", "looks_tier.json")
 HD_IDS = sorted(f[:-3] for f in os.listdir(HERE) if f.endswith(".py") and f[:-3] not in ("hdlib", "hd_core", "hd_detail", "hd_bridge", "test_hdlib") and not f.startswith("_"))

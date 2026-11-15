@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: loads {@code data/nusmp/arc/dialogue/<character_id>.json} once per data reload into an immutable snapshot of {@link DialogueBook}s, so talking in
+ * Why: loads {@code data/anime_multiverse/arc/dialogue/<character_id>.json} once per data reload into an immutable snapshot of {@link DialogueBook}s, so talking in
  * game never touches the disk, and a datapack that supplies the same file replaces a character's words. A broken file is reported (the log, and
  * {@code /multiverse arc info}) and skipped, never fatal. The file {@value #FALLBACK_ID} is what any character without a file of its own says; if that
  * is missing too, a one-line book built into the code is used, so a character is never mute. Registered by {@code ArcSystem.init} through
@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public final class DialogueLoader implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
-    public static final String NAMESPACE = "nusmp", ROOT = "arc/dialogue", FALLBACK_ID = DialogueBook.FALLBACK_ID;
+    public static final String NAMESPACE = "anime_multiverse", ROOT = "arc/dialogue", FALLBACK_ID = DialogueBook.FALLBACK_ID;
 
     /** Used only when even {@value #FALLBACK_ID} could not be read. */
     private static final String LAST_RESORT = "{\"lines\":{\"greeting\":[\"...\"],\"hint\":[\"...\"]}}";
@@ -49,16 +49,16 @@ public final class DialogueLoader implements ResourceManagerReloadListener {
                     DialogueBook.Parsed p = DialogueBook.parse(id, new String(in.readAllBytes(), StandardCharsets.UTF_8));
                     if (!p.problems().isEmpty()) bad.put(id, p.problems());
                     if (p.ok()) found.put(id, p.book());
-                    else LOG.warn("[nusmp] arc dialogue file {} skipped: {}", rl, String.join("; ", p.problems()));
+                    else LOG.warn("[anime_multiverse] arc dialogue file {} skipped: {}", rl, String.join("; ", p.problems()));
                 } catch (IOException | RuntimeException e) {
                     bad.put(id, List.of("could not be read: " + e));
-                    LOG.warn("[nusmp] arc dialogue file {} could not be read: {}", rl, e.toString());
+                    LOG.warn("[anime_multiverse] arc dialogue file {} could not be read: {}", rl, e.toString());
                 }
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] arc dialogue could not scan its data folder", e);
+            LOG.warn("[anime_multiverse] arc dialogue could not scan its data folder", e);
         }
-        for (Map.Entry<String, List<String>> e : bad.entrySet()) if (found.containsKey(e.getKey())) LOG.info("[nusmp] arc dialogue {}: {}", e.getKey(), String.join("; ", e.getValue()));
+        for (Map.Entry<String, List<String>> e : bad.entrySet()) if (found.containsKey(e.getKey())) LOG.info("[anime_multiverse] arc dialogue {}: {}", e.getKey(), String.join("; ", e.getValue()));
         books = Collections.unmodifiableMap(found);
         problems = Collections.unmodifiableMap(bad);
     }

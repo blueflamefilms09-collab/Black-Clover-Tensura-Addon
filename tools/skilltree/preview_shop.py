@@ -22,8 +22,8 @@ from PIL import Image, ImageDraw, ImageFont
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA_LAYOUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "skilltree", "shop", "ShopLayout.java")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "gui", "black_market")
+JAVA_LAYOUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "skilltree", "shop", "ShopLayout.java")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "black_market")
 SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 SANS_B = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 

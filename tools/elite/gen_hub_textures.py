@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Draws the Hub's textures (docs/elite/hub.md): the two NPC skins (villager model layout, 64x64) and the Dungeon Map's inventory icon (16x16).
 
-    python tools/elite/gen_hub_textures.py            # writes src/main/resources/assets/nusmp/textures/{entity/hub,item}/*.png
+    python tools/elite/gen_hub_textures.py            # writes src/main/resources/assets/anime_multiverse/textures/{entity/hub,item}/*.png
 
 Why a generator and not hand-painted files: the villager model's UV layout is a fixed 64x64 sheet of box nets, and painting two skins pixel by pixel in an editor is how a sleeve ends up on the
 wrong face. This paints each box net region by name (head, body, robe, arms, legs, nose) from a small palette, so the skins can be recoloured by changing a dict. The hat and hat rim regions
@@ -13,7 +13,7 @@ import sys
 from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures")
 
 
 def box(img, u, v, w, h, d, faces):

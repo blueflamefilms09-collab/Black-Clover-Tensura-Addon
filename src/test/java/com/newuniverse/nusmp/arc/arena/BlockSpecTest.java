@@ -27,7 +27,7 @@ class BlockSpecTest {
         assertEquals(Map.of("facing", "north", "half", "bottom"), s.properties());
         assertEquals("minecraft:stone_brick_stairs[facing=north,half=bottom]", s.toString());
         assertEquals("minecraft:oak_leaves[persistent=true]", BlockSpec.parse(" oak_leaves[persistent=true] ").toString());
-        assertEquals("nusmp:labyrinth_gate", BlockSpec.parse("nusmp:labyrinth_gate").id());
+        assertEquals("anime_multiverse:labyrinth_gate", BlockSpec.parse("anime_multiverse:labyrinth_gate").id());
         assertEquals(0, BlockSpec.parse("lantern[]").properties().size());
     }
 

@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "docs", "previews", "sylph")
-TEX = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "entity")
+TEX = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity")
 # (reference file, crop box in the reference (l, t, r, b), scene, caption)
 ROWS = [("119.png", (110, 120, 480, 420), "cmp_wings_119", "reference 119 (small form): small translucent yellow-green wings | ours: the small wings, seen as in the first picture"),
         ("120.webp", (0, 0, 851, 520), "cmp_wings_small", "reference 120: long, narrow, tall iridescent wings with pointed tips, a large front and a smaller rear pair | ours: the small form's wings"),

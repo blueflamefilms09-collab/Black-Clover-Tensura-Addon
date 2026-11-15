@@ -58,14 +58,14 @@ public final class PocketBoss {
     public static void intro(ServerLevel level, PocketRuntime rt, List<ServerPlayer> in) {
         PocketBossExtra extra = PocketDefs.extra(rt.def);
         if (extra.intro().isEmpty()) return;
-        Component line = Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".boss.intro", extra.intro()).withStyle(ChatFormatting.ITALIC, ChatFormatting.LIGHT_PURPLE);
+        Component line = Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".boss.intro", extra.intro()).withStyle(ChatFormatting.ITALIC, ChatFormatting.LIGHT_PURPLE);
         for (ServerPlayer pl : in) pl.displayClientMessage(line, false);
     }
 
     public static void death(ServerLevel level, PocketRuntime rt, List<ServerPlayer> in) {
         PocketBossExtra extra = PocketDefs.extra(rt.def);
         if (extra.death().isEmpty()) return;
-        Component line = Component.translatableWithFallback("pocket.nusmp." + rt.def.id() + ".boss.death", extra.death()).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+        Component line = Component.translatableWithFallback("pocket.anime_multiverse." + rt.def.id() + ".boss.death", extra.death()).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
         for (ServerPlayer pl : in) pl.displayClientMessage(line, false);
     }
 
@@ -79,12 +79,12 @@ public final class PocketBoss {
         if (g != null) {
             rt.bossMissingSince = -1;
             DndProfile profile = PocketDefs.boss(rt.def);
-            if (profile != null && PocketBossBridge.ensure(g, profile)) LOG.debug("[nusmp] The profile of the boss of {} was put back after a load.", rt.pocketId);
+            if (profile != null && PocketBossBridge.ensure(g, profile)) LOG.debug("[anime_multiverse] The profile of the boss of {} was put back after a load.", rt.pocketId);
             PocketBossExtra extra = PocketDefs.extra(rt.def);
             if (g.phaseTwo() && !extra.adds().isEmpty() && !g.getTags().contains(TAG_ADDS)) {
                 g.addTag(TAG_ADDS);
                 int n = PocketMobs.adds(level, rt, p, extra.adds(), extra.addCount(), g.blockPosition());
-                if (n > 0) for (ServerPlayer pl : in) pl.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.boss.court", "The master calls its court.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                if (n > 0) for (ServerPlayer pl : in) pl.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.boss.court", "The master calls its court.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
             }
             return false;
         }
@@ -101,7 +101,7 @@ public final class PocketBoss {
         if (rt.bossRespawns < MAX_REPLACEMENTS) {
             rt.bossRespawns++;
             rt.bossMissingSince = -1;
-            LOG.info("[nusmp] The boss of {} was missing; a fresh one stands in its lair ({} of {}).", rt.pocketId, rt.bossRespawns, MAX_REPLACEMENTS);
+            LOG.info("[anime_multiverse] The boss of {} was missing; a fresh one stands in its lair ({} of {}).", rt.pocketId, rt.bossRespawns, MAX_REPLACEMENTS);
             return spawn(level, rt, p) == null;
         }
         return true;

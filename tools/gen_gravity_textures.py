@@ -1,6 +1,6 @@
 """Gravity Magic textures (1.93.0 rebuild): the particle sprites of the GRAVITY_FX1..3 layer, the armour's ground sigil and glints, and the props.
 
-    python3 -B tools/gen_gravity_textures.py     # -> src/main/resources/assets/nusmp/textures/particle/gravity_*.png
+    python3 -B tools/gen_gravity_textures.py     # -> src/main/resources/assets/anime_multiverse/textures/particle/gravity_*.png
 
 White or light (tinted by the effect colour, violet 0xB45AFF) unless said:
   gravity_ring     a pressure ring: a double rim with short ticks pointing inwards (the rings of a well that crowd towards the centre)

@@ -9,13 +9,13 @@ import static com.newuniverse.nusmp.arc.tier.TierMove.of;
 /**
  * Why: the gag boss of rank F of the owner's new ladder (docs/bosses/roster.md, docs/bosses/light_yagami.md): Light Yagami of Death Note. He is NOT a fight: his one real act is the scripted
  * Death Note scene ({@link LightScene}); he has very little health (28), full knockback vulnerability and five token moves so the house rules ({@link TierRules}) still hold, all of them
- * tiny jokes (a pen, a potato chip, a notebook). His look is an ORIGINAL design (a neat young man in a plain dark navy suit, ink-blue side-parted hair, teal eyes, a small teal notebook in the breast pocket), painted by tools/tier_bosses; the owner can drop their own skin PNG over playermodel/light_yagami.png (+ _glow) and arc_light_yagami.png, the ids stay. The name is only the lang key entity.nusmp.light_yagami (plus the row string below), so a rename is one line.
+ * tiny jokes (a pen, a potato chip, a notebook). His look is an ORIGINAL design (a neat young man in a plain dark navy suit, ink-blue side-parted hair, teal eyes, a small teal notebook in the breast pocket), painted by tools/tier_bosses; the owner can drop their own skin PNG over playermodel/light_yagami.png (+ _glow) and arc_light_yagami.png, the ids stay. The name is only the lang key entity.anime_multiverse.light_yagami (plus the row string below), so a rename is one line.
  * Kept in its own file so the older rosters ({@link TierRosterF}, {@link TierRosterD}) are untouched; {@link TierRoster#all()} appends it last.
  */
 public final class TierRosterGag {
     private TierRosterGag() {}
 
-    /** The id of the gag boss (entity {@code nusmp:light_yagami}). */
+    /** The id of the gag boss (entity {@code anime_multiverse:light_yagami}). */
     public static final String LIGHT = "light_yagami";
 
     public static List<TierRow> rows() {

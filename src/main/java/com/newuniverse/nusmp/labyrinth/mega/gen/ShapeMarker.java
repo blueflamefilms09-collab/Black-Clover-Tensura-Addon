@@ -8,7 +8,7 @@ import com.newuniverse.nusmp.labyrinth.mega.MarkerSpec;
  * EXPANSION_SOCKET marker to find the end of the Way Onward); the generator turns all of them into world markers by turning the cell with the
  * piece, with no help from the game's own marker reader.
  *
- * @param spec the parsed {@code nusmp:<kind>[;key=value]*} metadata
+ * @param spec the parsed {@code anime_multiverse:<kind>[;key=value]*} metadata
  * @param cell the cell of the structure block in the template frame
  */
 public record ShapeMarker(MarkerSpec spec, Vec cell) {

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Why: the ambient effect layers of an upgraded relic are data, not Java per item: assets/nusmp/visual_upgrade/fx/&lt;relic id&gt;.json lists them (name, kind, colour, rate), written by
+ * Why: the ambient effect layers of an upgraded relic are data, not Java per item: assets/anime_multiverse/visual_upgrade/fx/&lt;relic id&gt;.json lists them (name, kind, colour, rate), written by
  * tools/visual_upgrade/charms_genesis_worn. A {@code geometry} layer is part of the model (a spinning halo ring, orbiting shards, a light shaft, a portal ripple: the named animation
  * group of the model file draws it, so it costs nothing outside the draw passes); a {@code particle} layer is spawned by {@link VuFxClient} while the relic is held or worn, within the
  * per-tick particle budget and thinned by the quality options. Pure (Gson only), so the files are checked in tests.
  * <pre>
- * { "id": "...", "ambient_sound": "nusmp:relic.ambient.x", "draw_ticks": 12,
+ * { "id": "...", "ambient_sound": "anime_multiverse:relic.ambient.x", "draw_ticks": 12,
  *   "layers": [ { "name": "halo ring", "kind": "geometry", "type": "halo_ring", "group": "halo", "views": ["hand","worn"] },
  *               { "name": "idle motes", "kind": "particle", "type": "motes", "particle": "end_rod", "color": "FFD93A", "count": 1, "every": 6,
  *                 "radius": 0.35, "rise": 0.012, "views": ["hand","worn"] } ] }

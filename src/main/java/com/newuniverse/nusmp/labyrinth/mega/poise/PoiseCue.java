@@ -56,7 +56,7 @@ public final class PoiseCue {
         Fx.burst(level, THEME, m, FxTone.LIGHT, 12);
         Fx.ring(level, THEME, FxTone.LIGHT, m.getX(), m.getY() + 0.1, m.getZ(), 1.6, 16);
         level.playSound(null, m.getX(), m.getY(), m.getZ(), SoundEvents.SHIELD_BREAK, SoundSource.HOSTILE, 0.9f, 0.8f);
-        notice(level, m, Component.translatableWithFallback("message.nusmp.poise.broken", "%s loses its footing!", m.getDisplayName()).withStyle(ChatFormatting.GOLD));
+        notice(level, m, Component.translatableWithFallback("message.anime_multiverse.poise.broken", "%s loses its footing!", m.getDisplayName()).withStyle(ChatFormatting.GOLD));
     }
 
     /** The desperation phase begins: a dark burst and ring, a low roar, a line for the players near. */
@@ -64,7 +64,7 @@ public final class PoiseCue {
         Fx.burst(level, THEME, m, FxTone.DARK, 12);
         Fx.ring(level, THEME, FxTone.DARK, m.getX(), m.getY() + 0.1, m.getZ(), 2.5, 20);
         level.playSound(null, m.getX(), m.getY(), m.getZ(), SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 1.0f, 0.7f);
-        notice(level, m, Component.translatableWithFallback("message.nusmp.poise.desperate", "%s is desperate!", m.getDisplayName()).withStyle(ChatFormatting.DARK_RED));
+        notice(level, m, Component.translatableWithFallback("message.anime_multiverse.poise.desperate", "%s is desperate!", m.getDisplayName()).withStyle(ChatFormatting.DARK_RED));
     }
 
     /** The embers around a desperate bearer (called every half second while it lasts). */

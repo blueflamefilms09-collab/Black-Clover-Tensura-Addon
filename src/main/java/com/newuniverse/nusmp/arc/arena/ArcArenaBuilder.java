@@ -83,7 +83,7 @@ public final class ArcArenaBuilder {
                 }
             }
         });
-        LOG.info("[nusmp] The story arena {} (slot {}) {}: {} blocks set", shape.id(), slot, onlyMissing ? "repaired" : "built", set[0]);
+        LOG.info("[anime_multiverse] The story arena {} (slot {}) {}: {} blocks set", shape.id(), slot, onlyMissing ? "repaired" : "built", set[0]);
         return set[0];
     }
 }

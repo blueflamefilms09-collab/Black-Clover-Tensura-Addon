@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * result packet of kind "bark".
  */
 public record C2S_BarkRequestPayload(String primary, String secondary) implements CustomPacketPayload {
-    public static final Type<C2S_BarkRequestPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_bark"));
+    public static final Type<C2S_BarkRequestPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_bark"));
     public static final StreamCodec<RegistryFriendlyByteBuf, C2S_BarkRequestPayload> CODEC = StreamCodec.of(
             (b, p) -> { b.writeUtf(NetText.clean(p.primary, NetText.ID_MAX), NetText.ID_MAX); b.writeUtf(NetText.clean(p.secondary, NetText.ID_MAX), NetText.ID_MAX); },
             b -> new C2S_BarkRequestPayload(b.readUtf(NetText.ID_MAX), b.readUtf(NetText.ID_MAX)));

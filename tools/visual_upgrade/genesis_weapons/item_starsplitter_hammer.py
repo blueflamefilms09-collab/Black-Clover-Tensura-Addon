@@ -225,9 +225,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 18, "flash": "FFE070", "groups": ["meteors", "starmap"], "note": "the meteors spiral in and the star map opens as the hammer is drawn"}
     it.swing = {"trail": "falling_star", "rgb": "FFE070", "rgb2": "3A2A5A", "length": 1.8, "width": 0.5, "life": 12, "particles": "star_dust"}
-    it.sound = "nusmp:item.genesis.starsplitter.night_loop"
+    it.sound = "anime_multiverse:item.genesis.starsplitter.night_loop"
     it.acts = {
-        "meteor_smash": {"burst": "meteor_smash", "pattern": "nova", "rgb": "FFE070", "ring": 6.0, "particles": 46, "sound": "nusmp:item.genesis.starsplitter.smash"},
-        "gravity_well": {"burst": "gravity_well", "pattern": "inward", "rgb": "8C64E6", "ring": 6.0, "particles": 46, "sound": "nusmp:item.genesis.starsplitter.well"},
-        "starsplit": {"burst": "starsplit", "pattern": "column", "rgb": "FFF2B0", "ring": 6.0, "particles": 50, "sound": "nusmp:item.genesis.starsplitter.split"},
+        "meteor_smash": {"burst": "meteor_smash", "pattern": "nova", "rgb": "FFE070", "ring": 6.0, "particles": 46, "sound": "anime_multiverse:item.genesis.starsplitter.smash"},
+        "gravity_well": {"burst": "gravity_well", "pattern": "inward", "rgb": "8C64E6", "ring": 6.0, "particles": 46, "sound": "anime_multiverse:item.genesis.starsplitter.well"},
+        "starsplit": {"burst": "starsplit", "pattern": "column", "rgb": "FFF2B0", "ring": 6.0, "particles": 50, "sound": "anime_multiverse:item.genesis.starsplitter.split"},
     }

@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 /**
  * Why: every path that falls back to drawing something plainer than the best look (no model for a relic, the client's own Curios read missed a relic the server knows, a renderer that is
  * not a player renderer drew a player, a slot the Curios inventory does not have) used to be silent, so "my relic is not shown" could not be traced to a cause. Each such path now says its
- * cause once per (cause, relic), in the log ({@code [nusmp] worn relic: ...}) and in the list {@code /multiverse relic debug} prints. The hot path costs one enum-indexed set lookup and
+ * cause once per (cause, relic), in the log ({@code [anime_multiverse] worn relic: ...}) and in the list {@code /multiverse relic debug} prints. The hot path costs one enum-indexed set lookup and
  * allocates nothing once a pair was seen (the message is only built the first time); at most {@link #MAX} distinct pairs are kept, so a flood of different ones cannot grow it. Thread
  * safe, no Minecraft type (the log line goes to a sink that {@code RelicSystem.registerGame} sets to the game's logger).
  */

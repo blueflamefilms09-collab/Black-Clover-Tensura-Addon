@@ -63,7 +63,7 @@ public final class ThemeDefs implements ResourceManagerReloadListener {
         try {
             found.addAll(manager.listResources(DIR, rl -> rl.getPath().endsWith(".json")).entrySet());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] mega themes: could not list {}: {}", DIR, e.toString());
+            LOG.warn("[anime_multiverse] mega themes: could not list {}: {}", DIR, e.toString());
         }
         found.sort(java.util.Comparator.comparing(x -> x.getKey().toString()));
         for (Map.Entry<ResourceLocation, Resource> e : found) {
@@ -71,14 +71,14 @@ public final class ThemeDefs implements ResourceManagerReloadListener {
             String fileId = path.substring(path.lastIndexOf('/') + 1, path.length() - ".json".length());
             try (Reader reader = e.getValue().openAsReader()) {
                 ThemeDef.Parsed p = ThemeDef.parse(fileId, JsonTrees.read(reader));
-                for (String w : p.warnings()) LOG.warn("[nusmp] mega theme {}: {}", e.getKey(), w);
+                for (String w : p.warnings()) LOG.warn("[anime_multiverse] mega theme {}: {}", e.getKey(), w);
                 if (p.def() != null) loaded.put(p.def().id(), p.def());
             } catch (Exception ex) {
-                LOG.warn("[nusmp] mega theme {} skipped: {}", e.getKey(), ex.toString());
+                LOG.warn("[anime_multiverse] mega theme {} skipped: {}", e.getKey(), ex.toString());
             }
         }
-        for (RegionTheme t : RegionTheme.values()) if (!loaded.containsKey(t.id()) && t != RegionTheme.GRAVITY) LOG.warn("[nusmp] mega themes: no file for theme '{}': its sectors look like the baseline", t.id());
+        for (RegionTheme t : RegionTheme.values()) if (!loaded.containsKey(t.id()) && t != RegionTheme.GRAVITY) LOG.warn("[anime_multiverse] mega themes: no file for theme '{}': its sectors look like the baseline", t.id());
         replace(loaded);
-        LOG.info("[nusmp] mega themes: loaded {}", loaded.keySet());
+        LOG.info("[anime_multiverse] mega themes: loaded {}", loaded.keySet());
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 A structure-template DSL for the Labyrinth: build a piece in Python, save it as the gzip NBT Minecraft 1.21.1 reads
-(`data/nusmp/structure/<name>.nbt`), load one back, preview it as ASCII layers, and `--check` every template in the mod.
+(`data/anime_multiverse/structure/<name>.nbt`), load one back, preview it as ASCII layers, and `--check` every template in the mod.
 
 Why a DSL and no Blockbench / structure blocks: the Labyrinth is dozens of Jigsaw pieces that must agree on exact jigsaw positions,
 sizes and block ids across builders. Generated templates are deterministic (same script -> same bytes), reviewable in a diff
@@ -10,13 +10,13 @@ and validated in CI (`--check`: round-trips every .nbt and checks every jigsaw's
 
     t = Template("gate/ruin_a", 13, 14, 13)                 # name (may contain a slash), size x y z
     t.fill((0, 0, 0), (12, 0, 12), "minecraft:stone_bricks")
-    t.set(6, 1, 6, "nusmp:labyrinth_pillar", {"axis": "y"})
-    t.jigsaw(6, 13, 6, "up_north", "nusmp:up", "nusmp:down", "nusmp:labyrinth/ascent_1", joint="rollable")
-    t.chest(3, 1, 3, "nusmp:chests/labyrinth_trial", facing="south")
-    t.be(2, 1, 2, "nusmp:sealed_archway", {"id": "nusmp:sealed_archway", "radius": 9})
-    t.save("src/main/resources")                           # -> src/main/resources/data/nusmp/structure/gate/ruin_a.nbt
+    t.set(6, 1, 6, "anime_multiverse:labyrinth_pillar", {"axis": "y"})
+    t.jigsaw(6, 13, 6, "up_north", "anime_multiverse:up", "anime_multiverse:down", "anime_multiverse:labyrinth/ascent_1", joint="rollable")
+    t.chest(3, 1, 3, "anime_multiverse:chests/labyrinth_trial", facing="south")
+    t.be(2, 1, 2, "anime_multiverse:sealed_archway", {"id": "anime_multiverse:sealed_archway", "radius": 9})
+    t.save("src/main/resources")                           # -> src/main/resources/data/anime_multiverse/structure/gate/ruin_a.nbt
     print(t.ascii_layers())
-    load("src/main/resources/data/nusmp/structure/gate/ruin_a.nbt")
+    load("src/main/resources/data/anime_multiverse/structure/gate/ruin_a.nbt")
 
 Cells that are never set are OMITTED from the NBT: the world keeps whatever is there (in the void dimension that is air anyway);
 set "minecraft:air" explicitly where a piece must carve the world out. Coordinates are template-local, 0-based, inclusive ranges.
@@ -34,7 +34,7 @@ except ImportError:  # run as a script: tools/labyrinth is sys.path[0]
     import nbt
 
 DATA_VERSION = 3955  # Minecraft 1.21.1
-MODID = "nusmp"
+MODID = "anime_multiverse"
 
 #: The twelve jigsaw orientations: `<facing>_<top>`; `north_up` faces north with its top up (horizontal), `up_north` faces up (vertical).
 ORIENTATIONS = ("down_east", "down_north", "down_south", "down_west", "up_east", "up_north", "up_south", "up_west",
@@ -186,7 +186,7 @@ class Template:
             if not is_resource_location(v) or ":" not in v:
                 raise ValueError("jigsaw %s %r must be a namespaced id" % (label, v))
         if not is_block_state_string(final_state):
-            raise ValueError("jigsaw final_state %r must be a block state string like minecraft:air or nusmp:x[axis=y]" % final_state)
+            raise ValueError("jigsaw final_state %r must be a block state string like minecraft:air or anime_multiverse:x[axis=y]" % final_state)
         if joint not in JOINTS:
             raise ValueError("jigsaw joint must be rollable or aligned, got %r" % joint)
         data = nbt.Compound({"id": "minecraft:jigsaw", "name": name, "target": target, "pool": pool, "final_state": final_state,
@@ -249,7 +249,7 @@ class Template:
         return os.path.join(root, "data", MODID, "structure", *self.name.split("/")) + ".nbt"
 
     def save(self, root):
-        """Write `root/data/nusmp/structure/<name>.nbt` (gzip, DataVersion 3955). Returns the path."""
+        """Write `root/data/anime_multiverse/structure/<name>.nbt` (gzip, DataVersion 3955). Returns the path."""
         p = self.path(root)
         os.makedirs(os.path.dirname(p), exist_ok=True)
         nbt.dump(p, self.to_nbt())
@@ -384,7 +384,7 @@ def check(root, verbose=True):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--root", default=resources_root(), help="resources root (default: src/main/resources of this repo)")
-    ap.add_argument("--check", action="store_true", help="round-trip and validate every template under data/nusmp/structure")
+    ap.add_argument("--check", action="store_true", help="round-trip and validate every template under data/anime_multiverse/structure")
     ap.add_argument("--preview", metavar="NAME", help="print the ASCII layers of a template (name like gate/ruin_a, or a path)")
     ap.add_argument("--list", action="store_true", help="list the templates")
     a = ap.parse_args(argv)

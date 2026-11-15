@@ -59,7 +59,7 @@ public final class ArcHubNpcs {
             if (hub == null || hub.players().isEmpty() || ChronicleSave.get(hub).version() < ChronicleBuilder.BUILD_VERSION) return;
             pass(hub, server);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] the Hub NPC pass failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] the Hub NPC pass failed: {}", ex.toString());
         }
     }
 

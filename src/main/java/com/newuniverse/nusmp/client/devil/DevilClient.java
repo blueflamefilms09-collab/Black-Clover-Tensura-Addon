@@ -50,13 +50,13 @@ import java.util.Map;
 public final class DevilClient {
     private DevilClient() {}
 
-    public static final String CATEGORY = "key.categories.nusmp";
-    public static final KeyMapping ASSIMILATE = new KeyMapping("key.nusmp.devil_assimilate", InputConstants.Type.KEYSYM, InputConstants.KEY_N, CATEGORY);
+    public static final String CATEGORY = "key.categories.anime_multiverse";
+    public static final KeyMapping ASSIMILATE = new KeyMapping("key.anime_multiverse.devil_assimilate", InputConstants.Type.KEYSYM, InputConstants.KEY_N, CATEGORY);
 
     /** Other players the layer draws in one frame (the owner's own body is always drawn). */
     static final int MAX_PER_FRAME = 16;
     static final int MAX_TRACKED = 256;
-    private static final ResourceLocation HUD = ResourceLocation.fromNamespaceAndPath("nusmp", "devil_hud"), EYES = ResourceLocation.fromNamespaceAndPath("nusmp", "devil_eyes");
+    private static final ResourceLocation HUD = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_hud"), EYES = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_eyes");
     private static final int W = 164;
 
     // ---------------------------------------------------------------- what other bodies look like
@@ -191,7 +191,7 @@ public final class DevilClient {
     // ---------------------------------------------------------------- the HUD
     private record Lines(long second, String title, String attr, String level, String stage, String union, int unionColour, String hint, String warn, String sacrifices) {}
 
-    static String t(String key, String fallback, Object... args) { return Component.translatableWithFallback("nusmp.devil.hud." + key, fallback, args).getString(); }
+    static String t(String key, String fallback, Object... args) { return Component.translatableWithFallback("anime_multiverse.devil.hud." + key, fallback, args).getString(); }
 
     private static int left(int secAtSync, long sinceTicks) { return (int) Math.max(0, (secAtSync * 20L - sinceTicks + 19) / 20); }
 
@@ -205,8 +205,8 @@ public final class DevilClient {
         long since = Math.max(0, nowTicks - syncAt);
         int unionLeft = left(s.unionSec(), since), coolLeft = left(s.coolSec(), since);
         DevilTier tier = DevilTier.byOrdinal(s.tier());
-        String name = Component.translatableWithFallback("nusmp.devil.tier." + tier.key(), tier.key().substring(0, 1).toUpperCase() + tier.key().substring(1) + " Devil").getString();
-        String attr = Component.translatableWithFallback("nusmp.devil.attr." + com.newuniverse.nusmp.devil.DevilAttribute.byOrdinal(s.attribute()).key(),
+        String name = Component.translatableWithFallback("anime_multiverse.devil.tier." + tier.key(), tier.key().substring(0, 1).toUpperCase() + tier.key().substring(1) + " Devil").getString();
+        String attr = Component.translatableWithFallback("anime_multiverse.devil.attr." + com.newuniverse.nusmp.devil.DevilAttribute.byOrdinal(s.attribute()).key(),
                 com.newuniverse.nusmp.devil.DevilAttribute.byOrdinal(s.attribute()).key()).getString();
         boolean on = (s.flags() & DevilNet.F_ASSIMILATING) != 0;
         String level = t("level", "Assimilation %s%%", s.level()) + (on ? " " + t("rising", "(rising)") : s.level() > 0 ? " " + t("fading", "(fading)") : "");

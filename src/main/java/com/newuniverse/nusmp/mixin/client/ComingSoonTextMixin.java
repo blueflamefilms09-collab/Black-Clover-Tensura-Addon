@@ -17,12 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(GuiGraphics.class)
 public abstract class ComingSoonTextMixin {
     @Inject(method = "drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", at = @At("HEAD"), cancellable = true)
-    private void nusmp$comingSoonString(Font font, String text, int x, int y, int color, boolean shadow, CallbackInfoReturnable<Integer> cir) {
+    private void anime_multiverse$comingSoonString(Font font, String text, int x, int y, int color, boolean shadow, CallbackInfoReturnable<Integer> cir) {
         if (text != null && MultiverseStatusClient.placeholderText((GuiGraphics) (Object) this, font, text, x, y)) cir.setReturnValue(x);
     }
 
     @Inject(method = "drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;IIIZ)I", at = @At("HEAD"), cancellable = true)
-    private void nusmp$comingSoonSequence(Font font, FormattedCharSequence text, int x, int y, int color, boolean shadow, CallbackInfoReturnable<Integer> cir) {
+    private void anime_multiverse$comingSoonSequence(Font font, FormattedCharSequence text, int x, int y, int color, boolean shadow, CallbackInfoReturnable<Integer> cir) {
         if (text == null || !MultiverseStatusClient.watching()) return;
         StringBuilder sb = new StringBuilder();
         text.accept((i, style, cp) -> { sb.appendCodePoint(cp); return true; });

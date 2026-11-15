@@ -94,9 +94,9 @@ BOOKS = {
 def main():
     os.makedirs(OUT, exist_ok=True)
     for key, (name, desc, pages) in BOOKS.items():
-        frag = {"nusmp.skill.book_%s.description" % key: desc}
+        frag = {"anime_multiverse.skill.book_%s.description" % key: desc}
         for pid, text in pages.items():
-            frag["nusmp.page.book_%s.%s" % (key, pid)] = text
+            frag["anime_multiverse.page.book_%s.%s" % (key, pid)] = text
         path = os.path.join(OUT, key + "_rebuild.json")
         with open(path, "w") as f:
             json.dump(frag, f, indent=2, ensure_ascii=True)

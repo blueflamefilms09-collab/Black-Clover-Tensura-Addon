@@ -306,7 +306,7 @@ public final class CanonSpells {
         return true;
     }
 
-    private static final net.minecraft.resources.ResourceLocation BLACK_BLADE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("nusmp", "black_blade_reach");
+    private static final net.minecraft.resources.ResourceLocation BLACK_BLADE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "black_blade_reach");
 
     /** Dark Cloaked Black Blade - darkness coats the sword and forms a longer blade: more reach and bite for 30 s. */
     public static boolean blackBlade(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {

@@ -52,8 +52,8 @@ final class PocketBuilder {
     private PocketBuilder() {}
 
     private static final Logger LOG = LogUtils.getLogger();
-    static final ResourceLocation RELIC_VAULT = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/dungeon_relic_vault");
-    static final ResourceLocation TRIAL = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/labyrinth_trial");
+    static final ResourceLocation RELIC_VAULT = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/dungeon_relic_vault");
+    static final ResourceLocation TRIAL = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/labyrinth_trial");
     static final String BOSS_TAG = "nusmp_pocket_boss", GUARD_TAG = "nusmp_pocket_guard";
 
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
@@ -174,7 +174,7 @@ final class PocketBuilder {
                     }
                 }
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] The {} of the realm in slot {} could not be placed at {}: {}", f.type(), p.slot, at.toShortString(), ex.toString());
+                LOG.warn("[anime_multiverse] The {} of the realm in slot {} could not be placed at {}: {}", f.type(), p.slot, at.toShortString(), ex.toString());
             }
         }
         if (!plates.isEmpty()) p.plates = plates.toArray(new BlockPos[0]);

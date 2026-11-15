@@ -88,7 +88,7 @@ public final class ArcWorldSelfTests {
             if (!BossRegistry.known(c.id())) bad.add(c.id() + " is not in the boss registry");
             if (c.hasCharter() && CharterTable.byId(c.charterId()) == null) bad.add(c.id() + " declares a grimoire the Canon table does not have");
             EntityType<?> type = ExistingBossSpawner.typeOf(c.id());
-            if (type == null) { bad.add(c.id() + " has no entity type (nusmp:" + ExistingBosses.entityPath(c.id()) + ")"); continue; }
+            if (type == null) { bad.add(c.id() + " has no entity type (anime_multiverse:" + ExistingBosses.entityPath(c.id()) + ")"); continue; }
             var probe = type.create(level);
             if (!(probe instanceof ZogratisBoss)) bad.add(c.id() + ": its entity is not a boss of the framework");
             else if (!c.id().equals(BossEntities.bossId(probe))) bad.add(c.id() + ": the boss registry does not recognise its entity");
@@ -124,7 +124,7 @@ public final class ArcWorldSelfTests {
     // ================================================================ arena
     private static SelfTests.Result arena(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (server.getLevel(ArcArena.DIMENSION) == null) bad.add("the dimension " + ArcArena.DIMENSION.location() + " is not loaded (data/nusmp/dimension/arc_arena.json and dimension_type/arc_arena.json)");
+        if (server.getLevel(ArcArena.DIMENSION) == null) bad.add("the dimension " + ArcArena.DIMENSION.location() + " is not loaded (data/anime_multiverse/dimension/arc_arena.json and dimension_type/arc_arena.json)");
         int blocks = 0;
         for (ArenaShape s : ArenaShapes.all()) {
             for (Map.Entry<ArenaPart, String> e : s.palette().entrySet()) {

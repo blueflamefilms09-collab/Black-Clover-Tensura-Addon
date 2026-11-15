@@ -42,7 +42,7 @@ class NoFlatCardPictureTest {
             if (s.contains("VfxShape.SPELL_CARD") || s.contains("case SPELL_CARD")) bad.add(p + " draws or lists the removed SPELL_CARD");
         }
         assertTrue(bad.isEmpty(), bad.toString());
-        assertFalse(Files.exists(RES.resolve("assets/nusmp/textures/particle/card_frame.png")), "the card frame texture came back");
+        assertFalse(Files.exists(RES.resolve("assets/anime_multiverse/textures/particle/card_frame.png")), "the card frame texture came back");
     }
 
     @Test
@@ -79,10 +79,10 @@ class NoFlatCardPictureTest {
     @Test
     void noActEffectOrUpgradeFileNamesTheSpellCard() throws IOException {
         List<String> bad = new ArrayList<>();
-        try (Stream<Path> s = Files.walk(RES.resolve("data/nusmp/visual_upgrade"))) {
+        try (Stream<Path> s = Files.walk(RES.resolve("data/anime_multiverse/visual_upgrade"))) {
             for (Path p : s.filter(Files::isRegularFile).toList()) if (Files.readString(p).contains("SPELL_CARD")) bad.add(p.toString());
         }
-        try (Stream<Path> s = Files.walk(RES.resolve("assets/nusmp/visual_upgrade"))) {
+        try (Stream<Path> s = Files.walk(RES.resolve("assets/anime_multiverse/visual_upgrade"))) {
             for (Path p : s.filter(q -> q.toString().endsWith(".json") || q.toString().endsWith(".txt")).toList()) if (Files.readString(p).contains("SPELL_CARD")) bad.add(p.toString());
         }
         assertTrue(bad.isEmpty(), "SPELL_CARD is back in " + bad);

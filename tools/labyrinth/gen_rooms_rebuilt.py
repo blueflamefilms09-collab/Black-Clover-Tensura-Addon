@@ -9,7 +9,7 @@ Writes the rebuilt rooms, halls and hallways of the Mega-Dungeon (docs/labyrinth
     python3 tools/labyrinth/gen_rooms_rebuilt.py --report out.md # a table of every variant: blocks, light, the problems
 
 Each shipped template `mega/<folder>/<stem>` gets variants `mega_r/<folder>/<stem>_v1` .. `_v4` (same size, same sockets, same data markers) and the manifest
-`data/nusmp/mega/rooms_rebuilt.json` lists them for the generator (labyrinth/mega/gen/RoomVariants). The shipped templates are never touched. Templates that are not
+`data/anime_multiverse/mega/rooms_rebuilt.json` lists them for the generator (labyrinth/mega/gen/RoomVariants). The shipped templates are never touched. Templates that are not
 regular boxes (domes, caverns, rock-carved works) and the boss-chain, safe, stair, trial, trap and puzzle pieces are not rebuilt (their functions are read by other systems).
 """
 import concurrent.futures
@@ -31,7 +31,7 @@ import rr_check as CK  # noqa: E402
 VARIANTS = 4
 FOLDERS = ("hall", "junction", "corridor", "link", "treasure")
 OUT_ROOT = "mega_r"
-MANIFEST = os.path.join(L.RES, "data", "nusmp", "mega", "rooms_rebuilt.json")
+MANIFEST = os.path.join(L.RES, "data", "anime_multiverse", "mega", "rooms_rebuilt.json")
 #: shipped templates that are not rebuilt, and why
 SKIP = {
     "mega/hall/round_hall_a": "a domed round hall: its roof is the room",
@@ -100,7 +100,7 @@ def verify():
     """Runs the contract checker of the shipped templates (mega_check.check_template) on every rebuilt file on disk: sizes, sockets on the outer layer, markers, blocks, states."""
     import mega_check as MC
     errors, warns = [], []
-    known = {"vanilla": MC.vanilla_blocks(), "nusmp": MC.registered_nusmp_blocks()}
+    known = {"vanilla": MC.vanilla_blocks(), "anime_multiverse": MC.registered_nusmp_blocks()}
     pools = MC.check_pools(errors, warns)
     files = sorted(glob.glob(os.path.join(C.STRUCT, OUT_ROOT, "**", "*.nbt"), recursive=True))
     for p in files:
@@ -112,7 +112,7 @@ def verify():
 
 
 def write_manifest_from_disk():
-    """Rebuilds data/nusmp/mega/rooms_rebuilt.json from the files under structure/mega_r (how many contiguous variants each shipped template has, which carry a stand slot), so a
+    """Rebuilds data/anime_multiverse/mega/rooms_rebuilt.json from the files under structure/mega_r (how many contiguous variants each shipped template has, which carry a stand slot), so a
     partial re-run of a few templates still leaves a consistent manifest."""
     from template import load
     variants, stands = {}, set()

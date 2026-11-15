@@ -11,7 +11,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
  * whom it is aiming at (the reticle) and its phase (the evolution of the fight). Sent to everyone tracking it when it changes.
  */
 public record ZagredStatePayload(int entity, int state, int word, int target, int phase) implements CustomPacketPayload {
-    public static final Type<ZagredStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "zagred_state"));
+    public static final Type<ZagredStatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "zagred_state"));
     public static final StreamCodec<FriendlyByteBuf, ZagredStatePayload> STREAM_CODEC = StreamCodec.of(
             (buf, p) -> { buf.writeVarInt(p.entity()); buf.writeByte(p.state()); buf.writeByte(p.word()); buf.writeVarInt(p.target()); buf.writeByte(p.phase()); },
             buf -> new ZagredStatePayload(buf.readVarInt(), buf.readByte(), buf.readByte(), buf.readVarInt(), buf.readByte()));

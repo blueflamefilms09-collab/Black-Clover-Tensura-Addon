@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /** 3.72.0: giving up your own hero weapon takes a question and a confirmation inside 30 seconds; the server side is bounded, UUID-keyed and refuses while the curse holds the wielder. */
 class HeroAbandonRulesTest {
-    private static String read(String p) throws IOException { return Files.readString(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon", p)); }
+    private static String read(String p) throws IOException { return Files.readString(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon", p)); }
 
     @Test
     void aConfirmationNeedsAnOpenQuestion() {

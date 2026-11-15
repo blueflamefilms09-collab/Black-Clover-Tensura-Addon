@@ -5,12 +5,12 @@
     python3 -B tools/gen_corpse_assets.py jimmy carl   # only the named ones
 
 Why this exists: the Frankenstein look of a Soul Corpse is two things. (1) A patterned overlay texture that client/corpse/CorpseDecayLayer
-draws over the model of any creature that carries the nusmp:soul_corpse effect (stitches, patchwork discolouration, rot, exposed bone,
+draws over the model of any creature that carries the anime_multiverse:soul_corpse effect (stitches, patchwork discolouration, rot, exposed bone,
 four stages that strengthen as the body decays) and a faint soul glow. (2) Three dedicated GeoLite models for the named puppets, each
 with its own silhouette, four skins (stage 0 to 3, the same stage the effect carries) and a glow map per skin. Everything is drawn with
 deterministic noise, so a run always gives the same files and stage N+1 is stage N plus more decay.
 
-Writes (assets/nusmp, through tools/geo_builder.py for the models):
+Writes (assets/anime_multiverse, through tools/geo_builder.py for the models):
     textures/entity/corpse_decay_0..3.png          64x64 RGBA overlay, one per decay stage (tinted pale green-grey by the layer)
     textures/entity/corpse_soul.png                64x64 soft additive wisp texture for the glow pass
     geo/entity/corpse_<name>.geo.json              jimmy, alfredo, carl

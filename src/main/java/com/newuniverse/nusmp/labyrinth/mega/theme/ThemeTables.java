@@ -67,7 +67,7 @@ final class ThemeTables {
     private static Table build(ThemeDef def) {
         Predicate<String> exists = ThemeTables::registered;
         for (String problem : ThemeSwap.problems(def.families(), def.explicit(), exists)) {
-            if (LOGGED.add(def.id() + "|" + problem)) LOG.warn("[nusmp] mega theme {}: {}", def.id(), problem);
+            if (LOGGED.add(def.id() + "|" + problem)) LOG.warn("[anime_multiverse] mega theme {}: {}", def.id(), problem);
         }
         IdentityHashMap<Block, Block> map = new IdentityHashMap<>();
         for (Map.Entry<String, ThemeSwap.Resolved> x : ThemeSwap.table(def.families(), def.explicit(), exists).entrySet()) {

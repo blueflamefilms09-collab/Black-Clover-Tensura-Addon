@@ -162,9 +162,9 @@ public class ZogratisHourglassItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.nusmp.zogratis_hourglass.tip.kind").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("item.nusmp.zogratis_hourglass.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("item.nusmp.zogratis_hourglass.tip.use").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("item.nusmp.zogratis_hourglass.tip.rules").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.zogratis_hourglass.tip.kind").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("item.anime_multiverse.zogratis_hourglass.tip.lore").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.anime_multiverse.zogratis_hourglass.tip.use").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item.anime_multiverse.zogratis_hourglass.tip.rules").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

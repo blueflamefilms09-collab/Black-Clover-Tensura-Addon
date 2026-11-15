@@ -100,7 +100,7 @@ public final class LuckLoot {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
         if (id == null) return false;
         if (CoinKind.ofItemId(id.toString()) != null) return false;
-        if ("nusmp".equals(id.getNamespace())) return item instanceof LootMaterialItem || item instanceof LootFoodItem || item instanceof BoneArrowItem;
+        if ("anime_multiverse".equals(id.getNamespace())) return item instanceof LootMaterialItem || item instanceof LootFoodItem || item instanceof BoneArrowItem;
         return true;
     }
 

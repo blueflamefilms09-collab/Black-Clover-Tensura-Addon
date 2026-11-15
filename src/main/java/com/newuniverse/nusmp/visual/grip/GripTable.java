@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * 1.111.0 (docs/weapon_grip.md): assets/nusmp/weapon_grips.json, the per-weapon half of the grip table. Pure (Gson only).
+ * 1.111.0 (docs/weapon_grip.md): assets/anime_multiverse/weapon_grips.json, the per-weapon half of the grip table. Pure (Gson only).
  * <pre>
  * { "version": 1,
  *   "fractions": { "elsdocia": 0.12, ... },     per-weapon grip fraction (share of the length from the butt) that beats the mesh's own grip line and the handle finder

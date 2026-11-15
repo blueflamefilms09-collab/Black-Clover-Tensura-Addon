@@ -136,7 +136,7 @@ public final class MasteryPages {
             com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "page.unlocked", page.id());
             p.sendSystemMessage(Component.literal("Your mastery opens a new page: ").withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(page.name()).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD)));
-            p.sendSystemMessage(Component.translatable("nusmp.page." + book.getRegistryName().getPath() + "." + page.id()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            p.sendSystemMessage(Component.translatable("anime_multiverse.page." + book.getRegistryName().getPath() + "." + page.id()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1.0f, 0.8f);
             MultiverseSync.markDirty(p);
             return m;

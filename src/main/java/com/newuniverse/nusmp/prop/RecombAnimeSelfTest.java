@@ -46,7 +46,7 @@ public final class RecombAnimeSelfTest {
         try {
             for (int m = 0; m < RecombAnimeRules.MODELS.length; m++) {
                 String id = "recombanime_" + RecombAnimeRules.MODELS[m];
-                JsonObject geo = json("/assets/nusmp/geo/entity/" + id + ".geo.json").getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();
+                JsonObject geo = json("/assets/anime_multiverse/geo/entity/" + id + ".geo.json").getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();
                 JsonObject desc = geo.getAsJsonObject("description");
                 int tw = desc.get("texture_width").getAsInt(), th = desc.get("texture_height").getAsInt();
                 int cubes = 0;
@@ -70,10 +70,10 @@ public final class RecombAnimeSelfTest {
                 }
                 if (cubes > RecombAnimeRules.MAX_CUBES[m]) return SelfTests.Result.fail(id + " has " + cubes + " cubes, the cap is " + RecombAnimeRules.MAX_CUBES[m]);
                 for (String suffix : new String[]{".png", "_glow.png"}) {
-                    int[] size = pngSize("/assets/nusmp/textures/entity/" + id + suffix);
+                    int[] size = pngSize("/assets/anime_multiverse/textures/entity/" + id + suffix);
                     if (size[0] != tw || size[1] != th) return SelfTests.Result.fail(id + suffix + " is " + size[0] + " x " + size[1] + ", the model says " + tw + " x " + th);
                 }
-                JsonObject anims = json("/assets/nusmp/animations/entity/" + id + ".animation.json").getAsJsonObject("animations");
+                JsonObject anims = json("/assets/anime_multiverse/animations/entity/" + id + ".animation.json").getAsJsonObject("animations");
                 for (String clip : RecombAnimeRules.CLIPS[m]) {
                     if (!anims.has(clip)) return SelfTests.Result.fail(id + " has no clip " + clip);
                     for (var e : anims.getAsJsonObject(clip).getAsJsonObject("bones").entrySet())
@@ -81,7 +81,7 @@ public final class RecombAnimeSelfTest {
                 }
             }
             for (String old : new String[]{"bull", "room", "halo", "drill"})
-                if (RecombAnimeSelfTest.class.getResource("/assets/nusmp/geo/entity/recombination_" + old + ".geo.json") == null) return SelfTests.Result.fail("the older model recombination_" + old + " is gone");
+                if (RecombAnimeSelfTest.class.getResource("/assets/anime_multiverse/geo/entity/recombination_" + old + ".geo.json") == null) return SelfTests.Result.fail("the older model recombination_" + old + " is gone");
             for (String id : RecombAnimeRules.PARTICLE_IDS)
                 if (FxCatalog.byId(id) == null) return SelfTests.Result.fail("the particle " + id + " is not in the catalog");
             for (PropKind k : new PropKind[]{PropKind.RECOMBINATION_1, PropKind.RECOMBINATION_2, PropKind.RECOMBINATION_3, PropKind.RECOMBINATION_4})

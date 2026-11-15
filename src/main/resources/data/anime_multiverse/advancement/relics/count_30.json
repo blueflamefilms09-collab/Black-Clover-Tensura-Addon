@@ -1,0 +1,35 @@
+{
+  "parent": "anime_multiverse:relics/count_10",
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:bag_of_holding"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.relics.count_30.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.relics.count_30.desc"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_relic_obtained_30": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "relic.obtained",
+        "count": 30
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_relic_obtained_30"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  }
+}

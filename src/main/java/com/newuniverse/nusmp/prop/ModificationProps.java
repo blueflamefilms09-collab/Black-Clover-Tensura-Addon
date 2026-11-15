@@ -201,7 +201,7 @@ public final class ModificationProps {
         for (PropKind k : new PropKind[]{PropKind.MODIFICATION_1, PropKind.MODIFICATION_2, PropKind.MODIFICATION_3})
             if (MagicProps.behavior(k) == null) return SelfTests.Result.fail("no behaviour for " + k);
         for (String n : new String[]{"helm", "chest", "tasset", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "greave_r", "greave_l", "back", "halo", "tendril", "needle", "subject"})
-            if (ModificationProps.class.getResource("/assets/nusmp/geo/entity/modification_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
+            if (ModificationProps.class.getResource("/assets/anime_multiverse/geo/entity/modification_" + n + ".geo.json") == null) return SelfTests.Result.fail("missing geo model " + n);
         var ledger = new ModificationRules.Ledger();
         ledger.note(ModificationRules.Kind.MELEE, 20, 0);
         if (ledger.multiplier(ModificationRules.Kind.MELEE, 0, 0.3f) >= 1f) return SelfTests.Result.fail("the ledger does not adapt to a kind that leads");

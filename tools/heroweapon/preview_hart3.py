@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.join(ROOT, "tools", "relics"))
 import preview_mesh as pm                                                       # noqa: E402
 import weapon_sheet as ws                                                       # noqa: E402
 
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 OUT_DIR = os.path.join(ROOT, "build", "hart3")
 FOV = 70.0                                                                      # the vertical field of the hand (GameRenderer draws it with the player's field of view setting, 70 by default)
 SCREEN = (640, 360)

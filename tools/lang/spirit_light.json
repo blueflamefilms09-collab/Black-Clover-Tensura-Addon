@@ -1,12 +1,12 @@
 {
-  "key.nusmp.spirit_light_link": "Spirit of Light (link or unlink; with sneak: the seraph form)",
-  "key.nusmp.spirit_light_command": "Spirit of Light (light beam; with sneak: the Glowing pulse)",
-  "nusmp.spiritlight.need": "The Spirit of Light answers only a Light Magic caster.",
-  "nusmp.spiritlight.full": "The Spirit of Light cannot answer: too many spirits are out.",
-  "nusmp.spiritlight.linked": "The Spirit of Light takes your shoulder.",
-  "nusmp.spiritlight.unlinked": "The Spirit of Light fades into the light.",
-  "nusmp.spiritlight.recharge": "The seraph is not ready to rise again.",
-  "nusmp.spiritlight.powered_full": "Too many seraphs are risen: the Spirit of Light stays a cub.",
-  "nusmp.spiritlight.risen": "The Spirit of Light rises as a seraph.",
-  "nusmp.spiritlight.fallen": "The seraph settles back into the cub."
+  "key.anime_multiverse.spirit_light_link": "Spirit of Light (link or unlink; with sneak: the seraph form)",
+  "key.anime_multiverse.spirit_light_command": "Spirit of Light (light beam; with sneak: the Glowing pulse)",
+  "anime_multiverse.spiritlight.need": "The Spirit of Light answers only a Light Magic caster.",
+  "anime_multiverse.spiritlight.full": "The Spirit of Light cannot answer: too many spirits are out.",
+  "anime_multiverse.spiritlight.linked": "The Spirit of Light takes your shoulder.",
+  "anime_multiverse.spiritlight.unlinked": "The Spirit of Light fades into the light.",
+  "anime_multiverse.spiritlight.recharge": "The seraph is not ready to rise again.",
+  "anime_multiverse.spiritlight.powered_full": "Too many seraphs are risen: the Spirit of Light stays a cub.",
+  "anime_multiverse.spiritlight.risen": "The Spirit of Light rises as a seraph.",
+  "anime_multiverse.spiritlight.fallen": "The seraph settles back into the cub."
 }

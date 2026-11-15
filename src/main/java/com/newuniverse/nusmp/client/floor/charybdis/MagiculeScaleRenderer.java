@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * Draws a magicule scale (tools/gen_charybdis.py writes assets/nusmp/geo|textures/entity/magicule_scale*): a small flat glowing plate that points the
+ * Draws a magicule scale (tools/gen_charybdis.py writes assets/anime_multiverse/geo|textures/entity/magicule_scale*): a small flat glowing plate that points the
  * way it flies and slowly rolls about that line, bright at any depth. A scale that was sent back is drawn in the warm skin, so the player can see which
  * ones are theirs.
  */

@@ -1,4 +1,4 @@
-"""Why: Sylph, the wind Spirit Lord of Black Clover (entities nusmp:elemental_spirit_lord kind SYLPH, nusmp:spirit_lord kind SYLPH, and nusmp:wind_spirit_lord, the Wind Spirit Lord boss whose
+"""Why: Sylph, the wind Spirit Lord of Black Clover (entities anime_multiverse:elemental_spirit_lord kind SYLPH, anime_multiverse:spirit_lord kind SYLPH, and anime_multiverse:wind_spirit_lord, the Wind Spirit Lord boss whose
 renderer was a stub that drew nothing). The old model was a green fairy with dragonfly wings and drifting bubbles (tools/gen_spirit_lords.py). This is the kit's version on the player's
 rig: a small, light, green-skinned sprite with big bright eyes, twin tails of pale green hair that stream in the wind, a leaf-cut dress, a pair of dragonfly (fairy) wings and a little
 wand that throws the wind blade. She hovers. The wind boss wears the same model drawn larger by its hitbox (client/remodel). The colours are the old model's. See docs/arc/remodel.md.

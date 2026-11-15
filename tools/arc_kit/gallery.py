@@ -1,6 +1,6 @@
 """Why: the manual lists every name of the vocabulary (hair styles, eyes, outfits, props ...), and nobody picks a hair style from a word. `--gallery <set>` builds one small
 model per name, renders each with the preview harness and lays them out in one contact sheet with the names printed on it, so a character author can LOOK at the whole list.
-The models are temporary: they are written under tools/render_preview/assets/nusmp (a folder the preview harness reads, next to the mod's own assets) and removed afterwards,
+The models are temporary: they are written under tools/render_preview/assets/anime_multiverse (a folder the preview harness reads, next to the mod's own assets) and removed afterwards,
 nothing of them stays in the mod.
 
     python3 -B tools/gen_arc_characters.py --gallery hair            # sets: hair eyes tops legs builds props accessories extras all
@@ -108,7 +108,7 @@ def run(which, out_dir, repo, preview_py):
         if w not in SETS:
             print("unknown gallery set %r; use one of: %s, all" % (w, ", ".join(SETS)))
             return 1
-    root = os.path.join(repo, "tools", "render_preview", "assets", "nusmp")
+    root = os.path.join(repo, "tools", "render_preview", "assets", "anime_multiverse")
     saved_root = geo_builder.ROOT
     made = []
     code = 0
@@ -195,7 +195,7 @@ def run(which, out_dir, repo, preview_py):
                 p = os.path.join(root, rel)
                 if os.path.isfile(p):
                     os.remove(p)
-        for dp, dn, fn in os.walk(os.path.join(repo, "tools", "render_preview", "assets", "nusmp"), topdown=False):
+        for dp, dn, fn in os.walk(os.path.join(repo, "tools", "render_preview", "assets", "anime_multiverse"), topdown=False):
             if not os.listdir(dp):
                 os.rmdir(dp)
     return code

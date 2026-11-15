@@ -46,7 +46,7 @@ public final class DepthDrops {
         } catch (RuntimeException | LinkageError ex) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The depth drops failed once and are skipped for that death (further failures are not logged)", ex);
+                LOG.warn("[anime_multiverse] The depth drops failed once and are skipped for that death (further failures are not logged)", ex);
             }
         }
     }
@@ -62,7 +62,7 @@ public final class DepthDrops {
         } catch (RuntimeException | LinkageError ex) {
             if (!warned) {
                 warned = true;
-                LOG.warn("[nusmp] The depth experience failed once and is skipped (further failures are not logged)", ex);
+                LOG.warn("[anime_multiverse] The depth experience failed once and is skipped (further failures are not logged)", ex);
             }
         }
     }

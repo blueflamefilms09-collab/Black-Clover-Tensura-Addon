@@ -73,7 +73,7 @@ public class AbyssalRenderer extends KitMobRenderer<LivingArmorEntity> {
                 rl("textures/entity/abyssal_" + m + "_glow.png"));
     }
 
-    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
+    private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     @Override
     public ResourceLocation getTextureLocation(LivingArmorEntity e) {

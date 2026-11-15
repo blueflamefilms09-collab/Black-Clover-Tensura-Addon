@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 /**
  * Why: the one call that wires the performance safety nets into the mod (one line in {@code NUSMP}): the common config file nusmp-performance-common.toml, the copy of its values into
  * {@link PerfSettings} (when the file loads, when it is edited, and every five seconds as a safety net), the server probe events and the {@code /multiverse perf} command, and the CI self-test
- * {@code perf.core}. The client half (the client config file, the {@code /nusmp perf} command, the client probe events) is {@code client.perf.PerfClient}, called from the client block of
+ * {@code perf.core}. The client half (the client config file, the {@code /anime_multiverse perf} command, the client probe events) is {@code client.perf.PerfClient}, called from the client block of
  * the constructor.
  */
 public final class PerfBoot {

@@ -30,27 +30,27 @@ public final class ForgeView {
         public boolean enabled(ForgeRules.Button b) { return (mask & (1 << b.id())) != 0; }
 
         /** "Tier: 3 / 6" or the no-relic line. */
-        public Line tierLine() { return isRelic() ? new Line("nusmp.forge.tier", tier, maxTier) : new Line("nusmp.forge.tier.none"); }
+        public Line tierLine() { return isRelic() ? new Line("anime_multiverse.forge.tier", tier, maxTier) : new Line("anime_multiverse.forge.tier.none"); }
 
         /** "Sockets: 1 / 2" or the no-sockets line. */
         public Line socketLine() {
-            if (!isRelic()) return new Line("nusmp.forge.sockets.none");
-            return total <= 0 ? new Line("nusmp.forge.sockets.zero") : new Line("nusmp.forge.sockets", used, total);
+            if (!isRelic()) return new Line("anime_multiverse.forge.sockets.none");
+            return total <= 0 ? new Line("anime_multiverse.forge.sockets.zero") : new Line("anime_multiverse.forge.sockets", used, total);
         }
 
         /** "Draw out socket 2 of 2" (the chosen index, 1-based) or empty when nothing is bound. */
-        public Line cycleLine() { return used <= 0 ? new Line("nusmp.forge.cycle.none") : new Line("nusmp.forge.cycle", Math.min(cycle, used - 1) + 1, used); }
+        public Line cycleLine() { return used <= 0 ? new Line("anime_multiverse.forge.cycle.none") : new Line("anime_multiverse.forge.cycle", Math.min(cycle, used - 1) + 1, used); }
 
         /** The cost of the next jump: a share of the magicule pool, or "nothing to pay" at the top / without a relic. */
-        public Line costLine() { return isRelic() && target >= 0 ? new Line("nusmp.forge.cost", costPercent) : new Line("nusmp.forge.cost.none"); }
+        public Line costLine() { return isRelic() && target >= 0 ? new Line("anime_multiverse.forge.cost", costPercent) : new Line("anime_multiverse.forge.cost.none"); }
 
-        public Line chanceLine() { return isRelic() && target >= 0 ? new Line("nusmp.forge.chance", chancePercent) : new Line("nusmp.forge.chance.none"); }
+        public Line chanceLine() { return isRelic() && target >= 0 ? new Line("anime_multiverse.forge.chance", chancePercent) : new Line("anime_multiverse.forge.chance.none"); }
 
         /** "Engravings added here: 1 / 3". */
-        public Line engraveLine() { return new Line("nusmp.forge.engraved", forgeEngravings, ForgeRules.ENGRAVING_CAP); }
+        public Line engraveLine() { return new Line("anime_multiverse.forge.engraved", forgeEngravings, ForgeRules.ENGRAVING_CAP); }
 
         /** The ritual cooldown, shown only while it runs. Null when ready. */
-        public Line cooldownLine() { return cooldownSeconds > 0 ? new Line("nusmp.forge.cooldown", cooldownSeconds) : null; }
+        public Line cooldownLine() { return cooldownSeconds > 0 ? new Line("anime_multiverse.forge.cooldown", cooldownSeconds) : null; }
 
         /** The Great Sage line for the last action or the current refusal. */
         public Line messageLine() { return new Line(msg.langKey()); }

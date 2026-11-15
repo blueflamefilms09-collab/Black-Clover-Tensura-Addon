@@ -40,7 +40,7 @@ import java.util.Set;
  * Why: nothing of the hero weapons can be played by its author, so the Legendary Shield has a SELF-TEST that the CI server smoke test runs in the real game
  * ({@code /multiverse mega selftest}, key {@code hero.weapon.shield}). It checks, in this order: that every technique of the table is registered with the table's
  * cooldown, cost, name and ultimate flag; that every form of the weapon (from the forms system once it is merged, and from the packaged file
- * {@code data/nusmp/hero/forms/legendary_shield.json} either way) lists only techniques and passives that exist, on slots a blocking weapon has; and then, with a
+ * {@code data/anime_multiverse/hero/forms/legendary_shield.json} either way) lists only techniques and passives that exist, on slots a blocking weapon has; and then, with a
  * stand-in player bonded to the Shield beside a mob that cannot move, that every technique can be cast once and every hook run once without throwing. It removes
  * what it spawned and releases the bond. If the stand-in cannot be bonded (the Shield is held by a real player) or the spawn chunk is not loaded, the third part
  * is skipped and says so.
@@ -48,7 +48,7 @@ import java.util.Set;
 final class ShieldSelfTest {
     private ShieldSelfTest() {}
 
-    private static final String PLAYER = "hero_shield_tester", FORMS_FILE = "/data/nusmp/hero/forms/legendary_shield.json";
+    private static final String PLAYER = "hero_shield_tester", FORMS_FILE = "/data/anime_multiverse/hero/forms/legendary_shield.json";
 
     static SelfTests.Result run(MinecraftServer server) {
         List<String> bad = new ArrayList<>();

@@ -18,8 +18,8 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-MESH = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "DemonSlayerMesh.java")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures")
+MESH = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "DemonSlayerMesh.java")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures")
 OUT = os.path.join(ROOT, "build", "item_preview")
 W = H = 360
 

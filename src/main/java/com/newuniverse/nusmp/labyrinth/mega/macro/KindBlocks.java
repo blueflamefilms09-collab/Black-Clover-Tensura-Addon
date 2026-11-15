@@ -24,7 +24,7 @@ public final class KindBlocks {
     public record Spec(String block, String... props) {}
 
     /** The id of the one block of this mod the table names. */
-    public static final String GATE_ID = "nusmp:labyrinth_gate";
+    public static final String GATE_ID = "anime_multiverse:labyrinth_gate";
 
     /** The block (and the fixed properties) a kind is drawn with. {@link BlockKind#GATE} is the mod's own block; rails get their connections from the helpers below. */
     public static Spec of(BlockKind k) {

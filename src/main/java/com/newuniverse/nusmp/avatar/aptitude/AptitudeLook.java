@@ -12,7 +12,7 @@ import java.util.Map;
  * the client frames agree. Pure: no Minecraft class.
  *
  * @param tint        0xRRGGBB, the colour of the icon glyph, the aura tint and the frame glow
- * @param icon        a resource location of a texture ("nusmp:textures/gui/soulforge/apt/fire.png"); the screen draws a letter in a circle when it is missing
+ * @param icon        a resource location of a texture ("anime_multiverse:textures/gui/soulforge/apt/fire.png"); the screen draws a letter in a circle when it is missing
  * @param description one short line shown in the tooltip (may be empty)
  */
 public record AptitudeLook(int tint, String icon, String description) {
@@ -27,7 +27,7 @@ public record AptitudeLook(int tint, String icon, String description) {
     }
 
     /** The default icon path of an aptitude id. */
-    public static String defaultIcon(String id) { return "nusmp:textures/gui/soulforge/apt/" + id + ".png"; }
+    public static String defaultIcon(String id) { return "anime_multiverse:textures/gui/soulforge/apt/" + id + ".png"; }
 
     /** The look of this aptitude: the loaded one, or a default made from its rarity (never null). */
     public static AptitudeLook of(Aptitude a) {

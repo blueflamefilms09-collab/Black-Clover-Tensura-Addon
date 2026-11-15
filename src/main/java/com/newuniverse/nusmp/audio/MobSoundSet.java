@@ -105,7 +105,7 @@ public final class MobSoundSet {
     public static String eventId(String family, Cue cue) { return "mob." + family + "." + cue.id(); }
 
     /** The subtitle key of a cue of a family (the text is in {@code tools/lang/mob_audio.json}). */
-    public static String subtitleKey(String family, Cue cue) { return "subtitles.nusmp.mob." + family + "." + cue.id(); }
+    public static String subtitleKey(String family, Cue cue) { return "subtitles.anime_multiverse.mob." + family + "." + cue.id(); }
 
     /** A random pitch for a cue, {@code r01} being a random number in [0, 1). */
     public static float pitch(String family, Cue cue, double r01) {
@@ -200,15 +200,15 @@ public final class MobSoundSet {
             Map.entry("minecraft:evoker", "cultist"), Map.entry("minecraft:illusioner", "cultist"), Map.entry("minecraft:witch", "cultist"),
             Map.entry("minecraft:ravager", "ogre"), Map.entry("minecraft:hoglin", "beast"), Map.entry("minecraft:zoglin", "beast"), Map.entry("minecraft:wolf", "beast"),
             Map.entry("minecraft:iron_golem", "golem"), Map.entry("minecraft:villager", "npc"), Map.entry("minecraft:wandering_trader", "npc"),
-            Map.entry("nusmp:dungeon_slime", "slime"), Map.entry("nusmp:living_armor", "armor"), Map.entry("nusmp:dungeon_direwolf", "beast"), Map.entry("nusmp:basilisk", "drake"),
-            Map.entry("nusmp:floor_warden", "armor"), Map.entry("nusmp:labyrinth_guardian", "armor"));
+            Map.entry("anime_multiverse:dungeon_slime", "slime"), Map.entry("anime_multiverse:living_armor", "armor"), Map.entry("anime_multiverse:dungeon_direwolf", "beast"), Map.entry("anime_multiverse:basilisk", "drake"),
+            Map.entry("anime_multiverse:floor_warden", "armor"), Map.entry("anime_multiverse:labyrinth_guardian", "armor"));
 
     /** The family of an entity type id such as {@code minecraft:zombie}, or null when none is known (the Foundry mob, whose family depends on which mob it is, answers null here). */
     public static String forEntityType(String typeId) { return typeId == null ? null : TYPES.get(typeId); }
 
     /** The family of an entity: a Foundry mob by its faction and id, anything else by its type. Null when unknown. */
     public static String forEntity(String typeId, String faction, String detail) {
-        if ("nusmp:foundry_mob".equals(typeId)) return forFoundry(faction, detail);
+        if ("anime_multiverse:foundry_mob".equals(typeId)) return forFoundry(faction, detail);
         return forEntityType(typeId);
     }
 

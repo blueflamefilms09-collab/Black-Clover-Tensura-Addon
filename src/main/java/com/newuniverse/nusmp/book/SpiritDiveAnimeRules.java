@@ -205,7 +205,7 @@ public final class SpiritDiveAnimeRules {
     /** Eyes: Earth's glow amber, the others the colour of the palette; a dive with a helmet on the head draws no eyes and no cap (the painter asks). */
 
     // ------------------------------------------------------------------ the textures
-    /** Texture paths (under assets/nusmp/textures) by element ordinal (WIND, WATER, FIRE, EARTH); the generator is tools/gen_spirit_dive_anime_textures.py. */
+    /** Texture paths (under assets/anime_multiverse/textures) by element ordinal (WIND, WATER, FIRE, EARTH); the generator is tools/gen_spirit_dive_anime_textures.py. */
     public static String swirlTexture(Element el) { return "aura/sda_swirl_" + name(el); }
     public static String plumeTexture(Element el) { return "aura/sda_plume_" + name(el); }
     public static String plumeGlowTexture(Element el) { return "aura/sda_plume_glow_" + name(el); }

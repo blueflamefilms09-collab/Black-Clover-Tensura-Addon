@@ -26,7 +26,7 @@ public final class MissionStars {
             if (!MissionStarRules.counts(h.id().getNamespace(), h.id().getPath(), display.isPresent(), MultiverseConfig.get(MultiverseConfig.MISSION_EXCLUDE))) return;
             award(p, h.id().toString(), display.get().getType().name(), display.get().getTitle());
         } catch (Throwable t) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] mission stars failed", t);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] mission stars failed", t);
         }
     }
 

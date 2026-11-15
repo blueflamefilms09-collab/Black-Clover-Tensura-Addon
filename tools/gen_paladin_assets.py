@@ -6,11 +6,11 @@
     python3 -B tools/gen_paladin_assets.py --preview         # the headless render of tools/render_preview (JOML_JAR / GSON_JAR, see that script)
 
 Writes (GeoSpec.of("paladin", "halo") and GeoSpec.of("paladin", "wings")):
-    assets/nusmp/geo/entity/paladin_{halo,wings}.geo.json
-    assets/nusmp/animations/entity/paladin_{halo,wings}.animation.json
-    assets/nusmp/textures/entity/paladin_{halo,wings}.png          the cutout skin
-    assets/nusmp/textures/entity/paladin_{halo,wings}_glow.png     what shines (additive, full bright; the layer pulses it)
-    assets/nusmp/textures/mob_effect/paladin.png                   the 18 x 18 icon of the marker effect
+    assets/anime_multiverse/geo/entity/paladin_{halo,wings}.geo.json
+    assets/anime_multiverse/animations/entity/paladin_{halo,wings}.animation.json
+    assets/anime_multiverse/textures/entity/paladin_{halo,wings}.png          the cutout skin
+    assets/anime_multiverse/textures/entity/paladin_{halo,wings}_glow.png     what shines (additive, full bright; the layer pulses it)
+    assets/anime_multiverse/textures/mob_effect/paladin.png                   the 18 x 18 icon of the marker effect
 and tools/render_preview/scenes.d/paladin.json.
 
 Frame: both models are authored AROUND THE ORIGIN, not on the feet. The layer puts the origin where it wants it for the creature at hand (halo
@@ -225,7 +225,7 @@ def build_all():
 
 # ================================================================================================ preview scenes
 def scene(model, anim, ages, views, tile, argb="FFFFFFFF", glow="FFFFFFFF", floor=False):
-    return {"kind": "geo", "model": "nusmp:geo/entity/paladin_%s.geo.json" % model, "texture": "nusmp:textures/entity/paladin_%s.png" % model,
+    return {"kind": "geo", "model": "anime_multiverse:geo/entity/paladin_%s.geo.json" % model, "texture": "anime_multiverse:textures/entity/paladin_%s.png" % model,
             "space": "PLAYER", "layer": "CUTOUT", "argb": argb, "glow": glow, "ages": ages, "tile": list(tile), "floor": floor, "figure": False,
             "expect": [], "anim": anim, "views": views}
 

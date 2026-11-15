@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 /**
  * Why: particle providers are a client-only mod-bus event ({@code RegisterParticleProvidersEvent}); {@code registerSpriteSet} hands each provider the {@code SpriteSet} the engine built from
- * {@code assets/nusmp/particles/<id>.json}, so every animation frame is stitched into the particle atlas and reloaded with resource packs. One provider class serves all 70 types; it only
+ * {@code assets/anime_multiverse/particles/<id>.json}, so every animation frame is stitched into the particle atlas and reloaded with resource packs. One provider class serves all 70 types; it only
  * remembers its sprite set and the catalog entry of its type (one atlas lookup list per type, nothing allocated per particle but the particle). Call {@code init} only on the client dist
  * (the line sits with the other client inits in the mod constructor).
  */

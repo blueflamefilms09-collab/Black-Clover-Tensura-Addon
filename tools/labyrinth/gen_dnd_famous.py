@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes data/nusmp/mega/dnd_bosses/famous/<id>.json: D&D's famous villains as Decennial boss profiles (1.67.0).
+"""Writes data/anime_multiverse/mega/dnd_bosses/famous/<id>.json: D&D's famous villains as Decennial boss profiles (1.67.0).
 
     python3 tools/labyrinth/gen_dnd_famous.py            # writes
     python3 tools/labyrinth/gen_dnd_famous.py --check    # exit 1 when a file on disk differs
@@ -10,7 +10,7 @@ fits the floor and whose side (holy, evil or any) fits the road. Each one carrie
 (`reflective`: the Tarrasque), whether it holds an anti-magic aura (`A`), the Word of Ending (`X`), and its three forms."""
 import json, os, sys
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "mega", "dnd_bosses", "famous")
+OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "dnd_bosses", "famous")
 
 # id, name, side, tier range, D&D source, anime echo, forms, legendary actions (id, cost), lair actions, flags (A anti-magic aura, F frightful, M absorbs magic, X execution, R reflective), breath, resistances, points
 F = [

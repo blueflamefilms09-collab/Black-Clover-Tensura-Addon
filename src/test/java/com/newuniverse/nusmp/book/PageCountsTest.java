@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * <p>What is checked, all without a game: (1) the golden file is well formed and names exactly the registered books (NUSkills + the generic wiki attributes of WikiBooks); (2) a few simple books whose
  * pages are all written in their own source file are counted here by hand, in Java, independently of the script (the golden total is never below that); (3) when {@code python3} is on the path, the script
  * is run and no number is lower than the golden one (a removed, renamed or hidden page shows up here); (4) the "15 spells" goal: the shortfalls are LISTED (not failed) unless the system property
- * {@code nusmp.pages15=strict} is set, which phase 2 sets when it is finished. Pure (java.nio, regular expressions); the working directory is the project root.
+ * {@code anime_multiverse.pages15=strict} is set, which phase 2 sets when it is finished. Pure (java.nio, regular expressions); the working directory is the project root.
  */
 class PageCountsTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
@@ -175,7 +175,7 @@ class PageCountsTest {
             for (var c : r.chars().entrySet()) if (c.getValue() < GOAL) { shortChar.add(r.book() + "/" + c.getKey() + " " + c.getValue()); charMissing += GOAL - c.getValue(); }
         }
         System.out.println("pages15: " + shortBasic.size() + " basic grimoires under " + GOAL + " (" + basicMissing + " spells missing), " + shortChar.size() + " character grimoires under " + GOAL + " (" + charMissing + " missing)");
-        if ("strict".equals(System.getProperty("nusmp.pages15"))) {
+        if ("strict".equals(System.getProperty("anime_multiverse.pages15"))) {
             assertTrue(shortBasic.isEmpty(), "basic grimoires under " + GOAL + ": " + shortBasic);
             assertTrue(shortChar.isEmpty(), "character grimoires under " + GOAL + ": " + shortChar);
         } else {

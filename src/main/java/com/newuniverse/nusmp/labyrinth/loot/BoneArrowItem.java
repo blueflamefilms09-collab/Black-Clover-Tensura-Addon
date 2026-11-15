@@ -35,6 +35,6 @@ public class BoneArrowItem extends ArrowItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.bone_arrow.lore", lore).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.bone_arrow.lore", lore).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

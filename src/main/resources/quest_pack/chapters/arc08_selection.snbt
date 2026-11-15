@@ -4,7 +4,7 @@
 	order_index: 13
 	filename: "arc08_selection"
 	icon: {
-		id: "nusmp:labyrinth_gate"
+		id: "anime_multiverse:labyrinth_gate"
 	}
 	default_hide_dependency_lines: false
 	quests: [
@@ -15,7 +15,7 @@
 			shape: "rsquare"
 			size: 1.25d
 			icon: {
-				id: "nusmp:labyrinth_gate"
+				id: "anime_multiverse:labyrinth_gate"
 			}
 			dependencies: ["3D1DCEA3D6FC3FF6"]
 			tasks: [
@@ -45,7 +45,7 @@
 				{
 					id: "08FC049F3661E45F"
 					type: "advancement"
-					advancement: "nusmp:squads/created"
+					advancement: "anime_multiverse:squads/created"
 					criterion: ""
 				}
 			]
@@ -65,19 +65,19 @@
 			shape: "diamond"
 			size: 1.25d
 			icon: {
-				id: "nusmp:labyrinth_gate"
+				id: "anime_multiverse:labyrinth_gate"
 			}
 			dependencies: ["69ADB434A73CF246"]
 			tasks: [
 				{
 					id: "21FBDEB4D8CDFBE4"
 					type: "dimension"
-					dimension: "nusmp:mega_dungeon"
+					dimension: "anime_multiverse:mega_dungeon"
 				}
 				{
 					id: "27FEF375BF8ABF51"
 					type: "advancement"
-					advancement: "nusmp:arcs/royal_knights"
+					advancement: "anime_multiverse:arcs/royal_knights"
 					criterion: ""
 				}
 			]
@@ -101,7 +101,7 @@
 			y: 3.0d
 			shape: "square"
 			icon: {
-				id: "nusmp:pitfall_tile"
+				id: "anime_multiverse:pitfall_tile"
 			}
 			dependencies: ["5EB7B5098840B9AD"]
 			optional: true
@@ -109,7 +109,7 @@
 				{
 					id: "2540769AE9E95827"
 					type: "advancement"
-					advancement: "nusmp:dungeon/traps"
+					advancement: "anime_multiverse:dungeon/traps"
 					criterion: ""
 				}
 			]
@@ -136,7 +136,7 @@
 				{
 					id: "6887EC7AAA97A283"
 					type: "advancement"
-					advancement: "nusmp:bosses/floor_warden"
+					advancement: "anime_multiverse:bosses/floor_warden"
 					criterion: ""
 				}
 			]
@@ -159,14 +159,14 @@
 			x: 6.0d
 			y: 1.5d
 			icon: {
-				id: "nusmp:shadow_key"
+				id: "anime_multiverse:shadow_key"
 			}
 			dependencies: ["49B9408B7AF4D633"]
 			tasks: [
 				{
 					id: "5E2054EDC801162F"
 					type: "advancement"
-					advancement: "nusmp:dungeon/shadow_key"
+					advancement: "anime_multiverse:dungeon/shadow_key"
 					criterion: ""
 				}
 			]
@@ -193,7 +193,7 @@
 				{
 					id: "2A15998F3A0681DD"
 					type: "advancement"
-					advancement: "nusmp:dungeon/seal"
+					advancement: "anime_multiverse:dungeon/seal"
 					criterion: ""
 				}
 			]
@@ -225,7 +225,7 @@
 				{
 					id: "28C52DE1659819C2"
 					type: "advancement"
-					advancement: "nusmp:future/royal_knights_boss"
+					advancement: "anime_multiverse:future/royal_knights_boss"
 					criterion: ""
 				}
 			]
@@ -250,14 +250,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:relic_pedestal"
+				id: "anime_multiverse:relic_pedestal"
 			}
 			dependencies: ["4C76D219FAA5C75C"]
 			tasks: [
 				{
 					id: "1294D53C7F6116BF"
 					type: "advancement"
-					advancement: "nusmp:dungeon/vault"
+					advancement: "anime_multiverse:dungeon/vault"
 					criterion: ""
 				}
 			]

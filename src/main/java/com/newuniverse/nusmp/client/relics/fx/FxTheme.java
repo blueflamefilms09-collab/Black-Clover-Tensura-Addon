@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.client.relics.fx;
 import java.util.Locale;
 
 /**
- * The ambient particle theme of a worn relic: what drifts off it. A signature relic names its own theme in the catalog (assets/nusmp/relic_worn/catalog.txt, "fx" lines);
+ * The ambient particle theme of a worn relic: what drifts off it. A signature relic names its own theme in the catalog (assets/anime_multiverse/relic_worn/catalog.txt, "fx" lines);
  * every other relic gets the one that fits the hue of its glow colour ({@link #fromGlow}). Pure.
  */
 public enum FxTheme {

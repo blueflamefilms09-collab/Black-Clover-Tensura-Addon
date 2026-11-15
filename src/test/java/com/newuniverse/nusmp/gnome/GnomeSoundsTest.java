@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * generator's own table must say the same; every file is a short mono Ogg Vorbis; the sound gate holds its cooldowns and rates; no entry or file of the set is an orphan.
  */
 class GnomeSoundsTest {
-    private static final Path ASSETS = Path.of("src/main/resources/assets/nusmp");
+    private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path DIR = ASSETS.resolve("sounds/gnome");
 
     private static JsonObject sounds() throws IOException { return JsonParser.parseString(Files.readString(ASSETS.resolve("sounds.json"))).getAsJsonObject(); }
@@ -68,7 +68,7 @@ class GnomeSoundsTest {
             for (JsonElement s : list) {
                 String name = nameOf(s);
                 Path f = DIR.resolve(name.substring(name.indexOf("gnome/") + 6) + ".ogg");
-                if (!name.startsWith("nusmp:gnome/") || !Files.exists(f)) { bad.add("missing " + name); continue; }
+                if (!name.startsWith("anime_multiverse:gnome/") || !Files.exists(f)) { bad.add("missing " + name); continue; }
                 Ogg o = read(f);
                 if (o.channels() != 1) bad.add(f + " not mono");
                 if (o.rate() != 32000 && o.rate() != 44100) bad.add(f + " rate " + o.rate());

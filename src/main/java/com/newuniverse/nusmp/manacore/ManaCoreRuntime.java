@@ -137,7 +137,7 @@ public final class ManaCoreRuntime {
     }
 
     // ================================================================== modifiers
-    private static ResourceLocation modId(String coreId, int i) { return ResourceLocation.fromNamespaceAndPath("nusmp", "manacore/" + coreId + "/" + i); }
+    private static ResourceLocation modId(String coreId, int i) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "manacore/" + coreId + "/" + i); }
 
     private static Holder<Attribute> attr(String id) { return BuiltInRegistries.ATTRIBUTE.getHolder(ResourceLocation.parse(id)).orElse(null); }
 

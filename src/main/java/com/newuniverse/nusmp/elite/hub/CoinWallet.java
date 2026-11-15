@@ -37,7 +37,7 @@ public final class CoinWallet implements EliteHooks.Wallet {
     public static boolean available() {
         for (CoinKind k : CoinKind.values()) {
             if (item(k) == null) {
-                if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] elite hub: the coin item {} does not exist (is Tensura Reincarnated loaded?): the coin wallet is off", k.itemId());
+                if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] elite hub: the coin item {} does not exist (is Tensura Reincarnated loaded?): the coin wallet is off", k.itemId());
                 return false;
             }
         }

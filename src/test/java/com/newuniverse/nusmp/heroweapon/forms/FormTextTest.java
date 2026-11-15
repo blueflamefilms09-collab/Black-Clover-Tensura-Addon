@@ -13,7 +13,7 @@ class FormTextTest {
         assertEquals("Leaf Shield", FormText.pretty("leaf_shield"));
         assertEquals("Oak Leaves", FormText.pretty("minecraft:oak_leaves"));
         assertEquals("Iron", FormText.pretty("c:ingots/iron"));
-        assertEquals("Chimera Viper Shield", FormText.pretty("nusmp:chimera_viper_shield"));
+        assertEquals("Chimera Viper Shield", FormText.pretty("anime_multiverse:chimera_viper_shield"));
         assertEquals("", FormText.pretty(""));
         assertEquals("", FormText.pretty(null));
         assertEquals("Any Leaves", FormText.tagLabel("minecraft:leaves"));

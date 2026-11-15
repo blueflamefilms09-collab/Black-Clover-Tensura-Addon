@@ -9,15 +9,15 @@ public final class GsNoticeAllow {
     private GsNoticeAllow() {}
 
     private static final String[] KEYS = {
-            "nusmp.zone.enter",
-            "nusmp.mana_zone.open",
-            "nusmp.mana_zone.attuned",
-            "nusmp.mana_zone.refused_head",
-            "nusmp.dive.upgrade",
-            "nusmp.spiritdive.tier.",
-            "nusmp.noelle.black_exhausted",
-            "nusmp.spirit_control.combat_on",
-            "nusmp.ui.notice.",                       // the crest's own keys (page opened, ...)
+            "anime_multiverse.zone.enter",
+            "anime_multiverse.mana_zone.open",
+            "anime_multiverse.mana_zone.attuned",
+            "anime_multiverse.mana_zone.refused_head",
+            "anime_multiverse.dive.upgrade",
+            "anime_multiverse.spiritdive.tier.",
+            "anime_multiverse.noelle.black_exhausted",
+            "anime_multiverse.spirit_control.combat_on",
+            "anime_multiverse.ui.notice.",                       // the crest's own keys (page opened, ...)
     };
 
     public static boolean allowed(String key) {
@@ -29,9 +29,9 @@ public final class GsNoticeAllow {
         return false;
     }
 
-    /** A companion looking after the player from her pouch ("nusmp.companion.<name>.use"): the one companion line the crest mirrors. */
+    /** A companion looking after the player from her pouch ("anime_multiverse.companion.<name>.use"): the one companion line the crest mirrors. */
     static boolean companionHeal(String key) {
-        return key.startsWith("nusmp.companion.") && key.endsWith(".use") && key.indexOf('.', 16) == key.length() - 4;
+        return key.startsWith("anime_multiverse.companion.") && key.endsWith(".use") && key.indexOf('.', 16) == key.length() - 4;
     }
 
     /** The kind (colour) of a mirrored key: warnings and refusals read as WARN, exhaustion as BAD, the rest as INFO. */

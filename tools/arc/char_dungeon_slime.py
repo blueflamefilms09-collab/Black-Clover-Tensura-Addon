@@ -1,4 +1,4 @@
-"""Why: the Dungeon Slime (entity nusmp:dungeon_slime, dungeon/DungeonSlimeEntity), the first rung of the Living Dungeon's food web: the game's own slime body in a teal gel, in three sizes by
+"""Why: the Dungeon Slime (entity anime_multiverse:dungeon_slime, dungeon/DungeonSlimeEntity), the first rung of the Living Dungeon's food web: the game's own slime body in a teal gel, in three sizes by
 growth. The old renderer was the vanilla slime model with its outer layer. A creature becomes an anthropomorphic character on the player's rig with its features kept, so this is a slime
 child: a small round-headed body of teal gel (light, glassy tones with a pale core), a big smiling face with wide dark eyes and a blush, a dome of gel for hair with a drip, short stubby
 limbs and a little gel tail. The renderer draws it translucent (client/remodel's look says so), the way the slime's outer layer was, and scales it by its hitbox (the entity grows through

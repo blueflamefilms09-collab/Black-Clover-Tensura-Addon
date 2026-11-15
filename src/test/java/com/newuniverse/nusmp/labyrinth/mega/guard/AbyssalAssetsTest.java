@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Why: a look whose model, texture or glow layer is missing shows in the game as an invisible boss or a purple-and-black cube, and nothing at compile time sees it. This reads the files (no game
- * needed) and fails when any look of assets/nusmp/abyssal/looks.json lacks one: every phase's model, atlas and glow layer (the same size as the model's sheet), the animation file with the eight
+ * needed) and fails when any look of assets/anime_multiverse/abyssal/looks.json lacks one: every phase's model, atlas and glow layer (the same size as the model's sheet), the animation file with the eight
  * clips the pose clock plays and no track for a bone no phase has, every bone linked to a parent that exists, every cube face inside its sheet; and for a humanoid the real 64x64 player skin and
  * its glow skin, and an extras model whose anchor bones are named after the player's parts. Also that the phases look different (the textures differ), and that the glow layer of every look
  * lights something.
  */
 class AbyssalAssetsTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
     private static final Set<String> CLIPS = Set.of("idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "death");
     private static final Set<String> ROOTS = Set.of("x_head", "x_body", "x_arm_r", "x_arm_l", "x_leg_r", "x_leg_l");
     private static final Set<String> KIT_KEYS = Set.of("skin", "slim", "glow", "glow_color", "hair", "hair_color", "scale", "alpha", "extras", "cape", "hold_r", "hold_l");

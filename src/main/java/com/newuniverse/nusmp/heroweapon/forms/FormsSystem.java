@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 /**
  * Why: the one entry point of the forms system (the data loader, the absorption, the Weapon Book packets, the config {@code nusmp-heroweapon-forms-server.toml}, the
  * self-tests {@code hero.forms} and {@code hero.absorb}), called once from {@code HeroWeaponSystem.init} so the shared start-up never changes when this system
- * grows. It registers the reload listener for {@code data/nusmp/hero/forms}, the packets, and the few events that keep the loadout true: on login, respawn, dimension
+ * grows. It registers the reload listener for {@code data/anime_multiverse/hero/forms}, the packets, and the few events that keep the loadout true: on login, respawn, dimension
  * change and every data reload the attribute modifiers are brought up to date and the weapon's forms are sent to the client; a bind teaches the base form; a release
  * takes everything off. Every handler is guarded, because an event handler that throws would break the event for every other mod.
  */
@@ -53,7 +53,7 @@ public final class FormsSystem {
                 if (e.getServer().getTickCount() % RECONCILE_TICKS == 0) reconcile(e.getServer());
                 FormsFeedback.flush(e.getServer());
             } catch (RuntimeException ex) {
-                LOG.warn("[nusmp] hero forms: the periodic tick failed", ex);
+                LOG.warn("[anime_multiverse] hero forms: the periodic tick failed", ex);
             }
         });
         HeroBonds.addListener(new HeroBonds.Listener() {
@@ -74,7 +74,7 @@ public final class FormsSystem {
         try {
             e.getRelevantPlayers().forEach(FormsSystem::sync);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] hero forms: the data pack sync hook failed", ex);
+            LOG.warn("[anime_multiverse] hero forms: the data pack sync hook failed", ex);
         }
     }
 
@@ -88,7 +88,7 @@ public final class FormsSystem {
             }
             HeroForms.refresh(p);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] hero forms: login sync failed for {}", p.getGameProfile().getName(), ex);
+            LOG.warn("[anime_multiverse] hero forms: login sync failed for {}", p.getGameProfile().getName(), ex);
         }
     }
 
@@ -125,7 +125,7 @@ public final class FormsSystem {
                 HeroLogics.of(bond.kind()).onFormChanged(c, base, base);
             }
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] hero forms: onFormChanged at bind failed", ex);
+            LOG.warn("[anime_multiverse] hero forms: onFormChanged at bind failed", ex);
         }
     }
 

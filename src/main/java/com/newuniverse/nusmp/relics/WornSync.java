@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Read only: nothing on the wearer is written. Wiring: {@link RelicPayloads#register} registers the packet; {@link RelicSystem#registerGame} calls {@link #register}.
  */
 public record WornSync(UUID wearer, List<ItemStack> stacks) implements CustomPacketPayload {
-    public static final Type<WornSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "relic_worn_sync"));
+    public static final Type<WornSync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "relic_worn_sync"));
     /** The most stacks one list carries (a player has five Curios slot types and a mob's pack is small). */
     public static final int MAX = 40;
 

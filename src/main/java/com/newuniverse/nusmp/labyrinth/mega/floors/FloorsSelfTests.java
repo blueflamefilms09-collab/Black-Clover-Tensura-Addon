@@ -340,7 +340,7 @@ public final class FloorsSelfTests {
 
     private static SelfTests.Result sync(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (!"nusmp:alignment_sync".equals(AlignmentNet.Sync.TYPE.id().toString())) bad.add("the packet id is " + AlignmentNet.Sync.TYPE.id() + ", the contract says nusmp:alignment_sync");
+        if (!"anime_multiverse:alignment_sync".equals(AlignmentNet.Sync.TYPE.id().toString())) bad.add("the packet id is " + AlignmentNet.Sync.TYPE.id() + ", the contract says anime_multiverse:alignment_sync");
         AlignmentNet.Sync[] samples = {
                 AlignmentNet.Sync.of(new PlayerDungeonAlignment()),
                 AlignmentNet.Sync.of(PlayerDungeonAlignment.of("holy", true, 12, 3, 99)),

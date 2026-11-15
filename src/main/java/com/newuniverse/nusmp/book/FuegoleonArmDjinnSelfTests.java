@@ -42,11 +42,11 @@ public final class FuegoleonArmDjinnSelfTests {
         SelfTests.register("magic.fuegoleon_arm_djinn", FuegoleonArmDjinnSelfTests::run);
     }
 
-    private static boolean asset(String path) { return FuegoleonArmDjinnSelfTests.class.getClassLoader().getResource("assets/nusmp/" + path) != null; }
+    private static boolean asset(String path) { return FuegoleonArmDjinnSelfTests.class.getClassLoader().getResource("assets/anime_multiverse/" + path) != null; }
 
     /** The cubes of a geo file (a GeoLite file: bones with cubes), read from the jar. */
     static int cubesOf(String path) throws IOException {
-        try (var in = FuegoleonArmDjinnSelfTests.class.getClassLoader().getResourceAsStream("assets/nusmp/" + path); Reader r = new InputStreamReader(in, StandardCharsets.UTF_8)) {
+        try (var in = FuegoleonArmDjinnSelfTests.class.getClassLoader().getResourceAsStream("assets/anime_multiverse/" + path); Reader r = new InputStreamReader(in, StandardCharsets.UTF_8)) {
             JsonObject root = JsonParser.parseReader(r).getAsJsonObject();
             int n = 0;
             for (JsonElement g : root.getAsJsonArray("minecraft:geometry"))

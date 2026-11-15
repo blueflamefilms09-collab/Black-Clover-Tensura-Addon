@@ -55,8 +55,8 @@ public final class CorpseClient {
             EntityRenderer<?> r = e.getRenderer(CorpseEntities.type(k));
             String cls = r == null ? "none" : r.getClass().getName();
             boolean ours = r instanceof RadesUndeadRenderer;
-            if (ours || CorpseClientConfig.classicLooks()) LOG.info("[nusmp] numbered undead renderer: {} is drawn by {}{}", k.id, cls, ours ? "" : " (corpse.classicLooks asks for the old look)");
-            else LOG.error("[nusmp] numbered undead renderer: {} is drawn by {}, not by the new look (RadesUndeadRenderer): another registration won", k.id, cls);
+            if (ours || CorpseClientConfig.classicLooks()) LOG.info("[anime_multiverse] numbered undead renderer: {} is drawn by {}{}", k.id, cls, ours ? "" : " (corpse.classicLooks asks for the old look)");
+            else LOG.error("[anime_multiverse] numbered undead renderer: {} is drawn by {}, not by the new look (RadesUndeadRenderer): another registration won", k.id, cls);
         }
     }
 
@@ -64,7 +64,7 @@ public final class CorpseClient {
         try {
             report(e);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] numbered undead renderer report failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] numbered undead renderer report failed: {}", ex.toString());
         }
         for (EntityType<?> type : e.getEntityTypes()) {
             EntityRenderer<?> r = e.getRenderer(type);

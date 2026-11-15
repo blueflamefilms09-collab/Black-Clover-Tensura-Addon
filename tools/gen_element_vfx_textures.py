@@ -2,7 +2,7 @@
 
     python tools/gen_element_vfx_textures.py
 
-Output: src/main/resources/assets/nusmp/textures/particle/{fire,water,wind,earth}_*.png
+Output: src/main/resources/assets/anime_multiverse/textures/particle/{fire,water,wind,earth}_*.png
 
 Look reference: the Black Clover anime / wiki spell art.
   Fire  - Leo Rugiens (a lion made of flame), Sol Linea (spiralling flame spear), Ignis Columna / Calderos (flame pillars).
@@ -21,7 +21,7 @@ import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(__file__), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 RNG = np.random.default_rng(20261006)
 

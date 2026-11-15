@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * {@code blocking} property for every id of {@link ShieldSet}. Every relic of the shield look is in the set, so a shield added later must join the preset.
  */
 class ShieldClassesTest {
-    static final Path JAVA = Path.of("src", "main", "java", "com", "newuniverse", "nusmp");
+    static final Path JAVA = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse");
 
     static String read(String rel) throws IOException { return Files.readString(JAVA.resolve(rel)); }
 
@@ -99,16 +99,16 @@ class ShieldClassesTest {
 
     @Test
     void shieldsAreNotBetterCombatWeapons() throws IOException {
-        // a shield swings nothing: the Better Combat attributes live in data/nusmp/weapon_attributes and must not exist for a shield, or Better Combat would treat it as a
+        // a shield swings nothing: the Better Combat attributes live in data/anime_multiverse/weapon_attributes and must not exist for a shield, or Better Combat would treat it as a
         // (possibly two-handed) weapon and hide the off hand the way it does for a two-handed weapon
-        Path dir = Path.of("src", "main", "resources", "data", "nusmp", "weapon_attributes");
+        Path dir = Path.of("src", "main", "resources", "data", "anime_multiverse", "weapon_attributes");
         for (String id : ShieldSet.IDS) assertFalse(Files.exists(dir.resolve(id + ".json")), id + " must carry no Better Combat attributes");
     }
 
     @Test
     void noUpgradedVuMeshExistsForAShieldYet() throws IOException {
         // client/relics/item/vu/VuRenderer places its meshes on the sprite diagonal; a shield there would bypass the shield frame, so one must teach it ShieldFrame first
-        Path vu = Path.of("src", "main", "resources", "assets", "nusmp", "weapon_meshes_vu");
+        Path vu = Path.of("src", "main", "resources", "assets", "anime_multiverse", "weapon_meshes_vu");
         if (!Files.isDirectory(vu)) return;
         try (var files = Files.list(vu)) {
             for (Path p : (Iterable<Path>) files::iterator) {

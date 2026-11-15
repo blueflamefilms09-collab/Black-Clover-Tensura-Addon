@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * contains can throw, and that the SHIPPED file parses without a single problem and says what the doc says about the real templates of the dungeon.
  */
 class LockdownTableTest {
-    private static final String FILE = "src/main/resources/data/nusmp/mega/lockdown/rooms.json";
+    private static final String FILE = "src/main/resources/data/anime_multiverse/mega/lockdown/rooms.json";
 
     private static LockdownTable shipped() throws Exception {
         LockdownTable.Parsed p = LockdownTable.parse(FILE, Files.readString(Path.of(FILE), StandardCharsets.UTF_8));
@@ -28,25 +28,25 @@ class LockdownTableTest {
     void theShippedFileIsCleanAndFlagsTheKeyChallengeRooms() throws Exception {
         LockdownTable t = shipped();
         assertFalse(t.isEmpty());
-        assertTrue(t.ruleFor("nusmp:mega/treasure/holy_church_reliquary", RoomKind.TREASURE).lock(), "a treasure room locks");
-        assertTrue(t.ruleFor("nusmp:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).lock(), "a set piece locks");
-        assertEquals(Band.HARD, t.ruleFor("nusmp:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).band());
-        assertEquals(2, t.ruleFor("nusmp:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).waves());
-        assertTrue(t.ruleFor("nusmp:mega/hall/barracks_a", RoomKind.HALL).lock(), "a barracks always locks");
-        assertEquals(1.0, t.ruleFor("nusmp:mega/hall/barracks_a", RoomKind.HALL).chance());
-        LockdownRule hall = t.ruleFor("nusmp:mega/hall/library_a", RoomKind.HALL);
+        assertTrue(t.ruleFor("anime_multiverse:mega/treasure/holy_church_reliquary", RoomKind.TREASURE).lock(), "a treasure room locks");
+        assertTrue(t.ruleFor("anime_multiverse:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).lock(), "a set piece locks");
+        assertEquals(Band.HARD, t.ruleFor("anime_multiverse:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).band());
+        assertEquals(2, t.ruleFor("anime_multiverse:mega/set/cathedral_rotunda", RoomKind.SET_PIECE).waves());
+        assertTrue(t.ruleFor("anime_multiverse:mega/hall/barracks_a", RoomKind.HALL).lock(), "a barracks always locks");
+        assertEquals(1.0, t.ruleFor("anime_multiverse:mega/hall/barracks_a", RoomKind.HALL).chance());
+        LockdownRule hall = t.ruleFor("anime_multiverse:mega/hall/library_a", RoomKind.HALL);
         assertTrue(hall.lock() && hall.chance() < 1.0, "an ordinary hall locks for a share of its rooms only");
     }
 
     @Test
     void roomsThatHaveTheirOwnChallengeOrNoWallNeverLock() throws Exception {
         LockdownTable t = shipped();
-        assertFalse(t.ruleFor("nusmp:mega/trial/trial_hall_a", RoomKind.TRIAL).lock(), "a trial hall seals itself with its Sealed Archway");
-        assertFalse(t.ruleFor("nusmp:mega/puzzle/sigil_hall_a", RoomKind.PUZZLE).lock(), "a puzzle room's mechanic bars its doors");
-        assertFalse(t.ruleFor("nusmp:mega/trap/pit_hall_a", RoomKind.TRAP).lock());
-        assertFalse(t.ruleFor("nusmp:mega/cavern/crystal_cavern", RoomKind.CAVERN).lock(), "a cavern has no wall to close");
+        assertFalse(t.ruleFor("anime_multiverse:mega/trial/trial_hall_a", RoomKind.TRIAL).lock(), "a trial hall seals itself with its Sealed Archway");
+        assertFalse(t.ruleFor("anime_multiverse:mega/puzzle/sigil_hall_a", RoomKind.PUZZLE).lock(), "a puzzle room's mechanic bars its doors");
+        assertFalse(t.ruleFor("anime_multiverse:mega/trap/pit_hall_a", RoomKind.TRAP).lock());
+        assertFalse(t.ruleFor("anime_multiverse:mega/cavern/crystal_cavern", RoomKind.CAVERN).lock(), "a cavern has no wall to close");
         for (RoomKind k : new RoomKind[] {RoomKind.LANDING, RoomKind.SAFE, RoomKind.STAIRWELL, RoomKind.ARENA, RoomKind.ANTECHAMBER, RoomKind.VAULT, RoomKind.CORRIDOR, RoomKind.JUNCTION, RoomKind.LINK, RoomKind.ONWARD}) {
-            assertFalse(t.ruleFor("nusmp:mega/" + k.folder() + "/x", k).lock(), k + " must never lock");
+            assertFalse(t.ruleFor("anime_multiverse:mega/" + k.folder() + "/x", k).lock(), k + " must never lock");
         }
     }
 
@@ -64,15 +64,15 @@ class LockdownTableTest {
         String json = """
                 {"kinds": {"hall": {"lock": true, "band": "minor"}},
                  "patterns": [{"match": "forge", "band": "hard", "waves": 2}],
-                 "templates": {"nusmp:mega/hall/forge_a": {"lock": false}}}
+                 "templates": {"anime_multiverse:mega/hall/forge_a": {"lock": false}}}
                 """;
         LockdownTable.Parsed p = LockdownTable.parse("t", json);
         assertTrue(p.clean(), String.valueOf(p.problems()));
         LockdownTable t = p.table();
-        assertFalse(t.ruleFor("nusmp:mega/hall/forge_a", RoomKind.HALL).lock(), "the exact template wins, and may opt a room out");
-        assertEquals(Band.HARD, t.ruleFor("nusmp:mega/hall/forge_b", RoomKind.HALL).band(), "a name pattern beats the kind");
-        assertEquals(Band.MINOR, t.ruleFor("nusmp:mega/hall/library_a", RoomKind.HALL).band(), "the kind answers when nothing more specific does");
-        assertFalse(t.ruleFor("nusmp:mega/trap/pit", RoomKind.TRAP).lock(), "a room nothing mentions does not lock");
+        assertFalse(t.ruleFor("anime_multiverse:mega/hall/forge_a", RoomKind.HALL).lock(), "the exact template wins, and may opt a room out");
+        assertEquals(Band.HARD, t.ruleFor("anime_multiverse:mega/hall/forge_b", RoomKind.HALL).band(), "a name pattern beats the kind");
+        assertEquals(Band.MINOR, t.ruleFor("anime_multiverse:mega/hall/library_a", RoomKind.HALL).band(), "the kind answers when nothing more specific does");
+        assertFalse(t.ruleFor("anime_multiverse:mega/trap/pit", RoomKind.TRAP).lock(), "a room nothing mentions does not lock");
         assertEquals(t.ruleFor("mega/hall/forge_b", RoomKind.HALL), t.ruleFor("NUSMP:mega/hall/forge_b", RoomKind.HALL), "the namespace and the case do not matter");
     }
 
@@ -85,7 +85,7 @@ class LockdownTableTest {
         LockdownTable.Parsed p = LockdownTable.parse("x", """
                 {"surprise": 1,
                  "kinds": {"hrad": {"lock": true}, "hall": {"band": "hrad", "waves": 9, "chance": 4, "unknown": 1}},
-                 "templates": {"nusmp:structure/x": {}},
+                 "templates": {"anime_multiverse:structure/x": {}},
                  "patterns": [{"match": "ab"}, 7]}
                 """);
         String all = String.join("\n", p.problems());
@@ -98,7 +98,7 @@ class LockdownTableTest {
         assertTrue(all.contains("not a mega template id"), all);
         assertTrue(all.contains("at least three characters"), all);
         assertTrue(all.contains("patterns[1] is not an object"), all);
-        LockdownRule hall = p.table().ruleFor("nusmp:mega/hall/x", RoomKind.HALL);
+        LockdownRule hall = p.table().ruleFor("anime_multiverse:mega/hall/x", RoomKind.HALL);
         assertEquals(LockdownRule.MAX_WAVES, hall.waves(), "a bad value is clamped, the entry is kept");
         assertEquals(1.0, hall.chance());
         assertEquals(Band.STANDARD, hall.band(), "a bad band falls back to the default");

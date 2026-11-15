@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * has the three appended pages; the policy file and the page source agree; the Water book appended (never reordered) its pages. Pure: reads the source tree.
  */
 class NoelleFormAssetsTest {
-    private static final File ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final File JAVA = new File("src/main/java/com/newuniverse/nusmp");
     private static final Form[] FORMS = {Form.VALKYRIE, Form.MERMAID, Form.SEA_DRAGON, Form.BLACK_DRAGON};
 
@@ -203,16 +203,16 @@ class NoelleFormAssetsTest {
     void theLangFragmentHasTheThreeAppendedPagesAndTheMessages() throws Exception {
         JsonObject o = json(new File("tools/lang/noelle_forms.json"));
         for (String p : new String[]{"mermaid_form", "sea_dragon_god_form", "black_dragon_form", "valkyrie_dress"}) {
-            String key = "nusmp.page.book_water." + p;
+            String key = "anime_multiverse.page.book_water." + p;
             assertTrue(o.has(key) && o.get(key).getAsString().length() > 60, "missing text for " + key);
         }
-        for (String k : new String[]{"nusmp.noelle.limit", "nusmp.noelle.black_end", "nusmp.noelle.black_exhausted"}) assertTrue(o.has(k), "missing " + k);
+        for (String k : new String[]{"anime_multiverse.noelle.limit", "anime_multiverse.noelle.black_end", "anime_multiverse.noelle.black_exhausted"}) assertTrue(o.has(k), "missing " + k);
         for (var e : o.entrySet()) assertFalse(e.getValue().getAsString().contains("\n"), e.getKey() + " has a line break");
     }
 
     @Test
     void thePolicyTheBookAndTheLocksAgree() throws Exception {
-        JsonObject water = json(new File("src/main/resources/data/nusmp/armour_policy.json")).getAsJsonObject("magics").getAsJsonObject("WATER");
+        JsonObject water = json(new File("src/main/resources/data/anime_multiverse/armour_policy.json")).getAsJsonObject("magics").getAsJsonObject("WATER");
         JsonObject pages = water.getAsJsonObject("armour_pages");
         assertEquals(1, pages.get("valkyrie_dress").getAsInt());
         assertEquals(0, pages.get("scale_mail").getAsInt());

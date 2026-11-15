@@ -72,6 +72,6 @@ public class ValkyrieDrillLanceItem extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.valkyrie_drill_lance.lore", "The spiral lance of water of the Valkyrie Dress: its drill turns, and a hit scatters drops.").withStyle(ChatFormatting.AQUA));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.valkyrie_drill_lance.lore", "The spiral lance of water of the Valkyrie Dress: its drill turns, and a hit scatters drops.").withStyle(ChatFormatting.AQUA));
     }
 }

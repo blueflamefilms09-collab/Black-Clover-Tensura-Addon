@@ -26,10 +26,10 @@ public class AvatarBuilderMenu extends AbstractContainerMenu {
     /** Opens the creation screen for a player (the Genesis Core item calls this) and sends the race list. Does nothing when the Avatar system is off. */
     public static void open(ServerPlayer player) {
         if (!AvatarConfig.enabled()) {
-            player.displayClientMessage(Component.translatable("nusmp.avatar.gui.disabled"), true);
+            player.displayClientMessage(Component.translatable("anime_multiverse.avatar.gui.disabled"), true);
             return;
         }
-        player.openMenu(new SimpleMenuProvider((id, inv, p) -> new AvatarBuilderMenu(id), Component.translatable("nusmp.avatar.gui.title")));
+        player.openMenu(new SimpleMenuProvider((id, inv, p) -> new AvatarBuilderMenu(id), Component.translatable("anime_multiverse.avatar.gui.title")));
         PacketDistributor.sendToPlayer(player, new S2C_RacesPayload(RaceEntryFactory.build(player)));
     }
 }

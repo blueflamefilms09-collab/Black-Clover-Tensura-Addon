@@ -70,7 +70,7 @@ public final class StrikeSelfTest {
 
     // ------------------------------------------------------------------ the data
     private static void shippedFile(HeroKind kind, FormsCheck.Known known, List<String> bad) {
-        String path = "/data/nusmp/hero/forms/" + kind.itemId() + ".json";
+        String path = "/data/anime_multiverse/hero/forms/" + kind.itemId() + ".json";
         try (InputStream in = StrikeSelfTest.class.getResourceAsStream(path)) {
             if (in == null) {
                 bad.add("the forms file " + path + " is missing from the mod");

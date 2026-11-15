@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Why: the owner wants the Relics of Many Worlds to come only from the Labyrinth (its vault chests, its Relic Pedestals, its bosses), never
  * from a plain Overworld chest or a crafting table. Two code paths used to put relics into the wild: the global loot modifier
- * {@code nusmp:relic_chests} (any "chests/" table with a dungeon-like word) and the Mimic drop handler in {@code RelicLoot}. Both now ask this
+ * {@code anime_multiverse:relic_chests} (any "chests/" table with a dungeon-like word) and the Mimic drop handler in {@code RelicLoot}. Both now ask this
  * class first. The rules are pure static methods over strings and booleans so a JUnit test can pin them without a server; the two
  * Minecraft-facing overloads only gather the inputs (the queried table id, the dimension, the config value) and delegate.
  * <p>
@@ -22,7 +22,7 @@ public final class RelicExclusivity {
     private RelicExclusivity() {}
 
     /** The namespace of the only tables allowed to yield relics while exclusive. */
-    static final String NAMESPACE = "nusmp";
+    static final String NAMESPACE = "anime_multiverse";
 
     /** The two tables of the Labyrinth that may yield relics: the grand vault chests and the Relic Pedestal. */
     static final Set<String> VAULT_TABLES = Set.of("chests/dungeon_relic_vault", "chests/labyrinth_pedestal");
@@ -64,14 +64,14 @@ public final class RelicExclusivity {
     }
 
     /**
-     * 1.54.0 pure rule: may the world's loot (a chest table, the {@code nusmp:relic} loot entry, a Mimic) roll a relic in this kind of level? Never in the
+     * 1.54.0 pure rule: may the world's loot (a chest table, the {@code anime_multiverse:relic} loot entry, a Mimic) roll a relic in this kind of level? Never in the
      * Mega-Dungeon, whatever the config says: there a Crucible is the only source of relics of Unique and above, exactly one per region, so a stray chest
      * table or a Mimic cannot add a second. Everywhere else the answer is yes (the rules above decide where the old paths apply).
      */
     public static boolean allowsWildRoll(boolean inMega) { return !inMega; }
 
     /**
-     * 1.75.0: the hidden caches of the Mega-Dungeon (the treasure rooms, {@code nusmp:chests/hidden_cache}) may hold a relic of a grade that is not hard-capped. The Crucible stays
+     * 1.75.0: the hidden caches of the Mega-Dungeon (the treasure rooms, {@code anime_multiverse:chests/hidden_cache}) may hold a relic of a grade that is not hard-capped. The Crucible stays
      * the only source of the capped grades (Unique and above, one per region), so inside the Mega-Dungeon a roll is allowed only when its HIGHEST grade is at most
      * {@link #HIDDEN_CACHE_MAX}; every other level answers as {@link #allowsWildRoll(boolean)} does (yes).
      */

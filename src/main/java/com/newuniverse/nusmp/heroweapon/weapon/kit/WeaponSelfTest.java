@@ -171,7 +171,7 @@ public final class WeaponSelfTest {
 
     // ------------------------------------------------------------------ the forms file
     private static int checkForms(HeroKind kind, List<String> bad) {
-        String path = "/data/nusmp/hero/forms/" + kind.itemId() + ".json";
+        String path = "/data/anime_multiverse/hero/forms/" + kind.itemId() + ".json";
         try (InputStream in = WeaponSelfTest.class.getResourceAsStream(path)) {
             if (in == null) {
                 bad.add(path + " is missing from the mod");

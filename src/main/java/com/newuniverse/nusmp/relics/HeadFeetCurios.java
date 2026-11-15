@@ -91,7 +91,7 @@ public final class HeadFeetCurios {
             if (m.getStackInSlot(pick.index()).isEmpty()) continue;                       // the slot did not take it: nothing is emptied
             p.setItemSlot(s, ItemStack.EMPTY);
             moved++;
-            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.relic_wear.moved", "%s moved to its Curios slot (%s)", d.cardName(), want), true);
+            p.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.relic_wear.moved", "%s moved to its Curios slot (%s)", d.cardName(), want), true);
         }
         if (moved > 0) {
             Relics.invalidate(p);

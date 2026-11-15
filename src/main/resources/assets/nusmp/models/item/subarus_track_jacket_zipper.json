@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:builtin/entity",
-  "gui_light": "front",
-  "textures": {
-    "particle": "nusmp:item/subarus_track_jacket_zipper"
-  }
-}

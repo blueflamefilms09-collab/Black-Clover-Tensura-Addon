@@ -23,7 +23,7 @@ import java.util.Map;
  * {@code optional} on channel version 1 like the rest of the mod's packets, so a client without the mod's forms system can still join. Register {@link #registerPayloads}
  * on the mod bus (done by {@link FormsSystem#init}).
  *
- * <p>Ids: {@code nusmp:hero_forms_open} and {@code nusmp:hero_forms_act} (client to server), {@code nusmp:hero_forms_defs} and {@code nusmp:hero_forms_state}
+ * <p>Ids: {@code anime_multiverse:hero_forms_open} and {@code anime_multiverse:hero_forms_act} (client to server), {@code anime_multiverse:hero_forms_defs} and {@code anime_multiverse:hero_forms_state}
  * (server to client).
  */
 public final class FormsNet {
@@ -37,7 +37,7 @@ public final class FormsNet {
     // ------------------------------------------------------------------------------------------------ the packets
     /** Client to server: open the Weapon Book. Carries the weapon and checksum of the client's copy of the forms ("" and 0 for none), so the server can skip sending them. */
     public record Open(String haveKind, int haveSum) implements CustomPacketPayload {
-        public static final Type<Open> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_forms_open"));
+        public static final Type<Open> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_forms_open"));
         public static final StreamCodec<FriendlyByteBuf, Open> CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUtf(p.haveKind(), ID);
@@ -50,7 +50,7 @@ public final class FormsNet {
 
     /** Client to server: a click in the book. {@code arg} is a form id (use, learn) or an item id (feed); {@code whole} asks for the whole stack (feed). */
     public record Act(int action, String arg, boolean whole) implements CustomPacketPayload {
-        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_forms_act"));
+        public static final Type<Act> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_forms_act"));
         public static final StreamCodec<FriendlyByteBuf, Act> CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeByte(p.action());
@@ -64,7 +64,7 @@ public final class FormsNet {
 
     /** Server to client: the forms of the weapon the player is bonded to, with their checksum. */
     public record Defs(HeroKind kind, int sum, List<HeroForm> forms) implements CustomPacketPayload {
-        public static final Type<Defs> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_forms_defs"));
+        public static final Type<Defs> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_forms_defs"));
         public static final StreamCodec<FriendlyByteBuf, Defs> CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeUtf(p.kind().itemId(), ID);
@@ -102,7 +102,7 @@ public final class FormsNet {
      */
     public record State(boolean open, String kind, String form, long exp, boolean summoned, boolean locked, boolean curseActive, int despair, int corruption, String offered,
                         List<String> learned, Map<String, Integer> mastery, List<String> bonuses, Map<String, Integer> absorbed, List<String> series) implements CustomPacketPayload {
-        public static final Type<State> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "hero_forms_state"));
+        public static final Type<State> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_forms_state"));
         public static final StreamCodec<FriendlyByteBuf, State> CODEC = StreamCodec.of(
                 (buf, p) -> {
                     buf.writeBoolean(p.open());

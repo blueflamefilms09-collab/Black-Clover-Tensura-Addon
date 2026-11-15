@@ -3,7 +3,7 @@
 drawn behind the player as additive billboards by client/aura/BeastWillAura.java, plus a few shared specks (leaf, shard, bolt, ember, dust) and a wind ribbon. All art is procedural (Pillow + numpy, fixed
 seeds, so the output is byte-for-byte the same every run). The textures are WHITE glow maps: the painter tints them with the will's colour. Rule for additive textures: no colour under a fully
 transparent pixel (SafeAdditiveTextureScanTest), so rgb is always 0 where alpha is 0.
-Writes src/main/resources/assets/nusmp/textures/particle/bwspirit_*.png and, with --preview, the contact sheet. Run from the repo root: python3 tools/beastwill/gen_spirit_textures.py [--new-only] [--preview PATH] [--preview-new PATH]"""
+Writes src/main/resources/assets/anime_multiverse/textures/particle/bwspirit_*.png and, with --preview, the contact sheet. Run from the repo root: python3 tools/beastwill/gen_spirit_textures.py [--new-only] [--preview PATH] [--preview-new PATH]"""
 import math
 import os
 import sys
@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 S = 1024          # drawing size
 OUT = 256         # texture size of the big sprites
 PI = math.pi

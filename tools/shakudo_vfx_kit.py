@@ -2,7 +2,7 @@
 (tools/gen_shakudo_textures.py, gen_scale_textures.py, gen_spike_textures.py, gen_nail_textures.py, gen_hair_textures.py).
 
 Every sprite is grey + alpha (the vertex colour tints it), square unless stated, drawn at 4x and reduced. Deterministic (fixed seeds).
-Output: src/main/resources/assets/nusmp/textures/particle/<name>.png (read by VfxTextures.byName and by the armour accents).
+Output: src/main/resources/assets/anime_multiverse/textures/particle/<name>.png (read by VfxTextures.byName and by the armour accents).
 """
 import math
 import os
@@ -13,7 +13,7 @@ sys.dont_write_bytecode = True
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "particle")
 SS = 4
 
 

@@ -23,13 +23,13 @@ class PriceTableTest {
 
     @Test
     void bothRowShapesAreRead() {
-        PriceTable.Parsed p = PriceTable.parse("{\"prices\":{\"minecraft:diamond\":200000,\"nusmp:magic_stone\":{\"gold\":50000,\"category\":\"stones\"},\"minecraft:emerald\":{\"gold\":60000}}}");
+        PriceTable.Parsed p = PriceTable.parse("{\"prices\":{\"minecraft:diamond\":200000,\"anime_multiverse:magic_stone\":{\"gold\":50000,\"category\":\"stones\"},\"minecraft:emerald\":{\"gold\":60000}}}");
         assertTrue(p.problems().isEmpty(), p.problems().toString());
         PriceTable t = p.table();
         assertEquals(3, t.size());
         assertEquals(200_000L, t.get("minecraft:diamond").gold());
         assertEquals(PriceTable.DEFAULT_CATEGORY, t.get("minecraft:diamond").category());
-        assertEquals("stones", t.get("nusmp:magic_stone").category());
+        assertEquals("stones", t.get("anime_multiverse:magic_stone").category());
         assertEquals(PriceTable.DEFAULT_CATEGORY, t.get("minecraft:emerald").category());
         assertNull(t.get("minecraft:dirt"));
         assertNull(t.get(null));

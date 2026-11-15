@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the arena (1.46.0, {@code nusmp:zogratis_arena}) is built by code the first time somebody arrives, and a layout that is built
+ * Why: the arena (1.46.0, {@code anime_multiverse:zogratis_arena}) is built by code the first time somebody arrives, and a layout that is built
  * from a formula can be checked without a game: this pure class (no Minecraft types, unit tested) says, for every column at an offset
  * (dx, dz) from the centre, which {@link Part} stands at which height ({@code dy}, 0 is the walking surface of the floor, so a player
  * stands at dy = 1). {@link ArenaBuilder} only maps each part to a block and places it. The layout is a castle courtyard:

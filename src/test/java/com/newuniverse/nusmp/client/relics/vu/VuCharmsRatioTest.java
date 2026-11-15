@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class VuCharmsRatioTest {
     static final Path DOCS = Path.of("docs/visual_upgrade");
-    static final Path VU = Path.of("src/main/resources/assets/nusmp/visual_upgrade");
+    static final Path VU = Path.of("src/main/resources/assets/anime_multiverse/visual_upgrade");
 
     static JsonObject load(String file) throws IOException { return JsonParser.parseString(Files.readString(DOCS.resolve(file))).getAsJsonObject(); }
 

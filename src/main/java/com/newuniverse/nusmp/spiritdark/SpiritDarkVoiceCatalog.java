@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * Why: the one list of the spirit's SPOKEN lines that really exist. The plan is {@code tools/audio/spirit_dark_lines.json} (about 47 short lines of a smooth, mocking, aristocratic voice, in
  * groups: link, cast, step, hurt, feast, idle, low, kill, died, unlink, power, power_end), the converter {@code tools/audio/spirit_dark_voice.py} turns the takes that were generated into Ogg
- * files and writes {@code assets/nusmp/spirit_dark_voice.json}: the id and the text of every line whose file exists. THIS class reads that data file, so a line without a recording is never
+ * files and writes {@code assets/anime_multiverse/spirit_dark_voice.json}: the id and the text of every line whose file exists. THIS class reads that data file, so a line without a recording is never
  * registered, never picked and never played: the game neither plays silence nor pretends. A group that has no spoken line falls back to a cue of the synthesised set ({@link #fallback}).
  * Pure apart from reading one resource (a test feeds {@link #parse} a string).
  */
@@ -67,7 +67,7 @@ public final class SpiritDarkVoiceCatalog {
     public static synchronized void load() {
         if (loaded) return;
         loaded = true;
-        try (InputStream in = SpiritDarkVoiceCatalog.class.getResourceAsStream("/assets/nusmp/spirit_dark_voice.json")) {
+        try (InputStream in = SpiritDarkVoiceCatalog.class.getResourceAsStream("/assets/anime_multiverse/spirit_dark_voice.json")) {
             if (in != null) set(parse(new String(in.readAllBytes(), StandardCharsets.UTF_8)));
         } catch (Exception broken) {
             set(Collections.emptyMap());

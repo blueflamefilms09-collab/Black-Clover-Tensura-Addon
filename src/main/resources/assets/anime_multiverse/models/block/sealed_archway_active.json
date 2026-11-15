@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "anime_multiverse:block/sealed_archway_top",
+    "bottom": "anime_multiverse:block/sealed_archway_top",
+    "side": "anime_multiverse:block/sealed_archway_eye_active"
+  }
+}

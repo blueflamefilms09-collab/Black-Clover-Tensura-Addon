@@ -150,7 +150,7 @@ public final class MissionBoard {
             if (!(e.getSource().getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer || !MultiverseConfig.get(MultiverseConfig.BOARD_ENABLED)) return;
             credit(p, kindsOf(e.getEntity()));
         } catch (Throwable t) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] mission board failed", t);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] mission board failed", t);
         }
     }
 }

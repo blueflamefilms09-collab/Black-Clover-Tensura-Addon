@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The learned-spells tab: grouping by magic, sorting, de-duplication, sealed counts and the fallback lines. */
 class SpellModelTest {
     private static SpellModel.Spell s(String magic, String label, String page, String name, int mode, int cost, int cd, int mastery) {
-        return new SpellModel.Spell(magic, label, page, name, mode, cost, cd, mastery, "nusmp.page." + magic + "." + page);
+        return new SpellModel.Spell(magic, label, page, name, mode, cost, cd, mastery, "anime_multiverse.page." + magic + "." + page);
     }
 
     @Test

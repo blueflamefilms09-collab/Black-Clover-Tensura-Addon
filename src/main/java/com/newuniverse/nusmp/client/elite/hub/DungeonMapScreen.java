@@ -37,7 +37,7 @@ public class DungeonMapScreen extends Screen {
     private boolean fitted, dragging;
 
     public DungeonMapScreen(HubNet.MapSync p) {
-        super(Component.translatableWithFallback("item.nusmp.dungeon_map", "Dungeon Map"));
+        super(Component.translatableWithFallback("item.anime_multiverse.dungeon_map", "Dungeon Map"));
         this.view = p.view();
         this.note = p.note();
         this.bounds = view.bounds();
@@ -46,7 +46,7 @@ public class DungeonMapScreen extends Screen {
     @Override public boolean isPauseScreen() { return false; }
 
     private static String tr(String key, String english, Object... args) {
-        return Component.translatableWithFallback("gui.nusmp.dungeon_map." + key, english, args).getString();
+        return Component.translatableWithFallback("gui.anime_multiverse.dungeon_map." + key, english, args).getString();
     }
 
     // ---- layout ----------------------------------------------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ public class DungeonMapScreen extends Screen {
         } else {
             cam = DungeonMapMath.clamp(cam, bounds, frame);
         }
-        addRenderableWidget(Button.builder(Component.translatableWithFallback("gui.nusmp.dungeon_map.close", "Close"), b -> onClose())
+        addRenderableWidget(Button.builder(Component.translatableWithFallback("gui.anime_multiverse.dungeon_map.close", "Close"), b -> onClose())
                 .bounds(width - 10 - 50, 7, 50, 18).build());
     }
 

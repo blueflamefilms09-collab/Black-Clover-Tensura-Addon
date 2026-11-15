@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Why: the Genesis Core is the key to creating an Avatar (owner section 1). It is NOT used up by opening a screen, only when an Avatar is actually created
  * ({@link com.newuniverse.nusmp.avatar.AvatarCreation#finalizeAvatar} consumes one), so a player can look, roll and walk away. It drops from the dungeon
- * bosses ({@link GenesisCoreDrops}) and, since 1.58.0, it can be crafted from rare items (data/nusmp/recipe/genesis_core.json); the Soul Forge block is built
+ * bosses ({@link GenesisCoreDrops}) and, since 1.58.0, it can be crafted from rare items (data/anime_multiverse/recipe/genesis_core.json); the Soul Forge block is built
  * around one. 1.58.0: the item no longer starts a creation on its own: with {@code coreUse = "forge"} (the default of {@link AvatarSoulForgeConfig}) it only
  * works at a Soul Forge and shows a hint anywhere else; {@code "item"} keeps the old direct use (which opens the Soul Forge screen at the player's feet, or
  * the classic screen when {@code creationUi = "classic"}). In the hand it is a small glowing 3D core (model built by tools/gen_avatar_assets.py), with
@@ -38,7 +38,7 @@ public class GenesisCoreItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
         if (!AvatarSoulForgeConfig.coreWorksAlone()) {
-            sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.avatar.core_needs_forge", "The Genesis Core only wakes at a Soul Forge.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+            sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.avatar.core_needs_forge", "The Genesis Core only wakes at a Soul Forge.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
             return InteractionResultHolder.fail(stack);
         }
         if (AvatarSoulForgeConfig.soulForgeUi()) SoulForgeRitual.interact(sp, null);
@@ -51,7 +51,7 @@ public class GenesisCoreItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatableWithFallback("item.nusmp.genesis_core.desc1", "Take it to a Soul Forge to design an Avatar. It is spent only when the Avatar is born.").withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatableWithFallback("item.anime_multiverse.genesis_core.desc1", "Take it to a Soul Forge to design an Avatar. It is spent only when the Avatar is born.").withStyle(ChatFormatting.GRAY));
         tip.add(Component.literal("Found in the hearts of the dungeon's great beasts.").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
     }
 

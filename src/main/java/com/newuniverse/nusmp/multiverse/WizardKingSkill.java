@@ -38,7 +38,7 @@ public class WizardKingSkill extends Skill {
 
     public WizardKingSkill() { super(SkillType.UNIQUE); }
 
-    @Override public ResourceLocation getSkillIcon() { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/skill/grimoire/storm.png"); }
+    @Override public ResourceLocation getSkillIcon() { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/storm.png"); }
     @Override public int getModes(ManasSkillInstance i) { return NAMES.length; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), NAMES.length); }
     @Override public String getModeId(ManasSkillInstance i, int mode) { return IDS[Math.floorMod(mode, IDS.length)]; }

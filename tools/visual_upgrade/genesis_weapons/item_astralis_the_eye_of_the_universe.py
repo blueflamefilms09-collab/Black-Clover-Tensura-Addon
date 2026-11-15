@@ -289,8 +289,8 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 18, "flash": "C48CFF", "groups": ["ring_a", "ring_b", "ring_c", "stars", "zodiac"], "note": "the armillary opens ring by ring and the star shards spiral out when the staff is drawn"}
     it.swing = {"trail": "starlight", "rgb": "C48CFF", "rgb2": "7A3CC8", "length": 1.0, "width": 0.3, "life": 9, "particles": "glint"}
-    it.sound = "nusmp:item.genesis.astralis.hum_loop"
+    it.sound = "anime_multiverse:item.genesis.astralis.hum_loop"
     it.acts = {
-        "astral_cast": {"burst": "blinding_stars", "pattern": "nova", "rgb": "E0E8FF", "ring": 4.0, "particles": 36, "sound": "nusmp:item.genesis.astralis.cast"},
-        "astral_pick": {"burst": "constellation_ring", "pattern": "ring", "rgb": "C48CFF", "ring": 2.5, "particles": 22, "sound": "nusmp:item.genesis.astralis.pick"},
+        "astral_cast": {"burst": "blinding_stars", "pattern": "nova", "rgb": "E0E8FF", "ring": 4.0, "particles": 36, "sound": "anime_multiverse:item.genesis.astralis.cast"},
+        "astral_pick": {"burst": "constellation_ring", "pattern": "ring", "rgb": "C48CFF", "ring": 2.5, "particles": 22, "sound": "anime_multiverse:item.genesis.astralis.pick"},
     }

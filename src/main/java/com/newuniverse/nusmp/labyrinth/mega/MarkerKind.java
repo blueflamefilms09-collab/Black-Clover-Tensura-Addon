@@ -5,7 +5,7 @@ import java.util.Locale;
 /**
  * Why: the Mega-Dungeon's templates are built from VANILLA blocks only (the Vanilla Block Primacy Rule), so "where does a patrol node go",
  * "which cell is a seat", "where does the next sector attach" cannot be custom marker blocks. They are vanilla structure blocks in DATA mode
- * whose metadata string names a marker ({@code nusmp:seat;as=chair}): the game never places a DATA structure block (the Jigsaw pool element
+ * whose metadata string names a marker ({@code anime_multiverse:seat;as=chair}): the game never places a DATA structure block (the Jigsaw pool element
  * ignores it), so a marker leaves no trace in the world, costs no custom block, and is read BEFORE placement through the public
  * {@code SinglePoolElement.getDataMarkers(...)}, which already applies the piece's position and rotation. Convention for the cell: the marker
  * stands in the AIR cell directly ABOVE the thing it describes (above the seat stair, above the hearth, above the pedestal), except where the
@@ -58,14 +58,14 @@ public enum MarkerKind {
      */
     PUZZLE;
 
-    /** The id as written after {@code nusmp:} in a metadata string ({@code guardian_spawn}). */
+    /** The id as written after {@code anime_multiverse:} in a metadata string ({@code guardian_spawn}). */
     public String id() { return name().toLowerCase(Locale.ROOT); }
 
-    /** The kind named by {@code id} (case-insensitive, with or without the {@code nusmp:} prefix), or null when unknown. */
+    /** The kind named by {@code id} (case-insensitive, with or without the {@code anime_multiverse:} prefix), or null when unknown. */
     public static MarkerKind byId(String id) {
         if (id == null) return null;
         String s = id.trim();
-        if (s.startsWith("nusmp:")) s = s.substring(6);
+        if (s.startsWith("anime_multiverse:")) s = s.substring(6);
         for (MarkerKind k : values()) if (k.id().equalsIgnoreCase(s)) return k;
         return null;
     }

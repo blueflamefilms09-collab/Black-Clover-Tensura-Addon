@@ -1,0 +1,13 @@
+{
+  "type": "anime_multiverse:labyrinth",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "anime_multiverse:labyrinth_sky",
+      "layers": [],
+      "features": false,
+      "lakes": false,
+      "structure_overrides": []
+    }
+  }
+}

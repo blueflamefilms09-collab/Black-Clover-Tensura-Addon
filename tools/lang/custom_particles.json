@@ -1,5 +1,5 @@
 {
-  "nusmp.particles.cmd.nogroup": "No such group: %s. Groups: %s",
-  "nusmp.particles.cmd.unknown": "No such custom particle: %s (see /multiverse particles list)",
-  "nusmp.particles.cmd.player": "Run this as a player."
+  "anime_multiverse.particles.cmd.nogroup": "No such group: %s. Groups: %s",
+  "anime_multiverse.particles.cmd.unknown": "No such custom particle: %s (see /multiverse particles list)",
+  "anime_multiverse.particles.cmd.player": "Run this as a player."
 }

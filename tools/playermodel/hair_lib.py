@@ -1,6 +1,6 @@
 """Why: the hair system of the player-model kit (client/playermodel, docs/playermodel.md) draws every haircut as layered boxes slightly larger than the head's hat layer, each with a
 box-UV region of a 64x64 hair sheet, and moves the hanging locks on springs. A haircut is therefore two things that must agree: the boxes (geometry, written to
-assets/nusmp/playermodel/hair_styles.json, which the Java side reads) and the painted sheet of that style (assets/nusmp/textures/entity/playermodel/hair/<style>.png). This module is the
+assets/anime_multiverse/playermodel/hair_styles.json, which the Java side reads) and the painted sheet of that style (assets/anime_multiverse/textures/entity/playermodel/hair/<style>.png). This module is the
 shared part of the generator: a packer that gives every box its UV region (the scalp cap always sits where the hat layer of a skin is, u 32 v 0), the strand painters that carve a
 haircut out of a grey sheet with an alpha mask (the game tints it with the character's hair colour, so the sheet is grey and bright), and the writer.
 
@@ -18,7 +18,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
 SHEET = 64
 
 

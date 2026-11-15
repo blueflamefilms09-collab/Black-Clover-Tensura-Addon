@@ -102,7 +102,7 @@ class DecennialRulesTest {
 
     private static String readShipped(String id) {
         try {
-            return java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/nusmp/mega/decennial/bosses/" + id + ".json"));
+            return java.nio.file.Files.readString(java.nio.file.Path.of("src/main/resources/data/anime_multiverse/mega/decennial/bosses/" + id + ".json"));
         } catch (java.io.IOException e) {
             throw new IllegalStateException(e);
         }

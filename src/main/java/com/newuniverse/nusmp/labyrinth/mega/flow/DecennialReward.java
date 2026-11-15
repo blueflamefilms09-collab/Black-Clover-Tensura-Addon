@@ -98,7 +98,7 @@ public final class DecennialReward {
             if (killer == null) return;                                                       // nobody to credit: the sector keeps its reward for a death that has a killer
             Grant g = grant(level, sector, false);
             if (g.status() == Status.NONE_LEFT) {
-                killer.sendSystemMessage(Component.translatableWithFallback("message.nusmp.mega.mfw.vessel.none",
+                killer.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.mega.mfw.vessel.none",
                         "The Guardian has no Metal Vessel left to give: every relic that can carry a Djinn is already in the world.").withStyle(ChatFormatting.GRAY));
             } else if (g.status() == Status.GIVEN) {
                 ItemEntity drop = new ItemEntity(level, dead.getX(), dead.getY() + 0.3, dead.getZ(), g.stack());
@@ -185,7 +185,7 @@ public final class DecennialReward {
     /** Tells the receiver and the players around {@code where} (null = nobody else) what was handed over, and, when {@code quest}, fires the quest event for the receiver. */
     static void announce(ServerLevel level, ServerPlayer receiver, Sector sector, Grant g, Entity where, boolean quest) {
         String floor = sector == null ? "?" : FloorMap.label(sector.lastFloor());
-        Component line = Component.translatableWithFallback("message.nusmp.mega.mfw.vessel.given", "The Guardian of floor %s lets go of a Metal Vessel: %s.",
+        Component line = Component.translatableWithFallback("message.anime_multiverse.mega.mfw.vessel.given", "The Guardian of floor %s lets go of a Metal Vessel: %s.",
                 floor, g.stack().getHoverName()).withStyle(ChatFormatting.GOLD);
         receiver.sendSystemMessage(line);
         if (where != null) {

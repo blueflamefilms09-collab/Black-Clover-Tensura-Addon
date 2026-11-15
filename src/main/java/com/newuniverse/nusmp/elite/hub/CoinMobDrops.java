@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Why: the global loot modifier ({@link CoinLootModifier}) pays every monster whose class rolls a loot table, but a creature whose class overrides {@code dropFromLootTable} to do nothing never
- * reaches it: the 400 Mob Foundry mobs ({@code nusmp:foundry_mob}) are exactly that (their loot is the economy's listeners, not a table), and so is any other mob a mod makes that way. The owner
+ * reaches it: the 400 Mob Foundry mobs ({@code anime_multiverse:foundry_mob}) are exactly that (their loot is the economy's listeners, not a table), and so is any other mob a mod makes that way. The owner
  * wants coins from "all Abyssal/Holy mobs (and the 400 foundry mobs)", so the same payout is also made from the other door every death goes through, {@code LivingDropsEvent}, for the creatures the
  * modifier did NOT see. The two never double pay: the modifier stamps the creature with {@link #PAID_TAG} the moment it decides (whether it pays or not), and this listener skips a creature that
  * carries it. The rules are the modifier's: Mega-Dungeon only, coins as the currency, a PLAYER's kill, an ordinary hostile monster ({@link LootVictims#kindOf}) or a foundry mob that is not a summoner's
@@ -40,7 +40,7 @@ public final class CoinMobDrops {
         try {
             process(event, null, HubConfig.lootParams());
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.compareAndSet(false, true)) LOG.warn("[nusmp] the dungeon mob coin drop failed once and is skipped for that death", ex);
+            if (WARNED.compareAndSet(false, true)) LOG.warn("[anime_multiverse] the dungeon mob coin drop failed once and is skipped for that death", ex);
         }
     }
 

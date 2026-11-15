@@ -7,7 +7,7 @@
 The staff follows the Genesis Demon-Slayer's method: real cross-sections (a lathed crown, lofted shafts, swept horns), named parts, a painted skin, an additive glow skin. Look: a tall
 lacquered slate-blue staff wound with a twisted silver wire of gust; a silver crown cup that holds a THUNDERCLOUD (a dark belly under a rolling grey-white top of lobes, flickering blue light
 inside them) round a glowing storm core, four silver horns of wind curling up round it, a long silver LIGHTNING ROD rising out of the cloud with fins and a glowing tip, six drops of
-glowing rain crystal hung under the rim, and a bolt of glow inlay zig-zagging down the shaft. It writes (through new197_lib.finish): assets/nusmp/weapon_meshes/stormcaller_staff.txt
+glowing rain crystal hung under the rim, and a bolt of glow inlay zig-zagging down the shaft. It writes (through new197_lib.finish): assets/anime_multiverse/weapon_meshes/stormcaller_staff.txt
 (+ a `gripxyz` line: the hand holds the wrapped grip), textures/entity/weapon/stormcaller_staff.png and _glow.png, textures/item/stormcaller_staff.png (the 16 x 16 inventory sprite rendered
 from the finished mesh, kept as the inventory icon), models/item/stormcaller_staff.json and _icon.json, then the class row ("staff", both copies of weapon_classes.json) and the display
 preset of the long weapon (the oversize rule). The two json files with other weapons' rows are changed by text insertion only: every other row stays byte for byte.
@@ -29,7 +29,7 @@ from new197_god import helix_pts                                           # noq
 from new197_legend import glow_parts                                       # noqa: E402
 
 REPO = os.path.abspath(os.path.join(_TOOLS, ".."))
-GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "nusmp")
+GAME_ASSETS = os.path.join(REPO, "src", "main", "resources", "assets", "anime_multiverse")
 ITEM_ID = "stormcaller_staff"
 GRIP_Y = 68.0                                                              # the middle of the wrapped grip (cm, mesh space): the hand holds the staff here
 

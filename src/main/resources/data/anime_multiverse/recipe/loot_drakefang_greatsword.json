@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": {
+      "item": "anime_multiverse:beast_fang"
+    },
+    "D": {
+      "item": "anime_multiverse:drake_scale"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " FD",
+    "FDF",
+    "IF "
+  ],
+  "result": {
+    "id": "anime_multiverse:drakefang_greatsword",
+    "count": 1
+  }
+}

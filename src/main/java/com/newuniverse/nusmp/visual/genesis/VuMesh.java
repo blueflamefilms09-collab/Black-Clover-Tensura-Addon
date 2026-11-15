@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A baked upgraded weapon mesh (assets/nusmp/weapon_meshes_vu/&lt;id&gt;.txt, from tools/visual_upgrade/genesis_weapons): the dialect of the game's weapon meshes
+ * A baked upgraded weapon mesh (assets/anime_multiverse/weapon_meshes_vu/&lt;id&gt;.txt, from tools/visual_upgrade/genesis_weapons): the dialect of the game's weapon meshes
  * (docs/relic_format.md) with five layers and animation groups. Lines:
  * <pre>
  *   vu 1                               format version

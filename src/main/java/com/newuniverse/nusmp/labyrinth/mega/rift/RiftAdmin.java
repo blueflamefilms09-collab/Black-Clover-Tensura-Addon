@@ -57,7 +57,7 @@ public final class RiftAdmin {
             }
             return RiftService.open(level, feet, RiftType.RETURN, rnd.nextLong()) != null;
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] RiftAdmin.spawnRift failed at {}: {}", at, ex.toString());
+            LOG.warn("[anime_multiverse] RiftAdmin.spawnRift failed at {}: {}", at, ex.toString());
             return false;
         }
     }
@@ -99,7 +99,7 @@ public final class RiftAdmin {
             ExclusivePockets.join(mega, realm, pocket, def, List.of(p), null);
             return true;
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] RiftAdmin.enter failed for {}: {}", pocketId, ex.toString());
+            LOG.warn("[anime_multiverse] RiftAdmin.enter failed for {}: {}", pocketId, ex.toString());
             return false;
         }
     }
@@ -113,7 +113,7 @@ public final class RiftAdmin {
             PocketRealm.Pocket p = server == null ? null : PocketRealm.get(server).at(slot);
             return p == null ? null : PocketSwitch.leverAt(p);
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] RiftAdmin.switchPos failed for slot {}: {}", slot, ex.toString());
+            LOG.warn("[anime_multiverse] RiftAdmin.switchPos failed for slot {}: {}", slot, ex.toString());
             return null;
         }
     }
@@ -133,7 +133,7 @@ public final class RiftAdmin {
             }
             return realm.clear(mega, p, "admin");
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] RiftAdmin.openSwitch failed for slot {}: {}", slot, ex.toString());
+            LOG.warn("[anime_multiverse] RiftAdmin.openSwitch failed for slot {}: {}", slot, ex.toString());
             return false;
         }
     }
@@ -163,7 +163,7 @@ public final class RiftAdmin {
                 }
             }
         } catch (RuntimeException | LinkageError ex) {
-            LOG.warn("[nusmp] RiftAdmin.collapseAll failed: {}", ex.toString());
+            LOG.warn("[anime_multiverse] RiftAdmin.collapseAll failed: {}", ex.toString());
         }
         return n;
     }

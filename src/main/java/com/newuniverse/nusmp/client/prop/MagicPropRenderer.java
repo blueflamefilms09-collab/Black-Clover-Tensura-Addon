@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 /** 0.53: draws {@link MagicPropEntity} through the painter of its kind. */
 public class MagicPropRenderer extends EntityRenderer<MagicPropEntity> {
-    private static final ResourceLocation NONE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/particle/glow.png");
+    private static final ResourceLocation NONE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/particle/glow.png");
 
     public MagicPropRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);

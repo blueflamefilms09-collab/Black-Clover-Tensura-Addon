@@ -229,7 +229,7 @@ public final class VanicaCurse {
         try {
             return AntiMagic.lord(p).isPresent() || BuiltInRegistries.ITEM.getKey(p.getMainHandItem().getItem()).getPath().startsWith("demon_");
         } catch (RuntimeException ex) {
-            LogUtils.getLogger().debug("[nusmp] anti-magic check failed: {}", ex.toString());
+            LogUtils.getLogger().debug("[anime_multiverse] anti-magic check failed: {}", ex.toString());
             return false;
         }
     }

@@ -72,7 +72,7 @@ public final class ModeArmorWindV2 {
     private static final int FULL = LightTexture.FULL_BRIGHT;
     private static final ResourceLocation COAT = tex("mwv2_coat"), FUR = tex("mwv2_fur"), GLOW = tex("mwv2_glow"), WING = tex("mwv2_wing"), FX = tex("mwv2_fx");
 
-    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/mode/" + n + ".png"); }
+    private static ResourceLocation tex(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/mode/" + n + ".png"); }
 
     /** One pose per part, captured while the wearer's pose stack stands in the part, drawn pass by pass; cleared after the draw. */
     private static final PoseStack.Pose[] POSE = new PoseStack.Pose[Part.values().length];

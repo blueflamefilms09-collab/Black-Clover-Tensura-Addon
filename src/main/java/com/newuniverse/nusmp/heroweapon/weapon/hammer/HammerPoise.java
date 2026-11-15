@@ -23,8 +23,8 @@ final class HammerPoise {
     private HammerPoise() {}
 
     private static final String VALUE = "nusmp_hv_pz", STAMP = "nusmp_hv_pt", BROKEN = "nusmp_hv_pb", LOCK = "nusmp_hv_pl";
-    private static final ResourceLocation CRACK_ARMOR = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_hammer_crack");
-    private static final ResourceLocation CRACK_TOUGHNESS = ResourceLocation.fromNamespaceAndPath("nusmp", "hero_hammer_crack_t");
+    private static final ResourceLocation CRACK_ARMOR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_hammer_crack");
+    private static final ResourceLocation CRACK_TOUGHNESS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "hero_hammer_crack_t");
     /** The amber of the gem, used for every effect of the weapon. */
     static final int AMBER = 0xFF9A2E;
 

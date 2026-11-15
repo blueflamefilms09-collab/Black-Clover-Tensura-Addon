@@ -30,26 +30,26 @@ public final class CompatCommand {
         try {
             player = ctx.getSource().getPlayerOrException();
         } catch (CommandSyntaxException notAPlayer) {
-            ctx.getSource().sendFailure(Component.translatable("nusmp.compat.book.console"));
+            ctx.getSource().sendFailure(Component.translatable("anime_multiverse.compat.book.console"));
             return 0;
         }
         ItemStack book = written ? CompatBookItem.stack() : CompatItems.codexStack();                       // 1.34.0: the grimoire-style item (CompatBookItem.stack() is the written-book fallback)
         if (!player.getInventory().add(book)) player.drop(book, false);
-        ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.compat.book.given"), false);
+        ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.compat.book.given"), false);
         return 1;
     }
 
     private static int status(CommandContext<CommandSourceStack> ctx) {
-        ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.compat.status.header").withStyle(ChatFormatting.GOLD), false);
+        ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.compat.status.header").withStyle(ChatFormatting.GOLD), false);
         int loadedCount = 0;
         for (CompatCatalog.Status s : CompatCatalog.statuses(CompatBookItem::isLoaded)) {
             if (s.loaded()) loadedCount++;
-            Component word = Component.translatable(s.loaded() ? "nusmp.compat.loaded" : "nusmp.compat.absent")
+            Component word = Component.translatable(s.loaded() ? "anime_multiverse.compat.loaded" : "anime_multiverse.compat.absent")
                     .withStyle(s.loaded() ? ChatFormatting.GREEN : ChatFormatting.GRAY);
-            ctx.getSource().sendSuccess(() -> Component.translatable("nusmp.compat.status.line", s.entry().name(), word), false);
+            ctx.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.compat.status.line", s.entry().name(), word), false);
         }
         boolean pack = CompatCatalog.packActive(CompatBookItem::isLoaded);
-        ctx.getSource().sendSuccess(() -> Component.translatable(pack ? "nusmp.compat.pack.on" : "nusmp.compat.pack.off", CompatCatalog.PACK_ID), false);
+        ctx.getSource().sendSuccess(() -> Component.translatable(pack ? "anime_multiverse.compat.pack.on" : "anime_multiverse.compat.pack.off", CompatCatalog.PACK_ID), false);
         return loadedCount;
     }
 }

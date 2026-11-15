@@ -7,7 +7,7 @@ Usage: python3 -B tools/mobs_audit/geo_stats.py
 import json, os, re, statistics, collections
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-G = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "geo", "entity")
+G = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "geo", "entity")
 
 GROUPS = [
     ("foundry_<id> (400 art-kit bodies)", r"^foundry_[a-z0-9_]+$"),

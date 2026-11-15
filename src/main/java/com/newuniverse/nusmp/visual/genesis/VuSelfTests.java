@@ -26,7 +26,7 @@ public final class VuSelfTests {
         SelfTests.register("visual.genesis_weapons", VuSelfTests::run);
     }
 
-    static InputStream open(String path) { return VuSelfTests.class.getResourceAsStream("/assets/nusmp/" + path); }
+    static InputStream open(String path) { return VuSelfTests.class.getResourceAsStream("/assets/anime_multiverse/" + path); }
 
     private static SelfTests.Result run(MinecraftServer server) throws Exception {
         if (VuRules.useUpgrade(false, true) || VuRules.useUpgrade(true, false) || !VuRules.useUpgrade(true, true)) return SelfTests.Result.fail("the flag fallback decides wrongly");

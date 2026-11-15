@@ -15,10 +15,10 @@ Two skins of each (the glow layer follows the tint): the Avatar of Lucifero, vio
 (devil_avatar_<name>_megicula).
 
 Writes (through tools/geo_builder.py):
-    assets/nusmp/geo/entity/devil_avatar_<name>.geo.json
-    assets/nusmp/animations/entity/devil_avatar_<name>.animation.json
-    assets/nusmp/textures/entity/devil_avatar_<name>[_megicula].png          512 wide at 2 texels per model pixel (the face, the halo and the tablets at 4)
-    assets/nusmp/textures/entity/devil_avatar_<name>[_megicula]_glow.png     eyes, cracks, sigils, ember edges (additive, full bright)
+    assets/anime_multiverse/geo/entity/devil_avatar_<name>.geo.json
+    assets/anime_multiverse/animations/entity/devil_avatar_<name>.animation.json
+    assets/anime_multiverse/textures/entity/devil_avatar_<name>[_megicula].png          512 wide at 2 texels per model pixel (the face, the halo and the tablets at 4)
+    assets/anime_multiverse/textures/entity/devil_avatar_<name>[_megicula]_glow.png     eyes, cracks, sigils, ember edges (additive, full bright)
 and tools/render_preview/scenes.d/devil_avatar.json (python3 -B tools/render_preview/preview.py devil_base_front devil_gates_death ...; the scenes are
 named devil_<model>[_m]_<front|back|face|idle|walk|run|attack|cast|cast_big|hurt|transform|death>, _m for the Megicula skin).
 
@@ -936,8 +936,8 @@ def scene(model, anim, ages, views, tile=(420, 640), tex=None):
     if tex is None:
         sc["model"] = "%s_%s" % (KEY, model)
     else:
-        sc["model"] = "nusmp:geo/entity/%s_%s.geo.json" % (KEY, model)
-        sc["texture"] = "nusmp:textures/entity/%s_%s%s.png" % (KEY, model, tex)
+        sc["model"] = "anime_multiverse:geo/entity/%s_%s.geo.json" % (KEY, model)
+        sc["texture"] = "anime_multiverse:textures/entity/%s_%s%s.png" % (KEY, model, tex)
     return sc
 
 

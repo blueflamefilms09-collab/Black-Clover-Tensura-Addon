@@ -49,7 +49,7 @@ public final class KnightConduct {
             if (!(e.getSource().getEntity() instanceof ServerPlayer p) || p instanceof FakePlayer || !MultiverseConfig.get(MultiverseConfig.CONDUCT_ENABLED)) return;
             apply(p, e.getEntity());
         } catch (Throwable t) {
-            com.mojang.logging.LogUtils.getLogger().warn("[nusmp] conduct failed", t);
+            com.mojang.logging.LogUtils.getLogger().warn("[anime_multiverse] conduct failed", t);
         }
     }
 }

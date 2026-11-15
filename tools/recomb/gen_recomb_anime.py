@@ -1,5 +1,5 @@
 """Recombination Magic, the "anime look": a colossal house-golem (the Raging Black Bull as Henry Legolant's town rebuilt into a giant), the recombined house, the ring of
-building pieces and the brick drill. Writes the geo models, animations, textures and glow maps (assets/nusmp/geo|animations|textures/entity/recombanime_*) and prints the
+building pieces and the brick drill. Writes the geo models, animations, textures and glow maps (assets/anime_multiverse/geo|animations|textures/entity/recombanime_*) and prints the
 numbers the Java rules class copies (tools/recomb/golem_numbers.json).
 
     python3 -B tools/recomb/gen_recomb_anime.py                 # everything

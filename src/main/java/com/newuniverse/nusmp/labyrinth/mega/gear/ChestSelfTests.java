@@ -48,8 +48,8 @@ public final class ChestSelfTests {
     private ChestSelfTests() {}
 
     private static final String PLAYER = "gear_chest_tester";
-    private static final ResourceLocation STANDARD_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/gear_selftest");
-    private static final ResourceLocation TREASURE_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "chests/gear_selftest_treasure");
+    private static final ResourceLocation STANDARD_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/gear_selftest");
+    private static final ResourceLocation TREASURE_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "chests/gear_selftest_treasure");
 
     /** Registers the test; called from {@link GearSelfTests#register()}. */
     public static void register() {
@@ -128,8 +128,8 @@ public final class ChestSelfTests {
         LootItemCondition[] none = new LootItemCondition[0];
         Tally d = direct(overworld, high, STANDARD_ID, 1500, 0f, random, none);
         if (d.pieces != 0) return fail("the modifier without JSON conditions added gear in the Overworld (" + d.pieces + "): MegaDungeon.in is not checked");
-        for (ResourceLocation id : List.of(rl("nusmp:chests/dungeon_relic_vault"), rl("nusmp:chests/labyrinth_pedestal"), rl("minecraft:entities/zombie"),
-                rl("minecraft:blocks/stone"), rl("nusmp:library"), LootTableIdCondition.UNKNOWN_LOOT_TABLE)) {
+        for (ResourceLocation id : List.of(rl("anime_multiverse:chests/dungeon_relic_vault"), rl("anime_multiverse:chests/labyrinth_pedestal"), rl("minecraft:entities/zombie"),
+                rl("minecraft:blocks/stone"), rl("anime_multiverse:library"), LootTableIdCondition.UNKNOWN_LOOT_TABLE)) {
             Tally x = direct(mega, at, id, 800, 3f, random, none);
             if (x.pieces != 0) return fail("the table " + id + " got " + x.pieces + " pieces of gear in the Mega-Dungeon: it is a relic table or no chest table and must never be touched");
             if (x.breads != x.rolls) return fail("the table " + id + " lost the loot it came with");
@@ -157,10 +157,10 @@ public final class ChestSelfTests {
     /** The classes of real and made-up ids; null when the rules answer as the design says. */
     private static String classification(ChestRules rules) {
         Object[][] want = {
-                {"nusmp", "chests/labyrinth_trial", ChestRules.Kind.STANDARD}, {"nusmp", "chests/library_ruins", ChestRules.Kind.STANDARD},
-                {"nusmp", "chests/grimoire_tower", ChestRules.Kind.STANDARD}, {"minecraft", "chests/simple_dungeon", ChestRules.Kind.STANDARD},
-                {"nusmp", "chests/gear_selftest", ChestRules.Kind.STANDARD}, {"nusmp", "chests/gear_selftest_treasure", ChestRules.Kind.TREASURE},
-                {"nusmp", "chests/dungeon_relic_vault", ChestRules.Kind.NONE}, {"nusmp", "chests/labyrinth_pedestal", ChestRules.Kind.NONE},
+                {"anime_multiverse", "chests/labyrinth_trial", ChestRules.Kind.STANDARD}, {"anime_multiverse", "chests/library_ruins", ChestRules.Kind.STANDARD},
+                {"anime_multiverse", "chests/grimoire_tower", ChestRules.Kind.STANDARD}, {"minecraft", "chests/simple_dungeon", ChestRules.Kind.STANDARD},
+                {"anime_multiverse", "chests/gear_selftest", ChestRules.Kind.STANDARD}, {"anime_multiverse", "chests/gear_selftest_treasure", ChestRules.Kind.TREASURE},
+                {"anime_multiverse", "chests/dungeon_relic_vault", ChestRules.Kind.NONE}, {"anime_multiverse", "chests/labyrinth_pedestal", ChestRules.Kind.NONE},
                 {"minecraft", "entities/zombie", ChestRules.Kind.NONE}, {"minecraft", "blocks/stone", ChestRules.Kind.NONE},
                 {LootTableIdCondition.UNKNOWN_LOOT_TABLE.getNamespace(), LootTableIdCondition.UNKNOWN_LOOT_TABLE.getPath(), ChestRules.Kind.NONE}};
         for (Object[] w : want) {
@@ -179,7 +179,7 @@ public final class ChestSelfTests {
         double sigma = Math.sqrt(tl.rolls * total * (1 - total));
         if (Math.abs(tl.pieces - tl.rolls * total) > 6 * sigma + 5) {
             return what + ": " + tl.pieces + " pieces in " + tl.rolls + " chests, the chances say " + String.format(java.util.Locale.ROOT, "%.1f", tl.rolls * total) + " +- " + String.format(java.util.Locale.ROOT, "%.1f", 6 * sigma)
-                    + (expectPieces && tl.pieces == 0 ? " (nothing at all: is nusmp:gear_chests registered, named in data/neoforge/loot_modifiers/global_loot_modifiers.json, and its conditions met?)" : "");
+                    + (expectPieces && tl.pieces == 0 ? " (nothing at all: is anime_multiverse:gear_chests registered, named in data/neoforge/loot_modifiers/global_loot_modifiers.json, and its conditions met?)" : "");
         }
         for (GearGrade g : GearGrade.values()) {
             double pg = p[g.ordinal()], sg = Math.sqrt(tl.rolls * pg * (1 - pg));

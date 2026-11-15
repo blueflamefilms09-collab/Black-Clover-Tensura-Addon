@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * Why: the visual upgrade of the charms, the gauntlet, the crowns and the Gate of Babylon crest replaces the models some relics are held and worn as, but the older models and
  * the hand and worn catalogs (written by tools/relics/gen_hand_all.py and gen_worn_all.py, "do not edit") must stay exactly as they were, so that the owner can switch back
- * with {@code visual.upgrade=false} and so nothing is deleted. This is the documented override table that sits beside them: assets/nusmp/visual_upgrade/overrides.txt.
+ * with {@code visual.upgrade=false} and so nothing is deleted. This is the documented override table that sits beside them: assets/anime_multiverse/visual_upgrade/overrides.txt.
  * Pure (no Minecraft types), so the file is parsed and checked in tests.
  * <pre>
  * hand &lt;relic id&gt; &lt;piece&gt; ... [| size=0.62 style=palm]    the models the relic is held as in the hand, on the ground and in a frame
  * worn &lt;relic id&gt; &lt;piece&gt; ...                          the models it wears on the body
  * </pre>
- * A piece is {@code model[@anchor][~]} exactly as in the catalogs; a model named {@code vu/<name>} is read from assets/nusmp/visual_upgrade/models/&lt;name&gt;.txt.
+ * A piece is {@code model[@anchor][~]} exactly as in the catalogs; a model named {@code vu/<name>} is read from assets/anime_multiverse/visual_upgrade/models/&lt;name&gt;.txt.
  * Options after the bar apply to the hold style of a hand entry: {@code size} (the longest side of the object in blocks) and {@code style} (a style of transforms.txt).
  */
 public final class VuOverrides {

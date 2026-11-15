@@ -42,12 +42,12 @@ final class SkillsPage extends ForgePage {
 
     @Override int accent() { return 0x9A7CFF; }
 
-    @Override String title() { return ForgeText.s("nusmp.avatar.forge.page.skills", "Unique & Ultimate Skills"); }
+    @Override String title() { return ForgeText.s("anime_multiverse.avatar.forge.page.skills", "Unique & Ultimate Skills"); }
 
     private static int kindColour(ForgeSkill.Kind k) { return k == ForgeSkill.Kind.UNIQUE ? 0x5CD8FF : 0xE8C468; }
 
     private static net.minecraft.network.chat.MutableComponent kindName(boolean ultimate) {
-        return ultimate ? ForgeText.t("nusmp.avatar.forge.ultimate", "Ultimate") : ForgeText.t("nusmp.avatar.forge.unique", "Unique");
+        return ultimate ? ForgeText.t("anime_multiverse.avatar.forge.ultimate", "Ultimate") : ForgeText.t("anime_multiverse.avatar.forge.unique", "Unique");
     }
 
     private List<ForgeSkillRow> rowsOf(ForgeSkill.Kind kind) {
@@ -117,7 +117,7 @@ final class SkillsPage extends ForgePage {
         }
         // ---- the grid of skills of the active slot
         if (shown.isEmpty()) {
-            ForgeUi.wrapped(g, font, ForgeText.s("nusmp.avatar.forge.skills.none", "This world offers no skill for this slot."), gridArea.x(), gridArea.y() + 2, gridArea.w(), UiTheme.TEXT_DIM, 3);
+            ForgeUi.wrapped(g, font, ForgeText.s("anime_multiverse.avatar.forge.skills.none", "This world offers no skill for this slot."), gridArea.x(), gridArea.y() + 2, gridArea.w(), UiTheme.TEXT_DIM, 3);
         }
         ForgeSkillRow hovered = null;
         int vis = grid.visibleRows();
@@ -145,10 +145,10 @@ final class SkillsPage extends ForgePage {
     private List<Component> slotTooltip(ForgeSkill.Kind kind, ForgeSkillRow row) {
         List<Component> t = new ArrayList<>();
         t.add(kindName(kind == ForgeSkill.Kind.ULTIMATE).withStyle(kind == ForgeSkill.Kind.UNIQUE ? ChatFormatting.AQUA : ChatFormatting.GOLD));
-        if (row == null) t.add(ForgeText.t("nusmp.avatar.forge.slot.empty", "Empty. Choose a skill from the grid below.").withStyle(ChatFormatting.GRAY));
+        if (row == null) t.add(ForgeText.t("anime_multiverse.avatar.forge.slot.empty", "Empty. Choose a skill from the grid below.").withStyle(ChatFormatting.GRAY));
         else {
             t.add(ForgeIcons.skillName(row).copy().withStyle(ChatFormatting.WHITE));
-            t.add(ForgeText.t("nusmp.avatar.forge.slot.remove", "Click to remove it.").withStyle(ChatFormatting.DARK_GRAY));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.slot.remove", "Click to remove it.").withStyle(ChatFormatting.DARK_GRAY));
         }
         return t;
     }
@@ -162,11 +162,11 @@ final class SkillsPage extends ForgePage {
         if (!r.description().isEmpty()) for (String line : ForgeUi.wrapLines(h.font(), r.description(), 190, 4)) t.add(Component.literal(line).withStyle(ChatFormatting.GRAY));
         double tax = r.epTaxPercent() / 100.0 * rules.skillTaxScale();
         String pct = String.format(Locale.ROOT, "%.1f", tax * 100.0);
-        t.add(ForgeText.t("nusmp.avatar.forge.skill.tax", "Binding it takes %s%% of your maximum magicule, for good.", pct).withStyle(ChatFormatting.GOLD));
-        if (c.maxMagicule() > 0) t.add(ForgeText.t("nusmp.avatar.forge.skill.pay", "You also pay about %s magicule now.", Math.round(tax * rules.upfrontFactor() * c.maxMagicule())).withStyle(ChatFormatting.YELLOW));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.skill.tax", "Binding it takes %s%% of your maximum magicule, for good.", pct).withStyle(ChatFormatting.GOLD));
+        if (c.maxMagicule() > 0) t.add(ForgeText.t("anime_multiverse.avatar.forge.skill.pay", "You also pay about %s magicule now.", Math.round(tax * rules.upfrontFactor() * c.maxMagicule())).withStyle(ChatFormatting.YELLOW));
         if (r.minEp() > 0) {
             boolean short_ = cannotCarry(r);
-            t.add(ForgeText.t("nusmp.avatar.forge.skill.ep", "Needs %s EP of you (you have %s).", Math.round(r.minEp()), Math.round(c.maxEp())).withStyle(short_ ? ChatFormatting.RED : ChatFormatting.GREEN));
+            t.add(ForgeText.t("anime_multiverse.avatar.forge.skill.ep", "Needs %s EP of you (you have %s).", Math.round(r.minEp()), Math.round(c.maxEp())).withStyle(short_ ? ChatFormatting.RED : ChatFormatting.GREEN));
         }
         return t;
     }
@@ -188,11 +188,11 @@ final class SkillsPage extends ForgePage {
         g.fill(box.x(), box.y(), box.right(), box.bottom(), ForgeUi.argb(0x03050A, 0.9f));
         g.renderOutline(box.x(), box.y(), box.w(), box.h(), ForgeUi.argb(col, 0.5f + 0.5f * hv));
         if (paid) g.fill(box.x() + 3, box.y() + 3, box.right() - 3, box.bottom() - 3, ForgeUi.argb(col, 1f));
-        String l1 = ForgeText.s("nusmp.avatar.forge.awaken.short", "Paid Awakening");
+        String l1 = ForgeText.s("anime_multiverse.avatar.forge.awaken.short", "Paid Awakening");
         ForgeUi.text(g, font, ForgeUi.fit(font, l1, awake.w() - 15), box.right() + 4, box.y() + 2, allowed ? (paid ? UiTheme.GOLD : UiTheme.TEXT) : UiTheme.TEXT_FAINT);
         if (awake.h() >= 30) {
             double chance = ForgeCosts.awakeningChance(rules, h.reserves().luck()) * 100.0;
-            String l2 = ForgeText.s("nusmp.avatar.forge.awaken.sub", "Free chance %s%%. Paid: +%s core, %s%% tax for good.",
+            String l2 = ForgeText.s("anime_multiverse.avatar.forge.awaken.sub", "Free chance %s%%. Paid: +%s core, %s%% tax for good.",
                     String.format(Locale.ROOT, "%.0f", chance), rules.awakeningExtraCores(), String.format(Locale.ROOT, "%.1f", rules.awakeningTax() * 100.0));
             ForgeUi.wrapped(g, font, l2, awake.x(), box.bottom() + 2, awake.w(), UiTheme.TEXT_DIM, 2);
         }
@@ -203,12 +203,12 @@ final class SkillsPage extends ForgePage {
         ForgeRules rules = h.rules();
         double chance = ForgeCosts.awakeningChance(rules, h.reserves().luck()) * 100.0;
         List<Component> t = new ArrayList<>();
-        t.add(ForgeText.t("nusmp.avatar.forge.awaken", "Guaranteed Instant Awakening").withStyle(ChatFormatting.GOLD));
-        t.add(ForgeText.t("nusmp.avatar.forge.awaken.tip1", "At birth the Avatar rolls a d100: below %s plus your luck, it awakens a Unique or Ultimate skill at once.", Math.round(rules.awakeningBase())).withStyle(ChatFormatting.GRAY));
-        t.add(ForgeText.t("nusmp.avatar.forge.awaken.tip2", "Your free chance now: %s%%.", String.format(Locale.ROOT, "%.0f", chance)).withStyle(ChatFormatting.GREEN));
-        t.add(ForgeText.t("nusmp.avatar.forge.awaken.tip3", "Pay %s extra Genesis Core and %s%% of your maximum magicule for good, and it is certain.", rules.awakeningExtraCores(),
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.awaken", "Guaranteed Instant Awakening").withStyle(ChatFormatting.GOLD));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.awaken.tip1", "At birth the Avatar rolls a d100: below %s plus your luck, it awakens a Unique or Ultimate skill at once.", Math.round(rules.awakeningBase())).withStyle(ChatFormatting.GRAY));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.awaken.tip2", "Your free chance now: %s%%.", String.format(Locale.ROOT, "%.0f", chance)).withStyle(ChatFormatting.GREEN));
+        t.add(ForgeText.t("anime_multiverse.avatar.forge.awaken.tip3", "Pay %s extra Genesis Core and %s%% of your maximum magicule for good, and it is certain.", rules.awakeningExtraCores(),
                 String.format(Locale.ROOT, "%.1f", rules.awakeningTax() * 100.0)).withStyle(ChatFormatting.YELLOW));
-        if (!allowed) t.add(ForgeText.t("nusmp.avatar.forge.awaken.need", "You hold %s Genesis Core(s); you need %s.", h.reserves().cores(), 1 + rules.awakeningExtraCores()).withStyle(ChatFormatting.RED));
+        if (!allowed) t.add(ForgeText.t("anime_multiverse.avatar.forge.awaken.need", "You hold %s Genesis Core(s); you need %s.", h.reserves().cores(), 1 + rules.awakeningExtraCores()).withStyle(ChatFormatting.RED));
         return t;
     }
 
@@ -238,7 +238,7 @@ final class SkillsPage extends ForgePage {
         boolean already = r.id().equals(active == ForgeSkill.Kind.UNIQUE ? st.unique() : st.ultimate());
         if (!already && cannotCarry(r)) {
             refuseFlash = 20;
-            h.say(ForgeText.t("nusmp.avatar.forge.skill.ep_short", "You need %s EP to carry this skill.", Math.round(r.minEp())), false);
+            h.say(ForgeText.t("anime_multiverse.avatar.forge.skill.ep_short", "You need %s EP to carry this skill.", Math.round(r.minEp())), false);
             return true;
         }
         h.click();

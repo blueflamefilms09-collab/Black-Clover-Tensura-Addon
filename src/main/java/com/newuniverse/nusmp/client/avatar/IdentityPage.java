@@ -30,7 +30,7 @@ final class IdentityPage extends ForgePage {
 
     @Override int accent() { return 0x5CD8FF; }
 
-    @Override String title() { return ForgeText.s("nusmp.avatar.forge.page.identity", "Identity"); }
+    @Override String title() { return ForgeText.s("anime_multiverse.avatar.forge.page.identity", "Identity"); }
 
     @Override
     void layout(Rect area) {
@@ -112,7 +112,7 @@ final class IdentityPage extends ForgePage {
         float now = h.now();
         S2C_RollPayload r = AvatarClientData.roll;
         // ---- the name
-        ForgeUi.text(g, font, ForgeText.s("nusmp.avatar.forge.name", "Name (optional)"), body.x(), body.y(), UiTheme.TEXT_DIM);
+        ForgeUi.text(g, font, ForgeText.s("anime_multiverse.avatar.forge.name", "Name (optional)"), body.x(), body.y(), UiTheme.TEXT_DIM);
         EditBox box = h.nameBox();
         boolean nameHover = nameRect.contains(mx, my);
         float nh = h.hover("name", nameHover || box.isFocused());
@@ -120,15 +120,15 @@ final class IdentityPage extends ForgePage {
         g.renderOutline(nameRect.x(), nameRect.y(), nameRect.w(), nameRect.h(), ForgeUi.argb(box.isFocused() ? 0xE8C468 : 0x5CD8FF, 0.35f + 0.5f * nh));
         box.render(g, mx, my, partial);
         if (!BuilderState.nameOk(box.getValue())) {
-            ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("nusmp.avatar.gui.confirm.name_bad").getString(), body.w()), body.x(), nameRect.bottom() + 1, UiTheme.RED);
+            ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("anime_multiverse.avatar.gui.confirm.name_bad").getString(), body.w()), body.x(), nameRect.bottom() + 1, UiTheme.RED);
         }
         // ---- the roll button
         boolean rolled = h.state().rolled();
-        String label = awaiting ? ForgeText.s("nusmp.avatar.forge.rolling", "Rolling...")
-                : Component.translatable(rolled ? "nusmp.avatar.gui.reroll" : "nusmp.avatar.gui.roll").getString();
+        String label = awaiting ? ForgeText.s("anime_multiverse.avatar.forge.rolling", "Rolling...")
+                : Component.translatable(rolled ? "anime_multiverse.avatar.gui.reroll" : "anime_multiverse.avatar.gui.roll").getString();
         boolean over = rollRect.contains(mx, my);
         ForgeUi.button(g, font, rollRect, label, !awaiting, h.hover("roll", over && !awaiting), UiTheme.CYAN & 0xFFFFFF);
-        if (over) h.tooltip(List.of(Component.translatable("nusmp.avatar.gui.stats.title"), ForgeText.t("nusmp.avatar.forge.tip.roll",
+        if (over) h.tooltip(List.of(Component.translatable("anime_multiverse.avatar.gui.stats.title"), ForgeText.t("anime_multiverse.avatar.forge.tip.roll",
                 "The server rolls your six scores. Luck can earn you a fifth die. Nothing here can be chosen.").withStyle(net.minecraft.ChatFormatting.GRAY)));
         // ---- the six cards
         if (cardsArea.h() >= 24) drawCards(g, r, now);
@@ -138,18 +138,18 @@ final class IdentityPage extends ForgePage {
             int room = Math.max(1, (body.bottom() - footerY) / lh);
             int y = footerY;
             int dieLines = room >= 4 ? 2 : 1;
-            String dice = Component.translatable(r.fiveDice() ? "nusmp.avatar.gui.dice.five" : "nusmp.avatar.gui.dice.four").getString();
-            if (dieLines == 1 && font.width(dice) > body.w() && r.fiveDice()) dice = ForgeText.s("nusmp.avatar.forge.dice.five_short", "Lucky roll: 5d6");        // the long line would be cut
+            String dice = Component.translatable(r.fiveDice() ? "anime_multiverse.avatar.gui.dice.five" : "anime_multiverse.avatar.gui.dice.four").getString();
+            if (dieLines == 1 && font.width(dice) > body.w() && r.fiveDice()) dice = ForgeText.s("anime_multiverse.avatar.forge.dice.five_short", "Lucky roll: 5d6");        // the long line would be cut
             y = ForgeUi.wrapped(g, font, dice, body.x(), y, body.w(), r.fiveDice() ? UiTheme.GOLD : UiTheme.TEXT, dieLines);
             if (y + font.lineHeight <= body.bottom() + 1) {
-                ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("nusmp.avatar.gui.luck", String.format(Locale.ROOT, "%.1f", r.luck())).getString(), body.w()), body.x(), y, UiTheme.VIOLET);
+                ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("anime_multiverse.avatar.gui.luck", String.format(Locale.ROOT, "%.1f", r.luck())).getString(), body.w()), body.x(), y, UiTheme.VIOLET);
                 y += lh;
             }
             if (r.rerollCost() > 0 && y + font.lineHeight <= body.bottom() + 1) {
-                ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("nusmp.avatar.gui.reroll_cost", r.rerollCost()).getString(), body.w()), body.x(), y, UiTheme.TEXT_DIM);
+                ForgeUi.text(g, font, ForgeUi.fit(font, Component.translatable("anime_multiverse.avatar.gui.reroll_cost", r.rerollCost()).getString(), body.w()), body.x(), y, UiTheme.TEXT_DIM);
             }
         } else if (footerY < body.bottom() && r == null) {
-            ForgeUi.wrapped(g, font, Component.translatable("nusmp.avatar.gui.stats.hint").getString(), body.x(), footerY, body.w(), UiTheme.TEXT_DIM, Math.max(1, (body.bottom() - footerY) / (font.lineHeight + 1)));
+            ForgeUi.wrapped(g, font, Component.translatable("anime_multiverse.avatar.gui.stats.hint").getString(), body.x(), footerY, body.w(), UiTheme.TEXT_DIM, Math.max(1, (body.bottom() - footerY) / (font.lineHeight + 1)));
         }
     }
 
@@ -159,7 +159,7 @@ final class IdentityPage extends ForgePage {
         int cw = (cardsArea.w() - 2 * gap) / 3;
         int ch = Math.max(24, Math.min(46, (cardsArea.h() - gap) / 2));
         boolean abbreviate = false;                                  // one rule for all six: either every card shows the full name or every card shows STR, DEX ...
-        for (String k : STATS) if (font.width(Component.translatable("nusmp.avatar.gui.stat." + k).getString()) > cw - 4) abbreviate = true;
+        for (String k : STATS) if (font.width(Component.translatable("anime_multiverse.avatar.gui.stat." + k).getString()) > cw - 4) abbreviate = true;
         for (int i = 0; i < 6; i++) {
             int cx = cardsArea.x() + (i % 3) * (cw + gap), cy = cardsArea.y() + (i / 3) * (ch + gap);
             Rect c = new Rect(cx, cy, cw, ch);
@@ -168,7 +168,7 @@ final class IdentityPage extends ForgePage {
             int accent = r == null ? 0x5C6E88 : value >= 16 ? 0xE8C468 : value <= 8 ? 0xFF6A6A : 0x5CD8FF;
             g.fill(c.x(), c.y(), c.right(), c.bottom(), ForgeUi.argb(0x060912, 0.85f));
             g.renderOutline(c.x(), c.y(), c.w(), c.h(), ForgeUi.argb(accent, settled ? 0.7f : 0.35f));
-            String name = abbreviate ? STATS[i].toUpperCase(Locale.ROOT) : Component.translatable("nusmp.avatar.gui.stat." + STATS[i]).getString();
+            String name = abbreviate ? STATS[i].toUpperCase(Locale.ROOT) : Component.translatable("anime_multiverse.avatar.gui.stat." + STATS[i]).getString();
             ForgeUi.centered(g, font, ForgeUi.fit(font, name, cw - 2), c.cx(), c.y() + 2, UiTheme.TEXT_DIM);
             String num;
             int col = UiTheme.TEXT;

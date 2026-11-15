@@ -20,7 +20,7 @@ public class HubNpcRenderer extends MobRenderer<HubNpcBase, VillagerModel<HubNpc
 
     public HubNpcRenderer(EntityRendererProvider.Context ctx, String skin) {
         super(ctx, new VillagerModel<>(ctx.bakeLayer(ModelLayers.VILLAGER)), 0.5f);
-        this.texture = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/hub/" + skin + ".png");
+        this.texture = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/hub/" + skin + ".png");
         addLayer(new CustomHeadLayer<>(this, ctx.getModelSet(), ctx.getItemInHandRenderer()));
     }
 

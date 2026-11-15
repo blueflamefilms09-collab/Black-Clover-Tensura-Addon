@@ -2,401 +2,401 @@
   "replace": false,
   "values": [
     {
-      "id": "nusmp:amulet_of_dragon_rage",
+      "id": "anime_multiverse:amulet_of_dragon_rage",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_safeguarding",
+      "id": "anime_multiverse:amulet_of_safeguarding",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_the_coven",
+      "id": "anime_multiverse:amulet_of_the_coven",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_the_forest",
+      "id": "anime_multiverse:amulet_of_the_forest",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_the_huntress",
+      "id": "anime_multiverse:amulet_of_the_huntress",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_the_sea_of_stars",
+      "id": "anime_multiverse:amulet_of_the_sea_of_stars",
       "required": false
     },
     {
-      "id": "nusmp:amulet_of_the_warmage",
+      "id": "anime_multiverse:amulet_of_the_warmage",
       "required": false
     },
     {
-      "id": "nusmp:arcane_glass_of_seeing",
+      "id": "anime_multiverse:arcane_glass_of_seeing",
       "required": false
     },
     {
-      "id": "nusmp:beast_masters_amulet",
+      "id": "anime_multiverse:beast_masters_amulet",
       "required": false
     },
     {
-      "id": "nusmp:hemlocks_amulet",
+      "id": "anime_multiverse:hemlocks_amulet",
       "required": false
     },
     {
-      "id": "nusmp:lovelorn_locket",
+      "id": "anime_multiverse:lovelorn_locket",
       "required": false
     },
     {
-      "id": "nusmp:pendant_of_echoed_souls",
+      "id": "anime_multiverse:pendant_of_echoed_souls",
       "required": false
     },
     {
-      "id": "nusmp:pendant_of_the_dreamer",
+      "id": "anime_multiverse:pendant_of_the_dreamer",
       "required": false
     },
     {
-      "id": "nusmp:the_amulet_of_lost_souls",
+      "id": "anime_multiverse:the_amulet_of_lost_souls",
       "required": false
     },
     {
-      "id": "nusmp:voice_of_the_mountain",
+      "id": "anime_multiverse:voice_of_the_mountain",
       "required": false
     },
     {
-      "id": "nusmp:brooch_of_poeur",
+      "id": "anime_multiverse:brooch_of_poeur",
       "required": false
     },
     {
-      "id": "nusmp:crest_of_foresight",
+      "id": "anime_multiverse:crest_of_foresight",
       "required": false
     },
     {
-      "id": "nusmp:sigil_of_the_faint_flame",
+      "id": "anime_multiverse:sigil_of_the_faint_flame",
       "required": false
     },
     {
-      "id": "nusmp:true_heart_clasp",
+      "id": "anime_multiverse:true_heart_clasp",
       "required": false
     },
     {
-      "id": "nusmp:chromatic_collar",
+      "id": "anime_multiverse:chromatic_collar",
       "required": false
     },
     {
-      "id": "nusmp:collar_of_the_penitent_dragon",
+      "id": "anime_multiverse:collar_of_the_penitent_dragon",
       "required": false
     },
     {
-      "id": "nusmp:eye_of_the_aboleth",
+      "id": "anime_multiverse:eye_of_the_aboleth",
       "required": false
     },
     {
-      "id": "nusmp:fenrirs_collar",
+      "id": "anime_multiverse:fenrirs_collar",
       "required": false
     },
     {
-      "id": "nusmp:sunheart_medallion",
+      "id": "anime_multiverse:sunheart_medallion",
       "required": false
     },
     {
-      "id": "nusmp:witchers_medallion",
+      "id": "anime_multiverse:witchers_medallion",
       "required": false
     },
     {
-      "id": "nusmp:forbidden_library_key",
+      "id": "anime_multiverse:forbidden_library_key",
       "required": false
     },
     {
-      "id": "nusmp:pucks_crystal_pendant",
+      "id": "anime_multiverse:pucks_crystal_pendant",
       "required": false
     },
     {
-      "id": "nusmp:anubis_judges_pendant",
+      "id": "anime_multiverse:anubis_judges_pendant",
       "required": false
     },
     {
-      "id": "nusmp:binding_vow_seal",
+      "id": "anime_multiverse:binding_vow_seal",
       "required": false
     },
     {
-      "id": "nusmp:black_whistle",
+      "id": "anime_multiverse:black_whistle",
       "required": false
     },
     {
-      "id": "nusmp:blue_whistle",
+      "id": "anime_multiverse:blue_whistle",
       "required": false
     },
     {
-      "id": "nusmp:catalyst_fang_of_the_beast_king",
+      "id": "anime_multiverse:catalyst_fang_of_the_beast_king",
       "required": false
     },
     {
-      "id": "nusmp:cursed_speech_collar",
+      "id": "anime_multiverse:cursed_speech_collar",
       "required": false
     },
     {
-      "id": "nusmp:moon_whistle",
+      "id": "anime_multiverse:moon_whistle",
       "required": false
     },
     {
-      "id": "nusmp:red_whistle",
+      "id": "anime_multiverse:red_whistle",
       "required": false
     },
     {
-      "id": "nusmp:scarab_heart_amulet",
+      "id": "anime_multiverse:scarab_heart_amulet",
       "required": false
     },
     {
-      "id": "nusmp:seekers_pendant",
+      "id": "anime_multiverse:seekers_pendant",
       "required": false
     },
     {
-      "id": "nusmp:shikigami_whistle",
+      "id": "anime_multiverse:shikigami_whistle",
       "required": false
     },
     {
-      "id": "nusmp:white_whistle",
+      "id": "anime_multiverse:white_whistle",
       "required": false
     },
     {
-      "id": "nusmp:waypoint_anchor",
+      "id": "anime_multiverse:waypoint_anchor",
       "required": false
     },
     {
-      "id": "nusmp:albedos_black_wings_brooch",
+      "id": "anime_multiverse:albedos_black_wings_brooch",
       "required": false
     },
     {
-      "id": "nusmp:auras_whistle",
+      "id": "anime_multiverse:auras_whistle",
       "required": false
     },
     {
-      "id": "nusmp:beast_clan_whistle",
+      "id": "anime_multiverse:beast_clan_whistle",
       "required": false
     },
     {
-      "id": "nusmp:demon_castle_crest",
+      "id": "anime_multiverse:demon_castle_crest",
       "required": false
     },
     {
-      "id": "nusmp:healers_last_breath_locket",
+      "id": "anime_multiverse:healers_last_breath_locket",
       "required": false
     },
     {
-      "id": "nusmp:lords_table_crest",
+      "id": "anime_multiverse:lords_table_crest",
       "required": false
     },
     {
-      "id": "nusmp:lycans_moonlit_collar",
+      "id": "anime_multiverse:lycans_moonlit_collar",
       "required": false
     },
     {
-      "id": "nusmp:rudeuss_soundless_chant_brooch",
+      "id": "anime_multiverse:rudeuss_soundless_chant_brooch",
       "required": false
     },
     {
-      "id": "nusmp:ruijerds_spear_pendant",
+      "id": "anime_multiverse:ruijerds_spear_pendant",
       "required": false
     },
     {
-      "id": "nusmp:staff_mages_journey_pendant",
+      "id": "anime_multiverse:staff_mages_journey_pendant",
       "required": false
     },
     {
-      "id": "nusmp:stone_statue_pendant",
+      "id": "anime_multiverse:stone_statue_pendant",
       "required": false
     },
     {
-      "id": "nusmp:sun_gate_pendant",
+      "id": "anime_multiverse:sun_gate_pendant",
       "required": false
     },
     {
-      "id": "nusmp:wirbels_guard_pendant",
+      "id": "anime_multiverse:wirbels_guard_pendant",
       "required": false
     },
     {
-      "id": "nusmp:brand_of_sacrifice",
+      "id": "anime_multiverse:brand_of_sacrifice",
       "required": false
     },
     {
-      "id": "nusmp:cascas_cavalry_scarf",
+      "id": "anime_multiverse:cascas_cavalry_scarf",
       "required": false
     },
     {
-      "id": "nusmp:chomusukes_familiar_collar",
+      "id": "anime_multiverse:chomusukes_familiar_collar",
       "required": false
     },
     {
-      "id": "nusmp:cult_of_diablos_sigil",
+      "id": "anime_multiverse:cult_of_diablos_sigil",
       "required": false
     },
     {
-      "id": "nusmp:headons_blue_flame_scarf",
+      "id": "anime_multiverse:headons_blue_flame_scarf",
       "required": false
     },
     {
-      "id": "nusmp:homunculus_sin_brooch",
+      "id": "anime_multiverse:homunculus_sin_brooch",
       "required": false
     },
     {
-      "id": "nusmp:sherrys_pendulum_pendant",
+      "id": "anime_multiverse:sherrys_pendulum_pendant",
       "required": false
     },
     {
-      "id": "nusmp:wizs_lich_pendant",
+      "id": "anime_multiverse:wizs_lich_pendant",
       "required": false
     },
     {
-      "id": "nusmp:wolf_hunters_fang",
+      "id": "anime_multiverse:wolf_hunters_fang",
       "required": false
     },
     {
-      "id": "nusmp:akatsukis_assassin_scarf",
+      "id": "anime_multiverse:akatsukis_assassin_scarf",
       "required": false
     },
     {
-      "id": "nusmp:death_game_survivors_dog_tag",
+      "id": "anime_multiverse:death_game_survivors_dog_tag",
       "required": false
     },
-    "nusmp:lich_dust_pendant",
-    "nusmp:tide_pearl_amulet",
+    "anime_multiverse:lich_dust_pendant",
+    "anime_multiverse:tide_pearl_amulet",
     {
-      "id": "nusmp:hivemind_carapace_pendant",
+      "id": "anime_multiverse:hivemind_carapace_pendant",
       "required": false
     },
     {
-      "id": "nusmp:sun_eaters_locket",
+      "id": "anime_multiverse:sun_eaters_locket",
       "required": false
     },
     {
-      "id": "nusmp:axel_adventurers_scarf",
+      "id": "anime_multiverse:axel_adventurers_scarf",
       "required": false
     },
     {
-      "id": "nusmp:familia_falna_locket",
+      "id": "anime_multiverse:familia_falna_locket",
       "required": false
     },
     {
-      "id": "nusmp:hunter_exam_number_plate",
+      "id": "anime_multiverse:hunter_exam_number_plate",
       "required": false
     },
     {
-      "id": "nusmp:silver_guild_pendant",
+      "id": "anime_multiverse:silver_guild_pendant",
       "required": false
     },
     {
-      "id": "nusmp:sindria_traders_scarf",
+      "id": "anime_multiverse:sindria_traders_scarf",
       "required": false
     },
     {
-      "id": "nusmp:ahjin_guild_pin",
+      "id": "anime_multiverse:ahjin_guild_pin",
       "required": false
     },
     {
-      "id": "nusmp:blumund_adventurer_tag",
+      "id": "anime_multiverse:blumund_adventurer_tag",
       "required": false
     },
     {
-      "id": "nusmp:clover_kingdom_citizen_seal",
+      "id": "anime_multiverse:clover_kingdom_citizen_seal",
       "required": false
     },
     {
-      "id": "nusmp:copper_adventurer_plate_of_e_rantel",
+      "id": "anime_multiverse:copper_adventurer_plate_of_e_rantel",
       "required": false
     },
     {
-      "id": "nusmp:dwargon_merchant_guild_seal",
+      "id": "anime_multiverse:dwargon_merchant_guild_seal",
       "required": false
     },
     {
-      "id": "nusmp:easton_academy_crest",
+      "id": "anime_multiverse:easton_academy_crest",
       "required": false
     },
     {
-      "id": "nusmp:harpers_brooch_pin",
+      "id": "anime_multiverse:harpers_brooch_pin",
       "required": false
     },
     {
-      "id": "nusmp:hero_course_badge",
+      "id": "anime_multiverse:hero_course_badge",
       "required": false
     },
     {
-      "id": "nusmp:lugunica_royal_guard_crest",
+      "id": "anime_multiverse:lugunica_royal_guard_crest",
       "required": false
     },
     {
-      "id": "nusmp:magnoshutatt_academy_medal",
+      "id": "anime_multiverse:magnoshutatt_academy_medal",
       "required": false
     },
     {
-      "id": "nusmp:marine_recruit_badge",
+      "id": "anime_multiverse:marine_recruit_badge",
       "required": false
     },
     {
-      "id": "nusmp:seireitei_academy_badge",
+      "id": "anime_multiverse:seireitei_academy_badge",
       "required": false
     },
     {
-      "id": "nusmp:tempest_federation_citizen_medal",
+      "id": "anime_multiverse:tempest_federation_citizen_medal",
       "required": false
     },
     {
-      "id": "nusmp:celestial_spirit_key_pendant",
+      "id": "anime_multiverse:celestial_spirit_key_pendant",
       "required": false
     },
     {
-      "id": "nusmp:demon_blood_talisman_chip",
+      "id": "anime_multiverse:demon_blood_talisman_chip",
       "required": false
     },
     {
-      "id": "nusmp:djinn_vessel_replica_amulet",
+      "id": "anime_multiverse:djinn_vessel_replica_amulet",
       "required": false
     },
     {
-      "id": "nusmp:four_leaf_clover_locket",
+      "id": "anime_multiverse:four_leaf_clover_locket",
       "required": false
     },
     {
-      "id": "nusmp:four_star_ball_pendant",
+      "id": "anime_multiverse:four_star_ball_pendant",
       "required": false
     },
     {
-      "id": "nusmp:goddess_blessing_medallion",
+      "id": "anime_multiverse:goddess_blessing_medallion",
       "required": false
     },
     {
-      "id": "nusmp:guardians_gold_coin_necklace",
+      "id": "anime_multiverse:guardians_gold_coin_necklace",
       "required": false
     },
     {
-      "id": "nusmp:prayer_bead_necklace",
+      "id": "anime_multiverse:prayer_bead_necklace",
       "required": false
     },
     {
-      "id": "nusmp:rimurus_slime_pendant",
+      "id": "anime_multiverse:rimurus_slime_pendant",
       "required": false
     },
     {
-      "id": "nusmp:spirit_mediums_salt_pouch",
+      "id": "anime_multiverse:spirit_mediums_salt_pouch",
       "required": false
     },
     {
-      "id": "nusmp:spirit_tortoise_scale_charm",
+      "id": "anime_multiverse:spirit_tortoise_scale_charm",
       "required": false
     },
     {
-      "id": "nusmp:wolf_tooth_pendant",
+      "id": "anime_multiverse:wolf_tooth_pendant",
       "required": false
     },
     {
-      "id": "nusmp:revival_fluid_pendant",
+      "id": "anime_multiverse:revival_fluid_pendant",
       "required": false
     },
     {
-      "id": "nusmp:millennium_puzzle",
+      "id": "anime_multiverse:millennium_puzzle",
       "required": false
     },
     {
-      "id": "nusmp:wings_of_freedom_pin",
+      "id": "anime_multiverse:wings_of_freedom_pin",
       "required": false
     }
   ]

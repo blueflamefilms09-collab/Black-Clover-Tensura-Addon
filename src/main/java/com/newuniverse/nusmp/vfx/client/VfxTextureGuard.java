@@ -29,7 +29,7 @@ public final class VfxTextureGuard {
         try {
             if (AdditivePolicy.replaceWithSoftCircle(TextureAudit.kind(tex), additive, tex.getPath(), VfxSafeBlendConfig.safeBlend())) {
                 r = SoftCircleTexture.get();
-                LogUtils.getLogger().warn("[nusmp] texture {} cannot be drawn as a sprite (missing or opaque): the generated soft circle is used instead", tex);
+                LogUtils.getLogger().warn("[anime_multiverse] texture {} cannot be drawn as a sprite (missing or opaque): the generated soft circle is used instead", tex);
             }
         } catch (RuntimeException | LinkageError e) {
             r = tex;

@@ -30,7 +30,7 @@ public final class Heritage {
     private Heritage() {}
 
     private static final String KEY = "nusmp_heritage";
-    private static final ResourceLocation MARKER = ResourceLocation.fromNamespaceAndPath("nusmp", "heritage_marker");
+    private static final ResourceLocation MARKER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "heritage_marker");
 
     private record Mod(Holder<Attribute> attr, double amount, Operation op) {}
 
@@ -222,7 +222,7 @@ public final class Heritage {
     private static final List<Holder<Attribute>> TOUCHED = List.of(Attributes.MAX_HEALTH, Attributes.ATTACK_DAMAGE, Attributes.ARMOR, Attributes.LUCK,
             Attributes.MOVEMENT_SPEED, Attributes.ARMOR_TOUGHNESS, Attributes.KNOCKBACK_RESISTANCE, Attributes.WATER_MOVEMENT_EFFICIENCY);
 
-    private static ResourceLocation id(int i) { return ResourceLocation.fromNamespaceAndPath("nusmp", "heritage_" + i); }
+    private static ResourceLocation id(int i) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "heritage_" + i); }
 
     // ---------------------------------------------------------------- numbers other systems read
     public static double costMult(Player p) { return (kingdom(p) == Kingdom.HEART ? 0.95 : 1.0) * socialCost(p); }

@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * Why: a character's spell set is data (src/main/resources/data/nusmp/character_spells/&lt;canon_id&gt;.json, schema in docs/magic/character_spells.md), so a content builder adds a character without
+ * Why: a character's spell set is data (src/main/resources/data/anime_multiverse/character_spells/&lt;canon_id&gt;.json, schema in docs/magic/character_spells.md), so a content builder adds a character without
  * touching the engine. This pure class (no game classes) parses one file and checks it hard: a file with any problem is not used at all and that character keeps today's generic grimoire, so a
  * typo can never hide a page by accident. {@link #problems} is also what the JUnit tests and the CI self-test run on every shipped file.
  */

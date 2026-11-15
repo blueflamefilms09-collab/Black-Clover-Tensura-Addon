@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Why: the registration entry point of the Mob Foundry, the pattern of every package of the Mega-Dungeon: its own deferred register and one {@link #init} (mod bus: the one entity
- * type {@code nusmp:foundry_mob}, its attributes, the in-game self-tests) and one {@link #register} (game bus: the data reload listener and the drop listeners), called from
+ * type {@code anime_multiverse:foundry_mob}, its attributes, the in-game self-tests) and one {@link #register} (game bus: the data reload listener and the drop listeners), called from
  * {@code MegaSystem}. The lead registers {@link FoundryConfig#SPEC} as {@code nusmp-labyrinth-mega-foundry-server.toml}, attaches {@link #command()} under
  * {@code /multiverse mega}, and adds the client call {@code FoundryClient.init(modBus)} to {@code LabyrinthClient}. There is no spawn egg and no creative-tab entry on purpose: a
  * foundry mob is made by the Dungeon Master or by the admin command, which gives it the identity the entity needs.

@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * the files: every sprite on the list really is a flat single-colour cut-out (so the list says what it claims), the solid material sheet of the replacements is opaque and has grain, and the switch is off by default.
  */
 class FlatPropsTest {
-    private static final Path TEX = Path.of("src/main/resources/assets/nusmp/textures");
+    private static final Path TEX = Path.of("src/main/resources/assets/anime_multiverse/textures");
 
     @Test
     void theSwitchIsOffByDefault() {
@@ -29,7 +29,7 @@ class FlatPropsTest {
     @Test
     void aFlatSpriteIsRefusedWhenTheSwitchIsOffAndAllowedWhenItIsOn() {
         for (FlatProps.Entry e : FlatProps.FLAT) {
-            String path = "nusmp:textures/particle/" + e.texture() + ".png";
+            String path = "anime_multiverse:textures/particle/" + e.texture() + ".png";
             assertTrue(FlatProps.isFlat(path), e.texture());
             assertFalse(FlatProps.shouldDraw(path, false), e.texture() + " is drawn with visual.flatProps off");
             assertTrue(FlatProps.shouldDraw(path, true), e.texture() + " is hidden with visual.flatProps on");
@@ -38,7 +38,7 @@ class FlatPropsTest {
 
     @Test
     void everyOtherTextureIsAlwaysDrawn() {
-        for (String p : new String[]{"textures/particle/glow.png", "textures/particle/bone_arm.png", "textures/flatprops/solid.png", "textures/entity/construct_sword.png", "nusmp:textures/particle/time_clock_hand.png", "", null}) {
+        for (String p : new String[]{"textures/particle/glow.png", "textures/particle/bone_arm.png", "textures/flatprops/solid.png", "textures/entity/construct_sword.png", "anime_multiverse:textures/particle/time_clock_hand.png", "", null}) {
             assertFalse(FlatProps.isFlat(p), String.valueOf(p));
             assertTrue(FlatProps.shouldDraw(p, false), String.valueOf(p));
         }
@@ -109,7 +109,7 @@ class FlatPropsTest {
 
     @Test
     void theNamesAreCaseAndPathProof() {
-        assertEquals("construct_axe", FlatProps.nameOf("nusmp:textures/particle/Construct_Axe.png"));
+        assertEquals("construct_axe", FlatProps.nameOf("anime_multiverse:textures/particle/Construct_Axe.png"));
         List<String> none = new ArrayList<>();
         assertTrue(none.isEmpty());
     }

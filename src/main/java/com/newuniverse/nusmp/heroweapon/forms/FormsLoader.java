@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: the forms of the 21 weapons are data ({@code data/nusmp/hero/forms/<itemId>.json}), so the people who design a weapon write JSON, not Java, and a data pack
+ * Why: the forms of the 21 weapons are data ({@code data/anime_multiverse/hero/forms/<itemId>.json}), so the people who design a weapon write JSON, not Java, and a data pack
  * can replace any of it. This listener reads every such file at each data reload, hands the text to {@link FormsSchema} (the same validator the unit test runs),
  * and swaps the result into {@link FormsStore} in one step, so a reader sees the old forms or the new ones, never a mixture. A broken form is logged and skipped,
  * a broken file leaves its weapon with the synthetic base form, a file that matches no weapon is reported; nothing here is ever fatal. Skills are checked against the
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public final class FormsLoader implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
-    public static final String NAMESPACE = "nusmp", ROOT = "hero/forms";
+    public static final String NAMESPACE = "anime_multiverse", ROOT = "hero/forms";
 
     /** The skill questions of the schema, answered from the weapon logics. */
     static final FormsSchema.SkillIndex SKILLS = new FormsSchema.SkillIndex() {
@@ -57,7 +57,7 @@ public final class FormsLoader implements ResourceManagerReloadListener {
                 HeroKind kind = id == null ? null : HeroKind.byItemId(id);
                 if (kind == null) {
                     stray.add(rl.getPath());
-                    LOG.warn("[nusmp] hero forms file {} matches no weapon (the file name must be <itemId>.json); it is ignored", rl);
+                    LOG.warn("[anime_multiverse] hero forms file {} matches no weapon (the file name must be <itemId>.json); it is ignored", rl);
                     continue;
                 }
                 FormsSchema.Parsed p;
@@ -68,13 +68,13 @@ public final class FormsLoader implements ResourceManagerReloadListener {
                 }
                 found.put(kind, p);
                 forms.put(kind, p.forms());
-                if (!p.clean()) LOG.warn("[nusmp] hero forms file {} ({} forms used){}:\n{}", rl, p.forms().size(), p.fileRejected() ? ", REJECTED, the weapon keeps its base form" : "", p.report());
+                if (!p.clean()) LOG.warn("[anime_multiverse] hero forms file {} ({} forms used){}:\n{}", rl, p.forms().size(), p.fileRejected() ? ", REJECTED, the weapon keeps its base form" : "", p.report());
             }
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms could not scan their data folder", e);
+            LOG.warn("[anime_multiverse] hero forms could not scan their data folder", e);
         }
         FormsStore.install(forms, found, stray);
-        LOG.info("[nusmp] hero forms: {} of {} weapons have a forms file", forms.size(), HeroKind.values().length);
+        LOG.info("[anime_multiverse] hero forms: {} of {} weapons have a forms file", forms.size(), HeroKind.values().length);
     }
 
     /** {@code hero/forms/legendary_shield.json} gives {@code legendary_shield}; a file in a sub-folder is not a weapon's. */

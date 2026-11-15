@@ -28,7 +28,7 @@ import mega_decor_r1 as D  # noqa: E402
 from mega_decor_r1 import GROUND, FLOOR, Hall  # noqa: E402
 
 ROOMS = {}
-LOOT_TRIAL = "nusmp:chests/labyrinth_trial"
+LOOT_TRIAL = "anime_multiverse:chests/labyrinth_trial"
 
 
 def room(name):
@@ -2022,7 +2022,7 @@ def print_table():
     brief_order = ["cell_block", "torture_chamber", "crypt", "ossuary", "library", "alchemy_lab", "armory_forge", "kitchen_larder", "barracks", "shrine", "great_hall",
                    "closet"]
     for name in sorted(ROOMS, key=lambda n: (brief_order.index(n.rsplit("_", 1)[0] if n[-2:] in ("_a", "_b", "_c") else n), n)):
-        t = load(os.path.join(L.RES, "data", "nusmp", "structure", "mega", name_path(name) + ".nbt"), "mega/" + name_path(name))
+        t = load(os.path.join(L.RES, "data", "anime_multiverse", "structure", "mega", name_path(name) + ".nbt"), "mega/" + name_path(name))
         sx, sy, sz = t.size
         doors = []
         for (x, y, z), o, _d in t.jigsaws():

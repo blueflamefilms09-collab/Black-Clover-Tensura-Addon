@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: WeaponRenderer runs the normaliser ({@link WeaponNormaliser}) on every mesh it loads, and since 1.110.0 it loads the thickened copy of a dagger or katana mesh
- * (assets/nusmp/weapon_meshes_sz, tools/relics/weapon_sizes.py) instead of the old file. The copy must be held and sized so that the normaliser has nothing to do on it
+ * (assets/anime_multiverse/weapon_meshes_sz, tools/relics/weapon_sizes.py) instead of the old file. The copy must be held and sized so that the normaliser has nothing to do on it
  * (no turn, no mirror, no scale-up), exactly like the old shipped meshes (WeaponMeshesTest).
  */
 class SizedMeshNormaliserTest {

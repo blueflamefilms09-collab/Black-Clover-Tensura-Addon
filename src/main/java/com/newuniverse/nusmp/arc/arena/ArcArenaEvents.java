@@ -48,7 +48,7 @@ public final class ArcArenaEvents {
             if (ArcArena.editing() || !(e.getLevel() instanceof Level l) || l.isClientSide() || !ArcArena.in(l)) return;
             e.setCanceled(true);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] arena place guard failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] arena place guard failed: {}", ex.toString());
         }
     }
 
@@ -59,7 +59,7 @@ public final class ArcArenaEvents {
             boolean natural = t == MobSpawnType.NATURAL || t == MobSpawnType.CHUNK_GENERATION || t == MobSpawnType.PATROL || t == MobSpawnType.REINFORCEMENT;
             if (natural) e.setSpawnCancelled(true);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] arena spawn guard failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] arena spawn guard failed: {}", ex.toString());
         }
     }
 
@@ -76,13 +76,13 @@ public final class ArcArenaEvents {
             e.setCanceled(true);
             e.setCancellationResult(InteractionResult.SUCCESS);
             if (ArcArenaDirector.fightRunningAt(sp.getServer(), sp)) {
-                sp.displayClientMessage(Component.translatableWithFallback("message.nusmp.arc.arena.sigil_dormant",
+                sp.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.arc.arena.sigil_dormant",
                         "The sigil is dormant while the boss fights. Hold the Chronicle Sigil for ten seconds to leave.").withStyle(ChatFormatting.GOLD), true);
                 return;
             }
             ArcArenaTravel.leave(sp);
         } catch (RuntimeException ex) {
-            LOG.error("[nusmp] arena click guard failed: {}", ex.toString());
+            LOG.error("[anime_multiverse] arena click guard failed: {}", ex.toString());
         }
     }
 }

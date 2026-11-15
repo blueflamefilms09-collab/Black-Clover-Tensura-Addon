@@ -11,8 +11,8 @@ import java.util.function.Consumer;
  * The pure rules of the discovery system (no Minecraft types, so it is unit-tested): what a key looks like, which things are tracked, when
  * an entry is shown and how an undiscovered one is labelled, how the slot scan finds what is new and how a sync is cut into packets.
  * <p>
- * A key is a short string with a kind prefix: {@code item:nusmp:heart_of_words}, {@code page:fire_book:attribute_bolt},
- * {@code skill:nusmp:grimoire_fire}, {@code magic:flame}, {@code mob:nusmp:zagred}, {@code spiritlord:salamander}, {@code boss:dante}.
+ * A key is a short string with a kind prefix: {@code item:anime_multiverse:heart_of_words}, {@code page:fire_book:attribute_bolt},
+ * {@code skill:anime_multiverse:grimoire_fire}, {@code magic:flame}, {@code mob:anime_multiverse:zagred}, {@code spiritlord:salamander}, {@code boss:dante}.
  * The one question every UI asks is {@link #visible}: is this key known to the player (or does the player see everything)?
  */
 public final class DiscoveryRules {
@@ -33,7 +33,7 @@ public final class DiscoveryRules {
     private static final String[] PREFIXES = {ITEM, PAGE, SKILL, MAGIC, MOB, SPIRIT_LORD, BOSS};
 
     /** Only things of these namespaces are tracked and hidden (the mod's own); everything else is always shown. */
-    private static final Set<String> TRACKED = Set.of("nusmp");
+    private static final Set<String> TRACKED = Set.of("anime_multiverse");
 
     public static boolean tracksNamespace(String namespace) { return namespace != null && TRACKED.contains(namespace); }
 

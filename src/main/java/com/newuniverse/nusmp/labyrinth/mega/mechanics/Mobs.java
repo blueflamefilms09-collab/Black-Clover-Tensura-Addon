@@ -38,7 +38,7 @@ final class Mobs {
 
     private static final Logger LOG = LogUtils.getLogger();
     static final String TAG = "nusmp_mech";
-    static final ResourceLocation HP_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mech_hp"), DMG_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mech_dmg");
+    static final ResourceLocation HP_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mech_hp"), DMG_ID = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mech_dmg");
     private static final Set<String> WARNED = new HashSet<>();
     private static final int[][] RING = {{0, 0}, {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}, {2, 0}, {-2, 0}, {0, 2}, {0, -2}};
 
@@ -147,7 +147,7 @@ final class Mobs {
             }
             return mob;
         } catch (RuntimeException | LinkageError ex) {
-            if (WARNED.add(e.id() + ex.getClass().getName())) LOG.warn("[nusmp] mechanics could not spawn {}: {}", e.id(), ex.toString());
+            if (WARNED.add(e.id() + ex.getClass().getName())) LOG.warn("[anime_multiverse] mechanics could not spawn {}: {}", e.id(), ex.toString());
             if (mob != null) mob.discard();
             return null;
         }

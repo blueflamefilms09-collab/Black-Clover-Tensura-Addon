@@ -141,6 +141,6 @@ public final class NoiseEvents {
     private static void warn(Throwable t) {
         if (warned) return;
         warned = true;
-        LOG.warn("[nusmp] The Dungeon Master could not read a noise event (further failures are not logged)", t);
+        LOG.warn("[anime_multiverse] The Dungeon Master could not read a noise event (further failures are not logged)", t);
     }
 }

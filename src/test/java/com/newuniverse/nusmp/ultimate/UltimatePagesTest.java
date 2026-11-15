@@ -62,8 +62,8 @@ class UltimatePagesTest {
 
     @Test
     void theModConstructorBootsItExactlyOnce() throws IOException {
-        String nusmp = read(SRC.resolve("NUSMP.java"));
-        assertEquals(1, count(nusmp, "UltimateBoot.init(modEventBus, modContainer)"));
+        String anime_multiverse = read(SRC.resolve("NUSMP.java"));
+        assertEquals(1, count(anime_multiverse, "UltimateBoot.init(modEventBus, modContainer)"));
     }
 
     @Test
@@ -100,7 +100,7 @@ class UltimatePagesTest {
         try (DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "pages15_batch*_new_pages.json")) {
             for (Path f : ds) for (String id : all) assertFalse(read(f).contains("\"" + id + "\""), f.getFileName() + " lists " + id);
         }
-        String policy = read(ROOT.resolve("src/main/resources/data/nusmp/armour_policy.json"));
+        String policy = read(ROOT.resolve("src/main/resources/data/anime_multiverse/armour_policy.json"));
         for (String id : all) assertFalse(policy.contains(id), "the armour policy names " + id + ": an Ultimate never equips an armour");
     }
 
@@ -115,10 +115,10 @@ class UltimatePagesTest {
             String t = o.get(d.langKey()).getAsString();
             assertTrue(t.length() >= 120 && t.contains("original") && t.contains("cooldown") && t.contains("ALL"), d.langKey() + ": " + t);
         }
-        for (UltimateRules.Cancel c : UltimateRules.Cancel.values()) assertTrue(o.has("nusmp.ultimate.cancel." + c.name().toLowerCase(java.util.Locale.ROOT)), "no message for the cancel " + c);
-        assertTrue(o.has("nusmp.ultimate.gathering") && o.has("nusmp.ultimate.warning"));
+        for (UltimateRules.Cancel c : UltimateRules.Cancel.values()) assertTrue(o.has("anime_multiverse.ultimate.cancel." + c.name().toLowerCase(java.util.Locale.ROOT)), "no message for the cancel " + c);
+        assertTrue(o.has("anime_multiverse.ultimate.gathering") && o.has("anime_multiverse.ultimate.warning"));
         assertTrue(Files.isRegularFile(ROOT.resolve("tools/lang/merge_ultimate.py")));
-        for (var e : o.entrySet()) assertTrue(e.getKey().startsWith("nusmp.page.") || e.getKey().startsWith("nusmp.ultimate."), e.getKey());
+        for (var e : o.entrySet()) assertTrue(e.getKey().startsWith("anime_multiverse.page.") || e.getKey().startsWith("anime_multiverse.ultimate."), e.getKey());
     }
 
     @Test

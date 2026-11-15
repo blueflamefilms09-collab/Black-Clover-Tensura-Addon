@@ -24,7 +24,7 @@ if HERE not in sys.path:
 import palette as PAL  # noqa: E402
 
 CLIPS = "idle,walk,run,attack,cast,cast_big,hurt,death"           # the clips a mob plays (the kit's `transform` is left out)
-ASSETS = os.path.join(TOOLS, "..", "src", "main", "resources", "assets", "nusmp")
+ASSETS = os.path.join(TOOLS, "..", "src", "main", "resources", "assets", "anime_multiverse")
 KEY = "foundry"
 MAGIC_PROPS = ("staff", "wand", "orb", "grimoire")
 METAL_ACC = ("crown", "tiara", "circlet", "earrings", "ear_cuffs", "monocle", "chain", "pocket_watch", "glasses", "goggles")

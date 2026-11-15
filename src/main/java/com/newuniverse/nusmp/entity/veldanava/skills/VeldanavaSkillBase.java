@@ -79,7 +79,7 @@ public abstract class VeldanavaSkillBase extends Skill {
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
         JudgmentRules.Mode m = spec.mode(slot(mode));
-        Component name = Component.translatable("nusmp.skill.mode." + spec.id() + "." + m.id());
+        Component name = Component.translatable("anime_multiverse.skill.mode." + spec.id() + "." + m.id());
         if (m.toggle()) return name.copy().append(Component.literal(JudgmentRules.on(JudgmentState.toggles(i), m.index()) ? " [ON]" : " [OFF]"));
         int cd = i.getCoolDown(cdSlot(m));
         return cd > 0 ? name.copy().append(Component.literal(" (" + cd + "s)")) : name;
@@ -107,7 +107,7 @@ public abstract class VeldanavaSkillBase extends Skill {
         super.onSkillMastered(i, e);
         if (e instanceof ServerPlayer p) {
             syncMask(i, p);
-            p.sendSystemMessage(Component.translatable("nusmp.skill." + spec.id() + ".mastered").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+            p.sendSystemMessage(Component.translatable("anime_multiverse.skill." + spec.id() + ".mastered").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         }
     }
 
@@ -170,7 +170,7 @@ public abstract class VeldanavaSkillBase extends Skill {
         syncMask(i, p);
         boolean on = JudgmentRules.on(t, m.index());
         toggled(i, p, m, on);
-        p.displayClientMessage(Component.translatable("nusmp.skill.mode." + spec.id() + "." + m.id()).append(Component.literal(on ? " on" : " off"))
+        p.displayClientMessage(Component.translatable("anime_multiverse.skill.mode." + spec.id() + "." + m.id()).append(Component.literal(on ? " on" : " off"))
                 .withStyle(on ? ChatFormatting.GOLD : ChatFormatting.GRAY), true);
     }
 

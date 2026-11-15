@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * are real bones of their model.
  */
 class MagicRebuildAssetsTest {
-    private static final File SRC = new File("src/main/java/com/newuniverse/nusmp"), ASSETS = new File("src/main/resources/assets/nusmp");
+    private static final File SRC = new File("src/main/java/com/newuniverse/nusmp"), ASSETS = new File("src/main/resources/assets/anime_multiverse");
     private static final String[] KEYS = {"song", "sound", "soul", "soulcorpse", "memory"};
 
     private static List<File> rebuildSources() {

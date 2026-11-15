@@ -95,7 +95,7 @@ public final class PocketCollapse {
             landings(level, in, now);
             clearing(level);
         } catch (RuntimeException ex) {
-            LOG.warn("[nusmp] The collapse of {} failed a tick (it goes on): {}", rt.pocketId, ex.toString());
+            LOG.warn("[anime_multiverse] The collapse of {} failed a tick (it goes on): {}", rt.pocketId, ex.toString());
         } finally {
             com.newuniverse.nusmp.dungeon.DungeonGuard.end();
         }
@@ -103,9 +103,9 @@ public final class PocketCollapse {
 
     private void start(ServerLevel level, List<ServerPlayer> in) {
         for (ServerPlayer pl : in) {
-            pl.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.start", "The primary relic is gone. The tomb is coming down: run for the entry hall!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
-            com.newuniverse.nusmp.labyrinth.mega.rift.RiftService.title(pl, Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.title", "The tomb is collapsing"),
-                    Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.sub", "%s seconds. The deepest rooms fall first.", total / 20));
+            pl.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.start", "The primary relic is gone. The tomb is coming down: run for the entry hall!").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
+            com.newuniverse.nusmp.labyrinth.mega.rift.RiftService.title(pl, Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.title", "The tomb is collapsing"),
+                    Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.sub", "%s seconds. The deepest rooms fall first.", total / 20));
         }
         level.playSound(null, rt.arrival == null ? BlockPos.containing(PocketCell.centreX(rt.slot), PocketPlan.Y0, PocketCell.centreZ()) : rt.arrival, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.AMBIENT, 2.0f, 0.5f);
     }
@@ -127,7 +127,7 @@ public final class PocketCollapse {
             warned |= 1L << id;
             for (ServerPlayer pl : in)
                 if (box.contains(pl.position()))
-                    pl.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.room", "This room is about to fall: get out!").withStyle(ChatFormatting.RED), true);
+                    pl.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.room", "This room is about to fall: get out!").withStyle(ChatFormatting.RED), true);
             level.playSound(null, BlockPos.containing(box.getCenter()), SoundEvents.AMBIENT_CAVE.value(), SoundSource.AMBIENT, 3.0f, 0.5f);
         }
         if (el % 4 == 0) {
@@ -169,7 +169,7 @@ public final class PocketCollapse {
         PocketRealm.move(pl, level, rt.arrival.getX() + 0.5, rt.arrival.getY(), rt.arrival.getZ() + 0.5, pl.getYRot(), 0f);
         pl.resetFallDistance();
         if (hurt > 0f && !pl.isCreative() && !pl.isSpectator()) pl.hurt(level.damageSources().magic(), hurt);
-        pl.displayClientMessage(Component.translatableWithFallback("message.nusmp.mega.pocket.collapse.rescued", "The floor gives way. The mana of the tomb carries you to the entry hall.").withStyle(ChatFormatting.GOLD), true);
+        pl.displayClientMessage(Component.translatableWithFallback("message.anime_multiverse.mega.pocket.collapse.rescued", "The floor gives way. The mana of the tomb carries you to the entry hall.").withStyle(ChatFormatting.GOLD), true);
         rt.rescued.put(pl.getUUID(), level.getGameTime());
     }
 

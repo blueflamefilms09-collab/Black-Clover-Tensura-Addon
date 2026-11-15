@@ -4,9 +4,9 @@
     python3 -B tools/relics/wave10_icons.py [id ...]       (idempotent)
 
 Writes, per id,
-  assets/nusmp/textures/item/<id>.png        the sprite: the old-style inventory icon (kept as the icon; the item itself is 3D in hand)
-  assets/nusmp/models/item/<id>_icon.json    the flat inventory model of that sprite
-  assets/nusmp/models/item/<id>.json         the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
+  assets/anime_multiverse/textures/item/<id>.png        the sprite: the old-style inventory icon (kept as the icon; the item itself is 3D in hand)
+  assets/anime_multiverse/models/item/<id>_icon.json    the flat inventory model of that sprite
+  assets/anime_multiverse/models/item/<id>.json         the in-hand model: builtin/entity, drawn by client/WeaponRenderer from weapon_meshes/<id>.txt
                                              (the display transforms of the Bloodbound Katana, like the other diagonal weapons)
 Every icon is drawn from bands along a diagonal (a width profile and a colour function per weapon), then given a one pixel dark outline;
 the grade shows as one coloured pixel at the pommel and the glow as bright pixels at runes, gems and edges.

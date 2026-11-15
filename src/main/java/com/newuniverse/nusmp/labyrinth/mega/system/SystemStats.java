@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * Why: the "permanent stat boost" of the brief has to be REAL attribute strength, it has to stay right whatever happens to the player, and since 1.58.0 it has to
  * work ONLY inside the dungeon dimensions (the Mega-Dungeon and the Hub; config {@code system.buffOnlyInDungeon}, default on). The same fixed modifier id per
- * stat ({@code nusmp:system/str} ...) means applying is idempotent (a second call finds the modifier already correct and changes nothing, and a changed table
+ * stat ({@code anime_multiverse:system/str} ...) means applying is idempotent (a second call finds the modifier already correct and changes nothing, and a changed table
  * value replaces the old one instead of stacking), it can be removed by id alone, and no other system can mistake it for its own. The amounts come from the
  * table (a point's worth and its ceiling are data), and every attribute id is resolved at run time and SKIPPED when it is not registered or the player does not
  * have it, so the Tensura magicule effect simply does nothing in a game without Tensura instead of crashing.
@@ -39,7 +39,7 @@ public final class SystemStats {
 
     /** The fixed id of a stat's modifier on every attribute it feeds. */
     public static ResourceLocation modifierId(Stat stat) {
-        return ResourceLocation.fromNamespaceAndPath("nusmp", "system/" + stat.id());
+        return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "system/" + stat.id());
     }
 
     // ================================================================ the gate

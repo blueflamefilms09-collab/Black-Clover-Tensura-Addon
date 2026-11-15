@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Why: the Engravement Codex says, in plain words, the cooldowns, windows, durations, stack limits and caps of every franchise engraving. They are never typed here: every number is read
- * from the engraving's own effects ({@code data/nusmp/franchise/engravings.json}) or from the constants of {@link FranchiseRules} (the caps the game really applies), so when a number is
+ * from the engraving's own effects ({@code data/anime_multiverse/franchise/engravings.json}) or from the constants of {@link FranchiseRules} (the caps the game really applies), so when a number is
  * retuned the Codex follows by itself. Pure (no Minecraft types), unit tested.
  */
 public final class CodexFacts {

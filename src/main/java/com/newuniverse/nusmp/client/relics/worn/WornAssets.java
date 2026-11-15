@@ -23,8 +23,8 @@ import java.util.Set;
 public final class WornAssets {
     private WornAssets() {}
 
-    public static final String BASE = "/assets/nusmp/relic_worn/";
-    public static final String ATLAS = "/assets/nusmp/textures/relic_worn/atlas.png", SHIMMER = "/assets/nusmp/textures/relic_worn/shimmer.png";
+    public static final String BASE = "/assets/anime_multiverse/relic_worn/";
+    public static final String ATLAS = "/assets/anime_multiverse/textures/relic_worn/atlas.png", SHIMMER = "/assets/anime_multiverse/textures/relic_worn/shimmer.png";
 
     /** The relics that have a worn renderer of their own ({@code WornRenderers.init}); a test pins this list to that method. */
     public static final Set<String> CUSTOM_RENDERERS = Set.of("dante_gravity_crown", "zenon_spatial_ring", "artifact_mimic");

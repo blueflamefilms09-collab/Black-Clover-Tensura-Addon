@@ -3,11 +3,11 @@
     python3 -B tools/visual_upgrade/duel_disk/build.py
 
 Writes (all additive; nothing existing is edited):
-    assets/nusmp/visual_upgrade/models/duel_disk_<id>_worn[_lod].txt, duel_disk_<id>_hand[_lod].txt     the disk (worn on the left forearm, held)
-    assets/nusmp/visual_upgrade/models/deck_of_many_things_cards_{worn,hand}.txt                        the floating cards of the Deck of Many Things, copied QUAD FOR QUAD
+    assets/anime_multiverse/visual_upgrade/models/duel_disk_<id>_worn[_lod].txt, duel_disk_<id>_hand[_lod].txt     the disk (worn on the left forearm, held)
+    assets/anime_multiverse/visual_upgrade/models/deck_of_many_things_cards_{worn,hand}.txt                        the floating cards of the Deck of Many Things, copied QUAD FOR QUAD
                                                                                                           from the existing models (only moved beside the disk in the worn one)
-    assets/nusmp/textures/visual_upgrade/duel_disk_<id>[_lod][_glow|_star].png
-    assets/nusmp/visual_upgrade/overrides_duel_disk.txt, fx/pact_of_the_deck.json
+    assets/anime_multiverse/textures/visual_upgrade/duel_disk_<id>[_lod][_glow|_star].png
+    assets/anime_multiverse/visual_upgrade/overrides_duel_disk.txt, fx/pact_of_the_deck.json
     tools/lang/duel_disk.json
 """
 import json
@@ -154,7 +154,7 @@ def write_data():
              "worn pact_of_the_deck vu/duel_disk_pact_of_the_deck_worn@larm"]
     with open(os.path.join(vu, "overrides_duel_disk.txt"), "w", newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
-    fx = {"id": "pact_of_the_deck", "grade": "SPECIAL", "ambient_sound": "nusmp:relic.ambient.pact_of_the_deck", "draw_ticks": 10, "layers": [
+    fx = {"id": "pact_of_the_deck", "grade": "SPECIAL", "ambient_sound": "anime_multiverse:relic.ambient.pact_of_the_deck", "draw_ticks": 10, "layers": [
         SP.geo_layer("card fan", "ribbons", "card_fan"), SP.geo_layer("pact cards", "orbit_shards", "pact_cards"), SP.geo_layer("life points", "pulse_glow", "life_points"),
         SP.geo_layer("deck top card", "ribbons", "deck_top_card"),
         SP.part_layer("pact dust", "motes", "dust", 0xFFF3C0, count=1, every=6, radius=0.4, rise=-0.01),

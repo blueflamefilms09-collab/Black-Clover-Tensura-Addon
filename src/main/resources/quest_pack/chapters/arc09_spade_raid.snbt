@@ -38,14 +38,14 @@
 			x: 1.5d
 			y: 1.5d
 			icon: {
-				id: "nusmp:charter_grimoire_dante"
+				id: "anime_multiverse:charter_grimoire_dante"
 			}
 			dependencies: ["6AE9DB00B892D9EF"]
 			tasks: [
 				{
 					id: "7556114A69C4F175"
 					type: "advancement"
-					advancement: "nusmp:squads/charter"
+					advancement: "anime_multiverse:squads/charter"
 					criterion: ""
 				}
 			]
@@ -72,7 +72,7 @@
 				{
 					id: "1498FB4EB389DF35"
 					type: "advancement"
-					advancement: "nusmp:world/kingdom_spade"
+					advancement: "anime_multiverse:world/kingdom_spade"
 					criterion: ""
 				}
 			]
@@ -97,13 +97,13 @@
 				{
 					id: "4D5D59FE01A25E6B"
 					type: "advancement"
-					advancement: "nusmp:bosses/first"
+					advancement: "anime_multiverse:bosses/first"
 					criterion: ""
 				}
 				{
 					id: "532B5C9CED55B80A"
 					type: "advancement"
-					advancement: "nusmp:arcs/spade_raid"
+					advancement: "anime_multiverse:arcs/spade_raid"
 					criterion: ""
 				}
 			]
@@ -123,14 +123,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:dante_gravity_crown"
+				id: "anime_multiverse:dante_gravity_crown"
 			}
 			dependencies: ["3274C29004F53291"]
 			tasks: [
 				{
 					id: "5FF0897F29E3085E"
 					type: "advancement"
-					advancement: "nusmp:bosses/dante_zogratis"
+					advancement: "anime_multiverse:bosses/dante_zogratis"
 					criterion: ""
 				}
 			]
@@ -162,7 +162,7 @@
 				{
 					id: "4553C7335ED410F7"
 					type: "advancement"
-					advancement: "nusmp:bosses/vanica_zogratis"
+					advancement: "anime_multiverse:bosses/vanica_zogratis"
 					criterion: ""
 				}
 			]
@@ -187,14 +187,14 @@
 			shape: "octagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:zenon_spatial_ring"
+				id: "anime_multiverse:zenon_spatial_ring"
 			}
 			dependencies: ["3274C29004F53291"]
 			tasks: [
 				{
 					id: "12558ABCB5F32088"
 					type: "advancement"
-					advancement: "nusmp:bosses/zenon_zogratis"
+					advancement: "anime_multiverse:bosses/zenon_zogratis"
 					criterion: ""
 				}
 			]
@@ -219,14 +219,14 @@
 			shape: "hexagon"
 			size: 1.5d
 			icon: {
-				id: "nusmp:charter_grimoire_zenon"
+				id: "anime_multiverse:charter_grimoire_zenon"
 			}
 			dependencies: ["3E9465637CC9F145", "3BDEAFB942E8AD2D", "3F7553B6A7856875"]
 			tasks: [
 				{
 					id: "02A8BB9045CD2BDA"
 					type: "advancement"
-					advancement: "nusmp:bosses/triad"
+					advancement: "anime_multiverse:bosses/triad"
 					criterion: ""
 				}
 			]

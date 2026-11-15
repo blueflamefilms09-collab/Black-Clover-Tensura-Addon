@@ -25,11 +25,11 @@ class BindGestureTest {
 
     /** A tiny relic catalog: a Legend weapon vessel, a God weapon vessel, a Legend relic that is not a vessel, a Rare relic, a plain item. */
     private static final Catalog CATALOG = id -> switch (id) {
-        case "nusmp:vorpal_sword", "nusmp:noon_cleaver" -> new Entry(true, true, true);
-        case "nusmp:staff_of_the_magi" -> new Entry(true, true, true);
-        case "nusmp:ring_free" -> new Entry(true, true, false);                 // a vessel that needs no attunement
-        case "nusmp:legend_toy" -> new Entry(false, true, true);                  // Legend, not flagged as a vessel
-        case "nusmp:rare_blade" -> new Entry(true, false, true);                  // flagged, below Legend
+        case "anime_multiverse:vorpal_sword", "anime_multiverse:noon_cleaver" -> new Entry(true, true, true);
+        case "anime_multiverse:staff_of_the_magi" -> new Entry(true, true, true);
+        case "anime_multiverse:ring_free" -> new Entry(true, true, false);                 // a vessel that needs no attunement
+        case "anime_multiverse:legend_toy" -> new Entry(false, true, true);                  // Legend, not flagged as a vessel
+        case "anime_multiverse:rare_blade" -> new Entry(true, false, true);                  // flagged, below Legend
         default -> null;
     };
 
@@ -60,11 +60,11 @@ class BindGestureTest {
 
     @Test
     void theLegacyReadRefusedEveryTwoHandedVesselAndTheRawReadAcceptsIt() {
-        for (String vessel : new String[]{"nusmp:noon_cleaver", "nusmp:staff_of_the_magi"}) {
+        for (String vessel : new String[]{"anime_multiverse:noon_cleaver", "anime_multiverse:staff_of_the_magi"}) {
             Stack real = Stack.of(vessel, comps(BindGesture.COMPONENT_ATTUNED, ME));
-            Stack seen = BcHands.legacyOther(true, Stack.of("nusmp:djinn_seal_baal", null), real, Stack.of("minecraft:air", null), false, true);
+            Stack seen = BcHands.legacyOther(true, Stack.of("anime_multiverse:djinn_seal_baal", null), real, Stack.of("minecraft:air", null), false, true);
             assertEquals(Why.EMPTY, BindGesture.judge(BindGesture.look(seen, CATALOG, ME)), "the old ritual: " + vessel + " not found -> a vague refusal");
-            Stack raw = BcHands.rawOther(true, Stack.of("nusmp:djinn_seal_baal", null), real);
+            Stack raw = BcHands.rawOther(true, Stack.of("anime_multiverse:djinn_seal_baal", null), real);
             assertEquals(Why.OK, BindGesture.judge(BindGesture.look(raw, CATALOG, ME)), "the new ritual finds " + vessel);
         }
     }
@@ -73,7 +73,7 @@ class BindGestureTest {
     @Test
     void extraComponentsOnTheVesselAreIgnored() {
         Map<String, String> plain = comps(BindGesture.COMPONENT_ATTUNED, ME);
-        Look base = look("nusmp:vorpal_sword", plain);
+        Look base = look("anime_multiverse:vorpal_sword", plain);
         assertEquals(Why.OK, BindGesture.judge(base));
         Map<String, String> noisy = new HashMap<>(plain);
         noisy.put("bettercombat:preset_id", "bettercombat:claymore");
@@ -81,20 +81,20 @@ class BindGestureTest {
         noisy.put("minecraft:enchantments", "{'tensura:severance':2}");
         noisy.put("minecraft:custom_name", "Warden's Edge");
         noisy.put("othermod:tier", "17");
-        noisy.put("nusmp:relic_tier", "3");
+        noisy.put("anime_multiverse:relic_tier", "3");
         noisy.put("minecraft:damage", "37");
-        assertEquals(base, look("nusmp:vorpal_sword", noisy), "the judgement reads the item and two components only");
+        assertEquals(base, look("anime_multiverse:vorpal_sword", noisy), "the judgement reads the item and two components only");
         for (int i = 0; i < 200; i++) noisy.put("junk:c" + i, "v" + i);
-        assertEquals(Why.OK, BindGesture.judge(look("nusmp:vorpal_sword", noisy)));
+        assertEquals(Why.OK, BindGesture.judge(look("anime_multiverse:vorpal_sword", noisy)));
     }
 
     @Test
     void theRitualsOwnComponentsStillDecide() {
-        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("nusmp:vorpal_sword", comps())));
-        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("nusmp:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, OTHER))), "attuned to someone else");
-        assertEquals(Why.OK, BindGesture.judge(look("nusmp:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME, "bettercombat:preset_id", "x"))));
-        assertEquals(Why.ALREADY_BOUND, BindGesture.judge(look("nusmp:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME, BindGesture.COMPONENT_BOUND, "baal"))));
-        assertEquals(Why.OK, BindGesture.judge(look("nusmp:ring_free", comps())), "a vessel that needs no attunement");
+        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("anime_multiverse:vorpal_sword", comps())));
+        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("anime_multiverse:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, OTHER))), "attuned to someone else");
+        assertEquals(Why.OK, BindGesture.judge(look("anime_multiverse:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME, "bettercombat:preset_id", "x"))));
+        assertEquals(Why.ALREADY_BOUND, BindGesture.judge(look("anime_multiverse:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME, BindGesture.COMPONENT_BOUND, "baal"))));
+        assertEquals(Why.OK, BindGesture.judge(look("anime_multiverse:ring_free", comps())), "a vessel that needs no attunement");
     }
 
     // ---------------------------------------------------------------- the reasons
@@ -104,17 +104,17 @@ class BindGestureTest {
         assertEquals(Why.EMPTY, BindGesture.judge(null));
         assertEquals(Why.EMPTY, BindGesture.judge(look("minecraft:air", comps())));
         assertEquals(Why.NOT_A_RELIC, BindGesture.judge(look("minecraft:iron_sword", comps())));
-        assertEquals(Why.NOT_A_VESSEL, BindGesture.judge(look("nusmp:legend_toy", comps(BindGesture.COMPONENT_ATTUNED, ME))));
-        assertEquals(Why.NOT_LEGEND, BindGesture.judge(look("nusmp:rare_blade", comps(BindGesture.COMPONENT_ATTUNED, ME))));
-        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("nusmp:noon_cleaver", comps())));
-        assertEquals(Why.ALREADY_BOUND, BindGesture.judge(look("nusmp:noon_cleaver", comps(BindGesture.COMPONENT_BOUND, "amon", BindGesture.COMPONENT_ATTUNED, ME))));
+        assertEquals(Why.NOT_A_VESSEL, BindGesture.judge(look("anime_multiverse:legend_toy", comps(BindGesture.COMPONENT_ATTUNED, ME))));
+        assertEquals(Why.NOT_LEGEND, BindGesture.judge(look("anime_multiverse:rare_blade", comps(BindGesture.COMPONENT_ATTUNED, ME))));
+        assertEquals(Why.NOT_ATTUNED, BindGesture.judge(look("anime_multiverse:noon_cleaver", comps())));
+        assertEquals(Why.ALREADY_BOUND, BindGesture.judge(look("anime_multiverse:noon_cleaver", comps(BindGesture.COMPONENT_BOUND, "amon", BindGesture.COMPONENT_ATTUNED, ME))));
     }
 
     @Test
     void everyReasonHasAKeyAndATextAndTheTextsAreDistinct() {
         java.util.Set<String> texts = new java.util.HashSet<>();
         for (Why w : Why.values()) {
-            assertEquals("message.nusmp.djinn_bind." + w.name().toLowerCase(java.util.Locale.ROOT), w.key());
+            assertEquals("message.anime_multiverse.djinn_bind." + w.name().toLowerCase(java.util.Locale.ROOT), w.key());
             assertFalse(w.fallback().isBlank(), w.name());
             assertTrue(texts.add(w.fallback()), "two reasons share a text: " + w);
             if (w != Why.OK && w != Why.GESTURE_DISABLED && w != Why.NO_SEAL && w != Why.EMPTY)
@@ -127,19 +127,19 @@ class BindGestureTest {
     // ---------------------------------------------------------------- the gestures
     @Test
     void everyGestureAcceptsALegalVesselWithExtraComponents() {
-        Look ok = look("nusmp:noon_cleaver", comps(BindGesture.COMPONENT_ATTUNED, ME, "bettercombat:preset_id", "bettercombat:double_axe"));
+        Look ok = look("anime_multiverse:noon_cleaver", comps(BindGesture.COMPONENT_ATTUNED, ME, "bettercombat:preset_id", "bettercombat:double_axe"));
         for (Gesture g : Gesture.values()) assertEquals(Why.OK, BindGesture.decide(g, true, ok, true, true), g.name());
     }
 
     @Test
     void noSealNoRitualWhateverTheGesture() {
-        Look ok = look("nusmp:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME));
+        Look ok = look("anime_multiverse:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME));
         for (Gesture g : Gesture.values()) assertEquals(Why.NO_SEAL, BindGesture.decide(g, false, ok, true, true), g.name());
     }
 
     @Test
     void theSwitchesTurnOffOnlyTheFallbackGestures() {
-        Look ok = look("nusmp:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME));
+        Look ok = look("anime_multiverse:vorpal_sword", comps(BindGesture.COMPONENT_ATTUNED, ME));
         assertEquals(Why.OK, BindGesture.decide(Gesture.USE_SEAL_MAIN, true, ok, false, false), "right-clicking the Seal never depends on a switch");
         assertEquals(Why.OK, BindGesture.decide(Gesture.USE_SEAL_OFF, true, ok, false, false));
         assertEquals(Why.GESTURE_DISABLED, BindGesture.decide(Gesture.COMMAND, true, ok, false, true));
@@ -153,7 +153,7 @@ class BindGestureTest {
 
     @Test
     void aRefusedGestureNamesTheProblemNotAGenericNoVessel() {
-        assertEquals(Why.NOT_LEGEND, BindGesture.decide(Gesture.GUI_STACK, true, look("nusmp:rare_blade", comps()), true, true));
+        assertEquals(Why.NOT_LEGEND, BindGesture.decide(Gesture.GUI_STACK, true, look("anime_multiverse:rare_blade", comps()), true, true));
         assertEquals(Why.NOT_A_RELIC, BindGesture.decide(Gesture.COMMAND, true, look("minecraft:diamond_sword", comps()), true, true));
         assertEquals(Why.EMPTY, BindGesture.decide(Gesture.USE_SEAL_MAIN, true, Look.NONE, true, true));
     }

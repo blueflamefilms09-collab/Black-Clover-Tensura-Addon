@@ -2,11 +2,11 @@
 
     python3 -B tools/loot/gen_data.py
 
-  src/main/resources/data/nusmp/loot/roster.json              what the game reads (items, drop tables, values, recipes' source of truth)
-  src/main/resources/data/nusmp/recipe/loot_*.json            the crafting recipes
-  src/main/resources/data/nusmp/tags/item/loot/shadow_cores.json   the shard and the System's Shadow Core
-  src/main/resources/data/nusmp/loot_modifiers/anime_loot.json     the global loot modifier entry
-  src/main/resources/assets/nusmp/models/item/<id>.json       the flat item models of everything that is not a 3D weapon or trinket
+  src/main/resources/data/anime_multiverse/loot/roster.json              what the game reads (items, drop tables, values, recipes' source of truth)
+  src/main/resources/data/anime_multiverse/recipe/loot_*.json            the crafting recipes
+  src/main/resources/data/anime_multiverse/tags/item/loot/shadow_cores.json   the shard and the System's Shadow Core
+  src/main/resources/data/anime_multiverse/loot_modifiers/anime_loot.json     the global loot modifier entry
+  src/main/resources/assets/anime_multiverse/models/item/<id>.json       the flat item models of everything that is not a 3D weapon or trinket
   tools/lang/squad_loot.json                                  the English text (a flat fragment the lead merges into en_us.json)
 """
 import json
@@ -19,8 +19,8 @@ import roster as R  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 RES = os.path.join(ROOT, "src", "main", "resources")
-DATA = os.path.join(RES, "data", "nusmp")
-ASSETS = os.path.join(RES, "assets", "nusmp")
+DATA = os.path.join(RES, "data", "anime_multiverse")
+ASSETS = os.path.join(RES, "assets", "anime_multiverse")
 LANG = os.path.join(ROOT, "tools", "lang", "squad_loot.json")
 
 # the weapons and trinkets are 3D (tools/gen_loot_models.py writes their item models)
@@ -69,7 +69,7 @@ def recipe_json(r):
         return {"tag": s[1:]} if s.startswith("#") else {"item": s}
     if kind == "shaped":
         pattern, key, result, count = r[2], r[3], r[4], r[5]
-        return {"type": "minecraft:crafting_shaped", "category": "equipment" if result.split(":")[1] in THREE_D or any(result == "nusmp:" + a[0] for a in R.ARMOUR) else "misc",
+        return {"type": "minecraft:crafting_shaped", "category": "equipment" if result.split(":")[1] in THREE_D or any(result == "anime_multiverse:" + a[0] for a in R.ARMOUR) else "misc",
                 "key": {k: ing(v) for k, v in key.items()}, "pattern": list(pattern), "result": {"id": result, "count": count}}
     ingredients, result, count = r[2], r[3], r[4]
     return {"type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": [ing(i) for i in ingredients], "result": {"id": result, "count": count}}
@@ -96,69 +96,69 @@ def all_items():
 
 
 LANG_EXTRA = {
-    "itemGroup.nusmp.dungeon_loot": "Dungeon Loot",
-    "effect.nusmp.mana_surge": "Mana Surge",
-    "effect.nusmp.mana_surge.description": "Magicules come back faster.",
+    "itemGroup.anime_multiverse.dungeon_loot": "Dungeon Loot",
+    "effect.anime_multiverse.mana_surge": "Mana Surge",
+    "effect.anime_multiverse.mana_surge.description": "Magicules come back faster.",
     # squads
-    "message.nusmp.squad.formed": "Squad: %1$s",
-    "message.nusmp.squad.broken.leader": "The squad's leader has fallen. %1$s still stand.",
-    "message.nusmp.squad.broken.losses": "The squad is cut to pieces. %1$s still stand.",
-    "message.nusmp.squad.broken.last": "Only one of the squad is left standing.",
+    "message.anime_multiverse.squad.formed": "Squad: %1$s",
+    "message.anime_multiverse.squad.broken.leader": "The squad's leader has fallen. %1$s still stand.",
+    "message.anime_multiverse.squad.broken.losses": "The squad is cut to pieces. %1$s still stand.",
+    "message.anime_multiverse.squad.broken.last": "Only one of the squad is left standing.",
     # gear
-    "tooltip.nusmp.loot.rarity.common": "Common",
-    "tooltip.nusmp.loot.rarity.uncommon": "Uncommon",
-    "tooltip.nusmp.loot.rarity.rare": "Rare",
-    "tooltip.nusmp.loot.rarity.epic": "Epic",
-    "tooltip.nusmp.loot.rarity.legendary": "Legendary",
-    "tooltip.nusmp.loot.header": "%1$s - found on floor %2$s",
-    "tooltip.nusmp.loot.stat.attack_damage": "+%1$s attack damage",
-    "tooltip.nusmp.loot.stat.attack_speed": "+%1$s attack speed",
-    "tooltip.nusmp.loot.stat.armor": "+%1$s armor",
-    "tooltip.nusmp.loot.stat.max_health": "+%1$s max health",
-    "tooltip.nusmp.loot.stat.move_speed": "+%1$s%% movement speed",
-    "tooltip.nusmp.loot.stat.crit_chance": "+%1$s%% critical chance",
-    "tooltip.nusmp.loot.stat.mana": "+%1$s%% maximum magicules",
-    "tooltip.nusmp.loot.stat.mana_regen": "+%1$s%% magicule regeneration",
-    "tooltip.nusmp.loot.tempered": "Shadow-tempered",
-    "tooltip.nusmp.loot.venom": "Venom-coated: %1$s strikes left",
-    "tooltip.nusmp.loot.worn_in": "Worn in the %1$s slot",
-    "tooltip.nusmp.loot.value": "Sells for %1$s",
-    "tooltip.nusmp.loot.restores_mana": "Restores %1$s%% of your magicules",
-    "tooltip.nusmp.loot.restores_aura": "Restores %1$s%% of your aura",
-    "tooltip.nusmp.loot.sell_hint": "Sneak and use on a Hub Merchant to sell",
-    "tooltip.nusmp.loot.damage": "%1$s attack damage (%2$s grade)",
-    "tooltip.nusmp.loot.speed": "%1$s attacks per second",
-    "tooltip.nusmp.loot.armor": "%1$s armor",
-    "tooltip.nusmp.loot.effect": "%1$s (%2$s)",
-    "tooltip.nusmp.loot.use.shadow_core_shard": "Anvil: works one extra stat line into a piece of loot gear",
-    "tooltip.nusmp.loot.use.golem_core": "Anvil: fully repairs a damaged tool, weapon or armour piece",
-    "tooltip.nusmp.loot.use.venom_sac": "Anvil: coats a weapon, its next twenty strikes poison",
-    "tooltip.nusmp.loot.grade.normal": "normal",
-    "tooltip.nusmp.loot.grade.special": "special",
-    "tooltip.nusmp.loot.grade.rare": "rare",
+    "tooltip.anime_multiverse.loot.rarity.common": "Common",
+    "tooltip.anime_multiverse.loot.rarity.uncommon": "Uncommon",
+    "tooltip.anime_multiverse.loot.rarity.rare": "Rare",
+    "tooltip.anime_multiverse.loot.rarity.epic": "Epic",
+    "tooltip.anime_multiverse.loot.rarity.legendary": "Legendary",
+    "tooltip.anime_multiverse.loot.header": "%1$s - found on floor %2$s",
+    "tooltip.anime_multiverse.loot.stat.attack_damage": "+%1$s attack damage",
+    "tooltip.anime_multiverse.loot.stat.attack_speed": "+%1$s attack speed",
+    "tooltip.anime_multiverse.loot.stat.armor": "+%1$s armor",
+    "tooltip.anime_multiverse.loot.stat.max_health": "+%1$s max health",
+    "tooltip.anime_multiverse.loot.stat.move_speed": "+%1$s%% movement speed",
+    "tooltip.anime_multiverse.loot.stat.crit_chance": "+%1$s%% critical chance",
+    "tooltip.anime_multiverse.loot.stat.mana": "+%1$s%% maximum magicules",
+    "tooltip.anime_multiverse.loot.stat.mana_regen": "+%1$s%% magicule regeneration",
+    "tooltip.anime_multiverse.loot.tempered": "Shadow-tempered",
+    "tooltip.anime_multiverse.loot.venom": "Venom-coated: %1$s strikes left",
+    "tooltip.anime_multiverse.loot.worn_in": "Worn in the %1$s slot",
+    "tooltip.anime_multiverse.loot.value": "Sells for %1$s",
+    "tooltip.anime_multiverse.loot.restores_mana": "Restores %1$s%% of your magicules",
+    "tooltip.anime_multiverse.loot.restores_aura": "Restores %1$s%% of your aura",
+    "tooltip.anime_multiverse.loot.sell_hint": "Sneak and use on a Hub Merchant to sell",
+    "tooltip.anime_multiverse.loot.damage": "%1$s attack damage (%2$s grade)",
+    "tooltip.anime_multiverse.loot.speed": "%1$s attacks per second",
+    "tooltip.anime_multiverse.loot.armor": "%1$s armor",
+    "tooltip.anime_multiverse.loot.effect": "%1$s (%2$s)",
+    "tooltip.anime_multiverse.loot.use.shadow_core_shard": "Anvil: works one extra stat line into a piece of loot gear",
+    "tooltip.anime_multiverse.loot.use.golem_core": "Anvil: fully repairs a damaged tool, weapon or armour piece",
+    "tooltip.anime_multiverse.loot.use.venom_sac": "Anvil: coats a weapon, its next twenty strikes poison",
+    "tooltip.anime_multiverse.loot.grade.normal": "normal",
+    "tooltip.anime_multiverse.loot.grade.special": "special",
+    "tooltip.anime_multiverse.loot.grade.rare": "rare",
     # selling
-    "message.nusmp.loot.sold": "Sold %1$s for %2$s.",
-    "message.nusmp.loot.nothing_to_sell": "The Merchant has no use for that.",
-    "message.nusmp.loot.shop_off": "The Merchant is not trading.",
+    "message.anime_multiverse.loot.sold": "Sold %1$s for %2$s.",
+    "message.anime_multiverse.loot.nothing_to_sell": "The Merchant has no use for that.",
+    "message.anime_multiverse.loot.shop_off": "The Merchant is not trading.",
     # anvil
-    "message.nusmp.loot.tempered": "The shard sinks into the metal. Shadow-tempered.",
-    "message.nusmp.loot.repaired": "The core flares and the metal is whole again.",
-    "message.nusmp.loot.coated": "The venom soaks into the edge.",
+    "message.anime_multiverse.loot.tempered": "The shard sinks into the metal. Shadow-tempered.",
+    "message.anime_multiverse.loot.repaired": "The core flares and the metal is whole again.",
+    "message.anime_multiverse.loot.coated": "The venom soaks into the edge.",
 }
 
 
 def lang():
     out = {}
     for iid, name, lore in all_items():
-        out["item.nusmp." + iid] = name
-        out["item.nusmp." + iid + ".lore"] = lore
+        out["item.anime_multiverse." + iid] = name
+        out["item.anime_multiverse." + iid + ".lore"] = lore
     out.update(LANG_EXTRA)
     return out
 
 
 def java_text():
     """LootText.java: the English of every tooltip and message key the code uses, so a missing lang entry still reads properly."""
-    rows = sorted((k, v) for k, v in LANG_EXTRA.items() if k.startswith("tooltip.") or k.startswith("message.nusmp.loot."))
+    rows = sorted((k, v) for k, v in LANG_EXTRA.items() if k.startswith("tooltip.") or k.startswith("message.anime_multiverse.loot."))
     body = ",\n".join('            Map.entry("%s", "%s")' % (k, v.replace("\\", "\\\\").replace('"', '\\"')) for k, v in rows)
     return """package com.newuniverse.nusmp.labyrinth.loot;
 
@@ -188,19 +188,19 @@ final class LootText {
 
 
 def main():
-    java = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "loot", "LootText.java")
+    java = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "loot", "LootText.java")
     with open(java, "w", encoding="utf-8", newline="\n") as f:
         f.write(java_text())
     dump(os.path.join(DATA, "loot", "roster.json"), roster())
     for r in R.RECIPES:
         dump(os.path.join(DATA, "recipe", "loot_" + r[0] + ".json"), recipe_json(r))
-    dump(os.path.join(DATA, "tags", "item", "loot", "shadow_cores.json"), {"values": ["nusmp:shadow_core_shard", {"id": "nusmp:shadow_core", "required": False}]})
-    dump(os.path.join(DATA, "loot_modifiers", "anime_loot.json"), {"type": "nusmp:anime_loot", "conditions": []})
+    dump(os.path.join(DATA, "tags", "item", "loot", "shadow_cores.json"), {"values": ["anime_multiverse:shadow_core_shard", {"id": "anime_multiverse:shadow_core", "required": False}]})
+    dump(os.path.join(DATA, "loot_modifiers", "anime_loot.json"), {"type": "anime_multiverse:anime_loot", "conditions": []})
     n = 0
     for iid, _, _ in all_items():
         if iid in THREE_D:
             continue
-        dump(os.path.join(ASSETS, "models", "item", iid + ".json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/" + iid}})
+        dump(os.path.join(ASSETS, "models", "item", iid + ".json"), {"parent": "minecraft:item/generated", "textures": {"layer0": "anime_multiverse:item/" + iid}})
         n += 1
     dump(LANG, lang())
     print("roster.json, %d recipes, %d flat item models, %d lang keys" % (len(R.RECIPES), n, len(lang())))

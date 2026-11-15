@@ -1,4 +1,4 @@
-"""Spirit Dive, REEL look: writes the textures of the look to src/main/resources/assets/nusmp/textures/aura/ (all deterministic, redo with `python3 -B tools/gen_spirit_dive_reel_textures.py`).
+"""Spirit Dive, REEL look: writes the textures of the look to src/main/resources/assets/anime_multiverse/textures/aura/ (all deterministic, redo with `python3 -B tools/gen_spirit_dive_reel_textures.py`).
 
 The look is the V2 design (crystal-block crown with a gold ring halo, hex-membrane wing, gold rings) painted the way the owner's two showcase videos paint it: glowing BLOCKS (pixel cells with a bright
 frame and a white inner light), thin white-gold ribbons, a leaf / feather wing, a comb of thin blades, a mosaic of blue block patches. Every texture is RGBA with RGB = 0 where alpha = 0
@@ -27,7 +27,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "nusmp", "textures", "aura")
+OUT = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura")
 ELS = ["wind", "water", "fire", "earth"]
 
 

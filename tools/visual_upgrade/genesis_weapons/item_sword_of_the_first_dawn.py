@@ -199,9 +199,9 @@ def build(it, state=""):
     ]
     it.draw = {"ticks": 16, "flash": "FFE49A", "groups": ["halo", "sun_rays"], "note": "the sun rises in the guard and the halo of dawn settles round the blade as the sword is drawn"}
     it.swing = {"trail": "dawnlight", "rgb": "FFF4B0", "rgb2": "E8C050", "length": 1.8, "width": 0.4, "life": 11, "particles": "daylight"}
-    it.sound = "nusmp:item.genesis.first_dawn.choir_loop"
+    it.sound = "anime_multiverse:item.genesis.first_dawn.choir_loop"
     it.acts = {
-        "dawnlight_cut": {"burst": "dawnlight_cut", "pattern": "cone", "rgb": "FFF4B0", "ring": 5.0, "particles": 40, "sound": "nusmp:item.genesis.first_dawn.cut"},
-        "first_light": {"burst": "first_light", "pattern": "nova", "rgb": "FFE49A", "ring": 5.5, "particles": 46, "sound": "nusmp:item.genesis.first_dawn.light"},
-        "daybreak": {"burst": "daybreak", "pattern": "column", "rgb": "FFFFFF", "ring": 6.0, "particles": 50, "sound": "nusmp:item.genesis.first_dawn.daybreak"},
+        "dawnlight_cut": {"burst": "dawnlight_cut", "pattern": "cone", "rgb": "FFF4B0", "ring": 5.0, "particles": 40, "sound": "anime_multiverse:item.genesis.first_dawn.cut"},
+        "first_light": {"burst": "first_light", "pattern": "nova", "rgb": "FFE49A", "ring": 5.5, "particles": 46, "sound": "anime_multiverse:item.genesis.first_dawn.light"},
+        "daybreak": {"burst": "daybreak", "pattern": "column", "rgb": "FFFFFF", "ring": 6.0, "particles": 50, "sound": "anime_multiverse:item.genesis.first_dawn.daybreak"},
     }

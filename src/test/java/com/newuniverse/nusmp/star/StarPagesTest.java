@@ -105,7 +105,7 @@ class StarPagesTest {
         assertTrue(lang.get(Pages15Rules.langKey("book_star", StarRules.BLACK_NEVERLAND)).getAsString().contains("ch. 381 to 383"));
         for (String id : List.of(StarRules.SCUTUM, StarRules.HASTA, StarRules.BLACK_NEVERLAND, StarRules.QUINTILE_SCUTUM, StarRules.QUINTILE_HASTA, StarRules.QUINTILE_FLAGELLUM))
             assertTrue(lang.get(Pages15Rules.langKey("book_star", id)).getAsString().contains("Grinberryall heir"), id + " says it needs the heir mark");
-        JsonObject policy = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/nusmp/armour_policy.json"))).getAsJsonObject();
+        JsonObject policy = JsonParser.parseString(read(ROOT.resolve("src/main/resources/data/anime_multiverse/armour_policy.json"))).getAsJsonObject();
         JsonArray listed = policy.getAsJsonObject("magics").getAsJsonObject("STAR").getAsJsonArray("new_pages");
         List<String> listedIds = new ArrayList<>();
         for (JsonElement e : listed) listedIds.add(e.getAsString());

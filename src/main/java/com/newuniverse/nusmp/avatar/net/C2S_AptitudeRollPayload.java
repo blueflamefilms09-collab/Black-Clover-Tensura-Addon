@@ -14,7 +14,7 @@ import java.util.List;
  */
 public record C2S_AptitudeRollPayload(List<String> picked) implements CustomPacketPayload {
     public static final int MAX = 8;
-    public static final Type<C2S_AptitudeRollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "forge_roll"));
+    public static final Type<C2S_AptitudeRollPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "forge_roll"));
     public static final StreamCodec<RegistryFriendlyByteBuf, C2S_AptitudeRollPayload> CODEC = StreamCodec.of(
             (b, p) -> {
                 int n = Math.min(p.picked.size(), MAX);

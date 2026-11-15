@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 public record VfxPayload(int shape, Vec3 from, Vec3 to, int color, int duration, float power, int followEntity, long seed)
         implements CustomPacketPayload {
 
-    public static final Type<VfxPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "vfx"));
+    public static final Type<VfxPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "vfx"));
     public static final StreamCodec<FriendlyByteBuf, VfxPayload> STREAM_CODEC =
             CustomPacketPayload.codec(VfxPayload::write, VfxPayload::read);
 

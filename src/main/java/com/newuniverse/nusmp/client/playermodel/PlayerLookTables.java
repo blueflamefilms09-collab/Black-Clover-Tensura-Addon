@@ -42,7 +42,7 @@ public final class PlayerLookTables {
         }
     }
 
-    /** Reads and merges every table of {@link #FILES} through {@code open} (a path under {@code assets/nusmp/} to a stream, or null when the file does not exist). */
+    /** Reads and merges every table of {@link #FILES} through {@code open} (a path under {@code assets/anime_multiverse/} to a stream, or null when the file does not exist). */
     public static Merged load(Function<String, InputStream> open) {
         Map<String, PlayerLook> out = new LinkedHashMap<>();
         List<String> problems = new ArrayList<>();

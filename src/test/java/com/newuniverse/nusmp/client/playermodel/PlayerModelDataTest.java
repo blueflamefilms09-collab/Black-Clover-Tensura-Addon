@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * rule and the arcs' bosses. The same audit runs in the CI server's self-test {@code render.playermodel}.
  */
 class PlayerModelDataTest {
-    private static final String ASSETS = "src/main/resources/assets/nusmp/";
+    private static final String ASSETS = "src/main/resources/assets/anime_multiverse/";
 
     private static InputStream open(String path) {
         try {
@@ -114,7 +114,7 @@ class PlayerModelDataTest {
     @Test
     void skinPathsResolveAndRefuseWhatLeavesTheFolder() {
         assertEquals("textures/entity/playermodel/asta.png", SkinPath.resolve("asta"));
-        assertEquals("textures/entity/playermodel/asta.png", SkinPath.resolve("nusmp:asta"));
+        assertEquals("textures/entity/playermodel/asta.png", SkinPath.resolve("anime_multiverse:asta"));
         assertEquals("textures/entity/playermodel/asta_glow.png", SkinPath.glowOf(SkinPath.resolve("asta")));
         assertEquals("textures/entity/hub/x.png", SkinPath.resolve("textures/entity/hub/x.png"));
         for (String bad : new String[]{"../secret", "textures/../../x.png", "/etc/passwd.png", "A B", "", null, "x.jpg", "textures//x.png", "a:b:c"})

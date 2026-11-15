@@ -133,10 +133,10 @@ class CompatCodexModelTest {
             assertTrue(com.newuniverse.nusmp.grimoire.GrimoireBookPlan.textures().contains(q.texture()), "unknown texture " + q.texture());
         }
         assertTrue(emblem && art && base, "the rings emblem and the cover design are on the book");
-        File dir = new File("src/main/resources/assets/nusmp/textures/item/grimoire_book");
+        File dir = new File("src/main/resources/assets/anime_multiverse/textures/item/grimoire_book");
         for (String t : new String[]{"emblem_compat", "cover_art_compat", "cover_base_compat"})
             assertTrue(new File(dir, t + ".png").isFile(), "missing texture " + t);
-        assertTrue(new File("src/main/resources/assets/nusmp/textures/item/compat_codex.png").isFile());
-        assertTrue(new File("src/main/resources/assets/nusmp/models/item/compat_codex.json").isFile());
+        assertTrue(new File("src/main/resources/assets/anime_multiverse/textures/item/compat_codex.png").isFile());
+        assertTrue(new File("src/main/resources/assets/anime_multiverse/models/item/compat_codex.json").isFile());
     }
 }

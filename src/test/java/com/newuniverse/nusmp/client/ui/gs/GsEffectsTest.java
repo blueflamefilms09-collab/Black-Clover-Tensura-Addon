@@ -94,13 +94,13 @@ class GsEffectsTest {
     // ------------------------------------------------------------ chat allow-list
     @Test
     void onlyAllowListedKeysAreMirroredFromChat() {
-        assertTrue(GsNoticeAllow.allowed("nusmp.zone.enter"));
-        assertTrue(GsNoticeAllow.allowed("nusmp.spiritdive.tier.gold"));
-        assertTrue(GsNoticeAllow.allowed("nusmp.ui.notice.page_open"));
-        for (String k : new String[]{"chat.type.text", "commands.give.success", "nusmp.zone.enter.extra", "nusmp.mana_zone.cooldown", "", null, "x".repeat(300)})
+        assertTrue(GsNoticeAllow.allowed("anime_multiverse.zone.enter"));
+        assertTrue(GsNoticeAllow.allowed("anime_multiverse.spiritdive.tier.gold"));
+        assertTrue(GsNoticeAllow.allowed("anime_multiverse.ui.notice.page_open"));
+        for (String k : new String[]{"chat.type.text", "commands.give.success", "anime_multiverse.zone.enter.extra", "anime_multiverse.mana_zone.cooldown", "", null, "x".repeat(300)})
             assertFalse(GsNoticeAllow.allowed(k), String.valueOf(k).length() > 40 ? "long" : String.valueOf(k));
-        assertEquals(GsNoticeQueue.Kind.WARN, GsNoticeAllow.kind("nusmp.mana_zone.refused_head"));
-        assertEquals(GsNoticeQueue.Kind.OK, GsNoticeAllow.kind("nusmp.mana_zone.attuned"));
+        assertEquals(GsNoticeQueue.Kind.WARN, GsNoticeAllow.kind("anime_multiverse.mana_zone.refused_head"));
+        assertEquals(GsNoticeQueue.Kind.OK, GsNoticeAllow.kind("anime_multiverse.mana_zone.attuned"));
         assertEquals(GsNoticeQueue.Kind.INFO, GsNoticeAllow.kind(null));
     }
 }

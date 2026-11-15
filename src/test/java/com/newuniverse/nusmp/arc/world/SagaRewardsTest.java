@@ -73,9 +73,9 @@ class SagaRewardsTest {
             assertFalse(r.isEmpty(), s.id());
             int stones = 0;
             for (SagaRewards.Stack st : r) {
-                assertTrue(st.item().startsWith("minecraft:") || st.item().equals("nusmp:magic_stone"), s.id() + ": " + st.item());
+                assertTrue(st.item().startsWith("minecraft:") || st.item().equals("anime_multiverse:magic_stone"), s.id() + ": " + st.item());
                 assertTrue(st.count() > 0 && st.count() <= 64, s.id() + ": " + st);
-                if (st.item().equals("nusmp:magic_stone")) stones = st.count();
+                if (st.item().equals("anime_multiverse:magic_stone")) stones = st.count();
             }
             assertTrue(stones > 0 && stones <= 32, s.id());
             if (s == ArcSaga.WIZARD_KING) assertTrue(stones >= last, "the Wizard King's saga pays the most");

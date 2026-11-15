@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JibrilShapesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYER = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer/JibrilLayer.java");
-    private static final Path TEX = ROOT.resolve("src/main/resources/assets/nusmp/textures/particle");
+    private static final Path TEX = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/particle");
 
     private static final List<String> EIGHT = List.of("JIBRIL_COMMAND", "JIBRIL_JUDGMENT", "JIBRIL_PURGE", "JIBRIL_SHACKLES", "JIBRIL_WORD", "JIBRIL_REFLECT", "JIBRIL_KINGDOM", "JIBRIL_WINGS");
 
@@ -173,7 +173,7 @@ class JibrilShapesTest {
 
     @Test
     void theSkillIconExists() throws IOException {
-        Path icon = ROOT.resolve("src/main/resources/assets/nusmp/textures/skill/veldanava/jibril.png");
+        Path icon = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/skill/veldanava/jibril.png");
         assertTrue(Files.isRegularFile(icon), "the skill icon");
         BufferedImage img = ImageIO.read(icon.toFile());
         assertEquals(32, img.getWidth());

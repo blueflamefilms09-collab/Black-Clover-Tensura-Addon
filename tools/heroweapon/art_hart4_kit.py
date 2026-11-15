@@ -35,7 +35,7 @@ ASSETS, MESH_DIR, SKIN_DIR, ICON_DIR, MODEL_DIR = _layout(ml.ASSETS)
 
 
 def set_output_root(root):
-    """Writes every file of the weapons under `root` (laid out like assets/nusmp) instead of the mod's assets; None goes back to the mod. Returns the root."""
+    """Writes every file of the weapons under `root` (laid out like assets/anime_multiverse) instead of the mod's assets; None goes back to the mod. Returns the root."""
     global ASSETS, MESH_DIR, SKIN_DIR, ICON_DIR, MODEL_DIR
     ASSETS, MESH_DIR, SKIN_DIR, ICON_DIR, MODEL_DIR = _layout(ml.ASSETS if root is None else root)
     return ASSETS
@@ -398,10 +398,10 @@ def write_item_models(item_id):
     with open(os.path.join(ml.ASSETS, "models", "item", "brooch_pin.json"), encoding="utf-8") as f:
         src = json.load(f)
     os.makedirs(MODEL_DIR, exist_ok=True)
-    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "nusmp:item/" + item_id}, "display": src["display"]}
+    model = {"parent": "minecraft:builtin/entity", "gui_light": "front", "textures": {"particle": "anime_multiverse:item/" + item_id}, "display": src["display"]}
     with open(os.path.join(MODEL_DIR, item_id + ".json"), "w", newline="\n", encoding="utf-8") as f:
         json.dump(model, f, indent=2)
-    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "nusmp:item/" + item_id}}
+    icon = {"parent": "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
     with open(os.path.join(MODEL_DIR, item_id + "_icon.json"), "w", newline="\n", encoding="utf-8") as f:
         json.dump(icon, f, indent=2)
 

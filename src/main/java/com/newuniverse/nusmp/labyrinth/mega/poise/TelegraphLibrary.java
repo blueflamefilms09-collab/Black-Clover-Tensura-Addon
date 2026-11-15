@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Why: which Foundry abilities are TELEGRAPHED, how, and which ULTIMATE each archetype unlocks in desperation are design choices the owner will tune, so they are data
- * ({@code data/nusmp/mega/poise/telegraphs.json}) over the abilities that already exist, read by a strict parser in the style of {@link FoundryLibrary}: every problem is one line of text,
+ * ({@code data/anime_multiverse/mega/poise/telegraphs.json}) over the abilities that already exist, read by a strict parser in the style of {@link FoundryLibrary}: every problem is one line of text,
  * a row that cannot work is dropped, a number out of range is clamped. {@code kinds} gives a default per ability KIND (every cleave warns with a cone), {@code overrides} gives a row for one
  * ability ID (arrow rain draws a circle on the target, the plain volley draws nothing), {@code ultimates} names, per archetype, the ability of {@code abilities} (rows in exactly the format of
  * {@code _abilities.json}, parsed by the same {@link FoundryLibrary#parseAbilities}) that a desperate mob adds to its own. Immutable once built; {@link #check} audits it against the

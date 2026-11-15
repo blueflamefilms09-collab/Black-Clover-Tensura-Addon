@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Why: a style is data ({@code assets/nusmp/boss_bars/<id>.json}): which emblem, which fill effect, how it enters and dies, and the colours. This is the strict reader (pure, so the tests and the
+ * Why: a style is data ({@code assets/anime_multiverse/boss_bars/<id>.json}): which emblem, which fill effect, how it enters and dies, and the colours. This is the strict reader (pure, so the tests and the
  * game read the files with the same code): it says in plain words what is wrong with a file, and it refuses an unknown emblem, effect, entrance or death so a typo cannot silently draw nothing.
  * The art (the frame atlas) is not in the json: it is {@code textures/gui/boss_bar/frame_<id>.png}, named by the id.
  */

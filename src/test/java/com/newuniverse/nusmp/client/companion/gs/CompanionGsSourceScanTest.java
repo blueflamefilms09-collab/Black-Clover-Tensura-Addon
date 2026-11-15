@@ -141,9 +141,9 @@ class CompanionGsSourceScanTest {
 
     @Test
     void theCrestMirrorsOnlyTheCompanionsPouchLine() {
-        assertTrue(GsNoticeAllow.allowed("nusmp.companion.charmy.use"));
-        assertEquals(GsNoticeQueue.Kind.OK, GsNoticeAllow.kind("nusmp.companion.charmy.use"));
-        for (String k : new String[]{"nusmp.companion.charmy.gift.love", "nusmp.companion.use", "nusmp.companion.", "nusmp.companion.a.b.use", "nusmp.companion.charmy.reuse.x", "nusmp.companion.charmy.sub", "other.charmy.use"})
+        assertTrue(GsNoticeAllow.allowed("anime_multiverse.companion.charmy.use"));
+        assertEquals(GsNoticeQueue.Kind.OK, GsNoticeAllow.kind("anime_multiverse.companion.charmy.use"));
+        for (String k : new String[]{"anime_multiverse.companion.charmy.gift.love", "anime_multiverse.companion.use", "anime_multiverse.companion.", "anime_multiverse.companion.a.b.use", "anime_multiverse.companion.charmy.reuse.x", "anime_multiverse.companion.charmy.sub", "other.charmy.use"})
             assertFalse(GsNoticeAllow.allowed(k), k);
     }
 }

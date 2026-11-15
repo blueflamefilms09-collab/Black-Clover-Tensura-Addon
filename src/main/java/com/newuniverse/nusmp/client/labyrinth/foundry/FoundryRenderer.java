@@ -68,7 +68,7 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
         Kit k = kits.get(id);
         if (k == null || !k.anim.equals(en.anim())) {
             GeoSpec own = GeoSpec.of(KEY, id);
-            ResourceLocation anim = ResourceLocation.fromNamespaceAndPath("nusmp", "animations/entity/foundry_anim_" + en.anim() + ".animation.json");
+            ResourceLocation anim = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "animations/entity/foundry_anim_" + en.anim() + ".animation.json");
             k = new Kit(en.anim(), new GeoSpec(own.model(), anim, own.texture(), own.glow()));
             kits.put(id, k);
         }
@@ -133,7 +133,7 @@ public class FoundryRenderer extends ZogratisRenderer<FoundryMobEntity> {
         String id = e.foundryId();
         FoundryIndex.Entry en = id.isEmpty() ? null : FoundryIndex.get(id);
         if (en == null) {
-            if (!id.isEmpty() && warned.add(id)) LOG.warn("[nusmp] the foundry mob '{}' has no entry in the asset index: it is not drawn", id);
+            if (!id.isEmpty() && warned.add(id)) LOG.warn("[anime_multiverse] the foundry mob '{}' has no entry in the asset index: it is not drawn", id);
             super.render(e, yaw, partial, pose, buffers, light);
             return;
         }

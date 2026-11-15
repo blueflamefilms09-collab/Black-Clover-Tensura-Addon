@@ -67,11 +67,11 @@ public final class ArcStory {
     /** The per-boss rows: buff profile, boss registry entry, Charter Grimoire (table row and item). A clash with an older boss is logged and skipped. */
     private static void wireBoss(ArcCharacter c) {
         if (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) return;                // 1.61.0: the seven older bosses already have their registry, buff and Charter rows (arc/world/ExistingBosses)
-        if (!BossRegistry.addArc(c.id(), c.id())) LOG.warn("[nusmp] arc boss {} is not added to the boss registry (the id or entity path is taken)", c.id());
-        if (!BossBuffTable.addArc(ArcBossProfile.profileFor(c))) LOG.warn("[nusmp] arc boss {} has no global buff row (the id is taken)", c.id());
+        if (!BossRegistry.addArc(c.id(), c.id())) LOG.warn("[anime_multiverse] arc boss {} is not added to the boss registry (the id or entity path is taken)", c.id());
+        if (!BossBuffTable.addArc(ArcBossProfile.profileFor(c))) LOG.warn("[anime_multiverse] arc boss {} has no global buff row (the id is taken)", c.id());
         if (c.hasCharter()) {
             CharterTable.Boss b = CharterTable.addArc(c);
-            if (b == null) LOG.warn("[nusmp] arc boss {} has no Canon Grimoire (no lawful skill left, or the id is taken)", c.id());
+            if (b == null) LOG.warn("[anime_multiverse] arc boss {} has no Canon Grimoire (no lawful skill left, or the id is taken)", c.id());
             else CharterItems.registerArc(b);
         }
     }
@@ -204,21 +204,21 @@ public final class ArcStory {
             try {
                 tell(p, c, defeated(p, c.id()));
             } catch (RuntimeException e) {
-                LOG.error("[nusmp] could not give {} the story credit for {}: {}", p.getGameProfile().getName(), c.id(), e.toString());
+                LOG.error("[anime_multiverse] could not give {} the story credit for {}: {}", p.getGameProfile().getName(), c.id(), e.toString());
             }
         }
     }
 
     private static void tell(ServerPlayer p, ArcCharacter c, Credit cr) {
         if (!cr.fresh()) return;
-        p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.fallen", "[Story] %s has fallen.", c.fullName()).withStyle(ChatFormatting.GOLD));
+        p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.fallen", "[Story] %s has fallen.", c.fullName()).withStyle(ChatFormatting.GOLD));
         if (!cr.opened().isEmpty()) {
             List<String> names = new ArrayList<>();
             for (ArcCharacter o : cr.opened()) names.add(o.fullName());
-            p.sendSystemMessage(Component.translatableWithFallback("message.nusmp.arc.opened", "[Story] Now open: %s", String.join(", ", names)).withStyle(ChatFormatting.AQUA));
+            p.sendSystemMessage(Component.translatableWithFallback("message.anime_multiverse.arc.opened", "[Story] Now open: %s", String.join(", ", names)).withStyle(ChatFormatting.AQUA));
         }
         if (cr.sagaChanged()) {
-            MutableComponent m = Component.translatableWithFallback("message.nusmp.arc.saga", "[Story] A new saga begins: %s", cr.sagaNow().title());
+            MutableComponent m = Component.translatableWithFallback("message.anime_multiverse.arc.saga", "[Story] A new saga begins: %s", cr.sagaNow().title());
             p.sendSystemMessage(m.withStyle(ChatFormatting.LIGHT_PURPLE));
         }
     }

@@ -1,445 +1,445 @@
 {
   "replace": false,
   "values": [
-    "nusmp:hand_of_providence",
+    "anime_multiverse:hand_of_providence",
     {
-      "id": "nusmp:claws_of_greed",
+      "id": "anime_multiverse:claws_of_greed",
       "required": false
     },
     {
-      "id": "nusmp:elemental_hand_wraps",
+      "id": "anime_multiverse:elemental_hand_wraps",
       "required": false
     },
     {
-      "id": "nusmp:gauntlets_of_eldritch_ferocity",
+      "id": "anime_multiverse:gauntlets_of_eldritch_ferocity",
       "required": false
     },
     {
-      "id": "nusmp:gloves_of_instant_cleanliness",
+      "id": "anime_multiverse:gloves_of_instant_cleanliness",
       "required": false
     },
     {
-      "id": "nusmp:thermo_gloves",
+      "id": "anime_multiverse:thermo_gloves",
       "required": false
     },
     {
-      "id": "nusmp:zenon_spatial_ring",
+      "id": "anime_multiverse:zenon_spatial_ring",
       "required": false
     },
     {
-      "id": "nusmp:bear_bracer",
+      "id": "anime_multiverse:bear_bracer",
       "required": false
     },
     {
-      "id": "nusmp:bracelets_of_faithful_friendship",
+      "id": "anime_multiverse:bracelets_of_faithful_friendship",
       "required": false
     },
     {
-      "id": "nusmp:bracer_of_initiative",
+      "id": "anime_multiverse:bracer_of_initiative",
       "required": false
     },
     {
-      "id": "nusmp:bracers_of_arcane_blades",
+      "id": "anime_multiverse:bracers_of_arcane_blades",
       "required": false
     },
     {
-      "id": "nusmp:bracers_of_manhandling",
+      "id": "anime_multiverse:bracers_of_manhandling",
       "required": false
     },
     {
-      "id": "nusmp:bracers_of_phasing",
+      "id": "anime_multiverse:bracers_of_phasing",
       "required": false
     },
     {
-      "id": "nusmp:phantoms_bracelet",
+      "id": "anime_multiverse:phantoms_bracelet",
       "required": false
     },
     {
-      "id": "nusmp:arcane_tricksters_glove",
+      "id": "anime_multiverse:arcane_tricksters_glove",
       "required": false
     },
     {
-      "id": "nusmp:bears_grip",
+      "id": "anime_multiverse:bears_grip",
       "required": false
     },
     {
-      "id": "nusmp:dragons_fire_gauntlet",
+      "id": "anime_multiverse:dragons_fire_gauntlet",
       "required": false
     },
     {
-      "id": "nusmp:gauntlet_mimic",
+      "id": "anime_multiverse:gauntlet_mimic",
       "required": false
     },
     {
-      "id": "nusmp:gauntlet_of_the_stormcaller",
+      "id": "anime_multiverse:gauntlet_of_the_stormcaller",
       "required": false
     },
     {
-      "id": "nusmp:glove_of_appreciation",
+      "id": "anime_multiverse:glove_of_appreciation",
       "required": false
     },
     {
-      "id": "nusmp:gloves_of_opportunity",
+      "id": "anime_multiverse:gloves_of_opportunity",
       "required": false
     },
     {
-      "id": "nusmp:goristro_charger",
+      "id": "anime_multiverse:goristro_charger",
       "required": false
     },
     {
-      "id": "nusmp:hand_of_vecna",
+      "id": "anime_multiverse:hand_of_vecna",
       "required": false
     },
     {
-      "id": "nusmp:hellfire_gauntlet",
+      "id": "anime_multiverse:hellfire_gauntlet",
       "required": false
     },
     {
-      "id": "nusmp:proficiency_gloves",
+      "id": "anime_multiverse:proficiency_gloves",
       "required": false
     },
     {
-      "id": "nusmp:the_gauntlet_of_gamelon",
+      "id": "anime_multiverse:the_gauntlet_of_gamelon",
       "required": false
     },
     {
-      "id": "nusmp:the_infinity_gauntlet",
+      "id": "anime_multiverse:the_infinity_gauntlet",
       "required": false
     },
     {
-      "id": "nusmp:gauntlets_of_the_iron_fang",
+      "id": "anime_multiverse:gauntlets_of_the_iron_fang",
       "required": false
     },
     {
-      "id": "nusmp:gloves_of_the_unseen_hand",
+      "id": "anime_multiverse:gloves_of_the_unseen_hand",
       "required": false
     },
     {
-      "id": "nusmp:quasi_spirit_bracelet",
+      "id": "anime_multiverse:quasi_spirit_bracelet",
       "required": false
     },
     {
-      "id": "nusmp:black_flash_gloves",
+      "id": "anime_multiverse:black_flash_gloves",
       "required": false
     },
     {
-      "id": "nusmp:command_seal_tattoo",
+      "id": "anime_multiverse:command_seal_tattoo",
       "required": false
     },
     {
-      "id": "nusmp:divergent_fist_knuckles",
+      "id": "anime_multiverse:divergent_fist_knuckles",
       "required": false
     },
     {
-      "id": "nusmp:horus_falcon_gauntlets",
+      "id": "anime_multiverse:horus_falcon_gauntlets",
       "required": false
     },
     {
-      "id": "nusmp:incinerator_arm",
+      "id": "anime_multiverse:incinerator_arm",
       "required": false
     },
     {
-      "id": "nusmp:inverted_spear_of_heaven_wrap",
+      "id": "anime_multiverse:inverted_spear_of_heaven_wrap",
       "required": false
     },
     {
-      "id": "nusmp:mammons_vault_ring",
+      "id": "anime_multiverse:mammons_vault_ring",
       "required": false
     },
     {
-      "id": "nusmp:playful_cloud_charm",
+      "id": "anime_multiverse:playful_cloud_charm",
       "required": false
     },
     {
-      "id": "nusmp:servant_contract_ring",
+      "id": "anime_multiverse:servant_contract_ring",
       "required": false
     },
     {
-      "id": "nusmp:zoaholic_ring",
+      "id": "anime_multiverse:zoaholic_ring",
       "required": false
     },
     {
-      "id": "nusmp:berus_carapace_gauntlets",
+      "id": "anime_multiverse:berus_carapace_gauntlets",
       "required": false
     },
     {
-      "id": "nusmp:cocytuss_frost_gauntlets",
+      "id": "anime_multiverse:cocytuss_frost_gauntlets",
       "required": false
     },
     {
-      "id": "nusmp:dragon_scale_frying_pan",
+      "id": "anime_multiverse:dragon_scale_frying_pan",
       "required": false
     },
     {
-      "id": "nusmp:elinalises_rouge_ring",
+      "id": "anime_multiverse:elinalises_rouge_ring",
       "required": false
     },
     {
-      "id": "nusmp:elven_healers_staff_bangle",
+      "id": "anime_multiverse:elven_healers_staff_bangle",
       "required": false
     },
     {
-      "id": "nusmp:gloves_of_nazarick",
+      "id": "anime_multiverse:gloves_of_nazarick",
       "required": false
     },
     {
-      "id": "nusmp:golem_garden_gloves",
+      "id": "anime_multiverse:golem_garden_gloves",
       "required": false
     },
     {
-      "id": "nusmp:imitation_ring_of_the_first_class_exam",
+      "id": "anime_multiverse:imitation_ring_of_the_first_class_exam",
       "required": false
     },
     {
-      "id": "nusmp:knight_of_the_shadow_ring",
+      "id": "anime_multiverse:knight_of_the_shadow_ring",
       "required": false
     },
     {
-      "id": "nusmp:monarchs_command_sigil",
+      "id": "anime_multiverse:monarchs_command_sigil",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_sorcerer_king",
+      "id": "anime_multiverse:ring_of_the_sorcerer_king",
       "required": false
     },
     {
-      "id": "nusmp:roxys_staff_wrap",
+      "id": "anime_multiverse:roxys_staff_wrap",
       "required": false
     },
     {
-      "id": "nusmp:sebass_butler_gloves",
+      "id": "anime_multiverse:sebass_butler_gloves",
       "required": false
     },
     {
-      "id": "nusmp:slime_jelly_ring",
+      "id": "anime_multiverse:slime_jelly_ring",
       "required": false
     },
     {
-      "id": "nusmp:ubels_slicing_cord",
+      "id": "anime_multiverse:ubels_slicing_cord",
       "required": false
     },
     {
-      "id": "nusmp:alchemists_transmutation_gloves",
+      "id": "anime_multiverse:alchemists_transmutation_gloves",
       "required": false
     },
     {
-      "id": "nusmp:aquas_party_trick_fan",
+      "id": "anime_multiverse:aquas_party_trick_fan",
       "required": false
     },
     {
-      "id": "nusmp:automail_arm_bracer",
+      "id": "anime_multiverse:automail_arm_bracer",
       "required": false
     },
     {
-      "id": "nusmp:claires_fire_silk_gloves",
+      "id": "anime_multiverse:claires_fire_silk_gloves",
       "required": false
     },
     {
-      "id": "nusmp:endorsis_shinsu_whip_wrap",
+      "id": "anime_multiverse:endorsis_shinsu_whip_wrap",
       "required": false
     },
     {
-      "id": "nusmp:flame_alchemists_ignition_gloves",
+      "id": "anime_multiverse:flame_alchemists_ignition_gloves",
       "required": false
     },
     {
-      "id": "nusmp:gutss_cannon_arm",
+      "id": "anime_multiverse:gutss_cannon_arm",
       "required": false
     },
     {
-      "id": "nusmp:khuns_lighthouse_spear_cord",
+      "id": "anime_multiverse:khuns_lighthouse_spear_cord",
       "required": false
     },
     {
-      "id": "nusmp:raks_thick_hammer_mitts",
+      "id": "anime_multiverse:raks_thick_hammer_mitts",
       "required": false
     },
     {
-      "id": "nusmp:skels_dueling_gloves",
+      "id": "anime_multiverse:skels_dueling_gloves",
       "required": false
     },
     {
-      "id": "nusmp:slayers_ring_of_ranking",
+      "id": "anime_multiverse:slayers_ring_of_ranking",
       "required": false
     },
     {
-      "id": "nusmp:suspendium_bracelet",
+      "id": "anime_multiverse:suspendium_bracelet",
       "required": false
     },
     {
-      "id": "nusmp:thiefs_steal_gloves",
+      "id": "anime_multiverse:thiefs_steal_gloves",
       "required": false
     },
     {
-      "id": "nusmp:kiritos_dual_wield_gloves",
+      "id": "anime_multiverse:kiritos_dual_wield_gloves",
       "required": false
     },
     {
-      "id": "nusmp:skill_slot_ring",
+      "id": "anime_multiverse:skill_slot_ring",
       "required": false
     },
     {
-      "id": "nusmp:sleeping_knights_pact_ring",
+      "id": "anime_multiverse:sleeping_knights_pact_ring",
       "required": false
     },
     {
-      "id": "nusmp:aerie_courier_gloves",
+      "id": "anime_multiverse:aerie_courier_gloves",
       "required": false
     },
     {
-      "id": "nusmp:bloodbound_gauntlets",
+      "id": "anime_multiverse:bloodbound_gauntlets",
       "required": false
     },
     {
-      "id": "nusmp:bandaged_training_wraps",
+      "id": "anime_multiverse:bandaged_training_wraps",
       "required": false
     },
     {
-      "id": "nusmp:dragon_slayer_apprentice_bracers",
+      "id": "anime_multiverse:dragon_slayer_apprentice_bracers",
       "required": false
     },
     {
-      "id": "nusmp:e_rank_hunters_work_gloves",
+      "id": "anime_multiverse:e_rank_hunters_work_gloves",
       "required": false
     },
     {
-      "id": "nusmp:gate_raider_grip_gloves",
+      "id": "anime_multiverse:gate_raider_grip_gloves",
       "required": false
     },
     {
-      "id": "nusmp:guild_mark_armband",
+      "id": "anime_multiverse:guild_mark_armband",
       "required": false
     },
     {
-      "id": "nusmp:mana_skin_wrap",
+      "id": "anime_multiverse:mana_skin_wrap",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_minor_protection",
+      "id": "anime_multiverse:ring_of_minor_protection",
       "required": false
     },
     {
-      "id": "nusmp:rope_climbers_gloves",
+      "id": "anime_multiverse:rope_climbers_gloves",
       "required": false
     },
     {
-      "id": "nusmp:weighted_training_wristbands",
+      "id": "anime_multiverse:weighted_training_wristbands",
       "required": false
     },
     {
-      "id": "nusmp:archers_finger_guards",
+      "id": "anime_multiverse:archers_finger_guards",
       "required": false
     },
     {
-      "id": "nusmp:beast_tamers_falconry_glove",
+      "id": "anime_multiverse:beast_tamers_falconry_glove",
       "required": false
     },
     {
-      "id": "nusmp:clerics_bandage_wraps",
+      "id": "anime_multiverse:clerics_bandage_wraps",
       "required": false
     },
     {
-      "id": "nusmp:cooks_oven_mitts",
+      "id": "anime_multiverse:cooks_oven_mitts",
       "required": false
     },
     {
-      "id": "nusmp:cradle_diggers_gloves",
+      "id": "anime_multiverse:cradle_diggers_gloves",
       "required": false
     },
     {
-      "id": "nusmp:deckhands_rope_gloves",
+      "id": "anime_multiverse:deckhands_rope_gloves",
       "required": false
     },
     {
-      "id": "nusmp:dwargon_forge_gloves",
+      "id": "anime_multiverse:dwargon_forge_gloves",
       "required": false
     },
     {
-      "id": "nusmp:genin_arm_guards",
+      "id": "anime_multiverse:genin_arm_guards",
       "required": false
     },
     {
-      "id": "nusmp:guild_skinners_gloves",
+      "id": "anime_multiverse:guild_skinners_gloves",
       "required": false
     },
     {
-      "id": "nusmp:sword_saint_trainees_grip_wrap",
+      "id": "anime_multiverse:sword_saint_trainees_grip_wrap",
       "required": false
     },
     {
-      "id": "nusmp:thiefs_lockpick_gloves",
+      "id": "anime_multiverse:thiefs_lockpick_gloves",
       "required": false
     },
     {
-      "id": "nusmp:breathing_practice_wristlets",
+      "id": "anime_multiverse:breathing_practice_wristlets",
       "required": false
     },
     {
-      "id": "nusmp:climbers_chalked_gloves",
+      "id": "anime_multiverse:climbers_chalked_gloves",
       "required": false
     },
     {
-      "id": "nusmp:duel_disk_wrist_strap",
+      "id": "anime_multiverse:duel_disk_wrist_strap",
       "required": false
     },
     {
-      "id": "nusmp:espers_plain_mitts",
+      "id": "anime_multiverse:espers_plain_mitts",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_feather_falling_common",
+      "id": "anime_multiverse:ring_of_feather_falling_common",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_minor_mana_stillness",
+      "id": "anime_multiverse:ring_of_minor_mana_stillness",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_third_class_squire",
+      "id": "anime_multiverse:ring_of_the_third_class_squire",
       "required": false
     },
     {
-      "id": "nusmp:ring_of_the_wandering_sorceress",
+      "id": "anime_multiverse:ring_of_the_wandering_sorceress",
       "required": false
     },
     {
-      "id": "nusmp:rubber_grip_gloves",
+      "id": "anime_multiverse:rubber_grip_gloves",
       "required": false
     },
     {
-      "id": "nusmp:shadow_soldier_signet_ring",
+      "id": "anime_multiverse:shadow_soldier_signet_ring",
       "required": false
     },
     {
-      "id": "nusmp:sin_of_patience_ring",
+      "id": "anime_multiverse:sin_of_patience_ring",
       "required": false
     },
     {
-      "id": "nusmp:slave_crest_hand_wrap",
+      "id": "anime_multiverse:slave_crest_hand_wrap",
       "required": false
     },
     {
-      "id": "nusmp:swordsmans_grip_gloves",
+      "id": "anime_multiverse:swordsmans_grip_gloves",
       "required": false
     },
     {
-      "id": "nusmp:young_alchemists_chalk_gloves",
+      "id": "anime_multiverse:young_alchemists_chalk_gloves",
       "required": false
     },
     {
-      "id": "nusmp:e_rank_hunter_gloves",
+      "id": "anime_multiverse:e_rank_hunter_gloves",
       "required": false
     },
     {
-      "id": "nusmp:transmutation_circle_gloves",
+      "id": "anime_multiverse:transmutation_circle_gloves",
       "required": false
     },
     {
-      "id": "nusmp:millennium_ring",
+      "id": "anime_multiverse:millennium_ring",
       "required": false
     },
     {
-      "id": "nusmp:tournament_fist_wraps",
+      "id": "anime_multiverse:tournament_fist_wraps",
       "required": false
     }
   ]

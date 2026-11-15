@@ -36,7 +36,7 @@ public final class ArmourStandRarity {
     /**
      * May a room of this template hold the rare stand? Halls and treasure rooms whose name says armoury, barracks, guard post, training hall, hoard, counting house, reliquary, gem vault, burial or
      * sarcophagus vault, closet or pantry. Never a corridor, junction, link, stair, trap, puzzle, trial, arena, antechamber, landing, relic vault or Safe Zone. Accepts a shipped id
-     * ({@code nusmp:mega/hall/armory_forge_a}) or a rebuilt one ({@code mega_r/hall/armory_forge_a_v2}).
+     * ({@code anime_multiverse:mega/hall/armory_forge_a}) or a rebuilt one ({@code mega_r/hall/armory_forge_a_v2}).
      */
     public static boolean eligibleTemplate(String id) {
         if (id == null) return false;

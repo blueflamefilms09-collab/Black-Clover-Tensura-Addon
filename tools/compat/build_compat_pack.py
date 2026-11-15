@@ -45,8 +45,8 @@ def validate():
     problems = []
     known = json.loads((HERE / "known_ids.json").read_text(encoding="utf-8"))
     items = {"tensuranoindex:" + i for i in known["tensuranoindex_items"]}
-    ents = {"tensuranoindex:" + i for i in known["tensuranoindex_entities"]} | {"nusmp:" + i for i in known["nusmp_entities"]}
-    tables = {"nusmp:" + t for t in known["nusmp_loot_tables"]}
+    ents = {"tensuranoindex:" + i for i in known["tensuranoindex_entities"]} | {"anime_multiverse:" + i for i in known["nusmp_entities"]}
+    tables = {"anime_multiverse:" + t for t in known["nusmp_loot_tables"]}
     for p in files():
         rel = p.relative_to(SRC).as_posix()
         if not (p.suffix in (".json", ".mcmeta")):

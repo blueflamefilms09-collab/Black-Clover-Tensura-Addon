@@ -1,0 +1,175 @@
+{
+  "parent": "anime_multiverse:magic/branch_light_dark_signature",
+  "display": {
+    "icon": {
+      "id": "minecraft:glowstone_dust"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.magic.branch_light_dark_all.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.magic.branch_light_dark_all.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e_spell_cast_light": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "light"
+      }
+    },
+    "e_spell_cast_lightning": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "lightning"
+      }
+    },
+    "e_spell_cast_dark": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "dark"
+      }
+    },
+    "e_spell_cast_poison": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "poison"
+      }
+    },
+    "e_spell_cast_smoke": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "smoke"
+      }
+    },
+    "e_spell_cast_curse": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "curse"
+      }
+    },
+    "e_spell_cast_curse_warding": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "curse_warding"
+      }
+    },
+    "e_spell_cast_eyeball": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "eyeball"
+      }
+    },
+    "e_spell_cast_black_oil": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "black_oil"
+      }
+    },
+    "e_spell_cast_demon_fire": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "demon_fire"
+      }
+    },
+    "e_spell_cast_demon_ice": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "demon_ice"
+      }
+    },
+    "e_spell_cast_demon_light": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "demon_light"
+      }
+    },
+    "e_spell_cast_demon_water": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "demon_water"
+      }
+    },
+    "e_spell_cast_demon_beast": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "demon_beast"
+      }
+    },
+    "e_spell_cast_anti_magic": {
+      "trigger": "anime_multiverse:event",
+      "conditions": {
+        "key": "spell.cast",
+        "arg": "anti_magic"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "e_spell_cast_light"
+    ],
+    [
+      "e_spell_cast_lightning"
+    ],
+    [
+      "e_spell_cast_dark"
+    ],
+    [
+      "e_spell_cast_poison"
+    ],
+    [
+      "e_spell_cast_smoke"
+    ],
+    [
+      "e_spell_cast_curse"
+    ],
+    [
+      "e_spell_cast_curse_warding"
+    ],
+    [
+      "e_spell_cast_eyeball"
+    ],
+    [
+      "e_spell_cast_black_oil"
+    ],
+    [
+      "e_spell_cast_demon_fire"
+    ],
+    [
+      "e_spell_cast_demon_ice"
+    ],
+    [
+      "e_spell_cast_demon_light"
+    ],
+    [
+      "e_spell_cast_demon_water"
+    ],
+    [
+      "e_spell_cast_demon_beast"
+    ],
+    [
+      "e_spell_cast_anti_magic"
+    ]
+  ],
+  "rewards": {
+    "experience": 220
+  }
+}

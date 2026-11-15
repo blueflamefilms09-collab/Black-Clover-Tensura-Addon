@@ -270,11 +270,11 @@ def markers_round(mt, cx, cz, faction):
 
 
 # =====================================================================================================================
-# PIT HALL (trap/pit_hall_a, pit_hall_b): 3x3, a field of nusmp:pitfall_tile with one thin safe route to a treasure island
+# PIT HALL (trap/pit_hall_a, pit_hall_b): 3x3, a field of anime_multiverse:pitfall_tile with one thin safe route to a treasure island
 # =====================================================================================================================
 
-PITFALL = "nusmp:pitfall_tile"
-LOOT_TRIAL = "nusmp:chests/labyrinth_trial"
+PITFALL = "anime_multiverse:pitfall_tile"
+LOOT_TRIAL = "anime_multiverse:chests/labyrinth_trial"
 PIT_CHAMBER_FLOOR = FR - 3        # row 5: the fall from the tiles (feet at row 9) onto it is exactly 3 blocks, the Spire's fall (docs/labyrinth/f1_traps.md)
 
 
@@ -1087,7 +1087,7 @@ def rot_galleries(mt, rng):
 # DARK ROOM (trap/dark_room): 2x2, the Spire's snuffer glyphs in a crypt with no light of its own and a chest behind a cobweb curtain
 # =====================================================================================================================
 
-SNUFFER = "nusmp:snuffer_glyph"
+SNUFFER = "anime_multiverse:snuffer_glyph"
 
 
 @room("trap", "dark_room", faction="undead", dark=True, few_spawns=True, kind="dark")
@@ -1159,9 +1159,9 @@ def dark_room(name):
 # SIGIL HALL (puzzle/sigil_hall_a, sigil_hall_b): 3x2, four sigil plates, a riddle stone, a puzzle door and a treasure closet
 # =====================================================================================================================
 
-PLATE = "nusmp:sigil_plate"
-RIDDLE = "nusmp:riddle_stone"
-GATE = "nusmp:gatekeeper_door"
+PLATE = "anime_multiverse:sigil_plate"
+RIDDLE = "anime_multiverse:riddle_stone"
+GATE = "anime_multiverse:gatekeeper_door"
 PLATE_COLORS = ("red", "blue", "gold", "green")
 
 
@@ -1270,9 +1270,9 @@ def nbt_list(values):
 # TRIAL HALL (trial/trial_hall_a, trial_hall_b): 3x3, a Sealed Archway trial: the doors seal, the hall spawns its own wave
 # =====================================================================================================================
 
-ARCHWAY = "nusmp:sealed_archway"
-WARD_RUNE = "nusmp:ward_rune"
-SPAWN_GLYPH = "nusmp:spawn_glyph"
+ARCHWAY = "anime_multiverse:sealed_archway"
+WARD_RUNE = "anime_multiverse:ward_rune"
+SPAWN_GLYPH = "anime_multiverse:spawn_glyph"
 
 
 def archway_data(radius, height, mobs, reset):
@@ -1411,7 +1411,7 @@ def trial_hall_b(name):
         D.brazier(mt, x, FR + 4, 3, cage=False)
     D.lit_window(mt, D.inner_frame(mt, "n", 13), width=3, y0=6, height=8, glass="minecraft:red_stained_glass", backing="minecraft:shroomlight")
     glyphs = [(x, z) for x in (8, 13, 18) for z in (9, 17)]
-    trial_core(mt, [("nusmp:living_armor", 2), ("nusmp:dungeon_direwolf", 1)], rng, [("w", 13), ("e", 13)], FR + 12, glyphs)
+    trial_core(mt, [("anime_multiverse:living_armor", 2), ("anime_multiverse:dungeon_direwolf", 1)], rng, [("w", 13), ("e", 13)], FR + 12, glyphs)
     for pz in (7, 19):
         for px in (5, 9, 13, 17, 21):
             if pz == 7 and 9 <= px <= 17:
@@ -2053,7 +2053,7 @@ def cave_lichen(mt, cav, rng, prob, level_boost=0):
             props = {}
             for dx, dz, nm in WALL_DIRS:
                 c = mt.get(x + dx, y, z + dz)
-                if c is not None and D.classify(c) == "solid" and not c.block.startswith("nusmp:"):
+                if c is not None and D.classify(c) == "solid" and not c.block.startswith("anime_multiverse:"):
                     props[nm] = "true"
             for dy, nm in ((1, "up"), (-1, "down")):
                 c = mt.get(x, y + dy, z)
@@ -2415,7 +2415,7 @@ def wall_vines(mt, cav, rng, prob):
                 continue
             for dx, dz, nm in WALL_DIRS:
                 c = mt.get(x + dx, y, z + dz)
-                if c is not None and D.classify(c) == "solid" and not c.block.startswith("nusmp:"):
+                if c is not None and D.classify(c) == "solid" and not c.block.startswith("anime_multiverse:"):
                     length = rng.randint(2, 6)
                     for k in range(length):
                         cc = mt.get(x + dx, y - k, z + dz)
@@ -2583,7 +2583,7 @@ def crystal_cavern(name):
                 continue
             for dx, dy, dz, face in ((0, -1, 0, "up"), (0, 1, 0, "down"), (1, 0, 0, "west"), (-1, 0, 0, "east"), (0, 0, 1, "north"), (0, 0, -1, "south")):
                 c = mt.get(x + dx, y + dy, z + dz)
-                if c is None or D.classify(c) != "solid" or c.block.startswith("nusmp:"):
+                if c is None or D.classify(c) != "solid" or c.block.startswith("anime_multiverse:"):
                     continue
                 if dy == -1 and ((x, z) in cav.lanes or mt.get(x, y - 1, z).block in ("minecraft:water",)):
                     continue

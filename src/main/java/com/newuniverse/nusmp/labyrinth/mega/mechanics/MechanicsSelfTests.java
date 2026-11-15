@@ -92,7 +92,7 @@ public final class MechanicsSelfTests {
         return out.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    private static Room room() { return new Room(90_001, "nusmp:mega/hall/selftest", RoomKind.HALL, BOX); }
+    private static Room room() { return new Room(90_001, "anime_multiverse:mega/hall/selftest", RoomKind.HALL, BOX); }
 
     private static MechanicDef def(String id, String op, Scope scope, MechanicDef.Trigger t, List<MechanicDef.Effect> fx, MechanicDef.Counter c, String reward) {
         return new MechanicDef(id, "Test " + op, "A self-test mechanic.", "", MechCategory.HAZARD, "Self-test", op, scope, 1, 5, Road.BOTH, List.of(), 1, 1, t, fx, c, reward, "");

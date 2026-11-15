@@ -784,7 +784,7 @@ public final class ShishouService {
         UUID owner = cap.owner();
         ServerPlayer op = owner == null ? null : server.getPlayerList().getPlayer(owner);
         ShishouRecovery.Plan plan = ShishouRecovery.plan(owner != null, op != null && op.isAlive(), cap.hasHome());
-        LOG.info("[nusmp] Shishou recovered ({}): {}", cause, plan);
+        LOG.info("[anime_multiverse] Shishou recovered ({}): {}", cause, plan);
         if (plan == ShishouRecovery.Plan.GIVE_TO_WIELDER) {
             long t = cap.recoverToHeld();
             if (t != 0L) {

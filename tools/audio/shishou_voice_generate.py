@@ -44,7 +44,7 @@ def main():
         sys.exit(__doc__)
     raw = sys.argv[1]
     os.makedirs(raw, exist_ok=True)
-    done_dir = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "nusmp", "sounds", "voice", "shishou")
+    done_dir = os.path.join(HERE, "..", "..", "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice", "shishou")
     again = "--force" in sys.argv
     todo = [ln for ln in doc["lines"] if again or not (os.path.exists(os.path.join(raw, ln["id"] + ".mp3")) or os.path.exists(os.path.join(done_dir, ln["id"] + ".ogg")))]
     print("%d of %d lines still need a take" % (len(todo), len(doc["lines"])))

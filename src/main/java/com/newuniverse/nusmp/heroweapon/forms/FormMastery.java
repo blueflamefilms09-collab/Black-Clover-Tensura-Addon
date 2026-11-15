@@ -32,7 +32,7 @@ public final class FormMastery {
         try {
             FormLocks.technique(player.getUUID(), player.level().getGameTime());
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: could not note a technique", e);
+            LOG.warn("[anime_multiverse] hero forms: could not note a technique", e);
         }
         add(player, FormsConfig.get(FormsConfig.MASTERY_PER_SKILL));
     }
@@ -55,7 +55,7 @@ public final class FormMastery {
             }
             if (step.finished() && bond.grantBonus(form.id())) finish(player, bond, form);
         } catch (RuntimeException e) {
-            LOG.warn("[nusmp] hero forms: mastery failed", e);
+            LOG.warn("[anime_multiverse] hero forms: mastery failed", e);
         }
     }
 

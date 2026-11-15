@@ -45,7 +45,7 @@ final class KeyThree {
             try {
                 down = Boolean.TRUE.equals(isHeld.invoke(null, p, HeroTrigger.KEY_3));
             } catch (ReflectiveOperationException | RuntimeException e) {
-                LOG.warn("[nusmp] The core's key bookkeeping failed; the third hero key no longer accepts the Embrace: {}", e.toString());
+                LOG.warn("[anime_multiverse] The core's key bookkeeping failed; the third hero key no longer accepts the Embrace: {}", e.toString());
                 isHeld = null;
             }
         }

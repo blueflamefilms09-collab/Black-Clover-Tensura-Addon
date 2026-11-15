@@ -4,8 +4,8 @@ loft / box / strip vocabulary of tools/gen_weapon_models.py), deterministic.
     python3 tools/gen_sdw3_models.py
 
 Writes
-  src/main/resources/assets/nusmp/sdw3_meshes/<name>.txt      one mesh each (see the format below)
-  src/main/resources/assets/nusmp/textures/aura/sdw3_skin.png  the 64 x 64 atlas the meshes are mapped on (solid, cube face, leaf panel, bevel)
+  src/main/resources/assets/anime_multiverse/sdw3_meshes/<name>.txt      one mesh each (see the format below)
+  src/main/resources/assets/anime_multiverse/textures/aura/sdw3_skin.png  the 64 x 64 atlas the meshes are mapped on (solid, cube face, leaf panel, bevel)
   docs/previews/spirit_dive_wind3/models.txt                   vertex counts per mesh and layer (the numbers the budgets use)
 
 The models are VISUAL ONLY pieces of the Wind Spirit Dive (worn aura pieces drawn by the dive painter for the diver; not items). Units are model pixels (1/16 block). Mesh space: y runs along the
@@ -24,9 +24,9 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "sdw3_meshes")
-TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "aura", "sdw3_skin.png")
-SOFT = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "aura", "sdw3_soft.png")
+OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sdw3_meshes")
+TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura", "sdw3_skin.png")
+SOFT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "aura", "sdw3_soft.png")
 DOC = os.path.join(ROOT, "docs", "previews", "spirit_dive_wind3", "models.txt")
 
 # atlas regions (u0, v0, u1, v1 in 0..1 of the 64 x 64 skin)

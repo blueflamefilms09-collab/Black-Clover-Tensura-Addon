@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Why: everything about WHAT standard gear drops, as plain immutable data read from {@code data/nusmp/mega/gear/tables.json}: how the grade mix shifts
+ * Why: everything about WHAT standard gear drops, as plain immutable data read from {@code data/anime_multiverse/mega/gear/tables.json}: how the grade mix shifts
  * with depth (a curve per grade), the caps on every chance, how likely each slot is, and, for each grade, the vanilla base items per slot, how much
  * stronger and tougher the piece is, which enchantments and Tensura engravings it may carry and how much magic resistance it has. The owner wants the
  * drops tunable without a mod update, so the numbers are data and a datapack may replace the file; the roller reads only this class, never a file or a

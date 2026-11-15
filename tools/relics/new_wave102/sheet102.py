@@ -12,7 +12,7 @@ sys.path.insert(0, HERE)
 from roster102 import WEAPONS, GEAR  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-ICONS = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "item")
+ICONS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "item")
 
 
 def main(out):

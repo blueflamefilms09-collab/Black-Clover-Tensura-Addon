@@ -4,7 +4,7 @@ import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-M = os.path.join(ROOT, "src/main/resources/assets/nusmp/models/item")
+M = os.path.join(ROOT, "src/main/resources/assets/anime_multiverse/models/item")
 IDS = "magebane_shield legendary_shield aegis_of_the_abyss celestial_support heros_shield thunder_shield calamity_wave_aegis".split()
 
 out = {}

@@ -22,12 +22,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: every text of the companion system is a lang key (a dedicated server has no lang file, each player reads their own language), so a key that the code names and the fragment does not have shows up in game as a raw
- * key. This reads the fragment {@code tools/lang/companions.json} and the source: every {@code nusmp.companion.*} key the code names exists; every companion record in {@code CompanionProfiles} has the lines the
+ * key. This reads the fragment {@code tools/lang/companions.json} and the source: every {@code anime_multiverse.companion.*} key the code names exists; every companion record in {@code CompanionProfiles} has the lines the
  * {@code Companion} contract needs under its prefix (the high five, using the pouch, the four gift answers, the two "likes" lines, the three stance answers, the greeting and the line under her name), each with its
  * placeholder where the code passes one; the entity and egg names exist; nothing is empty; and the fragment does not disagree with the merged game file.
  */
 class CompanionLangTest {
-    private static final Path FRAGMENT = Path.of("tools/lang/companions.json"), EN_US = Path.of("src/main/resources/assets/nusmp/lang/en_us.json");
+    private static final Path FRAGMENT = Path.of("tools/lang/companions.json"), EN_US = Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json");
     private static final Path MAIN = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Pattern LITERAL = Pattern.compile("\"([^\"\\\\]*)\"");
 
@@ -55,14 +55,14 @@ class CompanionLangTest {
                 Matcher m = LITERAL.matcher(line);
                 while (m.find()) {
                     String lit = m.group(1);
-                    String key = bond && !lit.startsWith("nusmp.") ? "nusmp.companion.bond." + lit : lit;
-                    if (!key.startsWith("nusmp.companion.")) continue;
-                    if (key.equals("nusmp.companion.bond.")) continue;
+                    String key = bond && !lit.startsWith("anime_multiverse.") ? "anime_multiverse.companion.bond." + lit : lit;
+                    if (!key.startsWith("anime_multiverse.companion.")) continue;
+                    if (key.equals("anime_multiverse.companion.bond.")) continue;
                     if (key.endsWith(".")) {                                              // a prefix the code completes at run time: some key must start with it
                         boolean any = false;
                         for (String k : lang.keySet()) if (k.startsWith(key)) any = true;
                         if (!any) missing.add(p.getFileName() + ": nothing starts with " + key);
-                    } else if (!lang.has(key) && !key.startsWith("nusmp.companion.selftest.") && !isNotAKey(key)) {
+                    } else if (!lang.has(key) && !key.startsWith("anime_multiverse.companion.selftest.") && !isNotAKey(key)) {
                         missing.add(p.getFileName() + ": " + key);
                     }
                 }
@@ -79,7 +79,7 @@ class CompanionLangTest {
         JsonObject lang = fragment();
         for (String k : new String[]{"tab.talk", "tab.interact", "tab.bond", "tab.pouch", "tier.stranger", "tier.acquaintance", "tier.friend", "tier.close", "stance.guard", "stance.aggressive", "stance.passive",
                 "bond.stance.guard", "bond.stance.aggressive", "bond.stance.passive", "close", "join.full"})
-            assertTrue(lang.has("nusmp.companion." + k), k);
+            assertTrue(lang.has("anime_multiverse.companion." + k), k);
     }
 
     private static final String[] CONTRACT = {"sub", "greet", "act.five", "use", "gift.love", "gift.ok", "gift.hate", "gift.no", "likes.love", "likes.hate", "stance.guard", "stance.aggressive", "stance.passive"};
@@ -110,15 +110,15 @@ class CompanionLangTest {
     @Test
     void theEntityAndTheEggHaveNames() throws IOException {
         JsonObject lang = fragment();
-        assertTrue(lang.has("entity.nusmp.arc_companion"));
-        assertTrue(lang.has("item.nusmp.companion_charmy_spawn_egg"));
+        assertTrue(lang.has("entity.anime_multiverse.arc_companion"));
+        assertTrue(lang.has("item.anime_multiverse.companion_charmy_spawn_egg"));
     }
 
     @Test
     void nothingIsEmptyAndNoKeyIsOutsideOurSpaces() throws IOException {
         JsonObject lang = fragment();
         for (String k : lang.keySet()) {
-            assertTrue(k.startsWith("nusmp.companion.") || k.equals("entity.nusmp.arc_companion") || k.equals("item.nusmp.companion_charmy_spawn_egg"), "a key outside the companion spaces: " + k);
+            assertTrue(k.startsWith("anime_multiverse.companion.") || k.equals("entity.anime_multiverse.arc_companion") || k.equals("item.anime_multiverse.companion_charmy_spawn_egg"), "a key outside the companion spaces: " + k);
             assertFalse(lang.get(k).getAsString().isBlank(), k + " is empty");
         }
     }

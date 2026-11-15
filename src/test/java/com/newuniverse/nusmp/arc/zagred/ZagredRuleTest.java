@@ -29,7 +29,7 @@ class ZagredRuleTest {
         for (ZagredRule r : ZagredRule.values()) {
             assertFalse(r.text().isBlank());
             assertFalse(r.hint().isBlank());
-            assertTrue(r.textKey().startsWith("message.nusmp.zagred.rule."));
+            assertTrue(r.textKey().startsWith("message.anime_multiverse.zagred.rule."));
             assertEquals(r.textKey() + ".hint", r.hintKey());
         }
         assertEquals("fire", ZagredRule.NO_FIRE.element());

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.NeoForge;
  * {@code com.newuniverse.nusmp.core.discovery.Discovery.init(modEventBus, modContainer);}
  * and, in the client-only block, {@code com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();}.
  * <p>
- * What it does: registers the player attachment and the {@code nusmp:discovery_sync} payload on the mod bus, the server config
+ * What it does: registers the player attachment and the {@code anime_multiverse:discovery_sync} payload on the mod bus, the server config
  * {@code nusmp-discovery-server.toml} (key {@code discovery.showAll}), and the server tracker on the game bus.
  * See docs/discovery.md.
  */

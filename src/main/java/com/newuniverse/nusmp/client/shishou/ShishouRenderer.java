@@ -24,8 +24,8 @@ import net.minecraft.util.Mth;
  * beyond {@link ShishouMeshDraw#CULL_RANGE}; a Stealth-veiled sword is drawn translucent.
  */
 public final class ShishouRenderer extends EntityRenderer<ShishouEntity> {
-    private static final ResourceLocation ANIMATION = ResourceLocation.fromNamespaceAndPath("nusmp", "animations/entity/shishou_sword.animation.json");
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/entity/weapon/shishou.png");
+    private static final ResourceLocation ANIMATION = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "animations/entity/shishou_sword.animation.json");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/weapon/shishou.png");
     private static final float[] ROT = new float[3], POS = new float[3];
     private static final GeoSpec PROXY = GeoSpec.of("shishou", "sword");
 

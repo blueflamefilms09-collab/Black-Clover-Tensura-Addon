@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * no model or assistant names, and the preview PNGs (idle, tilted heavy and light, the suppression aura, the levels, beside a caster) are there.
  */
 class ScaleCastAssetsTest {
-    private static final Path TEX = Path.of("src/main/resources/assets/nusmp/textures/entity/scalecast");
+    private static final Path TEX = Path.of("src/main/resources/assets/anime_multiverse/textures/entity/scalecast");
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Map<String, int[]> SIZE = Map.of("gold", new int[]{64, 64}, "enamel", new int[]{64, 64}, "chain", new int[]{32, 32}, "gem", new int[]{32, 32},
             "glow_runes", new int[]{64, 128}, "glow_halo", new int[]{256, 256}, "glow_ring", new int[]{256, 256});
@@ -112,7 +112,7 @@ class ScaleCastAssetsTest {
             assertTrue(Files.exists(TEX.resolve(m.group(1) + ".png")), "the renderer names a missing texture " + m.group(1));
         }
         assertEquals(SIZE.size(), n, "the renderer uses all " + SIZE.size() + " textures of the folder (found " + n + ")");
-        assertTrue(src.contains("AuraRender.tex(\"particle/glow\")") && Files.exists(Path.of("src/main/resources/assets/nusmp/textures/particle/glow.png")));
+        assertTrue(src.contains("AuraRender.tex(\"particle/glow\")") && Files.exists(Path.of("src/main/resources/assets/anime_multiverse/textures/particle/glow.png")));
     }
 
     @Test
@@ -122,7 +122,7 @@ class ScaleCastAssetsTest {
         JsonObject frag = JsonParser.parseString(text).getAsJsonObject();
         for (JsonElement v : frag.asMap().values()) assertTrue(v.isJsonPrimitive() && !v.getAsString().isBlank());
         String painter = Files.readString(SRC.resolve("client/prop/ScaleBalancePainter.java"));
-        Matcher m = Pattern.compile("\"(nusmp\\.scale\\.[a-z_.]+)\"").matcher(painter);
+        Matcher m = Pattern.compile("\"(anime_multiverse\\.scale\\.[a-z_.]+)\"").matcher(painter);
         int n = 0;
         while (m.find()) {
             n++;

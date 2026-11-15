@@ -41,7 +41,7 @@ class DevilSourceScanTest {
 
     @Test
     void theCommonPackageNamesNoClientClassAndNoMinecraftInstance() throws IOException {
-        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
+        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
         for (Path f : files(DIR)) assertFalse(client.matcher(code(f)).find(), f.getFileName() + " names a client-only class");
     }
 
@@ -111,7 +111,7 @@ class DevilSourceScanTest {
 
     @Test
     void theTexturesTheLayerNamesExist() throws IOException {
-        Path dir = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/nusmp/textures/entity/devil");
+        Path dir = Path.of("").toAbsolutePath().resolve("src/main/resources/assets/anime_multiverse/textures/entity/devil");
         for (String t : List.of("low", "mid", "high", "supreme"))
             for (String s : List.of("", "_slim")) {
                 assertTrue(Files.exists(dir.resolve("weg_" + t + s + ".png")), "weg_" + t + s + ".png");

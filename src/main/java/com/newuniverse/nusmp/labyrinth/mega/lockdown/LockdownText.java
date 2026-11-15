@@ -7,13 +7,13 @@ import java.util.Map;
 /**
  * Why: every word of the room lockdown and the ambush director is a lang key with its English fallback kept in ONE pure map, so each line reads properly before the
  * lang fragment ({@code tools/lang/lockdown.json}) is merged and in every language afterwards, and a unit test pins that the fragment and this map cannot drift. The
- * chat lines are under {@code message.nusmp.mega.lockdown.*}; the pop-ups the System shows are under {@code message.nusmp.mega.system.lockdown.*} so they resolve on the
+ * chat lines are under {@code message.anime_multiverse.mega.lockdown.*}; the pop-ups the System shows are under {@code message.anime_multiverse.mega.system.lockdown.*} so they resolve on the
  * client with the System's own lookup, like the escape rules' toasts. Pure.
  */
 public final class LockdownText {
     private LockdownText() {}
 
-    private static final String CHAT = "message.nusmp.mega.lockdown.", TOAST = "message.nusmp.mega.system.lockdown.";
+    private static final String CHAT = "message.anime_multiverse.mega.lockdown.", TOAST = "message.anime_multiverse.mega.system.lockdown.";
     private static final Map<String, String> EN = new LinkedHashMap<>();
 
     private static String put(String key, String english) {
@@ -22,7 +22,7 @@ public final class LockdownText {
     }
 
     // ---- the block
-    public static final String BLOCK = put("block.nusmp.lockdown_barrier", "Lockdown Barrier");
+    public static final String BLOCK = put("block.anime_multiverse.lockdown_barrier", "Lockdown Barrier");
 
     // ---- the room closes and opens
     public static final String SEALED = put(CHAT + "sealed", "The doors seal behind you. Defeat every enemy in the room to open them (wave %1$s of %2$s).");

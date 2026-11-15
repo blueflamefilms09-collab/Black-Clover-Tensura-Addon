@@ -124,7 +124,7 @@ class RelicWearWiringTest {
     @Test
     void theLangFragmentHasTheNewTexts() throws IOException {
         String frag = Files.readString(Path.of("tools/lang/relics_wear.json"));
-        for (String key : List.of("message.nusmp.relic_wear.equipped", "message.nusmp.relic_wear.show_on", "message.nusmp.relic_wear.show_off", "key.nusmp.toggle_show_worn_relics"))
+        for (String key : List.of("message.anime_multiverse.relic_wear.equipped", "message.anime_multiverse.relic_wear.show_on", "message.anime_multiverse.relic_wear.show_off", "key.anime_multiverse.toggle_show_worn_relics"))
             assertTrue(frag.contains("\"" + key + "\""), key);
     }
 }

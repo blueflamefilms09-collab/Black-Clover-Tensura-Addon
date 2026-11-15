@@ -52,7 +52,7 @@ public final class AvatarSystem {
             () -> AttachmentType.builder(AvatarSession::new).build());
 
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, NUSMP.MODID);
-    /** {@code nusmp:naming_sleep}: the creator's exhaustion after naming an Avatar. */
+    /** {@code anime_multiverse:naming_sleep}: the creator's exhaustion after naming an Avatar. */
     public static final DeferredHolder<MobEffect, NamingSleepEffect> NAMING_SLEEP = EFFECTS.register("naming_sleep", NamingSleepEffect::new);
 
     private static boolean started;

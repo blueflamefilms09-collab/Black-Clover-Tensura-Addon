@@ -1,6 +1,6 @@
 """Textures for the 0.40 Dream Magic and Painting Magic VFX. Deterministic, no fonts, no external images.
 
-    python tools/gen_dream_paint_vfx_textures.py   ->  src/main/resources/assets/nusmp/textures/particle/dream_*.png, paint_*.png
+    python tools/gen_dream_paint_vfx_textures.py   ->  src/main/resources/assets/anime_multiverse/textures/particle/dream_*.png, paint_*.png
 
 Convention (same as the rest of textures/particle): white / greyscale with alpha, so one vertex colour tints each quad; the
 iridescence comes from shifting the vertex colours across the quads (pink -> lilac -> sky blue), not from the texture.

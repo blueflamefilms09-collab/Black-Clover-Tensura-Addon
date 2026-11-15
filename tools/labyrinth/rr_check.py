@@ -60,7 +60,7 @@ def functional_cells(base):
     for pos, c in base.cells.items():
         if c.block in ("minecraft:structure_block", "minecraft:jigsaw"):
             continue
-        if c.block.startswith("nusmp:") or c.block in ("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:spawner", "minecraft:trial_spawner",
+        if c.block.startswith("anime_multiverse:") or c.block in ("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:spawner", "minecraft:trial_spawner",
                                                       "minecraft:vault", "minecraft:ender_chest", "minecraft:shulker_box", "minecraft:hopper", "minecraft:dispenser",
                                                       "minecraft:dropper", "minecraft:crafter", "minecraft:brewing_stand", "minecraft:furnace", "minecraft:blast_furnace",
                                                       "minecraft:smoker", "minecraft:lectern", "minecraft:chiseled_bookshelf", "minecraft:decorated_pot", "minecraft:jukebox",
@@ -116,7 +116,7 @@ def check(room, max_blocks_ratio=1.45):
         problems.append("the data markers differ: %s" % sorted(set(mb.items()) ^ set(mn.items()))[:3])
     lane = lane_cells(room) if room.scratch else set()
     for pos, c in functional_cells(base).items():
-        if pos in lane and not c.block.startswith("nusmp:") and c.block not in ("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:spawner"):
+        if pos in lane and not c.block.startswith("anime_multiverse:") and c.block not in ("minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:spawner"):
             continue            # furniture inside a corridor lane: the generator's 7 x 7 cut removes it anyway
         n = t.cells.get(pos)
         if n is None or n.block != c.block or n.props != c.props or (c.nbt is not None and n.nbt != c.nbt):

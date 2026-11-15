@@ -23,7 +23,7 @@ import java.util.List;
 public final class MapsCommand {
     private MapsCommand() {}
 
-    static MutableComponent t(String key, String english, Object... args) { return Component.translatableWithFallback("message.nusmp.maps." + key, english, args); }
+    static MutableComponent t(String key, String english, Object... args) { return Component.translatableWithFallback("message.anime_multiverse.maps." + key, english, args); }
 
     public static LiteralArgumentBuilder<CommandSourceStack> waypointNode() {
         return Commands.literal("waypoint")

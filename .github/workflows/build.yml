@@ -36,7 +36,7 @@ jobs:
         run: |
           jar=$(ls build/libs/multiverse-of-anime-*.jar | grep -v -- '-sources' | head -1)
           ls -l "$jar"
-          for m in assets/nusmp/weapon_meshes_vu/blackrazor.txt assets/nusmp/weapon_meshes/catstaff.txt; do
+          for m in assets/anime_multiverse/weapon_meshes_vu/blackrazor.txt assets/anime_multiverse/weapon_meshes/catstaff.txt; do
             magic=$(unzip -p "$jar" "$m" | head -c 4)
             echo "$m starts with: $magic"
             [ "$magic" = "NMSH" ] || { echo "::error::$m is not packed in the jar"; exit 1; }

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Why: "mana regeneration" as a food buff has no vanilla effect to borrow, and the mod's own way of giving a mana buff is the way it already uses for the naming sleep: a
- * status effect that carries an attribute modifier on Tensura's magicule regeneration. {@code nusmp:mana_surge} adds 75 percent to the regeneration multiplier for as long as
+ * status effect that carries an attribute modifier on Tensura's magicule regeneration. {@code anime_multiverse:mana_surge} adds 75 percent to the regeneration multiplier for as long as
  * it lasts, nothing else: no tick work, no drain, and it is a beneficial effect (so milk and the like treat it like any other buff). Spirit Tea, the Mana Elixirs and the
  * Sage's Elixir give it. It is registered on the mod bus by {@link LootRegistry#init}.
  */
@@ -27,7 +27,7 @@ public final class LootEffects {
     static final class ManaSurge extends MobEffect {
         ManaSurge() {
             super(MobEffectCategory.BENEFICIAL, 0x5AA8FF);
-            addAttributeModifier(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, ResourceLocation.fromNamespaceAndPath("nusmp", "mana_surge"), 0.75, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(TensuraAttributes.MAGICULE_REGENERATION_MULTIPLIER, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "mana_surge"), 0.75, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         }
     }
 }

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * of this mod is registered in the source, and the economics the owner asked for hold (the core uses the eight named rarities; the forge uses a core).
  */
 class ForgeRecipesTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/recipe");
+    private static final Path DIR = Path.of("src/main/resources/data/anime_multiverse/recipe");
     private static final Set<String> VANILLA = Set.of("minecraft:netherite_ingot", "minecraft:diamond_block", "minecraft:heart_of_the_sea", "minecraft:nether_star",
             "minecraft:totem_of_undying", "minecraft:echo_shard", "minecraft:enchanted_golden_apple", "minecraft:crying_obsidian");
 
@@ -50,7 +50,7 @@ class ForgeRecipesTest {
             Set<Character> keys = new HashSet<>();
             for (String k : r.getAsJsonObject("key").keySet()) { assertEquals(1, k.length(), "key is one character"); keys.add(k.charAt(0)); }
             assertEquals(keys, used, name + ": every key is used and every symbol has a key");
-            assertEquals("nusmp:" + name, r.getAsJsonObject("result").get("id").getAsString());
+            assertEquals("anime_multiverse:" + name, r.getAsJsonObject("result").get("id").getAsString());
             assertEquals(1, r.getAsJsonObject("result").get("count").getAsInt());
         }
     }
@@ -60,8 +60,8 @@ class ForgeRecipesTest {
         for (String name : new String[]{"genesis_core", "soul_forge"}) {
             for (String id : ingredients(recipe(name))) {
                 if (id.startsWith("minecraft:")) assertTrue(VANILLA.contains(id), name + " uses an item this test does not know: " + id);
-                else if (id.equals("nusmp:genesis_core")) assertTrue(registered("src/main/java/com/newuniverse/nusmp/avatar/item/AvatarItems.java", "genesis_core"));
-                else if (id.equals("nusmp:dark_rukh_shard")) assertTrue(registered("src/main/java/com/newuniverse/nusmp/relics/djinn/DjinnItems.java", "dark_rukh_shard"));
+                else if (id.equals("anime_multiverse:genesis_core")) assertTrue(registered("src/main/java/com/newuniverse/nusmp/avatar/item/AvatarItems.java", "genesis_core"));
+                else if (id.equals("anime_multiverse:dark_rukh_shard")) assertTrue(registered("src/main/java/com/newuniverse/nusmp/relics/djinn/DjinnItems.java", "dark_rukh_shard"));
                 else assertTrue(false, name + " uses an unknown mod item " + id);
             }
         }
@@ -77,14 +77,14 @@ class ForgeRecipesTest {
     @Test
     void theGenesisCoreNeedsTheEightRarities() throws Exception {
         Set<String> need = Set.of("minecraft:nether_star", "minecraft:heart_of_the_sea", "minecraft:totem_of_undying", "minecraft:netherite_ingot", "minecraft:diamond_block",
-                "minecraft:enchanted_golden_apple", "minecraft:echo_shard", "nusmp:dark_rukh_shard");
+                "minecraft:enchanted_golden_apple", "minecraft:echo_shard", "anime_multiverse:dark_rukh_shard");
         assertEquals(need, ingredients(recipe("genesis_core")));
     }
 
     @Test
     void theSoulForgeNeedsAGenesisCoreAndNothingElseCheap() throws Exception {
         Set<String> got = ingredients(recipe("soul_forge"));
-        assertTrue(got.contains("nusmp:genesis_core"));
+        assertTrue(got.contains("anime_multiverse:genesis_core"));
         assertTrue(got.contains("minecraft:nether_star"));
         assertTrue(got.contains("minecraft:netherite_ingot"));
         assertTrue(got.contains("minecraft:enchanted_golden_apple"));
@@ -94,7 +94,7 @@ class ForgeRecipesTest {
     @Test
     void thereIsNoCircularRecipe() throws Exception {
         // the Genesis Core must not need the Soul Forge or itself, or neither could ever be made
-        assertFalse(ingredients(recipe("genesis_core")).contains("nusmp:soul_forge"));
-        assertFalse(ingredients(recipe("genesis_core")).contains("nusmp:genesis_core"));
+        assertFalse(ingredients(recipe("genesis_core")).contains("anime_multiverse:soul_forge"));
+        assertFalse(ingredients(recipe("genesis_core")).contains("anime_multiverse:genesis_core"));
     }
 }
