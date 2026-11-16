@@ -93,7 +93,7 @@ def export(wid):
     for name in ("head", "body", "armL", "armR", "legL", "legR", "tail", "wings", "acq"):
         boxes = groups.get(name)
         if not boxes: continue
-        ident = "%s_arm_%s" % (key, name)
+        ident = "%s_arm_%s" % (key, name.lower())      # 4.0.1: a resource path must be lowercase, or the game ignores the file
         m = G.Model(ident, shim)
         used = {b.bone for b in boxes if b.bone != "root"}
         bones = []

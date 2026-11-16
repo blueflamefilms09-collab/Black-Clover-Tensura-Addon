@@ -68,7 +68,7 @@ public final class NoelleFormRig {
             this.key = key;
             this.pieces = pieces;
             this.specs = new GeoSpec[pieces.length];
-            for (int i = 0; i < pieces.length; i++) specs[i] = GeoSpec.of(key, "arm_" + pieces[i].name);
+            for (int i = 0; i < pieces.length; i++) specs[i] = GeoSpec.of(key, "arm_" + pieces[i].name.toLowerCase(java.util.Locale.ROOT));
         }
 
         /** 3.61.0: a set whose pieces all read ONE shared texture sheet ({@code textures/entity/<sheet>.png} + {@code <sheet>_glow.png}) while each keeps its own model and animation. */
@@ -76,7 +76,7 @@ public final class NoelleFormRig {
             this.key = key;
             this.pieces = pieces;
             this.specs = new GeoSpec[pieces.length];
-            for (int i = 0; i < pieces.length; i++) specs[i] = GeoSpec.of(key, "arm_" + pieces[i].name).skin(sheet);
+            for (int i = 0; i < pieces.length; i++) specs[i] = GeoSpec.of(key, "arm_" + pieces[i].name.toLowerCase(java.util.Locale.ROOT)).skin(sheet);
         }
 
         public int size() { return pieces.length; }

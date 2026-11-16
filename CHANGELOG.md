@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.1] — Fix: Beast Will forms had no arms or legs on the player's body
+- FIXED: the arm and leg pieces of all 27 Beast Will forms (and the idle animation of the Fenrir arms) were stored under names with capital letters (`armL`, `armR`, `legL`, `legR`). The game only accepts lowercase resource names, so it ignored all 220 files ("Invalid path in pack" in the log) and the 3D forms were drawn with head, body and tail but without arms and legs. The files are now lowercase (`arml`, `armr`, `legl`, `legr`) and the form code looks them up in lowercase. Nothing else changed; the models are the same.
+- Cost: unchanged (same pieces, same budgets); the game now loads 220 more small model files once at start.
+- Not fixed here: the Astralis weapon upgrade table is missing its `item` field, so the old model is drawn for it (logged once, harmless).
+
 ## [4.0.0] — The big update: Ultimate classes, a Magic Knight guide, anime-style effects, boss models and Dragon Ball techniques
 This milestone collects 3.95.1 to 3.105.0 and adds boss rework wave 3. Every old thing is kept; each new look or number has a setting that brings the old one back.
 - NEW (boss rework wave 3): Lucifero (both forms) and the God of Order are Blender models with moving parts (Lucifero has bat wings, horns and a third eye in his second form; the God of Order has robes, halo, ledger and staff, and a Gates form with a second halo and six pages). 16 arc bosses (Heath Grice, Vetto, Lotus Whomalt, Mars, Revchi Salik, Fana, Rhya, Rades Spirito, Patolli, Meliodas, Diane, King, Escanor, Ban, Gowther, Merlin) each get one new signature move at the end of their move list. The 200 Decennial bosses get ten tier families, each with its own visual signature and one extra floor move (circle, donut with a safe middle, or line). Settings: CLIENT `luciferoBlenderModel`, `godOfOrderBlenderModel`; SERVER `bossRework3Moves`, `bossRework3DecennialMoves`.

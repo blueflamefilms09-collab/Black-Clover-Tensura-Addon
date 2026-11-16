@@ -45,7 +45,7 @@ class BeastWillFormsTest {
             BufferedImage img = javax.imageio.ImageIO.read(sheet);
             int total = 0, quads = 0;
             for (String piece : BeastWillFormTable.parts(stem).split(" ")) {
-                Path geo = RES.resolve("geo/entity/" + key + "_arm_" + piece + ".geo.json");
+                Path geo = RES.resolve("geo/entity/" + key + "_arm_" + piece.toLowerCase(java.util.Locale.ROOT) + ".geo.json");
                 assertTrue(Files.exists(geo), geo + " missing");
                 JsonObject g = json(geo).getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject();
                 JsonObject d = g.getAsJsonObject("description");
@@ -70,7 +70,7 @@ class BeastWillFormsTest {
                 assertTrue(cubes > 0, key + " " + piece + " is empty");
                 if (piece.equals("acq")) assertTrue(cubes <= 16, key + ": the Acquire piece is " + cubes + " cubes");
                 else { total += cubes; quads += pq; }
-                if (bones) assertTrue(Files.exists(RES.resolve("animations/entity/" + key + "_arm_" + piece + ".animation.json")), key + " " + piece + " has bones but no animation");
+                if (bones) assertTrue(Files.exists(RES.resolve("animations/entity/" + key + "_arm_" + piece.toLowerCase(java.util.Locale.ROOT) + ".animation.json")), key + " " + piece + " has bones but no animation");
             }
             assertTrue(total <= 400, key + " has " + total + " cubes (cap 400)");
             assertTrue(quads <= 2000, key + " has " + quads + " quads (cap 2000)");
@@ -83,11 +83,11 @@ class BeastWillFormsTest {
         for (String stem : BeastWillFormTable.stems()) {
             String key = "bwf_" + stem;
             for (String piece : BeastWillFormTable.parts(stem).split(" ")) {
-                Path an = RES.resolve("animations/entity/" + key + "_arm_" + piece + ".animation.json");
+                Path an = RES.resolve("animations/entity/" + key + "_arm_" + piece.toLowerCase(java.util.Locale.ROOT) + ".animation.json");
                 if (!Files.exists(an)) continue;
                 clips++;
                 java.util.Map<String, String> parent = new java.util.HashMap<>();
-                for (JsonElement be : json(RES.resolve("geo/entity/" + key + "_arm_" + piece + ".geo.json")).getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject().getAsJsonArray("bones")) {
+                for (JsonElement be : json(RES.resolve("geo/entity/" + key + "_arm_" + piece.toLowerCase(java.util.Locale.ROOT) + ".geo.json")).getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject().getAsJsonArray("bones")) {
                     JsonObject b = be.getAsJsonObject();
                     parent.put(b.get("name").getAsString(), b.has("parent") ? b.get("parent").getAsString() : "");
                 }
