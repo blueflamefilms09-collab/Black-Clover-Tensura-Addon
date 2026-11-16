@@ -27,6 +27,9 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue FAITH_WORSHIP;
     public static final ModConfigSpec.IntValue FAITH_MAX_WORSHIPPERS, FAITH_INVITE_SECONDS, FAITH_RECRUIT_COOLDOWN, FAITH_OFFERING_COOLDOWN, FAITH_GIFT_DISCOUNT, FAITH_TRICKLE_TICKS;
     public static final ModConfigSpec.DoubleValue FAITH_RECRUIT_RANGE, FAITH_OFFERING_RANGE, FAITH_OFFERING_COST;
+    // The eight Faith gods (docs/faith_gods.md)
+    public static final ModConfigSpec.BooleanValue FG_ENABLED;
+    public static final ModConfigSpec.IntValue FG_ASCEND_FAITH, FG_MIN_WORSHIPPERS, FG_MIN_OFFERED, FG_DEVOTION_PCT, FG_POWER_PCT, FG_EP_GATE_PCT, FG_MAX_LINES, FG_ASCEND_COOLDOWN;
 
     // DanMachi
     public static final ModConfigSpec.DoubleValue FIREBOLT_DAMAGE;
@@ -316,6 +319,19 @@ public final class NUConfig {
                 .defineInRange("summonerMasteryPercent", 0.5, 0.0, 5.0);
         b.push("ultimates_fiction_god");
         ALL_FICTION_GOD = b.comment("All Fiction god-class rework (sixteen modes: Deny Skill, Overwrite Rule, Reversal, Mass Fiction, Nothing Sticks, Rewrite Time, the Retcon passive) and Book Maker's lead-in modes (Equalize, Glimpse of the Fiction). false = the ten-mode All Fiction and the two-mode Book Maker of 3.46.0 (needs allFictionRebuilt for All Fiction).").define("allFictionGod", true);
+        b.push("faithGods");
+        FG_ENABLED = b.comment("The eight Faith gods (docs/faith_gods.md): the ritual /faith ascend, the 16 god skills and the god-form evolutions.",
+                        "false = Faith is exactly the 4.3.0 skill (the god skills do nothing, the ritual refuses, nothing evolves).")
+                .define("enabled", true);
+        FG_ASCEND_FAITH = b.comment("Faith points the ritual burns.").defineInRange("ascendFaithCost", 40, 0, 1_000_000);
+        FG_MIN_WORSHIPPERS = b.comment("Worshippers one of the ritual's four proofs asks for (three proofs of four are needed).").defineInRange("minWorshippers", 4, 0, 64);
+        FG_MIN_OFFERED = b.comment("Faith offered by the worshippers, one of the four proofs.").defineInRange("minOffered", 20, 0, 1_000_000);
+        FG_DEVOTION_PCT = b.comment("Percent of extra strength each worshipper gives a god's abilities (at most +100 %).").defineInRange("devotionPercent", 4, 0, 20);
+        FG_POWER_PCT = b.comment("Percent of the god abilities' damage, healing and durations (100 = the table).").defineInRange("powerPercent", 100, 10, 300);
+        FG_EP_GATE_PCT = b.comment("Percent of the EP a god form wants before the Unique evolves (the table is read from the Nightmares wiki: Lord 2M, King 15M, God 30M, Dragon 5M). 0 = mastery alone is enough.")
+                .defineInRange("evolutionEpGatePercent", 100, 0, 1000);
+        FG_MAX_LINES = b.comment("How many god lines one player may follow at once.").defineInRange("maxGodLines", 1, 1, 8);
+        FG_ASCEND_COOLDOWN = b.comment("Wait between two rituals of one player (ticks).").defineInRange("ascendCooldown", 6000, 0, 10_000_000);
         b.pop();
 
         SPEC = b.build();
@@ -340,6 +356,15 @@ public final class NUConfig {
     public static double faithRecruitRange() { return Math.max(2.0, Math.min(32.0, live(FAITH_RECRUIT_RANGE))); }
     public static double faithOfferingRange() { return Math.max(2.0, Math.min(64.0, live(FAITH_OFFERING_RANGE))); }
     public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
+    public static boolean faithGodsEnabled() { return live(FG_ENABLED); }
+    public static int faithGodAscendFaith() { return Math.max(0, live(FG_ASCEND_FAITH)); }
+    public static int faithGodMinWorshippers() { return Math.max(0, Math.min(64, live(FG_MIN_WORSHIPPERS))); }
+    public static int faithGodMinOffered() { return Math.max(0, live(FG_MIN_OFFERED)); }
+    public static int faithGodDevotionPercent() { return Math.max(0, Math.min(20, live(FG_DEVOTION_PCT))); }
+    public static int faithGodPowerPercent() { return Math.max(10, Math.min(300, live(FG_POWER_PCT))); }
+    public static int faithGodEpGatePercent() { return Math.max(0, Math.min(1000, live(FG_EP_GATE_PCT))); }
+    public static int faithGodMaxLines() { return Math.max(1, Math.min(8, live(FG_MAX_LINES))); }
+    public static int faithGodAscendCooldown() { return Math.max(0, live(FG_ASCEND_COOLDOWN)); }
 
     public static boolean shinraRework() { return live(SHINRA_REWORK); }
     public static boolean summonerRework() { return live(SUMMONER_REWORK); }

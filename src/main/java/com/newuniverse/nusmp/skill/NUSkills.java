@@ -277,4 +277,7 @@ public final class NUSkills {
     // ---- 3.85.0: Lord of Gluttonous Greed (Ultimate), the skill of the Black Sword Greed (greed package). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, LordOfGluttonousGreedSkill> LORD_OF_GLUTTONOUS_GREED =
             SKILLS.register("lord_of_gluttonous_greed", LordOfGluttonousGreedSkill::new);
+
+    // ---- 4.4.0: the eight Faith gods, 16 skills (a Unique "Faith of X" and its god form each), registered last so no older order changes (docs/faith_gods.md)
+    public static final int FAITH_GODS = FaithGods.registerAll(SKILLS);
 }

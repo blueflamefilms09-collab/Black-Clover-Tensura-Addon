@@ -181,6 +181,7 @@ public class NUSMP {
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
         com.newuniverse.nusmp.skill.FaithSelfTests.register();                                              // faith fix: self-tests faith.* (docs/faith_fix.md)
+        com.newuniverse.nusmp.skill.FaithGodSelfTests.register();                                           // the eight Faith gods: self-tests gods.* (docs/faith_gods.md)
         com.newuniverse.nusmp.skill.UltimateClassSelfTests.register();                                      // Ultimate classes: self-tests ultclass.* (docs/ultimate_classes.md)
         com.newuniverse.nusmp.skill.ArgonautSelfTests.register();                                           // Argonaut rework: self-tests argonaut.* (docs/argonaut_rework.md)
         com.newuniverse.nusmp.skill.ArgonautMerge.register();                                                // Argonaut rework: a Firebolt holder is moved to Argonaut at login
@@ -561,6 +562,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(FaithCommand::register);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithWorship::onLogout);                  // faith fix: open invitations and offering clocks leave with the player
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> com.newuniverse.nusmp.skill.FaithWorship.clear());
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::register);                      // the eight Faith gods: /faith ascend|gods and the admin give command
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::onLogout);                      // the ritual clock leaves with the player
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::onServerStopping);
         NeoForge.EVENT_BUS.addListener(LiarisFreeseSkill::onKill);
         NeoForge.EVENT_BUS.addListener(SkillEvolution::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(GrimoireAcceptance::onPlayerTick);
