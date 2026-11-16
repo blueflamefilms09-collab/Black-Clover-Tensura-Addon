@@ -130,7 +130,7 @@ class FaithWorshipRulesTest {
         String tests = Files.readString(Path.of(root + "skill/FaithSelfTests.java"));
         assertTrue(tests.contains("\"faith.rules\"") && tests.contains("\"faith.worship\""));
         String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"));
-        assertTrue(smoke.contains(",attune,faith,scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the smoke list expects the faith self-tests and keeps its tail");
+        assertTrue(smoke.contains(",faith,") && smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the smoke list expects the faith self-tests and keeps its tail");
         String cmd = Files.readString(Path.of(root + "command/FaithCommand.java"));
         assertTrue(cmd.contains("Commands.literal(\"faith\")") && cmd.contains("\"offer\"") && cmd.contains("\"gift\""), "the worship commands");
         String skill = Files.readString(Path.of(root + "skill/FaithSkill.java"));

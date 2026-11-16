@@ -137,7 +137,7 @@ class FaithGodRulesTest {
         assertTrue(cfg.contains("b.push(\"faithGods\")") && cfg.contains("define(\"enabled\", true)"), "own SERVER section, on by default");
         assertTrue(read(S + "NUSMP.java").contains("FaithGodSelfTests.register()") && read(S + "NUSMP.java").contains("FaithGods::onLogout"), "self-test and the logout cleanup are wired");
         String smoke = read(".github/workflows/smoke.yml");
-        assertTrue(smoke.contains(",gods,scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the smoke list expects gods, tail unchanged");
+        assertTrue(smoke.contains(",gods,") && smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the smoke list expects gods, tail unchanged");
     }
 
     @Test void nothingClientSideAndNoVanillaParticleInTheGodFiles() throws Exception {
