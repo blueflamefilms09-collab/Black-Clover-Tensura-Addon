@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.92.0] — Boss Cores and four armour families (floor 250 and deeper)
+- NEW (asked for: "after floor 250 every boss would drop a material as a core in an armour set type ... make this a system"): every Decennial boss on floor 250 or deeper (either road) pays Boss Cores once per hall: 2 / 3 / 4 / 5 cores at floors 250 / 500 / 750 / 1000. The level picks the family: Aegis, Striker, Wellspring or Ascendant (Wellspring also picks its resource).
+- NEW: seven cores and seven armour sets of four pieces (28 pieces), crafted from cores only (helmet 3, chestplate 5, leggings 4, boots 3):
+  - Aegis: more max health per piece, and less damage from other mods' damage types (any type outside `minecraft`; add exact ids such as Quenched's Coronzon type in `extraResistedTypes`).
+  - Striker: more attack damage per piece for any weapon; 2 pieces: hits deal more; 4 pieces: a second damage type (an extra share of each hit as magic damage, at most 3 a tick).
+  - Wellspring (Magicule, Aura, Ki, Nihility): refills that resource each second. Ki is the magicule in this mod, so the Ki set refills magicule, 1.5x for a Saiyan. Nihility has no pool: each second it shortens active skill cooldowns, and 4 pieces wipe one harmful effect.
+  - Ascendant (progression): a kill adds a share of the victim's EP to your base EP (capped, nothing for player kills by default). Telesma and Malice (Quenched's mod) are NOT done: no API could be checked, so the bridge only detects the mod and does nothing.
+- Set bonuses of different sets share a cap (`maxSetBonusTiers`, 2). SERVER config `nusmp-boss-cores-server.toml`, every number configurable; `enabled=false` turns the system off.
+- KEPT: the boss relic drop, the loot armour (Drake-Scale, Shadowsteel), relics and every older drop are unchanged.
+- NEW: `BossCoreRules` (pure), `BossCoreRulesTest`, `BossCoreSourceScanTest`, `BossCoreAssetsTest`, self-tests `cores.rules`, `cores.items`, `cores.world`, `tools/gen_boss_core_assets.py` (35 icons, 14 layer textures, 28 recipes), `docs/boss_cores.md`.
+- Not done: 3D models in Blender for the armour (rule 14): the pieces use vanilla-style layer textures for now. Balance numbers are first guesses.
+- Cost: one item drop per boss kill; once a second per player wearing a piece (four slot reads, a few multiplications); no packets, no entities. Not compiled before CI, not seen in a game.
+
 ## [3.91.0] — damage grows with the player; grimoires hit harder
 - NEW (asked for: "buff the damage ... so they're actually good for late game ... or make them scale with the player"): late-game scaling. Every addon hit a player deals through the balance law grows with that player's max magicule: x1 up to 10,000, +1.25 per tenfold above (x2.25 at 100k, x3.5 at 1M, x4.75 at 10M), at most x6 (reached at 100M). Applied once per hit, before the PvP hit cap (PvP stays capped). Players only: mobs and bosses keep their damage. It reaches grimoire pages, weapon arts, hero weapon skills, Beast Will and Djinn acts, Saiyan, Mana Core, Mana Method, spirit control, Shadow, Storm, Veldanava and more (list in `docs/damage_scaling.md`).
 - NEW (asked for: "buff grimoire damage because it seems like it's bad"): grimoire spells x1.75 (a mid page goes from 10-14 to 18-25, level with a weapon art at the same tier).
