@@ -33,7 +33,7 @@ final class SkillAnime2More {
         switch (SkillAnime2Vfx.skillStyle(inst.power)) {
             case 1 -> hati(inst, ctx, buf, age, from);
             case 2 -> hawk(inst, ctx, buf, age, from, R);
-            case 3 -> spiritCard(inst, ctx, buf, age, from, R);
+            case 3 -> spiritSigil(inst, ctx, buf, age, from, R);
             case 4 -> summon(inst, ctx, buf, age, from, R);
             case 5 -> shishou(inst, ctx, buf, age, from, R);
             case 6 -> armor(inst, ctx, buf, age, from);
@@ -112,13 +112,14 @@ final class SkillAnime2More {
     }
 
     // ------------------------------------------------------------------ SPIRIT CARD
-    private static void spiritCard(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf, float age, Vector3f c, float R) {
+    private static void spiritSigil(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf, float age, Vector3f c, float R) {
         int col = inst.color;
         float fade = life(inst, age, 2, 8), pop = VfxAnim.easeOutBack(ramp(age, 0, 6f));
         Vector3f top = at(c, 0, 2.5f, 0);
         buf.billboard(ctx, GLOW, VfxBlend.ADD, top, 1.6f * pop, 0, al(col, 0.4f * fade));
-        buf.billboard(ctx, CARD, VfxBlend.ALPHA, top, 1.0f * pop, Mth.sin(age * 0.15f) * 0.25f, al(col, 0.95f * fade));
-        buf.billboard(ctx, CARD, VfxBlend.ADD, top, 1.05f * pop, Mth.sin(age * 0.15f) * 0.25f, al(hot(col, 0.6f), 0.7f * fade));
+        // owner order (release 1.110.0): never a flat picture of a card; the Spirit Card shows a floating rune star and a rune circle on the ground instead
+        buf.billboard(ctx, SPARKLE, VfxBlend.ADD, top, 1.1f * pop, age * 0.12f, al(hot(col, 0.6f), 0.9f * fade));
+        buf.plane(RUNE, VfxBlend.ALPHA, VfxPose.ground(at(c, 0, 0.06f, 0)).spin(age * 0.05f), 1.2f * pop, al(col, 0.7f * fade));
         float rr = Math.min(R, 16f) * VfxAnim.easeOutCubic(ramp(age, 0, 12f));
         groundRing(ctx, buf, c, rr * 0.9f, rr, age * 0.02f, col, 0.7f * fade * (1 - ramp(age, 8f, 12f)));
         RandomSource r = inst.random();
