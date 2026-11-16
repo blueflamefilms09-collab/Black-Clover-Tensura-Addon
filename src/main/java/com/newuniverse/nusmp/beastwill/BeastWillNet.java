@@ -155,7 +155,8 @@ public final class BeastWillNet {
     }
 
     static void onAction(ServerPlayer p, int op, int arg) {
-        if (!valid(op, arg) || !p.isAlive()) return;                 // a key pressed on the death screen must not start a form on the dead body
+        if (!valid(op, arg)) return;
+        if (!p.isAlive()) return;                                    // a key pressed on the death screen must not start a form on the dead body
         BeastWillManager.onAction(p, op, arg);
     }
 
