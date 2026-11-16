@@ -19,7 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class UniteState {
     private UniteState() {}
 
-    private static final String KIND = "nusmp_unite_kind", UNTIL = "nusmp_unite_until", OLD = "nusmp_unite_old";
+    public static final String KIND = "nusmp_unite_kind", UNTIL = "nusmp_unite_until", OLD = "nusmp_unite_old";
 
     private static ResourceLocation id(String n) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", "unite_" + n); }
 

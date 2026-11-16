@@ -92,6 +92,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
     public static final ModConfigSpec.BooleanValue SHINRA_CANON;                                         // Shinra canon pass (docs/shinra_rework.md, Fire Force wiki)
     public static final ModConfigSpec.BooleanValue SHINRA_REWORK;                                        // Shinra rework (docs/shinra_rework.md)
+    public static final ModConfigSpec.BooleanValue TRANSFORM_RESET_ON_DEATH;                                                // transformations.resetOnDeath (core.xform.TransformGuard, docs/transformation_fixes.md)
     public static final ModConfigSpec.BooleanValue ALL_FICTION_GOD, ALL_FICTION_CANON;                                      // All Fiction god-class rework (docs/all_fiction_rework.md)
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
@@ -347,6 +348,12 @@ public final class NUConfig {
         ALL_FICTION_CANON = b.comment("All Fiction / Book Maker canon pass (Medaka Box wiki, docs/all_fiction_rework.md): All Fiction cannot erase another Minus (a player holding Book Maker or any Ultimate), Undo and Erase Effects refuse when there is nothing to erase, new modes Erase Presence and April Fiction (a timed erase); Book Maker's screw does almost no damage and drags the target's attack and armour down toward yours for a few seconds, plus the mastered mode Leg Eating Forest. false = the guess-era behaviour of allFictionGod (needs allFictionGod).").define("allFictionCanon", true);
         b.pop();
 
+        b.push("transformations");
+        TRANSFORM_RESET_ON_DEATH = b.comment("Every transformation, form, mode armour and look of a player ends when the player dies and nothing resumes in the new body (core.xform.TransformGuard: persistent form flags, form modifiers, the render layers and the form skills' own switches are cleared on death and again on respawn).",
+                        "false = the old behaviour exactly: the guard does nothing, each system keeps what it did on its own.")
+                .define("resetOnDeath", true);
+        b.pop();
+
         SPEC = b.build();
     }
 
@@ -359,6 +366,8 @@ public final class NUConfig {
 
     /** The All Fiction god-class modes and Book Maker's lead-in modes (default on before the SERVER config is loaded, as the rebuild is). */
     public static boolean allFictionGod() { return live(ALL_FICTION_GOD); }
+    /** transformations.resetOnDeath: forms end on death and nothing resumes (default on, also before the SERVER config is loaded). */
+    public static boolean transformResetOnDeath() { return live(TRANSFORM_RESET_ON_DEATH); }
     /** The Medaka Box canon pass on top of the god-class modes (default on before the SERVER config is loaded). */
     public static boolean allFictionCanon() { return live(ALL_FICTION_CANON); }
     public static boolean faithWorship() { return live(FAITH_WORSHIP); }

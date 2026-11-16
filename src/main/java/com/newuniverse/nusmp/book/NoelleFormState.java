@@ -28,7 +28,7 @@ import net.minecraft.world.effect.MobEffects;
 public final class NoelleFormState {
     private NoelleFormState() {}
 
-    static final String AFTER = "nusmp_noelle_black_after";
+    public static final String AFTER = "nusmp_noelle_black_after";
     private static boolean registered;
 
     /** Registers the per-player tick once (called from NUSMP). */

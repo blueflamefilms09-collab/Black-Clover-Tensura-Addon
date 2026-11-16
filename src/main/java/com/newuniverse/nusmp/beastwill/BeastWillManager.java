@@ -69,7 +69,7 @@ public final class BeastWillManager {
     /** Called for every server player every tick; costs one lookup for a player with no will. */
     public static void tick(ServerPlayer p) {
         BeastWillState s = BeastWillStore.peek(p);
-        if (s == null) return;
+        if (s == null || !p.isAlive()) return;          // a dead body is not upkept: its record was dropped at death and must not be rebuilt with the passive modifiers on it
         Run r = RUN.get(p.getUUID());
         if (r == null) {
             if (s.wills.isEmpty()) return;

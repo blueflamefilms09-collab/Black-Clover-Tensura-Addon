@@ -43,6 +43,26 @@ public final class PlayerAuras {
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new PlayerAuraPayload(p.getId(), a.ordinal(), 0, 0));
     }
 
+    /**
+     * Ends every aura of the player at once (death, a form reset): the server table is dropped, and one small clear packet per aura that was still running goes to the players who can see the
+     * player (never to everyone), so no client keeps drawing a lease that outlives the body, and a viewer who starts tracking the respawned body is not replayed a stale one. Bounded by the number of
+     * auras that were running (a handful); a body with no connection (a stand-in in a self-test) only has its table cleared.
+     */
+    public static int clearAll(ServerPlayer p) {
+        var m = ACTIVE.remove(p.getUUID());
+        if (m == null) return 0;
+        long now = p.level().getGameTime();
+        int sent = 0;
+        for (var en : m.entrySet()) {
+            if (now >= en.getValue()[1] || p.connection == null) continue;
+            try {
+                PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new PlayerAuraPayload(p.getId(), en.getKey().ordinal(), 0, 0));
+                sent++;
+            } catch (NullPointerException noConnection) { /* a body with no network: nothing to tell */ }
+        }
+        return sent;
+    }
+
     public static boolean active(LivingEntity e, Aura a) {
         var m = ACTIVE.get(e.getUUID());
         long[] w = m == null ? null : m.get(a);

@@ -18,7 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 public final class DevilFormLimit {
     private DevilFormLimit() {}
 
-    static final String SINCE = "nusmp_devil_form_since", AFTER = "nusmp_devil_form_after_until";
+    public static final String SINCE = "nusmp_devil_form_since", AFTER = "nusmp_devil_form_after_until";
 
     private static int limitSeconds() {
         try { return NUConfig.DEVIL_FORM_LIMIT_SECONDS.get(); } catch (RuntimeException | LinkageError e) { return ArmourRules.DEVIL_LIMIT_SECONDS; }

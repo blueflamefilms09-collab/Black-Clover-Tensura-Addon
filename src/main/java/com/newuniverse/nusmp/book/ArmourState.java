@@ -43,7 +43,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class ArmourState {
     private ArmourState() {}
 
-    static final String KEY = "nusmp_armour";
+    public static final String KEY = "nusmp_armour";
     private static final ResourceLocation M_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_speed"),
             M_ATTACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_attack"),
             M_KNOCKBACK = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "armour_knockback");

@@ -89,6 +89,7 @@ public final class SaiyanManager {
     public static void tick(ServerPlayer p) {
         SaiyanState s = SaiyanStore.peek(p);
         if (s == null || !s.saiyan) return;
+        if (!p.isAlive()) return;          // a dead body (the death screen) is not upkept: its record was dropped at death and must not be rebuilt, its modifiers must not come back
         Run r = runOf(p);
         long now = p.level().getGameTime();
         if ((p.tickCount % 20) == 0) second(p, s, r, now);
@@ -327,7 +328,7 @@ public final class SaiyanManager {
     /** Login, respawn and change of dimension: the modifiers are rebuilt from the saved progress and the client gets the state again. */
     static void onEnter(ServerPlayer p) {
         SaiyanState s = SaiyanStore.peek(p);
-        RUN.remove(p.getUUID());
+        endLook(p, RUN.remove(p.getUUID()));          // a change of dimension drops the form: its look on the clients ends with it, not up to three seconds later
         if (s == null || !s.saiyan) {
             if (s != null) {
                 SaiyanAttributes.clear(p);
@@ -364,10 +365,16 @@ public final class SaiyanManager {
     static void onLogout(ServerPlayer p) { cleanRuntime(p); }
 
     static void cleanRuntime(ServerPlayer p) {
-        RUN.remove(p.getUUID());
+        endLook(p, RUN.remove(p.getUUID()));
         SaiyanRitual.end(p);
         SaiyanAttributes.clear(p);
         SaiyanFlight.release(p);
+    }
+
+    /** The form of a dropped record is over: its look (the lease the clients hold) ends now instead of running out. A record with no form, or none, costs nothing. */
+    private static void endLook(ServerPlayer p, Run old) {
+        if (old == null || old.form.isEmpty()) return;
+        SaiyanFormEngine.lookEnd(p, SaiyanFormEngine.active(old));
     }
 
     static void clearAll() { RUN.clear(); }

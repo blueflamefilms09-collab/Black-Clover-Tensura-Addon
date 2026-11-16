@@ -33,7 +33,7 @@ public final class ModeArmor {
          */
         WIND_SPIRIT_DIVE_YUNO }
 
-    private static final String KEY = "nusmp_mode_armor", UNTIL = "nusmp_mode_armor_until", YUNO = "nusmp_mode_armor_yuno";
+    public static final String KEY = "nusmp_mode_armor", UNTIL = "nusmp_mode_armor_until", YUNO = "nusmp_mode_armor_yuno";
 
     private ModeArmor() {}
 

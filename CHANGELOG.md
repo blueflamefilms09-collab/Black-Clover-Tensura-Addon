@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.14.2] — Transformations no longer bug on death
+- FIXED (server setting `transformations.resetOnDeath`, default on; off = the old behaviour): a shared `TransformGuard` ends every form on death and respawn and nothing resumes. Seven bugs: the Black Form survived death and came back after respawn with its armour, +25 % attack and speed; the Devil Union, Devil Dive and Noelle aftermath flags were never cleared on death; the mode-armour and Unite flags are now also swept; render layers (auras) outlived the body so the corpse was still drawn and new viewers saw the stale effect; the Saiyan look stayed on other players' screens up to 3 s after a silent form drop; a dead body kept ticking Saiyan and Beast Will upkeep and a form key sent from the death screen was accepted. Details and per-system table: `docs/transformation_fixes.md`.
+- NEW: `docs/keybind_consolidation.md` and `tools/audit/keybind_inventory.py`: an audit of the mod's 56 keybinds (21 collide with another key) and a plan to fold them into hub skills (no code changed by it).
+- KEPT: every form, modifier and skill; permanent racial bonuses are never swept; the End return, dimension change, logout and login are left to each system.
+- Cost: no per-tick work and no per-player map; at most one clear packet per running aura layer on death, to tracking players only.
+- Not seen in a game; the Java is compiled only by CI. Unconfirmed: whether NeoForge copies the player's persistent data into the respawned body, and how ManasCore copies the skill tag (the guard ends the flag on both bodies either way).
+
 ## [4.14.1] — Build fix: Black Clover looks' fine/fx layers
 - FIXED: `GeoAssetsTest` demanded a texture named after each geo file, but the Black Clover looks' `_fine` and `_fx` layers draw on the look's single atlas (named in the look's extras). The test now maps those layers to their atlas. No game files changed: the 4.14.0 looks are unchanged.
 - Cost: none (test only).

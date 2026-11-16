@@ -188,6 +188,8 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.ArgonautSelfTests.register();                                           // Argonaut rework: self-tests argonaut.* (docs/argonaut_rework.md)
         com.newuniverse.nusmp.skill.ArgonautMerge.register();                                                // Argonaut rework: a Firebolt holder is moved to Argonaut at login
         com.newuniverse.nusmp.skill.SummonerSelfTests.register();                                           // Summoner rework: self-tests summoner.* (docs/summoner_rework.md)
+        com.newuniverse.nusmp.core.xform.TransformGuard.register(NeoForge.EVENT_BUS);                        // forms end on death and nothing resumes (setting transformations.resetOnDeath; docs/transformation_fixes.md)
+        com.newuniverse.nusmp.core.xform.XformGuardSelfTests.register();                                    // self-tests xformguard.* (docs/transformation_fixes.md)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.NUSkill::onLogin);                       // Ultimate classes: earned mastery moves to the class's max at the same fraction
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
