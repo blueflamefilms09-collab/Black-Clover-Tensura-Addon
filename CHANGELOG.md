@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.91.0] — damage grows with the player; grimoires hit harder
+- NEW (asked for: "buff the damage ... so they're actually good for late game ... or make them scale with the player"): late-game scaling. Every addon hit a player deals through the balance law grows with that player's max magicule: x1 up to 10,000, +1.25 per tenfold above (x2.25 at 100k, x3.5 at 1M, x4.75 at 10M), at most x6 (reached at 100M). Applied once per hit, before the PvP hit cap (PvP stays capped). Players only: mobs and bosses keep their damage. It reaches grimoire pages, weapon arts, hero weapon skills, Beast Will and Djinn acts, Saiyan, Mana Core, Mana Method, spirit control, Shadow, Storm, Veldanava and more (list in `docs/damage_scaling.md`).
+- NEW (asked for: "buff grimoire damage because it seems like it's bad"): grimoire spells x1.75 (a mid page goes from 10-14 to 18-25, level with a weapon art at the same tier).
+- SERVER settings (`nusmp-server.toml`, `[black_clover]`): `lateGameScaling` (true), `lateGameScalingBaseline` (10000), `lateGameScalingCap` (6), `grimoireDamageMultiplier` (1.75). Off / cap 1 / 1.0 = the old damage.
+- Not covered yet: the caster-less book passives, about 29 sites that compute their own EP scale, the legacy `GrimoireMagicSkill`, the god skills, devil and spirit damage that skips the balance law. Grimoire VFX not changed in this release (weakest seen in code: Cotton, Mirror, Plant, Sealing, Thread).
+- NEW: `LateGameScaling` (pure), `LateGameScalingTest`, `LateGameScalingSourceScanTest`, self-tests `scaling.rules`, `scaling.live`.
+- Cost: a few multiplications and one magicule read per hit; no packets. Not compiled before CI, not seen in a game.
+
 ## [3.90.0] — Fenrir reworked to the Norse myth
 - REPLACED (owner's pasted Norse-myth text): the Fenrir Beast Will skills are the wolf of the myth instead of God of War's: Fenrir, Devourer of the Gods (Ultimate) and Wolf of Limitless Growth (Unique); passives Limitless Growth (more attack), Hide No Chain Could Hold (armour), Cunning of Loki's Son; actives The Jaws That Took Tyr's Hand (now also bleeds), Leyding and Dromi Snap; finisher Ragnarok: Swallow the Sun (blinds instead of freezing). The will's lore, ability names and incantation follow.
 - KEPT: every id, all numbers, the look and the icons, so old saves load unchanged. Table in `docs/beast_skills.md`.
