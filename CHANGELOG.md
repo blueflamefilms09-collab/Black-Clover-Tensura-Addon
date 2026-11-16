@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.101.0] — Skill effects wave 3: Tensura and DanMachi unique skills in their anime style
+- NEW (asked for: anime-style effects for skills): 21 skills now draw real shapes: Gate of Babylon (golden portals, falling weapons, Gae, chains, Ea), Firebolt, Adolla Burst and the Devil's Footprints dash, Hero's Argonaut (chimes and beam), Wynn Fimbulvetr, Hestia, Rea Laevateinn, Freya, All Fiction (screws), Black Wings, Faith, Goddess of Faith, Hephaestus, Uchide no Kozuchi, Unbreakable Will, Immortal Will, Hell Walker, Hell Conqueror and Futsunomitama.
+- NEW: 9 shapes appended after `DEVIL_HIT` (SKILL_GATE ... SKILL_SIGIL, the sigil has 8 styles), `SkillAnimeLayer`, `SkillAnimeFx`, 20 textures from `tools/gen_skill_anime_vfx_textures.py`, previews `docs/vfx_remake/previews/skill_*.png`.
+- KEPT: the old effects still play. CLIENT setting `skills.classicVfx` (`nusmp-skill-anime-vfx-client.toml`, default off) = only the old look.
+- Not done yet: Liaris Freese, Hati, Hawk Eye, Spirit Card, Lord of Summons, Book Maker, Shishou and the Gate's Armour, Vimana, King and Elixir modes. The anime references are from memory (the wikis were blocked).
+- Cost: one effect packet per cast to players within 96 blocks (Black Wings one every 2 seconds while gliding); at most 352 of the 400 vertices per effect; no server work.
+
 ## [3.100.0] — Boss rework wave 2: Blender models for Goliath and the Minotaur
 - NEW (owner's boss rework): the Goliath (6.65 blocks tall, stone body with a glowing core) and the Minotaur (double-bitted great axe) are real Blender models drawn from a mesh file, in eight moving parts (torso, head, both arms and forearms, both legs). They breathe, walk by the ground they cover, swing, slam, stomp, roar, punch, hurl, rise, flinch and fall. Asterius keeps his old model.
 - NEW: far away they use a lighter copy of the model (beyond 40 blocks) and the glow stops beyond 48 blocks. Mesh files for entities are packed small in the jar (about 190 KB instead of 1.8 MB).
