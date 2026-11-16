@@ -31,6 +31,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue LUCIFERO_NEW_BODY;
     /** Black Clover bosses on the redesigned player model (docs/bc_playermodels.md), key {@code bossLooks.bcPlayerModel}, CLIENT config like every look option here (it changes only how a boss is drawn). */
     public static final ModConfigSpec.BooleanValue BC_PLAYER_MODEL;
+    /** Wave 2 (docs/bosses_bc_wave2.md), key {@code bossLooks.godOfOrderPlayerModel}: the God of Order on the redesigned player model instead of his Blender body (off by default: the Blender body stays). CLIENT config. */
+    public static final ModConfigSpec.BooleanValue GOD_OF_ORDER_PLAYER_MODEL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -56,7 +58,10 @@ public final class PlayerModelOptions {
         b.pop();
         b.push("bossLooks");
         BC_PLAYER_MODEL = b.comment("Black Clover bosses (Lucius, the Dark Triad, Zagred, Lucifero and the clones of Lucius) on the redesigned player model: anime face, layered cube hair, crowns, horns, bat wings, "
-                + "bracers, mantles, halo and a faint shimmer (docs/bc_playermodels.md). Off = exactly the previous look, Lucifero included (his Blender body returns).").define("bcPlayerModel", true);
+                + "bracers, mantles, halo and a faint shimmer (docs/bc_playermodels.md). Wave 2 adds the Dark Disciples, the Devil Avatar, Heath Grice, Lotus Whomalt, Mars, Revchi Salik, Vetto and Morris "
+                + "(docs/bosses_bc_wave2.md). Off = exactly the previous look, Lucifero included (his Blender body returns).").define("bcPlayerModel", true);
+        GOD_OF_ORDER_PLAYER_MODEL = b.comment("Draw the God of Order on the redesigned player model (hood, white robe, gold stole, closed serene face; docs/bosses_bc_wave2.md) instead of his Blender body. "
+                + "Off (default) = the Blender body (or the kit's look when godOfOrderBlenderModel is off).").define("godOfOrderPlayerModel", false);
         b.pop();
         SPEC = b.build();
     }
@@ -101,7 +106,7 @@ public final class PlayerModelOptions {
     public static boolean blender(String mesh) {
         try {
             if (mesh.startsWith("lucifero")) return !bcPlayerModel() && LUCIFERO_BLENDER.get();      // the redesigned player-model Lucifero wins while bossLooks.bcPlayerModel is on
-            if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get();
+            if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get() && !godOfOrderPlayerModel();      // the selectable player-model look wins while it is on
             return true;
         } catch (IllegalStateException notLoaded) {
             return true;
@@ -114,6 +119,15 @@ public final class PlayerModelOptions {
             return BC_PLAYER_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return true;
+        }
+    }
+
+    /** True when the God of Order is drawn with the redesigned player-model look (the config value; false while it is not loaded: the Blender body stays the default). */
+    public static boolean godOfOrderPlayerModel() {
+        try {
+            return GOD_OF_ORDER_PLAYER_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return false;
         }
     }
 

@@ -31,7 +31,7 @@ public final class BcAudit {
         PlayerLookTables.Merged merged = PlayerLookTables.load(open);
         Map<String, PlayerLook> looks = merged.looks();
         if (BcLooks.oldIds().isEmpty()) bad.add("BcLooks has no entries");
-        for (String old : BcLooks.oldIds()) {
+        for (String old : BcLooks.allOldIds()) {
             String id = BcLooks.of(old);
             if (!looks.containsKey(old)) bad.add("the old look '" + old + "' is gone: nothing is removed (rule 2)");
             PlayerLook l = looks.get(id);
@@ -58,7 +58,7 @@ public final class BcAudit {
                 quads += q[0];
                 if (x.model().endsWith("_fx")) fxQuads += q[0];
                 if (x.model().endsWith("_fx") && q[1] > 0 && !x.glow()) bad.add(id + ": the fx model has a glow map but not the glow flag");
-                if (!x.model().endsWith("_fx") && x.glow()) bad.add(id + ": only the fx model glows (the others would draw a second additive pass for nothing)");
+                if (!x.model().endsWith("_fx") && !x.model().contains("_keep") && x.glow()) bad.add(id + ": only the fx model glows (the others would draw a second additive pass for nothing; a kept old prop model may)");
             }
             if (models == 0) bad.add(id + " has no pmx_bc_ extras model");
             if (quads > MAX_QUADS) bad.add(id + ": " + quads + " quads of new parts, over the budget of " + MAX_QUADS);

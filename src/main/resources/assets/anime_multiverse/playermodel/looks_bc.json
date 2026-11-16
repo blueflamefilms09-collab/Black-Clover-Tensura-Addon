@@ -53,6 +53,349 @@
     }
    ]
   },
+  "bc_dark_disciple": {
+   "skin": "bc_dark_disciple",
+   "slim": false,
+   "scale": 1.0133,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_dark_disciple",
+     "texture": "pmx_dark_disciple",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dark_disciple",
+     "texture": "pmx_bc_dark_disciple",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dark_disciple_fx",
+     "texture": "pmx_bc_dark_disciple",
+     "glow": true
+    }
+   ]
+  },
+  "bc_dark_disciple_astaroth": {
+   "skin": "bc_dark_disciple_astaroth",
+   "slim": false,
+   "scale": 1.0133,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_dark_disciple",
+     "texture": "pmx_dark_disciple_astaroth",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dark_disciple_astaroth",
+     "texture": "pmx_bc_dark_disciple_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dark_disciple_astaroth_fx",
+     "texture": "pmx_bc_dark_disciple_astaroth",
+     "glow": true
+    }
+   ]
+  },
+  "bc_dark_disciple_beelzebub": {
+   "skin": "bc_dark_disciple_beelzebub",
+   "slim": false,
+   "scale": 1.0133,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_dark_disciple",
+     "texture": "pmx_dark_disciple_beelzebub",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dark_disciple_beelzebub",
+     "texture": "pmx_bc_dark_disciple_beelzebub",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dark_disciple_beelzebub_fx",
+     "texture": "pmx_bc_dark_disciple_beelzebub",
+     "glow": true
+    }
+   ]
+  },
+  "bc_dark_disciple_lucifero": {
+   "skin": "bc_dark_disciple_lucifero",
+   "slim": false,
+   "scale": 1.0133,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_dark_disciple",
+     "texture": "pmx_dark_disciple_lucifero",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dark_disciple_lucifero",
+     "texture": "pmx_bc_dark_disciple_lucifero",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dark_disciple_lucifero_fx",
+     "texture": "pmx_bc_dark_disciple_lucifero",
+     "glow": true
+    }
+   ]
+  },
+  "bc_dark_disciple_megicula": {
+   "skin": "bc_dark_disciple_megicula",
+   "slim": false,
+   "scale": 1.0133,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_dark_disciple",
+     "texture": "pmx_dark_disciple_megicula",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dark_disciple_megicula",
+     "texture": "pmx_bc_dark_disciple_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dark_disciple_megicula_fx",
+     "texture": "pmx_bc_dark_disciple_megicula",
+     "glow": true
+    }
+   ]
+  },
+  "bc_devil_avatar": {
+   "skin": "bc_devil_avatar",
+   "slim": false,
+   "scale": 1.52,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_devil_avatar",
+     "texture": "pmx_bc_devil_avatar",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_fine",
+     "texture": "pmx_bc_devil_avatar",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_fx",
+     "texture": "pmx_bc_devil_avatar",
+     "glow": true
+    }
+   ]
+  },
+  "bc_devil_avatar_form2": {
+   "skin": "bc_devil_avatar_form2",
+   "slim": false,
+   "scale": 1.52,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_devil_avatar_form2",
+     "texture": "pmx_bc_devil_avatar_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_form2_fine",
+     "texture": "pmx_bc_devil_avatar_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_form2_fx",
+     "texture": "pmx_bc_devil_avatar_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_devil_avatar_megicula": {
+   "skin": "bc_devil_avatar_megicula",
+   "slim": false,
+   "scale": 1.52,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_devil_avatar_megicula",
+     "texture": "pmx_bc_devil_avatar_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_megicula_fine",
+     "texture": "pmx_bc_devil_avatar_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_megicula_fx",
+     "texture": "pmx_bc_devil_avatar_megicula",
+     "glow": true
+    }
+   ]
+  },
+  "bc_devil_avatar_megicula_form2": {
+   "skin": "bc_devil_avatar_megicula_form2",
+   "slim": false,
+   "scale": 1.52,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_devil_avatar_megicula_form2",
+     "texture": "pmx_bc_devil_avatar_megicula_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_megicula_form2_fine",
+     "texture": "pmx_bc_devil_avatar_megicula_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_devil_avatar_megicula_form2_fx",
+     "texture": "pmx_bc_devil_avatar_megicula_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_god_of_order": {
+   "skin": "bc_god_of_order",
+   "slim": false,
+   "scale": 1.7067,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_god_of_order",
+     "texture": "pmx_god_of_order",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_god_of_order",
+     "texture": "pmx_bc_god_of_order",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_god_of_order_fine",
+     "texture": "pmx_bc_god_of_order",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_god_of_order_fx",
+     "texture": "pmx_bc_god_of_order",
+     "glow": true
+    }
+   ]
+  },
+  "bc_god_of_order_form2": {
+   "skin": "bc_god_of_order_form2",
+   "slim": false,
+   "scale": 1.7067,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_god_of_order_form2",
+     "texture": "pmx_god_of_order_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_god_of_order_form2",
+     "texture": "pmx_bc_god_of_order_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_god_of_order_form2_fine",
+     "texture": "pmx_bc_god_of_order_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_god_of_order_form2_fx",
+     "texture": "pmx_bc_god_of_order_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_heath_grice": {
+   "skin": "bc_heath_grice",
+   "slim": true,
+   "scale": 1.1093,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_heath_grice",
+     "texture": "pmx_heath_grice",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_heath_grice",
+     "texture": "pmx_bc_heath_grice",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_heath_grice_fine",
+     "texture": "pmx_bc_heath_grice",
+     "glow": false
+    }
+   ]
+  },
+  "bc_heath_grice_form2": {
+   "skin": "bc_heath_grice_form2",
+   "slim": true,
+   "scale": 1.1093,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_heath_grice_form2_keep",
+     "texture": "pmx_bc_heath_grice_form2_keep",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_heath_grice_form2",
+     "texture": "pmx_bc_heath_grice_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_heath_grice_form2_fine",
+     "texture": "pmx_bc_heath_grice_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_heath_grice_form2_fx",
+     "texture": "pmx_bc_heath_grice_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_lotus_whomalt": {
+   "skin": "bc_lotus_whomalt",
+   "slim": true,
+   "scale": 1.0933,
+   "extras": [
+    {
+     "model": "pmx_lotus_whomalt",
+     "texture": "pmx_lotus_whomalt",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_lotus_whomalt",
+     "texture": "pmx_bc_lotus_whomalt",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_lotus_whomalt_fine",
+     "texture": "pmx_bc_lotus_whomalt",
+     "glow": false
+    }
+   ]
+  },
   "bc_lucifero": {
    "skin": "bc_lucifero",
    "slim": false,
@@ -145,6 +488,139 @@
     }
    ]
   },
+  "bc_mars": {
+   "skin": "bc_mars",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_mars",
+     "texture": "pmx_mars",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_mars",
+     "texture": "pmx_bc_mars",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mars_fine",
+     "texture": "pmx_bc_mars",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mars_fx",
+     "texture": "pmx_bc_mars",
+     "glow": true
+    }
+   ]
+  },
+  "bc_mars_form2": {
+   "skin": "bc_mars_form2",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_mars_form2",
+     "texture": "pmx_mars_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_mars_form2",
+     "texture": "pmx_bc_mars_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mars_form2_fine",
+     "texture": "pmx_bc_mars_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mars_form2_fx",
+     "texture": "pmx_bc_mars_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_morris_libardirt": {
+   "skin": "bc_morris_libardirt",
+   "slim": true,
+   "scale": 1.0667,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_morris_libardirt",
+     "texture": "pmx_morris_libardirt",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_morris_libardirt",
+     "texture": "pmx_bc_morris_libardirt",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_morris_libardirt_fine",
+     "texture": "pmx_bc_morris_libardirt",
+     "glow": false
+    }
+   ]
+  },
+  "bc_morris_libardirt_form2": {
+   "skin": "bc_morris_libardirt_form2",
+   "slim": true,
+   "scale": 1.0667,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_morris_libardirt_form2_keep",
+     "texture": "pmx_bc_morris_libardirt_form2_keep",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_morris_libardirt_form2",
+     "texture": "pmx_bc_morris_libardirt_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_morris_libardirt_form2_fine",
+     "texture": "pmx_bc_morris_libardirt_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_morris_libardirt_form2_fx",
+     "texture": "pmx_bc_morris_libardirt_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_revchi_salik": {
+   "skin": "bc_revchi_salik",
+   "slim": true,
+   "scale": 1.04,
+   "glow": true,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_revchi_salik",
+     "texture": "pmx_revchi_salik",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_revchi_salik",
+     "texture": "pmx_bc_revchi_salik",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_revchi_salik_fine",
+     "texture": "pmx_bc_revchi_salik",
+     "glow": false
+    }
+   ]
+  },
   "bc_vanica_zogratis": {
    "skin": "bc_vanica_zogratis",
    "slim": true,
@@ -187,6 +663,41 @@
      "model": "pmx_bc_vanica_zogratis_form2_fx",
      "texture": "pmx_bc_vanica_zogratis_form2",
      "glow": true
+    }
+   ]
+  },
+  "bc_vetto": {
+   "skin": "bc_vetto",
+   "slim": false,
+   "scale": 1.3067,
+   "extras": [
+    {
+     "model": "pmx_bc_vetto",
+     "texture": "pmx_bc_vetto",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_vetto_fine",
+     "texture": "pmx_bc_vetto",
+     "glow": false
+    }
+   ]
+  },
+  "bc_vetto_form2": {
+   "skin": "bc_vetto_form2",
+   "slim": false,
+   "scale": 1.3067,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_vetto_form2",
+     "texture": "pmx_bc_vetto_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_vetto_form2_fine",
+     "texture": "pmx_bc_vetto_form2",
+     "glow": false
     }
    ]
   },

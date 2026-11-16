@@ -51,6 +51,370 @@
    "main": 236
   }
  },
+ "bc_dark_disciple": {
+  "atlas_fill": 0.049,
+  "atlas_glow": true,
+  "atlas_tiles": 8,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 19
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_dark_disciple_astaroth": {
+  "atlas_fill": 0.049,
+  "atlas_glow": true,
+  "atlas_tiles": 8,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 19
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_dark_disciple_beelzebub": {
+  "atlas_fill": 0.049,
+  "atlas_glow": true,
+  "atlas_tiles": 8,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 19
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_dark_disciple_lucifero": {
+  "atlas_fill": 0.049,
+  "atlas_glow": true,
+  "atlas_tiles": 8,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 19
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_dark_disciple_megicula": {
+  "atlas_fill": 0.049,
+  "atlas_glow": true,
+  "atlas_tiles": 8,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 19
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_devil_avatar": {
+  "atlas_fill": 0.135,
+  "atlas_glow": true,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 14,
+   "fx": 2,
+   "main": 12
+  },
+  "cubes": {
+   "fine": 38,
+   "fx": 1,
+   "main": 48
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 38,
+   "fx": 2,
+   "main": 253
+  }
+ },
+ "bc_devil_avatar_form2": {
+  "atlas_fill": 0.136,
+  "atlas_glow": true,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 20,
+   "fx": 3,
+   "main": 14
+  },
+  "cubes": {
+   "fine": 52,
+   "fx": 2,
+   "main": 62
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 4,
+   "main": 0
+  },
+  "quads": {
+   "fine": 52,
+   "fx": 4,
+   "main": 317
+  }
+ },
+ "bc_devil_avatar_megicula": {
+  "atlas_fill": 0.14,
+  "atlas_glow": true,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 14,
+   "fx": 2,
+   "main": 14
+  },
+  "cubes": {
+   "fine": 38,
+   "fx": 1,
+   "main": 56
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 38,
+   "fx": 2,
+   "main": 301
+  }
+ },
+ "bc_devil_avatar_megicula_form2": {
+  "atlas_fill": 0.141,
+  "atlas_glow": true,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 20,
+   "fx": 3,
+   "main": 18
+  },
+  "cubes": {
+   "fine": 52,
+   "fx": 2,
+   "main": 78
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 4,
+   "main": 0
+  },
+  "quads": {
+   "fine": 52,
+   "fx": 4,
+   "main": 413
+  }
+ },
+ "bc_god_of_order": {
+  "atlas_fill": 0.081,
+  "atlas_glow": true,
+  "atlas_tiles": 12,
+  "bones": {
+   "fine": 6,
+   "fx": 3,
+   "main": 8
+  },
+  "cubes": {
+   "fine": 4,
+   "fx": 5,
+   "main": 38
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 22,
+   "main": 0
+  },
+  "quads": {
+   "fine": 24,
+   "fx": 22,
+   "main": 138
+  }
+ },
+ "bc_god_of_order_form2": {
+  "atlas_fill": 0.096,
+  "atlas_glow": true,
+  "atlas_tiles": 13,
+  "bones": {
+   "fine": 6,
+   "fx": 5,
+   "main": 8
+  },
+  "cubes": {
+   "fine": 4,
+   "fx": 8,
+   "main": 38
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 34,
+   "main": 0
+  },
+  "quads": {
+   "fine": 24,
+   "fx": 34,
+   "main": 138
+  }
+ },
+ "bc_heath_grice": {
+  "atlas_fill": 0.132,
+  "atlas_glow": false,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 6,
+   "fx": 0,
+   "main": 41
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 6,
+   "fx": 0,
+   "main": 106
+  }
+ },
+ "bc_heath_grice_form2": {
+  "atlas_fill": 0.158,
+  "atlas_glow": true,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 1,
+   "fx": 3,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 6,
+   "fx": 2,
+   "main": 47
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 4,
+   "main": 0
+  },
+  "quads": {
+   "fine": 6,
+   "fx": 4,
+   "main": 102
+  }
+ },
+ "bc_lotus_whomalt": {
+  "atlas_fill": 0.177,
+  "atlas_glow": false,
+  "atlas_tiles": 38,
+  "bones": {
+   "fine": 12,
+   "fx": 0,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 27,
+   "fx": 0,
+   "main": 46
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 27,
+   "fx": 0,
+   "main": 111
+  }
+ },
  "bc_lucifero": {
   "atlas_fill": 0.172,
   "atlas_glow": false,
@@ -155,6 +519,136 @@
    "main": 182
   }
  },
+ "bc_mars": {
+  "atlas_fill": 0.195,
+  "atlas_glow": true,
+  "atlas_tiles": 30,
+  "bones": {
+   "fine": 2,
+   "fx": 2,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 21,
+   "fx": 9,
+   "main": 44
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 33,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 33,
+   "main": 94
+  }
+ },
+ "bc_mars_form2": {
+  "atlas_fill": 0.195,
+  "atlas_glow": true,
+  "atlas_tiles": 30,
+  "bones": {
+   "fine": 2,
+   "fx": 2,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 21,
+   "fx": 9,
+   "main": 44
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 33,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 33,
+   "main": 94
+  }
+ },
+ "bc_morris_libardirt": {
+  "atlas_fill": 0.103,
+  "atlas_glow": false,
+  "atlas_tiles": 23,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 1
+  },
+  "cubes": {
+   "fine": 8,
+   "fx": 0,
+   "main": 32
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 8,
+   "fx": 0,
+   "main": 72
+  }
+ },
+ "bc_morris_libardirt_form2": {
+  "atlas_fill": 0.231,
+  "atlas_glow": true,
+  "atlas_tiles": 33,
+  "bones": {
+   "fine": 1,
+   "fx": 2,
+   "main": 9
+  },
+  "cubes": {
+   "fine": 8,
+   "fx": 1,
+   "main": 62
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 8,
+   "fx": 2,
+   "main": 182
+  }
+ },
+ "bc_revchi_salik": {
+  "atlas_fill": 0.202,
+  "atlas_glow": false,
+  "atlas_tiles": 40,
+  "bones": {
+   "fine": 18,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 42,
+   "fx": 0,
+   "main": 38
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 42,
+   "fx": 0,
+   "main": 88
+  }
+ },
  "bc_vanica_zogratis": {
   "atlas_fill": 0.224,
   "atlas_glow": true,
@@ -205,6 +699,58 @@
    "fine": 39,
    "fx": 10,
    "main": 240
+  }
+ },
+ "bc_vetto": {
+  "atlas_fill": 0.208,
+  "atlas_glow": false,
+  "atlas_tiles": 43,
+  "bones": {
+   "fine": 24,
+   "fx": 0,
+   "main": 1
+  },
+  "cubes": {
+   "fine": 72,
+   "fx": 0,
+   "main": 40
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 72,
+   "fx": 0,
+   "main": 80
+  }
+ },
+ "bc_vetto_form2": {
+  "atlas_fill": 0.221,
+  "atlas_glow": false,
+  "atlas_tiles": 46,
+  "bones": {
+   "fine": 24,
+   "fx": 0,
+   "main": 9
+  },
+  "cubes": {
+   "fine": 72,
+   "fx": 0,
+   "main": 59
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 72,
+   "fx": 0,
+   "main": 194
   }
  },
  "bc_zagred": {

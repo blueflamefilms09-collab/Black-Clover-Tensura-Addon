@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.15.0] — Black Clover bosses, wave 2: 21 more detailed player-model looks
+- REPLACED (client setting `bossLooks.bcPlayerModel`, default on; off = the previous rendering): the looks of the five Dark Disciples (base, Lucifero, Megicula, Beelzebub, Astaroth), the Devil Avatar (four forms) and the Spade arc bosses Heath Grice, Lotus Whomalt, Mars, Revchi Salik, Vetto and Morris Libardirt (with their second forms). Same quality and builder as the 4.14.0 looks: painted anime face, layered hair, horns, wings, mantles, glow gems, palettes from the English Black Clover Fandom wiki (the Dark Disciples, Devil Avatar and God of Order have no wiki page of their own: the mod's own designs).
+- NEW: God of Order player-model look behind the new client setting `bossLooks.godOfOrderPlayerModel` (default off: his Blender body stays the default).
+- KEPT: every old look and model, held props, capes and orbs. Not covered: the Seven Deadly Sins, Tier List and Abyssal bosses, Goliath, Charybdis, Minotaur, Udaeus (other franchises or not Black Clover).
+- Previews: `docs/bosses_bc_wave2_previews/` (software renders, not the game). Details: `docs/bosses_bc_wave2.md`.
+- Cost: client only; the largest look is 469 quads (limit 700), glow layer at most 34 quads; no packets, no server work.
+- Not seen in a game; the Java is compiled only by CI. Not Blender: generator-built cubes; skins are generator-painted faces, not hand-painted.
+
 ## [4.14.2] — Transformations no longer bug on death
 - FIXED (server setting `transformations.resetOnDeath`, default on; off = the old behaviour): a shared `TransformGuard` ends every form on death and respawn and nothing resumes. Seven bugs: the Black Form survived death and came back after respawn with its armour, +25 % attack and speed; the Devil Union, Devil Dive and Noelle aftermath flags were never cleared on death; the mode-armour and Unite flags are now also swept; render layers (auras) outlived the body so the corpse was still drawn and new viewers saw the stale effect; the Saiyan look stayed on other players' screens up to 3 s after a silent form drop; a dead body kept ticking Saiyan and Beast Will upkeep and a form key sent from the death screen was accepted. Details and per-system table: `docs/transformation_fixes.md`.
 - NEW: `docs/keybind_consolidation.md` and `tools/audit/keybind_inventory.py`: an audit of the mod's 56 keybinds (21 collide with another key) and a plan to fold them into hub skills (no code changed by it).

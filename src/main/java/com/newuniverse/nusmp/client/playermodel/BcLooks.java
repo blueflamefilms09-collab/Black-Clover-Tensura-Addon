@@ -35,14 +35,27 @@ public final class BcLooks {
             Map.entry("bc_lucifero", "boss.zagred"), Map.entry("bc_lucifero_form2", "boss.zagred"));
 
     /** The redesigned look id of an old look id, or null when there is none. */
-    public static String of(String oldId) { return oldId == null ? null : NEW_OF.get(oldId); }
+    public static String of(String oldId) {
+        String s = oldId == null ? null : NEW_OF.get(oldId);
+        return s != null ? s : BcWave2.of(oldId);                       // wave 2 (docs/bosses_bc_wave2.md) has its own table
+    }
 
     /** Is this the id of a redesigned look? */
     public static boolean isBc(String lookId) { return lookId != null && lookId.startsWith(PREFIX); }
 
     /** The particle theme id of a redesigned look's shimmer, or null. */
-    public static String theme(String bcId) { return bcId == null ? null : THEME_OF.get(bcId); }
+    public static String theme(String bcId) {
+        String t = bcId == null ? null : THEME_OF.get(bcId);
+        return t != null ? t : BcWave2.theme(bcId);
+    }
 
     /** Every old look id that has a redesigned look (for the tests and docs). */
     public static java.util.Set<String> oldIds() { return NEW_OF.keySet(); }
+
+    /** Wave 1 and wave 2 together: every old look id that has a redesigned look (the audit walks this). */
+    public static java.util.Set<String> allOldIds() {
+        java.util.Set<String> all = new java.util.LinkedHashSet<>(NEW_OF.keySet());
+        all.addAll(BcWave2.oldIds());
+        return all;
+    }
 }

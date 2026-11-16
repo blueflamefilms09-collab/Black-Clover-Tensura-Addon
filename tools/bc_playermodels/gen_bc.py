@@ -22,6 +22,7 @@ import bclib as L  # noqa: E402
 import bcparts as P  # noqa: E402
 import bcskin as S  # noqa: E402
 import bcchars as CH  # noqa: E402
+import bcchars2 as CH2  # noqa: E402   (wave 2: docs/bosses_bc_wave2.md)
 
 A = L.ASSETS
 TEX = os.path.join(A, "textures", "entity")
@@ -41,6 +42,48 @@ def old_looks():
         if os.path.isfile(p):
             for k, v in json.load(open(p))["looks"].items():
                 out.setdefault(k, v)
+    return out
+
+
+def keep_old_bones(new_id, old_extras, keep):
+    """The old extras reduced to the bones named in `keep` (and their children and parents), written as pmx_bc_<id>_keep (geo, animation and a copy of the old atlas under the same name) so the new look
+    can keep a held prop or a cape and drop the crude horns, wings and halo it replaces. Returns the extras entries."""
+    out = []
+    for k, x in enumerate(old_extras):
+        stem = "pmx_bc_%s_keep" % new_id[3:] if k == 0 else "pmx_bc_%s_keep%d" % (new_id[3:], k)
+        g = json.load(open(os.path.join(GEO, x["model"] + ".geo.json")))
+        geom = g["minecraft:geometry"][0]
+        bones = {b["name"]: b for b in geom["bones"]}
+        want = {n for n in keep if n in bones}
+        changed = True
+        while changed:                                                           # first the children of a kept bone ...
+            changed = False
+            for n, b in bones.items():
+                if b.get("parent") in want and n not in want:
+                    want.add(n)
+                    changed = True
+        for n in list(want):                                                     # ... then the parents a kept bone hangs from (not their other children)
+            p = bones[n].get("parent")
+            while p and p not in want:
+                want.add(p)
+                p = bones[p].get("parent")
+        if not any(bones[n].get("cubes") for n in want):
+            continue
+        geom["bones"] = [b for b in geom["bones"] if b["name"] in want]
+        geom["description"]["identifier"] = "geometry." + stem
+        L.write_json(os.path.join(GEO, stem + ".geo.json"), g)
+        ap = os.path.join(ANI, x["model"] + ".animation.json")
+        if os.path.isfile(ap):
+            an = json.load(open(ap))
+            for clip in an.get("animations", {}).values():
+                clip["bones"] = {n: v for n, v in clip.get("bones", {}).items() if n in want}
+            L.write_json(os.path.join(ANI, stem + ".animation.json"), an)
+        import shutil
+        for suf in (".png", "_glow.png"):
+            src = os.path.join(TEX, x["texture"] + suf)
+            if os.path.isfile(src):
+                shutil.copyfile(src, os.path.join(TEX, stem + suf))
+        out.append({"model": stem, "texture": stem, "glow": bool(x.get("glow", False))})
     return out
 
 
@@ -90,6 +133,8 @@ def build_one(spec, olds):
         if k in old:
             look[k] = old[k]
     extras = list(old.get("extras", [])) if spec.get("keep_extras", True) else []
+    if spec.get("keep_bones"):                                                   # wave 2: only some bones of the old extras (props, cape), the rest is replaced by new parts
+        extras = keep_old_bones(new_id, old.get("extras", []), spec["keep_bones"])
     for layer in ("main", "fine", "fx"):
         if layer in names:
             extras.append({"model": names[layer], "texture": "pmx_" + new_id, "glow": bool(layer == "fx" and has_glow)})
@@ -106,7 +151,7 @@ def main(argv):
     looks = {}
     if os.path.isfile(LOOKS_BC) and flt:
         looks = json.load(open(LOOKS_BC))["looks"]
-    for spec in CH.CHARS:
+    for spec in CH.CHARS + CH2.CHARS:
         if flt and not any(f in spec["id"] for f in flt):
             continue
         nid, look = build_one(spec, olds)

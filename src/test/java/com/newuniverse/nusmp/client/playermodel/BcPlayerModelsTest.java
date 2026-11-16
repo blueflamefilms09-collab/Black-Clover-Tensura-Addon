@@ -54,7 +54,7 @@ class BcPlayerModelsTest {
             assertTrue(BcLooks.isBc(id));
             assertNotNull(BcLooks.theme(id), "theme of " + id);
         }
-        for (String k : looks.keySet()) if (BcLooks.isBc(k)) assertTrue(BcLooks.oldIds().contains(k.substring(3)), k + " replaces a look that does not exist");
+        for (String k : looks.keySet()) if (BcLooks.isBc(k)) assertTrue(BcLooks.allOldIds().contains(k.substring(3)), k + " replaces a look that does not exist");
     }
 
     @Test

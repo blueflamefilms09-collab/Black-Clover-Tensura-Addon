@@ -92,7 +92,7 @@ def sheet(name, look, old=None):
     return out
 
 
-def overview(looks):
+def overview(looks, title="Black Clover bosses on the player model, three-quarter view   (software renders, idle pose; not the game)"):
     """One image: every look in its three-quarter view, in rows of seven."""
     ids = list(looks)
     cols = 7
@@ -100,7 +100,7 @@ def overview(looks):
     rows = (len(ids) + cols - 1) // cols
     out = Image.new("RGB", (tw * cols, (th + 16) * rows + 22), (232, 236, 242))
     d = ImageDraw.Draw(out)
-    d.text((6, 5), "Black Clover bosses on the player model, three-quarter view   (software renders, idle pose; not the game)", fill=(20, 20, 20))
+    d.text((6, 5), title, fill=(20, 20, 20))
     for i, lid in enumerate(ids):
         look = looks[lid]
         zoom, cy = fit(look)
@@ -115,18 +115,26 @@ def main(argv):
     out_dir = os.path.join(ROOT, "docs", "bc_playermodels_previews")
     flt = []
     use_old = False
+    wave2 = False
     i = 0
     while i < len(argv):
         if argv[i] == "--out":
             out_dir = argv[i + 1]
             i += 2
             continue
-        if argv[i] == "--old":
+        if argv[i] == "--wave2":                                  # wave 2 (docs/bosses_bc_wave2.md): only its looks, into docs/bosses_bc_wave2_previews
+            wave2 = True
+            out_dir = os.path.join(ROOT, "docs", "bosses_bc_wave2_previews")
+        elif argv[i] == "--old":
             use_old = True
         else:
             flt.append(argv[i])
         i += 1
     looks = json.load(open(LOOKS_BC))["looks"]
+    if wave2:
+        import bcchars2
+        mine = {"bc_" + c["id"] for c in bcchars2.CHARS}
+        looks = {k: v for k, v in looks.items() if k in mine}
     olds = PV.load_looks()
     os.makedirs(out_dir, exist_ok=True)
     made = []
@@ -141,7 +149,7 @@ def main(argv):
         print(p)
     if not flt:
         p = os.path.join(out_dir, "overview.png")
-        overview(looks).save(p)
+        overview(looks, "Black Clover bosses, wave 2, three-quarter view   (software renders, idle pose; not the game)" if wave2 else None or "Black Clover bosses on the player model, three-quarter view   (software renders, idle pose; not the game)").save(p)
         print(p)
     return made
 

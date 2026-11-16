@@ -135,7 +135,7 @@ public final class PlayerAssets {
      */
     public static String bcId(String id) {
         String bc = BcLooks.of(id);
-        return bc != null && PlayerModelOptions.bcPlayerModel() && hasLook(bc) ? bc : id;
+        return bc != null && (BcWave2.isOrder(id) ? PlayerModelOptions.godOfOrderPlayerModel() : PlayerModelOptions.bcPlayerModel()) && hasLook(bc) ? bc : id;
     }
 
     /** The look of an id, or null when there is none (no fallback, no warning): for a renderer that chooses between the kit and an older renderer. */

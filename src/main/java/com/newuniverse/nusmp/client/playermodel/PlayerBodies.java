@@ -228,7 +228,7 @@ public final class PlayerBodies {
                 case ASTAROTH -> "astaroth";
                 default -> null;
             };
-            return PlayerAssets.look(devil == null ? "dark_disciple" : "dark_disciple_" + devil);
+            return PlayerAssets.look(PlayerAssets.bcId(devil == null ? "dark_disciple" : "dark_disciple_" + devil));      // the redesigned look while bossLooks.bcPlayerModel is on (wave 2)
         }
 
         @Override

@@ -1,0 +1,4 @@
+{
+ "anime_multiverse.configuration.godOfOrderPlayerModel": "God of Order on the player model",
+ "anime_multiverse.configuration.godOfOrderPlayerModel.tooltip": "On: the God of Order is drawn on the redesigned player model (hood, white robe, gold stole, closed serene face, halo) instead of his Blender body. Off (default): the Blender body."
+}
