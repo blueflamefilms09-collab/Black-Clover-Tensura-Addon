@@ -127,6 +127,24 @@ public final class UniqueLedger extends SavedData {
     /** Looks at every online player's belongings at the next tick instead of waiting for their turn (after a command or a loot roll). */
     public static void scan(MinecraftServer server) { RelicScanner.requestAll(server); }
 
+    /**
+     * The away rule of the Infinity Stones: each live copy of the given relic ids that an OFFLINE player holds and has not been seen with for longer than {@code maxAwayMillis} is declared lost (the
+     * relic can be found again; the old copy becomes a duplicate if it ever shows up). Returns the ids declared lost. The 14-day rule of {@link #sweep} only looks at online holders.
+     */
+    public static java.util.List<String> loseAway(MinecraftServer server, java.util.Collection<String> ids, long maxAwayMillis) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        if (server == null || ids == null || maxAwayMillis <= 0) return out;
+        UniqueLedger l = get(server);
+        long now = System.currentTimeMillis();
+        for (String id : ids) {
+            Entry e = l.entries.get(id);
+            if (e == null || !e.live || e.kind != Spot.Kind.PLAYER || e.holder == null) continue;
+            boolean offline = server.getPlayerList().getPlayer(e.holder) == null;
+            if (com.newuniverse.nusmp.stones.StoneRules.awayExpired(offline, now - e.seenMillis, maxAwayMillis) && l.lose(id)) out.add(id);
+        }
+        return out;
+    }
+
     /** The ids of the relics that have a live valid copy. */
     public static Set<String> liveIds(MinecraftServer server) {
         Set<String> out = new LinkedHashSet<>();

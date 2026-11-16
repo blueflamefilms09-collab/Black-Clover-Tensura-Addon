@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:the_space_stone_or_the_tesseract",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:the_mind_stone",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:the_power_stone",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:the_time_stone_or_the_eye_of_agamotto",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:the_reality_stone",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:the_soul_stone",
+      "required": false
+    }
+  ]
+}

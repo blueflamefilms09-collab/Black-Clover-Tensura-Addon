@@ -66,6 +66,7 @@ public final class RelicCatalog {
         guard("Wave102", () -> com.newuniverse.nusmp.relics.wave.Wave102.defs(out));                  // 1.111.0: 9 God + 20 Special relics (docs/relics/god_special_new.md)
         guard("later waves", () -> WaveRegistry.defs(out));                 // 1.25.0: WaveBoss and Wave8 and up, found by name
         guard("Wave101", () -> com.newuniverse.nusmp.relics.wave.Wave101.defs(out));          // 1.111.0: the seven Millennium Items and eight more Genesis relics
+        guard("infinity stones", () -> raw.replaceAll(com.newuniverse.nusmp.stones.StoneKit::extend));       // Infinity Stone slot: the six Wave 30 stones gain two slot acts each (everything old stays)
         Set<String> taken = new HashSet<>();
         for (DeferredHolder<Item, ? extends Item> h : NUItems.ITEMS.getEntries()) taken.add(h.getId().getPath());
         RelicChecks.Checked c = RelicChecks.check(raw, taken);

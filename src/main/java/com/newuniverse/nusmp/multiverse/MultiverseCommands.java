@@ -216,6 +216,7 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
         root.then(com.newuniverse.nusmp.skilltree.unique.SkillBookCommand.node());                                    // 1.96.0: skillbook list|learn|forget|give|gold|shop (replaces the removed /multiverse tree)
         root.then(com.newuniverse.nusmp.heroweapon.HeroCommand.node());                                         // 1.62.0: hero status|summon|dismiss|bind|release|form|curse|gem
+        root.then(com.newuniverse.nusmp.stones.StoneCommand.node());                                             // stones give|status|offer (give is op; the Soul Stone's trial)
         root.then(com.newuniverse.nusmp.shishou.ShishouCommand.node());                                       // shishou spawn|status|reset|recover|level|skills|broadcast|stomach (op for the admin ones)
         root.then(com.newuniverse.nusmp.greed.GreedCommand.node());                                           // greed status|give|reset (op), form|recover|vault (the wielder)
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story

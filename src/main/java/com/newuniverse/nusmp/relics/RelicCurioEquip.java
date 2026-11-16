@@ -75,6 +75,7 @@ public final class RelicCurioEquip {
         if (!CuriosLink.available()) return CurioEquipRules.Result.NO_CURIOS;
         Map<String, IItemHandler> handlers = CuriosLink.slotHandlers(p);
         if (handlers.isEmpty()) return CurioEquipRules.Result.NO_CURIOS;
+        want = com.newuniverse.nusmp.stones.StoneKit.slotFor(p, def, want, handlers);          // Infinity Stone slot: a stone goes there when the EP gate is met and the slot is free (else the charm slot, as before)
         if (!handlers.containsKey(want)) {
             WornOnce.log(WornOnce.Cause.SLOT_MISSING, def.id() + " (" + want + ")");
             return CurioEquipRules.Result.NO_SLOT_TYPE;
