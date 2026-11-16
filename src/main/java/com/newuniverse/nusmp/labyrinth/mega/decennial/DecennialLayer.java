@@ -387,6 +387,7 @@ public final class DecennialLayer {
             standalone = s != null && s.standalone;
         }
         if (!noLoot && !standalone) DecennialRewards.award(g, sl, source, profile, siteKey);
+        if (!noLoot && !standalone) com.newuniverse.nusmp.labyrinth.mega.cores.BossCoreAward.award(g, sl, source, profile.level(), profile.floor(), siteKey);      // the Boss Cores (docs/boss_cores.md): from floor 250 the boss also pays one family of armour core
     }
 
     // ================================================================ save

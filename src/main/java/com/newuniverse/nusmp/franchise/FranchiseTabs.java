@@ -13,7 +13,9 @@ public final class FranchiseTabs {
     /** Tab ids, in display order. Each has the lang key {@code itemGroup.anime_multiverse.franchise_<id>}. */
     public static final List<String> TABS = List.of("black_clover", "tensura", "berserk", "fairy_tail", "magi", "hero_weapons", "anime_worlds");
 
-    private static final Pattern RANK_CORE = Pattern.compile("core_[a-z]{1,2}_(standard|beast|ancient)");
+    private static final Pattern BOSS_CORE = Pattern.compile("core_(aegis|striker|ascendant|wellspring_(magicule|aura|ki|nihility))|(aegis|striker|ascendant|wellspring_(magicule|aura|ki|nihility))_(helmet|chestplate|leggings|boots)");
+
+    private static final Pattern RANK_CORE =Pattern.compile("core_[a-z]{1,2}_(standard|beast|ancient)");
 
     /** The tab id of an item path, or null when the item belongs to no franchise tab. {@code franchise} is {@link FranchiseMap#franchiseOf}'s answer (may be null). */
     public static String tabOf(String path, String franchise) {
@@ -30,6 +32,7 @@ public final class FranchiseTabs {
         }
         if (path == null || path.isEmpty()) return null;
         if (path.startsWith("black_sword_greed")) return "berserk";
+        if (BOSS_CORE.matcher(path).matches()) return "tensura";          // the Boss Cores and their armour (labyrinth/mega/cores): Tensura-side progression gear
         if (path.startsWith("beast_will") || RANK_CORE.matcher(path).matches()) return "tensura";
         if (path.startsWith("djinn_")) return "magi";
         if (path.contains("grimoire") || path.startsWith("devil_")) return "black_clover";

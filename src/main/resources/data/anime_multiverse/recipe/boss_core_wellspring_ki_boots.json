@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_wellspring_ki"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_ki"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_ki"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:wellspring_ki_boots",
+    "count": 1
+  }
+}

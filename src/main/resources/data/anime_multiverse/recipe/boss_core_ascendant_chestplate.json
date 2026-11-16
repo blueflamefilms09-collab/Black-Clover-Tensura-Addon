@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:ascendant_chestplate",
+    "count": 1
+  }
+}

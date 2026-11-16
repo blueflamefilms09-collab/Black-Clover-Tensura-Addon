@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_aegis"
+    },
+    {
+      "item": "anime_multiverse:core_aegis"
+    },
+    {
+      "item": "anime_multiverse:core_aegis"
+    },
+    {
+      "item": "anime_multiverse:core_aegis"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:aegis_leggings",
+    "count": 1
+  }
+}

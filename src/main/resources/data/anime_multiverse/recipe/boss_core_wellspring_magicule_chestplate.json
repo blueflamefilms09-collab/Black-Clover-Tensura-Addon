@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_wellspring_magicule"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_magicule"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_magicule"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_magicule"
+    },
+    {
+      "item": "anime_multiverse:core_wellspring_magicule"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:wellspring_magicule_chestplate",
+    "count": 1
+  }
+}

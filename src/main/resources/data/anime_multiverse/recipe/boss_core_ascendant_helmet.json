@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    },
+    {
+      "item": "anime_multiverse:core_ascendant"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:ascendant_helmet",
+    "count": 1
+  }
+}

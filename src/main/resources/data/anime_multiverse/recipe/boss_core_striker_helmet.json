@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "anime_multiverse:core_striker"
+    },
+    {
+      "item": "anime_multiverse:core_striker"
+    },
+    {
+      "item": "anime_multiverse:core_striker"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:striker_helmet",
+    "count": 1
+  }
+}

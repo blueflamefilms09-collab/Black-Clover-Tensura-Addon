@@ -77,6 +77,7 @@ public final class NUCreativeTab {
                 for (net.minecraft.world.item.ItemStack bw : com.newuniverse.nusmp.beastwill.BeastWillItems.creativeStacks()) o.apply(G.RELICS).accept(bw);             // 3.45.0: one Beast Will core per shipped will
                 for (net.minecraft.world.item.ItemStack mc : com.newuniverse.nusmp.manacore.ManaCoreItems.creativeStacks()) o.apply(G.RELICS).accept(mc);              // 3.51.0: the 24 rank Mana Cores
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(o.apply(G.DUNGEON));                                       // 1.35.0: the Labyrinth's blocks and items
+                com.newuniverse.nusmp.labyrinth.mega.cores.BossCoreItems.addTo(o.apply(G.DUNGEON), o.apply(G.ARMOR));              // the Boss Cores: seven cores (dungeon tab) and twenty-eight armour pieces (armour tab)
 
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,
                         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,
