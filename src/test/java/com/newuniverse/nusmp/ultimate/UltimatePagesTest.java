@@ -40,8 +40,8 @@ class UltimatePagesTest {
         int basic = book.indexOf("BasicPages.append(", u);
         int rest = book.indexOf("CharacterPagesRest.append(", u);
         assertTrue(p15 > u && basic > p15 && rest > basic, "order: Ultimate( Pages15( BasicPages( CharacterPagesRest( family )))): no older page moves");
-        assertTrue(book.contains("restUltimate == ultimate"), "the cached family list is rebuilt when ultimate.enabled flips");
-        assertTrue(book.contains("ultimate != builtUltimate"), "the page list is rebuilt when ultimate.enabled flips");
+        assertTrue(book.contains("fc.ultimate() == ultimate"), "the cached family list is rebuilt when ultimate.enabled flips");
+        assertTrue(book.contains("ultimate != c.ultimate()"), "the page list is rebuilt when ultimate.enabled flips");
         assertEquals(1, count(book, "UltimatePages.append("), "one hook");
     }
 

@@ -339,7 +339,7 @@ class ManaMethodSourceScanTest {
         assertTrue(m.contains("AntiMagic.isUser(pl)") && m.contains("return true;"), "a failed Anti-Magic lookup takes the old, safe route");
         String book = code(read(SRC.resolve("book/GrimoireBook.java")));
         String direct = body(book, "hurtDirect");
-        assertTrue(direct.contains("BalanceLaw.damage(caster, target, r, masteryFrac(i))"), "the balance law's caps stay");
+        assertTrue(direct.contains("pageDamage(") && body(book, "pageDamage").contains("BalanceLaw.damage(caster, target, r, masteryFrac(i))"), "the balance law's caps stay (guide P2: one shared pageDamage)");
         assertTrue(direct.contains("target.isAlliedTo(caster)"), "never an ally");
         assertTrue(m.contains("TrueDamageRules.resistanceFactor("), "the resistance is only undone on the old route");
     }
