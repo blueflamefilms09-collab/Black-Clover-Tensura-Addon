@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.103.0] — Skill icons v2: 146 placeholder icons redrawn
+- REPLACED (asked for: better skill icons): 29 magics of the 0.53 expansion (barrier through legion) had one shared diamond placeholder for their grimoire, buff, ultimate and symbol icons (116 icons); now each has its own themed glyph. 30 wiki magics (air through wing) shared six motifs; their grimoire icons are redrawn (30 icons).
+- KEPT: every file name and id; the 47 original magics, the Veldanava, root, unique, Beast Will and Dragon Ball icons. The old versions are in `tools/skills/icons_classic/` (not in the jar). Generator `tools/skills/gen_icons_v2.py`, before/after sheets in `docs/skill_icons_v2/`.
+- Not seen in a game: judged on contact sheets only. Weakest at 32 px: black_oil, mucus, vine, ice_wedge, barrier. No 128 px copies for the redrawn icons.
+- Cost: none at run time (the same number of textures).
+
 ## [3.102.0] — Master guide part 2: Ultimate damage cap, grimoire skill costs, cast event, Quenched bridge
 - NEW: the class damage cap of the Ultimate classes is now live: a hit from a classified Ultimate scales with its class's EP cap times the late-game factor (setting `[ultimateClasses] classDamage` off = old).
 - REPLACED: the grimoire page skills and the grimoire magic skills also pay through Tensura's magicule cost now (flat price stays the minimum; `flatCosts` restores the old flat cost). Creative players pay nothing for them.
