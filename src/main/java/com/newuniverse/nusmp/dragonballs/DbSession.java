@@ -82,7 +82,7 @@ public final class DbSession {
             }
         }
         level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 8.0f, 0.7f);
-        level.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y + 6, pos.z, 40, 3.0, 5.0, 3.0, 0.05);
+        level.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y + 6, pos.z, 40, 3.0, 5.0, 3.0, 0.05); // fx-allow: one 40-mote burst per ritual, capped by the ritual lock
         s.lastSkyTick = p.getServer().getTickCount();
         DbNet.sendSky(level, pos, set, 260);
         for (ServerPlayer q : level.players()) if (q.distanceToSqr(pos.x, pos.y, pos.z) < DbNet.RANGE * DbNet.RANGE) q.sendSystemMessage(DbMsg.say(set, "arrive", s.summonerName));
@@ -174,7 +174,7 @@ public final class DbSession {
             DbNet.sendSky(level, at, set, 0);
             if (farewell) for (ServerPlayer q : level.players()) if (q.distanceToSqr(at.x, at.y, at.z) < DbNet.RANGE * DbNet.RANGE) q.sendSystemMessage(DbMsg.say(set, wishesGranted > 0 ? "farewell" : "farewell_none"));
             level.playSound(null, at.x, at.y, at.z, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 6.0f, 1.2f);
-            level.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 6, at.z, 30, 3.0, 5.0, 3.0, 0.05);
+            level.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 6, at.z, 30, 3.0, 5.0, 3.0, 0.05); // fx-allow: one 30-mote burst per ritual end
         }
         DbManager.finish(s, set, wishesGranted > 0);
         DbManager.LOG.info("[dragonballs] {} ritual of {} (uuid {}) ended: {} ({} wish(es) granted, locked={})", set.id(), summonerName, summoner, why, wishesGranted, wishesGranted > 0 && DbConfig.lockMinutes() > 0);

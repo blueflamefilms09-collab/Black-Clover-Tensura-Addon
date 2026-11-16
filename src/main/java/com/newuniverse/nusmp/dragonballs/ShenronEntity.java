@@ -62,7 +62,7 @@ public class ShenronEntity extends Entity {
         super.tick();
         if (level().isClientSide && tickCount % 6 == 0) {
             for (int i = 0; i < 3; i++)
-                level().addParticle(ParticleTypes.END_ROD, getX() + (random.nextDouble() - 0.5) * 8.0, getY() + random.nextDouble() * 16.0, getZ() + (random.nextDouble() - 0.5) * 8.0, 0.0, 0.02, 0.0);
+                level().addParticle(ParticleTypes.END_ROD, getX() + (random.nextDouble() - 0.5) * 8.0, getY() + random.nextDouble() * 16.0, getZ() + (random.nextDouble() - 0.5) * 8.0, 0.0, 0.02, 0.0); // fx-allow: a 3-mote halo every 6 ticks on the one dragon, drawn on the client only
         }
     }
 }
