@@ -135,6 +135,7 @@ public final class PlayerAssets {
      */
     public static String bcId(String id) {
         String bc = BcLooks.of(id);
+        if (bc == null) bc = BcNpcLooks.of(id);                                  // docs/npcs_bc.md: the NPCs and the Midnight Sun
         return bc != null && (BcWave2.isOrder(id) ? PlayerModelOptions.godOfOrderPlayerModel() : PlayerModelOptions.bcPlayerModel()) && hasLook(bc) ? bc : id;
     }
 

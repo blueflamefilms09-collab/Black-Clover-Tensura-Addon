@@ -1,0 +1,990 @@
+{
+ "bc_asta": {
+  "atlas_fill": 0.13,
+  "atlas_glow": false,
+  "atlas_tiles": 30,
+  "bones": {
+   "fine": 3,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 11,
+   "fx": 0,
+   "main": 44
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 11,
+   "fx": 0,
+   "main": 107
+  }
+ },
+ "bc_charlotte_roselei": {
+  "atlas_fill": 0.088,
+  "atlas_glow": false,
+  "atlas_tiles": 20,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 7,
+   "fx": 0,
+   "main": 31
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 7,
+   "fx": 0,
+   "main": 176
+  }
+ },
+ "bc_charmy_pappitson": {
+  "atlas_fill": 0.03,
+  "atlas_glow": false,
+  "atlas_tiles": 7,
+  "bones": {
+   "fine": 3,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 4,
+   "fx": 0,
+   "main": 9
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 4,
+   "fx": 0,
+   "main": 54
+  }
+ },
+ "bc_dorothy_unsworth": {
+  "atlas_fill": 0.167,
+  "atlas_glow": true,
+  "atlas_tiles": 32,
+  "bones": {
+   "fine": 8,
+   "fx": 1,
+   "main": 1
+  },
+  "cubes": {
+   "fine": 20,
+   "fx": 1,
+   "main": 23
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 20,
+   "fx": 2,
+   "main": 138
+  }
+ },
+ "bc_fana": {
+  "atlas_fill": 0.183,
+  "atlas_glow": true,
+  "atlas_tiles": 30,
+  "bones": {
+   "fine": 13,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 45,
+   "fx": 1,
+   "main": 11
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 45,
+   "fx": 2,
+   "main": 66
+  }
+ },
+ "bc_fana_form2": {
+  "atlas_fill": 0.231,
+  "atlas_glow": true,
+  "atlas_tiles": 44,
+  "bones": {
+   "fine": 13,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 45,
+   "fx": 1,
+   "main": 40
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 45,
+   "fx": 2,
+   "main": 120
+  }
+ },
+ "bc_finral_roulacase": {
+  "atlas_fill": 0.088,
+  "atlas_glow": true,
+  "atlas_tiles": 21,
+  "bones": {
+   "fine": 1,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 6,
+   "fx": 2,
+   "main": 28
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 6,
+   "fx": 8,
+   "main": 68
+  }
+ },
+ "bc_fuegoleon_vermillion": {
+  "atlas_fill": 0.114,
+  "atlas_glow": true,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 17,
+   "fx": 4,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 37,
+   "fx": 4,
+   "main": 8
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 18,
+   "main": 0
+  },
+  "quads": {
+   "fine": 47,
+   "fx": 18,
+   "main": 48
+  }
+ },
+ "bc_gauche_adlai": {
+  "atlas_fill": 0.101,
+  "atlas_glow": false,
+  "atlas_tiles": 23,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 11,
+   "fx": 0,
+   "main": 32
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 11,
+   "fx": 0,
+   "main": 72
+  }
+ },
+ "bc_gordon_agrippa": {
+  "atlas_fill": 0.017,
+  "atlas_glow": false,
+  "atlas_tiles": 5,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "main": 1
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "main": 10
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 55
+  }
+ },
+ "bc_grey": {
+  "atlas_fill": 0.147,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 10,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 24,
+   "fx": 0,
+   "main": 8
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 24,
+   "fx": 0,
+   "main": 48
+  }
+ },
+ "bc_jack_the_ripper": {
+  "atlas_fill": 0.133,
+  "atlas_glow": false,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 3,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 13,
+   "fx": 0,
+   "main": 35
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 13,
+   "fx": 0,
+   "main": 80
+  }
+ },
+ "bc_julius_novachrono": {
+  "atlas_fill": 0.135,
+  "atlas_glow": true,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 2,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 27,
+   "fx": 1,
+   "main": 39
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 27,
+   "fx": 2,
+   "main": 94
+  }
+ },
+ "bc_kahono": {
+  "atlas_fill": 0.104,
+  "atlas_glow": true,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 8,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 21,
+   "fx": 1,
+   "main": 15
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 2,
+   "main": 90
+  }
+ },
+ "bc_kiato": {
+  "atlas_fill": 0.12,
+  "atlas_glow": false,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 9,
+   "fx": 0,
+   "main": 34
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 9,
+   "fx": 0,
+   "main": 84
+  }
+ },
+ "bc_klaus_lunettes": {
+  "atlas_fill": 0.07,
+  "atlas_glow": true,
+  "atlas_tiles": 15,
+  "bones": {
+   "fine": 1,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 6,
+   "fx": 2,
+   "main": 16
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 6,
+   "fx": 8,
+   "main": 76
+  }
+ },
+ "bc_leopold_vermillion": {
+  "atlas_fill": 0.141,
+  "atlas_glow": true,
+  "atlas_tiles": 33,
+  "bones": {
+   "fine": 4,
+   "fx": 3,
+   "main": 3
+  },
+  "cubes": {
+   "fine": 11,
+   "fx": 2,
+   "main": 47
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 10,
+   "main": 117
+  }
+ },
+ "bc_luck_voltia": {
+  "atlas_fill": 0.126,
+  "atlas_glow": false,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 3,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 13,
+   "fx": 0,
+   "main": 32
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 13,
+   "fx": 0,
+   "main": 72
+  }
+ },
+ "bc_magna_swing": {
+  "atlas_fill": 0.026,
+  "atlas_glow": false,
+  "atlas_tiles": 7,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "main": 27
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 78
+  }
+ },
+ "bc_marx_francois": {
+  "atlas_fill": 0.088,
+  "atlas_glow": true,
+  "atlas_tiles": 16,
+  "bones": {
+   "fine": 2,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 27,
+   "fx": 1,
+   "main": 11
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 27,
+   "fx": 2,
+   "main": 66
+  }
+ },
+ "bc_mereoleona_vermillion": {
+  "atlas_fill": 0.203,
+  "atlas_glow": true,
+  "atlas_tiles": 43,
+  "bones": {
+   "fine": 27,
+   "fx": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 65,
+   "fx": 2,
+   "main": 37
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 75,
+   "fx": 10,
+   "main": 82
+  }
+ },
+ "bc_mimosa_vermillion": {
+  "atlas_fill": 0.142,
+  "atlas_glow": true,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 18,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 43,
+   "fx": 2,
+   "main": 9
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 43,
+   "fx": 8,
+   "main": 54
+  }
+ },
+ "bc_nacht_faust": {
+  "atlas_fill": 0.102,
+  "atlas_glow": true,
+  "atlas_tiles": 22,
+  "bones": {
+   "fine": 8,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 21,
+   "fx": 1,
+   "main": 12
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 2,
+   "main": 72
+  }
+ },
+ "bc_noelle_silva": {
+  "atlas_fill": 0.136,
+  "atlas_glow": true,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 7,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 21,
+   "fx": 2,
+   "main": 10
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 21,
+   "fx": 8,
+   "main": 60
+  }
+ },
+ "bc_nozel_silva": {
+  "atlas_fill": 0.17,
+  "atlas_glow": false,
+  "atlas_tiles": 37,
+  "bones": {
+   "fine": 26,
+   "fx": 0,
+   "main": 3
+  },
+  "cubes": {
+   "fine": 56,
+   "fx": 0,
+   "main": 42
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 56,
+   "fx": 0,
+   "main": 107
+  }
+ },
+ "bc_patolli": {
+  "atlas_fill": 0.066,
+  "atlas_glow": true,
+  "atlas_tiles": 19,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 2,
+   "main": 51
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 270
+  }
+ },
+ "bc_patolli_form2": {
+  "atlas_fill": 0.066,
+  "atlas_glow": true,
+  "atlas_tiles": 19,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 2,
+   "main": 51
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 8,
+   "main": 270
+  }
+ },
+ "bc_rades_spirito": {
+  "atlas_fill": 0.164,
+  "atlas_glow": true,
+  "atlas_tiles": 35,
+  "bones": {
+   "fine": 19,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 43,
+   "fx": 1,
+   "main": 29
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 43,
+   "fx": 2,
+   "main": 72
+  }
+ },
+ "bc_rades_spirito_form2": {
+  "atlas_fill": 0.179,
+  "atlas_glow": true,
+  "atlas_tiles": 40,
+  "bones": {
+   "fine": 25,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 61,
+   "fx": 1,
+   "main": 42
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 61,
+   "fx": 2,
+   "main": 110
+  }
+ },
+ "bc_rhya": {
+  "atlas_fill": 0.134,
+  "atlas_glow": false,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 11,
+   "fx": 0,
+   "main": 36
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 11,
+   "fx": 0,
+   "main": 76
+  }
+ },
+ "bc_rhya_form2": {
+  "atlas_fill": 0.14,
+  "atlas_glow": false,
+  "atlas_tiles": 32,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 11,
+   "fx": 0,
+   "main": 46
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 11,
+   "fx": 0,
+   "main": 106
+  }
+ },
+ "bc_secre_swallowtail": {
+  "atlas_fill": 0.135,
+  "atlas_glow": false,
+  "atlas_tiles": 22,
+  "bones": {
+   "fine": 8,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 20,
+   "fx": 0,
+   "main": 11
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 20,
+   "fx": 0,
+   "main": 46
+  }
+ },
+ "bc_solid_silva": {
+  "atlas_fill": 0.188,
+  "atlas_glow": true,
+  "atlas_tiles": 38,
+  "bones": {
+   "fine": 14,
+   "fx": 1,
+   "main": 3
+  },
+  "cubes": {
+   "fine": 39,
+   "fx": 2,
+   "main": 43
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 4,
+   "main": 0
+  },
+  "quads": {
+   "fine": 39,
+   "fx": 4,
+   "main": 133
+  }
+ },
+ "bc_vanessa_enoteca": {
+  "atlas_fill": 0.184,
+  "atlas_glow": true,
+  "atlas_tiles": 31,
+  "bones": {
+   "fine": 12,
+   "fx": 1,
+   "main": 1
+  },
+  "cubes": {
+   "fine": 26,
+   "fx": 1,
+   "main": 14
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 26,
+   "fx": 2,
+   "main": 84
+  }
+ },
+ "bc_william_vangeance": {
+  "atlas_fill": 0.068,
+  "atlas_glow": true,
+  "atlas_tiles": 22,
+  "bones": {
+   "fine": 0,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "main": 37
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 92
+  }
+ },
+ "bc_yami_sukehiro": {
+  "atlas_fill": 0.123,
+  "atlas_glow": false,
+  "atlas_tiles": 26,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 3
+  },
+  "cubes": {
+   "fine": 8,
+   "fx": 0,
+   "main": 37
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 8,
+   "fx": 0,
+   "main": 72
+  }
+ },
+ "bc_yuno": {
+  "atlas_fill": 0.139,
+  "atlas_glow": true,
+  "atlas_tiles": 30,
+  "bones": {
+   "fine": 3,
+   "fx": 1,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 13,
+   "fx": 1,
+   "main": 36
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 13,
+   "fx": 2,
+   "main": 96
+  }
+ },
+ "bc_zora_ideale": {
+  "atlas_fill": 0.064,
+  "atlas_glow": false,
+  "atlas_tiles": 18,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "main": 40
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 80
+  }
+ }
+}

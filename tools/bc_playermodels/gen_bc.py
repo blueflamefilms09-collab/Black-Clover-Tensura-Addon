@@ -158,6 +158,8 @@ def main(argv):
         looks[nid] = look
         s = STATS[nid]
         print("%-34s cubes %s quads %s glow_quads %s tiles %d fill %.2f" % (nid, s["cubes"], s["quads"], s["glow_quads"], s["atlas_tiles"], s["atlas_fill"]))
+    import specs_npc as NPC                                      # docs/npcs_bc.md: the NPC and Midnight Sun looks (own table looks_bc_npc.json, own stats_npc.json)
+    NPC.run(flt, olds, build_one, STATS)
     doc = {"version": 1, "note": "Black Clover boss player models (docs/bc_playermodels.md), written by tools/bc_playermodels/gen_bc.py. Every id is 'bc_' + the id of the look it replaces; the old looks stay in looks.json.", "looks": dict(sorted(looks.items()))}
     with open(LOOKS_BC, "w") as f:
         json.dump(doc, f, indent=1)

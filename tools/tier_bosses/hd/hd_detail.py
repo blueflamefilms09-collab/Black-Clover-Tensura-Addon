@@ -298,11 +298,11 @@ def mouth_smile(face, cx, cy, w, color="#a84a4a", lip="#d8847a", depth=0.28, thi
         u = t * 2 - 1
         pts.append((cx + u * w / 2.0, cy + depth * (1.0 - u * u)))
     if open_h > 0:
-        lower = [(x, y + open_h * (1.0 - ((x - cx) / (w / 2.0)) ** 2) ** 0.8) for x, y in pts]
+        lower = [(x, y + open_h * max(0.0, 1.0 - ((x - cx) / (w / 2.0)) ** 2) ** 0.8) for x, y in pts]
         shape = face.m_poly(pts + lower[::-1])
         face.fill(shape, tone(color, 0.42), a)
         if teeth:
-            face.fill(face.m_poly(pts + [(x, y + open_h * 0.45 * (1.0 - ((x - cx) / (w / 2.0)) ** 2) ** 0.8) for x, y in pts[::-1]]) * shape, teeth, a)
+            face.fill(face.m_poly(pts + [(x, y + open_h * 0.45 * max(0.0, 1.0 - ((x - cx) / (w / 2.0)) ** 2) ** 0.8) for x, y in pts[::-1]]) * shape, teeth, a)
         face.polyline(lower, lip, thick * 0.9, a=a * 0.9)
     face.polyline(pts, color, thick, a=a)
     face.polyline([(x, y + thick * 0.8) for x, y in pts[2:-2]], lip, thick * 0.55, a=0.55 * a)

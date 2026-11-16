@@ -40,6 +40,11 @@ public final class PlayerModelSelfTests {
             if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
             return SelfTests.Result.ok(BcLooks.allOldIds().size() + " redesigned looks, the old ones kept, atlases and budgets in range");
         });
+        SelfTests.register("bcnpc.looks", server -> {                                     // docs/npcs_bc.md: the redesigned Black Clover NPC and Midnight Sun looks (old ones kept, skins, atlases, budgets)
+            List<String> bad = BcNpcAudit.run(PlayerModelAudit::classpath);
+            if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
+            return SelfTests.Result.ok(BcNpcLooks.oldIds().size() + " redesigned NPC looks, the old ones kept, atlases and budgets in range");
+        });
         SelfTests.register("render.playermodel2", server -> {
             List<String> bad = new ArrayList<>(DungeonAudit.run(PlayerModelAudit::classpath));
             for (String id : DungeonLooks.ENTITIES)

@@ -68,7 +68,7 @@ public final class BcAudit {
     }
 
     /** {quads, 1 when the texture has a glow map} of one extras model, problems appended. */
-    private static int[] geoProblems(String id, PlayerLook.Extra x, Function<String, InputStream> open, List<String> bad) {
+    static int[] geoProblems(String id, PlayerLook.Extra x, Function<String, InputStream> open, List<String> bad) {
         int quads = 0;
         String geo = "geo/entity/" + x.model() + ".geo.json";
         String tex = SkinPath.extraTexture(x.texture());

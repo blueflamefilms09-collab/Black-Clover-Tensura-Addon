@@ -1,0 +1,938 @@
+{
+ "version": 1,
+ "note": "Black Clover NPC and Midnight Sun player models (docs/npcs_bc.md), written by tools/bc_playermodels/gen_bc.py (specs_npc.py). Every id is 'bc_' + the id of the look it replaces; the old looks stay in looks.json.",
+ "looks": {
+  "bc_asta": {
+   "skin": "bc_asta",
+   "slim": false,
+   "scale": 1.0027,
+   "extras": [
+    {
+     "model": "pmx_asta",
+     "texture": "pmx_asta",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_asta",
+     "texture": "pmx_bc_asta",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_asta_fine",
+     "texture": "pmx_bc_asta",
+     "glow": false
+    }
+   ]
+  },
+  "bc_charlotte_roselei": {
+   "skin": "bc_charlotte_roselei",
+   "slim": true,
+   "scale": 1.024,
+   "extras": [
+    {
+     "model": "pmx_charlotte_roselei",
+     "texture": "pmx_charlotte_roselei",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_charlotte_roselei",
+     "texture": "pmx_bc_charlotte_roselei",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_charlotte_roselei_fine",
+     "texture": "pmx_bc_charlotte_roselei",
+     "glow": false
+    }
+   ]
+  },
+  "bc_charmy_pappitson": {
+   "skin": "bc_charmy_pappitson",
+   "slim": true,
+   "scale": 0.8107,
+   "extras": [
+    {
+     "model": "pmx_charmy_pappitson",
+     "texture": "pmx_charmy_pappitson",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_charmy_pappitson",
+     "texture": "pmx_bc_charmy_pappitson",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_charmy_pappitson_fine",
+     "texture": "pmx_bc_charmy_pappitson",
+     "glow": false
+    }
+   ]
+  },
+  "bc_dorothy_unsworth": {
+   "skin": "bc_dorothy_unsworth",
+   "slim": true,
+   "scale": 0.8747,
+   "extras": [
+    {
+     "model": "pmx_dorothy_unsworth",
+     "texture": "pmx_dorothy_unsworth",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_dorothy_unsworth",
+     "texture": "pmx_bc_dorothy_unsworth",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dorothy_unsworth_fine",
+     "texture": "pmx_bc_dorothy_unsworth",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_dorothy_unsworth_fx",
+     "texture": "pmx_bc_dorothy_unsworth",
+     "glow": true
+    }
+   ]
+  },
+  "bc_fana": {
+   "skin": "bc_fana",
+   "slim": true,
+   "scale": 0.928,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_fana",
+     "texture": "pmx_fana",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_fana",
+     "texture": "pmx_bc_fana",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fana_fine",
+     "texture": "pmx_bc_fana",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fana_fx",
+     "texture": "pmx_bc_fana",
+     "glow": true
+    }
+   ]
+  },
+  "bc_fana_form2": {
+   "skin": "bc_fana_form2",
+   "slim": true,
+   "scale": 0.928,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_fana_form2",
+     "texture": "pmx_fana_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_fana_form2",
+     "texture": "pmx_bc_fana_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fana_form2_fine",
+     "texture": "pmx_bc_fana_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fana_form2_fx",
+     "texture": "pmx_bc_fana_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_finral_roulacase": {
+   "skin": "bc_finral_roulacase",
+   "slim": true,
+   "scale": 1.0133,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_finral_roulacase",
+     "texture": "pmx_finral_roulacase",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_finral_roulacase",
+     "texture": "pmx_bc_finral_roulacase",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_finral_roulacase_fine",
+     "texture": "pmx_bc_finral_roulacase",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_finral_roulacase_fx",
+     "texture": "pmx_bc_finral_roulacase",
+     "glow": true
+    }
+   ]
+  },
+  "bc_fuegoleon_vermillion": {
+   "skin": "bc_fuegoleon_vermillion",
+   "slim": false,
+   "scale": 1.1093,
+   "extras": [
+    {
+     "model": "pmx_fuegoleon_vermillion",
+     "texture": "pmx_fuegoleon_vermillion",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_fuegoleon_vermillion",
+     "texture": "pmx_bc_fuegoleon_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fuegoleon_vermillion_fine",
+     "texture": "pmx_bc_fuegoleon_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_fuegoleon_vermillion_fx",
+     "texture": "pmx_bc_fuegoleon_vermillion",
+     "glow": true
+    }
+   ]
+  },
+  "bc_gauche_adlai": {
+   "skin": "bc_gauche_adlai",
+   "slim": true,
+   "scale": 1.0453,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gauche_adlai",
+     "texture": "pmx_gauche_adlai",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_gauche_adlai",
+     "texture": "pmx_bc_gauche_adlai",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_gauche_adlai_fine",
+     "texture": "pmx_bc_gauche_adlai",
+     "glow": false
+    }
+   ]
+  },
+  "bc_gordon_agrippa": {
+   "skin": "bc_gordon_agrippa",
+   "slim": false,
+   "scale": 1.1093,
+   "extras": [
+    {
+     "model": "pmx_gordon_agrippa",
+     "texture": "pmx_gordon_agrippa",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_gordon_agrippa",
+     "texture": "pmx_bc_gordon_agrippa",
+     "glow": false
+    }
+   ]
+  },
+  "bc_grey": {
+   "skin": "bc_grey",
+   "slim": true,
+   "scale": 0.928,
+   "extras": [
+    {
+     "model": "pmx_grey",
+     "texture": "pmx_grey",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_grey",
+     "texture": "pmx_bc_grey",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_grey_fine",
+     "texture": "pmx_bc_grey",
+     "glow": false
+    }
+   ]
+  },
+  "bc_jack_the_ripper": {
+   "skin": "bc_jack_the_ripper",
+   "slim": false,
+   "scale": 1.1733,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_jack_the_ripper",
+     "texture": "pmx_jack_the_ripper",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_jack_the_ripper",
+     "texture": "pmx_bc_jack_the_ripper",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_jack_the_ripper_fine",
+     "texture": "pmx_bc_jack_the_ripper",
+     "glow": false
+    }
+   ]
+  },
+  "bc_julius_novachrono": {
+   "skin": "bc_julius_novachrono",
+   "slim": false,
+   "scale": 1.0773,
+   "extras": [
+    {
+     "model": "pmx_julius_novachrono",
+     "texture": "pmx_julius_novachrono",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_julius_novachrono",
+     "texture": "pmx_bc_julius_novachrono",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_julius_novachrono_fine",
+     "texture": "pmx_bc_julius_novachrono",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_julius_novachrono_fx",
+     "texture": "pmx_bc_julius_novachrono",
+     "glow": true
+    }
+   ]
+  },
+  "bc_kahono": {
+   "skin": "bc_kahono",
+   "slim": true,
+   "scale": 0.9067,
+   "extras": [
+    {
+     "model": "pmx_kahono",
+     "texture": "pmx_kahono",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_kahono",
+     "texture": "pmx_bc_kahono",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kahono_fine",
+     "texture": "pmx_bc_kahono",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kahono_fx",
+     "texture": "pmx_bc_kahono",
+     "glow": true
+    }
+   ]
+  },
+  "bc_kiato": {
+   "skin": "bc_kiato",
+   "slim": false,
+   "scale": 1.0347,
+   "extras": [
+    {
+     "model": "pmx_kiato",
+     "texture": "pmx_kiato",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_kiato",
+     "texture": "pmx_bc_kiato",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kiato_fine",
+     "texture": "pmx_bc_kiato",
+     "glow": false
+    }
+   ]
+  },
+  "bc_klaus_lunettes": {
+   "skin": "bc_klaus_lunettes",
+   "slim": true,
+   "scale": 1.0613,
+   "extras": [
+    {
+     "model": "pmx_klaus_lunettes",
+     "texture": "pmx_klaus_lunettes",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_klaus_lunettes",
+     "texture": "pmx_bc_klaus_lunettes",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_klaus_lunettes_fine",
+     "texture": "pmx_bc_klaus_lunettes",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_klaus_lunettes_fx",
+     "texture": "pmx_bc_klaus_lunettes",
+     "glow": true
+    }
+   ]
+  },
+  "bc_leopold_vermillion": {
+   "skin": "bc_leopold_vermillion",
+   "slim": false,
+   "scale": 1.0027,
+   "extras": [
+    {
+     "model": "pmx_leopold_vermillion",
+     "texture": "pmx_leopold_vermillion",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_leopold_vermillion",
+     "texture": "pmx_bc_leopold_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_leopold_vermillion_fine",
+     "texture": "pmx_bc_leopold_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_leopold_vermillion_fx",
+     "texture": "pmx_bc_leopold_vermillion",
+     "glow": true
+    }
+   ]
+  },
+  "bc_luck_voltia": {
+   "skin": "bc_luck_voltia",
+   "slim": true,
+   "scale": 0.928,
+   "extras": [
+    {
+     "model": "pmx_luck_voltia",
+     "texture": "pmx_luck_voltia",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_luck_voltia",
+     "texture": "pmx_bc_luck_voltia",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_luck_voltia_fine",
+     "texture": "pmx_bc_luck_voltia",
+     "glow": false
+    }
+   ]
+  },
+  "bc_magna_swing": {
+   "skin": "bc_magna_swing",
+   "slim": false,
+   "scale": 1.0453,
+   "extras": [
+    {
+     "model": "pmx_magna_swing",
+     "texture": "pmx_magna_swing",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_magna_swing",
+     "texture": "pmx_bc_magna_swing",
+     "glow": false
+    }
+   ]
+  },
+  "bc_marx_francois": {
+   "skin": "bc_marx_francois",
+   "slim": false,
+   "scale": 0.992,
+   "extras": [
+    {
+     "model": "pmx_marx_francois",
+     "texture": "pmx_marx_francois",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_marx_francois",
+     "texture": "pmx_bc_marx_francois",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_marx_francois_fine",
+     "texture": "pmx_bc_marx_francois",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_marx_francois_fx",
+     "texture": "pmx_bc_marx_francois",
+     "glow": true
+    }
+   ]
+  },
+  "bc_mereoleona_vermillion": {
+   "skin": "bc_mereoleona_vermillion",
+   "slim": false,
+   "scale": 1.0667,
+   "extras": [
+    {
+     "model": "pmx_mereoleona_vermillion",
+     "texture": "pmx_mereoleona_vermillion",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_mereoleona_vermillion",
+     "texture": "pmx_bc_mereoleona_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mereoleona_vermillion_fine",
+     "texture": "pmx_bc_mereoleona_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mereoleona_vermillion_fx",
+     "texture": "pmx_bc_mereoleona_vermillion",
+     "glow": true
+    }
+   ]
+  },
+  "bc_mimosa_vermillion": {
+   "skin": "bc_mimosa_vermillion",
+   "slim": true,
+   "scale": 0.9813,
+   "extras": [
+    {
+     "model": "pmx_mimosa_vermillion",
+     "texture": "pmx_mimosa_vermillion",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_mimosa_vermillion",
+     "texture": "pmx_bc_mimosa_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mimosa_vermillion_fine",
+     "texture": "pmx_bc_mimosa_vermillion",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_mimosa_vermillion_fx",
+     "texture": "pmx_bc_mimosa_vermillion",
+     "glow": true
+    }
+   ]
+  },
+  "bc_nacht_faust": {
+   "skin": "bc_nacht_faust",
+   "slim": true,
+   "scale": 1.088,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_nacht_faust",
+     "texture": "pmx_nacht_faust",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_nacht_faust",
+     "texture": "pmx_bc_nacht_faust",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_nacht_faust_fine",
+     "texture": "pmx_bc_nacht_faust",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_nacht_faust_fx",
+     "texture": "pmx_bc_nacht_faust",
+     "glow": true
+    }
+   ]
+  },
+  "bc_noelle_silva": {
+   "skin": "bc_noelle_silva",
+   "slim": true,
+   "scale": 0.96,
+   "extras": [
+    {
+     "model": "pmx_noelle_silva",
+     "texture": "pmx_noelle_silva",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_noelle_silva",
+     "texture": "pmx_bc_noelle_silva",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_noelle_silva_fine",
+     "texture": "pmx_bc_noelle_silva",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_noelle_silva_fx",
+     "texture": "pmx_bc_noelle_silva",
+     "glow": true
+    }
+   ]
+  },
+  "bc_nozel_silva": {
+   "skin": "bc_nozel_silva",
+   "slim": true,
+   "scale": 1.0667,
+   "extras": [
+    {
+     "model": "pmx_nozel_silva",
+     "texture": "pmx_nozel_silva",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_nozel_silva",
+     "texture": "pmx_bc_nozel_silva",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_nozel_silva_fine",
+     "texture": "pmx_bc_nozel_silva",
+     "glow": false
+    }
+   ]
+  },
+  "bc_patolli": {
+   "skin": "bc_patolli",
+   "slim": true,
+   "scale": 1.0773,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_patolli",
+     "texture": "pmx_patolli",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_patolli",
+     "texture": "pmx_bc_patolli",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_patolli_fx",
+     "texture": "pmx_bc_patolli",
+     "glow": true
+    }
+   ]
+  },
+  "bc_patolli_form2": {
+   "skin": "bc_patolli_form2",
+   "slim": true,
+   "scale": 1.0773,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_patolli_form2",
+     "texture": "pmx_patolli_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_patolli_form2",
+     "texture": "pmx_bc_patolli_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_patolli_form2_fx",
+     "texture": "pmx_bc_patolli_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_rades_spirito": {
+   "skin": "bc_rades_spirito",
+   "slim": false,
+   "scale": 1.024,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_rades_spirito",
+     "texture": "pmx_rades_spirito",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_rades_spirito",
+     "texture": "pmx_bc_rades_spirito",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rades_spirito_fine",
+     "texture": "pmx_bc_rades_spirito",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rades_spirito_fx",
+     "texture": "pmx_bc_rades_spirito",
+     "glow": true
+    }
+   ]
+  },
+  "bc_rades_spirito_form2": {
+   "skin": "bc_rades_spirito_form2",
+   "slim": false,
+   "scale": 1.024,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_rades_spirito_form2",
+     "texture": "pmx_rades_spirito_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_rades_spirito_form2",
+     "texture": "pmx_bc_rades_spirito_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rades_spirito_form2_fine",
+     "texture": "pmx_bc_rades_spirito_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rades_spirito_form2_fx",
+     "texture": "pmx_bc_rades_spirito_form2",
+     "glow": true
+    }
+   ]
+  },
+  "bc_rhya": {
+   "skin": "bc_rhya",
+   "slim": true,
+   "scale": 1.0667,
+   "extras": [
+    {
+     "model": "pmx_rhya",
+     "texture": "pmx_rhya",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_rhya",
+     "texture": "pmx_bc_rhya",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rhya_fine",
+     "texture": "pmx_bc_rhya",
+     "glow": false
+    }
+   ]
+  },
+  "bc_rhya_form2": {
+   "skin": "bc_rhya_form2",
+   "slim": true,
+   "scale": 1.0667,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_rhya_form2",
+     "texture": "pmx_rhya_form2",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_rhya_form2",
+     "texture": "pmx_bc_rhya_form2",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_rhya_form2_fine",
+     "texture": "pmx_bc_rhya_form2",
+     "glow": false
+    }
+   ]
+  },
+  "bc_secre_swallowtail": {
+   "skin": "bc_secre_swallowtail",
+   "slim": true,
+   "scale": 0.9173,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_secre_swallowtail",
+     "texture": "pmx_secre_swallowtail",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_secre_swallowtail",
+     "texture": "pmx_bc_secre_swallowtail",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_secre_swallowtail_fine",
+     "texture": "pmx_bc_secre_swallowtail",
+     "glow": false
+    }
+   ]
+  },
+  "bc_solid_silva": {
+   "skin": "bc_solid_silva",
+   "slim": true,
+   "scale": 1.0133,
+   "extras": [
+    {
+     "model": "pmx_solid_silva",
+     "texture": "pmx_solid_silva",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_solid_silva",
+     "texture": "pmx_bc_solid_silva",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_solid_silva_fine",
+     "texture": "pmx_bc_solid_silva",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_solid_silva_fx",
+     "texture": "pmx_bc_solid_silva",
+     "glow": true
+    }
+   ]
+  },
+  "bc_vanessa_enoteca": {
+   "skin": "bc_vanessa_enoteca",
+   "slim": true,
+   "scale": 1.0507,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_vanessa_enoteca",
+     "texture": "pmx_vanessa_enoteca",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_vanessa_enoteca",
+     "texture": "pmx_bc_vanessa_enoteca",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_vanessa_enoteca_fine",
+     "texture": "pmx_bc_vanessa_enoteca",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_vanessa_enoteca_fx",
+     "texture": "pmx_bc_vanessa_enoteca",
+     "glow": true
+    }
+   ]
+  },
+  "bc_william_vangeance": {
+   "skin": "bc_william_vangeance",
+   "slim": true,
+   "scale": 1.088,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_william_vangeance",
+     "texture": "pmx_william_vangeance",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_william_vangeance",
+     "texture": "pmx_bc_william_vangeance",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_william_vangeance_fx",
+     "texture": "pmx_bc_william_vangeance",
+     "glow": true
+    }
+   ]
+  },
+  "bc_yami_sukehiro": {
+   "skin": "bc_yami_sukehiro",
+   "slim": false,
+   "scale": 1.0933,
+   "hold_r": -0.42,
+   "extras": [
+    {
+     "model": "pmx_yami_sukehiro",
+     "texture": "pmx_yami_sukehiro",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_yami_sukehiro",
+     "texture": "pmx_bc_yami_sukehiro",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_yami_sukehiro_fine",
+     "texture": "pmx_bc_yami_sukehiro",
+     "glow": false
+    }
+   ]
+  },
+  "bc_yuno": {
+   "skin": "bc_yuno",
+   "slim": true,
+   "scale": 1.0667,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_yuno",
+     "texture": "pmx_yuno",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_yuno",
+     "texture": "pmx_bc_yuno",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_yuno_fine",
+     "texture": "pmx_bc_yuno",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_yuno_fx",
+     "texture": "pmx_bc_yuno",
+     "glow": true
+    }
+   ]
+  },
+  "bc_zora_ideale": {
+   "skin": "bc_zora_ideale",
+   "slim": true,
+   "scale": 1.0347,
+   "extras": [
+    {
+     "model": "pmx_zora_ideale",
+     "texture": "pmx_zora_ideale",
+     "glow": true
+    },
+    {
+     "model": "pmx_bc_zora_ideale",
+     "texture": "pmx_bc_zora_ideale",
+     "glow": false
+    }
+   ]
+  }
+ }
+}

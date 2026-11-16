@@ -55,7 +55,7 @@ public final class PlayerBodies {
 
         @Override
         public PlayerLook look(ArcNpcEntity e) {
-            String id = e.characterId();
+            String id = PlayerAssets.bcId(e.characterId());                          // the redesigned look (docs/npcs_bc.md) while bossLooks.bcPlayerModel is on, else the same id
             return PlayerAssets.look(PlayerAssets.hasLook(id) ? id : SkinPath.DEFAULT_ID);
         }
 

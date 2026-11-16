@@ -25,7 +25,7 @@ ASSET_TEX = os.path.join(L.ASSETS, "textures", "entity", "playermodel")
 
 def _load(path):
     im = Image.open(path).convert("RGBA")
-    if im.size != (256, 256):                                     # wave 2: a 64x64 skin (the God of Order) is the same layout at 1 texel per pixel: x4, nearest
+    if im.size != (256, 256):                                     # a 64x64 skin is the same layout at 1 texel per pixel: x4, nearest
         im = im.resize((256, 256), Image.NEAREST)
     return np.asarray(im, np.float32) / 255.0
 
