@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.87.1] — fix: the animated Veldanava icons are back as they were
+- FIXED: the builds of 3.86.0 and 3.87.0 did not pass `AnimatedIconsTest`: the polish pass had also filtered the Veldanava still icons, whose stills must stay exact frames of their animation strips with no colour under transparent pixels. Those icons are restored byte for byte from 3.85.2, the copies under `textures/skill/classic/veldanava` are removed, and `tools/icon_polish.py` now skips the whole `veldanava` folder and clears colour under transparent pixels.
+- KEPT: everything of 3.87.0 (the redrawn grimoire and Beast Will icons, the 128 px HD copies, the originals under `textures/skill/classic`). Cost: none.
+
 ## [3.87.0] — skill icons redrawn with relief, rich backgrounds and gem frames
 - REPLACED (asked for: "give the icons a better design, not like a little kid drew them, more detail"): the 195 grimoire and Beast Will icons (every grimoire magic in its active, buff and ultimate icon, and every Beast Will Unique and Ultimate icon) are redrawn by the new `tools/icon_forge.py`: each emblem is a bevelled, lit relief (top-left light, highlights, contour engraving, rim light in the magic colour, soft drop shadow), on a richer background (energy streaks, rune circles with star seals, sparks, rays for the Ultimates) inside an ornate frame with corner gems and edge studs (gold for active and Ultimate Beast Wills, silver for buff and Unique, black iron for ultimate). Same ids, same paths, same 32x32 size.
 - NEW: a 128x128 high-detail copy of each of those icons under `textures/skill/hd/<same path>` (not drawn by the game yet: the skill lists of ManasCore take the 32 px path, and drawing the HD copies in the mod's own screens is the next step).

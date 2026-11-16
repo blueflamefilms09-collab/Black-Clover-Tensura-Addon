@@ -4,7 +4,7 @@ license="All rights reserved"
 
 [[mods]]
 modId="anime_multiverse"
-version="3.87.0"
+version="3.87.1"
 displayName="Anime Multiverse"
 logoFile="logo.png"
 logoBlur=false

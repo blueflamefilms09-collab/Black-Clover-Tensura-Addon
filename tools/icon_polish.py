@@ -18,11 +18,12 @@ TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse
 CLASSIC = os.path.join(TEX, "classic")
 SKIP_PREFIX = ("sym_", "bg_", "mod_", "db_", "sheet")
 SKIP_PART = ("_anim", "_hd", "_strip")
+SKIP_DIR = ("veldanava" + os.sep,)          # the animated hero icons: their stills must stay frames of the strip (AnimatedIconsTest)
 
 
 def skip(rel):
     base = os.path.basename(rel)
-    return (os.path.exists(os.path.join(TEX, "hd", rel)) or rel.startswith("hd" + os.sep) or rel.startswith("classic" + os.sep) or base.startswith(SKIP_PREFIX) or any(p in base for p in SKIP_PART))
+    return (rel.startswith(SKIP_DIR) or os.path.exists(os.path.join(TEX, "hd", rel)) or rel.startswith("hd" + os.sep) or rel.startswith("classic" + os.sep) or base.startswith(SKIP_PREFIX) or any(p in base for p in SKIP_PART))
 
 
 def polish(im):
@@ -50,6 +51,7 @@ def polish(im):
     img = Image.fromarray((out * 255 + 0.5).astype(np.uint8), "RGBA").resize((W, W), Image.LANCZOS)
     img = img.filter(ImageFilter.UnsharpMask(radius=1.6, percent=55, threshold=2)).filter(ImageFilter.UnsharpMask(radius=0.6, percent=60, threshold=1))
     arr = np.asarray(img).copy()
+    arr[arr[..., 3] == 0, :3] = 0                # no colour under a transparent pixel
     # 1 px dark outer rim (only where the icon is opaque and borders transparency or the image edge)
     opaque = arr[..., 3] > 128
     pad = np.pad(opaque, 1, constant_values=False)
