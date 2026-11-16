@@ -150,6 +150,7 @@ public final class SpiritCombat {
             if (pick.why() == CombatRules.Refusal.NO_SPIRIT_MANA || pick.why() == CombatRules.Refusal.NO_USER_MANA) outOfMana(p, f, now, h, pick.why());
             return;
         }
+        if (!com.newuniverse.nusmp.attune.AttuneGate.spirit(p, h)) { f.nextCastAt = now + SpiritControlConfig.castGap(); return; }   // 3.95.0: the equip limit, asked only when a cast is due
         if (casts.max() != SpiritControlConfig.serverCastsPerSecond()) casts = new RateWindow(SpiritControlConfig.serverCastsPerSecond(), 20);
         if (!casts.tryAcquire(now)) return;                                    // the whole server's ceiling this second
         SpiritSpellDef spell = spells.get(pick.index());

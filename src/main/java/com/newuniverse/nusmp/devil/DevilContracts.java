@@ -119,6 +119,7 @@ public final class DevilContracts {
             msg(p, "withdraw", "You push the devil back.", ChatFormatting.GRAY);
         } else {
             if (!hasMana(p, drain(c, c.assimilation))) { msg(p, "no_mana", "Not enough magicules to hold a devil.", ChatFormatting.RED); return; }
+            if (!com.newuniverse.nusmp.attune.AttuneGate.devil(p, c)) return;                                      // 3.95.0: the equip limit (pushing it back is never stopped)
             c.assimilating = true;
             msg(p, "embrace", "You let the devil in.", ChatFormatting.DARK_PURPLE);
         }

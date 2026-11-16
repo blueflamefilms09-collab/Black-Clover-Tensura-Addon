@@ -60,6 +60,7 @@ final class DjinnMagic {
         DjinnState s = DjinnState.of(p);
         Djinn d = s.djinn();
         if (d == null || s.phase() < DjinnPhaseRules.HALF) return;
+        if (!com.newuniverse.nusmp.attune.AttuneGate.djinn(p, d)) return;                          // 3.95.0: the equip limit (an old save past it)
         Djinn.Trait t = d.trait();
         float amount = e.getAmount();
         boolean dark = DarkDjinn.active(s);                                                         // the black rukh: +35% of the rider, its cap x1.5 (a mob's rider; a player's stays at the 6-point clamp)

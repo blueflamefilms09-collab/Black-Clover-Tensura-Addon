@@ -16,5 +16,9 @@
  "attune.msg.cooldown": "Your mind is not settled yet: %s s.",
  "attune.msg.reject": "%s and %s reject each other: their elements clash.",
  "attune.msg.done": "Attuned: %s power(s), resonance +%s%%.",
- "attune.msg.suppressed": "Clashing powers: %s. Meditate (/meditate) to settle them."
+ "attune.msg.suppressed": "Clashing powers: %s. Meditate (/meditate) to settle them.",
+ "attune.msg.devil_spirit": "A Devil and a Spirit cannot be attuned together.",
+ "attune.msg.limit": "Only two powers at once. Meditate (/meditate) to choose which two.",
+ "attune.msg.limit_devil_spirit": "A Devil and a Spirit will not work together. Meditate (/meditate) to choose one.",
+ "attune.screen.devil_spirit": "A Devil and a Spirit cannot be held together."
 }

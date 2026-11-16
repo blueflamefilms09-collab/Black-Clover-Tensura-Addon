@@ -76,6 +76,7 @@ public final class SpiritControl {
         if (!h.eligible(p)) { say(p, "anime_multiverse.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
         if (!allowed(p)) return Verdict.RATE;
         if (h.isOut(p)) return Verdict.DONE;
+        if (!com.newuniverse.nusmp.attune.AttuneGate.spirit(p, h)) return Verdict.REFUSED;                        // 3.95.0: the equip limit
         return h.summon(p) ? Verdict.DONE : Verdict.REFUSED;
     }
 
@@ -104,6 +105,7 @@ public final class SpiritControl {
         if (!h.eligible(p)) { say(p, "anime_multiverse.spirit_control.refused", "%s does not answer you.", ChatFormatting.GRAY, h.display()); return Verdict.REFUSED; }
         if (!h.isOut(p)) { say(p, "anime_multiverse.spirit_control.callfirst", "Call %s first.", ChatFormatting.GRAY, h.display()); return Verdict.NONE; }
         if (!allowed(p)) return Verdict.RATE;
+        if (!com.newuniverse.nusmp.attune.AttuneGate.spirit(p, h)) return Verdict.REFUSED;                        // 3.95.0: the equip limit
         return h.ability(p, def.id(), arg) ? Verdict.DONE : Verdict.REFUSED;
     }
 

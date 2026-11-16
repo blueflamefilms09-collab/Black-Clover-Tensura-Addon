@@ -76,7 +76,8 @@ class AttuneSourceScanTest {
         String lang = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
         String frag = Files.readString(Path.of("tools/lang/attune.json"));
         java.util.regex.Matcher m = Pattern.compile("\"(attune\\.(?:msg|screen)\\.[a-z_]+)\"").matcher(
-                Files.readString(SRC.resolve("attune/AttuneService.java")) + Files.readString(SRC.resolve("attune/AttuneEvents.java")) + Files.readString(SRC.resolve("client/attune/MeditationScreen.java")));
+                Files.readString(SRC.resolve("attune/AttuneService.java")) + Files.readString(SRC.resolve("attune/AttuneEvents.java")) + Files.readString(SRC.resolve("client/attune/MeditationScreen.java"))
+                        + Files.readString(SRC.resolve("attune/AttuneGate.java")));
         int n = 0;
         while (m.find()) {
             n++;
@@ -84,6 +85,33 @@ class AttuneSourceScanTest {
             assertTrue(frag.contains("\"" + m.group(1) + "\""), "tools/lang/attune.json lacks " + m.group(1));
         }
         assertTrue(n >= 10);
-        for (String r : new String[]{"too_many", "not_owned", "duplicate", "same_system"}) assertTrue(lang.contains("\"attune.msg." + r + "\""), "no text for the refusal " + r);
+        for (String r : new String[]{"too_many", "not_owned", "duplicate", "devil_spirit"}) assertTrue(lang.contains("\"attune.msg." + r + "\""), "no text for the refusal " + r);
+    }
+
+    @Test
+    void everySystemsEntryPointAsksTheGate() throws IOException {
+        // file, the gate call, the action it must come right before
+        String[][] points = {
+                {"beastwill/BeastWillManager.java", "AttuneGate.beast(p, s.active)) startForm(", "startForm(p, s, r, arg, now)"},
+                {"beastwill/BeastWillManager.java", "AttuneGate.beast(p, s.active)) useAbility(", "useAbility(p, s, r, arg, now)"},
+                {"relics/djinn/DjinnEngine.java", "!admin && !com.newuniverse.nusmp.attune.AttuneGate.djinn(p, s.active())", "enter(p, s, r, target, now, admin)"},
+                {"relics/djinn/DjinnEngine.java", "AttuneGate.djinn(p, d)) DjinnMagic.lesserBolt(", "DjinnMagic.lesserBolt(p, d)"},
+                {"relics/djinn/DjinnMagic.java", "AttuneGate.djinn(p, d)) return;", "e.setAmount(amount + bonus)"},
+                {"devil/DevilContracts.java", "AttuneGate.devil(p, c)) return;", "c.assimilating = true;"},
+                {"devil/DevilCombat.java", "AttuneGate.devil(p, c)) return;", "e.setAmount(blow + bonus)"},
+                {"spiritcontrol/SpiritControl.java", "AttuneGate.spirit(p, h)) return Verdict.REFUSED;", "return h.summon(p)"},
+                {"spiritcontrol/SpiritControl.java", "AttuneGate.spirit(p, h)) return Verdict.REFUSED;", "return h.ability(p"},
+                {"spiritcontrol/SpiritCombat.java", "AttuneGate.spirit(p, h)) { f.nextCastAt = now + SpiritControlConfig.castGap(); return; }", "apply(p, h, spell, target, power)"}};
+        for (String[] pt : points) {
+            String c = code(Files.readString(SRC.resolve(pt[0])));
+            int act = c.indexOf(pt[2]), gate = c.lastIndexOf(pt[1], act);
+            assertTrue(act > 0 && gate > 0, pt[0] + " lost its equip limit gate before " + pt[2]);
+        }
+        String gate = code(Files.readString(SRC.resolve("attune/AttuneGate.java")));
+        assertTrue(gate.contains("!AttuneConfig.enabled() || !AttuneConfig.equipLimit()) return true;"), "both switches restore the old behaviour");
+        assertTrue(gate.contains("AttuneRules.gate(AttunePowers.out(p), use.get(), attuned)") && gate.contains("catch (RuntimeException e)"), "the pure decision, and an error never blocks or throws");
+        assertTrue(gate.contains("displayClientMessage(") && gate.contains(", true);"), "the refusal goes to the action bar");
+        assertTrue(code(Files.readString(SRC.resolve("attune/AttuneService.java"))).contains("gone.addAll(AttuneRules.blocked(ordered, slots))"), "the blocked extras also lose the damage raise");
     }
 }
+

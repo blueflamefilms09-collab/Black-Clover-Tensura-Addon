@@ -172,10 +172,8 @@ public final class AttuneService {
         AttuneStore.State s = AttuneStore.peek(p);
         if ((s == null || s.slots.isEmpty()) && out.size() < 2) return 1.0;                                    // no attunement and nothing to clash: the old behaviour
         List<String> slots = s == null ? List.of() : s.slots;
-        List<AttuneRules.Power> ordered = new ArrayList<>(out.size());
-        for (String id : slots) for (AttuneRules.Power pw : out) if (pw.id().equals(id)) ordered.add(pw);
-        for (AttuneRules.Power pw : out) if (!slots.contains(pw.id())) ordered.add(pw);
-        Set<Integer> gone = AttuneConfig.suppress() ? AttuneRules.suppressed(ordered) : Set.of();
+        List<AttuneRules.Power> ordered = AttuneRules.order(out, slots);
+        Set<Integer> gone = gone(ordered, slots);
         boolean power = PowerConfig.enabled();
         double want = 1.0;
         List<AttuneRules.Power> resonating = new ArrayList<>(4);
@@ -195,6 +193,14 @@ public final class AttuneService {
         return AttuneRules.extra(want, applied);
     }
 
+    /** The powers out that lose their damage raise: the weaker of a clash (suppressClashes) and, with the equip limit on, the ones it blocks (an old save with three out, or a Devil with a Spirit). */
+    static Set<Integer> gone(List<AttuneRules.Power> ordered, List<String> slots) {
+        Set<Integer> gone = new java.util.HashSet<>();
+        if (AttuneConfig.suppress()) gone.addAll(AttuneRules.suppressed(ordered));
+        if (AttuneConfig.equipLimit()) gone.addAll(AttuneRules.blocked(ordered, slots));
+        return gone;
+    }
+
     /** The blow after {@link #factor}, held at the PvP hit cap against a player. */
     public static float apply(ServerPlayer dealer, LivingEntity target, float amount) {
         double f = factor(dealer);
@@ -207,11 +213,9 @@ public final class AttuneService {
         List<String> lines = new ArrayList<>();
         AttuneStore.State s = AttuneStore.peek(p);
         List<String> slots = s == null ? List.of() : s.slots;
-        List<AttuneRules.Power> out = AttunePowers.out(p);
-        List<AttuneRules.Power> ordered = new ArrayList<>();
-        for (String id : slots) for (AttuneRules.Power pw : out) if (pw.id().equals(id)) ordered.add(pw);
-        for (AttuneRules.Power pw : out) if (!slots.contains(pw.id())) ordered.add(pw);
-        Set<Integer> gone = AttuneRules.suppressed(ordered);
+        List<AttuneRules.Power> ordered = AttuneRules.order(AttunePowers.out(p), slots);
+        Set<Integer> gone = new java.util.HashSet<>(AttuneRules.suppressed(ordered));
+        if (AttuneConfig.equipLimit()) gone.addAll(AttuneRules.blocked(ordered, slots));
         lines.add("Slots " + slots.size() + "/" + AttuneConfig.slots() + (AttuneConfig.enabled() ? "" : " (switched off)"));
         for (AttunePowers.View v : AttunePowers.owned(p)) {
             String id = v.power().id();

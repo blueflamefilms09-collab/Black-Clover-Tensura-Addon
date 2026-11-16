@@ -115,7 +115,7 @@ public final class DjinnEngine {
         if (r.charging) chargeStep(p, s, r, now);
         if (s.phase() >= DjinnPhaseRules.HALF && t % 8 == 0) trail(p, s);
         Djinn d = s.active();
-        if (d != null && s.phase() == DjinnPhaseRules.LESSER && t % 40 == 0) DjinnMagic.lesserBolt(p, d);
+        if (d != null && s.phase() == DjinnPhaseRules.LESSER && t % 40 == 0 && com.newuniverse.nusmp.attune.AttuneGate.djinn(p, d)) DjinnMagic.lesserBolt(p, d);   // 3.95.0: the equip limit, once a bolt (2 s)
         if (d != null && s.phase() == DjinnPhaseRules.LESSER && t % 40 == 24) TinyDjinnCue.lesserCue(p);                          // 1.105.0: tells the tiny figure to point and dash, 16 ticks before the bolt
         if (((t >> 2) + p.getId()) % 5 == 0) second(p, s, r, now);
     }
@@ -305,6 +305,7 @@ public final class DjinnEngine {
         if (target <= DjinnPhaseRules.OFF) { stepDown(p, s, DjinnPhaseRules.OFF, EndReason.VOLUNTARY); return true; }
         if (target < s.phase()) { stepDown(p, s, target, EndReason.VOLUNTARY); return true; }
         if (target == s.phase()) return true;
+        if (!admin && !com.newuniverse.nusmp.attune.AttuneGate.djinn(p, s.active())) return false;           // 3.95.0: the equip limit (stepping down is never stopped)
         Verdict v = admin ? adminVerdict(s, target) : DjinnPhaseRules.request(snapshot(p, s, now), target);
         if (v != Verdict.OK) { refuse(p, s, v, target); return false; }
         enter(p, s, r, target, now, admin);

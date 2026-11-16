@@ -298,9 +298,9 @@ public final class BeastWillManager {
         switch (op) {
             case BeastWillNet.OP_FORM -> {
                 if (s.phase == arg) endForm(p, s, r, "cancel");
-                else startForm(p, s, r, arg, now);
+                else if (com.newuniverse.nusmp.attune.AttuneGate.beast(p, s.active)) startForm(p, s, r, arg, now);     // 3.95.0: the equip limit
             }
-            case BeastWillNet.OP_ABILITY -> useAbility(p, s, r, arg, now);
+            case BeastWillNet.OP_ABILITY -> { if (com.newuniverse.nusmp.attune.AttuneGate.beast(p, s.active)) useAbility(p, s, r, arg, now); }
             case BeastWillNet.OP_SWAP -> swap(p, s, r, arg, now);
             default -> { }
         }

@@ -41,6 +41,7 @@ public final class DevilCombat {
             DevilRules.Effect fx = DevilRules.effect(c.attribute);
             if (power <= 0 || (fx.bonus() <= 0 && fx.effectId().isEmpty() && !fx.strip() && fx.heal() <= 0)) return;
             c.lastEffect = now;
+            if (!com.newuniverse.nusmp.attune.AttuneGate.devil(p, c)) return;                                      // 3.95.0: an old save let in past the limit acts no more
             float blow = e.getAmount(), bonus = DevilRules.effectBonus(blow, fx, power, DevilConfig.effectScale());
             if (target instanceof Player) bonus = (float) Math.min(bonus, target.getMaxHealth() * 0.15);       // no one-shots between players
             e.setAmount(blow + bonus);

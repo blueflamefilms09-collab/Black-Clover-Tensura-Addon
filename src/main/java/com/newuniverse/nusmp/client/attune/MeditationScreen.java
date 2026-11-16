@@ -17,8 +17,8 @@ import java.util.List;
 
 /**
  * Why: the meditation screen. Top: the slots (click one to take it out). Below: every power the server says the player holds (at most {@link AttuneRules#MAX_OWNED}); click one to put it in a slot
- * (a power of a system already in a slot replaces it, since each system has one power out). Colours come from the same {@link AttuneRules} table the server enforces: red = rejects a power in the
- * slots, gold = resonates with one, white = neutral. Confirm sends the ids once; the server decides (owned, slots, cooldown, clashes, that the player stood still). While it is open the player gets a
+ * (3.95.0: two of one system may share the slots; with the slots full the last one is replaced). Colours come from the same {@link AttuneRules} table the server enforces: red = rejects a power in the
+ * slots (or a Devil beside a Spirit, never together), gold = resonates with one, white = neutral. Confirm sends the ids once; the server decides (owned, slots, cooldown, clashes, that the player stood still). While it is open the player gets a
  * calm visual only: a slow breathing tint and two enchant motes every eight ticks around them, both client side. Colours and texts are worked out on each click, never per frame. A small modal window,
  * so it is a fixed screen of the GUI Move framework.
  */
@@ -79,7 +79,8 @@ public final class MeditationScreen extends Screen {
             AttuneNet.Entry e = data.owned().get(i);
             int c = chosen.contains(e.id()) ? UiTheme.WHITE : UiTheme.TEXT_DIM;
             for (AttuneRules.Power p : in) {
-                if (p.id().equals(e.id()) || p.system() == e.system()) continue;      // the same slot would be replaced, not joined
+                if (p.id().equals(e.id())) continue;
+                if (AttuneRules.devilSpirit(p.system(), e.system())) { c = UiTheme.RED; break; }
                 AttuneRules.Pair pr = AttuneRules.pair(p.elements(), e.elements());
                 if (pr == AttuneRules.Pair.REJECT) { c = UiTheme.RED; break; }
                 if (pr == AttuneRules.Pair.RESONATE) c = UiTheme.GOLD;
@@ -88,10 +89,12 @@ public final class MeditationScreen extends Screen {
         }
         slotColor = new int[in.size()];
         clash = false;
+        boolean devilSpirit = false;
         for (int i = 0; i < in.size(); i++) {
             int c = UiTheme.CYAN;
             for (int j = 0; j < in.size(); j++) {
                 if (i == j) continue;
+                if (AttuneRules.devilSpirit(in.get(i).system(), in.get(j).system())) { c = UiTheme.RED; clash = true; devilSpirit = true; break; }
                 AttuneRules.Pair pr = AttuneRules.pair(in.get(i).elements(), in.get(j).elements());
                 if (pr == AttuneRules.Pair.REJECT) { c = UiTheme.RED; clash = true; break; }
                 if (pr == AttuneRules.Pair.RESONATE) c = UiTheme.GOLD;
@@ -100,7 +103,8 @@ public final class MeditationScreen extends Screen {
         }
         int pairs = AttuneRules.resonatingPairs(in);
         int bonus = (int) Math.round((AttuneRules.resonance(pairs, data.resonancePercent() / 100.0) - 1.0) * 100);
-        if (clash) { footer = Component.translatableWithFallback("attune.screen.clash", "Clashing elements: these powers reject each other.").getString(); footerColor = UiTheme.RED; }
+        if (devilSpirit) { footer = Component.translatableWithFallback("attune.screen.devil_spirit", "A Devil and a Spirit cannot be held together.").getString(); footerColor = UiTheme.RED; }
+        else if (clash) { footer = Component.translatableWithFallback("attune.screen.clash", "Clashing elements: these powers reject each other.").getString(); footerColor = UiTheme.RED; }
         else { footer = Component.translatableWithFallback("attune.screen.resonance", "Resonance +%s%%", bonus).getString(); footerColor = bonus > 0 ? UiTheme.GOLD : UiTheme.TEXT_DIM; }
         if (confirm != null) confirm.active = !clash && cooldownLeft() <= 0;
     }
@@ -145,11 +149,8 @@ public final class MeditationScreen extends Screen {
 
     private void toggle(AttuneNet.Entry e) {
         if (chosen.remove(e.id())) { recompute(); return; }
-        for (int i = 0; i < chosen.size(); i++) {
-            AttuneNet.Entry c = find(chosen.get(i));
-            if (c != null && c.system() == e.system()) { chosen.set(i, e.id()); recompute(); return; }
-        }
         if (chosen.size() < slots) chosen.add(e.id());
+        else if (!chosen.isEmpty()) chosen.set(chosen.size() - 1, e.id());
         recompute();
     }
 

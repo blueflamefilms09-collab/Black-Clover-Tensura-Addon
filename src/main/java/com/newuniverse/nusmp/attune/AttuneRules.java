@@ -20,8 +20,8 @@ public final class AttuneRules {
 
     public static String systemKey(int system) { return system >= 0 && system < SYSTEMS ? SYSTEM_KEYS[system] : "none"; }
 
-    /** The most slots any setting may give (one power per system, four systems). */
-    public static final int MAX_SLOTS = SYSTEMS;
+    /** The most slots any setting may give, and the most powers a player may use at once (3.95.0, the owner: "players shouldn't be able to equip more than two"). */
+    public static final int MAX_SLOTS = 2;
     /** The most powers one player can be offered on the screen (and the most ids a confirm may carry is {@link #MAX_SLOTS}). */
     public static final int MAX_OWNED = 24;
     public static final int MAX_ID_LENGTH = 64;
@@ -111,25 +111,70 @@ public final class AttuneRules {
     public record Refusal(String reason, int first, int second) {}
 
     /**
-     * May this set be attuned? {@code owned} are the ids the server found on the player this moment. Refusals in order: too many for the slots, an id the player does not own, an id twice, two of one system
-     * (each system has one power out at a time), then the first rejecting pair (indices into {@code chosen}).
+     * May this set be attuned? {@code owned} are the ids the server found on the player this moment. Refusals in order: too many for the slots, an id the player does not own, an id twice, a Devil with a
+     * Spirit (never together, whatever their elements), then the first rejecting pair (indices into {@code chosen}). Two powers of one system are allowed (3.95.0; "same_system" is no longer refused).
      */
     public static Refusal check(List<Power> chosen, Set<String> owned, int slots) {
         if (chosen.size() > slots(slots)) return new Refusal("too_many", -1, -1);
         Set<String> seen = new HashSet<>();
-        boolean[] system = new boolean[SYSTEMS];
         for (int i = 0; i < chosen.size(); i++) {
             Power p = chosen.get(i);
             if (p == null || p.id() == null || !owned.contains(p.id())) return new Refusal("not_owned", i, -1);
             if (!seen.add(p.id())) return new Refusal("duplicate", i, -1);
             if (p.system() < 0 || p.system() >= SYSTEMS) return new Refusal("not_owned", i, -1);
-            if (system[p.system()]) return new Refusal("same_system", i, -1);
-            system[p.system()] = true;
         }
+        for (int i = 0; i < chosen.size(); i++)
+            for (int j = i + 1; j < chosen.size(); j++)
+                if (devilSpirit(chosen.get(i).system(), chosen.get(j).system())) return new Refusal("devil_spirit", i, j);
         for (int i = 0; i < chosen.size(); i++)
             for (int j = i + 1; j < chosen.size(); j++)
                 if (pair(chosen.get(i).elements(), chosen.get(j).elements()) == Pair.REJECT) return new Refusal("reject", i, j);
         return null;
+    }
+
+    /** A Devil and a Spirit: never held or used together (the owner, 3.95.0). */
+    public static boolean devilSpirit(int a, int b) { return (a == DEVIL && b == SPIRIT) || (a == SPIRIT && b == DEVIL); }
+
+    // ------------------------------------------------------------------ the equip limit (3.95.0)
+    /** The powers out now ordered attuned first (slot order), then the rest as found; the order {@link #suppressed} and {@link #blocked} break ties by. */
+    public static List<Power> order(List<Power> out, List<String> attuned) {
+        List<Power> ordered = new ArrayList<>(out.size() + 1);
+        for (String id : attuned) for (Power pw : out) if (pw.id().equals(id) && !ordered.contains(pw)) ordered.add(pw);
+        for (Power pw : out) if (!ordered.contains(pw)) ordered.add(pw);
+        return ordered;
+    }
+
+    /**
+     * Which of the powers out together the equip limit blocks (indices into {@code ordered}): with more than {@link #MAX_SLOTS} out, every one that is not attuned; then of a Devil and a Spirit that are
+     * both still free, the one not attuned, or else the weaker (equal strength: the later one in {@code ordered}).
+     */
+    public static Set<Integer> blocked(List<Power> ordered, List<String> attuned) {
+        Set<Integer> out = new HashSet<>();
+        if (ordered.size() > MAX_SLOTS) for (int i = 0; i < ordered.size(); i++) if (!attuned.contains(ordered.get(i).id())) out.add(i);
+        for (int i = 0; i < ordered.size(); i++)
+            for (int j = i + 1; j < ordered.size(); j++) {
+                if (out.contains(i) || out.contains(j)) continue;
+                Power a = ordered.get(i), b = ordered.get(j);
+                if (!devilSpirit(a.system(), b.system())) continue;
+                boolean ai = attuned.contains(a.id()), bj = attuned.contains(b.id());
+                out.add(ai != bj ? (ai ? j : i) : (b.rank() > a.rank() ? i : j));
+            }
+        return out;
+    }
+
+    /**
+     * The gate (3.95.0): may the player use {@code use} now, with {@code out} the powers out this moment and {@code attuned} the meditated set? {@code use} counts as out (it is what is being called).
+     * null = yes, else the reason: "limit" (more than two out and it is not attuned) or "devil_spirit".
+     */
+    public static String gate(List<Power> out, Power use, List<String> attuned) {
+        if (use == null) return null;
+        List<Power> all = new ArrayList<>(out.size() + 1);
+        for (Power pw : out) if (!pw.id().equals(use.id())) all.add(pw);
+        all.add(use);
+        List<Power> ordered = order(all, attuned);
+        int at = ordered.indexOf(use);
+        if (!blocked(ordered, attuned).contains(at)) return null;
+        return ordered.size() > MAX_SLOTS && !attuned.contains(use.id()) ? "limit" : "devil_spirit";
     }
 
     /**

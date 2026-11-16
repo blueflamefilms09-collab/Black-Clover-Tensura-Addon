@@ -81,7 +81,7 @@ public final class AttunePowers {
 
     private static Djinn djinn(ServerPlayer p) { return p.hasData(DjinnAttachments.STATE) ? DjinnState.of(p).active() : null; }
 
-    private static AttuneRules.Power djinnPower(ServerPlayer p, Djinn d) {
+    static AttuneRules.Power djinnPower(ServerPlayer p, Djinn d) {
         boolean dark = DjinnState.of(p).dark();
         return new AttuneRules.Power("djinn:" + clean(d.id()), AttuneRules.DJINN, AttuneRules.elementsOf(d.affinity().name() + (dark ? " dark" : "")), 3);
     }

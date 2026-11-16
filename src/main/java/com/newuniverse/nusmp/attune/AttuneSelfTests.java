@@ -14,7 +14,7 @@ import java.util.Set;
  * Why: meditation can not be played by its author, so the CI server smoke test proves what a stand-in can: {@code attune.rules} (the element table is symmetric, the owner's example "fire Beast Will
  * and ice Djinn" rejects, resonance is capped, suppression keeps the stronger, the backlash never kills, the tag round-trips and is clamped), {@code attune.player} (a stand-in with no session, a moved
  * stand-in, a stand-in asking for a power it does not hold and one asking for too many are all refused and nothing is saved; an empty attunement is taken; a player with nothing out gets factor 1;
- * logout drops the session). Server safe: no client class.
+ * logout drops the session; the equip limit lets a first power through). 3.95.0: two of one system attune, a Devil with a Spirit and a third power out are refused. Server safe: no client class.
  */
 public final class AttuneSelfTests {
     private AttuneSelfTests() {}
@@ -45,6 +45,14 @@ public final class AttuneSelfTests {
         if (r == null || !r.reason().equals("reject")) return Result.fail("a fire Beast Will and an ice Djinn were attuned together");
         if (!AttuneRules.suppressed(List.of(beast, djinn)).equals(Set.of(0))) return Result.fail("suppression did not keep the stronger");
         if (AttuneRules.resonance(10, 0.3) > 1.0 + AttuneRules.MAX_RESONANCE + 1e-9) return Result.fail("resonance is not capped");
+        AttuneRules.Power devil = new AttuneRules.Power("devil:d", AttuneRules.DEVIL, 0, 2), spirit = new AttuneRules.Power("spirit:s", AttuneRules.SPIRIT, 0, 2);
+        AttuneRules.Power will2 = new AttuneRules.Power("beast:w", AttuneRules.BEAST, 0, 2);
+        if (AttuneRules.check(List.of(beast, will2), Set.of(beast.id(), will2.id()), 2) != null) return Result.fail("two Beast Wills were refused");
+        AttuneRules.Refusal ds = AttuneRules.check(List.of(devil, spirit), Set.of(devil.id(), spirit.id()), 2);
+        if (ds == null || !ds.reason().equals("devil_spirit")) return Result.fail("a Devil and a Spirit were attuned together");
+        if (!"limit".equals(AttuneRules.gate(List.of(beast, djinn), devil, List.of()))) return Result.fail("a third power out was not refused");
+        if (AttuneRules.gate(List.of(beast, djinn), devil, List.of("devil:d", "djinn:x")) != null) return Result.fail("an attuned power was refused");
+        if (!"devil_spirit".equals(AttuneRules.gate(List.of(devil), spirit, List.of()))) return Result.fail("a Spirit was called beside a Devil");
         if (AttuneRules.backlash(1.5f) > 0.5f || AttuneRules.backlash(100f) > AttuneRules.BACKLASH_MAX) return Result.fail("the backlash can kill");
         AttuneStore.State st = new AttuneStore.State();
         st.slots.add("beast:lion_will");
@@ -57,7 +65,7 @@ public final class AttuneSelfTests {
         for (String s : new String[]{"beast:a", "BAD ID", "djinn:b", "devil:c", "spirit:d", "beast:e"}) bad.add(net.minecraft.nbt.StringTag.valueOf(s));
         t.put("slots", bad);
         if (AttuneStore.State.fromTag(t).slots.size() > AttuneRules.MAX_SLOTS) return Result.fail("a damaged save holds too many slots");
-        return Result.ok("table symmetric, fire/ice and light/dark reject, suppression keeps the stronger, resonance capped, backlash never lethal, the save is clamped");
+        return Result.ok("table symmetric, fire/ice and light/dark reject, suppression keeps the stronger, resonance capped, backlash never lethal, the save is clamped; two of a kind allowed, devil+spirit and a third refused");
     }
 
     private static Result player(MinecraftServer server) {
@@ -69,6 +77,7 @@ public final class AttuneSelfTests {
             AttuneService.forget(a.getUUID());
             if (AttuneService.confirm(a, List.of()) != AttuneService.Verdict.NO_SESSION) return Result.fail("a confirm without a session was taken");
             if (AttuneService.factor(a) != 1.0) return Result.fail("a player with nothing out gets factor " + AttuneService.factor(a));
+            if (!AttuneGate.beast(a, "lion_will")) return Result.fail("the equip limit refused a first power to a stand-in with nothing out");
             AttuneService.forget(a.getUUID());
             if (!AttuneService.open(a)) return Result.fail("the stand-in could not sit down");
             AttuneService.forget(a.getUUID());                                    // drop the ask gap and the session ...

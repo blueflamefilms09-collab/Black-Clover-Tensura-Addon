@@ -10,11 +10,11 @@ Code: `src/main/java/com/newuniverse/nusmp/attune/**` (common), `client/attune/*
 
 1. Type **`/meditate`** (no key: the owner has too many already, the spirits already went the command way). The server records where you sat and sends what you hold:
    every bound Beast Will, your Djinn (own or lent), your Devil contract, every Spirit that answers you.
-2. The **Meditation** screen: the slots on top, your powers below. Click a power to put it in a slot (one power per system: a second Djinn/Beast Will/... replaces the first); click a slot to
+2. The **Meditation** screen: the slots on top, your powers below. Click a power to put it in a slot (3.95.0: two slots, two of one kind allowed, slots full = the last is replaced; before: one per system); click a slot to
    empty it. Colours: **red** = rejects a power in the slots, **gold** = resonates with one, white/grey = neutral. The footer shows the resonance bonus or the clash.
    While the screen is open you get a calm visual only (a slow breathing tint and two enchant motes every 8 ticks, client side).
 3. **Attune** sends one packet. The server checks again from nothing: the setting is on, you opened a session (`/meditate`) at most 2 minutes ago and stood within 1.5 blocks of that spot,
-   one ask per 10 ticks, you own each id, no more than the slots, one per system, the cooldown (30 s by default; resending the same set costs nothing), and the clashes.
+   one ask per 10 ticks, you own each id, no more than the slots, never a Devil with a Spirit (3.95.0; before: one per system), the cooldown (30 s by default; resending the same set costs nothing), and the clashes.
    **A clash is refused**: a message naming the two powers, a backlash of at most 4 health that never takes you under 1 (never lethal) and 3 s of Slowness II. Nothing changes.
 4. `/meditate status` lists your powers (system, elements, attuned, out, SUPPRESSED); `/meditate clear` forgets your attunement. Operators: `/meditate status <player>`, `/meditate clear <player>`.
 
@@ -74,7 +74,8 @@ by default), never lowered below the blow itself.
 
 ## Settings (`serverconfig/nusmp-attune-server.toml`, `[attune]`)
 
-`enabled` (true; **false = the old behaviour exactly**: `/meditate` only says it is off, no rejection, no suppression, no factor), `suppressClashes` (true), `slots` (3, 1 to 4), `cooldownTicks` (600),
+`enabled` (true; **false = the old behaviour exactly**: `/meditate` only says it is off, no rejection, no suppression, no factor, no equip limit), `suppressClashes` (true), `slots` (2, 1 to 2; was 3, 1 to 4),
+`equipLimit` (true, 3.95.0; false = no limit, the 3.93.0 behaviour), `cooldownTicks` (600),
 `beastWillFactor` (25), `djinnFactor` (25), `devilFactor` (12), `spiritFactor` (12), `resonancePerPair` (0.10, at most 0.30).
 
 ## Multiplayer and cost (rules 9, 11), worst case
@@ -106,3 +107,46 @@ by default), never lowered below the blow itself.
 * Suppression removes the damage raise only; the suppressed power's own abilities still work.
 * A lent Djinn gets no 3.74.0 raise (as before) but does get `djinnFactor` when attuned.
 * Element words come from labels, so a new will, djinn or devil gets its element with no new rule; a label with none of the words is neutral.
+
+## 3.95.0: the equip limit (at most two powers, never a Devil with a Spirit)
+
+**Owner's words (verbatim).** "Players shouldn't be able to equip more than two of any of the things, so they can't have three like a beast will, a djinn, and a devil. They can only have either a beast
+will and a djinn, two beast wills, a devil and a djinn, but players can still not use a devil and a spirit at the same time."
+
+**Rules (`AttuneRules`, pure, `AttuneRulesTest`).** `MAX_SLOTS = 2` (setting `slots` 2, range 1 to 2). Two powers of the same system may be attuned (two Beast Wills; two Djinns if a system ever lets a
+player own two). A Devil with a Spirit is always refused (`devil_spirit`, told before an element clash, whatever their elements). The element rejection stays as it was.
+
+**The gate (`AttuneGate`, decision `AttuneRules.gate` / `AttuneRules.blocked`).** With `enabled` and `equipLimit` on, a power works only if, counting it, at most two powers are out, or it is one of the
+meditated two; and of a Devil and a Spirit out together only one works (the one attuned, else the stronger, else the earlier). A refused use says on the action bar "Only two powers at once.
+Meditate (/meditate) to choose which two." (or the Devil/Spirit line) and does nothing else; nothing is charged. Putting a power away (ending a form, stepping a Djinn down, pushing the Devil
+back, releasing a Spirit) is never stopped. An error inside the gate lets the power work (it never throws).
+
+Entry points that ask the gate:
+
+| System | Where (server) | What is stopped |
+|---|---|---|
+| Beast Will | `BeastWillManager.onAction` (OP_FORM start, OP_ABILITY) | taking the form, every ability |
+| Djinn | `DjinnEngine.go` (any step up, not the admin command), `DjinnEngine` tick (`lesserBolt`), `DjinnMagic.onOutgoing` (Half Equip rider) | Lesser Summon and up, the Extreme Magic, the Lesser bolt, the Half Equip bonus and special |
+| Devil | `DevilContracts.onToggleAsk` (let in), `DevilCombat.onDamage` (the attribute on the host's blows) | letting it in, its attribute effect |
+| Spirit | `SpiritControl.summon`, `SpiritControl.ability`, `SpiritCombat.decide` (combat-mode cast) | calling it, its abilities, its combat spells |
+
+**Old saves.** A player who already has three out, or a Devil and a Spirit, keeps them out, but the ones the gate blocks (not attuned; of a Devil and a Spirit the loser above) are also suppressed in
+the damage hook (they lose the damage raise, like a clash) and their uses are refused until the player meditates or puts one away. A saved attunement of more than two ids is cut to the first two
+when it loads (the store was already clamped to `MAX_SLOTS`). With three out and nothing meditated, none of the three works until the player meditates or puts one away.
+
+**Cost, worst case.** Per gated use: one attunement attachment read plus `AttunePowers.out` (3 attachment reads that never create one, one Djinn check, one map lookup per registered spirit, 9 today)
+and lists of at most 5 entries. The uses are already rate limited by their systems (Beast Will asks `MIN_GAP_TICKS`, Djinn keys `KEY_SPACING`, Devil asks `askAllowed`, Spirit asks `askGap`); the
+per-blow ones (Devil attribute at most once a second, Djinn Half Equip per melee blow) cost the same per blow; the Lesser bolt once every 2 s; the Spirit combat cast only when a cast is due (a refusal
+waits one cast gap). Nothing per tick, no entity, no scan; network: one action-bar message per refused use, to that player only.
+
+**NEW:** `AttuneGate`, `AttuneRules.devilSpirit / order / blocked / gate`, setting `equipLimit`, 4 lang keys (`attune.msg.devil_spirit`, `attune.msg.limit`, `attune.msg.limit_devil_spirit`,
+`attune.screen.devil_spirit`), the gate calls listed above (one line each), tests `theEquipLimitBlocksTheThirdAndADevilWithASpirit`, `oldSavesAreHeldToTheLimitToo`,
+`everySystemsEntryPointAsksTheGate`, more checks in the self-tests `attune.rules` and `attune.player`.
+**REPLACED (owner's ask):** slots 3 (max 4) -> 2 (max 2); the refusal `same_system` -> `devil_spirit` (the `attune.msg.same_system` text stays in the lang file); on the screen a power of a system already
+in a slot no longer replaces it (slots full: the last one is replaced); "a clashing power only loses its damage" -> blocked extras lose their uses too.
+**KEPT:** the element table, rejection, backlash, suppression of clashes, resonance, the factors, `/meditate` and its commands.
+
+**Caveats (not seen in a game).** Not compiled by Gradle here (`AttuneRules` and the attune tests were compiled and run with plain `javac`/JUnit). Passive effects of a power already out are not
+gated: a held Beast Will form keeps its attribute modifiers and aura, a Djinn already summoned keeps its phase buffs and flight, a Devil let in keeps its stat bonuses and keeps assimilating, a
+Spirit already beside the player keeps following (its own free AI, e.g. the Spirit Lord's free cast outside combat mode, is not gated). Grimoire-book spells of a spirit magic that do not go
+through `SpiritControl` are not gated. The admin `/djinn` phase command skips the gate on purpose.
