@@ -54,6 +54,12 @@ public record WorldDevil(String id, DevilWorld world, String name, String title,
         return null;
     }
 
+    /** The place of a devil in the roster (what the visual packet carries), or -1. Ids are appended only, so an index is stable between versions of the mod. */
+    public static int indexOf(String id) {
+        if (id != null) for (int i = 0; i < ALL.length; i++) if (ALL[i].id.equalsIgnoreCase(id)) return i;
+        return -1;
+    }
+
     /** How many devils a world has. */
     public static int countOf(DevilWorld w) {
         int n = 0;

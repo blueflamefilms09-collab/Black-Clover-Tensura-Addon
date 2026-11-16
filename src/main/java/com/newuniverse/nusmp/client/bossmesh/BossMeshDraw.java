@@ -39,6 +39,7 @@ public final class BossMeshDraw {
     private int[] rolesFull, rolesLod;
     private Matrix4f[] mats = new Matrix4f[0];
     private Matrix3f[] norms = new Matrix3f[0];
+    private float[] alphas = new float[0];
     private final Matrix4f base = new Matrix4f();
     private final Matrix3f baseN = new Matrix3f();
     private final Quaternionf turn = new Quaternionf();
@@ -72,6 +73,7 @@ public final class BossMeshDraw {
         int n = Math.max(full.parts.length, lod == null ? 0 : lod.parts.length);
         mats = new Matrix4f[n];
         norms = new Matrix3f[n];
+        alphas = new float[n];
         for (int i = 0; i < n; i++) {
             mats[i] = new Matrix4f();
             norms[i] = new Matrix3f();
@@ -136,6 +138,55 @@ public final class BossMeshDraw {
             for (int i = 0; i < m.parts.length; i++) emit(mats[i], norms[i], g, m.glow[i], glowArgb, 0xF000F0);
         }
         return true;
+    }
+
+    /**
+     * Devil forms (docs/devil_forms.md): places every part with {@code placer} instead of the procedural pose, so a part can follow a body it is anchored on (the player's), and draws each with
+     * its own opacity (forging in, shattering out). A part whose role the placer does not know ({@code -1}) follows its parent. {@code tintRgb} is multiplied into the skin, {@code glowRgb} (0 = none)
+     * tints the glow pass, {@code glowK} (0 to 1.5) is its strength, {@code distSqr} picks the low-detail copy and the glow cut-off as in {@link #draw}. The pose stack is at the mesh's origin (feet), y up, face +z.
+     * Draws the parts that are fully on in one cutout batch, the others in one translucent batch, the glow in one additive batch; allocates nothing. False when there is no mesh.
+     */
+    public boolean drawParts(PoseStack ps, MultiBufferSource buffers, int light, int tintRgb, int glowRgb, float glowK, double distSqr, Placer placer) {
+        if (!available()) return false;
+        boolean far = lod != null && distSqr > LOD_RANGE * LOD_RANGE;
+        EntityMeshData m = far ? lod : full;
+        int[] roles = far ? rolesLod : rolesFull;
+        PoseStack.Pose p = ps.last();
+        base.set(p.pose()).scale(m.scale);
+        baseN.set(p.normal());
+        boolean partial = false;
+        for (int i = 0; i < m.parts.length; i++) {
+            int r = roles[i], par = m.parent[i];
+            if (r < 0) {
+                mats[i].set(par < 0 ? base : mats[par]);
+                norms[i].set(par < 0 ? baseN : norms[par]);
+                alphas[i] = par < 0 ? 1f : alphas[par];
+            } else {
+                alphas[i] = placer.place(r, m.scale, m.pivot[i * 3], m.pivot[i * 3 + 1], m.pivot[i * 3 + 2], base, baseN, mats[i], norms[i]);
+            }
+            if (alphas[i] > 0f && alphas[i] < 0.999f) partial = true;
+        }
+        int rgb = tintRgb & 0xFFFFFF;
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutout(tex));
+        for (int i = 0; i < m.parts.length; i++) if (alphas[i] >= 0.999f) emit(mats[i], norms[i], vc, m.body[i], 0xFF000000 | rgb, light);
+        if (partial) {
+            VertexConsumer vt = buffers.getBuffer(RenderType.entityTranslucent(tex));
+            for (int i = 0; i < m.parts.length; i++) if (alphas[i] > 0f && alphas[i] < 0.999f) emit(mats[i], norms[i], vt, m.body[i], (((int) (alphas[i] * 255f + 0.5f)) << 24) | rgb, light);
+        }
+        if (glowRgb != 0 && glowK > 0.01f && !far && distSqr < GLOW_RANGE * GLOW_RANGE) {
+            VertexConsumer g = buffers.getBuffer(SafeAdditive.additive(glowTex));
+            int grgb = glowRgb & 0xFFFFFF;
+            for (int i = 0; i < m.parts.length; i++) {
+                float a = alphas[i] * glowK;
+                if (a > 0.01f) emit(mats[i], norms[i], g, m.glow[i], (Math.min(255, (int) (a * 255f + 0.5f)) << 24) | grgb, 0xF000F0);
+            }
+        }
+        return true;
+    }
+
+    /** Places one part for {@link #drawParts}: writes its matrix and normal matrix (from {@code base} / {@code baseN}) and returns its opacity, 0 = not drawn. {@code scale}: model units to blocks; pivot in model units. */
+    public interface Placer {
+        float place(int role, float scale, float px, float py, float pz, Matrix4f base, Matrix3f baseN, Matrix4f out, Matrix3f outN);
     }
 
     private void emit(Matrix4f m, Matrix3f n, VertexConsumer vc, float[] v, int argb, int light) {

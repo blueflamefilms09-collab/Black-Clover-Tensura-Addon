@@ -183,6 +183,7 @@ public final class DevilCommands {
         d.tier = DevilTier.NONE;
         d.attribute = DevilAttribute.NONE;
         d.devil = "";
+        DevilNpcs.discard(p.getServer(), d);
         d.offer = "";
         d.ritual = null;
         d.sacrifices.clear();

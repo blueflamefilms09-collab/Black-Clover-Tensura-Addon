@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DevilClientConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue WEG, HUD;
+    private static final ModConfigSpec.BooleanValue WEG, HUD, FORMS;
     private static final ModConfigSpec.DoubleValue EYE;
 
     static {
@@ -17,6 +17,8 @@ public final class DevilClientConfig {
         WEG = b.comment("Draw the Weg markings, horns and wings on devils (yours and other players'). false = no body changes are drawn (the system itself still works).").define("wegLayer", true);
         HUD = b.comment("Draw the assimilation panel (level, magicule drain, union and cooldown timers). It can also be moved or hidden with the GUI Move settings.").define("hud", true);
         EYE = b.comment("How strong the shade of a lost eye is on your own screen: 0 = no shade and no narrower view, 1 = full.").defineInRange("eyeOverlayStrength", 1.0, 0.0, 1.0);
+        FORMS = b.comment("3.97.0: a devil of another world has its own form: its Blender mesh worn on the body (head, arms, wings, tail, legs by stage) and the markings in its colour. false = the generic horns and wings exactly as before (docs/devil_forms.md).")
+                .define("customForms", true);
         b.pop();
         SPEC = b.build();
     }
@@ -24,6 +26,8 @@ public final class DevilClientConfig {
     private DevilClientConfig() {}
 
     public static boolean weg() { try { return WEG.get(); } catch (RuntimeException notLoaded) { return true; } }
+
+    public static boolean customForms() { try { return FORMS.get(); } catch (RuntimeException notLoaded) { return true; } }
 
     public static boolean hud() { try { return HUD.get(); } catch (RuntimeException notLoaded) { return true; } }
 

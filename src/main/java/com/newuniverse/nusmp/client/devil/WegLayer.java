@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.devil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.devil.DevilRules;
+import com.newuniverse.nusmp.devil.WorldDevil;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -94,10 +95,13 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
 
             // ---- the markings: the body, a hair larger, in the tier's texture, fainter when the level is low
             float markA = Mth.clamp(0.18f + 0.82f * level / 100f, 0f, 1f);
-            drawMarks(pose, buffers, light, p, tier, s, markA, glowAmount(level, union, age));
+            boolean custom = v.devil >= 0 && DevilClientConfig.customForms();                          // 3.97.0: a devil of another world: the markings in its colour, and its mesh instead of the generic horns and wings
+            int tint = custom ? tintOf(WorldDevil.at(v.devil).color()) : 0xFFFFFF;
+            boolean ownForm = custom && DevilFormLayer.usable(v.devil);
+            drawMarks(pose, buffers, light, p, tier, s, markA, glowAmount(level, union, age), tint);
 
             // ---- horns from 20 %
-            if (level >= DevilRules.HORNS_AT) {
+            if (level >= DevilRules.HORNS_AT && !ownForm) {
                 float grow = 0.75f + 0.5f * Mth.clamp((level - DevilRules.HORNS_AT) / 40f, 0f, 1f);
                 if (union) grow *= 1.2f;
                 pose.pushPose();
@@ -110,7 +114,7 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             }
 
             // ---- wings from 50 %
-            if (level >= DevilRules.WINGS_AT) {
+            if (level >= DevilRules.WINGS_AT && !ownForm) {
                 float size = (0.55f + 0.2f * Mth.clamp((level - DevilRules.WINGS_AT) / 50f, 0f, 1f)) * (union ? 1.2f : 1f);
                 float flap = air ? Mth.sin(age * 0.38f) * 0.85f : Mth.sin(age * 0.07f) * 0.12f;
                 wings.pose(v.spread, flap, size);
@@ -133,13 +137,20 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         return level < DevilRules.WINGS_AT ? 0f : 0.45f * Mth.clamp((level - DevilRules.WINGS_AT) / 50f, 0f, 1f);
     }
 
-    private void drawMarks(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, int tier, int s, float markA, float glow) {
+    /** The devil's colour mixed a third of the way to white, so the markings keep their drawing. */
+    private static int tintOf(int rgb) {
+        int r = 255 - ((255 - (rgb >> 16 & 255)) * 2 / 3), g = 255 - ((255 - (rgb >> 8 & 255)) * 2 / 3), b = 255 - ((255 - (rgb & 255)) * 2 / 3);
+        return r << 16 | g << 8 | b;
+    }
+
+    private void drawMarks(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, int tier, int s, float markA, float glow, int tint) {
+        int tr = tint >> 16 & 255, tg = tint >> 8 & 255, tb = tint & 255;
         PlayerModel<AbstractClientPlayer> parent = getParentModel();
         parent.copyPropertiesTo(overlay);
         overlay.setAllVisible(false);
         overlay.head.visible = overlay.body.visible = overlay.rightArm.visible = overlay.leftArm.visible = overlay.rightLeg.visible = overlay.leftLeg.visible = true;   // the base layer only: the marks are painted there
-        overlay.renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucent(WEG[tier][s][0])), light, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (markA * 255f), 0, 255), 255, 255, 255));
+        overlay.renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucent(WEG[tier][s][0])), light, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (markA * 255f), 0, 255), tr, tg, tb));
         if (glow > 0.02f)
-            overlay.renderToBuffer(pose, buffers.getBuffer(SafeAdditive.additive(WEG[tier][s][1])), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (glow * 255f), 0, 255), 255, 255, 255));
+            overlay.renderToBuffer(pose, buffers.getBuffer(SafeAdditive.additive(WEG[tier][s][1])), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (glow * 255f), 0, 255), tr, tg, tb));
     }
 }

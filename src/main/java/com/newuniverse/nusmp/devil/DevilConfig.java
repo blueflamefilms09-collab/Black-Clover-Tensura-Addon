@@ -13,6 +13,8 @@ public final class DevilConfig {
     private static final ModConfigSpec.BooleanValue ENABLED, ALLOW_FLIGHT, HALF_HEALTH, EYE_REACH, DEATH_COOLDOWN, WORLDS, EFFECTS;
     private static final ModConfigSpec.DoubleValue DRAIN_SCALE, STAT_SCALE, EFFECT_SCALE;
     private static final ModConfigSpec.IntValue UNION_SECONDS, COOLDOWN_HOURS;
+    private static final ModConfigSpec.BooleanValue NPC_ENABLED;
+    private static final ModConfigSpec.IntValue NPC_MAX, NPC_LIFE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -44,6 +46,14 @@ public final class DevilConfig {
                 .define("combatEffects", true);
         EFFECT_SCALE = b.comment("Multiplier on the extra damage of the attribute (the bonus is never more than three times the blow).").defineInRange("effectScale", 1.0, 0.0, 10.0);
         b.pop();
+        b.push("npc");
+        NPC_ENABLED = b.comment("The devil's figure: while a ritual runs and the offer is open, a figure of the devil stands three blocks in front of the caller and speaks to them (docs/devil_forms.md).",
+                "false = exactly the old behaviour: the ritual's pictures only, no entity.").define("enabled", true);
+        NPC_MAX = b.comment("The most figures on the whole server at once (one per player at most). Over the cap a ritual plays the old pictures-only shadow instead.")
+                .defineInRange("max", DevilNpcRules.DEFAULT_MAX, 0, DevilNpcRules.MAX_MAX);
+        NPC_LIFE = b.comment("The longest a figure may live, in seconds, whatever else happens (the ritual and the 30 second offer fit inside the default 60).")
+                .defineInRange("lifetimeSeconds", DevilNpcRules.DEFAULT_LIFE_SECONDS, DevilNpcRules.MIN_LIFE_SECONDS, DevilNpcRules.MAX_LIFE_SECONDS);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -72,4 +82,7 @@ public final class DevilConfig {
     public static boolean worlds() { return on(WORLDS, true); }
     public static boolean attributeEffects() { return on(EFFECTS, true); }
     public static double effectScale() { return num(EFFECT_SCALE, 1.0, 0, 10); }
+    public static boolean npcEnabled() { return on(NPC_ENABLED, true); }
+    public static int npcMax() { return DevilNpcRules.clampMax(whole(NPC_MAX, DevilNpcRules.DEFAULT_MAX, 0, DevilNpcRules.MAX_MAX)); }
+    public static long npcLifetimeTicks() { return DevilNpcRules.lifetimeTicks(whole(NPC_LIFE, DevilNpcRules.DEFAULT_LIFE_SECONDS, DevilNpcRules.MIN_LIFE_SECONDS, DevilNpcRules.MAX_LIFE_SECONDS)); }
 }

@@ -55,15 +55,31 @@ public final class DevilNet {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
-    /** What one player looks like to those who can see them: {@code level} 0 to 100 (already rounded to a step), {@code union} the Devil Union. */
-    public record Visual(int entity, int tier, int level, boolean union) implements CustomPacketPayload {
+    /**
+     * What one player looks like to those who can see them: {@code level} 0 to 100 (already rounded to a step), {@code union} the Devil Union, {@code devil} (3.97.0, appended) the place of the devil of
+     * another world in {@link WorldDevil} (-1 = an old-pact devil without one: the generic look). On the wire the devil is one last byte (index + 1, 0 = none); a packet of the old format that stops after the union flag
+     * reads as -1, and an index outside the roster is read as -1, so neither end can be made to read out of range.
+     */
+    public record Visual(int entity, int tier, int level, boolean union, int devil) implements CustomPacketPayload {
         public static final Type<Visual> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_visual"));
         public static final StreamCodec<FriendlyByteBuf, Visual> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeVarInt(p.entity());
             buf.writeByte(p.tier());
             buf.writeByte(p.level());
             buf.writeBoolean(p.union());
-        }, buf -> new Visual(buf.readVarInt(), DevilRules.clampInt(buf.readByte(), 0, DevilTier.values().length - 1), DevilRules.clampInt(buf.readByte(), 0, 100), buf.readBoolean()));
+            buf.writeByte(DevilRules.clampInt(p.devil(), -1, WorldDevil.count() - 1) + 1);
+        }, buf -> {
+            int entity = buf.readVarInt();
+            int tier = DevilRules.clampInt(buf.readByte(), 0, DevilTier.values().length - 1);
+            int level = DevilRules.clampInt(buf.readByte(), 0, 100);
+            boolean union = buf.readBoolean();
+            int devil = buf.isReadable() ? buf.readByte() - 1 : -1;
+            return new Visual(entity, tier, level, union, devil < 0 || devil >= WorldDevil.count() ? -1 : devil);
+        });
+
+        /** The 3.48.0 shape: no devil of another world. */
+        public Visual(int entity, int tier, int level, boolean union) { this(entity, tier, level, union, -1); }
+
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 

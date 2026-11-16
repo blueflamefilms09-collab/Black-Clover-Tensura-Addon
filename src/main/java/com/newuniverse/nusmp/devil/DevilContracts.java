@@ -266,6 +266,7 @@ public final class DevilContracts {
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         DevilContract c = DevilStore.peek(p);
+        if (c != null) DevilNpcs.discard(p.getServer(), c);                                                      // 3.97.0: a figure never outlives its caller
         if (c == null || !c.hasContract()) return;
         c.assimilating = false;
         if (c.inUnion()) endUnion(p, c, time(p), "quiet"); else c.assimilation = 0f;
@@ -283,6 +284,7 @@ public final class DevilContracts {
     static void onDimension(PlayerEvent.PlayerChangedDimensionEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         DevilContract c = DevilStore.peek(p);
+        if (c != null) DevilNpcs.discard(p.getServer(), c);                                                      // 3.97.0: the figure stays in the level it was made in: gone
         if (c == null || !c.hasContract()) return;
         applyStats(p, c);
         c.sentSelf = -1;
@@ -293,6 +295,7 @@ public final class DevilContracts {
     static void onDeath(LivingDeathEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         DevilContract c = DevilStore.peek(p);
+        if (c != null) DevilNpcs.discard(p.getServer(), c);                                                      // 3.97.0: dying ends the ritual's figure
         if (c == null || !c.hasContract()) return;
         if (c.inUnion()) endUnion(p, c, time(p), "death");
         else { c.assimilation = 0f; c.assimilating = false; }
@@ -316,11 +319,11 @@ public final class DevilContracts {
     }
 
     // ---------------------------------------------------------------- sync
-    static DevilNet.Visual visual(ServerPlayer p, DevilContract c) { return new DevilNet.Visual(p.getId(), c.tier.ordinal(), DevilRules.bucket(c.assimilation) * 5, c.inUnion()); }
+    static DevilNet.Visual visual(ServerPlayer p, DevilContract c) { return new DevilNet.Visual(p.getId(), c.tier.ordinal(), DevilRules.bucket(c.assimilation) * 5, c.inUnion(), WorldDevil.indexOf(c.devil)); }
 
     private static int visualKey(DevilContract c) {
         int b = DevilRules.bucket(c.assimilation);
-        return c.inUnion() || b > 0 ? (c.tier.ordinal() << 16) | (b << 8) | (c.inUnion() ? 1 : 0) : 0;
+        return c.inUnion() || b > 0 ? ((WorldDevil.indexOf(c.devil) + 1) << 20) | (c.tier.ordinal() << 16) | (b << 8) | (c.inUnion() ? 1 : 0) : 0;      // 3.97.0: the devil's place in the roster is part of the picture
     }
 
     private static int selfKey(ServerPlayer p, DevilContract c, long now) {

@@ -47,7 +47,7 @@ class DevilSourceScanTest {
 
     @Test
     void thePureClassesNameNoMinecraftType() throws IOException {
-        for (String f : List.of("DevilRules.java", "DevilTier.java", "DevilAttribute.java", "Sacrifice.java"))
+        for (String f : List.of("DevilRules.java", "DevilTier.java", "DevilAttribute.java", "Sacrifice.java", "DevilNpcRules.java", "DevilFormRules.java", "DevilNpcLines.java"))
             assertFalse(Pattern.compile("(?m)^import (net\\.minecraft|net\\.neoforged|com\\.mojang)").matcher(common(f)).find(), f + " must stay pure (it is unit tested without a game)");
     }
 
@@ -58,8 +58,10 @@ class DevilSourceScanTest {
             String n = f.getFileName().toString();
             assertFalse(Pattern.compile("static\\s+(?:final\\s+|volatile\\s+)*(?:ServerPlayer|Player|FakePlayer)\\s+\\w+").matcher(c).find(), n + " has a static player");
             assertFalse(Pattern.compile("static\\s+[^;=(]*(?:Map|List|Set)<").matcher(c).find(), n + " keeps a static collection: the state of a player lives in its attachment");
-            assertFalse(Pattern.compile("getEntitiesOfClass|getEntities\\(|getNearbyEntities|getChunk\\(|forceChunk|setChunkForced|addFreshEntity|\\.setBlock\\(|setBlockAndUpdate|\\.explode\\(|Math\\.random").matcher(c).find(),
-                    n + " scans the world, spawns something or uses unseeded randomness: the devil system is numbers and pictures only");
+            assertFalse(Pattern.compile("getEntitiesOfClass|getEntities\\(|getNearbyEntities|getChunk\\(|forceChunk|setChunkForced|\\.setBlock\\(|setBlockAndUpdate|\\.explode\\(|Math\\.random").matcher(c).find(),
+                    n + " scans the world or uses unseeded randomness: the devil system is numbers and pictures only");
+            if (!n.equals("DevilNpcs.java"))                                                   // 3.97.0: the devil's figure is the one entity, made in one place
+                assertFalse(c.contains("addFreshEntity"), n + " spawns an entity: only DevilNpcs may (one per player, capped)");
         }
     }
 
@@ -107,6 +109,35 @@ class DevilSourceScanTest {
         assertTrue(w.contains("PerfProbe.section(\"c.devil.layer\")"), "the layer is timed");
         assertTrue(w.contains("SafeAdditive.additive("), "glow passes use the repo's safe additive type");
         assertFalse(w.contains("new float[") || w.contains("new Vector") || w.contains("new Quaternionf"), "no allocation in the draw path");
+    }
+
+    @Test
+    void theDevilsFigureIsOneEntityMadeInOnePlaceAndBounded() throws IOException {
+        String n = common("DevilNpcs.java");
+        assertTrue(n.contains("DevilConfig.npcEnabled()"), "the setting turns it off");
+        assertTrue(n.contains("DevilNpcRules.mayStart(") && n.contains("DevilConfig.npcMax()"), "the server-wide cap");
+        assertTrue(n.contains("old.discard()"), "one per player: a new figure replaces the old one");
+        assertTrue(n.contains("server.getPlayerList().getPlayers()"), "the count looks at the online players, not at the world");
+        String e = common("DevilNpc.java");
+        assertTrue(e.contains("life % DevilNpcRules.CHECK_EVERY == 0"), "the figure checks itself once every ten ticks");
+        assertTrue(e.contains("shouldBeSaved() { return false; }"), "never saved");
+        assertTrue(e.contains("isInvulnerableTo") && e.contains("isPickable() { return false; }") && e.contains("isPushable() { return false; }"), "nothing can touch it");
+        assertTrue(common("DevilEntities.java").contains(".noSave()"), "the type is never saved either");
+        String c = common("DevilContracts.java");
+        assertTrue(c.contains("DevilNpcs.discard(") && c.indexOf("DevilNpcs.discard(") != c.lastIndexOf("DevilNpcs.discard("), "logout, dimension change and death remove it");
+        assertTrue(common("DevilRituals.java").contains("DevilNpcs.dissolve(") && common("DevilRituals.java").contains("DevilNpcs.merge("), "refuse, break and sign end it");
+    }
+
+    @Test
+    void theFormLayerAndTheFigureRendererAreBounded() throws IOException {
+        String l = client("DevilFormLayer.java");
+        assertTrue(l.contains("NoelleFormRules.budgeted(") && l.contains("DevilFormRules.wanted(") && l.contains("newFrame()"), "the crowd budget and the distance cut");
+        assertTrue(l.contains("PerfProbe.section(\"c.devil.form\")"), "timed");
+        assertFalse(l.contains("new float[") || l.contains("new Vector") || l.contains("Axis."), "no allocation in the draw path (the rotations are made once)");
+        assertTrue(client("DevilClientConfig.java").contains("\"customForms\""), "the setting that restores the generic look");
+        String r = client("DevilNpcRenderer.java");
+        assertTrue(r.contains("CULL") && r.contains("PerfProbe.section(\"c.devil.npc\")"), "the figure is culled by distance and timed");
+        assertFalse(r.contains("new float[") || r.contains("new Vector") || r.contains("new Quaternionf"), "no allocation in the draw path");
     }
 
     @Test

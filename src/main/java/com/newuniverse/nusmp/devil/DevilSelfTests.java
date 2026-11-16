@@ -2,8 +2,13 @@ package com.newuniverse.nusmp.devil;
 
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 /**
@@ -13,6 +18,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
  * <li>{@code registry}: the save attachment is registered, the server config answers with sane numbers, the three payload types have distinct ids.</li>
  * <li>{@code rules}: the numbers the doc promises (stages 20 / 50 / 100, the union exactly 6000 ticks, the cooldown exactly 24 000 ticks, the cap while cooling, the drain ten times higher at 100 %, no stat past its cap).</li>
  * <li>{@code store}: a contract written to a tag and read back is the same, and a damaged tag is clamped.</li>
+ * <li>{@code devil.npc} (3.97.0): the figure's entity type is registered; the cap and the off switch refuse a figure; a stand-in's ritual makes one figure in front of it, a second ritual replaces it (still one),
+ * the offer, the merge and the dissolve set its state, a discard (what logout, death, a change of dimension and {@code /devil clear} call) removes it, and a figure whose owner is not online removes itself within ten ticks.</li>
  * </ul>
  */
 public final class DevilSelfTests {
@@ -27,6 +34,7 @@ public final class DevilSelfTests {
         SelfTests.register("devil.rules.bounds", DevilSelfTests::rules);
         SelfTests.register("devil.store.roundtrip", DevilSelfTests::store);
         SelfTests.register("devil.worlds", DevilSelfTests::worlds);                                  // 3.76.0
+        SelfTests.register("devil.npc", DevilSelfTests::npc);                                        // 3.97.0: the devil's figure (docs/devil_forms.md)
     }
 
     private static Result registry(MinecraftServer server) {
@@ -103,5 +111,60 @@ public final class DevilSelfTests {
         if (DevilRules.effectBonus(10f, DevilRules.effect(DevilAttribute.CAUSALITY), 1.5, 10.0) > 30f) return Result.fail("an attribute bonus passed three times the blow");
         if (DevilRitualRules.bindingBlow(3f, 20f) > 1f + 1e-6 || DevilRitualRules.bindingBlow(1f, 20f) != 0f) return Result.fail("the devil's blow could take the last heart");
         return Result.ok("devil worlds: " + DevilWorld.values().length + " worlds, " + WorldDevil.count() + " devils, every attribute acts, prices survive a save, rituals refuse the unprepared; worlds=" + DevilConfig.worlds());
+    }
+
+    /** 3.97.0: the devil's figure. The stand-in is not on the player list, so it is also the "owner gone" case of the figure's own check. */
+    private static Result npc(MinecraftServer server) {
+        if (!DevilEntities.NPC.isBound()) return Result.fail("the devil_npc entity type is not registered");
+        if (!BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_npc"))) return Result.fail("the devil_npc entity type is missing from the registry");
+        if (DevilNpcRules.mayStart(false, false, 0, 8) || DevilNpcRules.mayStart(true, true, 0, 8) || DevilNpcRules.mayStart(true, false, 8, 8) || !DevilNpcRules.mayStart(true, false, 7, 8)) return Result.fail("the figure's cap or switch rules moved");
+        int max = DevilConfig.npcMax();
+        long life = DevilConfig.npcLifetimeTicks();
+        if (max < 0 || max > DevilNpcRules.MAX_MAX || life < DevilNpcRules.MIN_LIFE_SECONDS * 20L || life > DevilNpcRules.MAX_LIFE_SECONDS * 20L) return Result.fail("the figure's settings left their bounds: max " + max + ", life " + life);
+        if (!DevilConfig.npcEnabled() || max == 0) return Result.ok("skipped the entity part: npc.enabled is " + DevilConfig.npcEnabled() + ", npc.max " + max + " (the old pictures-only ritual)");
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 3, 0);
+        ServerPlayer a = SelfTests.standIn(level, "devil_npc", at.x, at.y, at.z);
+        DevilContract c = DevilStore.of(a);
+        try {
+            WorldDevil d = WorldDevil.at(0);
+            DevilRitualRun run = new DevilRitualRun(d.id(), 0L, at.x, at.y, at.z, 0.0, 1.0, level.dimension().location().toString());
+            c.ritual = run;
+            if (!DevilNpcs.spawn(a, c, d, run)) return Result.fail("a ritual made no figure");
+            DevilNpc n = DevilNpcs.figure(server, c);
+            if (n == null) return Result.fail("the figure is not found after it was made");
+            if (!a.getUUID().equals(n.owner()) || !d.id().equals(n.devilId()) || n.state() != DevilNpcRules.RISING) return Result.fail("the figure's owner, devil or state is wrong");
+            double away = Math.hypot(n.getX() - at.x, n.getZ() - at.z);
+            if (away < 1.0 || away > DevilNpcRules.FRONT + 0.1) return Result.fail("the figure stands " + away + " blocks from the circle, not in front of it");
+            if (n.isPickable() || n.isPushable() || n.canBeCollidedWith() || n.shouldBeSaved() || !n.isInvulnerableTo(level.damageSources().generic())) return Result.fail("the figure can be touched or saved");
+            if (!DevilNpcs.spawn(a, c, d, run)) return Result.fail("a second ritual made no figure");
+            DevilNpc second = DevilNpcs.figure(server, c);
+            if (second == null || second == n || !n.isRemoved()) return Result.fail("a second figure did not replace the first");
+            if (DevilNpcs.live(server, java.util.List.of(a)) != 1) return Result.fail("the caller has " + DevilNpcs.live(server, java.util.List.of(a)) + " figures, not one");
+            if (!DevilNpcs.offer(a, c, d) || second.state() != DevilNpcRules.OFFER) return Result.fail("the offer did not set the OFFER state");
+            DevilNpcs.merge(a, c, d);
+            if (second.state() != DevilNpcRules.MERGE) return Result.fail("signing did not set the MERGE state");
+            DevilNpcs.dissolve(a, c);
+            if (second.state() != DevilNpcRules.MERGE) return Result.fail("a merging figure was turned into a dissolving one");
+            DevilNpcs.discard(server, c);
+            if (!second.isRemoved() || c.npc != null || DevilNpcs.figure(server, c) != null) return Result.fail("discard (logout, death, dimension change, /devil clear) left the figure");
+            if (DevilNpcs.offer(a, c, d)) return Result.fail("an offer was made with no figure (the old shadow must play then)");
+
+            if (!DevilNpcs.spawn(a, c, d, run)) return Result.fail("the third figure was not made");
+            DevilNpcs.dissolve(a, c);
+            DevilNpc third = DevilNpcs.figure(server, c);
+            if (third == null || third.state() != DevilNpcRules.DISSOLVE) return Result.fail("a refused offer did not set the DISSOLVE state");
+            DevilNpcs.discard(server, c);
+
+            if (!DevilNpcs.spawn(a, c, d, run)) return Result.fail("the fourth figure was not made");
+            DevilNpc fourth = DevilNpcs.figure(server, c);
+            for (int i = 0; i < DevilNpcRules.CHECK_EVERY && fourth != null && !fourth.isRemoved(); i++) fourth.tick();
+            if (fourth == null || !fourth.isRemoved()) return Result.fail("a figure whose owner is not online did not remove itself within " + DevilNpcRules.CHECK_EVERY + " ticks");
+            return Result.ok("devil figure: type registered, made in front of the caller, one per caller, offer / merge / dissolve states, discard and the owner-gone check remove it; cap " + max + ", life " + life + " ticks");
+        } finally {
+            DevilNpcs.discard(server, c);
+            c.ritual = null;
+            c.npc = null;
+        }
     }
 }

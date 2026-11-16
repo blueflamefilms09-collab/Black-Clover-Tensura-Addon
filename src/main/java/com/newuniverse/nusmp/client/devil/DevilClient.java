@@ -6,10 +6,13 @@ import com.newuniverse.nusmp.client.ui.theme.UiBar;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
 import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
+import com.newuniverse.nusmp.devil.DevilEntities;
+import com.newuniverse.nusmp.devil.DevilFormRules;
 import com.newuniverse.nusmp.devil.DevilNet;
 import com.newuniverse.nusmp.devil.DevilRules;
 import com.newuniverse.nusmp.devil.DevilTier;
 import com.newuniverse.nusmp.devil.Sacrifice;
+import com.newuniverse.nusmp.devil.WorldDevil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -23,6 +26,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -65,6 +69,11 @@ public final class DevilClient {
         int tier, level;
         boolean union;
         float shown, spread = 0.4f, lastT = -1f;
+        /** 3.97.0: the index of the devil of another world ({@code WorldDevil}) this contract is with, -1 = none (the generic look); the forging state of each role of its form ({@link DevilFormLayer}). */
+        int devil = -1;
+        boolean formInit;
+        final boolean[] was = new boolean[DevilFormRules.COUNT];
+        final float[] onAt = new float[DevilFormRules.COUNT], offAt = new float[DevilFormRules.COUNT];
 
         /** Moves the drawn level toward the real one (12 percent a second) and the wings toward open or folded. */
         void step(float now, boolean air) {
@@ -106,10 +115,12 @@ public final class DevilClient {
         });
         modBus.addListener(DevilModels::register);
         modBus.addListener(WegLayer::add);
+        modBus.addListener(DevilFormLayer::add);
+        modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> e.registerEntityRenderer(DevilEntities.NPC.get(), DevilNpcRenderer::new));
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
         NeoForge.EVENT_BUS.addListener((ViewportEvent.ComputeFov e) -> fov(e));
-        NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent e) -> { if (e.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) drawn = 0; });
+        NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent e) -> { if (e.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) { drawn = 0; DevilFormLayer.newFrame(); } });
         DevilNet.clientSync = DevilClient::onSync;
         DevilNet.clientVisual = DevilClient::onVisual;
     }
@@ -143,6 +154,9 @@ public final class DevilClient {
         x.tier = v.tier();
         x.level = v.level();
         x.union = v.union();
+        int devil = v.devil() >= 0 && v.devil() < WorldDevil.count() ? v.devil() : -1;
+        if (devil != x.devil) x.formInit = false;                                         // another devil: its form is forged from nothing
+        x.devil = devil;
     }
 
     private static void tick() {

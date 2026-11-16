@@ -19,6 +19,7 @@ public final class DevilBoot {
         if (done) return;
         done = true;
         DevilStore.ATTACHMENTS.register(modBus);
+        DevilEntities.init(modBus);                                                          // 3.97.0: the devil's figure (anime_multiverse:devil_npc), npc.* in nusmp-devil-server.toml
         container.registerConfig(ModConfig.Type.SERVER, DevilConfig.SPEC, "nusmp-devil-server.toml");
         modBus.addListener(DevilNet::registerPayloads);
         DevilContracts.register(NeoForge.EVENT_BUS);

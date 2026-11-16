@@ -33,8 +33,8 @@ import net.minecraft.world.phys.Vec3;
  * then on is the 3.48.0 contract (assimilation key, Devil Union, markings) with the devil's tier and attribute.
  *
  * <p>Cost (rule 11): nothing for a player with no ritual (one attachment lookup a tick). A running ritual is a distance check a tick, at most 8 pictures in its 4 to 10 seconds (one packet each to
- * players within 96 blocks, through the effect budget), at most 6 particles every 10 ticks through the particle budget, and a handful of chat lines to the caller. No entity is spawned, no block
- * is changed, nothing is scanned, nothing is kept in a static map.
+ * players within 96 blocks, through the effect budget), at most 6 particles every 10 ticks through the particle budget, and a handful of chat lines to the caller. Until 3.97.0 (and with {@code npc.enabled = false}) no entity is spawned; no block
+ * is changed, nothing is scanned, nothing is kept in a static map. 3.97.0: the one entity is the devil's figure ({@link DevilNpcs}, at most one per player and {@code npc.max} on the server, gone in at most 60 seconds), and four lines of chat to the caller.
  */
 public final class DevilRituals {
     private DevilRituals() {}
@@ -119,6 +119,7 @@ public final class DevilRituals {
         c.offer = "";
         p.sendSystemMessage(Component.literal(d.world().ritual + " (" + d.world().label + ")").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         stage(p, d, c.ritual, 0);
+        DevilNpcs.spawn(p, c, d, c.ritual);                                                  // 3.97.0: the devil's figure, three blocks in front (docs/devil_forms.md); none over the cap or with npc.enabled = false
         return DevilRitualRules.Denial.NONE;
     }
 
@@ -131,6 +132,7 @@ public final class DevilRituals {
         WorldDevil d = WorldDevil.byId(r.devil);
         if (d == null || !p.isAlive() || !on() || !r.dimension.equals(p.level().dimension().location().toString())) {
             c.ritual = null;
+            DevilNpcs.dissolve(p, c);
             return;
         }
         int t = (int) Math.max(0, DevilContracts.time(p) - r.start);
@@ -139,17 +141,19 @@ public final class DevilRituals {
         String why = DevilRitualRules.broken(d.world(), Math.sqrt(p.distanceToSqr(r.x, r.y, r.z)), p.getHealth() / max);
         if (why != null) {
             c.ritual = null;
+            DevilNpcs.dissolve(p, c);
             say(p, why, ChatFormatting.RED);
             if (d.world() == DevilWorld.BLUE_EXORCIST && !p.isCreative()) p.hurt(p.damageSources().magic(), DevilRitualRules.EXORCIST_BACKLASH);
             sound(p, SoundEvents.ELDER_GUARDIAN_CURSE, 1.0f, 0.7f);
             return;
         }
         stage(p, d, r, t);
+        DevilNpcs.speakAt(p, c, d, t);
         if (t >= d.world().ticks) {
             c.ritual = null;
             Vec3 front = new Vec3(r.x + r.faceX * 3.0, r.y + 0.05, r.z + r.faceZ * 3.0);              // 3.77.0: the devil itself: a shadow with burning eyes over its sigil, three blocks in front, while it waits for the answer
             shape(p, VfxShape.BOSS_DEVIL_SIGIL, front, front.add(0, 1, 0), d.color(), 80, 2.5);
-            shape(p, VfxShape.SHADOW_UNITE, front, front.add(0, 1, 0), d.color(), 200, 1.4);
+            if (!DevilNpcs.offer(p, c, d)) shape(p, VfxShape.SHADOW_UNITE, front, front.add(0, 1, 0), d.color(), 200, 1.4);        // 3.97.0: with a figure it roars and speaks; without one (off, over the cap) the old shadow
             offer(p, c, d);
         }
     }
@@ -297,7 +301,8 @@ public final class DevilRituals {
         DevilContracts.applySacrifices(p, c);
         DevilContracts.applyStats(p, c);
         DevilContracts.syncNow(p, c);
-        DevilNet.sendVisual(p, new DevilNet.Visual(p.getId(), d.tier().ordinal(), 100, true));       // 3.77.0: for three seconds the signer wears the devil whole: markings, horns, wings, the union's glow
+        DevilNpcs.merge(p, c, d);                                                            // 3.97.0: the figure merges into the signer
+        DevilNet.sendVisual(p, new DevilNet.Visual(p.getId(), d.tier().ordinal(), 100, true, WorldDevil.indexOf(d.id())));       // 3.77.0: for three seconds the signer wears the devil whole: markings, horns, wings, the union's glow
         c.sentVisual = -2;
         c.flashUntil = now + 60;
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SHADOW_UNITE, p, p.position().add(0, 1, 0), 0xFF000000 | (d.color() & 0xFFFFFF), 60, 1.2f);      // the devil's shadow settles on the signer
@@ -320,6 +325,7 @@ public final class DevilRituals {
         if (c == null || c.offer.isEmpty()) return false;
         WorldDevil d = WorldDevil.byId(c.offer);
         c.offer = "";
+        DevilNpcs.dissolve(p, c);
         say(p, (d == null ? "The devil" : cap(d.name())) + " withdraws.", ChatFormatting.GRAY);
         return true;
     }

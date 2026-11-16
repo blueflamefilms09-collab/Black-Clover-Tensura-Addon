@@ -122,7 +122,7 @@ class PerfSourceScanTest {
     private static final List<String> HOT_RENDER_FILES = List.of(
             "vfx/client/VfxVertexBuffer.java", "vfx/client/VfxManager.java", "vfx/client/FxRenderer.java", "client/geo/GeoDraw.java", "client/aura/PlayerAuraLayer.java",
             "client/aura/AuraRender.java", "client/relics/RelicWornLayer.java", "client/relics/HumanoidRelicLayer.java", "client/labyrinth/foundry/FoundryRenderer.java",
-            "client/remodel/AbyssalRenderer.java", "client/thread/ThreadTrapRenderer.java", "client/grimoire/GrimoireFloatClient.java", "client/relics/djinn/DjinnArmorLayer.java",
+            "client/remodel/AbyssalRenderer.java", "client/thread/ThreadTrapRenderer.java", "client/grimoire/GrimoireFloatClient.java", "client/relics/djinn/DjinnArmorLayer.java", "client/devil/DevilFormLayer.java", "client/devil/DevilNpcRenderer.java", "client/devil/WegLayer.java",
             "vfx/client/layer/WindMcLayer.java",        // the Wind pixel look: its textures are static finals, its frame methods build no location
             "vfx/client/layer/WaterBcLayer.java", "vfx/client/WaterBcDraw.java", "vfx/client/WaterBcFrame.java",        // the Water hybrid: static textures, a fixed plan, a mesh draw of three passes
             "vfx/client/layer/FireV2Layer.java",       // the Fire V2 look: the same, its textures are static finals resolved once
@@ -199,6 +199,18 @@ class PerfSourceScanTest {
         int voidPass = render.indexOf("NURenderTypes.demonVoid()");
         assertTrue(voidPass > 0, "the void pass moved; update this pin");
         assertFalse(render.substring(voidPass, voidPass + 400).contains("new Vector3f"), "the void pass allocates a vector per vertex again");
+    }
+
+    /** 3.97.0 (docs/devil_forms.md): the devil form's draw path builds no object per frame: the part placer, the mesh part drawer, the forge state and the figure's own draw. */
+    @Test
+    void theDevilFormDrawPathAllocatesNothing() throws IOException {
+        String[][] pins = {{"client/bossmesh/BossMeshDraw.java", "drawParts"}, {"client/devil/DevilFormLayer.java", "render"}, {"client/devil/DevilFormLayer.java", "ring"},
+                {"client/devil/DevilFormLayer.java", "place"}, {"client/devil/DevilFormLayer.java", "forge"}, {"client/devil/DevilNpcRenderer.java", "render"}, {"client/devil/DevilNpcRenderer.java", "fallback"}};
+        for (String[] p : pins) {
+            String body = code(method(p[0], p[1]).body());
+            assertFalse(NEW_OBJECT.matcher(body).find(), p[0] + " " + p[1] + " allocates per frame");
+        }
+        assertTrue(code(method("client/devil/DevilFormLayer.java", "render").body()).contains("NoelleFormRules.budgeted("), "the crowd budget is applied in the layer");
     }
 
     @Test
@@ -323,6 +335,8 @@ class PerfSourceScanTest {
         PROBES.put("mana/method/BrushRunes.java", "s.mana.brush");
         PROBES.put("mana/method/RuneState.java", "s.mana.state");                                       // 3.8.0: the TIMED rune state sweep is measurable
         PROBES.put("shishou/ShishouService.java", "s.shishou.hold");                                    // Shishou: the holder tick, the casts, the blows and the server tick are measurable
+        PROBES.put("client/devil/DevilFormLayer.java", "c.devil.form");                                 // 3.97.0: the devil forms on players
+        PROBES.put("client/devil/DevilNpcRenderer.java", "c.devil.npc");
     }
 
     @Test

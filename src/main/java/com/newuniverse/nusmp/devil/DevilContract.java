@@ -36,6 +36,9 @@ public final class DevilContract {
     public DevilRitualRun ritual;
     public String offer = "";
     public long offerAt, lastRitual = -1, lastEffect = Long.MIN_VALUE / 2, flashUntil;
+    /** Live, not saved: the devil's figure of the running ritual (docs/devil_forms.md) and the game time it was made; null = none. */
+    public java.util.UUID npc;
+    public long npcAt;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
     public boolean isEmpty() { return tier == DevilTier.NONE && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }
