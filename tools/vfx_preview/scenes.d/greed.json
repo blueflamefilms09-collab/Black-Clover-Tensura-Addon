@@ -1,0 +1,1027 @@
+{
+ "_comment": "Black Sword Greed (GreedLayer): the nine GREED_* shapes the Greed forms and Secret Techniques send (docs/vfx_remake/greed_devils.md). A pale overcast sky so the ink-black blades, lightning and void read the way they do in the Berserk of Gluttony anime; figures are the wielder / foes (1.8 tall); colour = the crimson the server sends (dusk for Twilight Healing).",
+ "greed_ptarmigan": {
+  "layer": "GreedLayer",
+  "shape": "GREED_SLASH",
+  "from": [
+   0,
+   1.5,
+   0.4
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 2,
+  "duration": 16,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -3.5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.5,
+   8
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14.5,
+    1.8
+   ]
+  ]
+ },
+ "greed_blink": {
+  "layer": "GreedLayer",
+  "shape": "GREED_SLASH",
+  "from": [
+   0,
+   1.1,
+   -1.6
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 2,
+  "duration": 14,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -3.5,
+   1.8,
+   3
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   2,
+   5,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    -1.6,
+    1.8
+   ]
+  ]
+ },
+ "greed_storm": {
+  "layer": "GreedLayer",
+  "shape": "GREED_SLASH",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 12,
+  "duration": 24,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -8,
+   3.5,
+   7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ],
+   [
+    -3,
+    0,
+    -2,
+    1.8
+   ]
+  ]
+ },
+ "greed_bow": {
+  "layer": "GreedLayer",
+  "shape": "GREED_LANCE",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.1,
+   24
+  ],
+  "power": 0.3,
+  "duration": 16,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6,
+   2.2,
+   5
+  ],
+  "target": [
+   0,
+   1.2,
+   11
+  ],
+  "ages": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    24.5,
+    1.8
+   ]
+  ]
+ },
+ "greed_meteor": {
+  "layer": "GreedLayer",
+  "shape": "GREED_LANCE",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.3,
+   30
+  ],
+  "power": 0.7,
+  "duration": 20,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -7,
+   2.6,
+   6
+  ],
+  "target": [
+   0,
+   1.3,
+   13
+  ],
+  "ages": [
+   1,
+   3,
+   8,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_brionac": {
+  "layer": "GreedLayer",
+  "shape": "GREED_LANCE",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.3,
+   28
+  ],
+  "power": 1.2,
+  "duration": 22,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -7,
+   2.6,
+   6
+  ],
+  "target": [
+   0,
+   1.3,
+   12
+  ],
+  "ages": [
+   1,
+   3,
+   9,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_flames": {
+  "layer": "GreedLayer",
+  "shape": "GREED_FLAME",
+  "from": [
+   0,
+   1.25,
+   0.6
+  ],
+  "to": [
+   0,
+   1.6,
+   14
+  ],
+  "power": 1,
+  "duration": 20,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6,
+   2.6,
+   -2
+  ],
+  "target": [
+   0,
+   1.3,
+   7
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_twilight": {
+  "layer": "GreedLayer",
+  "shape": "GREED_FLAME",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 8,
+  "duration": 30,
+  "color": "FFB0407A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -10,
+   5,
+   10
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   18,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ },
+ "greed_threads": {
+  "layer": "GreedLayer",
+  "shape": "GREED_THREADS",
+  "from": [
+   0,
+   1.25,
+   0.6
+  ],
+  "to": [
+   0,
+   1.4,
+   12
+  ],
+  "power": 6,
+  "duration": 18,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -5,
+   2.4,
+   -2.5
+  ],
+  "target": [
+   0,
+   1.3,
+   7
+  ],
+  "ages": [
+   1,
+   3,
+   8,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1,
+    0,
+    12,
+    1.8
+   ],
+   [
+    -1,
+    0,
+    11.5,
+    1.8
+   ]
+  ]
+ },
+ "greed_reap": {
+  "layer": "GreedLayer",
+  "shape": "GREED_REAP",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 4.5,
+  "duration": 20,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6,
+   3.5,
+   6
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   13
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ],
+   [
+    -2.5,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "greed_dome_guard": {
+  "layer": "GreedLayer",
+  "shape": "GREED_DOME",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 1.6,
+  "duration": 12,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -3.5,
+   1.8,
+   3.5
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   9
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_fortress": {
+  "layer": "GreedLayer",
+  "shape": "GREED_DOME",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 18,
+  "duration": 22,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -10,
+   4.5,
+   9
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ },
+ "greed_maw": {
+  "layer": "GreedLayer",
+  "shape": "GREED_MAW",
+  "from": [
+   0,
+   1.1,
+   6
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 1.8,
+  "duration": 24,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -5,
+   2.2,
+   8
+  ],
+  "target": [
+   0,
+   1.2,
+   4
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ]
+  ]
+ },
+ "greed_dimension": {
+  "layer": "GreedLayer",
+  "shape": "GREED_LIGHTNING",
+  "from": [
+   0,
+   1.25,
+   0.6
+  ],
+  "to": [
+   0,
+   1.3,
+   10
+  ],
+  "power": 1.5,
+  "duration": 16,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -5,
+   2.4,
+   -1
+  ],
+  "target": [
+   0,
+   1.3,
+   6
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_crackle": {
+  "layer": "GreedLayer",
+  "shape": "GREED_LIGHTNING",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 2.5,
+  "duration": 14,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4,
+   1.8,
+   3.5
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   9
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_awaken": {
+  "layer": "GreedLayer",
+  "shape": "GREED_AWAKEN",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 3,
+  "duration": 24,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.6,
+   1.7,
+   3.2
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   10,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "greed_tier": {
+  "layer": "GreedLayer",
+  "shape": "GREED_AWAKEN",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 9,
+  "duration": 30,
+  "color": "FFD2142E",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4,
+   2.2,
+   5
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

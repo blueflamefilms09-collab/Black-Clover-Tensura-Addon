@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.particle.fx.FxTone;
 import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.perf.PerfParticles;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -140,6 +141,7 @@ public final class GreedForms {
         restoreMagicule(p, Math.min(5.0, hit.size()));
         Vec3 eye = p.getEyePosition();
         trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, eye, p.getLookAngle(), 14, 2);
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_FLAME, GreedFx.hand(p), GreedFx.ahead(p, 14.0), GreedFx.CRIMSON, 20, 1.0f);      // VFX wave 2: black flames in a cone
         sound(p, SoundEvents.BLAZE_SHOOT, 0.8f, 0.6f);
     }
 
@@ -156,6 +158,7 @@ public final class GreedForms {
             }
             PerfParticles.send(p.serverLevel(), CRIMSON, t.getX(), t.getY() + 1.0, t.getZ(), 4, 0.2, 0.4, 0.2, 0.0);
         }
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_THREADS, GreedFx.hand(p), GreedFx.ahead(p, 12.0), GreedFx.CRIMSON, 18, Math.max(3, hit.size()));      // the threads, one packet
         sound(p, SoundEvents.CHAIN_PLACE, 1.0f, 1.4f);
     }
 
@@ -170,6 +173,7 @@ public final class GreedForms {
             hurt(p, t, (float) (10.0 + atk * 0.8), false);
         }
         trail(p.serverLevel(), CRIMSON, p.getEyePosition(), p.getLookAngle(), 8, 1);
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_LANCE, GreedFx.hand(p), GreedFx.ahead(p, 8.5), GreedFx.CRIMSON, 12, 0.35f);      // the thrust: a black-red streak
         sound(p, SoundEvents.PLAYER_ATTACK_STRONG, 1.0f, 0.8f);
         return !hit.isEmpty();
     }
@@ -183,6 +187,7 @@ public final class GreedForms {
         p.teleportTo(behind.x, t.getY(), behind.z);
         for (int i = 0; i < 2; i++) hurt(p, t, (float) (12.0 + atk * 1.0), false);
         PerfParticles.send(p.serverLevel(), ZERO, t.getX(), t.getY() + 1.0, t.getZ(), 16, 0.5, 0.7, 0.5, 0.08);
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_SLASH, GreedFx.chest(p), GreedFx.chest(t), GreedFx.CRIMSON, 14, 2.0f);      // the two cuts cross on the foe
         sound(p, SoundEvents.ENDERMAN_TELEPORT, 1.0f, 1.4f);
         return true;
     }
@@ -191,10 +196,13 @@ public final class GreedForms {
     public static void bolt(ServerPlayer p, int chargeTicks, double atk) {
         if (chargeTicks < 5) return;
         List<LivingEntity> hit = alongRay(p, 48.0, 3.0, 1);
+        Vec3 end = GreedFx.ahead(p, 48.0);
         if (!hit.isEmpty()) {
             LivingEntity t = hit.get(0);
             hurt(p, t, (float) (6.0 + Math.min(chargeTicks, 20) * 0.4 + atk * 0.6), true);
+            end = GreedFx.chest(t);
         }
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_LANCE, GreedFx.hand(p), end, GreedFx.CRIMSON, 16, 0.3f);      // the black-red arrow streak
         trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, p.getEyePosition(), p.getLookAngle(), 48, 4);
         sound(p, SoundEvents.ARROW_SHOOT, 1.0f, 0.7f);
     }
@@ -226,12 +234,14 @@ public final class GreedForms {
             PerfParticles.send(level, CRIMSON, c.x + s, c.y - s, c.z, 1, 0, 0, 0, 0);
             PerfParticles.send(level, CRIMSON, c.x - s, c.y - s, c.z, 1, 0, 0, 0, 0);
         }
+        GreedFx.send(level, VfxShape.GREED_SLASH, o, o.add(look.scale(14.0)), GreedFx.CRIMSON, 16, 2.0f);      // Bloody Ptarmigan Cross: the crossed crescents fly
         sound(p, SoundEvents.PLAYER_ATTACK_SWEEP, 1.5f, 0.6f);
     }
 
     private static void piercingMeteor(ServerPlayer p, double power) {
         for (LivingEntity t : alongRay(p, 32.0, 1.4, GreedRules.MAX_TARGETS)) hurt(p, t, (float) (22.0 + power * 2.2), true);
         trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, p.getEyePosition(), p.getLookAngle(), 32, 2);
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_LANCE, GreedFx.hand(p), GreedFx.ahead(p, 32.0), GreedFx.CRIMSON, 20, 0.7f);      // Piercing Meteor: the beam with black lightning
         sound(p, SoundEvents.WARDEN_SONIC_BOOM, 0.8f, 1.4f);
     }
 
@@ -245,6 +255,7 @@ public final class GreedForms {
         }
         p.heal(Math.min(30.0f, heal));
         Fx.spray(p.serverLevel(), FxThemes.MAGIC_SWORD, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 6, 2.0, 0.5, 2.0, 0.0);
+        GreedFx.follow(p.serverLevel(), VfxShape.GREED_REAP, p, p.position(), GreedFx.CRIMSON, 20, 4.5f);      // Soul Reap: the reaping arc
         sound(p, SoundEvents.WITHER_SHOOT, 0.9f, 0.8f);
     }
 
@@ -254,6 +265,7 @@ public final class GreedForms {
         POOL.remove(p.getUUID());
         for (LivingEntity t : around(p, 8.0, GreedRules.MAX_TARGETS)) hurt(p, t, Math.max(6.0f, pool), true);
         PerfParticles.send(p.serverLevel(), CRIMSON, p.getX(), p.getY() + 1.0, p.getZ(), 40, 4.0, 0.8, 4.0, 0.1);
+        GreedFx.follow(p.serverLevel(), VfxShape.GREED_DOME, p, GreedFx.chest(p), GreedFx.CRIMSON, 22, 18.0f);      // Reflection Fortress: the shell of scales shatters out to 8 blocks (10 + radius)
         sound(p, SoundEvents.GENERIC_EXPLODE.value(), 1.0f, 1.2f);
     }
 
@@ -267,6 +279,7 @@ public final class GreedForms {
             for (MobEffectInstance m : new ArrayList<>(e.getActiveEffects())) if (!m.getEffect().value().isBeneficial()) e.removeEffect(m.getEffect());
             Fx.spray(level, FxThemes.ITEM_ROTDOOM, FxTone.DARK, e.getX(), e.getY() + 1.0, e.getZ(), 10, 0.4, 0.8, 0.4, 0.04);
         }
+        GreedFx.send(level, VfxShape.GREED_FLAME, GreedFx.chest(p), GreedFx.chest(p), GreedFx.DUSK, 30, 8.0f);      // Twilight Healing: the ring of black flames (one packet, not one per ally)
         sound(p, SoundEvents.BEACON_POWER_SELECT, 1.0f, 1.2f);
     }
 
@@ -275,6 +288,7 @@ public final class GreedForms {
             hurt(p, t, (float) (20.0 + power * 2.0), true);
             Fx.spray(p.serverLevel(), FxThemes.MAGIC_SPATIAL, FxTone.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 12, 0.3, 0.6, 0.3, 0.3);
         }
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_LIGHTNING, GreedFx.hand(p), GreedFx.ahead(p, 10.0), GreedFx.CRIMSON, 16, 1.5f);      // Dimension Destruction: black lightning tears a rift
         sound(p, SoundEvents.ENDER_DRAGON_GROWL, 0.6f, 1.6f);
     }
 
@@ -289,6 +303,7 @@ public final class GreedForms {
             if (t.isAlive() && t.getHealth() <= t.getMaxHealth() * 0.25f) hurt(p, t, t.getMaxHealth(), true);
         }
         trail(p.serverLevel(), CRIMSON, p.getEyePosition(), p.getLookAngle(), 30, 2);
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_LANCE, GreedFx.hand(p), GreedFx.ahead(p, 30.0), GreedFx.CRIMSON, 22, 1.2f);      // Revolt Brionac: the heavy lance
         sound(p, SoundEvents.TRIDENT_THUNDER.value(), 1.5f, 1.0f);
     }
 
@@ -297,6 +312,7 @@ public final class GreedForms {
             for (int i = 0; i < 6; i++) hurt(p, t, (float) (18.0 + power * 1.1), true);
             PerfParticles.send(p.serverLevel(), ZERO, t.getX(), t.getY() + 1.0, t.getZ(), 20, 0.6, 0.8, 0.6, 0.12);
         }
+        GreedFx.send(p.serverLevel(), VfxShape.GREED_SLASH, GreedFx.chest(p), GreedFx.chest(p), GreedFx.CRIMSON, 24, 12.0f);      // Infinity Divide: a storm of cuts round the wielder
         sound(p, SoundEvents.TRIDENT_THUNDER.value(), 1.8f, 1.3f);
     }
 
@@ -308,6 +324,7 @@ public final class GreedForms {
         Long last = REFLECTED.get(p.getUUID());
         if (last != null && now - last < 10L) return;
         REFLECTED.put(p.getUUID(), now);
+        GreedFx.follow(p.serverLevel(), VfxShape.GREED_DOME, p, GreedFx.chest(p), GreedFx.CRIMSON, 12, 1.6f);      // the dome of scales flashes up (at most once every half second, the gate above)
         float back = Math.min(60.0f, amount * 1.5f + tier * 1.0f);
         attacker.invulnerableTime = 0;
         attacker.hurt(p.serverLevel().damageSources().indirectMagic(p, p), (float) (back * GreedConfig.damage()));

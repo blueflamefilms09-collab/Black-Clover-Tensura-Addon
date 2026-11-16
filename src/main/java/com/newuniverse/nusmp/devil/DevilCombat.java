@@ -58,6 +58,7 @@ public final class DevilCombat {
             if (fx.heal() > 0) com.newuniverse.nusmp.relics.Fx.heal(p, (float) Math.min(6.0, (blow + bonus) * fx.heal() * power));
             WorldDevil d = WorldDevil.byId(c.devil);
             Fx.sprayTinted(p.level(), FxThemes.SKILL, FxSlot.MOTE, d != null ? d.color() : 0xC81E2D, 1.1f, target.getX(), target.getY() + target.getBbHeight() * 0.6, target.getZ(), 8, 0.3, 0.4, 0.3, 0.03);
+            DevilHitFx.hit(p.serverLevel(), p, target, d);                                                             // VFX wave 2: the hit in the devil's anime style (one packet, the once-a-second gate above)
         });
     }
 }

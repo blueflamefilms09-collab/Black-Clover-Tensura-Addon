@@ -489,7 +489,25 @@ public enum VfxShape {
     KI_DEFLECT,
     KI_BIND,
     KI_DRAGON,
-    KI_TRANSFER;
+    KI_TRANSFER,
+    // Black Sword Greed (Berserk of Gluttony) and the devil hits (GreedLayer + GreedDevilHits, docs/vfx_remake/greed_devils.md), appended after KI_TRANSFER: sent by greed/GreedFx and devil/DevilHitFx;
+    // the client settings greed.classicVfx / devil.classicVfx (nusmp-greed-devil-vfx-client.toml) draw nothing for them.
+    // GREED_SLASH ink crescents with a crimson edge (power = cuts; from = to: a storm of cuts round from; from -> to more than 4 apart: the cuts fly to `to`); GREED_LANCE the black-red streak from -> to
+    // (power = half-width; 0.6 and up: black lightning coils round it); GREED_FLAME black flames in a cone from -> to (from = to: a ring of flames round from, power = radius); GREED_THREADS taut crimson threads
+    // from -> to (power = how many); GREED_REAP the scythe's reaping arc round from (power = radius); GREED_DOME the dome of black scales round from (power = radius; 10 + radius: Reflection Fortress bursts);
+    // GREED_MAW the hungry void at from devouring, souls streaming to `to` (power = victim height); GREED_LIGHTNING black lightning from -> to (from = to: crackling round from, power = radius);
+    // GREED_AWAKEN black lightning over the wielder's body and two red eye glints (from = the feet, follows; power = form + 1, 9 = a new tier);
+    // DEVIL_HIT a devil's combat hit in its world's anime style (from = the target's chest, to = the attacker's chest, power = DevilWorld ordinal + 1).
+    GREED_SLASH,
+    GREED_LANCE,
+    GREED_FLAME,
+    GREED_THREADS,
+    GREED_REAP,
+    GREED_DOME,
+    GREED_MAW,
+    GREED_LIGHTNING,
+    GREED_AWAKEN,
+    DEVIL_HIT;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

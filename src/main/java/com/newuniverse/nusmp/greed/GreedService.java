@@ -280,6 +280,7 @@ public final class GreedService {
         d.setForm(formId);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_SCREAM, SoundSource.PLAYERS, 0.6f, 0.5f);
         say(p, "greed.msg.form", "Form: %s", ChatFormatting.RED, Component.translatableWithFallback(to.langKey(), to.english()));
+        GreedFx.follow(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.GREED_AWAKEN, p, p.position(), GreedFx.CRIMSON, 24, formId + 1);      // VFX wave 2: black lightning, the red eyes (at most once every two seconds, the gate above)
         hud(p, true);
         return true;
     }
@@ -367,6 +368,7 @@ public final class GreedService {
             d.setTier(reached);
             p.sendSystemMessage(Component.translatableWithFallback("greed.msg.tier", "\"Not bad, partner... we have opened Tier %s.\"", reached).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
             p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.8f, 1.4f);
+            GreedFx.follow(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.GREED_AWAKEN, p, p.position(), GreedFx.CRIMSON, 30, 9.0f);      // a new tier: the awakening, bigger
         }
     }
 
@@ -385,6 +387,8 @@ public final class GreedService {
         st.setSatiation(st.satiation + GreedRules.feed(absorbed));
         if (GreedConfig.STEAL_SKILLS.get() && (victim instanceof ServerPlayer || killer.getRandom().nextDouble() < GreedRules.STEAL_MOB)) stealSkill(killer, victim, st);
         applyAttributes(killer, st);
+        if (GreedFx.mawReady(killer.serverLevel().getGameTime()))
+            GreedFx.send(killer.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.GREED_MAW, GreedFx.chest(victim), GreedFx.chest(killer), GreedFx.CRIMSON, 24, victim.getBbHeight());      // VFX wave 2: the sword devours (at most one maw every half second, so a technique that kills eight sends one)
         checkTier(killer, st, d);
         hud(killer, false);
     }

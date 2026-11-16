@@ -217,6 +217,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.greed.GreedClient.init(modEventBus);      // 3.85.0 Black Sword Greed: the form key, the starvation vignette and the HUD
+            com.newuniverse.nusmp.vfx.client.GreedVfxConfig.init(modEventBus, modContainer);      // VFX wave 2: greed.classicVfx / devil.classicVfx (nusmp-greed-devil-vfx-client.toml): the old particles only
             com.newuniverse.nusmp.client.attune.AttuneClient.init(modEventBus);    // meditation attunement: the meditation screen (opened by /meditate)
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
             com.newuniverse.nusmp.client.devil.DevilClient.init(modEventBus, modContainer);                                  // 3.48.0 Devil Contract: the key, the HUD, the Weg layer (markings, horns, wings), the eye shade, nusmp-devil-client.toml

@@ -26,5 +26,6 @@ public final class GreedBoot {
         modBus.addListener(GreedNet::registerPayloads);
         GreedEvents.register(NeoForge.EVENT_BUS);
         GreedSelfTests.register();
+        GreedFx.registerSelfTests();                      // VFX wave 2: the anime effects (GreedLayer): greed.vfx
     }
 }

@@ -25,5 +25,6 @@ public final class DevilBoot {
         DevilCombat.register(NeoForge.EVENT_BUS);                                            // 3.76.0: the attribute's combat effect, the Brand
         DevilCommands.register(NeoForge.EVENT_BUS);
         DevilSelfTests.register();
+        DevilHitFx.registerSelfTests();                                                      // VFX wave 2: the devil hits in their anime style: devil.vfx
     }
 }
