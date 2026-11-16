@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.96.0] — Boss rework, wave 1 (abilities and effects)
+- NEW (asked for: "rework the bosses in my mod: models, abilities, and VFX"), worst-rated bosses first (audit in `docs/bosses/rework_wave1.md`):
+  - Goliath (DanMachi): its own stone model is the default again (the stretched player body was a regression) and +5 moves: Magebane Roar, Boulder Hurl, Stone Skin (halves hits for 6 s; a shield, never a heal), Pound Shockwave, Stomp Chain.
+  - Charybdis Spawn (Tensura): +4 moves: Scale-Shard Storm, Tempest Current, Whirlpool Maw, Magic Interference.
+  - God of Order: +4 moves (8 in all): Seal of Silence, Scales of Order, Chains of Law, Verdict Rain. Still excluded from boss buffs.
+  - Lucifero (Black Clover): its vanilla dust is replaced by shaped gravity effects: violet pillars for Falling Heavens, a crush ring for Kneel Before the King, a black sphere for the Event Horizon collapse, gravity lanes for the Six Limbs wind-up.
+  - Black Goliath, Minotaur, Amphisbaena: a signature effect each (brimstone cracks, a reaping arc, a water serpent).
+  - Seven Tier List bosses get a signature 6th move with its own effect: Wall Breach Kick (Bertholdt), Yamata Venom Fangs (Kurozumi Orochi), Life Sewing (Shou Tucker), Ikoku Sovereignty (Big Mom), Ira Giant Cero (Yammy), Claw Grime (Code), Swan Arabesque (Mr. 2 Bon Clay).
+- Every new move telegraphs (wind-up of at least 24 ticks) and hits through the existing boss damage budgets and caps. Move tables are append-only, so old move indices and saves are unchanged.
+- Settings (each restores the old behaviour): SERVER `bossRework1Moves`, `bossRework1Vfx`; CLIENT `goliathStoneModel`.
+- NEW: `BossRework1Test`, self-test `boss.rework1`, lang for the new moves.
+- Not in this wave: new 3D models (rule 14: there is no renderer path for Blender meshes on entities yet; the doc lists what it needs), the 200 Decennial bosses, the God of Order's 64 px skin. Move names and lore are from memory (the wikis did not resolve).
+- Cost: one or two effect packets per cast to nearby players, existing shapes only; no per-tick scans. Not compiled before CI (the pure boss tests passed outside Gradle), not seen in a game.
+
 ## [3.95.1] — fix: the meditation screen uses the mod's own particles
 - FIXED: the builds of 3.93.0 and 3.94.0 compiled but did not pass `FxSourceScanTest` (the calm motes of the meditation screen used a vanilla particle). They now use the mod's own `mana_mote` (pale violet), through the client particle budget. Everything of 3.91.0-3.95.0 is in this build.
 - Cost: unchanged (two motes every 8 ticks while the screen is open). Not seen in a game.
