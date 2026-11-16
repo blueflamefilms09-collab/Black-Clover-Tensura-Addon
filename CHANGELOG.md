@@ -1,6 +1,6 @@
 # Changelog
 
-## [4.2.0] — EP scaling needs mastery (more in this release as it lands)
+## [4.2.0] — Saiyan race, hair, tail and armour, Beast Will fixes and 3D tails, a much stronger Lucifero, boss drops, and EP that needs mastery
 - NEW: the EP part of an addon skill's damage now grows in with the skill's mastery: x1 with no mastery, the full EP scale (up to x12) once the skill is mastered, a straight line between (`balance.EpMastery`). Applies to the plain law and to Ultimate-class hits.
 - NEW: Saiyan is a real Tensura race (`anime_multiverse:saiyan`): it is listed in Tensura's race menu, and the Saiyan flag and the Tensura race follow each other (`/saiyan race` sets the race, picking it in Tensura's menu sets the flag; leaving it restores the old race). Settings `phase.race.tensuraRace` (off = the old flag only) and `phase.race.listInRaceMenu`. Details: `docs/dragon_ball/phase_report.md`.
 - NEW: a craftable Saiyan armour set (Saiyan alloy: scouter, battle armour, waist guard, greaves; alloy ingot from iron, gold and copper or netherite scrap), real 3D when worn, with a small Ki-regen set bonus (server setting `setKiRegenPercent`). Transforming no longer hands out the cosmetic armour by itself: the old look stays behind the client setting `saiyan.autoArmour` (default off).
@@ -13,7 +13,9 @@
 - NEW: Beast Will tails and tentacles as real 3D Blender meshes that sway: dragon, nidhoggr, jormungandr, serpent, apophis, typhon, kitsune (nine tails), kraken (twelve tentacles) and Scylla and Charybdis (six waist tentacles). Client setting `beastwill.meshTails` (default on; off = the old cube tails). Forms without a mesh tail keep their cube tail. A broken model file is now logged once and skipped instead of throwing on the render thread.
 - KEPT: the old damage (full EP scale at any mastery) with the SERVER setting `epNeedsMastery` = false. Mastery still adds its small -15% to +15% on top.
 - Not covered: about 29 skills that apply their own EP factor outside the balance law keep the old damage; late-game (magicule) scaling is untouched.
-- Cost: one multiply per hit.
+- Cost: one multiply per hit; the new models are drawn on the client only (at most 4 players with full detail per frame, nothing beyond 48 blocks); the boss-drop hook is one table lookup per kill; the race link does work only when the flag, the race or a login changes.
+- Not done / owner decisions: Lucifero's health (21,000 with the x3 Black Clover multiplier) and whether "Lucius" meant Lucius Zogratis; the same strong-boss treatment for Dante, Zenon and Vanica; per-boss themed gear (only Lucifero has his own armour, the others have the generic Trophy Plate); Beast Will tails for the other 15 forms keep their cube tails; the transform crash needs a new crash report if it still happens on 4.0.1 or later.
+- Honest caveat: none of this was seen in a game and the new Java was only compiled by CI. Previews are Blender and software renders. The Saiyan race is registered from the Tensura 2.0.1 class files; it must never be renamed or removed once it exists in a world.
 
 ## [4.1.0] — Devils get their own bodies, and a devil stands in front of you at the ritual
 - NEW: a figure of the devil rises out of the ritual circle in front of the caller, speaks four lines (26 devils, a few lines each, in chat), roars at the offer, merges into you if you sign and dissolves if you refuse, time out or break the circle. It is not a mob: no AI, no health, not saved, one per player.
