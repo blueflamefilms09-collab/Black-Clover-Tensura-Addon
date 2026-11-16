@@ -142,6 +142,7 @@ public final class SummonerRules {
             case BEAST -> rank == 0 ? "Mousey" : rank == 1 ? "Moley" : rank == 7 ? "Hayate" : null;
             case BIRD -> rank == 1 ? "Chappy" : rank == 3 ? "Hawk" : rank == 7 ? "Tsubame" : null;
             case GRASS -> rank == 2 ? "Appo" : null;
+            case FISH -> null;                                   // the wiki names no fish summon
             case STONE -> rank == 3 ? "Wally" : rank == 5 ? "Steely" : rank == 6 ? "Mira" : null;
             case SPIRIT -> rank == 5 ? "Maria" : rank == 6 ? "Ellie" : rank == 7 ? "Okiyosan" : null;
             case DRAGON -> rank == 6 ? "Dradra" : null;

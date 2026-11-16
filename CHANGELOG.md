@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.8.1] — Build fix: the Summoner canon pass did not compile
+- FIXED: the canon-name table of the Summoner (`SummonerRules.canonName`) had no case for the Fish type, so the 4.7.0 and 4.8.0 builds stopped at compile time. The Fish type now answers "no canon name" (the wiki names no fish summon) and gets its "Fish <rank>" label.
+- Nothing else changes. The 4.7.0 content (wiki-accurate Argonaut, Shinra, All Fiction, Summoner) and the 4.8.0 content (new and animated skill icons) ship in this build; their details are in the entries below.
+
 ## [4.8.0] — New skill icons, animated Ultimates
 - REPLACED: 121 skill icons at their same paths (37 root skills, 54 Beast Wills, 30 Dragon Ball), repainted in the house style of Tensura and Tensura No Index: class-coloured frame (Unique cyan, Extra gold, Ultimate royal gold), bevel shading, outline, glow, and one symbol per skill taken from its anime. The previous icons are kept in `textures/skill/classic/v440/`. Method and motifs: `docs/skill_icons_study.md`, `docs/skill_icons_rework.md`; before/after sheets in `docs/skill_icons/`.
 - NEW: the 56 Ultimates have an 8-frame animated icon (pulse, glint, orbiting sparkles). Uniques and Extras stay still.
