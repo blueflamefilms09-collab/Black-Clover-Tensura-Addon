@@ -107,6 +107,7 @@ public class NUSMP {
         com.newuniverse.nusmp.attune.AttuneBoot.init(modEventBus, modContainer);    // meditation attunement: Beast Wills, Djinns, Devils and Spirits held together, clashing elements reject, nusmp-attune-server.toml, /meditate, self-tests attune.*
         com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.init(modEventBus);      // the Wind Spirit blades (creative display): Spirit of Zephyr sword and Spirit of Boreas bow, self-test magic.spirit_blades
         com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.init(modEventBus);    // the Valkyrie Drill Lance (creative display, spear class) and the Valkyrie armour v2 (player-fitted layer, three looks): self-test magic.valkyrie_armor
+        com.newuniverse.nusmp.dragonballs.DbBoot.init(modEventBus, modContainer);   // the Dragon Balls: two sets of seven (Earth, Super), scatter, Dragon Radar, the spoken ritual, Shenron, the wishes, nusmp-dragonballs-server.toml, self-tests dragonballs.* (docs/dragon_balls.md)
         com.newuniverse.nusmp.gnome.GnomeBoot.init(modEventBus, modContainer);      // the Gnome (Earth Spirit): its sound events, nusmp-gnome-server.toml (magic.gnome), the key packet, the events, self-test magic.gnome
 
         com.newuniverse.nusmp.firecast.FireCastBoot.init(modEventBus, modContainer);                                      // fire casting: Magna's Soul Bat, nusmp-firecast-server.toml (magic.fireCasting), the key packet, the events, self-test magic.fire_casting
@@ -193,7 +194,8 @@ public class NUSMP {
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
         if (FMLEnvironment.dist == Dist.CLIENT) {
             com.newuniverse.nusmp.client.skilltree.SkillBookClient.init(modEventBus);                                       // 1.96.0: the Skill Book cover, tooltip and banner, the Black Market screen
-            com.newuniverse.nusmp.client.heroweapon.HeroClient.init(modEventBus);                                           // 1.62.0: hero weapon keys, HUD, forms book, curse screen
+            com.newuniverse.nusmp.client.dragonballs.DbClient.init(modEventBus, modContainer);                              // the Dragon Balls: the Shenron renderer, the dark sky of a summoning, nusmp-dragonballs-client.toml
+            com.newuniverse.nusmp.client.heroweapon.HeroClient.init(modEventBus);                                         // 1.62.0: hero weapon keys, HUD, forms book, curse screen
             com.newuniverse.nusmp.client.arc.ArcClient.init(modEventBus);                                                   // 1.58.0: renderers of the arc characters, spawn egg colours
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);

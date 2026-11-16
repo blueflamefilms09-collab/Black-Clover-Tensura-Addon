@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "anime_multiverse:item/dragon_ball_earth_3"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "anime_multiverse:item/dragon_ball_earth_3_stone"
+    }
+  ]
+}
