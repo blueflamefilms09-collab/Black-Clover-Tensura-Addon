@@ -27,6 +27,7 @@ public final class SkillEvents {
                 int cap = SummonerSkill.capFor(player);
                 if (cap < SummonRules.HARD_CAP || player.tickCount % 100 == 7) Summons.tick(player, player.getServer(), cap);
             }
+            if (player.tickCount % 100 == 13) SummonerMigration.check(player);                // the old Hawk Eye / Spirit Card are carried into the Summoner (docs/summoner_rework.md)
             if (player.tickCount % 200 == 11) SkillZones.sweep(player.getServer());
         } catch (RuntimeException | LinkageError upkeep) {
             // upkeep is never allowed to crash the server tick

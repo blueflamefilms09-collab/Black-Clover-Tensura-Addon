@@ -184,6 +184,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.UltimateClassSelfTests.register();                                      // Ultimate classes: self-tests ultclass.* (docs/ultimate_classes.md)
         com.newuniverse.nusmp.skill.ArgonautSelfTests.register();                                           // Argonaut rework: self-tests argonaut.* (docs/argonaut_rework.md)
         com.newuniverse.nusmp.skill.ArgonautMerge.register();                                                // Argonaut rework: a Firebolt holder is moved to Argonaut at login
+        com.newuniverse.nusmp.skill.SummonerSelfTests.register();                                           // Summoner rework: self-tests summoner.* (docs/summoner_rework.md)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.NUSkill::onLogin);                       // Ultimate classes: earned mastery moves to the class's max at the same fraction
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
@@ -473,6 +474,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.BeastSkillSelfTests.register();                               // 3.58.0
         com.newuniverse.nusmp.skill.ShinraSelfTests.register();                                   // Shinra rework: self-tests shinra.rules, shinra.skills (docs/shinra_rework.md)
         com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
+        com.newuniverse.nusmp.skill.FictionGodSelfTests.register();                                                                        // All Fiction god-class rework
         com.newuniverse.nusmp.skill.GuideP1SelfTests.register();                                  // guide P1 #2, #3, #5
         com.newuniverse.nusmp.skill.GuideP2SelfTests.register();                                  // guide P2: legacy grimoire pay, cast event, class damage, Quenched bridge
         com.newuniverse.nusmp.skill.SkillAnimeFx.registerSelfTests();                                  // VFX wave 3: the anime skill effects (SkillAnimeLayer): skill.vfx

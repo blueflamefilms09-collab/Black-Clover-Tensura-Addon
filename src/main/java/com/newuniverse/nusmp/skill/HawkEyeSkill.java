@@ -28,7 +28,10 @@ public class HawkEyeSkill extends ToggleAuraSkill {
     @Override protected double drainPerPulse(Tier tier) { return AuraRules.HAWK_DRAIN; }
 
     @Override
-    protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+    protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) { sight(player, tier); }
+
+    /** One pulse of the sight (also the Summoner's Bird Card mode): night vision and the glow on the nearest hostile creatures. */
+    static void sight(ServerPlayer player, Tier tier) {
         player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
         double range = AuraRules.hawkRange(tier);
         Vec3 here = player.position();
@@ -42,8 +45,16 @@ public class HawkEyeSkill extends ToggleAuraSkill {
     }
 
     @Override
-    protected void turnedOff(ManasSkillInstance instance, ServerPlayer player) {
+    protected void turnedOff(ManasSkillInstance instance, ServerPlayer player) { clearSight(player); }
+
+    static void clearSight(ServerPlayer player) {
         var night = player.getEffect(MobEffects.NIGHT_VISION);
         if (night != null && night.isAmbient()) player.removeEffect(MobEffects.NIGHT_VISION);   // only the one this skill gave
     }
+
+    /** Summoner rework: this skill is carried into the Summoner (Bird Card / Spirit Card mode) and does nothing while the rework is on; the id stays registered so old worlds load. */
+    @Override public boolean canInteractSkill(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canActivateSkill(ManasSkillInstance instance, LivingEntity entity, int mode) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canBeToggled(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canTick(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
 }

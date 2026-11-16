@@ -22,7 +22,10 @@ public class SpiritCardSkill extends ToggleAuraSkill {
     @Override protected double drainPerPulse(Tier tier) { return AuraRules.SPIRIT_DRAIN; }
 
     @Override
-    protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+    protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) { heal(player, tier); }
+
+    /** One pulse of the healing aura (also the Summoner's Spirit Card mode). */
+    static void heal(ServerPlayer player, Tier tier) {
         SkillAnimeFx2.spiritCard(player, AuraRules.spiritRadius(tier));                 // VFX wave 4: the card and the healing rings (once per 3 seconds at most)
         for (LivingEntity ally : SkillTargets.alliesAround(player, player.position(), AuraRules.spiritRadius(tier))) {
             if (AuraRules.spiritCleanses(tier)) SkillUtil.cleanse(ally);
@@ -31,4 +34,10 @@ public class SpiritCardSkill extends ToggleAuraSkill {
             SkillFx.spray(player.serverLevel(), false, ally.position().add(0, 1, 0), 5, 0.3, 0.5, 0.3, 0.0);
         }
     }
+
+    /** Summoner rework: this skill is carried into the Summoner (Bird Card / Spirit Card mode) and does nothing while the rework is on; the id stays registered so old worlds load. */
+    @Override public boolean canInteractSkill(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canActivateSkill(ManasSkillInstance instance, LivingEntity entity, int mode) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canBeToggled(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
+    @Override public boolean canTick(ManasSkillInstance instance, LivingEntity entity) { return !com.newuniverse.nusmp.NUConfig.summonerRework(); }
 }

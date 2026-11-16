@@ -1,0 +1,17 @@
+{
+ "anime_multiverse.skill.summoner.description": "Unique. Allen's class: call summon cards (Beast, Stone), dismiss them with Recall, and as it is mastered open the Bird Card's sight, Strengthening, Synthesis, the Spirit Card's healing and the stat reflection of your summons.",
+ "anime_multiverse.skill.lord_of_summons": "Summoner of Beginnings",
+ "anime_multiverse.skill.lord_of_summons.description": "Ultimate. Evolved from Summoner (formerly the Lord of Summons). Every card and every gift of Allen's class is open: twice the summons and far stronger cards, Beast Card calls three wolves, Stone Card is a colossus, Legion calls a pack of five and the Wraith Card a swarm of flying spirits, with the Bird Card's sight, the Spirit Card's healing, Strengthening, Synthesis up to rank three and the full stat reflection.",
+ "anime_multiverse.skill.mode.summoner.bird": "Bird Card",
+ "anime_multiverse.skill.mode.summoner.spirit": "Spirit Card",
+ "anime_multiverse.skill.mode.summoner.strengthen": "Strengthening",
+ "anime_multiverse.skill.mode.summoner.synthesis": "Synthesis",
+ "anime_multiverse.skill.msg.summoner.lord_only": "Only the Summoner of Beginnings can call this card.",
+ "anime_multiverse.skill.msg.summoner.locked": "%s opens at %s%% mastery of the Summoner.",
+ "anime_multiverse.skill.msg.summoner.reworked_off": "This Summoner mode is switched off on this server.",
+ "anime_multiverse.skill.msg.summoner.no_summons": "You have no summons to strengthen.",
+ "anime_multiverse.skill.msg.summoner.strengthened": "Strengthened %s summon(s).",
+ "anime_multiverse.skill.msg.summoner.no_pair": "Synthesis needs two summons of the same card and rank (and below the top rank).",
+ "anime_multiverse.skill.msg.summoner.synthesized": "Two cards became one: %s.",
+ "anime_multiverse.skill.msg.summoner.merged": "Hawk Eye and Spirit Card are now part of your Summoner."
+}

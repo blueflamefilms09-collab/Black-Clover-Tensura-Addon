@@ -61,20 +61,95 @@ public final class FictionRules {
     /** The ids of the ten modes (lang keys anime_multiverse.skill.mode.&lt;id&gt;; the first two are the old ones). */
     public static final String[] ALL_IDS = {"fiction.undo", "fiction.erase", "fiction.annul", "fiction.rewind", "fiction.unpick", "fiction.nullify", "fiction.unmake", "fiction.share", "fiction.standup", "fiction.world"};
 
+    // ---- All Fiction god class (modes 10-15, appended after the ten of 3.46.0; server setting allFictionGod) ----
+    // Canon: "All Fiction" (Kumagawa) makes a thing not have happened, so it can be an injury, an effect, a skill, a blow or the time spent. Class design: docs/all_fiction_rework.md.
+    public static final int DENY = 10, RULE = 11, REVERSAL = 12, MASS = 13, SKIN = 14, REWRITE_TIME = 15;
+    public static final int GOD_MODES = 16;
+    /** The ids of the sixteen modes: the ten above first and unchanged. */
+    public static final String[] GOD_IDS = {"fiction.undo", "fiction.erase", "fiction.annul", "fiction.rewind", "fiction.unpick", "fiction.nullify", "fiction.unmake", "fiction.share", "fiction.standup", "fiction.world",
+            "fiction.deny", "fiction.rule", "fiction.reversal", "fiction.mass", "fiction.skin", "fiction.rewritetime"};
+
+    /** The wheel: sixteen with the god-class modes on, ten with only the rebuild (allFictionGod = false), the old two with the rebuild off too. */
+    public static int wheel(boolean rebuilt, boolean god) { return rebuilt ? (god ? GOD_MODES : ALL_MODES) : 2; }
+
+    /** Deny Skill: effects stripped, magic silenced (through the balance law's control time, so a boss is held one second and a player three). */
+    public static double denyRange() { return 24.0; }
+    public static int denySilenceTicks() { return 300; }
+    public static double denyDamage() { return 40.0; }
+
+    /** Overwrite Rule: a zone where a rule is written for 12 s; once a second foes in it are weakened and silenced, allies cleansed, hostile shots erased; the owner takes half in it. */
+    public static double ruleRadius() { return 10.0; }
+    public static int ruleTicks() { return 240; }
+    public static double ruleOwnerTakenMultiplier() { return 0.5; }
+    public static int ruleWeakTicks() { return 40; }
+    public static int ruleSilenceTicks() { return 40; }
+    public static int rulePulseMaxProjectiles() { return 16; }
+
+    /** True when {@code distSq} (blocks squared from the zone centre) is inside the zone. */
+    public static boolean inZone(double distSq, double radius) { return distSq <= radius * radius; }
+
+    /** Reversal: for eight seconds up to three hits are made not to have happened and are written back at the striker (through the balance law). */
+    public static int reversalTicks() { return 160; }
+    public static int reversalCharges() { return 3; }
+    public static double reversalMultiplier() { return 1.5; }
+    public static double reversalRawCap() { return 60.0; }
+    public static double reversalRaw(double hit) { return Math.max(0.0, Math.min(reversalRawCap(), hit * reversalMultiplier())); }
+    /** A charge is spent by a hit while the window is open and charges are left. */
+    public static boolean reversalOpen(long until, long now, int charges) { return windowOpen(until, now) && charges > 0; }
+
+    /** Mass Fiction (mastered only): every foe within the radius (at most the 24 SkillTargets allows). Ordinary creatures are erased; bosses and players lose their effects and take a hit. */
+    public static double massRadius() { return 14.0; }
+    public static double massDamage() { return 60.0; }
+    public static int massSilenceTicks() { return 200; }
+    public static boolean massUnlocked(boolean mastered) { return mastered; }
+    public static boolean massErases(boolean isPlayer, boolean fullyAffected) { return !isPlayer && fullyAffected; }
+
+    /** Nothing Sticks: for twenty seconds every second your harmful effects are cleansed. */
+    public static int skinTicks() { return 400; }
+
+    /** Rewrite Time: the time spent on these modes never was. The big modes (Fiction, World, Mass, Overwrite Rule, Rewrite Time itself) are not on the list. */
+    public static boolean resettable(int mode) {
+        return switch (mode) { case UNDO, ANNUL, REWIND, UNPICK, NULLIFY, UNMAKE, SHARE, DENY, REVERSAL, SKIN -> true; default -> false; };
+    }
+
+    /** Passive Retcon (once a second): how many harmful effects of the owner are made not to have happened, never more than this. */
+    public static int retconPerSecond() { return 1; }
+
+    // ---- Book Maker leads in (modes 2-3, appended; server setting allFictionGod) ----
+    public static final int EQUALIZE = 2, GLIMPSE = 3;
+    /** Book Maker's wheel: four with the lead-in modes on, the old two (see {@link #modes()}) off. */
+    public static int bookMakerModes(boolean god) { return god ? 4 : modes(); }
+    public static double equalizeCost() { return 900; }
+    public static int equalizeCooldown() { return 160; }
+    public static double equalizeRange() { return 24; }
+    public static int equalizeStripMax() { return 6; }
+    public static int equalizeWeakAmp(Tier t) { return t == Tier.BASE ? 2 : 3; }
+    public static int equalizeWeakTicks() { return 200; }
+    /** Mastered Book Maker also silences the pinned (through the balance law's control time). */
+    public static boolean equalizeSilences(Tier t) { return t != Tier.BASE; }
+    /** Glimpse of the Fiction (mastered only): for five seconds a quarter of your maximum health of harm is made not to have happened. */
+    public static double glimpseCost() { return 1800; }
+    public static int glimpseCooldown() { return 1200; }
+    public static int glimpseTicks() { return 100; }
+    public static double glimpsePool(double maxHealth) { return Math.max(0.0, maxHealth) * 0.25; }
+    public static boolean glimpseUnlocked(Tier t) { return t != Tier.BASE; }
+
     /** The number of modes on the wheel: ten when the rebuild is on (setting allFictionRebuilt), the old two when it is off. */
     public static int wheel(boolean rebuilt) { return rebuilt ? ALL_MODES : 2; }
 
     public static double cost(int mode) {
         return switch (mode) {
             case UNDO -> undoCost(); case ERASE -> eraseCost(); case ANNUL -> 2500; case REWIND -> 2000; case UNPICK -> 1500;
-            case NULLIFY -> 3000; case UNMAKE -> 3500; case SHARE -> 3000; case WORLD -> 6000; default -> 0;
+            case NULLIFY -> 3000; case UNMAKE -> 3500; case SHARE -> 3000; case WORLD -> 6000;
+            case DENY -> 4000; case RULE -> 7000; case REVERSAL -> 5000; case MASS -> 9000; case SKIN -> 4000; case REWRITE_TIME -> 8000; default -> 0;
         };
     }
 
     public static int cooldown(int mode) {
         return switch (mode) {
             case UNDO -> undoCooldown(); case ERASE -> eraseCooldown(); case ANNUL -> 900; case REWIND -> 600; case UNPICK -> 300;
-            case NULLIFY -> 1200; case UNMAKE -> 900; case SHARE -> 900; case WORLD -> 3600; default -> 0;
+            case NULLIFY -> 1200; case UNMAKE -> 900; case SHARE -> 900; case WORLD -> 3600;
+            case DENY -> 600; case RULE -> 3600; case REVERSAL -> 1800; case MASS -> 2400; case SKIN -> 2400; case REWRITE_TIME -> 6000; default -> 0;
         };
     }
 

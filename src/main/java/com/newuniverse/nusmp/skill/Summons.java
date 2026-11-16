@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.skill.rules.SummonRules;
 import com.newuniverse.nusmp.skill.rules.SummonRules.Card;
+import com.newuniverse.nusmp.skill.rules.SummonerRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -33,7 +34,7 @@ import java.util.UUID;
 final class Summons {
     private Summons() {}
 
-    static final String UNTIL = "nusmp_summon_until", CARD = "nusmp_summon_card";
+    static final String UNTIL = "nusmp_summon_until", CARD = "nusmp_summon_card", RANK = "nusmp_summon_rank";
     /** How far from a player a summon is still looked after. */
     private static final double SCAN = 64.0;
 
@@ -85,7 +86,10 @@ final class Summons {
 
     // ---------------------------------------------------------------- creation
     /** Builds (does not add) one creature of the card, or null if its entity type cannot be made. */
-    static Mob create(ServerPlayer owner, Card card, Tier tier) {
+    static Mob create(ServerPlayer owner, Card card, Tier tier) { return create(owner, card, tier, 0); }
+
+    /** The same with a Synthesis rank (0 = a plain card): health and damage grow by {@link SummonerRules#rankFactor}. */
+    static Mob create(ServerPlayer owner, Card card, Tier tier, int rank) {
         ServerLevel level = owner.serverLevel();
         Mob mob = switch (card) {
             case BEAST, LEGION -> {
@@ -106,10 +110,11 @@ final class Summons {
         };
         if (mob == null) return null;
 
-        mob.setCustomName(name(card).withStyle(color(card)));
+        double factor = SummonerRules.rankFactor(rank);
+        mob.setCustomName((rank > 0 ? name(card).append(" +" + rank) : name(card)).withStyle(color(card)));
         mob.setCustomNameVisible(false);
-        setBase(mob, Attributes.MAX_HEALTH, SummonRules.health(card, tier));
-        setBase(mob, Attributes.ATTACK_DAMAGE, SummonRules.damage(card, tier));
+        setBase(mob, Attributes.MAX_HEALTH, SummonRules.health(card, tier) * factor);
+        setBase(mob, Attributes.ATTACK_DAMAGE, SummonRules.damage(card, tier) * factor);
         double scale = SummonRules.scale(card, tier);
         if (scale != 1.0) setBase(mob, Attributes.SCALE, scale);
         mob.setHealth(mob.getMaxHealth());
@@ -120,6 +125,7 @@ final class Summons {
         data.putUUID(SummonerSkill.OWNER_KEY, owner.getUUID());
         data.putLong(UNTIL, now + SummonRules.lifetimeTicks(card, tier));
         data.putInt(CARD, card.ordinal());
+        if (rank > 0) data.putInt(RANK, rank);
         mob.setPersistenceRequired();
         return mob;
     }
@@ -173,6 +179,51 @@ final class Summons {
         return made;
     }
 
+    /** Strengthening: every summon of the owner within range gets strength and resistance for a while. At most the cap's worth of creatures. Returns how many. */
+    static int strengthen(ServerPlayer owner, Tier tier) {
+        int ticks = SummonerRules.strengthenSeconds(tier) * 20, amp = SummonerRules.strengthenAmplifier(tier), n = 0;
+        double range2 = SummonerRules.STRENGTHEN_RANGE * SummonerRules.STRENGTHEN_RANGE;
+        for (Mob m : owned(owner)) {
+            if (m.level() != owner.level() || m.distanceToSqr(owner) > range2) continue;
+            m.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, ticks, amp, true, true));
+            m.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE, ticks, amp, true, true));
+            SkillFx.burst(owner.serverLevel(), m.position().add(0, m.getBbHeight() * 0.5, 0), false, 4, 0.3);
+            n++;
+        }
+        return n;
+    }
+
+    static int rankOf(Mob m) { return Math.max(0, m.getPersistentData().getInt(RANK)); }
+
+    /** Two summons of the same card and rank that Synthesis may combine (oldest first), or an empty list. */
+    static List<Mob> pair(ServerPlayer owner, Tier tier) {
+        java.util.Map<Integer, List<Mob>> groups = new java.util.TreeMap<>();
+        for (Mob m : owned(owner)) {
+            int rank = rankOf(m);
+            if (m.level() != owner.level() || !SummonerRules.canSynthesize(rank, tier) || !m.getPersistentData().contains(CARD)) continue;
+            groups.computeIfAbsent(m.getPersistentData().getInt(CARD) * 8 + rank, k -> new ArrayList<>()).add(m);
+        }
+        for (List<Mob> g : groups.values()) if (g.size() >= 2) return new ArrayList<>(g.subList(0, 2));
+        return List.of();
+    }
+
+    /** Synthesis: the two creatures go and one of the next rank stands where the first was. Returns it, or null if it could not be made. */
+    static Mob merge(ServerPlayer owner, List<Mob> two, Tier tier) {
+        if (two.size() != 2) return null;
+        Mob a = two.get(0);
+        Card[] cards = Card.values();
+        int ordinal = a.getPersistentData().getInt(CARD);
+        if (ordinal < 0 || ordinal >= cards.length) return null;
+        Mob made = create(owner, cards[ordinal], tier, rankOf(a) + 1);
+        if (made == null) return null;
+        made.moveTo(a.getX(), a.getY(), a.getZ(), a.getYRot(), 0.0F);
+        for (Mob m : two) m.discard();
+        if (!owner.serverLevel().addFreshEntity(made)) return null;
+        track(owner, made);
+        SkillFx.burst(owner.serverLevel(), made.position().add(0, made.getBbHeight() * 0.5, 0), true, 10, 0.5);
+        return made;
+    }
+
     /** Discards every summon of the owner (Recall, death, logout). Returns how many were removed. */
     static int recall(ServerPlayer owner) {
         int removed = 0;
@@ -209,6 +260,7 @@ final class Summons {
         if (mine.isEmpty()) return;
 
         mine.sort(Comparator.comparingInt(Mob::getId));
+        SummonerSkill.reflect(player, mine);
         for (int i = 0, drop = SummonRules.excess(mine.size(), max); i < drop; i++) mine.remove(0).discard();   // oldest first
 
         // summons pick fights with monsters on their own, never with players (a PvP server must not see wolves hunting strangers);

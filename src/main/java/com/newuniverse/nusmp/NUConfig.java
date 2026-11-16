@@ -87,6 +87,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
     public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
     public static final ModConfigSpec.BooleanValue SHINRA_REWORK;                                        // Shinra rework (docs/shinra_rework.md)
+    public static final ModConfigSpec.BooleanValue ALL_FICTION_GOD;                                      // All Fiction god-class rework (docs/all_fiction_rework.md)
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -103,6 +104,9 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue[] UC_MAX_MASTERY = new ModConfigSpec.IntValue[UC_N];
     public static final ModConfigSpec.BooleanValue UC_FLAT_COSTS, UC_CLASS_MASTERY, UC_MASTERED_TIER, UC_MILESTONES, UC_CLASS_DAMAGE;
     public static final ModConfigSpec.DoubleValue UC_LATE_SHARE, UC_PLAIN_COST_PCT, UC_PLAIN_COST_REF;
+    // Summoner rework (docs/summoner_rework.md): Allen's Hawk Eye, Spirit Card, Strengthening and Synthesis folded into the Summoner
+    public static final ModConfigSpec.BooleanValue SUMMONER_REWORK;
+    public static final ModConfigSpec.DoubleValue SUMMONER_MASTERY_PERCENT;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -305,6 +309,15 @@ public final class NUConfig {
         }
         b.pop();
 
+        b.push("summonerRework");
+        SUMMONER_REWORK = b.comment("Summoner rework: Allen's Hawk Eye, Spirit Card, Strengthening and Synthesis are modes / passives of the Summoner, opened by its mastery (Bird Card 15 %, Strengthening 30 %, Synthesis 45 %, Spirit Card 60 %, stat reflection 75 %); the Summoner of Beginnings has them all. The old Hawk Eye and Spirit Card skills are carried into the Summoner at login. false = the old Summoner (Beast Card, Stone Card, Recall; Legion and Wraith for the Lord) and the old Hawk Eye / Spirit Card toggles.")
+                .define("summonerRework", true);
+        SUMMONER_MASTERY_PERCENT = b.comment("Summoner rework: percent of the maximum mastery one card cast earns (so the modes open after a playable number of casts; 0.5 = about 200 casts to master). Ignored when summonerRework is false (then a cast earns one point, as before).")
+                .defineInRange("summonerMasteryPercent", 0.5, 0.0, 5.0);
+        b.push("ultimates_fiction_god");
+        ALL_FICTION_GOD = b.comment("All Fiction god-class rework (sixteen modes: Deny Skill, Overwrite Rule, Reversal, Mass Fiction, Nothing Sticks, Rewrite Time, the Retcon passive) and Book Maker's lead-in modes (Equalize, Glimpse of the Fiction). false = the ten-mode All Fiction and the two-mode Book Maker of 3.46.0 (needs allFictionRebuilt for All Fiction).").define("allFictionGod", true);
+        b.pop();
+
         SPEC = b.build();
     }
 
@@ -315,6 +328,8 @@ public final class NUConfig {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
 
+    /** The All Fiction god-class modes and Book Maker's lead-in modes (default on before the SERVER config is loaded, as the rebuild is). */
+    public static boolean allFictionGod() { return live(ALL_FICTION_GOD); }
     public static boolean faithWorship() { return live(FAITH_WORSHIP); }
     public static int faithMaxWorshippers() { return com.newuniverse.nusmp.skill.rules.FaithWorshipRules.capOf(live(FAITH_MAX_WORSHIPPERS)); }
     public static int faithInviteTicks() { return Math.max(10, live(FAITH_INVITE_SECONDS)) * 20; }
@@ -327,6 +342,8 @@ public final class NUConfig {
     public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
 
     public static boolean shinraRework() { return live(SHINRA_REWORK); }
+    public static boolean summonerRework() { return live(SUMMONER_REWORK); }
+    public static double summonerMasteryPercent() { return Math.max(0.0, Math.min(5.0, live(SUMMONER_MASTERY_PERCENT))); }
     public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
     public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }
     public static boolean ucFlatCosts() { return live(UC_FLAT_COSTS); }

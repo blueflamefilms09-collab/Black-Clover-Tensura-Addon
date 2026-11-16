@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.skill;
 import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.skill.rules.FictionRules;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -14,6 +15,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,15 +35,21 @@ import java.util.List;
  * around you never existed. Share the Fiction: allies near you are cleansed and healed. Stand Up: tells you when your death can be made fiction again. World Fiction: a zone around where you stood,
  * for six seconds, that cleanses allies and erases hostile projectiles once a second. Passive: once every fifteen minutes your own death becomes fiction and you stand up at full health.
  * <p>
+ * God class (docs/all_fiction_rework.md, server setting {@code allFictionGod}), six modes appended after the ten: Deny Skill (a foe loses its effects and its magic is silenced), Overwrite Rule (a zone where a rule
+ * is written for twelve seconds), Reversal (up to three hits made not to have happened and written back at the striker), Mass Fiction (mastered only: every foe around you is erased, or stripped and hurt if it is
+ * a boss or a player), Nothing Sticks (twenty seconds of harmful effects never staying) and Rewrite Time (the time spent on the lesser modes never was). Passive Retcon: once a second one harmful effect of
+ * yours is made not to have happened. Every window is a game time in the owner's own skill tag; every area press looks at no more than 24 creatures and 32 projectiles; every hit goes through the balance law.
+ * <p>
  * State is kept in the skill tag of the one player who owns it (nothing static, nothing shared): the five-second health memory (H0..H4, unchanged), the five-second position memory (PX/PY/PZ0..4, PN,
  * PDim), the window ends as game times (AnnulUntil, NullifyUntil, WorldUntil) and the zone (WorldX/Y/Z, WorldDim). The tick writes a few numbers once a second; the zone pulses once a second for six
  * seconds. A press looks at no more than 24 creatures, 32 projectiles. Numbers: {@link FictionRules}. Switch: server setting {@code allFictionRebuilt} (off = the old two modes, the new hooks do nothing).
  */
 public class AllFictionSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("all_fiction", "All Fiction",
-            "Ultimate. Make injuries, enemies and even your own death never have happened.");
+            "Ultimate (God class). Make injuries, effects, enemy skills, blows, time and even your own death never have happened. Sixteen modes, from Undo to Mass Fiction.");
 
-    private static final String ANNUL_UNTIL = "AnnulUntil", ANNUL_POOL = "AnnulPool", NULLIFY_UNTIL = "NullifyUntil", WORLD_UNTIL = "WorldUntil";
+    private static final String ANNUL_UNTIL = "AnnulUntil", ANNUL_POOL = "AnnulPool", NULLIFY_UNTIL = "NullifyUntil", WORLD_UNTIL = "WorldUntil",
+            RULE_UNTIL = "RuleUntil", REVERSAL_UNTIL = "ReversalUntil", REVERSAL_LEFT = "ReversalLeft", SKIN_UNTIL = "SkinUntil";
 
     public AllFictionSkill() { super(SkillType.ULTIMATE, TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.GOD; }      // docs/ultimate_classes.md
@@ -53,19 +63,22 @@ public class AllFictionSkill extends NUSkill {
         }
     }
 
-    @Override public int getModes(ManasSkillInstance i) { return FictionRules.wheel(rebuilt()); }
+    /** True when the god-class modes are on (needs the rebuild; server setting allFictionGod). */
+    static boolean god() { return rebuilt() && NUConfig.allFictionGod(); }
+
+    @Override public int getModes(ManasSkillInstance i) { return FictionRules.wheel(rebuilt(), god()); }
 
     @Override
     public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) {
-        int n = FictionRules.wheel(rebuilt());
+        int n = FictionRules.wheel(rebuilt(), god());
         return Math.floorMod(mode + (reverse ? -1 : 1), n);
     }
 
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return FictionRules.ALL_IDS[Math.floorMod(mode, FictionRules.ALL_MODES)]; }
+    @Override public String getModeId(ManasSkillInstance i, int mode) { return FictionRules.GOD_IDS[Math.floorMod(mode, FictionRules.GOD_MODES)]; }
 
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
-        return switch (Math.floorMod(mode, FictionRules.ALL_MODES)) {
+        return switch (Math.floorMod(mode, FictionRules.GOD_MODES)) {
             case FictionRules.UNDO -> SkillMsg.mode("fiction.undo", "Undo");
             case FictionRules.ERASE -> SkillMsg.mode("fiction.erase", "Fiction");
             case FictionRules.ANNUL -> SkillMsg.mode("fiction.annul", "Annul Damage");
@@ -75,6 +88,12 @@ public class AllFictionSkill extends NUSkill {
             case FictionRules.UNMAKE -> SkillMsg.mode("fiction.unmake", "Unmake");
             case FictionRules.SHARE -> SkillMsg.mode("fiction.share", "Share the Fiction");
             case FictionRules.STAND_UP -> SkillMsg.mode("fiction.standup", "Stand Up");
+            case FictionRules.DENY -> SkillMsg.mode("fiction.deny", "Deny Skill");
+            case FictionRules.RULE -> SkillMsg.mode("fiction.rule", "Overwrite Rule");
+            case FictionRules.REVERSAL -> SkillMsg.mode("fiction.reversal", "Reversal");
+            case FictionRules.MASS -> SkillMsg.mode("fiction.mass", "Mass Fiction");
+            case FictionRules.SKIN -> SkillMsg.mode("fiction.skin", "Nothing Sticks");
+            case FictionRules.REWRITE_TIME -> SkillMsg.mode("fiction.rewritetime", "Rewrite Time");
             default -> SkillMsg.mode("fiction.world", "World Fiction");
         };
     }
@@ -111,14 +130,21 @@ public class AllFictionSkill extends NUSkill {
             if (dim.equals(tag.getString("WorldDim"))) pulseWorld(p, tag);
             else tag.putLong(WORLD_UNTIL, 0L);              // you left the world the zone was in: it closes
         }
+        if (!god()) return;
+        if (living instanceof ServerPlayer p && FictionRules.worldPulseDue(tag.getLong(RULE_UNTIL), now, living.tickCount)) {
+            if (dim.equals(tag.getString("RuleDim"))) pulseRule(p, tag);
+            else tag.putLong(RULE_UNTIL, 0L);               // you left the world the rule was written in: it is crossed out
+        }
+        if (FictionRules.windowOpen(tag.getLong(SKIN_UNTIL), now)) SkillUtil.cleanse(living);   // Nothing Sticks
+        else retcon(living);                                                                    // the passive: one harmful effect a second
     }
 
     // ---------------------------------------------------------------- the press
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
-        if (mode < 0 || mode >= FictionRules.ALL_MODES) return;
-        if (mode >= FictionRules.wheel(rebuilt())) { SkillUtil.fail(player, SkillMsg.t("fiction.off", "That part of All Fiction is switched off on this server.")); return; }
+        if (mode < 0 || mode >= FictionRules.GOD_MODES) return;
+        if (mode >= FictionRules.wheel(rebuilt(), god())) { SkillUtil.fail(player, SkillMsg.t("fiction.off", "That part of All Fiction is switched off on this server.")); return; }
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("fiction.cooldown", "Not yet.")); return; }
         ServerLevel level = player.serverLevel();
         CompoundTag tag = instance.getOrCreateTag();
@@ -140,7 +166,14 @@ public class AllFictionSkill extends NUSkill {
             case FictionRules.NULLIFY -> nullify(instance, player, level, tag, now);
             case FictionRules.UNMAKE -> unmake(instance, player, level);
             case FictionRules.SHARE -> share(instance, player, level);
-            default -> world(instance, player, level, tag, now);
+            case FictionRules.WORLD -> world(instance, player, level, tag, now);
+            case FictionRules.DENY -> deny(instance, player, level);
+            case FictionRules.RULE -> rule(instance, player, level, tag, now);
+            case FictionRules.REVERSAL -> reversal(instance, player, level, tag, now);
+            case FictionRules.MASS -> mass(instance, player, level);
+            case FictionRules.SKIN -> skin(instance, player, level, tag, now);
+            case FictionRules.REWRITE_TIME -> rewriteTime(instance, player, level);
+            default -> false;
         };
         if (!done) return;
         cooldown(instance, mode, DMUtil.cooldown(FictionRules.cooldown(mode)));
@@ -295,6 +328,121 @@ public class AllFictionSkill extends NUSkill {
         SkillFx.ring(level, centre, r, 0x5A2A7A);
     }
 
+
+    // ---------------------------------------------------------------- god class: the six appended modes
+    /** Deny Skill: the foe you look at loses every effect and its magic is silenced (balance-law control time: a boss one second, a player three), then it is hit. */
+    private boolean deny(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        LivingEntity target = SkillTargets.lookFoe(player, FictionRules.denyRange());
+        if (target == null) { SkillUtil.fail(player, SkillMsg.t("fiction.no_target", "No target.")); return false; }
+        if (!pay(instance, player, FictionRules.DENY)) return false;
+        target.removeAllEffects();
+        EnergyBridge.effect(target, "silence", BalanceLaw.controlTicks(target, FictionRules.denySilenceTicks()), 0);
+        SkillDamage.hit(player, target, FictionRules.denyDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
+        SkillFx.spray(level, true, body(target), 14, 0.4, 0.8, 0.4, 0.05);
+        SkillAnimeFx.screwShot(level, player.getEyePosition(), body(target));
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.deny", "Its power never was.").withStyle(ChatFormatting.DARK_PURPLE));
+        return true;
+    }
+
+    /** Overwrite Rule: a rule is written into the ground where you stand for twelve seconds (first pulse now, the rest once a second from the tick). */
+    private boolean rule(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
+        if (!pay(instance, player, FictionRules.RULE)) return false;
+        tag.putLong(RULE_UNTIL, now + FictionRules.ruleTicks());
+        tag.putDouble("RuleX", player.getX());
+        tag.putDouble("RuleY", player.getY());
+        tag.putDouble("RuleZ", player.getZ());
+        tag.putString("RuleDim", level.dimension().location().toString());
+        instance.markDirty();
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.rule", "A new rule is written here.").withStyle(ChatFormatting.DARK_PURPLE));
+        pulseRule(player, tag);
+        return true;
+    }
+
+    /** One pulse of the rule: foes in it (at most 24) are weakened and silenced, allies (at most 8) cleansed, hostile projectiles (at most 16) erased. */
+    private static void pulseRule(ServerPlayer p, CompoundTag tag) {
+        ServerLevel level = p.serverLevel();
+        Vec3 centre = new Vec3(tag.getDouble("RuleX"), tag.getDouble("RuleY"), tag.getDouble("RuleZ"));
+        double r = FictionRules.ruleRadius();
+        for (LivingEntity f : SkillTargets.foes(p, centre, r)) {
+            f.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, FictionRules.ruleWeakTicks(), 1));
+            EnergyBridge.effect(f, "silence", BalanceLaw.controlTicks(f, FictionRules.ruleSilenceTicks()), 0);
+        }
+        int n = 0;
+        for (LivingEntity a : SkillTargets.alliesAround(p, centre, r)) {
+            if (n++ >= FictionRules.shareMax()) break;
+            SkillUtil.cleanse(a);
+        }
+        unmakeAll(level, hostileProjectiles(p, level, centre, r, FictionRules.rulePulseMaxProjectiles()));
+        SkillFx.ring(level, centre, r, 0x7A2AB0);
+    }
+
+    /** Reversal: for eight seconds the next three hits you take are made not to have happened and are written back at who struck (see {@link #onTakenDamage}). */
+    private boolean reversal(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
+        if (!pay(instance, player, FictionRules.REVERSAL)) return false;
+        tag.putLong(REVERSAL_UNTIL, now + FictionRules.reversalTicks());
+        tag.putInt(REVERSAL_LEFT, FictionRules.reversalCharges());
+        instance.markDirty();
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.reversal", "Harm is written back to its maker.").withStyle(ChatFormatting.DARK_PURPLE));
+        SkillFx.spray(level, true, body(player), 14, 0.5, 0.8, 0.5, 0.04);
+        return true;
+    }
+
+    /** Mass Fiction (mastered): every foe within fourteen blocks (at most 24): ordinary creatures are erased; a boss or a player loses its effects, is silenced and takes a hit. */
+    private boolean mass(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        if (!FictionRules.massUnlocked(instance.isMastered(player))) {
+            SkillUtil.fail(player, SkillMsg.t("fiction.mass_locked", "Master All Fiction to unlock Mass Fiction."));
+            return false;
+        }
+        List<LivingEntity> foes = SkillTargets.foes(player, player.position(), FictionRules.massRadius());
+        if (foes.isEmpty()) { SkillUtil.fail(player, SkillMsg.t("fiction.mass_none", "Nothing near you to make fiction.")); return false; }
+        if (!pay(instance, player, FictionRules.MASS)) return false;
+        int erased = 0;
+        for (LivingEntity f : foes) {
+            SkillFx.spray(level, true, body(f), 8, 0.4, 0.8, 0.4, 0.05);
+            if (FictionRules.massErases(f instanceof Player, GodTier.fullyAffected(f))) {
+                f.discard();                                // erased: no body, no drops
+                erased++;
+            } else {
+                f.removeAllEffects();
+                EnergyBridge.effect(f, "silence", BalanceLaw.controlTicks(f, FictionRules.massSilenceTicks()), 0);
+                SkillDamage.hit(player, f, FictionRules.massDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
+            }
+        }
+        SkillFx.ring(level, player.position(), FictionRules.massRadius() * 0.7, 0x7A2AB0);
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.mass", "%s made fiction.", erased).withStyle(ChatFormatting.DARK_PURPLE));
+        return true;
+    }
+
+    /** Nothing Sticks: for twenty seconds your harmful effects are cleansed once a second (and now). */
+    private boolean skin(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
+        if (!pay(instance, player, FictionRules.SKIN)) return false;
+        tag.putLong(SKIN_UNTIL, now + FictionRules.skinTicks());
+        instance.markDirty();
+        SkillUtil.cleanse(player);
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.skin", "Nothing sticks to you.").withStyle(ChatFormatting.DARK_PURPLE));
+        SkillFx.spray(level, true, body(player), 12, 0.4, 0.8, 0.4, 0.04);
+        return true;
+    }
+
+    /** Rewrite Time: the time spent on the lesser modes never was, so their cooldowns are gone. The big modes keep theirs. */
+    private boolean rewriteTime(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        if (!pay(instance, player, FictionRules.REWRITE_TIME)) return false;
+        for (int m = 0; m < FictionRules.GOD_MODES; m++) if (FictionRules.resettable(m)) instance.setCoolDown(0, m);
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.rewritetime", "The time you spent never was.").withStyle(ChatFormatting.DARK_PURPLE));
+        SkillFx.spray(level, true, body(player), 16, 0.5, 0.9, 0.5, 0.05);
+        return true;
+    }
+
+    /** The passive Retcon, once a second: the shortest harmful effect of the owner is made not to have happened (one effect at most). */
+    private static void retcon(LivingEntity owner) {
+        MobEffectInstance pick = null;
+        for (MobEffectInstance e : owner.getActiveEffects()) {
+            if (e.getEffect().value().isBeneficial()) continue;
+            if (pick == null || e.getDuration() < pick.getDuration()) pick = e;
+        }
+        if (pick != null) owner.removeEffect(pick.getEffect());
+    }
+
     // ---------------------------------------------------------------- projectiles
     /** Projectiles in a sphere that are not yours, not your allies' and not your summons' (at most {@code max}, found with one box query). */
     private static List<Projectile> hostileProjectiles(ServerPlayer p, ServerLevel level, Vec3 centre, double radius, int max) {
@@ -333,6 +481,20 @@ public class AllFictionSkill extends NUSkill {
             if (owner instanceof ServerPlayer p) SkillUtil.actionbar(p, SkillMsg.t("fiction.nullified", "That blow never happened.").withStyle(ChatFormatting.DARK_PURPLE));
             return true;
         }
+        if (god() && owner instanceof ServerPlayer rp && FictionRules.reversalOpen(tag.getLong(REVERSAL_UNTIL), now, tag.getInt(REVERSAL_LEFT))) {
+            float hit = amount.get();
+            int left = tag.getInt(REVERSAL_LEFT) - 1;
+            tag.putInt(REVERSAL_LEFT, left);
+            if (left <= 0) tag.putLong(REVERSAL_UNTIL, 0L);
+            amount.set(0.0F);
+            instance.markDirty();
+            if (source.getEntity() instanceof LivingEntity striker && striker != owner) {
+                SkillDamage.hit(rp, striker, FictionRules.reversalRaw(hit), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
+                SkillFx.spray(rp.serverLevel(), true, body(striker), 8, 0.3, 0.6, 0.3, 0.04);
+            }
+            SkillUtil.actionbar(rp, SkillMsg.t("fiction.reversed", "That blow was written back.").withStyle(ChatFormatting.DARK_PURPLE));
+            return true;
+        }
         if (FictionRules.windowOpen(tag.getLong(ANNUL_UNTIL), now)) {
             double pool = tag.getDouble(ANNUL_POOL);
             double taken = FictionRules.annulAbsorb(pool, amount.get());
@@ -343,6 +505,11 @@ public class AllFictionSkill extends NUSkill {
                 tag.putLong(ANNUL_UNTIL, 0L);
                 instance.markDirty();
             }
+        }
+        if (god() && amount.get() > 0 && FictionRules.windowOpen(tag.getLong(RULE_UNTIL), now)                  // Overwrite Rule: the owner takes half inside the zone
+                && owner.level().dimension().location().toString().equals(tag.getString("RuleDim"))
+                && FictionRules.inZone(owner.distanceToSqr(tag.getDouble("RuleX"), tag.getDouble("RuleY"), tag.getDouble("RuleZ")), FictionRules.ruleRadius())) {
+            amount.set((float) (amount.get() * FictionRules.ruleOwnerTakenMultiplier()));
         }
         return true;
     }

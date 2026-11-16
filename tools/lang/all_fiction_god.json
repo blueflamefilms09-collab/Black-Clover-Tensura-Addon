@@ -1,0 +1,23 @@
+{
+  "anime_multiverse.skill.all_fiction.description": "Ultimate (God class). Make injuries, effects, enemy skills, blows, time and even your own death never have happened. Sixteen modes, from Undo to Mass Fiction. Passive: once a second one harmful effect of yours never was; once every fifteen minutes your own death never happened.",
+  "anime_multiverse.skill.book_maker.description": "Unique. Pin your target with giant screws and drag it down to your level. Equalize strips its boons. Once mastered, Barrage pins every foe in front of you, Equalize silences, and Glimpse of the Fiction undoes a little harm.",
+  "anime_multiverse.skill.mode.fiction.deny": "Deny Skill",
+  "anime_multiverse.skill.mode.fiction.rule": "Overwrite Rule",
+  "anime_multiverse.skill.mode.fiction.reversal": "Reversal",
+  "anime_multiverse.skill.mode.fiction.mass": "Mass Fiction",
+  "anime_multiverse.skill.mode.fiction.skin": "Nothing Sticks",
+  "anime_multiverse.skill.mode.fiction.rewritetime": "Rewrite Time",
+  "anime_multiverse.skill.mode.bookmaker.equalize": "Equalize",
+  "anime_multiverse.skill.mode.bookmaker.glimpse": "Glimpse of the Fiction",
+  "anime_multiverse.skill.msg.fiction.deny": "Its power never was.",
+  "anime_multiverse.skill.msg.fiction.rule": "A new rule is written here.",
+  "anime_multiverse.skill.msg.fiction.reversal": "Harm is written back to its maker.",
+  "anime_multiverse.skill.msg.fiction.reversed": "That blow was written back.",
+  "anime_multiverse.skill.msg.fiction.mass": "%s made fiction.",
+  "anime_multiverse.skill.msg.fiction.mass_locked": "Master All Fiction to unlock Mass Fiction.",
+  "anime_multiverse.skill.msg.fiction.mass_none": "Nothing near you to make fiction.",
+  "anime_multiverse.skill.msg.fiction.skin": "Nothing sticks to you.",
+  "anime_multiverse.skill.msg.fiction.rewritetime": "The time you spent never was.",
+  "anime_multiverse.skill.msg.bookmaker.glimpse": "A little of the harm never happened.",
+  "anime_multiverse.skill.msg.bookmaker.glimpse_locked": "Master Book Maker to unlock Glimpse of the Fiction."
+}
