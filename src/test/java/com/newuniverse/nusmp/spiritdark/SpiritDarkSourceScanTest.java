@@ -132,7 +132,7 @@ class SpiritDarkSourceScanTest {
 
     @Test
     void theSharedHooksAreOneLinersAndTheDarkBookIsUntouched() throws IOException {
-        assertTrue(code(SRC.resolve("book/GrimoireBook.java")).contains("com.newuniverse.nusmp.spiritdark.SpiritDark.onCast(player, castMagic)"));
+        assertTrue((code(SRC.resolve("book/GrimoireBook.java")) + code(SRC.resolve("book/GrimoireCastListeners.java"))).contains("com.newuniverse.nusmp.spiritdark.SpiritDark.onCast(player, castMagic)"));
         assertTrue(code(SRC.resolve("prop/PropRegistry.java")).contains("SpiritDarkProps.init()"));
         assertTrue(code(SRC.resolve("client/prop/PropPainterRegistry.java")).contains("SpiritDarkPropPainter.register()"));
         assertTrue(code(SRC.resolve("NUSMP.java")).contains("SpiritDarkBoot.init(modEventBus, modContainer)") && !code(SRC.resolve("NUSMP.java")).contains("SpiritDarkClient.init(modEventBus)"), "3.0.0: no client key setup any more");

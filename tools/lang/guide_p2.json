@@ -1,0 +1,14 @@
+{
+  "anime_multiverse.skill.mode.grimoire_bullet": "%s Bullet",
+  "anime_multiverse.skill.mode.grimoire_burst": "%s Burst",
+  "anime_multiverse.skill.mode.grimoire_ward": "%s Ward",
+  "anime_multiverse.skill.mode.grimoire_cataclysm": "%s Cataclysm",
+  "anime_multiverse.skill.mode.grimoire_union": "Devil Union",
+  "anime_multiverse.skill.mode.grimoire_union_with": "Devil Union: %s",
+  "anime_multiverse.skill.msg.guide_p2.grimoire_recharging": "Your grimoire's pages are still recharging.",
+  "anime_multiverse.skill.msg.guide_p2.grimoire_master_first": "Master your magic to unlock this page.",
+  "anime_multiverse.skill.msg.guide_p2.grimoire_summon_first": "Summon your grimoire first (Summon Grimoire).",
+  "anime_multiverse.skill.msg.guide_p2.union_entered": "%s has entered Devil Union with %s!",
+  "anime_multiverse.skill.msg.guide_p2.grimoire_returns": "Your grimoire returns to you.",
+  "anime_multiverse.skill.msg.guide_p2.pages_sealed": "Your pages are sealed shut. Summon your grimoire first (Summon Grimoire)."
+}

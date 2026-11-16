@@ -54,7 +54,7 @@ The flat price already carries `costMultiplier` (DMUtil) at its call site, so it
 
 Early game nothing changes (the flat price wins); a big pool can no longer spam a x12-damage Ultimate for under 1 % of itself (guide A.8 #1).
 
-**Not converted (6 sites):** `GrimoirePageSkill` (1) and `GrimoireMagicSkill` (5). They extend Tensura's `Skill`, not `NUSkill` (the legacy
+**Converted later (guide P2, `LegacyPay`; the text below is what this change left):** `GrimoirePageSkill` (1) and `GrimoireMagicSkill` (5). They extend Tensura's `Skill`, not `NUSkill` (the legacy
 grimoire skills the guide's P2 #8 plans to retire), so the helper does not reach them; they still pay flat through `spendMagicules`.
 `getMagiculeCost` answers only during a payment (0 otherwise, as before), so Tensura's UI still shows no price for these skills.
 
@@ -90,9 +90,9 @@ instead of `epScale x lateGameScale` (the late-game factor is still applied once
 | top (EP >= 25M, MP >= 100M) | 12 x 6 = **x72** | x24 | x30 | x36 |
 
 **Combined cap: epCap x lateGameShare (default 3) = x24 / x30 / x36 / x36, never above x72** (12 x 6, the unclassified top), whatever the settings.
-**Not live yet:** `SkillDamage.hit` (owned by the damage-source worker this round) still calls the 4-argument `BalanceLaw.damage`, so classified hits
+**Live since the guide P2 change (docs/guide_fixes_p2.md): `SkillDamage.hit` passes the skill's class.** (Old text: `SkillDamage.hit` (owned by the damage-source worker this round) still calls the 4-argument `BalanceLaw.damage`, so classified hits
 today scale as before. The hookup is one line there once `hit` has the skill instance (which the `createSource(instance, ...)` change needs anyway):
-`BalanceLaw.damage(caster, target, scaled, masteryFrac, instance.getSkill() instanceof NUSkill s ? s.ultimateClass() : null)`.
+`BalanceLaw.damage(caster, target, scaled, masteryFrac, instance.getSkill() instanceof NUSkill s ? s.ultimateClass() : null)`.)
 
 ### Attunement (docs/attunement.md)
 Its "King class" target (60-150 raw per hit) is a raw-damage band; the KING class carries no raw band (it caps the EP scaling, prices casts and sets mastery),

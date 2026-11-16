@@ -14,6 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -36,7 +37,7 @@ public abstract class GrimoirePageSkill extends Skill {
     /** Is your grimoire summoned? Pages are locked without it (0.24: holding it is not enough). */
     protected static boolean ready(ServerPlayer player) {
         if (com.newuniverse.nusmp.book.GrimoireSummon.isFloating(player)) return true;
-        SkillUtil.fail(player, "Your pages are sealed shut. Summon your grimoire first (Summon Grimoire).");
+        SkillUtil.fail(player, SkillMsg.t("guide_p2.pages_sealed", "Your pages are sealed shut. Summon your grimoire first (Summon Grimoire)."));
         return false;
     }
 
@@ -50,6 +51,17 @@ public abstract class GrimoirePageSkill extends Skill {
     /** Magicule cost after cover discount. Returns false (and spends nothing) if too low. */
     protected static boolean pay(ServerPlayer p, double base) {
         return SkillUtil.spendMagicules(p, base * cover(p).cost * NUConfig.DM_COST_MULT.get());
+    }
+
+    /** Guide P2: the same price paid through Tensura (getMagiculeCost + isOutOfEnergy, see {@link LegacyPay}); SERVER ultimateClasses.flatCosts = true is the old flat write of {@link #pay(ServerPlayer, double)}. */
+    protected static boolean pay(ManasSkillInstance i, ServerPlayer p, double base) {
+        return LegacyPay.charge(i, p, 0, base * cover(p).cost * NUConfig.DM_COST_MULT.get());
+    }
+
+    /** Tensura's price hook: the cast being paid, 0 otherwise (the numbers live in each page, so Tensura's UI shows none, as before). */
+    @Override
+    public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) {
+        return LegacyPay.paying();
     }
 
     /** Diamond grimoires learn faster. */

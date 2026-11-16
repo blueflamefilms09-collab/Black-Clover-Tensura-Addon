@@ -75,8 +75,10 @@ public final class AntiMagic {
     public static int amp(ManasSkillInstance i) { return i.getOrCreateTag().getInt("AMP"); }
 
     public static void setAmp(ManasSkillInstance i, int v) {
-        i.getOrCreateTag().putInt("AMP", Math.max(0, Math.min(MAX_AMP, v)));
-        i.markDirty();
+        int now = Math.max(0, Math.min(MAX_AMP, v));
+        boolean changed = i.getOrCreateTag().getInt("AMP") != now;      // guide P3 #14: setting the same value (the cap, every second) syncs nothing
+        i.getOrCreateTag().putInt("AMP", now);
+        if (changed || !com.newuniverse.nusmp.NUConfig.gfDirtyOnChange()) i.markDirty();
     }
 
     public static void addAmp(Player p, int amount) { ampHolder(p).ifPresent(i -> setAmp(i, amp(i) + amount)); }

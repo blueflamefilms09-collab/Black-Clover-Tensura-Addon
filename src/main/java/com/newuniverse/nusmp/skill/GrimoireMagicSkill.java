@@ -95,13 +95,22 @@ public class GrimoireMagicSkill extends Skill {
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
         MagicType m = magic(i);
-        return Component.literal(switch (mode) {
-            case BULLET -> m.word + " Bullet";
-            case BURST -> m.word + " Burst";
-            case WARD -> m.word + " Ward";
-            case FINISHER -> m.word + " Cataclysm";
-            default -> "Devil Union" + (devil(i) != null ? ": " + devil(i).displayName : "");
-        });
+        // guide P2 #10: translatable with the old English as the fallback (keys in tools/lang/guide_p2.json)
+        return switch (mode) {
+            case BULLET -> Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_bullet", "%s Bullet", m.word);
+            case BURST -> Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_burst", "%s Burst", m.word);
+            case WARD -> Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_ward", "%s Ward", m.word);
+            case FINISHER -> Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_cataclysm", "%s Cataclysm", m.word);
+            default -> devil(i) != null
+                    ? Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_union_with", "Devil Union: %s", devil(i).displayName)
+                    : Component.translatableWithFallback("anime_multiverse.skill.mode.grimoire_union", "Devil Union");
+        };
+    }
+
+    /** Guide P2: Tensura's price hook: the cast being paid ({@link LegacyPay}), 0 otherwise (the numbers live in onPressed, so Tensura's UI shows none, as before). */
+    @Override
+    public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) {
+        return LegacyPay.paying();
     }
 
     // ---------- casting ----------
@@ -109,7 +118,7 @@ public class GrimoireMagicSkill extends Skill {
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player)) return;
         if (!holdingOwnGrimoire(player, instance)) return;
-        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, "Your grimoire's pages are still recharging."); return; }
+        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("guide_p2.grimoire_recharging", "Your grimoire's pages are still recharging.")); return; }
 
         ServerLevel level = player.serverLevel();
         MagicType m = magic(instance);
@@ -119,7 +128,7 @@ public class GrimoireMagicSkill extends Skill {
 
         switch (mode) {
             case BULLET -> {
-                if (!SkillUtil.spendMagicules(player, 300 * cost)) return;
+                if (!LegacyPay.charge(instance, player, mode, 300 * cost)) return;
                 Vec3 start = player.getEyePosition();
                 Vec3 end = DMUtil.lookPoint(player, 40);
                 Vec3 dir = end.subtract(start).normalize();
@@ -134,7 +143,7 @@ public class GrimoireMagicSkill extends Skill {
                 cooldown(instance, BULLET, 30);
             }
             case BURST -> {
-                if (!SkillUtil.spendMagicules(player, 800 * cost)) return;
+                if (!LegacyPay.charge(instance, player, mode, 800 * cost)) return;
                 Vec3 c = DMUtil.lookPoint(player, 32);
                 double r = 5 + (leaves(instance) - 3);
                 for (LivingEntity t : DMUtil.around(player, c, r)) strike(player, instance, t, 14 * pow);
@@ -142,7 +151,7 @@ public class GrimoireMagicSkill extends Skill {
                 cooldown(instance, BURST, 120);
             }
             case WARD -> {
-                if (!SkillUtil.spendMagicules(player, 600 * cost)) return;
+                if (!LegacyPay.charge(instance, player, mode, 600 * cost)) return;
                 int ticks = (int) (600 * power(instance));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, leaves(instance) >= 4 ? 1 : 0));
                 player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, leaves(instance) - 2));
@@ -151,8 +160,8 @@ public class GrimoireMagicSkill extends Skill {
                 cooldown(instance, WARD, 600);
             }
             case FINISHER -> {
-                if (leaves(instance) < 4 && !mastered) { SkillUtil.fail(player, "Master your magic to unlock this page."); return; }
-                if (!SkillUtil.spendMagicules(player, 3000 * cost)) return;
+                if (leaves(instance) < 4 && !mastered) { SkillUtil.fail(player, SkillMsg.t("guide_p2.grimoire_master_first", "Master your magic to unlock this page.")); return; }
+                if (!LegacyPay.charge(instance, player, mode, 3000 * cost)) return;
                 Vec3 c = DMUtil.lookPoint(player, 48);
                 for (LivingEntity t : DMUtil.around(player, c, 9)) strike(player, instance, t, 35 * pow);
                 Fx.spray(level, m.profile().themeKey(), Fx.toneOf(m.particle()), c.x, c.y + 1, c.z, 400, 4, 2, 4, 0.1);
@@ -162,7 +171,7 @@ public class GrimoireMagicSkill extends Skill {
             default -> {
                 Devil devil = devil(instance);
                 if (devil == null) return;
-                if (!SkillUtil.spendMagicules(player, 6000 * cost)) return;
+                if (!LegacyPay.charge(instance, player, mode, 6000 * cost)) return;
                 int ticks = NUConfig.DEVIL_UNION_SECONDS.get() * 20;
                 instance.getOrCreateTag().putLong("UnionUntil", level.getGameTime() + ticks);
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, 2));
@@ -170,8 +179,7 @@ public class GrimoireMagicSkill extends Skill {
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 1));
                 Fx.spray(level, FxThemes.SKILL, FxTone.DARK, player.getX(), player.getY() + 1, player.getZ(), 150, 0.8, 1.2, 0.8, 0.05);
                 level.playSound(null, player.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.PLAYERS, 0.7F, 0.6F);
-                player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(player.getName().getString()
-                        + " has entered Devil Union with " + devil.displayName + "!").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
+                player.getServer().getPlayerList().broadcastSystemMessage(SkillMsg.t("guide_p2.union_entered", "%s has entered Devil Union with %s!", player.getName().getString(), devil.displayName).withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD), false);
                 cooldown(instance, UNION, 6000);
             }
         }
@@ -222,11 +230,11 @@ public class GrimoireMagicSkill extends Skill {
         boolean carried = com.newuniverse.nusmp.blackclover.GrimoireSlot.holdsOwn(player, null);
         for (ItemStack s : player.getInventory().items) if (GrimoireItem.isOwnedBy(s, player.getUUID())) carried = true;
         if (carried) {
-            SkillUtil.fail(player, "Summon your grimoire first (Summon Grimoire).");
+            SkillUtil.fail(player, SkillMsg.t("guide_p2.grimoire_summon_first", "Summon your grimoire first (Summon Grimoire)."));
             return false;
         }
         player.getInventory().placeItemBackInInventory(GrimoireItem.create(player, coverOf(instance), magic(instance), devil(instance)));
-        player.displayClientMessage(Component.literal("Your grimoire returns to you.").withStyle(ChatFormatting.GOLD), true);
+        player.displayClientMessage(SkillMsg.t("guide_p2.grimoire_returns", "Your grimoire returns to you.").withStyle(ChatFormatting.GOLD), true);
         return false;
     }
 

@@ -47,7 +47,8 @@ class LateGameScalingSourceScanTest {
     @Test
     void theGrimoireBuffIsAppliedOncePerHitPath() throws IOException {
         String gb = code(SRC.resolve("book/GrimoireBook.java"));
-        assertEquals(2, count(gb, "r *= BalanceLaw.grimoireMult();"), "hurtAs and hurtDirect");
+        assertEquals(1, count(gb, "r *= BalanceLaw.grimoireMult();"), "once, in pageDamage (guide P2 #7), which hurtAs and hurtDirect both use");
+        assertEquals(2, count(gb, "pageDamage(i, caster, target, mode, raw)"), "hurtAs and hurtDirect each call it once");
         assertTrue(gb.contains("BalanceLaw.damage(caster, target, r, masteryFrac(i))"), "then the balance law and its caps");
     }
 

@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.TensuraSkill;
 import io.github.manasmods.tensura.damage.TensuraDamageTypes;
@@ -28,7 +29,9 @@ final class SkillDamage {
     static float hit(ServerPlayer caster, LivingEntity target, double raw, double masteryFrac, Kind kind, ManasSkillInstance instance) {
         if (caster == null || target == null || !target.isAlive() || raw <= 0 || !SkillTargets.isAimable(caster, target)) return 0f;
         double scaled = raw * NUConfig.DM_DAMAGE_MULT.get();
-        float dmg = BalanceLaw.damage(caster, target, (float) scaled, masteryFrac);
+        // Ultimate classes: a classified skill takes the class-capped scaling (the SERVER switch ultimateClasses.classDamage off, or a null class, is the plain law inside BalanceLaw)
+        UltimateClass cls = instance != null && instance.getSkill() instanceof NUSkill s ? s.ultimateClass() : null;
+        float dmg = BalanceLaw.damage(caster, target, (float) scaled, masteryFrac, cls);
         if (dmg <= 0f) return 0f;
         float before = target.getHealth();
         target.hurt(source(caster, kind, instance), dmg);

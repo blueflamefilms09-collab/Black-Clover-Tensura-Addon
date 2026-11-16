@@ -17,7 +17,10 @@ public final class BossCoreConfig {
     public static final ModConfigSpec SPEC;
     private static final Map<Object, Object> DEFAULTS = new IdentityHashMap<>();
 
-    private static final ModConfigSpec.BooleanValue ENABLED, AEGIS_OTHER_MODS, NIHILITY_CLEANSE, EP_FROM_PLAYERS;
+    private static final ModConfigSpec.BooleanValue ENABLED, AEGIS_OTHER_MODS, NIHILITY_CLEANSE, EP_FROM_PLAYERS, QUENCHED_BRIDGE;
+    private static final ModConfigSpec.ConfigValue<String> TELESMA_COMMAND, MALICE_COMMAND;
+    private static final ModConfigSpec.DoubleValue TELESMA_PER_EP, MALICE_PER_EP;
+    private static final ModConfigSpec.IntValue QUENCHED_MAX;
     private static final ModConfigSpec.IntValue MIN_FLOOR, BAND2, BAND3, BAND4, COUNT1, COUNT2, COUNT3, COUNT4, MAX_TIERS, EXTRA_HITS;
     private static final ModConfigSpec.DoubleValue AEGIS_HEALTH, AEGIS_PER, AEGIS_SET2, AEGIS_SET4, AEGIS_CAP, STRIKER_ATTACK, STRIKER_SET2, STRIKER_SHARE,
             REGEN_PER, REGEN_CAP, TIER2, TIER4, KI_SAIYAN, NIHILITY_COOLDOWN, EP_SHARE, EP_CAP;
@@ -84,6 +87,14 @@ public final class BossCoreConfig {
         EP_SHARE = real(b, "epSharePercentPerPiece", 0.5, 0.0, 10.0, "Percent of a slain creature's EP added to the wearer's base EP, per piece.");
         EP_CAP = real(b, "epCapPercentOfBase", 0.5, 0.0, 5.0, "One kill never adds more than this percent of the wearer's own base EP.");
         EP_FROM_PLAYERS = bool(b, "epFromPlayers", false, "true = killing a player also pays the EP share (off: it would be a farm).");
+        b.pop();
+        b.push("quenched");
+        QUENCHED_BRIDGE = bool(b, "bridge", false, "Telesma and Malice of Tensura No Index (docs/guide_fixes_p2.md). true = an Ascendant kill also runs the two commands below (only when that mod is loaded). Off until you fill in the commands.");
+        TELESMA_COMMAND = b.comment("The command that adds Telesma to a player, with {player} and {amount} filled in (e.g. the add command of the other mod). Blank = nothing. Runs as the server at permission level 2, output suppressed.").define("telesmaCommand", "");
+        MALICE_COMMAND = b.comment("The command that adds Malice to a player, with {player} and {amount}. Blank = nothing.").define("maliceCommand", "");
+        TELESMA_PER_EP = real(b, "telesmaPerEp", 0.0, 0.0, 1000.0, "Telesma paid per point of EP the Ascendant added (0 = none).");
+        MALICE_PER_EP = real(b, "malicePerEp", 0.0, 0.0, 1000.0, "Malice paid per point of EP the Ascendant added (0 = none).");
+        QUENCHED_MAX = integer(b, "maxPerKill", 1000, 1, 1000000, "The most one kill pays of each.");
         b.pop();
         b.push("mixing");
         MAX_TIERS = integer(b, "maxSetBonusTiers", 2, 1, 4, "Set bonuses of different sets worn together share this budget (a two piece bonus costs 1, a four piece bonus 2), so mixing never beats a full set.");
@@ -158,4 +169,20 @@ public final class BossCoreConfig {
     public static boolean epFromPlayers() { return flag(EP_FROM_PLAYERS); }
 
     public static int maxTiers() { return num(MAX_TIERS); }
+
+    public static boolean quenchedBridge() { return flag(QUENCHED_BRIDGE); }
+
+    public static double telesmaPerEp() { return num(TELESMA_PER_EP); }
+
+    public static double malicePerEp() { return num(MALICE_PER_EP); }
+
+    public static long quenchedMaxPerKill() { return num(QUENCHED_MAX); }
+
+    public static String telesmaCommand() { return text(TELESMA_COMMAND); }
+
+    public static String maliceCommand() { return text(MALICE_COMMAND); }
+
+    private static String text(ModConfigSpec.ConfigValue<String> v) {
+        try { return v.get(); } catch (RuntimeException notLoaded) { return ""; }
+    }
 }

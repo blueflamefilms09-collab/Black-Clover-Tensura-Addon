@@ -284,9 +284,9 @@ public final class BossCoreEvents {
     // ---------------------------------------------------------------- clean-up
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { forget(e.getEntity().getUUID()); }
 
-    static void onStopping(ServerStoppingEvent e) { EXTRA.clear(); }
+    static void onStopping(ServerStoppingEvent e) { EXTRA.clear(); QuenchedBridge.clear(); }
 
-    static void forget(UUID id) { EXTRA.remove(id); }
+    static void forget(UUID id) { EXTRA.remove(id); QuenchedBridge.forget(id); }
 
     /** For the self-test: how many players the second-type table holds. */
     static int tracked() { return EXTRA.size(); }

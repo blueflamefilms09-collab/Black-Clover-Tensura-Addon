@@ -43,7 +43,7 @@ public final class TimePages {
             if (i.onCoolDown(mode)) { SkillUtil.fail(p, "The seconds are still settling."); return; }
             LivingEntity target = GodTier.lookLiving(p, 32);
             if (target == null) { SkillUtil.fail(p, "There is nothing there to stop."); return; }
-            if (!pay(p, 1500)) return;
+            if (!pay(i, p, 1500)) return;
             int ticks = (int) ((i.isMastered(p) ? 120 : 70) * Math.min(1.5, power(p)));
             TimeStop.freeze(target, ticks);
             shout(p, "Chrono Stasis", ChatFormatting.GOLD);
@@ -71,7 +71,7 @@ public final class TimePages {
             CompoundTag t = i.getOrCreateTag();
             if (t.getBoolean("Active")) { stop(i, p, "You let time flow again."); return; }
             if (i.onCoolDown(mode)) { SkillUtil.fail(p, "Grigora is still recovering."); return; }
-            if (!pay(p, 2500)) return;
+            if (!pay(i, p, 2500)) return;
             float radius = (i.isMastered(p) ? 12 : 8) * (float) Math.min(1.4, power(p));
             t.putBoolean("Active", true);
             t.putDouble("X", p.getX()); t.putDouble("Y", p.getY()); t.putDouble("Z", p.getZ());
@@ -99,11 +99,11 @@ public final class TimePages {
             float r = t.getFloat("R");
             // Caster walked out: drag the zone along, at a price.
             if (p.position().distanceTo(c) > r) {
-                if (!pay(p, 800)) { stop(i, p, "The zone slips from your grasp."); return; }
+                if (!pay(i, p, 800)) { stop(i, p, "The zone slips from your grasp."); return; }
                 c = p.position();
                 t.putDouble("X", c.x); t.putDouble("Y", c.y); t.putDouble("Z", c.z);
             }
-            if (p.tickCount % 20 == 0 && !pay(p, i.isMastered(p) ? 300 : 450)) { stop(i, p, "Your magicule runs dry. Time resumes."); return; }
+            if (p.tickCount % 20 == 0 && !pay(i, p, i.isMastered(p) ? 300 : 450)) { stop(i, p, "Your magicule runs dry. Time resumes."); return; }
             boolean spare = t.getBoolean("SparePlayers");
             for (Entity x : p.serverLevel().getEntities(p, new AABB(c, c).inflate(r))) {
                 if (x.distanceToSqr(c) > r * r) continue;
@@ -130,7 +130,7 @@ public final class TimePages {
         public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
             if (!(e instanceof ServerPlayer p) || !ready(p)) return;
             if (i.onCoolDown(mode)) { SkillUtil.fail(p, "Your own clock is still unwinding."); return; }
-            if (!pay(p, 1200)) return;
+            if (!pay(i, p, 1200)) return;
             int ticks = i.isMastered(p) ? 400 : 240;
             p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, 2));
             p.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, ticks, 3));   // haste also speeds up attacks
@@ -162,7 +162,7 @@ public final class TimePages {
         public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
             if (!(e instanceof ServerPlayer p) || !ready(p)) return;
             if (i.onCoolDown(mode)) { SkillUtil.fail(p, "The past is still too close to touch."); return; }
-            if (!pay(p, 1800)) return;
+            if (!pay(i, p, 1800)) return;
             ServerLevel level = p.serverLevel();
             Vec3 at = DMUtil.lookPoint(p, 24);
             double radius = i.isMastered(p) ? 10 : 7;
@@ -190,7 +190,7 @@ public final class TimePages {
         public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
             if (!(e instanceof ServerPlayer p) || !ready(p)) return;
             if (i.onCoolDown(mode)) { SkillUtil.fail(p, "You have no time left to steal."); return; }
-            if (!pay(p, 1000)) return;
+            if (!pay(i, p, 1000)) return;
             Vec3 eye = p.getEyePosition(), look = p.getViewVector(1.0F);
             float dmg = (float) (12 * power(p) * (i.isMastered(p) ? 1.4 : 1.0));
             int hits = 0;

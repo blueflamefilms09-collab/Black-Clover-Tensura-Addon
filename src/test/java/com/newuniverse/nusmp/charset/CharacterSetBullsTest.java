@@ -288,7 +288,7 @@ class CharacterSetBullsTest {
         }
         assertTrue(code(SRC.resolve("book/FireBook.java")).contains("CharacterPagesBulls.fire(CharacterPages.fire(pages))"));
         assertTrue(code(SRC.resolve("book/CharacterPages.java")).contains("CharacterPagesBulls.isAdded(bookPath, pageId)"));
-        assertTrue(code(SRC.resolve("book/GrimoireBook.java")).contains("CharacterFlairBulls.onCast(player, instance, p)"));
+        assertTrue((code(SRC.resolve("book/GrimoireBook.java")) + code(SRC.resolve("book/GrimoireCastListeners.java"))).contains("CharacterFlairBulls.onCast(player, instance, p)"));
         assertTrue(code(SRC.resolve("charset/CharacterSetBoot.java")).contains("CharacterSetBullsSelfTests.register()"));
         assertTrue(code(SRC.resolve("charset/CharacterSetBullsSelfTests.java")).contains("\"magic.character_spells_bulls\""));
         // the pages are appended to the END of the older list, never inserted

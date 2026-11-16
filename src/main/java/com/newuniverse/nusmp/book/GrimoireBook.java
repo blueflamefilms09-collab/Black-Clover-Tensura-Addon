@@ -46,8 +46,9 @@ public abstract class GrimoireBook extends Skill {
     public final MagicType magic;
     public final int color;
     private final ResourceLocation icon;
-    private List<BookPage> all;
-    private int builtVersion;
+    /** Guide P3 #17: the page list is built completely, then published through ONE volatile field, so the client and server threads of a single-player game never see a half built or mixed list. */
+    private record PageCache(int version, boolean fifteen, boolean ultimate, List<BookPage> pages) {}
+    private volatile PageCache cache;
 
     protected GrimoireBook(MagicType magic, int color) {
         this(magic, color, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/skill/grimoire/" + magic.name().toLowerCase() + ".png"));
@@ -108,10 +109,8 @@ public abstract class GrimoireBook extends Skill {
         int version = pagesVersion();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();
         boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();      // Ultimate Magic (ultimate.enabled): a book list is rebuilt when the setting flips
-        if (all == null || version != builtVersion || fifteen != builtFifteen || ultimate != builtUltimate) {
-            builtVersion = version;
-            builtFifteen = fifteen;
-            builtUltimate = ultimate;
+        PageCache c = cache;
+        if (c == null || version != c.version() || fifteen != c.fifteen() || ultimate != c.ultimate()) {
             List<BookPage> l = new ArrayList<>(familyAll());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
@@ -133,27 +132,27 @@ public abstract class GrimoireBook extends Skill {
                 l.addAll(com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.pages());   // 3.0.0: the spirit control pages (Summon / Release, Combat Mode, the spirit's abilities), appended after everything; hidden unless a spirit of this magic answers the player
                 l.addAll(com.newuniverse.nusmp.mana.method.ManaMethodPages.pages());       // Mana Method: the Mana Method pages (Flame, Water, Wind, Earth and True Magic Rune), appended after the spirit pages; late-game gate, see usable
             }
-            all = l;
+            c = new PageCache(version, fifteen, ultimate, l);
+            cache = c;
         }
-        return all;
+        return c.pages();
     }
 
     public int familyCount() { return familyAll().size(); }
 
-    private List<BookPage> restBase, restAll;
-    private boolean restFifteen, builtFifteen, restUltimate, builtUltimate;
+    private record FamilyCache(List<BookPage> base, boolean fifteen, boolean ultimate, List<BookPage> all) {}
+    private volatile FamilyCache family;
     /** The family's pages followed by the pages the character spell sets of the squad captains / Spade / Heart / Diamond / Seabed append to this book (book.CharacterPagesRest; the same list when none). */
     private List<BookPage> familyAll() {
         List<BookPage> f = familyPages();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();      // server setting magic.pagesFifteen: false = the old lists
         boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();
-        if (restBase == f && restAll != null && restFifteen == fifteen && restUltimate == ultimate) return restAll;
+        FamilyCache fc = family;
+        if (fc != null && fc.base() == f && fc.fifteen() == fifteen && fc.ultimate() == ultimate) return fc.all();
         if (getRegistryName() == null) return f;
-        restAll = com.newuniverse.nusmp.ultimate.UltimatePages.append(getRegistryName().getPath(), com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f))));      // Ultimate Magic (ultimate.UltimatePages): the Ultimate is the very last family page of its book; basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
-        restBase = f;
-        restFifteen = fifteen;
-        restUltimate = ultimate;
-        return restAll;
+        List<BookPage> built = com.newuniverse.nusmp.ultimate.UltimatePages.append(getRegistryName().getPath(), com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f))));      // Ultimate Magic (ultimate.UltimatePages): the Ultimate is the very last family page of its book; basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
+        family = new FamilyCache(f, fifteen, ultimate, built);
+        return built;
     }
 
     /**
@@ -308,9 +307,11 @@ public abstract class GrimoireBook extends Skill {
     public boolean onHeld(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int mode) {
         if (!(entity instanceof ServerPlayer p) || instant(mode)) return true;
         int charge = Math.min(castTicks(instance, p), Math.max(0, heldTicks));
-        instance.getOrCreateTag().putInt("ChargeMode", mode);
-        instance.getOrCreateTag().putInt("ChargeTicks", charge);
-        instance.markDirty();
+        var held = instance.getOrCreateTag();
+        boolean changed = held.getInt("ChargeMode") != mode || held.getInt("ChargeTicks") != charge;      // guide P3 #14: a full charge held on sends nothing
+        held.putInt("ChargeMode", mode);
+        held.putInt("ChargeTicks", charge);
+        if (changed || !com.newuniverse.nusmp.NUConfig.gfDirtyOnChange()) instance.markDirty();
         // 1.27.0: one continuous hold circle (start once, grow with the charge, keep-alive) instead of a new circle every 4 ticks; none for a page that cannot be cast
         CastHoldFx.held(instance, p, colorNow(), charge, castTicks(instance, p), castReady(instance, p, mode));
         if (magic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onHeld(p);      // Scale casting: the Scale stays out while a page is held
@@ -395,6 +396,7 @@ public abstract class GrimoireBook extends Skill {
             return;
         }
         instance.getOrCreateTag().putBoolean("ManaZone", false);
+        if (com.newuniverse.nusmp.NUConfig.gfCastEvent() && net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new GrimoireCastEvent.Pre(this, player, instance, p, mode)).isCanceled()) return;      // guide P2 #6: a listener may refuse the cast before it is paid
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
         // Mana Zone upgrade: with a zone open and an aim sent, ZoneCast.around casts the page from the zone, at the aimed point (the plain cast when there is none)
@@ -413,21 +415,8 @@ public abstract class GrimoireBook extends Skill {
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, player);
-        com.newuniverse.nusmp.charset.CharacterSets.onCast(instance, p.id());      // character spell sets: the cast counts toward the rules that name this page (Spirit of Zephyr after the Spirit Dive)
-        com.newuniverse.nusmp.charset.CharacterFlourishRest.after(player, instance, p);      // character spell sets (squad captains / Spade / Heart / Diamond / Seabed): the character's own colours around the cast
-        CharacterFlairBulls.onCast(player, instance, p);      // Black Bulls character spell sets: a signature layer in his colour on top of the page's own effect (nothing for any other grimoire)
-        com.newuniverse.nusmp.quests.QuestHooks.onCast(player, String.valueOf(castMagic), p.id(), p.costPercent());
-        com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.onCast(player, magicId(), p.id(), p.costPercent());      // 1.55.0: the Rukh flow: a finished cast is Light, Dark or neutral; an opposing one is rejected in a Holy place
-        instance.getOrCreateTag().putInt("LastMode", mode);
-        com.newuniverse.nusmp.item.MagicGear.onCast(player);
-        com.newuniverse.nusmp.relics.wave.Wave6Events.onSpellCast(player);
-        com.newuniverse.nusmp.spiritdark.SpiritDark.onCast(player, castMagic);      // Spirit of Darkness: the companion reacts to a Dark or Shadow cast (nothing for any other caster)
-        com.newuniverse.nusmp.relics.wave.Wave16.onSpellCast(player, p.costPercent());      // 1.25.0: Brooch of Po'eur's free cast      // 1.24.0: Neket's robe stores a Mage Armor per cast
-        DreamWorld.onCast(player, castMagic);                                     // 0.41: Spatial / Time / Anti-Magic / Dream tear a dream open
-        MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
-        com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts
-        com.newuniverse.nusmp.franchise.FranchiseEvents.onSpellCast(player);        // 1.111.0: franchise engravings of the held book (mana back, spell power)
-        com.newuniverse.nusmp.entity.veldanava.skills.SolomonCasts.record(player, this, mode);      // 3.18.0: the cast log Solomon's Grand Spell Copy and Spell Chain read (one record, two deque operations)
+        if (com.newuniverse.nusmp.NUConfig.gfCastEvent()) net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new GrimoireCastEvent.Post(this, player, instance, p, mode));      // guide P2 #6: the features that follow a cast listen (GrimoireCastListeners)
+        else GrimoireCastListeners.afterCast(this, player, instance, p, mode);      // the old direct calls (SERVER guide_fixes.grimoireCastEvent = false)
         exhaustion(player);
         instance.markDirty();
     }
@@ -464,6 +453,15 @@ public abstract class GrimoireBook extends Skill {
     /** 0.45: {@link #hurt} through a chosen Tensura damage type (Dice elements, Light), same multipliers. */
     public void hurtAs(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, ResourceKey<DamageType> type) {
         if (target == caster || target.isAlliedTo(caster)) return;
+        float dealt = pageDamage(i, caster, target, mode, raw);
+        target.hurt(createSource(i, caster, type, mode), dealt);
+    }
+
+    /**
+     * Guide P2 #7: the one multiplier block of {@link #hurtAs} and {@link #hurtDirect} (they used to carry identical copies): the cover, Devil Union, the build-up, fire casting, a worn armour of this
+     * magic, the magic gear, the Dark / Shadow bonus against devils, the grimoire buff, then the balance law and its caps. Remembers the hit for Copy Memory. The amount is unchanged.
+     */
+    private float pageDamage(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw) {
         float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
                 * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)      // fire casting: Leopold's charged spiral (1 for every other caster)
                 * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
@@ -473,7 +471,7 @@ public abstract class GrimoireBook extends Skill {
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         r *= BalanceLaw.grimoireMult();      // 3.90: the grimoire buff (SERVER grimoireDamageMultiplier); the late-game scaling comes once, inside BalanceLaw.damage
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
-        target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
+        return BalanceLaw.damage(caster, target, r, masteryFrac(i));
     }
 
     /**
@@ -482,15 +480,7 @@ public abstract class GrimoireBook extends Skill {
      */
     public boolean hurtDirect(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, net.minecraft.world.damagesource.DamageSource source) {
         if (target == caster || target.isAlliedTo(caster)) return false;
-        float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
-                * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)
-                * ArmourState.spellBoost(caster, magic)
-                * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
-        if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
-                || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
-        r *= BalanceLaw.grimoireMult();      // 3.90: the grimoire buff (SERVER grimoireDamageMultiplier); the late-game scaling comes once, inside BalanceLaw.damage
-        com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
-        return target.hurt(source, BalanceLaw.damage(caster, target, r, masteryFrac(i)));
+        return target.hurt(source, pageDamage(i, caster, target, mode, raw));
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {

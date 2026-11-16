@@ -88,6 +88,7 @@ public final class NUConfig {
     // Forbidden magic
     public static final ModConfigSpec.DoubleValue FORBIDDEN_HP_PRICE, FORBIDDEN_MAXHP_PRICE, FORBIDDEN_MANA_TAX;
     public static final ModConfigSpec.BooleanValue TENSURA_SKILL_DAMAGE_SOURCE;   // guide P1 #2 (skill.SkillDamage)
+    public static final ModConfigSpec.BooleanValue GF_CAST_EVENT, GF_DIRTY_ON_CHANGE;   // guide P2 #6 (book.GrimoireCastEvent), P3 #14 (GrimoireBook.onHeld, AntiMagic.setAmp)
     // The Ultimate classes (skill.rules.UltimateClass, docs/ultimate_classes.md): one value per class and column, plus the switches that restore the old behaviour
     private static final int UC_N = com.newuniverse.nusmp.skill.rules.UltimateClass.values().length;
     public static final ModConfigSpec.DoubleValue[] UC_EP_CAP = new ModConfigSpec.DoubleValue[UC_N], UC_COST_PCT = new ModConfigSpec.DoubleValue[UC_N],
@@ -247,6 +248,10 @@ public final class NUConfig {
         b.push("guide_fixes");
         TENSURA_SKILL_DAMAGE_SOURCE = b.comment("Rebuilt skills (Gate of Babylon, Ki, Nen, Adolla, Firebolt, the chant Ultimates ...) hit through Tensura's skill damage source, so Tensura resistances, nullifications and skill kill credit apply. false = the old vanilla magic / player-attack sources. The damage amount and the PvP cap are the same either way.")
                 .define("tensuraSkillDamageSource", true);
+        GF_CAST_EVENT = b.comment("Guide P2 #6: a grimoire cast posts a cancellable GrimoireCastEvent.Pre before it is paid and a GrimoireCastEvent.Post after it, and the features that follow a cast (quests, relics, character flair, Solomon's cast log ...) listen to the Post event. false = the old direct calls in GrimoireBook.castPage, no event is posted.")
+                .define("grimoireCastEvent", true);
+        GF_DIRTY_ON_CHANGE = b.comment("Guide P3 #14: a held grimoire page and Anti-Magic Power mark the skill dirty (a sync to the client) only when a value changed. false = the old behaviour (every held tick, every set).")
+                .define("markDirtyOnlyOnChange", true);
         b.pop();
 
         b.push("ultimateClasses");
@@ -284,6 +289,8 @@ public final class NUConfig {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
 
+    public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
+    public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }
     public static boolean ucFlatCosts() { return live(UC_FLAT_COSTS); }
     public static boolean ucClassMastery() { return live(UC_CLASS_MASTERY); }
     public static boolean ucMasteredTier() { return live(UC_MASTERED_TIER); }

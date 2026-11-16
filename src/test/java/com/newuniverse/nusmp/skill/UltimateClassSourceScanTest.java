@@ -48,7 +48,7 @@ class UltimateClassSourceScanTest {
         try (var w = Files.walk(SRC)) {
             for (Path f : w.filter(p -> p.toString().endsWith(".java")).toList()) {
                 String name = f.getFileName().toString();
-                if (name.equals("SkillUtil.java") || name.equals("GrimoirePageSkill.java") || name.equals("GrimoireMagicSkill.java")) continue;
+                if (name.equals("SkillUtil.java") || name.equals("GrimoirePageSkill.java") || name.equals("GrimoireMagicSkill.java") || name.equals("LegacyPay.java")) continue;   // guide P2: LegacyPay is their flatCosts fallback
                 int n = count(code(f), "SkillUtil.spendMagicules(");
                 if (name.equals("NUSkill.java")) assertEquals(1, n, "NUSkill: only the flatCosts fallback");
                 else assertEquals(0, n, name + " spends magicules directly");

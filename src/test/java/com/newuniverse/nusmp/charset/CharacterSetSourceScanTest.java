@@ -156,7 +156,7 @@ class CharacterSetSourceScanTest {
     void theGrimoireHooksAreInPlace() throws IOException {
         String gb = code(SRC.resolve("book/GrimoireBook.java"));
         assertTrue(gb.contains("CharacterSets.hidden(i, mode)"), "isUnlocked hides the pages the character never used");
-        assertTrue(gb.contains("CharacterSets.onCast(instance, p.id())"), "a successful cast is counted");
+        assertTrue((gb + code(SRC.resolve("book/GrimoireCastListeners.java"))).contains("CharacterSets.onCast(instance, p.id())"), "a successful cast is counted");
         String mp = code(SRC.resolve("multiverse/MasteryPages.java"));
         assertTrue(mp.contains("CharacterSets.opens(p, inst, book, m)") && mp.contains("masteryCost(page, m, n)"), "the character's rule replaces the mastery order only when he has a set");
         String cs = code(SRC.resolve("book/CharacterSpells.java"));

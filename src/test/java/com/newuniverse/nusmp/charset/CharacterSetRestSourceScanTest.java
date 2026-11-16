@@ -155,7 +155,7 @@ class CharacterSetRestSourceScanTest {
     void theHooksAreInPlaceAndTheOldLockLinesStay() throws IOException {
         String gb = code(SRC.resolve("book/GrimoireBook.java"));
         assertTrue(gb.contains("new ArrayList<>(familyAll())") && gb.contains("CharacterPagesRest.append(getRegistryName().getPath(), f)") && gb.contains("familyAll().size()"), "the family list is the book's list followed by the added pages");
-        assertTrue(gb.contains("CharacterFlourishRest.after(player, instance, p)"), "the flourish follows a counted cast");
+        assertTrue((gb + code(SRC.resolve("book/GrimoireCastListeners.java"))).contains("CharacterFlourishRest.after(player, instance, p)"), "the flourish follows a counted cast");
         assertTrue(code(SRC.resolve("book/CharacterPages.java")).contains("CharacterPagesRest.isAdded(bookPath, pageId)"), "the added pages belong to their character");
         assertTrue(code(SRC.resolve("charset/CharacterSetBoot.java")).contains("CharacterRestSelfTests.register()"));
         assertTrue(code(SRC.resolve("charset/CharacterRestSelfTests.java")).contains("\"magic.character_spells_rest\""));
