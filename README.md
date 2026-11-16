@@ -41,7 +41,7 @@ Master the Unique skill and it evolves automatically (checked every 5 seconds). 
 | Devil's Footprints (Fire Force) | Adolla Burst | `anime_multiverse:adolla_burst` |
 | Book Maker (Medaka Box) | All Fiction | `anime_multiverse:all_fiction` |
 
-Standalone Ultimates (grant only): `anime_multiverse:black_wings`, `anime_multiverse:the_almighty`, `anime_multiverse:the_visionary`. (3.44.0 removed Six Eyes / Limitless, Gold Experience / Requiem, Vector Manipulation and Instant Death; Black Wings stays as a grant-only skill.)
+Standalone Ultimates (grant only): `anime_multiverse:the_almighty`, `anime_multiverse:the_visionary`. (3.44.0 removed Six Eyes / Limitless, Gold Experience / Requiem, Vector Manipulation and Instant Death; Black Wings was removed later, see `docs/black_wings_removed.md`.)
 God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, almightyDodgeChance).
 Beast Will (3.45.0): `anime_multiverse:beast_will_core` (rare drop of rank A+ beasts, or a beast's own offer) binds a Dragon, Shadow Panther, Elderwood Guardian or Lion Will; keys `[` `]` `;` `\` `=`; commands `/beastwill ...`; server config `nusmp-beastwill-server.toml`; see `docs/beastwill.md`.
 Nen (3.46.0): Hunter x Hunter Ultimate with ten modes (Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission, Vow and Limitation); grant with `/tensura edit <player> ability grant anime_multiverse:nen`; server setting `ultimates_3_46.nenEnabled`. All Fiction was rebuilt to ten modes (Undo, Fiction, Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); `ultimates_3_46.allFictionRebuilt = false` brings back the old two. Docs: `docs/skills/nen_allfiction.md`.
@@ -62,7 +62,7 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-4.2.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-4.3.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.

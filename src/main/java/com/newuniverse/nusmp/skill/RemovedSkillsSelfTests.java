@@ -11,9 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * The CI self-test of the 3.44.0 removals (id {@code skill.removed_ultimates}): on the booted server each of the six removed skill ids ({@link LegacyIds#REMOVED_SKILLS}) must still be in the skill
- * registry (an old world that saved one must load) and must be an inert {@link LegacySkill}, never a live skill; and Black Wings, which used to be reached through Vector Manipulation, must still be a
- * live skill. Registry reads only: no player, no world, no tick work.
+ * The CI self-test of the removed skills (id {@code skill.removed_ultimates}): on the booted server each removed skill id ({@link LegacyIds#REMOVED_SKILLS}, the six of 3.44.0 and Black Wings, appended last) must still
+ * be in the skill registry (an old world that saved one must load) and must be an inert {@link LegacySkill}, never a live skill. Registry reads only: no player, no world, no tick work.
  */
 public final class RemovedSkillsSelfTests {
     private RemovedSkillsSelfTests() {}
@@ -31,8 +30,6 @@ public final class RemovedSkillsSelfTests {
             if (!(skill instanceof LegacySkill)) return Result.fail(id + " is still a live skill (" + skill.getClass().getSimpleName() + "), it must be an inert stub");
             stubs++;
         }
-        ManasSkill wings = SkillAPI.getSkillRegistry().get(NUSkills.BLACK_WINGS.getId());
-        if (wings == null || wings instanceof LegacySkill) return Result.fail("Black Wings must stay a live skill");
-        return Result.ok(stubs + " removed skills are inert stubs, Black Wings is live");
+        return Result.ok(stubs + " removed skills are inert stubs (Black Wings included)");
     }
 }

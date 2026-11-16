@@ -118,12 +118,7 @@ a player is killed, never silently removed), passive **death becomes fiction** o
 ### REMOVED in 3.44.0: Six Eyes, Limitless, Gold Experience, Gold Experience Requiem, Vector Manipulation
 The owner removed Six Eyes (and its Ultimate Limitless), Gold Experience (and Gold Experience Requiem) and Vector Manipulation. Their ids stay registered as inert stubs (`LegacyIds.REMOVED_SKILLS`, `LegacySkills`),
 and `LegacyMigration` forgets a stub a player still holds at the next login or respawn, so an old world loads. The evolution paths Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings are gone from `SkillEvolution`.
-Their 32x32 icons stay in the jar. `GojoRules` and `JoJoRules` are deleted; `AuraRules`' Six Eyes numbers and `VectorRules` stay as pure rules. **Black Wings stays** (grant only now, through `/tensura edit <player> ability grant anime_multiverse:black_wings`); it keeps
-the shared reflection engine, which lives on as the abstract `VectorManipulationSkill` base class:
-
-### Black Wings (`black_wings`, grant only since 3.44.0)
-*Rules: `VectorRules`.* Toggle 80/s: projectiles are reversed, **100%** of a melee hit goes back (through the PvP cap; never reflected twice).
-Black Wings adds no fall damage at all, projectiles return 1.6x faster **as your own**, and a **glide** (sneak in mid-air: slow sink, drift forward, dark Rukh wings).
+Their 32x32 icons stay in the jar. `GojoRules` and `JoJoRules` are deleted; `AuraRules`' Six Eyes numbers stay as pure rules. Black Wings stayed as a grant-only skill in 3.44.0 and was removed later too (`docs/black_wings_removed.md`; `VectorRules` and `VectorManipulationSkill` went with it).
 
 ## Standalone god-tier Ultimates (admin / event rewards)
 *Rules: `GodTierRules`. Config `[god_tier]`: `affectsPlayers`, `bossHealthThreshold`, `almightyDodgeChance`. (3.44.0 removed Instant Death and its `instantDeathBossShare` setting; an old key in a config file is ignored.)*

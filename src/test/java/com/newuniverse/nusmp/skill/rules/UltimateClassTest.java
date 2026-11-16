@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Why: the Ultimate classes (docs/ultimate_classes.md) price, cap and gate 17 skills; the math is pure, so it is pinned here: the columns and their order (append only), the clamps every config value
+ * Why: the Ultimate classes (docs/ultimate_classes.md) price, cap and gate 16 skills; the math is pure, so it is pinned here: the columns and their order (append only), the clamps every config value
  * passes through, the class-capped EP scaling and the combined cap with the late-game factor, the price (never below the flat price, proportional late game), the milestones and the mastery rescale.
  */
 class UltimateClassTest {
@@ -142,6 +142,5 @@ class UltimateClassTest {
         assertEquals(FireForceRules.modes(Tier.ULTIMATE), FireForceRules.modes(Tier.ULTIMATE_MASTERED));
         assertEquals(WillRules.modes(Tier.ULTIMATE), WillRules.modes(Tier.ULTIMATE_MASTERED));
         assertEquals(SummonRules.maxSummons(3, 6, Tier.ULTIMATE), SummonRules.maxSummons(3, 6, Tier.ULTIMATE_MASTERED));
-        assertTrue(VectorRules.fallImmune(Tier.ULTIMATE_MASTERED));
     }
 }

@@ -55,12 +55,11 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, HellConquerorSkill> HELL_CONQUEROR = SKILLS.register("hell_conqueror", HellConquerorSkill::new);
     public static final DeferredHolder<ManasSkill, ImmortalWillSkill> IMMORTAL_WILL = SKILLS.register("immortal_will", ImmortalWillSkill::new);
 
-    // ---- Fire Force / Medaka Box / Railgun (Unique -> Ultimate); 3.44.0: Six Eyes, Limitless, Gold Experience (+Requiem) and Vector Manipulation were removed (their ids live on as inert stubs, LegacySkills) ----
+    // ---- Fire Force / Medaka Box / Railgun (Unique -> Ultimate); 3.44.0: Six Eyes, Limitless, Gold Experience (+Requiem) Vector Manipulation and Black Wings were removed (their ids live on as inert stubs, LegacySkills) ----
     public static final DeferredHolder<ManasSkill, DevilsFootprintsSkill> DEVILS_FOOTPRINTS = SKILLS.register("devils_footprints", DevilsFootprintsSkill::new);
     public static final DeferredHolder<ManasSkill, AdollaBurstSkill> ADOLLA_BURST = SKILLS.register("adolla_burst", AdollaBurstSkill::new);
     public static final DeferredHolder<ManasSkill, BookMakerSkill> BOOK_MAKER = SKILLS.register("book_maker", BookMakerSkill::new);
     public static final DeferredHolder<ManasSkill, AllFictionSkill> ALL_FICTION = SKILLS.register("all_fiction", AllFictionSkill::new);
-    public static final DeferredHolder<ManasSkill, BlackWingsSkill> BLACK_WINGS = SKILLS.register("black_wings", BlackWingsSkill::new);
 
     // ---- Standalone god-tier Ultimates (admin/event rewards); 3.44.0: Instant Death was removed ----
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);

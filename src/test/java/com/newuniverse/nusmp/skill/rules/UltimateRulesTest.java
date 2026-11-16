@@ -81,25 +81,6 @@ class UltimateRulesTest {
     }
 
     @Test
-    void blackWingsReflectEverythingAndGlideOnlyInTheAir() {
-        assertEquals(0.5, VectorRules.reflectShare(Tier.BASE), 1e-9);
-        assertEquals(0.75, VectorRules.reflectShare(Tier.MASTERED), 1e-9);
-        assertEquals(1.0, VectorRules.reflectShare(Tier.ULTIMATE), 1e-9);
-        assertEquals(10.0, VectorRules.reflected(10, Tier.ULTIMATE) + VectorRules.taken(10, Tier.ULTIMATE), 1e-9);
-        assertEquals(0.0, VectorRules.taken(10, Tier.ULTIMATE), 1e-9);
-        assertEquals(10.0, VectorRules.reflected(10, Tier.BASE) + VectorRules.taken(10, Tier.BASE), 1e-9);
-        assertEquals(0.0, VectorRules.reflected(-5, Tier.BASE));
-        assertTrue(VectorRules.projectileBoost(Tier.ULTIMATE) > VectorRules.projectileBoost(Tier.MASTERED));
-        assertTrue(VectorRules.canGlide(Tier.ULTIMATE, true, false, false));
-        assertFalse(VectorRules.canGlide(Tier.MASTERED, true, false, false));
-        assertFalse(VectorRules.canGlide(Tier.ULTIMATE, false, false, false));
-        assertFalse(VectorRules.canGlide(Tier.ULTIMATE, true, true, false));
-        assertFalse(VectorRules.canGlide(Tier.ULTIMATE, true, false, true));
-        assertTrue(VectorRules.fallImmune(Tier.ULTIMATE));
-        assertTrue(VectorRules.drain(Tier.ULTIMATE) > VectorRules.drain(Tier.BASE));
-    }
-
-    @Test
     void godTierKnobsStayInsideSafeBounds() {
         assertTrue(GodTierRules.kills(true));
         assertFalse(GodTierRules.kills(false), "bosses and protected players are only hurt");

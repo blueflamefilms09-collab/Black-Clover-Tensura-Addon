@@ -74,7 +74,7 @@ class UltimateClassSourceScanTest {
     @Test
     void theClassificationMatchesTheDoc() throws IOException {
         String[][] want = {{"TheAlmightySkill", "GOD"}, {"TheVisionarySkill", "GOD"}, {"AllFictionSkill", "GOD"}, {"GateOfBabylonSkill", "KING"}, {"HellConquerorSkill", "KING"},
-                {"LordOfSummonsSkill", "KING"}, {"GoddessOfFaithSkill", "KING"}, {"AdollaBurstSkill", "LORD"}, {"BlackWingsSkill", "LORD"}, {"HerosArgonautSkill", "LORD"},
+                {"LordOfSummonsSkill", "KING"}, {"GoddessOfFaithSkill", "KING"}, {"AdollaBurstSkill", "LORD"}, {"HerosArgonautSkill", "LORD"},
                 {"ImmortalWillSkill", "LORD"}, {"KiSkill", "LORD"}, {"NenSkill", "LORD"}, {"ShishouUltimateSkill", "LORD"}, {"LordOfGluttonousGreedSkill", "LORD"}};
         String doc = Files.readString(Path.of("docs/ultimate_classes.md"), StandardCharsets.UTF_8);
         for (String[] w : want) {

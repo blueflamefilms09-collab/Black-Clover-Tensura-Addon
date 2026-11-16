@@ -87,11 +87,11 @@ public final class LegacyIds {
             "ft_ice_make_lance", "ft_ice_make_floor", "ft_ice_make_shield", "ft_ice_make_cannon", "ft_ice_make_saucer", "ft_ice_make_eagle", "ft_ice_make_hammer", "ft_ice_make_excalibur");
 
     /**
-     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death). The ids {@code anime_multiverse:<path>}
+     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death), plus Black Wings appended LAST (removed later, see docs/black_wings_removed.md). The ids {@code anime_multiverse:<path>}
      * stay registered as inert stubs so a world that saved one of them still loads; the stub is forgotten at the next login or respawn ({@link LegacyMigration}). Their 32x32 icons stay in the jar.
      */
     public static final List<String> REMOVED_SKILLS = List.of(
-            "six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death");
+            "six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings");
 
     private static final Set<String> LINE_SET = Set.copyOf(REMOVED_LINES);
 

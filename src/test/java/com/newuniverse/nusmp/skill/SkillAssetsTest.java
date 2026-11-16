@@ -30,11 +30,11 @@ class SkillAssetsTest {
             "wynn_fimbulvetr", "rea_laevateinn", "arcs_ray", "futsunomitama", "uchide_no_kozuchi", "hell_walker", "hawk_eye",
             "spirit_card", "unbreakable_will", "hati", "devils_footprints", "book_maker",
             "lord_of_summons", "goddess_of_faith", "heros_argonaut", "hell_conqueror", "immortal_will", "adolla_burst",
-            "all_fiction", "black_wings",
+            "all_fiction",
             "the_almighty", "the_visionary", "nen", "gate_of_babylon", "ki", "adaptability");
 
     /** 3.44.0: removed on the owner's word. Their ids must no longer be registered by NUSkills (LegacySkills keeps them as inert stubs) and their icons stay in the jar. */
-    private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death");
+    private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings");
 
     private static String read(String path) throws Exception {
         return Files.readString(Path.of(path), StandardCharsets.UTF_8);
@@ -55,7 +55,7 @@ class SkillAssetsTest {
             assertTrue(legacy.contains("\"" + id + "\""), id + " must stay registered as an inert stub (LegacyIds.REMOVED_SKILLS) so old worlds load");
             assertTrue(new File("src/main/resources/assets/anime_multiverse/textures/skill/" + id + ".png").isFile(), id + ": the icon stays (rule 2)");
         }
-        for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules"})
+        for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules", "BlackWingsSkill", "VectorManipulationSkill", "VectorRules"})
             assertFalse(new File("src/main/java/com/newuniverse/nusmp/skill/" + gone + ".java").exists() || new File("src/main/java/com/newuniverse/nusmp/skill/rules/" + gone + ".java").exists(), gone + " is deleted");
     }
 

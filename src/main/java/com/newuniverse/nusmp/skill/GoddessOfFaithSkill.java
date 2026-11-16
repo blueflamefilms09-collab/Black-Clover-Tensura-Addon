@@ -31,7 +31,9 @@ public class GoddessOfFaithSkill extends FaithSkill {
     public GoddessOfFaithSkill() { super(SkillType.ULTIMATE, GODDESS_TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.KING; }      // docs/ultimate_classes.md
 
-    @Override public int getModes(ManasSkillInstance instance) { return 5; }
+    @Override public int getModes(ManasSkillInstance instance) { return 7; }
+    @Override protected int recruitMode() { return 5; }       // after Blessing (3) and Miracle (4); the old five modes keep their numbers
+    @Override protected int giftMode() { return 6; }
 
     @Override
     public String getModeId(ManasSkillInstance instance, int mode) {
@@ -54,6 +56,7 @@ public class GoddessOfFaithSkill extends FaithSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
         if (entity instanceof ServerPlayer player && player.isAlive()) {
+            if (mode == BLESSING || mode == MIRACLE) FaithWorship.settle(player, instance);
             if (mode == BLESSING) { blessing(instance, player); return; }
             if (mode == MIRACLE) { miracle(instance, player); return; }
         }

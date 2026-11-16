@@ -514,8 +514,8 @@ public enum VfxShape {
     // 3: Ea's crimson spiral from -> to); SKILL_FIREBOLT the instant zigzag fire-lightning bolt from -> to (power = width); SKILL_ARGONAUT the bell light (mode 0: the chime of charge = power,
     // follows; 1: 20 + charge, the white sweep from -> to; 2: 40 + charge, the hero's beam from -> to); SKILL_FROST Wynn Fimbulvetr's frost circle, ice spikes and blizzard round from (power = radius);
     // SKILL_HOLY_FIRE sacred fire (mode 0: Hestia's hearth pillar at from, power = radius; 1: 20 + radius, Rea Laevateinn's flame pillars erupting round from); SKILL_ALLURE Freya's silver allure
-    // round from (power = radius); SKILL_SCREW All Fiction's giant screws (from -> to: one screw driven into `to`; from = to: power screws slam down round from); SKILL_WINGS Black Wings on the
-    // back of the followed player (from = the feet, power = span); SKILL_SIGIL a smaller skill's signature at from (power = style + 1, SkillAnimeVfx.SIGIL_STYLES; the from -> to distance = radius).
+    // round from (power = radius); SKILL_SCREW All Fiction's giant screws (from -> to: one screw driven into `to`; from = to: power screws slam down round from); SKILL_WINGS (unused since the Black Wings skill was removed; the entry stays so the
+    // ordinals after it do not move) was Black Wings on the back of the followed player (from = the feet, power = span); SKILL_SIGIL a smaller skill's signature at from (power = style + 1, SkillAnimeVfx.SIGIL_STYLES; the from -> to distance = radius).
     SKILL_GATE,
     SKILL_FIREBOLT,
     SKILL_ARGONAUT,

@@ -11,8 +11,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * Why: the one place the Unique / Ultimate skills send their anime-style effects (the {@code SKILL_*} shapes drawn by {@code SkillAnimeLayer}, VFX wave 3, docs/vfx_remake/skill_anime.md). Each call is ONE
  * effect packet through {@link VfxSpawn} (the per-tick effect budget, players within 96 blocks only), made once per cast next to the skill's old {@link SkillFx} calls, which stay (they are what the client
- * setting {@code skills.classicVfx} shows). Never per target, never per tick: the only repeating senders are the Argonaut chime (one per charge step, at most the charge cap), the Black Wings glide (one
- * every 40 ticks while gliding) and the Hell Conqueror hellfire (one per hellfire pulse, a second apart). Never throws: an effect is cosmetic and must not break a cast.
+ * setting {@code skills.classicVfx} shows). Never per target, never per tick: the only repeating senders are the Argonaut chime (one per charge step, at most the charge cap) and the Hell Conqueror hellfire (one per hellfire pulse, a second apart). Never throws: an effect is cosmetic and must not break a cast.
  * The power numbers below are read back by {@code vfx.client.layer.SkillAnimeVfx} (this class may not name it: it is client code); SkillAnimeVfxAssetTest pins the two against each other.
  */
 public final class SkillAnimeFx {
@@ -89,13 +88,10 @@ public final class SkillAnimeFx {
 
     static void allure(ServerLevel level, Vec3 at, double radius, int argb) { send(level, VfxShape.SKILL_ALLURE, at, at.add(0, 1, 0), argb, 30, (float) Math.min(16.0, radius)); }
 
-    // ---------------------------------------------------------------- All Fiction, Black Wings
+    // ---------------------------------------------------------------- All Fiction
     static void screwShot(ServerLevel level, Vec3 from, Vec3 to) { send(level, VfxShape.SKILL_SCREW, from, to, FICTION, 30, 1f); }
 
     static void screwRing(ServerLevel level, Vec3 feet, int count) { send(level, VfxShape.SKILL_SCREW, feet, feet, FICTION, 30, Math.max(3, Math.min(5, count))); }
-
-    /** The wings on the gliding wearer (follows); sent again every 40 ticks while the glide lasts, each one 42 ticks long, so they cross-fade. */
-    static void wings(ServerLevel level, Entity who, float span) { follow(level, VfxShape.SKILL_WINGS, who, who.position().add(0, 1, 0), 0xFF6A6070, 42, span); }
 
     // ---------------------------------------------------------------- the smaller skills
     /** A SKILL_SIGIL style at {@code at}; the radius rides on the from -> to distance. */

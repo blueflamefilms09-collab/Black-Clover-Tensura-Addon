@@ -128,6 +128,5 @@ SKILLS = [
     ("hell_conqueror", "anime_multiverse:hell_conqueror", "ultimate", "Hell Conqueror", 15, 3500, 0xFF6A1E, "Walks through fire and keeps the flame."),
     ("immortal_will", "anime_multiverse:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
     ("adolla_burst", "anime_multiverse:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),
-    ("black_wings", "anime_multiverse:black_wings", "ultimate", "Black Wings", 14, 3000, 0x4A3A6A, "Direction, bent to your will."),
-    # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone)
+    # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone); black_wings too (docs/black_wings_removed.md)
 ]

@@ -36,8 +36,8 @@ class LegacyIdsTest {
     }
 
     @Test
-    void the344RemovalsAreSixKnownIds() {
-        assertEquals(List.of("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death"), LegacyIds.REMOVED_SKILLS);
+    void theRemovedSkillsAreSevenKnownIdsBlackWingsLast() {
+        assertEquals(List.of("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings"), LegacyIds.REMOVED_SKILLS);
     }
 
     @Test

@@ -23,6 +23,10 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue BESTOW_COOLDOWN;
     public static final ModConfigSpec.DoubleValue PRAY_MAGICULE_COST;
     public static final ModConfigSpec.IntValue PRAY_COOLDOWN;
+    // Faith worship (docs/faith_fix.md): the worshipper / offering / chosen-gift model of the reference skill
+    public static final ModConfigSpec.BooleanValue FAITH_WORSHIP;
+    public static final ModConfigSpec.IntValue FAITH_MAX_WORSHIPPERS, FAITH_INVITE_SECONDS, FAITH_RECRUIT_COOLDOWN, FAITH_OFFERING_COOLDOWN, FAITH_GIFT_DISCOUNT, FAITH_TRICKLE_TICKS;
+    public static final ModConfigSpec.DoubleValue FAITH_RECRUIT_RANGE, FAITH_OFFERING_RANGE, FAITH_OFFERING_COST;
 
     // DanMachi
     public static final ModConfigSpec.DoubleValue FIREBOLT_DAMAGE;
@@ -116,6 +120,19 @@ public final class NUConfig {
         BESTOW_COOLDOWN = b.comment("Cooldown after bestowing (ticks: 12000 = 10 minutes).").defineInRange("bestowCooldown", 12000, 0, 10_000_000);
         PRAY_MAGICULE_COST = b.comment("Magicules spent to gain 1 Faith with Pray.").defineInRange("prayMagiculeCost", 1000.0, 0.0, 1.0E9);
         PRAY_COOLDOWN = b.comment("Cooldown after praying (ticks).").defineInRange("prayCooldown", 200, 0, 1_000_000);
+        FAITH_WORSHIP = b.comment("Worship (docs/faith_fix.md): the Recruit and Gift modes, /faith accept|reject|leave|status|offering|offer|gift, prayer strengthened by worshippers, gifts cheaper for worshippers.",
+                        "false = the old Faith: only Pray and the random Bestow (the two new modes then do nothing).")
+                .define("worshipEnabled", true);
+        FAITH_MAX_WORSHIPPERS = b.comment("Most worshippers one Faith holder can have.").defineInRange("maxWorshippers", 16, 1, 64);
+        FAITH_INVITE_SECONDS = b.comment("Seconds a worship invitation stays open.").defineInRange("inviteSeconds", 60, 10, 600);
+        FAITH_RECRUIT_COOLDOWN = b.comment("Cooldown after sending an invitation (ticks).").defineInRange("recruitCooldown", 100, 0, 1_000_000);
+        FAITH_RECRUIT_RANGE = b.comment("How far the Faith holder can see a player to invite (blocks).").defineInRange("recruitRange", 12.0, 2.0, 32.0);
+        FAITH_OFFERING_RANGE = b.comment("How close a worshipper must be to their god to make an offering (blocks).").defineInRange("offeringRange", 16.0, 2.0, 64.0);
+        FAITH_OFFERING_COST = b.comment("Magicules a worshipper gives for 1 Faith unit of an offering (the god gains that Faith).").defineInRange("offeringMagiculeCost", 1000.0, 1.0, 1.0E9);
+        FAITH_OFFERING_COOLDOWN = b.comment("Wait between two offerings of one worshipper (ticks).").defineInRange("offeringCooldown", 100, 0, 1_000_000);
+        FAITH_TRICKLE_TICKS = b.comment("Worshippers give their god Faith slowly (the Konosuba-style regeneration): one period of this many ticks gives Faith in proportion to the worshippers. 0 = off. Settled when the god uses the skill, never per tick.")
+                .defineInRange("worshipTrickleTicks", 6000, 0, 10_000_000);
+        FAITH_GIFT_DISCOUNT = b.comment("Percent off the Faith price of a chosen gift when the receiver is a worshipper.").defineInRange("worshipperGiftDiscount", 25, 0, 90);
         b.pop();
 
         b.push("danmachi");
@@ -291,6 +308,17 @@ public final class NUConfig {
     private static <T> T live(ModConfigSpec.ConfigValue<T> v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
+
+    public static boolean faithWorship() { return live(FAITH_WORSHIP); }
+    public static int faithMaxWorshippers() { return com.newuniverse.nusmp.skill.rules.FaithWorshipRules.capOf(live(FAITH_MAX_WORSHIPPERS)); }
+    public static int faithInviteTicks() { return Math.max(10, live(FAITH_INVITE_SECONDS)) * 20; }
+    public static int faithRecruitCooldown() { return Math.max(0, live(FAITH_RECRUIT_COOLDOWN)); }
+    public static int faithOfferingCooldown() { return Math.max(0, live(FAITH_OFFERING_COOLDOWN)); }
+    public static int faithTrickleTicks() { return Math.max(0, live(FAITH_TRICKLE_TICKS)); }
+    public static int faithGiftDiscount() { return Math.max(0, Math.min(90, live(FAITH_GIFT_DISCOUNT))); }
+    public static double faithRecruitRange() { return Math.max(2.0, Math.min(32.0, live(FAITH_RECRUIT_RANGE))); }
+    public static double faithOfferingRange() { return Math.max(2.0, Math.min(64.0, live(FAITH_OFFERING_RANGE))); }
+    public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
 
     public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
     public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }

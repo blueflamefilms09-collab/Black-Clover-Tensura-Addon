@@ -29,7 +29,7 @@ import java.util.Set;
  *       Rea Laevateinn, flame pillars erupt round from one after another inside a great ring.</li>
  *   <li>SKILL_ALLURE, Freya round from (power = radius): a silver glow, silver waves spreading, rose petals spiralling out, silver twinkles, a charm mark over her head.</li>
  *   <li>SKILL_SCREW, All Fiction. from -> to: one giant solid screw is driven into {@code to} and stays, a violet flash. from = to: power screws (3..6) slam down round from, a dark ring.</li>
- *   <li>SKILL_WINGS, Black Wings on the followed player's back (power = span): jagged ink-black spikes fan out from the shoulders and jitter, a dark glow behind them.</li>
+ *   <li>SKILL_WINGS (no skill sends it since the Black Wings skill was removed; kept so the shape ordinals do not move), was Black Wings on the followed player's back (power = span): jagged ink-black spikes fan out from the shoulders and jitter, a dark glow behind them.</li>
  *   <li>SKILL_SIGIL: a smaller skill's signature at from, see {@link SkillAnimeSigils}.</li>
  * </ul>
  * <b>Budgets (rule 11).</b> The engine caps every activation at 100 quads (400 vertices) and this layer keeps the default; every arc, ring, hoop, beam loop and solid model checks the budget (a solid is

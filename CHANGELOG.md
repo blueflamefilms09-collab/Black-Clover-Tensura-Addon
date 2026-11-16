@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.0] — Faith with worshippers, offerings and a chosen gift; Black Wings removed
+- NEW: Faith and Goddess of Faith get worshippers, built on how Mitama Faith (Tensura More Skills) does it: Recruit Worshipper mode invites the player you look at (they answer with `/faith accept` or `/faith reject`), worshippers turn magicules into Faith with `/faith offering` and `/faith offer 1|5|10`, and Choose a Gift mode lets the god pick which skill to bestow from a clickable list (worshippers pay 25 % less). Worshippers boost Pray and slowly refill Faith. Everything is server-checked and behind the server setting `faith.worshipEnabled` (off = the old Faith); the old random Bestow stays.
+- FIXED: Faith's Pray paid with the wrong mode, and `faith add` could overflow.
+- REMOVED (owner request): the Black Wings skill. Its id stays registered as an inert stub so old worlds load; a player who still holds it loses it at the next login. Albedo's Black Wings Brooch item stays. Details: `docs/black_wings_removed.md`.
+- Cost: no per-tick work and no new packets; two UUID-keyed maps capped and cleared on logout and server stop.
+- Not done: Faith has no GUI screen yet (the menu is clickable chat); aura, EP and soul offerings, Beams, Edict and skill creation from the reference are not ported. Nothing was seen in a game and the new Java was only compiled by CI.
+
 ## [4.2.0] — Saiyan race, hair, tail and armour, Beast Will fixes and 3D tails, a much stronger Lucifero, boss drops, and EP that needs mastery
 - NEW: the EP part of an addon skill's damage now grows in with the skill's mastery: x1 with no mastery, the full EP scale (up to x12) once the skill is mastered, a straight line between (`balance.EpMastery`). Applies to the plain law and to Ultimate-class hits.
 - NEW: Saiyan is a real Tensura race (`anime_multiverse:saiyan`): it is listed in Tensura's race menu, and the Saiyan flag and the Tensura race follow each other (`/saiyan race` sets the race, picking it in Tensura's menu sets the flag; leaving it restores the old race). Settings `phase.race.tensuraRace` (off = the old flag only) and `phase.race.listInRaceMenu`. Details: `docs/dragon_ball/phase_report.md`.

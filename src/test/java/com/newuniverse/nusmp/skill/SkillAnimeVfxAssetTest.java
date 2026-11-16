@@ -38,7 +38,7 @@ class SkillAnimeVfxAssetTest {
             VfxShape.SKILL_SCREW, VfxShape.SKILL_WINGS, VfxShape.SKILL_SIGIL};
     /** The skills wired in wave 3 (each sends its anime effect through SkillAnimeFx next to its old SkillFx calls). */
     private static final String[] WIRED = {"GateOfBabylonSkill", "FireboltSkill", "AdollaBurstSkill", "DevilsFootprintsSkill", "ArgonautSkill", "HerosArgonautSkill", "WynnFimbulvetrSkill",
-            "HestiaSkill", "ReaLaevateinnSkill", "FreyaSkill", "AllFictionSkill", "BlackWingsSkill", "FaithSkill", "GoddessOfFaithSkill", "HephaestusSkill", "UchideNoKozuchiSkill",
+            "HestiaSkill", "ReaLaevateinnSkill", "FreyaSkill", "AllFictionSkill", "FaithSkill", "GoddessOfFaithSkill", "HephaestusSkill", "UchideNoKozuchiSkill",
             "ImmortalWillSkill", "UnbreakableWillSkill", "HellWalkerSkill", "HellConquerorSkill", "FutsunomitamaSkill"};
 
     private static String code(Path p) throws IOException {
@@ -153,7 +153,7 @@ class SkillAnimeVfxAssetTest {
     void everyShapeIsSentThroughTheHelperNextToTheOldEffects() throws IOException {
         String fx = code(SKILL_DIR.resolve("SkillAnimeFx.java"));
         assertTrue(fx.contains("VfxSpawn.send(") && fx.contains("VfxSpawn.sendFollowing("), "SkillAnimeFx must go through VfxSpawn (the per-tick effect budget)");
-        for (VfxShape s : SHAPES) assertTrue(fx.contains("VfxShape." + s.name()), s + " is never sent");
+        for (VfxShape s : SHAPES) assertEquals(s != VfxShape.SKILL_WINGS, fx.contains("VfxShape." + s.name()), s + (s == VfxShape.SKILL_WINGS ? " is unused since Black Wings was removed" : " is never sent"));
         assertTrue(fx.contains("SelfTests.register(\"skill.vfx\""), "the self-test is registered under skill.vfx");
         assertTrue(code(ROOT.resolve("src/main/java/com/newuniverse/nusmp/NUSMP.java")).contains("SkillAnimeFx.registerSelfTests()"));
         for (String f : WIRED) {
@@ -163,7 +163,6 @@ class SkillAnimeVfxAssetTest {
             assertFalse(c.contains("VfxShape.SKILL_"), f + " must send the SKILL_ shapes through SkillAnimeFx");
         }
         assertTrue(Files.readString(ROOT.resolve(".github/workflows/smoke.yml"), StandardCharsets.UTF_8).contains(",greed,greed.vfx,devil.vfx,skill.vfx,"), "the skill.vfx self-test is on the smoke list");
-        String wings = code(SKILL_DIR.resolve("BlackWingsSkill.java"));
-        assertTrue(wings.contains("player.tickCount % 40 == 0) SkillAnimeFx.wings("), "the wings are re-sent at most every 40 ticks, never every tick");
+        assertFalse(Files.exists(SKILL_DIR.resolve("BlackWingsSkill.java")), "Black Wings was removed");
     }
 }

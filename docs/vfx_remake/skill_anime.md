@@ -63,7 +63,7 @@ in the session network settings.
 | Freya (`FreyaSkill`) | Freya's silver allure, her Charm | `SKILL_ALLURE`: a silver glow, silver waves, rose petals spiralling out, twinkles, a charm mark over her head | 1 |
 | All Fiction: Fiction (`AllFictionSkill.erase`) | Kumagawa's giant screws (Medaka Box) | `SKILL_SCREW` from -> to: a giant solid screw is driven into the target and stays | 1 |
 | All Fiction: every other mode | "It's All Fiction", screws everywhere | `SKILL_SCREW` from = to: five screws slam down round the caster, a dark violet ring | 1 |
-| Black Wings (`BlackWingsSkill`) | Accelerator's black wings (Railgun / Index) | `SKILL_WINGS` (follows): jagged ink-black spikes fan from the shoulders and jitter, a faint glow | 1 every 40 ticks while gliding |
+| ~~Black Wings~~ (skill removed, `docs/black_wings_removed.md`) | Accelerator's black wings | `SKILL_WINGS`: the shape and its layer stay, nothing sends it any more | none |
 | Faith: Pray / Bestow (`FaithSkill`) | (mod's own; a blessing from above) | `SKILL_SIGIL` FAITH: a golden halo settles over the head, a pillar of light falls, sparkles rise | 1 |
 | Goddess of Faith: Blessing / Miracle | (mod's own) | `SKILL_SIGIL` GODDESS: a sunburst behind the caster, shafts of light round the radius, a halo on the ground | 1 |
 | Hephaestus (`HephaestusSkill`) | Hephaestus, the smith goddess (look unverified) | `SKILL_SIGIL` FORGE: a fountain of hot sparks, two hammer-strike rings, a heat ring | 1 |
@@ -78,7 +78,7 @@ in the session network settings.
   Liaris Freese, Hati, Hawk Eye, Spirit Card, Summoner / Lord of Summons (card summons), Book Maker, The Almighty / The Visionary (already shaped),
   Shishou, the Gate's Armour / Vimana / King's Aura / Elixir modes, Devil's Footprints' kick.
 - **Six Eyes, Limitless (Hollow Purple), Gold Experience (Requiem), Vector Manipulation (as a skill) and Instant Death** were removed by the owner in 3.44.0
-  (their ids are inert stubs, `LegacyIds`), so there is nothing to draw. `VectorManipulationSkill` survives only as the base of Black Wings.
+  (their ids are inert stubs, `LegacyIds`), so there is nothing to draw. Black Wings (3.44.0 kept it as a grant-only skill) was removed later too, see `docs/black_wings_removed.md`.
 - Dragon Ball, the Veldanava skills and Black Sword Greed were already done.
 
 ## The classic setting
@@ -93,8 +93,7 @@ mirrored into `SkillAnimeVfx` when the file loads or reloads. `ConfigFileNamesTe
 
 - No entity, no block change, no new query, no map, no per-player state. One `static boolean` (the self-test registration).
 - Each cast adds 1 effect packet (about 60 bytes) through `VfxSpawn.send`: the per-tick effect budget, players within 96 blocks only. Never per target.
-- The only repeating senders: the Argonaut chime (one per charge step, bounded by the charge cap), Black Wings (one every 40 ticks while gliding, so at most
-  0.5 packets a second per gliding player) and Hell Conqueror's hellfire (one per hellfire pulse, at most one a second). Worst case per player: 1 packet a second.
+- The only repeating senders: the Argonaut chime (one per charge step, bounded by the charge cap), and Hell Conqueror's hellfire (one per hellfire pulse, at most one a second). Worst case per player: 1 packet a second.
 
 **Client**
 
@@ -134,4 +133,3 @@ texture and layer; no cost or damage code was touched; the Time Magic files.
 - Gradle could not be run here. The layer and its helpers were compiled by the preview against stubs; the server helper, the wiring, the config and the test were
   checked only by reading them (and by Python mirrors of the test's texture and string checks).
 - The wings and the chime use the followed player's body yaw; while the head turns away from the body they can sit a little off.
-- Black Wings shows only while gliding (where the old spray was); standing still with the wings on shows the old look.
