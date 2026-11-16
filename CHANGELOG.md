@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.89.0] — the old Dragon Ball skills are removed from play; Dragon Ball rework plan
+- REPLACED (asked for: "remove all the old ones because the new Dragon Ball system is how it's going to be"): the 30 old Dragon Ball skills (15 characters, Unique and Ultimate) are no longer usable. New SERVER setting `dragonBallLegacySkills` (default `false` = removed; `true` restores the 3.56.0 behaviour). A player who still has one forgets it at the next login (one grey message), the `/multiverse dragonball` commands are hidden, and a copy granted by command is inert.
+- KEPT (rule 2): the registrations, ids, icons, lang keys, `DbRules`, `DbMoves`, `DbPassives`, the doc and the `skill.db` self-test, so old worlds and Beast Wills (which reuse `DbRules`) load unchanged.
+- NEW: `docs/dragon_ball/rework_plan.md`: the five uploaded specs read against the mod (the Saiyan system of 3.56-3.69 already covers most of them), a NEW / REPLACED / KEPT table, six phases, the cost table, and five decisions for the owner. The Saiyan real-race is a written design only (not built).
+- NEW: `DbLegacyRemovalTest` (source scan of the switch).
+- Cost: 30 lookups per login, nothing per tick, no packets. Not compiled before CI, not seen in a game.
+
 ## [3.88.0] — creative tabs by franchise
 - NEW (asked for: "creative tabs by franchise"): seven new creative tabs, one per franchise: Black Clover, Tensura, Berserk, Fairy Tail, Magi, Hero Weapons and Other Anime Worlds (every other franchise of the franchise map). Items go into a tab by the franchise map and by id rules (`black_sword_greed*` to Berserk, `beast_will*` and the rank cores to Tensura, `djinn_*` to Magi, grimoires and devil items to Black Clover, the calling gem and crystals to Hero Weapons).
 - KEPT: the seven older tabs and their contents are unchanged (an item may show in both). CLIENT setting `visual.franchiseTabs` (`nusmp-franchise-tabs-client.toml`, default on); off = the new tabs are empty.
