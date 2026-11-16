@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.98.0] — Black Sword Greed and devil effects in their anime style (VFX wave 2)
+- REPLACED look (asked for: anime-style VFX instead of particle effects): every form of the Black Sword Greed now draws real shapes: ink-black crescent slashes with a crimson edge (Ptarmigan Cross), a black-red bow bolt and Piercing Meteor, the scythe's Soul Reap arc, the shield's black-scale dome (Reflection Fortress and reflected blows), Black Flames, Twilight Healing, Spatial Threads, Dimension Destruction, the spear thrust and Revolt Brionac, Infinity Divide, a devouring maw with red eyes on a kill, black lightning and an awakening burst on a form switch or new tier.
+- NEW: a devil's combat hit now shows its world: Black Clover sigil crack, Chainsaw Man saw rip and blood, Black Butler pentagram and black feathers, Blue Exorcist blue flames, Tensura aura pulse, Dororo ghost fire, Berserk Brand and eclipse ring, Fairy Tail curse runes (at most once a second, as before).
+- NEW: 10 shapes appended to `VfxShape` (GREED_SLASH ... DEVIL_HIT), `GreedLayer`, `GreedDevilHits`, `tools/gen_greed_vfx_textures.py` (19 textures), previews in `docs/vfx_remake/previews/greed_*.png`, `devil_*.png` and `greed_devil_sheet.png`, `docs/vfx_remake/greed_devils.md`, `GreedVfxAssetTest`, self-tests `greed.vfx`, `devil.vfx`.
+- KEPT: the old sprays still play as an accent. CLIENT settings `greed.classicVfx`, `devil.classicVfx` (`nusmp-greed-devil-vfx-client.toml`) = only the old look.
+- Not covered: the scythe's Soul Sever on a plain hit, the starvation drip. The anime references are from memory (the wikis were blocked).
+- Cost: one effect packet per cast or hit to players within 96 blocks (devil hits at most one a second, the maw at most one every half second); at most 320 vertices per effect (preview count). Not compiled before CI, not seen in a game.
+
 ## [3.97.0] — Master guide fixes, part 1 (skill damage counts as Tensura skill damage, grimoire skill names, spell cleanup)
 - REPLACED (owner's master guide, Part 0 §0.5 P1 #2): mod skills now hit with Tensura's own skill damage source (magic hits as Tensura magic, attacks as player attacks), so Tensura's resistances, nullifications and kill credit apply to them. 37 call sites in 17 skill files. The damage amount is unchanged (same multipliers, PvP cap intact). SERVER setting `tensuraSkillDamageSource` (`nusmp-server.toml`, `[guide_fixes]`, default true); false = the old vanilla sources.
 - FIXED (P1 #3): the 43 `grimoire_<magic>` skills that had no name or description now have both (`tools/lang/grimoire_skills.json`, `GrimoireSkillLangTest`).
