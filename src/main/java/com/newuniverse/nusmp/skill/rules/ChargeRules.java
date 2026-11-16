@@ -11,7 +11,7 @@ public final class ChargeRules {
     public static final int TICKS_PER_CHARGE = 20;
 
     /** Append-only strike kinds (mode index): the Unique has only STRIKE; the Ultimate adds BEAM. */
-    public enum Strike { STRIKE, BEAM }
+    public enum Strike { STRIKE, BEAM, FIREBOLT }   // FIREBOLT is appended (ArgonautMergeRules): its index depends on the tier
 
     public static int maxCharge(Tier tier) { return tier.ultimate() ? 10 : 5; }
 

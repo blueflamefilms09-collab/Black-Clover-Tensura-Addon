@@ -20,30 +20,17 @@ import net.minecraft.world.phys.Vec3;
  * and stops at the first wall. Mode order is append-only (Strike stays mode 0).
  */
 public class HerosArgonautSkill extends ArgonautSkill {
-    static final SkillText HERO_TEXT = SkillText.of("heros_argonaut", "Hero's Argonaut",
-            "Ultimate. Evolved from Argonaut. Charge up to ten bells and strike with triple power, or release the charge as a piercing Hero's Beam.");
+    static final SkillText HERO_TEXT = SkillText.of("heros_argonaut", "Bell Cranel, Hero Argonaut",
+            "Ultimate. Evolved from Argonaut. Charge up to ten bells and strike with triple power, or release the charge as a piercing Hero's Beam, both burning what they hit. A third mode fires Firebolt.");
 
     public HerosArgonautSkill() { super(SkillType.ULTIMATE, HERO_TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
-    @Override public int getModes(ManasSkillInstance instance) { return 2; }
-
-    @Override
-    public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) { return mode == 0 ? 1 : 0; }
-
-    @Override
-    public String getModeId(ManasSkillInstance instance, int mode) { return mode == ChargeRules.Strike.BEAM.ordinal() ? "argonaut.beam" : "argonaut.strike"; }
-
-    @Override
-    public Component getModeName(ManasSkillInstance instance, int mode) {
-        return mode == ChargeRules.Strike.BEAM.ordinal()
-                ? SkillMsg.mode("argonaut.beam", "Hero's Beam")
-                : SkillMsg.mode("argonaut.strike", "Hero's Strike");
-    }
+    // modes (Hero's Strike 0, Hero's Beam 1, Firebolt 2 with the merge on): ArgonautSkill.getModes / nextMode / getModeId / getModeName
 
     @Override
     protected int release(ManasSkillInstance instance, ServerPlayer player, int charge, int mode) {
-        if (mode != ChargeRules.Strike.BEAM.ordinal()) return strike(instance, player, charge);
+        if (kind(mode) != ChargeRules.Strike.BEAM) return strike(instance, player, charge);
 
         ServerLevel level = player.serverLevel();
         Tier tier = tier(instance, player);
@@ -52,8 +39,12 @@ public class HerosArgonautSkill extends ArgonautSkill {
         Vec3 from = player.getEyePosition().add(0, -0.2, 0);
         Vec3 to = DMUtil.lookPoint(player, ChargeRules.beamLength(charge));      // a wall ends the beam
         int hits = 0;
+        int burn = fireSeconds(charge);                                          // Firebolt folded in: a charged beam burns what it pierces
         for (LivingEntity t : SkillTargets.foesAlong(player, from, to, ChargeRules.beamRadius(charge))) {
-            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) hits++;
+            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) {
+                if (burn > 0) t.igniteForSeconds(burn);
+                hits++;
+            }
         }
         SkillFx.beam(level, from, to, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, from, to, 0xFFFFF2B0, 14, 2.0f + charge * 0.2f);

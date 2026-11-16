@@ -35,6 +35,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue ARGONAUT_DAMAGE_PER_CHARGE;
     public static final ModConfigSpec.DoubleValue ARGONAUT_MAGICULE_PER_CHARGE;
     public static final ModConfigSpec.IntValue ARGONAUT_COOLDOWN;
+    public static final ModConfigSpec.BooleanValue ARGONAUT_FIREBOLT_MERGE;
     public static final ModConfigSpec.DoubleValue LIARIS_CHANCE;
     public static final ModConfigSpec.IntValue LIARIS_MASTERY_PER_KILL;
     public static final ModConfigSpec.DoubleValue AIRIEL_MAGICULE_COST;
@@ -85,6 +86,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
     public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
+    public static final ModConfigSpec.BooleanValue SHINRA_REWORK;                                        // Shinra rework (docs/shinra_rework.md)
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -142,6 +144,9 @@ public final class NUConfig {
         ARGONAUT_DAMAGE_PER_CHARGE = b.comment("Damage per charge level (max 5 charges, x1.5 when mastered).").defineInRange("argonautDamagePerCharge", 8.0, 0.0, 10000.0);
         ARGONAUT_MAGICULE_PER_CHARGE = b.defineInRange("argonautMagiculePerCharge", 200.0, 0.0, 1.0E9);
         ARGONAUT_COOLDOWN = b.comment("Cooldown after release (ticks).").defineInRange("argonautCooldown", 200, 0, 1_000_000);
+        ARGONAUT_FIREBOLT_MERGE = b.comment("Firebolt is a mode of Argonaut (docs/argonaut_rework.md): Argonaut and Hero's Argonaut gain a rapid-cast Firebolt mode, a charged release carries fire, and a Firebolt holder is moved to Argonaut at login.",
+                "false = the old DanMachi: Firebolt is its own skill, Argonaut has only the charged strike, nothing is migrated (holders migrated earlier get Firebolt back at their next login).")
+                .define("argonautFireboltMerge", true);
         LIARIS_CHANCE = b.comment("Chance per kill that Liaris Freese grows your skills (0.0 - 1.0).").defineInRange("liarisChance", 0.5, 0.0, 1.0);
         LIARIS_MASTERY_PER_KILL = b.comment("Mastery points added to each of your skills when it triggers.").defineInRange("liarisMasteryPerKill", 1, 0, 1000);
         AIRIEL_MAGICULE_COST = b.defineInRange("airielMagiculeCost", 300.0, 0.0, 1.0E9);
@@ -263,6 +268,7 @@ public final class NUConfig {
         BEAST_SKILLS_ENABLED = b.comment("The 54 Beast Will skills (3.59.0, a Unique and an Ultimate for each of the 27 wills). false = they stay registered but every mode refuses, the passives do nothing and they do not evolve.").define("beastSkillsEnabled", true);
         BEAST_SKILL_GRANT_ON_MASTERY = b.comment("Mastering a Beast Will to 100 % grants the Unique skill of that beast once (3.59.0). false = the skills come only from the admin command or /tensura edit.").define("beastSkillGrantOnMastery", true);
         DB_LEGACY_SKILLS = b.comment("Dragon Ball rework, phase 1. The 15 old Dragon Ball skills (30 ids, 3.56.0) are REMOVED by default: false = no command, no evolution, no use, and they are taken from players at login (the ids stay registered so old worlds load). true = the old behaviour (dragonBallEnabled still applies).").define("dragonBallLegacySkills", false);
+        SHINRA_REWORK = b.comment("Shinra rework (docs/shinra_rework.md). true = Hell Walker is the Shinra Kusakabe skill (the dash, kick and Rapid-Man Kick on the wheel, the devil's grin and Adolla Link under low health, fire immunity), Devil's Footprints is folded into it at login and Hell Walker evolves into Adolla Burst. false = the old behaviour: Hell Walker is only the toggle, no wheel, no folding, Hell Walker evolves into Hell Conqueror.").define("shinraRework", true);
         b.pop();
 
         b.push("guide_fixes");
@@ -320,6 +326,7 @@ public final class NUConfig {
     public static double faithOfferingRange() { return Math.max(2.0, Math.min(64.0, live(FAITH_OFFERING_RANGE))); }
     public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
 
+    public static boolean shinraRework() { return live(SHINRA_REWORK); }
     public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
     public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }
     public static boolean ucFlatCosts() { return live(UC_FLAT_COSTS); }

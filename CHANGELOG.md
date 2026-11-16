@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.4.0] — Firebolt joins Argonaut, Bell's ultimate renamed, Hell Walker becomes Shinra
+- NEW: Argonaut has a Firebolt mode (rapid cast with its own cost, cooldown and damage, set in the DanMachi settings) and Hero's Argonaut has a third mode that fires Firebolt too. A charged release of two or more bells sets everything hit alight. A Firebolt that hits gives Argonaut half a mastery point, so rapid casting cannot master it early. Server setting `danmachi.argonautFireboltMerge` (off = the old separate skills; holders who were moved get Firebolt back at their next login). Details: `docs/argonaut_rework.md`.
+- REPLACED: Firebolt as a separate skill. It stays registered and castable, and a holder gets Argonaut at login and respawn (the old Firebolt mastery is not carried over).
+- REPLACED: the ultimate Hero's Argonaut is shown as "Bell Cranel, Hero Argonaut" (registry id and evolution unchanged).
+- NEW: Hell Walker is the Shinra Kusakabe skill (Fire Force): a wheel of Ignition Dash, Devil's Kick and the new Rapid-Man Kick, plus a Hell Mode toggle that keeps the old "harder the closer to death" damage, adds the Devil's Grin under 35 % health, and Adolla Link when mastered under 25 %. Your own flames cannot burn you. Server setting `shinraRework` (off = the old Hell Walker). Details: `docs/shinra_rework.md`.
+- REPLACED: Devil's Footprints is folded into it (still registered; holders are moved at the evolution check with the same mastery), Adolla Burst is now its ultimate and takes over Hell Conqueror's hellfire and berserk. KEPT: Hell Conqueror stays registered and works for current holders; nothing evolves into it any more.
+- Cost: a Firebolt cast is one ray, at most 24 splash targets, one visual lightning and three effect packets; a Shinra move is one line-shaped query with at most 12 hits and a 2.5 s minimum cooldown; Hell Mode adds one small pulse per second. No per-player static state.
+- Not seen in a game; the Java was only compiled by CI. Neither worker could open a wiki, so details from Fire Force and DanMachi are from general knowledge (the Rapid-Man Kick effect and the Devil's Grin are guesses) and are marked unverified in the docs.
+
 ## [4.3.0] — Faith with worshippers, offerings and a chosen gift; Black Wings removed
 - NEW: Faith and Goddess of Faith get worshippers, built on how Mitama Faith (Tensura More Skills) does it: Recruit Worshipper mode invites the player you look at (they answer with `/faith accept` or `/faith reject`), worshippers turn magicules into Faith with `/faith offering` and `/faith offer 1|5|10`, and Choose a Gift mode lets the god pick which skill to bestow from a clickable list (worshippers pay 25 % less). Worshippers boost Pray and slowly refill Faith. Everything is server-checked and behind the server setting `faith.worshipEnabled` (off = the old Faith); the old random Bestow stays.
 - FIXED: Faith's Pray paid with the wrong mode, and `faith add` could overflow.

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.NUConfig;
+import com.newuniverse.nusmp.skill.rules.ShinraRules;
 import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.skill.rules.FireForceRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
@@ -13,60 +15,50 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Adolla Burst: the Ultimate evolution of {@link DevilsFootprintsSkill} (unlocked automatically by mastering it). Not an alias. The
+ * Adolla Burst: the Ultimate of the Shinra skill {@link HellWalkerSkill} (unlocked automatically by mastering it; before the Shinra rework: of Devil's Footprints, which is folded into Hell Walker). Not an alias. The
  * Ignition Dash becomes Light Speed (a blink of up to 32 blocks that strikes and ignites every foe on the way), the Devil's Kick reaches
  * eight blocks and hits more than twice as hard, and a third mode, Adolla Burst, is appended: an explosion of flame ten blocks wide
  * that hurts, ignites and hurls back every foe around you. You are still immune to fire. Numbers: {@link FireForceRules}.
  */
-public class AdollaBurstSkill extends DevilsFootprintsSkill {
+public class AdollaBurstSkill extends HellWalkerSkill {
     static final SkillText ADOLLA_TEXT = SkillText.of("adolla_burst", "Adolla Burst",
-            "Ultimate. Evolved from Devil's Footprints. Move at the speed of light striking everything on the way, kick with far more force, and unleash the Adolla Burst around you.");
+            "Ultimate. Shinra's Ultimate, evolved from Hell Walker. Move at the speed of light striking everything on the way, kick with far more force, unleash the Adolla Burst around you, and in Adolla Link near death a hellfire aura burns the foes around you.");
 
     public AdollaBurstSkill() { super(SkillType.ULTIMATE, ADOLLA_TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
-    @Override public int getModes(ManasSkillInstance i) { return FireForceRules.modes(Tier.ULTIMATE); }
+    @Override protected boolean fullWheel() { return true; }
+    /** Adolla Burst always had its wheel: it stays on with the setting off (then without the Rapid-Man Kick, and without the Hell Mode toggle). */
+    @Override protected boolean wheelOn() { return true; }
+    @Override public int getModes(ManasSkillInstance i) { return NUConfig.shinraRework() ? super.getModes(i) : FireForceRules.modes(Tier.ULTIMATE); }
+    @Override public boolean canBeToggled(ManasSkillInstance instance, LivingEntity entity) { return NUConfig.shinraRework(); }
+    @Override public boolean canTick(ManasSkillInstance instance, LivingEntity entity) { return NUConfig.shinraRework(); }
 
+    /** Adolla Link at the Ultimate: the hellfire aura and the berserk of the old Hell Conqueror, on top of the grin and link of {@link HellWalkerSkill#pulse}. */
     @Override
-    public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) {
-        int count = getModes(i);
-        return r ? (mode + count - 1) % count : (mode + 1) % count;
-    }
-
-    @Override
-    public String getModeId(ManasSkillInstance i, int mode) {
-        return switch (mode) {
-            case FireForceRules.DASH -> "fireforce.light_speed";
-            case FireForceRules.BURST -> "fireforce.burst";
-            default -> super.getModeId(i, mode);
-        };
-    }
-
-    @Override
-    public Component getModeName(ManasSkillInstance i, int mode) {
-        return switch (mode) {
-            case FireForceRules.DASH -> SkillMsg.mode("fireforce.light_speed", "Light Speed");
-            case FireForceRules.BURST -> SkillMsg.mode("fireforce.burst", "Adolla Burst");
-            default -> super.getModeName(i, mode);
-        };
+    protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+        super.pulse(instance, player, tier);
+        hellfire(instance, player, tier);
     }
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
-        if (mode == FireForceRules.KICK) { super.onPressed(instance, entity, key, mode); return; }
-        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("fireforce.cooldown", "Your flames need a moment.")); return; }
+        int move = ShinraRules.move(true, mode);
+        if (move == ShinraRules.KICK || move == ShinraRules.RAPID) { super.onPressed(instance, entity, key, mode); return; }
+        int slot = Math.floorMod(mode, getModes(instance));
+        if (instance.onCoolDown(slot)) { SkillUtil.fail(player, SkillMsg.t("fireforce.cooldown", "Your flames need a moment.")); return; }
         Tier tier = tier(instance, player);
 
-        if (mode == FireForceRules.DASH) {
+        if (move == ShinraRules.DASH) {
             double price = price(instance, player, DMUtil.cost(FireForceRules.dashCost(tier)));
-            if (!charge(instance, player, mode, price)) return;
+            if (!charge(instance, player, slot, price)) return;
             if (!lightSpeed(instance, player, tier)) { SkillUtil.refund(player, price); return; }
-            cooldown(instance, mode, DMUtil.cooldown(FireForceRules.dashCooldown(tier)));
-        } else if (mode == FireForceRules.BURST) {
-            if (!pay(instance, player, mode, DMUtil.cost(FireForceRules.burstCost()))) return;
+            moveCooldown(instance, player, slot, FireForceRules.dashCooldown(tier));
+        } else if (move == ShinraRules.BURST) {
+            if (!pay(instance, player, slot, DMUtil.cost(FireForceRules.burstCost()))) return;
             burst(instance, player);
-            cooldown(instance, mode, DMUtil.cooldown(FireForceRules.burstCooldown()));
+            moveCooldown(instance, player, slot, FireForceRules.burstCooldown());
         } else {
             return;
         }

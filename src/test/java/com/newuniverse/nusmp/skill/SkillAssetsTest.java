@@ -76,7 +76,7 @@ class SkillAssetsTest {
                 {"BOOK_MAKER", "ALL_FICTION"}};
         for (String[] p : pairs) assertTrue(src.contains("m.put(NUSkills." + p[0] + ", NUSkills." + p[1] + ");"), "evolution missing: " + p[0]);
         int puts = src.split("m\\.put\\(NUSkills\\.", -1).length - 1;
-        assertEquals(pairs.length, puts, "no evolution path was added or dropped");
+        assertEquals(pairs.length + 1, puts, "no evolution path was added or dropped (+1: the Shinra rework appends HELL_WALKER -> ADOLLA_BURST behind the shinraRework setting)");
     }
 
     @Test

@@ -15,7 +15,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Devil's Footprints (Shinra Kusakabe, Fire Force): flames from your feet. Modes: Ignition Dash (rocket through the air; no fall damage
+ * Devil's Footprints (Shinra Kusakabe, Fire Force): flames from your feet. Since the Shinra rework (docs/shinra_rework.md) this skill is FOLDED into Hell Walker: its dash and kick live on as the
+ * static helpers below (used by {@link HellWalkerSkill}), and a holder is moved to Hell Walker at the next evolution check, every 5 seconds ({@link ShinraMigration}). It stays registered and keeps working until then.
+ * Modes: Ignition Dash (rocket through the air; no fall damage
  * from it) and Devil's Kick (a burning kick on everything in front of you, thrown back and set alight). Passive: your own flames cannot
  * burn you (all fire damage is cancelled). Adolla Burst (the Ultimate) extends this class. Numbers: {@link FireForceRules}.
  */
@@ -59,7 +61,8 @@ public class DevilsFootprintsSkill extends NUSkill {
         grow(instance, player, 1);
     }
 
-    private void dash(ServerPlayer player, Tier tier) {
+    /** Shared with the Shinra skill (Hell Walker): the ignition dash. */
+    static void dash(ServerPlayer player, Tier tier) {
         ServerLevel level = player.serverLevel();
         Vec3 look = player.getViewVector(1.0F);
         double power = FireForceRules.dashPower(tier);
@@ -73,8 +76,8 @@ public class DevilsFootprintsSkill extends NUSkill {
         SkillFx.sound(level, player.position(), SoundEvents.FIRECHARGE_USE, 1.0F, 1.4F);
     }
 
-    /** Shared with Adolla Burst: the kick. */
-    protected final void kick(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+    /** Shared with Adolla Burst and the Shinra skill (Hell Walker): the kick. */
+    static void kick(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
         ServerLevel level = player.serverLevel();
         Vec3 eye = player.getEyePosition();
         Vec3 look = player.getViewVector(1.0F);

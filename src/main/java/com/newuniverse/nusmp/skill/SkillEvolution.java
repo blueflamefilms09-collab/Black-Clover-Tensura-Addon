@@ -36,6 +36,7 @@ public final class SkillEvolution {
         m.put(NUSkills.UNBREAKABLE_WILL, NUSkills.IMMORTAL_WILL);
         m.put(NUSkills.DEVILS_FOOTPRINTS, NUSkills.ADOLLA_BURST);
         m.put(NUSkills.BOOK_MAKER, NUSkills.ALL_FICTION);
+        if (NUConfig.shinraRework()) m.put(NUSkills.HELL_WALKER, NUSkills.ADOLLA_BURST);   // Shinra rework, appended: replaces the Hell Conqueror target above while the setting is on
         // 3.44.0: Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings were removed (Black Wings itself was removed later)
         return m;
     }
@@ -45,6 +46,7 @@ public final class SkillEvolution {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 100 != 0) return;
         if (!com.newuniverse.nusmp.NUGameRules.skillEvolution(player.level())) return;
         Skills skills = SkillAPI.getSkillsFrom(player);
+        ShinraMigration.run(player, skills);   // Shinra rework: Devil's Footprints is folded into Hell Walker (docs/shinra_rework.md)
 
         for (var path : paths().entrySet()) {
             ManasSkill base = path.getKey().get();

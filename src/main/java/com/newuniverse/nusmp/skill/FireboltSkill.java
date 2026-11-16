@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.NUConfig;
+import com.newuniverse.nusmp.skill.rules.ArgonautMergeRules;
 import com.newuniverse.nusmp.skill.rules.FireboltRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -24,18 +25,27 @@ import net.minecraft.world.phys.Vec3;
  */
 public class FireboltSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("firebolt", "Firebolt",
-            "Instant magic. A bolt of lightning-fire fired the moment you press, striking what you look at and scorching everything near it. Mastery doubles the damage.");
+            "Instant magic. A bolt of lightning-fire fired the moment you press, striking what you look at and scorching everything near it. Mastery doubles the damage. Argonaut now holds this as a mode; this skill stays for old saves.");
 
     public FireboltSkill() { super(SkillType.EXTRA, TEXT, false); }
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
-        if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
+        if (!(entity instanceof ServerPlayer player)) return;
+        cast(this, instance, player, mode, 0.0);
+    }
+
+    /**
+     * The bolt itself, shared with Argonaut's Firebolt mode (docs/argonaut_rework.md): {@code owner} is the skill that holds {@code instance}
+     * (its tier, price, cooldown and mastery are used). {@code masteryPerHit} 0 = the old rule (FireboltRules.masteryGain), else Argonaut's own.
+     */
+    static void cast(NUSkill owner, ManasSkillInstance instance, ServerPlayer player, int mode, double masteryPerHit) {
+        if (!player.isAlive()) return;
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("firebolt.cooldown", "Firebolt is on cooldown.")); return; }
         if (!pay(instance, player, mode, NUConfig.FIREBOLT_MAGICULE_COST.get())) return;
 
         ServerLevel level = player.serverLevel();
-        Tier tier = tier(instance, player);
+        Tier tier = owner.tier(instance, player);
         double range = FireboltRules.range(tier);
         Vec3 start = player.getEyePosition();
         Vec3 wall = DMUtil.lookPoint(player, range);                       // where the bolt would stop on a block
@@ -70,11 +80,11 @@ public class FireboltSkill extends NUSkill {
 
         cooldown(instance, mode, NUConfig.FIREBOLT_COOLDOWN.get());
         SkillUtil.castVfx(player, 0xFFFF7A2A);
-        grow(instance, player, FireboltRules.masteryGain(hitSomething));
+        grow(instance, player, masteryPerHit > 0 ? ArgonautMergeRules.fireboltMastery(hitSomething) : FireboltRules.masteryGain(hitSomething));
     }
 
     /** A lightning strike that is only to look at: no damage, no fire, no block change. */
-    private static void strikeVisual(ServerLevel level, Vec3 at) {
+    static void strikeVisual(ServerLevel level, Vec3 at) {
         LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
         if (bolt == null) return;
         bolt.moveTo(at.x, at.y, at.z);

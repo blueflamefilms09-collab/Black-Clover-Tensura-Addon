@@ -124,7 +124,7 @@ SKILLS = [
     # ---- this mod's own Ultimate skills (SkillType.ULTIMATE in NUSkills): Tensura 2.0.1.3 ships no Ultimate skill ids of its own
     ("lord_of_summons", "anime_multiverse:lord_of_summons", "ultimate", "Lord of Summons", 16, 4000, 0x9A7CFF, "Every summon obeys, every gate opens."),
     ("goddess_of_faith", "anime_multiverse:goddess_of_faith", "ultimate", "Goddess of Faith", 16, 4000, 0xFFF2A8, "Belief made into strength."),
-    ("heros_argonaut", "anime_multiverse:heros_argonaut", "ultimate", "Hero's Argonaut", 15, 3500, 0xFFD060, "A hero's growth with no ceiling."),
+    ("heros_argonaut", "anime_multiverse:heros_argonaut", "ultimate", "Bell Cranel, Hero Argonaut", 15, 3500, 0xFFD060, "A hero's growth with no ceiling."),
     ("hell_conqueror", "anime_multiverse:hell_conqueror", "ultimate", "Hell Conqueror", 15, 3500, 0xFF6A1E, "Walks through fire and keeps the flame."),
     ("immortal_will", "anime_multiverse:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
     ("adolla_burst", "anime_multiverse:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),

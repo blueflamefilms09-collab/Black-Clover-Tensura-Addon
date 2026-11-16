@@ -1,0 +1,10 @@
+{
+  "anime_multiverse.skill.mode.argonaut.firebolt": "Firebolt",
+  "anime_multiverse.skill.mode.argonaut.charge": "Argonaut",
+  "anime_multiverse.skill.msg.argonaut.migrated": "Firebolt is now a mode of Argonaut.",
+  "anime_multiverse.skill.msg.argonaut.restored": "Firebolt is its own skill again.",
+  "anime_multiverse.skill.heros_argonaut": "Bell Cranel, Hero Argonaut",
+  "anime_multiverse.skill.heros_argonaut.description": "Ultimate. Evolved from Argonaut. Charge up to ten bells and strike with triple power, or release the charge as a piercing Hero's Beam, both burning what they hit. A third mode fires Firebolt.",
+  "anime_multiverse.skill.argonaut.description": "Unique. The wish to become a hero. Hold to charge with the chime of bells (up to five) and release to strike everything in front of you, setting it alight. A second mode fires Firebolt: the instant you press, a bolt of lightning-fire.",
+  "anime_multiverse.skill.firebolt.description": "Instant magic. A bolt of lightning-fire fired the moment you press, striking what you look at and scorching everything near it. Mastery doubles the damage. Argonaut now holds this as a mode; this skill stays for old saves."
+}
