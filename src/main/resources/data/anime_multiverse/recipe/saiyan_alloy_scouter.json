@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "anime_multiverse:saiyan_alloy_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AGA"
+  ],
+  "result": {
+    "id": "anime_multiverse:saiyan_alloy_scouter",
+    "count": 1
+  }
+}

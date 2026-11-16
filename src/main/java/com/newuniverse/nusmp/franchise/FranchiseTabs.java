@@ -34,6 +34,7 @@ public final class FranchiseTabs {
         if (path.startsWith("black_sword_greed")) return "berserk";
         if (BOSS_CORE.matcher(path).matches()) return "tensura";          // the Boss Cores and their armour (labyrinth/mega/cores): Tensura-side progression gear
         if (path.startsWith("beast_will") || RANK_CORE.matcher(path).matches()) return "tensura";
+        if (path.startsWith("saiyan_alloy")) return "anime_worlds";          // the craftable Saiyan alloy set (Dragon Ball has no tab of its own)
         if (path.startsWith("djinn_")) return "magi";
         if (path.contains("grimoire") || path.startsWith("devil_")) return "black_clover";
         if (path.startsWith("calling_gem") || path.startsWith("gem_fragment") || path.equals("gneiss_crystal") || path.equals("release_crystal") || path.equals("purification_charm")) return "hero_weapons";

@@ -231,6 +231,7 @@ def main(argv):
     if not check:
         cat.write()
     if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "visual_upgrade", "charms_genesis_worn", "build.py"), run_name="vu_charms_genesis_worn")      # visual upgrade, slice charms_genesis_worn: bakes its own files under assets/anime_multiverse/visual_upgrade only
+    if not check: __import__("runpy").run_path(os.path.join(HERE, "..", "saiyan_armor", "catalog_hook.py"), run_name="__main__")      # append-only hook: the craftable Saiyan alloy armour entries (Blender models) go back at the end of catalog.txt
     if not check: __import__("runpy").run_path(os.path.join(HERE, "new_wave101", "build_all.py"), run_name="wave101_hook")      # 1.111.0 (append-only hook): the 15 Genesis relics of wave 101 (models, sprites, weapons, lang, tags)
     # 1.102.0 (append-only hook): the God grade worn upgrade (models, skins, effect tables) lives in tools/visual_upgrade/god_worn and adds files only; it skips itself when up to date
     sys.path.insert(0, os.path.join(HERE, "..", "visual_upgrade", "god_worn"))

@@ -9,6 +9,7 @@ import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.prop.SealDraw;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import com.newuniverse.nusmp.saiyan.SaiyanLook;
+import com.newuniverse.nusmp.saiyan.armor.SaiyanArmorSet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -90,7 +91,7 @@ public final class SaiyanAura {
         int glow = k.glow();
 
         // 1. the battle armour (solid pieces first, their glow maps are tinted with the form's colour)
-        if (SaiyanLookClientConfig.armour() && k.armour()) WaterAuraRig.draw(c, SET, glow, 0.65f * pulse + 0.35f);
+        if (SaiyanLookClientConfig.armour() && SaiyanLookClientConfig.autoArmour() && k.armour() && SaiyanArmorSet.worn(c.player()) == 0) WaterAuraRig.draw(c, SET, glow, 0.65f * pulse + 0.35f);      // the cosmetic set only when autoArmour is on and no crafted piece is worn (never both)
 
         // 2 + 3. the fur and the tail of the Super Saiyan 4 forms
         if (full && k.hasFur()) {

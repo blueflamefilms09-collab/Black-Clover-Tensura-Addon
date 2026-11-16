@@ -246,6 +246,7 @@ public class NUSMP {
             com.newuniverse.nusmp.vfx.client.UniqueUltimatesConfig.init(modEventBus, modContainer);                           // 3.29.0: visual.uniqueUltimates (CLIENT, default on): the ten Evolution Ultimates' own effects; off = their old generic ones
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
+            com.newuniverse.nusmp.client.saiyan.SaiyanArmorClient.init(modEventBus);                                         // the craftable Saiyan alloy set hides its vanilla box under the worn Blender models
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
             com.newuniverse.nusmp.client.music.ThemedMusicEngine.init(modEventBus, modContainer);                            // 1.107.0: the themed dungeon music engine, nusmp-music-client.toml (music.themed)
             com.newuniverse.nusmp.client.voice.VoiceClient.init(modContainer);                                               // 1.110.0: the spoken voices, nusmp-voice-client.toml (voice.enabled, voice.volume)

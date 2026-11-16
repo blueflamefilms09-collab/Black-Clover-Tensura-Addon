@@ -65,7 +65,7 @@ public final class ArmorItemRenderer extends BlockEntityWithoutLevelRenderer {
             }
         };
         List<Item> items = new ArrayList<>();
-        for (Item item : BuiltInRegistries.ITEM) if (candidate(item) && !(item instanceof GeoItem) && !(item instanceof com.newuniverse.nusmp.labyrinth.loot.LootArmorItem)) items.add(item);       // 1.99.0: the dungeon armour registers its own extension (client/loot/LootClient), one per item
+        for (Item item : BuiltInRegistries.ITEM) if (candidate(item) && !(item instanceof GeoItem) && !(item instanceof com.newuniverse.nusmp.labyrinth.loot.LootArmorItem) && !(item instanceof com.newuniverse.nusmp.saiyan.armor.SaiyanArmorItem)) items.add(item);       // 1.99.0: the dungeon armour registers its own extension (client/loot/LootClient), one per item; so does the Saiyan alloy set (client/saiyan/SaiyanArmorClient)
         if (!items.isEmpty()) e.registerItem(ext, items.toArray(new Item[0]));
     }
 

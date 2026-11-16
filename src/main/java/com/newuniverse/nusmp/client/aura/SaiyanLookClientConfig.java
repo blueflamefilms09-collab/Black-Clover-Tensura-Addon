@@ -19,6 +19,9 @@ public final class SaiyanLookClientConfig {
     private static volatile boolean looks = true, armour = true, chargeUp = true, full = true, chargeAnim = true;
     /** saiyan.classicVfx (default false): mirrored into the pure switch {@code KiVfx.classic()} the Ki layer reads. */
     public static final ModConfigSpec.BooleanValue CLASSIC_VFX;
+    /** saiyan.autoArmour (default false): a form draws the cosmetic battle armour by itself (the old look). false: the armour is the craftable Saiyan alloy set, worn from the inventory. */
+    public static final ModConfigSpec.BooleanValue AUTO_ARMOUR;
+    private static volatile boolean autoArmour = false;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -35,12 +38,15 @@ public final class SaiyanLookClientConfig {
                 .define("chargeAnimation", true);
         CLASSIC_VFX = b.comment("true: the Saiyan techniques (Ki Blast, Kamehameha, Spirit Bomb, Instant Transmission, Dragon Fist, ...) show only their old particles. false: the anime Ki effects are drawn too (beams, orbs, shock rings, the golden dragon). Looks only.")
                 .define("classicVfx", false);
+        AUTO_ARMOUR = b.comment("true: a transformed Saiyan is drawn in the cosmetic battle armour by itself (the look of 3.69.0 to 4.1.0, needs saiyan.armour too). false (default): a form hands out no armour; wear the craftable Saiyan alloy set instead. A worn alloy set always replaces the cosmetic one. Looks only.")
+                .define("autoArmour", false);
         b.pop();
         SPEC = b.build();
     }
 
     public static boolean looks() { return looks; }
     public static boolean armour() { return armour; }
+    public static boolean autoArmour() { return autoArmour; }
     public static boolean chargeUp() { return chargeUp; }
     public static boolean fullDetail() { return full; }
     public static boolean chargeAnimation() { return chargeAnim; }
@@ -56,9 +62,11 @@ public final class SaiyanLookClientConfig {
         try {
             looks = LOOKS.get(); armour = ARMOUR.get(); chargeUp = CHARGE_UP.get(); full = FULL_DETAIL.get(); chargeAnim = CHARGE_ANIM.get();
             com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(CLASSIC_VFX.get());
+            autoArmour = AUTO_ARMOUR.get();
         } catch (IllegalStateException unloaded) {
             looks = true; armour = true; chargeUp = true; full = true; chargeAnim = true;
             com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(false);
+            autoArmour = false;
         }
     }
 }

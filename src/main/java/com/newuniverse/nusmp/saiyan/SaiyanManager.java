@@ -118,7 +118,7 @@ public final class SaiyanManager {
         double max = staminaMax(s);
         if (s.stamina < 0.0) s.stamina = max;
         s.stamina = SaiyanRules.stamina(s.stamina, SaiyanConfig.staminaRegen() * (p.isSprinting() ? 1.0 / 3.0 : 1.0), max);
-        if (s.awakened) SaiyanKi.regen(p, SaiyanConfig.kiRegenPercent());
+        if (s.awakened) SaiyanKi.regen(p, SaiyanConfig.kiRegenPercent() + com.newuniverse.nusmp.saiyan.armor.SaiyanArmorSet.kiRegenBonus(p));      // the Saiyan alloy set: +x% a second with all four pieces (server config)
         else meditate(p, s, r, now);
         double moved = Double.isNaN(r.lx) ? 0.0 : Math.sqrt(sq(p.getX() - r.lx) + sq(p.getY() - r.ly) + sq(p.getZ() - r.lz));
         SaiyanFlight.second(p, s, r, now, moved);

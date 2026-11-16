@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "anime_multiverse:saiyan_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "A A"
+  ],
+  "result": {
+    "id": "anime_multiverse:saiyan_alloy_waist_guard",
+    "count": 1
+  }
+}

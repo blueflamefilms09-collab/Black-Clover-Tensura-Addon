@@ -19237,5 +19237,12 @@
   "anime_multiverse.devil.npc.line.etherious.2": "Ether, ether. Give me ether and I will give you the whole page.",
   "anime_multiverse.devil.npc.line.etherious.3": "Read me aloud, and I will answer. Sign my name.",
   "anime_multiverse.race.saiyan": "Saiyan",
-  "anime_multiverse.race.saiyan.description": "A proud warrior race whose Ki is its magicule. Saiyans start strong, grow stronger with every hard fight, and rise through four stages: Saiyan, Primal Saiyan, Divine Saiyan and Autonomous Martial God. Choosing this race makes you a Saiyan (Ki, Battle Power, Zenkai and the Saiyan techniques)."
+  "anime_multiverse.race.saiyan.description": "A proud warrior race whose Ki is its magicule. Saiyans start strong, grow stronger with every hard fight, and rise through four stages: Saiyan, Primal Saiyan, Divine Saiyan and Autonomous Martial God. Choosing this race makes you a Saiyan (Ki, Battle Power, Zenkai and the Saiyan techniques).",
+  "item.anime_multiverse.saiyan_alloy_ingot": "Saiyan Alloy Ingot",
+  "item.anime_multiverse.saiyan_alloy_scouter": "Saiyan Alloy Scouter",
+  "item.anime_multiverse.saiyan_alloy_battle_armor": "Saiyan Alloy Battle Armor",
+  "item.anime_multiverse.saiyan_alloy_waist_guard": "Saiyan Alloy Waist Guard",
+  "item.anime_multiverse.saiyan_alloy_greaves": "Saiyan Alloy Greaves",
+  "tooltip.anime_multiverse.saiyan_alloy": "Saiyan alloy battle armour. Mend it with an alloy ingot.",
+  "tooltip.anime_multiverse.saiyan_alloy.set": "Full set (4 pieces): a Saiyan regains Ki faster."
 }

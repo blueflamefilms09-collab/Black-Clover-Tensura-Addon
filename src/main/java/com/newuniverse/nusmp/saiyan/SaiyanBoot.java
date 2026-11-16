@@ -35,5 +35,6 @@ public final class SaiyanBoot {
         SaiyanPhaseSelfTests.register();                // Dragon Ball rework: db.phase2.* and saiyan.t3.*
         SaiyanRaceSelfTests.register();                 // db.phase2.tensura.*: the real Tensura race (inside the db.phase2 smoke prefix)
         SaiyanKiFx.registerSelfTests();                 // the anime Ki effects (KiLayer): saiyan.kivfx
+        com.newuniverse.nusmp.saiyan.armor.SaiyanArmorBoot.init(modBus, container);      // the craftable Saiyan alloy armour set: items, material, nusmp-saiyan-armor-server.toml, saiyan.armor.* (docs/saiyan_armor.md)
     }
 }
