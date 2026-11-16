@@ -125,7 +125,7 @@ public final class FaithGods {
 
     /** {@code /faith ascend <god>}: the survival way to become a god. Everything is read here on the server; returns true when the player was made a god. */
     public static boolean ascend(ServerPlayer p, String godId) {
-        God g = FaithGodRules.god(godId);
+        God g = FaithGodRules.pick(FaithGodRules.god(godId), NUConfig.faithGodCanon());      // the canon row names the offering and the ritual's worshippers
         if (g == null) { SkillUtil.fail(p, SkillMsg.t("gods.unknown", "There is no such god. /faith gods lists them.")); return false; }
         if (!p.isAlive()) return false;
         Skills skills = SkillAPI.getSkillsFrom(p);
@@ -143,6 +143,10 @@ public final class FaithGods {
                 faith == null ? 0 : FaithSkill.getFaith(faith), NUConfig.faithGodAscendFaith());
         if (r != FaithGodRules.Ritual.OK) {
             SkillUtil.fail(p, refusal(r, g, proofs));
+            return false;
+        }
+        if (!FaithGodRules.ritualWorshippersOk(g, worshippers)) {      // canon: Super Saiyan God needs the six righteous Saiyans (five beside the target)
+            SkillUtil.fail(p, SkillMsg.t("gods.need_ritual_worshippers", "The ritual of %s needs at least %s worshippers (you have %s).", g.name(), g.canonRules().ritualWorshippers(), worshippers));
             return false;
         }
         if (ASCEND_LAST.size() >= MAX_CLOCKS) ASCEND_LAST.clear();      // only a rate limit: losing it is harmless
@@ -187,7 +191,8 @@ public final class FaithGods {
     /** {@code /faith gods}: one line per god (name, franchise, class, what the ritual burns). */
     public static void list(ServerPlayer p) {
         p.sendSystemMessage(SkillMsg.t("gods.list_title", "The Faith gods (/faith ascend <id>): stand on a gold block, carry the offering, prove yourself.").withStyle(ChatFormatting.GOLD));
-        for (God g : FaithGodRules.GODS) {
+        for (God g0 : FaithGodRules.GODS) {
+            God g = FaithGodRules.pick(g0, NUConfig.faithGodCanon());
             p.sendSystemMessage(Component.literal(" " + g.id() + ": " + g.name() + " (" + g.franchise() + ", " + g.cls().key() + " class, " + g.offeringCount() + "x " + g.offering() + ")")
                     .withStyle(ChatFormatting.YELLOW));
         }

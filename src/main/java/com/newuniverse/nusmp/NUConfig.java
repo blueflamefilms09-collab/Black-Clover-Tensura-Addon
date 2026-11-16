@@ -28,7 +28,7 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue FAITH_MAX_WORSHIPPERS, FAITH_INVITE_SECONDS, FAITH_RECRUIT_COOLDOWN, FAITH_OFFERING_COOLDOWN, FAITH_GIFT_DISCOUNT, FAITH_TRICKLE_TICKS;
     public static final ModConfigSpec.DoubleValue FAITH_RECRUIT_RANGE, FAITH_OFFERING_RANGE, FAITH_OFFERING_COST;
     // The eight Faith gods (docs/faith_gods.md)
-    public static final ModConfigSpec.BooleanValue FG_ENABLED;
+    public static final ModConfigSpec.BooleanValue FG_ENABLED, FG_CANON;
     public static final ModConfigSpec.IntValue FG_ASCEND_FAITH, FG_MIN_WORSHIPPERS, FG_MIN_OFFERED, FG_DEVOTION_PCT, FG_POWER_PCT, FG_EP_GATE_PCT, FG_MAX_LINES, FG_ASCEND_COOLDOWN;
 
     // DanMachi
@@ -341,6 +341,9 @@ public final class NUConfig {
                 .defineInRange("evolutionEpGatePercent", 100, 0, 1000);
         FG_MAX_LINES = b.comment("How many god lines one player may follow at once.").defineInRange("maxGodLines", 1, 1, 8);
         FG_ASCEND_COOLDOWN = b.comment("Wait between two rituals of one player (ticks).").defineInRange("ascendCooldown", 6000, 0, 10_000_000);
+        FG_CANON = b.comment("Faith gods canon pass (docs/faith_gods.md 'Canon pass'): the moves, passives, unlock order, colours and drawbacks of the eight gods are read from each series' English wiki (Femto's Eclipse and gravity well, Lucifero's gates, Luminus' Sanctuary, Mavis' Fairy Law, Ill Ilah's Black Spot, Super Saiyan God's six-Saiyan ritual, Ra's life-point cannon, Aqua's undead-only holy magic).",
+                        "false = the guess-era tables of 4.6.0 exactly (needs enabled). Skill names and descriptions are static text and do not change with this setting.")
+                .define("canon", true);
         ALL_FICTION_CANON = b.comment("All Fiction / Book Maker canon pass (Medaka Box wiki, docs/all_fiction_rework.md): All Fiction cannot erase another Minus (a player holding Book Maker or any Ultimate), Undo and Erase Effects refuse when there is nothing to erase, new modes Erase Presence and April Fiction (a timed erase); Book Maker's screw does almost no damage and drags the target's attack and armour down toward yours for a few seconds, plus the mastered mode Leg Eating Forest. false = the guess-era behaviour of allFictionGod (needs allFictionGod).").define("allFictionCanon", true);
         b.pop();
 
@@ -369,6 +372,8 @@ public final class NUConfig {
     public static double faithOfferingRange() { return Math.max(2.0, Math.min(64.0, live(FAITH_OFFERING_RANGE))); }
     public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
     public static boolean faithGodsEnabled() { return live(FG_ENABLED); }
+    /** The canon pass of the eight Faith gods (default on before the SERVER config is loaded). */
+    public static boolean faithGodCanon() { return live(FG_CANON); }
     public static int faithGodAscendFaith() { return Math.max(0, live(FG_ASCEND_FAITH)); }
     public static int faithGodMinWorshippers() { return Math.max(0, Math.min(64, live(FG_MIN_WORSHIPPERS))); }
     public static int faithGodMinOffered() { return Math.max(0, live(FG_MIN_OFFERED)); }

@@ -55,19 +55,25 @@ final class FaithGodMoves {
             case BLESS -> done = bless(p, at, r, strength, amp);
             case HEAL -> done = heal(p, at, r, amount);
             case SMITE -> done = smite(p, inst, at, r, amount, masteryFrac);
-            case BEAM -> done = beam(p, inst, r, amount, masteryFrac, g.rgb());
+            case BEAM -> done = beam(p, inst, r, amount, masteryFrac, FaithGodRules.rgbOf(g, ult));
             case WARD -> done = ward(p, at, r, strength, amp);
             case BIND -> done = bind(p, at, r, strength);
             case BLINK -> done = blink(p, inst, r, amount, masteryFrac);
             case DRAIN -> done = drain(p, inst, r, amount, masteryFrac);
             case PURGE -> done = purge(p, at, r, strength);
             case SURGE -> done = surge(p, strength, amp);
+            case WELL -> done = FaithGodCanonMoves.well(p, inst, at, r, amount, masteryFrac, strength);
+            case PRESS -> done = FaithGodCanonMoves.press(p, inst, at, r, amount, masteryFrac, strength);
+            case HOLY -> done = FaithGodCanonMoves.holy(p, inst, at, r, amount, masteryFrac);
+            case LAW -> done = FaithGodCanonMoves.law(p, inst, at, r, amount, masteryFrac);
+            case LIFE_BEAM -> done = FaithGodCanonMoves.lifeBeam(p, inst, m, r, amount, masteryFrac, FaithGodRules.rgbOf(g, ult));
             default -> done = domain(p, at, r, strength, amp);
         }
         if (!done) return false;
-        int argb = 0xFF000000 | g.rgb();
+        int rgb = FaithGodRules.rgbOf(g, ult);
+        int argb = 0xFF000000 | rgb;
         SkillAnimeFx.sigil(level, g.sigil(), p.position(), Math.max(3.0, Math.min(14.0, r > 0 ? r : 4.0)), argb, 30);
-        if (r > 0) SkillFx.ring(level, p.position(), Math.min(14.0, r), g.rgb());
+        if (r > 0) SkillFx.ring(level, p.position(), Math.min(14.0, r), rgb);
         SkillFx.sound(level, p.position(), SoundEvents.BEACON_ACTIVATE, 0.8F, 1.0F + (g.rgb() & 7) * 0.05F);
         SkillUtil.actionbar(p, net.minecraft.network.chat.Component.literal(m.name()));
         return true;
@@ -105,7 +111,7 @@ final class FaithGodMoves {
         return true;
     }
 
-    private static boolean beam(ServerPlayer p, ManasSkillInstance inst, double range, double amount, double mf, int rgb) {
+    static boolean beam(ServerPlayer p, ManasSkillInstance inst, double range, double amount, double mf, int rgb) {
         Vec3 from = p.getEyePosition();
         Vec3 to = from.add(p.getViewVector(1.0F).scale(range));
         List<LivingEntity> foes = SkillTargets.foesAlong(p, from, to, 1.2);
@@ -205,6 +211,7 @@ final class FaithGodMoves {
         int amp = FaithGodRules.passiveAmp(g, ult, list.size());
         List<Passive> pas = FaithGodRules.passives(g, ult);
         for (Passive pa : pas) refresh(p, effectOf(pa.effect()), pa.effect() == FaithGodRules.Pas.SIGHT ? 260 : 80, pa.effect() == FaithGodRules.Pas.SIGHT || pa.effect() == FaithGodRules.Pas.FIRE || pa.effect() == FaithGodRules.Pas.WATER ? 0 : amp);
+        if (FaithGodRules.tollApplies(g, ult, inst.isMastered(p)) && !p.isCreative()) refresh(p, MobEffects.WEAKNESS, 80, 0);      // Super Saiyan God: the form tires the body until it is mastered (no hunger: the mod bans it)
         if (pas.isEmpty() || list.isEmpty() || p.getServer() == null) return;
         Holder<MobEffect> shared = effectOf(pas.get(0).effect());
         int shown = 0;

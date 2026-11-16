@@ -29,6 +29,45 @@ public final class FaithGodSelfTests {
         registered = true;
         SelfTests.register("gods.rules", s -> rules());
         SelfTests.register("gods.skills", FaithGodSelfTests::skills);
+        SelfTests.register("gods.canon", FaithGodSelfTests::canon);
+    }
+
+    /** The canon pass (docs/faith_gods.md "Canon pass"): the second table matches the first in ids and counts, the pure rules are bounded, and the registered skills read it without changing their mode counts. */
+    private static Result canon(MinecraftServer server) {
+        if (FaithGodRules.CANON_GODS.size() != FaithGodRules.GODS.size()) return Result.fail("the canon table has " + FaithGodRules.CANON_GODS.size() + " gods, expected " + FaithGodRules.GODS.size());
+        int moves = 0;
+        for (God g : FaithGodRules.GODS) {
+            God c = FaithGodRules.pick(g, true);
+            if (c == g || c.canonRules() == null) return Result.fail(g.id() + ": no canon row");
+            if (FaithGodRules.pick(g, false) != g) return Result.fail(g.id() + ": canon off must give the 4.6.0 row");
+            if (!c.uniqueId().equals(g.uniqueId()) || !c.ultimateId().equals(g.ultimateId()) || c.cls() != g.cls() || !c.franchise().equals(g.franchise())) return Result.fail(g.id() + ": the canon row changed an id, class or franchise");
+            if (c.moves().size() != FaithGodRules.POOL_ACTIVES || c.passives().size() != FaithGodRules.POOL_PASSIVES) return Result.fail(g.id() + ": the canon row has the wrong number of abilities");
+            Set<String> seen = new HashSet<>();
+            double last = -1.0;
+            for (int i = 0; i < c.moves().size(); i++) {
+                FaithGodRules.Move m = c.moves().get(i);
+                if (!seen.add(m.id())) return Result.fail(g.id() + " repeats the canon move " + m.id());
+                if (m.unlock() < 0.0 || m.unlock() > 0.5 || m.hpFrac() < 0.0 || m.hpFrac() > 0.5 || m.minWorshippers() < 0 || m.minWorshippers() > 8) return Result.fail(g.id() + "." + m.id() + ": a canon number is out of its bound");
+                if (i < FaithGodRules.UNIQUE_ACTIVES) {
+                    if (m.unlock() < last) return Result.fail(g.id() + ": the Unique's unlocks do not rise");
+                    last = m.unlock();
+                }
+                moves++;
+            }
+            if (c.moves().get(0).unlock() != 0.0) return Result.fail(g.id() + ": the first canon move must be open from the start");
+            if (FaithGodRules.ritualWorshippersOk(c, 0) != (c.canonRules().ritualWorshippers() <= 0)) return Result.fail(g.id() + ": the ritual worshipper minimum is wrong");
+        }
+        if (FaithGodRules.lawCostFrac(1000) > 0.24 + 1e-9 || FaithGodRules.hpPaid(3.0, 20.0, 1.0) > 1.0 + 1e-9 || FaithGodRules.hpPaid(2.0, 20.0, 1.0) != 0.0) return Result.fail("a health price can take the caster under one heart");
+        if (FaithGodRules.gateFactor(0) >= FaithGodRules.gateFactor(3) || FaithGodRules.gateFactor(3) >= FaithGodRules.gateFactor(6)) return Result.fail("Lucifero's gates do not rise");
+        if (FaithGodRules.holyFactor(true) <= FaithGodRules.holyFactor(false)) return Result.fail("holy magic is not heavier on the undead");
+        for (God g : FaithGodRules.GODS) {
+            ManasSkill sk = SkillAPI.getSkillRegistry().get(FaithGods.UNIQUE.get(g.id()).getId());
+            if (!(sk instanceof FaithGodSkill fs)) return Result.fail(g.uniqueId() + " is not registered as a FaithGodSkill");
+            ManasSkillInstance inst = fs.createDefaultInstance();
+            if (fs.getModes(inst) != FaithGodRules.UNIQUE_ACTIVES || fs.wheel().size() != FaithGodRules.UNIQUE_ACTIVES) return Result.fail(g.id() + ": the canon wheel changed the mode count");
+            for (int m = 0; m < fs.getModes(inst); m++) if (fs.getModeId(inst, m).isBlank()) return Result.fail(g.id() + ": a mode id is blank");
+        }
+        return Result.ok(FaithGodRules.CANON_GODS.size() + " canon gods, " + moves + " canon moves, faithGods.canon=" + NUConfig.faithGodCanon());
     }
 
     private static Result rules() {
