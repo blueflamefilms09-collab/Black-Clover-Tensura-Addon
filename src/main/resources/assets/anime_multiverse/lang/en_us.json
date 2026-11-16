@@ -18845,5 +18845,12 @@
   "greed.vault.title": "Gluttony Skill Vault (%s)",
   "greed.vault.ok": "Done.",
   "greed.vault.equipped": "Greed lends you a devoured skill.",
-  "greed.vault.sacrificed": "Greed devours the skill."
+  "greed.vault.sacrificed": "Greed devours the skill.",
+  "itemGroup.anime_multiverse.franchise_black_clover": "Black Clover",
+  "itemGroup.anime_multiverse.franchise_tensura": "Tensura",
+  "itemGroup.anime_multiverse.franchise_berserk": "Berserk",
+  "itemGroup.anime_multiverse.franchise_fairy_tail": "Fairy Tail",
+  "itemGroup.anime_multiverse.franchise_magi": "Magi",
+  "itemGroup.anime_multiverse.franchise_hero_weapons": "Hero Weapons",
+  "itemGroup.anime_multiverse.franchise_anime_worlds": "Other Anime Worlds"
 }

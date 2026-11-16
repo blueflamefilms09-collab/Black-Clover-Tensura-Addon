@@ -36,7 +36,7 @@ public final class NUCreativeTab {
     }
 
     private static void fill(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, G only) {
-        Function<G, CreativeModeTab.Output> o = g -> g == only ? output : DISCARD;
+        Function<G, CreativeModeTab.Output> o = g -> only == null || g == only ? output : DISCARD;   // only == null: every group (the franchise tabs)
                 // One of every cover state (Flame shown), then every magic as a three-leaf.
                 for (GrimoireCover c : GrimoireCover.values()) {
                     MagicType m = c.isForbidden() ? MagicType.DARK : MagicType.FLAME;
@@ -113,6 +113,32 @@ public final class NUCreativeTab {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGGS = tab("eggs", G.EGGS, () -> new ItemStack(Items.ZOMBIE_SPAWN_EGG));
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNGEON = tab("dungeon", G.DUNGEON, () -> new ItemStack(com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT.get()));
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MISC = tab("misc", G.MISC, () -> new ItemStack(com.newuniverse.nusmp.compat.CompatItems.WIKI.get()));
+
+    /** 3.88.0: the franchise tabs. Each one re-runs the whole fill and keeps the items its franchise owns (FranchiseTabs), so the older tabs stay as they were and an item can be in both. Empty (= hidden) when the client option is off. */
+    private static void fillFranchise(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, String id) {
+        if (!com.newuniverse.nusmp.franchise.FranchiseTabsConfig.enabled()) return;
+        fill(params, (stack, vis) -> {
+            net.minecraft.resources.ResourceLocation key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+            if (key != null && NUSMP.MODID.equals(key.getNamespace())
+                    && id.equals(com.newuniverse.nusmp.franchise.FranchiseTabs.tabOf(key.getPath(), com.newuniverse.nusmp.franchise.FranchiseMap.franchiseOf(key.getPath())))) output.accept(stack, vis);
+        }, null);
+    }
+
+    private static DeferredHolder<CreativeModeTab, CreativeModeTab> franchiseTab(String id, java.util.function.Supplier<ItemStack> icon) {
+        return TABS.register("franchise_" + id, () -> CreativeModeTab.builder()
+                .title(Component.translatable("itemGroup.anime_multiverse.franchise_" + id))
+                .icon(icon)
+                .displayItems((params, output) -> fillFranchise(params, output, id))
+                .build());
+    }
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_BLACK_CLOVER = franchiseTab("black_clover", () -> GrimoireItem.createUnbound(5, MagicType.ANTI_MAGIC, Devil.LIEBE));
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_TENSURA = franchiseTab("tensura", () -> new ItemStack(com.newuniverse.nusmp.beastwill.BeastWillItems.CORE.get()));
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_BERSERK = franchiseTab("berserk", () -> com.newuniverse.nusmp.greed.GreedItems.creativeStack());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_FAIRY_TAIL = franchiseTab("fairy_tail", () -> new ItemStack(com.newuniverse.nusmp.fairytail.storm.StormBoot.STAFF.get()));
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_MAGI = franchiseTab("magi", () -> com.newuniverse.nusmp.relics.djinn.DjinnItems.darkShardStack());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_HERO_WEAPONS = franchiseTab("hero_weapons", () -> com.newuniverse.nusmp.heroweapon.HeroItems.stack(com.newuniverse.nusmp.heroweapon.HeroKind.SWORD));
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_ANIME_WORLDS = franchiseTab("anime_worlds", () -> new ItemStack(Items.NETHER_STAR));
 
     private NUCreativeTab() {}
 }
