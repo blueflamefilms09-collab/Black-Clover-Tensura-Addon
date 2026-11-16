@@ -495,6 +495,22 @@ def hall_demon():
     return std_rig(hip=14.0, sh=23.0, neck=24.0, sw=6.6, el=15.0, hipx=2.6, headz=0.6, elx=0.6), ("FFAA38", 0.11, 0.55, 1.0)
 
 
+def fit_skin(path, kb=300):
+    """A baked skin is noisy, so its 256-colour palette PNG can still pass 300 KB: re-quantise to fewer colours (128, 96, 64, 48) until it fits. Run on a palette or an RGBA skin."""
+    from PIL import Image
+    im = Image.open(path).convert("RGBA")
+    for n in (256, 128, 96, 64, 48):
+        try:
+            import imagequant
+            q = imagequant.quantize_pil_image(im, dithering_level=0.0, max_colors=n)
+        except ImportError:
+            q = im.quantize(colors=n, method=Image.Quantize.FASTOCTREE, dither=Image.Dither.NONE)
+        q.save(path, optimize=True)
+        if os.path.getsize(path) <= kb * 1024:
+            break
+    return os.path.getsize(path)
+
+
 def crop_shrink(path):
     """The preview is cropped to the figure (the studio background is flat) and quantised."""
     from PIL import Image, ImageChops
@@ -543,6 +559,7 @@ def main(argv):
         print(did, "faces before export:", count())
         be.finish_entity("devil_" + did, rig, glow=glow, skin=1024 if not quick else 512, bake=2048 if not quick else 512, lod_ratio=0.27,
                          out_mesh=trial, out_skin=trial, previews={os.path.join(pv, did + ".png"): (30, None), os.path.join(pv, did + "_back.png"): (205, None)}, poses={}, cage=0.2)
+        fit_skin(os.path.join(trial or be.ENTITY_SKIN_DIR, f"devil_{did}.png"))
 
 
 if __name__ == "__main__":
