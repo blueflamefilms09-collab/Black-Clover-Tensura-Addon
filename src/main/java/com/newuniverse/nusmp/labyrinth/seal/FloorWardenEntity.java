@@ -149,6 +149,8 @@ public class FloorWardenEntity extends LivingArmorEntity implements BudgetedBoss
         if (reworkOn()) {
             if (moves == null) moves = new WardenBrain();
             moves.tick(this, sl);
+        } else if (customMoves()) {
+            customMovesTick(sl);                                                          // rework 2: a subclass with a move set of its own (the Labyrinth Guardian) runs it instead of the old two moves
         } else if (target != null && target.isAlive()) {
             double d2 = distanceToSqr(target);
             if (slamCooldown <= 0 && d2 <= SLAM_REACH * SLAM_REACH) {
@@ -168,7 +170,14 @@ public class FloorWardenEntity extends LivingArmorEntity implements BudgetedBoss
     public boolean reworkOn() { return getClass() == FloorWardenEntity.class && BossRulesConfig.dungeonWarden(); }
 
     /** Is a move of the new set winding up or landing (the melee goal then stands still)? */
-    private boolean casting() { return moves != null && moves.activeMove() >= 0; }
+    protected boolean casting() { return (moves != null && moves.activeMove() >= 0) || customCasting(); }
+
+    /** Rework 2 hooks for a subclass with its own telegraphed move set (the Labyrinth Guardian): is it on, run one tick of it, is one of its moves winding up. The Warden has none. */
+    protected boolean customMoves() { return false; }
+
+    protected void customMovesTick(ServerLevel sl) {}
+
+    protected boolean customCasting() { return false; }
 
     /** The new set's phase change: the bar turns pink at half health and red at a quarter. */
     public void setBarPhase(int phase) {

@@ -3383,6 +3383,227 @@
     ]
    }
   },
+  "dungeon.boss.warden": {
+   "particles": [
+    "rune_sol",
+    "rune_key",
+    "spark",
+    "soot_puff"
+   ],
+   "color": "#B89CFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.direwolf": {
+   "particles": [
+    "ash_flake",
+    "bone_chip",
+    "spark",
+    "soot_puff"
+   ],
+   "color": "#9AA2B6",
+   "dark": {
+    "particles": [
+     "ash_flake",
+     "cinder",
+     "blood_drop",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.basilisk": {
+   "particles": [
+    "spore",
+    "droplet",
+    "glint",
+    "poison_cloud"
+   ],
+   "color": "#5FD08A",
+   "dark": {
+    "particles": [
+     "spore",
+     "leaf_autumn",
+     "void_speck",
+     "poison_cloud"
+    ]
+   }
+  },
+  "dungeon.boss.armor": {
+   "particles": [
+    "spark",
+    "rune_key",
+    "ash_flake",
+    "soot_puff"
+   ],
+   "color": "#C8C0B0",
+   "dark": {
+    "particles": [
+     "ash_flake",
+     "cinder",
+     "blood_drop",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.gravity": {
+   "particles": [
+    "earth_chip",
+    "void_speck",
+    "rune_eye",
+    "ash_flake"
+   ],
+   "color": "#9A86D8",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.blood": {
+   "particles": [
+    "blood_drop",
+    "rune_eye",
+    "ember",
+    "soot_puff"
+   ],
+   "color": "#C02040",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.spatial": {
+   "particles": [
+    "mana_mote",
+    "nebula_puff",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#B07CFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.flame": {
+   "particles": [
+    "ember",
+    "rune_flame",
+    "spark",
+    "soot_puff"
+   ],
+   "color": "#FF8A3A",
+   "dark": {
+    "particles": [
+     "cinder",
+     "ember",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.frost": {
+   "particles": [
+    "snowflake",
+    "shard_ice",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#B8F0FF",
+   "dark": {
+    "particles": [
+     "ink_splat",
+     "droplet",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.verdant": {
+   "particles": [
+    "spore",
+    "petal",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#7FD070",
+   "dark": {
+    "particles": [
+     "spore",
+     "leaf_autumn",
+     "void_speck",
+     "poison_cloud"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.storm": {
+   "particles": [
+    "rune_bolt",
+    "spark",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#8FD0FF",
+   "dark": {
+    "particles": [
+     "feather_black",
+     "void_speck",
+     "soul_wisp",
+     "smoke_wisp"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.shadow": {
+   "particles": [
+    "void_speck",
+    "shadow_tendril",
+    "rune_eye",
+    "soot_puff"
+   ],
+   "color": "#6A4FA0",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "shadow_tendril",
+     "soul_wisp",
+     "soot_puff"
+    ]
+   }
+  },
+  "dungeon.boss.guardian.astral": {
+   "particles": [
+    "star4",
+    "gem_sparkle",
+    "mana_mote",
+    "mote_soft"
+   ],
+   "color": "#FFF0B0",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
   "relic.wave.0": {
    "particles": [
     "ember",

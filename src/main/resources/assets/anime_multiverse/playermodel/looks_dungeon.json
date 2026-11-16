@@ -5961,6 +5961,132 @@
      "glow": true
     }
    ]
+  },
+  "guardian_gravity": {
+   "skin": "guardian_gravity",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_gravity",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_blood": {
+   "skin": "guardian_blood",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_blood",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_spatial": {
+   "skin": "guardian_spatial",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_spatial",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_flame": {
+   "skin": "guardian_flame",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_flame",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_frost": {
+   "skin": "guardian_frost",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_frost",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_verdant": {
+   "skin": "guardian_verdant",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_verdant",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_storm": {
+   "skin": "guardian_storm",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_storm",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_shadow": {
+   "skin": "guardian_shadow",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_shadow",
+     "glow": true
+    }
+   ]
+  },
+  "guardian_astral": {
+   "skin": "guardian_astral",
+   "slim": false,
+   "scale": 1.8133,
+   "hold_r": -0.42,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_floor_warden",
+     "texture": "pmx_guardian_astral",
+     "glow": true
+    }
+   ]
   }
  }
 }

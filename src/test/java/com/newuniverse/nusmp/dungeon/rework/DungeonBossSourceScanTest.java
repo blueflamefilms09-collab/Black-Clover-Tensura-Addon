@@ -106,8 +106,8 @@ class DungeonBossSourceScanTest {
         assertTrue(read(SRC + "boss/BossHooks.java").contains("DungeonBossSelfTests.register()"));
         assertTrue(read(PKG + "DungeonBossSelfTests.java").contains("SelfTests.register(\"dboss\""));
         String smoke = read(".github/workflows/smoke.yml");
-        assertTrue(smoke.contains(",dboss,scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "dboss sits directly before scaling and the tail is unchanged");
-        assertEquals(1, count(smoke, ",dboss,"));
+        assertTrue(smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the tail of the smoke list is unchanged");
+        assertEquals(1, count(smoke, ",dboss,"), "dboss is in the smoke list once (later prefixes may follow it, so the position is not asserted)");
     }
 
     @Test

@@ -40,6 +40,12 @@ public final class DungeonLooks {
     private static final Map<String, String[]> GUARDIAN = new ConcurrentHashMap<>();
     private static final String[] NONE = new String[0];
 
+    /** Dungeon-boss rework 2: the colourways of the Warden suit, one per sector trait in the order of {@code GuardianScaling.Trait} (tools/dungeon_bosses/gen_guardian_colourways.py). */
+    private static final String[] GUARDIAN_KITS = {"guardian_gravity", "guardian_blood", "guardian_spatial", "guardian_flame", "guardian_frost", "guardian_verdant", "guardian_storm", "guardian_shadow", "guardian_astral"};
+
+    /** The colourway look of a synced theme kit (the trait's ordinal + 1), or {@link #FLOOR_WARDEN} for 0 and anything out of range. */
+    public static String guardianKit(int kit) { return kit >= 1 && kit <= GUARDIAN_KITS.length ? GUARDIAN_KITS[kit - 1] : FLOOR_WARDEN; }
+
     /** The look id of a Foundry mob (interned: one string per id). */
     public static String foundry(String id) { return FOUNDRY.computeIfAbsent(id, k -> FOUNDRY_PREFIX + k); }
 

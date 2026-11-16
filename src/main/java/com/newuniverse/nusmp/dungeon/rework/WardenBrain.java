@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.dungeon.rework;
 import com.newuniverse.nusmp.audio.Cue;
 import com.newuniverse.nusmp.audio.MobVoice;
 import com.newuniverse.nusmp.dungeon.rework.DungeonReworkRules.Move;
+import com.newuniverse.nusmp.dungeon.rework2.DungeonBossSoundRules;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.labyrinth.seal.FloorWardenEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -38,6 +40,9 @@ public final class WardenBrain {
     private static final ResourceLocation PHASE3_SPEED = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "warden_phase3_speed");
 
     private final long[] readyAt = new long[DungeonReworkRules.WARDEN.size()];
+    /** Rework 2: its own sound gate (cooldown per cue, four a second) and its own particle theme (colours of the Warden: seal gold over iron, a violet shadow set). */
+    private final DungeonBossSoundRules.Limiter cues = new DungeonBossSoundRules.Limiter();
+    private final ThemeKey theme = ThemeKey.of("dungeon.boss.warden");
     private int move = -1, t, fight, idle, phase = 1;
     private long gapUntil;
     private boolean enraged;
@@ -86,10 +91,10 @@ public final class WardenBrain {
         if (!enraged && DungeonReworkRules.enraged(fight)) {
             enraged = true;
             announce(w, sl, "enrage");
-            DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 8.0, 32, true);
-            DungeonStrikes.sound(sl, w, SoundEvents.RAVAGER_ROAR, 1.6f, 0.6f);
+            DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 8.0, 32, true);
+            DungeonStrikes.cue(sl, w, cues, "roar", SoundEvents.RAVAGER_ROAR, 1.6f, 0.6f);
         }
-        if (phase >= 2 && w.tickCount % (phase >= 3 ? 10 : 20) == 0) DungeonStrikes.burst(sl, w.getX(), w.getY() + w.getBbHeight() * 0.55, w.getZ(), phase >= 3 ? 5 : 3, 0.6, phase >= 3);
+        if (phase >= 2 && w.tickCount % (phase >= 3 ? 10 : 20) == 0) DungeonStrikes.burst(sl, theme, w.getX(), w.getY() + w.getBbHeight() * 0.55, w.getZ(), phase >= 3 ? 5 : 3, 0.6, phase >= 3);
         if (move >= 0) {
             advance(w, sl, target, now);
             return;
@@ -103,15 +108,15 @@ public final class WardenBrain {
     private void onPhase(FloorWardenEntity w, ServerLevel sl) {
         w.setBarPhase(phase);
         MobVoice.play(w, w.soundFamily(), Cue.AGGRO);
-        DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 10.0, 36, phase >= 3);
-        DungeonStrikes.burst(sl, w.getX(), w.getY() + w.getBbHeight() * 0.5, w.getZ(), 30, 1.0, phase >= 3);
-        DungeonStrikes.flash(sl, w.getX(), w.getY() + 1.0, w.getZ());
+        DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 10.0, 36, phase >= 3);
+        DungeonStrikes.burst(sl, theme, w.getX(), w.getY() + w.getBbHeight() * 0.5, w.getZ(), 30, 1.0, phase >= 3);
+        DungeonStrikes.flash(sl, theme, w.getX(), w.getY() + 1.0, w.getZ());
         if (phase >= 3) {
-            DungeonStrikes.sound(sl, w, SoundEvents.WITHER_SPAWN, 0.9f, 1.3f);
+            DungeonStrikes.cue(sl, w, cues, "gong", SoundEvents.WITHER_SPAWN, 0.9f, 1.3f);
             AttributeInstance speed = w.getAttribute(Attributes.MOVEMENT_SPEED);
             if (speed != null && speed.getModifier(PHASE3_SPEED) == null) speed.addTransientModifier(new AttributeModifier(PHASE3_SPEED, 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         } else {
-            DungeonStrikes.sound(sl, w, SoundEvents.RAVAGER_ROAR, 1.5f, 0.8f);
+            DungeonStrikes.cue(sl, w, cues, "gong", SoundEvents.RAVAGER_ROAR, 1.5f, 0.8f);
         }
         announce(w, sl, phase >= 3 ? "p3" : "p2");
     }
@@ -137,7 +142,7 @@ public final class WardenBrain {
                     readyAt[i] = now + 20;
                     return;
                 }
-                DungeonStrikes.sound(sl, w, SoundEvents.CHAIN_PLACE, 1.6f, 0.5f);
+                DungeonStrikes.cue(sl, w, cues, "chain", SoundEvents.CHAIN_PLACE, 1.6f, 0.5f);
             }
             case DungeonReworkRules.W_STEP -> {
                 stepTo = findSpot(sl, w, target);
@@ -145,16 +150,16 @@ public final class WardenBrain {
                     readyAt[i] = now + 40;
                     return;
                 }
-                DungeonStrikes.burst(sl, w.getX(), w.getY() + 1.0, w.getZ(), 14, 0.5, true);
-                DungeonStrikes.sound(sl, w, SoundEvents.ENDERMAN_TELEPORT, 1.0f, 0.5f);
+                DungeonStrikes.burst(sl, theme, w.getX(), w.getY() + 1.0, w.getZ(), 14, 0.5, true);
+                DungeonStrikes.cue(sl, w, cues, "step", SoundEvents.ENDERMAN_TELEPORT, 1.0f, 0.5f);
             }
-            case DungeonReworkRules.W_PULSE -> DungeonStrikes.sound(sl, w, SoundEvents.WARDEN_SONIC_CHARGE, 1.0f, 0.8f);
+            case DungeonReworkRules.W_PULSE -> DungeonStrikes.cue(sl, w, cues, "rise", SoundEvents.WARDEN_SONIC_CHARGE, 1.0f, 0.8f);
             case DungeonReworkRules.W_TOLL -> {
                 sigils = DungeonReworkRules.sigils(w.getX(), w.getZ(), w.getRandom().nextDouble() * Math.PI * 2.0);
                 announce(w, sl, "toll");
-                DungeonStrikes.sound(sl, w, SoundEvents.BELL_RESONATE, 2.0f, 0.5f);
+                DungeonStrikes.cue(sl, w, cues, "charge", SoundEvents.BELL_RESONATE, 2.0f, 0.5f);
             }
-            default -> DungeonStrikes.sound(sl, w, SoundEvents.ANVIL_PLACE, 1.0f, 0.5f);          // the hammer rises
+            default -> DungeonStrikes.cue(sl, w, cues, "rise", SoundEvents.ANVIL_PLACE, 1.0f, 0.5f);          // the hammer rises
         }
         move = i;
         t = 0;
@@ -190,29 +195,29 @@ public final class WardenBrain {
     private void telegraph(FloorWardenEntity w, ServerLevel sl, int tick) {
         switch (move) {
             case DungeonReworkRules.W_SLAM -> {
-                if (tick % 4 == 1) DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 4.5, 24, false);
+                if (tick % 4 == 1) DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 4.5, 24, false);
             }
             case DungeonReworkRules.W_LASH -> {
                 if (tick % 3 == 1) for (UUID id : marked) {
                     Player p = sl.getPlayerByUUID(id);
-                    if (p != null && p.isAlive()) DungeonStrikes.line(sl, w.position().add(0, w.getBbHeight() * 0.7, 0), p.position().add(0, 1.0, 0), true, 3);
+                    if (p != null && p.isAlive()) DungeonStrikes.line(sl, theme, w.position().add(0, w.getBbHeight() * 0.7, 0), p.position().add(0, 1.0, 0), true, 3);
                 }
             }
             case DungeonReworkRules.W_STEP -> {
-                if (stepTo != null && tick % 3 == 1) DungeonStrikes.ring(sl, stepTo.x, stepTo.y + 0.1, stepTo.z, 1.8, 16, true);
+                if (stepTo != null && tick % 3 == 1) DungeonStrikes.ring(sl, theme, stepTo.x, stepTo.y + 0.1, stepTo.z, 1.8, 16, true);
             }
             case DungeonReworkRules.W_PULSE -> {
-                if (tick % 5 == 1) DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), Math.max(2.0, 14.0 - tick * 0.4), 28, false);
+                if (tick % 5 == 1) DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), Math.max(2.0, 14.0 - tick * 0.4), 28, false);
             }
             case DungeonReworkRules.W_TOLL -> {
                 if (tick % 5 == 1 && sigils != null) {
                     for (int i = 0; i + 1 < sigils.length; i += 2) {
-                        DungeonStrikes.ring(sl, sigils[i], w.getY() + 0.1, sigils[i + 1], DungeonReworkRules.SIGIL_RADIUS, 24, false);
-                        DungeonStrikes.burst(sl, sigils[i], w.getY() + 1.0, sigils[i + 1], 3, 0.3, false);
+                        DungeonStrikes.ring(sl, theme, sigils[i], w.getY() + 0.1, sigils[i + 1], DungeonReworkRules.SIGIL_RADIUS, 24, false);
+                        DungeonStrikes.burst(sl, theme, sigils[i], w.getY() + 1.0, sigils[i + 1], 3, 0.3, false);
                     }
                 }
-                if (tick % 10 == 1) DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 22.0, 40, true);
-                if (tick == 35 || tick == 55) DungeonStrikes.sound(sl, w, SoundEvents.BELL_RESONATE, 2.0f, tick == 35 ? 0.6f : 0.75f);
+                if (tick % 10 == 1) DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 22.0, 40, true);
+                if (tick == 35 || tick == 55) DungeonStrikes.cue(sl, w, cues, "toll", SoundEvents.BELL_RESONATE, 2.0f, tick == 35 ? 0.6f : 0.75f);
             }
             default -> { }
         }
@@ -224,9 +229,9 @@ public final class WardenBrain {
                 for (Player p : DungeonStrikes.victims(sl, w, 4.5)) {
                     if (DungeonStrikes.strike(w, p, dmg(9.0), false)) DungeonStrikes.knock(w, p, 1.2);
                 }
-                DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 4.5, 36, false);
-                DungeonStrikes.flash(sl, w.getX(), w.getY() + 0.2, w.getZ());
-                DungeonStrikes.sound(sl, w, SoundEvents.ANVIL_LAND, 1.4f, 0.6f);
+                DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 4.5, 36, false);
+                DungeonStrikes.flash(sl, theme, w.getX(), w.getY() + 0.2, w.getZ());
+                DungeonStrikes.cue(sl, w, cues, "slam", SoundEvents.ANVIL_LAND, 1.4f, 0.6f);
                 MobVoice.play(w, w.soundFamily(), Cue.ATTACK);
             }
             case DungeonReworkRules.W_LASH -> {
@@ -243,13 +248,13 @@ public final class WardenBrain {
                         p.hurtMarked = true;
                     }
                     if (!slowed) slowed = DungeonStrikes.slow(w, p, 20, 1);
-                    DungeonStrikes.line(sl, w.position().add(0, w.getBbHeight() * 0.7, 0), p.position().add(0, 1.0, 0), false, 6);
+                    DungeonStrikes.line(sl, theme, w.position().add(0, w.getBbHeight() * 0.7, 0), p.position().add(0, 1.0, 0), false, 6);
                 }
-                DungeonStrikes.sound(sl, w, SoundEvents.CHAIN_PLACE, 1.6f, 0.9f);
+                DungeonStrikes.cue(sl, w, cues, "chain", SoundEvents.CHAIN_PLACE, 1.6f, 0.9f);
             }
             case DungeonReworkRules.W_STEP -> {
                 if (stepTo == null) return;
-                DungeonStrikes.burst(sl, w.getX(), w.getY() + 1.0, w.getZ(), 20, 0.5, true);
+                DungeonStrikes.burst(sl, theme, w.getX(), w.getY() + 1.0, w.getZ(), 20, 0.5, true);
                 w.teleportTo(stepTo.x, stepTo.y, stepTo.z);
                 w.getNavigation().stop();
                 LivingEntity target = w.getTarget();
@@ -257,9 +262,9 @@ public final class WardenBrain {
                 for (Player p : DungeonStrikes.victims(sl, w, 3.2)) {
                     if (DungeonStrikes.strike(w, p, dmg(6.0), false)) DungeonStrikes.knock(w, p, 0.9);
                 }
-                DungeonStrikes.ring(sl, stepTo.x, stepTo.y + 0.1, stepTo.z, 3.2, 24, true);
-                DungeonStrikes.flash(sl, stepTo.x, stepTo.y + 0.5, stepTo.z);
-                DungeonStrikes.sound(sl, w, SoundEvents.ENDERMAN_TELEPORT, 1.2f, 0.6f);
+                DungeonStrikes.ring(sl, theme, stepTo.x, stepTo.y + 0.1, stepTo.z, 3.2, 24, true);
+                DungeonStrikes.flash(sl, theme, stepTo.x, stepTo.y + 0.5, stepTo.z);
+                DungeonStrikes.cue(sl, w, cues, "step", SoundEvents.ENDERMAN_TELEPORT, 1.2f, 0.6f);
             }
             case DungeonReworkRules.W_TOLL -> {
                 if (sigils == null) return;
@@ -267,10 +272,10 @@ public final class WardenBrain {
                     boolean inside = DungeonReworkRules.insideSigil(sigils, p.getX(), p.getZ());
                     DungeonStrikes.strike(w, p, dmg(22.0) * DungeonReworkRules.tollShare(inside), true);
                 }
-                DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 22.0, 48, true);
-                DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), 12.0, 40, false);
-                DungeonStrikes.flash(sl, w.getX(), w.getY() + 1.0, w.getZ());
-                DungeonStrikes.sound(sl, w, SoundEvents.WARDEN_SONIC_BOOM, 1.6f, 0.7f);
+                DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 22.0, 48, true);
+                DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), 12.0, 40, false);
+                DungeonStrikes.flash(sl, theme, w.getX(), w.getY() + 1.0, w.getZ());
+                DungeonStrikes.cue(sl, w, cues, "blast", SoundEvents.WARDEN_SONIC_BOOM, 1.6f, 0.7f);
             }
             default -> { }                                                                                  // the Seal Pulse resolves over the next 30 ticks
         }
@@ -283,8 +288,8 @@ public final class WardenBrain {
             int age = k - 10 * j;
             if (age < 0 || age >= 8) continue;
             double r = (age + 1) * 2.0;
-            if (age == 0) DungeonStrikes.sound(sl, w, SoundEvents.ANVIL_LAND, 1.0f, 0.8f);
-            if (age % 2 == 0) DungeonStrikes.ring(sl, w.getX(), w.getY() + 0.1, w.getZ(), r, 28, j == 2);
+            if (age == 0) DungeonStrikes.cue(sl, w, cues, "slam", SoundEvents.ANVIL_LAND, 1.0f, 0.8f);
+            if (age % 2 == 0) DungeonStrikes.ring(sl, theme, w.getX(), w.getY() + 0.1, w.getZ(), r, 28, j == 2);
             if (near == null) near = DungeonStrikes.victims(sl, w, 17.0);
             for (Player p : near) {
                 double dx = p.getX() - w.getX(), dz = p.getZ() - w.getZ();

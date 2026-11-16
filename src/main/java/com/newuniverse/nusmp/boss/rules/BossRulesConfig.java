@@ -20,6 +20,8 @@ public final class BossRulesConfig {
     public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX, REWORK3_MOVES, REWORK3_DECENNIAL;
     /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): the master switch and the per-boss switches of the Floor Warden and the three creatures. */
     public static final ModConfigSpec.BooleanValue DUNGEON_REWORK, DUNGEON_WARDEN, DUNGEON_CREATURES;
+    /** Dungeon-boss rework 2 (docs/dungeon_bosses_rework2.md): the Labyrinth Guardians' telegraphed move sets and colourways, and the new boss sound set. */
+    public static final ModConfigSpec.BooleanValue DUNGEON_GUARDIANS, DUNGEON_SOUNDS, DUNGEON_THEMES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -66,6 +68,14 @@ public final class BossRulesConfig {
                 .define("warden", true);
         DUNGEON_CREATURES = b.comment("The Direwolf's pounce and howl, the Basilisk's gaze, spit and tail sweep, the Living Armor's shield bash and rattle. Needs dungeonBosses.rework. false = their old bite-only fight.")
                 .define("creatures", true);
+        DUNGEON_GUARDIANS = b.comment("Dungeon-boss rework 2: the Labyrinth Guardians (sector bosses and the 200 Decennial bosses) fight with a themed, telegraphed move set (a slam, a lance, a rain of marks, a wave, an ultimate at a quarter of its health) and wear their sector's colourway.",
+                        "Needs dungeonBosses.rework. false = the Guardians keep the old Ground Slam and Shadow Step and the plain Warden look (their traits, D&D layer and Decennial layer are never affected).")
+                .define("guardians", true);
+        DUNGEON_SOUNDS = b.comment("Dungeon-boss rework 2: the bosses' and creatures' own sound set (dboss.* cues: telegraph whoosh, slam, chain rattle, roar, howl, hiss, gong, bell toll ...). Needs dungeonBosses.rework.",
+                        "false = the moves play the vanilla sounds they used before. Read at every cue.")
+                .define("sounds", true);
+        DUNGEON_THEMES = b.comment("Dungeon-boss rework 2: each boss and creature has its own particle theme (colours and particles) instead of the shared seal theme. Needs dungeonBosses.rework. false = the old seal theme. A looks-only setting the server decides because it sends the effects.")
+                .define("themes", true);
         b.pop();
         SPEC = b.build();
     }
@@ -120,4 +130,13 @@ public final class BossRulesConfig {
 
     /** The creatures' signature moves (master switch and their own). */
     public static boolean dungeonCreatures() { return get(DUNGEON_REWORK) && get(DUNGEON_CREATURES); }
+
+    /** Dungeon-boss rework 2: the Labyrinth Guardians' move sets and colourways (master switch and their own). */
+    public static boolean dungeonGuardians() { return get(DUNGEON_REWORK) && get(DUNGEON_GUARDIANS); }
+
+    /** Dungeon-boss rework 2: the boss sound set (master switch and its own). */
+    public static boolean dungeonSounds() { return get(DUNGEON_REWORK) && get(DUNGEON_SOUNDS); }
+
+    /** Dungeon-boss rework 2: the per-boss particle themes (master switch and their own). */
+    public static boolean dungeonThemes() { return get(DUNGEON_REWORK) && get(DUNGEON_THEMES); }
 }

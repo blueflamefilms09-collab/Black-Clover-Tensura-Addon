@@ -240,6 +240,20 @@ OTHER = {
     "spirit_dive.earth": ("earth", "earth_chip shard_crystal glint ash_flake", "E8B060"),
     # Fuegoleon's flame arm, Djinn look (client.aura.FuegoleonArmSparks): the sparks drifting off the arm
     "fuegoleon_arm.sparks": ("fire", "ember spark flame_tongue cinder", "FF7A18"),
+    # dungeon-boss rework 2 (docs/dungeon_bosses_rework2.md, appended): each boss and creature has its own look of telegraph; the nine Labyrinth Guardian traits each have a colour
+    "dungeon.boss.warden": ("dark", "rune_sol rune_key spark soot_puff", "B89CFF"),
+    "dungeon.boss.direwolf": ("battle", "ash_flake bone_chip spark soot_puff", "9AA2B6"),
+    "dungeon.boss.basilisk": ("life", "spore droplet glint poison_cloud", "5FD08A"),
+    "dungeon.boss.armor": ("battle", "spark rune_key ash_flake soot_puff", "C8C0B0"),
+    "dungeon.boss.guardian.gravity": ("space", "earth_chip void_speck rune_eye ash_flake", "9A86D8"),
+    "dungeon.boss.guardian.blood": ("dark", "blood_drop rune_eye ember soot_puff", "C02040"),
+    "dungeon.boss.guardian.spatial": ("space", "mana_mote nebula_puff glint mote_soft", "B07CFF"),
+    "dungeon.boss.guardian.flame": ("fire", "ember rune_flame spark soot_puff", "FF8A3A"),
+    "dungeon.boss.guardian.frost": ("water", "snowflake shard_ice star4 mote_soft", "B8F0FF"),
+    "dungeon.boss.guardian.verdant": ("life", "spore petal glint mote_soft", "7FD070"),
+    "dungeon.boss.guardian.storm": ("wind", "rune_bolt spark star4 mote_soft", "8FD0FF"),
+    "dungeon.boss.guardian.shadow": ("dark", "void_speck shadow_tendril rune_eye soot_puff", "6A4FA0"),
+    "dungeon.boss.guardian.astral": ("light", "star4 gem_sparkle mana_mote mote_soft", "FFF0B0"),
 }
 
 

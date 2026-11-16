@@ -28,6 +28,8 @@ final class TelegraphedAttackGoal extends FoundryGoals.AbilityGoal {
     private int wind;
     private double aimX, aimY, aimZ;
     private boolean dark;
+    /** Dungeon-boss rework 2: this mob's own sound gate (a cooldown per cue, four a second); the cues are the boss sound set and play only with {@code dungeonBosses.sounds}. */
+    private final com.newuniverse.nusmp.dungeon.rework2.DungeonBossSoundRules.Limiter cues = new com.newuniverse.nusmp.dungeon.rework2.DungeonBossSoundRules.Limiter();
 
     TelegraphedAttackGoal(FoundryMobEntity m) { super(m); }
 
@@ -54,6 +56,7 @@ final class TelegraphedAttackGoal extends FoundryGoals.AbilityGoal {
         m.setCast(wind, wind);
         m.getNavigation().stop();
         if (def != null && def.armor()) PoiseSystem.raiseArmor(m, wind + PoiseSystem.tuning().armorTail());
+        if (wind >= 20 && m.level() instanceof ServerLevel sl) com.newuniverse.nusmp.dungeon.rework2.BossCues.play(sl, m, cues, "rise", 0.6f);        // a readable wind-up now also sounds like one
     }
 
     @Override
@@ -78,6 +81,7 @@ final class TelegraphedAttackGoal extends FoundryGoals.AbilityGoal {
             m.brain().used(active, m.tickCount);
             if (def != null) m.fx.aim = new Vec3(aimX, aimY, aimZ);
             FoundryAbilityRunner.fire(m, ability, t);
+            if (def != null && def.armor() && m.level() instanceof ServerLevel sl) com.newuniverse.nusmp.dungeon.rework2.BossCues.play(sl, m, cues, "slam", 0.5f);       // a heavy, armoured blow lands with weight
             m.fx.aim = null;
             active = -1;
         } else {

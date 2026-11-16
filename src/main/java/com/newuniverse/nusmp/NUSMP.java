@@ -164,6 +164,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
         com.newuniverse.nusmp.sound.NUSounds.SOUNDS.register(modEventBus);
         com.newuniverse.nusmp.audio.ModSounds.SOUNDS.register(modEventBus);                                                // 1.99.0: the bespoke mob voices, 25 families x 8 cues
+        com.newuniverse.nusmp.dungeon.rework2.DungeonBossSounds.SOUNDS.register(modEventBus);                              // dungeon-boss rework 2: 16 boss cues (dboss.*)
         com.newuniverse.nusmp.audio.music.ThemedMusic.init(modEventBus);                                                   // 1.107.0: the themed dungeon music (25 sound events, the state payload)
         com.newuniverse.nusmp.audio.voice.VoiceBoot.init(modEventBus, modContainer);                                       // 1.110.0: the 120 spoken voice lines (sound events, payload, nusmp-voice-server.toml)
         modEventBus.addListener(com.newuniverse.nusmp.entity.NUEntities::attributes);

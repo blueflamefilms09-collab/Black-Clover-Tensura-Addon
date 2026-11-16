@@ -5,6 +5,8 @@ import com.newuniverse.nusmp.dungeon.DungeonCreature;
 import com.newuniverse.nusmp.dungeon.LivingArmorEntity;
 import com.newuniverse.nusmp.dungeon.rework.DungeonReworkRules.BeastKind;
 import com.newuniverse.nusmp.dungeon.rework.DungeonReworkRules.Move;
+import com.newuniverse.nusmp.dungeon.rework2.DungeonBossSoundRules;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
@@ -33,6 +35,9 @@ public final class BeastBrain {
     private final int[] ids;
     private final List<Move> book = new ArrayList<>(3);
     private final long[] readyAt;
+    /** Rework 2: its own sound gate and its kind's own particle theme. */
+    private final DungeonBossSoundRules.Limiter cues = new DungeonBossSoundRules.Limiter();
+    private final ThemeKey theme;
     private int move = -1, t;
     private long gapUntil;
     private boolean landed;
@@ -42,6 +47,11 @@ public final class BeastBrain {
         this.ids = DungeonReworkRules.beastMoves(kind);
         for (int id : ids) book.add(DungeonReworkRules.BEASTS.get(id));
         this.readyAt = new long[ids.length];
+        this.theme = ThemeKey.of(switch (kind) {
+            case DIREWOLF -> "dungeon.boss.direwolf";
+            case BASILISK -> "dungeon.boss.basilisk";
+            case ARMOR -> "dungeon.boss.armor";
+        });
     }
 
     /** Is a move winding up or landing (the creature's melee goal stands still)? */
@@ -85,13 +95,13 @@ public final class BeastBrain {
 
     private void begin(DungeonCreature e, ServerLevel sl, int global) {
         switch (global) {
-            case DungeonReworkRules.B_POUNCE -> DungeonStrikes.sound(sl, e, SoundEvents.WOLF_GROWL, 1.2f, 0.7f);
-            case DungeonReworkRules.B_HOWL -> DungeonStrikes.sound(sl, e, SoundEvents.WOLF_HOWL, 1.6f, 0.8f);
-            case DungeonReworkRules.B_GAZE -> DungeonStrikes.sound(sl, e, SoundEvents.GUARDIAN_ATTACK, 1.0f, 0.6f);
-            case DungeonReworkRules.B_SPIT -> DungeonStrikes.sound(sl, e, SoundEvents.SPIDER_AMBIENT, 1.0f, 1.6f);
-            case DungeonReworkRules.B_SWEEP -> DungeonStrikes.sound(sl, e, SoundEvents.SPIDER_AMBIENT, 1.0f, 0.5f);
-            case DungeonReworkRules.B_BASH -> DungeonStrikes.sound(sl, e, SoundEvents.SHIELD_BLOCK, 0.9f, 0.7f);
-            default -> DungeonStrikes.sound(sl, e, SoundEvents.CHAIN_HIT, 1.2f, 0.6f);
+            case DungeonReworkRules.B_POUNCE -> DungeonStrikes.cue(sl, e, cues, "growl", SoundEvents.WOLF_GROWL, 1.2f, 0.7f);
+            case DungeonReworkRules.B_HOWL -> DungeonStrikes.cue(sl, e, cues, "howl", SoundEvents.WOLF_HOWL, 1.6f, 0.8f);
+            case DungeonReworkRules.B_GAZE -> DungeonStrikes.cue(sl, e, cues, "rise", SoundEvents.GUARDIAN_ATTACK, 1.0f, 0.6f);
+            case DungeonReworkRules.B_SPIT -> DungeonStrikes.cue(sl, e, cues, "hiss", SoundEvents.SPIDER_AMBIENT, 1.0f, 1.6f);
+            case DungeonReworkRules.B_SWEEP -> DungeonStrikes.cue(sl, e, cues, "hiss", SoundEvents.SPIDER_AMBIENT, 1.0f, 0.5f);
+            case DungeonReworkRules.B_BASH -> DungeonStrikes.cue(sl, e, cues, "clang", SoundEvents.SHIELD_BLOCK, 0.9f, 0.7f);
+            default -> DungeonStrikes.cue(sl, e, cues, "chain", SoundEvents.CHAIN_HIT, 1.2f, 0.6f);
         }
     }
 
@@ -112,7 +122,7 @@ public final class BeastBrain {
                 if (DungeonStrikes.strike(e, p, m.damage(), false)) DungeonStrikes.knock(e, p, 0.6);
                 landed = true;
             }
-            if (landed) DungeonStrikes.sound(sl, e, SoundEvents.WOLF_GROWL, 1.0f, 0.5f);
+            if (landed) DungeonStrikes.cue(sl, e, cues, "growl", SoundEvents.WOLF_GROWL, 1.0f, 0.5f);
         }
         if (t >= m.windup() + resolveTicks(global) || (landed && global == DungeonReworkRules.B_POUNCE)) {
             gapUntil = now + GAP;
@@ -123,22 +133,22 @@ public final class BeastBrain {
     private void telegraph(DungeonCreature e, ServerLevel sl, LivingEntity target, int global) {
         switch (global) {
             case DungeonReworkRules.B_POUNCE -> {
-                if (t % 4 == 1) DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 1.4, 12, false);
+                if (t % 4 == 1) DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 1.4, 12, false);
             }
             case DungeonReworkRules.B_HOWL -> {
-                if (t % 6 == 1) DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 1.0 + t * 0.4, 16, false);
+                if (t % 6 == 1) DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 1.0 + t * 0.4, 16, false);
             }
             case DungeonReworkRules.B_GAZE, DungeonReworkRules.B_SPIT -> {
-                if (t % 3 == 1) DungeonStrikes.line(sl, e.getEyePosition(), target.getEyePosition(), global == DungeonReworkRules.B_GAZE, global == DungeonReworkRules.B_GAZE ? 2 : 1);
+                if (t % 3 == 1) DungeonStrikes.line(sl, theme, e.getEyePosition(), target.getEyePosition(), global == DungeonReworkRules.B_GAZE, global == DungeonReworkRules.B_GAZE ? 2 : 1);
             }
             case DungeonReworkRules.B_SWEEP -> {
-                if (t % 3 == 1) DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 3.6, 20, false);
+                if (t % 3 == 1) DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 3.6, 20, false);
             }
             case DungeonReworkRules.B_BASH -> {
-                if (t % 4 == 1) DungeonStrikes.burst(sl, e.getX(), e.getY() + 1.0, e.getZ(), 2, 0.3, false);
+                if (t % 4 == 1) DungeonStrikes.burst(sl, theme, e.getX(), e.getY() + 1.0, e.getZ(), 2, 0.3, false);
             }
             default -> {
-                if (t % 5 == 1) DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 4.0, 20, true);
+                if (t % 5 == 1) DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 4.0, 20, true);
             }
         }
     }
@@ -152,7 +162,7 @@ public final class BeastBrain {
                 if (flat.lengthSqr() < 1e-4) return;
                 flat = flat.normalize().scale(1.05);
                 e.setDeltaMovement(flat.x, 0.42, flat.z);
-                DungeonStrikes.burst(sl, e.getX(), e.getY() + 0.3, e.getZ(), 6, 0.3, false);
+                DungeonStrikes.burst(sl, theme, e.getX(), e.getY() + 0.3, e.getZ(), 6, 0.3, false);
             }
             case DungeonReworkRules.B_HOWL -> {
                 int called = 0;
@@ -162,39 +172,39 @@ public final class BeastBrain {
                     if (w.getTarget() == null) w.setTarget(target);
                 }
                 DungeonStrikes.effect(e, MobEffects.MOVEMENT_SPEED, 100, 0);
-                DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 10.0, 32, false);
-                DungeonStrikes.sound(sl, e, SoundEvents.WOLF_HOWL, 2.0f, 0.7f);
+                DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 10.0, 32, false);
+                DungeonStrikes.cue(sl, e, cues, "howl", SoundEvents.WOLF_HOWL, 2.0f, 0.7f);
             }
             case DungeonReworkRules.B_GAZE -> {
                 for (Player p : DungeonStrikes.victims(sl, e, 17.0)) {
                     Vec3 toMe = e.getEyePosition().subtract(p.getEyePosition());
                     if (toMe.lengthSqr() < 1e-4 || p.getViewVector(1.0f).dot(toMe.normalize()) < 0.6) continue;      // looking away is the answer
                     if (DungeonStrikes.strike(e, p, m.damage(), true)) DungeonStrikes.slow(e, p, 40, 2);
-                    DungeonStrikes.line(sl, e.getEyePosition(), p.getEyePosition(), true, 6);
+                    DungeonStrikes.line(sl, theme, e.getEyePosition(), p.getEyePosition(), true, 6);
                 }
-                DungeonStrikes.sound(sl, e, SoundEvents.GUARDIAN_ATTACK, 1.4f, 1.2f);
+                DungeonStrikes.cue(sl, e, cues, "hiss", SoundEvents.GUARDIAN_ATTACK, 1.4f, 1.2f);
             }
             case DungeonReworkRules.B_SPIT -> {
                 Vec3 from = e.getEyePosition(), to = target.getEyePosition();
-                DungeonStrikes.line(sl, from, to, false, 8);
+                DungeonStrikes.line(sl, theme, from, to, false, 8);
                 if (target instanceof Player p && p.isAlive() && e.hasLineOfSight(p)) {
                     if (DungeonStrikes.strike(e, p, m.damage(), false)) DungeonStrikes.effect(p, MobEffects.POISON, 100, 0);
                 }
-                DungeonStrikes.sound(sl, e, SoundEvents.SPIDER_AMBIENT, 1.2f, 1.8f);
+                DungeonStrikes.cue(sl, e, cues, "spit", SoundEvents.SPIDER_AMBIENT, 1.2f, 1.8f);
             }
             case DungeonReworkRules.B_SWEEP -> {
                 for (Player p : DungeonStrikes.victims(sl, e, 3.6)) {
                     if (DungeonStrikes.strike(e, p, m.damage(), false)) DungeonStrikes.knock(e, p, 1.0);
                 }
-                DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 3.6, 28, false);
-                DungeonStrikes.sound(sl, e, SoundEvents.IRON_GOLEM_ATTACK, 1.0f, 0.6f);
+                DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 3.6, 28, false);
+                DungeonStrikes.cue(sl, e, cues, "slam", SoundEvents.IRON_GOLEM_ATTACK, 1.0f, 0.6f);
             }
             case DungeonReworkRules.B_BASH -> {
                 for (Player p : DungeonStrikes.victims(sl, e, 3.2)) {
                     if (DungeonStrikes.strike(e, p, m.damage(), false)) DungeonStrikes.knock(e, p, 1.1);
                 }
-                DungeonStrikes.flash(sl, e.getX(), e.getY() + 1.0, e.getZ());
-                DungeonStrikes.sound(sl, e, SoundEvents.SHIELD_BLOCK, 1.2f, 0.5f);
+                DungeonStrikes.flash(sl, theme, e.getX(), e.getY() + 1.0, e.getZ());
+                DungeonStrikes.cue(sl, e, cues, "clang", SoundEvents.SHIELD_BLOCK, 1.2f, 0.5f);
             }
             default -> {
                 int called = 0;
@@ -204,8 +214,8 @@ public final class BeastBrain {
                     if (a.getTarget() == null) a.setTarget(target);
                 }
                 DungeonStrikes.effect(e, MobEffects.DAMAGE_RESISTANCE, 100, 0);
-                DungeonStrikes.ring(sl, e.getX(), e.getY() + 0.1, e.getZ(), 6.0, 28, true);
-                DungeonStrikes.sound(sl, e, SoundEvents.CHAIN_HIT, 1.6f, 0.5f);
+                DungeonStrikes.ring(sl, theme, e.getX(), e.getY() + 0.1, e.getZ(), 6.0, 28, true);
+                DungeonStrikes.cue(sl, e, cues, "chain", SoundEvents.CHAIN_HIT, 1.6f, 0.5f);
             }
         }
     }

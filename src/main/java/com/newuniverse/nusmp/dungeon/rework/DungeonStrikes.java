@@ -1,10 +1,14 @@
 package com.newuniverse.nusmp.dungeon.rework;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
+import com.newuniverse.nusmp.dungeon.rework2.DungeonBossSoundRules;
+import com.newuniverse.nusmp.dungeon.rework2.DungeonBossSounds;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisDamage;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.particle.fx.FxTone;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -61,24 +65,45 @@ final class DungeonStrikes {
         victim.addEffect(new MobEffectInstance(effect, Math.min(ticks, 120), amp, false, true));
     }
 
-    /** A flat ring of the seal theme around a point (the telegraph and the shock of a blow). {@code dark} picks the shadowed set. */
-    static void ring(ServerLevel sl, double x, double y, double z, double radius, int points, boolean dark) {
-        Fx.ring(sl, FxThemes.DUNGEON_SEAL, FxTone.of(dark), x, y, z, radius, points);
+    /** The theme a boss draws with: its own while {@code dungeonBosses.themes} is on, else the shared seal theme the rework started with. */
+    static ThemeKey theme(ThemeKey own) {
+        return own != null && BossRulesConfig.dungeonThemes() ? own : FxThemes.DUNGEON_SEAL;
     }
 
-    /** A burst of the seal theme at a point. */
+    /** A flat ring of the boss's theme around a point (the telegraph and the shock of a blow). {@code dark} picks the shadowed set. */
+    static void ring(ServerLevel sl, ThemeKey t, double x, double y, double z, double radius, int points, boolean dark) {
+        Fx.ring(sl, theme(t), FxTone.of(dark), x, y, z, radius, points);
+    }
+
+    static void ring(ServerLevel sl, double x, double y, double z, double radius, int points, boolean dark) {
+        ring(sl, null, x, y, z, radius, points, dark);
+    }
+
+    /** A burst of the boss's theme at a point. */
+    static void burst(ServerLevel sl, ThemeKey t, double x, double y, double z, int count, double spread, boolean dark) {
+        Fx.send(sl, theme(t), FxTone.of(dark), x, y, z, count, spread, 0.06);
+    }
+
     static void burst(ServerLevel sl, double x, double y, double z, int count, double spread, boolean dark) {
-        Fx.send(sl, FxThemes.DUNGEON_SEAL, FxTone.of(dark), x, y, z, count, spread, 0.06);
+        burst(sl, null, x, y, z, count, spread, dark);
     }
 
     /** One impact flash (the old explosion slot of the theme). */
+    static void flash(ServerLevel sl, ThemeKey t, double x, double y, double z) {
+        Fx.spray(sl, theme(t), FxOld.EXPLOSION, x, y, z, 1, 0, 0, 0, 0);
+    }
+
     static void flash(ServerLevel sl, double x, double y, double z) {
-        Fx.spray(sl, FxThemes.DUNGEON_SEAL, FxOld.EXPLOSION, x, y, z, 1, 0, 0, 0, 0);
+        flash(sl, null, x, y, z);
     }
 
     /** A line of motes from one point to another (a chain, a gaze, a spit). */
+    static void line(ServerLevel sl, ThemeKey t, Vec3 from, Vec3 to, boolean dark, int perTick) {
+        Fx.stream(sl, theme(t), from, to, FxTone.of(dark), perTick);
+    }
+
     static void line(ServerLevel sl, Vec3 from, Vec3 to, boolean dark, int perTick) {
-        Fx.stream(sl, FxThemes.DUNGEON_SEAL, from, to, FxTone.of(dark), perTick);
+        line(sl, null, from, to, dark, perTick);
     }
 
     /** A vanilla sound at a point (the game sends it to the players near it only). */
@@ -88,5 +113,33 @@ final class DungeonStrikes {
 
     static void sound(ServerLevel sl, double x, double y, double z, SoundEvent sound, float volume, float pitch) {
         sl.playSound(null, x, y, z, sound, SoundSource.HOSTILE, volume, pitch);
+    }
+
+    /**
+     * A boss cue: the mod's own sound ({@code dboss.<cue>}, tools/gen_dungeon_boss_sounds.py) while {@code dungeonBosses.sounds} is on, else the vanilla sound the move used before
+     * ({@code fallback} at {@code fbVolume} and {@code fbPitch}). The boss's own {@link DungeonBossSoundRules.Limiter} decides whether the cue may play now (a cooldown per cue, four a second); the
+     * game sends the sound to the players inside its range only, and the range is the cue's (16 blocks times its volume at most 2.4).
+     */
+    static void cue(ServerLevel sl, Entity at, DungeonBossSoundRules.Limiter limiter, String cue, SoundEvent fallback, float fbVolume, float fbPitch) {
+        DungeonBossSoundRules.Cue c = DungeonBossSoundRules.cue(cue);
+        SoundEvent own = c == null || !BossRulesConfig.dungeonSounds() ? null : DungeonBossSounds.event(cue);
+        if (own == null) {
+            sound(sl, at, fallback, fbVolume, fbPitch);
+            return;
+        }
+        if (limiter != null && !limiter.allow(cue, sl.getGameTime())) return;
+        sl.playSound(null, at.getX(), at.getY(), at.getZ(), own, SoundSource.HOSTILE, c.volume(), c.pitch(sl.getRandom().nextDouble()));
+    }
+
+    /** A boss cue at a point (the Guardians' marks and sigils): like {@link #cue(ServerLevel, Entity, DungeonBossSoundRules.Limiter, String, SoundEvent, float, float)}. */
+    static void cueAt(ServerLevel sl, double x, double y, double z, DungeonBossSoundRules.Limiter limiter, String cue, SoundEvent fallback, float fbVolume, float fbPitch) {
+        DungeonBossSoundRules.Cue c = DungeonBossSoundRules.cue(cue);
+        SoundEvent own = c == null || !BossRulesConfig.dungeonSounds() ? null : DungeonBossSounds.event(cue);
+        if (own == null) {
+            sound(sl, x, y, z, fallback, fbVolume, fbPitch);
+            return;
+        }
+        if (limiter != null && !limiter.allow(cue, sl.getGameTime())) return;
+        sl.playSound(null, x, y, z, own, SoundSource.HOSTILE, c.volume(), c.pitch(sl.getRandom().nextDouble()));
     }
 }

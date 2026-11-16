@@ -25,5 +25,6 @@ public final class BossHooks {
         com.newuniverse.nusmp.boss.rework.BossReworkSelfTests.register();              // key boss.rework1 (boss rework wave 1)
         com.newuniverse.nusmp.boss.rework3.Rework3SelfTests.register();                // key boss.rework3 (boss rework wave 3)
         com.newuniverse.nusmp.dungeon.rework.DungeonBossSelfTests.register();           // key dboss (dungeon-boss rework)
+        com.newuniverse.nusmp.dungeon.rework2.DungeonBoss2SelfTests.register();         // key dboss2 (dungeon-boss rework 2)
     }
 }

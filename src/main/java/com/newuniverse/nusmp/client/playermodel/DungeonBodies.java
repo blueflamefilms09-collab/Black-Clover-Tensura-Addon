@@ -55,7 +55,10 @@ public final class DungeonBodies {
 
         /** The id of the look the kit draws this entity with, or "" when it is not drawn by the kit (a creature look). */
         static String lookId(LivingArmorEntity e) {
-            if (e instanceof LabyrinthGuardianEntity g) return DungeonLooks.guardian(g.lookId(), g.lookPhase());
+            if (e instanceof LabyrinthGuardianEntity g) {
+                String id = DungeonLooks.guardian(g.lookId(), g.lookPhase());
+                return DungeonLooks.FLOOR_WARDEN.equals(id) && g.themeKit() > 0 ? DungeonLooks.guardianKit(g.themeKit()) : id;       // rework 2: a Guardian with no abyssal look wears its sector's colourway
+            }
             return e instanceof FloorWardenEntity ? DungeonLooks.FLOOR_WARDEN : DungeonLooks.LIVING_ARMOR;
         }
 

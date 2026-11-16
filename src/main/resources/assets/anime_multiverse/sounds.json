@@ -3097,5 +3097,69 @@
   "light_yagami.death_i_am_justice": {
     "sounds": [{ "name": "anime_multiverse:light_death_i_am_justice", "stream": false }],
     "subtitle": "subtitles.anime_multiverse.light_yagami.death_i_am_justice"
+  },
+  "dboss.rise": {
+    "subtitle": "subtitles.anime_multiverse.dboss.rise",
+    "sounds": [ { "name": "anime_multiverse:dboss/rise_1", "stream": false }, { "name": "anime_multiverse:dboss/rise_2", "stream": false }, { "name": "anime_multiverse:dboss/rise_3", "stream": false } ]
+  },
+  "dboss.slam": {
+    "subtitle": "subtitles.anime_multiverse.dboss.slam",
+    "sounds": [ { "name": "anime_multiverse:dboss/slam_1", "stream": false }, { "name": "anime_multiverse:dboss/slam_2", "stream": false }, { "name": "anime_multiverse:dboss/slam_3", "stream": false } ]
+  },
+  "dboss.chain": {
+    "subtitle": "subtitles.anime_multiverse.dboss.chain",
+    "sounds": [ { "name": "anime_multiverse:dboss/chain_1", "stream": false }, { "name": "anime_multiverse:dboss/chain_2", "stream": false }, { "name": "anime_multiverse:dboss/chain_3", "stream": false } ]
+  },
+  "dboss.roar": {
+    "subtitle": "subtitles.anime_multiverse.dboss.roar",
+    "sounds": [ { "name": "anime_multiverse:dboss/roar_1", "stream": false }, { "name": "anime_multiverse:dboss/roar_2", "stream": false }, { "name": "anime_multiverse:dboss/roar_3", "stream": false } ]
+  },
+  "dboss.howl": {
+    "subtitle": "subtitles.anime_multiverse.dboss.howl",
+    "sounds": [ { "name": "anime_multiverse:dboss/howl_1", "stream": false }, { "name": "anime_multiverse:dboss/howl_2", "stream": false } ]
+  },
+  "dboss.hiss": {
+    "subtitle": "subtitles.anime_multiverse.dboss.hiss",
+    "sounds": [ { "name": "anime_multiverse:dboss/hiss_1", "stream": false }, { "name": "anime_multiverse:dboss/hiss_2", "stream": false }, { "name": "anime_multiverse:dboss/hiss_3", "stream": false } ]
+  },
+  "dboss.gong": {
+    "subtitle": "subtitles.anime_multiverse.dboss.gong",
+    "sounds": [ { "name": "anime_multiverse:dboss/gong_1", "stream": false }, { "name": "anime_multiverse:dboss/gong_2", "stream": false } ]
+  },
+  "dboss.charge": {
+    "subtitle": "subtitles.anime_multiverse.dboss.charge",
+    "sounds": [ { "name": "anime_multiverse:dboss/charge_1", "stream": false }, { "name": "anime_multiverse:dboss/charge_2", "stream": false } ]
+  },
+  "dboss.blast": {
+    "subtitle": "subtitles.anime_multiverse.dboss.blast",
+    "sounds": [ { "name": "anime_multiverse:dboss/blast_1", "stream": false }, { "name": "anime_multiverse:dboss/blast_2", "stream": false } ]
+  },
+  "dboss.toll": {
+    "subtitle": "subtitles.anime_multiverse.dboss.toll",
+    "sounds": [ { "name": "anime_multiverse:dboss/toll_1", "stream": false }, { "name": "anime_multiverse:dboss/toll_2", "stream": false } ]
+  },
+  "dboss.clang": {
+    "subtitle": "subtitles.anime_multiverse.dboss.clang",
+    "sounds": [ { "name": "anime_multiverse:dboss/clang_1", "stream": false }, { "name": "anime_multiverse:dboss/clang_2", "stream": false }, { "name": "anime_multiverse:dboss/clang_3", "stream": false } ]
+  },
+  "dboss.spit": {
+    "subtitle": "subtitles.anime_multiverse.dboss.spit",
+    "sounds": [ { "name": "anime_multiverse:dboss/spit_1", "stream": false }, { "name": "anime_multiverse:dboss/spit_2", "stream": false } ]
+  },
+  "dboss.shimmer": {
+    "subtitle": "subtitles.anime_multiverse.dboss.shimmer",
+    "sounds": [ { "name": "anime_multiverse:dboss/shimmer_1", "stream": false }, { "name": "anime_multiverse:dboss/shimmer_2", "stream": false }, { "name": "anime_multiverse:dboss/shimmer_3", "stream": false } ]
+  },
+  "dboss.crackle": {
+    "subtitle": "subtitles.anime_multiverse.dboss.crackle",
+    "sounds": [ { "name": "anime_multiverse:dboss/crackle_1", "stream": false }, { "name": "anime_multiverse:dboss/crackle_2", "stream": false }, { "name": "anime_multiverse:dboss/crackle_3", "stream": false } ]
+  },
+  "dboss.step": {
+    "subtitle": "subtitles.anime_multiverse.dboss.step",
+    "sounds": [ { "name": "anime_multiverse:dboss/step_1", "stream": false }, { "name": "anime_multiverse:dboss/step_2", "stream": false } ]
+  },
+  "dboss.growl": {
+    "subtitle": "subtitles.anime_multiverse.dboss.growl",
+    "sounds": [ { "name": "anime_multiverse:dboss/growl_1", "stream": false }, { "name": "anime_multiverse:dboss/growl_2", "stream": false }, { "name": "anime_multiverse:dboss/growl_3", "stream": false } ]
   }
 }

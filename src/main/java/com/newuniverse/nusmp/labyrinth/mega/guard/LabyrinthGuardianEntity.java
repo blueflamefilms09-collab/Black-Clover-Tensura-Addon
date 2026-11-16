@@ -2,6 +2,9 @@ package com.newuniverse.nusmp.labyrinth.mega.guard;
 
 import com.newuniverse.nusmp.boss.budget.BossBudget;
 import com.newuniverse.nusmp.boss.budget.BudgetedBoss;
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
+import com.newuniverse.nusmp.dungeon.rework.GuardianBrain;
+import com.newuniverse.nusmp.dungeon.rework.GuardianRules;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.RegionTheme;
@@ -81,6 +84,8 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     private static final EntityDataAccessor<Integer> CAST_KIND = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
     /** 1.99.0: the tint (0xRRGGBB) a Decennial boss's profile gives its look; 0xFFFFFF for every other Guardian. Written on the server, synced like any entity data, read by the renderer. */
     private static final EntityDataAccessor<Integer> DEC_TINT = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
+    /** Dungeon-boss rework 2: the colourway of the plain Warden look for this sector's trait (0 = none, else the trait's ordinal + 1); written on the server from {@code dungeonBosses.guardians}, read by the player-model renderer. */
+    private static final EntityDataAccessor<Integer> THEME_KIT = SynchedEntityData.defineId(LabyrinthGuardianEntity.class, EntityDataSerializers.INT);
 
     private final BossBudget dpsBudget = new BossBudget();
     private final GuardianTraits.State traits = new GuardianTraits.State();
@@ -88,6 +93,13 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     private final DndBoss dnd = new DndBoss();
     /** 1.99.0: the Decennial layer (one of the 200 bosses of the tenth floors: phases, lair actions, signature, loot); inactive for every Guardian without a profile. */
     private final DecennialLayer decennial = new DecennialLayer();
+    /** Dungeon-boss rework 2: the themed move set (null until the first server tick it is used) and what it needs from this entity. Used only while {@code dungeonBosses.guardians} is on. */
+    private GuardianBrain themedMoves;
+    private final GuardianBrain.Host themedHost = new GuardianBrain.Host() {
+        @Override public void phaseChanged(int phase) { setBarPhase(phase); }
+
+        @Override public void casting(int kind) { noteCast(kind); }
+    };
     /** 1.99.0: the Decennial level of the sector this Guardian is being configured for (0 = none); set by the public configure methods just before the private one reads it. */
     private int decennialLevel;
     private int floorNo = 1;
@@ -129,6 +141,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         builder.define(CAST_AT, -1000L);
         builder.define(CAST_KIND, 0);
         builder.define(DEC_TINT, 0xFFFFFF);
+        builder.define(THEME_KIT, 0);
     }
 
     /** The id of the abyssal look it wears ("" = the look the Guardian always had); read on the client by the renderer. */
@@ -210,6 +223,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         DndProfile decennialProfile = decennial.bind(this, decennialLevel, sectorId);                                           // 1.99.0: a Decennial boss runs the D&D profile made from its own
         dnd.configure(decennialProfile != null ? decennialProfile : DndProfiles.forBoss(floorNo, sectorId));
         syncLook();
+        syncThemeKit();
         applyScaling();
     }
 
@@ -300,6 +314,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         super.aiStep();
         if (level().isClientSide || !(level() instanceof ServerLevel sl) || !isAlive()) return;
         try {
+            if (tickCount % 100 == 1) syncThemeKit();
             if (!phaseTwo && GuardianScaling.phaseTwo(getHealth(), getMaxHealth())) enterPhaseTwo(sl);
             if (GuardConfig.get(GuardConfig.LEASH) && tickCount % 20 == 0) leash(sl);
             if (traitsOn()) GuardianTraits.tick(this, sl, traits, trait, phaseTwo);
@@ -320,6 +335,29 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(48.0), Player::isAlive)) {
             p.displayClientMessage(Component.translatable("message.anime_multiverse.mega.mgd.phase_two").withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE, net.minecraft.ChatFormatting.ITALIC), true);
         }
+    }
+
+    // ---------------------------------------------------------------- dungeon-boss rework 2: the themed move set and the colourway
+    /** The Guardian's own telegraphed move set (a Slam, a Lance, a Rain, a Wave, the Verdict; docs/dungeon_bosses_rework2.md) replaces the Warden's old Ground Slam and Shadow Step while it is on. */
+    @Override
+    protected boolean customMoves() { return BossRulesConfig.dungeonGuardians(); }
+
+    @Override
+    protected void customMovesTick(ServerLevel sl) {
+        if (themedMoves == null) themedMoves = new GuardianBrain(GuardianRules.kit(trait.name()));
+        boolean paused = decennial.active() && (decennial.shielded(this, sl) || decennial.cannotStrike(sl));          // a shift or a hall not built yet: it does not telegraph
+        int tier = decennial.active() ? com.newuniverse.nusmp.labyrinth.mega.decennial.DecennialRules.tierOf(decennial.profile().level()) : 0;
+        themedMoves.tick(this, sl, themedHost, attackDamage(), getScale(), tier, paused);
+    }
+
+    @Override
+    protected boolean customCasting() { return themedMoves != null && themedMoves.busy() && customMoves(); }
+
+    /** The colourway of the player-model Warden look this sector's trait gives it; 0 when the setting is off (the old plain look). */
+    public int themeKit() { return entityData.get(THEME_KIT); }
+
+    private void syncThemeKit() {
+        entityData.set(THEME_KIT, BossRulesConfig.dungeonGuardians() ? trait.ordinal() + 1 : 0);
     }
 
     /** Is a floor point inside the hall and its doorway tunnels (the altar's footprint plus a little)? Always true for a Guardian with no altar. */
@@ -403,6 +441,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
     @Override
     public void die(DamageSource source) {
         super.die(source);
+        if (themedMoves != null) themedMoves.reset();
         if (isAlive()) return;                                                                      // 1.65.0: the Mythic Trait cancelled the death (DndEvents): nothing to report
         try {
             if (level() instanceof ServerLevel dsl) decennial.onDeath(this, dsl, source);          // 1.99.0: the hall opens, the adds go, the loot of the level is paid
@@ -537,6 +576,7 @@ public class LabyrinthGuardianEntity extends FloorWardenEntity implements Budget
         dnd.configure(decennialProfile != null ? decennialProfile : DndProfiles.forBoss(floorNo, sectorId));
         dnd.load(tag);
         syncLook();                                                                                // 1.94.0: the look and the phase it was saved in
+        syncThemeKit();
         stamp();                                                                                // loading clears and restores the tag list: both keys are written again
     }
 }
