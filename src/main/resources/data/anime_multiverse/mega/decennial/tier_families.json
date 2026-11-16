@@ -1,0 +1,123 @@
+{
+  "_why": "Boss rework wave 3: one visual signature and one extra move for each of the ten tier families (side + D&D tier). Written by tools/gen_decennial_roster.py; read by DecennialFamilies.java, which clamps every number.",
+  "evil_1": {
+    "pattern": "circle",
+    "effect": "slow",
+    "shape": "BONE_FX1",
+    "color": "A1887F",
+    "radius": 5.0,
+    "period": 18,
+    "warn": 36,
+    "share": 0.05,
+    "effectTicks": 40,
+    "label": "Grave Grasp"
+  },
+  "evil_2": {
+    "pattern": "line",
+    "effect": "none",
+    "shape": "BLOOD_SIGIL",
+    "color": "B71C1C",
+    "radius": 16.0,
+    "period": 16,
+    "warn": 34,
+    "share": 0.06,
+    "effectTicks": 0,
+    "label": "Blood Lance"
+  },
+  "evil_3": {
+    "pattern": "donut",
+    "effect": "ignite",
+    "shape": "DEVIL_CIRCLE",
+    "color": "E64A19",
+    "radius": 9.0,
+    "period": 15,
+    "warn": 40,
+    "share": 0.06,
+    "effectTicks": 40,
+    "label": "Hellfire Ring"
+  },
+  "evil_4": {
+    "pattern": "circle",
+    "effect": "weakness",
+    "shape": "DARK_BLACK_MOON",
+    "color": "6A1B9A",
+    "radius": 6.0,
+    "period": 14,
+    "warn": 36,
+    "share": 0.07,
+    "effectTicks": 50,
+    "label": "Black Moon Fall"
+  },
+  "evil_5": {
+    "pattern": "line",
+    "effect": "drain",
+    "shape": "NIHILITY_ZONE",
+    "color": "37474F",
+    "radius": 18.0,
+    "period": 12,
+    "warn": 32,
+    "share": 0.08,
+    "effectTicks": 40,
+    "label": "Nihil Sunder"
+  },
+  "holy_1": {
+    "pattern": "circle",
+    "effect": "none",
+    "shape": "LIGHT_FLARE",
+    "color": "FFF59D",
+    "radius": 5.0,
+    "period": 18,
+    "warn": 36,
+    "share": 0.05,
+    "effectTicks": 0,
+    "label": "Dawn Flare"
+  },
+  "holy_2": {
+    "pattern": "donut",
+    "effect": "knockback",
+    "shape": "DIVINE_HALO",
+    "color": "FFE082",
+    "radius": 8.0,
+    "period": 16,
+    "warn": 38,
+    "share": 0.06,
+    "effectTicks": 0,
+    "label": "Halo Verdict"
+  },
+  "holy_3": {
+    "pattern": "line",
+    "effect": "slow",
+    "shape": "DIVINE_RAY",
+    "color": "80DEEA",
+    "radius": 16.0,
+    "period": 15,
+    "warn": 34,
+    "share": 0.06,
+    "effectTicks": 40,
+    "label": "Lance of Mercy"
+  },
+  "holy_4": {
+    "pattern": "circle",
+    "effect": "blind",
+    "shape": "DIVINE_PILLAR",
+    "color": "FFD740",
+    "radius": 6.0,
+    "period": 14,
+    "warn": 36,
+    "share": 0.07,
+    "effectTicks": 30,
+    "label": "Pillar of Judgement"
+  },
+  "holy_5": {
+    "pattern": "donut",
+    "effect": "weakness",
+    "shape": "DIVINE_SIGIL",
+    "color": "FFFFFF",
+    "radius": 10.0,
+    "period": 12,
+    "warn": 40,
+    "share": 0.08,
+    "effectTicks": 50,
+    "label": "Sigil of the Last Dawn"
+  }
+}

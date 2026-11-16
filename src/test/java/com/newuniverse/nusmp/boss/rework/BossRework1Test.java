@@ -179,7 +179,7 @@ class BossRework1Test {
         assertTrue(read(SRC + "boss/rework/BossReworkSelfTests.java").contains("\"boss.rework1\""));
         assertTrue(read(SRC + "boss/BossHooks.java").contains("BossReworkSelfTests.register()"));
         String smoke = read(".github/workflows/smoke.yml");
-        assertTrue(smoke.contains(",boss.rework1,boss.stats,tier\""), "boss.rework1 sits before boss.stats, which stays just before the final tier");
+        assertTrue(smoke.contains(",boss.rework1,boss.rework3,boss.stats,tier\""), "boss.rework1 sits before boss.stats, which stays just before the final tier");
     }
 
     @Test

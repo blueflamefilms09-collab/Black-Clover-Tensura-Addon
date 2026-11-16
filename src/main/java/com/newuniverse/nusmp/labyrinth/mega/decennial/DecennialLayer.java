@@ -63,6 +63,7 @@ public final class DecennialLayer {
     private DecennialProfile profile;
     private DecennialBossController ctl;
     private Signatures sig;
+    private FamilyMoves family;                                        // boss rework wave 3: the tier family's signature and extra move
     private final LairEngine lairs = new LairEngine();
     private String siteKey = "";
     private boolean noLoot, dead, attached, fresh;
@@ -100,6 +101,7 @@ public final class DecennialLayer {
         profile = p;
         ctl = new DecennialBossController(p);
         sig = new Signatures(DecennialVocab.signature(p.signature()));
+        family = new FamilyMoves(DecennialFamilies.of(level));
         siteKey = !wishSite.isEmpty() ? wishSite : sectorId >= 0 ? DecennialData.keyOfSector(sectorId) : "";
         dead = false;
         attached = false;
@@ -114,6 +116,7 @@ public final class DecennialLayer {
         profile = null;
         ctl = null;
         sig = null;
+        family = null;
         return null;
     }
 
@@ -247,7 +250,10 @@ public final class DecennialLayer {
             emptyTicks = 0;
             fightTicks++;
             if (hall != null && now % 10 == 0) DecennialArenas.closeSeal(sl, hall);
-            if (!shifting) sig.tick(g, sl, now, players, addsAlive, fightTicks);
+            if (!shifting) {
+                sig.tick(g, sl, now, players, addsAlive, fightTicks);
+                if (family != null) family.tick(g, sl, now, players);
+            }
         } else if (ctl.fightStart() >= 0 && !unbuilt) {
             emptyTicks++;
             if (emptyTicks >= DecennialConfig.get(DecennialConfig.WIPE_SECONDS) * 20) wipe(g, sl, hall);
@@ -356,6 +362,7 @@ public final class DecennialLayer {
     private void wipe(LabyrinthGuardianEntity g, ServerLevel sl, Live hall) {
         ctl.reset();
         sig.reset();
+        if (family != null) family.reset();
         lairs.clear();
         emptyTicks = 0;
         fightTicks = 0;

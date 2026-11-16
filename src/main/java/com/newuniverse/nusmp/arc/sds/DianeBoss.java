@@ -369,6 +369,11 @@ public class DianeBoss extends ArcBoss {
         for (int i = 0; i < bk.size(); i++) {
             String id = bk.get(i).id();
             MoveRow row = DianeTable.byId(id);
+            if (row == null && com.newuniverse.nusmp.boss.rework3.Rework3Rows.is(id)) {                    // boss rework wave 3: the appended move is for either size
+                allowed.add(bk.get(i));
+                index.add(i);
+                continue;
+            }
             if (row == null || DianeTable.isSizeChange(id)) continue;
             if (row.group() != DianeTable.ANY && row.group() != (giant ? DianeTable.GIANT : DianeTable.HUMAN)) continue;
             if (defended && (id.equals(DianeTable.HEAVY_METAL) || id.equals(DianeTable.DIAMOND_SHIELD))) continue;            // one defence at a time

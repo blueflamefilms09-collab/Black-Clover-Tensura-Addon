@@ -17,7 +17,7 @@ public final class BossRulesConfig {
     public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS;
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
     /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
-    public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX;
+    public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX, REWORK3_MOVES, REWORK3_DECENNIAL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -51,6 +51,10 @@ public final class BossRulesConfig {
         REWORK_VFX = b.comment("Boss rework wave 1: Lucifero's shaped gravity effects and the signature effects of the Black Goliath, the Minotaur, the Amphisbaena and the new moves. false = the old dust bursts.",
                         "A server setting because the server decides which effect it sends; it changes looks only.")
                 .define("bossRework1Vfx", true);
+        REWORK3_MOVES = b.comment("Boss rework wave 3: the one new signature move appended to 16 early, Midnight Sun and Seven Deadly Sins bosses (read when a boss is built). false = their old move lists.")
+                .define("bossRework3Moves", true);
+        REWORK3_DECENNIAL = b.comment("Boss rework wave 3: the extra move of each decennial boss family (read when a boss is built). false = their old moves. The visual signatures are client looks.")
+                .define("bossRework3DecennialMoves", true);
         b.pop();
         SPEC = b.build();
     }
@@ -90,4 +94,10 @@ public final class BossRulesConfig {
 
     /** Boss rework wave 1: the shaped effects (false = the old dust bursts). */
     public static boolean reworkVfx() { return get(REWORK_VFX); }
+
+    /** Boss rework wave 3: the appended signature moves of the early, midnight and Sins bosses. */
+    public static boolean rework3Moves() { return get(REWORK3_MOVES); }
+
+    /** Boss rework wave 3: the extra move of each decennial boss family. */
+    public static boolean rework3Decennial() { return get(REWORK3_DECENNIAL); }
 }

@@ -166,6 +166,9 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
      */
     protected abstract List<Move> moves();
 
+    /** Boss rework wave 3: moves appended after {@link #moves()} (so no index moves); none by default. Read once, when the move book is built. */
+    protected List<Move> appendedMoves() { return List.of(); }
+
     // ---- hooks
     /** Power rose from 'old' to 'now' (a step of the curve, or Triad rage). Server side. */
     protected void onPowerChanged(int old, int now) {}
@@ -331,7 +334,12 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     private MoveBook<Move> moveBook() {
         if (book == null) {
-            book = MoveBook.of(moves());
+            List<Move> all = moves(), extra = appendedMoves();
+            if (!extra.isEmpty()) {
+                all = new ArrayList<>(all);
+                all.addAll(extra);
+            }
+            book = MoveBook.of(all);
             for (String d : book.dropped()) LogUtils.getLogger().warn("[anime_multiverse] {}: duplicate or empty move dropped: {}", getClass().getSimpleName(), d);
         }
         return book;

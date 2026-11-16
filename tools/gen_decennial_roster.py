@@ -28,6 +28,7 @@ OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiver
 LAIRS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "lairs.json")
 SIGS_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "signatures.json")
 FAMOUS_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "dnd_bosses", "famous")
+FAMILIES_JSON = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "decennial", "tier_families.json")
 LANG_OUT = os.path.join(ROOT, "tools", "lang", "decennial.json")
 DOC_OUT = os.path.join(ROOT, "docs", "labyrinth", "decennial_roster.md")
 
@@ -535,6 +536,31 @@ def doc_table(bosses):
     return "\n".join(rows) + "\n"
 
 
+# ---------------------------------------------------------------------------------------------------------------------- boss rework wave 3: the ten tier families
+# A family is a side and a D&D tier (levels 1..20 tier 1, ...): ONE visual signature (the name of a VfxShape and a colour) and ONE extra move (a floor shape shown first, then landing once).
+# pattern: circle | donut (a safe middle) | line (through the foe); radius = outer radius (line: length); period in seconds; warn in ticks; share of the boss's base attack per hit.
+# Read by DecennialFamilies.java (every number is clamped there); docs/bosses/rework_wave3.md.
+FAMILIES = [
+    ("evil_1", "circle", "slow", "BONE_FX1", "A1887F", 5.0, 18, 36, 0.05, 40, "Grave Grasp"),
+    ("evil_2", "line", "none", "BLOOD_SIGIL", "B71C1C", 16.0, 16, 34, 0.06, 0, "Blood Lance"),
+    ("evil_3", "donut", "ignite", "DEVIL_CIRCLE", "E64A19", 9.0, 15, 40, 0.06, 40, "Hellfire Ring"),
+    ("evil_4", "circle", "weakness", "DARK_BLACK_MOON", "6A1B9A", 6.0, 14, 36, 0.07, 50, "Black Moon Fall"),
+    ("evil_5", "line", "drain", "NIHILITY_ZONE", "37474F", 18.0, 12, 32, 0.08, 40, "Nihil Sunder"),
+    ("holy_1", "circle", "none", "LIGHT_FLARE", "FFF59D", 5.0, 18, 36, 0.05, 0, "Dawn Flare"),
+    ("holy_2", "donut", "knockback", "DIVINE_HALO", "FFE082", 8.0, 16, 38, 0.06, 0, "Halo Verdict"),
+    ("holy_3", "line", "slow", "DIVINE_RAY", "80DEEA", 16.0, 15, 34, 0.06, 40, "Lance of Mercy"),
+    ("holy_4", "circle", "blind", "DIVINE_PILLAR", "FFD740", 6.0, 14, 36, 0.07, 30, "Pillar of Judgement"),
+    ("holy_5", "donut", "weakness", "DIVINE_SIGIL", "FFFFFF", 10.0, 12, 40, 0.08, 50, "Sigil of the Last Dawn"),
+]
+
+
+def families_json():
+    out = {"_why": "Boss rework wave 3: one visual signature and one extra move for each of the ten tier families (side + D&D tier). Written by tools/gen_decennial_roster.py; read by DecennialFamilies.java, which clamps every number."}
+    for fid, pattern, effect, shape, color, radius, period, warn, share, eticks, label in FAMILIES:
+        out[fid] = {"pattern": pattern, "effect": effect, "shape": shape, "color": color, "radius": radius, "period": period, "warn": warn, "share": share, "effectTicks": eticks, "label": label}
+    return json.dumps(out, indent=2, ensure_ascii=False) + "\n"
+
+
 def main():
     check = "--check" in sys.argv
     bosses, problems = build()
@@ -548,6 +574,7 @@ def main():
         files[os.path.join(OUT_DIR, "%s.json" % b["id"])] = to_json(b)
     files[LANG_OUT] = json.dumps(lang_fragment(bosses), indent=2, ensure_ascii=False) + "\n"
     files[DOC_OUT] = doc_table(bosses)
+    files[FAMILIES_JSON] = families_json()
     bad = 0
     for path, text in files.items():
         if check:

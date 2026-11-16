@@ -29,6 +29,11 @@ public abstract class ArcBoss extends ZogratisBoss {
     /** Who this boss is. A constant of the concrete class ({@code public static final ArcCharacter CHARACTER}), returned here. */
     public abstract ArcCharacter character();
 
+    /** Boss rework wave 3: the one signature move of the early, midnight and Sins bosses (appended at the end; none when the setting is off or the character has none). */
+    @Override protected java.util.List<com.newuniverse.nusmp.entity.zogratis.Move> appendedMoves() {
+        return com.newuniverse.nusmp.boss.rework3.Rework3Moves.forBoss(character().id());
+    }
+
     @Override public String bossName() { return character().name(); }
 
     /** Never null: neutral ({@link Devil#LILITH}) unless the character is bound to a devil. The framework's own lines that name the devil are all overridden below. */

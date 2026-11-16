@@ -23,5 +23,6 @@ public final class BossHooks {
         NeoForge.EVENT_BUS.addListener(BossStatBuff::onIncomingDamage);
         BossStatSelfTests.register();                                                 // key boss.stats
         com.newuniverse.nusmp.boss.rework.BossReworkSelfTests.register();              // key boss.rework1 (boss rework wave 1)
+        com.newuniverse.nusmp.boss.rework3.Rework3SelfTests.register();                // key boss.rework3 (boss rework wave 3)
     }
 }

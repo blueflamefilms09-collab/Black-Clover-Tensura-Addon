@@ -103,6 +103,6 @@ class UltimateClassSourceScanTest {
         assertTrue(skill("UltimateClassSelfTests").contains("\"ultclass.rules\"") && skill("UltimateClassSelfTests").contains("\"ultclass.skills\""));
         String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"), StandardCharsets.UTF_8);
         assertTrue(smoke.contains(",ultclass,"), "ultclass right after greed");
-        assertTrue(smoke.contains(",scaling,") && smoke.contains(",attune,") && smoke.contains(",scaling,boss.rework1,boss.stats,tier\""), "the pinned entries stay");
+        assertTrue(smoke.contains(",scaling,") && smoke.contains(",attune,") && smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the pinned entries stay");
     }
 }
