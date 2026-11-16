@@ -54,6 +54,7 @@ public class ImmortalWillSkill extends UnbreakableWillSkill {
         SkillUtil.cleanse(player);
         BalanceLaw.heal(player, (float) (player.getMaxHealth() * WillRules.rallyShare()));
         SkillFx.spray(player.serverLevel(), false, player.position().add(0, 1, 0), 12, 0.5, 0.9, 0.5, 0.15);
+        SkillAnimeFx.sigil(player.serverLevel(), SkillAnimeFx.WILL, player.position(), 3.0, 0xFFFFD060, 24);      // VFX wave 3: the rally's golden flames
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.BEACON_POWER_SELECT, 1.0F, 1.2F);
         SkillUtil.actionbar(player, SkillMsg.t("will.rally", "You rally.").withStyle(ChatFormatting.GOLD));
         cooldown(instance, WillRules.RALLY, DMUtil.cooldown(WillRules.rallyCooldown()));
@@ -77,6 +78,7 @@ public class ImmortalWillSkill extends UnbreakableWillSkill {
             }
         }
         SkillFx.shape(player.serverLevel(), VfxShape.FIRE_BURST, at, at.add(0, 1, 0), 0xFFFFD060, 24, (float) (radius * 0.4));
+        SkillAnimeFx.sigil(player.serverLevel(), SkillAnimeFx.WILL, at, radius, 0xFFFFD060, 30);      // VFX wave 3: the shockwave of the refused death
         SkillFx.ring(player.serverLevel(), at, Math.min(radius, 8.0), 0xFFD060);
     }
 }

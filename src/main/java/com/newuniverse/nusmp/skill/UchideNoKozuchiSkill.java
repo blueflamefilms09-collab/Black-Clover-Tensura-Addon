@@ -54,6 +54,7 @@ public class UchideNoKozuchiSkill extends ChantedMagicSkill {
         SkillFx.aura(level, target, false);
         SkillFx.spray(level, false, at, 12, 0.5, 1.0, 0.5, 0.2);
         SkillFx.shape(level, VfxShape.LIGHT_FLARE, at, at, 0xFFFFD24A, 20, 1.2f);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.MALLET, target.position(), 1.0, 0xFFFFD24A, 30);      // VFX wave 3: the level boost, rings climbing the body
         SkillFx.sound(level, at, SoundEvents.PLAYER_LEVELUP, 1.0F, 0.8F);
         if (target instanceof ServerPlayer boosted) {
             SkillUtil.actionbar(boosted, SkillMsg.t("kozuchi.boost", "LEVEL BOOST! Your power surges.").withStyle(ChatFormatting.GOLD));

@@ -220,6 +220,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.greed.GreedClient.init(modEventBus);      // 3.85.0 Black Sword Greed: the form key, the starvation vignette and the HUD
             com.newuniverse.nusmp.vfx.client.GreedVfxConfig.init(modEventBus, modContainer);      // VFX wave 2: greed.classicVfx / devil.classicVfx (nusmp-greed-devil-vfx-client.toml): the old particles only
+            com.newuniverse.nusmp.vfx.client.SkillAnimeVfxConfig.init(modEventBus, modContainer);  // VFX wave 3: skills.classicVfx (nusmp-skill-anime-vfx-client.toml): the old skill effects only
             com.newuniverse.nusmp.client.attune.AttuneClient.init(modEventBus);    // meditation attunement: the meditation screen (opened by /meditate)
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
             com.newuniverse.nusmp.client.devil.DevilClient.init(modEventBus, modContainer);                                  // 3.48.0 Devil Contract: the key, the HUD, the Weg layer (markings, horns, wings), the eye shade, nusmp-devil-client.toml
@@ -467,6 +468,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.BeastSkillSelfTests.register();                               // 3.58.0
         com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
         com.newuniverse.nusmp.skill.GuideP1SelfTests.register();                                  // guide P1 #2, #3, #5
+        com.newuniverse.nusmp.skill.SkillAnimeFx.registerSelfTests();                                  // VFX wave 3: the anime skill effects (SkillAnimeLayer): skill.vfx
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartingEvent e) -> { if (com.newuniverse.nusmp.skill.ResetGuard.enabled()) com.newuniverse.nusmp.skill.ResetGuard.protectScrollLists(); });
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);

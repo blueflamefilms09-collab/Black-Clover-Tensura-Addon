@@ -47,5 +47,6 @@ public class BlackWingsSkill extends VectorManipulationSkill {
         if (player.tickCount % 6 == 0) {
             SkillFx.spray(player.serverLevel(), true, player.position().add(0, 1.2, 0), 4, 0.9, 0.4, 0.3, 0.01);
         }
+        if (player.tickCount % 40 == 0) SkillAnimeFx.wings(player.serverLevel(), player, 2.6f);      // VFX wave 3: the black wings, one packet every 2 seconds of glide
     }
 }

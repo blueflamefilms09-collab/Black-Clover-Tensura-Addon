@@ -42,6 +42,7 @@ public class ReaLaevateinnSkill extends ChantedMagicSkill {
         double mastery = masteryFrac(instance);
         int perWave = ChantRules.pillarsPerWave(tier);
         SkillFx.ring(level, player.position(), Math.min(radius * 0.5, 8.0), 0xFF7A2A);
+        SkillAnimeFx.flameField(level, player, radius, ChantRules.pillarWaves(tier) * ChantRules.pillarInterval() + 20, 0xFFFF7A2A);      // VFX wave 3: one packet for every wave
 
         SkillZones.start(player, ChantRules.pillarInterval(), ChantRules.pillarWaves(tier), (owner, lvl, index) -> {
             Vec3 centre = owner.position();

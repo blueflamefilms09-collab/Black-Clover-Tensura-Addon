@@ -507,7 +507,24 @@ public enum VfxShape {
     GREED_MAW,
     GREED_LIGHTNING,
     GREED_AWAKEN,
-    DEVIL_HIT;
+    DEVIL_HIT,
+    // VFX wave 3: the Tensura-style Unique / Ultimate skills in their anime look (SkillAnimeLayer, docs/vfx_remake/skill_anime.md), appended after DEVIL_HIT: sent by skill/SkillAnimeFx only;
+    // the client setting skills.classicVfx (nusmp-skill-anime-vfx-client.toml) draws nothing for them. The power of GATE / ARGONAUT / HOLY_FIRE carries a mode in steps of 20 (SkillAnimeVfx.mode).
+    // SKILL_GATE Gate of Babylon: golden ripple gates (mode 0: count gates behind from fire weapons at `to`; 1: 20 + radius, gates over from rain weapons down on `to`; 2: Enkidu's chains bind `to`;
+    // 3: Ea's crimson spiral from -> to); SKILL_FIREBOLT the instant zigzag fire-lightning bolt from -> to (power = width); SKILL_ARGONAUT the bell light (mode 0: the chime of charge = power,
+    // follows; 1: 20 + charge, the white sweep from -> to; 2: 40 + charge, the hero's beam from -> to); SKILL_FROST Wynn Fimbulvetr's frost circle, ice spikes and blizzard round from (power = radius);
+    // SKILL_HOLY_FIRE sacred fire (mode 0: Hestia's hearth pillar at from, power = radius; 1: 20 + radius, Rea Laevateinn's flame pillars erupting round from); SKILL_ALLURE Freya's silver allure
+    // round from (power = radius); SKILL_SCREW All Fiction's giant screws (from -> to: one screw driven into `to`; from = to: power screws slam down round from); SKILL_WINGS Black Wings on the
+    // back of the followed player (from = the feet, power = span); SKILL_SIGIL a smaller skill's signature at from (power = style + 1, SkillAnimeVfx.SIGIL_STYLES; the from -> to distance = radius).
+    SKILL_GATE,
+    SKILL_FIREBOLT,
+    SKILL_ARGONAUT,
+    SKILL_FROST,
+    SKILL_HOLY_FIRE,
+    SKILL_ALLURE,
+    SKILL_SCREW,
+    SKILL_WINGS,
+    SKILL_SIGIL;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

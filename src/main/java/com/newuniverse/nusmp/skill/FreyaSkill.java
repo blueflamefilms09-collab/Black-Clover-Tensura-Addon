@@ -63,6 +63,7 @@ public class FreyaSkill extends GodSkill {
         }
         Vec3 at = player.position();
         SkillFx.ring(level, at, Math.min(GodRules.Freya.radius(tier) * 0.6, 8.0), 0xFFA6D2);
+        SkillAnimeFx.allure(level, at, GodRules.Freya.radius(tier), 0xFFFFA6D2);         // VFX wave 3: the silver allure
         SkillFx.spray(level, false, at.add(0, 1, 0), 12, 1.2, 0.8, 1.2, 0.02);
         SkillFx.sound(level, at, SoundEvents.AMETHYST_BLOCK_CHIME, 2.0F, 1.2F);
         return true;

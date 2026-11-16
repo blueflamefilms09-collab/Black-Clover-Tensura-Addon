@@ -49,6 +49,7 @@ public class WynnFimbulvetrSkill extends ChantedMagicSkill {
         }
         SkillFx.follow(level, VfxShape.WIND_TORNADO, player, c, 0xFFCFF3FF, ChantRules.blizzardTicks(tier), (float) (radius * 0.5));
         SkillFx.shape(level, VfxShape.WATER_RING, c.add(0, 0.1, 0), c.add(0, 1, 0), 0xFF9ADFFF, 30, (float) (radius * 0.4));
+        SkillAnimeFx.frost(level, c, radius, ChantRules.blizzardTicks(tier));             // VFX wave 3: the frost circle, ice spikes and blizzard
         SkillFx.spray(level, false, c.add(0, 1.5, 0), 12, radius / 3, 1.5, radius / 3, 0.05);
         SkillFx.sound(level, c, SoundEvents.GLASS_BREAK, 2.0F, 0.5F);
 

@@ -297,6 +297,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.KiLayer());
         // Black Sword Greed (Berserk of Gluttony) and the devil hits: their own ten shapes (GREED_SLASH ... DEVIL_HIT), appended after KI_TRANSFER; greed.classicVfx / devil.classicVfx = true draw nothing for them.
         register(new com.newuniverse.nusmp.vfx.client.layer.GreedLayer());
+        // VFX wave 3: the Unique / Ultimate skills in their anime look: their own nine shapes (SKILL_GATE ... SKILL_SIGIL), appended after DEVIL_HIT; skills.classicVfx = true draws nothing for them.
+        register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnimeLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

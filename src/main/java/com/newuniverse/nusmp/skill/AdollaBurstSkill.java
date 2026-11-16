@@ -89,6 +89,7 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
         }
         SkillFx.beam(level, a, b, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, a, b, 0xFF6AD8FF, 12, 1.2f);
+        SkillAnimeFx.firebolt(level, a, b, 0xFF6AD8FF, 1.2f);                            // VFX wave 3: the blue flash of Light Speed
         SkillFx.sound(level, to, SoundEvents.FIREWORK_ROCKET_BLAST, 1.5F, 0.6F);
         return true;
     }
@@ -109,6 +110,7 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
             }
         }
         SkillFx.shape(level, VfxShape.FIRE_WILD, at, at.add(0, 1, 0), 0xFF6AD8FF, 30, (float) FireForceRules.burstRadius());
+        SkillAnimeFx.sigil(level, SkillAnimeFx.FIRE_FORCE, at, FireForceRules.burstRadius(), 0xFF6AD8FF, 30);      // VFX wave 3: the Adolla flames burst out
         SkillFx.ring(level, at, 8.0, 0x6AD8FF);
         SkillFx.sound(level, at, SoundEvents.GENERIC_EXPLODE.value(), 1.2F, 1.2F);
     }

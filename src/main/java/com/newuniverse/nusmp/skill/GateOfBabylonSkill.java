@@ -108,6 +108,7 @@ public class GateOfBabylonSkill extends NUSkill {
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("gate.no_target", "Nothing to strike.")); return false; }
         if (!pay(instance, p, GateRules.GATE, DMUtil.cost(GateRules.cost(GateRules.GATE)))) return false;
         fall(p.serverLevel(), t, true);
+        SkillAnimeFx.gate(p.serverLevel(), p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0), 1);      // VFX wave 3: a golden gate fires one weapon
         SkillDamage.hit(p, t, GateRules.gateDamage(), masteryFrac(instance), instance);
         return true;
     }
@@ -122,6 +123,7 @@ public class GateOfBabylonSkill extends NUSkill {
             if (drawn < FX_BEAMS) { fall(p.serverLevel(), t, drawn < FX_GATES); drawn++; }   // at most six beams and three gates, whatever is refused
             if (SkillDamage.hit(p, t, GateRules.volleyDamage(), masteryFrac(instance), instance) > 0f) struck++;
         }
+        SkillAnimeFx.gate(p.serverLevel(), p.getEyePosition(), foes.get(0).position().add(0, foes.get(0).getBbHeight() * 0.5, 0), drawn + 2);      // VFX wave 3: one packet for the whole volley
         return true;
     }
 
@@ -132,6 +134,7 @@ public class GateOfBabylonSkill extends NUSkill {
         SkillFx.ring(level, centre.add(0, 0.2, 0), GateRules.rainRadius(), 0xFFD060);
         Vec3 sky = centre.add(0, 7.0, 0);
         SkillFx.shape(level, com.newuniverse.nusmp.vfx.VfxShape.MAGIC_CIRCLE, sky, sky.add(0, -1, 0), 0xFFFFD060, 24, 1.1f);
+        SkillAnimeFx.gateRain(level, sky, centre, GateRules.rainRadius());                 // VFX wave 3: gates over the area, weapons raining
         int struck = 0, drawn = 0;
         for (LivingEntity t : SkillTargets.foes(p, centre, GateRules.rainRadius())) {
             if (struck >= GateRules.rainMax()) break;
@@ -151,6 +154,7 @@ public class GateOfBabylonSkill extends NUSkill {
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ControlRules.controlTicks(GateRules.chainsWeakTicks(), boss, player), 0));
         SkillFx.beam(p.serverLevel(), p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0), false);
         SkillFx.ring(p.serverLevel(), t.position().add(0, 0.2, 0), 2.0, 0xC8A040);
+        SkillAnimeFx.enkidu(p.serverLevel(), p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0));      // VFX wave 3: Enkidu's chains from four gates
         SkillUtil.actionbar(p, SkillMsg.t("gate.chains", "The Chains of Heaven bind it.").withStyle(ChatFormatting.GOLD));
         return true;
     }
@@ -205,6 +209,7 @@ public class GateOfBabylonSkill extends NUSkill {
         if (!pay(instance, p, GateRules.GAE, DMUtil.cost(GateRules.cost(GateRules.GAE)))) return false;
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, GateRules.gaeRange());
         SkillFx.beam(p.serverLevel(), from, to, false);
+        SkillAnimeFx.gate(p.serverLevel(), from, to, 1);                                 // VFX wave 3: Gae Bolg flies out of a gate
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, GateRules.gaeWidth())) {
             if (hits >= GateRules.gaePierce()) break;
@@ -220,6 +225,7 @@ public class GateOfBabylonSkill extends NUSkill {
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, GateRules.eaRange());
         SkillFx.beam(level, from, to, false);
         SkillFx.shape(level, com.newuniverse.nusmp.vfx.VfxShape.MAGIC_CIRCLE_EXPLOSION, from, to, 0xFFFF4020, 24, 1.2f);
+        SkillAnimeFx.ea(level, from, to);                                                  // VFX wave 3: Ea's crimson spiral from a gate
         SkillFx.sound(level, p.position(), SoundEvents.ANVIL_LAND, 0.8F, 0.5F);
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, GateRules.eaWidth())) {
             SkillDamage.hit(p, t, GateRules.eaDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);

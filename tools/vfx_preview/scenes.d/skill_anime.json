@@ -1,0 +1,1499 @@
+{
+ "_comment": "VFX wave 3 (SkillAnimeLayer): the anime-style Unique / Ultimate skills (docs/vfx_remake/skill_anime.md). Figures are the caster / foes (1.8 tall); colour = what the server sends; power encodes the mode (steps of 20, SkillAnimeVfx.mode).",
+ "skill_gate_barrage": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_GATE",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 6,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -6,
+   3.2,
+   -5
+  ],
+  "target": [
+   0,
+   1.6,
+   4
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   17
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_gate_volley8": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_GATE",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 8,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -6,
+   3.2,
+   -5
+  ],
+  "target": [
+   0,
+   1.6,
+   4
+  ],
+  "ages": [
+   5,
+   8,
+   11,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_gate_rain": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_GATE",
+  "from": [
+   0,
+   8,
+   10
+  ],
+  "to": [
+   0,
+   0,
+   10
+  ],
+  "power": 28,
+  "duration": 34,
+  "color": "FFFFD060",
+  "cam": [
+   -9,
+   4.5,
+   -4
+  ],
+  "target": [
+   0,
+   3,
+   10
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1,
+    0,
+    9,
+    1.8
+   ],
+   [
+    -2,
+    0,
+    11,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_gate_enkidu": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_GATE",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   6
+  ],
+  "power": 40,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -4.5,
+   2.6,
+   1.5
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_gate_ea": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_GATE",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   30
+  ],
+  "power": 60,
+  "duration": 24,
+  "color": "FFFF4020",
+  "cam": [
+   -7,
+   3,
+   -4
+  ],
+  "target": [
+   0,
+   1.6,
+   10
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    20,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_firebolt": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_FIREBOLT",
+  "from": [
+   0.3,
+   1.35,
+   0.8
+  ],
+  "to": [
+   0,
+   1.0,
+   14
+  ],
+  "power": 1,
+  "duration": 12,
+  "color": "FFFF8A2A",
+  "cam": [
+   -5,
+   2.4,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   7
+  ],
+  "ages": [
+   0,
+   2,
+   4,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_adolla_lightspeed": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_FIREBOLT",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   12
+  ],
+  "power": 1.2,
+  "duration": 12,
+  "color": "FF6AD8FF",
+  "cam": [
+   -5,
+   2.4,
+   -3
+  ],
+  "target": [
+   0,
+   1.2,
+   6
+  ],
+  "ages": [
+   0,
+   2,
+   4,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_argonaut_chime": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_ARGONAUT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 20,
+  "color": "FFFFF2B0",
+  "cam": [
+   2.2,
+   1.7,
+   2.8
+  ],
+  "target": [
+   0.2,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   8,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_argonaut_strike": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_ARGONAUT",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   6
+  ],
+  "power": 28,
+  "duration": 16,
+  "color": "FFFFF2B0",
+  "cam": [
+   -4.5,
+   3.5,
+   -3
+  ],
+  "target": [
+   0,
+   1.2,
+   3
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1,
+    0,
+    4,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_hero_beam": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_ARGONAUT",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   30
+  ],
+  "power": 50,
+  "duration": 18,
+  "color": "FFFFF2B0",
+  "cam": [
+   -6,
+   3,
+   -4
+  ],
+  "target": [
+   0,
+   1.4,
+   10
+  ],
+  "ages": [
+   1,
+   4,
+   8,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    15,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_wynn_fimbulvetr": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_FROST",
+  "from": [
+   0,
+   0,
+   10
+  ],
+  "to": [
+   0,
+   1,
+   10
+  ],
+  "power": 7,
+  "duration": 60,
+  "color": "FFCFF3FF",
+  "cam": [
+   -9,
+   6,
+   -2
+  ],
+  "target": [
+   0,
+   0.8,
+   10
+  ],
+  "ages": [
+   3,
+   8,
+   16,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1,
+    0,
+    9,
+    1.8
+   ],
+   [
+    -2,
+    0,
+    11,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_hestia": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_HOLY_FIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 30,
+  "color": "FFFFB347",
+  "cam": [
+   -5.5,
+   3,
+   -6
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_rea_laevateinn": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_HOLY_FIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 30,
+  "duration": 60,
+  "color": "FFFF7A2A",
+  "cam": [
+   -12,
+   7,
+   -10
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   24,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    3,
+    1.8
+   ],
+   [
+    -4,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_freya": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_ALLURE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 30,
+  "color": "FFFFA6D2",
+  "cam": [
+   -5,
+   2.8,
+   -6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_fiction_screw": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SCREW",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 1,
+  "duration": 30,
+  "color": "FF5A2A7A",
+  "cam": [
+   -4.5,
+   2.4,
+   2
+  ],
+  "target": [
+   0,
+   1.1,
+   6
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_fiction_ring": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SCREW",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 5,
+  "duration": 30,
+  "color": "FF5A2A7A",
+  "cam": [
+   -4.5,
+   3.4,
+   -5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_black_wings": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_WINGS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 2.6,
+  "duration": 42,
+  "color": "FF6A6070",
+  "cam": [
+   0.6,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_sigil_faith": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   1,
+   0,
+   0
+  ],
+  "power": 1,
+  "duration": 30,
+  "color": "FFFFE08A",
+  "cam": [
+   -3,
+   2.4,
+   -4
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_sigil_goddess": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   6,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 30,
+  "color": "FFFFE9A0",
+  "cam": [
+   -7,
+   4,
+   -8
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_sigil_forge": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   2,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FFFF8A3A",
+  "cam": [
+   -2.8,
+   2.0,
+   -3.6
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_sigil_mallet": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   1,
+   0,
+   0
+  ],
+  "power": 4,
+  "duration": 30,
+  "color": "FFFFD24A",
+  "cam": [
+   -3,
+   2.2,
+   -4
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_sigil_will": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   5,
+   0,
+   0
+  ],
+  "power": 5,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -5,
+   3,
+   -6
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "skill_sigil_hell": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   4,
+   0,
+   0
+  ],
+  "power": 6,
+  "duration": 30,
+  "color": "FFFF2A1E",
+  "cam": [
+   -5,
+   3.2,
+   -6
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_sigil_gravity": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   5,
+   0,
+   0
+  ],
+  "power": 7,
+  "duration": 30,
+  "color": "FFB070FF",
+  "cam": [
+   -7,
+   5,
+   -8
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ },
+ "skill_sigil_fire_force": {
+  "layer": "SkillAnimeLayer",
+  "shape": "SKILL_SIGIL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   4,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 30,
+  "color": "FFFF5A1E",
+  "cam": [
+   -5,
+   2.6,
+   -6
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.18,
+   0.2,
+   0.32
+  ],
+  "horizon": [
+   0.52,
+   0.42,
+   0.46
+  ],
+  "floor": [
+   0.24,
+   0.24,
+   0.24
+  ]
+ }
+}

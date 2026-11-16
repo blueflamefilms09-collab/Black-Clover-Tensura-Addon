@@ -42,6 +42,7 @@ public class HephaestusSkill extends GodSkill {
         Vec3 at = player.position().add(0, 1, 0);
         SkillFx.spray(level, false, at, 12, 0.4, 0.4, 0.4, 0.04);
         SkillFx.shape(level, VfxShape.ALCHEMY_CIRCLE, player.position().add(0, 0.05, 0), at, 0xFFFF8A3A, 24, 1.2f);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.FORGE, at, 2.0, 0xFFFF8A3A, 24);           // VFX wave 3: the forge's sparks and hammer strikes
         SkillFx.sound(level, at, SoundEvents.ANVIL_USE, 1.0F, 1.0F);
         SkillUtil.actionbar(player, SkillMsg.t("hephaestus.done", "Forged anew: %s durability restored.", points));
         return true;

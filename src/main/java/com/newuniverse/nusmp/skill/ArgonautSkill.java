@@ -68,6 +68,7 @@ public class ArgonautSkill extends NUSkill {
         ServerLevel level = player.serverLevel();
         SkillFx.sound(level, player.position(), SoundEvents.BELL_BLOCK, 1.0F, 0.8F + paid * 0.12F);
         SkillFx.spray(level, false, player.position().add(0, 1, 0), 4 + paid, 0.4, 0.6, 0.4, 0.02);
+        SkillAnimeFx.chime(level, player, paid);                                           // VFX wave 3: the bell of light (one per charge step)
         if (paid >= ChargeRules.maxCharge(tier)) {
             SkillUtil.actionbar(player, SkillMsg.t("argonaut.full", "Fully charged: release!").withStyle(ChatFormatting.GOLD));
         } else {
@@ -114,6 +115,7 @@ public class ArgonautSkill extends NUSkill {
         }
         Vec3 tip = eye.add(look.scale(ChargeRules.strikeReach(tier)));
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, eye.add(look.scale(0.8)).add(0, -0.3, 0), tip, 0xFFFFF2B0, 10, 1.0f + charge * 0.12f);
+        SkillAnimeFx.argoStrike(level, eye, tip, charge);                                  // VFX wave 3: the white crescent
         SkillFx.spray(level, false, eye.add(look.scale(2.0)).add(0, -0.3, 0), 6 + charge, 1.0, 0.3, 1.0, 0.0);
         SkillFx.sound(level, player.position(), SoundEvents.PLAYER_ATTACK_SWEEP, 1.5F, 0.6F);
         return hits;

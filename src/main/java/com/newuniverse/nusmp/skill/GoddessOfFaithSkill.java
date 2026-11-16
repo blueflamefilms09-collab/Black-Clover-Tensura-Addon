@@ -87,6 +87,7 @@ public class GoddessOfFaithSkill extends FaithSkill {
             SkillFx.spray(level, false, ally.position().add(0, ally.getBbHeight() + 0.3, 0), 8, 0.3, 0.2, 0.3, 0.02);
         }
         SkillFx.ring(level, player.position(), 6.0, 0xFFE9A0);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.GODDESS, player.position(), 6.0, 0xFFFFE9A0, 30);      // VFX wave 3: the sunburst and the shafts of light
         SkillFx.sound(level, player.position(), SoundEvents.BEACON_ACTIVATE, 1.0F, 1.5F);
         SkillUtil.actionbar(player, SkillMsg.t("faith.blessing", "Blessing: your allies are strengthened.").withStyle(ChatFormatting.GOLD));
         cooldown(instance, BLESSING, FaithRules.blessingCooldown());
@@ -105,6 +106,7 @@ public class GoddessOfFaithSkill extends FaithSkill {
             SkillFx.beam(level, at.add(0, 4, 0), at, false);
         }
         SkillFx.ring(level, player.position(), 8.0, 0xFFFFFF);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.GODDESS, player.position(), 8.0, 0xFFFFFFFF, 30);      // VFX wave 3: the miracle
         SkillFx.sound(level, player.position(), SoundEvents.TOTEM_USE, 0.8F, 1.4F);
         SkillUtil.actionbar(player, SkillMsg.t("faith.miracle", "A miracle: your allies are healed and protected.").withStyle(ChatFormatting.GOLD));
         cooldown(instance, MIRACLE, FaithRules.miracleCooldown());

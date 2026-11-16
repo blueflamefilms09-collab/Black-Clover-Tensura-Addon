@@ -57,6 +57,7 @@ public class HerosArgonautSkill extends ArgonautSkill {
         }
         SkillFx.beam(level, from, to, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, from, to, 0xFFFFF2B0, 14, 2.0f + charge * 0.2f);
+        SkillAnimeFx.heroBeam(level, from, to, charge);                                   // VFX wave 3: the hero's beam with its bell rings
         SkillFx.shape(level, VfxShape.LIGHT_FLARE, to, to, 0xFFFFE9A0, 12, 1.5f);
         SkillFx.sound(level, player.position(), SoundEvents.BELL_RESONATE, 2.0F, 0.7F);
         SkillFx.sound(level, player.position(), SoundEvents.WARDEN_SONIC_BOOM, 0.6F, 1.6F);

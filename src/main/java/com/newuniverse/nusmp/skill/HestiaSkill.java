@@ -45,6 +45,7 @@ public class HestiaSkill extends GodSkill {
         Vec3 at = player.position();
         SkillFx.ring(level, at, Math.min(radius * 0.6, 8.0), 0xFFB347);
         SkillFx.shape(level, VfxShape.FIRE_PILLAR, at, at.add(0, 1, 0), 0xFFFFB347, 30, 2.0f);
+        SkillAnimeFx.hearth(level, at, radius, 0xFFFFB347);                               // VFX wave 3: the sacred hearth flame
         SkillFx.sound(level, at, SoundEvents.BEACON_ACTIVATE, 1.0F, 1.4F);
         return true;
     }

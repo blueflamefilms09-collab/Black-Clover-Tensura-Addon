@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Why: the Black Sword Greed / devil-hit look (GreedLayer + GreedDevilHits, docs/vfx_remake/greed_devils.md) reads its 19 textures by name and the server sends its 10 shapes by ordinal, so both are pinned:
  * every texture exists with a power-of-two size, some visible and some clear texels, clear corners on the round sprites, no black colour in a clear texel next to a visible one, no stray greed_ file, every name
- * drawn by the layer and made by the generator; the shapes are appended after KI_TRANSFER in order and DEVIL_HIT is the last shape; the layer is registered, keeps the engine's 400-vertex cap, draws nothing
+ * drawn by the layer and made by the generator; the shapes are appended after KI_TRANSFER in order and the wave 3 skill shapes follow DEVIL_HIT; the layer is registered, keeps the engine's 400-vertex cap, draws nothing
  * with the classic settings on; every Greed shape is sent by the Greed code through GreedFx and the devil hit by DevilCombat through DevilHitFx; the world list matches the devil enum.
  */
 class GreedVfxAssetTest {
@@ -97,7 +97,8 @@ class GreedVfxAssetTest {
     void theShapesAreAppendedAfterKiInOrderAndTheLayerIsRegistered() throws IOException {
         for (int i = 0; i < SHAPES.length; i++) assertEquals(VfxShape.KI_TRANSFER.ordinal() + 1 + i, SHAPES[i].ordinal(), "appended in order: " + SHAPES[i]);
         VfxShape[] all = VfxShape.values();
-        assertEquals(VfxShape.DEVIL_HIT, all[all.length - 1], "wave 2: DEVIL_HIT is the last shape (a later family is appended after it: move this pin)");
+        assertEquals(VfxShape.SKILL_SIGIL, all[all.length - 1], "wave 3: SKILL_SIGIL is the last shape, the skill family follows DEVIL_HIT (a later family is appended after it: move this pin)");
+        assertEquals(VfxShape.DEVIL_HIT.ordinal() + 1, VfxShape.SKILL_GATE.ordinal(), "wave 3 is appended right after DEVIL_HIT");
         String layer = code(LAYER_DIR.resolve("GreedLayer.java"));
         for (VfxShape s : SHAPES) assertTrue(layer.contains("VfxShape." + s.name()) || layer.contains("case " + s.name()), s + " is not drawn by GreedLayer");
         assertTrue(code(ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/VfxManager.java")).contains("register(new com.newuniverse.nusmp.vfx.client.layer.GreedLayer())"));

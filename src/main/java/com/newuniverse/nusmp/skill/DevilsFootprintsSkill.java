@@ -68,6 +68,7 @@ public class DevilsFootprintsSkill extends NUSkill {
         player.fallDistance = 0;
         Vec3 from = player.position().add(0, 0.2, 0);
         SkillFx.shape(level, VfxShape.FLAME_TRAIL, from, from.add(look.scale(-6.0)), 0xFFFF5A1E, 16, 1.0f);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.FIRE_FORCE, player.position(), 2.5, 0xFFFF5A1E, 16);      // VFX wave 3: flame jets from the soles
         SkillFx.spray(level, false, from, 10, 0.2, 0.1, 0.2, 0.08);
         SkillFx.sound(level, player.position(), SoundEvents.FIRECHARGE_USE, 1.0F, 1.4F);
     }

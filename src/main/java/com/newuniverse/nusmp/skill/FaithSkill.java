@@ -95,6 +95,7 @@ public class FaithSkill extends NUSkill {
         SkillUtil.actionbar(player, SkillMsg.t("faith.prayed", "You pray. Faith: %s", getFaith(instance)).withStyle(ChatFormatting.GOLD));
         var level = player.serverLevel();
         SkillFx.spray(level, false, player.position().add(0, 2.1, 0), 12, 0.4, 0.1, 0.4, 0.01);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.FAITH, player.position(), 1, 0xFFFFE08A, 30);      // VFX wave 3: the halo and the light from above
         SkillFx.sound(level, player.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.0F, 1.2F);
         grow(instance, player, 0.5);
     }
@@ -146,6 +147,7 @@ public class FaithSkill extends NUSkill {
         Vec3 at = target.position().add(0, 1, 0);
         SkillFx.beam(level, player.getEyePosition(), at, false);
         SkillFx.spray(level, false, at.add(0, 1, 0), 12, 0.4, 0.5, 0.4, 0.02);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.FAITH, target.position(), 1, 0xFFFFE08A, 30);      // VFX wave 3: the gift comes down on the target
         SkillFx.sound(level, target.position(), SoundEvents.BEACON_POWER_SELECT, 1.0F, 1.0F);
         grow(instance, player, 1);
 

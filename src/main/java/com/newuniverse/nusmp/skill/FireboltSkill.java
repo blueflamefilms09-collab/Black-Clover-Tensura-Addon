@@ -48,6 +48,7 @@ public class FireboltSkill extends NUSkill {
         Vec3 hand = start.add(player.getViewVector(1.0F).scale(0.8)).add(0, -0.25, 0);
         SkillFx.beam(level, hand, impact, false);
         SkillFx.shape(level, VfxShape.LIGHTNING_SPEAR, hand, impact, 0xFFFF8A2A, 8, 1.0f);
+        SkillAnimeFx.firebolt(level, hand, impact, 0xFFFF8A2A, 1.0f);                     // VFX wave 3: the instant fire-lightning bolt
         SkillFx.sound(level, player.position(), SoundEvents.LIGHTNING_BOLT_IMPACT, 0.8F, 1.6F);
 
         boolean hitSomething = false;

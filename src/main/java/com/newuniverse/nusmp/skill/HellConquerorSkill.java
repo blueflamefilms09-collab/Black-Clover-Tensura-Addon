@@ -35,6 +35,7 @@ public class HellConquerorSkill extends HellWalkerSkill {
             }
             Vec3 at = player.position();
             SkillFx.shape(player.serverLevel(), VfxShape.FIRE_WILD, at, at.add(0, 1, 0), 0xFFFF2A1E, 20, (float) AuraRules.hellfireRadius());
+            SkillAnimeFx.sigil(player.serverLevel(), SkillAnimeFx.HELL, at, AuraRules.hellfireRadius(), 0xFFFF2A1E, 24);      // VFX wave 3: hellfire (one per pulse, a second apart)
         }
         if (AuraRules.berserk(hp, max, tier)) {
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 1, true, false));

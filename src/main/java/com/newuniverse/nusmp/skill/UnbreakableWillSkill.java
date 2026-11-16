@@ -53,6 +53,7 @@ public class UnbreakableWillSkill extends NUSkill {
         refused(instance, player, tier);
 
         SkillFx.spray(player.serverLevel(), false, player.position().add(0, 1, 0), 12, 0.5, 1, 0.5, 0.2);
+        SkillAnimeFx.sigil(player.serverLevel(), SkillAnimeFx.WILL, player.position(), 3.0, 0xFFFFD060, 30);      // VFX wave 3: the will that refuses to fall
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.TOTEM_USE, 1.0F, 0.8F);
         SkillUtil.actionbar(player, SkillMsg.t("will.refused", "You refuse to fall!").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
         cooldown(instance, WillRules.READY, DMUtil.cooldown(WillRules.cooldownTicks(tier)));

@@ -145,6 +145,7 @@ public class AllFictionSkill extends NUSkill {
         if (!done) return;
         cooldown(instance, mode, DMUtil.cooldown(FictionRules.cooldown(mode)));
         SkillFx.sound(level, player.position(), SoundEvents.ILLUSIONER_MIRROR_MOVE, 1.0F, 0.5F);
+        if (mode != FictionRules.ERASE) SkillAnimeFx.screwRing(level, player.position(), 5);      // VFX wave 3: the screws slam down (Fiction itself drives one into its target)
         SkillUtil.castVfx(player, 0xFF5A2A7A);
         grow(instance, player, 1);
     }
@@ -170,6 +171,7 @@ public class AllFictionSkill extends NUSkill {
         if (target == null) { SkillUtil.fail(player, SkillMsg.t("fiction.no_target", "No target.")); return false; }
         if (!pay(instance, player, FictionRules.ERASE)) return false;
         SkillFx.spray(level, true, body(target), 12, 0.4, 0.8, 0.4, 0.05);
+        SkillAnimeFx.screwShot(level, player.getEyePosition(), body(target));            // VFX wave 3: a giant screw is driven into it
         if (FictionRules.erases(GodTier.fullyAffected(target))) {
             if (target instanceof ServerPlayer) GodTier.kill(player, target);   // a player is killed, never silently removed from the world
             else target.discard();                                              // erased: no body, no drops

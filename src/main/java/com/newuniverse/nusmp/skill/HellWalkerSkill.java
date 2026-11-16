@@ -38,6 +38,7 @@ public class HellWalkerSkill extends ToggleAuraSkill {
     protected void turnedOn(ManasSkillInstance instance, ServerPlayer player) {
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.WITHER_AMBIENT, 0.6F, 0.6F);
         SkillFx.spray(player.serverLevel(), true, player.position().add(0, 1, 0), 12, 0.4, 0.6, 0.4, 0.02);
+        SkillAnimeFx.sigil(player.serverLevel(), SkillAnimeFx.HELL, player.position(), 2.5, 0xFF8A0A0A, 30);      // VFX wave 3: the ground cracks into hell
     }
 
     @Override

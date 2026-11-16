@@ -48,6 +48,7 @@ public class FutsunomitamaSkill extends ChantedMagicSkill {
             t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));
         }
         SkillFx.shape(level, VfxShape.ASH_FORMATION, c, c.add(0, 1, 0), 0xFFB070FF, ChantRules.gravityTicks(tier), (float) radius);
+        SkillAnimeFx.sigil(level, SkillAnimeFx.GRAVITY, c, radius, 0xFFB070FF, ChantRules.gravityTicks(tier));      // VFX wave 3: the gravity seal and the falling pressure
         SkillFx.spray(level, true, c.add(0, 0.5, 0), 12, radius / 3, 0.3, radius / 3, 0.0);
         SkillFx.sound(level, c, SoundEvents.ANVIL_LAND, 1.5F, 0.5F);
 
