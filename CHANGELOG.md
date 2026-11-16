@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.101.1] — Fix: Adaptability skill texts
+- Fixed the skill text list missing the Adaptability name and description (a build check failed on it in 3.99.0 to 3.101.0). No gameplay change; 3.99.0 to 3.101.0 (Ultimate classes, Magic Knight wiki pages, Blender Goliath and Minotaur, Tensura/DanMachi skill effects) ship in this version.
+
 ## [3.101.0] — Skill effects wave 3: Tensura and DanMachi unique skills in their anime style
 - NEW (asked for: anime-style effects for skills): 21 skills now draw real shapes: Gate of Babylon (golden portals, falling weapons, Gae, chains, Ea), Firebolt, Adolla Burst and the Devil's Footprints dash, Hero's Argonaut (chimes and beam), Wynn Fimbulvetr, Hestia, Rea Laevateinn, Freya, All Fiction (screws), Black Wings, Faith, Goddess of Faith, Hephaestus, Uchide no Kozuchi, Unbreakable Will, Immortal Will, Hell Walker, Hell Conqueror and Futsunomitama.
 - NEW: 9 shapes appended after `DEVIL_HIT` (SKILL_GATE ... SKILL_SIGIL, the sigil has 8 styles), `SkillAnimeLayer`, `SkillAnimeFx`, 20 textures from `tools/gen_skill_anime_vfx_textures.py`, previews `docs/vfx_remake/previews/skill_*.png`.
