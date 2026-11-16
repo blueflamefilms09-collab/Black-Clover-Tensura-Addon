@@ -1,0 +1,5 @@
+{
+  "title": "Magic Knights: squads and the Star Awards",
+  "text": "A squad is an FTB Team of Magic Knights. Found one with /multiverse squad create <name> (Intermediate 5th Class), invite with /multiverse squad invite <player>, leave with leave. Junior 5th Class can join; a squad holds up to 10 knights. The founder is Captain and can name a Vice-Captain (/multiverse squad setvice, setcaptain). The squad's score is the stars of its members; /multiverse squad info and standings show it. The captain can take the look of one of nine squads with /multiverse squad style <style> (Golden Dawn, Silver Eagle, Crimson Lion Kings, Blue Rose Maidens, Black Bull, Aqua Deer, Green Praying Mantis, Purple Orca, Coral Peacock): name, colour and captain only, no numbers change. Every 28 in-game days the Star Awards Festival announces the standings and each online member of the top three squads gets gold stars: 5, 3 and 1.",
+  "order": 24
+}

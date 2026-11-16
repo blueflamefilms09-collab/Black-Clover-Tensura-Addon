@@ -1,0 +1,5 @@
+{
+  "title": "Magic Knights: ranks and stars",
+  "text": "Becoming a Magic Knight is about merit, not raw power. Your rank follows your net stars (gold stars minus black stars). Every 10 net stars you move up one class: Junior, Intermediate and Senior Magic Knight each have five classes, from 5th (lowest) to 1st, so Senior 1st Class is 140 net stars. Above them are the Grand Magic Knight and the Wizard King (an admin can also set ranks). Your rank opens things: zone pages of a grimoire need Intermediate 5th Class, signature (ultimate) pages need Senior 5th Class, and founding a squad needs Intermediate 5th Class. Check yourself with /multiverse rank info and /multiverse stars info, or open the Multiverse status screen. Social class (Royalty, Noble, Commoner, Peasant) is flavour with a small buff and debuff shown in your status; it never blocks you.",
+  "order": 22
+}

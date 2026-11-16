@@ -1,0 +1,5 @@
+{
+  "title": "Magic Knights: the grimoire ceremony and the Wizard King",
+  "text": "A grimoire chooses you at the yearly Grimoire Acceptance Ceremony (March by default): go to a Grimoire Tower while it is on. If you miss it, pray at a Grimoire Altar. Sneak and use your grimoire on an altar to train its mastery. Only one player on a server can be the Wizard King. Reach Grand Magic Knight, have at least 100 net stars and more net stars than the current holder, then use /multiverse wizardking claim: the crown gives a great jump in health, defence, attack and speed, mana that refills itself, and the Wizard King's own skill. Someone with more net stars can take it from you, and then the awakening leaves you. You cannot claim it if you already awakened as a true hero or a true demon lord. Server owners can change the numbers in nusmp-multiverse-server.toml.",
+  "order": 25
+}
