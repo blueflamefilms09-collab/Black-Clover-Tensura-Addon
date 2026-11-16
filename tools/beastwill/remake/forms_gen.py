@@ -97,32 +97,32 @@ def roles(wid):
 # emblem: gem | sun | fang | chevron | eye | leaf ; bulk = chest width factor ; horn / mane / wing / spine = size of the signature feature (1 = as before).
 STYLE = {
  "dragon_will": dict(shoulder="spike", collar="scale", emblem="chevron", horn=1.45, wing=1.18, spine=3.0, mane=.9),
- "elderwood_guardian_will": dict(shoulder="round", collar="plate", emblem="leaf", bulk=1.06),
+ "elderwood_guardian_will": dict(shoulder="round", collar="plate", emblem="leaf", bulk=1.06, horn=.5),
  "shadow_panther_will": dict(shoulder="sleek", collar="none", emblem="eye"),
- "lion_will": dict(shoulder="fur", collar="ruff", emblem="sun", mane=1.5, bulk=1.05),
- "ridge_wolf_will": dict(shoulder="fur", collar="ruff", emblem="fang", mane=1.2, spine=2.8),
- "thunder_fang_chimera_will": dict(shoulder="fur", collar="plate", emblem="fang", mane=1.25),
+ "lion_will": dict(shoulder="fur", collar="ruff", emblem="sun", mane=1.5, bulk=1.05, hs=.92, mc=.3),
+ "ridge_wolf_will": dict(shoulder="fur", collar="ruff", emblem="fang", mane=1.2, spine=2.8, hs=.92, mc=.35, es=.7),
+ "thunder_fang_chimera_will": dict(shoulder="fur", collar="plate", emblem="fang", mane=1.25, hs=.92, mc=.35),
  "crested_boar_will": dict(shoulder="round", collar="plate", emblem="gem", bulk=1.1, spine=2.8),
  "wind_skimmer_will": dict(shoulder="feather", collar="none", emblem="chevron", wing=1.15),
  "flame_serpent_will": dict(shoulder="scale", collar="scale", emblem="chevron", spine=2.8),
- "ammit_will": dict(shoulder="scale", collar="plate", emblem="eye", bulk=1.08),
+ "ammit_will": dict(shoulder="scale", collar="plate", emblem="eye", bulk=1.08, mc=.35),
  "apophis_will": dict(shoulder="sleek", collar="scale", emblem="eye", horn=1.25, wing=1.1),
- "cerberus_will": dict(shoulder="spike", collar="ruff", emblem="fang", mane=1.1, spine=2.8),
- "fenrir_will": dict(shoulder="fur", collar="ruff", emblem="fang", mane=1.35),
- "cu_sith_will": dict(shoulder="fur", collar="ruff", emblem="leaf", mane=1.15),
+ "cerberus_will": dict(shoulder="spike", collar="ruff", emblem="fang", mane=1.1, spine=2.8, hs=.92, mc=.35, es=.7),
+ "fenrir_will": dict(shoulder="fur", collar="ruff", emblem="fang", mane=1.35, hs=.92, mc=.3, es=.62),
+ "cu_sith_will": dict(shoulder="fur", collar="ruff", emblem="leaf", mane=1.15, hs=.92, mc=.35, es=.7),
  "kitsune_will": dict(shoulder="sleek", collar="ruff", emblem="gem"),
  "nue_will": dict(shoulder="fur", collar="plate", emblem="eye", bulk=1.06),
- "pegasus_will": dict(shoulder="slab", collar="plate", emblem="sun", wing=1.2, mane=1.15),
- "minotaur_will": dict(shoulder="round", collar="plate", emblem="gem", bulk=1.12, horn=1.4),
- "sphinx_will": dict(shoulder="slab", collar="plate", emblem="sun", wing=1.1),
+ "pegasus_will": dict(shoulder="slab", collar="plate", emblem="sun", wing=1.2, mane=1.15, mc=.35, es=.7),
+ "minotaur_will": dict(shoulder="round", collar="plate", emblem="gem", bulk=1.12, horn=.85, hs=.92),
+ "sphinx_will": dict(shoulder="slab", collar="plate", emblem="sun", wing=1.1, mc=.35, hs=.92),
  "hafgufa_will": dict(shoulder="fin", collar="plate", emblem="gem", bulk=1.1),
- "hydra_will": dict(shoulder="scale", collar="scale", emblem="chevron"),
+ "hydra_will": dict(shoulder="scale", collar="scale", emblem="chevron", fan=1),
  "jormungandr_will": dict(shoulder="fin", collar="scale", emblem="chevron", spine=2.8),
  "kraken_will": dict(shoulder="fin", collar="none", emblem="eye"),
  "nidhoggr_will": dict(shoulder="bone", collar="none", emblem="eye", wing=1.1, spine=2.8),
- "scylla_charybdis_will": dict(shoulder="fin", collar="plate", emblem="eye"),
- "typhon_will": dict(shoulder="spike", collar="plate", emblem="eye"),
- "yamata_no_orochi_will": dict(shoulder="scale", collar="scale", emblem="chevron"),
+ "scylla_charybdis_will": dict(shoulder="fin", collar="plate", emblem="eye", mc=.35),
+ "typhon_will": dict(shoulder="spike", collar="plate", emblem="eye", fan=1),
+ "yamata_no_orochi_will": dict(shoulder="scale", collar="scale", emblem="chevron", fan=1),
 }
 
 
@@ -152,6 +152,55 @@ def weapon(c, kind):
         for k in range(5): wsg(c, "armR", (-6.2, 9.0, -3.0), (-6.2 + (k - 2) * 1.9, 9.0 + 4 - abs(k - 2) * .6, -9.0), 1.6, .6, "cloth" if k % 2 else "belly", pad=.2)
 
 
+# ---------------------------------------------------------------------------------------------------------------------- the fan of necks (body-parts pass)
+# One row per head: (tilt from the vertical in degrees, azimuth in degrees: 0 = straight ahead, 90 = out to the left, 180 = behind, neck length in px, head scale).
+# The owner: "Rework the Hydra heads, because they're too close together and they don't feel like Hydra heads." Each head gets its own long neck on its own base angle, the necks fan out
+# (every pair at least FAN_MIN_DEG apart in 3D, checked by BeastWillHeadFitTest), the heads sit staggered along the body (some ahead, some behind) and at different heights, so no two heads overlap.
+FANS = {
+    4: [(60, -104, 19.0, .66), (34, 198, 24.0, .66), (38, 38, 21.0, .66), (66, 100, 18.0, .66)],
+    7: [(64, -96, 17.0, .52), (50, -150, 22.0, .52), (36, -36, 21.0, .52), (14, 180, 26.0, .52), (32, 36, 20.0, .52), (52, 150, 22.0, .52), (62, 96, 17.0, .52)],
+}
+FAN_MIN_DEG = 35.0
+
+
+def fan_dirs(n):
+    """the unit direction of each neck of an n-head fan (x left, y up, front -z)"""
+    out = []
+    for tilt, az, L, hs in FANS[n]:
+        t, a = math.radians(tilt), math.radians(az)
+        out.append((math.sin(t) * math.sin(a), math.cos(t), -math.sin(t) * math.cos(a)))
+    return out
+
+
+def fan_heads(c, sc, n, sub, lite):
+    """n necks, each its own bone chain: a lower neck that sways, an upper neck that whips with its own phase, and a head with its own jaw bone that bites at its own time"""
+    dirs = fan_dirs(n)
+    for i, (tilt, az, L, hs) in enumerate(FANS[n]):
+        d = V(*dirs[i])
+        a = math.radians(az)
+        base = V(math.sin(a) * 2.4, 23.5, 0.7 - math.cos(a) * 0.9)                       # roots staggered across the shoulders and along the back
+        tip = base + d * L
+        side = V(math.cos(a), 0, math.sin(a))                                              # sideways of the neck's own direction, for the S in the neck
+        pts = curve(base, tip, (0, 4.5 + (i % 3) * 1.2, 0) + side * (2.0 if i % 2 else -2.0), 9)
+        nb, ub, jb = "neck%d" % i, "neckU%d" % i, "jaw%d" % i
+        cyc = (1, 2, 1, 3, 2, 3, 1)[i % 7]                                                 # a different number of swings per 4.8 s clip for each head
+        ph = (i * 0.37 + 0.11 * (i % 3)) % 1.0
+        sc.def_bone(nb, base, None, [("rot", 2, (3.6 + i % 3) * (1 if math.sin(a) >= 0 else -1), cyc, ph), ("rot", 0, 3.0 + (i % 2) * 1.5, 1 + (i + 1) % 3, ph + .31), ("pos", 1, .5 + .15 * (i % 3), cyc + 1 - i % 2, ph + .6)])
+        mid = pts[len(pts) // 2]
+        sc.def_bone(ub, mid, nb, [("rot", 2, (4.5 + (i * 7 % 3)) * (-1 if math.sin(a) >= 0 else 1), 2 + (i % 2), ph + .45), ("rot", 0, 4.0, 1 + (i + 2) % 3, ph + .12)])
+        hc = tip + V(0, 1.0, -1.2)
+        sc.def_bone(jb, hc + V(0, -2.9 * hs, -3.4 * hs), ub, [("rot", 0, 11.0, 1, i / float(n)), ("rot", 0, 4.0, 3, (i * .23 + .5) % 1.0)])     # the bite: one snap per clip, each head at its own time
+        k = len(pts) // 2
+        for bone, a0, a1 in ((nb, 0, k), (ub, k, len(pts) - 1)):
+            with sc.in_bone(bone):
+                seg_pts = pts[a0:a1 + 1]
+                w0 = 3.4 - 1.2 * a0 / (len(pts) - 1)
+                w1 = 3.4 - 1.2 * a1 / (len(pts) - 1)
+                cn(c, "body", seg_pts, taper(w0, w1, len(seg_pts)), taper(w0, w1, len(seg_pts)), "body", mat2="belly")
+        with sc.in_bone(ub):
+            head(c, sub, hc, hs, "body", ear="none", lite=lite, jaw_bone=jb)
+
+
 def build(wid):
     sp = SPEC[wid]
     m = roles(wid)
@@ -162,6 +211,7 @@ def build(wid):
     # ---- body
     sc.def_bone("breath", (0, 18.0, 0), None, [("scale", 1, .022, 1, 0.0), ("scale", 0, .014, 1, 0.1), ("scale", 2, .014, 1, 0.1)])
     st = STYLE.get(wid, {})
+    if os.environ.get("BWF_OLD_HEADS"): st = {k: v for k, v in st.items() if k not in ("hs", "mc", "es", "fan", "horn_fit")}      # the look before the body-parts pass (for the before / after previews)
     with sc.in_bone("breath"):
         torso(c, bulk=st.get("bulk", 1.0), chest="plate" if sp.get("plates") else "belly")
         gorget(c, kind=st.get("collar", "plate"))
@@ -179,17 +229,23 @@ def build(wid):
         if digi: leg_digi(c, s_, pn, hoof=wid in ("pegasus_will", "minotaur_will"))
         else: leg_straight(c, s_, pn)
     # ---- head
-    head(c, kind, V(0, 28, 0), 1.0, "head")
-    ears(c, sp["ears"], V(0, 28, 0)) if sp["ears"] != "none" else None
+    hs, mc = st.get("hs", 1.0), st.get("mc", 1.0)                              # body-parts pass: hs = head scale (the skull never goes under the player's 8 px head), mc = mane compaction (1 = as before)
+    head(c, kind, V(0, 28, 0), hs, "head")
+    ears(c, sp["ears"], V(0, 28, 0), st.get("es", 1.0)) if sp["ears"] != "none" else None
     if sp["horns"] != "none": horns(c, sp["horns"], V(0, 28, 0), scale=st.get("horn", 1.0))
     if sp.get("mane"):
         mk = st.get("mane", 1.0)                                              # 3.76.0: the mane is the lion's and the great wolves' signature, so they get a bigger one
-        mane_ring(c, "head", "mane", "mane2", 31.2, 5.0 + (mk - 1) * 1.2, 3.6 * mk, 1.6 * mk, 15, 52, 308, w=3.0 * mk ** .5, t=2.0, seed=1, bone="mane1")
-        mane_ring(c, "head", "mane2", "mane", 28.6, 5.4 + (mk - 1) * 1.6, 4.2 * mk, 2.1 * mk, 17, 40, 320, w=3.2 * mk ** .5, t=2.2, seed=2, bone="mane2")
+        cm = lambda r, d, o, w: (4.4 + (r - 4.4) * mc, d * (0.6 + 0.4 * mc), o * mc, w * (0.55 + 0.45 * mc))     # the compact mane keeps its root ring and shortens everything that sticks out
+        r1, d1, o1, w1 = cm(5.0 + (mk - 1) * 1.2, 3.6 * mk, 1.6 * mk, 3.0 * mk ** .5)
+        r2, d2, o2, w2 = cm(5.4 + (mk - 1) * 1.6, 4.2 * mk, 2.1 * mk, 3.2 * mk ** .5)
+        mane_ring(c, "head", "mane", "mane2", 31.2, r1, d1, o1, 15, 52, 308, w=w1, t=2.0, seed=1, bone="mane1")
+        mane_ring(c, "head", "mane2", "mane", 28.6, r2, d2, o2, 17, 40, 320, w=w2, t=2.2, seed=2, bone="mane2")
     # ---- extra heads on necks, waist heads, tentacles, island, chains
     n = sp.get("sideheads", 0)
     sub = {"dragon": "dragon", "wolf": "wolf"}.get(kind, "snake") if wid != "typhon_will" else "dragon"
-    if n:
+    if n and st.get("fan") and n in FANS:
+        fan_heads(c, sc, n, sub, lite=n > 4 or wid == "typhon_will")                                  # body-parts pass: long, fanned necks, each head on its own sway and bite (the old layout below is kept for Cerberus and BWF_OLD_HEADS)
+    elif n:
         angs = {2: (-52, 52), 4: (-42, 42, -78, 78), 7: (-26, 26, -52, 52, -78, 78, 0)}.get(n, (-50, 50, -80, 80, -25, 25))
         for i, a in enumerate(angs[:n]):
             ar = math.radians(a)

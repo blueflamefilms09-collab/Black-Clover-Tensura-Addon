@@ -237,7 +237,7 @@ def ears(c, kind, H, sc_=1.0, mat="body", inner="dark"):
         if kind == "round":
             cu(c, "head", H + V(x, 5.0, .2), (2.6, 2.4, 1.6), mat); cu(c, "head", H + V(x, 5.0, -.7), (1.6, 1.4, .5), inner)
         elif kind in ("pointed", "fox", "long"):
-            L = {"pointed": 5.0, "fox": 6.6, "long": 7.4}[kind]; w = {"pointed": 3.2, "fox": 3.8, "long": 2.6}[kind]
+            L = {"pointed": 5.0, "fox": 6.6, "long": 7.4}[kind] * sc_; w = {"pointed": 3.2, "fox": 3.8, "long": 2.6}[kind] * sc_
             lean = {"pointed": 1.0, "fox": 1.8, "long": 2.4}[kind]; back = 1.8 if kind == "long" else 0.0
             for k in range(5):
                 t = k / 4
@@ -270,11 +270,13 @@ def horns(c, kind, H, mat="claw", scale=1.0):
                 p = H + V(s * (2.4 + 3.6 * t), 4.5 + 8.5 * t, 1.0 * t)
                 sg(c, "head", p, p + V(s * 2.6, 2.4, -1.4), .9, .9, mat, pad=.2)
         elif kind == "branch":
-            cn(c, "head", [H + V(s * 2.2, 4.6, 0), H + V(s * 3.0, 7.4, .2), H + V(s * 4.4, 10.0, .6), H + V(s * 5.2, 12.4, .4)], [1.8, 1.5, 1.2], [1.8, 1.5, 1.2], "bark_" if False else mat)
+            B = H + V(s * 2.2, 4.6, 0)
+            K = lambda q: B + (q - B) * k                                    # body-parts pass: `scale` shrinks the branches about their root (1.0 = as before)
+            cn(c, "head", [K(H + V(s * 2.2, 4.6, 0)), K(H + V(s * 3.0, 7.4, .2)), K(H + V(s * 4.4, 10.0, .6)), K(H + V(s * 5.2, 12.4, .4))], [1.8, 1.5, 1.2], [1.8, 1.5, 1.2], "bark_" if False else mat)
             for t, d in ((.25, 1), (.5, -1), (.75, 1)):
-                p = H + V(s * (2.2 + 3.0 * t), 4.6 + 7.8 * t, .5 * t)
-                sg(c, "head", p, p + V(s * 3.0, 1.8, d * 2.0), 1.0, 1.0, mat, pad=.2)
-                sg(c, "head", p + V(s * 3.0, 1.8, d * 2.0), p + V(s * 3.4, 3.8, d * 2.6), .8, .8, "leaf", pad=.2)
+                p = K(H + V(s * (2.2 + 3.0 * t), 4.6 + 7.8 * t, .5 * t))
+                sg(c, "head", p, p + V(s * 3.0, 1.8, d * 2.0) * k, 1.0, 1.0, mat, pad=.2)
+                sg(c, "head", p + V(s * 3.0, 1.8, d * 2.0) * k, p + V(s * 3.4, 3.8, d * 2.6) * k, .8, .8, "leaf", pad=.2)
 
 
 # ====================================================================================================================== tails

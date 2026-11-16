@@ -77,6 +77,8 @@ public final class SaiyanLookSelfTests {
         }
         if (SaiyanHair.wanted(10 * 10) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.STANDARD || SaiyanHair.wanted(30 * 30) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.FAR
                 || SaiyanHair.wanted(50 * 50) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.NONE) return Result.fail("the hair distance levels are wrong");
+        if (!SaiyanHair.TAIL_MONKEY.equals(SaiyanHair.tailId(true, false)) || !SaiyanHair.TAIL_WRAP.equals(SaiyanHair.tailId(true, true)) || !SaiyanHair.TAIL.equals(SaiyanHair.tailId(false, true))
+                || SaiyanHair.monkeyTint(0) != 0xFFFFFF || SaiyanHair.monkeyTint(0xC02020) == 0xC02020) return Result.fail("the monkey tail choice or tint is wrong");     // docs/body_parts_pass.md
         return Result.ok(SaiyanForms.ALL.size() + " forms have a hair of " + SaiyanHair.SHAPES.length + " shapes, growth and sway stay bounded, the distance levels step full / far / none");
     }
 }

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
+import com.newuniverse.nusmp.client.aura.BeastWillSpiritOptions;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.resources.ResourceLocation;
@@ -272,11 +273,13 @@ public class DemonWaterLayer extends AbstractVfxLayer {
             float a = Mth.TWO_PI * i / heads + 0.4f;
             float grow = VfxAnim.easeOutBack(sat((age - 2 - i * 2.2f) / 14f)) * fade;
             if (grow <= 0.02f) continue;
-            // snap towards the centre on a slow beat, each head on its own phase
-            float snap = sat(Mth.sin(age * 0.13f + i * 1.9f) * 2.2f - 0.6f);
-            Vector3f foot = new Vector3f(Mth.cos(a) * R * 0.8f, 0, Mth.sin(a) * R * 0.8f).add(c);
-            Vector3f axis = new Vector3f(-Mth.cos(a) * (0.35f + 0.25f * snap), 1f, -Mth.sin(a) * (0.35f + 0.25f * snap)).normalize();
-            float len = neckLen * grow;
+            // snap towards the centre on a slow beat, each head on its own phase; body-parts pass: each head also has its own beat speed, neck length and stand-off (the setting beastwill.classicHeads restores the even ring)
+            boolean even = BeastWillSpiritOptions.classicHeads();
+            float snap = sat(Mth.sin(age * (even ? 0.13f : 0.11f + 0.017f * i) + i * 1.9f) * 2.2f - 0.6f);
+            float ringK = even ? 0.8f : (i % 2 == 0 ? 0.93f : 0.68f), lenK = even ? 1f : 0.78f + 0.44f * ((i * 5 + 2) % 7) / 6f, leanK = even ? 1f : (i % 2 == 0 ? 0.85f : 1.35f);
+            Vector3f foot = new Vector3f(Mth.cos(a) * R * ringK, 0, Mth.sin(a) * R * ringK).add(c);
+            Vector3f axis = new Vector3f(-Mth.cos(a) * (0.35f + 0.25f * snap) * leanK, 1f, -Mth.sin(a) * (0.35f + 0.25f * snap) * leanK).normalize();
+            float len = neckLen * lenK * grow;
             Vector3f[] pts = path(ctx, foot, axis, len, neckLen * 0.2f, i * 1.7f, age, 0.16f, 4);
             ribbon(ctx, buf, SCALES, VfxBlend.ALPHA, pts, neckW * 1.4f, neckW * 0.8f, skin, 0.9f, 0.95f, age * 0.01f);
             ribbon(ctx, buf, SCALE_GLOW, VfxBlend.ADD, pts, neckW * 1.4f, neckW * 0.8f, lit, 0.3f, 0.55f, age * 0.01f);

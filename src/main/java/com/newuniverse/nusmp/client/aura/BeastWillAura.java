@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
  * within 24 blocks, phase 2): 2 eye quads + 6 motes + 1 body + 1 accent + 8 specks + 4 ring quads = at most 22 quads (the raptor's 4 ribbons replace the 8 specks: 18). LIGHT detail (phase 1, between 24 and
  * 48 blocks, or over the per-frame budget): 2 eyes + 4 or 5 motes + 1 body (+ 1 accent in phase 2) = at most 8. So with N players in view the worst frame is 6 * 22 + (N - 6) * 8 quads. A will without a
  * spirit keeps the old look: at most 17 quads. The 18 later wills (docs/beastwill_new.md) use the same budget: the four whose heads multiply (hydra, typhon, scylla, orochi) draw 3 to 5 extra head quads
- * in FULL phase-2 detail INSTEAD of the accent layer and the eight specks (2 + 6 + 1 + 5 + 4 = 18 quads at most); the rest are as above. No allocation (maths on locals, sprite locations built once).
+ * in FULL phase-2 detail INSTEAD of the accent layer and the eight specks (2 + 6 + 1 + 5 + 4 = 18 quads at most), plus (body-parts pass) one neck ribbon per head, at most four, so 22 at most; the rest are as above. No allocation (maths on locals, sprite locations built once).
  * <p>3.60.0 (Beast Will remake, docs/beastwill_remake.md): the body and glow sprites are the remade forms ({@code bwform_*}: Acquire a running figure with the equipped piece burning, Integrate the
  * armoured beast-humanoid; the glow layer is a rim halo, or one head for the four multi-headed wills). The quad counts above do not change (same layers, same size); the old set stays registered and
  * is drawn when the client setting {@code beastwill.classicSpirits} is on.
@@ -275,11 +275,19 @@ public final class BeastWillAura {
             if (kind == BeastWillLook.PANTHER) h *= 1f + 0.06f * Mth.sin(age * 0.05f);
             sprite(pose, c.buffers().getBuffer(AuraRender.additive(accTex)), sway, cy - 0.05f, cz + 0.12f, w * breathe, h * breathe, rot, SealDraw.argb(0.62f * f * pulse, acc), light);
         }
-        if (strong && heads > 0 && accTex != null) {                                                       // heads that multiply (hydra, typhon, scylla, orochi): the extra heads sway apart, one quad each
+        if (strong && heads > 0 && accTex != null) {                                                       // heads that multiply (hydra, typhon, scylla, orochi): body-parts pass: each head on its own neck, fanned out, with its own sway, bob and bite
             VertexConsumer hv = c.buffers().getBuffer(AuraRender.additive(accTex));
+            VertexConsumer nv = c.buffers().getBuffer(AuraRender.additive(SPECK[BeastWillLook.SCYLLA]));    // the ribbon texture: one neck quad per head (at most four, the middle head of the orochi sits on the body)
+            float bx = sway, by = cy - 0.15f, bz = cz + 0.1f, gap = heads > 3 ? 0.78f : 0.98f;
             for (int i = 0; i < heads; i++) {
-                float side = i - (heads - 1) * 0.5f, lean = side * 0.42f + Mth.sin(age * 0.05f + i * 1.7f) * 0.22f;
-                sprite(pose, hv, sway + side * 0.62f, cy - 0.5f - Math.abs(side) * 0.08f, cz + 0.12f - i * 0.01f, 0.55f, 0.55f, lean, SealDraw.argb(0.7f * f * pulse, acc), light);
+                float side = i - (heads - 1) * 0.5f, ph = i * 2.1f + i * i * 0.37f;
+                float lean = side * 0.62f + Mth.sin(age * (0.04f + 0.008f * i) + ph) * 0.2f;                  // about 35 degrees between neighbours, each on its own swing
+                float bite = Mth.sin(age * 0.05f + i * (Mth.TWO_PI / heads)), snap = bite > 0.85f ? (bite - 0.85f) / 0.15f : 0f;   // each head snaps at its own time
+                float hx = sway + side * gap + Mth.sin(age * (0.035f + 0.011f * i) + ph) * 0.14f;
+                float hy = cy - 0.3f - Math.abs(side) * 0.1f + ((i & 1) == 0 ? 0.22f : -0.08f) + Mth.sin(age * (0.06f + 0.015f * (i % 3)) + ph * 1.3f) * 0.07f - snap * 0.1f;
+                float hz = cz + 0.12f - i * 0.01f + ((i & 1) == 0 ? -0.04f : 0.05f);
+                if (heads < 5 || i != heads / 2) SealDraw.ribbon(pose, nv, bx, by, bz, hx, hy - 0.22f, hz + 0.02f, heads > 3 ? 0.07f : 0.09f, 0f, 1f, SealDraw.argb(0.55f * f * pulse, acc), light);
+                sprite(pose, hv, hx, hy, hz, 0.55f * (1f + 0.28f * snap), 0.55f * (1f + 0.28f * snap), lean, SealDraw.argb(0.7f * f * pulse, acc), light);
             }
         }
         sprite(pose, c.buffers().getBuffer(AuraRender.additive(bodyTex)), sway, cy, cz, half * breathe, half * breathe, 0f, SealDraw.argb((strong ? 0.78f : 0.40f) * f, SealDraw.mix(rgb, 0xFFFFFF, strong ? 0.25f : 0.1f)), light);

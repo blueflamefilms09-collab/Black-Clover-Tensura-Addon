@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.16.0] — Saiyan monkey tail, Hydra heads that fan out, smaller heads
+- REPLACED (client settings, looks only): the Saiyan tail is now a furry brown monkey tail (gentle curve, taper, fur strands, tip tuft, idle sway; 388 quads, 157 at distance; setting `saiyan.monkeyTail`, default on; `saiyan.tailWrap` for a wrap-round-the-waist pose, `saiyan.tailAllForms`). The Hydra, Typhon and Yamata no Orochi Beast Will forms get one long neck per head on its own angle (at least 36 degrees apart, staggered roots, own jaw and bite timing); the Beast Will aura heads and the Demon Water crown got the same fan. Fenrir's head went from 2.37 x 1.98 to 1.69 x 1.66 times the player's head, and 11 other Beast Will heads (Ridge Wolf, Lion, Thunder Fang Chimera, Cu Sith, Cerberus, Minotaur, Pegasus, Sphinx, Ammit, Elderwood Guardian, Scylla and Charybdis) were fitted to at most 2.0x.
+- NEW: `tools/audit/head_scale_audit.py` (896 head bones measured; no unexplained outlier above 1.6x; 25 exempt on purpose, listed with reasons) and `BeastWillHeadFitTest`, `SaiyanMonkeyTailTest`.
+- KEPT: the old tail meshes and the old head models (copied as `_v2` files); `beastwill.classicHeads` (default off) restores them. Left as is: Kraken, Nidhoggr, Dragon and Kitsune (their skulls are normal; the height is horns, ears and tentacles); the Blender devil and boss meshes are only listed.
+- Previews: `docs/body_parts_previews/`; numbers and the exempt list: `docs/body_parts_pass.md`.
+- Cost: tail at most 472 quads per Super Saiyan 4 player under the existing 700 cap; the hydra fan is bone animation only; no packets, no server work.
+- Not seen in a game; the Java is compiled only by CI. Needs an eye in game: tail clipping in sprint, the wrap pose, the Orochi neck fan (36 degrees, closest to the limit).
+
 ## [4.15.0] — Black Clover bosses, wave 2: 21 more detailed player-model looks
 - REPLACED (client setting `bossLooks.bcPlayerModel`, default on; off = the previous rendering): the looks of the five Dark Disciples (base, Lucifero, Megicula, Beelzebub, Astaroth), the Devil Avatar (four forms) and the Spade arc bosses Heath Grice, Lotus Whomalt, Mars, Revchi Salik, Vetto and Morris Libardirt (with their second forms). Same quality and builder as the 4.14.0 looks: painted anime face, layered hair, horns, wings, mantles, glow gems, palettes from the English Black Clover Fandom wiki (the Dark Disciples, Devil Avatar and God of Order have no wiki page of their own: the mod's own designs).
 - NEW: God of Order player-model look behind the new client setting `bossLooks.godOfOrderPlayerModel` (default off: his Blender body stays the default).

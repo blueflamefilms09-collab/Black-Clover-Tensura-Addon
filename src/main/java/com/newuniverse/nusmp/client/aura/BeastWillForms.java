@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.newuniverse.nusmp.beastwill.BeastTailRules;
 import com.newuniverse.nusmp.beastwill.BeastWillFormTable;
+import com.newuniverse.nusmp.beastwill.BeastWillHeadFit;
 import com.newuniverse.nusmp.beastwill.BeastWillLook;
 import com.newuniverse.nusmp.book.NoelleFormRules;
 import com.newuniverse.nusmp.client.aura.NoelleFormRig.Piece;
@@ -23,7 +24,7 @@ public final class BeastWillForms {
     private BeastWillForms() {}
 
     /** [0] the 3.76.0 look, [1] the models of 3.61.0 / 3.62.0 ({@code bwf_<stem>_v1...}, client setting beastwill.classicForms). */
-    private static final Forms[][] SETS = new Forms[2][BeastWillLook.COUNT];
+    private static final Forms[][] SETS = new Forms[3][BeastWillLook.COUNT];                // [2]: the heads and necks before the body-parts pass (BeastWillHeadFit, setting beastwill.classicHeads)
 
     /** {@code fullMesh}: the same pieces without the cube tail (and for Kraken / Scylla with the body that has no cube tentacles), worn together with the Blender tail of {@link BeastWillTails}; null for a form without a mesh tail. */
     private static final class Forms { NoelleFormRig.Set full, fullMesh, acq; }
@@ -32,14 +33,15 @@ public final class BeastWillForms {
     public static boolean has(int kind) { return kind > 0 && kind < BeastWillLook.COUNT && !BeastWillFormTable.parts(BeastWillLook.STEM[kind]).isEmpty(); }
 
     private static Forms of(int kind) {
-        int v = BeastWillSpiritOptions.classicForms() ? 1 : 0;
+        String stem = BeastWillLook.STEM[kind], suffix = BeastWillHeadFit.suffix(BeastWillSpiritOptions.classicForms(), BeastWillSpiritOptions.classicHeads(), stem);
+        int v = suffix.isEmpty() ? 0 : suffix.equals("_v1") ? 1 : 2;
         Forms s = SETS[v][kind];
         if (s != null) return s;
         s = new Forms();
-        String stem = BeastWillLook.STEM[kind], key = "bwf_" + stem + (v == 1 ? "_v1" : "");
+        String key = "bwf_" + stem + suffix;
         s.full = new NoelleFormRig.Set(key, key, pieces(stem, "body", true).toArray(new Piece[0]));
         BeastTailRules.Tail mt = BeastTailRules.of(stem);
-        if (v == 0 && mt != null) s.fullMesh = new NoelleFormRig.Set(key, key, pieces(stem, mt.bodyNoTail() ? "body_nt" : "body", false).toArray(new Piece[0]));
+        if (v != 1 && mt != null) s.fullMesh = new NoelleFormRig.Set(key, key, pieces(stem, mt.bodyNoTail() ? "body_nt" : "body", false).toArray(new Piece[0]));
         java.util.List<Piece> a = new java.util.ArrayList<>();
         add(a, stem, "acq", Anchor.ARM_R, 0f, -9f, 0f, 0f, false, null);
         s.acq = new NoelleFormRig.Set(key, key, a.toArray(new Piece[0]));

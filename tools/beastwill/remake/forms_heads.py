@@ -16,14 +16,19 @@ TIP = (0, 1, 2, 3, 4)           # ... whose far end shows
 FRONT = (0, 1, 2, 3, 5)         # a cube against the skull's face: everything but its back
 
 
-def head(c, kind, H=(0, 28, 0), s=1.0, part="head", ear="pointed", horn=None, bone="root", teeth=True, lite=False):
+def head(c, kind, H=(0, 28, 0), s=1.0, part="head", ear="pointed", horn=None, bone="root", teeth=True, lite=False, jaw_bone=None):
     H = V(*H)
     P = lambda x, y, z: H + V(x, y, z) * s
 
-    def cb(ctr, size, mat, **k): return c.sc.cube(part, ctr, tuple(v * s for v in size), c.m[mat], bone=bone, **k)
+    jb = jaw_bone or bone                                                  # the body-parts pass: the lower jaw (and its lower fangs) can be a bone of its own, so a head can bite
+
+    def cb(ctr, size, mat, **k):
+        k.setdefault("bone", bone)
+        return c.sc.cube(part, ctr, tuple(v * s for v in size), c.m[mat], **k)
     def sgm(p0, p1, w, h, mat, **k):
         if "pad" in k: k["pad"] *= s
-        return c.sc.seg(part, p0, p1, w * s, h * s, c.m[mat], bone=bone, **k)
+        k.setdefault("bone", bone)
+        return c.sc.seg(part, p0, p1, w * s, h * s, c.m[mat], **k)
 
     def muzzle(L, w0, w1, h0, h1, y0=-.9, drop=1.3, mat="belly", ridge="body", z0=-4.4):
         """two tapering segments from the face forward and down, a ridge along the top; returns (tip centre, y0, drop)"""
@@ -35,15 +40,15 @@ def head(c, kind, H=(0, 28, 0), s=1.0, part="head", ear="pointed", horn=None, bo
 
     def jaw(L, w, y0, drop, h0, h1, mat="belly", z0=-4.4, gape=1.0):
         """the lower jaw, hanging open, and the dark of the mouth above it"""
-        sgm(P(0, y0 - h0 / 2 - .5, z0 + 1.0), P(0, y0 - drop - h1 / 2 - .6 - gape, z0 - L * .92), w, 1.2, mat, dt=-1, faces=TIP, pad=.2)
-        if not lite: sgm(P(0, y0 - h0 / 2 + .1, z0 - .4), P(0, y0 - drop - h1 / 2 - .2 - gape * .4, z0 - L * .86), w - .9, .9, "dark", faces=(0, 1, 4))
+        sgm(P(0, y0 - h0 / 2 - .5, z0 + 1.0), P(0, y0 - drop - h1 / 2 - .6 - gape, z0 - L * .92), w, 1.2, mat, dt=-1, faces=TIP, pad=.2, bone=jb)
+        if not lite: sgm(P(0, y0 - h0 / 2 + .1, z0 - .4), P(0, y0 - drop - h1 / 2 - .2 - gape * .4, z0 - L * .86), w - .9, .9, "dark", faces=(0, 1, 4), bone=jb)
 
     def fangs(L, w, y0, drop, h1, f=2.0, z0=-4.4, lower=True, gape=1.0):
         zt = z0 - L
         yb = y0 - drop - h1 / 2
         for sx in (-1, 1):
             cb(P(sx * (w / 2 - .35), yb - f / 2 + .5, zt + 1.0), (.75, f, .75), "claw", faces=(0, 1, 3, 4, 5))
-            if lower and not lite: cb(P(sx * (w / 2 - .25), yb - gape - .2, zt + 2.6), (.6, 1.4, .6), "claw", faces=(0, 1, 2, 4, 5))
+            if lower and not lite: cb(P(sx * (w / 2 - .25), yb - gape - .2, zt + 2.6), (.6, 1.4, .6), "claw", faces=(0, 1, 2, 4, 5), bone=jb)
 
     def cheeks(w0, h0, y0, L, drop, mat="body", z0=-4.4):
         if lite: return

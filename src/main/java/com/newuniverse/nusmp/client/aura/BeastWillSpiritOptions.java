@@ -28,6 +28,13 @@ public final class BeastWillSpiritOptions {
 
     public static void setClassicForms(boolean on) { classicForms = on; }
 
+    private static volatile boolean classicHeads;
+
+    /** Body-parts pass: true = the heads, manes and necks of the reworked Beast Will forms as they were before (client setting {@code beastwill.classicHeads}; the files {@code bwf_<stem>_v2...}). */
+    public static boolean classicHeads() { return classicHeads; }
+
+    public static void setClassicHeads(boolean on) { classicHeads = on; }
+
     private static volatile boolean meshTails = true;
 
     /** True (the default) = the tails and tentacles of the forms are the Blender meshes (client setting {@code beastwill.meshTails}); false = the cube tails of 3.76.0, exactly as before. */

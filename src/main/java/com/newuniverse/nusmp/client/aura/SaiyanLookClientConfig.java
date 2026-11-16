@@ -17,8 +17,8 @@ public final class SaiyanLookClientConfig {
     private SaiyanLookClientConfig() {}
 
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue LOOKS, ARMOUR, CHARGE_UP, FULL_DETAIL, CHARGE_ANIM, HAIR, TAIL3D;
-    private static volatile boolean looks = true, armour = true, chargeUp = true, full = true, chargeAnim = true, hair = true, tail3d = true;
+    public static final ModConfigSpec.BooleanValue LOOKS, ARMOUR, CHARGE_UP, FULL_DETAIL, CHARGE_ANIM, HAIR, TAIL3D, MONKEY_TAIL, TAIL_WRAP, TAIL_ALL_FORMS;
+    private static volatile boolean looks = true, armour = true, chargeUp = true, full = true, chargeAnim = true, hair = true, tail3d = true, monkeyTail = true, tailWrap = false, tailAllForms = false;
     /** saiyan.classicVfx (default false): mirrored into the pure switch {@code KiVfx.classic()} the Ki layer reads. */
     public static final ModConfigSpec.BooleanValue CLASSIC_VFX;
     /** saiyan.autoArmour (default false): a form draws the cosmetic battle armour by itself (the old look). false: the armour is the craftable Saiyan alloy set, worn from the inventory. */
@@ -42,6 +42,12 @@ public final class SaiyanLookClientConfig {
                 .define("hair", true);
         TAIL3D = b.comment("true: the Super Saiyan 4 forms wear the Blender tail (tapered, furred, swaying in three parts). false: the old camera-facing ribbon tail. Looks only.")
                 .define("tail3d", true);
+        MONKEY_TAIL = b.comment("true (default): the 3D tail is the furry brown monkey tail (gentle curve, slight taper, fur strands and a tuft). false: the older red tapered tail of 4.x. Needs saiyan.tail3d. Looks only (docs/body_parts_pass.md).")
+                .define("monkeyTail", true);
+        TAIL_WRAP = b.comment("true: the monkey tail is wrapped around the waist (the classic Saiyan pose) instead of hanging behind. Default false. Looks only.")
+                .define("tailWrap", false);
+        TAIL_ALL_FORMS = b.comment("true: every transformed Saiyan form wears the monkey tail, not only the Super Saiyan 4 forms. Default false. Looks only.")
+                .define("tailAllForms", false);
         CLASSIC_VFX = b.comment("true: the Saiyan techniques (Ki Blast, Kamehameha, Spirit Bomb, Instant Transmission, Dragon Fist, ...) show only their old particles. false: the anime Ki effects are drawn too (beams, orbs, shock rings, the golden dragon). Looks only.")
                 .define("classicVfx", false);
         AUTO_ARMOUR = b.comment("true: a transformed Saiyan is drawn in the cosmetic battle armour by itself (the look of 3.69.0 to 4.1.0, needs saiyan.armour too). false (default): a form hands out no armour; wear the craftable Saiyan alloy set instead. A worn alloy set always replaces the cosmetic one. Looks only.")
@@ -58,6 +64,9 @@ public final class SaiyanLookClientConfig {
     public static boolean chargeAnimation() { return chargeAnim; }
     public static boolean hair() { return hair; }
     public static boolean tail3d() { return tail3d; }
+    public static boolean monkeyTail() { return monkeyTail; }
+    public static boolean tailWrap() { return tailWrap; }
+    public static boolean tailAllForms() { return tailAllForms; }
 
     /** Registers the file and the reload hook (client only; called from NUSMP in the client block). */
     public static void init(IEventBus modBus, ModContainer container) {
@@ -70,10 +79,11 @@ public final class SaiyanLookClientConfig {
     private static void apply() {
         try {
             looks = LOOKS.get(); armour = ARMOUR.get(); chargeUp = CHARGE_UP.get(); full = FULL_DETAIL.get(); chargeAnim = CHARGE_ANIM.get(); hair = HAIR.get(); tail3d = TAIL3D.get();
+            monkeyTail = MONKEY_TAIL.get(); tailWrap = TAIL_WRAP.get(); tailAllForms = TAIL_ALL_FORMS.get();
             com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(CLASSIC_VFX.get());
             autoArmour = AUTO_ARMOUR.get();
         } catch (IllegalStateException unloaded) {
-            looks = true; armour = true; chargeUp = true; full = true; chargeAnim = true; hair = true; tail3d = true;
+            looks = true; armour = true; chargeUp = true; full = true; chargeAnim = true; hair = true; tail3d = true; monkeyTail = true; tailWrap = false; tailAllForms = false;
             com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(false);
             autoArmour = false;
         }

@@ -39,13 +39,13 @@ final class SaiyanHairDraw {
 
     /** One mesh drawer per hair shape and one for the tail, made on first use; reset when the renderers are made again (a resource reload reads the files again). */
     private static BossMeshDraw[] hair = new BossMeshDraw[SaiyanHair.SHAPES.length];
-    private static BossMeshDraw tail;
+    private static BossMeshDraw[] tails = new BossMeshDraw[3];                                         // [0] the old tail, [1] the monkey tail hanging, [2] the monkey tail wrapped round the waist
     private static int full, far;
     private static final Rig RIG = new Rig();
 
     /** Mod bus, client: a resource reload makes the renderers again, so the meshes are read again; the crowd budget starts again every frame. */
     static void init(IEventBus modBus) {
-        modBus.addListener((EntityRenderersEvent.AddLayers e) -> { hair = new BossMeshDraw[SaiyanHair.SHAPES.length]; tail = null; });
+        modBus.addListener((EntityRenderersEvent.AddLayers e) -> { hair = new BossMeshDraw[SaiyanHair.SHAPES.length]; tails = new BossMeshDraw[3]; });
         NeoForge.EVENT_BUS.addListener((RenderLevelStageEvent e) -> { if (e.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) { full = 0; far = 0; } });
     }
 
@@ -55,9 +55,10 @@ final class SaiyanHairDraw {
         return m;
     }
 
-    private static BossMeshDraw tailMesh() {
-        if (tail == null) tail = new BossMeshDraw(SaiyanHair.TAIL);
-        return tail;
+    private static BossMeshDraw tailMesh(boolean monkey, boolean wrap) {
+        int i = !monkey ? 0 : wrap ? 2 : 1;
+        if (tails[i] == null) tails[i] = new BossMeshDraw(SaiyanHair.tailId(monkey, wrap));
+        return tails[i];
     }
 
     /**
@@ -67,7 +68,7 @@ final class SaiyanHairDraw {
     static boolean draw(AuraContext c, SaiyanLook.Look k, double d2, boolean self1p) {
         SaiyanHair.Hair h = SaiyanHair.of(k.id());
         boolean wantHair = h != null && SaiyanLookClientConfig.hair() && c.player().getItemBySlot(EquipmentSlot.HEAD).isEmpty();      // a helmet covers the hair
-        boolean wantTail = k.tail() && SaiyanLookClientConfig.tail3d();
+        boolean wantTail = (k.tail() || (SaiyanLookClientConfig.monkeyTail() && SaiyanLookClientConfig.tailAllForms())) && SaiyanLookClientConfig.tail3d();
         if (self1p || (!wantHair && !wantTail)) return false;
         NoelleFormRules.Lod lod = NoelleFormRules.budgeted(SaiyanHair.wanted(d2), 0, full, far);
         if (lod == NoelleFormRules.Lod.NONE) return false;
@@ -96,9 +97,10 @@ final class SaiyanHairDraw {
                 m.drawParts(pose, c.buffers(), light, h.tint(), h.glow(), h.glowK() * g, dd, RIG);
             }
             if (wantTail) {
+                boolean monkey = SaiyanLookClientConfig.monkeyTail(), wrap = monkey && SaiyanLookClientConfig.tailWrap();
                 RIG.onBody = true;
-                RIG.loose = 1f;
-                drew = tailMesh().drawParts(pose, c.buffers(), c.light(), k.fur(), 0, 0f, dd, RIG);
+                RIG.loose = wrap ? SaiyanHair.WRAP_LOOSE : 1f;
+                drew = tailMesh(monkey, wrap).drawParts(pose, c.buffers(), c.light(), monkey ? SaiyanHair.monkeyTint(k.fur()) : k.fur(), 0, 0f, dd, RIG);
             }
             pose.popPose();
             return drew;

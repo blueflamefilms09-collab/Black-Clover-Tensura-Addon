@@ -21,6 +21,27 @@ public final class SaiyanHair {
     public static final String[] SHAPES = {"base", "ss", "ss2", "ss3", "ss4", "god", "ui"};
     /** The tail mesh id (three parts: tail, wing_l, wing_r are its root, middle and tip segment: the names borrow the roles the mesh drawer routes). */
     public static final String TAIL = "saiyan_tail";
+    /** The monkey tail (docs/body_parts_pass.md): the furry brown tail hanging behind, and the same tail wrapped around the waist. Same three parts as {@link #TAIL}, so the same rig swings them. */
+    public static final String TAIL_MONKEY = "saiyan_tail_monkey", TAIL_WRAP = "saiyan_tail_wrap";
+    /** How much of the normal sway the wrapped tail keeps (it is tied round the waist, so it only breathes). */
+    public static final float WRAP_LOOSE = 0.2f;
+
+    /** The mesh id of the tail the settings ask for: the old tail when {@code monkey} is off, else the hanging or the waist-wrapped monkey tail. */
+    public static String tailId(boolean monkey, boolean wrap) { return !monkey ? TAIL : wrap ? TAIL_WRAP : TAIL_MONKEY; }
+
+    /**
+     * The colour multiplied into the brown monkey-tail skin for a form: no tint (0) leaves the plain brown, a form's fur colour only warms it (35 percent of the way from white), so the Super Saiyan 4
+     * tails stay brown with a red cast instead of turning red like the old tail.
+     */
+    public static int monkeyTint(int furRgb) {
+        if (furRgb == 0) return 0xFFFFFF;
+        int out = 0;
+        for (int sh = 16; sh >= 0; sh -= 8) {
+            int c = (furRgb >> sh) & 0xFF;
+            out |= (255 - Math.round((255 - c) * 0.35f)) << sh;
+        }
+        return out;
+    }
     /** The most quad lines (body and glow copy) a hair mesh or its far copy may hold, and a tail mesh. */
     public static final int MAX_QUADS = 1200, MAX_TAIL_QUADS = 700;
     /** Full detail up to this distance (blocks); the far copy beyond it; nothing beyond {@link #FAR_BLOCKS}. */
