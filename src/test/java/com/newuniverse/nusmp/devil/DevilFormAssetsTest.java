@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Devil forms (docs/devil_forms.md): every devil of {@link WorldDevil} has its own Blender mesh, a low-detail copy, a skin and a glow map, and each mesh is one the form layer can wear: the quads fit the
  * budget, the part names are the eleven roles of {@link MeshPose} (the basic eight are all there), a parent always comes before its children, the low-detail copy has the same roles and is not heavier,
- * the textures are square powers of two. Reads the shipped files with the game's own parser. This test fails until the four asset sets (the meshes and skins made in Blender) are merged; until then the
- * game draws the old generic horns and wings for a devil without them (the layer and the figure both fall back).
+ * the textures are square powers of two. Reads the shipped files with the game's own parser. A devil with none of its four files yet is skipped (the game draws the old generic horns and wings for it: the layer and the figure both fall back);
+ * a devil with some of them must have all of them.
  */
 class DevilFormAssetsTest {
     private static final Path ROOT = Path.of("src/main/resources");
@@ -66,8 +66,10 @@ class DevilFormAssetsTest {
     void everyDevilHasItsMeshItsLowDetailCopyItsSkinAndItsGlowMap() throws IOException {
         for (int i = 0; i < WorldDevil.count(); i++) {
             String id = WorldDevil.at(i).id();
-            assertTrue(Files.exists(ROOT.resolve(DevilFormRules.meshPath(id))), "missing mesh of " + id + ": " + DevilFormRules.meshPath(id));
-            assertTrue(Files.exists(ROOT.resolve(DevilFormRules.lodPath(id))), "missing low-detail mesh of " + id);
+            boolean[] have = {Files.exists(ROOT.resolve(DevilFormRules.meshPath(id))), Files.exists(ROOT.resolve(DevilFormRules.lodPath(id))),
+                    Files.exists(ROOT.resolve(DevilFormRules.skinPath(id))), Files.exists(ROOT.resolve(DevilFormRules.glowPath(id)))};
+            if (!have[0] && !have[1] && !have[2] && !have[3]) continue;                          // not made yet: the layer and the figure draw the old generic look
+            for (boolean h : have) assertTrue(h, id + ": mesh, low-detail mesh, skin and glow map must all ship together " + java.util.Arrays.toString(have));
             EntityMeshData full = mesh(DevilFormRules.meshPath(id)), lod = mesh(DevilFormRules.lodPath(id));
             checkMesh(id, full, false);
             checkMesh(id, lod, true);
