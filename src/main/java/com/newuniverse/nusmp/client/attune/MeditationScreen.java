@@ -8,7 +8,12 @@ import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.particles.ParticleTypes;
+import com.newuniverse.nusmp.particle.fx.FxCatalog;
+import com.newuniverse.nusmp.particle.fx.FxTypes;
+import com.newuniverse.nusmp.particle.fx.TintedParticleOptions;
+import com.newuniverse.nusmp.particle.fx.TintedParticleType;
+import com.newuniverse.nusmp.perf.PerfBudgets;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -116,6 +121,20 @@ public final class MeditationScreen extends Screen {
         cooldownText = cd > 0 ? Component.translatableWithFallback("attune.screen.cooldown", "Settling: %s s", (cd + 19) / 20).getString() : "";
     }
 
+    private static ParticleOptions calm;
+
+    /** The mod's own mana mote (the themed particle set, not a vanilla particle), pale violet. */
+    private static ParticleOptions calmMote() {
+        if (calm == null) {
+            TintedParticleType type = FxTypes.type("mana_mote");
+            if (type == null) return null;
+            FxCatalog.Def d = FxCatalog.byId("mana_mote");
+            boolean tintable = d != null && d.tint();
+            calm = new TintedParticleOptions(type, tintable ? 0xC8B4FF : -1, 0.7f, false, tintable);
+        }
+        return calm;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -126,7 +145,9 @@ public final class MeditationScreen extends Screen {
         if (mc.player != null && mc.level != null && ticks % 8 == 0) {                       // the calm visual: two motes, client only, bounded
             for (int i = 0; i < 2; i++) {
                 double a = (ticks * 0.21 + i * Math.PI) % (Math.PI * 2);
-                mc.level.addParticle(ParticleTypes.ENCHANT, mc.player.getX() + Math.cos(a) * 1.2, mc.player.getY() + 0.4 + i * 0.6, mc.player.getZ() + Math.sin(a) * 1.2, 0, 0.02, 0);
+                ParticleOptions o = calmMote();
+                if (o == null || PerfBudgets.clientParticles(mc.level.getGameTime(), 1) <= 0) break;
+                mc.level.addParticle(o, mc.player.getX() + Math.cos(a) * 1.2, mc.player.getY() + 0.4 + i * 0.6, mc.player.getZ() + Math.sin(a) * 1.2, 0, 0.02, 0);
             }
         }
     }

@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.95.1] — fix: the meditation screen uses the mod's own particles
+- FIXED: the builds of 3.93.0 and 3.94.0 compiled but did not pass `FxSourceScanTest` (the calm motes of the meditation screen used a vanilla particle). They now use the mod's own `mana_mote` (pale violet), through the client particle budget. Everything of 3.91.0-3.95.0 is in this build.
+- Cost: unchanged (two motes every 8 ticks while the screen is open). Not seen in a game.
+
 ## [3.95.0] — At most two powers at once; never a Devil with a Spirit
 - REPLACED (asked for: "players shouldn't be able to equip more than two ... a beast will and a djinn, two beast wills, a devil and a djinn, but not a devil and a spirit at the same time"): a player can have at most TWO of Beast Wills, Djinns, Devils and Spirits working at once (two of the same kind is allowed, e.g. two Beast Wills). A Devil and a Spirit never work together, whatever their elements. The element clash still applies on top.
 - Meditation now has 2 slots (setting range 1..2) and refuses a Devil beside a Spirit (shown red on the screen).
