@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.skill.rules.SummonRules.Card;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ public class LordOfSummonsSkill extends SummonerSkill {
             "Ultimate. Evolved from Summoner. Twice the summons and far stronger cards: Beast Card calls three wolves, Stone Card is a colossus, Legion calls a pack of five and the Wraith Card a swarm of flying spirits.");
 
     public LordOfSummonsSkill() { super(SkillType.ULTIMATE, LORD_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.KING; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return 5; }
 

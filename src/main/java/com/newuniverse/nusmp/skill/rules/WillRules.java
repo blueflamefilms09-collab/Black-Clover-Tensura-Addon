@@ -17,14 +17,14 @@ public final class WillRules {
     public static int cooldownTicks(Tier t) { return t.pick(12000, 6000, 3600); }
 
     /** Ticks of damage resistance after rising. */
-    public static int shieldTicks(Tier t) { return t == Tier.ULTIMATE ? 200 : 100; }
-    public static int shieldAmp(Tier t) { return t == Tier.ULTIMATE ? 4 : 3; }
+    public static int shieldTicks(Tier t) { return t.ultimate() ? 200 : 100; }
+    public static int shieldAmp(Tier t) { return t.ultimate() ? 4 : 3; }
 
     /** Whether the will may refuse this death. */
     public static boolean mayRefuse(boolean onCooldown, boolean bypassesInvulnerability) { return !onCooldown && !bypassesInvulnerability; }
 
     /** The Immortal Will's shockwave (Ultimate only). */
-    public static double shockRadius(Tier t) { return t == Tier.ULTIMATE ? 8.0 : 0.0; }
+    public static double shockRadius(Tier t) { return t.ultimate() ? 8.0 : 0.0; }
     public static double shockDamage() { return 18.0; }
     public static double shockKnockback() { return 1.6; }
 
@@ -33,5 +33,5 @@ public final class WillRules {
     public static double rallyCost() { return 1200; }
     public static int rallyCooldown() { return 1800; }
 
-    public static int modes(Tier t) { return t == Tier.ULTIMATE ? 2 : 1; }
+    public static int modes(Tier t) { return t.ultimate() ? 2 : 1; }
 }

@@ -93,8 +93,8 @@ public class SummonerSkill extends NUSkill {
             SkillUtil.fail(player, SkillMsg.t("summoner.cap", "You can only have %s summons at once.", max));
             return;
         }
-        double price = SummonRules.cost(card, NUConfig.SUMMON_MAGICULE_COST.get()) * count / want;   // a partial cast costs a partial price
-        if (!SkillUtil.spendMagicules(player, price)) return;
+        double price = price(instance, player, SummonRules.cost(card, NUConfig.SUMMON_MAGICULE_COST.get()) * count / want);   // a partial cast costs a partial price
+        if (!charge(instance, player, mode, price)) return;
 
         int made = Summons.spawn(player, card, tier, count);
         if (made <= 0) {

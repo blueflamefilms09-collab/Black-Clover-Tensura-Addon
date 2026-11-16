@@ -45,11 +45,11 @@ public class DevilsFootprintsSkill extends NUSkill {
         Tier tier = tier(instance, player);
 
         if (mode == FireForceRules.DASH) {
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FireForceRules.dashCost(tier)))) return;
+            if (!pay(instance, player, mode, DMUtil.cost(FireForceRules.dashCost(tier)))) return;
             dash(player, tier);
             cooldown(instance, mode, DMUtil.cooldown(FireForceRules.dashCooldown(tier)));
         } else if (mode == FireForceRules.KICK) {
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FireForceRules.kickCost(tier)))) return;
+            if (!pay(instance, player, mode, DMUtil.cost(FireForceRules.kickCost(tier)))) return;
             kick(instance, player, tier);
             cooldown(instance, mode, DMUtil.cooldown(FireForceRules.kickCooldown(tier)));
         } else {

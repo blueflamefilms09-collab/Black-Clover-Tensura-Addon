@@ -88,6 +88,13 @@ public final class NUConfig {
     // Forbidden magic
     public static final ModConfigSpec.DoubleValue FORBIDDEN_HP_PRICE, FORBIDDEN_MAXHP_PRICE, FORBIDDEN_MANA_TAX;
     public static final ModConfigSpec.BooleanValue TENSURA_SKILL_DAMAGE_SOURCE;   // guide P1 #2 (skill.SkillDamage)
+    // The Ultimate classes (skill.rules.UltimateClass, docs/ultimate_classes.md): one value per class and column, plus the switches that restore the old behaviour
+    private static final int UC_N = com.newuniverse.nusmp.skill.rules.UltimateClass.values().length;
+    public static final ModConfigSpec.DoubleValue[] UC_EP_CAP = new ModConfigSpec.DoubleValue[UC_N], UC_COST_PCT = new ModConfigSpec.DoubleValue[UC_N],
+            UC_COST_REF = new ModConfigSpec.DoubleValue[UC_N], UC_KILL_BELOW = new ModConfigSpec.DoubleValue[UC_N], UC_SHRED_BELOW = new ModConfigSpec.DoubleValue[UC_N];
+    public static final ModConfigSpec.IntValue[] UC_MAX_MASTERY = new ModConfigSpec.IntValue[UC_N];
+    public static final ModConfigSpec.BooleanValue UC_FLAT_COSTS, UC_CLASS_MASTERY, UC_MASTERED_TIER, UC_MILESTONES, UC_CLASS_DAMAGE;
+    public static final ModConfigSpec.DoubleValue UC_LATE_SHARE, UC_PLAIN_COST_PCT, UC_PLAIN_COST_REF;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -242,8 +249,53 @@ public final class NUConfig {
                 .define("tensuraSkillDamageSource", true);
         b.pop();
 
+        b.push("ultimateClasses");
+        UC_FLAT_COSTS = b.comment("The addon skills (Gate of Babylon, Nen, Ki, The Visionary, Firebolt ...) pay through Tensura (getMagiculeCost + EnergyHelper.isOutOfEnergy) at a price that grows with max magicule. true = the old flat price, written straight to the magicule pool.")
+                .define("flatCosts", false);
+        UC_CLASS_MASTERY = b.comment("A classified Ultimate takes its class's maxMastery points to master (existing mastery is moved at the same fraction at login). false = Tensura's own Ultimate mastery.").define("classMastery", true);
+        UC_MASTERED_TIER = b.comment("A mastered classified Ultimate reads the ULTIMATE_MASTERED tier (its mastered numbers and the x1.2 mastery bonus). false = the old tier (always ULTIMATE).").define("masteredTier", true);
+        UC_MILESTONES = b.comment("Mastery milestones of a classified Ultimate: 25 % range x1.2, 50 % second effect, 75 % cost x0.8 and cooldown x0.75, 100 % mastered; each announced once. false = none.").define("milestones", true);
+        UC_CLASS_DAMAGE = b.comment("A classified hit scales with the class-capped EP scaling times the late-game factor, at most epCap x lateGameShare (BalanceLaw.damage with a class). false = the unclassified scaling.").define("classDamage", true);
+        UC_LATE_SHARE = b.comment("Combined cap of a classified hit: epScale(class) x late-game factor is at most epCap x this (3 = x24 Lord, x30 King, x36 God / Dragon; the unclassified top is x72).")
+                .defineInRange("lateGameShare", 3.0, 1.0, 6.0);
+        UC_PLAIN_COST_PCT = b.comment("Unclassified addon skills (Uniques, Extras): a cast whose flat price is plainCostReference costs this % of max magicule late game (never below its flat price). 0 = flat prices.")
+                .defineInRange("plainCostPercent", 1.0, 0.0, 50.0);
+        UC_PLAIN_COST_REF = b.comment("Unclassified addon skills: the flat price that maps to plainCostPercent.").defineInRange("plainCostReference", 1_000.0, 1.0, 1.0E9);
+        for (com.newuniverse.nusmp.skill.rules.UltimateClass c : com.newuniverse.nusmp.skill.rules.UltimateClass.values()) {
+            int i = c.ordinal();
+            b.push(c.key());
+            UC_EP_CAP[i] = b.comment("Damage ceiling of the EP scaling for this class (1 to 12).").defineInRange("epCap", c.epCap, 1.0, com.newuniverse.nusmp.skill.rules.UltimateClass.EP_CAP_MAX);
+            UC_COST_PCT[i] = b.comment("Late game, a cast whose flat price is costReference costs this % of max magicule.").defineInRange("costPercent", c.costPct, 0.0, 50.0);
+            UC_COST_REF[i] = b.comment("The flat price that maps to costPercent (every cast keeps its own flat price as the floor).").defineInRange("costReference", c.costRef, 1.0, 1.0E9);
+            UC_MAX_MASTERY[i] = b.comment("Mastery points to master a skill of this class.").defineInRange("maxMastery", c.maxMastery, 100, 1_000_000);
+            UC_KILL_BELOW[i] = b.comment("EP-ratio instakill gate (fraction of the caster's EP; never bosses or players); 0 = none.").defineInRange("killBelow", c.killBelow, 0.0, 0.95);
+            UC_SHRED_BELOW[i] = b.comment("EP-ratio HP / MP shred gate (fraction of the caster's EP); 0 = none.").defineInRange("shredBelow", c.shredBelow, 0.0, 0.95);
+            b.pop();
+        }
+        b.pop();
+
         SPEC = b.build();
     }
 
     private NUConfig() {}
+
+    // ------------------------------------------------------------------ Ultimate classes (guarded: the default before the SERVER config is loaded, e.g. on a client menu)
+    private static <T> T live(ModConfigSpec.ConfigValue<T> v) {
+        try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
+    }
+
+    public static boolean ucFlatCosts() { return live(UC_FLAT_COSTS); }
+    public static boolean ucClassMastery() { return live(UC_CLASS_MASTERY); }
+    public static boolean ucMasteredTier() { return live(UC_MASTERED_TIER); }
+    public static boolean ucMilestones() { return live(UC_MILESTONES); }
+    public static boolean ucClassDamage() { return live(UC_CLASS_DAMAGE); }
+    public static double ucLateShare() { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampLateShare(live(UC_LATE_SHARE)); }
+    public static double ucPlainCostPct() { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampCostPct(live(UC_PLAIN_COST_PCT)); }
+    public static double ucPlainCostRef() { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampCostRef(live(UC_PLAIN_COST_REF)); }
+    public static double ucEpCap(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampEpCap(live(UC_EP_CAP[c.ordinal()])); }
+    public static double ucCostPct(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampCostPct(live(UC_COST_PCT[c.ordinal()])); }
+    public static double ucCostRef(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampCostRef(live(UC_COST_REF[c.ordinal()])); }
+    public static int ucMaxMastery(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampMaxMastery(live(UC_MAX_MASTERY[c.ordinal()])); }
+    public static double ucKillBelow(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampRatio(live(UC_KILL_BELOW[c.ordinal()])); }
+    public static double ucShredBelow(com.newuniverse.nusmp.skill.rules.UltimateClass c) { return com.newuniverse.nusmp.skill.rules.UltimateClass.clampRatio(live(UC_SHRED_BELOW[c.ordinal()])); }
 }

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.GodTierRules;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -21,12 +22,13 @@ public class TheAlmightySkill extends NUSkill {
             "Ultimate. See every future and choose the one where you are never harmed.");
 
     public TheAlmightySkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.GOD; }      // docs/ultimate_classes.md
 
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("almighty.cooldown", "That future is not yet visible.")); return; }
-        if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.almightyCost()))) return;
+        if (!pay(instance, player, mode, DMUtil.cost(GodTierRules.almightyCost()))) return;
         ServerLevel level = player.serverLevel();
         int ticks = GodTierRules.rewriteTicks(instance.isMastered(player));
         instance.getOrCreateTag().putLong("FutureUntil", level.getGameTime() + ticks);

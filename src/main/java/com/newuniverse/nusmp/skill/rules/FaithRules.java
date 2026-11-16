@@ -27,11 +27,11 @@ public final class FaithRules {
     /** Faith one bestowal costs (the Ultimate halves it, never below 1). */
     public static int bestowCost(int configCost, Tier tier) {
         if (configCost <= 0) return 0;
-        return tier == Tier.ULTIMATE ? Math.max(1, configCost / 2) : configCost;
+        return tier.ultimate() ? Math.max(1, configCost / 2) : configCost;
     }
 
     public static int bestowCooldown(int configCooldown, Tier tier) {
-        return tier == Tier.ULTIMATE ? configCooldown / 2 : configCooldown;
+        return tier.ultimate() ? configCooldown / 2 : configCooldown;
     }
 
     public static boolean canSpend(int faith, int cost) { return cost <= 0 || faith >= cost; }

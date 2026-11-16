@@ -24,8 +24,8 @@ public abstract class GodSkill extends NUSkill {
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("god.cooldown", "This divine power is on cooldown.")); return; }
-        double price = DMUtil.cost(cost());
-        if (!SkillUtil.spendMagicules(player, price)) return;
+        double price = price(instance, player, DMUtil.cost(cost()));
+        if (!charge(instance, player, mode, price)) return;
         if (!use(instance, player, tier(instance, player))) {
             SkillUtil.refund(player, price);
             return;

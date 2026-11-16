@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.ControlRules;
 import com.newuniverse.nusmp.skill.rules.KiRules;
@@ -38,6 +39,7 @@ public class KiSkill extends NUSkill {
     private static final int[] COLORS = {0xFF8AD8FF, 0xFF40B8FF, 0xFFE8F4FF, 0xFFFFF8A0, 0xFFB0C8FF, 0xFFFFD020, 0xFF60E0FF, 0xFFFF3030, 0xFFD8E8FF, 0xFF8AFFC0};
 
     public KiSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance i) { return KiRules.MODES; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), KiRules.MODES); }
@@ -73,14 +75,14 @@ public class KiSkill extends NUSkill {
         boolean done = switch (mode) {
             case KiRules.BLAST -> blast(instance, p);
             case KiRules.KAME -> kame(instance, p);
-            case KiRules.TELEPORT -> teleport(p);
-            case KiRules.FLARE -> flare(p);
-            case KiRules.AFTERIMAGE -> afterimage(p, tag, now);
-            case KiRules.SSJ -> ssj(p, tag, now);
+            case KiRules.TELEPORT -> teleport(instance, p);
+            case KiRules.FLARE -> flare(instance, p);
+            case KiRules.AFTERIMAGE -> afterimage(instance, p, tag, now);
+            case KiRules.SSJ -> ssj(instance, p, tag, now);
             case KiRules.SPIRIT -> spirit(instance, p);
-            case KiRules.KAIOKEN -> kaioken(p, tag, now);
-            case KiRules.UI -> ultraInstinct(p, tag, now);
-            default -> sense(p);
+            case KiRules.KAIOKEN -> kaioken(instance, p, tag, now);
+            case KiRules.UI -> ultraInstinct(instance, p, tag, now);
+            default -> sense(instance, p);
         };
         if (!done) return;
         cooldown(instance, mode, DMUtil.cooldown(KiRules.cooldown(mode)));
@@ -91,7 +93,7 @@ public class KiSkill extends NUSkill {
 
     /** Ki Blast: a quick ball along your look; the first creature in its path is hit. */
     private boolean blast(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.BLAST)))) return false;
+        if (!pay(instance, p, KiRules.BLAST, DMUtil.cost(KiRules.cost(KiRules.BLAST)))) return false;
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, KiRules.blastRange());
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, KiRules.blastWidth())) {
             if (SkillDamage.hit(p, t, KiRules.blastDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) { to = t.position().add(0, t.getBbHeight() * 0.5, 0); break; }
@@ -103,7 +105,7 @@ public class KiSkill extends NUSkill {
 
     /** Kamehameha: a beam 28 blocks long through up to six creatures. */
     private boolean kame(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.KAME)))) return false;
+        if (!pay(instance, p, KiRules.KAME, DMUtil.cost(KiRules.cost(KiRules.KAME)))) return false;
         ServerLevel level = p.serverLevel();
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, KiRules.kameRange());
         SkillFx.beam(level, from, to, false);
@@ -117,9 +119,9 @@ public class KiSkill extends NUSkill {
     }
 
     /** Instant Transmission: a blink along your look to the nearest safe spot (the shared helper checks room, ground and lava); a spot closer than a block and a half is no blink and costs nothing. */
-    private boolean teleport(ServerPlayer p) {
-        double cost = DMUtil.cost(KiRules.cost(KiRules.TELEPORT));
-        if (!SkillUtil.spendMagicules(p, cost)) return false;
+    private boolean teleport(ManasSkillInstance instance, ServerPlayer p) {
+        double cost = price(instance, p, DMUtil.cost(KiRules.cost(KiRules.TELEPORT)));
+        if (!charge(instance, p, KiRules.TELEPORT, cost)) return false;
         Vec3 from = p.position();
         boolean moved = com.newuniverse.nusmp.relics.Fx.teleportLook(p, KiRules.teleportRange());
         if (!moved || !KiRules.teleportOk(from.distanceTo(p.position()))) {
@@ -135,8 +137,8 @@ public class KiSkill extends NUSkill {
     }
 
     /** Solar Flare: every foe in the cone in front of you is blinded (a boss for two fifths as long, a player for half as long) and slowed. */
-    private boolean flare(ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.FLARE)))) return false;
+    private boolean flare(ManasSkillInstance instance, ServerPlayer p) {
+        if (!pay(instance, p, KiRules.FLARE, DMUtil.cost(KiRules.cost(KiRules.FLARE)))) return false;
         for (LivingEntity t : SkillTargets.foesInCone(p, KiRules.flareRange(), KiRules.flareCone())) {
             boolean boss = GodTier.isBoss(t), player = t instanceof Player;
             t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, ControlRules.controlTicks(KiRules.flareBlindTicks(), boss, player), 0));
@@ -147,16 +149,16 @@ public class KiSkill extends NUSkill {
         return true;
     }
 
-    private boolean afterimage(ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.AFTERIMAGE)))) return false;
+    private boolean afterimage(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
+        if (!pay(instance, p, KiRules.AFTERIMAGE, DMUtil.cost(KiRules.cost(KiRules.AFTERIMAGE)))) return false;
         tag.putLong(KiRules.untilKey(KiRules.AFTERIMAGE), KiRules.endsAt(now, KiRules.AFTERIMAGE));
         SkillFx.burst(p.serverLevel(), p.position().add(0, 1, 0), false, 12, 0.5);
         SkillUtil.actionbar(p, SkillMsg.t("ki.afterimage", "Afterimage: the next blow will find only an image.").withStyle(ChatFormatting.AQUA));
         return true;
     }
 
-    private boolean ssj(ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.SSJ)))) return false;
+    private boolean ssj(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
+        if (!pay(instance, p, KiRules.SSJ, DMUtil.cost(KiRules.cost(KiRules.SSJ)))) return false;
         int ticks = KiRules.duration(KiRules.SSJ);
         tag.putLong(KiRules.untilKey(KiRules.SSJ), KiRules.endsAt(now, KiRules.SSJ));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, KiRules.ssjStrengthAmp()));
@@ -168,7 +170,7 @@ public class KiSkill extends NUSkill {
 
     /** Spirit Bomb: grows with the living allies around you (at most eight) lending their energy, and falls where you look. */
     private boolean spirit(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.SPIRIT)))) return false;
+        if (!pay(instance, p, KiRules.SPIRIT, DMUtil.cost(KiRules.cost(KiRules.SPIRIT)))) return false;
         int lenders = 0;
         for (LivingEntity a : SkillTargets.alliesAround(p, p.position(), KiRules.spiritLendRadius())) {
             if (a != p && (a.isAlliedTo(p) || !(a instanceof Player o) || !p.canHarmPlayer(o))) lenders++;
@@ -186,9 +188,9 @@ public class KiSkill extends NUSkill {
     }
 
     /** Kaioken: 15% of your maximum health (never to the last heart) buys Strength III and Speed II for ten seconds, and every hit does a quarter more. */
-    private boolean kaioken(ServerPlayer p, CompoundTag tag, long now) {
+    private boolean kaioken(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
         if (!KiRules.kaiokenAllowed(p.getHealth())) { SkillUtil.fail(p, SkillMsg.t("ki.too_weak", "You are too hurt for Kaioken.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.KAIOKEN)))) return false;
+        if (!pay(instance, p, KiRules.KAIOKEN, DMUtil.cost(KiRules.cost(KiRules.KAIOKEN)))) return false;
         p.setHealth(p.getHealth() - KiRules.kaiokenHealthCost(p.getHealth(), p.getMaxHealth()));
         int ticks = KiRules.duration(KiRules.KAIOKEN);
         tag.putLong(KiRules.untilKey(KiRules.KAIOKEN), KiRules.endsAt(now, KiRules.KAIOKEN));
@@ -199,8 +201,8 @@ public class KiSkill extends NUSkill {
         return true;
     }
 
-    private boolean ultraInstinct(ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.UI)))) return false;
+    private boolean ultraInstinct(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
+        if (!pay(instance, p, KiRules.UI, DMUtil.cost(KiRules.cost(KiRules.UI)))) return false;
         tag.putLong(KiRules.untilKey(KiRules.UI), KiRules.endsAt(now, KiRules.UI));
         tag.putLong(KiRules.UI_DODGE_KEY, 0L);
         SkillFx.aura(p.serverLevel(), p, false);
@@ -209,8 +211,8 @@ public class KiSkill extends NUSkill {
     }
 
     /** Ki Sense: every hostile presence within 32 blocks (at most 24) glows for ten seconds, and you are told how many there are. */
-    private boolean sense(ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.SENSE)))) return false;
+    private boolean sense(ManasSkillInstance instance, ServerPlayer p) {
+        if (!pay(instance, p, KiRules.SENSE, DMUtil.cost(KiRules.cost(KiRules.SENSE)))) return false;
         List<LivingEntity> foes = SkillTargets.foes(p, p.position(), KiRules.senseRadius());
         for (LivingEntity e : foes) e.addEffect(new MobEffectInstance(MobEffects.GLOWING, KiRules.senseGlowTicks(), 0, false, false, false));
         SkillFx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 12.0, 0x8AFFC0);

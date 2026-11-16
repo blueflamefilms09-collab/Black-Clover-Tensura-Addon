@@ -8,7 +8,7 @@ package com.newuniverse.nusmp.skill.rules;
 public final class VectorRules {
     private VectorRules() {}
 
-    public static double drain(Tier t) { return t == Tier.ULTIMATE ? 80 : 50; }
+    public static double drain(Tier t) { return t.ultimate() ? 80 : 50; }
     public static int interval() { return 20; }
 
     /** Share of a melee hit turned back on the attacker. */
@@ -19,7 +19,7 @@ public final class VectorRules {
     public static double taken(double hit, Tier t) { return Math.max(0, hit) - reflected(hit, t); }
 
     /** Speed multiplier a reflected projectile leaves with. */
-    public static double projectileBoost(Tier t) { return t == Tier.ULTIMATE ? 1.6 : 1.0; }
+    public static double projectileBoost(Tier t) { return t.ultimate() ? 1.6 : 1.0; }
 
     // ---- Black Wings: hover and glide ----
     /** Longest time the wings keep you aloft before a landing is needed (ticks of continuous hover). */
@@ -28,7 +28,7 @@ public final class VectorRules {
     public static double glideFall() { return -0.04; }
     public static double glideForward() { return 1.04; }
     public static boolean canGlide(Tier t, boolean sneaking, boolean onGround, boolean inWater) {
-        return t == Tier.ULTIMATE && sneaking && !onGround && !inWater;
+        return t.ultimate() && sneaking && !onGround && !inWater;
     }
-    public static boolean fallImmune(Tier t) { return t == Tier.ULTIMATE; }
+    public static boolean fallImmune(Tier t) { return t.ultimate(); }
 }

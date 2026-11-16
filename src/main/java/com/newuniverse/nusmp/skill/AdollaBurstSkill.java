@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.skill.rules.FireForceRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -22,6 +23,7 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
             "Ultimate. Evolved from Devil's Footprints. Move at the speed of light striking everything on the way, kick with far more force, and unleash the Adolla Burst around you.");
 
     public AdollaBurstSkill() { super(SkillType.ULTIMATE, ADOLLA_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance i) { return FireForceRules.modes(Tier.ULTIMATE); }
 
@@ -57,12 +59,12 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
         Tier tier = tier(instance, player);
 
         if (mode == FireForceRules.DASH) {
-            double price = DMUtil.cost(FireForceRules.dashCost(tier));
-            if (!SkillUtil.spendMagicules(player, price)) return;
+            double price = price(instance, player, DMUtil.cost(FireForceRules.dashCost(tier)));
+            if (!charge(instance, player, mode, price)) return;
             if (!lightSpeed(instance, player, tier)) { SkillUtil.refund(player, price); return; }
             cooldown(instance, mode, DMUtil.cooldown(FireForceRules.dashCooldown(tier)));
         } else if (mode == FireForceRules.BURST) {
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FireForceRules.burstCost()))) return;
+            if (!pay(instance, player, mode, DMUtil.cost(FireForceRules.burstCost()))) return;
             burst(instance, player);
             cooldown(instance, mode, DMUtil.cooldown(FireForceRules.burstCooldown()));
         } else {

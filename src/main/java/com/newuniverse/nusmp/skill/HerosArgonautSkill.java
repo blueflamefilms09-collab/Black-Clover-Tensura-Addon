@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.ChargeRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
@@ -23,6 +24,7 @@ public class HerosArgonautSkill extends ArgonautSkill {
             "Ultimate. Evolved from Argonaut. Charge up to ten bells and strike with triple power, or release the charge as a piercing Hero's Beam.");
 
     public HerosArgonautSkill() { super(SkillType.ULTIMATE, HERO_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return 2; }
 

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.shishou.ShishouGrantService;
 import com.newuniverse.nusmp.shishou.ShishouModes;
 import com.newuniverse.nusmp.shishou.ShishouSkill;
@@ -20,6 +21,7 @@ public class ShishouUltimateSkill extends NUSkill {
             "Ultimate. The talking sword's abilities as one skill: switch modes (Telekinesis, Sensory, Defence, Offence, Storage, Magic, Counsel) with the mode key, press the skill key to use the mode, sneak and press to pick the next ability of a mode. Hold him in your hand to cast; his own mana pays.");
 
     public ShishouUltimateSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return ShishouModes.COUNT; }
 

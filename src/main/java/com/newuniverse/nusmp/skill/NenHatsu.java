@@ -71,7 +71,7 @@ final class NenHatsu {
     static boolean enhance(ManasSkillInstance inst, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
         LivingEntity t = SkillTargets.lookFoe(p, NenRules.fistReach());
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.ENHANCE)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.ENHANCE, DMUtil.cost(NenRules.cost(NenRules.ENHANCE)))) return false;
         long koEnd = tag.getLong(NenRules.untilKey(NenRules.KO));
         double charge = NenRules.koCharge(koEnd, now);
         if (NenRules.active(koEnd, now)) tag.putLong(NenRules.untilKey(NenRules.KO), 0L);      // closed first: the fist spends what Ko gathered, and its own blow must not start Ko's strike
@@ -100,7 +100,7 @@ final class NenHatsu {
     // ------------------------------------------------------------------ Emission: the volley
     /** Opens a volley: four bullets (six under a vow), one every three ticks, each bending towards the foes in front of you (dealt out in turn, so a crowd shares them). */
     static boolean emit(ManasSkillInstance inst, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.EMIT)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.EMIT, DMUtil.cost(NenRules.cost(NenRules.EMIT)))) return false;
         int n = NenRules.volleyBullets(vow);
         tag.putInt(VOLLEY_LEFT, n);
         tag.putInt(VOLLEY_I, 0);
@@ -147,7 +147,7 @@ final class NenHatsu {
             if (!cone.isEmpty()) first = cone.get(0);
         }
         if (first == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.TRANS, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
         double dmg = NenRules.elecDamage() * NenSkill.hatsuMul(inst, p, NenRules.TRANS, vow);
         List<LivingEntity> hit = new ArrayList<>(6);
         Vec3 prev = hand(p);
@@ -170,7 +170,7 @@ final class NenHatsu {
     private static boolean gum(ManasSkillInstance inst, ServerPlayer p, boolean vow) {
         List<LivingEntity> foes = SkillTargets.foesInCone(p, NenRules.gumRange(), 0.35);
         if (foes.isEmpty()) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.TRANS, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
         double dmg = NenRules.gumDamage() * NenSkill.hatsuMul(inst, p, NenRules.TRANS, vow);
         Vec3 from = hand(p);
         int n = 0;
@@ -187,7 +187,7 @@ final class NenHatsu {
     }
 
     private static boolean rubber(ManasSkillInstance inst, ServerPlayer p, boolean vow) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.TRANS, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
         Vec3 look = p.getViewVector(1f);
         p.setDeltaMovement(look.x * 0.5, NenRules.rubberLeap(), look.z * 0.5);
         p.hurtMarked = true;
@@ -215,7 +215,7 @@ final class NenHatsu {
             if (e != aimed && p.hasLineOfSight(e)) foes.add(e);
         }
         if (foes.isEmpty()) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.CONJ)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.CONJ, DMUtil.cost(NenRules.cost(NenRules.CONJ)))) return false;
         double mul = NenSkill.hatsuMul(inst, p, NenRules.CONJ, vow);
         for (int i = 0; i < NenRules.chainSlots(); i++) tag.remove(CHAIN_T + i);      // a new casting replaces the old chains
         int slot = 0;
@@ -269,7 +269,7 @@ final class NenHatsu {
     static boolean manip(ManasSkillInstance inst, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
         LivingEntity t = SkillTargets.lookFoe(p, NenRules.manipRange());
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.MANIP)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.MANIP, DMUtil.cost(NenRules.cost(NenRules.MANIP)))) return false;
         int ticks = BalanceLaw.controlTicks(t, NenRules.needleTicks(vow));
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1, false, true, true));
         if (!(t instanceof Mob)) {
@@ -305,7 +305,7 @@ final class NenHatsu {
     // ------------------------------------------------------------------ Specialization: the field
     /** A field round you for six seconds (nine under a vow): once a second the foes in it are weakened and hurt, and up to two of them lose a buff, which becomes yours. */
     static boolean spec(ManasSkillInstance inst, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.SPEC)))) return false;
+        if (!NUSkill.pay(inst, p, NenRules.SPEC, DMUtil.cost(NenRules.cost(NenRules.SPEC)))) return false;
         tag.putLong(FIELD_E, now + NenRules.fieldTicks(vow));
         tag.putLong(FIELD_NEXT, now + 2);
         tag.putDouble(FIELD_MUL, NenSkill.hatsuMul(inst, p, NenRules.SPEC, vow));

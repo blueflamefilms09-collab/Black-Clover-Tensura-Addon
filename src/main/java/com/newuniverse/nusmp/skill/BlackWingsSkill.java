@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import com.newuniverse.nusmp.skill.rules.VectorRules;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -19,6 +20,7 @@ public class BlackWingsSkill extends VectorManipulationSkill {
             "Ultimate. Toggle. Total reflection of melee and projectiles, no fall damage, and wings that let you glide in the air while you sneak.");
 
     public BlackWingsSkill() { super(SkillType.ULTIMATE, WINGS_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override
     protected ProjectileDeflection deflection(ManasSkillInstance instance, LivingEntity living, Tier tier) {

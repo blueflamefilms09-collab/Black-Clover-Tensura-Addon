@@ -51,7 +51,7 @@ public class AirielSkill extends NUSkill {
         Tier tier = tier(instance, player);
 
         if (mode == WindRules.TEMPEST) {
-            if (!SkillUtil.spendMagicules(player, NUConfig.AIRIEL_MAGICULE_COST.get())) return;
+            if (!pay(instance, player, mode, NUConfig.AIRIEL_MAGICULE_COST.get())) return;
             int ticks = WindRules.tempestTicks(tier);
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, WindRules.speedAmp(tier)));
             player.addEffect(new MobEffectInstance(MobEffects.JUMP, ticks, 1));
@@ -63,7 +63,7 @@ public class AirielSkill extends NUSkill {
             SkillFx.sound(level, player.position(), SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), 1.0F, 1.0F);
             cooldown(instance, WindRules.TEMPEST, NUConfig.AIRIEL_COOLDOWN.get());
         } else {
-            if (!SkillUtil.spendMagicules(player, WindRules.dashCost(NUConfig.AIRIEL_MAGICULE_COST.get()))) return;
+            if (!pay(instance, player, mode, WindRules.dashCost(NUConfig.AIRIEL_MAGICULE_COST.get()))) return;
             Vec3 look = player.getViewVector(1.0F);
             double power = WindRules.dashPower(tier);
             player.setDeltaMovement(look.x * power, Math.max(0.3, look.y * power * 0.6), look.z * power);

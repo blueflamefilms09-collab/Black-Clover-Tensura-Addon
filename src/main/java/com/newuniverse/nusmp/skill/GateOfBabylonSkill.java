@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.ControlRules;
@@ -41,6 +42,7 @@ public class GateOfBabylonSkill extends NUSkill {
     private static final int FX_GATES = 3, FX_BEAMS = 6;
 
     public GateOfBabylonSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.KING; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance i) { return GateRules.MODES; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), GateRules.MODES); }
@@ -77,13 +79,13 @@ public class GateOfBabylonSkill extends NUSkill {
             case GateRules.GATE -> gate(instance, p);
             case GateRules.VOLLEY -> volley(instance, p);
             case GateRules.RAIN -> rain(instance, p);
-            case GateRules.CHAINS -> chains(p);
-            case GateRules.ARMOR -> armor(p, tag, now);
-            case GateRules.VIMANA -> vimana(p, tag, now);
-            case GateRules.KING -> king(p);
+            case GateRules.CHAINS -> chains(instance, p);
+            case GateRules.ARMOR -> armor(instance, p, tag, now);
+            case GateRules.VIMANA -> vimana(instance, p, tag, now);
+            case GateRules.KING -> king(instance, p);
             case GateRules.GAE -> gae(instance, p);
             case GateRules.EA -> ea(instance, p);
-            default -> elixir(p);
+            default -> elixir(instance, p);
         };
         if (!done) return;
         cooldown(instance, mode, DMUtil.cooldown(GateRules.cooldown(mode)));
@@ -104,7 +106,7 @@ public class GateOfBabylonSkill extends NUSkill {
     private boolean gate(ManasSkillInstance instance, ServerPlayer p) {
         LivingEntity t = SkillTargets.lookFoe(p, GateRules.gateReach());
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("gate.no_target", "Nothing to strike.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.GATE)))) return false;
+        if (!pay(instance, p, GateRules.GATE, DMUtil.cost(GateRules.cost(GateRules.GATE)))) return false;
         fall(p.serverLevel(), t, true);
         SkillDamage.hit(p, t, GateRules.gateDamage(), masteryFrac(instance), instance);
         return true;
@@ -113,7 +115,7 @@ public class GateOfBabylonSkill extends NUSkill {
     private boolean volley(ManasSkillInstance instance, ServerPlayer p) {
         List<LivingEntity> foes = SkillTargets.foesInCone(p, GateRules.volleyRange(), GateRules.volleyCone());
         if (foes.isEmpty()) { SkillUtil.fail(p, SkillMsg.t("gate.no_target", "Nothing to strike.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.VOLLEY)))) return false;
+        if (!pay(instance, p, GateRules.VOLLEY, DMUtil.cost(GateRules.cost(GateRules.VOLLEY)))) return false;
         int struck = 0, drawn = 0;
         for (LivingEntity t : foes) {
             if (struck >= GateRules.volleyMax()) break;
@@ -125,7 +127,7 @@ public class GateOfBabylonSkill extends NUSkill {
 
     private boolean rain(ManasSkillInstance instance, ServerPlayer p) {
         Vec3 centre = DMUtil.lookPoint(p, GateRules.rainReach());
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.RAIN)))) return false;
+        if (!pay(instance, p, GateRules.RAIN, DMUtil.cost(GateRules.cost(GateRules.RAIN)))) return false;
         ServerLevel level = p.serverLevel();
         SkillFx.ring(level, centre.add(0, 0.2, 0), GateRules.rainRadius(), 0xFFD060);
         Vec3 sky = centre.add(0, 7.0, 0);
@@ -140,10 +142,10 @@ public class GateOfBabylonSkill extends NUSkill {
     }
 
     /** Enkidu: the creature you look at cannot move for five seconds (two for a boss, two and a half for a player) and is weakened for ten. */
-    private boolean chains(ServerPlayer p) {
+    private boolean chains(ManasSkillInstance instance, ServerPlayer p) {
         LivingEntity t = SkillTargets.lookFoe(p, GateRules.chainsReach());
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("gate.no_target", "Nothing to strike.")); return false; }
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.CHAINS)))) return false;
+        if (!pay(instance, p, GateRules.CHAINS, DMUtil.cost(GateRules.cost(GateRules.CHAINS)))) return false;
         boolean boss = GodTier.isBoss(t), player = t instanceof Player;
         t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ControlRules.controlTicks(GateRules.chainsTicks(), boss, player), GateRules.chainsSlowAmp()));
         t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ControlRules.controlTicks(GateRules.chainsWeakTicks(), boss, player), 0));
@@ -153,8 +155,8 @@ public class GateOfBabylonSkill extends NUSkill {
         return true;
     }
 
-    private boolean armor(ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.ARMOR)))) return false;
+    private boolean armor(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
+        if (!pay(instance, p, GateRules.ARMOR, DMUtil.cost(GateRules.cost(GateRules.ARMOR)))) return false;
         tag.putLong(GateRules.untilKey(GateRules.ARMOR), GateRules.endsAt(now, GateRules.ARMOR));
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, GateRules.duration(GateRules.ARMOR), GateRules.armorAbsorptionAmp()));
         SkillFx.aura(p.serverLevel(), p, false);
@@ -162,8 +164,8 @@ public class GateOfBabylonSkill extends NUSkill {
         return true;
     }
 
-    private boolean vimana(ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.VIMANA)))) return false;
+    private boolean vimana(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
+        if (!pay(instance, p, GateRules.VIMANA, DMUtil.cost(GateRules.cost(GateRules.VIMANA)))) return false;
         Vec3 look = p.getLookAngle();
         double s = GateRules.vimanaSpeed();
         p.setDeltaMovement(look.x * s, Math.max(0.0, look.y * s) + GateRules.vimanaLift(), look.z * s);
@@ -182,8 +184,8 @@ public class GateOfBabylonSkill extends NUSkill {
         return e instanceof Player o ? !p.canHarmPlayer(o) : true;
     }
 
-    private boolean king(ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.KING)))) return false;
+    private boolean king(ManasSkillInstance instance, ServerPlayer p) {
+        if (!pay(instance, p, GateRules.KING, DMUtil.cost(GateRules.cost(GateRules.KING)))) return false;
         int lifted = 0;
         for (LivingEntity a : SkillTargets.alliesAround(p, p.position(), GateRules.kingRadius())) {
             if (!friendly(p, a)) continue;
@@ -200,7 +202,7 @@ public class GateOfBabylonSkill extends NUSkill {
     }
 
     private boolean gae(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.GAE)))) return false;
+        if (!pay(instance, p, GateRules.GAE, DMUtil.cost(GateRules.cost(GateRules.GAE)))) return false;
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, GateRules.gaeRange());
         SkillFx.beam(p.serverLevel(), from, to, false);
         int hits = 0;
@@ -213,7 +215,7 @@ public class GateOfBabylonSkill extends NUSkill {
 
     /** Ea: one great line (40 blocks, wide); everything in it that you may hurt (at most 24) is struck. */
     private boolean ea(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.EA)))) return false;
+        if (!pay(instance, p, GateRules.EA, DMUtil.cost(GateRules.cost(GateRules.EA)))) return false;
         ServerLevel level = p.serverLevel();
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, GateRules.eaRange());
         SkillFx.beam(level, from, to, false);
@@ -225,8 +227,8 @@ public class GateOfBabylonSkill extends NUSkill {
         return true;
     }
 
-    private boolean elixir(ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.ELIXIR)))) return false;
+    private boolean elixir(ManasSkillInstance instance, ServerPlayer p) {
+        if (!pay(instance, p, GateRules.ELIXIR, DMUtil.cost(GateRules.cost(GateRules.ELIXIR)))) return false;
         BalanceLaw.heal(p, (float) (p.getMaxHealth() * GateRules.elixirHeal()));
         SkillUtil.cleanse(p);
         p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, GateRules.elixirRegenTicks(), 0));

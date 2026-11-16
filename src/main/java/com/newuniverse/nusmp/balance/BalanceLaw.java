@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.balance;
 
 import com.newuniverse.nusmp.NUConfig;
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,6 +62,43 @@ public final class BalanceLaw {
         return cap(target, (float) r);
     }
 
+    /**
+     * Ultimate classes: the EP scaling capped by the class's epCap (SERVER config ultimateClasses.&lt;class&gt;.epCap). A null class (every unclassified caller) is the old {@link #epScale(LivingEntity)}.
+     */
+    public static double epScale(LivingEntity caster, UltimateClass cls) {
+        if (cls == null) return epScale(caster);
+        double ep = 0;
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        return UltimateClass.epScale(ep, NUConfig.ucEpCap(cls));
+    }
+
+    /**
+     * The whole damage scaling of a classified hit: {@link #epScale(LivingEntity, UltimateClass)} times the late-game factor, never above epCap x lateGameShare (x24 Lord, x30 King, x36 God / Dragon
+     * by default; an unclassified hit can reach x72 = 12 x 6). The late-game factor is the same curve {@link #lateGameScale} reads, applied once per hit (a hit takes this path or the plain one).
+     */
+    public static double classScale(LivingEntity caster, UltimateClass cls) {
+        double ep = 0, late = 1.0;
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        if (caster instanceof Player) {
+            double mm = 0;
+            try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+            late = LateGameScaling.factor(NUConfig.LATE_GAME_SCALING.get(), mm, NUConfig.LATE_GAME_BASELINE.get(), NUConfig.LATE_GAME_CAP.get());
+        }
+        return UltimateClass.totalScale(ep, NUConfig.ucEpCap(cls), late, NUConfig.ucLateShare());
+    }
+
+    /**
+     * Damage of a hit from a skill of Ultimate class {@code cls}: the same law as {@link #damage(LivingEntity, LivingEntity, float, double)} with {@link #classScale} in place of the EP and late-game
+     * factors. A null class, or the SERVER setting ultimateClasses.classDamage off, is exactly the plain law.
+     */
+    public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac, UltimateClass cls) {
+        if (cls == null || !NUConfig.ucClassDamage()) return damage(caster, target, raw, masteryFrac);
+        double m = Math.max(0, Math.min(1, masteryFrac));
+        double r = raw * classScale(caster, cls) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);
+        r += DamageSliver.of(raw, target.getMaxHealth(), isBoss(target));
+        return cap(target, (float) r);
+    }
+
     /** The same without a known caster (old call sites): mastery scaling only, then the same caps. */
     public static float damage(LivingEntity target, float raw, double masteryFrac) {
         double m = Math.max(0, Math.min(1, masteryFrac));
@@ -81,6 +119,18 @@ public final class BalanceLaw {
     /** Magicule cost: percent of max magicule, never below the floor. */
     public static double cost(LivingEntity caster, double percent, double floor) {
         return Math.max(floor, EnergyHelper.getMaxMagicule(caster) * percent / 100.0) * NUConfig.DM_COST_MULT.get();
+    }
+
+    /**
+     * Ultimate classes (master guide P1 #1): the price of an addon skill cast whose old flat price is {@code flat}, the {@link #cost} idea per cast: never below the flat price, and late game the
+     * class's costPercent of max magicule for a cast of costReference (the others in proportion). A null class uses plainCostPercent / plainCostReference. The flat price already carries the
+     * server's cost multiplier at its call site, so it is not multiplied again here.
+     */
+    public static double classCost(LivingEntity caster, UltimateClass cls, double flat) {
+        double mm = 0;
+        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+        return cls == null ? UltimateClass.price(flat, mm, NUConfig.ucPlainCostPct(), NUConfig.ucPlainCostRef())
+                : UltimateClass.price(flat, mm, NUConfig.ucCostPct(cls), NUConfig.ucCostRef(cls));
     }
 
     // ------------------------------------------------------------------ hard control

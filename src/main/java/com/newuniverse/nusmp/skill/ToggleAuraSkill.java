@@ -46,7 +46,7 @@ public abstract class ToggleAuraSkill extends NUSkill {
         if (!(living instanceof ServerPlayer player) || !instance.isToggled() || !player.isAlive()) return;
         if (player.tickCount % Math.max(1, interval()) != 0) return;
         Tier tier = tier(instance, player);
-        if (!SkillUtil.spendMagicules(player, DMUtil.cost(drainPerPulse(tier)))) {
+        if (!pay(instance, player, 0, DMUtil.cost(drainPerPulse(tier)))) {
             instance.setToggled(false);
             instance.onToggleOff(player);
             instance.markDirty();

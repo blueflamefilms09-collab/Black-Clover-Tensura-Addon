@@ -88,7 +88,7 @@ public class FaithSkill extends NUSkill {
             SkillUtil.fail(player, SkillMsg.t("faith.pray_cooldown", "You cannot pray again yet."));
             return;
         }
-        if (!SkillUtil.spendMagicules(player, NUConfig.PRAY_MAGICULE_COST.get())) return;
+        if (!pay(instance, player, 0, NUConfig.PRAY_MAGICULE_COST.get())) return;
         Tier tier = tier(instance, player);
         setFaith(instance, FaithRules.add(getFaith(instance), FaithRules.prayGain(tier)));
         cooldown(instance, PRAY, NUConfig.PRAY_COOLDOWN.get());
@@ -112,7 +112,7 @@ public class FaithSkill extends NUSkill {
             SkillUtil.fail(player, SkillMsg.t("faith.not_enough", "Not enough Faith (need %s, have %s).", cost, faith));
             return;
         }
-        ServerPlayer target = SkillUtil.lookTarget(player, tier == Tier.ULTIMATE ? 16.0 : 8.0);
+        ServerPlayer target = SkillUtil.lookTarget(player, tier.ultimate() ? 16.0 : 8.0);
         if (target == null) {
             SkillUtil.fail(player, SkillMsg.t("faith.no_target", "Look at a player to bestow."));
             return;

@@ -60,7 +60,7 @@ public class ArgonautSkill extends NUSkill {
 
         int paid = tag.getInt(PAID);
         if (paid >= ChargeRules.maxCharge(tier)) return true;
-        if (!SkillUtil.spendMagicules(player, NUConfig.ARGONAUT_MAGICULE_PER_CHARGE.get())) return false;
+        if (!pay(instance, player, mode, NUConfig.ARGONAUT_MAGICULE_PER_CHARGE.get())) return false;
         paid++;
         tag.putInt(PAID, paid);
         instance.markDirty();

@@ -32,7 +32,7 @@ public class FireboltSkill extends NUSkill {
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("firebolt.cooldown", "Firebolt is on cooldown.")); return; }
-        if (!SkillUtil.spendMagicules(player, NUConfig.FIREBOLT_MAGICULE_COST.get())) return;
+        if (!pay(instance, player, mode, NUConfig.FIREBOLT_MAGICULE_COST.get())) return;
 
         ServerLevel level = player.serverLevel();
         Tier tier = tier(instance, player);

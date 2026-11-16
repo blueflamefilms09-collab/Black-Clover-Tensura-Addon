@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.FictionRules;
@@ -41,6 +42,7 @@ public class AllFictionSkill extends NUSkill {
     private static final String ANNUL_UNTIL = "AnnulUntil", ANNUL_POOL = "AnnulPool", NULLIFY_UNTIL = "NullifyUntil", WORLD_UNTIL = "WorldUntil";
 
     public AllFictionSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.GOD; }      // docs/ultimate_classes.md
 
     /** True when the ten-mode rebuild is on; before the server config is loaded (a client on the title screen) it counts as on. */
     static boolean rebuilt() {
@@ -131,13 +133,13 @@ public class AllFictionSkill extends NUSkill {
 
         boolean done = switch (mode) {
             case FictionRules.UNDO -> undo(instance, player, level);
-            case FictionRules.ERASE -> erase(player, level);
+            case FictionRules.ERASE -> erase(instance, player, level);
             case FictionRules.ANNUL -> annul(instance, player, level, tag, now);
-            case FictionRules.REWIND -> rewind(player, level, tag);
-            case FictionRules.UNPICK -> unpick(player, level);
+            case FictionRules.REWIND -> rewind(instance, player, level, tag);
+            case FictionRules.UNPICK -> unpick(instance, player, level);
             case FictionRules.NULLIFY -> nullify(instance, player, level, tag, now);
-            case FictionRules.UNMAKE -> unmake(player, level);
-            case FictionRules.SHARE -> share(player, level);
+            case FictionRules.UNMAKE -> unmake(instance, player, level);
+            case FictionRules.SHARE -> share(instance, player, level);
             default -> world(instance, player, level, tag, now);
         };
         if (!done) return;
@@ -147,13 +149,13 @@ public class AllFictionSkill extends NUSkill {
         grow(instance, player, 1);
     }
 
-    private static boolean pay(ServerPlayer p, int mode) { return SkillUtil.spendMagicules(p, DMUtil.cost(FictionRules.cost(mode))); }
+    private static boolean pay(ManasSkillInstance instance, ServerPlayer p, int mode) { return pay(instance, p, mode, DMUtil.cost(FictionRules.cost(mode))); }
 
     private static Vec3 body(LivingEntity e) { return e.position().add(0, e.getBbHeight() * 0.5, 0); }
 
     /** Undo (unchanged): your health returns to what it was five seconds ago and harmful effects vanish. */
     private boolean undo(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
-        if (!pay(player, FictionRules.UNDO)) return false;
+        if (!pay(instance, player, FictionRules.UNDO)) return false;
         float past = instance.getOrCreateTag().getFloat("H" + FictionRules.oldestIndex());
         player.setHealth(FictionRules.undoHealth(past, player.getHealth(), player.getMaxHealth()));
         SkillUtil.cleanse(player);
@@ -163,10 +165,10 @@ public class AllFictionSkill extends NUSkill {
     }
 
     /** Fiction (unchanged): erase the creature you look at; a boss (or a protected player) loses its effects and a quarter of its health instead. */
-    private boolean erase(ServerPlayer player, ServerLevel level) {
+    private boolean erase(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
         LivingEntity target = SkillTargets.lookFoe(player, FictionRules.eraseRange());
         if (target == null) { SkillUtil.fail(player, SkillMsg.t("fiction.no_target", "No target.")); return false; }
-        if (!pay(player, FictionRules.ERASE)) return false;
+        if (!pay(instance, player, FictionRules.ERASE)) return false;
         SkillFx.spray(level, true, body(target), 12, 0.4, 0.8, 0.4, 0.05);
         if (FictionRules.erases(GodTier.fullyAffected(target))) {
             if (target instanceof ServerPlayer) GodTier.kill(player, target);   // a player is killed, never silently removed from the world
@@ -180,7 +182,7 @@ public class AllFictionSkill extends NUSkill {
 
     /** Annul Damage: hits are made not to have happened until a pool of half your maximum health is used up (or six seconds pass). */
     private boolean annul(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
-        if (!pay(player, FictionRules.ANNUL)) return false;
+        if (!pay(instance, player, FictionRules.ANNUL)) return false;
         tag.putLong(ANNUL_UNTIL, now + FictionRules.annulTicks());
         tag.putDouble(ANNUL_POOL, FictionRules.annulPool(player.getMaxHealth()));
         instance.markDirty();
@@ -190,7 +192,7 @@ public class AllFictionSkill extends NUSkill {
     }
 
     /** Rewind Step: you stand where you stood up to five seconds ago, if that place is in this world, loaded, free and not too near or far. */
-    private boolean rewind(ServerPlayer player, ServerLevel level, CompoundTag tag) {
+    private boolean rewind(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag) {
         int n = tag.getInt("PN");
         if (n < 2 || !level.dimension().location().toString().equals(tag.getString("PDim"))) {
             SkillUtil.fail(player, SkillMsg.t("fiction.rewind_none", "There is nowhere to rewind to yet."));
@@ -204,7 +206,7 @@ public class AllFictionSkill extends NUSkill {
             SkillUtil.fail(player, SkillMsg.t("fiction.rewind_blocked", "That place cannot be stood in now."));
             return false;
         }
-        if (!pay(player, FictionRules.REWIND)) return false;
+        if (!pay(instance, player, FictionRules.REWIND)) return false;
         SkillFx.spray(level, true, body(player), 14, 0.4, 0.8, 0.4, 0.05);
         player.connection.teleport(dest.x, dest.y, dest.z, player.getYRot(), player.getXRot());
         player.resetFallDistance();
@@ -214,11 +216,11 @@ public class AllFictionSkill extends NUSkill {
     }
 
     /** Erase Effects: a foe you look at loses every effect (the buffs too); an ally you look at, or you, every harmful one. */
-    private boolean unpick(ServerPlayer player, ServerLevel level) {
+    private boolean unpick(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
         LivingEntity target = SkillTargets.lookLiving(player, FictionRules.unpickRange());
         if (target == null) target = player;
         boolean foe = target != player && SkillTargets.isFoe(player, target);
-        if (!pay(player, FictionRules.UNPICK)) return false;
+        if (!pay(instance, player, FictionRules.UNPICK)) return false;
         if (foe) target.removeAllEffects();
         else SkillUtil.cleanse(target);
         SkillFx.spray(level, true, body(target), 12, 0.4, 0.8, 0.4, 0.05);
@@ -228,7 +230,7 @@ public class AllFictionSkill extends NUSkill {
 
     /** Nullify Strike: the next hit within ten seconds never happens. */
     private boolean nullify(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
-        if (!pay(player, FictionRules.NULLIFY)) return false;
+        if (!pay(instance, player, FictionRules.NULLIFY)) return false;
         tag.putLong(NULLIFY_UNTIL, now + FictionRules.nullifyTicks());
         instance.markDirty();
         SkillUtil.actionbar(player, SkillMsg.t("fiction.nullify", "The next blow will never have happened.").withStyle(ChatFormatting.DARK_PURPLE));
@@ -237,10 +239,10 @@ public class AllFictionSkill extends NUSkill {
     }
 
     /** Unmake: hostile projectiles within ten blocks never existed (at most 32). */
-    private boolean unmake(ServerPlayer player, ServerLevel level) {
+    private boolean unmake(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
         List<Projectile> found = hostileProjectiles(player, level, player.position(), FictionRules.unmakeRadius(), FictionRules.unmakeMax());
         if (found.isEmpty()) { SkillUtil.fail(player, SkillMsg.t("fiction.unmake_none", "Nothing near you to unmake.")); return false; }
-        if (!pay(player, FictionRules.UNMAKE)) return false;
+        if (!pay(instance, player, FictionRules.UNMAKE)) return false;
         int n = unmakeAll(level, found);
         SkillUtil.actionbar(player, SkillMsg.t("fiction.unmake", "%s projectile(s) made fiction.", n).withStyle(ChatFormatting.DARK_PURPLE));
         SkillFx.ring(level, player.position(), FictionRules.unmakeRadius() * 0.6, 0x5A2A7A);
@@ -248,8 +250,8 @@ public class AllFictionSkill extends NUSkill {
     }
 
     /** Share the Fiction: the allies around you (you included, at most eight) lose their harmful effects and are healed a quarter of their health. */
-    private boolean share(ServerPlayer player, ServerLevel level) {
-        if (!pay(player, FictionRules.SHARE)) return false;
+    private boolean share(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        if (!pay(instance, player, FictionRules.SHARE)) return false;
         List<LivingEntity> allies = SkillTargets.alliesAround(player, player.position(), FictionRules.shareRadius());
         int n = 0;
         for (LivingEntity a : allies) {
@@ -265,7 +267,7 @@ public class AllFictionSkill extends NUSkill {
 
     /** World Fiction: a zone round where you stand, open for six seconds. The first pulse comes now, the rest once a second from the tick. */
     private boolean world(ManasSkillInstance instance, ServerPlayer player, ServerLevel level, CompoundTag tag, long now) {
-        if (!pay(player, FictionRules.WORLD)) return false;
+        if (!pay(instance, player, FictionRules.WORLD)) return false;
         tag.putLong(WORLD_UNTIL, now + FictionRules.worldTicks());
         tag.putDouble("WorldX", player.getX());
         tag.putDouble("WorldY", player.getY());

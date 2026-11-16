@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.GodTierRules;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -26,6 +27,7 @@ public class TheVisionarySkill extends NUSkill {
             "Ultimate. Whatever you imagine becomes reality: a meteor, a void, a perfect body.");
 
     public TheVisionarySkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.GOD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance i) { return GodTierRules.MODES; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean r) { return r ? (mode + GodTierRules.MODES - 1) % GodTierRules.MODES : (mode + 1) % GodTierRules.MODES; }
@@ -50,7 +52,7 @@ public class TheVisionarySkill extends NUSkill {
 
         switch (mode) {
             case GodTierRules.METEOR -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.meteorCost()))) return;
+                if (!pay(instance, player, mode, DMUtil.cost(GodTierRules.meteorCost()))) return;
                 Vec3 c = DMUtil.lookPoint(player, 64);
                 Vec3 sky = c.add(8, 40, 0);
                 SkillFx.beam(level, sky, c, false);
@@ -63,7 +65,7 @@ public class TheVisionarySkill extends NUSkill {
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.meteorCooldown()));
             }
             case GodTierRules.VOID -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.voidCost()))) return;
+                if (!pay(instance, player, mode, DMUtil.cost(GodTierRules.voidCost()))) return;
                 Vec3 c = DMUtil.lookPoint(player, 40);
                 for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.voidRadius(mastered))) {
                     t.addEffect(new MobEffectInstance(MobEffects.LEVITATION, BalanceLaw.controlTicks(t, 60), 2));
@@ -77,7 +79,7 @@ public class TheVisionarySkill extends NUSkill {
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.voidCooldown()));
             }
             case GodTierRules.BODY -> {
-                if (!SkillUtil.spendMagicules(player, DMUtil.cost(GodTierRules.bodyCost()))) return;
+                if (!pay(instance, player, mode, DMUtil.cost(GodTierRules.bodyCost()))) return;
                 int ticks = GodTierRules.bodyTicks(mastered);
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, 2));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 2));

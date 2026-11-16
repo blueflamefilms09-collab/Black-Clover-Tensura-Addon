@@ -179,6 +179,8 @@ public class NUSMP {
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
+        com.newuniverse.nusmp.skill.UltimateClassSelfTests.register();                                      // Ultimate classes: self-tests ultclass.* (docs/ultimate_classes.md)
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.NUSkill::onLogin);                       // Ultimate classes: earned mastery moves to the class's max at the same fraction
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle

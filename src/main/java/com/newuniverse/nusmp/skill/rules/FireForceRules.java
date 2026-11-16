@@ -11,11 +11,11 @@ public final class FireForceRules {
     /** Mode indexes. DASH is Ignition Dash in the Unique and Light Speed in the Ultimate; BURST exists only in the Ultimate. */
     public static final int DASH = 0, KICK = 1, BURST = 2;
 
-    public static int modes(Tier t) { return t == Tier.ULTIMATE ? 3 : 2; }
+    public static int modes(Tier t) { return t.ultimate() ? 3 : 2; }
 
     // ---- dash / light speed ----
-    public static double dashCost(Tier t) { return t == Tier.ULTIMATE ? 600 : 150; }
-    public static int dashCooldown(Tier t) { return t == Tier.ULTIMATE ? 60 : 30; }
+    public static double dashCost(Tier t) { return t.ultimate() ? 600 : 150; }
+    public static int dashCooldown(Tier t) { return t.ultimate() ? 60 : 30; }
     public static double dashPower(Tier t) { return t == Tier.BASE ? 1.7 : 2.4; }
     /** Light Speed's reach in blocks (the safe-landing search of the relics' blink is capped at 32). */
     public static double lightSpeedRange(Tier t) { return t == Tier.MASTERED ? 28 : 32; }
@@ -23,11 +23,11 @@ public final class FireForceRules {
     public static double lightSpeedWidth() { return 1.8; }
 
     // ---- kick ----
-    public static double kickCost(Tier t) { return t == Tier.ULTIMATE ? 800 : 300; }
-    public static int kickCooldown(Tier t) { return t == Tier.ULTIMATE ? 60 : 100; }
-    public static double kickRange(Tier t) { return t == Tier.ULTIMATE ? 8 : 5; }
+    public static double kickCost(Tier t) { return t.ultimate() ? 800 : 300; }
+    public static int kickCooldown(Tier t) { return t.ultimate() ? 60 : 100; }
+    public static double kickRange(Tier t) { return t.ultimate() ? 8 : 5; }
     public static double kickDamage(Tier t) { return t.pick(14.0, 21.0, 30.0); }
-    public static int kickBurnSeconds(Tier t) { return t == Tier.ULTIMATE ? 9 : 6; }
+    public static int kickBurnSeconds(Tier t) { return t.ultimate() ? 9 : 6; }
 
     // ---- Adolla Burst blast (Ultimate) ----
     public static double burstCost() { return 1600; }

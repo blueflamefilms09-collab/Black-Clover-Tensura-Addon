@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.skill.rules.AuraRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import com.newuniverse.nusmp.vfx.VfxShape;
@@ -21,6 +22,7 @@ public class HellConquerorSkill extends HellWalkerSkill {
             "Ultimate. Toggle. Evolved from Hell Walker. Near death your blows become devastating and heal you, and a hellfire aura burns the foes around you.");
 
     public HellConquerorSkill() { super(SkillType.ULTIMATE, CONQUEROR_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.KING; }      // docs/ultimate_classes.md
 
     @Override
     protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) {

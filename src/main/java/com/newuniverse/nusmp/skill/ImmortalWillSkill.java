@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import com.newuniverse.nusmp.skill.rules.WillRules;
@@ -24,6 +25,7 @@ public class ImmortalWillSkill extends UnbreakableWillSkill {
             "Ultimate. Evolved from Unbreakable Will. Rise from a killing blow at full health, far more often, with a shockwave; Rally heals and cleanses you on demand.");
 
     public ImmortalWillSkill() { super(SkillType.ULTIMATE, IMMORTAL_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return 2; }
 
@@ -48,7 +50,7 @@ public class ImmortalWillSkill extends UnbreakableWillSkill {
             SkillUtil.fail(player, SkillMsg.t("will.rally_cooldown", "You cannot rally again yet."));
             return;
         }
-        if (!SkillUtil.spendMagicules(player, DMUtil.cost(WillRules.rallyCost()))) return;
+        if (!pay(instance, player, mode, DMUtil.cost(WillRules.rallyCost()))) return;
         SkillUtil.cleanse(player);
         BalanceLaw.heal(player, (float) (player.getMaxHealth() * WillRules.rallyShare()));
         SkillFx.spray(player.serverLevel(), false, player.position().add(0, 1, 0), 12, 0.5, 0.9, 0.5, 0.15);

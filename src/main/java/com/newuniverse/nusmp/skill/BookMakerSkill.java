@@ -46,15 +46,20 @@ public class BookMakerSkill extends NUSkill {
         if (mode == FictionRules.PIN) {
             LivingEntity target = SkillTargets.lookFoe(player, FictionRules.pinRange());
             if (target == null) { SkillUtil.fail(player, SkillMsg.t("bookmaker.no_target", "No target.")); return; }
+<<<<<<< HEAD
             if (!SkillUtil.spendMagicules(player, DMUtil.cost(FictionRules.pinCost()))) return;
             pin(player, target, FictionRules.pinDamage(tier), tier, mastery, instance);
+=======
+            if (!pay(instance, player, mode, DMUtil.cost(FictionRules.pinCost()))) return;
+            pin(player, target, FictionRules.pinDamage(tier), tier, mastery);
+>>>>>>> f5e341b99 (Ultimate classes (Lord / King / God / Dragon), NUSkill costs through Tensura, ULTIMATE_MASTERED tier, mastery milestones)
             cooldown(instance, mode, DMUtil.cooldown(FictionRules.pinCooldown()));
         } else if (mode == FictionRules.BARRAGE) {
             if (!FictionRules.barrageUnlocked(tier)) {
                 SkillUtil.fail(player, SkillMsg.t("bookmaker.locked", "Master Book Maker to unlock Barrage."));
                 return;
             }
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FictionRules.barrageCost()))) return;
+            if (!pay(instance, player, mode, DMUtil.cost(FictionRules.barrageCost()))) return;
             for (LivingEntity t : SkillTargets.foesInCone(player, FictionRules.barrageRange(), FictionRules.barrageCone())) {
                 pin(player, t, FictionRules.pinDamage(tier) * 0.6, tier, mastery, instance);
             }

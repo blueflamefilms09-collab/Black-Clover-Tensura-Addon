@@ -22,7 +22,7 @@ public final class AuraRules {
 
     /** Hell Conqueror heals for this share of the damage it deals, once below half health. */
     public static double hellLifesteal(double health, double max, Tier t) {
-        return t == Tier.ULTIMATE && SkillMath.missing(health, max) > 0.5 ? 0.2 : 0.0;
+        return t.ultimate() && SkillMath.missing(health, max) > 0.5 ? 0.2 : 0.0;
     }
 
     /** Hell Conqueror's Hellfire: below this share of health the aura burns foes around you. */
@@ -30,11 +30,11 @@ public final class AuraRules {
     public static double hellfireRadius() { return 4.5; }
     public static double hellfireDamage() { return 4.0; }
     public static boolean hellfire(double health, double max, Tier t) {
-        return t == Tier.ULTIMATE && max > 0 && health / max < hellfireBelow();
+        return t.ultimate() && max > 0 && health / max < hellfireBelow();
     }
     /** Below a third of health the Conqueror also gains speed and strength. */
     public static boolean berserk(double health, double max, Tier t) {
-        return t == Tier.ULTIMATE && max > 0 && health / max < 0.34;
+        return t.ultimate() && max > 0 && health / max < 0.34;
     }
 
     // ---- Hawk Eye ----

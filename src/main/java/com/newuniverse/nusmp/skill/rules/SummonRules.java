@@ -24,7 +24,7 @@ public final class SummonRules {
         int v = switch (tier) {
             case BASE -> configBase;
             case MASTERED -> Math.max(configBase, configMastered);
-            case ULTIMATE -> Math.max(configBase, configMastered) * 2;
+            case ULTIMATE, ULTIMATE_MASTERED -> Math.max(configBase, configMastered) * 2;
         };
         return SkillMath.clamp(v, 1, HARD_CAP);
     }
@@ -32,7 +32,7 @@ public final class SummonRules {
     /** How many creatures one cast of the card calls. */
     public static int mobCount(Card card, Tier tier) {
         return switch (card) {
-            case BEAST -> tier == Tier.ULTIMATE ? 3 : 1;
+            case BEAST -> tier.ultimate() ? 3 : 1;
             case STONE -> 1;
             case LEGION -> 5;
             case WRAITH -> 4;
@@ -40,7 +40,7 @@ public final class SummonRules {
     }
 
     /** Whether the tier may use the card at all. */
-    public static boolean available(Card card, Tier tier) { return !card.ultimateOnly() || tier == Tier.ULTIMATE; }
+    public static boolean available(Card card, Tier tier) { return !card.ultimateOnly() || tier.ultimate(); }
 
     public static double health(Card card, Tier tier) {
         return switch (card) {
@@ -62,7 +62,7 @@ public final class SummonRules {
 
     /** Body scale (1.0 = normal): the Ultimate's Stone Card is a colossus. */
     public static double scale(Card card, Tier tier) {
-        return card == Card.STONE && tier == Tier.ULTIMATE ? 1.35 : 1.0;
+        return card == Card.STONE && tier.ultimate() ? 1.35 : 1.0;
     }
 
     /** How long a summon stays before it fades (ticks). Nothing summoned lives forever, so none is left behind. */

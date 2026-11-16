@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.FaithRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
@@ -28,6 +29,7 @@ public class GoddessOfFaithSkill extends FaithSkill {
     private static final int BLESSING = 3, MIRACLE = 4;
 
     public GoddessOfFaithSkill() { super(SkillType.ULTIMATE, GODDESS_TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.KING; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return 5; }
 

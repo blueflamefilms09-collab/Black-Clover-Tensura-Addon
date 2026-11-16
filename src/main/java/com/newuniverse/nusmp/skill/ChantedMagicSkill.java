@@ -104,8 +104,8 @@ public abstract class ChantedMagicSkill extends NUSkill {
         }
         if (instance.onCoolDown(CAST)) { SkillUtil.fail(player, SkillMsg.t("magic.cooldown", "This magic is on cooldown.")); return; }
 
-        double price = DMUtil.cost(spell.cost);
-        if (!SkillUtil.spendMagicules(player, price)) return;
+        double price = price(instance, player, DMUtil.cost(spell.cost));
+        if (!charge(instance, player, mode, price)) return;
         if (!cast(instance, player, player.serverLevel(), tier)) {
             SkillUtil.refund(player, price);
             return;

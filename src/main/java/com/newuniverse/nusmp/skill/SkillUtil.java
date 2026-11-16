@@ -50,6 +50,7 @@ final class SkillUtil {
     /** Gives back magicules spent on a power that turned out not to be usable. */
     static void refund(ServerPlayer player, double amount) {
         if (amount <= 0) return;
+        if (player.isCreative() && !com.newuniverse.nusmp.NUConfig.ucFlatCosts()) return;      // Tensura's isOutOfEnergy took nothing from a creative player (NUSkill.charge), so nothing comes back
         IExistence existence = TensuraStorages.getExistenceFrom(player);
         if (existence == null) return;
         existence.setMagicule(existence.getMagicule() + amount);

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.NenRules;
 import io.github.manasmods.manascore.network.api.util.Changeable;
@@ -42,6 +43,7 @@ public class NenSkill extends NUSkill {
             0xFF7AFFD8, 0xFF303040, 0xFFFFFFFF, 0xFFFFE04A, 0xFFD8C890, 0xFFE060FF, 0xFFFF6AA0};
 
     public NenSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance i) { return NenRules.MODES; }
     @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), NenRules.MODES); }
@@ -148,7 +150,7 @@ public class NenSkill extends NUSkill {
 
     /** Pays and opens the window of a mode that only needs the window (Ten, Ko). */
     private boolean window(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, int mode, Component message) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(mode)))) return false;
+        if (!pay(instance, p, mode, DMUtil.cost(NenRules.cost(mode)))) return false;
         tag.putLong(NenRules.untilKey(mode), NenRules.endsAt(now, mode));
         NenFx.aura(p, kindOf(mode), typeOf(instance, p), 0.0);
         SkillUtil.actionbar(p, message.copy().withStyle(ChatFormatting.AQUA));
@@ -156,7 +158,7 @@ public class NenSkill extends NUSkill {
     }
 
     private boolean zetsu(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.ZETSU)))) return false;
+        if (!pay(instance, p, NenRules.ZETSU, DMUtil.cost(NenRules.cost(NenRules.ZETSU)))) return false;
         tag.putLong(NenRules.untilKey(NenRules.ZETSU), NenRules.endsAt(now, NenRules.ZETSU));
         p.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, NenRules.duration(NenRules.ZETSU), 0, false, false, true));
         for (LivingEntity e : SkillTargets.foes(p, p.position(), NenRules.zetsuRadius())) {
@@ -169,7 +171,7 @@ public class NenSkill extends NUSkill {
 
     /** Ren: Strength II and Speed II, and the aura bursts out: what stands within five blocks (at most 12) is thrown back and hurt a little. */
     private boolean ren(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.REN)))) return false;
+        if (!pay(instance, p, NenRules.REN, DMUtil.cost(NenRules.cost(NenRules.REN)))) return false;
         int ticks = NenRules.duration(NenRules.REN);
         tag.putLong(NenRules.untilKey(NenRules.REN), NenRules.endsAt(now, NenRules.REN));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, NenRules.renStrengthAmp()));
@@ -188,7 +190,7 @@ public class NenSkill extends NUSkill {
     }
 
     private boolean ken(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.KEN)))) return false;
+        if (!pay(instance, p, NenRules.KEN, DMUtil.cost(NenRules.cost(NenRules.KEN)))) return false;
         int ticks = NenRules.duration(NenRules.KEN);
         tag.putLong(NenRules.untilKey(NenRules.KEN), NenRules.endsAt(now, NenRules.KEN));
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, NenRules.kenSlowAmp()));
@@ -199,7 +201,7 @@ public class NenSkill extends NUSkill {
 
     /** Gyo: Night Vision for a minute, every invisible creature within 24 blocks (at most 16) glows for eight seconds, and the creature you look at is read: for eight seconds your blows do 20 % more to it. */
     private boolean gyo(ManasSkillInstance instance, ServerPlayer p) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.GYO)))) return false;
+        if (!pay(instance, p, NenRules.GYO, DMUtil.cost(NenRules.cost(NenRules.GYO)))) return false;
         p.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, NenRules.gyoNightTicks(), 0, false, false, true));
         double r = NenRules.gyoRadius();
         List<LivingEntity> hidden = p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(p.position(), p.position()).inflate(r),
@@ -223,7 +225,7 @@ public class NenSkill extends NUSkill {
 
     /** En: a sphere of aura round you for twelve seconds. Everything hostile in it (at most 24) glows, refreshed once a second, and the first blow every six seconds is felt coming and halved. */
     private boolean en(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.EN)))) return false;
+        if (!pay(instance, p, NenRules.EN, DMUtil.cost(NenRules.cost(NenRules.EN)))) return false;
         tag.putLong(NenRules.untilKey(NenRules.EN), NenRules.endsAt(now, NenRules.EN));
         int n = enPulse(p, NenRules.enGlowPulseTicks());
         NenFx.sense(p, NenRules.enRadius(), NenRules.typeColor(typeOf(instance, p)), false);
@@ -265,7 +267,7 @@ public class NenSkill extends NUSkill {
 
     /** Shu (the held item is wrapped in aura), In (the aura is hidden) and Ryu (the aura flows to where the blow lands): a window each. */
     private boolean advanced(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, int mode) {
-        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(mode)))) return false;
+        if (!pay(instance, p, mode, DMUtil.cost(NenRules.cost(mode)))) return false;
         tag.putLong(NenRules.untilKey(mode), NenRules.endsAt(now, mode));
         switch (mode) {
             case NenRules.SHU -> { NenFx.aura(p, kindOf(mode), typeOf(instance, p), 0.0); SkillUtil.actionbar(p, SkillMsg.t("nen.shu", "Shu: your aura wraps what you hold.").withStyle(ChatFormatting.AQUA)); }

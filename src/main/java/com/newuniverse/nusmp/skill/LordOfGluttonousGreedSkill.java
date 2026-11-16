@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.greed.GreedService;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import net.minecraft.network.chat.Component;
@@ -19,6 +20,7 @@ public class LordOfGluttonousGreedSkill extends NUSkill {
     private static final String[] NAMES = {"Secret Technique", "Half-Starvation", "Offer"};
 
     public LordOfGluttonousGreedSkill() { super(SkillType.ULTIMATE, TEXT, true); }
+    @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
 
     @Override public int getModes(ManasSkillInstance instance) { return IDS.length; }
 

@@ -13,7 +13,7 @@ public final class ChargeRules {
     /** Append-only strike kinds (mode index): the Unique has only STRIKE; the Ultimate adds BEAM. */
     public enum Strike { STRIKE, BEAM }
 
-    public static int maxCharge(Tier tier) { return tier == Tier.ULTIMATE ? 10 : 5; }
+    public static int maxCharge(Tier tier) { return tier.ultimate() ? 10 : 5; }
 
     /** Charges built after {@code heldTicks} of holding (0 until the first full second). */
     public static int chargeAt(int heldTicks, Tier tier) {
@@ -35,7 +35,7 @@ public final class ChargeRules {
     public static double strikeReach(Tier tier) { return tier.pick(6.0, 6.0, 8.0); }
 
     /** Cosine of the half-angle of the strike cone. */
-    public static double strikeCone(Tier tier) { return tier == Tier.ULTIMATE ? 0.45 : 0.6; }
+    public static double strikeCone(Tier tier) { return tier.ultimate() ? 0.45 : 0.6; }
 
     public static double knockback(int charge) { return 0.5 + charge * 0.3; }
 
@@ -55,5 +55,5 @@ public final class ChargeRules {
         return heldTicks > 0 && heldTicks % TICKS_PER_CHARGE == 0 && heldTicks / TICKS_PER_CHARGE <= maxCharge(tier);
     }
 
-    public static int modes(Tier tier) { return tier == Tier.ULTIMATE ? 2 : 1; }
+    public static int modes(Tier tier) { return tier.ultimate() ? 2 : 1; }
 }

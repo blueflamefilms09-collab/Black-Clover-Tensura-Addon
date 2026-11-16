@@ -46,6 +46,7 @@ public class DbSkill extends NUSkill {
 
     public Spec spec() { return spec; }
     public boolean isUltimate() { return ult; }
+    @Override public com.newuniverse.nusmp.skill.rules.UltimateClass ultimateClass() { return ult ? com.newuniverse.nusmp.skill.rules.UltimateClass.LORD : null; }      // docs/ultimate_classes.md (the Unique stays unclassified)
     public List<Mode> wheel() { return wheel; }
 
     private Mode at(int mode) { return wheel.get(Math.floorMod(mode, wheel.size())); }
@@ -88,8 +89,8 @@ public class DbSkill extends NUSkill {
         if (m.mastery() && !mastered) { SkillUtil.fail(p, SkillMsg.t("db.mastery", "%s answers only a mastered skill.", m.name())); return; }
         if (m.crouch() && !p.isShiftKeyDown()) { SkillUtil.fail(p, SkillMsg.t("db.crouch", "Crouch and press to use %s.", m.name())); return; }
         if (instance.onCoolDown(idx)) { SkillUtil.fail(p, SkillMsg.t("db.cooldown", "%s is recharging (%ss).", m.name(), instance.getCoolDown(idx))); return; }
-        double cost = p.isCreative() ? 0 : DMUtil.cost(DbRules.cost(m, mastered, 1.0) * (ult ? 1.0 : DbRules.UNIQUE_FACTOR + 0.5));
-        if (!SkillUtil.spendMagicules(p, cost)) return;
+        double cost = p.isCreative() ? 0 : price(instance, p, DMUtil.cost(DbRules.cost(m, mastered, 1.0) * (ult ? 1.0 : DbRules.UNIQUE_FACTOR + 0.5)));
+        if (!charge(instance, p, idx, cost)) return;
         if (!DbMoves.cast(spec, ult, m, p, mastered ? 1.0 : 0.4)) { SkillUtil.refund(p, cost); return; }
         int seconds = DbPassives.cooldownSeconds(DbRules.cooldown(m, mastered), p, spec);
         if (seconds > 0) instance.setCoolDown(seconds, idx);

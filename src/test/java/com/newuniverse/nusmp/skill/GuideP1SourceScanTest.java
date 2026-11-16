@@ -66,6 +66,6 @@ class GuideP1SourceScanTest {
         assertTrue(r.contains("if (gone(b.owner, b.level)) { b.dead = true; return; }"), "bolts of gone casters fizzle");
         assertTrue(read(MAIN.resolve("NUSMP.java")).contains("SpellRuntime::onServerStopping"), "the stop hook is registered");
         assertTrue(read(MAIN.resolve("NUSMP.java")).contains("GuideP1SelfTests.register()"), "the self-tests are registered");
-        assertTrue(read(Path.of(".github/workflows/smoke.yml")).contains(",greed,guide.p1,"), "guide.p1 is on the smoke list");
+        assertTrue(read(Path.of(".github/workflows/smoke.yml")).contains(",guide.p1,"), "guide.p1 is on the smoke list");
     }
 }
