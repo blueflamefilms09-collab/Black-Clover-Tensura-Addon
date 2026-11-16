@@ -528,6 +528,12 @@
     "black_sword_greed_staff": "staff",
     "black_sword_greed_gauntlets": "handitem",
     "black_sword_greed_spear": "spear",
-    "black_sword_greed_dual_blades": "shortsword"
+    "black_sword_greed_dual_blades": "shortsword",
+    "black_sword_greed_gauntlets_left": "handitem",
+    "black_axe_of_sloth": "battleaxe",
+    "black_gunblade_of_envy": "longsword",
+    "black_spear_of_vanity": "spear",
+    "black_chakrams": "handaxe",
+    "seifort_holy_sword": "longsword"
   }
 }

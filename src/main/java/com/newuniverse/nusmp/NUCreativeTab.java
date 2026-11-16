@@ -74,6 +74,7 @@ public final class NUCreativeTab {
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) o.apply(G.WEAPONS).accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) o.apply(G.WEAPONS).accept(vl.get());                // the Valkyrie Drill Lance (creative only)
                 for (var db : com.newuniverse.nusmp.dragonballs.DbItems.creativeItems()) o.apply(G.MISC).accept(db.get());                                  // the Dragon Balls (2 sets x 8 stars) and the Dragon Radar
+                for (var sw : com.newuniverse.nusmp.sinweapons.SinWeaponBoot.creativeItems()) o.apply(G.WEAPONS).accept(sw.get());                // the five other Berserk weapons (creative only)
                 o.apply(G.GRIM).accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 for (net.minecraft.world.item.ItemStack bw : com.newuniverse.nusmp.beastwill.BeastWillItems.creativeStacks()) o.apply(G.RELICS).accept(bw);             // 3.45.0: one Beast Will core per shipped will
                 for (net.minecraft.world.item.ItemStack mc : com.newuniverse.nusmp.manacore.ManaCoreItems.creativeStacks()) o.apply(G.RELICS).accept(mc);              // 3.51.0: the 24 rank Mana Cores

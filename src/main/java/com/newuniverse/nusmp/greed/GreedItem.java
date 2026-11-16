@@ -135,6 +135,7 @@ public class GreedItem extends Item {
         lines.add(Component.translatableWithFallback("greed.tooltip.form", "Form %s: %s", form.id(), Component.translatableWithFallback(form.langKey(), form.english())).withStyle(ChatFormatting.RED));
         lines.add(Component.translatableWithFallback("greed.tooltip.technique", "Secret Technique: %s (costs %s%% of the devoured stats)", Component.translatableWithFallback(form.techniqueKey(), form.techniqueEnglish()), (int) Math.round(form.share() * 100)).withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatableWithFallback("greed.tooltip.skill", "Its wielder holds the Ultimate skill Lord of Gluttonous Greed: the skill key casts the Secret Technique, devours and offers.").withStyle(ChatFormatting.DARK_GRAY));
+        if (GreedHands.isTwin(form.itemId())) lines.add(Component.translatableWithFallback("greed.tooltip.twin", "Twin form: one in each hand. With the off hand empty every blow is followed by a second one from it (60%).").withStyle(ChatFormatting.DARK_GRAY));
         lines.add(Component.translatableWithFallback("greed.tooltip.switch", "Form key (default R): next open form; sneak: previous. Forms open with tiers.").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

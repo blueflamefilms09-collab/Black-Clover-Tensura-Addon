@@ -199,6 +199,38 @@
   "y": 53.0,
   "z": -4.723
  },
+ "black_axe_of_sloth": {
+  "class": "battleaxe",
+  "fraction": 0.253,
+  "source": "directive",
+  "x": 0.0,
+  "y": 28.131,
+  "z": 0.0
+ },
+ "black_chakrams": {
+  "class": "handaxe",
+  "fraction": 0.25,
+  "source": "class",
+  "x": -0.418,
+  "y": 8.566,
+  "z": 0.0
+ },
+ "black_gunblade_of_envy": {
+  "class": "longsword",
+  "fraction": 0.131,
+  "source": "directive",
+  "x": 3.19,
+  "y": 16.97,
+  "z": 0.0
+ },
+ "black_spear_of_vanity": {
+  "class": "spear",
+  "fraction": 0.222,
+  "source": "directive",
+  "x": 0.0,
+  "y": 39.734,
+  "z": 0.0
+ },
  "black_sword_greed": {
   "class": "longsword",
   "fraction": 0.1,
@@ -220,14 +252,22 @@
   "fraction": 0.12,
   "source": "directive",
   "x": 0.0,
-  "y": 12.16,
+  "y": 12.18,
   "z": 0.0
  },
  "black_sword_greed_gauntlets": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": 0.0,
+  "x": -2.71,
+  "y": 32.205,
+  "z": 0.994
+ },
+ "black_sword_greed_gauntlets_left": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 2.71,
   "y": 32.205,
   "z": 0.994
  },
@@ -2653,6 +2693,14 @@
   "source": "directive",
   "x": -1.526,
   "y": 5.017,
+  "z": 0.0
+ },
+ "seifort_holy_sword": {
+  "class": "longsword",
+  "fraction": 0.118,
+  "source": "directive",
+  "x": 0.0,
+  "y": 15.342,
   "z": 0.0
  },
  "selection_hopefuls_bokken": {

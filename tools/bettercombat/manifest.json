@@ -61,6 +61,26 @@
       "profile": "club",
       "source": "relic"
     },
+    "black_axe_of_sloth": {
+      "class": "battleaxe",
+      "profile": "battleaxe",
+      "source": "table"
+    },
+    "black_chakrams": {
+      "class": "shortsword",
+      "profile": "greed_twin_blade",
+      "source": "table"
+    },
+    "black_gunblade_of_envy": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
+    "black_spear_of_vanity": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
     "black_sword_greed": {
       "class": "longsword",
       "profile": "longsword",
@@ -68,7 +88,12 @@
     },
     "black_sword_greed_dual_blades": {
       "class": "shortsword",
-      "profile": "shortsword",
+      "profile": "greed_twin_blade",
+      "source": "table"
+    },
+    "black_sword_greed_gauntlets": {
+      "class": "fist",
+      "profile": "greed_fists",
       "source": "table"
     },
     "black_sword_greed_scythe": {
@@ -1101,6 +1126,11 @@
       "profile": "sabre",
       "source": "relic"
     },
+    "seifort_holy_sword": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
     "selection_hopefuls_bokken": {
       "class": "katana",
       "profile": "katana",
@@ -1520,7 +1550,7 @@
     "beast_will_core": "hand item / charm / book / key: not a weapon",
     "bianca": "ranged (crossbow): Better Combat only handles melee",
     "black_sword_greed_bow": "ranged (bow): Better Combat only handles melee",
-    "black_sword_greed_gauntlets": "hand item / charm / book / key: not a weapon",
+    "black_sword_greed_gauntlets_left": "mesh only: the left glove of the Black Sword Greed gauntlets, not an item",
     "black_sword_greed_shield": "shield: no swing",
     "bolt_thrower": "ranged (crossbow): Better Combat only handles melee",
     "bond_thread": "hand item / charm / book / key: not a weapon",

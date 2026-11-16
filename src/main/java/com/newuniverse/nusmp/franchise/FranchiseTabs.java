@@ -34,7 +34,7 @@ public final class FranchiseTabs {
             }
         }
         if (path == null || path.isEmpty()) return null;
-        if (path.startsWith("black_sword_greed")) return "berserk";
+        if (path.startsWith("black_sword_greed") || com.newuniverse.nusmp.sinweapons.SinRules.IDS.contains(path)) return "berserk";
         if (BOSS_CORE.matcher(path).matches()) return "tensura";          // the Boss Cores and their armour (labyrinth/mega/cores): Tensura-side progression gear
         if (BOSS_DROP.matcher(path).matches()) return path.matches("trophy_(minotaur|black_goliath|amphisbaena|udaeus)") ? "anime_worlds" : "black_clover";      // the boss trophies and the armour the grimoire bosses drop (bossdrops)
         if (path.startsWith("beast_will") || RANK_CORE.matcher(path).matches()) return "tensura";

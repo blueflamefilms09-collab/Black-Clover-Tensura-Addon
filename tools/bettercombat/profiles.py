@@ -152,3 +152,19 @@ SPECIAL_PROFILES = {
     "twin_sabre": P("sword", 0.1),               # a pair: Better Combat dual wields two one-handed swords by itself
     "twin_shortsword": P("sword", 0.0),
 }
+
+# ======================================================================= the Black Sword Greed's two-hand forms (tools/greed_hands, docs/berserk_weapons.md)
+# Better Combat's own parts only. DUAL BLADES: the `twin_blade` preset is Better Combat's "two blades in one weapon" (its two slash animations alternate the right and left blade; two_handed, so the
+# off hand must be empty, which is also the rule of the second blow in GreedForms.offBlow). GAUNTLETS: the `fist` preset with a combo of Better Combat's own fist and two-fist animations (a jab, the crossed
+# double swing, the double thrust); two_handed for the same reason. Before this the gauntlets were listed as a "hand item, not a weapon" and had no combo at all.
+def _atk(hitbox, anim, angle, upswing, mult=1.0):
+    return {"hitbox": hitbox, "damage_multiplier": mult, "angle": angle, "upswing": upswing, "animation": "bettercombat:" + anim}
+
+
+GREED_FIST_COMBO = [_atk(FWD, "one_handed_punch", 25, 0.35), _atk(HORIZ, "dual_handed_slash_cross", 110, 0.40), _atk(FWD, "dual_handed_stab", 30, 0.50, 1.3)]
+SPECIAL_PROFILES["greed_twin_blade"] = P("twin_blade", 0.0, True)
+SPECIAL_PROFILES["greed_fists"] = P("fist", 0.0, True, GREED_FIST_COMBO)
+# item id -> (class for the manifest, profile): items whose class in weapon_classes.json is a non-melee one (the gauntlets are a "handitem" there, which also picks their grip) but that are real melee weapons
+FORCE_MELEE = {"black_sword_greed_gauntlets": ("fist", "greed_fists"), "black_sword_greed_dual_blades": ("shortsword", "greed_twin_blade"), "black_chakrams": ("shortsword", "greed_twin_blade")}
+# table ids that are a mesh only, not an item (the left glove of the gauntlets): no file, listed as excluded
+MESH_ONLY = {"black_sword_greed_gauntlets_left": "mesh only: the left glove of the Black Sword Greed gauntlets, not an item"}

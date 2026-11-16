@@ -37,6 +37,27 @@ public final class HandWrap {
             // claw: hand width = mesh x = forward, back of the hand = mesh z = lateral; the bracer is 35 x 25 units, 4.8 x 4.6 pixels; the blades run on 14 pixels beyond the fist
             "vassal_claw", new Wrap(new Matrix3f(0, 1, 0, 0, 0, -1, -1, 0, 0), 0.0085f, 0.0085f, 0.0115f, 3f));
 
+    /**
+     * The Black Sword Greed's gloves (one mesh per hand, tools/greed_hands/split_meshes.py; wrist at mesh y = 0, fingers +y, back of the hand +z, the right glove's thumb on -x, the left glove's on +x). Kept apart from
+     * {@link #WRAPPED} on purpose: the Greed gauntlets also have an old look (the pair, drawn held) that must keep its grip and display, so a glove is only worn while {@code GreedHandsClient} says the new look is on.
+     * Third person: like the vassal gauntlet (thumb forward, back of the hand outward; the left arm's outward is item -x). Arm section 4 x 4 pixels, glove 5 x 4.2 pixels at 0.0145 blocks per unit, 15 pixels long
+     * from the shoulder pivot down to just past the hand.
+     */
+    public static final float GLOVE_SCALE = 0.0145f;
+    private static final Map<String, Wrap> GLOVES = Map.of(
+            "black_sword_greed_gauntlets", new Wrap(new Matrix3f(0, -1, 0, 0, 0, -1, 1, 0, 0), GLOVE_SCALE, GLOVE_SCALE, GLOVE_SCALE, 0f),
+            "black_sword_greed_gauntlets_left", new Wrap(new Matrix3f(0, 1, 0, 0, 0, -1, -1, 0, 0), GLOVE_SCALE, GLOVE_SCALE, GLOVE_SCALE, 0f));
+
+    /** The third-person glove wrap of a mesh id, or null. */
+    public static Wrap glove(String meshId) { return GLOVES.get(meshId); }
+
+    /**
+     * First person: the glove lies in the arm's frame (x right, y up, z toward the camera), fingers toward -z, back of the hand up, thumb toward the middle of the screen. The same turn for both hands (the left
+     * mesh is the mirror of the right one). `drop`, `back`, `inward` place the wrist; `pitchDeg` lifts the fingers so the fist rises into view like the bare arm does.
+     */
+    public static final Wrap GLOVE_FP = new Wrap(new Matrix3f(1, 0, 0, 0, 0, -1, 0, 1, 0), 0.015f, 0.015f, 0.015f, 0f);
+    public static final float FP_DROP = -0.30f, FP_BACK = 0.18f, FP_INWARD = 0.05f, FP_PITCH_DEG = 30f;
+
     public static Wrap of(String id) { return WRAPPED.get(id); }
 
     public static boolean isWrapped(String id) { return WRAPPED.containsKey(id); }

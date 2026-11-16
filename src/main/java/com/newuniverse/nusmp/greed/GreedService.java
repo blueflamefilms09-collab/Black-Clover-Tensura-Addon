@@ -93,6 +93,7 @@ public final class GreedService {
 
     public static void onHit(ServerPlayer p, ItemStack stack, LivingEntity target, GreedRules.Form form) {
         if (form == GreedRules.Form.SCYTHE && mayUse(p, stack)) GreedForms.soulSever(target, p.serverLevel().getGameTime(), 160);
+        if (GreedHands.isTwin(form.itemId()) && mayUse(p, stack)) GreedForms.offBlow(p, target);                      // gauntlets and dual blades: the off hand strikes too
     }
 
     // ---------------------------------------------------------------- ownership scan

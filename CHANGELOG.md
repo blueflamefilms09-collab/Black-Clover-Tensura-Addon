@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.21.0] — Berserk of Gluttony weapons, real gauntlets, dual blades
+- NEW (server settings in `nusmp-sinweapons-server.toml`: `techniques`, `covet`, `damagePercent`): five more Weapons of Mortal Sin of Berserk of Gluttony, names from the English fandom wiki (the abilities and numbers are the mod's design: the wiki gives names only): Black Axe of Sloth (Dead Weight slows foes within 6 blocks), Black Gunblade of Envy (Green-Eyed Shot, hitscan; Covet lends you one stolen beneficial effect for up to 10 s), Black Spear of Vanity (Vain Thrust, an 8-block line), Black Chakrams (a twin weapon, one ring per hand; the name is a placeholder, the wiki's text did not give its sin) and the Seifort Holy Sword (Grand Cross, extra against the undead). 3D meshes with glow, Tensura engravings, Better Combat files, old-style sprites as inventory icons. Creative tab / `/give` only, like the Black Sword. All damage goes through the Balance Law.
+- REPLACED (client setting `classicHands`, default off; server setting `dualStance`, default on): the Black Sword Greed's gauntlet form is now a real pair of gauntlets, one glove per hand (a mirrored left glove, drawn in first and third person), with Better Combat fist punches; the dual-blade form is now one sword in each hand with Better Combat twin blades, and an empty off hand adds a second blow (60 % of the attack value, at most once per 12 ticks, one target). `dualStance` false restores the single blow; `classicHands` true draws the old one-mesh look.
+- KEPT: the old meshes and skins (`classic/` folders), item ids, the Greed forms enum and data components, the other Greed forms.
+- Docs: `docs/berserk_weapons.md`; previews in `docs/berserk_weapons_previews/`. Self-tests `greed.hands` and `berserk.weapons`.
+- Cost: a right click is one box query (at most 24 entities), at most 8 hits and about 20 particle packets to nearby players, plus the item's cooldown (at least 60 ticks); twin forms add one hit and one swing packet per 12 ticks per wielder; no new packet types; meshes of 376 to 1162 quads.
+- Not seen in a game; the Java is compiled only by CI. Not Blender (none available): the new meshes come from the kit, the gloves and single sword are derived by script from the existing Blender meshes. The glove and off-hand placement constants are derived by maths and need tuning by eye.
+
 ## [4.20.1] — Build fix: Beast Will action guard
 - FIXED: the dead-body check added to the Beast Will action handler in 4.14.2 shared a line with the packet validation and broke the source-scan test that pins that line (`BeastWillSourceScanTest`). The check now sits on its own line; behaviour is the same.
 - Cost: none.

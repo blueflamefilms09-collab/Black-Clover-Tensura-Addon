@@ -11,13 +11,16 @@ import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
@@ -93,6 +96,28 @@ public final class GreedForms {
     private static void hurt(ServerPlayer p, LivingEntity t, float amount, boolean magic) {
         t.invulnerableTime = 0;
         t.hurt(magic ? p.serverLevel().damageSources().magic() : p.serverLevel().damageSources().playerAttack(p), (float) (amount * GreedConfig.damage()));
+    }
+
+    private static final String K_OFF = "nusmp_greed_off";
+
+    /**
+     * The off-hand blow of the gauntlet and dual-blade forms ({@link GreedHands}): after the main blow landed, the empty off hand strikes the same creature once more, 60% of the main attack value, at most one per
+     * 12 ticks per wielder (the cooldown is one long in the player's persistent data, so nothing is kept per tick and nothing is left behind at logout). One creature, no area, one swing packet. Returns whether it fell.
+     */
+    public static boolean offBlow(ServerPlayer p, LivingEntity target) {
+        if (!GreedConfig.dualStance() || !GreedHands.offHandFree(p.getOffhandItem().isEmpty(), p.isCreative() || p.isSpectator())) return false;
+        if (!canHit(p, target)) return false;
+        long now = p.level().getGameTime();
+        CompoundTag data = p.getPersistentData();
+        if (!GreedHands.ready(now, data.getLong(K_OFF))) return false;
+        float dmg = GreedHands.offBlow((float) p.getAttributeValue(Attributes.ATTACK_DAMAGE));
+        if (dmg <= 0f) return false;
+        data.putLong(K_OFF, GreedHands.next(now));
+        Vec3 v = target.getDeltaMovement();
+        hurt(p, target, dmg, false);
+        target.setDeltaMovement(v);                                                   // no second shove
+        p.swing(InteractionHand.OFF_HAND, true);
+        return true;
     }
 
     private static void trail(ServerLevel level, ParticleOptions o, Vec3 from, Vec3 dir, double range, int every) {

@@ -16,11 +16,14 @@ import com.newuniverse.nusmp.client.relics.item.VariantRules;
 import com.newuniverse.nusmp.client.relics.item.WeaponClasses;
 import com.newuniverse.nusmp.client.relics.item.WeaponNormaliser;
 import com.newuniverse.nusmp.client.relics.item.WeaponOrientation;
+import com.newuniverse.nusmp.client.greed.GreedHandsClient;
+import com.newuniverse.nusmp.greed.GreedHands;
 import com.newuniverse.nusmp.item.NUItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransform;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -97,7 +100,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
-            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.greed.GreedItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream(), com.newuniverse.nusmp.beastwill.BeastWillItems.renderables().stream(), com.newuniverse.nusmp.bossdrops.BossDropItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py); the Beast Will Core (docs/solid_cores.md)
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.greed.GreedItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.sinweapons.SinWeaponBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream(), com.newuniverse.nusmp.beastwill.BeastWillItems.renderables().stream(), com.newuniverse.nusmp.bossdrops.BossDropItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py); the Beast Will Core (docs/solid_cores.md)
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
@@ -189,7 +192,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (ctx == ItemDisplayContext.GUI && GodMeleeBRender.gui(id, pose, buffers, light, overlay)) return;                // 1.102.0: visual.guiModel (off by default): the upgraded model in the slot
         // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null
-                : ItemStateVariants.resolve(stack, meshId(stack, id), ctx, m -> mesh(m) != null);
+                : ItemStateVariants.resolve(stack, twinMesh(meshId(stack, id), id, ctx), ctx, m -> mesh(m) != null);
         if (state != null && com.newuniverse.nusmp.client.relics.item.vu.VuRenderer.draw(stack, state.meshId(), ctx, pose, buffers, light, overlay)) return;      // 1.102.0 genesis_weapons upgrade: the upgraded mesh of this id (client flag visual.upgrade), else the old mesh below
         if (state == null && com.newuniverse.nusmp.client.relics.item.vu.VuRenderer.drawGui(stack, id, pose, buffers, light, overlay)) return;      // the tilted 3D model in the inventory (client flag visual.guiModel, off by default)
         Mesh mesh = state == null ? null : mesh(state.meshId());
@@ -208,9 +211,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         pose.pushPose();
         int gripCtx = mesh.grip != null && mesh.shield == null ? WeaponGrip.index(ctx) : -1;
         float[] gripShift = gripCtx < 0 ? null : mesh.grip.shift(gripCtx, mesh.ox, mesh.oy, mesh.angle, mesh.scale, mesh.ymin);      // null: the old placement (other contexts, a shield, no grip found, -Danime_multiverse.weaponGrip=off)
-        HandWrap.Wrap wrap = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND ? HandWrap.of(id) : null;
+        boolean tpHand = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+        HandWrap.Wrap wrap = tpHand ? HandWrap.of(id) : null;
+        boolean glove = state != null && GreedHands.isGloves(id) && GreedHandsClient.twinLook(id) && (tpHand || ctx.firstPerson());          // the Black Sword Greed's gauntlets: a glove on each hand (HandWrap.glove)
+        if (glove) wrap = tpHand ? HandWrap.glove(state.meshId()) : HandWrap.GLOVE_FP;
         if (wrap != null) gripShift = null;                                         // 1.111.0: a worn glove has its own origin
-        if (wrap != null) {                                                        // 1.71.0: worn on the hand, not held (client/relics/item/HandWrap)
+        if (glove && wrap != null) {
+            gloveFrame(pose, stack, ctx, wrap);
+        } else if (wrap != null) {                                                 // 1.71.0: worn on the hand, not held (client/relics/item/HandWrap)
             pose.translate(0.5f, 0.5f, 0.5f);                                      // the hand's own origin; the layer has already moved to the grip point
             pose.translate(0f, -HandWrap.ORIGIN_FORWARD / 16f, (HandWrap.ORIGIN_DOWN_ARM - wrap.mouthPx()) / 16f);
             if (ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND) pose.mulPose(Axis.ZP.rotationDegrees(180f));          // item +x is the inside of the left arm: turn the same glove about the arm
@@ -276,6 +284,41 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
         if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         pose.popPose();
+    }
+
+    /** The mesh a hand draws: the Black Sword Greed's gauntlets draw their left glove in a left hand (the new two-hand looks; the old one-mesh look when {@code classicHands} is on). */
+    private static String twinMesh(String mesh, String id, ItemDisplayContext ctx) {
+        if (!mesh.equals(id) || !GreedHandsClient.twinLook(id)) return mesh;
+        return GreedHands.meshFor(id, ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || ctx == ItemDisplayContext.FIRST_PERSON_LEFT_HAND);
+    }
+
+    private static final Quaternionf UNDO_Q = new Quaternionf();
+
+    /**
+     * Puts the pose at a glove's place on a hand. The item's model json carries display transforms made for a held sword; the glove wants the hand's own frame, so those are taken back out first
+     * (read from the model itself, so a change to the json cannot desync). Third person: the vassal gauntlet's arm frame ({@link HandWrap}); first person: the arm frame of a held item, the glove laid along -z with the
+     * fist lifted into view.
+     */
+    private static void gloveFrame(PoseStack pose, ItemStack stack, ItemDisplayContext ctx, HandWrap.Wrap wrap) {
+        Minecraft mc = Minecraft.getInstance();
+        boolean left = ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND || ctx == ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
+        pose.translate(0.5f, 0.5f, 0.5f);
+        ItemTransform t = mc.getItemRenderer().getModel(stack, mc.level, null, 0).getTransforms().getTransform(ctx);
+        if (t != ItemTransform.NO_TRANSFORM) {                                     // the exact inverse of ItemTransform.apply: scale, then turn, then move, back
+            float ry = t.rotation.y(), rz = t.rotation.z();
+            if (left) { ry = -ry; rz = -rz; }
+            pose.scale(1f / t.scale.x(), 1f / t.scale.y(), 1f / t.scale.z());
+            pose.mulPose(UNDO_Q.rotationXYZ(t.rotation.x() * ((float) Math.PI / 180f), ry * ((float) Math.PI / 180f), rz * ((float) Math.PI / 180f)).conjugate());
+            pose.translate(-(left ? -1f : 1f) * t.translation.x(), -t.translation.y(), -t.translation.z());
+        }
+        if (ctx.firstPerson()) {
+            pose.translate(left ? HandWrap.FP_INWARD : -HandWrap.FP_INWARD, HandWrap.FP_DROP, HandWrap.FP_BACK);
+            pose.mulPose(Axis.XP.rotationDegrees(HandWrap.FP_PITCH_DEG));
+        } else {
+            pose.translate(0f, -HandWrap.ORIGIN_FORWARD / 16f, (HandWrap.ORIGIN_DOWN_ARM - wrap.mouthPx()) / 16f);
+        }
+        pose.mulPose(wrap.quaternion());
+        pose.scale(wrap.sx(), wrap.sy(), wrap.sz());
     }
 
     /** 1.99.0 (performance pass): render-thread scratch vectors for {@link #emit} and the void pass. */
@@ -367,15 +410,17 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     /** The parsed mesh for an item id, read once per resource reload; null if it is missing or broken (the icon is used). */
     static Mesh plainMesh(String id) {
         boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels();
-        if (classic != classicSeen) {                                               // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        boolean greedClassic = GreedHandsClient.classic();
+        if (classic != classicSeen || greedClassic != greedClassicSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
+            greedClassicSeen = greedClassic;
             MESHES.clear();
             WeaponGrip.clear();
             ItemStateVariants.clearCache();
         }
         if (MESHES.containsKey(id)) return MESHES.get(id);
         Mesh mesh = null;
-        if (classic && isClassicLegendary(id)) {                                    // the model of before 3.79.0, under the same id (so the class, grip and display tables still apply)
+        if (classic && isClassicLegendary(id) || greedClassic && GreedHands.isTwin(id)) {      // the model of before 3.79.0 (the Greed pair / double blade: before the two-hand looks), under the same id (so the class, grip and display tables still apply)
             String skin = "textures/entity/weapon/classic/" + id.replaceAll("_pull[123]$", "");
             mesh = read(id, "weapon_meshes/classic/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
@@ -384,7 +429,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         return mesh;
     }
 
-    private static boolean classicSeen;
+    private static boolean classicSeen, greedClassicSeen;
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {

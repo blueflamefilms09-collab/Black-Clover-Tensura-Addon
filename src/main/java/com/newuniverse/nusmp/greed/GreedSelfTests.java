@@ -31,6 +31,7 @@ public final class GreedSelfTests {
         SelfTests.register("greed.rules", s -> rules());
         SelfTests.register("greed.world", GreedSelfTests::world);
         SelfTests.register("greed.forms", GreedSelfTests::forms);
+        SelfTests.register("greed.hands", GreedSelfTests::hands);
     }
 
     // ---------------------------------------------------------------- pure rules
@@ -197,6 +198,40 @@ public final class GreedSelfTests {
         } finally {
             dummy.discard();
             GreedForms.clearAll();
+        }
+    }
+
+    // ---------------------------------------------------------------- the two hands (gauntlets, dual blades)
+    private static Result hands(MinecraftServer server) {
+        for (GreedRules.Form f : GreedRules.Form.values()) {
+            boolean twin = f == GreedRules.Form.GAUNTLETS || f == GreedRules.Form.DUAL_BLADES;
+            if (GreedHands.isTwin(f.itemId()) != twin) return Result.fail("twin flag wrong for " + f.itemId());
+        }
+        if (!GreedHands.GAUNTLETS_LEFT.equals(GreedHands.meshFor(GreedHands.GAUNTLETS, true)) || !GreedHands.GAUNTLETS.equals(GreedHands.meshFor(GreedHands.GAUNTLETS, false))
+                || !GreedHands.DUAL_BLADES.equals(GreedHands.meshFor(GreedHands.DUAL_BLADES, true))) return Result.fail("the left hand draws the wrong mesh");
+        if (GreedHands.offBlow(10f) <= 0f || GreedHands.offBlow(10f) >= 10f || GreedHands.offBlow(Float.NaN) != 0f || GreedHands.offBlow(1e30f) > 100f) return Result.fail("the off-hand blow is not smaller than the main blow and capped");
+        if (GreedHands.ready(100, 105) || !GreedHands.ready(105, 105)) return Result.fail("the cooldown does not hold");
+        ServerLevel level = server.overworld();
+        double y = level.getMaxBuildHeight() - 40;
+        ServerPlayer fake = SelfTests.standIn(level, "greed_hands", 0.5, y, 0.5);
+        Zombie dummy = EntityType.ZOMBIE.create(level);
+        if (dummy == null) return Result.fail("no zombie");
+        try {
+            dummy.setPos(0.5, y, 1.5);
+            dummy.setNoAi(true);
+            level.addFreshEntity(dummy);
+            fake.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, new ItemStack(net.minecraft.world.item.Items.STICK));
+            if (GreedForms.offBlow(fake, dummy)) return Result.fail("the off hand struck with an item in it");
+            fake.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, ItemStack.EMPTY);
+            float hp = dummy.getHealth();
+            if (!GreedForms.offBlow(fake, dummy) || dummy.getHealth() >= hp) return Result.fail("the empty off hand did not strike");
+            float hp2 = dummy.getHealth();
+            if (GreedForms.offBlow(fake, dummy) || dummy.getHealth() != hp2) return Result.fail("a second off-hand blow fell inside its cooldown");
+            if (GreedForms.offBlow(fake, fake)) return Result.fail("the off hand struck its own wielder");
+            return Result.ok("twin flags, left glove mesh, off-hand blow smaller and capped, empty hand only, cooldown and self-safety hold");
+        } finally {
+            fake.getPersistentData().remove("nusmp_greed_off");
+            dummy.discard();
         }
     }
 }

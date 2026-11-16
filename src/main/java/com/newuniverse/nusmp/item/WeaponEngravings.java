@@ -122,7 +122,13 @@ public final class WeaponEngravings {
             Map.entry("black_sword_greed_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 2), e("magic_interference", 1))),  // the staff: Black Flames, a casting focus
             Map.entry("black_sword_greed_gauntlets", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 2))),             // the gauntlets: break what they grip
             Map.entry("black_sword_greed_spear", List.of(e("barrier_piercing", 3), e("severance", 1), e("crushing", 1))),              // the spear: breaks guards and barriers
-            Map.entry("black_sword_greed_dual_blades", List.of(e("severance", 3), e("barrier_piercing", 3), e("swift", 2), e("sturdy", 2))));   // Level Zero: the most refined edge
+            Map.entry("black_sword_greed_dual_blades", List.of(e("severance", 3), e("barrier_piercing", 3), e("swift", 2), e("sturdy", 2))),   // Level Zero: the most refined edge
+            // the other Weapons of Mortal Sin and the holy sword Seifort (sinweapons.SinWeaponBoot; creative-display items)
+            Map.entry("black_axe_of_sloth", List.of(e("crushing", 2), e("enervation", 1), e("sturdy", 2))),                            // Sloth: a dead weight that saps and breaks
+            Map.entry("black_gunblade_of_envy", List.of(e("barrier_piercing", 2), e("magic_interference", 1), e("energy_steal", 1))),  // Envy: a shot that parts wards, covets what its prey has
+            Map.entry("black_spear_of_vanity", List.of(e("barrier_piercing", 3), e("severance", 1), e("magic_weapon", 1))),            // Vanity: a mirrored thrust through guards
+            Map.entry("black_chakrams", List.of(e("severance", 2), e("swift", 2), e("sturdy", 1))),                                    // the rings: fast, clean, one in each hand
+            Map.entry("seifort_holy_sword", List.of(e("holy_weapon", 3), e("severance", 2), e("barrier_piercing", 1))));               // Seifort: light that cuts the dark and the dead
 
     static final String FLAG = "NUEngraved";
 

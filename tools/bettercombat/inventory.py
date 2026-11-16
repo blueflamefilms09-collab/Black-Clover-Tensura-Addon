@@ -105,6 +105,8 @@ def djinn_weapons():
 
 
 def profile_name(wid, cls, source):
+    if wid in PR.FORCE_MELEE:
+        return PR.FORCE_MELEE[wid][1]
     if wid == "demon_slayer_sword":
         return "genesis"
     if wid in ("elsdocia", "elsdocia_legacy"):
@@ -131,6 +133,11 @@ def build():
         weapons[wid] = {"class": cls, "profile": profile_name(wid, cls, source), "source": source}
 
     for wid, cls in table.items():
+        if wid in PR.MESH_ONLY:
+            excluded[wid] = PR.MESH_ONLY[wid]
+            continue
+        if wid in PR.FORCE_MELEE:
+            cls = PR.FORCE_MELEE[wid][0]
         if cls in PR.NON_MELEE_CLASSES:
             excluded[wid] = EXCLUDED_REASON[cls]
             continue

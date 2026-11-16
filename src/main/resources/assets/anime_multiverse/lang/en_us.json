@@ -19564,5 +19564,22 @@
   "anime_multiverse.dragonballs.wish.item.earth": "A random rare item.",
   "anime_multiverse.dragonballs.wish.item.super": "A random rare item, larger amount.",
   "anime_multiverse.dragonballs.wish.power.earth": "+1 permanent power level (capped).",
-  "anime_multiverse.dragonballs.wish.power.super": "+2 permanent power levels (capped)."
+  "anime_multiverse.dragonballs.wish.power.super": "+2 permanent power levels (capped).",
+  "item.anime_multiverse.black_axe_of_sloth": "Black Axe of Sloth",
+  "item.anime_multiverse.black_axe_of_sloth.lore": "A Weapon of Mortal Sin: a heavy black axe that drags its victims down.",
+  "item.anime_multiverse.black_gunblade_of_envy": "Black Gunblade of Envy",
+  "item.anime_multiverse.black_gunblade_of_envy.lore": "A Weapon of Mortal Sin: a black gunblade that covets what its prey has.",
+  "item.anime_multiverse.black_spear_of_vanity": "Black Spear of Vanity",
+  "item.anime_multiverse.black_spear_of_vanity.lore": "A Weapon of Mortal Sin: a black spear with a mirror that admires itself.",
+  "item.anime_multiverse.black_chakrams": "Black Chakrams",
+  "item.anime_multiverse.black_chakrams.lore": "A Weapon of Mortal Sin: a pair of black rings, one for each hand.",
+  "item.anime_multiverse.seifort_holy_sword": "Seifort Holy Sword",
+  "item.anime_multiverse.seifort_holy_sword.lore": "The holy sword Seifort: it cuts the dark and the dead.",
+  "sinweapons.technique.black_axe_of_sloth": "Dead Weight",
+  "sinweapons.technique.black_gunblade_of_envy": "Green-Eyed Shot",
+  "sinweapons.technique.black_spear_of_vanity": "Vain Thrust",
+  "sinweapons.technique.black_chakrams": "Spinning Ring",
+  "sinweapons.technique.seifort_holy_sword": "Grand Cross",
+  "sinweapons.tooltip.technique": "Right click: %s (cooldown %s s)",
+  "greed.tooltip.twin": "Twin form: one in each hand. With the off hand empty every blow is followed by a second one from it (60%)."
 }

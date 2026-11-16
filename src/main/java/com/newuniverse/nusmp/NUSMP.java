@@ -106,6 +106,7 @@ public class NUSMP {
         com.newuniverse.nusmp.stones.StoneBoot.init(modContainer);                  // Infinity Stone slot: the six Wave 30 stones worn in the infinity_stone slot (1B base EP), nusmp-stones-server.toml, self-tests stones.*
         com.newuniverse.nusmp.attune.AttuneBoot.init(modEventBus, modContainer);    // meditation attunement: Beast Wills, Djinns, Devils and Spirits held together, clashing elements reject, nusmp-attune-server.toml, /meditate, self-tests attune.*
         com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.init(modEventBus);      // the Wind Spirit blades (creative display): Spirit of Zephyr sword and Spirit of Boreas bow, self-test magic.spirit_blades
+        com.newuniverse.nusmp.sinweapons.SinWeaponBoot.init(modEventBus, modContainer);    // the five other Berserk of Gluttony weapons (Sloth axe, Envy gunblade, Vanity spear, chakrams, Seifort): self-test berserk.weapons
         com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.init(modEventBus);    // the Valkyrie Drill Lance (creative display, spear class) and the Valkyrie armour v2 (player-fitted layer, three looks): self-test magic.valkyrie_armor
         com.newuniverse.nusmp.dragonballs.DbBoot.init(modEventBus, modContainer);   // the Dragon Balls: two sets of seven (Earth, Super), scatter, Dragon Radar, the spoken ritual, Shenron, the wishes, nusmp-dragonballs-server.toml, self-tests dragonballs.* (docs/dragon_balls.md)
         com.newuniverse.nusmp.gnome.GnomeBoot.init(modEventBus, modContainer);      // the Gnome (Earth Spirit): its sound events, nusmp-gnome-server.toml (magic.gnome), the key packet, the events, self-test magic.gnome
@@ -314,6 +315,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.geo.GeoModels.init(modEventBus);                                      // 0.53: geo.json models re-read on a resource reload
             com.newuniverse.nusmp.client.SwordDrawClient.init();                                              // 0.52: the draw animation
             com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D
+            com.newuniverse.nusmp.client.greed.GreedHandsClient.init(modEventBus, modContainer);              // the Black Sword Greed's gauntlets / dual blades in both hands (nusmp-greed-client.toml)
             com.newuniverse.nusmp.client.relics.item.vu.VuClient.init(modEventBus);                          // 1.102.0: the upgraded Genesis weapons (meshes, effects)
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::layers);                    // 0.49: Rouge's cat model
             modEventBus.addListener(com.newuniverse.nusmp.client.RougeCatLayer::addLayers);                            // 0.48: the Genesis Demon-Slayer's 3D model and shaders
