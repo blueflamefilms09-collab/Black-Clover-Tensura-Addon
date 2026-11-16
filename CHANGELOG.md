@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.102.0] — Master guide part 2: Ultimate damage cap, grimoire skill costs, cast event, Quenched bridge
+- NEW: the class damage cap of the Ultimate classes is now live: a hit from a classified Ultimate scales with its class's EP cap times the late-game factor (setting `[ultimateClasses] classDamage` off = old).
+- REPLACED: the grimoire page skills and the grimoire magic skills also pay through Tensura's magicule cost now (flat price stays the minimum; `flatCosts` restores the old flat cost). Creative players pay nothing for them.
+- NEW: grimoire casts post a cancellable pre-cast and a post-cast event; the old direct calls stay behind `guide_fixes.grimoireCastEvent`. Dirty marking only on change (`guide_fixes.markDirtyOnlyOnChange`). Page caches are published safely. 12 more texts are translatable.
+- NEW: a data-driven bridge for the Quenched mod's Telesma and Malice: off by default; the owner sets the add commands and factors in `nusmp-boss-cores-server.toml` (`bossCores.quenched`). No Quenched file was readable here, so nothing was checked against the real mod.
+- Not done: Blender armour models (Blender is not installed in the build session), deleting legacy skills (rule 2), attachments migration, package renames, the mods.toml dependencies. Reasons in `docs/guide_fixes_p2.md`.
+- Cost: no tick work; one price calculation per cast; a command from the bridge at most at the configured rate.
+
 ## [3.101.1] — Fix: Adaptability skill texts
 - Fixed the skill text list missing the Adaptability name and description (a build check failed on it in 3.99.0 to 3.101.0). No gameplay change; 3.99.0 to 3.101.0 (Ultimate classes, Magic Knight wiki pages, Blender Goliath and Minotaur, Tensura/DanMachi skill effects) ship in this version.
 
