@@ -28,5 +28,6 @@ public final class BeastWillBoot {
         BeastWillEvents.register(NeoForge.EVENT_BUS);
         BeastWillCommands.register(NeoForge.EVENT_BUS);
         BeastWillSelfTests.register();
+        BeastCanonSelfTests.register();
     }
 }

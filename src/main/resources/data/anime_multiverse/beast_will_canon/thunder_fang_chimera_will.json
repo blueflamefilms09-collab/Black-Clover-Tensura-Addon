@@ -1,0 +1,201 @@
+{
+  "id": "thunder_fang_chimera_will",
+  "name": "Thunder-Fang Chimera Will",
+  "beast": "Thunder-Fang Chimera",
+  "affinity": "Lightning",
+  "legendary": false,
+  "minRank": "S",
+  "sources": [],
+  "keywords": [
+    "chimera"
+  ],
+  "dropChance": 0.006,
+  "requireEp": 30000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 16052828,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.15,
+    "unlockMastery": 0.0,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.14,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.2
+      }
+    ],
+    "abilities": [
+      {
+        "id": "ram_brace",
+        "kind": "mane_surge",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 400,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Ram's Brace",
+        "effect": ""
+      },
+      {
+        "id": "serpent_tail_sting",
+        "kind": "venom_spit",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 180,
+        "strain": 5,
+        "range": 7,
+        "radius": 3,
+        "durationTicks": 70,
+        "power": 1.5,
+        "maxTargets": 2,
+        "bossFactor": 0.5,
+        "name": "Serpent-Tail Sting",
+        "effect": "The tail's snake spits venom at what is in front of you."
+      }
+    ],
+    "equipPiece": "A single ram-horn bracer on the left forearm, sparking at the tip (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.6,
+    "drainPct": 1.6,
+    "strainPerSecond": 0.8,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.14
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.12
+      }
+    ],
+    "abilities": [
+      {
+        "id": "storm_venom_spit",
+        "kind": "venom_spit",
+        "slot": 1,
+        "costPct": 10,
+        "cooldownTicks": 160,
+        "strain": 12,
+        "range": 12,
+        "radius": 4,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Storm-Venom Spit",
+        "effect": ""
+      },
+      {
+        "id": "thunder_fang_chain",
+        "kind": "thunder_chain",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 220,
+        "strain": 16,
+        "range": 12,
+        "radius": 5,
+        "durationTicks": 0,
+        "power": 5,
+        "maxTargets": 4,
+        "bossFactor": 0.5,
+        "name": "Thunder-Fang Chain",
+        "effect": "A bolt leaps from foe to foe, a little weaker at each hop."
+      }
+    ],
+    "transformation": "Full armoured form: the whole body becomes a three-natured chimera-humanoid in storm-iron armor: lion head with fangs and a static mane, a ram head with curled horns on the left shoulder guard, a serpent-headed tail in a scale sheath, clawed forelimbs and digitigrade legs with greaves; a ram-horn thunder lance forms in the hand.",
+    "equip": {
+      "weapon": "A ram-horn thunder lance with a lion-fang head, crackling with arcs.",
+      "armor": "Lion-mane pauldron plates, a curled ram-horn shoulder guard (the second head), serpent-scale tail sheath and storm-iron greaves.",
+      "hair_eyes": "A mane of crackling static for hair, blue-white glowing eyes.",
+      "aura": "Yellow-blue storm aura with arcing bolts."
+    }
+  },
+  "beastNote": "Thunder-Fang Chimera (lion head, ram head, serpent tail)",
+  "lore": "The chimera is a fire-breathing hybrid of lion, goat and serpent. This will is the mod's own storm variant: a ram's brace, a venomous tail and thunder that leaps from fang to fang.",
+  "pitch": "The Thunder-Fang Chimera is a lion, ram and serpent in one storm-wrapped beast. Acquire keeps you human, trailing yellow static with one sparking ram-horn bracer. Integrate (Full armoured form) makes you a lion-headed beastman with a ram-head shoulder guard, serpent tail and a thunder lance, at a higher drain than any A will.",
+  "untrained": "An untrained holder's three instincts fight each other: static arcs over the body, limbs twitch against the holder's wishes (screen jitter) and strain jumps on every discharge. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#F4F25C",
+      "#3A4A8A",
+      "#BFE9FF"
+    ],
+    "echo": "A lion-headed beastman in storm-iron armor with a ram's head on the left shoulder guard and a serpent-headed tail; fanged jaws, curled horns, a static mane, digitigrade legs, a thunder lance.",
+    "accent": "#3A4A8A",
+    "look": "A pale-yellow orb split into three bands (mane gold, ram-horn spiral, serpent scale) with a blue-white arc crawling around it."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Chimera (mythology)",
+    "language": "en",
+    "facts": [
+      "Fire-breathing hybrid of different animal parts: a lion with a goat's head on its back and a snake's head at the tail end; killed by Bellerophon.",
+      "The thunder is a design twist (the myth gives fire)."
+    ],
+    "notes": []
+  }
+}

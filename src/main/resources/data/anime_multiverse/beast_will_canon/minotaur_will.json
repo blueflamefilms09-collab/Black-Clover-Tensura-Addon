@@ -1,0 +1,202 @@
+{
+  "id": "minotaur_will",
+  "name": "Minotaur Will",
+  "beast": "Asterion the Minotaur of the Labyrinth",
+  "affinity": "Labyrinth",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "minotaur",
+    "bull"
+  ],
+  "dropChance": 0.012,
+  "requireEp": 22000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 4200,
+  "masterySeconds": 2700,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 8879209,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.15,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.5
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "ram_charge",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 4,
+        "cooldownTicks": 80,
+        "strain": 6,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 2,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Ram Charge",
+        "effect": "A short shoulder-first charge carrying the tamer forward and shoving anything in the way."
+      },
+      {
+        "id": "maze_sense",
+        "kind": "dragon_sight",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 600,
+        "strain": 5,
+        "range": 20,
+        "radius": 20,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 4,
+        "bossFactor": 1.0,
+        "name": "Maze Sense",
+        "effect": "The bull's sense of the labyrinth: the nearest creatures (up to four) are outlined."
+      }
+    ],
+    "equipPiece": "One bronze maze-patterned bracer on the right forearm (the only equipped piece); dust and impact lines behind the heels."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.5,
+    "strainPerSecond": 0.9,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.6
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "rage_of_asterion",
+        "kind": "mane_surge",
+        "slot": 1,
+        "costPct": 14,
+        "cooldownTicks": 320,
+        "strain": 24,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 160,
+        "power": 6,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Rage of Asterion",
+        "effect": "A blood-red rage: bonus damage and resistance for about 8 seconds, with a narrowed view."
+      },
+      {
+        "id": "labrys_quake",
+        "kind": "maelstrom",
+        "slot": 2,
+        "costPct": 16,
+        "cooldownTicks": 300,
+        "strain": 26,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 60,
+        "power": 6,
+        "maxTargets": 6,
+        "bossFactor": 0.5,
+        "name": "Labrys Quake",
+        "effect": "The labrys smashes the ground: stone ridges ring up to six foes and fling them up and in."
+      }
+    ],
+    "transformation": "Whole body becomes a bull beastman in bronze maze-plate: broad bull head with curved horns, flared nostrils with a gold ring, thick pauldrons, furred forearms with heavy clawed hands holding a labrys, digitigrade hoofed legs, a tufted tail and a stone-grey back ridge.",
+    "equip": {
+      "weapon": "A labrys double axe forged from the beast's horn-bronze.",
+      "armor": "Dark earth-brown bronze plate engraved with a maze pattern, thick pauldrons, a gold nose-ring visor.",
+      "hair_eyes": "Coarse dark mane down the neck; red-rimmed eyes.",
+      "aura": "Rising dust with a red rage haze."
+    }
+  },
+  "beastNote": "Asterion the Minotaur of the Labyrinth",
+  "lore": "Asterion, the bull-headed man of King Minos's Labyrinth, killed by Theseus with the help of a golden thread. The will senses the maze, charges like a ram, rages and shakes the maze's floor.",
+  "pitch": "Asterion the Minotaur is the bull-headed man-eater of the Cretan Labyrinth who always finds the way to his prey. Acquire keeps you human with one bronze maze bracer, lending a shoulder charge and a sense that outlines nearby creatures. Integrate makes you a hulking bull beastman in maze-engraved bronze plate with curved horns, hoofed legs and a labrys double axe, a melee brute whose rage and ground-quake cost a heavy strain and may hit allies if you are untrained.",
+  "untrained": "An untrained holder is consumed by rage: strain surges with every charge, vision reddens and they hit allies and stone walls alike. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#534429",
+      "#1E1710",
+      "#C9983E"
+    ],
+    "echo": "A hulking bipedal bull-beastman: broad horned bull head with flared nostrils, thick muscular shoulders, furred forearms and heavy clawed hands, digitigrade hoofed legs, a tufted tail, a gold nose-ring and a labrys double axe.",
+    "accent": "#C9983E",
+    "look": "A dark earth-brown orb with a tiny maze pattern etched on its surface and two small gold horns curving around it."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Minotaur",
+    "language": "en",
+    "facts": [
+      "Head and tail of a bull on the body of a man, also called Asterion or Asterius; dwelt at the centre of the Labyrinth built by Daedalus.",
+      "Killed by Theseus who found his way with Ariadne's thread. The axe quake is design (the labrys is not in the extract)."
+    ],
+    "notes": []
+  }
+}

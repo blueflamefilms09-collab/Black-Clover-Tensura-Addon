@@ -11,7 +11,7 @@ import java.util.List;
  */
 public final class BeastWillConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue ENABLED, EXCLUSIVE_INTEGRATE, CLASSIC_WILLS, PENALTIES, REJECTION, MEDITATION, STEALTH, HIT_PLAYERS, OTHER_RACES;
+    private static final ModConfigSpec.BooleanValue ENABLED, EXCLUSIVE_INTEGRATE, CLASSIC_WILLS, CANON_REWORK, PENALTIES, REJECTION, MEDITATION, STEALTH, HIT_PLAYERS, OTHER_RACES;
     private static final ModConfigSpec.DoubleValue DROP_SCALE, STRAIN_RATE, REST_PER_SECOND, STAT_SCALE, DRAIN_SCALE, COOLDOWN_SCALE, ASSIM_RATE, MASTERY_RATE, REJECT_ASSIM_LOSS, OTHER_RACE_SCALE,
             OVERLOAD_DAMAGE, RANK_C, RANK_B, RANK_A, RANK_S, RANK_SS;
     private static final ModConfigSpec.IntValue REJECT_LOCK_MINUTES, SWAP_LOCK_MINUTES, MIN_VICTIM_AGE, MAX_TARGETS_CAP;
@@ -63,6 +63,7 @@ public final class BeastWillConfig {
         EXCLUSIVE_INTEGRATE = b.comment("The second phase (Integrate) cannot be held together with another transformation of this mod (a spirit dive, a mode armour, a devil form). The first phase stacks, its bonuses capped.").define("exclusiveIntegrate", true);
         HIT_PLAYERS = b.comment("Abilities may hit other players (they must still be foes: the server's PvP setting, teams and allies are respected). false = creatures only.").define("abilitiesHitPlayers", true);
         CLASSIC_WILLS = b.comment("3.60.0: true = the 27 wills as they were before the Beast Will remake (the files in data/anime_multiverse/beast_will_classic). Read at the next data reload (restart or /reload).").define("classicWills", false);
+        CANON_REWORK = b.comment("true = the 27 wills follow their source (the TBATE wiki for Dragon, Shadow Panther, Elderwood Guardian and Lion, the myth or series for the rest): data/anime_multiverse/beast_will_canon, plus mastery milestones that shorten cooldowns. false = the remade wills exactly as they were (data/anime_multiverse/beast_will). classicWills = true still wins and restores the wills from before the remake. Read at the next data reload (restart or /reload).").define("canonRework", true);
         STEALTH = b.comment("The Shadow Panther's stealth lowers how far creatures notice the player. false = no stealth at all.").define("stealth", true);
         b.pop();
         b.pop();
@@ -118,4 +119,6 @@ public final class BeastWillConfig {
     public static boolean hitPlayers() { return on(HIT_PLAYERS, true); }
     public static boolean classicWills() { return on(CLASSIC_WILLS, false); }
     public static boolean stealth() { return on(STEALTH, true); }
+    /** The setting is called {@code beastWills.canonRework} in the doc; it sits in the {@code beastwill.rules} section of the Beast Will server file next to {@code classicWills}. */
+    public static boolean canonRework() { return on(CANON_REWORK, true); }
 }

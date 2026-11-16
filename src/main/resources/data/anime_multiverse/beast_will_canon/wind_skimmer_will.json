@@ -1,0 +1,196 @@
+{
+  "id": "wind_skimmer_will",
+  "name": "Wind-Skimmer Raptor Will",
+  "beast": "Gale Skimmer Elder",
+  "affinity": "Wind",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "wind_skimmer"
+  ],
+  "dropChance": 0.015,
+  "requireEp": 12000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 3000,
+  "masterySeconds": 1800,
+  "assimilationDayCap": 0.4,
+  "masteryDayCap": 0.4,
+  "coreCooldownDays": 3,
+  "tint": 2947839,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "mult",
+      "amount": 0.02
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.08
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 3.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "skim_step",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Skim Step",
+        "effect": "A low fast skim forward along the air, long streaks behind."
+      },
+      {
+        "id": "wingbeat_gust",
+        "kind": "world_howl",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 400,
+        "strain": 6,
+        "range": 8,
+        "radius": 6,
+        "durationTicks": 30,
+        "power": 1,
+        "maxTargets": 3,
+        "bossFactor": 0.1,
+        "name": "Wingbeat Gust",
+        "effect": "A beat of the wings buffets the foes in front of you back."
+      }
+    ],
+    "equipPiece": "A single cyan feathered wing-vambrace on the left forearm (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.1,
+    "strainPerSecond": 0.42,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.24
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.3
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.3
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.12
+      }
+    ],
+    "abilities": [
+      {
+        "id": "storm_hawk_bolt",
+        "kind": "thunder_chain",
+        "slot": 1,
+        "costPct": 11,
+        "cooldownTicks": 240,
+        "strain": 14,
+        "range": 12,
+        "radius": 5,
+        "durationTicks": 0,
+        "power": 4.5,
+        "maxTargets": 4,
+        "bossFactor": 0.5,
+        "name": "Storm-Hawk Bolt",
+        "effect": "A bolt leaps from foe to foe, a little weaker at each hop."
+      },
+      {
+        "id": "cyclone_wake",
+        "kind": "maelstrom",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 320,
+        "strain": 14,
+        "range": 10,
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 6,
+        "bossFactor": 0.3,
+        "name": "Cyclone Wake",
+        "effect": "The raptor circles and leaves a cyclone in its wake that drags foes along and slows them."
+      }
+    ],
+    "transformation": "Full armoured form: the whole body becomes a raptor-beastman in light feathered armor: beaked head with a feather crest, sharp amber eyes, two wing-arm vambraces with long primary feathers, a down-feather ruff, digitigrade talon greaves and a fan of long tail feathers; a feather-edged wind-talon blade forms on the right wing-arm.",
+    "equip": {
+      "weapon": "A long feather-edged wind-talon blade formed from the primary feathers of the right wing-arm.",
+      "armor": "Light white-and-blue feathered cuirass, wing-arm vambraces with long primaries and talon greaves.",
+      "hair_eyes": "A swept feather crest for hair, sharp amber eyes.",
+      "aura": "A cyan-white gale trail around the body."
+    }
+  },
+  "beastNote": "Gale Skimmer Elder (A-class sky raptor)",
+  "lore": "An elder raptor of the hawk line: it skims the top of the gale, buffets with its wings and, like a thunder hawk, takes prey from the ground into the sky. Storm bolts jump between its foes.",
+  "pitch": "The Gale Skimmer is an A-class sky raptor that never lands hard and falls on prey out of the wind. Acquire keeps you human, skimming in air streaks with one cyan feathered wing-vambrace. Integrate (Full armoured form) makes you a raptor-beastman in feathered armor with a wind-talon blade: the best mobility, but little armor and a slightly higher drain than the wolf.",
+  "untrained": "An untrained holder is thrown by their own wind: the body wobbles in mid-air, falls are not cushioned as expected and strain climbs with every dash and dive. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "TBATE-KIN",
+  "spirit": {
+    "colors": [
+      "#2CFAFF",
+      "#F2FFFF",
+      "#3A7CC8"
+    ],
+    "echo": "A slim raptor beastman in light feathered armor: beaked head with a feather crest, sharp amber eyes, wing-arm vambraces with long primaries, digitigrade talon feet, streaming tail feathers, a wind-talon blade.",
+    "accent": "#3A7CC8",
+    "look": "A bright cyan orb with drifting white feathers and thin spiral wind lines orbiting it like the eye of a storm."
+  },
+  "canon": {
+    "source": "TBATE Fandom wiki (English, MediaWiki API): Mana Beasts (Thunder Hawk)",
+    "language": "en",
+    "facts": [
+      "Thunder Hawk: a mana beast that lifts forest hounds from the ground and kills them in the air; lives in large canopy nests (Mana Beasts).",
+      "The Gale Skimmer Elder is the mod's own A-class relative (design); the chain bolts are the design twist."
+    ],
+    "notes": []
+  }
+}

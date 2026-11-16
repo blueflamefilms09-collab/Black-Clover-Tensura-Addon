@@ -26,13 +26,15 @@ public final class BeastWillLoader implements ResourceManagerReloadListener {
     public static final String ROOT = "beast_will";
     /** 3.60.0: the 27 wills as they were before the remake, kept whole; the server setting {@code classicWills} makes the game read this folder instead of {@link #ROOT}. */
     public static final String CLASSIC_ROOT = "beast_will_classic";
+    /** The canon rework of the 27 wills (docs/beastwill_canon_rework.md), read when {@code canonRework} is on (the default) and {@code classicWills} is off. */
+    public static final String CANON_ROOT = BeastWillCanon.CANON_ROOT;
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
         Map<String, BeastWillDef> out = new LinkedHashMap<>();
         List<String> rejected = new ArrayList<>();
         try {
-            String root = BeastWillConfig.classicWills() ? CLASSIC_ROOT : ROOT;
+            String root = BeastWillCanon.rootFor(BeastWillConfig.classicWills(), BeastWillConfig.canonRework());      // classic wins, then the canon rework, else the remade wills (ROOT)
             Map<ResourceLocation, Resource> files = manager.listResources(root, rl -> rl.getNamespace().equals("anime_multiverse") && rl.getPath().endsWith(".json"));
             List<ResourceLocation> keys = new ArrayList<>(files.keySet());
             keys.sort(Comparator.comparing(ResourceLocation::toString));

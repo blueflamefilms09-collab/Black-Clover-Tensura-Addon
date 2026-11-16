@@ -1,0 +1,202 @@
+{
+  "id": "fenrir_will",
+  "name": "Fenrir Will",
+  "beast": "Fenrir, the chained wolf",
+  "affinity": "Soul",
+  "legendary": false,
+  "minRank": "S",
+  "sources": [],
+  "keywords": [
+    "fenrir",
+    "direwolf"
+  ],
+  "dropChance": 0.006,
+  "requireEp": 26000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 8909311,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.15,
+    "unlockMastery": 0.0,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.05
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "soul_light_leap",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 80,
+        "strain": 6,
+        "range": 9,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 2,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Sun-Chaser's Leap",
+        "effect": ""
+      },
+      {
+        "id": "wolf_pounce",
+        "kind": "ambush",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 300,
+        "strain": 8,
+        "range": 6,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 0.5,
+        "name": "Wolf Pounce",
+        "effect": "A pounce on one foe in front of you."
+      }
+    ],
+    "equipPiece": "One broken-chain band on a wrist with a glowing white paw-print on the back of the hand; pale-blue wolf-lope afterimages."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.6,
+    "drainPct": 1.8,
+    "strainPerSecond": 1.0,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 7.0
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.45
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.15
+      }
+    ],
+    "abilities": [
+      {
+        "id": "jaws_of_ragnarok",
+        "kind": "ambush",
+        "slot": 1,
+        "costPct": 14,
+        "cooldownTicks": 260,
+        "strain": 22,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 6,
+        "maxTargets": 1,
+        "bossFactor": 0.35,
+        "name": "Jaws of Ragnarok",
+        "effect": ""
+      },
+      {
+        "id": "gleipnir_snare",
+        "kind": "restraining_vines",
+        "slot": 2,
+        "costPct": 16,
+        "cooldownTicks": 520,
+        "strain": 26,
+        "range": 14,
+        "radius": 8,
+        "durationTicks": 90,
+        "power": 4,
+        "maxTargets": 5,
+        "bossFactor": 0.25,
+        "name": "Gleipnir, the Ribbon That Binds",
+        "effect": ""
+      }
+    ],
+    "transformation": "Full armoured form wolf-beastman: wolf head with a long muzzle and pointed ears, glowing soul-light eyes, frost-white mane and ruff gorget, clawed hands, digitigrade wolf legs, a bushy tail, broken-chain bands on wrists and ankles and a fang-sword on the forearm.",
+    "equip": {
+      "weapon": "A long frost-white fang-sword grown from the forearm with a trailing chain link (Gleipnir).",
+      "armor": "Pale frost plate: broken-chain bands on wrists and ankles, a fur-trimmed ruff gorget, wolf-brow pauldrons.",
+      "hair_eyes": "Thick frost-white mane and ruff; glowing blue soul-light eyes.",
+      "aura": "Pale soul-light aura with cold mist and drifting snow."
+    }
+  },
+  "beastNote": "Fenrir, the chained wolf (God of War's Fenrir / Garm lineage)",
+  "lore": "Fenrir grew so fast that the gods bound him with the chain Gleipnir, and he bit off Tyr's hand. At Ragnarok he kills Odin. The will leaps, pounces, snaps its jaws and binds foes the way the chain bound him.",
+  "pitch": "Fenrir is the great chained wolf of Norse myth (here the loyal soul-light wolf of God of War), who breaks Gleipnir and opens his jaws at Ragnarok. Acquire keeps you human, running with quick wolf-lope afterimages and one equipped piece, a single broken-chain wrist band, for a soul-light leap and a loyal speed surge. Integrate (Full armoured form) makes you a frost-maned wolf-beastman in chain-link plate with a fang-blade, snaring foes in Gleipnir and tearing in with Ragnarok jaws, at the price of heavy strain.",
+  "untrained": "An untrained holder is bitten by the bond itself: the wolf's loyalty demands a choice, strain climbs while its soul-light flickers and chain-marks burn around the wrists. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#87F1FF",
+      "#4A6B8A",
+      "#E8F6FF"
+    ],
+    "echo": "A tall pale wolf-beastman in broken-chain plate: long muzzle and pointed ears, frost-white mane and ruff, glowing blue soul-light eyes, clawed hands, digitigrade wolf legs, bushy tail, chain bands on wrists and ankles, a fang-sword on the forearm.",
+    "accent": "#E8F6FF",
+    "look": "An ice-blue orb of soul-light with a broken chain link frozen into its surface and two small wolf-eye glints."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Fenrir",
+    "language": "en",
+    "facts": [
+      "Son of Loki, grows rapidly; the gods bound him with Gleipnir and he bit off Tyr's right hand.",
+      "Foretold to kill Odin at Ragnarok and to be killed in turn by Vidar. Binding foes with the chain is a design twist."
+    ],
+    "notes": []
+  }
+}

@@ -48,6 +48,8 @@ public final class BeastWillManager {
         String infoFor = "";
         /** The highest phase already announced as unlocked, per will (filled silently the first time). */
         final Map<String, Integer> announced = new HashMap<>();
+        /** The mastery milestones (0 to 4, {@link BeastWillCanon#milestone}) already announced, per will (filled silently the first time). */
+        final Map<String, Integer> milestones = new HashMap<>();
     }
 
     private static final Map<UUID, Run> RUN = new ConcurrentHashMap<>();
@@ -277,6 +279,11 @@ public final class BeastWillManager {
         Integer before = r.announced.put(def.id(), now);
         if (before != null && now > before) BeastWillFeedback.say(p, now == BeastWillRules.INTEGRATE ? "unlocked_integrate" : "unlocked_acquire", true, BeastWillText.name(def));
         else if (before != null && now < before) r.announced.put(def.id(), now);
+        if (BeastWillConfig.canonRework()) {                                                                 // the mastery milestones: a quarter, a half, three quarters, all (silent the first time)
+            int ms = BeastWillCanon.milestone(prog.mastery);
+            Integer seen = r.milestones.put(def.id(), ms);
+            if (seen != null && ms > seen) BeastWillFeedback.say(p, "milestone", true, BeastWillText.name(def), net.minecraft.network.chat.Component.translatable("anime_multiverse.beastwill.milestone." + ms));
+        }
     }
 
     // ================================================================== the asks
@@ -340,7 +347,7 @@ public final class BeastWillManager {
         double scale = scaleNow(s, def, prog);
         if (!BeastWillAbilities.run(p, def, a, scale, prog.mastery)) return;                 // it did not take effect: nothing is charged
         ShadowMana.pay(p, cost);
-        s.startCooldown(prog, a.kind(), now, BeastWillRules.cooldown(a.cooldownTicks(), BeastWillConfig.cooldownScale()));
+        s.startCooldown(prog, a.kind(), now, BeastWillRules.cooldown(a.cooldownTicks(), BeastWillConfig.cooldownScale() * BeastWillCanon.cooldownFactor(BeastWillConfig.canonRework(), prog.mastery)));   // the mastery milestones (canon rework only)
         s.addStrain(add);
         if (!"shadow_veil".equals(a.kind())) BeastWillStealth.reveal(p);
         r.lastActive = now;

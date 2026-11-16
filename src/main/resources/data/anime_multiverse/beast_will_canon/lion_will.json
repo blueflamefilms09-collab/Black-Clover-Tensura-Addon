@@ -1,0 +1,200 @@
+{
+  "id": "lion_will",
+  "name": "Lion Will",
+  "beast": "World Lion",
+  "affinity": "Earth",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "lion",
+    "leonid"
+  ],
+  "dropChance": 0.012,
+  "requireEp": 12000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 15249440,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.22,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.03
+      }
+    ],
+    "abilities": [
+      {
+        "id": "pride_poise",
+        "kind": "mane_surge",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 600,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Pride's Poise",
+        "effect": "A lion's poise: a short burst of steadiness and bonus bite while it lasts."
+      },
+      {
+        "id": "mane_guard",
+        "kind": "bark_ward",
+        "slot": 2,
+        "costPct": 5,
+        "cooldownTicks": 480,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 2,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Mane Guard",
+        "effect": "The thick mane takes the blow: you take less damage for a few seconds."
+      }
+    ],
+    "equipPiece": "One gold mane collar at the nape (the only equipped piece); warm gold impact lines on strikes."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.5,
+    "strainPerSecond": 0.7,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 4
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
+      }
+    ],
+    "abilities": [
+      {
+        "id": "sovereigns_roar_call",
+        "kind": "world_howl",
+        "slot": 1,
+        "costPct": 18,
+        "cooldownTicks": 600,
+        "strain": 24,
+        "range": 14,
+        "radius": 12,
+        "durationTicks": 60,
+        "power": 5,
+        "maxTargets": 8,
+        "bossFactor": 0.25,
+        "name": "Sovereign's Full Howl",
+        "effect": "The full World Howl: a roar that hits up to eight foes in a cone, knocking them back and cracking the ground (bosses resist)."
+      },
+      {
+        "id": "royal_paw",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 9,
+        "cooldownTicks": 140,
+        "strain": 12,
+        "range": 6,
+        "radius": 6,
+        "durationTicks": 40,
+        "power": 5,
+        "maxTargets": 4,
+        "bossFactor": 0.6,
+        "name": "Royal Paw",
+        "effect": "A gold-clawed paw swipe that sends a short shockwave through up to four foes."
+      }
+    ],
+    "transformation": "Whole body becomes a lion beastman in gold pelt plate: full flowing mane, round ears and heavy brow, blunt-fanged muzzle, fur-ruffed chest, heavy clawed paws with a talon gauntlet, digitigrade legs and a tufted tail.",
+    "equip": {
+      "weapon": "A royal claw-gauntlet: gold talon blades on the right fist.",
+      "armor": "Gold-plated lion-pelt cuirass with a mane-ruff gorget and heavy paw greaves.",
+      "hair_eyes": "Deep-red mane to the shoulders; gold eyes.",
+      "aura": "A gold corona with earth-brown dust at the feet."
+    }
+  },
+  "beastNote": "World Lion (A-class pride king)",
+  "lore": "The will of a World Lion (A class), as Curtis holds it. In the first stage the holder grows a lion's mane and barely controls it. The second carries the World Howl, a huge mana blast that costs a great deal and is best loosed with the lion beside you.",
+  "pitch": "The World Lion is a pride-king lion whose howl shakes the world; this is our own lion will, since Curtis only has a bond with a lion cub. Acquire keeps you human with one gold mane collar, lending a lion's poise and a small cub's roar that nudges foes back. Integrate makes you an upright lion beastman in gold pelt plate with a flowing red mane, clawed paws and a tufted tail, a bruiser whose full World Howl and royal paw are paid for with a strain that climbs on every roar.",
+  "untrained": "An untrained holder cannot hold the pride's pride: the mane-heat burns the neck and shoulders, the howl cracks the holder's own throat and strain spikes if the Full Howl is spammed. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "CANON",
+  "spirit": {
+    "colors": [
+      "#E8B020",
+      "#5A3418",
+      "#FFF1B8"
+    ],
+    "echo": "An upright lion beastman: heavy deep-red mane to the shoulders, round ears, golden eyes, blunt fangs, broad fur-ruffed chest, digitigrade legs, tufted tail, heavy clawed paws.",
+    "accent": "#8E1E14",
+    "look": "A golden orb ringed by a thick mane of dark-red fur strands with two small canine-white points, pulsing slowly like a heartbeat."
+  },
+  "canon": {
+    "source": "TBATE Fandom wiki (English, MediaWiki API): Curtis Glayder/Abilities, Mana Beasts",
+    "language": "en",
+    "facts": [
+      "World Lion is an A-class mana beast; Curtis formed an equal contract with the lion Grawder (Mana Beasts, Curtis Glayder/Abilities).",
+      "In his first phase his hair becomes larger and bushier like a lion's, spreading to his face; he has little control over it and uses it as a last resort.",
+      "World Howl: mounted on Grawder, mana is built up and fired as a condensed beam that shreds what it meets; it takes a great amount of mana and needs Grawder for full power."
+    ],
+    "notes": [
+      "the beam is built as the existing cone howl; the lion beside you is not built"
+    ]
+  }
+}

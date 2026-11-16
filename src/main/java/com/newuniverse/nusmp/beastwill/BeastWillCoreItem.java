@@ -49,7 +49,12 @@ public final class BeastWillCoreItem extends Item {
         tip.add(Component.translatable("item.anime_multiverse.beast_will_core.of", BeastWillText.name(c.will())).withStyle(ChatFormatting.GOLD));
         tip.add(Component.translatable("item.anime_multiverse.beast_will_core.beast", c.beast().isBlank() ? "?" : c.beast(), c.rankValue().name()).withStyle(ChatFormatting.GRAY));
         String lore = "anime_multiverse.beastwill." + c.will() + ".lore";
-        if (net.minecraft.locale.Language.getInstance().has(lore)) tip.add(Component.translatable(lore).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));   // 3.60.0: the remade will's lore line
+        String canon = "anime_multiverse.beastwill." + c.will() + ".canon_lore", source = "anime_multiverse.beastwill." + c.will() + ".canon_source";
+        net.minecraft.locale.Language lang = net.minecraft.locale.Language.getInstance();
+        if (BeastWillConfig.canonRework() && lang.has(canon)) {                                                          // the canon rework: what the source says, then where it comes from
+            tip.add(Component.translatable(canon).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            if (lang.has(source)) tip.add(Component.translatable(source).withStyle(ChatFormatting.DARK_GRAY));
+        } else if (lang.has(lore)) tip.add(Component.translatable(lore).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));   // 3.60.0: the remade will's lore line
         tip.add(Component.translatable("item.anime_multiverse.beast_will_core.use").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

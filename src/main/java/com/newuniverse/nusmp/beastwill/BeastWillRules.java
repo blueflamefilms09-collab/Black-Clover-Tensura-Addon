@@ -134,7 +134,11 @@ public final class BeastWillRules {
             // the three kinds of the 18 later wills (docs/beastwill_new.md): a poison cone, a pull-in field and a dread that makes hunters lose their aim
             Map.entry("venom_spit", new KindLimit(120, 10, 6, 100)),
             Map.entry("maelstrom", new KindLimit(100, 10, 6, 240)),
-            Map.entry("dread_gaze", new KindLimit(160, 16, 6, 300)));
+            Map.entry("dread_gaze", new KindLimit(160, 16, 6, 300)),
+            // the three kinds of the canon rework (docs/beastwill_canon_rework.md): a tail sweep round the caster, a chain of thunder from foe to foe, a devouring bite that heals a little
+            Map.entry("tail_sweep", new KindLimit(0, 6, 6, 120)),
+            Map.entry("thunder_chain", new KindLimit(0, 6, 5, 100)),
+            Map.entry("devour", new KindLimit(0, 0, 1, 200)));
 
     public static final double MAX_COST_PCT = 25, MAX_STRAIN = 40, MAX_DRAIN_PCT = 3, MAX_STRAIN_PER_SECOND = 2.5, MAX_RANGE = 24, MAX_POWER = 8, MAX_REGEN = 1.0;
     public static final int MAX_COOLDOWN = 12000, MAX_ABILITIES_PER_PHASE = 2;

@@ -1,0 +1,206 @@
+{
+  "id": "sphinx_will",
+  "name": "Sphinx Will",
+  "beast": "The Sphinx of the Riddle",
+  "affinity": "Judgement",
+  "legendary": false,
+  "minRank": "S",
+  "sources": [],
+  "keywords": [
+    "sphinx"
+  ],
+  "dropChance": 0.006,
+  "requireEp": 26000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 3829736,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.armor_toughness",
+      "op": "add",
+      "amount": 0.5
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.15,
+    "unlockMastery": 0.0,
+    "drainPct": 0.55,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "stone_poise",
+        "kind": "bark_ward",
+        "slot": 1,
+        "costPct": 6,
+        "cooldownTicks": 420,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Stone Poise",
+        "effect": ""
+      },
+      {
+        "id": "riddling_stare",
+        "kind": "dread_gaze",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 500,
+        "strain": 8,
+        "range": 12,
+        "radius": 8,
+        "durationTicks": 100,
+        "power": 1.5,
+        "maxTargets": 3,
+        "bossFactor": 0.2,
+        "name": "Riddling Stare",
+        "effect": "A riddle in her eyes: foes who meet them lose their aim."
+      }
+    ],
+    "equipPiece": "A single gold nemes brow-band carrying the eye-glyph on the forehead (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.6,
+    "drainPct": 1.7,
+    "strainPerSecond": 0.95,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 4.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.4
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 4.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "silence_of_stone",
+        "kind": "time_exclusion",
+        "slot": 1,
+        "costPct": 18,
+        "cooldownTicks": 700,
+        "strain": 26,
+        "range": 10,
+        "radius": 9,
+        "durationTicks": 80,
+        "power": 5,
+        "maxTargets": 5,
+        "bossFactor": 0.0,
+        "name": "Silence of Stone",
+        "effect": ""
+      },
+      {
+        "id": "riddle_of_ages",
+        "kind": "dread_gaze",
+        "slot": 2,
+        "costPct": 14,
+        "cooldownTicks": 360,
+        "strain": 24,
+        "range": 16,
+        "radius": 14,
+        "durationTicks": 140,
+        "power": 5,
+        "maxTargets": 5,
+        "bossFactor": 0.4,
+        "name": "Riddle of the Ages",
+        "effect": ""
+      }
+    ],
+    "transformation": "Full armoured form: the whole body becomes a winged lion-humanoid in sandstone-and-lapis armor: calm human-like face under a striped nemes headdress, wide feathered wings with winged pauldrons, broad lion shoulders, clawed paws, digitigrade lion legs and a tufted tail; an eye-glyph glaive forms in the hand.",
+    "equip": {
+      "weapon": "A lion-claw glaive whose blade is a gold eye-glyph, formed from sandstone and lapis.",
+      "armor": "Sandstone plated back, lapis breastplate, winged pauldrons and a striped nemes headdress.",
+      "hair_eyes": "Black hair under the striped nemes, calm glowing gold eyes.",
+      "aura": "Gold sand motes with blue glyph light."
+    }
+  },
+  "beastNote": "The Sphinx of the Riddle (winged lion body, human head)",
+  "lore": "A guardian with a woman's head, a lion's body and a bird's wings, who sets a riddle and kills and eats those who fail. The will stands stone-still, stares with a riddle, stills the moment and asks the riddle of the ages.",
+  "pitch": "The Sphinx is the winged stone lion with a human face that asks a riddle and punishes those who fail. Acquire keeps you human, stepping in precise blue afterimages with one gold brow-band. Integrate (Full armoured form) makes you a winged lion-humanoid in sandstone and lapis armor with a glyph glaive, a heavy tank with two crowd-control moves, paid for with a high strain.",
+  "untrained": "An untrained holder is asked the riddle by their own will: strain climbs and they freeze in place as stone while it waits for an answer. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#3A6FE8",
+      "#2B3361",
+      "#E0C27A"
+    ],
+    "echo": "A rising lion-man in sandstone-and-lapis armor on digitigrade legs: calm human face under a striped nemes headdress, wide feathered wings, broad lion shoulders, clawed paws, tufted tail, an eye-glyph glaive.",
+    "accent": "#E0C27A",
+    "look": "A lapis-blue orb carved with a gold eye-glyph in the centre, sandstone flecks drifting off it, a calm closed eyelid that opens when held."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Sphinx",
+    "language": "en",
+    "facts": [
+      "Greek sphinx: head of a woman, haunches of a lion, wings of a bird; challenges all she meets to a riddle and kills and eats those who fail (Oedipus).",
+      "Sphinxes are guardians of temple entrances. Stopping time with silence is a design twist kept from the remade will."
+    ],
+    "notes": []
+  }
+}

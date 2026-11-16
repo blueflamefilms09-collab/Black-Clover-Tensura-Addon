@@ -1,0 +1,201 @@
+{
+  "id": "flame_serpent_will",
+  "name": "Flame-Serpent Will",
+  "beast": "Flame-Serpent Elder",
+  "affinity": "Fire",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "flame_serpent"
+  ],
+  "dropChance": 0.012,
+  "requireEp": 12000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 3900,
+  "masterySeconds": 2400,
+  "assimilationDayCap": 0.35,
+  "masteryDayCap": 0.35,
+  "coreCooldownDays": 3,
+  "tint": 16726528,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "pit_heat_sense",
+        "kind": "dragon_sight",
+        "slot": 1,
+        "costPct": 4,
+        "cooldownTicks": 300,
+        "strain": 4,
+        "range": 16,
+        "radius": 14,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 1.0,
+        "name": "Pit-Viper Heat Sense",
+        "effect": ""
+      },
+      {
+        "id": "cinder_tail_whip",
+        "kind": "tail_sweep",
+        "slot": 2,
+        "costPct": 5,
+        "cooldownTicks": 260,
+        "strain": 6,
+        "range": 0,
+        "radius": 3,
+        "durationTicks": 0,
+        "power": 2,
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Cinder Tail Whip",
+        "effect": "A hot tail whip hurls back the foes around you."
+      }
+    ],
+    "equipPiece": "One ember-scale armlet on a forearm, a few scales glowing; heat-haze streaks and a small ember trail at the heels."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.6,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.3
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "magma_spit",
+        "kind": "venom_spit",
+        "slot": 1,
+        "costPct": 10,
+        "cooldownTicks": 140,
+        "strain": 14,
+        "range": 12,
+        "radius": 4,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Magma Spit",
+        "effect": ""
+      },
+      {
+        "id": "spine_flame_burst",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 180,
+        "strain": 16,
+        "range": 8,
+        "radius": 6,
+        "durationTicks": 70,
+        "power": 5,
+        "maxTargets": 5,
+        "bossFactor": 0.5,
+        "name": "Spine-Flame Burst",
+        "effect": "Fire flares along the spine in a shockwave that sets foes alight."
+      }
+    ],
+    "transformation": "Full armoured form serpent-beastman: wedge head with a flared hood-crest helm, slit molten eyes and fanged jaw, black ember-seam scale plate, clawed digitigrade greaves, a thick ember tail, a forked tongue with spit sacs and a molten fang-blade on the forearm.",
+    "equip": {
+      "weapon": "A curved molten fang-blade grown from the forearm, dripping slag.",
+      "armor": "Black scale plate with glowing ember seams: flared hood-crest helm, scaled pauldrons and bracers, clawed greaves.",
+      "hair_eyes": "Hair burns away into a flared hood crest; slit molten eyes.",
+      "aura": "Red-orange heat aura with rising sparks and haze."
+    }
+  },
+  "beastNote": "Flame-Serpent Elder (A-class cinder coil)",
+  "lore": "An A-class elder of the line of the Hades Serpent, the long serpent with blue flames along its spine. It senses living heat, whips with a hot tail, spits molten venom and flares fire along its spine.",
+  "pitch": "The Flame-Serpent Elder is an A-class cinder coil whose scales glow like cooling lava; it senses living heat, hides in haze and spits molten venom. Acquire keeps you human with heat-haze streaks and one equipped piece, a single ember-scale armlet, to see warm bodies through walls and blur in heat haze. Integrate (Full armoured form) makes you a hooded serpent-beastman in black ember-seam plate with a fang-blade, spitting magma and coiling foes; it is the ranged burn A-rank, with less armour than the boar.",
+  "untrained": "An untrained holder is scorched from inside: ember seams open on the skin, the screen shimmers with heat, and strain rises with every spit or coil. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "TBATE-KIN",
+  "spirit": {
+    "colors": [
+      "#FF3A00",
+      "#3A0F0A",
+      "#FFC13A"
+    ],
+    "echo": "A lithe serpent-beastman in black ember-seam plate: wedge head with a flared hood crest, slit molten eyes, scaled body with glowing ember seams, clawed digitigrade feet, a thick ember-trailing tail, a molten fang-blade.",
+    "accent": "#FFC13A",
+    "look": "A glowing red-orange orb with black cooled-crust scales and a slit gold pupil that slowly narrows and widens."
+  },
+  "canon": {
+    "source": "TBATE Fandom wiki (English, MediaWiki API): Mana Beasts (Hades Serpent)",
+    "language": "en",
+    "facts": [
+      "Hades Serpent (AA class): a powerful serpent over 100 feet long with blue flames across its spine and matte grey scales (Mana Beasts).",
+      "The Flame-Serpent Elder is the mod's own A-class relative, not a wiki creature (design)."
+    ],
+    "notes": []
+  }
+}

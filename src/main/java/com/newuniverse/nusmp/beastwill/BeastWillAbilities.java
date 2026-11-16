@@ -74,6 +74,9 @@ public final class BeastWillAbilities {
             case "venom_spit" -> spit(p, def, a, scale, mastery);
             case "maelstrom" -> maelstrom(p, def, a, scale, mastery);
             case "dread_gaze" -> dread(p, def, a);
+            case "tail_sweep" -> sweep(p, def, a, scale, mastery);
+            case "thunder_chain" -> chain(p, def, a, scale, mastery);
+            case "devour" -> devour(p, def, a, scale, mastery);
             default -> false;
         };
     }
@@ -254,7 +257,7 @@ public final class BeastWillAbilities {
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         double range = Math.max(2, a.range());
         for (LivingEntity t : cone(p, range, 0.6, cap(a))) {
-            if (hit(p, t, a.power() * scale, mastery, a.bossFactor()) > 0 && !bossy(t) && a.power() >= 3) t.igniteForSeconds(2);
+            if (hit(p, t, a.power() * scale, mastery, a.bossFactor()) > 0 && !bossy(t) && BeastWillCanon.ignites(a.power(), def.affinity(), BeastWillConfig.canonRework())) t.igniteForSeconds(2);
             t.push(look.x * 0.35, 0.08, look.z * 0.35);
             t.hurtMarked = true;
         }
@@ -583,6 +586,83 @@ public final class BeastWillAbilities {
         fx(p.serverLevel(), true, p.getEyePosition(), 2, 0.3);
         burst(p.serverLevel(), def, p.position(), Math.min(a.radius(), 8));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WARDEN_NEARBY_CLOSER, SoundSource.PLAYERS, 0.7f, 0.7f);
+        return true;
+    }
+
+    // ------------------------------------------------------------------ the three kinds of the canon rework (docs/beastwill_canon_rework.md)
+    /** A tail sweep: foes within the radius round the caster take a hit and are flung outward, at most {@code maxTargets}; no control effect (no hard-control cooldown); bosses take the boss factor of the damage and of the push. */
+    private static boolean sweep(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
+        List<LivingEntity> seen = around(p, p.position(), Math.max(1.5, a.radius()), cap(a));
+        if (seen.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        ServerLevel level = p.serverLevel();
+        for (LivingEntity t : seen) {
+            double dx = p.getX() - t.getX(), dz = p.getZ() - t.getZ();
+            double strength = Math.min(1.4, a.power() * 0.3 * scale) * (bossy(t) ? a.bossFactor() : 1.0);
+            hit(p, t, a.power() * scale * 0.8, mastery, a.bossFactor());
+            if (strength > 0.05) t.knockback(strength, dx, dz);
+            t.hurtMarked = true;
+        }
+        burst(level, def, p.position(), Math.min(a.radius(), 6));                                                    // one picture for the whole sweep
+        fx(level, true, p.position().add(0, 0.6, 0), 12, 0.6);
+        level.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0f, 0.6f);
+        return true;
+    }
+
+    /** A chain of thunder: the first foe in front of the caster, then the nearest foe within {@code radius} of the one before, up to {@code maxTargets}; every hop keeps 80 % of the hit. No entity is spawned and no bolt is summoned: lines of particles and two pictures. */
+    private static boolean chain(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
+        List<LivingEntity> first = cone(p, Math.max(2, a.range()), 0.6, 1);
+        if (first.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        int max = cap(a);
+        List<LivingEntity> struck = new ArrayList<>(max);
+        struck.add(first.get(0));
+        double hop = Math.max(2, a.radius());
+        while (struck.size() < max) {
+            LivingEntity last = struck.get(struck.size() - 1), next = null;
+            for (LivingEntity t : around(p, last.getBoundingBox().getCenter(), hop, max + 1)) {
+                if (!struck.contains(t)) {
+                    next = t;
+                    break;
+                }
+            }
+            if (next == null) break;
+            struck.add(next);
+        }
+        ServerLevel level = p.serverLevel();
+        Vec3 from = p.getEyePosition();
+        for (int i = 0; i < struck.size(); i++) {
+            LivingEntity t = struck.get(i);
+            Vec3 at = t.getBoundingBox().getCenter();
+            hit(p, t, BeastWillCanon.chainDamage(a.power() * scale, i), mastery, a.bossFactor());
+            line(level, true, from, at, 4);
+            from = at;
+        }
+        travel(p, def, p.getEyePosition(), struck.get(0).getBoundingBox().getCenter(), 1.0f);
+        burst(level, def, struck.get(struck.size() - 1).position(), 1.5);
+        level.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.PLAYERS, 0.5f, 1.6f);
+        return true;
+    }
+
+    /** A devouring bite: one foe in front of the caster takes a heavy hit and the caster mends a share of what it dealt (at most three hearts). Bosses take the boss factor, so they feed the caster less. */
+    private static boolean devour(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
+        List<LivingEntity> seen = cone(p, Math.max(2, a.range()), 0.7, 1);
+        if (seen.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        LivingEntity t = seen.get(0);
+        ServerLevel level = p.serverLevel();
+        float dealt = hit(p, t, a.power() * scale, mastery, a.bossFactor());
+        if (dealt > 0f) BalanceLaw.heal(p, BeastWillCanon.devourHeal(dealt));
+        travel(p, def, p.getEyePosition(), t.getBoundingBox().getCenter(), 1.0f);
+        burst(level, def, t.position(), 1.5);
+        fx(level, true, p.position().add(0, 1.0, 0), 8, 0.4);
+        level.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ATTACK, SoundSource.PLAYERS, 0.8f, 0.7f);
         return true;
     }
 }

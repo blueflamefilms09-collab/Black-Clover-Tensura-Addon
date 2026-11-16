@@ -1,0 +1,187 @@
+{
+  "id": "scylla_charybdis_will",
+  "name": "Scylla and Charybdis Will",
+  "beast": "Scylla and Charybdis, the Strait Pair",
+  "affinity": "Strait",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "scylla",
+    "charybdis"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 28000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 293491,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.55,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "snatch_from_deck",
+        "kind": "ambush",
+        "slot": 1,
+        "costPct": 6,
+        "cooldownTicks": 300,
+        "strain": 8,
+        "range": 6,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 0.5,
+        "name": "Snatch from the Deck",
+        "effect": "A head snatches one foe in front of you."
+      },
+      {
+        "id": "six_neck_lash",
+        "kind": "vine_lash",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 110,
+        "strain": 5,
+        "range": 7,
+        "radius": 5,
+        "durationTicks": 40,
+        "power": 2.2,
+        "maxTargets": 2,
+        "bossFactor": 0.4,
+        "name": "Six-Neck Lash",
+        "effect": "Long necks lash at the nearest foes."
+      }
+    ],
+    "equipPiece": "A single stone-grey cliff pauldron with a carved snarling dog-head on one shoulder (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.5,
+    "strainPerSecond": 0.85,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.5
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.2
+      }
+    ],
+    "abilities": [
+      {
+        "id": "six_heads_meal",
+        "kind": "devour",
+        "slot": 1,
+        "costPct": 12,
+        "cooldownTicks": 320,
+        "strain": 18,
+        "range": 5,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 6,
+        "maxTargets": 1,
+        "bossFactor": 0.4,
+        "name": "Six Heads' Meal",
+        "effect": "The heads fall on one foe: heavy damage, and you mend a share."
+      },
+      {
+        "id": "charybdis_gulp",
+        "kind": "maelstrom",
+        "slot": 2,
+        "costPct": 13,
+        "cooldownTicks": 600,
+        "strain": 17,
+        "range": 0,
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 4,
+        "maxTargets": 6,
+        "bossFactor": 0.35,
+        "name": "Charybdis Gulp",
+        "effect": ""
+      }
+    ],
+    "transformation": "Full armoured form: the whole body becomes a strait-humanoid in cliff-stone armor: six dog-head shoulder guards that snap on thin necks, stone-grey plates on chest and arms, clawed hands, wave-scale teal plating on the lower body, digitigrade legs and a short fin-tail; a spear of stone and whirlpool water forms in the hand.",
+    "equip": {
+      "weapon": "A long barnacled spear of stone and whirlpool water, with a spinning teal vortex around its head.",
+      "armor": "Stone-grey cliff plates on chest and arms, six dog-head shoulder guards (drawn as three twin-head quads), teal wave-scale plating on the lower body.",
+      "hair_eyes": "Sea-green wet hair streaming back, red glowing eyes.",
+      "aura": "Teal spray with a small swirling vortex at the feet."
+    }
+  },
+  "beastNote": "Scylla and Charybdis, the Strait Pair",
+  "lore": "Scylla snatches sailors with her dog heads from one side of a narrow strait; across it Charybdis swallows the sea three times a day and belches it back as whirlpools. The will snatches from the deck, lashes with six necks, devours and swallows the sea.",
+  "pitch": "Scylla and Charybdis are the strait pair of Greek myth: six snapping dog heads on the cliff and a ship-eating whirlpool below. Acquire keeps you human, darting in teal streaks with one dog-head cliff pauldron. Integrate (Full armoured form) makes you a stone-armored, six-headed beastman with a whirlpool spear, and costs a medium-high drain because the two halves pull against each other.",
+  "untrained": "An untrained holder is torn two ways: the heads snap at the holder's own shoulders, the whirlpool drags at the legs and strain builds whenever both halves act together. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#047A73",
+      "#8C8F99",
+      "#B23A3A"
+    ],
+    "echo": "A rocky six-headed beastman in cliff armor: stone-grey plates, six snapping dog heads on thin necks from the shoulders (three twin-head quads), teal wave-scale lower body, a whirlpool spear.",
+    "accent": "#B23A3A",
+    "look": "A grey rock orb split in half: one side jagged with six tiny snarling heads, the other a spinning teal whirlpool."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Scylla, Charybdis",
+    "language": "en",
+    "facts": [
+      "Scylla: a man-eating monster on one side of a narrow channel, six dog heads in the Suda; sailors who avoid Charybdis pass dangerously close to her.",
+      "Charybdis swallowed a huge amount of water three times a day and belched it out, making whirlpools that drag a ship under."
+    ],
+    "notes": []
+  }
+}

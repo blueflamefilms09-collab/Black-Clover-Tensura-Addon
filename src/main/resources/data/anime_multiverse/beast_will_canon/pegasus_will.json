@@ -1,0 +1,201 @@
+{
+  "id": "pegasus_will",
+  "name": "Pegasus Will",
+  "beast": "Pegasus, the Divine Winged Stallion",
+  "affinity": "Light",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "pegasus"
+  ],
+  "dropChance": 0.012,
+  "requireEp": 20000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5000,
+  "masterySeconds": 3300,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 16777215,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "add",
+      "amount": 0.015
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 2.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "sky_leap",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 80,
+        "strain": 6,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Sky Leap",
+        "effect": ""
+      },
+      {
+        "id": "star_mane_gallop",
+        "kind": "mane_surge",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 400,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Star-Mane Gallop",
+        "effect": ""
+      }
+    ],
+    "equipPiece": "A single golden winged anklet on one ankle (a short white feather-tuft on a gold band) (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.65,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.25
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.35
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "hippocrene_spring",
+        "kind": "verdant_mend",
+        "slot": 1,
+        "costPct": 16,
+        "cooldownTicks": 420,
+        "strain": 22,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 160,
+        "power": 4,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Hippocrene Spring",
+        "effect": ""
+      },
+      {
+        "id": "thunderbearer_bolts",
+        "kind": "thunder_chain",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 240,
+        "strain": 16,
+        "range": 12,
+        "radius": 5,
+        "durationTicks": 0,
+        "power": 5,
+        "maxTargets": 4,
+        "bossFactor": 0.5,
+        "name": "Thunderbearer's Bolts",
+        "effect": "A bolt leaps from foe to foe, a little weaker at each hop."
+      }
+    ],
+    "transformation": "Full armoured form: the whole body becomes a Pegasus-humanoid in white-gold barding: horse head with a starlit white mane, two large feathered wings, a long white horsetail, golden-hooved digitigrade legs with hoof greaves and hoof-nailed hands; a thunderbolt lance of light forms in the right hand.",
+    "equip": {
+      "weapon": "A thunderbolt lance of white-gold light (Zeus's bolt) held in the right hand.",
+      "armor": "White-gold horse barding: winged pauldrons, a starlit chest plate, golden hoof greaves.",
+      "hair_eyes": "A long white mane tied with starlight, star-blue glowing eyes.",
+      "aura": "White-gold glow with falling star motes."
+    }
+  },
+  "beastNote": "Pegasus, the Divine Winged Stallion",
+  "lore": "Pegasus, the white winged stallion. His hoof made the fountain Hippocrene on Mount Helicon, and Zeus had him carry his thunderbolts. The will leaps through the sky, gallops with a star mane, heals at the spring and throws a chain of bolts.",
+  "pitch": "Pegasus is the winged stallion of Greek myth that opened a spring with its hoof and carried Zeus's thunderbolts. Acquire keeps you human, galloping in star-trails with one golden winged anklet. Integrate (Full armoured form) makes you a horse-headed, winged beastman in white-gold barding with a bolt-lance, and costs a medium drain with a slow heal as your only mend.",
+  "untrained": "An untrained holder is overwhelmed by the horse's urge to run: the legs bolt past the holder's control, falls hurt more and the healing spring refuses to open until the will is mastered. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "MYTH",
+  "spirit": {
+    "colors": [
+      "#FFFFFF",
+      "#8FD0FF",
+      "#D9B34A"
+    ],
+    "echo": "A tall winged stallion-man in white-gold barding on hoofed digitigrade legs: horse head, long white mane tied with starlight, large feathered wings, long horsetail, golden hooves, hoof-nailed hands, a bolt-lance of light.",
+    "accent": "#8FD0FF",
+    "look": "A bright white orb with a tiny feathered wing outline inside and a small blue-gold star turning slowly above it."
+  },
+  "canon": {
+    "source": "Wikipedia (English, MediaWiki API): Pegasus",
+    "language": "en",
+    "facts": [
+      "A winged horse, usually a white stallion, foaled by Medusa; creator of the fountain Hippocrene on Mount Helicon.",
+      "Zeus brought Pegasus to Olympus to carry his thunderbolts."
+    ],
+    "notes": []
+  }
+}
