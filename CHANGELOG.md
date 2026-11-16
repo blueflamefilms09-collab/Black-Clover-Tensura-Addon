@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.22.2] — Build fix: chakram size class
+- FIXED (no gameplay change): 4.22.1 put the Black Chakrams in the dagger class, which the dagger size tests refuse; they now use the hand-held item class (0.5 to 0.9 blocks, which fits their 0.62-block mesh), with the grip golden refreshed. Their Better Combat file is unchanged.
+- Cost: unchanged.
+
 ## [4.22.1] — Build fix: three more scan tests
 - FIXED (no gameplay change): the Black Chakrams are a 0.62-block weapon, so they now use the dagger size class instead of the hand-axe class (which would have scaled them 1.77x at runtime; their grip golden is refreshed); the four glow textures of the new Berserk weapons had colour under fully transparent pixels and are cleaned by the safe-additive tool; the devil figure renderer's once-made `alphas` field is allowed in the draw-path scan like the layer's.
 - Cost: unchanged.

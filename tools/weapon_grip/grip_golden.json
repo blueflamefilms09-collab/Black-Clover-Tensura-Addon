@@ -208,11 +208,11 @@
   "z": 0.0
  },
  "black_chakrams": {
-  "class": "dagger",
-  "fraction": 0.06,
-  "source": "handle",
-  "x": -10.618,
-  "y": 1.397,
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 18.0,
   "z": 0.0
  },
  "black_gunblade_of_envy": {
