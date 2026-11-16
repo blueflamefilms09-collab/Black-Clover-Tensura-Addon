@@ -29,5 +29,6 @@ public final class SaiyanBoot {
         SaiyanTechSelfTests.register();
         SaiyanTech3SelfTests.register();
         SaiyanLookSelfTests.register();
+        SaiyanKiFx.registerSelfTests();                 // the anime Ki effects (KiLayer): saiyan.kivfx
     }
 }

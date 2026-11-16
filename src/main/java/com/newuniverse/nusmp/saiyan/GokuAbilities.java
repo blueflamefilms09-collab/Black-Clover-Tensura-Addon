@@ -129,6 +129,7 @@ final class GokuAbilities {
             double c = GokuRules.charge(held, maxChargeSeconds(s));
             Vec3 at = p.getEyePosition().add(p.getLookAngle().scale(0.9)).add(0, -0.4, 0);
             Fx.sprayTinted(p.serverLevel(), FxThemes.WORLD, FxSlot.MOTE, 0x60C8FF, (float) (0.8 + c), at.x, at.y, at.z, 2, 0.12, 0.12, 0.12, 0.01);
+            SaiyanKiFx.follow(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.KI_CHARGE, p, at, SaiyanKiFx.kiColor(p, SaiyanKiFx.KAME, false), 14, (float) c);      // the sphere in the hands: a short copy every 10 ticks, they cross-fade
         }
         if (held >= (long) (maxChargeSeconds(s) * 20.0) + 100L) kameRelease(p, s, r, now);
     }
@@ -183,6 +184,7 @@ final class GokuAbilities {
             SaiyanCombat.trainOn(s, t, SaiyanTraining.Cat.KI, now);
         }
         beamFx(level, from, end, charge);
+        SaiyanKiFx.send(level, com.newuniverse.nusmp.vfx.VfxShape.KI_BEAM, from, end, SaiyanKiFx.kiColor(p, SaiyanKiFx.KAME, false), (int) Math.round(22 + 12 * charge), (float) width);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, (float) (0.4 + 0.5 * charge), 1.6f);
     }
 
@@ -228,6 +230,8 @@ final class GokuAbilities {
             SaiyanCombat.trainOn(s, t, SaiyanTraining.Cat.MARTIAL, now);
             Fx.spray(level, FxThemes.WORLD, stage == GokuRules.PAPER ? FxOld.SONIC_BOOM : stage == GokuRules.SCISSORS ? FxOld.SWEEP_ATTACK : FxOld.CRIT, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), stage == GokuRules.ROCK ? 6 : 1, 0.2, 0.2, 0.2, 0.05);
         }
+        Vec3 chest = SaiyanKiFx.chest(p);
+        SaiyanKiFx.send(level, com.newuniverse.nusmp.vfx.VfxShape.KI_STRIKE, chest, chest.add(look.scale(Math.min(GokuRules.stageReach(stage), 6.0))), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), stage == GokuRules.PAPER ? 16 : 10, stage);
         r.lastCombat = now;
         SaiyanAbilities.say(p, STAGE_KEYS[stage]);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), stage == GokuRules.PAPER ? SoundEvents.GENERIC_EXPLODE.value() : SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 0.6f, 1.0f + 0.15f * stage);

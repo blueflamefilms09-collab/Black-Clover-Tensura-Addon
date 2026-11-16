@@ -471,7 +471,25 @@ public enum VfxShape {
     NEN_SURGE,
     NEN_LINK,
     NEN_NEEDLE,
-    NEN_DOMAIN;
+    NEN_DOMAIN,
+    // Dragon Ball Ki look (KiLayer, docs/vfx_remake/ki_dragonball.md), appended after NEN_DOMAIN: the Saiyan techniques (saiyan/) send these; the client setting saiyan.classicVfx draws nothing for them.
+    // KI_BLAST orbs from -> to (power = how many, 1 = Ki Blast, 2-8 = a Rapid Barrage volley); KI_BEAM the Kamehameha from -> to (power = half-width); KI_CHARGE the sphere at the hands (power = charge 0-1, re-sent);
+    // KI_SPHERE the Spirit Bomb (from = to: gathering over the head, power = radius; from != to: flying, lands at the end); KI_SHOCKWAVE flash + ground ring + dust (power = radius); KI_AFTERIMAGE Instant Transmission at from (to = the other end);
+    // KI_RUSH the Meteor Combination round a foe (power = hits); KI_STRIKE Rock / Scissors / Paper from -> to (power = 1, 2, 3); KI_BARRIER the dome (power = radius, + 5 on a refresh); KI_DEFLECT the spin (power = radius);
+    // KI_BIND God Bind rings (power = body height); KI_DRAGON the Dragon Fist dragon (power = body height); KI_TRANSFER the Energy Transfer stream from -> to.
+    KI_BLAST,
+    KI_BEAM,
+    KI_CHARGE,
+    KI_SPHERE,
+    KI_SHOCKWAVE,
+    KI_AFTERIMAGE,
+    KI_RUSH,
+    KI_STRIKE,
+    KI_BARRIER,
+    KI_DEFLECT,
+    KI_BIND,
+    KI_DRAGON,
+    KI_TRANSFER;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

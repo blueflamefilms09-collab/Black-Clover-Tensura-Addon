@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxSlot;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.song.SongTargets;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -111,6 +112,7 @@ final class SaiyanTechniques3 {
         t.dragonTotal = SaiyanTech3Rules.dragonSteps(SaiyanConfig.dragonSteps());
         t.dragonStep = 0;
         t.dragonNext = now;
+        SaiyanKiFx.follow(p.serverLevel(), VfxShape.KI_DRAGON, target, target.position(), SaiyanKiFx.GOLD, 2 * (t.dragonTotal - 1) + 14, target.getBbHeight());      // ONE packet: the dragon rises with the steps and bursts on the last blow
         s.startCooldown("dragon", now, SaiyanConfig.dragonCooldown());
         s.use("dragon", 1);
         r.lastCombat = now;
@@ -188,6 +190,7 @@ final class SaiyanTechniques3 {
         r.lastCombat = now;
         r.dirty = true;
         ring(p.serverLevel(), target);
+        SaiyanKiFx.follow(p.serverLevel(), VfxShape.KI_BIND, target, target.position(), SaiyanKiFx.GOLD, ticks, target.getBbHeight());
         p.serverLevel().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.8f, 0.6f);
         SaiyanAbilities.say(p, "bind_on");
         return true;
@@ -231,6 +234,7 @@ final class SaiyanTechniques3 {
         r.dirty = true;
         ServerLevel level = p.serverLevel();
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0xA0E0FF, 1.6f, p.getX(), p.getY() + 1.0, p.getZ(), 10, 0.6, 0.8, 0.6, 0.02);
+        SaiyanKiFx.follow(level, VfxShape.KI_DEFLECT, p, SaiyanKiFx.chest(p), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 20 * SaiyanConfig.deflectSeconds(), (float) SaiyanConfig.deflectRadius());
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 0.8f, 1.4f);
         SaiyanAbilities.say(p, "deflect_on");
         return true;
@@ -296,6 +300,7 @@ final class SaiyanTechniques3 {
         s.use("energy", 1);
         ServerLevel level = p.serverLevel();
         Vec3 a = p.position().add(0.0, 1.2, 0.0), b = to.position().add(0.0, 1.2, 0.0);
+        SaiyanKiFx.send(level, VfxShape.KI_TRANSFER, a, b, SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 20, 1f);
         for (int k = 1; k <= 6; k++) {
             Vec3 q = a.lerp(b, k / 7.0);
             Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0x80E0FF, 1.4f, q.x, q.y, q.z, 1, 0.05, 0.05, 0.05, 0.0);

@@ -101,6 +101,9 @@ final class SaiyanAbilities {
         return new Hit(best, bestAt);
     }
 
+    /** Where a Ki attack leaves the hands (the start of the old particle line too). */
+    static Vec3 hand(ServerPlayer p) { return p.getEyePosition().add(p.getLookAngle().scale(0.8)).add(0, -0.25, 0); }
+
     /** The beam: a short line of budgeted particles, and a small burst where it ended. */
     private static void trail(ServerLevel level, Vec3 from, Vec3 to) {
         Vec3 d = to.subtract(from);
@@ -152,6 +155,7 @@ final class SaiyanAbilities {
         s.startCooldown("blast", now, SaiyanConfig.blastCooldown());
         double mastery = SaiyanRules.growth(s.battlePower);
         Hit h = ray(p, p.getLookAngle(), SaiyanConfig.blastRange());
+        SaiyanKiFx.send(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.KI_BLAST, hand(p), h.at(), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 12, 1f);
         if (h.target() != null) {
             double raw = SaiyanRules.kiDamage(SaiyanConfig.blastDamage(), SaiyanConfig.kiDamageGrowth(), s.battlePower);
             if (hurt(p, h.target(), raw, mastery) > 0f && !BalanceLaw.isBoss(h.target())) h.target().knockback(0.3, -p.getLookAngle().x, -p.getLookAngle().z);
@@ -170,11 +174,15 @@ final class SaiyanAbilities {
         double each = SaiyanRules.kiDamage(SaiyanConfig.blastDamage(), SaiyanConfig.kiDamageGrowth(), s.battlePower) * SaiyanConfig.barrageShare();
         Vec3 look = p.getLookAngle();
         Map<LivingEntity, Double> sums = new LinkedHashMap<>();
-        for (int i = 0; i < SaiyanConfig.barrageRays(); i++) {
+        Vec3 ends = Vec3.ZERO;
+        int rays = SaiyanConfig.barrageRays();
+        for (int i = 0; i < rays; i++) {
             Vec3 dir = look.add(p.getRandom().nextGaussian() * 0.07, p.getRandom().nextGaussian() * 0.05, p.getRandom().nextGaussian() * 0.07).normalize();
             Hit h = ray(p, dir, SaiyanConfig.blastRange());
+            ends = ends.add(h.at());
             if (h.target() != null) sums.merge(h.target(), each, Double::sum);
         }
+        SaiyanKiFx.send(p.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.KI_BLAST, hand(p), ends.scale(1.0 / Math.max(1, rays)), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 16, rays);      // ONE packet for the whole volley
         for (Map.Entry<LivingEntity, Double> e : new ArrayList<>(sums.entrySet())) {
             hurt(p, e.getKey(), e.getValue(), mastery);
             SaiyanCombat.trainOn(s, e.getKey(), SaiyanTraining.Cat.KI, now);

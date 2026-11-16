@@ -293,6 +293,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SolomonLayer());
         // Hercules, Lord of Martial Prowess (Veldanava): its own ten shapes (HERCULES_LEAP ... HERCULES_MOMENTUM), appended after SOLOMON_ABSORB; nothing else is touched
         register(new com.newuniverse.nusmp.vfx.client.layer.HerculesLayer());
+        // Dragon Ball Ki look (the Saiyan techniques): its own thirteen shapes (KI_BLAST ... KI_TRANSFER), appended after NEN_DOMAIN; nothing else is touched. saiyan.classicVfx = true draws nothing for them.
+        register(new com.newuniverse.nusmp.vfx.client.layer.KiLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

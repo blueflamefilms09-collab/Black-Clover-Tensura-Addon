@@ -6,6 +6,7 @@ import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxSlot;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.song.SongTargets;
+import com.newuniverse.nusmp.vfx.VfxShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -68,6 +69,11 @@ final class SaiyanTechniques {
     }
 
     private static final int SCAN_STEPS = 12;
+    /** The Ki Barrier dome (KI_BARRIER): the first copy lives until the next once-a-second pass, which re-sends a 24-tick copy (power + 5 = no opening pop) while the barrier stands; each fades in and out over 4 ticks. */
+    private static final int BARRIER_REFRESH = 24;
+    private static final float BARRIER_RADIUS = 1.6f;
+    /** The Spirit Bomb as drawn: its radius grows with the gathered charge. */
+    private static float bombLook(double charge) { return (float) (0.6 + 2.4 * charge); }
 
     // ================================================================== the gate
     private static boolean open(ServerPlayer p, SaiyanState s, boolean goku) {
@@ -111,6 +117,7 @@ final class SaiyanTechniques {
         s.use("barrier", 1);
         ServerLevel level = p.serverLevel();
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0x80D0FF, 1.4f, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.7, 0.9, 0.7, 0.0);
+        SaiyanKiFx.follow(level, VfxShape.KI_BARRIER, p, SaiyanKiFx.chest(p), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 20 - (p.tickCount % 20) + 4, BARRIER_RADIUS);      // lives until the next once-a-second refresh has faded in
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 0.8f, 0.7f);
         SaiyanAbilities.say(p, "barrier_on");
         return true;
@@ -150,9 +157,13 @@ final class SaiyanTechniques {
             SaiyanAbilities.say(p, "no_ki");
             return false;
         }
-        flash(level, p.position());
+        Vec3 start = p.position();
+        int kc = SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true);
+        flash(level, start);
+        SaiyanKiFx.send(level, VfxShape.KI_AFTERIMAGE, start, dest, kc, 12, 1f);            // sent at both ends: the two places can be 64 blocks apart
         moveTo(p, dest, r, now);
         flash(level, dest);
+        SaiyanKiFx.send(level, VfxShape.KI_AFTERIMAGE, dest, start, kc, 12, 1f);
         s.startCooldown("transmit", now, SaiyanConfig.itCooldown());
         s.use("transmit", 1);
         SaiyanAbilities.say(p, target != null ? "it_lock" : "it_blink");
@@ -278,6 +289,8 @@ final class SaiyanTechniques {
             ServerLevel level = p.serverLevel();
             Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0x80C8FF, (float) (1.0 + 2.0 * c), p.getX(), p.getY() + 2.6, p.getZ(), 2, 0.25, 0.25, 0.25, 0.0);
             if (t.sources > 0) Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0xC0F0FF, 0.8f, p.getX(), p.getY() + 1.5, p.getZ(), 2, 3.0, 1.0, 3.0, 0.02);
+            float size = bombLook(c);
+            SaiyanKiFx.follow(level, VfxShape.KI_SPHERE, p, p.position().add(0.0, p.getBbHeight() + 0.8 + size, 0.0), SaiyanKiFx.SPIRIT, 14, size);       // a short copy every 10 ticks (they cross-fade), gone soon after the throw
         }
         if (held >= (long) (SaiyanConfig.sbChargeSeconds() * 20.0) + 100L) bombRelease(p, s, r, now);
     }
@@ -323,6 +336,8 @@ final class SaiyanTechniques {
         t.bombRadius = SaiyanTechRules.bombRadius(SaiyanConfig.sbRadius(), charge);
         t.dim = level.dimension();
         t.bombFlying = true;
+        float size = bombLook(charge);
+        SaiyanKiFx.send(level, VfxShape.KI_SPHERE, t.from.add(0.0, size, 0.0), to, SaiyanKiFx.SPIRIT, (int) (t.landAt - t.launchAt), size);      // ONE packet: the client flies it and it lands with the blast
         s.startCooldown("spirit", now, SaiyanConfig.sbCooldown());
         s.use("spirit", 1);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.FIREWORK_ROCKET_LAUNCH, SoundSource.PLAYERS, 1.0f, 0.5f);
@@ -368,6 +383,7 @@ final class SaiyanTechniques {
         Fx.spray(level, FxThemes.WORLD, FxOld.FLASH, c.x, c.y, c.z, 1, 0.0, 0.0, 0.0, 0.0);
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.MOTE, 0x80C8FF, 3.0f, c.x, c.y + 0.5, c.z, 20, rad * 0.4, rad * 0.3, rad * 0.4, 0.05);
         Fx.spray(level, FxThemes.WORLD, FxOld.ELECTRIC_SPARK, c.x, c.y + 0.5, c.z, 10, rad * 0.3, rad * 0.2, rad * 0.3, 0.1);
+        SaiyanKiFx.send(level, VfxShape.KI_SHOCKWAVE, c, c, SaiyanKiFx.SPIRIT, 26, (float) rad);
         level.playSound(null, c.x, c.y, c.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 1.5f, 0.6f);
     }
 
@@ -385,6 +401,7 @@ final class SaiyanTechniques {
         t.meteorTotal = SaiyanTechRules.meteorHits(SaiyanConfig.meteorHits());
         t.meteorLeft = t.meteorTotal;
         t.meteorNext = now;
+        SaiyanKiFx.follow(p.serverLevel(), VfxShape.KI_RUSH, target, SaiyanKiFx.chest(target), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), t.meteorTotal * SaiyanConfig.meteorInterval() + 6, t.meteorTotal);       // ONE packet for the whole rush
         s.startCooldown("meteor", now, SaiyanConfig.meteorCooldown());
         s.use("meteor", 1);
         r.lastCombat = now;
@@ -442,6 +459,7 @@ final class SaiyanTechniques {
         if (SaiyanAbilities.hurtBlow(p, e, raw, growth) > 0f && !BalanceLaw.isBoss(e) && dir.lengthSqr() > 1.0e-6) e.knockback(last ? 1.2 : 0.15, -dir.x, -dir.z);
         SaiyanCombat.trainOn(s, e, SaiyanTraining.Cat.MARTIAL, now);
         Fx.spray(level, FxThemes.WORLD, last ? FxOld.SONIC_BOOM : FxOld.CRIT, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), last ? 1 : 4, 0.3, 0.3, 0.3, 0.1);
+        if (last) SaiyanKiFx.send(level, VfxShape.KI_SHOCKWAVE, e.position(), e.position(), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), 16, 3f);
         level.playSound(null, e.getX(), e.getY(), e.getZ(), last ? SoundEvents.GENERIC_EXPLODE.value() : SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, last ? 0.9f : 0.5f, 0.9f + 0.05f * i);
         r.lastCombat = now;
         t.meteorLeft--;
@@ -456,6 +474,8 @@ final class SaiyanTechniques {
         if (t.barrier > 0.0 && now >= t.barrierUntil) {
             t.barrier = 0.0;
             SaiyanAbilities.say(p, "barrier_down");
+        } else if (t.barrier > 0.0 && now - (t.barrierUntil - 20L * SaiyanConfig.barrierSeconds()) >= 2L) {
+            SaiyanKiFx.follow(p.serverLevel(), VfxShape.KI_BARRIER, p, SaiyanKiFx.chest(p), SaiyanKiFx.kiColor(p, SaiyanKiFx.BASE, true), BARRIER_REFRESH, BARRIER_RADIUS + 5f);      // one packet a second while it stands
         }
     }
 }

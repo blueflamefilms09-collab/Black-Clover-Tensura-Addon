@@ -1,0 +1,1023 @@
+{
+ "_comment": "Dragon Ball Ki (KiLayer): the thirteen KI_* shapes the Saiyan techniques send (docs/vfx_remake/ki_dragonball.md). A bright anime daytime sky so the hard white cores and the saturated halos read the way they do in the show; figures are the caster / foe (1.8 tall). Colours are the ones the server sends (base ki, Kamehameha blue, Spirit Bomb blue-white, gold for the Dragon Fist and God Bind, a Super Saiyan gold volley, a Super Saiyan 4 red Kamehameha).",
+ "ki_blast": {
+  "layer": "KiLayer",
+  "shape": "KI_BLAST",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 1,
+  "duration": 12,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -5,
+   2.2,
+   4
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   1,
+   2,
+   4,
+   6
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12.5,
+    1.8
+   ]
+  ]
+ },
+ "ki_barrage": {
+  "layer": "KiLayer",
+  "shape": "KI_BLAST",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 6,
+  "duration": 16,
+  "color": "FFFFD020",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -5,
+   2.2,
+   4
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12.5,
+    1.8
+   ]
+  ]
+ },
+ "ki_kamehameha": {
+  "layer": "KiLayer",
+  "shape": "KI_BEAM",
+  "from": [
+   0,
+   1.3,
+   0.8
+  ],
+  "to": [
+   0,
+   1.3,
+   22
+  ],
+  "power": 1.6,
+  "duration": 34,
+  "color": "FF5EC8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -7,
+   2.6,
+   5
+  ],
+  "target": [
+   0,
+   1.3,
+   11
+  ],
+  "ages": [
+   1,
+   3,
+   10,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_kamehameha_red": {
+  "layer": "KiLayer",
+  "shape": "KI_BEAM",
+  "from": [
+   0,
+   1.3,
+   0.8
+  ],
+  "to": [
+   0,
+   1.3,
+   22
+  ],
+  "power": 1.2,
+  "duration": 30,
+  "color": "FFC02020",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -7,
+   2.6,
+   5
+  ],
+  "target": [
+   0,
+   1.3,
+   11
+  ],
+  "ages": [
+   2,
+   8,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_charge": {
+  "layer": "KiLayer",
+  "shape": "KI_CHARGE",
+  "from": [
+   0.3,
+   1.1,
+   0.6
+  ],
+  "to": [
+   0.3,
+   1.1,
+   0.6
+  ],
+  "power": 0.8,
+  "duration": 14,
+  "color": "FF5EC8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -1.6,
+   1.6,
+   2.6
+  ],
+  "target": [
+   0.2,
+   1.1,
+   0.4
+  ],
+  "ages": [
+   1,
+   4,
+   8,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_spirit_gather": {
+  "layer": "KiLayer",
+  "shape": "KI_SPHERE",
+  "from": [
+   0,
+   5.4,
+   0
+  ],
+  "to": [
+   0,
+   5.4,
+   0
+  ],
+  "power": 2.8,
+  "duration": 14,
+  "color": "FF8CD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -8,
+   3,
+   -8
+  ],
+  "target": [
+   0,
+   3.6,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_spirit_throw": {
+  "layer": "KiLayer",
+  "shape": "KI_SPHERE",
+  "from": [
+   0,
+   5.4,
+   0
+  ],
+  "to": [
+   0,
+   0.5,
+   20
+  ],
+  "power": 2.8,
+  "duration": 20,
+  "color": "FF8CD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -12,
+   4,
+   4
+  ],
+  "target": [
+   0,
+   2.5,
+   10
+  ],
+  "ages": [
+   2,
+   8,
+   14,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    20,
+    1.8
+   ]
+  ]
+ },
+ "ki_shockwave": {
+  "layer": "KiLayer",
+  "shape": "KI_SHOCKWAVE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 26,
+  "color": "FF8CD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -9,
+   4,
+   -9
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "ki_afterimage": {
+  "layer": "KiLayer",
+  "shape": "KI_AFTERIMAGE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   10,
+   0,
+   0
+  ],
+  "power": 1,
+  "duration": 12,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -1,
+   1.6,
+   -5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   0,
+   2,
+   5,
+   9
+  ],
+  "figures": []
+ },
+ "ki_rush": {
+  "layer": "KiLayer",
+  "shape": "KI_RUSH",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 8,
+  "duration": 30,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -3.5,
+   1.8,
+   -3.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   1,
+   9,
+   22,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_strike_rock": {
+  "layer": "KiLayer",
+  "shape": "KI_STRIKE",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   4.5
+  ],
+  "power": 1,
+  "duration": 10,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -4,
+   1.8,
+   1
+  ],
+  "target": [
+   0,
+   1.1,
+   3
+  ],
+  "ages": [
+   1,
+   3,
+   6
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_strike_scissors": {
+  "layer": "KiLayer",
+  "shape": "KI_STRIKE",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   4.5
+  ],
+  "power": 2,
+  "duration": 10,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -4,
+   1.8,
+   1
+  ],
+  "target": [
+   0,
+   1.1,
+   3
+  ],
+  "ages": [
+   1,
+   3,
+   6
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_strike_paper": {
+  "layer": "KiLayer",
+  "shape": "KI_STRIKE",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   5
+  ],
+  "power": 3,
+  "duration": 16,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -5,
+   2,
+   0.5
+  ],
+  "target": [
+   0,
+   1.1,
+   3.5
+  ],
+  "ages": [
+   1,
+   5,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_barrier": {
+  "layer": "KiLayer",
+  "shape": "KI_BARRIER",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 1.6,
+  "duration": 40,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -3,
+   1.6,
+   -3.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   20,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_deflect": {
+  "layer": "KiLayer",
+  "shape": "KI_DEFLECT",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 4,
+  "duration": 80,
+  "color": "FF40B0FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -4,
+   2.4,
+   -4.5
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   2,
+   20,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_bind": {
+  "layer": "KiLayer",
+  "shape": "KI_BIND",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.9,
+  "duration": 120,
+  "color": "FFFFC832",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -3,
+   1.6,
+   -3.5
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   9,
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_dragon": {
+  "layer": "KiLayer",
+  "shape": "KI_DRAGON",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.9,
+  "duration": 24,
+  "color": "FFFFC832",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   -5,
+   2.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   14,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "ki_transfer": {
+  "layer": "KiLayer",
+  "shape": "KI_TRANSFER",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   5,
+   1.2,
+   0
+  ],
+  "power": 1,
+  "duration": 20,
+  "color": "FF9FD8FF",
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "cam": [
+   2.5,
+   2,
+   -5
+  ],
+  "target": [
+   2.5,
+   1.2,
+   0
+  ],
+  "ages": [
+   2,
+   6,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

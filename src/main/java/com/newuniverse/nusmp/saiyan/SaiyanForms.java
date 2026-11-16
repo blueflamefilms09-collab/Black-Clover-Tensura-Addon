@@ -172,4 +172,18 @@ public final class SaiyanForms {
 
     /** Lower-case id for a command argument. */
     public static String norm(String s) { return s == null ? "" : s.toLowerCase(Locale.ROOT).trim().replace(' ', '_').replace('-', '_'); }
+
+    // ------------------------------------------------------------------ the ki colour of the anime effects (SaiyanKiFx, KiLayer)
+    /** Base (no form) ki: a pale blue-white; the Kamehameha's own blue, the Spirit Bomb's blue-white, the Dragon Fist's and God Bind's gold. */
+    public static final int KI_BASE = 0xFF9FD8FF, KI_KAME = 0xFF5EC8FF, KI_SPIRIT = 0xFF8CD8FF, KI_GOLD = 0xFFFFC832;
+
+    /**
+     * The ki colour of a technique in a form ({@code null} = Base). {@code own} is the technique's own colour. {@code followsForm}: the generic ki (blasts, barrier, deflection, the blows, the transfer) takes
+     * the form's colour; a signature technique keeps its own, except the Kamehameha, which takes the form's red in a red-aura form (Kaio-ken, the Super Saiyan 4 forms: the crimson 10x Kamehameha).
+     */
+    public static int kiColor(Form f, int own, boolean followsForm) {
+        if (f == null) return own;
+        if (followsForm || (own == KI_KAME && f.aura() == Aura.RED)) return 0xFF000000 | (f.rgb() & 0xFFFFFF);
+        return own;
+    }
 }

@@ -17,6 +17,8 @@ public final class SaiyanLookClientConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue LOOKS, ARMOUR, CHARGE_UP, FULL_DETAIL, CHARGE_ANIM;
     private static volatile boolean looks = true, armour = true, chargeUp = true, full = true, chargeAnim = true;
+    /** saiyan.classicVfx (default false): mirrored into the pure switch {@code KiVfx.classic()} the Ki layer reads. */
+    public static final ModConfigSpec.BooleanValue CLASSIC_VFX;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -31,6 +33,8 @@ public final class SaiyanLookClientConfig {
                 .define("fullDetail", true);
         CHARGE_ANIM = b.comment("true: the body of a Saiyan powering up is animated (crouch, trembling flex, the snap open at the burst). false: the body keeps its normal pose. Looks only (3.71.0).")
                 .define("chargeAnimation", true);
+        CLASSIC_VFX = b.comment("true: the Saiyan techniques (Ki Blast, Kamehameha, Spirit Bomb, Instant Transmission, Dragon Fist, ...) show only their old particles. false: the anime Ki effects are drawn too (beams, orbs, shock rings, the golden dragon). Looks only.")
+                .define("classicVfx", false);
         b.pop();
         SPEC = b.build();
     }
@@ -51,8 +55,10 @@ public final class SaiyanLookClientConfig {
     private static void apply() {
         try {
             looks = LOOKS.get(); armour = ARMOUR.get(); chargeUp = CHARGE_UP.get(); full = FULL_DETAIL.get(); chargeAnim = CHARGE_ANIM.get();
+            com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(CLASSIC_VFX.get());
         } catch (IllegalStateException unloaded) {
             looks = true; armour = true; chargeUp = true; full = true; chargeAnim = true;
+            com.newuniverse.nusmp.vfx.client.layer.KiVfx.setClassic(false);
         }
     }
 }

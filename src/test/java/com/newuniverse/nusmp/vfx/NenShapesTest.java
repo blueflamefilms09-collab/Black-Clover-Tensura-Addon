@@ -9,7 +9,7 @@ class NenShapesTest {
     @Test
     void nenShapesAreAppendedAfterTheOlderOnes() {
         VfxShape[] v = VfxShape.values();
-        assertEquals(VfxShape.NEN_DOMAIN, v[v.length - 1], "3.57.0: the remade Nen shapes are the last ones");
+        assertEquals(VfxShape.NEN_DOMAIN.ordinal() + 1, VfxShape.KI_BLAST.ordinal(), "3.57.0: the remade Nen shapes were the last ones; the Ki shapes come right after them");
         assertTrue(VfxShape.NEN_AURA.ordinal() > VfxShape.ULT_THOUSAND_ELF.ordinal());
         assertEquals(VfxShape.NEN_AURA.ordinal() + 4, VfxShape.NEN_BEAM.ordinal());
     }
