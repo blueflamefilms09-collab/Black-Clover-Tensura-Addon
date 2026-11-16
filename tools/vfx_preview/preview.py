@@ -97,6 +97,9 @@ def build(layers):
     if not any(l.split(".")[-1] == "WaterBcLayer" for l in layers):        # WaterBcFrame names WaterBcLayer, so the layer (and the two it hands V1 back to) is always compiled
         layers = list(layers) + ["WaterBcLayer"]
     layers = list(layers) + [x for x in ("WaterFxLayer", "WaterMagicLayer") if x not in layers]
+    shutil.copy(os.path.join(VFX, "RobloxMath.java"), pkg)                 # the Roblox-style toolkit (docs/vfx_roblox_pass.md): the pure maths + switch, the primitives and the ten effects the old layers hand over to
+    for name in ("RobloxStyle.java", "RobloxFx.java"):
+        shutil.copy(os.path.join(VFX, "client", name), os.path.join(pkg, "client"))
     shutil.copy(os.path.join(VFX, "StarV2.java"), pkg)                     # Star V2: the pure rules (style switch, caps, reduced flashes, textures) StarMagicLayer reads
     shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
     if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
@@ -322,6 +325,8 @@ def run_java(scene, classes, out_json):
         args += ["--star-style", scene["star_style"]]
     if scene.get("reduced"):
         args += ["--reduced", "1"]
+    if scene.get("roblox") is not None:                    # the Roblox-style toolkit: 1 (default) or 0 = the old effect (the before picture)
+        args += ["--roblox", "1" if scene["roblox"] else "0"]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         return json.load(f)

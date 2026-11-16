@@ -53,6 +53,7 @@ public class WaterSpellLayer extends AbstractVfxLayer {
 
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        if (RobloxFx.draw(inst, ctx, buf)) return;                                          // 4.x Roblox-style toolkit (vfx.robloxStyle, docs/vfx_roblox_pass.md); false with the setting off: the effect below is the old one
         switch (inst.shape) {
             case WATER_DRAGON -> dragon(inst, ctx, buf);
             case WATER_CRADLE -> cradle(inst, ctx, buf);

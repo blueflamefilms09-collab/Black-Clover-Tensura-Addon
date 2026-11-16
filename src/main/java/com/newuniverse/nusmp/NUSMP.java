@@ -205,6 +205,7 @@ public class NUSMP {
             com.newuniverse.nusmp.vfx.client.WaterBcConfig.init(modEventBus, modContainer);                                     // Water hybrid look (Roar, Javelin, Cradle, Nest, Burst, Splash, Ring): nusmp-water-bc-client.toml (vfx.element.water = BC | V1)
             com.newuniverse.nusmp.vfx.client.FireV2Config.init(modEventBus, modContainer);                                      // Fire V2 look (11 fire shapes): nusmp-fire-v2-client.toml (vfx.element.fire = V2 | V1, vfx.element.fireReducedFlashes)
             com.newuniverse.nusmp.vfx.client.StarV2Config.init(modEventBus, modContainer);                                      // Star V2 look (the star nodes, lines, Conjunction, pane, lance, whip): nusmp-star-v2-client.toml (vfx.element.star = V2 | V1, vfx.element.starReducedFlashes)
+            com.newuniverse.nusmp.vfx.client.RobloxStyleConfig.init(modEventBus, modContainer);                                // Roblox-style effects (10 shapes): nusmp-roblox-vfx-client.toml (vfx.robloxStyle = true | false = the old drawing)
             com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);

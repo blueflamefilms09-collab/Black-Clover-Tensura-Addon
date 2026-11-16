@@ -55,6 +55,7 @@ public class IceLayer extends AbstractVfxLayer {
 
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        if (RobloxFx.draw(inst, ctx, buf)) return;                                          // 4.x Roblox-style toolkit (vfx.robloxStyle, docs/vfx_roblox_pass.md); false with the setting off: the effect below is the old one
         switch (inst.shape) {
             case ICE_FX1 -> fang(inst, ctx, buf);
             case ICE_FX2 -> field(inst, ctx, buf);

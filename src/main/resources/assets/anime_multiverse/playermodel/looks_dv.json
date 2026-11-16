@@ -1,0 +1,734 @@
+{
+ "version": 1,
+ "note": "Devil player models (docs/devil_looks.md), written by tools/bc_playermodels/gen_dv.py. Every id is 'dv_' + the WorldDevil id; nothing here replaces an older look.",
+ "looks": {
+  "dv_astaroth": {
+   "skin": "dv_astaroth",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_astaroth",
+     "texture": "pmx_dv_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_astaroth_fine",
+     "texture": "pmx_dv_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_astaroth_fx",
+     "texture": "pmx_dv_astaroth",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_astaroth_hair",
+     "texture": "pmx_dv_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_astaroth_hair_fine",
+     "texture": "pmx_dv_astaroth",
+     "glow": false
+    }
+   ]
+  },
+  "dv_beelzebub": {
+   "skin": "dv_beelzebub",
+   "slim": false,
+   "scale": 1.1,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_beelzebub",
+     "texture": "pmx_dv_beelzebub",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_beelzebub_fine",
+     "texture": "pmx_dv_beelzebub",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_beelzebub_hair",
+     "texture": "pmx_dv_beelzebub",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_beelzebub_hair_fine",
+     "texture": "pmx_dv_beelzebub",
+     "glow": false
+    }
+   ]
+  },
+  "dv_curse_devil": {
+   "skin": "dv_curse_devil",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_curse_devil",
+     "texture": "pmx_dv_curse_devil",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_blanc": {
+   "skin": "dv_daemon_blanc",
+   "slim": true,
+   "scale": 1.05,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_blanc",
+     "texture": "pmx_dv_daemon_blanc",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_blanc_fine",
+     "texture": "pmx_dv_daemon_blanc",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_blanc_hair",
+     "texture": "pmx_dv_daemon_blanc",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_blanc_hair_fine",
+     "texture": "pmx_dv_daemon_blanc",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_bleu": {
+   "skin": "dv_daemon_bleu",
+   "slim": true,
+   "scale": 0.94,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_bleu",
+     "texture": "pmx_dv_daemon_bleu",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_bleu_fine",
+     "texture": "pmx_dv_daemon_bleu",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_bleu_fx",
+     "texture": "pmx_dv_daemon_bleu",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_daemon_bleu_hair",
+     "texture": "pmx_dv_daemon_bleu",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_bleu_hair_fine",
+     "texture": "pmx_dv_daemon_bleu",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_jaune": {
+   "skin": "dv_daemon_jaune",
+   "slim": true,
+   "scale": 0.98,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_jaune",
+     "texture": "pmx_dv_daemon_jaune",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_jaune_fine",
+     "texture": "pmx_dv_daemon_jaune",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_jaune_fx",
+     "texture": "pmx_dv_daemon_jaune",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_daemon_jaune_hair",
+     "texture": "pmx_dv_daemon_jaune",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_jaune_hair_fine",
+     "texture": "pmx_dv_daemon_jaune",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_noir": {
+   "skin": "dv_daemon_noir",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_noir",
+     "texture": "pmx_dv_daemon_noir",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_noir_fine",
+     "texture": "pmx_dv_daemon_noir",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_noir_hair",
+     "texture": "pmx_dv_daemon_noir",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_noir_hair_fine",
+     "texture": "pmx_dv_daemon_noir",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_rouge": {
+   "skin": "dv_daemon_rouge",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_rouge",
+     "texture": "pmx_dv_daemon_rouge",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_rouge_fine",
+     "texture": "pmx_dv_daemon_rouge",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_rouge_hair",
+     "texture": "pmx_dv_daemon_rouge",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_rouge_hair_fine",
+     "texture": "pmx_dv_daemon_rouge",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_vert": {
+   "skin": "dv_daemon_vert",
+   "slim": true,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_vert",
+     "texture": "pmx_dv_daemon_vert",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_vert_fine",
+     "texture": "pmx_dv_daemon_vert",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_vert_fx",
+     "texture": "pmx_dv_daemon_vert",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_daemon_vert_hair",
+     "texture": "pmx_dv_daemon_vert",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_vert_hair_fine",
+     "texture": "pmx_dv_daemon_vert",
+     "glow": false
+    }
+   ]
+  },
+  "dv_daemon_violet": {
+   "skin": "dv_daemon_violet",
+   "slim": true,
+   "scale": 0.96,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_daemon_violet",
+     "texture": "pmx_dv_daemon_violet",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_violet_fine",
+     "texture": "pmx_dv_daemon_violet",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_violet_hair",
+     "texture": "pmx_dv_daemon_violet",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_daemon_violet_hair_fine",
+     "texture": "pmx_dv_daemon_violet",
+     "glow": false
+    }
+   ]
+  },
+  "dv_etherious": {
+   "skin": "dv_etherious",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_etherious",
+     "texture": "pmx_dv_etherious",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_etherious_hair",
+     "texture": "pmx_dv_etherious",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_etherious_hair_fine",
+     "texture": "pmx_dv_etherious",
+     "glow": false
+    }
+   ]
+  },
+  "dv_fox_devil": {
+   "skin": "dv_fox_devil",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_fox_devil",
+     "texture": "pmx_dv_fox_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_fox_devil_fine",
+     "texture": "pmx_dv_fox_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_fox_devil_hair",
+     "texture": "pmx_dv_fox_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_fox_devil_hair_fine",
+     "texture": "pmx_dv_fox_devil",
+     "glow": false
+    }
+   ]
+  },
+  "dv_future_devil": {
+   "skin": "dv_future_devil",
+   "slim": false,
+   "scale": 1.08,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_future_devil",
+     "texture": "pmx_dv_future_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_future_devil_fine",
+     "texture": "pmx_dv_future_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_future_devil_fx",
+     "texture": "pmx_dv_future_devil",
+     "glow": true
+    }
+   ]
+  },
+  "dv_ghost_devil": {
+   "skin": "dv_ghost_devil",
+   "slim": true,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_ghost_devil",
+     "texture": "pmx_dv_ghost_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_ghost_devil_fine",
+     "texture": "pmx_dv_ghost_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_ghost_devil_fx",
+     "texture": "pmx_dv_ghost_devil",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_ghost_devil_hair",
+     "texture": "pmx_dv_ghost_devil",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_ghost_devil_hair_fine",
+     "texture": "pmx_dv_ghost_devil",
+     "glow": false
+    }
+   ]
+  },
+  "dv_god_hand": {
+   "skin": "dv_god_hand",
+   "slim": false,
+   "scale": 1.08,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_god_hand",
+     "texture": "pmx_dv_god_hand",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_god_hand_fx",
+     "texture": "pmx_dv_god_hand",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_god_hand_hair",
+     "texture": "pmx_dv_god_hand",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_god_hand_hair_fine",
+     "texture": "pmx_dv_god_hand",
+     "glow": false
+    }
+   ]
+  },
+  "dv_hall_demon": {
+   "skin": "dv_hall_demon",
+   "slim": false,
+   "scale": 1.1,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_hall_demon",
+     "texture": "pmx_dv_hall_demon",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_hall_demon_fine",
+     "texture": "pmx_dv_hall_demon",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_hall_demon_hair",
+     "texture": "pmx_dv_hall_demon",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_hall_demon_hair_fine",
+     "texture": "pmx_dv_hall_demon",
+     "glow": false
+    }
+   ]
+  },
+  "dv_kin_of_amaimon": {
+   "skin": "dv_kin_of_amaimon",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_kin_of_amaimon",
+     "texture": "pmx_dv_kin_of_amaimon",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_amaimon_hair",
+     "texture": "pmx_dv_kin_of_amaimon",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_amaimon_hair_fine",
+     "texture": "pmx_dv_kin_of_amaimon",
+     "glow": false
+    }
+   ]
+  },
+  "dv_kin_of_astaroth": {
+   "skin": "dv_kin_of_astaroth",
+   "slim": false,
+   "scale": 0.96,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_kin_of_astaroth",
+     "texture": "pmx_dv_kin_of_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_astaroth_fx",
+     "texture": "pmx_dv_kin_of_astaroth",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_kin_of_astaroth_hair",
+     "texture": "pmx_dv_kin_of_astaroth",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_astaroth_hair_fine",
+     "texture": "pmx_dv_kin_of_astaroth",
+     "glow": false
+    }
+   ]
+  },
+  "dv_kin_of_egyn": {
+   "skin": "dv_kin_of_egyn",
+   "slim": true,
+   "scale": 0.92,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_kin_of_egyn",
+     "texture": "pmx_dv_kin_of_egyn",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_egyn_fine",
+     "texture": "pmx_dv_kin_of_egyn",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_egyn_hair",
+     "texture": "pmx_dv_kin_of_egyn",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_egyn_hair_fine",
+     "texture": "pmx_dv_kin_of_egyn",
+     "glow": false
+    }
+   ]
+  },
+  "dv_kin_of_iblis": {
+   "skin": "dv_kin_of_iblis",
+   "slim": true,
+   "scale": 0.98,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_kin_of_iblis",
+     "texture": "pmx_dv_kin_of_iblis",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_iblis_fine",
+     "texture": "pmx_dv_kin_of_iblis",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_iblis_fx",
+     "texture": "pmx_dv_kin_of_iblis",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_kin_of_iblis_hair",
+     "texture": "pmx_dv_kin_of_iblis",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_iblis_hair_fine",
+     "texture": "pmx_dv_kin_of_iblis",
+     "glow": false
+    }
+   ]
+  },
+  "dv_kin_of_lucifer": {
+   "skin": "dv_kin_of_lucifer",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_kin_of_lucifer",
+     "texture": "pmx_dv_kin_of_lucifer",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_lucifer_fine",
+     "texture": "pmx_dv_kin_of_lucifer",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_lucifer_fx",
+     "texture": "pmx_dv_kin_of_lucifer",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_kin_of_lucifer_hair",
+     "texture": "pmx_dv_kin_of_lucifer",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_kin_of_lucifer_hair_fine",
+     "texture": "pmx_dv_kin_of_lucifer",
+     "glow": false
+    }
+   ]
+  },
+  "dv_liebe": {
+   "skin": "dv_liebe",
+   "slim": false,
+   "scale": 0.9,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_liebe",
+     "texture": "pmx_dv_liebe",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_liebe_hair",
+     "texture": "pmx_dv_liebe",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_liebe_hair_fine",
+     "texture": "pmx_dv_liebe",
+     "glow": false
+    }
+   ]
+  },
+  "dv_lucifero": {
+   "skin": "dv_lucifero",
+   "slim": false,
+   "scale": 1.08,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_lucifero",
+     "texture": "pmx_dv_lucifero",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifero_fine",
+     "texture": "pmx_dv_lucifero",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifero_hair",
+     "texture": "pmx_dv_lucifero",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifero_hair_fine",
+     "texture": "pmx_dv_lucifero",
+     "glow": false
+    }
+   ]
+  },
+  "dv_lucifugus": {
+   "skin": "dv_lucifugus",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_lucifugus",
+     "texture": "pmx_dv_lucifugus",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifugus_fine",
+     "texture": "pmx_dv_lucifugus",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifugus_fx",
+     "texture": "pmx_dv_lucifugus",
+     "glow": true
+    },
+    {
+     "model": "pmx_dv_lucifugus_hair",
+     "texture": "pmx_dv_lucifugus",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_lucifugus_hair_fine",
+     "texture": "pmx_dv_lucifugus",
+     "glow": false
+    }
+   ]
+  },
+  "dv_megicula": {
+   "skin": "dv_megicula",
+   "slim": true,
+   "scale": 0.94,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_megicula",
+     "texture": "pmx_dv_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_megicula_fine",
+     "texture": "pmx_dv_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_megicula_hair",
+     "texture": "pmx_dv_megicula",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_megicula_hair_fine",
+     "texture": "pmx_dv_megicula",
+     "glow": false
+    }
+   ]
+  },
+  "dv_sebastian": {
+   "skin": "dv_sebastian",
+   "slim": false,
+   "scale": 1.06,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_dv_sebastian",
+     "texture": "pmx_dv_sebastian",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_sebastian_hair",
+     "texture": "pmx_dv_sebastian",
+     "glow": false
+    },
+    {
+     "model": "pmx_dv_sebastian_hair_fine",
+     "texture": "pmx_dv_sebastian",
+     "glow": false
+    }
+   ]
+  }
+ }
+}

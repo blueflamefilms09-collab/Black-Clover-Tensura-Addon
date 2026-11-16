@@ -6,6 +6,9 @@ import com.newuniverse.nusmp.book.NoelleFormRules;
 import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.client.aura.EquipAnimation;
 import com.newuniverse.nusmp.client.bossmesh.BossMeshDraw;
+import com.newuniverse.nusmp.client.playermodel.DevilExtras;
+import com.newuniverse.nusmp.client.playermodel.PlayerLod;
+import com.newuniverse.nusmp.client.playermodel.PlayerLook;
 import com.newuniverse.nusmp.devil.DevilFormRules;
 import com.newuniverse.nusmp.devil.WorldDevil;
 import com.newuniverse.nusmp.perf.PerfProbe;
@@ -38,6 +41,10 @@ import org.joml.Quaternionf;
  * ground ring, up to three draw batches. Per frame at most {@link NoelleFormRules#MAX_FULL_PER_FRAME} players at the full level of detail and {@link NoelleFormRules#MAX_FAR_PER_FRAME} at the far one ({@link
  * NoelleFormRules#budgeted}), nothing beyond {@link DevilFormRules#FAR_BLOCKS} blocks. Nothing is allocated per frame (matrices and the rotation are fields). Section {@code c.devil.form} of the performance
  * probe times it. Not seen in a running game by its author.
+ *
+ * <p>docs/devil_looks.md: while the client option {@code bossLooks.devilPlayerModel} is on (default) the devil's player-model look is worn instead of the mesh parts: its horns, wings, tail, bracers, mantle and
+ * glowing gems ({@link DevilExtras}, no hair: the player keeps their own) forge in by the same stages and the same Rig timing, per body part. Off = the mesh parts exactly as above. Extra cost per player per frame:
+ * the look's quads once (at most 400 with hair left out, fewer; the fine layer only in the full level of detail), the same per-frame crowd budget, one additive pass for the glowing gems in the full level only.
  */
 public final class DevilFormLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private static final PerfProbe.Section SECTION = PerfProbe.section("c.devil.form");
@@ -58,7 +65,10 @@ public final class DevilFormLayer extends RenderLayer<AbstractClientPlayer, Play
     }
 
     /** True when the devil at {@code index} has a mesh and the client setting is on: the generic horns and wings are then not drawn ({@link WegLayer}). */
-    static boolean usable(int index) { return index >= 0 && index < meshes.length && DevilClientConfig.customForms() && mesh(index).available(); }
+    static boolean usable(int index) {
+        if (index >= 0 && index < meshes.length && DevilClientConfig.customForms() && DevilExtras.lookFor(WorldDevil.at(index).id()) != null) return true;     // docs/devil_looks.md: the look is worn
+        return index >= 0 && index < meshes.length && DevilClientConfig.customForms() && mesh(index).available();
+    }
 
     /** Called once a frame (before the world is drawn): the crowd budget starts again. */
     static void newFrame() { full = 0; far = 0; }
@@ -95,12 +105,26 @@ public final class DevilFormLayer extends RenderLayer<AbstractClientPlayer, Play
             int rgb = d.color() & 0xFFFFFF;
             float glowK = lod == NoelleFormRules.Lod.STANDARD ? DevilFormRules.glow(v.level, v.union, age) : 0f;
             RIG.model = getParentModel();
+            PlayerLook look = DevilExtras.lookFor(d.id());
             RIG.flap = air ? Mth.sin(age * 0.38f) * 0.45f : Mth.sin(age * 0.07f) * 0.06f;
             RIG.sway = Mth.sin(age * 0.05f) * 0.12f;
+            if (look != null) {
+                float[] al = RIG.alpha;
+                al[PlayerLook.Anchor.HEAD.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.HEAD]);
+                al[PlayerLook.Anchor.BODY.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.WING_L]);
+                al[PlayerLook.Anchor.ARM_R.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.ARM_R]);
+                al[PlayerLook.Anchor.ARM_L.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.ARM_L]);
+                al[PlayerLook.Anchor.LEG_R.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.LEG_R]);
+                al[PlayerLook.Anchor.LEG_L.ordinal()] = EquipAnimation.alpha(RIG.asm[DevilFormRules.LEG_L]);
+                float speed = (float) Math.hypot(p.getX() - p.xo, p.getZ() - p.zo);
+                boolean std = lod == NoelleFormRules.Lod.STANDARD;
+                DevilExtras.draw(pose, buffers, getParentModel(), look, al, false, false, p.swinging, speed, age / 20f + (p.getId() & 15) * 0.37f, p.getAttackAnim(partial), light,
+                        OverlayTexture.NO_OVERLAY, std ? Math.max(0.35f, glowK) : 0f, rgb, std ? PlayerLod.FULL : PlayerLod.FAR);
+            }
             pose.pushPose();
             pose.translate(0f, 1.501f, 0f);
             pose.mulPose(FLIP);
-            mesh(v.devil).drawParts(pose, buffers, light, 0xFFFFFF, rgb, glowK, d2, RIG);
+            if (look == null) mesh(v.devil).drawParts(pose, buffers, light, 0xFFFFFF, rgb, glowK, d2, RIG);
             if (lod == NoelleFormRules.Lod.STANDARD && RIG.asm[DevilFormRules.TORSO] >= 1f) ring(pose, buffers, d, age, glowK);
             pose.popPose();
         } finally {
@@ -142,6 +166,7 @@ public final class DevilFormLayer extends RenderLayer<AbstractClientPlayer, Play
         PlayerModel<AbstractClientPlayer> model;
         float flap, sway;
         final float[] asm = new float[DevilFormRules.COUNT];
+        final float[] alpha = new float[DevilExtras.ANCHORS];                                   // docs/devil_looks.md: the opacity of each anchor of the worn look this frame
         final Quaternionf q = new Quaternionf();
 
         /** Works out how far each role is assembled ({@link EquipAnimation}'s convention); false when no role is on or going out. */

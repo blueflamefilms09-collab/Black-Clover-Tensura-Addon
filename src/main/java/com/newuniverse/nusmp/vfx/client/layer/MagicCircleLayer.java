@@ -55,6 +55,7 @@ public class MagicCircleLayer extends AbstractVfxLayer {
             return;
         }
         float b = (t - burstAt) / (1 - burstAt);   // 0..1 after the burst
+        if (RobloxFx.circleBurst(inst, ctx, buf, pose.origin(), pose.normal(), radius, b)) return;      // 4.x Roblox-style burst (vfx.robloxStyle); the old burst below runs with the setting off
         float fade = 1 - b;
         Vector3f center = pose.lift(0.2f).origin();
         // Flash

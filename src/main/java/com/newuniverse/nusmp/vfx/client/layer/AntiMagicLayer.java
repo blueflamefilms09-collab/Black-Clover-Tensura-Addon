@@ -31,6 +31,7 @@ public class AntiMagicLayer extends AbstractVfxLayer {
 
     @Override
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
+        if (RobloxFx.draw(inst, ctx, buf)) return;                                          // 4.x Roblox-style toolkit (vfx.robloxStyle, docs/vfx_roblox_pass.md); false with the setting off: the effect below is the old one
         float t = inst.progress(ctx.partialTick), age = inst.ageTicks(ctx.partialTick), P = inst.power;
         Vec3 a = inst.from(ctx), b = inst.to(ctx), d = b.subtract(a);
         if (d.lengthSqr() < 0.01) return;

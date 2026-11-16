@@ -1,0 +1,977 @@
+{
+ "_comment": "Roblox-style toolkit (docs/vfx_roblox_pass.md) before / after scenes: rbx_<name>_old runs the old effect (roblox = false), rbx_<name> the new one. tools/gen_roblox_vfx_textures.py makes the textures.",
+ "rbx_circle_burst_old": {
+  "layer": "MagicCircleLayer",
+  "shape": "MAGIC_CIRCLE_EXPLOSION",
+  "from": [
+   0,
+   0.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   0
+  ],
+  "power": 1.3,
+  "duration": 34,
+  "color": "FFFFB84A",
+  "cam": [
+   6,
+   3.2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   19,
+   21,
+   23,
+   26,
+   30,
+   33
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_circle_burst": {
+  "layer": "MagicCircleLayer",
+  "shape": "MAGIC_CIRCLE_EXPLOSION",
+  "from": [
+   0,
+   0.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   0
+  ],
+  "power": 1.3,
+  "duration": 34,
+  "color": "FFFFB84A",
+  "cam": [
+   6,
+   3.2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   19,
+   21,
+   23,
+   26,
+   30,
+   33
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": true
+ },
+ "rbx_ki_beam_old": {
+  "layer": "KiLayer",
+  "shape": "KI_BEAM",
+  "from": [
+   0,
+   1.3,
+   0.8
+  ],
+  "to": [
+   0,
+   1.3,
+   22
+  ],
+  "power": 1.6,
+  "duration": 34,
+  "color": "FF5EC8FF",
+  "cam": [
+   -7,
+   2.6,
+   5
+  ],
+  "target": [
+   0,
+   1.3,
+   11
+  ],
+  "ages": [
+   1,
+   3,
+   10,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": false
+ },
+ "rbx_ki_beam": {
+  "layer": "KiLayer",
+  "shape": "KI_BEAM",
+  "from": [
+   0,
+   1.3,
+   0.8
+  ],
+  "to": [
+   0,
+   1.3,
+   22
+  ],
+  "power": 1.6,
+  "duration": 34,
+  "color": "FF5EC8FF",
+  "cam": [
+   -7,
+   2.6,
+   5
+  ],
+  "target": [
+   0,
+   1.3,
+   11
+  ],
+  "ages": [
+   1,
+   3,
+   10,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": true
+ },
+ "rbx_ki_shockwave_old": {
+  "layer": "KiLayer",
+  "shape": "KI_SHOCKWAVE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 26,
+  "color": "FF8CD8FF",
+  "cam": [
+   -9,
+   4,
+   -9
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": false
+ },
+ "rbx_ki_shockwave": {
+  "layer": "KiLayer",
+  "shape": "KI_SHOCKWAVE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 26,
+  "color": "FF8CD8FF",
+  "cam": [
+   -9,
+   4,
+   -9
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   10,
+   20
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": true
+ },
+ "rbx_ki_blast_old": {
+  "layer": "KiLayer",
+  "shape": "KI_BLAST",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 3,
+  "duration": 14,
+  "color": "FF9FD8FF",
+  "cam": [
+   -5,
+   2.2,
+   4
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": false
+ },
+ "rbx_ki_blast": {
+  "layer": "KiLayer",
+  "shape": "KI_BLAST",
+  "from": [
+   0,
+   1.3,
+   0.6
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 3,
+  "duration": 14,
+  "color": "FF9FD8FF",
+  "cam": [
+   -5,
+   2.2,
+   4
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.32,
+   0.52,
+   0.82
+  ],
+  "horizon": [
+   0.78,
+   0.82,
+   0.86
+  ],
+  "floor": [
+   0.42,
+   0.38,
+   0.3
+  ],
+  "roblox": true
+ },
+ "rbx_lightning_old": {
+  "layer": "ElementShapesLayer",
+  "shape": "LIGHTNING_SPEAR",
+  "from": [
+   0,
+   6,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   6
+  ],
+  "power": 1.5,
+  "duration": 20,
+  "color": "FFB8D8FF",
+  "cam": [
+   -6,
+   2.5,
+   -3
+  ],
+  "target": [
+   0,
+   3,
+   3
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    6.5,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_lightning": {
+  "layer": "ElementShapesLayer",
+  "shape": "LIGHTNING_SPEAR",
+  "from": [
+   0,
+   6,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   6
+  ],
+  "power": 1.5,
+  "duration": 20,
+  "color": "FFB8D8FF",
+  "cam": [
+   -6,
+   2.5,
+   -3
+  ],
+  "target": [
+   0,
+   3,
+   3
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    6.5,
+    1.8
+   ]
+  ],
+  "roblox": true
+ },
+ "rbx_earth_spikes_old": {
+  "layer": "ElementShapesLayer",
+  "shape": "EARTH_SPIKES",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   8
+  ],
+  "power": 1.2,
+  "duration": 24,
+  "color": "FF8A6A3A",
+  "cam": [
+   -6,
+   3,
+   2
+  ],
+  "target": [
+   0,
+   0.8,
+   4
+  ],
+  "ages": [
+   4,
+   8,
+   12,
+   18
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_earth_spikes": {
+  "layer": "ElementShapesLayer",
+  "shape": "EARTH_SPIKES",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   8
+  ],
+  "power": 1.2,
+  "duration": 24,
+  "color": "FF8A6A3A",
+  "cam": [
+   -6,
+   3,
+   2
+  ],
+  "target": [
+   0,
+   0.8,
+   4
+  ],
+  "ages": [
+   4,
+   8,
+   12,
+   18
+  ],
+  "figures": [
+   [
+    2,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": true
+ },
+ "rbx_anti_slash_old": {
+  "layer": "AntiMagicLayer",
+  "shape": "ANTI_MAGIC_SLASH",
+  "from": [
+   -3,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 1.6,
+  "duration": 18,
+  "color": "FF2A0A30",
+  "cam": [
+   0,
+   2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   12,
+   15
+  ],
+  "figures": [
+   [
+    3.5,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_anti_slash": {
+  "layer": "AntiMagicLayer",
+  "shape": "ANTI_MAGIC_SLASH",
+  "from": [
+   -3,
+   1.2,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   0
+  ],
+  "power": 1.6,
+  "duration": 18,
+  "color": "FF2A0A30",
+  "cam": [
+   0,
+   2,
+   6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   12,
+   15
+  ],
+  "figures": [
+   [
+    3.5,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": true
+ },
+ "rbx_tornado_old": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_TORNADO",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3.0,
+  "duration": 100,
+  "color": "FF8CFFC2",
+  "cam": [
+   0,
+   3,
+   -11
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   40,
+   70,
+   92
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.5,
+   0.58
+  ],
+  "roblox": false
+ },
+ "rbx_tornado": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_TORNADO",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3.0,
+  "duration": 100,
+  "color": "FF8CFFC2",
+  "cam": [
+   0,
+   3,
+   -11
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   6,
+   20,
+   40,
+   70,
+   92
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.5,
+   0.58
+  ],
+  "roblox": true
+ },
+ "rbx_ice_shatter_old": {
+  "layer": "IceLayer",
+  "shape": "ICE_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 3.0,
+  "duration": 28,
+  "cam": [
+   0,
+   3.2,
+   -10
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   9,
+   16,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_ice_shatter": {
+  "layer": "IceLayer",
+  "shape": "ICE_FX3",
+  "from": [
+   0,
+   1.2,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   0
+  ],
+  "power": 3.0,
+  "duration": 28,
+  "cam": [
+   0,
+   3.2,
+   -10
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   1,
+   4,
+   9,
+   16,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "roblox": true
+ },
+ "rbx_water_burst_old": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_BURST",
+  "from": [
+   0,
+   0.8,
+   0
+  ],
+  "to": [
+   0,
+   0.8,
+   0
+  ],
+  "power": 1.8,
+  "duration": 24,
+  "cam": [
+   0,
+   2.2,
+   -7
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "roblox": false
+ },
+ "rbx_water_burst": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_BURST",
+  "from": [
+   0,
+   0.8,
+   0
+  ],
+  "to": [
+   0,
+   0.8,
+   0
+  ],
+  "power": 1.8,
+  "duration": 24,
+  "cam": [
+   0,
+   2.2,
+   -7
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "roblox": true
+ }
+}

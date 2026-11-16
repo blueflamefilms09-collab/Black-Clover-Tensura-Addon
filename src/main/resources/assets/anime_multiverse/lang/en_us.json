@@ -19488,5 +19488,7 @@
   "anime_multiverse.configuration.bcPlayerModel": "Black Clover bosses on the redesigned player model",
   "anime_multiverse.configuration.bcPlayerModel.tooltip": "On: Lucius, the Dark Triad, Zagred, Lucifero and the clones of Lucius are drawn with an anime face, layered hair, crowns, horns, wings, bracers and a faint shimmer. Off: exactly the previous look.",
   "anime_multiverse.configuration.godOfOrderPlayerModel": "God of Order on the player model",
-  "anime_multiverse.configuration.godOfOrderPlayerModel.tooltip": "On: the God of Order is drawn on the redesigned player model (hood, white robe, gold stole, closed serene face, halo) instead of his Blender body. Off (default): the Blender body."
+  "anime_multiverse.configuration.godOfOrderPlayerModel.tooltip": "On: the God of Order is drawn on the redesigned player model (hood, white robe, gold stole, closed serene face, halo) instead of his Blender body. Off (default): the Blender body.",
+  "anime_multiverse.configuration.devilPlayerModel": "Devils on the anime player model",
+  "anime_multiverse.configuration.devilPlayerModel.tooltip": "On: the devil of the ritual and the form a devil's contract gives its signer are drawn with a painted anime face, layered hair, horns, wings, tails, bracers and glowing gems in the devil's colours. Off: exactly the previous figures."
 }

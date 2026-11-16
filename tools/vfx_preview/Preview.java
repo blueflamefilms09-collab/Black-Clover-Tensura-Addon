@@ -34,6 +34,7 @@ public final class Preview {
         com.newuniverse.nusmp.vfx.FireV2.setReducedFlashes("1".equals(o.get("--reduced")));                          // the reduced-flashes option of the fire look
         com.newuniverse.nusmp.vfx.StarV2.setStyle(com.newuniverse.nusmp.vfx.StarV2.parse(o.get("--star-style")));    // the star V2 look (default) or V1, the old starlight beam
         com.newuniverse.nusmp.vfx.StarV2.setReducedFlashes("1".equals(o.get("--reduced")));                          // the reduced-flashes option of the star look
+        com.newuniverse.nusmp.vfx.RobloxMath.setEnabled(!"0".equals(o.get("--roblox")));                             // the Roblox-style toolkit (default on) or the old effects
         AbstractVfxLayer layer = (AbstractVfxLayer) Class.forName(o.get("--layer")).getDeclaredConstructor().newInstance();
         VfxShape shape = VfxShape.valueOf(o.get("--shape"));
         Vec3 from = vec(o.getOrDefault("--from", "0,0,0")), to = vec(o.getOrDefault("--to", "0,1,0"));

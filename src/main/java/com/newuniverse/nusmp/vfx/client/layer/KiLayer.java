@@ -127,6 +127,7 @@ public class KiLayer extends AbstractVfxLayer {
     public void render(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         if (KiVfx.classic()) return;
         if (inst.payload.followEntity() >= 0 && Float.isNaN(inst.followYaw(ctx))) return;        // the followed creature is gone (died, left): the effect ends with it
+        if (RobloxFx.draw(inst, ctx, buf)) return;                                          // 4.x Roblox-style toolkit (vfx.robloxStyle, docs/vfx_roblox_pass.md); false with the setting off: the effect below is the old one
         switch (inst.shape) {
             case KI_BLAST -> blast(inst, ctx, buf);
             case KI_BEAM -> beam(inst, ctx, buf);

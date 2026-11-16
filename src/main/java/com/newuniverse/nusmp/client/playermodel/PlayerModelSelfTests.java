@@ -45,6 +45,13 @@ public final class PlayerModelSelfTests {
             if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
             return SelfTests.Result.ok(BcNpcLooks.oldIds().size() + " redesigned NPC looks, the old ones kept, atlases and budgets in range");
         });
+        SelfTests.register("bcmodel.devils", server -> {                                  // docs/devil_looks.md: the contract devils' looks (every roster devil has one, skins, atlases, budgets)
+            List<String> roster = new ArrayList<>();
+            for (int i = 0; i < com.newuniverse.nusmp.devil.WorldDevil.count(); i++) roster.add(com.newuniverse.nusmp.devil.WorldDevil.at(i).id());
+            List<String> bad = DevilLooksAudit.run(PlayerModelAudit::classpath, roster);
+            if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
+            return SelfTests.Result.ok(DevilLooks.devilIds().size() + " devil looks, every roster devil has one, atlases and budgets in range");
+        });
         SelfTests.register("render.playermodel2", server -> {
             List<String> bad = new ArrayList<>(DungeonAudit.run(PlayerModelAudit::classpath));
             for (String id : DungeonLooks.ENTITIES)

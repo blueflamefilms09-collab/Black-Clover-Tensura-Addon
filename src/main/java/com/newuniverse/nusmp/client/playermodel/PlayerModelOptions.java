@@ -33,6 +33,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue BC_PLAYER_MODEL;
     /** Wave 2 (docs/bosses_bc_wave2.md), key {@code bossLooks.godOfOrderPlayerModel}: the God of Order on the redesigned player model instead of his Blender body (off by default: the Blender body stays). CLIENT config. */
     public static final ModConfigSpec.BooleanValue GOD_OF_ORDER_PLAYER_MODEL;
+    /** The contract devils on their own player-model looks (docs/devil_looks.md), key {@code bossLooks.devilPlayerModel}, CLIENT config (appended after the Black Clover option). */
+    public static final ModConfigSpec.BooleanValue DEVIL_PLAYER_MODEL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -62,6 +64,8 @@ public final class PlayerModelOptions {
                 + "(docs/bosses_bc_wave2.md). Off = exactly the previous look, Lucifero included (his Blender body returns).").define("bcPlayerModel", true);
         GOD_OF_ORDER_PLAYER_MODEL = b.comment("Draw the God of Order on the redesigned player model (hood, white robe, gold stole, closed serene face; docs/bosses_bc_wave2.md) instead of his Blender body. "
                 + "Off (default) = the Blender body (or the kit's look when godOfOrderBlenderModel is off).").define("godOfOrderPlayerModel", false);
+        DEVIL_PLAYER_MODEL = b.comment("The devils of the Devil Contract (the figure in the ritual, and the form a devil's contract gives its signer) on the anime player-model looks: painted face, layered cube hair, "
+                + "horns, wings, tails, bracers and glowing gems in each devil's colours (docs/devil_looks.md). Off = exactly the previous figures (the Blender meshes, or the generic horns and wings).").define("devilPlayerModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -128,6 +132,15 @@ public final class PlayerModelOptions {
             return GOD_OF_ORDER_PLAYER_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return false;
+        }
+    }
+
+    /** True when the contract devils are drawn with their player-model looks (the config value; true while it is not loaded). */
+    public static boolean devilPlayerModel() {
+        try {
+            return DEVIL_PLAYER_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
         }
     }
 
