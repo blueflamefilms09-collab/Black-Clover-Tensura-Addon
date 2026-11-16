@@ -48,6 +48,8 @@ public class GodOfOrder extends ZogratisBoss {
 
     /** The marks the telegraphs lock (package-private: {@link OrderMoves} writes them in the wind-up and reads them when the move runs). */
     Vec3 mark, markDir;
+    /** Boss rework wave 1: the circles {@link OrderRework} locked in a wind-up (the mirror of the Scales, the Verdict Rain). */
+    java.util.List<Vec3> reworkMarks = java.util.List.of();
     boolean erased;
     private UUID caseId, provoker;
     private final Set<UUID> attackers = new HashSet<>();

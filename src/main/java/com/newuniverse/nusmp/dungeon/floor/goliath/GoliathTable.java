@@ -30,6 +30,20 @@ public final class GoliathTable {
     public static final double AFTERSHOCK_REACH = 6.0, FORK_ANGLE = 0.55;
     public static final int AFTERSHOCK_DELAY = 10;
 
+    // ---------------------------------------------------------------- boss rework wave 1 (docs/bosses/rework_wave1.md): the moves appended to the table
+    /** The rows of the table before the rework (the setting bossRework1Moves off keeps only these). */
+    public static final int OLD_MOVES = 7;
+    /** DanMachi's Goliath: the roar that tears spells away, a boulder torn from the floor and thrown, the stone skin (a shield: no healing), a pound of both fists, a chain of stomps. */
+    public static final String MAGEBANE_ROAR = "magebane_roar", BOULDER_HURL = "boulder_hurl", STONE_SKIN = "stone_skin", POUND_SHOCKWAVE = "pound_shockwave", STOMP_CHAIN = "stomp_chain";
+    public static final float ROAR_BLAST = 6f, BOULDER = 18f, POUND = 10f, CHAIN_STOMP = 7f;
+    /** The roar's reach, the boulder's circle, the pound's wave, one stomp's circle and the stride between stomps (blocks; the Gates add a quarter as for the old moves). */
+    public static final double ROAR_REACH = 18.0, BOULDER_RADIUS = 3.0, POUND_REACH = 16.0, POUND_SPEED = 1.8, CHAIN_RADIUS = 3.2, CHAIN_FIRST = 3.0, CHAIN_STEP = 3.5;
+    /** Ticks the boulder flies, the stone skin lasts, between two stomps; how many stomps; how many blessings the roar tears off one foe. */
+    public static final int BOULDER_FLIGHT = 14, SKIN_TICKS = 120, CHAIN_GAP = 8, CHAIN_STOMPS = 4, ROAR_STRIPS = 2;
+    /** The share of a hit that gets through the stone skin, and the most of a victim's health the stomp chain may take in all. */
+    public static final float SKIN_PASS = 0.5f;
+    public static final double CHAIN_BUDGET = 0.45;
+
     /** The plain blow's share of the attack attribute: the giant is slow, and its real hits are the telegraphed ones. */
     public static final float MELEE_SHARE = 0.5f;
 
@@ -75,7 +89,13 @@ public final class GoliathTable {
             new Spec(TWIN_STOMP, "Twin Stomp", 40, 24, 160, 0, 10, 4, false, false, 14),
             new Spec(SEISMIC_LINE, "Seismic Line", 40, 26, 140, 5, 30, 4, false, false, 10),
             new Spec(RUBBLE_FALL, "Rubble Fall", 60, 34, 230, 0, 48, 3, false, true, 12),
-            new Spec(BEDROCK_QUAKE, "Bedrock Quake", 60, 60, 1200, 0, 40, 5, true, false, 60));
+            new Spec(BEDROCK_QUAKE, "Bedrock Quake", 60, 60, 1200, 0, 40, 5, true, false, 60),
+            // boss rework wave 1 (docs/bosses/rework_wave1.md): appended, never reordered; the first OLD_MOVES rows are the table above
+            new Spec(MAGEBANE_ROAR, "Magebane Roar", 40, 30, 520, 0, 18, 2, false, true, 14),
+            new Spec(BOULDER_HURL, "Boulder Hurl", 40, 30, 220, 10, 40, 3, false, false, 12),
+            new Spec(STONE_SKIN, "Stone Skin", 40, 24, 700, 0, 48, 2, false, false, 10),
+            new Spec(POUND_SHOCKWAVE, "Ground-Pound Shockwave", 60, 32, 260, 0, 16, 3, false, true, 16),
+            new Spec(STOMP_CHAIN, "Giant Stomp Chain", 60, 28, 240, 4, 20, 3, false, false, 16));
 
     /** The table, in the order of the boss's move list (the client reads the move being wound up by index). */
     public static List<Spec> specs() { return SPECS; }
@@ -98,6 +118,11 @@ public final class GoliathTable {
             case SEISMIC_LINE -> "The floor splits in a line: step off it!";
             case RUBBLE_FALL -> "Rubble falls on the marked circles: leave them!";
             case BEDROCK_QUAKE -> "The Bedrock Quake: three waves in a row. Jump each one!";
+            case MAGEBANE_ROAR -> "The Goliath draws a breath: its roar tears blessings away. Leave the ring!";
+            case BOULDER_HURL -> "The Goliath tears up a boulder: leave the marked circle!";
+            case STONE_SKIN -> "The Goliath's stone hardens: for a few seconds your blows do half. Wait it out.";
+            case POUND_SHOCKWAVE -> "Both fists come down: a fast shockwave. Jump it!";
+            case STOMP_CHAIN -> "The Goliath stomps toward you: step off the marked circles!";
             default -> "";
         };
     }

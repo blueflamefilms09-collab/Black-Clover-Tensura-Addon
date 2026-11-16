@@ -22,5 +22,6 @@ public final class BossHooks {
         NeoForge.EVENT_BUS.addListener(BossStatBuff::onJoin);                         // 3.64.0: the Black Clover bosses x3
         NeoForge.EVENT_BUS.addListener(BossStatBuff::onIncomingDamage);
         BossStatSelfTests.register();                                                 // key boss.stats
+        com.newuniverse.nusmp.boss.rework.BossReworkSelfTests.register();              // key boss.rework1 (boss rework wave 1)
     }
 }

@@ -79,6 +79,9 @@ public class GoliathBoss extends ZogratisBoss {
     /** The rise last tick and this tick, for the smooth sink of the model (both sides). */
     private float riseO = 1f, riseNow = 1f;
     private boolean riseSeen;
+    /** Boss rework wave 1 (server): the marks {@link GoliathRework} locked in a wind-up, and the tick the Stone Skin wears off. */
+    List<Vec3> reworkMarks = List.of();
+    int skinUntil;
 
     public GoliathBoss(EntityType<GoliathBoss> type, Level level) {
         super(type, level);
@@ -176,6 +179,16 @@ public class GoliathBoss extends ZogratisBoss {
         if (!level().isClientSide && rising() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
         return super.hurt(source, amount);
     }
+
+    /** Boss rework wave 1: while the Stone Skin holds, half of every hit is turned aside (a shield, not a heal: nothing is given back). */
+    @Override
+    protected float filterDamage(DamageSource source, float amount) {
+        float a = super.filterDamage(source, amount);
+        return skinned() ? com.newuniverse.nusmp.boss.rework.BossRework.shielded(a, GoliathTable.SKIN_PASS) : a;
+    }
+
+    /** Is the Stone Skin up? */
+    public boolean skinned() { return tickCount < skinUntil; }
 
     /** ... and it looks for nobody until it stands. */
     @Override
@@ -367,7 +380,7 @@ public class GoliathBoss extends ZogratisBoss {
     @Override
     protected List<Move> moves() {
         List<Move> out = new ArrayList<>();
-        for (GoliathTable.Spec s : GoliathTable.specs()) {
+        for (GoliathTable.Spec s : com.newuniverse.nusmp.boss.rework.BossRework.trim(GoliathTable.specs(), GoliathTable.OLD_MOVES, com.newuniverse.nusmp.boss.rework.ReworkFx.moves())) {
             Move.Builder b = Move.builder(s.id(), s.label()).minPower(s.minPower()).windUp(s.windUpTicks()).cooldown(s.cooldownTicks())
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();
@@ -409,7 +422,7 @@ public class GoliathBoss extends ZogratisBoss {
                 unlock();
                 GoliathMoves.rubbleFall(this, spots, reach(GoliathTable.RUBBLE_RADIUS), GoliathTable.RUBBLE);
             };
-            default -> (b, t) -> { };
+            default -> GoliathRework.runOf(this, id);                                        // boss rework wave 1: the appended moves
         };
     }
 
@@ -477,7 +490,7 @@ public class GoliathBoss extends ZogratisBoss {
             case GoliathTable.BEDROCK_FIST -> (b, t, left, total) -> tellFist(t, left, total);
             case GoliathTable.SEISMIC_LINE -> (b, t, left, total) -> tellLine(t, left, total);
             case GoliathTable.RUBBLE_FALL -> (b, t, left, total) -> tellRubble(left, total);
-            default -> null;
+            default -> GoliathRework.tellOf(this, id);
         };
     }
 

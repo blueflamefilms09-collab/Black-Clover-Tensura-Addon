@@ -37,6 +37,6 @@ class CharybdisFrenzyTest {
     @Test
     void theBuildIsTougherAndTheLastMoveIsStillTheUltimate() {
         assertTrue(CharybdisTable.HEALTH > 1100);
-        assertEquals(CharybdisTable.MAELSTROM, CharybdisTable.specs().get(CharybdisTable.specs().size() - 1).id());
+        assertEquals(CharybdisTable.MAELSTROM, CharybdisTable.specs().get(CharybdisTable.OLD_MOVES - 1).id(), "the ultimate closes the old list (boss rework wave 1 appends after it)");
     }
 }

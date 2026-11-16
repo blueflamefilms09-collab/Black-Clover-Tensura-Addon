@@ -158,7 +158,14 @@ public abstract class DanMachiBoss extends ArcBoss {
         int ticks = s.shape() == DmSpec.Shape.CUSTOM ? runCustom(s, target) : DmShapes.run(this, s, target);
         busyFor(ticks + 2);
         aim = null;
+        if (com.newuniverse.nusmp.boss.rework.ReworkFx.on() && level() instanceof ServerLevel sl && target != null) signature(sl, s, target);
     }
+
+    /**
+     * Boss rework wave 1 (docs/bosses/rework_wave1.md): the monster's own signature effect as one of its moves lands, so the four do not all read as the shared stone rings
+     * of {@link DmFx}. One effect per cast, through the boss effect budget, sent only while the setting {@code bossRework1Vfx} is on. The default draws nothing.
+     */
+    protected void signature(ServerLevel sl, DmSpec s, LivingEntity target) {}
 
     boolean calledAny() { return called; }
 

@@ -16,6 +16,8 @@ public final class BossRulesConfig {
             LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL, ENVIRONMENT_IMMUNE;
     public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS;
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
+    /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
+    public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -44,6 +46,11 @@ public final class BossRulesConfig {
         BLACK_CLOVER_STATS = b.comment("3.64.0: the Black Clover bosses (Dark Triad, Lucius, Devil Avatar, Zagred, the Midnight Sun elves, the early-arc and Spade Kingdom bosses) have this many times their maximum health",
                         "and deal this many times the damage (a boosted hit never takes more than half of a victim's maximum health). 3 = three times as strong, 1 = off (the old numbers).")
                 .defineInRange("blackCloverStatMultiplier", 3.0, 1.0, 10.0);
+        REWORK_MOVES = b.comment("Boss rework wave 1: the new moves appended to the Goliath, the God of Order, the Charybdis Spawn and seven Tier List bosses. false = their old move lists (read when a boss is built).")
+                .define("bossRework1Moves", true);
+        REWORK_VFX = b.comment("Boss rework wave 1: Lucifero's shaped gravity effects and the signature effects of the Black Goliath, the Minotaur, the Amphisbaena and the new moves. false = the old dust bursts.",
+                        "A server setting because the server decides which effect it sends; it changes looks only.")
+                .define("bossRework1Vfx", true);
         b.pop();
         SPEC = b.build();
     }
@@ -77,4 +84,10 @@ public final class BossRulesConfig {
     private static <T> T get(ModConfigSpec.ConfigValue<T> v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
+
+    /** Boss rework wave 1: are the appended moves in the move lists? */
+    public static boolean reworkMoves() { return get(REWORK_MOVES); }
+
+    /** Boss rework wave 1: the shaped effects (false = the old dust bursts). */
+    public static boolean reworkVfx() { return get(REWORK_VFX); }
 }

@@ -77,7 +77,7 @@ final class CharybdisMoves {
             case CharybdisTable.SUMMON -> (b, t, left, total) -> tellSummon(of(b), t, left, total);
             case CharybdisTable.TIDAL_CRUSH -> (b, t, left, total) -> tellCrush(of(b), t, left, total);
             case CharybdisTable.MAELSTROM -> (b, t, left, total) -> tellMaelstrom(of(b), left, total);
-            default -> null;
+            default -> CharybdisRework.tellOf(id);                                   // boss rework wave 1: the appended moves
         };
     }
 
@@ -221,7 +221,7 @@ final class CharybdisMoves {
                 crush(boss, at != null ? at : floorUnder(sl, t.position()));
             };
             case CharybdisTable.MAELSTROM -> (b, t) -> maelstrom(of(b), t);
-            default -> (b, t) -> { };
+            default -> CharybdisRework.runOf(id);
         };
     }
 

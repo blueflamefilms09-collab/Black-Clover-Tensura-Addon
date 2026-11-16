@@ -34,7 +34,7 @@ final class OrderMoves {
 
     static List<Move> build(GodOfOrder god) {
         List<Move> out = new ArrayList<>();
-        for (OrderTable.Spec s : OrderTable.specs()) {
+        for (OrderTable.Spec s : com.newuniverse.nusmp.boss.rework.BossRework.trim(OrderTable.specs(), OrderTable.OLD_MOVES, com.newuniverse.nusmp.boss.rework.ReworkFx.moves())) {
             Move.Builder b = Move.builder(s.id(), s.label()).minPower(s.minPower()).windUp(s.windUp()).cooldown(s.cooldown())
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();
@@ -60,7 +60,7 @@ final class OrderMoves {
                 god.quip(id);
             };
             case OrderTable.ERASURE -> (boss, target) -> erasure(god);
-            default -> (boss, target) -> { };
+            default -> OrderRework.runOf(god, id);                                    // boss rework wave 1: the appended moves
         };
     }
 
@@ -70,7 +70,7 @@ final class OrderMoves {
             case OrderTable.WRIT -> (boss, target, left, total) -> tellWrit(god, target, left, total);
             case OrderTable.JUDGEMENT -> (boss, target, left, total) -> tellJudgement(god, target, left, total);
             case OrderTable.ERASURE -> (boss, target, left, total) -> tellErasure(god, left, total);
-            default -> null;
+            default -> OrderRework.tellOf(god, id);
         };
     }
 

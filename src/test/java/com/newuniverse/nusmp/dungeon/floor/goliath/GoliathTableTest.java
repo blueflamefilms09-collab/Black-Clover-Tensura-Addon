@@ -32,7 +32,7 @@ class GoliathTableTest {
 
     @Test
     void theTableHoldsSixToEightMovesWithOneUltimate() {
-        assertTrue(SPECS.size() >= 6 && SPECS.size() <= 8, "six to eight moves: " + SPECS.size());
+        assertTrue(SPECS.size() >= 6 && SPECS.size() <= 12, "six to twelve moves (seven, and the rework's appended five): " + SPECS.size());
         Set<String> ids = new HashSet<>();
         int ultimates = 0;
         for (GoliathTable.Spec s : SPECS) {
@@ -44,7 +44,7 @@ class GoliathTableTest {
         }
         assertEquals(1, ultimates, "one ultimate");
         assertNull(GoliathTable.byId("nonsense"));
-        assertEquals(GoliathTable.BEDROCK_QUAKE, SPECS.get(SPECS.size() - 1).id(), "the ultimate is last");
+        assertEquals(GoliathTable.BEDROCK_QUAKE, SPECS.get(GoliathTable.OLD_MOVES - 1).id(), "the ultimate closes the old list (the rework's rows are appended after it)");
         for (String id : new String[]{GoliathTable.GROUND_SLAM, GoliathTable.TWIN_STOMP, GoliathTable.ROARING_SHOCKWAVE, GoliathTable.BEDROCK_FIST, GoliathTable.SEISMIC_LINE,
                 GoliathTable.RUBBLE_FALL, GoliathTable.BEDROCK_QUAKE}) assertTrue(ids.contains(id), id);
     }

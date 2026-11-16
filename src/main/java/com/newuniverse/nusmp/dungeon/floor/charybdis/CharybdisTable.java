@@ -20,6 +20,8 @@ public final class CharybdisTable {
 
     public static final String SCALE_VOLLEY = "scale_volley", TENTACLE_SWEEP = "tentacle_sweep", WHIRLPOOL = "whirlpool", BEAK_LUNGE = "beak_lunge",
             SUMMON = "summon_megalodons", TIDAL_CRUSH = "tidal_crush", MAELSTROM = "maelstrom_of_scales";
+    /** Boss rework wave 1 (appended rows, see below): the storm of scale shards on marked circles, the current that drags the party in, the maw at the heart of a whirlpool, and Magic Interference (the scales' anti-magic). */
+    public static final String SCALE_SHARD_STORM = "scale_shard_storm", TEMPEST_CURRENT = "tempest_current", WHIRLPOOL_MAW = "whirlpool_maw", MAGIC_INTERFERENCE = "magic_interference";
 
     /** The scoreboard tags: every floor boss, this boss, and its megalodons. */
     public static final String TAG_FLOOR_BOSS = "nusmp_floor_boss", TAG_BOSS = "nusmp_charybdis", TAG_MINION = "nusmp_charybdis_minion";
@@ -67,10 +69,35 @@ public final class CharybdisTable {
             new Spec(BEAK_LUNGE, "Beak Lunge", 40, 28, 200, 6, 28, 4, false, false, 30),
             new Spec(SUMMON, "Summon Megalodons", 40, 32, 520, 0, 48, 3, false, false, 14),
             new Spec(TIDAL_CRUSH, "Tidal Crush", 40, 46, 230, 0, 30, 4, false, false, 20),
-            new Spec(MAELSTROM, "Maelstrom of Scales", 60, 60, 1500, 0, 40, 5, true, true, 60));
+            new Spec(MAELSTROM, "Maelstrom of Scales", 60, 60, 1500, 0, 40, 5, true, true, 60),
+            // boss rework wave 1 (docs/bosses/rework_wave1.md): appended, never reordered; the first OLD_MOVES rows are the table above
+            new Spec(SCALE_SHARD_STORM, "Scale-Shard Storm", 40, 34, 300, 0, 36, 3, false, true, 14),
+            new Spec(TEMPEST_CURRENT, "Tempest Current", 40, 28, 320, 6, 30, 3, false, true, 14),
+            new Spec(WHIRLPOOL_MAW, "Whirlpool Maw", 60, 40, 420, 0, 14, 3, false, true, 20),
+            new Spec(MAGIC_INTERFERENCE, "Magic Interference", 40, 30, 600, 0, 24, 2, false, true, 12));
 
     /** The table, in the order of the boss's move list (the client reads move names by index). */
     public static List<Spec> specs() { return SPECS; }
+
+    // ---------------------------------------------------------------- boss rework wave 1 (docs/bosses/rework_wave1.md): Tensura's Charybdis, appended
+    /** The rows of the table before the rework (the setting bossRework1Moves off keeps only these). */
+    public static final int OLD_MOVES = 7;
+    public static final float SHARD = 9f, MAW = 20f, INTERFERENCE = 4f;
+    /** A shard circle, the current's reach and the core it drags toward, the maw's whirlpool and its jaws, the field of Magic Interference (blocks). */
+    public static final double SHARD_RADIUS = 2.6, CURRENT_RADIUS = 20.0, CURRENT_CORE = 4.0, CURRENT_SPEED = 0.16, MAW_RADIUS = 8.0, MAW_CORE = 3.2, INTERFERENCE_RADIUS = 16.0;
+    /** Shard circles at most, ticks from the wind-up to the shards landing, the current's and the maw's ticks, blessings torn off one foe. */
+    public static final int SHARD_SPOTS = 4, SHARD_LAND = 10, CURRENT_TICKS = 50, MAW_TICKS = 60, INTERFERENCE_STRIPS = 2;
+
+    /** The warning the foes read on the action bar while a rework move winds up ("" for any other move). */
+    public static String warning(String id) {
+        return switch (id) {
+            case SCALE_SHARD_STORM -> "Scale shards will rain on the marked circles: leave them!";
+            case TEMPEST_CURRENT -> "The tide turns toward the leviathan: swim against the current!";
+            case WHIRLPOOL_MAW -> "A whirlpool opens round the leviathan and its maw waits at the heart: get out of the ring!";
+            case MAGIC_INTERFERENCE -> "The scales hum with Magic Interference: your blessings will be torn away inside the ring.";
+            default -> "";
+        };
+    }
 
     public static Spec byId(String id) {
         for (Spec s : SPECS) if (s.id().equals(id)) return s;

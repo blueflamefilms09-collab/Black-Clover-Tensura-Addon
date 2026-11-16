@@ -251,7 +251,7 @@ public class LuciferoBoss extends ArcBoss {
     private void tearShroud(ServerLevel sl, long now) {
         staggerUntil = now + ShroudState.STAGGER_TICKS;
         announce("The Gravity Shroud is torn! Lucifero staggers: strike him now.");
-        Tells.burst(sl, position().add(0, 1.3, 0), ACCENT, 50);
+        LuciferoFx.burst(sl, position().add(0, 1.3, 0), ACCENT, 50);             // boss rework wave 1: shaped (bossRework1Vfx off = the old dust)
         sl.playSound(null, blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.HOSTILE, 1.5f, 0.5f);
         quip("Insects with teeth.", "Tch. A blade, then.");
     }
@@ -303,7 +303,7 @@ public class LuciferoBoss extends ArcBoss {
         if (!shell.active(now)) {
             dropShell();
             announce("The shell of swallowed devils shatters!");
-            Tells.burst(sl, position().add(0, 1.3, 0), ACCENT, 40);
+            LuciferoFx.burst(sl, position().add(0, 1.3, 0), ACCENT, 40);
         } else if (now - lastShellNote > 60) {
             lastShellNote = now;
             announce("A shell of swallowed devils holds (" + Math.round(shell.fraction() * 100) + "% left). Burst it, or wait it out.");
@@ -564,7 +564,7 @@ public class LuciferoBoss extends ArcBoss {
             announce("Six Limbs: six strikes round him, one after another. Back off beyond " + WeightMath.ARM_REACH + " blocks.");
         }
         Tells.ring(sl, position(), WeightMath.ARM_REACH, WARN, 1.3f, 40);
-        for (double a : WeightMath.armAngles(6, armPhase)) SpadeFx.spoke(sl, position(), a, WeightMath.ARM_REACH, WARN);
+        for (double a : WeightMath.armAngles(6, armPhase)) LuciferoFx.armTell(sl, position(), a, WeightMath.ARM_REACH, first(left, total), total);
     }
 
     // ---------------------------------------------------------------- the moves that need more than a call
@@ -577,7 +577,7 @@ public class LuciferoBoss extends ArcBoss {
             for (DarkDiscipleEntity d : mine) {
                 if (count >= 4) break;
                 ZogratisVfx.lane(sl, d.position().add(0, 1, 0), position().add(0, 1.5, 0), 1.2, 14, ACCENT, false);
-                Tells.burst(sl, d.position().add(0, 1, 0), RGB, 12);
+                LuciferoFx.burst(sl, d.position().add(0, 1, 0), RGB, 12);
                 d.discard();
                 count++;
             }

@@ -18,7 +18,7 @@ class CharybdisTableTest {
 
     @Test
     void theTableIsWellFormed() {
-        assertTrue(SPECS.size() >= 6 && SPECS.size() <= 8, "six to eight moves besides the plain strike: " + SPECS.size());
+        assertTrue(SPECS.size() >= 6 && SPECS.size() <= 12, "six to twelve moves besides the plain strike (seven, and the rework's appended four): " + SPECS.size());
         Set<String> ids = new HashSet<>();
         for (CharybdisTable.Spec s : SPECS) {
             assertTrue(ids.add(s.id()), "unique id " + s.id());
@@ -31,7 +31,7 @@ class CharybdisTableTest {
             assertTrue(s.recovery() >= 8, "a beat to breathe after every move");
             assertTrue(s.manaCost() > 0);
         }
-        assertSame(CharybdisTable.byId(CharybdisTable.MAELSTROM), SPECS.get(SPECS.size() - 1), "the ultimate is last");
+        assertSame(CharybdisTable.byId(CharybdisTable.MAELSTROM), SPECS.get(CharybdisTable.OLD_MOVES - 1), "the ultimate closes the old list (boss rework wave 1 appends after it)");
         assertNull(CharybdisTable.byId("nope"));
         for (String id : new String[]{CharybdisTable.SCALE_VOLLEY, CharybdisTable.TENTACLE_SWEEP, CharybdisTable.WHIRLPOOL, CharybdisTable.BEAK_LUNGE,
                 CharybdisTable.SUMMON, CharybdisTable.TIDAL_CRUSH, CharybdisTable.MAELSTROM})

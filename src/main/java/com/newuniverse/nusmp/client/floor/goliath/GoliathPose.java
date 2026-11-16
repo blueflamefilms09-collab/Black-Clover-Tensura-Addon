@@ -24,6 +24,10 @@ public final class GoliathPose {
             case GoliathTable.SEISMIC_LINE -> LINE;
             case GoliathTable.RUBBLE_FALL -> RUBBLE;
             case GoliathTable.BEDROCK_QUAKE -> QUAKE;
+            case GoliathTable.MAGEBANE_ROAR, GoliathTable.STONE_SKIN -> ROAR;                 // boss rework wave 1: the appended moves play the old clips
+            case GoliathTable.BOULDER_HURL -> RUBBLE;
+            case GoliathTable.POUND_SHOCKWAVE -> SLAM;
+            case GoliathTable.STOMP_CHAIN -> STOMP;
             default -> null;
         };
     }

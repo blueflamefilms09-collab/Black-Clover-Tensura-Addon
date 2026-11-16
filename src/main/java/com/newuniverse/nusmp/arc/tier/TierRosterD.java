@@ -56,6 +56,7 @@ public final class TierRosterD {
                         .move(of("prometheus_blaze", "Prometheus: Sun Blaze", SLAM).power(30).wind(24).cd(170).range(0, 10).weight(3).dmg(1.0).size(6).fx(BURN, 60).crowd().named())
                         .move(of("hungry_stomp", "Hungry Stomp", WAVE).power(40).wind(26).cd(220).range(0, 12).weight(3).dmg(0.9).size(10).knock(0.9).filler())
                         .move(of("soul_pocus", "Soul Pocus: Homies", VOLLEY).wind(48).range(6, 34).count(4).size(50).dmg(0.95).magic().ult().named())
+                        .move(of("ikoku_sovereignty", "Ikoku Sovereignty", BEAM).power(40).wind(30).cd(360).range(4, 20).weight(2).dmg(1.2).size(16).knock(1.0).named())   // boss rework wave 1, appended
                         .trait(TierTrait.SOUL_MARK)
                         .trait(TierTrait.FUSION)
                         .build(),
@@ -66,6 +67,7 @@ public final class TierRosterD {
                         .move(of("inner_strike", "Inner Strike", RUSH).power(30).wind(20).cd(130).range(4, 16).weight(3).dmg(1.1).size(9).filler())
                         .move(of("kara_seal", "Kara Seal", MARKED).power(30).wind(22).cd(140).range(5, 24).weight(3).dmg(1.1).size(2.6).fx(SLOW, 80).filler())
                         .move(of("karma_overdrive", "Karma Overdrive", WAVE).wind(46).range(0, 20).size(11).dmg(1.3).crowd().ult().filler())
+                        .move(of("claw_grime", "Claw Grime", MARKED).power(40).wind(30).cd(360).range(4, 24).count(4).size(2.4).weight(2).dmg(0.7).fx(SLOW, 60).magic().named())   // boss rework wave 1, appended
                         .trait(TierTrait.KARMA, "karma_burst")
                         .trait(TierTrait.SIGHT)
                         .build(),
@@ -76,6 +78,7 @@ public final class TierRosterD {
                         .move(of("wall_fragments", "Wall Fragments", VOLLEY).wind(24).cd(170).range(6, 30).count(3).size(40).weight(3).dmg(0.6).crowd().theme())
                         .move(of("steam_burst", "Steam Burst", WAVE).power(40).wind(26).cd(190).range(0, 12).weight(3).dmg(1.0).size(9).fx(BURN, 80).crowd().named())
                         .move(of("colossal_blast", "Colossal Transformation Blast", WAVE).wind(48).range(0, 20).size(13).dmg(1.4).knock(1.1).ult().named())
+                        .move(of("wall_breach_kick", "Wall-Breaching Kick", CLEAVE).power(40).wind(30).cd(360).range(0, 9).weight(2).dmg(1.2).size(8).knock(1.2).theme())   // boss rework wave 1, appended
                         .trait(TierTrait.STEAM)
                         .trait(TierTrait.FUSION)
                         .build(),
@@ -106,6 +109,7 @@ public final class TierRosterD {
                         .move(of("alexander", "Alexander the Chimera", SWARM).power(40).wind(26).cd(190).range(5, 30).count(2).size(2.4).dmg(1.0).theme())
                         .move(of("transmutation_circle", "Transmutation Circle", SLAM).power(30).wind(22).cd(130).range(0, 9).weight(3).dmg(0.8).size(5.5).fx(WEAKEN, 80).crowd().theme())
                         .move(of("chimera_rampage", "Chimera Rampage", WAVE).wind(48).range(0, 20).size(11).dmg(1.4).knock(0.9).ult().theme())
+                        .move(of("life_sewing", "Life-Sewing Transmutation", MARKED).power(40).wind(30).cd(360).range(4, 24).count(3).size(2.6).weight(2).dmg(0.8).fx(WEAKEN, 80).magic().theme())   // boss rework wave 1, appended
                         .trait(TierTrait.FUSION)
                         .trait(TierTrait.SPORE_POISON)
                         .build(),

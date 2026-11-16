@@ -41,6 +41,6 @@ class OrderOpenLedgerTest {
         assertEquals(OrderTable.JUDGEMENT_RADIUS * 1.25, OrderTable.judgementRadius(true), 1e-9);
         assertTrue(OrderTable.judgementRadius(true) < 6.0 && OrderTable.decreeRadius(true) < 8.0, "still leavable in the wind-up");
         assertTrue(OrderTable.HEALTH > 1200 && OrderTable.ATTACK >= 14);
-        assertEquals(OrderTable.ERASURE, OrderTable.specs().get(OrderTable.specs().size() - 1).id());
+        assertEquals(OrderTable.ERASURE, OrderTable.specs().get(OrderTable.OLD_MOVES - 1).id(), "the Erasure closes the old list (boss rework wave 1 appends after it)");
     }
 }

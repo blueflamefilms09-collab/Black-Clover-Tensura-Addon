@@ -16,6 +16,10 @@ public final class OrderTable {
 
     // ---- the four moves of the fight
     public static final String DECREE = "decree", WRIT = "writ", JUDGEMENT = "judgement", ERASURE = "erasure";
+    /** Boss rework wave 1 (docs/bosses/rework_wave1.md, appended rows): the seal that silences, the two pans of the scales, the chains of law, the rain of verdicts. */
+    public static final String SEAL_OF_SILENCE = "seal_of_silence", SCALES_OF_ORDER = "scales_of_order", CHAINS_OF_LAW = "chains_of_law", VERDICT_RAIN = "verdict_rain";
+    /** The rows of the table before the rework (the setting bossRework1Moves off keeps only these). */
+    public static final int OLD_MOVES = 4;
 
     /** One move's numbers (the entity builds a framework Move from it). */
     public record Spec(String id, String label, int minPower, int windUp, int cooldown, double minRange, double maxRange, int weight,
@@ -25,9 +29,31 @@ public final class OrderTable {
             new Spec(DECREE, "Decree of Binding", 20, 28, 160, 0, 30, 4, false, 10),
             new Spec(WRIT, "Writ of Light", 20, 24, 120, 3, 26, 4, false, 10),
             new Spec(JUDGEMENT, "Circle of Judgement", 40, 40, 240, 0, 28, 3, false, 14),
-            new Spec(ERASURE, "Erasure", 20, 60, 2_400, 0, 40, 1, true, 20));
+            new Spec(ERASURE, "Erasure", 20, 60, 2_400, 0, 40, 1, true, 20),
+            // boss rework wave 1: appended, never reordered (the client reads move names by index)
+            new Spec(SEAL_OF_SILENCE, "Seal of Silence", 40, 30, 360, 0, 24, 3, false, 12),
+            new Spec(SCALES_OF_ORDER, "Scales of Order", 40, 34, 300, 4, 30, 3, false, 12),
+            new Spec(CHAINS_OF_LAW, "Chains of Law", 60, 30, 320, 3, 22, 3, false, 12),
+            new Spec(VERDICT_RAIN, "Verdict Rain", 60, 36, 380, 0, 36, 2, false, 14));
 
     public static List<Spec> specs() { return SPECS; }
+
+    // ---- boss rework wave 1: the numbers of the appended moves
+    /** Seal of Silence: a ring locked on the foe; inside it two timed blessings are torn away and the foe is slowed. */
+    public static final double SEAL_RADIUS = 4.5;
+    public static final float SEAL_DAMAGE = 6f;
+    public static final int SEAL_STRIPS = 2;
+    /** Scales of Order: one circle under the foe and its mirror across the God, struck together. */
+    public static final double SCALES_RADIUS = 3.0;
+    public static final float SCALES_DAMAGE = 14f;
+    /** Chains of Law: a corridor of chains that holds (slowness III, two seconds) and stings. */
+    public static final double CHAINS_LENGTH = 18.0, CHAINS_HALF_WIDTH = 1.3;
+    public static final float CHAINS_DAMAGE = 8f;
+    public static final int CHAINS_TICKS = 40, CHAINS_AMP = 2;
+    /** Verdict Rain: a circle under each foe (at most four), struck by a beam from the sky after the wind-up. */
+    public static final double VERDICT_RADIUS = 2.8;
+    public static final float VERDICT_DAMAGE = 12f;
+    public static final int VERDICT_SPOTS = 4;
 
     // ---- Decree: a ring of binding glyphs that slows
     public static final double DECREE_RADIUS = 5.0;

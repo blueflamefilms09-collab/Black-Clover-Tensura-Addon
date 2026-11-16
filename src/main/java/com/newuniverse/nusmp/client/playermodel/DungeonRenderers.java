@@ -49,13 +49,28 @@ public final class DungeonRenderers {
         guard("living_armor", () -> kitOrOld(e, DungeonEntities.LIVING_ARMOR.get(), armour, DungeonBodies.Armour::kitDraws, ctx -> old(DungeonEntities.LIVING_ARMOR.get(), ctx)));
         guard("floor_warden", () -> kitOrOld(e, SealRegistry.FLOOR_WARDEN.get(), armour, DungeonBodies.Armour::kitDraws, ctx -> old(SealRegistry.FLOOR_WARDEN.get(), ctx)));
         guard("labyrinth_guardian", () -> kitOrOld(e, GuardRegistry.GUARDIAN.get(), armour, DungeonBodies.Armour::kitDraws, AbyssalRenderer::new));
-        guard("goliath", () -> kitOrOld(e, GoliathEntities.GOLIATH.get(), new DungeonBodies.Goliath(), DungeonBodies.Goliath::kitDraws,
-                ctx -> { EntityRenderer<GoliathBoss> o = old(GoliathEntities.GOLIATH.get(), ctx); return o != null ? o : new GoliathRenderer(ctx); }));
+        guard("goliath", () -> goliath(e));                                          // boss rework wave 1: its own stone model by default again (client setting goliathStoneModel)
         guard("foundry_mob", () -> kitOrOld(e, FoundryRegistry.MOB.get(), new DungeonBodies.Foundry(), DungeonBodies.Foundry::kitDraws, FoundryRenderer::new));
         DungeonBodies.Corpse corpse = new DungeonBodies.Corpse();
         guard("corpse_jimmy", () -> kitOrOld(e, CorpseEntities.JIMMY.get(), corpse, DungeonBodies.Corpse::kitDraws, NamedCorpseRenderer::new));
         guard("corpse_alfredo", () -> kitOrOld(e, CorpseEntities.ALFREDO.get(), corpse, DungeonBodies.Corpse::kitDraws, NamedCorpseRenderer::new));
         guard("corpse_carl", () -> kitOrOld(e, CorpseEntities.CARL.get(), corpse, DungeonBodies.Corpse::kitDraws, NamedCorpseRenderer::new));
+    }
+
+    /**
+     * Boss rework wave 1 (docs/mobs/remake_plan.md quick win 1): the Goliath is drawn by its own stone giant ({@link GoliathRenderer}, {@code goliath_body}: moss, cracks, its clips)
+     * while the client setting {@code goliathStoneModel} is on (the default); off gives exactly the routing of 1.99.0 (the kit's body when {@code dungeon} allows it, else the art kit's).
+     * The setting is read every frame, so a switch needs no restart.
+     */
+    private static void goliath(EntityRenderersEvent.RegisterRenderers e) {
+        EntityType<GoliathBoss> type = GoliathEntities.GOLIATH.get();
+        e.registerEntityRenderer(type, ctx -> {
+            GoliathRenderer stone = new GoliathRenderer(ctx);
+            EntityRenderer<GoliathBoss> o = old(type, ctx);
+            EntityRenderer<GoliathBoss> before = new PlayerModelRegistry.Split<GoliathBoss>(ctx,
+                    en -> DungeonLooks.usesKit(PlayerModelOptions.dungeon(), DungeonBodies.Goliath.kitDraws(en)), new PlayerModelRenderer<>(ctx, new DungeonBodies.Goliath()), o != null ? o : stone);
+            return new PlayerModelRegistry.Split<GoliathBoss>(ctx, en -> PlayerModelOptions.goliathStone(), stone, before);
+        });
     }
 
     /** The renderer the art kit registered for a type (the old renderer of the type), or null when it registered none. */

@@ -74,6 +74,8 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
     private String lockId = "";
     private Vec3 lockPoint, lockDir;
     private List<Vec3> lockSpots = List.of();
+    /** Boss rework wave 1 (server): the shard circles {@link CharybdisRework} locked in the Scale-Shard Storm's wind-up. */
+    List<Vec3> reworkSpots = List.of();
 
     public CharybdisSpawnBoss(EntityType<CharybdisSpawnBoss> type, Level level) {
         super(type, level);
@@ -322,7 +324,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
     @Override
     protected List<Move> moves() {
         List<Move> out = new ArrayList<>();
-        for (CharybdisTable.Spec s : CharybdisTable.specs()) {
+        for (CharybdisTable.Spec s : com.newuniverse.nusmp.boss.rework.BossRework.trim(CharybdisTable.specs(), CharybdisTable.OLD_MOVES, com.newuniverse.nusmp.boss.rework.ReworkFx.moves())) {
             Move.Builder b = Move.builder(s.id(), s.label()).minPower(s.minPower()).windUp(s.windUpTicks()).cooldown(s.cooldownTicks())
                     .range(s.minRange(), s.maxRange()).weight(s.weight()).mana(s.manaCost()).recovery(s.recovery());
             if (s.ultimate()) b.ultimate();

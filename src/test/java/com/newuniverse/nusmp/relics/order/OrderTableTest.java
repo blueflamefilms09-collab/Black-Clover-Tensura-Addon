@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.relics.order;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +26,9 @@ class OrderTableTest {
             assertTrue(s.cooldown() >= 10 && s.maxRange() > s.minRange() && s.weight() >= 1);
             assertFalse(s.label().isEmpty());
         }
-        assertEquals(4, ids.size(), "Decree, Writ, Judgement, Erasure");
+        assertEquals(OrderTable.OLD_MOVES + 4, ids.size(), "Decree, Writ, Judgement, Erasure, and the four of boss rework wave 1");
+        assertEquals(List.of(OrderTable.DECREE, OrderTable.WRIT, OrderTable.JUDGEMENT, OrderTable.ERASURE),
+                OrderTable.specs().subList(0, OrderTable.OLD_MOVES).stream().map(OrderTable.Spec::id).toList(), "the old moves keep their indices (the client reads by index)");
         assertTrue(ids.containsAll(Set.of(OrderTable.DECREE, OrderTable.WRIT, OrderTable.JUDGEMENT, OrderTable.ERASURE)));
     }
 

@@ -31,7 +31,7 @@ public final class TierMoves {
     /** The moves of a row, in its order. */
     public static List<Move> build(TierRow row) {
         List<Move> out = new ArrayList<>();
-        for (TierMove m : row.moves()) out.add(build(m));
+        for (TierMove m : TierSignature.moves(row.moves(), com.newuniverse.nusmp.boss.rework.ReworkFx.moves())) out.add(build(m));   // boss rework wave 1: off drops the appended move
         return out;
     }
 
@@ -51,6 +51,11 @@ public final class TierMoves {
         });
         return b.run((boss, target) -> {
             runSafe(m, boss, target);
+            try {
+                signatureLand(boss, m, target);                // boss rework wave 1: the signature effect of an appended move
+            } catch (RuntimeException e) {
+                LOG.debug("[anime_multiverse] tier signature effect {} failed: {}", m.id(), e.toString());
+            }
             if (boss instanceof TierBoss tb) {
                 try {
                     TierTraits.afterMove(tb, m, target);            // 3.39.0: the traits that hang on this move
@@ -212,6 +217,27 @@ public final class TierMoves {
                 Tells.gather(sl, at.add(0, 0.2, 0), m.size() * 0.5, accent, 3);
             }
             case SWARM -> Tells.gather(sl, pos.add(0, 1.2, 0), 2.0, rgb, 6);
+        }
+    }
+
+    /** Boss rework wave 1: the signature effect of an appended move ({@link TierSignature}) as it lands; nothing for every other move. One effect, through the boss budget. */
+    private static void signatureLand(ZogratisBoss boss, TierMove m, LivingEntity target) {
+        if (!TierSignature.is(m.id()) || target == null || !com.newuniverse.nusmp.boss.rework.ReworkFx.on() || !(boss.level() instanceof ServerLevel sl)) return;
+        Vec3 pos = boss.position(), eye = boss.getEyePosition(), mid = target.getBoundingBox().getCenter();
+        Vec3 flat = new Vec3(mid.x - pos.x, 0, mid.z - pos.z);
+        Vec3 face = flat.lengthSqr() < 1e-4 ? new Vec3(0, 0, 1) : flat.normalize();
+        switch (m.id()) {
+            case TierSignature.WALL_BREACH_KICK -> com.newuniverse.nusmp.boss.vfx.BossMoveVfx.strikeFor(sl, com.newuniverse.nusmp.vfx.VfxShape.BOSS_STONE_FISSURE, pos, pos.add(face.scale(m.size())), 0xBF360C, 24, 1.6);
+            case TierSignature.YAMATA_VENOM_FANGS -> com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.POISON_BREATH, eye, mid, 0x7B1FA2, 24, 1.4);
+            case TierSignature.LIFE_SEWING -> {
+                Vec3 g = ZogratisBoss.ground(sl, target.position()).add(0, 0.05, 0);
+                com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.ALCHEMY_CIRCLE, g, g.add(0, 1, 0), 0x9CCC65, 30, 1.6);
+            }
+            case TierSignature.IKOKU_SOVEREIGNTY -> com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.SLASH_WAVE, eye, eye.add(face.scale(m.size())), 0xF06292, 14, 2.0);
+            case TierSignature.IRA_GIANT_CERO -> com.newuniverse.nusmp.entity.zogratis.ZogratisVfx.ray(sl, eye, eye.add(face.scale(m.size())), 1.6, 14, 0xE53935, false);
+            case TierSignature.CLAW_GRIME -> com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.DARK_SLASH_WILD, mid, mid.add(0, 1, 0), 0x80DEEA, 18, 1.6);
+            case TierSignature.SWAN_ARABESQUE -> com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.WIND_SLASH, eye, mid, 0xF8BBD0, 14, 1.4);
+            default -> { }
         }
     }
 }

@@ -38,4 +38,17 @@ public final class BossMoveVfx {
                 BossVfxRules.seed(sl.random.nextLong(), strike)));
         return true;
     }
+
+    /**
+     * Boss rework wave 1: a shape that is not one of the {@code BOSS_*} shapes (a gravity sphere, a transmutation circle, a crescent), sent through the same per-tick budget
+     * with the low byte of the seed cleared (those layers read their own style bits there: cleared is each shape's plain strike form) and the radius kept sane. False if
+     * the budget of this tick is spent.
+     */
+    public static boolean plain(ServerLevel sl, VfxShape shape, Vec3 from, Vec3 to, int rgb, int ticks, double size) {
+        if (sl == null || shape == null || !THROTTLE.allow(sl.getGameTime())) return false;
+        int argb = (rgb & 0xFF000000) == 0 ? 0xFF000000 | rgb : rgb;
+        VfxSpawn.send(sl, new VfxPayload(shape.ordinal(), from, to == null ? from.add(0, 1, 0) : to, argb, Math.max(4, Math.min(240, ticks)), BossVfxRules.clampRadius(size), -1,
+                sl.random.nextLong() & ~0xFFL));
+        return true;
+    }
 }

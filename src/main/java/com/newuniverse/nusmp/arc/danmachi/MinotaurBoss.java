@@ -210,4 +210,11 @@ public class MinotaurBoss extends DanMachiBoss {
         }));
         return 14;
     }
+
+    /** Boss rework wave 1: the Minotaur's signature, the reaping arc of its natural weapon swung toward the foe (reach of the move, 3 to 7 blocks). */
+    @Override
+    protected void signature(ServerLevel sl, DmSpec s, LivingEntity target) {
+        Vec3 at = position().add(0, getBbHeight() * 0.5, 0), to = new Vec3(target.getX(), at.y, target.getZ());
+        com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, com.newuniverse.nusmp.vfx.VfxShape.SLASH_SCYTHE, at, to, STYLE.tint(this), 14, Math.max(3.0, Math.min(7.0, s.reach())));
+    }
 }

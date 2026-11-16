@@ -73,6 +73,6 @@ class GoliathEnragedTest {
         assertTrue(GoliathTable.AFTERSHOCK_DELAY >= 6, "the foes can step back before the second ring");
         assertTrue(GoliathTable.STOMP_THIRD < GoliathTable.STOMP_FIRST);
         assertTrue(GoliathTable.HEALTH > 1500 && GoliathTable.ATTACK >= 30);
-        assertEquals(GoliathTable.BEDROCK_QUAKE, GoliathTable.specs().get(GoliathTable.specs().size() - 1).id(), "the ultimate still closes the list");
+        assertEquals(GoliathTable.BEDROCK_QUAKE, GoliathTable.specs().get(GoliathTable.OLD_MOVES - 1).id(), "the ultimate still closes the old list (boss rework wave 1 appends after it)");
     }
 }

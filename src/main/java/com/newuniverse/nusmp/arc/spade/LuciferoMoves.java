@@ -82,7 +82,7 @@ final class LuciferoMoves {
             final Vec3 m = marks.get(i);
             b.later(3 + (i % 5) * 2, SpadeFx.safe(WHO, "falling heaven", () -> {
                 ZogratisVfx.gravityImpact(sl, m, HEAVEN_RADIUS * 1.5, VIOLET_RGB);
-                Tells.burst(sl, m.add(0, 0.8, 0), ACCENT_RGB, 22);
+                LuciferoFx.heaven(sl, m);                                        // boss rework wave 1: a falling-heavens pillar (bossRework1Vfx off = the old dust)
                 sl.playSound(null, BlockPos.containing(m), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 1.3f, 0.5f);
                 for (LivingEntity e : b.foesAround(m, HEAVEN_RADIUS + 1)) {
                     double dx = e.getX() - m.x, dz = e.getZ() - m.z, dy = e.getY() - m.y;
@@ -371,7 +371,7 @@ final class LuciferoMoves {
         int crushed = 0;
         sl.playSound(null, b.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.4f);
         ZogratisVfx.gravityImpact(sl, b.position(), 26, VIOLET_RGB);
-        Tells.burst(sl, b.position().add(0, 1.2, 0), ACCENT_RGB, 90);
+        LuciferoFx.kneel(sl, b.position());
         for (LivingEntity e : b.foes(56)) {
             BowRules.Verdict v = BowRules.verdict(SpadeFx.antiMagic(e), inAnyPocket(e, pockets), false);
             double factor = BowRules.kneelFactor(v);
@@ -414,7 +414,7 @@ final class LuciferoMoves {
         if (!(b.level() instanceof ServerLevel sl)) return 0;
         sl.playSound(null, BlockPos.containing(c), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.4f);
         ZogratisVfx.gravityImpact(sl, c, WeightMath.CORE_RADIUS * 1.5, VIOLET_RGB);
-        Tells.burst(sl, c.add(0, 1.2, 0), ACCENT_RGB, 80);
+        LuciferoFx.horizon(sl, c);
         int caught = 0;
         for (LivingEntity e : b.foesAround(c.add(0, 3, 0), WeightMath.CORE_RADIUS + 3)) {
             double dx = e.getX() - c.x, dz = e.getZ() - c.z, dy = e.getY() - c.y;

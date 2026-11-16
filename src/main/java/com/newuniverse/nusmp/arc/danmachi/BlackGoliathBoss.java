@@ -169,4 +169,11 @@ public class BlackGoliathBoss extends DanMachiBoss {
         }));
         return warn + SPOKE_WARN + 6;
     }
+
+    /** Boss rework wave 1: the black hide's signature, brimstone cracks running out of the floor under it (reach of the move, 3 to 12 blocks). */
+    @Override
+    protected void signature(ServerLevel sl, DmSpec s, LivingEntity target) {
+        Vec3 at = ZogratisBoss.ground(sl, position());
+        com.newuniverse.nusmp.boss.vfx.BossMoveVfx.strike(sl, com.newuniverse.nusmp.vfx.VfxShape.BOSS_DEVIL_CRACKS, at, at.add(0, 1, 0), STYLE.hot(), Math.max(3.0, Math.min(12.0, s.reach())));
+    }
 }

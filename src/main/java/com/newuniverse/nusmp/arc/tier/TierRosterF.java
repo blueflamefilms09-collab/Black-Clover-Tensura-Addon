@@ -45,6 +45,7 @@ public final class TierRosterF {
                         .move(of("hierro_charge", "Hierro Charge", RUSH).power(30).wind(24).cd(150).range(4, 16).weight(3).dmg(1.1).size(10).knock(1.0).theme())
                         .move(of("ground_pound", "Ground Pound", WAVE).power(40).wind(26).cd(190).range(0, 12).weight(3).dmg(1.0).size(9).crowd().filler())
                         .move(of("ira_rampage", "Ira: Cero Rampage", VOLLEY).wind(48).range(6, 32).count(5).size(50).dmg(1.0).magic().ult().named())
+                        .move(of("ira_giant_cero", "Ira: Giant Cero", BEAM).power(40).wind(30).cd(360).range(4, 20).weight(2).dmg(1.2).size(16).knock(0.8).magic().theme())   // boss rework wave 1, appended
                         .trait(TierTrait.ARMOUR)
                         .build(),
                 TierRow.of(TierLetter.F, "sogou_nobuyuki", "Sogou Nobuyuki", "Sword Art Online").title("Oberon, the Fairy King").colors(0xFFD54F, 0xB3E5FC).floors(2, 10).height(1.85f).scale(0.95, 0.95)
@@ -63,6 +64,7 @@ public final class TierRosterF {
                         .move(of("mane_mane", "Mane Mane no Mi: Face Copy", SLAM).power(30).wind(22).cd(130).range(0, 8).weight(3).dmg(0.6).size(5).fx(BLIND, 50).named())
                         .move(of("swan_volley", "Swan Volley", VOLLEY).power(30).wind(24).cd(140).range(6, 28).count(4).size(44).weight(3).dmg(0.8).theme())
                         .move(of("okama_spectacle", "Okama Way Spectacle", WAVE).wind(46).range(0, 20).size(10).dmg(1.2).knock(1.0).crowd().ult().theme())
+                        .move(of("swan_arabesque", "Okama Kenpo: Swan Arabesque", RUSH).power(40).wind(30).cd(360).range(3, 21).weight(2).dmg(1.2).size(16).knock(1.0).named())   // boss rework wave 1, appended
                         .trait(TierTrait.MIRROR, "mane_mane")
                         .build(),
                 TierRow.of(TierLetter.F, "kurozumi_orochi", "Kurozumi Orochi", "One Piece").title("the Shogun of Wano").colors(0x7B1FA2, 0xE1BEE7).floors(4, 14).height(2.0f).scale(1.05, 1.0)
@@ -72,6 +74,7 @@ public final class TierRosterF {
                         .move(of("eight_heads", "Eight Heads Strike", VOLLEY).power(30).wind(24).cd(190).range(6, 28).count(3).size(50).weight(3).dmg(0.55).theme())
                         .move(of("shogun_decree", "Shogun's Decree", MARKED).wind(22).cd(130).range(4, 24).weight(3).dmg(0.9).size(2.6).count(2).theme())
                         .move(of("eight_headed_orochi", "Eight-Headed Orochi", WAVE).wind(48).range(0, 20).size(12).dmg(1.4).knock(0.9).fx(WEAKEN, 80).ult().theme())
+                        .move(of("yamata_venom_fangs", "Yamata no Orochi: Venom Fangs", VOLLEY).power(40).wind(30).cd(360).range(6, 28).count(5).size(70).weight(2).dmg(0.5).fx(POISON, 60).theme())   // boss rework wave 1, appended
                         .trait(TierTrait.ECHO, "eight_heads")
                         .build()
         );

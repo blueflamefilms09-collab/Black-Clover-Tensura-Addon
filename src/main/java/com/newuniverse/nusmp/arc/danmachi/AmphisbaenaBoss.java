@@ -282,4 +282,11 @@ public class AmphisbaenaBoss extends DanMachiBoss {
         }));
         return ticks + 24;
     }
+
+    /** Boss rework wave 1: the Amphisbaena's signature, a serpent of water that flies from its body to the foe. */
+    @Override
+    protected void signature(ServerLevel sl, DmSpec s, LivingEntity target) {
+        Vec3 at = position().add(0, getBbHeight() * 0.8, 0);
+        com.newuniverse.nusmp.boss.vfx.BossMoveVfx.plain(sl, VfxShape.WATER_DRAGON, at, target.getBoundingBox().getCenter(), STYLE.tint(this), 18, 1.2);
+    }
 }

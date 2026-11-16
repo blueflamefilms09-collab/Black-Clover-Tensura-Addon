@@ -19,6 +19,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue DUNGEON;
     public static final ModConfigSpec.IntValue DETAIL_DISTANCE, FAR_DISTANCE;
+    /** Boss rework wave 1: the Goliath on its own stone model (true, the default again: docs/mobs/remake_plan.md quick win 1) or as in 1.99.0 (false). */
+    public static final ModConfigSpec.BooleanValue GOLIATH_STONE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -27,6 +29,8 @@ public final class PlayerModelOptions {
                 + "Off = the art-kit renderers they had before (no restart needed).").define("dungeon", true);
         DETAIL_DISTANCE = b.comment("Blocks beyond which a character is drawn without its second skin layer and without hair.").defineInRange("detailDistance", PlayerLod.DEFAULT_DETAIL, 4, 128);
         FAR_DISTANCE = b.comment("Blocks beyond which the additive glow passes are dropped as well.").defineInRange("farDistance", PlayerLod.DEFAULT_FAR, 8, 256);
+        GOLIATH_STONE = b.comment("Draw the Goliath with its own stone giant model (moss, cracks, its own clips). Off = the 1.99.0 look: the player model's body when 'dungeon' is on, else the art kit's.")
+                .define("goliathStoneModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -35,6 +39,15 @@ public final class PlayerModelOptions {
     public static boolean dungeon() {
         try {
             return DUNGEON.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the Goliath is drawn with its own stone model (the config value; true while it is not loaded). */
+    public static boolean goliathStone() {
+        try {
+            return GOLIATH_STONE.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }
