@@ -62,6 +62,7 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue WEIGHT_CLOVER, WEIGHT_SPADE, WEIGHT_HEART, WEIGHT_DIAMOND;
     public static final ModConfigSpec.BooleanValue ALLOW_FORBIDDEN_START;
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
+    public static final ModConfigSpec.BooleanValue EP_NEEDS_MASTERY;                     // the EP part of addon damage grows in with the skill's mastery (balance.EpMastery); false = the old damage
     public static final ModConfigSpec.BooleanValue LATE_GAME_SCALING;                    // 3.90: mod damage grows with the caster's max magicule (balance.LateGameScaling); false = the old damage
     public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
@@ -176,6 +177,8 @@ public final class NUConfig {
         SPELL_COOLDOWN_PERCENT = b.comment("0.48 pacing: grimoire page and magic weapon cooldowns, % of their listed length (60 = 40% shorter).")
                 .defineInRange("spellCooldownPercent", 60, 1, 1000);
         BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players: see pvpHitCapPercent).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
+        EP_NEEDS_MASTERY = b.comment("EP scaling needs mastery: the EP part of an addon hit grows with the casting skill's mastery (x1 with none, the full EP scale once mastered). false = the old damage, the full EP scale at any mastery.")
+                .define("epNeedsMastery", true);
         LATE_GAME_SCALING = b.comment("Late-game scaling: every addon hit a player deals through the balance law grows with that player's max magicule (x1 at the baseline, +1.25 per tenfold above it, at most lateGameScalingCap). false = the old damage.")
                 .define("lateGameScaling", true);
         LATE_GAME_BASELINE = b.comment("Late-game scaling: the max magicule at which the factor is x1 (below it, x1 too).").defineInRange("lateGameScalingBaseline", 10_000.0, 1.0, 1.0E12);

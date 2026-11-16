@@ -34,7 +34,7 @@ class LateGameScalingSourceScanTest {
     void theFactorIsAppliedOnceAtTheChokePoint() throws IOException {
         String law = code(SRC.resolve("balance/BalanceLaw.java"));
         assertEquals(2, count(law, "lateGameScale("), "the definition and one use");
-        assertTrue(law.contains("raw * epScale(caster) * lateGameScale(caster) *"), "multiplied into BalanceLaw.damage(caster, ...)");
+        assertTrue(law.contains("raw * epScale(caster, m) * lateGameScale(caster) *"), "multiplied into BalanceLaw.damage(caster, ...)");
         assertTrue(law.contains("return cap(target, (float) r);"), "players still end at the pvp hit cap");
         try (Stream<Path> files = Files.walk(SRC)) {
             for (Path f : files.filter(p -> p.toString().endsWith(".java")).toList()) {

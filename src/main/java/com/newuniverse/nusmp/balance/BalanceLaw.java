@@ -32,6 +32,11 @@ public final class BalanceLaw {
         return Math.min(12, 1 + Math.max(0, Math.log10(Math.max(1, ep)) - 3) * 2.5);
     }
 
+    /** The EP scale taken in by the skill's mastery 0..1 (owner request: EP only fully counts once the skill is mastered; SERVER config epNeedsMastery, off = {@link #epScale(LivingEntity)}). */
+    public static double epScale(LivingEntity caster, double masteryFrac) {
+        return EpMastery.ramp(epScale(caster), masteryFrac, NUConfig.EP_NEEDS_MASTERY.get());
+    }
+
     /**
      * 3.90: the late-game scaling ({@link LateGameScaling}) from a player caster's max magicule (mobs and bosses: x1), x1 to x6 by default (SERVER config balance lateGameScaling; off = 1). Applied once per hit, only in
      * {@link #damage(LivingEntity, LivingEntity, float, double)}; PvP hits still end at the pvp hit cap.
@@ -57,7 +62,7 @@ public final class BalanceLaw {
      */
     public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac) {
         double m = Math.max(0, Math.min(1, masteryFrac));
-        double r = raw * epScale(caster) * lateGameScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);   // 1.5.0: stage, Mana Zone, negative mana
+        double r = raw * epScale(caster, m) * lateGameScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);   // 1.5.0: stage, Mana Zone, negative mana
         r += DamageSliver.of(raw, target.getMaxHealth(), isBoss(target));    // 1.105.0: no percentage-of-max-health damage for weapon-scale hits or bosses (it made a 400 hit take 40% of a boss, see DamageSliver)
         return cap(target, (float) r);
     }
@@ -94,7 +99,7 @@ public final class BalanceLaw {
     public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac, UltimateClass cls) {
         if (cls == null || !NUConfig.ucClassDamage()) return damage(caster, target, raw, masteryFrac);
         double m = Math.max(0, Math.min(1, masteryFrac));
-        double r = raw * classScale(caster, cls) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);
+        double r = raw * EpMastery.ramp(classScale(caster, cls), m, NUConfig.EP_NEEDS_MASTERY.get()) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);
         r += DamageSliver.of(raw, target.getMaxHealth(), isBoss(target));
         return cap(target, (float) r);
     }
