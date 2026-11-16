@@ -4,8 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcLook;
+import com.newuniverse.nusmp.client.bossmesh.BossMeshDraw;
+import com.newuniverse.nusmp.client.bossmesh.MeshPose;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
+import com.newuniverse.nusmp.client.playermodel.PlayerModelOptions;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.zogratis.ZogratisGlow;
 import com.newuniverse.nusmp.client.zogratis.ZogratisPose;
@@ -31,6 +34,8 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
     private final ArcLook look;
     private final GeoSpec first, second;
     private final ArcClips firstClips, secondClips;
+    /** Boss rework wave 2: the Blender-made body of a look that has one (the Minotaur: tools/blender/boss_minotaur.py), else null; drawn in the base form while its client setting is on. */
+    private final BossMeshDraw blender;
 
     public ArcBossRenderer(EntityRendererProvider.Context ctx, ArcLook look) {
         super(ctx, look.shadow());
@@ -44,7 +49,10 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
         this.second = look.glow() ? b : b.noGlow();
         this.firstClips = new ArcClips(first);
         this.secondClips = new ArcClips(second);
+        this.blender = MINOTAUR.equals(name) && look.skin().isEmpty() ? new BossMeshDraw(MINOTAUR) : null;
     }
+
+    private static final String MINOTAUR = "minotaur";
 
     @Override
     public ResourceLocation getTextureLocation(ArcBoss e) { return first.texture(); }
@@ -94,8 +102,19 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(-facing));
         pose.scale(scale, scale, scale);
-        paint(pose, buffers, spec, clock.clip, clock.seconds, light, bodyRgb(e), fade, glow);
         float flash = transforming ? ZogratisGlow.flash(phase) : 0f;
+        if (blender != null && !useSecond && PlayerModelOptions.minotaurBlender() && blender.available()) {       // boss rework wave 2: the Blender body (the second form keeps its geo model)
+            float len = clips.length(clock.clip), stride = clock.travel() / Math.max(0.1f, look.walkCycle() * size);
+            blender.pose.solve(f.age, stride - (float) Math.floor(stride), Math.min(1f, clock.speed() / 0.06f), f.dead ? MeshPose.DEATH : MeshPose.action(clock.clip),
+                    f.dead ? f.deathTicks / DEATH_TICKS : len > 0f ? clock.seconds / len : 0f);
+            float level = ZogratisGlow.level(e.power(), f.age, mode, phase) * fade;
+            int glowArgb = flash > 0.02f ? ZogratisGlow.scaled(ZogratisGlow.mix(e.styleColor(), 0xFFFFFF, 0.5f), Math.max(level, flash)) : ZogratisGlow.grey(level);
+            blender.draw(pose, buffers, light, ZogratisGlow.withAlpha(bodyRgb(e), fade), glowArgb, entityRenderDispatcher.distanceToSqr(e));
+            pose.popPose();
+            super.render(e, yaw, partial, pose, buffers, light);
+            return;
+        }
+        paint(pose, buffers, spec, clock.clip, clock.seconds, light, bodyRgb(e), fade, glow);
         if (flash > 0.02f) {                                          // the character's colour burns over the power-up (and over the model swap of a second form)
             int rgb = ZogratisGlow.mix(e.styleColor(), 0xFFFFFF, 0.5f);
             GeoDraw.paint(pose, buffers, spec.noGlow(), clock.clip, clock.seconds, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, PropDraw.FULL_BRIGHT,

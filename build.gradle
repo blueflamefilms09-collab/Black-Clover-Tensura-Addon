@@ -81,7 +81,7 @@ tasks.withType(JavaCompile).configureEach {
 // 3.32.0: the big text meshes go into the jar in the compact packed form (mesh/MeshPack.java, same file names; the loaders read both forms).
 // The source tree and build/resources keep the plain text, so the tests and the dev runs read text; only the jar gets the packed copies.
 // Setting -PpackMeshes=false builds a jar with the plain text.
-def meshFolders = ["weapon_meshes", "weapon_meshes_vu", "weapon_meshes_sz", "weapon_meshes_vu_sz", "djinn"]
+def meshFolders = ["weapon_meshes", "weapon_meshes_vu", "weapon_meshes_sz", "weapon_meshes_vu_sz", "djinn", "entity_meshes"]
 def packedMeshDir = layout.buildDirectory.dir("packed-meshes")
 def meshRoot = layout.projectDirectory.dir("src/main/resources/assets/anime_multiverse")
 def packMeshesOn = !(project.findProperty("packMeshes") in ["false", false])

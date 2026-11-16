@@ -94,4 +94,7 @@ public final class GoliathPose {
     public float smoothScale(float target, float age) { return base.smoothScale(target, age); }
 
     public float smoothYaw(float target, float age) { return base.smoothYaw(target, age); }
+
+    /** Boss rework wave 2: the blocks of ground covered (the Blender body's walk phase). */
+    public float travel() { return base.travel(); }
 }

@@ -568,4 +568,15 @@ class PerfSourceScanTest {
         String stands = code(read("labyrinth/props/ArmourStandRarity.java"));
         assertFalse(stands.contains("net.minecraft"), "ArmourStandRarity must stay pure");
     }
+
+    /** Boss rework wave 2: the Blender boss body is drawn and posed every frame: its draw, its vertex loop and the pose solver allocate nothing (scratch matrices made at load). */
+    @Test
+    void theBossMeshDrawAllocatesNothingPerFrame() throws IOException {
+        for (String name : new String[]{"draw", "emit"})
+            assertFalse(NEW_OBJECT.matcher(code(method("client/bossmesh/BossMeshDraw.java", name).body())).find(), "BossMeshDraw." + name + " allocates per frame");
+        assertFalse(NEW_OBJECT.matcher(code(method("client/bossmesh/MeshPose.java", "solve").body())).find(), "MeshPose.solve allocates per frame");
+        String draw = code(method("client/bossmesh/BossMeshDraw.java", "draw").body());
+        assertTrue(draw.contains("LOD_RANGE") && draw.contains("GLOW_RANGE"), "the low-detail copy and the glow cut-off by distance are gone");
+        assertFalse(BUILDS_LOCATION.matcher(draw).find(), "a location is built per frame");
+    }
 }

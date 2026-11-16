@@ -21,6 +21,10 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.IntValue DETAIL_DISTANCE, FAR_DISTANCE;
     /** Boss rework wave 1: the Goliath on its own stone model (true, the default again: docs/mobs/remake_plan.md quick win 1) or as in 1.99.0 (false). */
     public static final ModConfigSpec.BooleanValue GOLIATH_STONE;
+    /** Boss rework wave 2: the stone Goliath drawn with its Blender-made body (true, the default) or with the 3.96.0 stone geo model (false). */
+    public static final ModConfigSpec.BooleanValue GOLIATH_BLENDER;
+    /** Boss rework wave 2: the DanMachi Minotaur drawn with its Blender-made body (true, the default) or with the art kit's geo model (false). */
+    public static final ModConfigSpec.BooleanValue MINOTAUR_BLENDER;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -31,6 +35,10 @@ public final class PlayerModelOptions {
         FAR_DISTANCE = b.comment("Blocks beyond which the additive glow passes are dropped as well.").defineInRange("farDistance", PlayerLod.DEFAULT_FAR, 8, 256);
         GOLIATH_STONE = b.comment("Draw the Goliath with its own stone giant model (moss, cracks, its own clips). Off = the 1.99.0 look: the player model's body when 'dungeon' is on, else the art kit's.")
                 .define("goliathStoneModel", true);
+        GOLIATH_BLENDER = b.comment("With goliathStoneModel on: draw the Goliath with its Blender-made body (parts moved by procedural animation). Off = the 3.96.0 stone geo model.")
+                .define("goliathBlenderModel", true);
+        MINOTAUR_BLENDER = b.comment("Draw the DanMachi Minotaur with its Blender-made body (parts moved by procedural animation; Asterius keeps his model). Off = the art kit's model.")
+                .define("minotaurBlenderModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -48,6 +56,24 @@ public final class PlayerModelOptions {
     public static boolean goliathStone() {
         try {
             return GOLIATH_STONE.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the stone Goliath is drawn with its Blender-made body (the config value; true while it is not loaded). */
+    public static boolean goliathBlender() {
+        try {
+            return GOLIATH_BLENDER.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the Minotaur is drawn with its Blender-made body (the config value; true while it is not loaded). */
+    public static boolean minotaurBlender() {
+        try {
+            return MINOTAUR_BLENDER.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

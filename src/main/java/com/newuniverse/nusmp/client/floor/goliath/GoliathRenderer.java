@@ -2,10 +2,13 @@ package com.newuniverse.nusmp.client.floor.goliath;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.newuniverse.nusmp.client.bossmesh.BossMeshDraw;
+import com.newuniverse.nusmp.client.bossmesh.MeshPose;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
+import com.newuniverse.nusmp.client.playermodel.PlayerModelOptions;
 import com.newuniverse.nusmp.client.prop.PropDraw;
 import com.newuniverse.nusmp.client.zogratis.ZogratisGlow;
 import com.newuniverse.nusmp.client.zogratis.ZogratisPose;
@@ -40,9 +43,13 @@ public class GoliathRenderer extends ZogratisRenderer<GoliathBoss> {
     /** The model is authored at its true size: 6.2 blocks to the top of the horns, and 4.4 blocks of ground to a cycle of its walk. */
     private static final float MODEL_HEIGHT = 6.2f, WALK_CYCLE = 4.4f, SHADOW = 2.2f;
     private static final int AMBER = 0xFFAA33;
+    /** Blocks the Blender body's fists rise above its head in the rise pose (tools/blender/boss_goliath.py). */
+    private static final float RAISED_REACH = 2.4f;
 
     private final Map<Entity, GoliathPose> poses = new WeakHashMap<>();
     private final Clips clips = new Clips(BODY);
+    /** Boss rework wave 2: the Blender-made body (tools/blender/boss_goliath.py), drawn while the client setting goliathBlenderModel is on; else the geo model as in 3.96.0. */
+    private final BossMeshDraw blender = new BossMeshDraw(KEY);
 
     public GoliathRenderer(EntityRendererProvider.Context ctx) { super(ctx, SHADOW); }
 
@@ -86,8 +93,19 @@ public class GoliathRenderer extends ZogratisRenderer<GoliathBoss> {
         pose.mulPose(Axis.YP.rotationDegrees(-facing));
         pose.translate(0f, -sink, 0f);
         pose.scale(scale, scale, scale);
-        paint(pose, buffers, spec, clock.clip, clock.seconds, light, bodyRgb(e), fade, glow);
         float flash = transforming ? ZogratisGlow.flash(phase) : 0f;
+        if (PlayerModelOptions.goliathBlender() && blender.available()) {
+            float level = ZogratisGlow.level(e.power(), f.age, mode, phase) * fade;
+            int glowArgb = cracked || flash > 0.02f ? ZogratisGlow.scaled(ZogratisGlow.mix(0xFFFFFF, AMBER, 0.5f + 0.5f * flash), Math.max(level, cracked ? 0.85f : flash))
+                    : ZogratisGlow.grey(level);
+            posed(clock, f, rise, size);
+            pose.translate(0f, -(1f - rise) * RAISED_REACH, 0f);                 // the raised fists of the rise pose reach higher than the head: sink them too
+            blender.draw(pose, buffers, light, ZogratisGlow.withAlpha(bodyRgb(e), fade), glowArgb, entityRenderDispatcher.distanceToSqr(e));
+            pose.popPose();
+            super.render(e, yaw, partial, pose, buffers, light);
+            return;
+        }
+        paint(pose, buffers, spec, clock.clip, clock.seconds, light, bodyRgb(e), fade, glow);
         if (flash > 0.02f) {                                                   // amber burns over the skin swap at the middle of the transformation
             int rgb = ZogratisGlow.mix(AMBER, 0xFFFFFF, 0.4f);
             GeoDraw.paint(pose, buffers, spec.noGlow(), clock.clip, clock.seconds, GeoDraw.Space.PROP, GeoDraw.Layer.ADDITIVE, PropDraw.FULL_BRIGHT,
@@ -95,6 +113,26 @@ public class GoliathRenderer extends ZogratisRenderer<GoliathBoss> {
         }
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);                   // the name tag
+    }
+
+    /**
+     * Boss rework wave 2: the pose of the Blender body from the clip {@link GoliathPose} chose (its progress paces the blow, which lands at 0.8), the ground covered (the
+     * stride, one cycle per {@link #WALK_CYCLE} blocks) and the rise and the death.
+     */
+    private void posed(GoliathPose clock, ZogratisPose.Frame f, float rise, float size) {
+        float len = clips.length(clock.clip);
+        int action = MeshPose.action(clock.clip);
+        float t = len > 0f ? clock.seconds / len : 0f;
+        if (f.dead) {
+            action = MeshPose.DEATH;
+            t = f.deathTicks / DEATH_TICKS;
+        } else if (rise < 1f) {
+            action = MeshPose.RISE;
+            t = rise;
+        }
+        float cycle = WALK_CYCLE * Math.max(0.1f, size), stride = clock.travel() / cycle;
+        float walk = Math.min(1f, clock.speed() / 0.06f);
+        blender.pose.solve(f.age, stride - (float) Math.floor(stride), walk, action, t);
     }
 
     /** The lengths of the clips of the model, read from its animation file when asked (so a resource reload is picked up). */

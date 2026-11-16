@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** 3.32.0: the packed mesh form is lossless for what the loaders read, falls back to text for lines it cannot hold, and shrinks the shipped meshes. */
 class MeshPackTest {
     static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
-    static final String[] PACKED_FOLDERS = {"weapon_meshes", "weapon_meshes_vu", "weapon_meshes_sz", "weapon_meshes_vu_sz", "djinn"};      // build.gradle meshFolders
+    static final String[] PACKED_FOLDERS = {"weapon_meshes", "weapon_meshes_vu", "weapon_meshes_sz", "weapon_meshes_vu_sz", "djinn", "entity_meshes"};      // build.gradle meshFolders
 
     private static String qn(int layer, double x, double y) {
         return String.format(java.util.Locale.ROOT, "qn %d %.3f %.3f 0.500 10.250 20.500 0.000 -0.000 1.000 %.3f %.3f 0.500 11.250 20.500 0.000 0.000 1.000 "
