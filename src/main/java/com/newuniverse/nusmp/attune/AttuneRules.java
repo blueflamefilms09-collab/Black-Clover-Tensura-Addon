@@ -145,12 +145,21 @@ public final class AttuneRules {
     }
 
     /**
-     * Which of the powers out together the equip limit blocks (indices into {@code ordered}): with more than {@link #MAX_SLOTS} out, every one that is not attuned; then of a Devil and a Spirit that are
+     * Which of the powers out together the equip limit blocks (indices into {@code ordered}): with more than {@link #MAX_SLOTS} out, the attuned ones and then the first ones found fill the slots and the rest is blocked; then of a Devil and a Spirit that are
      * both still free, the one not attuned, or else the weaker (equal strength: the later one in {@code ordered}).
      */
     public static Set<Integer> blocked(List<Power> ordered, List<String> attuned) {
         Set<Integer> out = new HashSet<>();
-        if (ordered.size() > MAX_SLOTS) for (int i = 0; i < ordered.size(); i++) if (!attuned.contains(ordered.get(i).id())) out.add(i);
+        if (ordered.size() > MAX_SLOTS) {
+            // the attuned ones keep their place; the free places go to the first ones found (so an old save with three out keeps two working until the player meditates)
+            int kept = 0;
+            for (Power pw : ordered) if (attuned.contains(pw.id())) kept++;
+            for (int i = 0; i < ordered.size(); i++) {
+                if (attuned.contains(ordered.get(i).id())) continue;
+                if (kept < MAX_SLOTS) kept++;
+                else out.add(i);
+            }
+        }
         for (int i = 0; i < ordered.size(); i++)
             for (int j = i + 1; j < ordered.size(); j++) {
                 if (out.contains(i) || out.contains(j)) continue;

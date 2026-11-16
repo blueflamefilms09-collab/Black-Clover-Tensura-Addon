@@ -132,7 +132,7 @@ Entry points that ask the gate:
 
 **Old saves.** A player who already has three out, or a Devil and a Spirit, keeps them out, but the ones the gate blocks (not attuned; of a Devil and a Spirit the loser above) are also suppressed in
 the damage hook (they lose the damage raise, like a clash) and their uses are refused until the player meditates or puts one away. A saved attunement of more than two ids is cut to the first two
-when it loads (the store was already clamped to `MAX_SLOTS`). With three out and nothing meditated, none of the three works until the player meditates or puts one away.
+when it loads (the store was already clamped to `MAX_SLOTS`). With three out and nothing meditated, the first two found keep working and the third is blocked until the player meditates (or puts one away).
 
 **Cost, worst case.** Per gated use: one attunement attachment read plus `AttunePowers.out` (3 attachment reads that never create one, one Djinn check, one map lookup per registered spirit, 9 today)
 and lists of at most 5 entries. The uses are already rate limited by their systems (Beast Will asks `MIN_GAP_TICKS`, Djinn keys `KEY_SPACING`, Devil asks `askAllowed`, Spirit asks `askGap`); the

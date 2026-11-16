@@ -164,8 +164,8 @@ class AttuneRulesTest {
         Power will = p("beast:w", AttuneRules.BEAST, "", 2), djinn = p("djinn:j", AttuneRules.DJINN, "", 3), devil = p("devil:d", AttuneRules.DEVIL, "", 2), spirit = p("spirit:s", AttuneRules.SPIRIT, "", 2);
         List<Power> ordered = AttuneRules.order(List.of(will, djinn, devil), List.of("devil:d"));
         assertEquals(List.of(devil, will, djinn), ordered, "attuned first, then the rest as found");
-        assertEquals(Set.of(1, 2), AttuneRules.blocked(ordered, List.of("devil:d")), "three out: every one not attuned is blocked");
-        assertEquals(Set.of(0, 1, 2), AttuneRules.blocked(AttuneRules.order(List.of(will, djinn, devil), List.of()), List.of()), "three out and nothing meditated: all wait for /meditate");
+        assertEquals(Set.of(2), AttuneRules.blocked(ordered, List.of("devil:d")), "three out: the attuned one and the first other keep working, the third is blocked");
+        assertEquals(Set.of(2), AttuneRules.blocked(AttuneRules.order(List.of(will, djinn, devil), List.of()), List.of()), "three out and nothing meditated: the first two keep working, the third waits for /meditate");
         assertTrue(AttuneRules.blocked(List.of(will, djinn), List.of()).isEmpty());
         assertEquals(Set.of(1), AttuneRules.blocked(AttuneRules.order(List.of(devil, spirit), List.of("devil:d", "spirit:s")), List.of("devil:d", "spirit:s")), "an old save with both attuned: the later of equals is blocked");
     }
