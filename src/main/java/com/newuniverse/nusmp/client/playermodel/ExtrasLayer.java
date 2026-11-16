@@ -36,6 +36,6 @@ public class ExtrasLayer<T extends LivingEntity> extends RenderLayer<T, PlayerMo
         boolean mainRight = e.getMainArm() == HumanoidArm.RIGHT;                      // a real item in a hand replaces the art kit's picture of the weapon on that arm
         boolean skipR = !(mainRight ? e.getMainHandItem() : e.getOffhandItem()).isEmpty(), skipL = !(mainRight ? e.getOffhandItem() : e.getMainHandItem()).isEmpty();
         ExtrasDraw.draw(pose, buffers, owner.kit(), look, dead, d.transforming, d.cast, e.swinging, speed, age / 20f + (e.getId() & 15) * 0.37f, progress, skipR, skipL, light,
-                LivingEntityRenderer.getOverlayCoords(e, 0f), argb, glow, rgb);
+                LivingEntityRenderer.getOverlayCoords(e, 0f), argb, glow, rgb, owner.lod());
     }
 }

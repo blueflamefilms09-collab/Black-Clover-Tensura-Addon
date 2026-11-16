@@ -29,6 +29,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue LUCIFERO_BLENDER, GOD_OF_ORDER_BLENDER;
     /** Lucifero v2 (docs/bosses/lucifero_v2.md): the player-shaped body with separate armour parts (true, the default) or the Blender body of wave 3 (false). Key {@code lucifero.newBody}. */
     public static final ModConfigSpec.BooleanValue LUCIFERO_NEW_BODY;
+    /** Black Clover bosses on the redesigned player model (docs/bc_playermodels.md), key {@code bossLooks.bcPlayerModel}, CLIENT config like every look option here (it changes only how a boss is drawn). */
+    public static final ModConfigSpec.BooleanValue BC_PLAYER_MODEL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -51,6 +53,10 @@ public final class PlayerModelOptions {
         LUCIFERO_NEW_BODY = b.comment("Lucifero v2: draw him with the player-shaped body and his separate armour parts (three bodies: the king, wings spread, the Gates). Off = the wave 3 body (bat wings on a thin frame).")
                 .define("newBody", true);
         b.pop();
+        b.pop();
+        b.push("bossLooks");
+        BC_PLAYER_MODEL = b.comment("Black Clover bosses (Lucius, the Dark Triad, Zagred, Lucifero and the clones of Lucius) on the redesigned player model: anime face, layered cube hair, crowns, horns, bat wings, "
+                + "bracers, mantles, halo and a faint shimmer (docs/bc_playermodels.md). Off = exactly the previous look, Lucifero included (his Blender body returns).").define("bcPlayerModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -94,9 +100,18 @@ public final class PlayerModelOptions {
     /** Boss rework wave 3: true when the Blender body of {@code mesh} ("lucifero", "god_of_order" and their forms) is switched on (true while the config is not loaded). */
     public static boolean blender(String mesh) {
         try {
-            if (mesh.startsWith("lucifero")) return LUCIFERO_BLENDER.get();
+            if (mesh.startsWith("lucifero")) return !bcPlayerModel() && LUCIFERO_BLENDER.get();      // the redesigned player-model Lucifero wins while bossLooks.bcPlayerModel is on
             if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get();
             return true;
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the Black Clover bosses are drawn with the redesigned player-model looks (the config value; true while it is not loaded). */
+    public static boolean bcPlayerModel() {
+        try {
+            return BC_PLAYER_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

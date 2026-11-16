@@ -129,6 +129,15 @@ public final class PlayerAssets {
         return id != null && LOOKS_BY_ID.containsKey(id);
     }
 
+    /**
+     * The id of the redesigned Black Clover look of this look id ({@link BcLooks}, docs/bc_playermodels.md) while the client option {@code bossLooks.bcPlayerModel} is on and that look exists, else
+     * the id itself: the old look is always one switch away. A table lookup, no allocation.
+     */
+    public static String bcId(String id) {
+        String bc = BcLooks.of(id);
+        return bc != null && PlayerModelOptions.bcPlayerModel() && hasLook(bc) ? bc : id;
+    }
+
     /** The look of an id, or null when there is none (no fallback, no warning): for a renderer that chooses between the kit and an older renderer. */
     public static synchronized PlayerLook lookOrNull(String id) {
         if (!loadedLooks) loadLooks();

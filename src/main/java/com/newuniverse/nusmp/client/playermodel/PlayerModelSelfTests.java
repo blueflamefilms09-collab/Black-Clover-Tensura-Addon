@@ -35,6 +35,11 @@ public final class PlayerModelSelfTests {
             if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
             return SelfTests.Result.ok("hair, skins, glow maps, extras and legacy hair ids all resolve");
         });
+        SelfTests.register("bcmodel.looks", server -> {                                   // docs/bc_playermodels.md: the redesigned Black Clover looks (old ones kept, skins, atlases, budgets)
+            List<String> bad = BcAudit.run(PlayerModelAudit::classpath);
+            if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
+            return SelfTests.Result.ok(BcLooks.oldIds().size() + " redesigned looks, the old ones kept, atlases and budgets in range");
+        });
         SelfTests.register("render.playermodel2", server -> {
             List<String> bad = new ArrayList<>(DungeonAudit.run(PlayerModelAudit::classpath));
             for (String id : DungeonLooks.ENTITIES)

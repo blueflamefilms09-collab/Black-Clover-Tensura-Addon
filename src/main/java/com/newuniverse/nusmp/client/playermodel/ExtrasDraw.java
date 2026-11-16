@@ -35,7 +35,17 @@ public final class ExtrasDraw {
      */
     public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, boolean dead, boolean transforming, int cast, boolean swinging, float speed,
                             float clockSeconds, float progress, boolean skipArmR, boolean skipArmL, int light, int overlay, int argb, float glowLevel, int glowRgb) {
+        draw(pose, buffers, model, look, dead, transforming, cast, swinging, speed, clockSeconds, progress, skipArmR, skipArmL, light, overlay, argb, glowLevel, glowRgb, PlayerLod.FULL);
+    }
+
+    /** Suffix of an extras model that holds only fine detail (single strands, fringes, tassels, fur tufts): drawn only at full detail (docs/bc_playermodels.md). */
+    public static final String FINE_SUFFIX = "_fine";
+
+    /** The same with the level of detail of the frame ({@link PlayerLod}): a model named {@code ..._fine} is skipped beyond the detail distance, like the hair and the second skin layer. */
+    public static void draw(PoseStack pose, MultiBufferSource buffers, KitPlayerModel<?> model, PlayerLook look, boolean dead, boolean transforming, int cast, boolean swinging, float speed,
+                            float clockSeconds, float progress, boolean skipArmR, boolean skipArmL, int light, int overlay, int argb, float glowLevel, int glowRgb, int lod) {
         for (PlayerLook.Extra ex : look.extras()) {
+            if (lod != PlayerLod.FULL && ex.model().endsWith(FINE_SUFFIX)) continue;
             ExtraModels.Ready r = ExtraModels.of(ex.model());
             if (r.empty()) continue;
             String clipName = ExtraClip.pick(r.clips, dead, transforming, cast, swinging, speed);

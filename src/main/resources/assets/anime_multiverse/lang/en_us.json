@@ -19739,5 +19739,9 @@
   "message.anime_multiverse.dboss.guardian.verdict.verdant": "The Guardian sows the Final Bloom: stand in a lit sigil!",
   "message.anime_multiverse.dboss.guardian.verdict.storm": "The Guardian calls the Tempest: stand in a lit sigil!",
   "message.anime_multiverse.dboss.guardian.verdict.shadow": "The Guardian drinks the light: get out of the ring!",
-  "message.anime_multiverse.dboss.guardian.verdict.astral": "The stars align on the Guardian: stand in a lit sigil!"
+  "message.anime_multiverse.dboss.guardian.verdict.astral": "The stars align on the Guardian: stand in a lit sigil!",
+  "anime_multiverse.configuration.bossLooks": "Boss looks",
+  "anime_multiverse.configuration.bossLooks.tooltip": "How some bosses are drawn (looks only, nothing about their fight).",
+  "anime_multiverse.configuration.bcPlayerModel": "Black Clover bosses on the redesigned player model",
+  "anime_multiverse.configuration.bcPlayerModel.tooltip": "On: Lucius, the Dark Triad, Zagred, Lucifero and the clones of Lucius are drawn with an anime face, layered hair, crowns, horns, wings, bracers and a faint shimmer. Off: exactly the previous look."
 }

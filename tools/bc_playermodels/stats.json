@@ -1,0 +1,366 @@
+{
+ "bc_dante_zogratis": {
+  "atlas_fill": 0.179,
+  "atlas_glow": true,
+  "atlas_tiles": 26,
+  "bones": {
+   "fine": 8,
+   "fx": 1,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 30,
+   "fx": 5,
+   "main": 41
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 30,
+   "fx": 10,
+   "main": 116
+  }
+ },
+ "bc_dante_zogratis_form2": {
+  "atlas_fill": 0.161,
+  "atlas_glow": true,
+  "atlas_tiles": 22,
+  "bones": {
+   "fine": 1,
+   "fx": 1,
+   "main": 9
+  },
+  "cubes": {
+   "fine": 18,
+   "fx": 5,
+   "main": 71
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 18,
+   "fx": 10,
+   "main": 236
+  }
+ },
+ "bc_lucifero": {
+  "atlas_fill": 0.172,
+  "atlas_glow": false,
+  "atlas_tiles": 33,
+  "bones": {
+   "fine": 32,
+   "fx": 0,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 77,
+   "fx": 0,
+   "main": 47
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 77,
+   "fx": 0,
+   "main": 237
+  }
+ },
+ "bc_lucifero_form2": {
+  "atlas_fill": 0.197,
+  "atlas_glow": true,
+  "atlas_tiles": 38,
+  "bones": {
+   "fine": 32,
+   "fx": 2,
+   "main": 8
+  },
+  "cubes": {
+   "fine": 77,
+   "fx": 1,
+   "main": 67
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "main": 0
+  },
+  "quads": {
+   "fine": 77,
+   "fx": 2,
+   "main": 297
+  }
+ },
+ "bc_lucius_zogratis": {
+  "atlas_fill": 0.118,
+  "atlas_glow": false,
+  "atlas_tiles": 23,
+  "bones": {
+   "fine": 2,
+   "fx": 0,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 27,
+   "fx": 0,
+   "main": 25
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 27,
+   "fx": 0,
+   "main": 70
+  }
+ },
+ "bc_lucius_zogratis_form2": {
+  "atlas_fill": 0.22,
+  "atlas_glow": true,
+  "atlas_tiles": 45,
+  "bones": {
+   "fine": 32,
+   "fx": 4,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 77,
+   "fx": 10,
+   "main": 57
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 32,
+   "main": 0
+  },
+  "quads": {
+   "fine": 97,
+   "fx": 32,
+   "main": 182
+  }
+ },
+ "bc_vanica_zogratis": {
+  "atlas_fill": 0.224,
+  "atlas_glow": true,
+  "atlas_tiles": 34,
+  "bones": {
+   "fine": 9,
+   "fx": 1,
+   "main": 4
+  },
+  "cubes": {
+   "fine": 36,
+   "fx": 5,
+   "main": 41
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 36,
+   "fx": 10,
+   "main": 126
+  }
+ },
+ "bc_vanica_zogratis_form2": {
+  "atlas_fill": 0.255,
+  "atlas_glow": true,
+  "atlas_tiles": 39,
+  "bones": {
+   "fine": 9,
+   "fx": 1,
+   "main": 14
+  },
+  "cubes": {
+   "fine": 39,
+   "fx": 5,
+   "main": 65
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "main": 0
+  },
+  "quads": {
+   "fine": 39,
+   "fx": 10,
+   "main": 240
+  }
+ },
+ "bc_zagred": {
+  "atlas_fill": 0.109,
+  "atlas_glow": false,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 11
+  },
+  "cubes": {
+   "fine": 7,
+   "fx": 0,
+   "main": 61
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 7,
+   "fx": 0,
+   "main": 211
+  }
+ },
+ "bc_zagred_form2": {
+  "atlas_fill": 0.119,
+  "atlas_glow": false,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 15
+  },
+  "cubes": {
+   "fine": 7,
+   "fx": 0,
+   "main": 79
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 7,
+   "fx": 0,
+   "main": 279
+  }
+ },
+ "bc_zagred_legacy": {
+  "atlas_fill": 0.109,
+  "atlas_glow": false,
+  "atlas_tiles": 27,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 11
+  },
+  "cubes": {
+   "fine": 7,
+   "fx": 0,
+   "main": 61
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 7,
+   "fx": 0,
+   "main": 211
+  }
+ },
+ "bc_zagred_legacy_form2": {
+  "atlas_fill": 0.119,
+  "atlas_glow": false,
+  "atlas_tiles": 28,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 15
+  },
+  "cubes": {
+   "fine": 7,
+   "fx": 0,
+   "main": 79
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 7,
+   "fx": 0,
+   "main": 279
+  }
+ },
+ "bc_zenon_zogratis": {
+  "atlas_fill": 0.219,
+  "atlas_glow": false,
+  "atlas_tiles": 32,
+  "bones": {
+   "fine": 2,
+   "fx": 0,
+   "main": 5
+  },
+  "cubes": {
+   "fine": 27,
+   "fx": 0,
+   "main": 36
+  },
+  "glow": false,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 27,
+   "fx": 0,
+   "main": 86
+  }
+ },
+ "bc_zenon_zogratis_form2": {
+  "atlas_fill": 0.095,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 1,
+   "fx": 0,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 18,
+   "fx": 0,
+   "main": 100
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 18,
+   "fx": 0,
+   "main": 390
+  }
+ }
+}

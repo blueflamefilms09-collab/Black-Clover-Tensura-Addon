@@ -176,6 +176,7 @@ public class PlayerModelRenderer<T extends LivingEntity> extends EntityRenderer<
             if (dyn.lift != 0f || ps.lift != 0f) pose.translate(0.0, dyn.lift + ps.lift, 0.0);
             super.render(e, yaw, partial, pose, source, light);
             pose.popPose();
+            BcShimmer.tick(e, look, lod);                                              // docs/bc_playermodels.md: a faint shimmer on the redesigned Black Clover looks (bounded, full detail only)
             pose.pushPose();
             body.decorate(e, partial, deco.set(pose, buffers, light));
             pose.popPose();

@@ -108,9 +108,9 @@ public final class PlayerBodies {
         @Override
         public PlayerLook look(T e) {
             boolean newForm = e.form() != ZogratisBoss.FORM_BASE;
-            String s = second(e);
+            String s = PlayerAssets.bcId(second(e));                                  // the redesigned Black Clover look while bossLooks.bcPlayerModel is on (else the same id)
             if (PlayerAssets.hasLook(s) && useSecond(e, newForm)) return PlayerAssets.look(s);
-            return PlayerAssets.look(first(e));
+            return PlayerAssets.look(PlayerAssets.bcId(first(e)));
         }
 
         @Override
@@ -257,7 +257,7 @@ public final class PlayerBodies {
 
         private boolean divine(ZogratisCloneEntity e) { return e.form() == ZogratisBoss.FORM_DIVINE; }
 
-        @Override public PlayerLook look(ZogratisCloneEntity e) { return PlayerAssets.look(divine(e) ? "lucius_zogratis_form2" : "lucius_zogratis"); }
+        @Override public PlayerLook look(ZogratisCloneEntity e) { return PlayerAssets.look(PlayerAssets.bcId(divine(e) ? "lucius_zogratis_form2" : "lucius_zogratis")); }
 
         @Override
         public void dynamic(ZogratisCloneEntity e, float partial, Dynamic d) {
@@ -285,7 +285,7 @@ public final class PlayerBodies {
     // ================================================================================================ the legacy Zagred and the God of Order
     /** The first Zagred boss: his look from the fourth phase on has the trident; he casts while he speaks a word (the old synced state). */
     public static final class LegacyZagred implements PlayerBody<ZagredBossEntity> {
-        @Override public PlayerLook look(ZagredBossEntity e) { return PlayerAssets.look(e.phase() >= 4 ? "zagred_legacy_form2" : "zagred_legacy"); }
+        @Override public PlayerLook look(ZagredBossEntity e) { return PlayerAssets.look(PlayerAssets.bcId(e.phase() >= 4 ? "zagred_legacy_form2" : "zagred_legacy")); }
 
         @Override
         public void dynamic(ZagredBossEntity e, float partial, Dynamic d) {
