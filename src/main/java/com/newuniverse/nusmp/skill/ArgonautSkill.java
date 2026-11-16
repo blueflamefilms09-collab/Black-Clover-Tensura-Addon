@@ -129,7 +129,6 @@ public class ArgonautSkill extends NUSkill {
         int paid = tag.getInt(PAID);
         if (paid >= cap) return true;
         if (!pay(instance, player, mode, NUConfig.ARGONAUT_MAGICULE_PER_CHARGE.get())) return false;
-        if (canon) player.causeFoodExhaustion(ArgonautMergeRules.staminaPerBell());          // wiki: a charge spends stamina and mind
         paid++;
         tag.putInt(PAID, paid);
         instance.markDirty();

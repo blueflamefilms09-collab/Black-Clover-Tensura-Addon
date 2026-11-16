@@ -135,7 +135,7 @@ public final class ShinraRules {
 
     // ---- Adolla Grace (Fourth Generation): a timed power boost through the Link, then the Ignition Limit (Overheat) ----
     public static double graceCost() { return 1200; }
-    public static int graceCooldown() { return 2400; }
+    public static int graceCooldown() { return 3000; }
     /** The Grace is short: as little as a second in the story when the giver is weak. */
     public static int graceTicks(Tier t) { return t == Tier.ULTIMATE_MASTERED ? 240 : 160; }
     public static int graceSpeedAmp() { return 3; }

@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.8.2] — Build fix: hunger ban and stale checks
+- FIXED: Argonaut's wiki-accurate charge no longer drains the food bar and the Shinra Ignition Limit no longer applies Hunger (the mod bans both everywhere; the Ignition Limit is Weakness and Slowness only). The Shinra Grace cooldown is now 150 s so it stays "rare" next to its 12 s length.
+- FIXED: two source-scan tests followed the canon passes (All Fiction's erase rule is now `canErase`; the eight 4.6.0 Faith god icons are listed as not-yet-repainted).
+- Nothing else changes: the 4.7.0 content (wiki-accurate Argonaut, Shinra, All Fiction, Summoner) and the 4.8.0 content (new and animated skill icons) ship in this build.
+
 ## [4.8.1] — Build fix: the Summoner canon pass did not compile
 - FIXED: the canon-name table of the Summoner (`SummonerRules.canonName`) had no case for the Fish type, so the 4.7.0 and 4.8.0 builds stopped at compile time. The Fish type now answers "no canon name" (the wiki names no fish summon) and gets its "Fish <rank>" label.
 - Nothing else changes. The 4.7.0 content (wiki-accurate Argonaut, Shinra, All Fiction, Summoner) and the 4.8.0 content (new and animated skill icons) ship in this build; their details are in the entries below.

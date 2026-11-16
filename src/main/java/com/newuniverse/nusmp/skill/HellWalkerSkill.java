@@ -263,7 +263,6 @@ public class HellWalkerSkill extends ToggleAuraSkill {
         int ticks = ShinraRules.overheatTicks();
         player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 1, true, false));
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 0, true, false));
-        player.addEffect(new MobEffectInstance(MobEffects.HUNGER, ticks, 1, true, false));
         SkillUtil.actionbar(player, SkillMsg.t("shinra.overheat", "Ignition Limit: you overheat.").withStyle(ChatFormatting.RED));
     }
 

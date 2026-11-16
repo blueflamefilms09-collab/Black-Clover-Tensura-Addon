@@ -62,7 +62,7 @@ class UltimatePairSourceScanTest {
     void theOldFictionModesAndThePassiveAreStillThere() throws Exception {
         String c = code("AllFictionSkill.java");
         assertTrue(c.contains("\"fiction.undo\"") && c.contains("\"fiction.erase\"") && c.contains("\"fiction.cooldown\"") && c.contains("\"fiction.death\""), "old lang keys kept");
-        for (String key : new String[]{"H\" + i", "DeathReadyAt", "oldestIndex()", "undoHealth(", "erases(", "deathCooldown()"}) assertTrue(c.contains(key), "old state or rule dropped: " + key);
+        for (String key : new String[]{"H\" + i", "DeathReadyAt", "oldestIndex()", "undoHealth(", "canErase(", "deathCooldown()"}) assertTrue(c.contains(key), "old state or rule dropped: " + key);
         assertTrue(c.contains("public boolean onDeath("), "the death passive is kept");
     }
 

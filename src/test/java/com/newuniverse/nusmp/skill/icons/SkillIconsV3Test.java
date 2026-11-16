@@ -27,7 +27,9 @@ class SkillIconsV3Test {
     private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path TEX = ASSETS.resolve("textures/skill");
     /** Icons of skills that were removed (3.44.0 / 4.3.0): kept as they were, not repainted (rule 2). */
-    private static final Set<String> LEGACY = Set.of("black_wings", "gold_experience", "gold_experience_requiem", "instant_death", "limitless", "six_eyes", "vector_manipulation");
+    private static final Set<String> LEGACY = Set.of("black_wings", "gold_experience", "gold_experience_requiem", "instant_death", "limitless", "six_eyes", "vector_manipulation",
+            // the eight Faith gods (4.6.0) keep their own generated icons until the painter covers them
+            "aqua_goddess_of_water", "femto_god_of_incarnation", "mavis_goddess_of_fairy_law", "ra_god_of_the_sun", "faith_of_mavis", "faith_of_super_saiyan_god", "faith_of_femto", "lucifero_god_of_devils", "luminus_goddess_of_light", "faith_of_ra", "faith_of_ill_ilah", "ill_ilah_god_of_rukh", "faith_of_aqua", "faith_of_lucifero", "faith_of_luminus", "ssj_blue_god_of_divine_ki");
 
     private static Map<String, String[]> manifest() throws Exception {
         Map<String, String[]> m = new LinkedHashMap<>();
