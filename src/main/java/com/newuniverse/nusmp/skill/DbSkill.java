@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.skill;
 
-import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.DbRules;
 import com.newuniverse.nusmp.skill.rules.DbRules.Mode;
 import com.newuniverse.nusmp.skill.rules.DbRules.Spec;
@@ -68,7 +67,7 @@ public class DbSkill extends NUSkill {
     @Override
     public void onTick(ManasSkillInstance i, LivingEntity e) {
         if (!(e instanceof ServerPlayer p) || p.tickCount % DbRules.PASSIVE_PERIOD_TICKS != 0) return;
-        DbPassives.second(i, p, spec, ult, i.isMastered(p), NUConfig.DB_ENABLED.get());
+        DbPassives.second(i, p, spec, ult, i.isMastered(p), DbSkills.active());
     }
 
     @Override public void onToggleOff(ManasSkillInstance i, LivingEntity e) { if (e instanceof ServerPlayer p) DbPassives.clear(p); }
@@ -82,7 +81,7 @@ public class DbSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer p) || !p.isAlive()) return;
-        if (!NUConfig.DB_ENABLED.get()) { SkillUtil.fail(p, SkillMsg.t("db.off", "The Dragon Ball skills are switched off on this server.")); return; }
+        if (!DbSkills.active()) { SkillUtil.fail(p, SkillMsg.t("db.off", "The Dragon Ball skills are switched off on this server.")); return; }
         int idx = Math.floorMod(mode, wheel.size());
         Mode m = wheel.get(idx);
         boolean mastered = instance.isMastered(p);

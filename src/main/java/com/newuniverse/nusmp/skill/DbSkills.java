@@ -18,10 +18,12 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,9 +47,32 @@ public final class DbSkills {
         return UNIQUE.size() + ULTIMATE.size();
     }
 
+    /** Dragon Ball rework phase 1: the old skills are removed unless the server sets {@code dragonBallLegacySkills = true}. Removed = not offered, not evolved, not usable, taken from players at login. */
+    public static boolean legacy() { return NUConfig.DB_LEGACY_SKILLS.get(); }
+
+    /** The old skills may be used: not removed ({@link #legacy()}) and not switched off ({@code dragonBallEnabled}). */
+    public static boolean active() { return NUConfig.DB_ENABLED.get() && legacy(); }
+
+    /** Login, once per player: while the skills are removed, any of the 30 ids the player still owns is forgotten (30 map lookups, no tick work, nothing sent unless something was taken). */
+    public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer p) || legacy()) return;
+        Skills skills = SkillAPI.getSkillsFrom(p);
+        if (skills == null) return;
+        int taken = 0;
+        for (Map<String, DeferredHolder<ManasSkill, DbSkill>> table : List.of(UNIQUE, ULTIMATE))
+            for (DeferredHolder<ManasSkill, DbSkill> h : table.values()) {
+                try {
+                    if (skills.getSkill(h.getId()).isEmpty()) continue;
+                    skills.forgetSkill(h.getId());
+                    taken++;
+                } catch (RuntimeException ignored) { /* a skill that cannot be forgotten now is refused by active() anyway */ }
+            }
+        if (taken > 0) p.displayClientMessage(Component.literal("The old Dragon Ball skills were removed (" + taken + ").").withStyle(ChatFormatting.GRAY), false);
+    }
+
     /** The evolution check of one player (the caller runs it every 5 seconds); at most one evolution per call. */
     static void evolve(ServerPlayer player, Skills skills) {
-        if (!NUConfig.DB_ENABLED.get()) return;
+        if (!active()) return;
         for (Spec s : DbRules.SPECS) {
             ManasSkill base = UNIQUE.get(s.id()).get(), ult = ULTIMATE.get(s.id()).get();
             Optional<ManasSkillInstance> owned = skills.getSkill(base.getRegistryName());
@@ -61,7 +86,7 @@ public final class DbSkills {
     }
 
     public static LiteralArgumentBuilder<CommandSourceStack> node() {
-        return Commands.literal("dragonball").requires(c -> c.hasPermission(2))
+        return Commands.literal("dragonball").requires(c -> c.hasPermission(2) && legacy())   // hidden while removed; read lazily, the server config is not loaded when commands are built
                 .then(Commands.literal("give").then(Commands.argument("player", EntityArgument.player())
                         .then(Commands.argument("id", StringArgumentType.word())
                                 .suggests((c, b) -> SharedSuggestionProvider.suggest(DbRules.SPECS.stream().map(Spec::id), b))
@@ -75,6 +100,7 @@ public final class DbSkills {
     }
 
     private static int give(CommandSourceStack src, ServerPlayer p, String id, boolean ultimate) {
+        if (!legacy()) { src.sendFailure(Component.literal("The old Dragon Ball skills are removed on this server (dragonBallLegacySkills = false).")); return 0; }
         Spec s = DbRules.spec(id);
         if (s == null || !UNIQUE.containsKey(s.id())) { src.sendFailure(Component.literal("Unknown Dragon Ball skill '" + id + "'. Use /multiverse dragonball list.")); return 0; }
         DeferredHolder<ManasSkill, DbSkill> h = (ultimate ? ULTIMATE : UNIQUE).get(s.id());

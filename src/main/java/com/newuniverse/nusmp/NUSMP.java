@@ -362,6 +362,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onPlayerTick);                // 1.19.0: skills lent by cooked meals
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onLogin);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealSkills::onClone);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.DbSkills::onLogin);                          // Dragon Ball rework phase 1: the 30 old Dragon Ball skills are taken at login unless dragonBallLegacySkills = true
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.dungeon.MealAttunement::onDamage);                // 1.19.0: a second magic's rider from a meal
         // 1.24.0: Relics of Many Worlds (engine + every wave's hooks), the Order, the Djinn
         com.newuniverse.nusmp.relics.RelicSystem.registerGame(NeoForge.EVENT_BUS);

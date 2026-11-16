@@ -77,6 +77,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue NEN_VFX_V2;          // 3.57.0
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
+    public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -224,6 +225,7 @@ public final class NUConfig {
         DB_ENABLED = b.comment("The 15 Dragon Ball skills (3.56.0). false = they stay registered but every mode refuses and the passives do nothing.").define("dragonBallEnabled", true);
         BEAST_SKILLS_ENABLED = b.comment("The 54 Beast Will skills (3.59.0, a Unique and an Ultimate for each of the 27 wills). false = they stay registered but every mode refuses, the passives do nothing and they do not evolve.").define("beastSkillsEnabled", true);
         BEAST_SKILL_GRANT_ON_MASTERY = b.comment("Mastering a Beast Will to 100 % grants the Unique skill of that beast once (3.59.0). false = the skills come only from the admin command or /tensura edit.").define("beastSkillGrantOnMastery", true);
+        DB_LEGACY_SKILLS = b.comment("Dragon Ball rework, phase 1. The 15 old Dragon Ball skills (30 ids, 3.56.0) are REMOVED by default: false = no command, no evolution, no use, and they are taken from players at login (the ids stay registered so old worlds load). true = the old behaviour (dragonBallEnabled still applies).").define("dragonBallLegacySkills", false);
         b.pop();
 
         SPEC = b.build();

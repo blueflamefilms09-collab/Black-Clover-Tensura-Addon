@@ -24,6 +24,6 @@ public final class DbSkillSelfTests {
             if (du.wheel().size() != 2 || da.wheel().size() != s.actives().size()) return Result.fail(s.id() + ": the wheel does not match the table");
             n += 2;
         }
-        return Result.ok(n + " Dragon Ball skills registered (15 Unique, 15 Ultimate); server setting dragonBallEnabled=" + com.newuniverse.nusmp.NUConfig.DB_ENABLED.get());
+        return Result.ok(n + " Dragon Ball skills registered (15 Unique, 15 Ultimate); server settings dragonBallEnabled=" + com.newuniverse.nusmp.NUConfig.DB_ENABLED.get() + ", dragonBallLegacySkills=" + com.newuniverse.nusmp.NUConfig.DB_LEGACY_SKILLS.get() + " (false = removed from play, ids kept)");
     }
 }
