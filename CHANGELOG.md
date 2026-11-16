@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.104.0] — Skill effects wave 4: Beast Wills, hero weapons, more unique skills and grimoire attributes
+- NEW (asked for: anime-style effects for skills): Liaris Freese, Hati, Hawk Eye, Spirit Card, Summoner and Lord of Summons, Book Maker, Shishou, the Gate of Babylon Armour, Vimana, King and Elixir modes, the Devil's Footprints kick, and the Almighty and The Visionary now draw real shapes. All 27 Beast Wills draw their move family (line, rush, burst, volley, seal, aura) in the colour of the beast's element. All 21 hero weapon kinds draw their weapon motif (slash, thrust, shock, ward, cast, thread, shard) in the weapon's colour, bigger with a rune halo for an ultimate. The Cotton, Mirror, Plant, Sealing and Thread grimoire attributes have a cast and an impact effect.
+- NEW: 4 shapes appended after `SKILL_SIGIL` (ANIME2_SKILL, ANIME2_BEAST, ANIME2_HERO, ANIME2_GRIMOIRE), `SkillAnime2Layer`, 15 textures from `tools/gen_skill_anime2_vfx_textures.py`, 59 preview scenes and four contact sheets in `docs/vfx_remake/previews/`.
+- KEPT: every old effect still plays. CLIENT setting `skills.classicVfx2` (default off) = only the old look.
+- Not covered: effects per technique (about 150 hero techniques) and per beast mode (the family and colour stand in), grimoire attributes beyond the five, sounds. Beast elements and weapon motifs are from memory (the wikis were blocked).
+- Cost: one packet per cast; throttled per player (Hawk Eye and Spirit Card one per 3 seconds, Liaris, Hati and Shishou one per second, beasts one per 6 ticks, heroes one per 4); at most 276 of the 400 vertices per effect; no server work.
+
 ## [3.103.0] — Skill icons v2: 146 placeholder icons redrawn
 - REPLACED (asked for: better skill icons): 29 magics of the 0.53 expansion (barrier through legion) had one shared diamond placeholder for their grimoire, buff, ultimate and symbol icons (116 icons); now each has its own themed glyph. 30 wiki magics (air through wing) shared six motifs; their grimoire icons are redrawn (30 icons).
 - KEPT: every file name and id; the 47 original magics, the Veldanava, root, unique, Beast Will and Dragon Ball icons. The old versions are in `tools/skills/icons_classic/` (not in the jar). Generator `tools/skills/gen_icons_v2.py`, before/after sheets in `docs/skill_icons_v2/`.
