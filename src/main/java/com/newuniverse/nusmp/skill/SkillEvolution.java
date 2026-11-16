@@ -21,8 +21,8 @@ import java.util.function.Supplier;
 
 /**
  * Unique -> Ultimate evolution. Every 5 seconds each player is checked: if they have a
- * MASTERED base skill (and enough EP), it evolves into its Ultimate. Saved data such as
- * Faith points carries over to the new skill.
+ * MASTERED base skill (and enough EP), it evolves into its Ultimate. The saved data of the
+ * old skill carries over to the new skill.
  */
 public final class SkillEvolution {
     private SkillEvolution() {}
@@ -30,13 +30,13 @@ public final class SkillEvolution {
     private static Map<Supplier<? extends ManasSkill>, Supplier<? extends ManasSkill>> paths() {
         Map<Supplier<? extends ManasSkill>, Supplier<? extends ManasSkill>> m = new LinkedHashMap<>();
         m.put(NUSkills.SUMMONER, NUSkills.LORD_OF_SUMMONS);
-        m.put(NUSkills.FAITH, NUSkills.GODDESS_OF_FAITH);
         m.put(NUSkills.ARGONAUT, NUSkills.HEROS_ARGONAUT);
         m.put(NUSkills.HELL_WALKER, NUSkills.HELL_CONQUEROR);
         m.put(NUSkills.UNBREAKABLE_WILL, NUSkills.IMMORTAL_WILL);
         m.put(NUSkills.DEVILS_FOOTPRINTS, NUSkills.ADOLLA_BURST);
         m.put(NUSkills.BOOK_MAKER, NUSkills.ALL_FICTION);
         if (NUConfig.shinraRework()) m.put(NUSkills.HELL_WALKER, NUSkills.ADOLLA_BURST);   // Shinra rework, appended: replaces the Hell Conqueror target above while the setting is on
+        // Faith -> Goddess of Faith and the eight Faith gods were removed on the owner's word (docs/faith_removed.md)
         // 3.44.0: Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings were removed (Black Wings itself was removed later)
         return m;
     }
@@ -69,12 +69,11 @@ public final class SkillEvolution {
         }
         DbSkills.evolve(player, skills);   // 3.56.0: the Dragon Ball pairs, kept in their own table
         BeastSkills.evolve(player, skills);   // 3.58.0: the Beast Will pairs, kept in their own table
-        FaithGods.evolve(player, skills);   // the eight Faith gods (docs/faith_gods.md), their own table
     }
 
     static void evolve(ServerPlayer player, Skills skills, ManasSkillInstance old, ManasSkill ult) {
         ManasSkillInstance evolved = ult.createDefaultInstance();
-        evolved.getOrCreateTag().merge(old.getOrCreateTag().copy()); // keep Faith points etc.
+        evolved.getOrCreateTag().merge(old.getOrCreateTag().copy()); // keep the saved data of the old skill
 
         boolean learned = skills.learnSkill(evolved, SkillMsg.t("evolution.learned", "Your skill has evolved!").withStyle(ChatFormatting.GOLD));
         if (!learned) return;

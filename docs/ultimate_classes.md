@@ -26,7 +26,7 @@ costPercent of max magicule", and every cast keeps its own flat price as the flo
 | Class | Skills (class file) |
 |---|---|
 | GOD | The Almighty `TheAlmightySkill`, The Visionary `TheVisionarySkill`, All Fiction `AllFictionSkill` |
-| KING | Gate of Babylon `GateOfBabylonSkill`, Hell Conqueror `HellConquerorSkill`, Lord of Summons `LordOfSummonsSkill`, Goddess of Faith `GoddessOfFaithSkill` |
+| KING | Gate of Babylon `GateOfBabylonSkill`, Hell Conqueror `HellConquerorSkill`, Lord of Summons `LordOfSummonsSkill` |
 | LORD | Adolla Burst `AdollaBurstSkill`, Hero's Argonaut `HerosArgonautSkill`, Immortal Will `ImmortalWillSkill`, Ki `KiSkill`, Nen `NenSkill`, Shishou `ShishouUltimateSkill`, Lord of Gluttonous Greed `LordOfGluttonousGreedSkill` (not in the guide's table: Lord by its name and kit), the 15 Dragon Ball Ultimates `DbSkill` and the 27 Beast Will Ultimates `BeastSkill` (their Unique halves stay unclassified) |
 | DRAGON | none yet. Candidate for the owner: the Dragon Sovereign Beast Ultimate (`bw_dragon`), kept LORD with the other Beast Ultimates as the guide's table says |
 | not an NUSkill, recorded only | the Veldanava Ultimates (`entity/veldanava/skills/VeldanavaSkillBase`, guide: GOD), Nullification, Kotodama (a GrimoireBook): they extend Tensura's `Skill` / `GrimoireBook`, so they keep their own costs and mastery |

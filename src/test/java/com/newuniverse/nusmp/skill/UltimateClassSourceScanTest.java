@@ -33,7 +33,7 @@ class UltimateClassSourceScanTest {
     @Test
     void theNuSkillFamilyPaysThroughTheHelper() throws IOException {
         List<String> converted = List.of("TheAlmightySkill", "TheVisionarySkill", "AllFictionSkill", "GateOfBabylonSkill", "KiSkill", "NenSkill", "NenHatsu", "AdollaBurstSkill",
-                "DevilsFootprintsSkill", "ImmortalWillSkill", "FireboltSkill", "AirielSkill", "ArgonautSkill", "GodSkill", "DbSkill", "BeastSkill", "ToggleAuraSkill", "SummonerSkill", "FaithSkill",
+                "DevilsFootprintsSkill", "ImmortalWillSkill", "FireboltSkill", "AirielSkill", "ArgonautSkill", "GodSkill", "DbSkill", "BeastSkill", "ToggleAuraSkill", "SummonerSkill",
                 "BookMakerSkill", "ChantedMagicSkill");
         int sites = 0;
         for (String f : converted) {
@@ -74,7 +74,7 @@ class UltimateClassSourceScanTest {
     @Test
     void theClassificationMatchesTheDoc() throws IOException {
         String[][] want = {{"TheAlmightySkill", "GOD"}, {"TheVisionarySkill", "GOD"}, {"AllFictionSkill", "GOD"}, {"GateOfBabylonSkill", "KING"}, {"HellConquerorSkill", "KING"},
-                {"LordOfSummonsSkill", "KING"}, {"GoddessOfFaithSkill", "KING"}, {"AdollaBurstSkill", "LORD"}, {"HerosArgonautSkill", "LORD"},
+                {"LordOfSummonsSkill", "KING"}, {"AdollaBurstSkill", "LORD"}, {"HerosArgonautSkill", "LORD"},
                 {"ImmortalWillSkill", "LORD"}, {"KiSkill", "LORD"}, {"NenSkill", "LORD"}, {"ShishouUltimateSkill", "LORD"}, {"LordOfGluttonousGreedSkill", "LORD"}};
         String doc = Files.readString(Path.of("docs/ultimate_classes.md"), StandardCharsets.UTF_8);
         for (String[] w : want) {

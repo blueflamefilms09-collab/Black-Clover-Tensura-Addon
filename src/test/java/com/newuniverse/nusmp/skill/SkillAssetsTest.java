@@ -26,15 +26,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class SkillAssetsTest {
     /** The ids that are still registered by NUSkills (3.44.0 took six of the owner's original 38 out, see REMOVED). */
     private static final List<String> IDS = Arrays.asList(
-            "summoner", "faith", "firebolt", "argonaut", "liaris_freese", "airiel", "hestia", "freya", "hephaestus", "loki",
+            "summoner", "firebolt", "argonaut", "liaris_freese", "airiel", "hestia", "freya", "hephaestus", "loki",
             "wynn_fimbulvetr", "rea_laevateinn", "arcs_ray", "futsunomitama", "uchide_no_kozuchi", "hell_walker", "hawk_eye",
             "spirit_card", "unbreakable_will", "hati", "devils_footprints", "book_maker",
-            "lord_of_summons", "goddess_of_faith", "heros_argonaut", "hell_conqueror", "immortal_will", "adolla_burst",
+            "lord_of_summons", "heros_argonaut", "hell_conqueror", "immortal_will", "adolla_burst",
             "all_fiction",
             "the_almighty", "the_visionary", "nen", "gate_of_babylon", "ki", "adaptability");
 
     /** 3.44.0: removed on the owner's word. Their ids must no longer be registered by NUSkills (LegacySkills keeps them as inert stubs) and their icons stay in the jar. */
-    private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings");
+    private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings", "faith", "goddess_of_faith");
 
     private static String read(String path) throws Exception {
         return Files.readString(Path.of(path), StandardCharsets.UTF_8);
@@ -55,7 +55,7 @@ class SkillAssetsTest {
             assertTrue(legacy.contains("\"" + id + "\""), id + " must stay registered as an inert stub (LegacyIds.REMOVED_SKILLS) so old worlds load");
             assertTrue(new File("src/main/resources/assets/anime_multiverse/textures/skill/" + id + ".png").isFile(), id + ": the icon stays (rule 2)");
         }
-        for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules", "BlackWingsSkill", "VectorManipulationSkill", "VectorRules"})
+        for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules", "BlackWingsSkill", "VectorManipulationSkill", "VectorRules", "FaithSkill", "GoddessOfFaithSkill", "FaithGods", "FaithGodSkill", "FaithWorship"})
             assertFalse(new File("src/main/java/com/newuniverse/nusmp/skill/" + gone + ".java").exists() || new File("src/main/java/com/newuniverse/nusmp/skill/rules/" + gone + ".java").exists(), gone + " is deleted");
     }
 
@@ -71,7 +71,7 @@ class SkillAssetsTest {
     void theEvolutionTableIsUnchanged() throws Exception {
         String src = read("src/main/java/com/newuniverse/nusmp/skill/SkillEvolution.java");
         String[][] pairs = {
-                {"SUMMONER", "LORD_OF_SUMMONS"}, {"FAITH", "GODDESS_OF_FAITH"}, {"ARGONAUT", "HEROS_ARGONAUT"},
+                {"SUMMONER", "LORD_OF_SUMMONS"}, {"ARGONAUT", "HEROS_ARGONAUT"},
                 {"HELL_WALKER", "HELL_CONQUEROR"}, {"UNBREAKABLE_WILL", "IMMORTAL_WILL"}, {"DEVILS_FOOTPRINTS", "ADOLLA_BURST"},
                 {"BOOK_MAKER", "ALL_FICTION"}};
         for (String[] p : pairs) assertTrue(src.contains("m.put(NUSkills." + p[0] + ", NUSkills." + p[1] + ");"), "evolution missing: " + p[0]);

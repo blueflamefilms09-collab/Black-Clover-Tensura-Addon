@@ -3,7 +3,6 @@ package com.newuniverse.nusmp;
 import com.newuniverse.nusmp.blackclover.BlackCloverRegistry;
 import com.newuniverse.nusmp.blackclover.GrimoireAcceptance;
 import com.newuniverse.nusmp.blackclover.GrimoireCommand;
-import com.newuniverse.nusmp.command.FaithCommand;
 import com.newuniverse.nusmp.skill.LiarisFreeseSkill;
 import com.newuniverse.nusmp.skill.NUSkills;
 import com.newuniverse.nusmp.skill.SkillEvolution;
@@ -182,8 +181,6 @@ public class NUSMP {
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
-        com.newuniverse.nusmp.skill.FaithSelfTests.register();                                              // faith fix: self-tests faith.* (docs/faith_fix.md)
-        com.newuniverse.nusmp.skill.FaithGodSelfTests.register();                                           // the eight Faith gods: self-tests gods.* (docs/faith_gods.md)
         com.newuniverse.nusmp.skill.UltimateClassSelfTests.register();                                      // Ultimate classes: self-tests ultclass.* (docs/ultimate_classes.md)
         com.newuniverse.nusmp.skill.ArgonautSelfTests.register();                                           // Argonaut rework: self-tests argonaut.* (docs/argonaut_rework.md)
         com.newuniverse.nusmp.skill.ArgonautMerge.register();                                                // Argonaut rework: a Firebolt holder is moved to Argonaut at login
@@ -565,12 +562,6 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.RaceBuffs::onPlayerTick);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent e) -> com.newuniverse.nusmp.multiverse.RaceBuffs.reset(e.getEntity()));
-        NeoForge.EVENT_BUS.addListener(FaithCommand::register);
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithWorship::onLogout);                  // faith fix: open invitations and offering clocks leave with the player
-        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppingEvent e) -> com.newuniverse.nusmp.skill.FaithWorship.clear());
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::register);                      // the eight Faith gods: /faith ascend|gods and the admin give command
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::onLogout);                      // the ritual clock leaves with the player
-        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.FaithGods::onServerStopping);
         NeoForge.EVENT_BUS.addListener(LiarisFreeseSkill::onKill);
         NeoForge.EVENT_BUS.addListener(SkillEvolution::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(GrimoireAcceptance::onPlayerTick);

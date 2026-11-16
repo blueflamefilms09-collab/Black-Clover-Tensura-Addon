@@ -27,9 +27,6 @@ final class SkillUtil {
         actionbar(player, Component.literal(text).withStyle(ChatFormatting.RED));
     }
 
-    /** The magicules of an offering (/faith offer): the worshipper holds no skill to pay through, so this is the one plain write, with Tensura's own "not enough" message. */
-    static boolean spendOffering(ServerPlayer player, double cost) { return spendMagicules(player, cost); }
-
     /** True if the player has at least this many magicules (nothing is spent). */
     static boolean hasMagicules(ServerPlayer player, double cost) {
         if (cost <= 0) return true;

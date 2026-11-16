@@ -18,7 +18,7 @@ import java.util.List;
  * Why: a race may demand things of its creator ("holds a devil contract", "has a DanMachi Falna", "carries an attuned relic") and the owner wants those
  * requirements checked on the server before a race is authorised, so a client can never pick a race it does not qualify for. The tags in the JSON map to
  * predicates through {@link ConditionEvaluator}'s registry; this class only supplies the real player behind them (a {@link ConditionEvaluator.Ctx} that reads
- * the inventory, the skills, the grimoire, the devil pact, the Faith / god skills, the relic attunement, the EP and the dimension). Every read is defensive:
+ * the inventory, the skills, the grimoire, the devil pact, the god skills, the relic attunement, the EP and the dimension). Every read is defensive:
  * a source that cannot be read counts as not satisfied.
  */
 public final class RaceConnectionChecker {
@@ -33,9 +33,9 @@ public final class RaceConnectionChecker {
         return new Result(r.ok(), r.failed());
     }
 
-    /** The skills whose owner counts as holding a DanMachi Falna: a god's blessing or the Faith skill (this mod has no other Falna record). */
+    /** The skills whose owner counts as holding a DanMachi Falna: a god's blessing (this mod has no other Falna record). */
     private static List<ResourceLocation> falnaSkills() {
-        return List.of(NUSkills.HESTIA.getId(), NUSkills.FREYA.getId(), NUSkills.HEPHAESTUS.getId(), NUSkills.LOKI.getId(), NUSkills.FAITH.getId());
+        return List.of(NUSkills.HESTIA.getId(), NUSkills.FREYA.getId(), NUSkills.HEPHAESTUS.getId(), NUSkills.LOKI.getId());
     }
 
     private record PlayerCtx(ServerPlayer p) implements ConditionEvaluator.Ctx {

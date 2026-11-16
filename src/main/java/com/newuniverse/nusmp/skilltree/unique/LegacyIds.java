@@ -87,11 +87,16 @@ public final class LegacyIds {
             "ft_ice_make_lance", "ft_ice_make_floor", "ft_ice_make_shield", "ft_ice_make_cannon", "ft_ice_make_saucer", "ft_ice_make_eagle", "ft_ice_make_hammer", "ft_ice_make_excalibur");
 
     /**
-     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death), plus Black Wings appended LAST (removed later, see docs/black_wings_removed.md). The ids {@code anime_multiverse:<path>}
+     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death), plus Black Wings (removed later, see docs/black_wings_removed.md), then the Faith skill, Goddess of Faith and the sixteen Faith god skills appended LAST (docs/faith_removed.md). The ids {@code anime_multiverse:<path>}
      * stay registered as inert stubs so a world that saved one of them still loads; the stub is forgotten at the next login or respawn ({@link LegacyMigration}). Their 32x32 icons stay in the jar.
      */
     public static final List<String> REMOVED_SKILLS = List.of(
-            "six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings");
+            "six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings",
+            // the Faith skill, its Ultimate and the eight Faith gods (a Unique "Faith of X" and its god form each) appended LAST, removed on the owner's word (docs/faith_removed.md)
+            "faith", "goddess_of_faith",
+            "faith_of_femto", "femto_god_of_incarnation", "faith_of_lucifero", "lucifero_god_of_devils", "faith_of_luminus", "luminus_goddess_of_light",
+            "faith_of_mavis", "mavis_goddess_of_fairy_law", "faith_of_ill_ilah", "ill_ilah_god_of_rukh", "faith_of_super_saiyan_god", "ssj_blue_god_of_divine_ki",
+            "faith_of_ra", "ra_god_of_the_sun", "faith_of_aqua", "aqua_goddess_of_water");
 
     private static final Set<String> LINE_SET = Set.copyOf(REMOVED_LINES);
 

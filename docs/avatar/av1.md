@@ -113,7 +113,7 @@ Fifteen races ship: `demon_host` (exactly the owner's example), `devil_vessel` (
 `fallen_angel`, `spirit`. The evolved forms are `selectable: false`. (Tensura race ids were not used: the mod's own `multiverse/Race` families are looser and the Avatar's race is its own thing.)
 
 Connection tags (`ConditionEvaluator`, the predicate registry map; `RaceConnectionChecker` supplies the real player): `has_item:<id>`, `has_skill:<id>`, `has_grimoire`, `has_magic:<MagicType>`, `black_clover:devil_contract`
-(= `ForbiddenMagic.devilOf(p) != null`), `danmachi:has_falna` (**this mod has no Falna record**: it counts a god's blessing, i.e. holding `anime_multiverse:hestia`, `freya`, `hephaestus`, `loki` or the Faith skill),
+(= `ForbiddenMagic.devilOf(p) != null`), `danmachi:has_falna` (**this mod has no Falna record**: it counts a god's blessing, i.e. holding `anime_multiverse:hestia`, `freya`, `hephaestus`, or `loki`),
 `relics:requires_curios_attunement` (`Attune.carried >= 1`), `min_ep:<n>` (max EP), `dimension:<id>`; a leading `!` negates. The key is the longest registered prefix, so `has_item:anime_multiverse:genesis_core` splits correctly. **Unknown tags and
 throwing predicates fail closed** with a warning (a typo can never open a race, and negating an unknown tag does not open it either). `ConditionEvaluator.register` lets an add-on add a tag.
 

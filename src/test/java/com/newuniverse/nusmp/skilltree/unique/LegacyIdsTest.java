@@ -36,8 +36,13 @@ class LegacyIdsTest {
     }
 
     @Test
-    void theRemovedSkillsAreSevenKnownIdsBlackWingsLast() {
-        assertEquals(List.of("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings"), LegacyIds.REMOVED_SKILLS);
+    void theOlderRemovalsKeepTheirOrderAndTheFaithSkillsAreAppendedLast() {
+        List<String> seven = List.of("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death", "black_wings");
+        assertEquals(seven, LegacyIds.REMOVED_SKILLS.subList(0, 7), "the older removals keep their order");
+        List<String> faith = LegacyIds.REMOVED_SKILLS.subList(7, LegacyIds.REMOVED_SKILLS.size());
+        assertEquals(18, faith.size(), "Faith, Goddess of Faith and the sixteen Faith god skills");
+        assertEquals(List.of("faith", "goddess_of_faith"), faith.subList(0, 2));
+        for (String god : List.of("femto", "lucifero", "luminus", "mavis", "ill_ilah", "super_saiyan_god", "ra", "aqua")) assertTrue(faith.contains("faith_of_" + god), god);
     }
 
     @Test

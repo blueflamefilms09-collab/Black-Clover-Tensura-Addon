@@ -123,10 +123,9 @@ SKILLS = [
     ("wrath", "tensura:wrath", "ultimate", "Wrath", 14, 3500, 0xFF3355, "Anger given a shape and a target."),
     # ---- this mod's own Ultimate skills (SkillType.ULTIMATE in NUSkills): Tensura 2.0.1.3 ships no Ultimate skill ids of its own
     ("lord_of_summons", "anime_multiverse:lord_of_summons", "ultimate", "Lord of Summons", 16, 4000, 0x9A7CFF, "Every summon obeys, every gate opens."),
-    ("goddess_of_faith", "anime_multiverse:goddess_of_faith", "ultimate", "Goddess of Faith", 16, 4000, 0xFFF2A8, "Belief made into strength."),
     ("heros_argonaut", "anime_multiverse:heros_argonaut", "ultimate", "Bell Cranel, Hero Argonaut", 15, 3500, 0xFFD060, "A hero's growth with no ceiling."),
     ("hell_conqueror", "anime_multiverse:hell_conqueror", "ultimate", "Hell Conqueror", 15, 3500, 0xFF6A1E, "Walks through fire and keeps the flame."),
     ("immortal_will", "anime_multiverse:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
     ("adolla_burst", "anime_multiverse:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),
-    # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone); black_wings too (docs/black_wings_removed.md)
+    # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone); black_wings too (docs/black_wings_removed.md); goddess_of_faith too (docs/faith_removed.md)
 ]

@@ -14,10 +14,6 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, SummonerSkill> SUMMONER =
             SKILLS.register("summoner", SummonerSkill::new);
 
-    /** Grant in game with: /tensura edit <player> ability grant anime_multiverse:faith */
-    public static final DeferredHolder<ManasSkill, FaithSkill> FAITH =
-            SKILLS.register("faith", FaithSkill::new);
-
     // ---- DanMachi (Is It Wrong to Pick Up Girls in a Dungeon?) ----
     public static final DeferredHolder<ManasSkill, FireboltSkill> FIREBOLT =
             SKILLS.register("firebolt", FireboltSkill::new);
@@ -50,7 +46,6 @@ public final class NUSkills {
 
     // ---- Ultimate evolutions (granted automatically on mastery, see SkillEvolution) ----
     public static final DeferredHolder<ManasSkill, LordOfSummonsSkill> LORD_OF_SUMMONS = SKILLS.register("lord_of_summons", LordOfSummonsSkill::new);
-    public static final DeferredHolder<ManasSkill, GoddessOfFaithSkill> GODDESS_OF_FAITH = SKILLS.register("goddess_of_faith", GoddessOfFaithSkill::new);
     public static final DeferredHolder<ManasSkill, HerosArgonautSkill> HEROS_ARGONAUT = SKILLS.register("heros_argonaut", HerosArgonautSkill::new);
     public static final DeferredHolder<ManasSkill, HellConquerorSkill> HELL_CONQUEROR = SKILLS.register("hell_conqueror", HellConquerorSkill::new);
     public static final DeferredHolder<ManasSkill, ImmortalWillSkill> IMMORTAL_WILL = SKILLS.register("immortal_will", ImmortalWillSkill::new);
@@ -277,7 +272,4 @@ public final class NUSkills {
     // ---- 3.85.0: Lord of Gluttonous Greed (Ultimate), the skill of the Black Sword Greed (greed package). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, LordOfGluttonousGreedSkill> LORD_OF_GLUTTONOUS_GREED =
             SKILLS.register("lord_of_gluttonous_greed", LordOfGluttonousGreedSkill::new);
-
-    // ---- 4.4.0: the eight Faith gods, 16 skills (a Unique "Faith of X" and its god form each), registered last so no older order changes (docs/faith_gods.md)
-    public static final int FAITH_GODS = FaithGods.registerAll(SKILLS);
 }

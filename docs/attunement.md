@@ -58,7 +58,7 @@ powers that are out (`resonancePerPair`), at most +30 %.
 (`skill/rules/Tier.ULTIMATE`), and its King-titled Ultimates are the benchmark: the Dragon Sovereign Ultimate (`bw_dragon`, docs/beast_skills.md) hits **40 to 85 raw** with its actives and **150 raw**
 with its finisher **Dragon King's Annihilation**; the Ultimate Magic pages hit **10 to 80 raw** (`UltimateRules`). Target: **60 to 150 raw** per hit before the Balance Law, i.e. an Ultimate active up to
 the King finisher.
-**Since the Ultimate classes (docs/ultimate_classes.md)** there is a real `UltimateClass.KING` (Gate of Babylon, Hell Conqueror, Lord of Summons, Goddess of Faith). It caps the EP scaling (x10), prices
+**Since the Ultimate classes (docs/ultimate_classes.md)** there is a real `UltimateClass.KING` (Gate of Babylon, Hell Conqueror, Lord of Summons). It caps the EP scaling (x10), prices
 casts and sets mastery, but carries no raw-damage band, so it cannot replace the 60-150 raw target above; the factors below stay as they are.
 
 | System | Raw now (source) | Factor (setting, default) | Raw-equivalent with the factor |

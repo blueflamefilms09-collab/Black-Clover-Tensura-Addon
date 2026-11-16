@@ -53,7 +53,6 @@ public final class UltimateClassSelfTests {
         want.put(NUSkills.GATE_OF_BABYLON, UltimateClass.KING);
         want.put(NUSkills.HELL_CONQUEROR, UltimateClass.KING);
         want.put(NUSkills.LORD_OF_SUMMONS, UltimateClass.KING);
-        want.put(NUSkills.GODDESS_OF_FAITH, UltimateClass.KING);
         want.put(NUSkills.ADOLLA_BURST, UltimateClass.LORD);
         want.put(NUSkills.HEROS_ARGONAUT, UltimateClass.LORD);
         want.put(NUSkills.IMMORTAL_WILL, UltimateClass.LORD);

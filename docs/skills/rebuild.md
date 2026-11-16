@@ -3,7 +3,7 @@
 Why: the custom Tensura / ManasCore skills (`src/main/java/com/newuniverse/nusmp/skill/`) were stubs with a vanilla placeholder icon,
 hard-coded English text, area effects that hit allies and pets, and Ultimates that were the base skill with a flag. This rebuild gives
 every one of them real, server-authoritative mechanics, its own icon, translatable text, unit-tested numbers and a clean-up story.
-Every registry id, the Unique -> Ultimate table (`SkillEvolution`), the config keys and the stored skill data (the Faith points, the Infinity
+Every registry id, the Unique -> Ultimate table (`SkillEvolution`), the config keys and the stored skill data (the Infinity
 switch, the All Fiction health memory, cooldown tags) are unchanged, so old worlds load.
 
 ## How it is built
@@ -45,11 +45,7 @@ fights with monsters (never players), is discarded when its time is up, its owne
 Nobody's area effect hits a summon. A partial cast (cap nearly full) costs a partial price. Recall only removes the caster's own.
 
 ### Faith (`faith`) -> Goddess of Faith (`goddess_of_faith`)
-*Rules: `FaithRules`. Config: `bestowableSkills`, `bestowFaithCost` 10, `bestowCooldown` 12000, `prayMagiculeCost` 1000, `prayCooldown` 200.*
-Modes: Bestow, Pray, Check Faith (+ **Blessing**, **Miracle** for the Goddess). Pray: +1 Faith (+2 mastered, **+3** Goddess).
-Bestow: the player you look at (8 blocks, Goddess 16) learns one random configured skill they do not own (Faith is spent only once it worked);
-Goddess: half the Faith, half the wait. Blessing (2 Faith, 16 blocks): allies get Strength II, Resistance, Regeneration, Absorption for 60 s.
-Miracle (5 Faith): allies cleansed, healed (healing cap) and Resistance IV for 5 s. Faith is the tag `Faith`, clamped 0..1,000,000, carried over on evolution.
+*Removed on the owner's word; the ids stay as inert placeholders (docs/faith_removed.md).*
 
 ### Firebolt (`firebolt`, standalone)
 *Rules: `FireboltRules`. Config: `fireboltDamage` 8, `fireboltMagiculeCost` 100, `fireboltCooldown` 20.*

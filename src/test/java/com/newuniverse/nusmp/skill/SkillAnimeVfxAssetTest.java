@@ -38,7 +38,7 @@ class SkillAnimeVfxAssetTest {
             VfxShape.SKILL_SCREW, VfxShape.SKILL_WINGS, VfxShape.SKILL_SIGIL};
     /** The skills wired in wave 3 (each sends its anime effect through SkillAnimeFx next to its old SkillFx calls). */
     private static final String[] WIRED = {"GateOfBabylonSkill", "FireboltSkill", "AdollaBurstSkill", "DevilsFootprintsSkill", "ArgonautSkill", "HerosArgonautSkill", "WynnFimbulvetrSkill",
-            "HestiaSkill", "ReaLaevateinnSkill", "FreyaSkill", "AllFictionSkill", "FaithSkill", "GoddessOfFaithSkill", "HephaestusSkill", "UchideNoKozuchiSkill",
+            "HestiaSkill", "ReaLaevateinnSkill", "FreyaSkill", "AllFictionSkill", "HephaestusSkill", "UchideNoKozuchiSkill",
             "ImmortalWillSkill", "UnbreakableWillSkill", "HellWalkerSkill", "HellConquerorSkill", "FutsunomitamaSkill"};
 
     private static String code(Path p) throws IOException {

@@ -15,7 +15,7 @@ Needs to be installed on **both the client and the server**.
 
 ## What is inside
 
-- **Unique to Ultimate skills.** Master a Unique skill and it evolves into an Ultimate. Summoner, Faith, Argonaut, Hell Walker, Unbreakable Will, Devil's Footprints (Adolla Burst), Book Maker (All Fiction) and dozens more from Fairy Tail, DanMachi, Tower of God, God of High School and others.
+- **Unique to Ultimate skills.** Master a Unique skill and it evolves into an Ultimate. Summoner, Argonaut, Hell Walker, Unbreakable Will, Devil's Footprints (Adolla Burst), Book Maker (All Fiction) and dozens more from Fairy Tail, DanMachi, Tower of God, God of High School and others.
 - **New Ultimates with ten modes each:** Sandalphon, Israfil, Jibril, Solomon and Hercules, plus **Nen** (Hunter x Hunter), **Gate of Babylon** (Fate) and **Ki** (Dragon Ball). **All Fiction** was rebuilt to ten modes.
 - **Grimoires and magic.** Black Clover style grimoires with many magic attributes, character pages, mode armour overlays, spells with their own effects, and the Genesis Demon-Slayer weapon.
 - **Devil Contract (3.48.0).** Sign a devil's price and let it in with the key `N`: assimilation 0 to 100 %, a magicule drain that grows with the level, **horns from 20 %**, **wings and flight from 50 %**, Weg markings by tier, and a strict **five minute Devil Union** at 100 % followed by a 24 hour lock. Prices that last through death: half your maximum health, or an eye.

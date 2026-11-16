@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.18.0] — The Faith system is removed (owner request)
+- REMOVED (on the owner's explicit request): the Faith skill, the Goddess of Faith ultimate, the 16 Faith gods (Femto, Lucifero, Luminus, Mavis, Ill Ilah, Super Saiyan God, Ra, Aqua with their Faith-of and god skills), the worship and offering system, `/faith` commands, the `faith.*` and `faithGods.*` server settings, their 16 god icons, 257 language lines, tests and docs (`docs/faith_gods.md`, `docs/faith_fix.md`). What was removed and what stayed: `docs/faith_removed.md`.
+- KEPT for saves: the 18 skill ids (`faith`, `goddess_of_faith` and the 16 god ids) stay registered as inert placeholders at the end of the removed-skill list, so old worlds and players that own them still load; they are forgotten at login, have no effects, key or list entry. The `faith` and `goddess_of_faith` icons and the shared Faith/Goddess effect sigils stay (the sigils are shared effect code), as with Black Wings. Unrelated names stay: Bracelets of Faithful Friendship, the `holy` decennial bosses.
+- NOTE: the `allFictionCanon` setting sat inside the removed `faithGods` settings block; it now lives at `ultimates_fiction_god.allFictionCanon` (default true). Only a server that had set it to false must set it again.
+- Cost: none; less code and fewer event listeners (six removed).
+- Not run in a game; the Java is compiled only by CI.
+
 ## [4.17.0] — 38 Black Clover and Midnight Sun characters on the detailed player model
 - REPLACED (client setting `bossLooks.bcPlayerModel`, default on; off = the previous rendering): the looks of the Midnight Sun elves Rhya, Fana, Patolli and Rades Spirito (each with a second form) and 30 Black Clover NPCs: the Black Bulls (Asta, Yami, Noelle, Finral, Magna, Luck, Charmy, Vanessa, Gordon, Zora, Gauche, Grey, Secre, Nacht), the Magic Knight captains and members (Julius, Marx, Yuno, Mimosa, Klaus, Leopold, Fuegoleon, Mereoleona, Charlotte, Nozel, Solid, Jack the Ripper, Dorothy, William, Kahono, Kiato). Painted anime face on a 256x256 skin, layered cube hair, clothes and ornaments, glowing eyes and marks where canon has them, near-vanilla head proportion, idle sway; palettes from the English Black Clover Fandom wiki.
 - KEPT: every old look, skin, atlas and model, and the old extras (glows, weapons). The Midnight Sun thralls are vanilla zombies (no look). Not covered: non-Black-Clover NPCs.

@@ -17,20 +17,6 @@ public final class NUConfig {
     // Grimoire look (0.20)
     public static final ModConfigSpec.BooleanValue GRIMOIRE_UNIQUE_LOOKS;
 
-    // Faith
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> BESTOWABLE_SKILLS;
-    public static final ModConfigSpec.IntValue BESTOW_FAITH_COST;
-    public static final ModConfigSpec.IntValue BESTOW_COOLDOWN;
-    public static final ModConfigSpec.DoubleValue PRAY_MAGICULE_COST;
-    public static final ModConfigSpec.IntValue PRAY_COOLDOWN;
-    // Faith worship (docs/faith_fix.md): the worshipper / offering / chosen-gift model of the reference skill
-    public static final ModConfigSpec.BooleanValue FAITH_WORSHIP;
-    public static final ModConfigSpec.IntValue FAITH_MAX_WORSHIPPERS, FAITH_INVITE_SECONDS, FAITH_RECRUIT_COOLDOWN, FAITH_OFFERING_COOLDOWN, FAITH_GIFT_DISCOUNT, FAITH_TRICKLE_TICKS;
-    public static final ModConfigSpec.DoubleValue FAITH_RECRUIT_RANGE, FAITH_OFFERING_RANGE, FAITH_OFFERING_COST;
-    // The eight Faith gods (docs/faith_gods.md)
-    public static final ModConfigSpec.BooleanValue FG_ENABLED, FG_CANON;
-    public static final ModConfigSpec.IntValue FG_ASCEND_FAITH, FG_MIN_WORSHIPPERS, FG_MIN_OFFERED, FG_DEVOTION_PCT, FG_POWER_PCT, FG_EP_GATE_PCT, FG_MAX_LINES, FG_ASCEND_COOLDOWN;
-
     // DanMachi
     public static final ModConfigSpec.DoubleValue FIREBOLT_DAMAGE;
     public static final ModConfigSpec.DoubleValue FIREBOLT_MAGICULE_COST;
@@ -123,29 +109,6 @@ public final class NUConfig {
         SUMMON_MAX_MASTERED = b.comment("Max summons alive once Summoner is mastered.").defineInRange("maxSummonsMastered", 6, 1, 50);
         SUMMON_MAGICULE_COST = b.comment("Magicules spent per summon.").defineInRange("magiculeCost", 500.0, 0.0, 1.0E9);
         SUMMON_COOLDOWN = b.comment("Cooldown after summoning (same unit Tensura uses for skill cooldowns, believed to be ticks: 20 = 1 second).").defineInRange("cooldown", 100, 0, 1_000_000);
-        b.pop();
-
-        b.push("faith");
-        BESTOWABLE_SKILLS = b.comment("Skills that Bestow can grant (one random skill the target doesn't have).",
-                        "Find IDs in game: type '/tensura edit <you> ability grant ' and press Tab.")
-                .defineListAllowEmpty("bestowableSkills", List.of("tensura:magic_sense", "tensura:sage"), () -> "tensura:", o -> o instanceof String);
-        BESTOW_FAITH_COST = b.comment("Faith points spent per bestowal.").defineInRange("bestowFaithCost", 10, 0, 1_000_000);
-        BESTOW_COOLDOWN = b.comment("Cooldown after bestowing (ticks: 12000 = 10 minutes).").defineInRange("bestowCooldown", 12000, 0, 10_000_000);
-        PRAY_MAGICULE_COST = b.comment("Magicules spent to gain 1 Faith with Pray.").defineInRange("prayMagiculeCost", 1000.0, 0.0, 1.0E9);
-        PRAY_COOLDOWN = b.comment("Cooldown after praying (ticks).").defineInRange("prayCooldown", 200, 0, 1_000_000);
-        FAITH_WORSHIP = b.comment("Worship (docs/faith_fix.md): the Recruit and Gift modes, /faith accept|reject|leave|status|offering|offer|gift, prayer strengthened by worshippers, gifts cheaper for worshippers.",
-                        "false = the old Faith: only Pray and the random Bestow (the two new modes then do nothing).")
-                .define("worshipEnabled", true);
-        FAITH_MAX_WORSHIPPERS = b.comment("Most worshippers one Faith holder can have.").defineInRange("maxWorshippers", 16, 1, 64);
-        FAITH_INVITE_SECONDS = b.comment("Seconds a worship invitation stays open.").defineInRange("inviteSeconds", 60, 10, 600);
-        FAITH_RECRUIT_COOLDOWN = b.comment("Cooldown after sending an invitation (ticks).").defineInRange("recruitCooldown", 100, 0, 1_000_000);
-        FAITH_RECRUIT_RANGE = b.comment("How far the Faith holder can see a player to invite (blocks).").defineInRange("recruitRange", 12.0, 2.0, 32.0);
-        FAITH_OFFERING_RANGE = b.comment("How close a worshipper must be to their god to make an offering (blocks).").defineInRange("offeringRange", 16.0, 2.0, 64.0);
-        FAITH_OFFERING_COST = b.comment("Magicules a worshipper gives for 1 Faith unit of an offering (the god gains that Faith).").defineInRange("offeringMagiculeCost", 1000.0, 1.0, 1.0E9);
-        FAITH_OFFERING_COOLDOWN = b.comment("Wait between two offerings of one worshipper (ticks).").defineInRange("offeringCooldown", 100, 0, 1_000_000);
-        FAITH_TRICKLE_TICKS = b.comment("Worshippers give their god Faith slowly (the Konosuba-style regeneration): one period of this many ticks gives Faith in proportion to the worshippers. 0 = off. Settled when the god uses the skill, never per tick.")
-                .defineInRange("worshipTrickleTicks", 6000, 0, 10_000_000);
-        FAITH_GIFT_DISCOUNT = b.comment("Percent off the Faith price of a chosen gift when the receiver is a worshipper.").defineInRange("worshipperGiftDiscount", 25, 0, 90);
         b.pop();
 
         b.push("danmachi");
@@ -329,22 +292,6 @@ public final class NUConfig {
                 .define("summonerCanon", true);
         b.push("ultimates_fiction_god");
         ALL_FICTION_GOD = b.comment("All Fiction god-class rework (sixteen modes: Deny Skill, Overwrite Rule, Reversal, Mass Fiction, Nothing Sticks, Rewrite Time, the Retcon passive) and Book Maker's lead-in modes (Equalize, Glimpse of the Fiction). false = the ten-mode All Fiction and the two-mode Book Maker of 3.46.0 (needs allFictionRebuilt for All Fiction).").define("allFictionGod", true);
-        b.push("faithGods");
-        FG_ENABLED = b.comment("The eight Faith gods (docs/faith_gods.md): the ritual /faith ascend, the 16 god skills and the god-form evolutions.",
-                        "false = Faith is exactly the 4.3.0 skill (the god skills do nothing, the ritual refuses, nothing evolves).")
-                .define("enabled", true);
-        FG_ASCEND_FAITH = b.comment("Faith points the ritual burns.").defineInRange("ascendFaithCost", 40, 0, 1_000_000);
-        FG_MIN_WORSHIPPERS = b.comment("Worshippers one of the ritual's four proofs asks for (three proofs of four are needed).").defineInRange("minWorshippers", 4, 0, 64);
-        FG_MIN_OFFERED = b.comment("Faith offered by the worshippers, one of the four proofs.").defineInRange("minOffered", 20, 0, 1_000_000);
-        FG_DEVOTION_PCT = b.comment("Percent of extra strength each worshipper gives a god's abilities (at most +100 %).").defineInRange("devotionPercent", 4, 0, 20);
-        FG_POWER_PCT = b.comment("Percent of the god abilities' damage, healing and durations (100 = the table).").defineInRange("powerPercent", 100, 10, 300);
-        FG_EP_GATE_PCT = b.comment("Percent of the EP a god form wants before the Unique evolves (the table is read from the Nightmares wiki: Lord 2M, King 15M, God 30M, Dragon 5M). 0 = mastery alone is enough.")
-                .defineInRange("evolutionEpGatePercent", 100, 0, 1000);
-        FG_MAX_LINES = b.comment("How many god lines one player may follow at once.").defineInRange("maxGodLines", 1, 1, 8);
-        FG_ASCEND_COOLDOWN = b.comment("Wait between two rituals of one player (ticks).").defineInRange("ascendCooldown", 6000, 0, 10_000_000);
-        FG_CANON = b.comment("Faith gods canon pass (docs/faith_gods.md 'Canon pass'): the moves, passives, unlock order, colours and drawbacks of the eight gods are read from each series' English wiki (Femto's Eclipse and gravity well, Lucifero's gates, Luminus' Sanctuary, Mavis' Fairy Law, Ill Ilah's Black Spot, Super Saiyan God's six-Saiyan ritual, Ra's life-point cannon, Aqua's undead-only holy magic).",
-                        "false = the guess-era tables of 4.6.0 exactly (needs enabled). Skill names and descriptions are static text and do not change with this setting.")
-                .define("canon", true);
         ALL_FICTION_CANON = b.comment("All Fiction / Book Maker canon pass (Medaka Box wiki, docs/all_fiction_rework.md): All Fiction cannot erase another Minus (a player holding Book Maker or any Ultimate), Undo and Erase Effects refuse when there is nothing to erase, new modes Erase Presence and April Fiction (a timed erase); Book Maker's screw does almost no damage and drags the target's attack and armour down toward yours for a few seconds, plus the mastered mode Leg Eating Forest. false = the guess-era behaviour of allFictionGod (needs allFictionGod).").define("allFictionCanon", true);
         b.pop();
 
@@ -370,27 +317,6 @@ public final class NUConfig {
     public static boolean transformResetOnDeath() { return live(TRANSFORM_RESET_ON_DEATH); }
     /** The Medaka Box canon pass on top of the god-class modes (default on before the SERVER config is loaded). */
     public static boolean allFictionCanon() { return live(ALL_FICTION_CANON); }
-    public static boolean faithWorship() { return live(FAITH_WORSHIP); }
-    public static int faithMaxWorshippers() { return com.newuniverse.nusmp.skill.rules.FaithWorshipRules.capOf(live(FAITH_MAX_WORSHIPPERS)); }
-    public static int faithInviteTicks() { return Math.max(10, live(FAITH_INVITE_SECONDS)) * 20; }
-    public static int faithRecruitCooldown() { return Math.max(0, live(FAITH_RECRUIT_COOLDOWN)); }
-    public static int faithOfferingCooldown() { return Math.max(0, live(FAITH_OFFERING_COOLDOWN)); }
-    public static int faithTrickleTicks() { return Math.max(0, live(FAITH_TRICKLE_TICKS)); }
-    public static int faithGiftDiscount() { return Math.max(0, Math.min(90, live(FAITH_GIFT_DISCOUNT))); }
-    public static double faithRecruitRange() { return Math.max(2.0, Math.min(32.0, live(FAITH_RECRUIT_RANGE))); }
-    public static double faithOfferingRange() { return Math.max(2.0, Math.min(64.0, live(FAITH_OFFERING_RANGE))); }
-    public static double faithOfferingCost() { return Math.max(1.0, live(FAITH_OFFERING_COST)); }
-    public static boolean faithGodsEnabled() { return live(FG_ENABLED); }
-    /** The canon pass of the eight Faith gods (default on before the SERVER config is loaded). */
-    public static boolean faithGodCanon() { return live(FG_CANON); }
-    public static int faithGodAscendFaith() { return Math.max(0, live(FG_ASCEND_FAITH)); }
-    public static int faithGodMinWorshippers() { return Math.max(0, Math.min(64, live(FG_MIN_WORSHIPPERS))); }
-    public static int faithGodMinOffered() { return Math.max(0, live(FG_MIN_OFFERED)); }
-    public static int faithGodDevotionPercent() { return Math.max(0, Math.min(20, live(FG_DEVOTION_PCT))); }
-    public static int faithGodPowerPercent() { return Math.max(10, Math.min(300, live(FG_POWER_PCT))); }
-    public static int faithGodEpGatePercent() { return Math.max(0, Math.min(1000, live(FG_EP_GATE_PCT))); }
-    public static int faithGodMaxLines() { return Math.max(1, Math.min(8, live(FG_MAX_LINES))); }
-    public static int faithGodAscendCooldown() { return Math.max(0, live(FG_ASCEND_COOLDOWN)); }
 
     public static boolean shinraRework() { return live(SHINRA_REWORK); }
     public static boolean shinraCanon() { return live(SHINRA_REWORK) && live(SHINRA_CANON); }

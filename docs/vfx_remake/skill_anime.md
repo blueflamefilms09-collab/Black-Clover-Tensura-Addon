@@ -63,9 +63,8 @@ in the session network settings.
 | Freya (`FreyaSkill`) | Freya's silver allure, her Charm | `SKILL_ALLURE`: a silver glow, silver waves, rose petals spiralling out, twinkles, a charm mark over her head | 1 |
 | All Fiction: Fiction (`AllFictionSkill.erase`) | Kumagawa's giant screws (Medaka Box) | `SKILL_SCREW` from -> to: a giant solid screw is driven into the target and stays | 1 |
 | All Fiction: every other mode | "It's All Fiction", screws everywhere | `SKILL_SCREW` from = to: five screws slam down round the caster, a dark violet ring | 1 |
+| ~~Faith / Goddess of Faith~~ (skills removed, `docs/faith_removed.md`) | (mod's own) | `SKILL_SIGIL` FAITH / GODDESS: the styles and their layer stay, nothing sends them any more | none |
 | ~~Black Wings~~ (skill removed, `docs/black_wings_removed.md`) | Accelerator's black wings | `SKILL_WINGS`: the shape and its layer stay, nothing sends it any more | none |
-| Faith: Pray / Bestow (`FaithSkill`) | (mod's own; a blessing from above) | `SKILL_SIGIL` FAITH: a golden halo settles over the head, a pillar of light falls, sparkles rise | 1 |
-| Goddess of Faith: Blessing / Miracle | (mod's own) | `SKILL_SIGIL` GODDESS: a sunburst behind the caster, shafts of light round the radius, a halo on the ground | 1 |
 | Hephaestus (`HephaestusSkill`) | Hephaestus, the smith goddess (look unverified) | `SKILL_SIGIL` FORGE: a fountain of hot sparks, two hammer-strike rings, a heat ring | 1 |
 | Uchide no Kozuchi (`UchideNoKozuchiSkill`) | Haruhime's level boost: a golden glow (look unverified) | `SKILL_SIGIL` MALLET: three gold rings climb the body, sparkles rain, a star over the head | 1 |
 | Unbreakable / Immortal Will | (mod's own) | `SKILL_SIGIL` WILL: golden flames burst up, a shockwave to the radius | 1 (Immortal: 2 on a refused death, rally 1) |
