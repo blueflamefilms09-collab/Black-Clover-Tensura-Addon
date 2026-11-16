@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.99.0] — Ultimate classes (Lord / King / God / Dragon) and a Magic Knight guide in the wiki
+- NEW (owner's master guide, Part 5): every Ultimate skill has a class. GOD: Almighty, The Visionary, All Fiction. KING: Gate of Babylon, Hell Conqueror, Lord of Summons, Goddess of Faith. LORD: Adolla Burst, Black Wings, Hero's Argonaut, Immortal Will, Ki, Nen, Shishou, Lord of Gluttonous Greed and the Dragon Ball and Beast Will Ultimates. The DRAGON class exists but no skill uses it yet. See `docs/ultimate_classes.md`.
+- REPLACED (guide fix P1 #1): the addon skills now pay through Tensura (`getMagiculeCost`, `EnergyHelper.isOutOfEnergy`). The price grows with your maximum magicule (a few percent of it late game, never below the old flat price). Setting `[ultimateClasses] flatCosts` brings the old flat cost back. Grimoire page skills still pay as before.
+- NEW: classified Ultimates take more mastery to master (per class), read a "mastered" tier once mastered, and have milestones at 25 / 50 / 75 / 100 percent (longer reach, a second effect, a cheaper and faster cast, the mastered form). Each can be switched off in `[ultimateClasses]`.
+- NEW: a classified hit scales with a class-capped version of the EP scaling times the late-game factor (the combined cap is written, wired through one line later; see the doc).
+- NEW: the Multiverse Wiki (book and Wiki tab) has four Magic Knight pages: ranks and stars, missions and conduct, squads and the Star Awards, the ceremony and the Wizard King. Data files only (`codex/wiki/22` to `25`).
+- KEPT: every old skill, number and setting; the old wiki pages. Missing skill message texts (milestones, Dragon Ball) are now in the language file.
+- Not covered: no instakill or shred uses the new gates yet; Veldanava, Nullification and Kotodama are only listed in the doc. Nothing was seen in a game, CI is the first compile check.
+- Cost: no tick work; one price calculation per cast; the wiki pages are read when the book opens.
+
 ## [3.98.0] — Black Sword Greed and devil effects in their anime style (VFX wave 2)
 - REPLACED look (asked for: anime-style VFX instead of particle effects): every form of the Black Sword Greed now draws real shapes: ink-black crescent slashes with a crimson edge (Ptarmigan Cross), a black-red bow bolt and Piercing Meteor, the scythe's Soul Reap arc, the shield's black-scale dome (Reflection Fortress and reflected blows), Black Flames, Twilight Healing, Spatial Threads, Dimension Destruction, the spear thrust and Revolt Brionac, Infinity Divide, a devouring maw with red eyes on a kill, black lightning and an awakening burst on a form switch or new tier.
 - NEW: a devil's combat hit now shows its world: Black Clover sigil crack, Chainsaw Man saw rip and blood, Black Butler pentagram and black feathers, Blue Exorcist blue flames, Tensura aura pulse, Dororo ghost fire, Berserk Brand and eclipse ring, Fairy Tail curse runes (at most once a second, as before).

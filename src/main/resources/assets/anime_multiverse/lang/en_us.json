@@ -19034,5 +19034,17 @@
   "anime_multiverse.skill.grimoire_vortex": "Vortex Magic",
   "anime_multiverse.skill.grimoire_vortex.description": "Grimoire magic: Vortex Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires cast stronger and cheaper.",
   "anime_multiverse.skill.grimoire_wing": "Wing Magic",
-  "anime_multiverse.skill.grimoire_wing.description": "Grimoire magic: Wing Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires cast stronger and cheaper."
+  "anime_multiverse.skill.grimoire_wing.description": "Grimoire magic: Wing Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires cast stronger and cheaper.",
+  "anime_multiverse.skill.msg.db.capsule": "Capsule Toss: %s (%s helped).",
+  "anime_multiverse.skill.msg.db.cooldown": "%s is recharging (%ss).",
+  "anime_multiverse.skill.msg.db.crouch": "Crouch and press to use %s.",
+  "anime_multiverse.skill.msg.db.mastery": "%s answers only a mastered skill.",
+  "anime_multiverse.skill.msg.db.no_target": "No target in reach.",
+  "anime_multiverse.skill.msg.db.off": "The Dragon Ball skills are switched off on this server.",
+  "anime_multiverse.skill.msg.db.rewound": "The lethal blow is denied: you are rewound.",
+  "anime_multiverse.skill.msg.db.scan": "Scan: %s foes marked, %s Temporal Debt.",
+  "anime_multiverse.skill.msg.milestone.1": "%s is a quarter mastered: its reach grows.",
+  "anime_multiverse.skill.msg.milestone.2": "%s is half mastered: its main power gains a second effect.",
+  "anime_multiverse.skill.msg.milestone.3": "%s is three quarters mastered: it costs less and recharges faster.",
+  "anime_multiverse.skill.msg.milestone.4": "%s is mastered: its mastered form awakens."
 }
