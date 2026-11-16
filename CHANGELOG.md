@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.2.0] — EP scaling needs mastery (more in this release as it lands)
+- NEW: the EP part of an addon skill's damage now grows in with the skill's mastery: x1 with no mastery, the full EP scale (up to x12) once the skill is mastered, a straight line between (`balance.EpMastery`). Applies to the plain law and to Ultimate-class hits.
+- KEPT: the old damage (full EP scale at any mastery) with the SERVER setting `epNeedsMastery` = false. Mastery still adds its small -15% to +15% on top.
+- Not covered: about 29 skills that apply their own EP factor outside the balance law keep the old damage; late-game (magicule) scaling is untouched.
+- Cost: one multiply per hit.
+
 ## [4.1.0] — Devils get their own bodies, and a devil stands in front of you at the ritual
 - NEW: a figure of the devil rises out of the ritual circle in front of the caller, speaks four lines (26 devils, a few lines each, in chat), roars at the offer, merges into you if you sign and dissolves if you refuse, time out or break the circle. It is not a mob: no AI, no health, not saved, one per player.
 - NEW: each devil has its own form worn on your body (head from 20 %, arms, wings and tail from 50 %, the whole form at 100 % and in the Devil Union), forged in piece by piece like the Djinn's Full Equip, with a glow in the devil's colour and the attribute's ring on the ground. Other players see it too.
