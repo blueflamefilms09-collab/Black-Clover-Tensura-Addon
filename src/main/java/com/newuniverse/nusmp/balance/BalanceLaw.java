@@ -32,6 +32,23 @@ public final class BalanceLaw {
     }
 
     /**
+     * 3.90: the late-game scaling ({@link LateGameScaling}) from a player caster's max magicule (mobs and bosses: x1), x1 to x6 by default (SERVER config balance lateGameScaling; off = 1). Applied once per hit, only in
+     * {@link #damage(LivingEntity, LivingEntity, float, double)}; PvP hits still end at the pvp hit cap.
+     */
+    public static double lateGameScale(LivingEntity caster) {
+        if (!(caster instanceof Player)) return 1.0;      // players only: a boss or mob caster keeps its old damage
+        double mm = 0;
+        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+        return LateGameScaling.factor(NUConfig.LATE_GAME_SCALING.get(), mm, NUConfig.LATE_GAME_BASELINE.get(), NUConfig.LATE_GAME_CAP.get());
+    }
+
+    /** 3.90: the grimoire spell damage multiplier (SERVER config grimoireDamageMultiplier, 1.75 by default; 1 = the old damage), applied in GrimoireBook.hurtAs / hurtDirect. */
+    public static float grimoireMult() {
+        double m = NUConfig.GRIMOIRE_DAMAGE_MULT.get();
+        return m >= 0 && Double.isFinite(m) ? (float) m : 1f;
+    }
+
+    /**
      * Damage of an addon spell or weapon technique.
      * @param caster         who casts it (its EP scales the hit)
      * @param raw            the spell's base damage (HP)
@@ -39,7 +56,7 @@ public final class BalanceLaw {
      */
     public static float damage(LivingEntity caster, LivingEntity target, float raw, double masteryFrac) {
         double m = Math.max(0, Math.min(1, masteryFrac));
-        double r = raw * epScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);   // 1.5.0: stage, Mana Zone, negative mana
+        double r = raw * epScale(caster) * lateGameScale(caster) * (0.85 + 0.3 * m) * com.newuniverse.nusmp.NUGameRules.spellDamage(target.level()) * com.newuniverse.nusmp.mana.ManaLaw.powerMult(caster);   // 1.5.0: stage, Mana Zone, negative mana
         r += DamageSliver.of(raw, target.getMaxHealth(), isBoss(target));    // 1.105.0: no percentage-of-max-health damage for weapon-scale hits or bosses (it made a 400 hit take 40% of a boss, see DamageSliver)
         return cap(target, (float) r);
     }

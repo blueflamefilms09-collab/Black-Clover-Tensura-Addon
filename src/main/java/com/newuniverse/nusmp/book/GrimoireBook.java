@@ -471,6 +471,7 @@ public abstract class GrimoireBook extends Skill {
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
+        r *= BalanceLaw.grimoireMult();      // 3.90: the grimoire buff (SERVER grimoireDamageMultiplier); the late-game scaling comes once, inside BalanceLaw.damage
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
         target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
     }
@@ -487,6 +488,7 @@ public abstract class GrimoireBook extends Skill {
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
+        r *= BalanceLaw.grimoireMult();      // 3.90: the grimoire buff (SERVER grimoireDamageMultiplier); the late-game scaling comes once, inside BalanceLaw.damage
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
         return target.hurt(source, BalanceLaw.damage(caster, target, r, masteryFrac(i)));
     }

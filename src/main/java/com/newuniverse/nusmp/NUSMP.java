@@ -176,6 +176,7 @@ public class NUSMP {
         com.newuniverse.nusmp.tooltip.UnifiedTooltipSelfTests.register();                                    // 1.110.0: self-test ui.unified_tooltips (every anime_multiverse item resolves to a tooltip style)
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
+        com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle

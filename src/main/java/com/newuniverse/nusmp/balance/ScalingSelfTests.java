@@ -1,0 +1,47 @@
+package com.newuniverse.nusmp.balance;
+
+import com.newuniverse.nusmp.NUConfig;
+import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
+import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Zombie;
+
+/**
+ * Why: the late-game scaling and the grimoire buff (3.90) change every addon hit and nobody can watch that in a game here, so the CI server smoke test checks them: key {@code scaling.rules} (the curve
+ * on the live SERVER settings: x1 at the baseline, rising, capped) and {@code scaling.live} (two stand-in zombies that never enter the world: a mob caster is not scaled (players only), a balance-law hit is finite and positive, the grimoire multiplier is the setting). Server safe, no client class, nothing is left in the world.
+ */
+public final class ScalingSelfTests {
+    private ScalingSelfTests() {}
+
+    public static void register() {
+        SelfTests.register("scaling.rules", s -> rules());
+        SelfTests.register("scaling.live", ScalingSelfTests::live);
+    }
+
+    private static Result rules() {
+        boolean on = NUConfig.LATE_GAME_SCALING.get();
+        double base = NUConfig.LATE_GAME_BASELINE.get(), cap = NUConfig.LATE_GAME_CAP.get();
+        if (LateGameScaling.factor(on, base, base, cap) != 1.0) return Result.fail("the baseline is not x1");
+        if (LateGameScaling.factor(false, base * 1e6, base, cap) != 1.0) return Result.fail("off is not x1");
+        double a = LateGameScaling.factor(on, base * 10, base, cap), b = LateGameScaling.factor(on, base * 1e9, base, cap);
+        if (a < 1.0 || b < a || b > cap) return Result.fail("the curve is not rising and capped: " + a + " / " + b);
+        return Result.ok("lateGameScaling=" + on + ", x" + a + " at baseline x10, x" + b + " at the top (cap " + cap + ")");
+    }
+
+    private static Result live(MinecraftServer server) {
+        Zombie caster = EntityType.ZOMBIE.create(server.overworld()), target = EntityType.ZOMBIE.create(server.overworld());
+        if (caster == null || target == null) return Result.fail("no stand-in zombie");
+        try {
+            double f = BalanceLaw.lateGameScale(caster);
+            if (f != 1.0) return Result.fail("a mob caster is scaled: x" + f);
+            float hit = BalanceLaw.damage(caster, target, 10f, 0.5);
+            if (!Float.isFinite(hit) || hit <= 0f) return Result.fail("a balance-law hit is " + hit);
+            if (Math.abs(BalanceLaw.grimoireMult() - NUConfig.GRIMOIRE_DAMAGE_MULT.get()) > 1e-6) return Result.fail("the grimoire multiplier is not the setting");
+            return Result.ok("a mob caster stays x1, raw 10 hits for " + hit + ", grimoire x" + BalanceLaw.grimoireMult());
+        } finally {
+            caster.discard();
+            target.discard();
+        }
+    }
+}

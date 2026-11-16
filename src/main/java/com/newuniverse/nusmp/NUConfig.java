@@ -62,6 +62,8 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue WEIGHT_CLOVER, WEIGHT_SPADE, WEIGHT_HEART, WEIGHT_DIAMOND;
     public static final ModConfigSpec.BooleanValue ALLOW_FORBIDDEN_START;
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
+    public static final ModConfigSpec.BooleanValue LATE_GAME_SCALING;                    // 3.90: mod damage grows with the caster's max magicule (balance.LateGameScaling); false = the old damage
+    public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     public static final ModConfigSpec.BooleanValue WEAPON_DRAINS_TARGET;     // 1.113.0: Elsdocia and the Demon Dweller take magicules from whoever they hit (the old behaviour); default false = they only charge
@@ -165,6 +167,12 @@ public final class NUConfig {
         SPELL_COOLDOWN_PERCENT = b.comment("0.48 pacing: grimoire page and magic weapon cooldowns, % of their listed length (60 = 40% shorter).")
                 .defineInRange("spellCooldownPercent", 60, 1, 1000);
         BAL_MOB_DAMAGE_MULT = b.comment("Balance law: multiplier on addon spell damage vs mobs (players: see pvpHitCapPercent).").defineInRange("mobDamageMultiplier", 1.0, 0.0, 10.0);
+        LATE_GAME_SCALING = b.comment("Late-game scaling: every addon hit a player deals through the balance law grows with that player's max magicule (x1 at the baseline, +1.25 per tenfold above it, at most lateGameScalingCap). false = the old damage.")
+                .define("lateGameScaling", true);
+        LATE_GAME_BASELINE = b.comment("Late-game scaling: the max magicule at which the factor is x1 (below it, x1 too).").defineInRange("lateGameScalingBaseline", 10_000.0, 1.0, 1.0E12);
+        LATE_GAME_CAP = b.comment("Late-game scaling: the largest factor (reached at baseline x 10,000 with the defaults). 1 = no scaling.").defineInRange("lateGameScalingCap", 6.0, 1.0, 100.0);
+        GRIMOIRE_DAMAGE_MULT = b.comment("Grimoire spell damage multiplier (every page that hits through GrimoireBook.hurt), on top of the late-game scaling. 1.0 = the old damage.")
+                .defineInRange("grimoireDamageMultiplier", 1.75, 0.0, 10.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 
