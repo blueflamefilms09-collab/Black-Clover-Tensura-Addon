@@ -34,6 +34,12 @@ public final class ArgonautMerge {
         try { return NUConfig.ARGONAUT_FIREBOLT_MERGE.get(); } catch (IllegalStateException notLoaded) { return NUConfig.ARGONAUT_FIREBOLT_MERGE.getDefault(); }
     }
 
+    /** The SERVER setting argonautWikiCanon (the wiki-faithful Argonaut), only with the merge on; true before the config is loaded. */
+    public static boolean canon() {
+        if (!enabled()) return false;
+        try { return NUConfig.ARGONAUT_WIKI_CANON.get(); } catch (IllegalStateException notLoaded) { return NUConfig.ARGONAUT_WIKI_CANON.getDefault(); }
+    }
+
     /** Hooks login and respawn on the game bus. Called once from the mod constructor. */
     public static synchronized void register() {
         if (done) return;

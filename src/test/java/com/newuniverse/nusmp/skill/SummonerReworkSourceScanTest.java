@@ -50,7 +50,8 @@ class SummonerReworkSourceScanTest {
         assertTrue(read("NUSMP.java").contains("SummonerSelfTests.register()"));
         String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"), StandardCharsets.UTF_8);
         assertTrue(smoke.contains(",summoner,") && smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the smoke list keeps its tail and has the summoner prefix");
-        String frag = Files.readString(Path.of("tools/lang/summoner_rework.json"), StandardCharsets.UTF_8);
+        String frag = Files.readString(Path.of("tools/lang/summoner_rework.json"), StandardCharsets.UTF_8)
+                + Files.readString(Path.of("tools/lang/summoner_canon.json"), StandardCharsets.UTF_8);   // the canon pass adds keys and overrides some
         assertTrue(frag.contains("\"anime_multiverse.skill.lord_of_summons\": \"Summoner of Beginnings\""));
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("SkillMsg\\.t\\(\"(summoner\\.[a-z_]+)\"").matcher(read("skill/SummonerSkill.java") + read("skill/SummonerMigration.java"));
         int keys = 0;

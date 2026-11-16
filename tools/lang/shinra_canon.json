@@ -1,0 +1,14 @@
+{
+ "anime_multiverse.skill.mode.shinra.rapid_jet": "Rapid",
+ "anime_multiverse.skill.mode.shinra.hellfire": "Hellfire",
+ "anime_multiverse.skill.mode.shinra.link": "Adolla Link",
+ "anime_multiverse.skill.mode.shinra.grace": "Adolla Grace",
+ "anime_multiverse.skill.msg.shinra.locked": "You have not learned this yet: master the skill first.",
+ "anime_multiverse.skill.msg.shinra.rapid_on": "Rapid: one jet of flame.",
+ "anime_multiverse.skill.msg.shinra.link.sensed": "Adolla Link: you sense %s hostile minds.",
+ "anime_multiverse.skill.msg.shinra.grace.nolink": "Open an Adolla Link first: the Grace comes through the Link.",
+ "anime_multiverse.skill.msg.shinra.grace.on": "Adolla Grace: the Fourth Generation burns, for a moment.",
+ "anime_multiverse.skill.msg.shinra.overheat": "Ignition Limit: you overheat.",
+ "anime_multiverse.skill.hell_walker.description": "Unique. Shinra Kusakabe of Fire Force, a Third Generation pyrokinetic who ignites his feet. Wheel: Ignition Dash (the Devil's Footprints trail), Devil's Kick, Rapid-Man Kick, Rapid, Adolla Link, and once mastered Hellfire. Your own flames cannot burn you. Toggle Hell Mode: the closer you are to death the harder you hit, and under a third of health Hysterical Strength burns blue.",
+ "anime_multiverse.skill.adolla_burst.description": "Ultimate. Shinra's Ultimate, evolved from Hell Walker: the Adolla Burst awakened. The Shinra wheel plus Light Speed, the Adolla Burst blast and, through an open Adolla Link, the Adolla Grace of the Fourth Generation (a short surge that ends in the Ignition Limit). Hysterical Strength burns blue the whole time Hell Mode is on, and near death a hellfire aura burns the foes around you."
+}

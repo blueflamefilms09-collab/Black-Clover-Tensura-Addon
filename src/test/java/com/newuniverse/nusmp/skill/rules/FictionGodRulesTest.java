@@ -22,6 +22,60 @@ class FictionGodRulesTest {
     }
 
     @Test
+    void theCanonPassOnlyAppendsAndTheSettingRestoresTheGuessEra() {
+        assertEquals(18, FictionRules.wheel(true, true, true));
+        assertEquals(16, FictionRules.wheel(true, true, false), "allFictionCanon off = the sixteen modes");
+        assertEquals(10, FictionRules.wheel(true, false, true), "no god modes = no canon modes");
+        assertEquals(2, FictionRules.wheel(false, true, true));
+        assertEquals(5, FictionRules.bookMakerModes(true, true));
+        assertEquals(4, FictionRules.bookMakerModes(true, false));
+        assertEquals(2, FictionRules.bookMakerModes(false, true));
+        assertEquals(FictionRules.CANON_MODES, FictionRules.CANON_IDS.length);
+        for (int i = 0; i < FictionRules.GOD_MODES; i++) assertEquals(FictionRules.GOD_IDS[i], FictionRules.CANON_IDS[i], "the sixteen ids are unchanged");
+        Set<String> ids = new HashSet<>();
+        for (String id : FictionRules.CANON_IDS) assertTrue(ids.add(id), "duplicate id " + id);
+        for (int m = FictionRules.PRESENCE; m < FictionRules.CANON_MODES; m++) {
+            assertTrue(FictionRules.cost(m) > 0 && FictionRules.cost(m) <= 10000);
+            assertTrue(FictionRules.cooldown(m) >= 600 && FictionRules.cooldown(m) <= 6000);
+        }
+    }
+
+    @Test
+    void allFictionCannotEraseAnotherMinusAndNothingToEraseDoesNothing() {
+        assertFalse(FictionRules.canErase(true, true, true), "canon: it cannot erase another Minus");
+        assertTrue(FictionRules.canErase(true, true, false));
+        assertTrue(FictionRules.canErase(true, false, true), "canon pass off: the old rule");
+        assertFalse(FictionRules.canErase(false, true, false), "a boss is still guarded");
+        assertFalse(FictionRules.undoHasWork(20f, 20f, 20f, false), "full health and nothing harmful: nothing to undo");
+        assertTrue(FictionRules.undoHasWork(20f, 10f, 20f, false));
+        assertTrue(FictionRules.undoHasWork(5f, 5f, 20f, true), "a harmful effect is work");
+    }
+
+    @Test
+    void aprilFictionLastsAtMostThreeMinutes() {
+        assertEquals(3600, FictionRules.aprilMaxTicks());
+        assertEquals(3600, FictionRules.aprilTicks(false, false), "a creature: the canon three minutes");
+        assertTrue(FictionRules.aprilTicks(true, false) <= 400 && FictionRules.aprilTicks(false, true) <= 600, "a boss and a player are held shorter");
+        assertTrue(FictionRules.presenceTicks() <= 600 && FictionRules.presenceRadius() <= 32);
+    }
+
+    @Test
+    void bookMakerLevelsTheTargetDownWithoutGoingBelowTheCaster() {
+        assertEquals(6.0, FictionRules.levelDrop(10.0, 4.0, 1.0), 1e-9, "all the way down to your level");
+        assertEquals(3.6, FictionRules.levelDrop(10.0, 4.0, 0.6), 1e-9);
+        assertEquals(0.0, FictionRules.levelDrop(3.0, 4.0, 1.0), 1e-9, "a weaker target is not raised");
+        assertEquals(6.0, FictionRules.levelDrop(10.0, 4.0, 5.0), 1e-9, "strength is clamped to 1");
+        assertEquals(0.0, FictionRules.levelDrop(10.0, 4.0, -1.0), 1e-9);
+        assertTrue(FictionRules.levelStrength(Tier.MASTERED, false) > FictionRules.levelStrength(Tier.BASE, false));
+        assertTrue(FictionRules.levelStrength(Tier.MASTERED, true) < FictionRules.levelStrength(Tier.MASTERED, false), "a boss is levelled less");
+        assertTrue(FictionRules.levelTicks(Tier.MASTERED, true) <= 100 && FictionRules.levelTicks(Tier.MASTERED, false) <= 600);
+        assertTrue(FictionRules.pinDamageCanon() < FictionRules.pinDamage(Tier.BASE), "the canon screw does almost no damage");
+        assertFalse(FictionRules.forestUnlocked(Tier.BASE));
+        assertTrue(FictionRules.forestUnlocked(Tier.MASTERED));
+        assertTrue(FictionRules.forestRadius() <= 12 && FictionRules.forestCost() > FictionRules.equalizeCost());
+    }
+
+    @Test
     void newModesWereOnlyAppendedAndHaveUniqueIds() {
         assertEquals(FictionRules.GOD_MODES, FictionRules.GOD_IDS.length);
         for (int i = 0; i < FictionRules.ALL_MODES; i++) assertEquals(FictionRules.ALL_IDS[i], FictionRules.GOD_IDS[i], "the first ten ids are unchanged");

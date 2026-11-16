@@ -11,9 +11,18 @@ public final class ChargeRules {
     public static final int TICKS_PER_CHARGE = 20;
 
     /** Append-only strike kinds (mode index): the Unique has only STRIKE; the Ultimate adds BEAM. */
-    public enum Strike { STRIKE, BEAM, FIREBOLT }   // FIREBOLT is appended (ArgonautMergeRules): its index depends on the tier
+    public enum Strike { STRIKE, BEAM, FIREBOLT, CHARGED_FIREBOLT, ARGO_VESTA }   // FIREBOLT, CHARGED_FIREBOLT, ARGO_VESTA are appended (ArgonautMergeRules): their index depends on the tier
 
     public static int maxCharge(Tier tier) { return tier.ultimate() ? 10 : 5; }
+
+    /**
+     * Canon charge cap (wiki: 3 minutes, 4 at Level 4, 5 at Level 5, scaled to one bell per second, ratio 3 : 4 : 5): a fresh Unique 3 bells, 4 from half mastery, 5 once mastered; the Ultimate keeps its ten.
+     * Used instead of {@link #maxCharge} when the setting argonautWikiCanon is on.
+     */
+    public static int canonMaxCharge(Tier tier, double masteryFrac) {
+        if (tier.ultimate()) return 10;
+        return tier == Tier.BASE ? (masteryFrac >= ArgonautMergeRules.DUAL_CHARGE_MASTERY ? 4 : 3) : 5;
+    }
 
     /** Charges built after {@code heldTicks} of holding (0 until the first full second). */
     public static int chargeAt(int heldTicks, Tier tier) {
@@ -22,7 +31,9 @@ public final class ChargeRules {
     }
 
     /** How long the key may be held: the charge time plus two seconds of slack. */
-    public static int maxHeldTicks(Tier tier) { return maxCharge(tier) * TICKS_PER_CHARGE + 40; }
+    public static int maxHeldTicks(Tier tier) { return maxHeldTicks(maxCharge(tier)); }
+
+    public static int maxHeldTicks(int cap) { return cap * TICKS_PER_CHARGE + 40; }
 
     /** Damage multiplier of the tier. The Ultimate is twice a mastered Unique's strike and a fresh Unique's is the baseline. */
     public static double tierFactor(Tier tier) { return tier.pick(1.0, 1.5, 3.0); }
@@ -51,8 +62,10 @@ public final class ChargeRules {
     public static int masteryGain(int charge, int hits) { return hits > 0 ? Math.max(1, charge) : 0; }
 
     /** True when the held key has crossed into a new full charge (a chime should ring). */
-    public static boolean chimeNow(int heldTicks, Tier tier) {
-        return heldTicks > 0 && heldTicks % TICKS_PER_CHARGE == 0 && heldTicks / TICKS_PER_CHARGE <= maxCharge(tier);
+    public static boolean chimeNow(int heldTicks, Tier tier) { return chimeNow(heldTicks, maxCharge(tier)); }
+
+    public static boolean chimeNow(int heldTicks, int cap) {
+        return heldTicks > 0 && heldTicks % TICKS_PER_CHARGE == 0 && heldTicks / TICKS_PER_CHARGE <= cap;
     }
 
     public static int modes(Tier tier) { return tier.ultimate() ? 2 : 1; }

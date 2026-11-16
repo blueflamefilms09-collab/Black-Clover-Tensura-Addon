@@ -18,11 +18,12 @@ import net.minecraft.world.phys.Vec3;
  * Adolla Burst: the Ultimate of the Shinra skill {@link HellWalkerSkill} (unlocked automatically by mastering it; before the Shinra rework: of Devil's Footprints, which is folded into Hell Walker). Not an alias. The
  * Ignition Dash becomes Light Speed (a blink of up to 32 blocks that strikes and ignites every foe on the way), the Devil's Kick reaches
  * eight blocks and hits more than twice as hard, and a third mode, Adolla Burst, is appended: an explosion of flame ten blocks wide
- * that hurts, ignites and hurls back every foe around you. You are still immune to fire. Numbers: {@link FireForceRules}.
+ * that hurts, ignites and hurls back every foe around you (the wiki gives the Adolla Burst as a flame, not a blast: the blast is design). You are still immune to fire. With the canon pass (setting
+ * {@code shinraCanon}) the wheel ends with Rapid, Hellfire, Adolla Link and Adolla Grace ({@link HellWalkerSkill}). Numbers: {@link FireForceRules}, {@link ShinraRules}.
  */
 public class AdollaBurstSkill extends HellWalkerSkill {
     static final SkillText ADOLLA_TEXT = SkillText.of("adolla_burst", "Adolla Burst",
-            "Ultimate. Shinra's Ultimate, evolved from Hell Walker. Move at the speed of light striking everything on the way, kick with far more force, unleash the Adolla Burst around you, and in Adolla Link near death a hellfire aura burns the foes around you.");
+            "Ultimate. Shinra's Ultimate, evolved from Hell Walker: the Adolla Burst awakened. The Shinra wheel plus Light Speed, the Adolla Burst blast and, through an open Adolla Link, the Adolla Grace of the Fourth Generation (a short surge that ends in the Ignition Limit). Hysterical Strength burns blue the whole time Hell Mode is on, and near death a hellfire aura burns the foes around you.");
 
     public AdollaBurstSkill() { super(SkillType.ULTIMATE, ADOLLA_TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
@@ -44,8 +45,8 @@ public class AdollaBurstSkill extends HellWalkerSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
-        int move = ShinraRules.move(true, mode);
-        if (move == ShinraRules.KICK || move == ShinraRules.RAPID) { super.onPressed(instance, entity, key, mode); return; }
+        int move = ShinraRules.move(true, canon(), mode);
+        if (move != ShinraRules.DASH && move != ShinraRules.BURST) { super.onPressed(instance, entity, key, mode); return; }      // kick, Rapid-Man Kick, Rapid, Hellfire, Link, Grace: the Shinra wheel
         int slot = Math.floorMod(mode, getModes(instance));
         if (instance.onCoolDown(slot)) { SkillUtil.fail(player, SkillMsg.t("fireforce.cooldown", "Your flames need a moment.")); return; }
         Tier tier = tier(instance, player);
@@ -53,7 +54,7 @@ public class AdollaBurstSkill extends HellWalkerSkill {
         if (move == ShinraRules.DASH) {
             double price = price(instance, player, DMUtil.cost(FireForceRules.dashCost(tier)));
             if (!charge(instance, player, slot, price)) return;
-            if (!lightSpeed(instance, player, tier)) { SkillUtil.refund(player, price); return; }
+            if (!lightSpeed(instance, player, tier, canon() && graceOn(instance, player))) { SkillUtil.refund(player, price); return; }
             moveCooldown(instance, player, slot, FireForceRules.dashCooldown(tier));
         } else if (move == ShinraRules.BURST) {
             if (!pay(instance, player, slot, DMUtil.cost(FireForceRules.burstCost()))) return;
@@ -67,7 +68,7 @@ public class AdollaBurstSkill extends HellWalkerSkill {
     }
 
     /** Light Speed: blink to the far end of your sight line, burning everything you pass. Returns false if there was no room. */
-    private boolean lightSpeed(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+    private boolean lightSpeed(ManasSkillInstance instance, ServerPlayer player, Tier tier, boolean grace) {
         ServerLevel level = player.serverLevel();
         Vec3 from = player.position();
         if (!com.newuniverse.nusmp.relics.Fx.teleportLook(player, FireForceRules.lightSpeedRange(tier))) {
@@ -77,7 +78,8 @@ public class AdollaBurstSkill extends HellWalkerSkill {
         Vec3 to = player.position();
         Vec3 a = from.add(0, 1, 0), b = to.add(0, 1, 0);
         for (LivingEntity t : SkillTargets.foesAlong(player, a, b, FireForceRules.lightSpeedWidth())) {
-            if (SkillDamage.hit(player, t, FireForceRules.lightSpeedDamage(tier), masteryFrac(instance), instance) > 0f) t.igniteForSeconds(5);
+            double dmg = FireForceRules.lightSpeedDamage(tier) * (grace ? ShinraRules.graceLightSpeedDamageFactor() : 1.0);      // Light Speed is a Fourth Generation power: it hits hardest under the Grace
+            if (SkillDamage.hit(player, t, dmg, masteryFrac(instance), instance) > 0f) t.igniteForSeconds(5);
         }
         SkillFx.beam(level, a, b, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, a, b, 0xFF6AD8FF, 12, 1.2f);

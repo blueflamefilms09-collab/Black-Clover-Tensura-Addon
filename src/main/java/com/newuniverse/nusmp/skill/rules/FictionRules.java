@@ -134,6 +134,52 @@ public final class FictionRules {
     public static double glimpsePool(double maxHealth) { return Math.max(0.0, maxHealth) * 0.25; }
     public static boolean glimpseUnlocked(Tier t) { return t != Tier.BASE; }
 
+    // ---- Canon pass (Medaka Box wiki, docs/all_fiction_rework.md; server setting allFictionCanon, needs allFictionGod). Appended after everything above. ----
+    /** Erase Presence (16: Kumagawa erases his own presence) and April Fiction (17: the erase that lasts three minutes). */
+    public static final int PRESENCE = 16, APRIL = 17;
+    public static final int CANON_MODES = 18;
+    /** The ids of the eighteen modes: the sixteen above first and unchanged. */
+    public static final String[] CANON_IDS = {"fiction.undo", "fiction.erase", "fiction.annul", "fiction.rewind", "fiction.unpick", "fiction.nullify", "fiction.unmake", "fiction.share", "fiction.standup", "fiction.world",
+            "fiction.deny", "fiction.rule", "fiction.reversal", "fiction.mass", "fiction.skin", "fiction.rewritetime", "fiction.presence", "fiction.april"};
+
+    /** The wheel with the canon pass: eighteen when the rebuild, the god modes and the canon pass are all on; otherwise as {@link #wheel(boolean, boolean)}. */
+    public static int wheel(boolean rebuilt, boolean god, boolean canon) { return rebuilt && god && canon ? CANON_MODES : wheel(rebuilt, god); }
+
+    /** Canon: All Fiction cannot erase another Minus (it only removes the unwanted part). With the canon pass off the old rule (the target only has to be fully affected) stands. */
+    public static boolean canErase(boolean fullyAffected, boolean canon, boolean targetIsMinus) { return fullyAffected && !(canon && targetIsMinus); }
+
+    /** Canon: nothing real to erase, nothing happens (Ezumachi's trick). Undo has work when it would return health or there is a harmful effect to remove. */
+    public static boolean undoHasWork(float remembered, float current, float max, boolean harmfulEffect) { return harmfulEffect || undoHealth(remembered, current, max) > current; }
+
+    /** Erase Presence: invisible for 20 s, and creatures (not bosses, at most the 24 SkillTargets allows) hunting you lose you. */
+    public static int presenceTicks() { return 400; }
+    public static double presenceRadius() { return 24.0; }
+
+    /** April Fiction: the erase that comes back by itself. A creature's strength is erased (Weakness) for three minutes (canon), a player's for 30 s, a boss's for 20 s; then it returns on its own. */
+    public static int aprilTicks(boolean boss, boolean player) { return boss ? 400 : player ? 600 : 3600; }
+    public static int aprilMaxTicks() { return 3600; }
+    public static int aprilWeakAmp() { return 2; }
+
+    // ---- Book Maker canon pass: the level-down screw ----
+    public static final int FOREST = 4;
+    /** Book Maker's wheel: five with the canon pass on (Pin, Barrage, Equalize, Glimpse, Leg Eating Forest), else as {@link #bookMakerModes(boolean)}. */
+    public static int bookMakerModes(boolean god, boolean canon) { return god && canon ? 5 : bookMakerModes(god); }
+    /** Canon: the screw does almost no damage; it only soils the heart. */
+    public static double pinDamageCanon() { return 1.0; }
+    /** How much of the gap between the target and you is closed: base 60 %, mastered 100 % (all the way down to your level), half of that on a boss. */
+    public static double levelStrength(Tier t, boolean boss) { double s = t == Tier.BASE ? 0.6 : 1.0; return boss ? s * 0.5 : s; }
+    /** Seconds of the level-down (it reverts when it wears off): 12 s base, 20 s mastered, 5 s on a boss. */
+    public static int levelTicks(Tier t, boolean boss) { return boss ? 100 : t == Tier.BASE ? 240 : 400; }
+    /** The amount taken off the target's value: the gap above the caster's value times the strength, never below the caster's value and never negative. */
+    public static double levelDrop(double targetValue, double casterValue, double strength) { return targetValue > casterValue ? (targetValue - casterValue) * Math.max(0.0, Math.min(1.0, strength)) : 0.0; }
+    /** Pin's screw closes half of what Equalize closes. */
+    public static double pinLevelScale() { return 0.5; }
+    /** Leg Eating Forest (mastered only): every foe within the radius (at most the 24 SkillTargets allows) is pinned by a hidden screw. */
+    public static double forestCost() { return 2400; }
+    public static int forestCooldown() { return 600; }
+    public static double forestRadius() { return 8.0; }
+    public static boolean forestUnlocked(Tier t) { return t != Tier.BASE; }
+
     /** The number of modes on the wheel: ten when the rebuild is on (setting allFictionRebuilt), the old two when it is off. */
     public static int wheel(boolean rebuilt) { return rebuilt ? ALL_MODES : 2; }
 
@@ -141,7 +187,8 @@ public final class FictionRules {
         return switch (mode) {
             case UNDO -> undoCost(); case ERASE -> eraseCost(); case ANNUL -> 2500; case REWIND -> 2000; case UNPICK -> 1500;
             case NULLIFY -> 3000; case UNMAKE -> 3500; case SHARE -> 3000; case WORLD -> 6000;
-            case DENY -> 4000; case RULE -> 7000; case REVERSAL -> 5000; case MASS -> 9000; case SKIN -> 4000; case REWRITE_TIME -> 8000; default -> 0;
+            case DENY -> 4000; case RULE -> 7000; case REVERSAL -> 5000; case MASS -> 9000; case SKIN -> 4000; case REWRITE_TIME -> 8000;
+            case PRESENCE -> 3000; case APRIL -> 5000; default -> 0;
         };
     }
 
@@ -149,7 +196,8 @@ public final class FictionRules {
         return switch (mode) {
             case UNDO -> undoCooldown(); case ERASE -> eraseCooldown(); case ANNUL -> 900; case REWIND -> 600; case UNPICK -> 300;
             case NULLIFY -> 1200; case UNMAKE -> 900; case SHARE -> 900; case WORLD -> 3600;
-            case DENY -> 600; case RULE -> 3600; case REVERSAL -> 1800; case MASS -> 2400; case SKIN -> 2400; case REWRITE_TIME -> 6000; default -> 0;
+            case DENY -> 600; case RULE -> 3600; case REVERSAL -> 1800; case MASS -> 2400; case SKIN -> 2400; case REWRITE_TIME -> 6000;
+            case PRESENCE -> 1200; case APRIL -> 2400; default -> 0;
         };
     }
 

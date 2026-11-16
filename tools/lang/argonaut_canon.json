@@ -1,0 +1,19 @@
+{
+  "anime_multiverse.skill.argonaut": "Argonaut",
+  "anime_multiverse.skill.argonaut.description": "Unique. The Hero Wish (英雄願望). Hold to charge one attack: a small bell chimes as the charge grows (three bells, four once you have half mastered it, five once mastered) and every bell costs magicules and stamina. Taking a hit breaks the charge. Release for the Hero's Strike; the weapon in your hand takes recoil. Other modes: Firebolt, Charged Firebolt, and Argo Vesta (learned with mastery, as is charging while you walk).",
+  "anime_multiverse.skill.heros_argonaut": "Bell Cranel, Hero Argonaut",
+  "anime_multiverse.skill.heros_argonaut.description": "Ultimate. Bell Cranel, the reincarnation of Argonaut, the Hero of the Beginning. The charge reaches ten bells and rings as the Grand Bell; you may walk while charging. Release for the Grand Bell strike, or fly the charge on Firebolt as a pseudo-Afterglow beam that burns what it pierces. Also Firebolt, Charged Firebolt and Argo Vesta.",
+  "anime_multiverse.skill.firebolt": "Firebolt",
+  "anime_multiverse.skill.firebolt.description": "Instant magic, no chant: say its name and it fires. A fast bolt of fire that strikes what you look at and scorches what stands near it; it is at its best at short and medium range and weakens at long range. Mastery doubles the damage. Argonaut now holds this as a mode; this skill stays for old saves.",
+  "anime_multiverse.skill.liaris_freese": "Liaris Freese",
+  "anime_multiverse.skill.liaris_freese.description": "Unique. Passive. Growth that lasts as long as the feeling behind it: your kills can raise the mastery of all your skills. (In the series it also makes Bell immune to charm; that part is not in the mod.)",
+  "anime_multiverse.skill.mode.argonaut.charge": "Hero's Strike",
+  "anime_multiverse.skill.mode.argonaut.strike": "Grand Bell",
+  "anime_multiverse.skill.mode.argonaut.beam": "Pseudo-Afterglow",
+  "anime_multiverse.skill.mode.argonaut.firebolt": "Firebolt",
+  "anime_multiverse.skill.mode.argonaut.charged_firebolt": "Charged Firebolt",
+  "anime_multiverse.skill.mode.argonaut.argo_vesta": "Argo Vesta",
+  "anime_multiverse.skill.msg.argonaut.broken": "Your charge broke: you were hit.",
+  "anime_multiverse.skill.msg.argonaut.moving": "You cannot charge while moving yet: keep still, or master Argonaut.",
+  "anime_multiverse.skill.msg.argonaut.locked": "Argo Vesta (Dual Charge) is learned with more Argonaut mastery."
+}

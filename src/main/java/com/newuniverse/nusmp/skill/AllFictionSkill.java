@@ -7,6 +7,9 @@ import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.skill.rules.FictionRules;
 import io.github.manasmods.manascore.network.api.util.Changeable;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
+import io.github.manasmods.manascore.skill.api.SkillAPI;
+import io.github.manasmods.manascore.skill.api.Skills;
+import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +50,7 @@ import java.util.List;
  */
 public class AllFictionSkill extends NUSkill {
     static final SkillText TEXT = SkillText.of("all_fiction", "All Fiction",
-            "Ultimate (God class). Make injuries, effects, enemy skills, blows, time and even your own death never have happened. Sixteen modes, from Undo to Mass Fiction.");
+            "Ultimate (God class). All Fiction, the Great Liar: deny reality and make wounds, effects, blows, enemy skills, time and even your own death never have happened. Eighteen modes, from Undo to Mass Fiction and April Fiction. It cannot erase another Minus and does nothing where there is nothing to erase.");
 
     private static final String ANNUL_UNTIL = "AnnulUntil", ANNUL_POOL = "AnnulPool", NULLIFY_UNTIL = "NullifyUntil", WORLD_UNTIL = "WorldUntil",
             RULE_UNTIL = "RuleUntil", REVERSAL_UNTIL = "ReversalUntil", REVERSAL_LEFT = "ReversalLeft", SKIN_UNTIL = "SkinUntil";
@@ -66,19 +70,38 @@ public class AllFictionSkill extends NUSkill {
     /** True when the god-class modes are on (needs the rebuild; server setting allFictionGod). */
     static boolean god() { return rebuilt() && NUConfig.allFictionGod(); }
 
-    @Override public int getModes(ManasSkillInstance i) { return FictionRules.wheel(rebuilt(), god()); }
+    /** True when the Medaka Box canon pass is on (needs the god-class modes; server setting allFictionCanon): the Minus limit, nothing-to-erase refusals, Erase Presence, April Fiction. */
+    static boolean canon() { return god() && NUConfig.allFictionCanon(); }
+
+    /** Canon: All Fiction cannot erase another Minus. Here a Minus is a player who holds Book Maker or any Ultimate skill (the "Minus equivalent"); creatures and bosses are guarded by {@link GodTier#fullyAffected}. */
+    static boolean isMinus(LivingEntity e) {
+        if (!(e instanceof ServerPlayer p)) return false;
+        Skills skills;
+        try { skills = SkillAPI.getSkillsFrom(p); } catch (Throwable noSkills) { return false; }
+        if (skills == null) return false;
+        if (skills.getSkill(NUSkills.BOOK_MAKER.getId()).isPresent()) return true;
+        for (ManasSkillInstance i : skills.getLearnedSkills()) if (i.getSkill() instanceof Skill s && s.getType() == Skill.SkillType.ULTIMATE) return true;
+        return false;
+    }
+
+    private static boolean harmful(LivingEntity e) {
+        for (MobEffectInstance m : e.getActiveEffects()) if (!m.getEffect().value().isBeneficial()) return true;
+        return false;
+    }
+
+    @Override public int getModes(ManasSkillInstance i) { return FictionRules.wheel(rebuilt(), god(), canon()); }
 
     @Override
     public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) {
-        int n = FictionRules.wheel(rebuilt(), god());
+        int n = FictionRules.wheel(rebuilt(), god(), canon());
         return Math.floorMod(mode + (reverse ? -1 : 1), n);
     }
 
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return FictionRules.GOD_IDS[Math.floorMod(mode, FictionRules.GOD_MODES)]; }
+    @Override public String getModeId(ManasSkillInstance i, int mode) { return FictionRules.CANON_IDS[Math.floorMod(mode, FictionRules.CANON_MODES)]; }
 
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
-        return switch (Math.floorMod(mode, FictionRules.GOD_MODES)) {
+        return switch (Math.floorMod(mode, FictionRules.CANON_MODES)) {
             case FictionRules.UNDO -> SkillMsg.mode("fiction.undo", "Undo");
             case FictionRules.ERASE -> SkillMsg.mode("fiction.erase", "Fiction");
             case FictionRules.ANNUL -> SkillMsg.mode("fiction.annul", "Annul Damage");
@@ -94,6 +117,8 @@ public class AllFictionSkill extends NUSkill {
             case FictionRules.MASS -> SkillMsg.mode("fiction.mass", "Mass Fiction");
             case FictionRules.SKIN -> SkillMsg.mode("fiction.skin", "Nothing Sticks");
             case FictionRules.REWRITE_TIME -> SkillMsg.mode("fiction.rewritetime", "Rewrite Time");
+            case FictionRules.PRESENCE -> SkillMsg.mode("fiction.presence", "Erase Presence");
+            case FictionRules.APRIL -> SkillMsg.mode("fiction.april", "April Fiction");
             default -> SkillMsg.mode("fiction.world", "World Fiction");
         };
     }
@@ -143,8 +168,8 @@ public class AllFictionSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
-        if (mode < 0 || mode >= FictionRules.GOD_MODES) return;
-        if (mode >= FictionRules.wheel(rebuilt(), god())) { SkillUtil.fail(player, SkillMsg.t("fiction.off", "That part of All Fiction is switched off on this server.")); return; }
+        if (mode < 0 || mode >= FictionRules.CANON_MODES) return;
+        if (mode >= FictionRules.wheel(rebuilt(), god(), canon())) { SkillUtil.fail(player, SkillMsg.t("fiction.off", "That part of All Fiction is switched off on this server.")); return; }
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("fiction.cooldown", "Not yet.")); return; }
         ServerLevel level = player.serverLevel();
         CompoundTag tag = instance.getOrCreateTag();
@@ -173,6 +198,8 @@ public class AllFictionSkill extends NUSkill {
             case FictionRules.MASS -> mass(instance, player, level);
             case FictionRules.SKIN -> skin(instance, player, level, tag, now);
             case FictionRules.REWRITE_TIME -> rewriteTime(instance, player, level);
+            case FictionRules.PRESENCE -> presence(instance, player, level);
+            case FictionRules.APRIL -> april(instance, player, level);
             default -> false;
         };
         if (!done) return;
@@ -189,8 +216,12 @@ public class AllFictionSkill extends NUSkill {
 
     /** Undo (unchanged): your health returns to what it was five seconds ago and harmful effects vanish. */
     private boolean undo(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
-        if (!pay(instance, player, FictionRules.UNDO)) return false;
         float past = instance.getOrCreateTag().getFloat("H" + FictionRules.oldestIndex());
+        if (canon() && !FictionRules.undoHasWork(past, player.getHealth(), player.getMaxHealth(), harmful(player))) {      // canon: no real damage, All Fiction does nothing (and costs nothing)
+            SkillUtil.fail(player, SkillMsg.t("fiction.nothing_to_undo", "There is nothing to undo."));
+            return false;
+        }
+        if (!pay(instance, player, FictionRules.UNDO)) return false;
         player.setHealth(FictionRules.undoHealth(past, player.getHealth(), player.getMaxHealth()));
         SkillUtil.cleanse(player);
         SkillUtil.actionbar(player, SkillMsg.t("fiction.undo", "It's All Fiction.").withStyle(ChatFormatting.DARK_PURPLE));
@@ -205,7 +236,10 @@ public class AllFictionSkill extends NUSkill {
         if (!pay(instance, player, FictionRules.ERASE)) return false;
         SkillFx.spray(level, true, body(target), 12, 0.4, 0.8, 0.4, 0.05);
         SkillAnimeFx.screwShot(level, player.getEyePosition(), body(target));            // VFX wave 3: a giant screw is driven into it
-        if (FictionRules.erases(GodTier.fullyAffected(target))) {
+        if (canon() && isMinus(target)) {                   // canon: it cannot erase another Minus, it only removes the unwanted part
+            target.removeAllEffects();
+            SkillUtil.actionbar(player, SkillMsg.t("fiction.minus", "A Minus cannot be erased. Only what was unwanted is gone.").withStyle(ChatFormatting.DARK_PURPLE));
+        } else if (FictionRules.canErase(GodTier.fullyAffected(target), canon(), false)) {
             if (target instanceof ServerPlayer) GodTier.kill(player, target);   // a player is killed, never silently removed from the world
             else target.discard();                                              // erased: no body, no drops
         } else {
@@ -255,6 +289,10 @@ public class AllFictionSkill extends NUSkill {
         LivingEntity target = SkillTargets.lookLiving(player, FictionRules.unpickRange());
         if (target == null) target = player;
         boolean foe = target != player && SkillTargets.isFoe(player, target);
+        if (canon() && (foe ? target.getActiveEffects().isEmpty() : !harmful(target))) {      // canon: nothing real to erase
+            SkillUtil.fail(player, SkillMsg.t("fiction.nothing_to_undo", "There is nothing to undo."));
+            return false;
+        }
         if (!pay(instance, player, FictionRules.UNPICK)) return false;
         if (foe) target.removeAllEffects();
         else SkillUtil.cleanse(target);
@@ -399,7 +437,7 @@ public class AllFictionSkill extends NUSkill {
         int erased = 0;
         for (LivingEntity f : foes) {
             SkillFx.spray(level, true, body(f), 8, 0.4, 0.8, 0.4, 0.05);
-            if (FictionRules.massErases(f instanceof Player, GodTier.fullyAffected(f))) {
+            if (FictionRules.massErases(f instanceof Player, GodTier.fullyAffected(f)) && !(canon() && isMinus(f))) {
                 f.discard();                                // erased: no body, no drops
                 erased++;
             } else {
@@ -430,6 +468,34 @@ public class AllFictionSkill extends NUSkill {
         for (int m = 0; m < FictionRules.GOD_MODES; m++) if (FictionRules.resettable(m)) instance.setCoolDown(0, m);
         SkillUtil.actionbar(player, SkillMsg.t("fiction.rewritetime", "The time you spent never was.").withStyle(ChatFormatting.DARK_PURPLE));
         SkillFx.spray(level, true, body(player), 16, 0.5, 0.9, 0.5, 0.05);
+        return true;
+    }
+
+    // ---------------------------------------------------------------- canon pass: the two appended modes
+    /** Erase Presence (canon: Kumagawa erases his own aura): invisible for 20 s; creatures hunting you (not bosses, at most 24) lose you. */
+    private boolean presence(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        if (!pay(instance, player, FictionRules.PRESENCE)) return false;
+        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, FictionRules.presenceTicks(), 0, false, false));
+        int n = 0;
+        for (LivingEntity f : SkillTargets.foes(player, player.position(), FictionRules.presenceRadius())) {
+            if (f instanceof Mob m && !BalanceLaw.isBoss(m) && m.getTarget() == player) { m.setTarget(null); n++; }
+        }
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.presence", "Nobody feels your presence.").withStyle(ChatFormatting.DARK_PURPLE));
+        SkillFx.spray(level, true, body(player), 12, 0.4, 0.8, 0.4, 0.04);
+        return true;
+    }
+
+    /** April Fiction (canon: All Fiction mixed with Unskilled, the erase lasts three minutes and then returns): the foe you look at loses its boons and its strength is erased (Weakness) for a time that ends by itself (creature 3 min, player 30 s, boss 20 s). It cannot erase a Minus. */
+    private boolean april(ManasSkillInstance instance, ServerPlayer player, ServerLevel level) {
+        LivingEntity target = SkillTargets.lookFoe(player, FictionRules.denyRange());
+        if (target == null) { SkillUtil.fail(player, SkillMsg.t("fiction.no_target", "No target.")); return false; }
+        if (isMinus(target)) { SkillUtil.fail(player, SkillMsg.t("fiction.minus", "A Minus cannot be erased. Only what was unwanted is gone.")); return false; }
+        if (!pay(instance, player, FictionRules.APRIL)) return false;
+        target.removeAllEffects();
+        target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Math.min(FictionRules.aprilMaxTicks(), FictionRules.aprilTicks(BalanceLaw.isBoss(target), target instanceof Player)), FictionRules.aprilWeakAmp()));
+        SkillFx.spray(level, true, body(target), 14, 0.4, 0.8, 0.4, 0.05);
+        SkillAnimeFx.screwShot(level, player.getEyePosition(), body(target));
+        SkillUtil.actionbar(player, SkillMsg.t("fiction.april", "Its strength is gone, for a while.").withStyle(ChatFormatting.DARK_PURPLE));
         return true;
     }
 

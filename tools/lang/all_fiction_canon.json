@@ -1,0 +1,17 @@
+{
+  "anime_multiverse.skill.all_fiction.description": "Ultimate (God class). All Fiction, the Great Liar: deny reality and make wounds, effects, blows, enemy skills, time and even your own death never have happened. Eighteen modes, from Undo to Mass Fiction and April Fiction. It cannot erase another Minus (a Book Maker or Ultimate holder), does nothing where there is nothing to erase, and what it erases does not come back. Passive: once a second one harmful effect of yours never was; once every fifteen minutes your own death never happened.",
+  "anime_multiverse.skill.book_maker.description": "Unique. Book Maker, Refuse the Book-Maker: a slotted screw that does almost no damage but drags the target down to your level (its attack and armour pulled down toward yours for a few seconds, then back). Equalize does it fully and strips boons. Once mastered, Barrage pins every foe in front of you, Leg Eating Forest hides screws under every foot, Equalize silences and Glimpse of the Fiction undoes a little harm. It does nothing to another Minus.",
+  "anime_multiverse.skill.mode.fiction.deny": "Unskilled",
+  "anime_multiverse.skill.mode.fiction.rewritetime": "Hundred Gauntlets",
+  "anime_multiverse.skill.mode.fiction.presence": "Erase Presence",
+  "anime_multiverse.skill.mode.fiction.april": "April Fiction",
+  "anime_multiverse.skill.mode.bookmaker.forest": "Leg Eating Forest",
+  "anime_multiverse.skill.msg.fiction.nothing_to_undo": "There is nothing to undo.",
+  "anime_multiverse.skill.msg.fiction.minus": "A Minus cannot be erased. Only what was unwanted is gone.",
+  "anime_multiverse.skill.msg.fiction.presence": "Nobody feels your presence.",
+  "anime_multiverse.skill.msg.fiction.april": "Its strength is gone, for a while.",
+  "anime_multiverse.skill.msg.bookmaker.minus": "They are already at your level.",
+  "anime_multiverse.skill.msg.bookmaker.forest": "Every screw under you was a Book Maker.",
+  "anime_multiverse.skill.msg.bookmaker.forest_locked": "Master Book Maker to unlock Leg Eating Forest.",
+  "anime_multiverse.skill.msg.bookmaker.forest_none": "Nothing near you to pin."
+}

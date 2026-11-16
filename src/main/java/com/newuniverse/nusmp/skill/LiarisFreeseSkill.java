@@ -26,7 +26,7 @@ public class LiarisFreeseSkill extends NUSkill {
     private static final String GROWN = "Grown", LAST = "LastGrow";
 
     static final SkillText TEXT = SkillText.of("liaris_freese", "Liaris Freese",
-            "Unique. Passive. While your feelings remain, so does your growth: your kills can raise the mastery of all your skills.");
+            "Unique. Passive. Growth that lasts as long as the feeling behind it: your kills can raise the mastery of all your skills. (In the series it also makes Bell immune to charm; that part is not in the mod.)");
 
     public LiarisFreeseSkill() { super(SkillType.UNIQUE, TEXT, false); }
 

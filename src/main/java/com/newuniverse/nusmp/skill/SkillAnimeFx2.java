@@ -213,10 +213,13 @@ public final class SkillAnimeFx2 {
     public static void gateElixir(ServerPlayer p) { if (p != null) skill(p.serverLevel(), GATE_ELIXIR, p.position(), 2.0, 0xFFC8FF80, 30); }
 
     /** Shinra's Devil's Kick: from the hip to the reach of the foot. */
-    public static void devilKick(ServerPlayer p, double reach) {
+    public static void devilKick(ServerPlayer p, double reach) { devilKick(p, reach, 0xFFFF5A1E); }
+
+    /** The same kick in another flame colour (Hysterical Strength: blue). */
+    public static void devilKick(ServerPlayer p, double reach, int argb) {
         if (p == null) return;
         Vec3 hip = p.position().add(0, 1.0, 0), foot = p.position().add(p.getViewVector(1.0f).scale(Math.max(1.5, Math.min(6.0, reach)))).add(0, 0.4, 0);
-        send(p.serverLevel(), VfxShape.ANIME2_SKILL, hip, foot, 0xFFFF5A1E, 16, skillPower(DEVIL_KICK, 0));
+        send(p.serverLevel(), VfxShape.ANIME2_SKILL, hip, foot, argb, 16, skillPower(DEVIL_KICK, 0));
     }
 
     public static void almighty(ServerPlayer p) { if (p != null) skill(p.serverLevel(), ALMIGHTY, p.position(), 3.0, 0xFFFFE0A0, 44); }

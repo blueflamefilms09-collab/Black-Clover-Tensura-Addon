@@ -31,6 +31,9 @@ import java.util.List;
  * Summoner of Beginnings (class {@link LordOfSummonsSkill}, the Ultimate, registry id lord_of_summons) has every mode open, two more cards and
  * doubled numbers. The numbers are in {@link SummonRules} and {@link SummonerRules}; the creatures and their upkeep are in {@link Summons}.
  * With the SERVER setting summonerRework off the skill is exactly as before (three modes, five for the Ultimate, one mastery point a cast).
+ * Canon pass (SERVER setting summonerCanon, docs/summoner_rework.md, Hell Mode wiki): modes open with the Summoning level (mastery / 7), the summon types without a
+ * card of their own are casts (Insect, Fish, Spirit, Dragon, the Ultimate's Angel), plus Awakening, Deputize and Storage ({@link SummonerCanon}); mode 6 is the Grass
+ * type's healing, the Bird card's sight is the Hawk's Hawk Eye; with it off the skill is exactly the 4.5.0 one.
  */
 public class SummonerSkill extends NUSkill {
     public static final String SUMMON_TAG = "nusmp_summon";
@@ -39,7 +42,7 @@ public class SummonerSkill extends NUSkill {
     static final String TAG_ON = "NuSummonerOn", TAG_FORCE = "NuSummonerForce";
 
     static final SkillText TEXT = SkillText.of("summoner", "Summoner",
-            "Unique. Allen's class: call summon cards (Beast, Stone), dismiss them with Recall, and as it is mastered open the Bird Card's sight, Strengthening, Synthesis, the Spirit Card's healing and the stat reflection of your summons.");
+            "Unique. Allen's class (Hell Mode): call summon cards (Beast, Insect), dismiss them with Recall (Deletion), and as your Summoning level grows open Synthesis and the Bird card (2), Strengthening and the Grass card (3), the Stone card and Storage (4), the Fish card (5), Awakening and the Spirit card (6), the Dragon card and Deputize (7).");
 
     /** Mode indexes (append-only: the Ultimate adds LEGION and WRAITH after Recall, the folded-in skills come after those). */
     static final int BEAST = SummonerRules.BEAST, STONE = SummonerRules.STONE, RECALL = SummonerRules.RECALL, LEGION = SummonerRules.LEGION,
@@ -50,9 +53,12 @@ public class SummonerSkill extends NUSkill {
 
     protected SummonerSkill(SkillType type, SkillText text, boolean ultimate) { super(type, text, ultimate); }
 
-    @Override public int getModes(ManasSkillInstance instance) { return NUConfig.summonerRework() ? SummonerRules.MODES : ultimate ? 5 : 3; }
+    @Override public int getModes(ManasSkillInstance instance) { return NUConfig.summonerCanon() ? SummonerRules.MODES_CANON : NUConfig.summonerRework() ? SummonerRules.MODES : ultimate ? 5 : 3; }
 
-    private boolean listed(int mode) { return NUConfig.summonerRework() ? SummonerRules.listed(mode, ultimate) : mode < (ultimate ? 5 : 3); }
+    private boolean listed(int mode) {
+        if (NUConfig.summonerCanon()) return SummonerRules.listedCanon(mode, ultimate);
+        return NUConfig.summonerRework() ? SummonerRules.listed(mode, ultimate) : mode < (ultimate ? 5 : 3);
+    }
 
     @Override
     public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) {
@@ -73,6 +79,14 @@ public class SummonerSkill extends NUSkill {
             case SPIRIT -> "spirit";
             case STRENGTHEN -> "strengthen";
             case SYNTHESIS -> "synthesis";
+            case SummonerRules.INSECT -> "insect";
+            case SummonerRules.FISH -> "fish";
+            case SummonerRules.SPIRIT_CAST -> "spirit_card";
+            case SummonerRules.DRAGON -> "dragon";
+            case SummonerRules.AWAKENING -> "awakening";
+            case SummonerRules.DEPUTIZE -> "deputize";
+            case SummonerRules.STORAGE -> "storage";
+            case SummonerRules.ANGEL -> "angel";
             default -> "recall";
         };
     }
@@ -83,9 +97,17 @@ public class SummonerSkill extends NUSkill {
             case BEAST -> SkillMsg.mode("summoner.beast", "Beast Card");
             case STONE -> SkillMsg.mode("summoner.stone", "Stone Card");
             case BIRD -> SkillMsg.mode("summoner.bird", "Bird Card");
-            case SPIRIT -> SkillMsg.mode("summoner.spirit", "Spirit Card");
+            case SPIRIT -> NUConfig.summonerCanon() ? SkillMsg.mode("summoner.grass", "Grass Card") : SkillMsg.mode("summoner.spirit", "Spirit Card");   // canon: the healing pulse is the Grass type's role
             case STRENGTHEN -> SkillMsg.mode("summoner.strengthen", "Strengthening");
             case SYNTHESIS -> SkillMsg.mode("summoner.synthesis", "Synthesis");
+            case SummonerRules.INSECT -> SkillMsg.mode("summoner.insect", "Insect Card");
+            case SummonerRules.FISH -> SkillMsg.mode("summoner.fish", "Fish Card");
+            case SummonerRules.SPIRIT_CAST -> SkillMsg.mode("summoner.spirit_card", "Spirit Card");
+            case SummonerRules.DRAGON -> SkillMsg.mode("summoner.dragon", "Dragon Card");
+            case SummonerRules.AWAKENING -> SkillMsg.mode("summoner.awakening", "Awakening");
+            case SummonerRules.DEPUTIZE -> SkillMsg.mode("summoner.deputize", "Deputize");
+            case SummonerRules.STORAGE -> SkillMsg.mode("summoner.storage", "Storage");
+            case SummonerRules.ANGEL -> SkillMsg.mode("summoner.angel", "Angel Card");
             default -> SkillMsg.mode("summoner.recall", "Recall");
         };
     }
@@ -93,10 +115,15 @@ public class SummonerSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int slot, int mode) {
         if (!(entity instanceof ServerPlayer player) || !player.isAlive()) return;
-        if (mode >= BIRD) {
-            if (!NUConfig.summonerRework()) { SkillUtil.fail(player, SkillMsg.t("summoner.reworked_off", "This Summoner mode is switched off on this server.")); return; }
+        boolean canon = NUConfig.summonerCanon();
+        if (mode >= BIRD || (canon && mode == STONE)) {
+            if (!NUConfig.summonerRework() || (mode >= SummonerRules.INSECT && !canon) || (mode == SummonerRules.ANGEL && !ultimate)) {
+                SkillUtil.fail(player, SkillMsg.t("summoner.reworked_off", "This Summoner mode is switched off on this server."));
+                return;
+            }
             if (!modeUnlocked(instance, player, mode)) {
-                SkillUtil.fail(player, SkillMsg.t("summoner.locked", "%s opens at %s%% mastery of the Summoner.", getModeName(instance, mode), SummonerRules.unlockPercent(mode)));
+                if (canon) SkillUtil.fail(player, SkillMsg.t("summoner.locked_canon", "%s opens at Summoning level %s (%s%% mastery of the Summoner).", getModeName(instance, mode), SummonerRules.canonLevel(mode), SummonerRules.canonUnlockPercent(mode)));
+                else SkillUtil.fail(player, SkillMsg.t("summoner.locked", "%s opens at %s%% mastery of the Summoner.", getModeName(instance, mode), SummonerRules.unlockPercent(mode)));
                 return;
             }
         }
@@ -107,6 +134,14 @@ public class SummonerSkill extends NUSkill {
             case BIRD, SPIRIT -> toggleMode(instance, player, mode);
             case STRENGTHEN -> strengthen(instance, player, mode);
             case SYNTHESIS -> synthesize(instance, player, mode);
+            case SummonerRules.INSECT -> canonCast(instance, player, mode, SummonerRules.Family.INSECT, 1, (t, mf) -> SummonerCanon.insect(player, t));
+            case SummonerRules.FISH -> canonCast(instance, player, mode, SummonerRules.Family.FISH, 1, (t, mf) -> SummonerCanon.fish(player, t));
+            case SummonerRules.SPIRIT_CAST -> canonCast(instance, player, mode, SummonerRules.Family.SPIRIT, 2, (t, mf) -> SummonerCanon.spirit(player, t, instance, mf));
+            case SummonerRules.DRAGON -> canonCast(instance, player, mode, SummonerRules.Family.DRAGON, 2, (t, mf) -> SummonerCanon.dragon(player, t, instance, mf));
+            case SummonerRules.ANGEL -> canonCast(instance, player, mode, null, 3, (t, mf) -> SummonerCanon.angel(player, t, instance, mf));
+            case SummonerRules.AWAKENING -> awaken(instance, player, mode);
+            case SummonerRules.DEPUTIZE -> deputize(instance, player);
+            case SummonerRules.STORAGE -> SummonerCanon.openStorage(player);
             default -> { }
         }
     }
@@ -116,6 +151,7 @@ public class SummonerSkill extends NUSkill {
     final boolean modeUnlocked(ManasSkillInstance instance, ServerPlayer player, int mode) {
         CompoundTag tag = instance.getTag();
         int forced = tag == null ? 0 : tag.getInt(TAG_FORCE);
+        if (NUConfig.summonerCanon()) return SummonerRules.unlockedCanon(mode, masteryFrac(instance), tier(instance, player).ultimate(), SummonerRules.forced(forced, mode));
         return SummonerRules.unlocked(mode, masteryFrac(instance), tier(instance, player).ultimate(), SummonerRules.forced(forced, mode));
     }
 
@@ -182,9 +218,11 @@ public class SummonerSkill extends NUSkill {
         if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("summoner.cooldown", "Summoner is on cooldown.")); return; }
         if (Summons.owned(player).isEmpty()) { SkillUtil.fail(player, SkillMsg.t("summoner.no_summons", "You have no summons to strengthen.")); return; }
         Tier tier = tier(instance, player);
-        double price = price(instance, player, SummonerRules.strengthenCost(SummonRules.cost(Card.BEAST, NUConfig.SUMMON_MAGICULE_COST.get())));
+        boolean canon = NUConfig.summonerCanon();
+        double cardCost = SummonRules.cost(Card.BEAST, NUConfig.SUMMON_MAGICULE_COST.get());
+        double price = price(instance, player, canon ? SummonerRules.canonStrengthenCost(cardCost) : SummonerRules.strengthenCost(cardCost));
         if (!charge(instance, player, mode, price)) return;
-        int n = Summons.strengthen(player, tier);
+        int n = canon ? Summons.strengthenCanon(player, SummonerRules.strengthenLevel(masteryFrac(instance), tier.ultimate())) : Summons.strengthen(player, tier);
         SkillUtil.actionbar(player, SkillMsg.t("summoner.strengthened", "Strengthened %s summon(s).", n).withStyle(ChatFormatting.AQUA));
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_CAST_SPELL, 0.9F, 0.9F);
         cooldown(instance, mode, SummonerRules.strengthenCooldown());
@@ -209,6 +247,65 @@ public class SummonerSkill extends NUSkill {
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, 1.5F);
         cooldown(instance, mode, SummonerRules.synthesisCooldown());
         grow(instance, player, SummonerRules.castGain(instance.getMaxMastery(), 2, NUConfig.summonerMasteryPercent(), true));
+    }
+
+    // ------------------------------------------------------------------ canon: the summon types, Awakening, Deputize
+    /** Shared flow of a type cast: cooldown, price (the type's creation mana ratio, or ten card prices for the Angel), the effect, cooldown, mastery. A cast that touched nothing is refunded. */
+    private void canonCast(ManasSkillInstance instance, ServerPlayer player, int mode, SummonerRules.Family family, int weight, java.util.function.BiFunction<Tier, Double, Integer> effect) {
+        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("summoner.cooldown", "Summoner is on cooldown.")); return; }
+        Tier tier = tier(instance, player);
+        double cardCost = SummonRules.cost(Card.BEAST, NUConfig.SUMMON_MAGICULE_COST.get());
+        double price = price(instance, player, family == null ? SummonerRules.awakeningCost(cardCost) : SummonerRules.typeCost(cardCost, family));
+        if (!charge(instance, player, mode, price)) return;
+        int n = effect.apply(tier, masteryFrac(instance));
+        if (n <= 0) {
+            SkillUtil.refund(player, price);
+            SkillUtil.fail(player, SkillMsg.t("summoner.canon_nothing", "Nothing answered the card."));
+            return;
+        }
+        SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_CAST_SPELL, 1.0F, 1.0F);
+        cooldown(instance, mode, SummonerRules.castCooldown(NUConfig.SUMMON_COOLDOWN.get(), mode));
+        grow(instance, player, SummonerRules.castGain(instance.getMaxMastery(), weight, NUConfig.summonerMasteryPercent(), true));
+    }
+
+    /** Awakening (100 MP, once a day; 6 h / 3 h / 1 h with a Soldier / General / King among your summons): every summon uses its awakened skill. */
+    private void awaken(ManasSkillInstance instance, ServerPlayer player, int mode) {
+        if (instance.onCoolDown(mode)) { SkillUtil.fail(player, SkillMsg.t("summoner.cooldown", "Summoner is on cooldown.")); return; }
+        Tier tier = tier(instance, player);
+        double price = price(instance, player, SummonerRules.awakeningCost(SummonRules.cost(Card.BEAST, NUConfig.SUMMON_MAGICULE_COST.get())));
+        if (!charge(instance, player, mode, price)) return;
+        int n = SummonerCanon.awaken(player, tier, modeUnlocked(instance, player, BIRD), modeUnlocked(instance, player, SPIRIT));
+        if (n <= 0) {
+            SkillUtil.refund(player, price);
+            SkillUtil.fail(player, SkillMsg.t("summoner.canon_nothing", "Nothing answered the card."));
+            return;
+        }
+        SkillUtil.actionbar(player, SkillMsg.t("summoner.awakened", "Awakened: %s summon(s) used their awakened skill.", Summons.owned(player).size()).withStyle(ChatFormatting.GOLD));
+        SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, 0.6F);
+        cooldown(instance, mode, SummonerRules.awakeningCooldown(Summons.topCommand(player)));
+        grow(instance, player, SummonerRules.castGain(instance.getMaxMastery(), 3, NUConfig.summonerMasteryPercent(), true));
+    }
+
+    /** Deputize (free): the summon you look at becomes a General (three per kind), a General a King with Kingnification (the Ultimate), a King a plain summon again. */
+    private void deputize(ManasSkillInstance instance, ServerPlayer player) {
+        LivingEntity look = SkillTargets.lookAlly(player, 24.0);
+        if (!(look instanceof Mob mob) || !Summons.ownedBy(mob, player.getUUID())) {
+            SkillUtil.fail(player, SkillMsg.t("summoner.deputize_look", "Look at one of your summons to deputize it."));
+            return;
+        }
+        int now = Summons.deputize(player, mob, tier(instance, player).ultimate());
+        if (now < 0) {
+            SkillUtil.fail(player, SkillMsg.t("summoner.deputize_limit", "That kind of summon already has three Generals."));
+            return;
+        }
+        Component what = switch (now) {
+            case SummonerRules.CMD_GENERAL -> SkillMsg.t("summoner.general", "General");
+            case SummonerRules.CMD_KING -> SkillMsg.t("summoner.king", "King");
+            default -> SkillMsg.t("summoner.plain", "plain summon");
+        };
+        SkillUtil.actionbar(player, SkillMsg.t("summoner.deputized", "%s is now: %s.", mob.getName(), what).withStyle(ChatFormatting.GOLD));
+        SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, 1.8F);
+        grow(instance, player, SummonerRules.castGain(instance.getMaxMastery(), 1, NUConfig.summonerMasteryPercent(), true));
     }
 
     /** Recall (Allen's Deletion): every summon of the caster goes away (never anybody else's). */
@@ -271,7 +368,8 @@ public class SummonerSkill extends NUSkill {
     static void reflect(ServerPlayer player, List<Mob> mine) {
         if (!NUConfig.summonerRework() || mine.isEmpty()) return;
         ManasSkillInstance inst = holder(player);
-        if (inst == null || !SummonerRules.reflects(masteryFrac(inst), inst.getSkill() instanceof SummonerSkill s && s.ultimate)) return;
+        boolean canon = NUConfig.summonerCanon();   // canon: the summons you keep always buff you (the wiki's status pages), so no mastery gate
+        if (inst == null || !(canon || SummonerRules.reflects(masteryFrac(inst), inst.getSkill() instanceof SummonerSkill s && s.ultimate))) return;
         int wolves = 0, golems = 0, spirits = 0;
         for (Mob m : mine) {
             int c = m.getPersistentData().getInt(Summons.CARD);
@@ -280,7 +378,7 @@ public class SummonerSkill extends NUSkill {
             else wolves++;
         }
         boolean strong = inst.getSkill() instanceof SummonerSkill s2 && s2.ultimate;
-        give(player, MobEffects.MOVEMENT_SPEED, SummonerRules.reflectLevel(wolves, strong));
+        give(player, canon ? MobEffects.DAMAGE_BOOST : MobEffects.MOVEMENT_SPEED, SummonerRules.reflectLevel(wolves, strong));   // canon: Beast summons give attack
         give(player, MobEffects.DAMAGE_RESISTANCE, SummonerRules.reflectLevel(golems, strong));
         give(player, MobEffects.SLOW_FALLING, SummonerRules.reflectLevel(spirits, false));
     }

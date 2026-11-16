@@ -22,4 +22,10 @@ public final class FireboltRules {
 
     /** Mastery earned per cast: only a shot that hit something teaches. */
     public static int masteryGain(boolean hit) { return hit ? 1 : 0; }
+
+    /** A Firebolt carrying an Argonaut charge (wiki: "an Argonaut charged Firebolt"): damage grows by 0.8 of the base per bell (5 bells = 5x). 0 bells = the plain bolt. */
+    public static double chargedFactor(int charge) { return 1.0 + 0.8 * Math.max(0, charge); }
+
+    /** Extra blast radius of a charged Firebolt (blocks), capped at 3 (the target count is still capped by SkillTargets). */
+    public static double chargedSplashBonus(int charge) { return Math.min(3.0, 0.3 * Math.max(0, charge)); }
 }

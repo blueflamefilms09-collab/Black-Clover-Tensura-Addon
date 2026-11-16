@@ -49,6 +49,12 @@ public final class ArgonautSelfTests {
         for (int m = 0; m < h.getModes(hi); m++) if (!seen.add(h.getModeId(hi, m))) return Result.fail("Hero's Argonaut repeats a mode id: " + h.getModeId(hi, m));
         seen.clear();
         for (int m = 0; m < a.getModes(ai); m++) if (!seen.add(a.getModeId(ai, m))) return Result.fail("Argonaut repeats a mode id: " + a.getModeId(ai, m));
+        if (ArgonautMerge.canon()) {                   // wiki canon: Charged Firebolt and Argo Vesta are appended after Firebolt, the old ids did not move
+            if (a.getModes(ai) != 4 || h.getModes(hi) != 5) return Result.fail("canon mode counts: Argonaut " + a.getModes(ai) + ", Hero " + h.getModes(hi));
+            if (!"argonaut.charged_firebolt".equals(a.getModeId(ai, 2)) || !"argonaut.argo_vesta".equals(a.getModeId(ai, 3))) return Result.fail("Argonaut canon modes are not 2 charged_firebolt, 3 argo_vesta");
+            if (!"argonaut.charged_firebolt".equals(h.getModeId(hi, 3)) || !"argonaut.argo_vesta".equals(h.getModeId(hi, 4))) return Result.fail("Hero's canon modes are not 3 charged_firebolt, 4 argo_vesta");
+            if (a.getMaxHeldTime(ai, null) <= 0 || h.getMaxHeldTime(hi, null) <= a.getMaxHeldTime(ai, null)) return Result.fail("the held time of the tiers is wrong");
+        }
         // a saved mode from a time the setting was on is the plain Strike once it is off, and the mode cycle never leaves the live range
         if (ArgonautMergeRules.kind(2, true, false) != ChargeRules.Strike.STRIKE || ArgonautMergeRules.kind(1, false, false) != ChargeRules.Strike.STRIKE)
             return Result.fail("a stale saved mode is not the Strike");
@@ -69,7 +75,11 @@ public final class ArgonautSelfTests {
         if (!ArgonautMergeRules.migrates(true, true) || ArgonautMergeRules.migrates(false, true) || ArgonautMergeRules.migrates(true, false)) return Result.fail("the migration answer is wrong");
         if (ArgonautMergeRules.grantsArgonaut(true, false) || ArgonautMergeRules.grantsArgonaut(false, true) || !ArgonautMergeRules.grantsArgonaut(false, false)) return Result.fail("the grant answer is wrong");
         if (!ArgonautMergeRules.restores(false, true, false) || ArgonautMergeRules.restores(true, true, false) || ArgonautMergeRules.restores(false, true, true)) return Result.fail("the restore answer is wrong");
+        if (ChargeRules.canonMaxCharge(com.newuniverse.nusmp.skill.rules.Tier.BASE, 0.0) != 3 || ChargeRules.canonMaxCharge(com.newuniverse.nusmp.skill.rules.Tier.MASTERED, 1.0) != 5
+                || ChargeRules.canonMaxCharge(com.newuniverse.nusmp.skill.rules.Tier.ULTIMATE, 0.0) != 10) return Result.fail("the 3 : 4 : 5 charge cap moved");
+        if (ArgonautMergeRules.rangeFalloff(5, 32) != 1.0 || ArgonautMergeRules.rangeFalloff(32, 32) >= 1.0) return Result.fail("Firebolt's long-range falloff is wrong");
+        if (ArgonautMergeRules.burns(ChargeRules.Strike.STRIKE, true) || !ArgonautMergeRules.burns(ChargeRules.Strike.ARGO_VESTA, true)) return Result.fail("canon burn table is wrong");
         if (NUConfig.FIREBOLT_COOLDOWN.get() < 0 || NUConfig.FIREBOLT_MAGICULE_COST.get() < 0) return Result.fail("Firebolt's own price or cooldown is negative");
-        return Result.ok("merge=" + ArgonautMerge.enabled() + ", fireboltCooldown=" + NUConfig.FIREBOLT_COOLDOWN.get() + ", fireboltCost=" + NUConfig.FIREBOLT_MAGICULE_COST.get());
+        return Result.ok("merge=" + ArgonautMerge.enabled() + ", canon=" + ArgonautMerge.canon() + ", fireboltCooldown=" + NUConfig.FIREBOLT_COOLDOWN.get() + ", fireboltCost=" + NUConfig.FIREBOLT_MAGICULE_COST.get());
     }
 }

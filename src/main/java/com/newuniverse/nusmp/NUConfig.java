@@ -39,6 +39,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue ARGONAUT_MAGICULE_PER_CHARGE;
     public static final ModConfigSpec.IntValue ARGONAUT_COOLDOWN;
     public static final ModConfigSpec.BooleanValue ARGONAUT_FIREBOLT_MERGE;
+    public static final ModConfigSpec.BooleanValue ARGONAUT_WIKI_CANON;
     public static final ModConfigSpec.DoubleValue LIARIS_CHANCE;
     public static final ModConfigSpec.IntValue LIARIS_MASTERY_PER_KILL;
     public static final ModConfigSpec.DoubleValue AIRIEL_MAGICULE_COST;
@@ -89,8 +90,9 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
     public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
+    public static final ModConfigSpec.BooleanValue SHINRA_CANON;                                         // Shinra canon pass (docs/shinra_rework.md, Fire Force wiki)
     public static final ModConfigSpec.BooleanValue SHINRA_REWORK;                                        // Shinra rework (docs/shinra_rework.md)
-    public static final ModConfigSpec.BooleanValue ALL_FICTION_GOD;                                      // All Fiction god-class rework (docs/all_fiction_rework.md)
+    public static final ModConfigSpec.BooleanValue ALL_FICTION_GOD, ALL_FICTION_CANON;                                      // All Fiction god-class rework (docs/all_fiction_rework.md)
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -110,6 +112,7 @@ public final class NUConfig {
     // Summoner rework (docs/summoner_rework.md): Allen's Hawk Eye, Spirit Card, Strengthening and Synthesis folded into the Summoner
     public static final ModConfigSpec.BooleanValue SUMMONER_REWORK;
     public static final ModConfigSpec.DoubleValue SUMMONER_MASTERY_PERCENT;
+    public static final ModConfigSpec.BooleanValue SUMMONER_CANON;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -154,6 +157,9 @@ public final class NUConfig {
         ARGONAUT_FIREBOLT_MERGE = b.comment("Firebolt is a mode of Argonaut (docs/argonaut_rework.md): Argonaut and Hero's Argonaut gain a rapid-cast Firebolt mode, a charged release carries fire, and a Firebolt holder is moved to Argonaut at login.",
                 "false = the old DanMachi: Firebolt is its own skill, Argonaut has only the charged strike, nothing is migrated (holders migrated earlier get Firebolt back at their next login).")
                 .define("argonautFireboltMerge", true);
+        ARGONAUT_WIKI_CANON = b.comment("Argonaut follows the DanMachi wiki (docs/argonaut_rework.md section 3): two more modes (Charged Firebolt, Argo Vesta), the charge costs stamina as well as magicules, a hit breaks a charge, and only Argo Vesta and the Afterglow beam burn what they hit.",
+                "false = Argonaut as it was in 4.4.0 (the plain charged strike burns, no extra modes, no stamina cost, a hit does not break the charge). Needs argonautFireboltMerge.")
+                .define("argonautWikiCanon", true);
         LIARIS_CHANCE = b.comment("Chance per kill that Liaris Freese grows your skills (0.0 - 1.0).").defineInRange("liarisChance", 0.5, 0.0, 1.0);
         LIARIS_MASTERY_PER_KILL = b.comment("Mastery points added to each of your skills when it triggers.").defineInRange("liarisMasteryPerKill", 1, 0, 1000);
         AIRIEL_MAGICULE_COST = b.defineInRange("airielMagiculeCost", 300.0, 0.0, 1.0E9);
@@ -276,6 +282,7 @@ public final class NUConfig {
         BEAST_SKILL_GRANT_ON_MASTERY = b.comment("Mastering a Beast Will to 100 % grants the Unique skill of that beast once (3.59.0). false = the skills come only from the admin command or /tensura edit.").define("beastSkillGrantOnMastery", true);
         DB_LEGACY_SKILLS = b.comment("Dragon Ball rework, phase 1. The 15 old Dragon Ball skills (30 ids, 3.56.0) are REMOVED by default: false = no command, no evolution, no use, and they are taken from players at login (the ids stay registered so old worlds load). true = the old behaviour (dragonBallEnabled still applies).").define("dragonBallLegacySkills", false);
         SHINRA_REWORK = b.comment("Shinra rework (docs/shinra_rework.md). true = Hell Walker is the Shinra Kusakabe skill (the dash, kick and Rapid-Man Kick on the wheel, the devil's grin and Adolla Link under low health, fire immunity), Devil's Footprints is folded into it at login and Hell Walker evolves into Adolla Burst. false = the old behaviour: Hell Walker is only the toggle, no wheel, no folding, Hell Walker evolves into Hell Conqueror.").define("shinraRework", true);
+        SHINRA_CANON = b.comment("Shinra canon pass (docs/shinra_rework.md). true = the Shinra skill follows the Fire Force wiki: Rapid, Hellfire (Corna), Adolla Link and Adolla Grace join the wheel (unlocked by tier), Rapid boosts the Rapid-Man Kick, the low-health passive is Hysterical Strength (blue flames) and the Devil's Grin is only a look. false = the first rework (shinraRework) exactly as shipped. Needs shinraRework.").define("shinraCanon", true);
         b.pop();
 
         b.push("guide_fixes");
@@ -317,6 +324,8 @@ public final class NUConfig {
                 .define("summonerRework", true);
         SUMMONER_MASTERY_PERCENT = b.comment("Summoner rework: percent of the maximum mastery one card cast earns (so the modes open after a playable number of casts; 0.5 = about 200 casts to master). Ignored when summonerRework is false (then a cast earns one point, as before).")
                 .defineInRange("summonerMasteryPercent", 0.5, 0.0, 5.0);
+        SUMMONER_CANON = b.comment("Summoner canon pass (Hell Mode wiki): modes open with Allen's Summoning levels (Insect and Beast 1, Synthesis and Bird 2, Strengthening and Grass 3, Stone and Storage 4, Fish 5, Awakening and Spirit 6, Dragon and Deputize 7), the Insect, Fish, Spirit, Dragon, Angel, Awakening, Deputize and Storage modes exist, Strengthening stays on the summon, cards are named Beast H / Wally, the owner always takes the buffs of the summons he keeps. false = the 4.5.0 Summoner (nine modes, guessed unlock order). Needs summonerRework.")
+                .define("summonerCanon", true);
         b.push("ultimates_fiction_god");
         ALL_FICTION_GOD = b.comment("All Fiction god-class rework (sixteen modes: Deny Skill, Overwrite Rule, Reversal, Mass Fiction, Nothing Sticks, Rewrite Time, the Retcon passive) and Book Maker's lead-in modes (Equalize, Glimpse of the Fiction). false = the ten-mode All Fiction and the two-mode Book Maker of 3.46.0 (needs allFictionRebuilt for All Fiction).").define("allFictionGod", true);
         b.push("faithGods");
@@ -332,6 +341,7 @@ public final class NUConfig {
                 .defineInRange("evolutionEpGatePercent", 100, 0, 1000);
         FG_MAX_LINES = b.comment("How many god lines one player may follow at once.").defineInRange("maxGodLines", 1, 1, 8);
         FG_ASCEND_COOLDOWN = b.comment("Wait between two rituals of one player (ticks).").defineInRange("ascendCooldown", 6000, 0, 10_000_000);
+        ALL_FICTION_CANON = b.comment("All Fiction / Book Maker canon pass (Medaka Box wiki, docs/all_fiction_rework.md): All Fiction cannot erase another Minus (a player holding Book Maker or any Ultimate), Undo and Erase Effects refuse when there is nothing to erase, new modes Erase Presence and April Fiction (a timed erase); Book Maker's screw does almost no damage and drags the target's attack and armour down toward yours for a few seconds, plus the mastered mode Leg Eating Forest. false = the guess-era behaviour of allFictionGod (needs allFictionGod).").define("allFictionCanon", true);
         b.pop();
 
         SPEC = b.build();
@@ -346,6 +356,8 @@ public final class NUConfig {
 
     /** The All Fiction god-class modes and Book Maker's lead-in modes (default on before the SERVER config is loaded, as the rebuild is). */
     public static boolean allFictionGod() { return live(ALL_FICTION_GOD); }
+    /** The Medaka Box canon pass on top of the god-class modes (default on before the SERVER config is loaded). */
+    public static boolean allFictionCanon() { return live(ALL_FICTION_CANON); }
     public static boolean faithWorship() { return live(FAITH_WORSHIP); }
     public static int faithMaxWorshippers() { return com.newuniverse.nusmp.skill.rules.FaithWorshipRules.capOf(live(FAITH_MAX_WORSHIPPERS)); }
     public static int faithInviteTicks() { return Math.max(10, live(FAITH_INVITE_SECONDS)) * 20; }
@@ -367,7 +379,9 @@ public final class NUConfig {
     public static int faithGodAscendCooldown() { return Math.max(0, live(FG_ASCEND_COOLDOWN)); }
 
     public static boolean shinraRework() { return live(SHINRA_REWORK); }
+    public static boolean shinraCanon() { return live(SHINRA_REWORK) && live(SHINRA_CANON); }
     public static boolean summonerRework() { return live(SUMMONER_REWORK); }
+    public static boolean summonerCanon() { return live(SUMMONER_CANON) && live(SUMMONER_REWORK); }
     public static double summonerMasteryPercent() { return Math.max(0.0, Math.min(5.0, live(SUMMONER_MASTERY_PERCENT))); }
     public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
     public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }

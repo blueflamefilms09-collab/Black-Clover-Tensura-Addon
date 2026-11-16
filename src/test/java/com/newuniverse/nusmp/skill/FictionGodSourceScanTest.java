@@ -36,11 +36,25 @@ class FictionGodSourceScanTest {
     }
 
     @Test
+    void theCanonPassIsBoundedBehindItsSettingAndNeverRaisesAScrewAboveTheCaster() throws Exception {
+        String a = read("skill/AllFictionSkill.java");
+        String b = read("skill/BookMakerSkill.java");
+        assertTrue(a.contains("static boolean canon()") && a.contains("NUConfig.allFictionCanon()") && b.contains("NUConfig.allFictionCanon()"), "both skills read the canon setting");
+        assertTrue(a.contains("isMinus(target)") && a.contains("FictionRules.canErase("), "the Minus limit is applied to Fiction");
+        assertTrue(a.contains("BalanceLaw.isBoss(m)") && a.contains("m.setTarget(null)"), "Erase Presence leaves bosses alone");
+        assertTrue(a.split("getEntitiesOfClass\\(", -1).length - 1 <= 1, "the canon pass adds no world query beyond the projectile box");
+        assertTrue(b.contains("addTransientModifier(") && b.contains("FictionRules.levelDrop(") && b.contains("SpellRuntime.later("), "the level-down is transient, never below the caster and removed by one delayed task");
+        assertFalse(b.contains("addPermanentModifier("), "no permanent modifier");
+        assertTrue(b.contains("SkillTargets.foes(player, player.position(), FictionRules.forestRadius())"), "Leg Eating Forest goes through the capped helper");
+        assertTrue(b.contains("BalanceLaw.isBoss(target)"), "a boss is levelled less");
+    }
+
+    @Test
     void everythingNewHonoursTheSettingAndTheOldIsKept() throws Exception {
         String a = read("skill/AllFictionSkill.java");
         assertTrue(a.contains("static boolean god()") && a.contains("NUConfig.allFictionGod()"), "All Fiction reads the god-class setting");
         assertTrue(a.contains("god() && owner instanceof ServerPlayer rp"), "the reversal hook honours the setting");
-        for (String key : new String[]{"\"fiction.undo\"", "\"fiction.erase\"", "DeathReadyAt", "public boolean onDeath(", "FictionRules.wheel(rebuilt(), god())"}) assertTrue(a.contains(key), "old part dropped: " + key);
+        for (String key : new String[]{"\"fiction.undo\"", "\"fiction.erase\"", "DeathReadyAt", "public boolean onDeath(", "FictionRules.wheel(rebuilt(), god(), canon())"}) assertTrue(a.contains(key), "old part dropped: " + key);
         String b = read("skill/BookMakerSkill.java");
         assertTrue(b.contains("NUConfig.allFictionGod()") && b.contains("SkillAnimeFx2.screw("), "Book Maker honours the setting and keeps its screw effect");
         String reg = read("skill/NUSkills.java");

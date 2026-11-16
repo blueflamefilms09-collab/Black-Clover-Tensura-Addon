@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class HerosArgonautSkill extends ArgonautSkill {
     static final SkillText HERO_TEXT = SkillText.of("heros_argonaut", "Bell Cranel, Hero Argonaut",
-            "Ultimate. Evolved from Argonaut. Charge up to ten bells and strike with triple power, or release the charge as a piercing Hero's Beam, both burning what they hit. A third mode fires Firebolt.");
+            "Ultimate. Bell Cranel, reincarnation of Argonaut, the Hero of the Beginning. Charge up to ten bells while walking and strike with triple power, or release the charge as a piercing beam, a pseudo-Afterglow that burns what it pierces. Also Firebolt, the Charged Firebolt and Argo Vesta.");
 
     public HerosArgonautSkill() { super(SkillType.ULTIMATE, HERO_TEXT, true); }
     @Override public UltimateClass ultimateClass() { return UltimateClass.LORD; }      // docs/ultimate_classes.md
@@ -30,7 +30,7 @@ public class HerosArgonautSkill extends ArgonautSkill {
 
     @Override
     protected int release(ManasSkillInstance instance, ServerPlayer player, int charge, int mode) {
-        if (kind(mode) != ChargeRules.Strike.BEAM) return strike(instance, player, charge);
+        if (kind(mode) != ChargeRules.Strike.BEAM) return super.release(instance, player, charge, mode);
 
         ServerLevel level = player.serverLevel();
         Tier tier = tier(instance, player);
@@ -39,7 +39,7 @@ public class HerosArgonautSkill extends ArgonautSkill {
         Vec3 from = player.getEyePosition().add(0, -0.2, 0);
         Vec3 to = DMUtil.lookPoint(player, ChargeRules.beamLength(charge));      // a wall ends the beam
         int hits = 0;
-        int burn = fireSeconds(charge);                                          // Firebolt folded in: a charged beam burns what it pierces
+        int burn = fireSeconds(charge, ChargeRules.Strike.BEAM);                                          // Firebolt folded in: a charged beam burns what it pierces
         for (LivingEntity t : SkillTargets.foesAlong(player, from, to, ChargeRules.beamRadius(charge))) {
             if (SkillDamage.hit(player, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) {
                 if (burn > 0) t.igniteForSeconds(burn);

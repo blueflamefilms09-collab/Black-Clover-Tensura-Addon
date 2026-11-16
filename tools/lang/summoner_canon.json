@@ -1,0 +1,23 @@
+{
+ "anime_multiverse.skill.summoner.description": "Unique. Allen's class (Hell Mode): the Grimoire's cards. Beast and Insect cards from the start, then as your Summoning level grows: Synthesis and the Bird card's sight (2), Strengthening and the Grass card's healing (3), the Stone card and Storage (4), the Fish card (5), Awakening and the Spirit card (6), the Dragon card and Deputize (7). Recall is Deletion. The summons you keep always lend you their strength.",
+ "anime_multiverse.skill.lord_of_summons.description": "Ultimate. Evolved from Summoner (Allen's title, Summoner of Beginning). Every card and every skill of the class is open, twice the summons and far stronger cards: Legion, the Wraith card, the Angel card (Merus' Thunder of Judgement), Kingnification (a General becomes a King) and the full gifts of every summon type.",
+ "anime_multiverse.skill.mode.summoner.grass": "Grass Card",
+ "anime_multiverse.skill.mode.summoner.insect": "Insect Card",
+ "anime_multiverse.skill.mode.summoner.fish": "Fish Card",
+ "anime_multiverse.skill.mode.summoner.spirit_card": "Spirit Card",
+ "anime_multiverse.skill.mode.summoner.dragon": "Dragon Card",
+ "anime_multiverse.skill.mode.summoner.awakening": "Awakening",
+ "anime_multiverse.skill.mode.summoner.deputize": "Deputize",
+ "anime_multiverse.skill.mode.summoner.storage": "Storage",
+ "anime_multiverse.skill.mode.summoner.angel": "Angel Card",
+ "anime_multiverse.skill.msg.summoner.locked_canon": "%s opens at Summoning level %s (%s%% mastery of the Summoner).",
+ "anime_multiverse.skill.msg.summoner.canon_nothing": "Nothing answered the card.",
+ "anime_multiverse.skill.msg.summoner.awakened": "Awakened: %s summon(s) used their awakened skill.",
+ "anime_multiverse.skill.msg.summoner.deputize_look": "Look at one of your summons to deputize it.",
+ "anime_multiverse.skill.msg.summoner.deputize_limit": "That kind of summon already has three Generals.",
+ "anime_multiverse.skill.msg.summoner.deputized": "%s is now: %s.",
+ "anime_multiverse.skill.msg.summoner.general": "General",
+ "anime_multiverse.skill.msg.summoner.king": "King",
+ "anime_multiverse.skill.msg.summoner.plain": "plain summon",
+ "anime_multiverse.skill.msg.summoner.merged": "Hawk Eye and Spirit Card were not Allen's skills: your old ones are now the Bird card's sight and the Grass card's healing of your Summoner."
+}

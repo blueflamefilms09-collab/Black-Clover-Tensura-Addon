@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.SummonRules;
 import com.newuniverse.nusmp.skill.rules.SummonRules.Card;
 import com.newuniverse.nusmp.skill.rules.SummonerRules;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Wolf;
@@ -34,7 +36,12 @@ import java.util.UUID;
 final class Summons {
     private Summons() {}
 
-    static final String UNTIL = "nusmp_summon_until", CARD = "nusmp_summon_card", RANK = "nusmp_summon_rank";
+    static final String UNTIL = "nusmp_summon_until", CARD = "nusmp_summon_card", RANK = "nusmp_summon_rank", COMMAND = "nusmp_summon_cmd";
+    // the permanent boosts of Strengthening and of the command tiers (built once: a ResourceLocation from strings is not allowed per tick)
+    private static final net.minecraft.resources.ResourceLocation STR_HP = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "summoner_strength_hp"),
+            STR_ATK = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "summoner_strength_atk"),
+            CMD_HP = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "summoner_command_hp"),
+            CMD_ATK = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "summoner_command_atk");
     /** How far from a player a summon is still looked after. */
     private static final double SCAN = 64.0;
 
@@ -111,7 +118,8 @@ final class Summons {
         if (mob == null) return null;
 
         double factor = SummonerRules.rankFactor(rank);
-        mob.setCustomName((rank > 0 ? name(card).append(" +" + rank) : name(card)).withStyle(color(card)));
+        net.minecraft.network.chat.MutableComponent label = canonLabel(card, rank);
+        mob.setCustomName((label != null ? label : rank > 0 ? name(card).append(" +" + rank) : name(card)).withStyle(color(card)));
         mob.setCustomNameVisible(false);
         setBase(mob, Attributes.MAX_HEALTH, SummonRules.health(card, tier) * factor);
         setBase(mob, Attributes.ATTACK_DAMAGE, SummonRules.damage(card, tier) * factor);
@@ -133,6 +141,16 @@ final class Summons {
     private static void setBase(Mob mob, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attr, double value) {
         AttributeInstance inst = mob.getAttribute(attr);
         if (inst != null) inst.setBaseValue(value);
+    }
+
+    /** Canon names (docs/summoner_rework.md): a Beast Card is "Beast H" (a letter further per Synthesis), a Stone Card is Wally (Stone E), then Stone D, Steely (C), Mira (B); null = keep the old name. */
+    static net.minecraft.network.chat.MutableComponent canonLabel(Card card, int rank) {
+        if (!NUConfig.summonerCanon()) return null;
+        return switch (card) {
+            case BEAST -> Component.literal(SummonerRules.cardLabel(SummonerRules.Family.BEAST, rank, false));
+            case STONE -> Component.literal(SummonerRules.cardLabel(SummonerRules.Family.STONE, rank, true));
+            default -> null;
+        };
     }
 
     static net.minecraft.network.chat.MutableComponent name(Card card) {
@@ -191,6 +209,78 @@ final class Summons {
             n++;
         }
         return n;
+    }
+
+    // ---------------------------------------------------------------- canon: Strengthening that stays, and the command tiers
+    private static void boost(Mob m, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attr, net.minecraft.resources.ResourceLocation id, double share) {
+        AttributeInstance inst = m.getAttribute(attr);
+        if (inst == null) return;
+        if (share <= 0) inst.removeModifier(id);
+        else inst.addOrReplacePermanentModifier(new AttributeModifier(id, share, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+    }
+
+    private static void boostBoth(Mob m, net.minecraft.resources.ResourceLocation hp, net.minecraft.resources.ResourceLocation atk, double share) {
+        float before = m.getMaxHealth();
+        boost(m, Attributes.MAX_HEALTH, hp, share);
+        boost(m, Attributes.ATTACK_DAMAGE, atk, share);
+        float grown = m.getMaxHealth() - before;
+        if (grown > 0) m.heal(grown);
+    }
+
+    /** Canon Strengthening: two stats of every summon within range grow for as long as the summon lives (a Synthesis makes a new, plain one, as in the wiki). At most the cap's worth. */
+    static int strengthenCanon(ServerPlayer owner, int level) {
+        double share = SummonerRules.strengthenBonus(level), range2 = SummonerRules.STRENGTHEN_RANGE * SummonerRules.STRENGTHEN_RANGE;
+        int n = 0;
+        for (Mob m : owned(owner)) {
+            if (m.level() != owner.level() || m.distanceToSqr(owner) > range2) continue;
+            boostBoth(m, STR_HP, STR_ATK, share);
+            SkillFx.burst(owner.serverLevel(), m.position().add(0, m.getBbHeight() * 0.5, 0), false, 4, 0.3);
+            n++;
+        }
+        return n;
+    }
+
+    static int commandOf(Mob m) { return Math.max(0, Math.min(SummonerRules.CMD_KING, m.getPersistentData().getInt(COMMAND))); }
+
+    static void setCommand(Mob m, int cmd) {
+        m.getPersistentData().putInt(COMMAND, cmd);
+        boostBoth(m, CMD_HP, CMD_ATK, SummonerRules.commandBonus(cmd));
+    }
+
+    /** The highest command tier among the owner's summons (it shortens the wait of Awakening). */
+    static int topCommand(ServerPlayer owner) {
+        int top = 0;
+        for (Mob m : owned(owner)) top = Math.max(top, commandOf(m));
+        return top;
+    }
+
+    /**
+     * Deputize on one summon: the next tier ({@link SummonerRules#nextCommand}); a new General turns the other summons of its card within range that have no tier into
+     * Soldiers (the wiki's General does it for its kind). Returns the new tier, or -1 when refused.
+     */
+    static int deputize(ServerPlayer owner, Mob target, boolean kingnification) {
+        int card = target.getPersistentData().getInt(CARD), generals = 0, kings = 0;
+        List<Mob> kin = new ArrayList<>();
+        for (Mob m : owned(owner)) {
+            if (m.getPersistentData().getInt(CARD) != card) continue;
+            kin.add(m);
+            if (m != target) {
+                int c = commandOf(m);
+                if (c == SummonerRules.CMD_GENERAL) generals++;
+                else if (c == SummonerRules.CMD_KING) kings++;
+            }
+        }
+        int next = SummonerRules.nextCommand(commandOf(target), generals, kings, kingnification);
+        if (next < 0) return -1;
+        setCommand(target, next);
+        if (next == SummonerRules.CMD_GENERAL || next == SummonerRules.CMD_KING) {
+            double range2 = SummonerRules.STRENGTHEN_RANGE * SummonerRules.STRENGTHEN_RANGE;
+            for (Mob m : kin) {
+                if (m != target && commandOf(m) == SummonerRules.CMD_NONE && m.level() == owner.level() && m.distanceToSqr(owner) <= range2) setCommand(m, SummonerRules.CMD_SOLDIER);
+            }
+        }
+        SkillFx.burst(owner.serverLevel(), target.position().add(0, target.getBbHeight() * 0.5, 0), next == SummonerRules.CMD_KING, 10, 0.5);
+        return next;
     }
 
     static int rankOf(Mob m) { return Math.max(0, m.getPersistentData().getInt(RANK)); }

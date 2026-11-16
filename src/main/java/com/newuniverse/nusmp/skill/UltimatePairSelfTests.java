@@ -63,7 +63,7 @@ public final class UltimatePairSelfTests {
         ManasSkill skill = SkillAPI.getSkillRegistry().get(NUSkills.ALL_FICTION.getId());
         if (!(skill instanceof AllFictionSkill fic)) return Result.fail("All Fiction is not registered as an AllFictionSkill: " + skill);
         ManasSkillInstance inst = fic.createDefaultInstance();
-        int want = FictionRules.wheel(NUConfig.ALL_FICTION_REBUILT.get(), NUConfig.allFictionGod());
+        int want = FictionRules.wheel(NUConfig.ALL_FICTION_REBUILT.get(), NUConfig.allFictionGod(), NUConfig.allFictionCanon());
         if (fic.getModes(inst) != want) return Result.fail("All Fiction should have " + want + " modes with allFictionRebuilt=" + NUConfig.ALL_FICTION_REBUILT.get() + ", has " + fic.getModes(inst));
         if (!"fiction.undo".equals(fic.getModeId(inst, FictionRules.UNDO)) || !"fiction.erase".equals(fic.getModeId(inst, FictionRules.ERASE))) return Result.fail("the first two modes moved or were renamed");
         Set<String> ids = new HashSet<>();
