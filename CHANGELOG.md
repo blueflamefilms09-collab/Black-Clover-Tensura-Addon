@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.1.0] — Devils get their own bodies, and a devil stands in front of you at the ritual
+- NEW: a figure of the devil rises out of the ritual circle in front of the caller, speaks four lines (26 devils, a few lines each, in chat), roars at the offer, merges into you if you sign and dissolves if you refuse, time out or break the circle. It is not a mob: no AI, no health, not saved, one per player.
+- NEW: each devil has its own form worn on your body (head from 20 %, arms, wings and tail from 50 %, the whole form at 100 % and in the Devil Union), forged in piece by piece like the Djinn's Full Equip, with a glow in the devil's colour and the attribute's ring on the ground. Other players see it too.
+- NEW: the Astralis upgrade table no longer logs an error at start (the file is in another format that another loader reads).
+- KEPT: the old generic horns and wings. A devil without a body file yet (and the four grimoire devils with no devil of another world) draws exactly the old look, on the player and as the figure.
+- Settings: server `devil.npc.enabled` (off = the old pictures-only ritual), `devil.npc.max` (default 8 figures on the whole server), `devil.npc.lifetimeSeconds`; client `devil.customForms` (off = the old generic look).
+- Cost: at most 8 figures server-wide (one per player), checked every 10 ticks, one small extra field in the existing visual packet; on the client at most 4 players with a full form and 6 with a far copy per frame, nothing beyond 48 blocks, a body mesh of at most 3000 quads.
+- Honest caveat: none of this was seen in a game. The fandom wikis could not be read, so the looks of the bodies come from memory (see `docs/devil_forms/` for the confidence of each).
+
 ## [4.0.1] — Fix: Beast Will forms had no arms or legs on the player's body
 - FIXED: the arm and leg pieces of all 27 Beast Will forms (and the idle animation of the Fenrir arms) were stored under names with capital letters (`armL`, `armR`, `legL`, `legR`). The game only accepts lowercase resource names, so it ignored all 220 files ("Invalid path in pack" in the log) and the 3D forms were drawn with head, body and tail but without arms and legs. The files are now lowercase (`arml`, `armr`, `legl`, `legr`) and the form code looks them up in lowercase. Nothing else changed; the models are the same.
 - Cost: unchanged (same pieces, same budgets); the game now loads 220 more small model files once at start.
