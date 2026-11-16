@@ -111,11 +111,13 @@ class BeastSkillRulesTest {
         }
     }
 
-    @Test void theFenrirIsTheGodOfWarWolf() {
+    @Test void theFenrirIsTheWolfOfNorseMyth() {
         Spec f = BeastSkillRules.FENRIR;
-        assertEquals("Gleipnir Breaks", f.finisher().name());
-        assertTrue(f.passives().stream().anyMatch(p -> p.name().contains("Soul")), "soul-light passive");
-        assertTrue(f.actives().stream().anyMatch(m -> m.name().contains("Soul-Frost")), "soul-frost active");
+        assertEquals("gleipnir_breaks", f.finisher().id(), "the finisher id is kept for old saves");
+        assertTrue(f.finisher().name().contains("Ragnarok") && f.finisher().name().contains("Sun"), "the sun-swallower of Ragnarok");
+        assertTrue(f.passives().stream().anyMatch(p -> p.name().contains("Limitless Growth")), "limitless growth");
+        assertTrue(f.actives().stream().anyMatch(m -> m.name().contains("Tyr")), "the jaws that took Tyr's hand");
+        assertTrue(f.actives().stream().anyMatch(m -> m.name().contains("Leyding")), "the chains Leyding and Dromi");
     }
 
     @Test void everyFinisherShapeExistsInTheEffectEnum() throws Exception {

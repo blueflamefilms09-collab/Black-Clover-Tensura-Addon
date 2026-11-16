@@ -2392,11 +2392,11 @@
   "name": "Fenrir Will",
   "beast": "Fenrir, the chained wolf (God of War's Fenrir / Garm lineage)",
   "tag": "DESIGN",
-  "source": "DESIGN. Not on the TBATE page. Owner asked for God of War's Fenrir: a loyal wolf bonded to Atreus, soul-light linked to the giant wolf Garm; Norse myth adds Gleipnir the unbreakable chain and the Ragnarok jaws. The game's own moves are not verified; the abilities are themed, not copied. Style idea: partial piece in Acquire -> full armoured form in Integrate (design only, not TBATE canon; owner request).",
+  "source": "DESIGN. Not on the TBATE page. Owner asked for God of War's Fenrir: a loyal wolf bonded to Atreus, soul-light linked to the giant wolf Garm; Norse myth adds Gleipnir the unbreakable chain and the Ragnarok jaws. The game's own moves are not verified; the abilities are themed, not copied. Style idea: partial piece in Acquire -> full armoured form in Integrate (design only, not TBATE canon; owner request). 3.90.0: reworked to the Norse myth on the owner's request (pasted text: limitless growth, strength and size, durability, Gleipnir and Tyr's hand, cunning, cosmic hunger, Ragnarok and Odin); source is the owner's text, no wiki fetched.",
   "minRank": "S",
   "legendary": false,
   "affinity": "Soul",
-  "lore": "A great pale wolf whose will is loyalty itself: a chain-breaker whose jaws gape wide at the end of the world. A will, not a bond: no wolf follows its holder.",
+  "lore": "The monstrous wolf, son of Loki, who grew without limit: he snapped the chains Leyding and Dromi, was bound only by Gleipnir at the price of Tyr's hand, and at Ragnarok breaks free to swallow the sun and devour Odin. A will, not a bond: no wolf follows its holder.",
   "dropChance": 0.006,
   "requireEp": 26000,
   "untrained": "An untrained holder is bitten by the bond itself: the wolf's loyalty demands a choice, strain climbs while its soul-light flickers and chain-marks burn around the wrists. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
@@ -2444,7 +2444,7 @@
    "abilities": [
     {
      "id": "soul_light_leap",
-     "name": "Soul-Light Leap",
+     "name": "Sun-Chaser's Leap",
      "kind": "shadow_dash",
      "slot": 1,
      "costPct": 5,
@@ -2459,7 +2459,7 @@
     },
     {
      "id": "loyal_surge",
-     "name": "Loyal Surge",
+     "name": "Swelling of the Wolf",
      "kind": "mane_surge",
      "slot": 2,
      "costPct": 6,
@@ -2529,7 +2529,7 @@
     },
     {
      "id": "gleipnir_snare",
-     "name": "Gleipnir Snare",
+     "name": "Gleipnir, the Ribbon That Binds",
      "kind": "restraining_vines",
      "slot": 2,
      "costPct": 16,
@@ -2551,30 +2551,30 @@
    }
   },
   "skill": {
-   "uniqueName": "Loyal Soul-Light",
-   "ultimateName": "Fenrir, Chain-Breaker",
-   "epithet": "The Wolf Who Breaks the Chain",
+   "uniqueName": "Wolf of Limitless Growth",
+   "ultimateName": "Fenrir, Devourer of the Gods",
+   "epithet": "The Wolf Who Swallows the Sun",
    "rgb": "#87F1FF",
    "scale": 0.95,
    "fx": "G:SEAL_CHAINS",
    "passives": [
     {
      "id": "soul_light",
-     "name": "Soul-Light",
-     "pas": "REGEN",
-     "amount": 0.02,
+     "name": "Limitless Growth",
+     "pas": "MIGHT",
+     "amount": 2.0,
      "radius": 0
     },
     {
      "id": "frostbound_coat",
-     "name": "Frostbound Coat",
-     "pas": "FROST",
-     "amount": 0,
-     "radius": 9
+     "name": "Hide No Chain Could Hold",
+     "pas": "ARMOR",
+     "amount": 7,
+     "radius": 0
     },
     {
      "id": "loyal_stride",
-     "name": "Loyal Stride",
+     "name": "Cunning of Loki's Son",
      "pas": "SWIFT",
      "amount": 0.08,
      "radius": 0
@@ -2583,23 +2583,23 @@
    "actives": [
     {
      "id": "garms_pounce",
-     "name": "Garm's Pounce",
+     "name": "The Jaws That Took Tyr's Hand",
      "prim": "RUSH",
-     "effect": "A leap wreathed in a giant wolf-shaped soul-light (the holder's own body, not a summoned beast) that crashes down on a foe and shoves others away."
+     "effect": "A lunge of the giant wolf's jaws around the holder that bites through guard and armour, tears and shoves foes aside, as Fenrir took Tyr's hand."
     },
     {
      "id": "soul_frost_howl",
-     "name": "Soul-Frost Howl",
+     "name": "Leyding and Dromi Snap",
      "prim": "BLAST",
-     "effect": "A howl of cold soul-light that freezes and staggers foes around the tamer."
+     "effect": "The holder swells and bursts the chains of the gods: a shockwave of breaking iron that staggers and throws back every foe around."
     }
    ],
    "finisher": {
     "id": "gleipnir_breaks",
-    "name": "Gleipnir Breaks",
+    "name": "Ragnarok: Swallow the Sun",
     "prim": "BEAM",
-    "effect": "The chain shatters and a wolf-jaw of soul-light, formed on the holder's own arm, crashes down in a beam: foes in the path are bitten, nearby allies are warded.",
-    "incantation": "Chain of the world, break: Fenrir's jaws open, Ragnarok comes!"
+    "effect": "Gleipnir snaps and Fenrir's endless hunger opens: jaws wide enough to reach from earth to sky devour all in a line, darkening the world for those caught in it, as at Ragnarok he swallows the sun and Odin.",
+    "incantation": "Gleipnir, break! The sun is swallowed, the All-Father falls: Ragnarok comes!"
    }
   },
   "changes": "v2->v3: separated the will from the bond mechanic (Addendum 2): ability 'Bond Surge' renamed 'Loyal Surge', BOND passive replaced by SWIFT 'Loyal Stride', Garm's Pounce / finisher reworded so the giant wolf is the holder's own soul-light, not a summoned beast. Marking = ONE equipped chain band, Full armoured form block + incantation, pitch added; numbers kept.",

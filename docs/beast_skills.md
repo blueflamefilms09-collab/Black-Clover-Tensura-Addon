@@ -530,3 +530,21 @@ Will: `apophis_will`. Apophis: the serpent of chaos who swallows the sun, legend
 | Veil of Darkness (crouch) | Ultimate | veil, range 10, n 1 | 2800 | 20 |
 | Night Without Dawn | mastery only | blast, dmg 130, radius 20.0, n 24, lock 160t | 30000 / 20000 mastered | 150 / 82 |
 
+
+## 3.90.0: Fenrir reworked to the Norse myth (REPLACED, owner's request)
+The owner pasted Fenrir's powers from Norse mythology (limitless growth, strength and size, durability, the chains Leyding and Dromi, Gleipnir and Tyr's hand, cunning, cosmic hunger, Ragnarok and Odin), so the God of War theme above is REPLACED by the myth. Source: the owner's own text; no wiki was fetched (rule 10).
+All ids are kept (`bw_fenrir`, `bw_fenrir_unique`, `soul_light`, `frostbound_coat`, `loyal_stride`, `garms_pounce`, `soul_frost_howl`, `gleipnir_breaks`, the will `fenrir_will` and its four ability ids), so old saves and skill wheels load unchanged; numbers are unchanged.
+
+| id | was | now |
+|---|---|---|
+| bw_fenrir | Fenrir, Chain-Breaker, The Wolf Who Breaks the Chain | Fenrir, Devourer of the Gods, The Wolf Who Swallows the Sun |
+| bw_fenrir_unique | Loyal Soul-Light | Wolf of Limitless Growth |
+| soul_light | Soul-Light (REGEN 2 %) | Limitless Growth (MIGHT 2.0) |
+| frostbound_coat | Frostbound Coat (FROST, 9 blocks) | Hide No Chain Could Hold (ARMOR 7) |
+| loyal_stride | Loyal Stride (SWIFT 0.08) | Cunning of Loki's Son (SWIFT 0.08) |
+| garms_pounce | Garm's Pounce (SNAP, IGN) | The Jaws That Took Tyr's Hand (SNAP, IGN, BLEED) |
+| soul_frost_howl | Soul-Frost Howl | Leyding and Dromi Snap (same numbers and flags) |
+| gleipnir_breaks | Gleipnir Breaks (BYP, FRZ, ARM, STUN) | Ragnarok: Swallow the Sun (BYP, ARM, STUN, BLIND: the sun goes dark for those caught) |
+| will abilities | Soul-Light Leap, Loyal Surge, Jaws of Ragnarok, Gleipnir Snare | Sun-Chaser's Leap, Swelling of the Wolf, Jaws of Ragnarok, Gleipnir, the Ribbon That Binds |
+
+The will's lore line, the incantation and the lang (`tools/beastwill/remake/gen_lang.py`) are regenerated from `beastwill_remake_v3.json`. Cost: none (names and two passive kinds; the same per-second passive tick as every other will).

@@ -155,12 +155,12 @@ public final class BeastSkillRules {
             f("skyfall_of_the_chimera", "Skyfall of the Chimera", Prim.BLAST, 24000, 120, 110, 40, 14, 24, 100, PAR | FRZ | BYP | SNAP));
 
     // ---------------------------------------------------------------- the eighteen legendary and mythic wills (remade in 3.60.0)
-    public static final Spec FENRIR = b("fenrir", "Fenrir, Chain-Breaker", "The Wolf Who Breaks the Chain", "Loyal Soul-Light", 0xFF87F1FF, 0.95, false, "G:SEAL_CHAINS",
-            "Fenrir: A great pale wolf whose will is loyalty itself: a chain-breaker whose jaws gape wide at the end of the world",
-            List.of(p("soul_light", "Soul-Light", Pas.REGEN, 0.02, 0), p("frostbound_coat", "Frostbound Coat", Pas.FROST, 0, 9), p("loyal_stride", "Loyal Stride", Pas.SWIFT, 0.08, 0)),
-            a("garms_pounce", "Garm's Pounce", Prim.RUSH, 2800, 10, 60, 20, 0, 2, 20, SNAP | IGN),
-            a("soul_frost_howl", "Soul-Frost Howl", Prim.BLAST, 2400, 12, 55, 0, 10, 24, 40, SNAP | STUN),
-            f("gleipnir_breaks", "Gleipnir Breaks", Prim.BEAM, 26000, 130, 150, 70, 4, 24, 60, BYP | FRZ | ARM | STUN));
+    public static final Spec FENRIR = b("fenrir", "Fenrir, Devourer of the Gods", "The Wolf Who Swallows the Sun", "Wolf of Limitless Growth", 0xFF87F1FF, 0.95, false, "G:SEAL_CHAINS",
+            "Fenrir: The monstrous wolf, son of Loki, who grew without limit: he snapped the chains Leyding and Dromi, was bound only by Gleipnir at the price of Tyr's hand, and at Ragnarok breaks free to swallow the sun and devour Odin",
+            List.of(p("soul_light", "Limitless Growth", Pas.MIGHT, 2.0, 0), p("frostbound_coat", "Hide No Chain Could Hold", Pas.ARMOR, 7, 0), p("loyal_stride", "Cunning of Loki's Son", Pas.SWIFT, 0.08, 0)),
+            a("garms_pounce", "The Jaws That Took Tyr's Hand", Prim.RUSH, 2800, 10, 60, 20, 0, 2, 20, SNAP | IGN | BLEED),
+            a("soul_frost_howl", "Leyding and Dromi Snap", Prim.BLAST, 2400, 12, 55, 0, 10, 24, 40, SNAP | STUN),
+            f("gleipnir_breaks", "Ragnarok: Swallow the Sun", Prim.BEAM, 26000, 130, 150, 70, 4, 24, 60, BYP | ARM | STUN | BLIND));
 
     public static final Spec JORMUNGANDR = b("jormungandr", "The World-Circling Serpent", "The Serpent Who Circles the World", "Sea Serpent Jormungandr", 0xFF1F4FB0, 0.96, false, "G:WATERFX_ZONE",
             "Jormungandr: The Midgard Serpent circles the world sea with its tail in its mouth; its venom meets Thor at Ragnarok",

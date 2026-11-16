@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.90.0] — Fenrir reworked to the Norse myth
+- REPLACED (owner's pasted Norse-myth text): the Fenrir Beast Will skills are the wolf of the myth instead of God of War's: Fenrir, Devourer of the Gods (Ultimate) and Wolf of Limitless Growth (Unique); passives Limitless Growth (more attack), Hide No Chain Could Hold (armour), Cunning of Loki's Son; actives The Jaws That Took Tyr's Hand (now also bleeds), Leyding and Dromi Snap; finisher Ragnarok: Swallow the Sun (blinds instead of freezing). The will's lore, ability names and incantation follow.
+- KEPT: every id, all numbers, the look and the icons, so old saves load unchanged. Table in `docs/beast_skills.md`.
+- Cost: none. Not compiled before CI, not seen in a game.
+
 ## [3.89.0] — the old Dragon Ball skills are removed from play; Dragon Ball rework plan
 - REPLACED (asked for: "remove all the old ones because the new Dragon Ball system is how it's going to be"): the 30 old Dragon Ball skills (15 characters, Unique and Ultimate) are no longer usable. New SERVER setting `dragonBallLegacySkills` (default `false` = removed; `true` restores the 3.56.0 behaviour). A player who still has one forgets it at the next login (one grey message), the `/multiverse dragonball` commands are hidden, and a copy granted by command is inert.
 - KEPT (rule 2): the registrations, ids, icons, lang keys, `DbRules`, `DbMoves`, `DbPassives`, the doc and the `skill.db` self-test, so old worlds and Beast Wills (which reuse `DbRules`) load unchanged.

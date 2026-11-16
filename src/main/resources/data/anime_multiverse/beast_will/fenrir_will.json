@@ -73,7 +73,7 @@
         "power": 2,
         "maxTargets": 1,
         "bossFactor": 0.0,
-        "name": "Soul-Light Leap",
+        "name": "Sun-Chaser's Leap",
         "effect": ""
       },
       {
@@ -89,7 +89,7 @@
         "power": 1.5,
         "maxTargets": 1,
         "bossFactor": 0.0,
-        "name": "Loyal Surge",
+        "name": "Swelling of the Wolf",
         "effect": ""
       }
     ],
@@ -163,7 +163,7 @@
         "power": 4,
         "maxTargets": 5,
         "bossFactor": 0.25,
-        "name": "Gleipnir Snare",
+        "name": "Gleipnir, the Ribbon That Binds",
         "effect": ""
       }
     ],
@@ -176,7 +176,7 @@
     }
   },
   "beastNote": "Fenrir, the chained wolf (God of War's Fenrir / Garm lineage)",
-  "lore": "A great pale wolf whose will is loyalty itself: a chain-breaker whose jaws gape wide at the end of the world. A will, not a bond: no wolf follows its holder.",
+  "lore": "The monstrous wolf, son of Loki, who grew without limit: he snapped the chains Leyding and Dromi, was bound only by Gleipnir at the price of Tyr's hand, and at Ragnarok breaks free to swallow the sun and devour Odin. A will, not a bond: no wolf follows its holder.",
   "pitch": "Fenrir is the great chained wolf of Norse myth (here the loyal soul-light wolf of God of War), who breaks Gleipnir and opens his jaws at Ragnarok. Acquire keeps you human, running with quick wolf-lope afterimages and one equipped piece, a single broken-chain wrist band, for a soul-light leap and a loyal speed surge. Integrate (Full armoured form) makes you a frost-maned wolf-beastman in chain-link plate with a fang-blade, snaring foes in Gleipnir and tearing in with Ragnarok jaws, at the price of heavy strain.",
   "untrained": "An untrained holder is bitten by the bond itself: the wolf's loyalty demands a choice, strain climbs while its soul-light flickers and chain-marks burn around the wrists. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
   "designTag": "DESIGN",
