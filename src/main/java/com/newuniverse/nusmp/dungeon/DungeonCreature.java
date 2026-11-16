@@ -123,7 +123,11 @@ public abstract class DungeonCreature extends PathfinderMob implements SoundFami
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new DungeonGoals.Sleep(this));
-        if (canAttack()) goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.15, true));
+        if (canAttack()) goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.15, true) {
+            @Override public boolean canUse() { return !busy() && super.canUse(); }
+
+            @Override public boolean canContinueToUse() { return !busy() && super.canContinueToUse(); }
+        });
         goalSelector.addGoal(4, new DungeonGoals.HuntForSustenance(this, 1.1));
         goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
@@ -141,7 +145,14 @@ public abstract class DungeonCreature extends PathfinderMob implements SoundFami
         if (hunger == 0 && tickCount % 40 == 0) hurt(damageSources().starve(), 1.0f);
         if (tickCount % 200 == 7) metabolize();
         if (tickCount % 10 == 0) entityData.set(SLEEPING, tier() == 3 && full() && getTarget() == null && getNavigation().isDone());
+        if (level() instanceof ServerLevel sl && !asleep()) reworkTick(sl);
     }
+
+    /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): the creature's signature moves, once a tick on the server while it is awake. Nothing happens unless a subclass overrides it. */
+    protected void reworkTick(ServerLevel sl) {}
+
+    /** Is a signature move winding up or landing? The melee goal then stands still. */
+    protected boolean busy() { return false; }
 
     /** What it does now and then (slimes graze and grow). */
     protected void metabolize() {}

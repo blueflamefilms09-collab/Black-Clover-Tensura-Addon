@@ -4161,35 +4161,35 @@
    ],
    "texture": [
     512,
-    192
+    256
    ],
-   "cubes": 49,
-   "faces_per_pass": 269,
-   "height_blocks": 3.19,
-   "height_with_hair_and_horns_blocks": 3.59,
+   "cubes": 87,
+   "faces_per_pass": 491,
+   "height_blocks": 3.41,
+   "height_with_hair_and_horns_blocks": 4.69,
    "bounds_blocks": {
     "min": [
-     -0.93,
+     -0.98,
      0.0,
-     -0.36
+     -0.61
     ],
     "max": [
-     0.89,
-     3.59,
-     0.34
+     0.96,
+     4.69,
+     0.36
     ]
    },
    "recommended_hitbox_blocks": {
     "width": 1.6,
-    "height": 3.19
+    "height": 3.41
    },
    "arc_look": {
-    "height": 3.19,
-    "walkCycle": 1.63,
-    "runCycle": 2.97,
-    "shadow": 0.65,
-    "growXz": 1.43,
-    "growUp": 0.8,
+    "height": 3.41,
+    "walkCycle": 1.76,
+    "runCycle": 3.2,
+    "shadow": 0.69,
+    "growXz": 1.48,
+    "growUp": 1.68,
     "glow": true
    },
    "grip": "",
@@ -4251,22 +4251,39 @@
     "hair",
     "cape",
     "cape_low",
-    "prop_r"
+    "horns",
+    "halo",
+    "prop_r",
+    "prop_float",
+    "key",
+    "tag0",
+    "tag1",
+    "tag2"
    ],
    "glow_bones": [
     "body",
     "head",
     "arm_l",
     "forearm_l",
+    "hand_l",
     "leg_l",
     "shin_l",
     "skirt_l",
     "arm_r",
     "forearm_r",
+    "hand_r",
     "leg_r",
     "shin_r",
     "skirt_r",
-    "prop_r"
+    "cape",
+    "horns",
+    "halo",
+    "prop_r",
+    "prop_float",
+    "key",
+    "tag0",
+    "tag1",
+    "tag2"
    ],
    "problems": []
   },

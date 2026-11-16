@@ -1,5 +1,10 @@
 package com.newuniverse.nusmp.dungeon;
 
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
+import com.newuniverse.nusmp.dungeon.rework.BeastBrain;
+import com.newuniverse.nusmp.dungeon.rework.DungeonReworkRules.BeastKind;
+import net.minecraft.server.level.ServerLevel;
+
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -53,4 +58,19 @@ public class LivingArmorEntity extends DungeonCreature {
             setDropChance(slots[i], 0f);                                      // found armour, not loot
         }
     }
+
+    /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): the signature moves, plain class only (the Floor Warden and the Guardian keep their own fight), behind {@code dungeonBosses.creatures}. */
+    private BeastBrain moves;
+
+    @Override
+    protected void reworkTick(ServerLevel sl) {
+        if (getClass() != LivingArmorEntity.class || !BossRulesConfig.dungeonCreatures()) {
+            if (moves != null) moves.reset();
+            return;
+        }
+        if (moves == null) moves = new BeastBrain(BeastKind.ARMOR);
+        moves.tick(this, sl);
+    }
+
+    @Override protected boolean busy() { return moves != null && moves.busy(); }
 }

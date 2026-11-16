@@ -31,7 +31,7 @@ final class RemodelLooks {
             Map.entry("devil_avatar_form2", new Look(2.84f, 1.37f, 2.53f, 0.76f, 2.79f, 1.68f)),
             Map.entry("dungeon_direwolf", new Look(1.91f, 1.06f, 1.88f, 0.46f, 1.58f, 0.83f)),
             Map.entry("dungeon_slime", new Look(1.41f, 0.75f, 1.29f, 0.35f, 1.07f, 0.72f)),
-            Map.entry("floor_warden", new Look(3.19f, 1.63f, 2.97f, 0.65f, 1.43f, 0.8f)),
+            Map.entry("floor_warden", new Look(3.41f, 1.76f, 3.2f, 0.69f, 1.48f, 1.68f)),
             Map.entry("god_of_order", new Look(3.19f, 1.58f, 2.92f, 0.44f, 1.12f, 3.09f)),
             Map.entry("god_of_order_form2", new Look(3.19f, 1.58f, 2.92f, 0.83f, 1.86f, 3.09f)),
             Map.entry("goliath", new Look(6.0f, 3.3f, 6.01f, 1.23f, 2.26f, 0.4f)),

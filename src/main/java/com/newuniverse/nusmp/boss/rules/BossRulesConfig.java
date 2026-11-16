@@ -18,6 +18,8 @@ public final class BossRulesConfig {
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
     /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
     public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX, REWORK3_MOVES, REWORK3_DECENNIAL;
+    /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): the master switch and the per-boss switches of the Floor Warden and the three creatures. */
+    public static final ModConfigSpec.BooleanValue DUNGEON_REWORK, DUNGEON_WARDEN, DUNGEON_CREATURES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -55,6 +57,15 @@ public final class BossRulesConfig {
                 .define("bossRework3Moves", true);
         REWORK3_DECENNIAL = b.comment("Boss rework wave 3: the extra move of each decennial boss family (read when a boss is built). false = their old moves. The visual signatures are client looks.")
                 .define("bossRework3DecennialMoves", true);
+        b.pop();
+        b.push("dungeonBosses");
+        DUNGEON_REWORK = b.comment("Dungeon-boss rework: the master switch of the new Floor Warden move set (Hammer Slam, Chain Lash, Shadow Step, Seal Pulse, the Key Toll, three phases, an enrage timer) and the creatures' signature moves.",
+                        "false = every dungeon boss and creature fights as before the rework (read every tick; the new look is a resource-pack matter and stays).")
+                .define("rework", true);
+        DUNGEON_WARDEN = b.comment("The Floor Warden's new move set. Needs dungeonBosses.rework. false = the old Ground Slam and Shadow Step only. Labyrinth Guardians are never affected.")
+                .define("warden", true);
+        DUNGEON_CREATURES = b.comment("The Direwolf's pounce and howl, the Basilisk's gaze, spit and tail sweep, the Living Armor's shield bash and rattle. Needs dungeonBosses.rework. false = their old bite-only fight.")
+                .define("creatures", true);
         b.pop();
         SPEC = b.build();
     }
@@ -100,4 +111,13 @@ public final class BossRulesConfig {
 
     /** Boss rework wave 3: the extra move of each decennial boss family. */
     public static boolean rework3Decennial() { return get(REWORK3_DECENNIAL); }
+
+    /** Dungeon-boss rework: the master switch. */
+    public static boolean dungeonRework() { return get(DUNGEON_REWORK); }
+
+    /** The Floor Warden's new move set (master switch and its own). */
+    public static boolean dungeonWarden() { return get(DUNGEON_REWORK) && get(DUNGEON_WARDEN); }
+
+    /** The creatures' signature moves (master switch and their own). */
+    public static boolean dungeonCreatures() { return get(DUNGEON_REWORK) && get(DUNGEON_CREATURES); }
 }

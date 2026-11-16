@@ -19708,5 +19708,9 @@
   "anime_multiverse.beastwill.milestone.1": "a quarter mastered: the will answers more readily.",
   "anime_multiverse.beastwill.milestone.2": "half mastered: its abilities recharge 5 % faster.",
   "anime_multiverse.beastwill.milestone.3": "three quarters mastered: its abilities recharge 8 % faster.",
-  "anime_multiverse.beastwill.milestone.4": "fully mastered: its abilities recharge 10 % faster."
+  "anime_multiverse.beastwill.milestone.4": "fully mastered: its abilities recharge 10 % faster.",
+  "message.anime_multiverse.dboss.warden.p2": "The Warden's seal cracks. Rings of violet light roll out from its feet: jump them.",
+  "message.anime_multiverse.dboss.warden.p3": "The Warden grips the Shadow Key. It is faster now, and the Key Toll is coming.",
+  "message.anime_multiverse.dboss.warden.toll": "The Key Toll! Stand inside one of the two lit sigils.",
+  "message.anime_multiverse.dboss.warden.enrage": "The Warden's patience is gone. Everything it does hits harder and comes sooner."
 }

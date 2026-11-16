@@ -1,6 +1,10 @@
 package com.newuniverse.nusmp.labyrinth.seal;
 
+import com.newuniverse.nusmp.boss.budget.BossBudget;
+import com.newuniverse.nusmp.boss.budget.BudgetedBoss;
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
 import com.newuniverse.nusmp.dungeon.DungeonEntities;
+import com.newuniverse.nusmp.dungeon.rework.WardenBrain;
 import com.newuniverse.nusmp.dungeon.LivingArmorEntity;
 import com.newuniverse.nusmp.labyrinth.LabyrinthConfig;
 import net.minecraft.core.BlockPos;
@@ -63,7 +67,7 @@ import com.newuniverse.nusmp.particle.fx.FxThemes;
  * per entity type), so the builder says 200 and {@link #finalizeSpawn} sets the base value from the server config afterwards. The boss bar is
  * a {@link ServerBossEvent} fed by {@code startSeenByPlayer} / {@code stopSeenByPlayer}, the pattern of the Zogratis bosses.
  */
-public class FloorWardenEntity extends LivingArmorEntity {
+public class FloorWardenEntity extends LivingArmorEntity implements BudgetedBoss {
     private static final int SLAM_COOLDOWN = 120, STEP_COOLDOWN = 160;
     private static final double SLAM_REACH = 5.0, SLAM_RADIUS = 4.0, STEP_MIN = 8.0, STEP_MAX = 24.0;
     private static final float SLAM_DAMAGE = 8f;
@@ -72,6 +76,9 @@ public class FloorWardenEntity extends LivingArmorEntity {
     private int slamCooldown = 60, stepCooldown = 80;
     /** The two Living Armors it calls at half health: once per life. */
     private boolean summoned;
+    /** Dungeon-boss rework: the move set (null until the first server tick) and the damage budget, both used only while {@link #reworkOn()} (the Labyrinth Guardian has its own budget and its own fight). */
+    private WardenBrain moves;
+    private final BossBudget wardenBudget = new BossBudget();
 
     public FloorWardenEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -87,7 +94,11 @@ public class FloorWardenEntity extends LivingArmorEntity {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.1, true));
+        goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.1, true) {
+            @Override public boolean canUse() { return !casting() && super.canUse(); }
+
+            @Override public boolean canContinueToUse() { return !casting() && super.canContinueToUse(); }
+        });
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.7));
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 12f));
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -135,7 +146,10 @@ public class FloorWardenEntity extends LivingArmorEntity {
         if (stepCooldown > 0) stepCooldown--;
         if (!isAlive()) return;
         LivingEntity target = getTarget();
-        if (target != null && target.isAlive()) {
+        if (reworkOn()) {
+            if (moves == null) moves = new WardenBrain();
+            moves.tick(this, sl);
+        } else if (target != null && target.isAlive()) {
             double d2 = distanceToSqr(target);
             if (slamCooldown <= 0 && d2 <= SLAM_REACH * SLAM_REACH) {
                 groundSlam(sl);
@@ -148,6 +162,37 @@ public class FloorWardenEntity extends LivingArmorEntity {
             summoned = true;
             summonGuards(sl);
         }
+    }
+
+    /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): true for the plain Floor Warden while {@code dungeonBosses.warden} is on; the Labyrinth Guardian and any other subclass keep their own fight. */
+    public boolean reworkOn() { return getClass() == FloorWardenEntity.class && BossRulesConfig.dungeonWarden(); }
+
+    /** Is a move of the new set winding up or landing (the melee goal then stands still)? */
+    private boolean casting() { return moves != null && moves.activeMove() >= 0; }
+
+    /** The new set's phase change: the bar turns pink at half health and red at a quarter. */
+    public void setBarPhase(int phase) {
+        bar.setColor(phase >= 3 ? BossEvent.BossBarColor.RED : phase == 2 ? BossEvent.BossBarColor.PINK : BossEvent.BossBarColor.PURPLE);
+    }
+
+    /** The move set's moves, or null (for the self-test and the debug line). */
+    public WardenBrain moves() { return moves; }
+
+    @Override public BossBudget dpsBudget() { return wardenBudget; }
+
+    @Override public int budgetStage() { return moves == null ? 0 : moves.phase() - 1; }
+
+    @Override public int budgetFinalStage() { return reworkOn() ? 2 : 0; }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        if (reworkOn()) wardenBudget.tick(this, this);
+    }
+
+    @Override
+    public void setHealth(float health) {
+        super.setHealth(wardenBudget == null || !reworkOn() ? health : wardenBudget.setHealth(this, health));          // null while the constructors of the parents run
     }
 
     /** 1.54.0: the Ground Slam's damage as an overridable value (the Labyrinth Guardian scales it with its sector's threat); the Warden's stays 8. */
@@ -221,12 +266,14 @@ public class FloorWardenEntity extends LivingArmorEntity {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypes.STARVE)) return false;
+        if (wardenBudget != null && reworkOn()) return wardenBudget.hurt(this, source, amount, x -> super.hurt(source, x));
         return super.hurt(source, amount);
     }
 
     @Override
     public void die(DamageSource source) {
         super.die(source);
+        if (moves != null) moves.reset();
         bar.setProgress(0f);
         bar.removeAllPlayers();
     }
@@ -284,7 +331,7 @@ public class FloorWardenEntity extends LivingArmorEntity {
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+        wardenBudget.bypass(() -> super.readAdditionalSaveData(tag));                          // loading the saved health is not damage
         slamCooldown = tag.getInt("SlamCooldown");
         stepCooldown = tag.getInt("StepCooldown");
         summoned = tag.getBoolean("Summoned");
