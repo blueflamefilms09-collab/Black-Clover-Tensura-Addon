@@ -48,7 +48,7 @@ public final class BossMeshRouting {
                 if (!"lucifero".equals(b.id())) continue;
                 @SuppressWarnings("unchecked") EntityType<ArcBoss> type = (EntityType<ArcBoss>) b.type().get();
                 e.registerEntityRenderer(type, ctx -> new MeshBossRenderer<ArcBoss>(ctx, new PlayerModelRenderer<>(ctx, new PlayerBodies.Arc()),
-                        en -> en.form() != ZogratisBoss.FORM_BASE ? "lucifero_form2" : "lucifero", 0xA66BFF, 3.0));
+                        en -> luciferoMesh(PlayerModelOptions.luciferoNewBody(), en.power(), en.gatesOpen(), en.form() != ZogratisBoss.FORM_BASE), 0xA66BFF, 3.0));
             }
         } catch (RuntimeException | LinkageError ex) {
             LOG.error("[anime_multiverse] the Blender body of Lucifero could not be registered: {}", ex.toString());
@@ -60,6 +60,15 @@ public final class BossMeshRouting {
         } catch (RuntimeException | LinkageError ex) {
             LOG.error("[anime_multiverse] the Blender body of the God of Order could not be registered: {}", ex.toString());
         }
+    }
+
+    /**
+     * Which of Lucifero's bodies is drawn (pure). v2 (default): the king until 80 percent power, then wings spread (the moment the fight says "his wings unfold"), then the Gates body
+     * (four wings turned into arms and a halo of horns). Not v2: the wave 3 body, as before (base, or the hybrid form).
+     */
+    static String luciferoMesh(boolean newBody, int power, boolean gatesOpen, boolean hybrid) {
+        if (!newBody) return hybrid ? "lucifero_form2" : "lucifero";
+        return gatesOpen ? "lucifero_v2_gates" : power >= 80 ? "lucifero_v2_form2" : "lucifero_v2";
     }
 
     /** What a casting move looks like in the body: the staff levelled, the bow, the ledger read, or a heavy cast. Pure. */

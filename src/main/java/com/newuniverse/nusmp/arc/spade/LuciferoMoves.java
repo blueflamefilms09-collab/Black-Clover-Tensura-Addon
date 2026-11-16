@@ -431,6 +431,38 @@ final class LuciferoMoves {
         return caught;
     }
 
+    // ================================================================ Weight of the Throne (spade.opMode)
+    static final double[] THRONE_RADII = {4.5, 8.5, 12.5};
+    static final double THRONE_BAND = 2.2;
+
+    /** Three rings of weight spread out from where he sits, twelve ticks apart; a foe is struck by at most one ring and only while its feet are on the ground (a jump over the ring is the answer, where the air is not flat). */
+    static void throne(ZogratisBoss b, float base) {
+        if (!(b.level() instanceof ServerLevel sl)) return;
+        final Vec3 c = b.position();
+        Set<Integer> hit = new HashSet<>();
+        for (int i = 0; i < THRONE_RADII.length; i++) {
+            final double r = THRONE_RADII[i];
+            b.later(i * 12, SpadeFx.safe(WHO, "throne ring", () -> {
+                ZogratisVfx.gravityImpact(sl, c, r, VIOLET_RGB);
+                sl.playSound(null, BlockPos.containing(c), SoundEvents.STONE_BREAK, SoundSource.HOSTILE, 1.4f, 0.4f);
+                for (LivingEntity e : b.foes(r + THRONE_BAND + 1)) {
+                    double d = Math.hypot(e.getX() - c.x, e.getZ() - c.z);
+                    if (Math.abs(d - r) > THRONE_BAND || !e.onGround() || !hit.add(e.getId())) continue;
+                    if (SpadeFx.crush(b, e, (float) (base * SpadeFx.guard01(e)), TensuraDamageTypes.GRAVITY_PRESS)) SpadeFx.slam(e, 0.7);
+                }
+            }));
+        }
+    }
+
+    // ================================================================ Gravity Lens Barrage (spade.opMode)
+    /** A lens of gravity (see {@link #lens}) at each of at most four marks, eight ticks apart: the lens that follows him step by step becomes four that do not follow anybody. */
+    static void lensBarrage(ZogratisBoss b, List<Vec3> marks, float base) {
+        for (int i = 0; i < Math.min(4, marks.size()); i++) {
+            final Vec3 m = marks.get(i);
+            b.later(i * 8, SpadeFx.safe(WHO, "barrage lens", () -> lens(b, m, base)));
+        }
+    }
+
     // ================================================================ Six Limbs
     /** One limb's strike (a wing turned into an arm, or a hand): a wedge of 24 degrees and 5.8 blocks; a foe is struck at most three times by the six limbs together. */
     static void arm(ZogratisBoss b, double angle, float base, Map<Integer, Integer> hits) {

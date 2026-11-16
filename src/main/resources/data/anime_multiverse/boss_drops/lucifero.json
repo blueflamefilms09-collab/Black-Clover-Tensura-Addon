@@ -1,0 +1,94 @@
+{
+  "boss": "lucifero",
+  "max_stacks": 10,
+  "drops": [
+    {
+      "item": "anime_multiverse:trophy_lucifero",
+      "chance": 1.0,
+      "min": 1,
+      "max": 2,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "tensura:silver_coin",
+      "chance": 1.0,
+      "min": 20,
+      "max": 40,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "tensura:gold_coin",
+      "chance": 1.0,
+      "min": 2,
+      "max": 3,
+      "first_kill_only": true,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_helmet",
+      "chance": 0.25,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_chestplate",
+      "chance": 0.25,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_leggings",
+      "chance": 0.25,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_boots",
+      "chance": 0.25,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_helmet",
+      "chance": 0.04,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_chestplate",
+      "chance": 0.04,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_leggings",
+      "chance": 0.04,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    },
+    {
+      "item": "anime_multiverse:lucifero_boots",
+      "chance": 0.04,
+      "min": 1,
+      "max": 1,
+      "first_kill_only": false,
+      "killer_only": true
+    }
+  ]
+}

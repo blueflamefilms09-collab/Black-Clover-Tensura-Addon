@@ -22,11 +22,18 @@ public final class LuciferoTable {
     public static final String CRUSHING_PALM = "crushing_palm", FALLING_HEAVENS = "falling_heavens", DISTORTION_STEP = "distortion_step",
             THE_BOW = "the_bow", GRAVITY_SHROUD = "gravity_shroud", LESSER_DEVILS = "lesser_devils", GRAVITY_COMB = "gravity_comb",
             GRAVITY_GRASP = "gravity_grasp", WANDERING_WEIGHT = "wandering_weight", FLATTEN_AIR = "flatten_air",
-            KNEEL_BEFORE_THE_KING = "kneel_before_the_king", EVENT_HORIZON = "event_horizon", SIX_LIMBS = "six_limbs";
+            KNEEL_BEFORE_THE_KING = "kneel_before_the_king", EVENT_HORIZON = "event_horizon", SIX_LIMBS = "six_limbs",
+            /** Appended with the OP mode (v2): the throne's three rings and the barrage of gravity lenses. */
+            WEIGHT_OF_THE_THRONE = "weight_of_the_throne", LENS_BARRAGE = "lens_barrage";
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
     public static final float PALM = 22f, HEAVEN = 11f, LENS = 7f, BOW = 20f, COMB = 17f, COMB_PULSE = 8f, GRASP = 26f, WANDER = 3.2f, ARM = 8f,
-            KNEEL = 34f, HORIZON = 36f;
+            KNEEL = 34f, HORIZON = 36f, THRONE_RING = 12f, BARRAGE_LENS = 9f;
+
+    /** {@code spade.opMode}: what the SS-tier Lucifero adds to the roster's 3500 health, armour 20 and toughness 12 (the sum is the 7000 health of the SS tier), and how much sooner his phases come. */
+    public static final double OP_HEALTH_BONUS = 3500, OP_ARMOR_BONUS = 6, OP_TOUGHNESS_BONUS = 6;
+    public static final int OP_OPENING_POWER = 40;
+    public static final float OP_PHASE_SHIFT = 1.12f;
 
     /** One row of the table. The record's accessors are the {@link MoveSpec} methods. */
     public record Spec(String id, String label, int minPower, int windUpTicks, int cooldownTicks, double minRange, double maxRange,
@@ -48,7 +55,9 @@ public final class LuciferoTable {
             new Spec(FLATTEN_AIR, "Flatten the Air", 40, 24, 420, 0, 48, 2, false, false, 8),
             new Spec(KNEEL_BEFORE_THE_KING, "Kneel Before the King", 60, 70, 1500, 0, 56, 5, true, false, 60),
             new Spec(EVENT_HORIZON, "Event Horizon", 80, 72, 1500, 0, 56, 5, true, false, 60),
-            new Spec(SIX_LIMBS, "Six Limbs", 100, 34, 260, 0, 9, 5, false, false, 12));
+            new Spec(SIX_LIMBS, "Six Limbs", 100, 34, 260, 0, 9, 5, false, false, 12),
+            new Spec(WEIGHT_OF_THE_THRONE, "Weight of the Throne", 40, 28, 340, 0, 16, 4, false, true, 12),
+            new Spec(LENS_BARRAGE, "Gravity Lens Barrage", 60, 30, 400, 4, 32, 3, false, false, 12));
 
     /** The table, in the order of the boss's move list (the client reads move names by index). */
     public static List<Spec> specs() { return SPECS; }

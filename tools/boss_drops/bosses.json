@@ -1,0 +1,189 @@
+{
+ "_comment": "Colours and trophy names of the 23 grimoire bosses (docs/bosses/boss_drops.md). The trophy names are invented, inspired by each boss's canon power; the colours come from each boss's own sheet or mesh. Read by tools/gen_boss_drop_assets.py and BossDropAssetsTest.",
+ "bosses": [
+  {
+   "id": "meliodas",
+   "name": "Meliodas",
+   "trophy": "Hellblaze Ember",
+   "color": "7A1432",
+   "accent": "FF5E6E",
+   "series": "Black Clover"
+  },
+  {
+   "id": "escanor",
+   "name": "Escanor",
+   "trophy": "Sunstone of Pride",
+   "color": "E8A317",
+   "accent": "FFE680",
+   "series": "Black Clover"
+  },
+  {
+   "id": "ban",
+   "name": "Ban",
+   "trophy": "Fox's Hunt Fang",
+   "color": "3C9E6B",
+   "accent": "D9E8A0",
+   "series": "Black Clover"
+  },
+  {
+   "id": "diane",
+   "name": "Diane",
+   "trophy": "Giant's Heart Stone",
+   "color": "E8832A",
+   "accent": "FFD27A",
+   "series": "Black Clover"
+  },
+  {
+   "id": "king",
+   "name": "King",
+   "trophy": "Spirit Spear Seed",
+   "color": "6BBF4E",
+   "accent": "FFD76A",
+   "series": "Black Clover"
+  },
+  {
+   "id": "gowther",
+   "name": "Gowther",
+   "trophy": "Goat's Dream Charm",
+   "color": "E0559B",
+   "accent": "FFC4E8",
+   "series": "Black Clover"
+  },
+  {
+   "id": "merlin",
+   "name": "Merlin",
+   "trophy": "Fragment of Infinity",
+   "color": "7A5CFF",
+   "accent": "FFD86B",
+   "series": "Black Clover"
+  },
+  {
+   "id": "fana",
+   "name": "Fana",
+   "trophy": "Third Eye Ember",
+   "color": "E8421A",
+   "accent": "FFB347",
+   "series": "Black Clover"
+  },
+  {
+   "id": "rhya",
+   "name": "Rhya",
+   "trophy": "Rooted Dirge Seed",
+   "color": "8E7BE0",
+   "accent": "FFD35A",
+   "series": "Black Clover"
+  },
+  {
+   "id": "rades_spirito",
+   "name": "Rades Spirito",
+   "trophy": "Soul Thrall Gem",
+   "color": "4A5578",
+   "accent": "9AA6C8",
+   "series": "Black Clover"
+  },
+  {
+   "id": "patolli",
+   "name": "Patolli",
+   "trophy": "Loaded Die Shard",
+   "color": "FFE3A0",
+   "accent": "FFFFFF",
+   "series": "Black Clover"
+  },
+  {
+   "id": "heath_grice",
+   "name": "Heath Grice",
+   "trophy": "Glacier Bloom Crystal",
+   "color": "7FD0FF",
+   "accent": "EAF8FF",
+   "series": "Black Clover"
+  },
+  {
+   "id": "lotus_whomalt",
+   "name": "Lotus Whomalt",
+   "trophy": "Poison Lotus Pearl",
+   "color": "7A6E94",
+   "accent": "C9C0DC",
+   "series": "Black Clover"
+  },
+  {
+   "id": "mars",
+   "name": "Mars",
+   "trophy": "Crystal Weapon Core",
+   "color": "A48CE8",
+   "accent": "E6F4FF",
+   "series": "Black Clover"
+  },
+  {
+   "id": "revchi_salik",
+   "name": "Revchi Salik",
+   "trophy": "Storm Anvil Link",
+   "color": "6E7A8C",
+   "accent": "D4DCE8",
+   "series": "Black Clover"
+  },
+  {
+   "id": "vetto",
+   "name": "Vetto",
+   "trophy": "Bound Hail Crystal",
+   "color": "D9622B",
+   "accent": "FFC27A",
+   "series": "Black Clover"
+  },
+  {
+   "id": "minotaur",
+   "name": "Minotaur",
+   "trophy": "Labyrinth Bull Horn Crest",
+   "color": "B4522E",
+   "accent": "F0B070",
+   "series": "DanMachi"
+  },
+  {
+   "id": "black_goliath",
+   "name": "Black Goliath",
+   "trophy": "Dungeon Wrath Core",
+   "color": "E0502A",
+   "accent": "FFB060",
+   "series": "DanMachi"
+  },
+  {
+   "id": "amphisbaena",
+   "name": "Amphisbaena",
+   "trophy": "Twin-Head Water Scale",
+   "color": "4AB0FF",
+   "accent": "FF6A5A",
+   "series": "DanMachi"
+  },
+  {
+   "id": "udaeus",
+   "name": "Udaeus",
+   "trophy": "White Palace Bone Seal",
+   "color": "9A8AFF",
+   "accent": "E8E2CC",
+   "series": "DanMachi"
+  },
+  {
+   "id": "morris_libardirt",
+   "name": "Morris Libardirt",
+   "trophy": "Scholar's Modified Specimen",
+   "color": "FF9B58",
+   "accent": "FFD9B0",
+   "series": "Black Clover"
+  },
+  {
+   "id": "lucifero",
+   "name": "Lucifero",
+   "trophy": "Heart of Gravity",
+   "color": "5B2A8C",
+   "accent": "B58CFF",
+   "series": "Black Clover"
+  },
+  {
+   "id": "vanica",
+   "name": "Vanica Zogratis",
+   "trophy": "Curse-Warding Blood Pearl",
+   "color": "9B1230",
+   "accent": "FF8FA3",
+   "series": "Black Clover"
+  }
+ ]
+}

@@ -79,6 +79,7 @@ public final class NUCreativeTab {
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(o.apply(G.DUNGEON));                                       // 1.35.0: the Labyrinth's blocks and items
                 com.newuniverse.nusmp.labyrinth.mega.cores.BossCoreItems.addTo(o.apply(G.DUNGEON), o.apply(G.ARMOR));              // the Boss Cores: seven cores (dungeon tab) and twenty-eight armour pieces (armour tab)
                 com.newuniverse.nusmp.saiyan.armor.SaiyanArmorItems.addTo(o.apply(G.ARMOR), o.apply(G.MISC));                       // the craftable Saiyan alloy set (armour tab) and its ingot (misc tab); no Dragon Ball tab exists, so the Anime Worlds franchise tab (FranchiseTabs) shows them too
+                com.newuniverse.nusmp.bossdrops.BossDropItems.addTo(o.apply(G.RELICS), o.apply(G.ARMOR));                          // the boss trophies (relic tab) and the Trophy Plate / Lucifero armour (armour tab)
 
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,
                         com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.BAND_OF_THE_SPATIAL_ANCHOR, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.DEVIL_BOUND_SHEATH, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GAMBLERS_GRIMOIRE_PAGE,

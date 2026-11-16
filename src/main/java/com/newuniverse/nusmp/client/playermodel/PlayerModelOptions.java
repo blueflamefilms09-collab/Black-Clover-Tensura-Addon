@@ -27,6 +27,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue MINOTAUR_BLENDER;
     /** Boss rework wave 3 (appended): Lucifero and the God of Order drawn with their Blender-made bodies (true, the default) or with the kit's player-model look (false). */
     public static final ModConfigSpec.BooleanValue LUCIFERO_BLENDER, GOD_OF_ORDER_BLENDER;
+    /** Lucifero v2 (docs/bosses/lucifero_v2.md): the player-shaped body with separate armour parts (true, the default) or the Blender body of wave 3 (false). Key {@code lucifero.newBody}. */
+    public static final ModConfigSpec.BooleanValue LUCIFERO_NEW_BODY;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -45,6 +47,10 @@ public final class PlayerModelOptions {
                 .define("luciferoBlenderModel", true);
         GOD_OF_ORDER_BLENDER = b.comment("Boss rework wave 3: draw the God of Order with his Blender-made body (robes, halo, staff, ledger; a second halo and floating pages at the Gates). Off = the kit's look.")
                 .define("godOfOrderBlenderModel", true);
+        b.push("lucifero");
+        LUCIFERO_NEW_BODY = b.comment("Lucifero v2: draw him with the player-shaped body and his separate armour parts (three bodies: the king, wings spread, the Gates). Off = the wave 3 body (bat wings on a thin frame).")
+                .define("newBody", true);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -91,6 +97,15 @@ public final class PlayerModelOptions {
             if (mesh.startsWith("lucifero")) return LUCIFERO_BLENDER.get();
             if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get();
             return true;
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** Lucifero v2: true when the player-shaped body is switched on (true while the config is not loaded). */
+    public static boolean luciferoNewBody() {
+        try {
+            return LUCIFERO_NEW_BODY.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

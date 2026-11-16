@@ -3519,6 +3519,190 @@
   "y": 13.066,
   "z": 0.0
  },
+ "trophy_amphisbaena": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_ban": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_black_goliath": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_diane": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_escanor": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_fana": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_gowther": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_heath_grice": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_king": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_lotus_whomalt": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_lucifero": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_mars": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_meliodas": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_merlin": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_minotaur": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_morris_libardirt": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_patolli": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_rades_spirito": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_revchi_salik": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_rhya": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_udaeus": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_vanica": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
+ "trophy_vetto": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.208,
+  "y": 0.75,
+  "z": -0.053
+ },
  "twin_hook_swords": {
   "class": "shortsword",
   "fraction": 0.102,

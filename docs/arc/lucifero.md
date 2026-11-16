@@ -195,3 +195,13 @@ The integration lines are at the end of the s2 report: `ArcRoster.register(Morri
 * Not run in the game: damage, cooldowns, the feel of the lanes, whether the Flattened Air + Wandering Weight combination is too harsh (the `flattenedAir` key is the lever), whether five lanes at 80% leave enough room on a small arena (the comb is laid on the target, not the middle, so it moves with the party).
 * The dust particle used by the telegraphs is the vanilla dust type (what `Tells` itself uses); no other vanilla particle type is used.
 * The art kit as it stands needed three workarounds, none of them a change to the kit: `pattern_color` must be a tuple (a hex string crashes the pattern code), an attack style other than `punch` needs a held prop (so both bosses hold an orb and use `cast_jab`), and `--preview <id>_form2` is read as "all characters" (form 2 was previewed through `tools/render_preview/preview.py arc_<id>_form2_<scene>`).
+
+## 14. OP mode and the two appended moves (added; everything above is kept and still true with `spade.opMode = false`)
+
+The sections above describe the original Lucifero (13 moves, 3500 health, armour 20, toughness 12). The owner asked for a really OP boss, so a SERVER setting `spade.opMode` (default true) turns on:
+
+* 7000 health (+3500), armour 26 (+6), toughness 18 (+6), as transient modifiers added when he is built (the roster stats stay 3500 / 20 / 12);
+* an opening power of 40 instead of 20, and phase gates read against 1.12 x his maximum health (they arrive sooner);
+* two appended moves (the move book is now 15): `weight_of_the_throne` (power 40, wind-up 28, cooldown 340, three expanding rings of weight, base 12 each, ground only) and `lens_barrage` (power 60, wind-up 30, cooldown 400, up to four gravity lenses 8 ticks apart, base 9 each).
+
+With the setting off he is the boss of sections 1 to 13. Details, cost and the new Blender bodies (`lucifero.newBody`): `docs/bosses/lucifero_v2.md`; his armour drops: `docs/bosses/boss_drops.md`.

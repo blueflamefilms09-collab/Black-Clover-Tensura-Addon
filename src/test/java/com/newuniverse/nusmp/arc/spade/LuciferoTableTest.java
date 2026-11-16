@@ -20,7 +20,7 @@ class LuciferoTableTest {
 
     @Test
     void theTableIsWellFormed() {
-        assertEquals(13, SPECS.size());
+        assertEquals(15, SPECS.size());
         Set<String> ids = new HashSet<>();
         for (LuciferoTable.Spec s : SPECS) {
             assertTrue(ids.add(s.id()), "unique id " + s.id());
@@ -40,10 +40,20 @@ class LuciferoTableTest {
         String[] order = {LuciferoTable.CRUSHING_PALM, LuciferoTable.FALLING_HEAVENS, LuciferoTable.DISTORTION_STEP, LuciferoTable.THE_BOW,
                 LuciferoTable.GRAVITY_SHROUD, LuciferoTable.LESSER_DEVILS, LuciferoTable.GRAVITY_COMB, LuciferoTable.GRAVITY_GRASP,
                 LuciferoTable.WANDERING_WEIGHT, LuciferoTable.FLATTEN_AIR, LuciferoTable.KNEEL_BEFORE_THE_KING, LuciferoTable.EVENT_HORIZON,
-                LuciferoTable.SIX_LIMBS};
+                LuciferoTable.SIX_LIMBS, LuciferoTable.WEIGHT_OF_THE_THRONE, LuciferoTable.LENS_BARRAGE};
         for (int i = 0; i < order.length; i++) assertEquals(order[i], SPECS.get(i).id(), "move " + i);
         assertSame(LuciferoTable.byId(LuciferoTable.SIX_LIMBS), SPECS.get(12));
         assertNull(LuciferoTable.byId("nope"));
+    }
+
+    @Test
+    void theOpModeAddsUpToTheSsTierAndTwoGravityMoves() {
+        assertEquals(7000, SpadeRoster.LUCIFERO.health() + LuciferoTable.OP_HEALTH_BONUS, 1e-9, "the SS tier of arc/tier/TierLetter");
+        assertTrue(LuciferoTable.OP_ARMOR_BONUS > 0 && LuciferoTable.OP_TOUGHNESS_BONUS > 0 && LuciferoTable.OP_PHASE_SHIFT > 1f);
+        assertTrue(LuciferoTable.OP_OPENING_POWER == 40, "a real power step");
+        assertTrue(LuciferoTable.THRONE_RING * 3 < LuciferoTable.KNEEL, "three rings that all land stay under one ultimate");
+        assertTrue(LuciferoTable.BARRAGE_LENS * 3 < LuciferoTable.KNEEL, "a barrage is no ultimate");
+        assertFalse(LuciferoTable.byId(LuciferoTable.WEIGHT_OF_THE_THRONE).ultimate() || LuciferoTable.byId(LuciferoTable.LENS_BARRAGE).ultimate());
     }
 
     @Test

@@ -13,6 +13,7 @@ import com.newuniverse.nusmp.entity.zogratis.PowerCurve;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -76,7 +77,41 @@ public class LuciferoBoss extends ArcBoss {
     private double armPhase;
     private UUID wanderTarget;
 
-    public LuciferoBoss(EntityType<LuciferoBoss> type, Level level) { super(type, level); }
+    private static final ResourceLocation OP_HEALTH = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "lucifero_op_health"),
+            OP_ARMOR = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "lucifero_op_armor"),
+            OP_TOUGHNESS = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "lucifero_op_toughness");
+
+    /** {@code spade.opMode}, read when he is built (a spawned boss keeps its mode for its life). */
+    private final boolean op;
+
+    public LuciferoBoss(EntityType<LuciferoBoss> type, Level level) {
+        super(type, level);
+        op = level.isClientSide || SpadeConfig.luciferoOp();                    // a client has no server config: it knows the longer move book (names are read by index; a shorter server book is a prefix)
+        if (op && !level.isClientSide) {                                                             // transient: a modifier is never saved, so the same code runs again when he is loaded (the saved health is read after it)
+            addOp(Attributes.MAX_HEALTH, OP_HEALTH, LuciferoTable.OP_HEALTH_BONUS);
+            addOp(Attributes.ARMOR, OP_ARMOR, LuciferoTable.OP_ARMOR_BONUS);
+            addOp(Attributes.ARMOR_TOUGHNESS, OP_TOUGHNESS, LuciferoTable.OP_TOUGHNESS_BONUS);
+            com.newuniverse.nusmp.boss.rules.BossHealGuard.allow(() -> setHealth(getMaxHealth()));
+        }
+    }
+
+    private void addOp(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, ResourceLocation id, double amount) {
+        var inst = getAttribute(attribute);
+        if (inst != null && inst.getModifier(id) == null)
+            inst.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(id, amount, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE));
+    }
+
+    /** OP mode: he opens at 40 percent power (the second step of the curve). */
+    @Override protected int openingPower() { return op ? LuciferoTable.OP_OPENING_POWER : super.openingPower(); }
+
+    /** OP mode: the phases arrive 12 percent sooner (the curve reads a health fraction that is that much smaller; the bar and the real health are untouched). */
+    @Override protected float powerMaxHealth() { return op ? getMaxHealth() * LuciferoTable.OP_PHASE_SHIFT : super.powerMaxHealth(); }
+
+    /** Without OP mode the two appended moves are not in his book (the old thirteen). */
+    @Override protected List<Move> moves() {
+        List<Move> all = allMoves();
+        return op ? all : new ArrayList<>(all.subList(0, 13));
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return ZogratisBoss.bossAttributes(CHARACTER.health(), CHARACTER.attack(), CHARACTER.speed(), CHARACTER.armor(), 12);
@@ -322,8 +357,7 @@ public class LuciferoBoss extends ArcBoss {
     }
 
     // ================================================================ moves
-    @Override
-    protected List<Move> moves() {
+    private List<Move> allMoves() {
         List<Move> out = new ArrayList<>();
         for (LuciferoTable.Spec s : LuciferoTable.specs()) {
             Move.Builder b = Move.builder(s.id(), s.label()).minPower(s.minPower()).windUp(s.windUpTicks()).cooldown(s.cooldownTicks())
@@ -353,6 +387,8 @@ public class LuciferoBoss extends ArcBoss {
             case LuciferoTable.KNEEL_BEFORE_THE_KING -> (bs, t, left, total) -> tellKneel(left, total);
             case LuciferoTable.EVENT_HORIZON -> (bs, t, left, total) -> tellHorizon(left, total);
             case LuciferoTable.SIX_LIMBS -> (bs, t, left, total) -> tellArms(left, total);
+            case LuciferoTable.WEIGHT_OF_THE_THRONE -> (bs, t, left, total) -> tellThrone(left, total);
+            case LuciferoTable.LENS_BARRAGE -> (bs, t, left, total) -> tellBarrage(t, left, total);
             default -> (bs, t, left, total) -> { };
         };
     }
@@ -423,6 +459,15 @@ public class LuciferoBoss extends ArcBoss {
                 announce(n == 0 ? "The well collapsed on nothing. Lucifero is open." : n + " were caught in the collapse. Lucifero is open: strike!");
             };
             case LuciferoTable.SIX_LIMBS -> (b, t) -> sixLimbs();
+            case LuciferoTable.WEIGHT_OF_THE_THRONE -> (b, t) -> {
+                LuciferoMoves.throne(this, LuciferoTable.THRONE_RING);
+                quip("Remain seated, if you can. I will not.");
+            };
+            case LuciferoTable.LENS_BARRAGE -> (b, t) -> {
+                LuciferoMoves.lensBarrage(this, marks.isEmpty() ? LuciferoMoves.heavenMarks(this, t, 4) : marks, LuciferoTable.BARRAGE_LENS);
+                marks = List.of();
+                quip("Every one of you. At once.");
+            };
             default -> (b, t) -> { };
         };
     }
@@ -555,6 +600,23 @@ public class LuciferoBoss extends ArcBoss {
         Tells.ring(sl, horizon, WeightMath.CORE_RADIUS, WARN, 1.5f, 72);
         Tells.ring(sl, horizon, Math.max(WeightMath.CORE_RADIUS, 26 - 17 * progress(left, total)), ACCENT, 1.1f, 80);
         Tells.gather(sl, horizon.add(0, 3.0, 0), 2.0, ACCENT, 8);
+    }
+
+    private void tellThrone(int left, int total) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        if (first(left, total)) announce("Weight of the Throne: three rings of weight spread out from him. Jump over each ring, or stand between them.");
+        for (double r : LuciferoMoves.THRONE_RADII) Tells.ring(sl, position(), r, WARN, 1.2f, 48);
+        Tells.gather(sl, position().add(0, 1.6, 0), 1.0, ACCENT, 5);
+    }
+
+    private void tellBarrage(LivingEntity target, int left, int total) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        if (first(left, total)) marks = LuciferoMoves.heavenMarks(this, target, 4);
+        for (Vec3 m : marks) {
+            Tells.ring(sl, m, 3.6, WARN, 1.3f, 28);
+            Tells.column(sl, m, 4, ACCENT);
+        }
+        Tells.gather(sl, position().add(0, getBbHeight() * 0.9, 0), 1.0, ACCENT, 5);
     }
 
     private void tellArms(int left, int total) {

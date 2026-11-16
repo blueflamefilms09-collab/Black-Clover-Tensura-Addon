@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class SpadeConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue FLATTENED_AIR, TUNING;
+    public static final ModConfigSpec.BooleanValue FLATTENED_AIR, TUNING, LUCIFERO_OP_MODE;
     public static final ModConfigSpec.DoubleValue KNEEL_SECONDS, TUNING_CUT, MORRIS_DAMAGE, LUCIFERO_DAMAGE;
     public static final ModConfigSpec.IntValue BOW_GRACE;
 
@@ -34,6 +34,9 @@ public final class SpadeConfig {
                 .defineInRange("morrisDamage", 1.0, 0.25, 3.0);
         LUCIFERO_DAMAGE = b.comment("Factor on everything Lucifero deals, on top of the framework's own damage law (1.0 = as designed).")
                 .defineInRange("luciferoDamage", 1.0, 0.25, 3.0);
+        LUCIFERO_OP_MODE = b.comment("Lucifero as a really strong boss (the SS tier): 7000 health, +6 armour, +6 toughness, he opens the fight at 40 percent power, his phases arrive sooner and he has two more gravity moves. "
+                        + "False: the old Lucifero (3500 health, armour 20, toughness 12, 13 moves). Read when he is spawned; the Balance Law's caps hold either way.")
+                .define("opMode", true);
         b.pop();
         SPEC = b.build();
     }
@@ -52,6 +55,9 @@ public final class SpadeConfig {
     public static int bowGrace() { return get(BOW_GRACE); }
 
     public static boolean tuning() { return get(TUNING); }
+
+    /** {@code spade.opMode}: the SS-tier Lucifero (true while the config is not loaded). */
+    public static boolean luciferoOp() { return get(LUCIFERO_OP_MODE); }
 
     public static double tuningCut() { return get(TUNING_CUT); }
 

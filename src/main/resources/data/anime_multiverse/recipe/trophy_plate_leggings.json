@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    },
+    {
+      "tag": "anime_multiverse:boss_trophies"
+    }
+  ],
+  "result": {
+    "id": "anime_multiverse:trophy_plate_leggings",
+    "count": 1
+  }
+}
