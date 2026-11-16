@@ -185,7 +185,7 @@ class BossDropAssetsTest {
     @Test
     void luciferoSetSitsBetweenNetheriteAndTheBossCoreArmour() {
         int total = 0, plate = 0;
-        for (int i = 0; i < 4; i++) { total += BossDropItems.luciferoPoints(i); plate += BossDropItems.platePoints(i); }
+        for (int i = 0; i < 4; i++) { total += BossDropCatalog.LUCIFERO_POINTS[i]; plate += BossDropCatalog.PLATE_POINTS[i]; }
         assertTrue(total > 20 && total < 24, "netherite 20, the Aegis 24: " + total);
         assertTrue(plate > 15 && plate < 20, "between iron (15) and diamond (20): " + plate);
     }

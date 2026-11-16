@@ -15,7 +15,7 @@ public final class BossDropConfig {
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("bossdrops");
-        ENABLED = b.comment("The data-driven boss drops (trophies, coins, Lucifero's armour). False: bosses drop what they dropped before this feature (the Charter Grimoire and the loot modifier are not affected either way).")
+        ENABLED = b.comment("The data-driven boss drops (trophies, coins, Lucifero's armour). False: bosses drop what they dropped before this feature (the Canon Grimoire and the loot modifier are not affected either way).")
                 .define("enabled", true);
         CHANCE_SCALE = b.comment("Factor on every chance of every boss drop table (1.0 = as the data files say; a chance never goes above 100 percent).")
                 .defineInRange("chanceScale", 1.0, 0.0, 5.0);

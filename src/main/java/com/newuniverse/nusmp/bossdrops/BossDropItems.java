@@ -53,9 +53,9 @@ public final class BossDropItems {
     private static final ArmorItem.Type[] TYPES = {ArmorItem.Type.HELMET, ArmorItem.Type.CHESTPLATE, ArmorItem.Type.LEGGINGS, ArmorItem.Type.BOOTS};
 
     /** Lucifero: heavier than netherite (3/8/6/3, toughness 3, knockback 0.1), lighter than the Aegis (4/9/7/4, toughness 4). */
-    private static final int[] LUCIFERO_POINTS = {4, 8, 6, 3};
+    private static final int[] LUCIFERO_POINTS = BossDropCatalog.LUCIFERO_POINTS;
     /** The Trophy Plate: a step over iron (2/6/5/2), under diamond (3/8/6/3). */
-    private static final int[] PLATE_POINTS = {3, 6, 5, 2};
+    private static final int[] PLATE_POINTS = BossDropCatalog.PLATE_POINTS;
 
     public static final DeferredHolder<ArmorMaterial, ArmorMaterial> LUCIFERO_MATERIAL = MATERIALS.register("lucifero",
             () -> material(LUCIFERO_POINTS, 30, 3.5f, 0.05f, "lucifero", () -> Ingredient.of(trophyOrDefault("lucifero"))));

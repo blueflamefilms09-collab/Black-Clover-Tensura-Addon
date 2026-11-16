@@ -10,6 +10,10 @@ import java.util.List;
 public final class BossDropCatalog {
     private BossDropCatalog() {}
 
+    /** Armour points helmet/chest/legs/boots; here (not in BossDropItems) so tests can read them without a booted registry. */
+    public static final int[] LUCIFERO_POINTS = {4, 8, 6, 3};
+    public static final int[] PLATE_POINTS = {3, 6, 5, 2};
+
     public static final List<String> BOSSES = List.of("meliodas", "escanor", "ban", "diane", "king", "gowther", "merlin", "fana", "rhya", "rades_spirito", "patolli", "heath_grice",
             "lotus_whomalt", "mars", "revchi_salik", "vetto", "minotaur", "black_goliath", "amphisbaena", "udaeus", "morris_libardirt", "lucifero", "vanica");
 

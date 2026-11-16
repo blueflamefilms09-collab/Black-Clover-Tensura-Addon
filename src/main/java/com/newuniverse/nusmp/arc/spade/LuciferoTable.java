@@ -28,7 +28,7 @@ public final class LuciferoTable {
 
     /** Base damage of the moves (before the boss's damage law: power tuning, victim EP, the balance law's caps). */
     public static final float PALM = 22f, HEAVEN = 11f, LENS = 7f, BOW = 20f, COMB = 17f, COMB_PULSE = 8f, GRASP = 26f, WANDER = 3.2f, ARM = 8f,
-            KNEEL = 34f, HORIZON = 36f, THRONE_RING = 12f, BARRAGE_LENS = 9f;
+            KNEEL = 34f, HORIZON = 36f, THRONE_RING = 11f, BARRAGE_LENS = 9f;
 
     /** {@code spade.opMode}: what the SS-tier Lucifero adds to the roster's 3500 health, armour 20 and toughness 12 (the sum is the 7000 health of the SS tier), and how much sooner his phases come. */
     public static final double OP_HEALTH_BONUS = 3500, OP_ARMOR_BONUS = 6, OP_TOUGHNESS_BONUS = 6;
