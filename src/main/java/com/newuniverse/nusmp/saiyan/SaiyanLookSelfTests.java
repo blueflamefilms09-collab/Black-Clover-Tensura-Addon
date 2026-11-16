@@ -19,6 +19,7 @@ public final class SaiyanLookSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("saiyan.look.rules", SaiyanLookSelfTests::rules);
+        SelfTests.register("saiyan.hair.rules", SaiyanLookSelfTests::hair);                   // docs/saiyan_hair.md: the hair table and the sway / growth maths
     }
 
     private static Result rules(MinecraftServer server) {
@@ -55,5 +56,27 @@ public final class SaiyanLookSelfTests {
             }
         }
         return Result.ok(SaiyanLook.all().size() + " forms have a look inside the quad budget, Aura.SAIYAN is the last slot, and every charge-up size (ray burst, tremor and wind included) stays bounded for its whole length");
+    }
+
+    /** The hair table (docs/saiyan_hair.md): every form has a hair of a known shape with a sane colour, the growth and the sway stay inside their bounds for the whole length of a form, the distance levels step the right way. */
+    private static Result hair(MinecraftServer server) {
+        for (SaiyanForms.Form f : SaiyanForms.ALL) {
+            SaiyanHair.Hair h = SaiyanHair.of(f.id());
+            if (h == null) return Result.fail("form " + f.id() + " has no hair");
+            if (SaiyanHair.shapeIndex(h.shape()) < 0) return Result.fail(f.id() + ": unknown hair shape " + h.shape());
+            if (h.tint() == 0 || h.glowK() < 0f || h.glowK() > 1.5f) return Result.fail(f.id() + ": a hair colour or glow strength is out of range");
+        }
+        if (SaiyanHair.of("base") != null || SaiyanHair.of(null) != null) return Result.fail("Base or null found a hair");
+        for (float t = 0f; t <= 400f; t += 0.5f) {
+            float g = SaiyanHair.grow(t, 400f - t, true), sc = SaiyanHair.scale(g);
+            if (Float.isNaN(g) || g < 0f || g > 1f || sc < 0.39f || sc > 1.13f) return Result.fail("hair growth left its bound at tick " + t);
+            for (int slot = 0; slot <= SaiyanHair.TAIL_TIP; slot++) {
+                float x = SaiyanHair.swayX(slot, t, 1f), z = SaiyanHair.swayZ(slot, t);
+                if (Float.isNaN(x + z) || Math.abs(x) > 0.6f || Math.abs(z) > 0.3f) return Result.fail("hair sway " + slot + " left its bound at tick " + t);
+            }
+        }
+        if (SaiyanHair.wanted(10 * 10) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.STANDARD || SaiyanHair.wanted(30 * 30) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.FAR
+                || SaiyanHair.wanted(50 * 50) != com.newuniverse.nusmp.book.NoelleFormRules.Lod.NONE) return Result.fail("the hair distance levels are wrong");
+        return Result.ok(SaiyanForms.ALL.size() + " forms have a hair of " + SaiyanHair.SHAPES.length + " shapes, growth and sway stay bounded, the distance levels step full / far / none");
     }
 }

@@ -5,7 +5,7 @@ package com.newuniverse.nusmp.saiyan;
  * Why: the LOOK of every Saiyan form (3.69.0, Stage 8) as pure data and pure math, so the client painter ({@code client.aura.SaiyanAura}), the preview, the tests and the budget all read one table.
  * A form is drawn as: glowing eyes, an aura of flame tongues and lightning bolts in the form's colour, the Saiyan battle armour (forged on while the form lasts), for the Super Saiyan 4 forms red fur
  * on the body and a tail, and the CHARGE-UP when the form starts: rocks lift off the ground, streaks of energy are pulled into the body, cracks spread over the ground, a flash, a column of light,
- * and shockwave rings. Hair is NOT drawn (the owner put the hair on hold; the hair maths is kept in {@code tools/saiyan_look_parked/}). Nothing here touches the game: the server only tells nearby
+ * and shockwave rings. The form's hair and the 3D tail are drawn from {@link SaiyanHair} by the painter's {@code SaiyanHairDraw} (docs/saiyan_hair.md; the older hair maths stays in {@code tools/saiyan_look_parked/}). Nothing here touches the game: the server only tells nearby
  * players which form code a Saiyan has ({@code PlayerAuras.set(p, Aura.SAIYAN, ticks, SaiyanForms.code(id))}); each client draws the look itself.
  * <p>Colours come from the owner's chart "All Saiyan Forms of Goku" and the series' well-known looks (Super Saiyan: gold aura, teal eyes; Super Saiyan 3: lightning; Super Saiyan 4: red fur, gold
  * eyes, tail; God: red; Blue: blue; Ultra Instinct: silver). The wiki pages could not be fetched from the build session, so every number is tuned by eye and is a table cell to change.

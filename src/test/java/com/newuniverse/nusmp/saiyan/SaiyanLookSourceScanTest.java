@@ -38,7 +38,7 @@ class SaiyanLookSourceScanTest {
         assertTrue(t.contains("PerfProbe.section(\"c.saiyan.aura\")") && t.contains("PerfProbe.begin()"), "measured");
         assertTrue(t.contains("SaiyanLook.FAR") && t.contains("SaiyanLook.NEAR"), "distance culled and level-of-detail");
         assertTrue(t.contains("MAX_CHIPS") && t.contains("MAX_STREAKS"), "the charge-up loops run to the table's caps");
-        assertFalse(t.toLowerCase().contains("hair"), "hair is on hold: nothing of it is drawn");
+        assertTrue(t.contains("SaiyanHairDraw.draw("), "the hair and the Blender tail are drawn through SaiyanHairDraw (docs/saiyan_hair.md; this replaces the old 'hair is on hold' pin)");
     }
 
     @Test

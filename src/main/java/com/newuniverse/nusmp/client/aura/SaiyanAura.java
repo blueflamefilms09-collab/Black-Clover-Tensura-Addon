@@ -20,7 +20,8 @@ import net.minecraft.util.Mth;
  *   pass                           render type          what
  *   1 battle armour                cutout / translucent  the Saiyan armour set (chest, hip guards, pauldrons, vambraces, greaves, scouter), forged on as the form starts and shattered when it ends
  *   2 fur (SS4 forms)              translucent           the body drawn once more with the fur map, head left out (the face stays the player's own)
- *   3 tail (SS4 forms)             cutout                seven ribbons on the body, swaying
+ *   3 tail (SS4 forms)             cutout                the Blender tail (3 swaying parts, SaiyanHairDraw) or, with saiyan.tail3d off, seven ribbons on the body
+ *   3b hair                        cutout + additive     the form's Blender hair on the head (SaiyanHairDraw, setting saiyan.hair)
  *   4 aura flames, bolts, ring     additive, full bright  flame tongues round the body, lightning, a slow ring on the ground
  *   5 eyes                         additive, full bright  two glowing bars, only when the face turns to the camera
  *   6 the charge-up (first 46 t)   additive + rock chips  cracks, rising rocks, streaks pulled into the chest, flash, column of light, two shockwave rings
@@ -77,13 +78,13 @@ public final class SaiyanAura {
         if (d2 > SaiyanLook.FAR * SaiyanLook.FAR) return;
         long t0 = PerfProbe.begin();
         try {
-            draw(c, k, f, d2 > SaiyanLook.NEAR * SaiyanLook.NEAR);
+            draw(c, k, f, d2 > SaiyanLook.NEAR * SaiyanLook.NEAR, d2);
         } finally {
             PerfProbe.end(SECTION, t0);
         }
     }
 
-    private static void draw(AuraContext c, SaiyanLook.Look k, float f, boolean far) {
+    private static void draw(AuraContext c, SaiyanLook.Look k, float f, boolean far, double d2) {
         PoseStack pose = c.pose();
         float age = c.age(), t = c.t(), pulse = 0.85f + 0.15f * Mth.sin(age * 0.3f);
         boolean full = !far && SaiyanLookClientConfig.fullDetail();
@@ -93,10 +94,11 @@ public final class SaiyanAura {
         // 1. the battle armour (solid pieces first, their glow maps are tinted with the form's colour)
         if (SaiyanLookClientConfig.armour() && SaiyanLookClientConfig.autoArmour() && k.armour() && SaiyanArmorSet.worn(c.player()) == 0) WaterAuraRig.draw(c, SET, glow, 0.65f * pulse + 0.35f);      // the cosmetic set only when autoArmour is on and no crafted piece is worn (never both)
 
-        // 2 + 3. the fur and the tail of the Super Saiyan 4 forms
+        // 2 + 3. the fur and the tail of the Super Saiyan 4 forms; the form's hair and the Blender tail (the old ribbon only when the Blender tail was not drawn)
+        boolean tail3d = SaiyanHairDraw.draw(c, k, d2, self1p);
         if (full && k.hasFur()) {
             WaterAuraRig.shell(c, AuraRender.translucent(fur), 1.07f, 1.04f, 1.07f, AuraRender.alpha(0xFF000000 | k.fur(), f), false, true);
-            if (!self1p) tail(c, k, age, f);
+            if (!self1p && !tail3d) tail(c, k, age, f);
         }
 
         // 4 + 5 + 6. everything additive, drawn camera-facing in the player's own pose
