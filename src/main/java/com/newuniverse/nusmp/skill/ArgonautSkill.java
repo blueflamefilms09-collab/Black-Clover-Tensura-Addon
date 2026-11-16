@@ -107,7 +107,7 @@ public class ArgonautSkill extends NUSkill {
         Vec3 look = player.getViewVector(1.0F);
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesInCone(player, ChargeRules.strikeReach(tier), ChargeRules.strikeCone(tier))) {
-            if (SkillDamage.hit(player, t, damage, masteryFrac(instance)) > 0f) {
+            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), instance) > 0f) {
                 t.knockback(ChargeRules.knockback(charge), -look.x, -look.z);
                 hits++;
             }

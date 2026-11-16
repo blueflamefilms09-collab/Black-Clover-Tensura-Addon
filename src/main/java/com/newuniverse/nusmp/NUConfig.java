@@ -87,6 +87,7 @@ public final class NUConfig {
             GEAR_DIAMOND_COOLDOWN, GEAR_SPADE_DAMAGE, GEAR_DEVIL_DAMAGE, GEAR_DEVIL_GRACE, GEAR_FORTUNE_SUCCESS, GEAR_FORTUNE_CRACK;
     // Forbidden magic
     public static final ModConfigSpec.DoubleValue FORBIDDEN_HP_PRICE, FORBIDDEN_MAXHP_PRICE, FORBIDDEN_MANA_TAX;
+    public static final ModConfigSpec.BooleanValue TENSURA_SKILL_DAMAGE_SOURCE;   // guide P1 #2 (skill.SkillDamage)
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -234,6 +235,11 @@ public final class NUConfig {
         BEAST_SKILLS_ENABLED = b.comment("The 54 Beast Will skills (3.59.0, a Unique and an Ultimate for each of the 27 wills). false = they stay registered but every mode refuses, the passives do nothing and they do not evolve.").define("beastSkillsEnabled", true);
         BEAST_SKILL_GRANT_ON_MASTERY = b.comment("Mastering a Beast Will to 100 % grants the Unique skill of that beast once (3.59.0). false = the skills come only from the admin command or /tensura edit.").define("beastSkillGrantOnMastery", true);
         DB_LEGACY_SKILLS = b.comment("Dragon Ball rework, phase 1. The 15 old Dragon Ball skills (30 ids, 3.56.0) are REMOVED by default: false = no command, no evolution, no use, and they are taken from players at login (the ids stay registered so old worlds load). true = the old behaviour (dragonBallEnabled still applies).").define("dragonBallLegacySkills", false);
+        b.pop();
+
+        b.push("guide_fixes");
+        TENSURA_SKILL_DAMAGE_SOURCE = b.comment("Rebuilt skills (Gate of Babylon, Ki, Nen, Adolla, Firebolt, the chant Ultimates ...) hit through Tensura's skill damage source, so Tensura resistances, nullifications and skill kill credit apply. false = the old vanilla magic / player-attack sources. The damage amount and the PvP cap are the same either way.")
+                .define("tensuraSkillDamageSource", true);
         b.pop();
 
         SPEC = b.build();

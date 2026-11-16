@@ -27,7 +27,7 @@ public class HatiSkill extends NUSkill {
     @Override
     public boolean onTakenDamage(ManasSkillInstance instance, LivingEntity owner, DamageSource source, Changeable<Float> amount) {
         boolean magical = source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_LIGHTNING)
-                || source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC);
+                || source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) || SkillDamage.isSkillMagic(source);      // guide P1 #2: skill magic is Tensura magic now
         if (!magical || amount.get() <= 0) return true;
 
         Tier tier = tier(instance, owner);

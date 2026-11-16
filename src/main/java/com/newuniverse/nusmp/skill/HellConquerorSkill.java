@@ -28,7 +28,7 @@ public class HellConquerorSkill extends HellWalkerSkill {
         double hp = player.getHealth(), max = player.getMaxHealth();
         if (AuraRules.hellfire(hp, max, tier)) {
             for (LivingEntity foe : SkillTargets.foes(player, player.position(), AuraRules.hellfireRadius())) {
-                SkillDamage.hit(player, foe, AuraRules.hellfireDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+                SkillDamage.hit(player, foe, AuraRules.hellfireDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
                 foe.igniteForSeconds(3);
             }
             Vec3 at = player.position();

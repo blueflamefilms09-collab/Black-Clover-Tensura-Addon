@@ -267,7 +267,7 @@ public class GrimoireMagicSkill extends Skill {
     public boolean onBeingDamaged(ManasSkillInstance instance, LivingEntity owner, DamageSource source, float amount) {
         // Liebe's Anti-Magic: magic can't touch an Anti-Magic user in Devil Union
         if (devil(instance) == Devil.LIEBE && unionActive(instance, owner)
-                && (source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) || source.is(DamageTypeTags.WITCH_RESISTANT_TO))) {
+                && (source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) || SkillDamage.isSkillMagic(source) || source.is(DamageTypeTags.WITCH_RESISTANT_TO))) {
             return false;
         }
         return true;

@@ -43,7 +43,7 @@ public class WynnFimbulvetrSkill extends ChantedMagicSkill {
         double mastery = masteryFrac(instance);
 
         for (LivingEntity t : SkillTargets.foes(player, c, radius)) {
-            SkillDamage.hit(player, t, ChantRules.blizzardDamage(tier), mastery, SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(player, t, ChantRules.blizzardDamage(tier), mastery, SkillDamage.Kind.MAGIC, instance);
             t.setTicksFrozen(t.getTicksRequiredToFreeze() + ChantRules.freezeTicks(tier));
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, ChantRules.slowTicks(tier)), 3));
         }
@@ -57,7 +57,7 @@ public class WynnFimbulvetrSkill extends ChantedMagicSkill {
         SkillZones.start(player, ChantRules.blizzardInterval(), pulses, (owner, lvl, index) -> {
             if (index == 0) return;                                   // the first strike was dealt above
             for (LivingEntity t : SkillTargets.foes(owner, c, radius)) {
-                SkillDamage.hit(owner, t, ChantRules.blizzardTickDamage(tier), mastery, SkillDamage.Kind.MAGIC);
+                SkillDamage.hit(owner, t, ChantRules.blizzardTickDamage(tier), mastery, SkillDamage.Kind.MAGIC, instance);
                 t.setTicksFrozen(Math.min(t.getTicksRequiredToFreeze() + 120, t.getTicksFrozen() + 80));
                 t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
             }

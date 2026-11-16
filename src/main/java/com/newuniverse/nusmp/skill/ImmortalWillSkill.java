@@ -65,7 +65,7 @@ public class ImmortalWillSkill extends UnbreakableWillSkill {
         double radius = WillRules.shockRadius(tier);
         Vec3 at = player.position();
         for (LivingEntity foe : SkillTargets.foes(player, at, radius)) {
-            if (SkillDamage.hit(player, foe, WillRules.shockDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) {
+            if (SkillDamage.hit(player, foe, WillRules.shockDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) {
                 Vec3 away = foe.position().subtract(at);
                 if (away.lengthSqr() > 1.0e-4) {
                     Vec3 dir = away.normalize();

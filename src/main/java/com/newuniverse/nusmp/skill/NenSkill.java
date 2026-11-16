@@ -178,7 +178,7 @@ public class NenSkill extends NUSkill {
         for (LivingEntity e : SkillTargets.foes(p, p.position(), NenRules.renBurstRadius())) {
             if (n++ >= NenRules.renBurstMax()) break;
             knock(p, e, NenRules.renBurstKnockback());
-            SkillDamage.hit(p, e, NenRules.renBurstDamage() * NenRules.hatsuMultiplier(vow), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, e, NenRules.renBurstDamage() * NenRules.hatsuMultiplier(vow), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
         }
         int type = typeOf(instance, p);
         NenFx.aura(p, kindOf(NenRules.REN), type, 0.0);
@@ -330,7 +330,7 @@ public class NenSkill extends NUSkill {
         if (owner instanceof ServerPlayer p && open(tag, NenRules.KEN, now) && source.getEntity() instanceof LivingEntity attacker && attacker != owner
                 && now - tag.getLong(KEN_HIT) >= NenRules.kenReflectGap()) {
             tag.putLong(KEN_HIT, now);
-            SkillDamage.hit(p, attacker, Math.min(NenRules.kenReflectMax(), amount.get() * NenRules.kenReflect()), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, attacker, Math.min(NenRules.kenReflectMax(), amount.get() * NenRules.kenReflect()), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
         }
         if (m != 1.0) amount.set((float) (amount.get() * m));
         return true;
@@ -346,7 +346,7 @@ public class NenSkill extends NUSkill {
         if (!(owner instanceof ServerPlayer p) || target == owner || amount.get() <= 0 || !NUConfig.NEN_ENABLED.get()) return true;
         CompoundTag tag = instance.getOrCreateTag();
         long now = p.level().getGameTime();
-        boolean blow = !source.is(DamageTypes.INDIRECT_MAGIC);
+        boolean blow = !source.is(DamageTypes.INDIRECT_MAGIC) && !SkillDamage.isSkillMagic(source);      // guide P1 #2: Nen's own magic hits now come as Tensura magic
         float a = amount.get();
         if (blow && open(tag, NenRules.SHU, now) && !p.getMainHandItem().isEmpty()) a += (float) NenRules.shuBonus();      // the aura on the weapon
         if (blow && open(tag, NenRules.RYU, now)) a *= (float) NenRules.ryuDealtMultiplier();
@@ -363,7 +363,7 @@ public class NenSkill extends NUSkill {
             tag.putLong(NenRules.untilKey(NenRules.KO), 0L);   // closed first: the strike below is itself a hit and must not start another
             instance.markDirty();
             double mul = NenRules.hatsuMultiplier(open(tag, NenRules.VOW, now));
-            SkillDamage.hit(p, target, NenRules.koStrike(charge) * mul, masteryFrac(instance));
+            SkillDamage.hit(p, target, NenRules.koStrike(charge) * mul, masteryFrac(instance), instance);
             knock(p, target, NenRules.enhanceKnockback() * (1.0 + charge));
             Vec3 koAt = target.position().add(0, target.getBbHeight() * 0.5, 0);
             NenFx.burst(p, koAt, 0xFFFF8A4A, (float) (1.0 + charge), false);

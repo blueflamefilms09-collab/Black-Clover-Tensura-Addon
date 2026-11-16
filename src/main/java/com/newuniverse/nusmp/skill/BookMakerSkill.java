@@ -47,7 +47,7 @@ public class BookMakerSkill extends NUSkill {
             LivingEntity target = SkillTargets.lookFoe(player, FictionRules.pinRange());
             if (target == null) { SkillUtil.fail(player, SkillMsg.t("bookmaker.no_target", "No target.")); return; }
             if (!SkillUtil.spendMagicules(player, DMUtil.cost(FictionRules.pinCost()))) return;
-            pin(player, target, FictionRules.pinDamage(tier), tier, mastery);
+            pin(player, target, FictionRules.pinDamage(tier), tier, mastery, instance);
             cooldown(instance, mode, DMUtil.cooldown(FictionRules.pinCooldown()));
         } else if (mode == FictionRules.BARRAGE) {
             if (!FictionRules.barrageUnlocked(tier)) {
@@ -56,7 +56,7 @@ public class BookMakerSkill extends NUSkill {
             }
             if (!SkillUtil.spendMagicules(player, DMUtil.cost(FictionRules.barrageCost()))) return;
             for (LivingEntity t : SkillTargets.foesInCone(player, FictionRules.barrageRange(), FictionRules.barrageCone())) {
-                pin(player, t, FictionRules.pinDamage(tier) * 0.6, tier, mastery);
+                pin(player, t, FictionRules.pinDamage(tier) * 0.6, tier, mastery, instance);
             }
             cooldown(instance, mode, DMUtil.cooldown(FictionRules.barrageCooldown()));
         } else {
@@ -68,8 +68,8 @@ public class BookMakerSkill extends NUSkill {
     }
 
     /** One screw: damage, crawl, weaken, drag down. */
-    private static void pin(ServerPlayer player, LivingEntity target, double damage, Tier tier, double mastery) {
-        SkillDamage.hit(player, target, damage, mastery);
+    private static void pin(ServerPlayer player, LivingEntity target, double damage, Tier tier, double mastery, ManasSkillInstance instance) {
+        SkillDamage.hit(player, target, damage, mastery, instance);
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(target, FictionRules.pinSlowTicks()), 5));
         target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, FictionRules.pinWeakTicks(), FictionRules.pinWeakAmp(tier)));
         target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 2));

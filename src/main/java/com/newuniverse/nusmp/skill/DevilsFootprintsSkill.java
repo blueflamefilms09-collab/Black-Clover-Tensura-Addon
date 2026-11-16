@@ -79,7 +79,7 @@ public class DevilsFootprintsSkill extends NUSkill {
         Vec3 look = player.getViewVector(1.0F);
         double damage = FireForceRules.kickDamage(tier);
         for (LivingEntity t : SkillTargets.foesInCone(player, FireForceRules.kickRange(tier), 0.5)) {
-            if (SkillDamage.hit(player, t, damage, masteryFrac(instance)) > 0f) {
+            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), instance) > 0f) {
                 t.igniteForSeconds(FireForceRules.kickBurnSeconds(tier));
                 t.knockback(1.5, -look.x, -look.z);
             }

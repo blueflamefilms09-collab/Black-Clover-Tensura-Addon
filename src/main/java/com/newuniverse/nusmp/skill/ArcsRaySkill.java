@@ -36,7 +36,7 @@ public class ArcsRaySkill extends ChantedMagicSkill {
         double mastery = masteryFrac(instance);
         for (LivingEntity t : SkillTargets.foesAlong(player, start, end, ChantRules.rayWidth())) {
             double dmg = ChantRules.rayDamage(tier) * (t.getType().is(EntityTypeTags.UNDEAD) ? ChantRules.rayUndeadFactor() : 1.0);
-            SkillDamage.hit(player, t, dmg, mastery, SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(player, t, dmg, mastery, SkillDamage.Kind.MAGIC, instance);
             SkillFx.spray(level, false, t.position().add(0, t.getBbHeight() * 0.6, 0), 5, 0.3, 0.3, 0.3, 0.02);
         }
         SkillFx.beam(level, start, end, false);

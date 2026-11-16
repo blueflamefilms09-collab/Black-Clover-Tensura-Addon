@@ -94,7 +94,7 @@ public class KiSkill extends NUSkill {
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(KiRules.cost(KiRules.BLAST)))) return false;
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, KiRules.blastRange());
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, KiRules.blastWidth())) {
-            if (SkillDamage.hit(p, t, KiRules.blastDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) { to = t.position().add(0, t.getBbHeight() * 0.5, 0); break; }
+            if (SkillDamage.hit(p, t, KiRules.blastDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) { to = t.position().add(0, t.getBbHeight() * 0.5, 0); break; }
         }
         SkillFx.beam(p.serverLevel(), from, to, false);
         SkillFx.burst(p.serverLevel(), to, false, 8, 0.3);
@@ -111,7 +111,7 @@ public class KiSkill extends NUSkill {
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, KiRules.kameWidth())) {
             if (hits >= KiRules.kamePierce()) break;
-            if (SkillDamage.hit(p, t, KiRules.kameDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) hits++;
+            if (SkillDamage.hit(p, t, KiRules.kameDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) hits++;
         }
         return true;
     }
@@ -179,7 +179,7 @@ public class KiSkill extends NUSkill {
         SkillFx.ring(level, centre.add(0, 0.2, 0), KiRules.spiritRadius(), 0x60E0FF);
         SkillFx.shape(level, com.newuniverse.nusmp.vfx.VfxShape.MAGIC_CIRCLE_EXPLOSION, centre.add(0, 1, 0), centre, 0xFF60E0FF, 24, 1.1f);
         for (LivingEntity t : SkillTargets.foes(p, centre, KiRules.spiritRadius())) {
-            SkillDamage.hit(p, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
         }
         SkillUtil.actionbar(p, SkillMsg.t("ki.spirit", "Spirit Bomb: %s lent their energy.", lenders).withStyle(ChatFormatting.AQUA));
         return true;

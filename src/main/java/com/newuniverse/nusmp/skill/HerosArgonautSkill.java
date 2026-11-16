@@ -51,7 +51,7 @@ public class HerosArgonautSkill extends ArgonautSkill {
         Vec3 to = DMUtil.lookPoint(player, ChargeRules.beamLength(charge));      // a wall ends the beam
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(player, from, to, ChargeRules.beamRadius(charge))) {
-            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) hits++;
+            if (SkillDamage.hit(player, t, damage, masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) hits++;
         }
         SkillFx.beam(level, from, to, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, from, to, 0xFFFFF2B0, 14, 2.0f + charge * 0.2f);

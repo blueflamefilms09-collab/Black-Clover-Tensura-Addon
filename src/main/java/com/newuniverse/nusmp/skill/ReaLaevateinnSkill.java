@@ -53,7 +53,7 @@ public class ReaLaevateinnSkill extends ChantedMagicSkill {
                 SkillFx.shape(lvl, VfxShape.FIRE_PILLAR, at, at.add(0, 1, 0), 0xFFFF7A2A, 22, 1.4f);
                 for (LivingEntity t : SkillTargets.foes(owner, at, ChantRules.pillarHitRadius())) {
                     if (!hitThisWave.add(t)) continue;
-                    if (SkillDamage.hit(owner, t, ChantRules.pillarDamage(tier), mastery, SkillDamage.Kind.MAGIC) > 0f) {
+                    if (SkillDamage.hit(owner, t, ChantRules.pillarDamage(tier), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) {
                         t.igniteForSeconds(ChantRules.pillarBurnSeconds(tier));
                     }
                 }

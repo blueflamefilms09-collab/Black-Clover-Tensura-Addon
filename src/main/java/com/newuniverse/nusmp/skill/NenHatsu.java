@@ -79,7 +79,7 @@ final class NenHatsu {
         Vec3 d = t.position().subtract(p.position());
         double h = Math.hypot(d.x, d.z);
         if (h > 2.5) { p.setDeltaMovement(d.x / h * NenRules.fistLunge(), Math.max(p.getDeltaMovement().y, 0.12), d.z / h * NenRules.fistLunge()); p.hurtMarked = true; }   // the rush
-        SkillDamage.hit(p, t, NenRules.enhanceDamage() * NenRules.fistMultiplier(charge) * NenSkill.hatsuMul(inst, p, NenRules.ENHANCE, vow), mastery(inst));
+        SkillDamage.hit(p, t, NenRules.enhanceDamage() * NenRules.fistMultiplier(charge) * NenSkill.hatsuMul(inst, p, NenRules.ENHANCE, vow), mastery(inst), inst);
         NenSkill.knock(p, t, NenRules.enhanceKnockback() * (1.0 + 0.7 * charge));
         shatter(t, NenRules.shatterFraction(charge, vow));
         if (charge >= 0.5) mark(t, p, NenRules.fistMarkTicks(), NenRules.fistMarkMultiplier());
@@ -127,7 +127,7 @@ final class NenHatsu {
         LivingEntity t = pick < 0 ? null : foes.get(pick);
         Vec3 to = t != null ? centre(t) : DMUtil.lookPoint(p, 20);
         NenFx.bullet(p, from, to, NenRules.typeColor(NenSkill.typeOf(inst, p)));
-        if (t != null) SkillDamage.hit(p, t, NenRules.bulletDamage() * tag.getDouble(VOLLEY_MUL), mastery(inst), SkillDamage.Kind.MAGIC);
+        if (t != null) SkillDamage.hit(p, t, NenRules.bulletDamage() * tag.getDouble(VOLLEY_MUL), mastery(inst), SkillDamage.Kind.MAGIC, inst);
     }
 
     // ------------------------------------------------------------------ Transmutation: electricity, gum, rubber
@@ -155,7 +155,7 @@ final class NenHatsu {
         for (int j = 0; cur != null && j <= NenRules.elecJumps(vow); j++) {
             Vec3 at = centre(cur);
             NenFx.surge(p, NenRules.ELECTRIC, prev, at, 0, C_ELECTRIC);
-            SkillDamage.hit(p, cur, dmg, mastery(inst), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, cur, dmg, mastery(inst), SkillDamage.Kind.MAGIC, inst);
             cur.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(cur, NenRules.elecSlowTicks()), 1, false, true, true));
             hit.add(cur);
             dmg *= NenRules.elecFalloff();
@@ -180,7 +180,7 @@ final class NenHatsu {
             double h = Math.hypot(d.x, d.z);
             if (h > 1.5) { e.setDeltaMovement(d.x / h * NenRules.gumPull(), 0.25, d.z / h * NenRules.gumPull()); e.hurtMarked = true; }
             e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(e, NenRules.gumRootTicks()), 3, false, true, true));
-            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC, inst);
             NenFx.surge(p, NenRules.GUM, from, centre(e), 0, C_GUM);
         }
         return true;
@@ -197,7 +197,7 @@ final class NenHatsu {
         for (LivingEntity e : SkillTargets.foes(p, p.position(), NenRules.rubberRadius())) {
             if (n++ >= NenRules.rubberMax()) break;
             NenSkill.knock(p, e, NenRules.rubberKnockback());
-            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC, inst);
         }
         NenFx.surge(p, NenRules.RUBBER, p.position(), p.position(), NenRules.rubberRadius(), C_RUBBER);
         return true;
@@ -223,7 +223,7 @@ final class NenHatsu {
             if (slot >= NenRules.chainSlots()) break;
             tag.putUUID(CHAIN_T + slot, e.getUUID());
             tag.putLong(CHAIN_E + slot, now + BalanceLaw.controlTicks(e, NenRules.chainTicks()));
-            SkillDamage.hit(p, e, NenRules.conjDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, e, NenRules.conjDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC, inst);
             NenFx.link(p, e, hand(p), NenRules.typeColor(NenRules.T_CONJ), 14);
             slot++;
         }
@@ -246,7 +246,7 @@ final class NenHatsu {
             long end = tag.getLong(CHAIN_E + i);
             if (!(e instanceof LivingEntity le) || !le.isAlive() || now >= end || le.distanceToSqr(p) > NenRules.chainLeash() * NenRules.chainLeash()) {
                 if (e instanceof LivingEntity le2 && le2.isAlive() && now >= end) {          // it ran its time: the chain bursts
-                    SkillDamage.hit(p, le2, NenRules.chainBurstDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC);
+                    SkillDamage.hit(p, le2, NenRules.chainBurstDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC, inst);
                     NenFx.burst(p, centre(le2), NenRules.typeColor(NenRules.T_CONJ), 1f, false);
                 }
                 tag.remove(CHAIN_T + i);
@@ -257,7 +257,7 @@ final class NenHatsu {
             Vec3 dm = le.getDeltaMovement();
             le.setDeltaMovement(dm.x * 0.1, Math.min(dm.y, 0.0), dm.z * 0.1);
             if (le instanceof ServerPlayer) le.hurtMarked = true;
-            if (hitNow) SkillDamage.hit(p, le, NenRules.chainDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC);
+            if (hitNow) SkillDamage.hit(p, le, NenRules.chainDamage() * mul, mastery(inst), SkillDamage.Kind.MAGIC, inst);
             if (fxNow) NenFx.link(p, le, hand(p), NenRules.typeColor(NenRules.T_CONJ), 14);
         }
         if (fxNow) tag.putLong(CHAIN_FX, now);
@@ -324,7 +324,7 @@ final class NenHatsu {
         int stolen = 0;
         for (LivingEntity e : SkillTargets.foes(p, p.position(), NenRules.fieldRadius(vow))) {
             e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, NenRules.fieldWeakTicks(), 0, false, true, true));
-            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, e, dmg, mastery(inst), SkillDamage.Kind.MAGIC, inst);
             if (stolen < NenRules.fieldSteals() && steal(p, e)) stolen++;
         }
     }

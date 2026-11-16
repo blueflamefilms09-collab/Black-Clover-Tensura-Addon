@@ -57,7 +57,7 @@ public class TheVisionarySkill extends NUSkill {
                 SkillFx.shape(level, VfxShape.DEMON_METEOR, sky, c, 0xFFFFA0E0, 24, 2.0f);
                 SkillFx.shape(level, VfxShape.FIRE_BURST, c, c.add(0, 1, 0), 0xFFFFA0E0, 24, (float) GodTierRules.meteorRadius(mastered) * 0.4f);
                 for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.meteorRadius(mastered))) {
-                    if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC) > 0f) t.igniteForSeconds(6);
+                    if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) t.igniteForSeconds(6);
                 }
                 SkillFx.sound(level, c, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.7F);
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.meteorCooldown()));

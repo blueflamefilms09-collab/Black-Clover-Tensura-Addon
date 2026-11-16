@@ -106,7 +106,7 @@ public class GateOfBabylonSkill extends NUSkill {
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("gate.no_target", "Nothing to strike.")); return false; }
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(GateRules.cost(GateRules.GATE)))) return false;
         fall(p.serverLevel(), t, true);
-        SkillDamage.hit(p, t, GateRules.gateDamage(), masteryFrac(instance));
+        SkillDamage.hit(p, t, GateRules.gateDamage(), masteryFrac(instance), instance);
         return true;
     }
 
@@ -118,7 +118,7 @@ public class GateOfBabylonSkill extends NUSkill {
         for (LivingEntity t : foes) {
             if (struck >= GateRules.volleyMax()) break;
             if (drawn < FX_BEAMS) { fall(p.serverLevel(), t, drawn < FX_GATES); drawn++; }   // at most six beams and three gates, whatever is refused
-            if (SkillDamage.hit(p, t, GateRules.volleyDamage(), masteryFrac(instance)) > 0f) struck++;
+            if (SkillDamage.hit(p, t, GateRules.volleyDamage(), masteryFrac(instance), instance) > 0f) struck++;
         }
         return true;
     }
@@ -134,7 +134,7 @@ public class GateOfBabylonSkill extends NUSkill {
         for (LivingEntity t : SkillTargets.foes(p, centre, GateRules.rainRadius())) {
             if (struck >= GateRules.rainMax()) break;
             if (drawn < FX_BEAMS) { fall(level, t, false); drawn++; }
-            if (SkillDamage.hit(p, t, GateRules.rainDamage(), masteryFrac(instance)) > 0f) struck++;
+            if (SkillDamage.hit(p, t, GateRules.rainDamage(), masteryFrac(instance), instance) > 0f) struck++;
         }
         return true;
     }
@@ -206,7 +206,7 @@ public class GateOfBabylonSkill extends NUSkill {
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, GateRules.gaeWidth())) {
             if (hits >= GateRules.gaePierce()) break;
-            if (SkillDamage.hit(p, t, GateRules.gaeDamage(), masteryFrac(instance)) > 0f) hits++;
+            if (SkillDamage.hit(p, t, GateRules.gaeDamage(), masteryFrac(instance), instance) > 0f) hits++;
         }
         return true;
     }
@@ -220,7 +220,7 @@ public class GateOfBabylonSkill extends NUSkill {
         SkillFx.shape(level, com.newuniverse.nusmp.vfx.VfxShape.MAGIC_CIRCLE_EXPLOSION, from, to, 0xFFFF4020, 24, 1.2f);
         SkillFx.sound(level, p.position(), SoundEvents.ANVIL_LAND, 0.8F, 0.5F);
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, GateRules.eaWidth())) {
-            SkillDamage.hit(p, t, GateRules.eaDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(p, t, GateRules.eaDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance);
         }
         return true;
     }

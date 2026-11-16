@@ -83,7 +83,7 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
         Vec3 to = player.position();
         Vec3 a = from.add(0, 1, 0), b = to.add(0, 1, 0);
         for (LivingEntity t : SkillTargets.foesAlong(player, a, b, FireForceRules.lightSpeedWidth())) {
-            if (SkillDamage.hit(player, t, FireForceRules.lightSpeedDamage(tier), masteryFrac(instance)) > 0f) t.igniteForSeconds(5);
+            if (SkillDamage.hit(player, t, FireForceRules.lightSpeedDamage(tier), masteryFrac(instance), instance) > 0f) t.igniteForSeconds(5);
         }
         SkillFx.beam(level, a, b, false);
         SkillFx.shape(level, VfxShape.LIGHT_BLADE, a, b, 0xFF6AD8FF, 12, 1.2f);
@@ -96,7 +96,7 @@ public class AdollaBurstSkill extends DevilsFootprintsSkill {
         ServerLevel level = player.serverLevel();
         Vec3 at = player.position();
         for (LivingEntity t : SkillTargets.foes(player, at, FireForceRules.burstRadius())) {
-            if (SkillDamage.hit(player, t, FireForceRules.burstDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) {
+            if (SkillDamage.hit(player, t, FireForceRules.burstDamage(), masteryFrac(instance), SkillDamage.Kind.MAGIC, instance) > 0f) {
                 t.igniteForSeconds(FireForceRules.burstBurnSeconds());
                 Vec3 away = t.position().subtract(at);
                 if (away.lengthSqr() > 1.0e-4) {

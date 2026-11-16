@@ -41,7 +41,7 @@ public class FutsunomitamaSkill extends ChantedMagicSkill {
         double mastery = masteryFrac(instance);
 
         for (LivingEntity t : SkillTargets.foes(player, c, radius)) {
-            SkillDamage.hit(player, t, ChantRules.gravityDamage(tier), mastery, SkillDamage.Kind.MAGIC);
+            SkillDamage.hit(player, t, ChantRules.gravityDamage(tier), mastery, SkillDamage.Kind.MAGIC, instance);
             t.setDeltaMovement(0, -1.5, 0);
             t.hurtMarked = true;
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, ChantRules.pinTicks(tier)), 6));
@@ -60,7 +60,7 @@ public class FutsunomitamaSkill extends ChantedMagicSkill {
                     t.setDeltaMovement(t.getDeltaMovement().add(pull.normalize().scale(ChantRules.pullStrength(tier))));
                     t.hurtMarked = true;
                 }
-                SkillDamage.hit(owner, t, ChantRules.gravityTickDamage(tier), mastery, SkillDamage.Kind.MAGIC);
+                SkillDamage.hit(owner, t, ChantRules.gravityTickDamage(tier), mastery, SkillDamage.Kind.MAGIC, instance);
                 t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 4));
             }
             SkillFx.spray(lvl, true, c.add(0, 0.5, 0), 6, radius / 3, 0.3, radius / 3, 0.0);

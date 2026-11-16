@@ -54,12 +54,12 @@ public class FireboltSkill extends NUSkill {
         double mastery = masteryFrac(instance);
         double dmg = FireboltRules.damage(NUConfig.FIREBOLT_DAMAGE.get(), tier);
         if (target != null) {
-            hitSomething = SkillDamage.hit(player, target, dmg, mastery, SkillDamage.Kind.MAGIC) > 0f;
+            hitSomething = SkillDamage.hit(player, target, dmg, mastery, SkillDamage.Kind.MAGIC, instance) > 0f;
             target.igniteForSeconds(FireboltRules.igniteSeconds(tier));
             strikeVisual(level, target.position());
             for (LivingEntity other : SkillTargets.foes(player, target.position(), FireboltRules.splashRadius(tier))) {
                 if (other == target) continue;
-                if (SkillDamage.hit(player, other, dmg * FireboltRules.splashShare(), mastery, SkillDamage.Kind.MAGIC) > 0f) {
+                if (SkillDamage.hit(player, other, dmg * FireboltRules.splashShare(), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) {
                     other.igniteForSeconds(FireboltRules.igniteSeconds(tier) / 2);
                     hitSomething = true;
                 }

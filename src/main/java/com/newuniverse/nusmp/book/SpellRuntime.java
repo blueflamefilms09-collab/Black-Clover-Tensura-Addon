@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public final class SpellRuntime {
     }
 
     private static void tickBolt(Bolt b) {
+        if (gone(b.owner, b.level)) { b.dead = true; return; }      // guide P1 #5: the caster logged out, died (a new player entity) or changed dimension: the bolt fizzles, no end effect
         if (b.homing != null && b.homing.isAlive()) {
             Vec3 want = b.homing.getBoundingBox().getCenter().subtract(b.pos).normalize().scale(b.vel.length());
             b.vel = b.vel.scale(0.75).add(want.scale(0.25));
@@ -118,6 +120,11 @@ public final class SpellRuntime {
             n++;
         }
         return n;
+    }
+
+    /** The owner can no longer act in this level: removed (death, logout) or disconnected or in another dimension. */
+    public static boolean gone(ServerPlayer owner, ServerLevel level) {
+        return owner.isRemoved() || owner.hasDisconnected() || owner.level() != level;
     }
 
     private static void end(Bolt b, Vec3 at) {
@@ -189,9 +196,31 @@ public final class SpellRuntime {
 
         TEMP.removeIf(t -> {
             if (t.level().getGameTime() < t.until()) return false;
-            if (t.level().getBlockState(t.pos()).is(t.state().getBlock()))
-                com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> t.level().removeBlock(t.pos(), false));      // the spell's own block, even in the unbreakable Dungeon
+            restore(t);
             return true;
         });
+    }
+
+    private static void restore(Temp t) {
+        if (t.level().getBlockState(t.pos()).is(t.state().getBlock()))
+            com.newuniverse.nusmp.dungeon.DungeonGuard.internal(() -> t.level().removeBlock(t.pos(), false));      // the spell's own block, even in the unbreakable Dungeon
+    }
+
+    /**
+     * Guide P1 #5: on server stop every pending temporary block is taken back before the world saves (it would stay forever otherwise),
+     * and the static lists are emptied so no player, level or skill instance outlives the server (single-player reopen, test servers).
+     * shortcut: a crash skips this (no stopping event) and leaves the blocks, persist TEMP in SavedData if that is ever reported.
+     */
+    public static void onServerStopping(ServerStoppingEvent event) {
+        for (Temp t : new ArrayList<>(TEMP)) SafeCast.tick("spell-temp-restore", () -> restore(t));
+        clearAll();
+    }
+
+    /** Empties every list (server stop). */
+    static void clearAll() {
+        BOLTS.clear();
+        ZONES.clear();
+        LATER.clear();
+        TEMP.clear();
     }
 }
