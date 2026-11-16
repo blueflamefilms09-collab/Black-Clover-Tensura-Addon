@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.8.0] — New skill icons, animated Ultimates
+- REPLACED: 121 skill icons at their same paths (37 root skills, 54 Beast Wills, 30 Dragon Ball), repainted in the house style of Tensura and Tensura No Index: class-coloured frame (Unique cyan, Extra gold, Ultimate royal gold), bevel shading, outline, glow, and one symbol per skill taken from its anime. The previous icons are kept in `textures/skill/classic/v440/`. Method and motifs: `docs/skill_icons_study.md`, `docs/skill_icons_rework.md`; before/after sheets in `docs/skill_icons/`.
+- NEW: the 56 Ultimates have an 8-frame animated icon (pulse, glint, orbiting sparkles). Uniques and Extras stay still.
+- Settings (client): `skillIcons.newStyle` (off = the 4.4.0 icons) and `skillIcons.animate`.
+- Cost: none on the server. Client: at most 56 animated icons, about 187 small texture uploads a second in the worst case, no per-frame allocation.
+- KEPT: every icon path and skill id. Not touched: grimoire icons, the five Veldanava icons, seven legacy icons.
+- Not seen in a game; whether the skill lists draw the animated texture is inferred from the Veldanava Ultimates. Weakest at 32 px: Hafgufa, Jormungandr, Goku/Vegeta/Trunks hair, Yamata no Orochi, Nue, Arcs Ray. Motifs are from memory, no wiki was read for them.
+
 ## [4.7.0] — Wiki-accurate rework of Argonaut, Shinra, All Fiction and the Summoner
 - The Fandom wikis (Hell Mode, Fire Force, Medaka Box, DanMachi) were read through their public API and the four skills reworked to follow them. Where a wiki is silent the number is a design value and says so in its doc. Every change sits behind its own server setting; off restores 4.6.1. Sources, tables and the "what the guess had wrong" lists: `docs/argonaut_rework.md`, `docs/shinra_rework.md`, `docs/all_fiction_rework.md`, `docs/summoner_rework.md`.
 - REPLACED (Argonaut, setting `danmachi.argonautWikiCanon`): Firebolt is a quick no-chant fire magic with short to medium range; the hero's strike is a plain charge that costs stamina and mind, full charge 3 / 4 / 5 minutes by level, recoil on what is charged, dissipates when hit; Grand Bell in a Limit Off; Argo Vesta; dual charge; Liaris Freese charm immunity. Aliases and names from the wiki.

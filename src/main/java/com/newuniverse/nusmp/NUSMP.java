@@ -257,6 +257,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.music.ThemedMusicEngine.init(modEventBus, modContainer);                            // 1.107.0: the themed dungeon music engine, nusmp-music-client.toml (music.themed)
             com.newuniverse.nusmp.client.voice.VoiceClient.init(modContainer);                                               // 1.110.0: the spoken voices, nusmp-voice-client.toml (voice.enabled, voice.volume)
             com.newuniverse.nusmp.client.veldanava.AnimatedIcons.init(modEventBus, modContainer);                           // 3.17.0: the animated Ultimate skill icons, nusmp-icons-client.toml (icons.ultimateStyle)
+            com.newuniverse.nusmp.client.skillicons.SkillIconSwap.init(modEventBus, modContainer);                           // skill icon rework: skillIcons.newStyle / skillIcons.animate, nusmp-skillicons-client.toml
             com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();                                                 // 1.55.0: the client side of the alignment sync
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme
@@ -474,6 +475,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.DbSkillSelfTests.register();                                  // 3.56.0
         com.newuniverse.nusmp.skill.BeastSkillSelfTests.register();                               // 3.58.0
         com.newuniverse.nusmp.skill.ShinraSelfTests.register();                                   // Shinra rework: self-tests shinra.rules, shinra.skills (docs/shinra_rework.md)
+        com.newuniverse.nusmp.skill.icons.SkillIconSelfTests.register();                          // skill icon rework: skillicons.index, skillicons.bounds (docs/skill_icons_rework.md)
         com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
         com.newuniverse.nusmp.skill.FictionGodSelfTests.register();                                                                        // All Fiction god-class rework
         com.newuniverse.nusmp.skill.GuideP1SelfTests.register();                                  // guide P1 #2, #3, #5
