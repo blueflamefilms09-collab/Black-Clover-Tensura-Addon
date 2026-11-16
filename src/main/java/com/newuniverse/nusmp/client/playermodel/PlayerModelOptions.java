@@ -25,6 +25,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue GOLIATH_BLENDER;
     /** Boss rework wave 2: the DanMachi Minotaur drawn with its Blender-made body (true, the default) or with the art kit's geo model (false). */
     public static final ModConfigSpec.BooleanValue MINOTAUR_BLENDER;
+    /** Boss rework wave 3 (appended): Lucifero and the God of Order drawn with their Blender-made bodies (true, the default) or with the kit's player-model look (false). */
+    public static final ModConfigSpec.BooleanValue LUCIFERO_BLENDER, GOD_OF_ORDER_BLENDER;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -39,6 +41,10 @@ public final class PlayerModelOptions {
                 .define("goliathBlenderModel", true);
         MINOTAUR_BLENDER = b.comment("Draw the DanMachi Minotaur with its Blender-made body (parts moved by procedural animation; Asterius keeps his model). Off = the art kit's model.")
                 .define("minotaurBlenderModel", true);
+        LUCIFERO_BLENDER = b.comment("Boss rework wave 3: draw Lucifero with his Blender-made body (bat wings, horns, hair; parts moved by procedural animation). Off = the kit's look.")
+                .define("luciferoBlenderModel", true);
+        GOD_OF_ORDER_BLENDER = b.comment("Boss rework wave 3: draw the God of Order with his Blender-made body (robes, halo, staff, ledger; a second halo and floating pages at the Gates). Off = the kit's look.")
+                .define("godOfOrderBlenderModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -74,6 +80,17 @@ public final class PlayerModelOptions {
     public static boolean minotaurBlender() {
         try {
             return MINOTAUR_BLENDER.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** Boss rework wave 3: true when the Blender body of {@code mesh} ("lucifero", "god_of_order" and their forms) is switched on (true while the config is not loaded). */
+    public static boolean blender(String mesh) {
+        try {
+            if (mesh.startsWith("lucifero")) return LUCIFERO_BLENDER.get();
+            if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get();
+            return true;
         } catch (IllegalStateException notLoaded) {
             return true;
         }

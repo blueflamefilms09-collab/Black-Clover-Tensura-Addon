@@ -82,7 +82,7 @@ public final class BossMeshDraw {
         int[] r = new int[m.parts.length];
         for (int i = 0; i < r.length; i++) {
             r[i] = -1;
-            for (int k = 0; k < MeshPose.ROLES; k++) if (MeshPose.ROLE_NAMES[k].equals(m.parts[i])) r[i] = k;
+            for (int k = 0; k < MeshPose.ALL_ROLES; k++) if (MeshPose.ALL_ROLE_NAMES[k].equals(m.parts[i])) r[i] = k;
         }
         return r;
     }

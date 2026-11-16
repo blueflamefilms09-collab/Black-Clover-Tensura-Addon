@@ -103,6 +103,7 @@ public final class PlayerModelRegistry {
         guard("avatar", () -> put(e, AvatarEntities.AVATAR.get(), new AvatarPlayerBody()));
         guard("painted_construct", () -> PaintedSplit.register(e));
         guard("the dungeon's humanoids", () -> DungeonRenderers.register(e));        // 1.99.0, phase 2: Foundry people, Living Armor, Warden, Guardian, Goliath, puppets (each with the old renderer as the flag's fallback)
+        guard("boss rework wave 3 Blender bodies", () -> com.newuniverse.nusmp.client.bossmesh.BossMeshRouting.register(e));      // Lucifero and the God of Order (kit renderer = fallback)
         List<Consumer<EntityRenderersEvent.RegisterRenderers>> more;
         synchronized (PlayerModelRegistry.class) { more = new ArrayList<>(EXTENSIONS); }
         for (Consumer<EntityRenderersEvent.RegisterRenderers> c : more) guard("an extension", () -> c.accept(e));

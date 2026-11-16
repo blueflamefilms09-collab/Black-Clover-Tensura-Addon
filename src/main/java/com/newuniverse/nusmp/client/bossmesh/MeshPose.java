@@ -12,12 +12,20 @@ package com.newuniverse.nusmp.client.bossmesh;
 public final class MeshPose {
     public static final int TORSO = 0, HEAD = 1, ARM_L = 2, ARM_R = 3, FOREARM_L = 4, FOREARM_R = 5, LEG_L = 6, LEG_R = 7, ROLES = 8;
     public static final String[] ROLE_NAMES = {"torso", "head", "arm_l", "arm_r", "forearm_l", "forearm_r", "leg_l", "leg_r"};
+    /**
+     * Boss rework wave 3: three more roles a body may have (appended; ROLES and ROLE_NAMES stay the eight every body has): the wings of Lucifero, the tail of the Charybdis Spawn.
+     * A mesh without them simply does not move them.
+     */
+    public static final int WING_L = 8, WING_R = 9, TAIL = 10, ALL_ROLES = 11;
+    public static final String[] ALL_ROLE_NAMES = {"torso", "head", "arm_l", "arm_r", "forearm_l", "forearm_r", "leg_l", "leg_r", "wing_l", "wing_r", "tail"};
 
     /** What the body is doing: picked from the renderer's clip by {@link #action}. */
-    public static final int NONE = 0, SWING = 1, SLAM = 2, STOMP = 3, ROAR = 4, PUNCH = 5, HURL = 6, RISE = 7, DEATH = 8, FLINCH = 9;
+    public static final int NONE = 0, SWING = 1, SLAM = 2, STOMP = 3, ROAR = 4, PUNCH = 5, HURL = 6, RISE = 7, DEATH = 8, FLINCH = 9,
+            /** Wave 3 (appended): the staff levelled at a target (the God of Order's beam), a bow. */
+            BEAM = 10, BOW = 11;
 
     /** rx, ry, rz per role. */
-    public final float[] rot = new float[ROLES * 3];
+    public final float[] rot = new float[ALL_ROLES * 3];
     /** The whole body: lift (model units) and a forward tip (radians, about the feet). */
     public float rootY, rootPitch;
 
@@ -28,7 +36,9 @@ public final class MeshPose {
             case "attack" -> SWING;
             case "slam", "cast_big", "cast" -> SLAM;
             case "stomp" -> STOMP;
-            case "roar", "transform" -> ROAR;
+            case "roar", "transform", "read" -> ROAR;
+            case "beam" -> BEAM;
+            case "bow" -> BOW;
             case "fist", "line" -> PUNCH;
             case "rubble" -> HURL;
             case "rise", "spawn" -> RISE;
@@ -56,6 +66,9 @@ public final class MeshPose {
         add(FOREARM_L, 0, -0.12f);
         add(FOREARM_R, 0, -0.12f);
         rootY += 0.35f * br;
+        add(WING_L, 2, 0.10f + 0.07f * br);                                // wave 3: wings beat slowly, the tail sways (a body without them ignores these)
+        add(WING_R, 2, -0.10f - 0.07f * br);
+        add(TAIL, 1, 0.10f * (float) Math.sin(age * 0.05f));
         // ---- the walk: legs and arms swing against each other, the torso rolls and bobs
         if (walk > 0.001f) {
             float a = (float) (walkPhase * Math.PI * 2), s = (float) Math.sin(a), c = (float) Math.cos(a);
@@ -70,6 +83,9 @@ public final class MeshPose {
             add(TORSO, 2, walk * 0.045f * s);
             add(HEAD, 1, -walk * 0.05f * s);
             rootY -= walk * 1.4f * Math.abs(c);
+            add(WING_L, 2, walk * 0.18f * s);
+            add(WING_R, 2, -walk * 0.18f * s);
+            add(TAIL, 1, walk * 0.40f * s);
         }
         if (action == NONE) return;
         t = clamp01(t);
@@ -92,6 +108,8 @@ public final class MeshPose {
                 add(TORSO, 0, -0.12f * up + 0.42f * down);
                 add(HEAD, 0, -0.3f * up + 0.1f * down);
                 rootY += 1.5f * up - 2.0f * down;
+                add(WING_L, 2, 0.6f * up);
+                add(WING_R, 2, -0.6f * up);
             }
             case STOMP -> {                                                   // the right leg high, stamped down at 0.8
                 float up = smooth(0f, 0.72f, t) * (1f - smooth(0.76f, 0.81f, t)), down = smooth(0.76f, 0.81f, t) * (1f - smooth(0.85f, 1f, t));
@@ -113,6 +131,8 @@ public final class MeshPose {
                 add(FOREARM_R, 0, -0.55f * k);
                 add(TORSO, 0, -0.16f * k + shake);
                 add(HEAD, 0, -0.5f * k + shake);
+                add(WING_L, 2, 0.7f * k);
+                add(WING_R, 2, -0.7f * k);
             }
             case PUNCH -> {                                                   // the right fist drawn back, then driven down and forward into the floor
                 float back = smooth(0f, 0.7f, t) * (1f - smooth(0.74f, 0.8f, t)), hit = smooth(0.74f, 0.8f, t) * (1f - smooth(0.86f, 1f, t));
@@ -147,8 +167,24 @@ public final class MeshPose {
                 add(ARM_R, 0, -0.5f * k);
                 add(LEG_L, 0, -0.5f * k);
                 add(LEG_R, 0, -0.5f * k);
+                add(WING_L, 2, -0.7f * k);
+                add(WING_R, 2, 0.7f * k);
                 rootPitch = 0.75f * k * k;
                 rootY -= 6f * k;
+            }
+            case BEAM -> {                                                    // the right arm levelled at the target and held, the head up
+                float k = smooth(0f, 0.25f, t) * (1f - smooth(0.92f, 1f, t));
+                add(ARM_R, 0, -1.55f * k);
+                add(FOREARM_R, 0, -0.1f * k);
+                add(TORSO, 1, 0.12f * k);
+                add(HEAD, 0, -0.12f * k);
+            }
+            case BOW -> {                                                     // a bow from the waist and back up
+                float k = (float) Math.sin(Math.PI * t);
+                add(TORSO, 0, 0.55f * k);
+                add(HEAD, 0, 0.25f * k);
+                add(ARM_L, 0, -0.3f * k);
+                add(ARM_R, 0, -0.3f * k);
             }
             case FLINCH -> {
                 float k = 1f - t;
