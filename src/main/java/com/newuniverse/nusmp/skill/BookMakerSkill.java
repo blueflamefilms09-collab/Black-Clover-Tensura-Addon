@@ -46,13 +46,8 @@ public class BookMakerSkill extends NUSkill {
         if (mode == FictionRules.PIN) {
             LivingEntity target = SkillTargets.lookFoe(player, FictionRules.pinRange());
             if (target == null) { SkillUtil.fail(player, SkillMsg.t("bookmaker.no_target", "No target.")); return; }
-<<<<<<< HEAD
-            if (!SkillUtil.spendMagicules(player, DMUtil.cost(FictionRules.pinCost()))) return;
-            pin(player, target, FictionRules.pinDamage(tier), tier, mastery, instance);
-=======
             if (!pay(instance, player, mode, DMUtil.cost(FictionRules.pinCost()))) return;
-            pin(player, target, FictionRules.pinDamage(tier), tier, mastery);
->>>>>>> f5e341b99 (Ultimate classes (Lord / King / God / Dragon), NUSkill costs through Tensura, ULTIMATE_MASTERED tier, mastery milestones)
+            pin(player, target, FictionRules.pinDamage(tier), tier, mastery, instance);
             cooldown(instance, mode, DMUtil.cooldown(FictionRules.pinCooldown()));
         } else if (mode == FictionRules.BARRAGE) {
             if (!FictionRules.barrageUnlocked(tier)) {

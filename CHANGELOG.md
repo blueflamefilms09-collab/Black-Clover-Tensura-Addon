@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.99.1] — Fix: Book Maker pin merge
+- Fixed a merge leftover in the Book Maker skill that stopped 3.99.0 from compiling. Nothing else changed; 3.99.0 contents (Ultimate classes, Magic Knight wiki pages) ship in this version.
+
 ## [3.99.0] — Ultimate classes (Lord / King / God / Dragon) and a Magic Knight guide in the wiki
 - NEW (owner's master guide, Part 5): every Ultimate skill has a class. GOD: Almighty, The Visionary, All Fiction. KING: Gate of Babylon, Hell Conqueror, Lord of Summons, Goddess of Faith. LORD: Adolla Burst, Black Wings, Hero's Argonaut, Immortal Will, Ki, Nen, Shishou, Lord of Gluttonous Greed and the Dragon Ball and Beast Will Ultimates. The DRAGON class exists but no skill uses it yet. See `docs/ultimate_classes.md`.
 - REPLACED (guide fix P1 #1): the addon skills now pay through Tensura (`getMagiculeCost`, `EnergyHelper.isOutOfEnergy`). The price grows with your maximum magicule (a few percent of it late game, never below the old flat price). Setting `[ultimateClasses] flatCosts` brings the old flat cost back. Grimoire page skills still pay as before.
