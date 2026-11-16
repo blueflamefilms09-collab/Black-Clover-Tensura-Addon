@@ -23,12 +23,20 @@ public final class BeastWillCoreItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        BeastWillComponents.Core c = BeastWillComponents.of(stack);
-        if (c == null) return InteractionResultHolder.fail(stack);
         if (!level.isClientSide && player instanceof ServerPlayer sp) {
-            if (!BeastWillAcquire.open(sp, c.will(), c.beast(), c.rankValue(), BeastWillAcquire.CORE, c.serial())) BeastWillFeedback.say(sp, "no.unknown_will", false);
+            BeastWillComponents.Core c = BeastWillComponents.of(stack);
+            if (c == null) c = stampBare(sp, stack);   // a bare core (a plain /give) becomes a core of the first will the player does not hold, so the ask always opens
+            if (!BeastWillAcquire.open(sp, c.will(), c.beast(), c.rankValue(), BeastWillAcquire.CORE, c.serial())) BeastWillFeedback.say(sp, BeastWillConfig.enabled() ? "no.unknown_will" : "no.disabled", true);
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+    }
+
+    private static BeastWillComponents.Core stampBare(ServerPlayer p, ItemStack stack) {
+        BeastWillState held = BeastWillStore.peek(p);
+        BeastWillCores.Entry e = BeastWillCores.firstFree(id -> held != null && held.has(id));
+        BeastWillComponents.Core c = new BeastWillComponents.Core(e.will(), e.beast(), e.rank().name(), java.util.UUID.randomUUID().toString());
+        stack.set(BeastWillComponents.CORE.get(), c);
+        return c;
     }
 
     @Override

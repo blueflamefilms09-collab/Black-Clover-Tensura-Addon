@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.aura;
 
+import com.newuniverse.nusmp.beastwill.BeastTailRules;
 import com.newuniverse.nusmp.beastwill.BeastWillFormTable;
 import com.newuniverse.nusmp.beastwill.BeastWillLook;
 import com.newuniverse.nusmp.book.NoelleFormRules;
@@ -24,7 +25,8 @@ public final class BeastWillForms {
     /** [0] the 3.76.0 look, [1] the models of 3.61.0 / 3.62.0 ({@code bwf_<stem>_v1...}, client setting beastwill.classicForms). */
     private static final Forms[][] SETS = new Forms[2][BeastWillLook.COUNT];
 
-    private static final class Forms { NoelleFormRig.Set full, acq; }
+    /** {@code fullMesh}: the same pieces without the cube tail (and for Kraken / Scylla with the body that has no cube tentacles), worn together with the Blender tail of {@link BeastWillTails}; null for a form without a mesh tail. */
+    private static final class Forms { NoelleFormRig.Set full, fullMesh, acq; }
 
     /** Is there a 3D form for this kind? (the table lists it) */
     public static boolean has(int kind) { return kind > 0 && kind < BeastWillLook.COUNT && !BeastWillFormTable.parts(BeastWillLook.STEM[kind]).isEmpty(); }
@@ -35,16 +37,9 @@ public final class BeastWillForms {
         if (s != null) return s;
         s = new Forms();
         String stem = BeastWillLook.STEM[kind], key = "bwf_" + stem + (v == 1 ? "_v1" : "");
-        java.util.List<Piece> list = new java.util.ArrayList<>();
-        add(list, stem, "body", Anchor.BODY, 0f, 0f, 0f, 5f, false, "idle");
-        add(list, stem, "armL", Anchor.ARM_L, 2f, 9f, 0f, 0f, false, "idle");
-        add(list, stem, "armR", Anchor.ARM_R, 2f, -9f, 0f, 0f, false, "idle");
-        add(list, stem, "legL", Anchor.LEG_L, 3f, 0f, 9f, 0f, false, "idle");
-        add(list, stem, "legR", Anchor.LEG_R, 3f, 0f, 9f, 0f, false, "idle");
-        add(list, stem, "head", Anchor.HEAD, 4f, 0f, -9f, 0f, true, "idle");
-        add(list, stem, "tail", Anchor.BODY, 6f, 0f, 2f, 10f, false, "idle");
-        add(list, stem, "wings", Anchor.BODY, 8f, 0f, -2f, 8f, false, "idle");
-        s.full = new NoelleFormRig.Set(key, key, list.toArray(new Piece[0]));
+        s.full = new NoelleFormRig.Set(key, key, pieces(stem, "body", true).toArray(new Piece[0]));
+        BeastTailRules.Tail mt = BeastTailRules.of(stem);
+        if (v == 0 && mt != null) s.fullMesh = new NoelleFormRig.Set(key, key, pieces(stem, mt.bodyNoTail() ? "body_nt" : "body", false).toArray(new Piece[0]));
         java.util.List<Piece> a = new java.util.ArrayList<>();
         add(a, stem, "acq", Anchor.ARM_R, 0f, -9f, 0f, 0f, false, null);
         s.acq = new NoelleFormRig.Set(key, key, a.toArray(new Piece[0]));
@@ -52,8 +47,23 @@ public final class BeastWillForms {
         return s;
     }
 
+
+    /** The pieces of the full form; {@code body} names the body piece ({@code body_nt} = the one without cube tentacles); {@code tail} false leaves out the cube tail (the mesh tail takes its place). */
+    private static java.util.List<Piece> pieces(String stem, String body, boolean tail) {
+        java.util.List<Piece> list = new java.util.ArrayList<>();
+        add(list, stem, body, Anchor.BODY, 0f, 0f, 0f, 5f, false, "idle");
+        add(list, stem, "armL", Anchor.ARM_L, 2f, 9f, 0f, 0f, false, "idle");
+        add(list, stem, "armR", Anchor.ARM_R, 2f, -9f, 0f, 0f, false, "idle");
+        add(list, stem, "legL", Anchor.LEG_L, 3f, 0f, 9f, 0f, false, "idle");
+        add(list, stem, "legR", Anchor.LEG_R, 3f, 0f, 9f, 0f, false, "idle");
+        add(list, stem, "head", Anchor.HEAD, 4f, 0f, -9f, 0f, true, "idle");
+        if (tail) add(list, stem, "tail", Anchor.BODY, 6f, 0f, 2f, 10f, false, "idle");
+        add(list, stem, "wings", Anchor.BODY, 8f, 0f, -2f, 8f, false, "idle");
+        return list;
+    }
+
     private static void add(java.util.List<Piece> out, String stem, String name, Anchor anchor, float delay, float dx, float dy, float dz, boolean head, String clip) {
-        if (!BeastWillFormTable.has(stem, name)) return;
+        if (!BeastWillFormTable.has(stem, name.equals("body_nt") ? "body" : name)) return;
         Piece p = Piece.of(name, anchor, delay, dx, dy, dz).silhouette();
         if (head) p = p.head();
         p = p.clip(clip, name.equals("wings") ? 1.4f : 1f);        // a piece without an idle file simply stays still (a missing animation is silently null)
@@ -63,14 +73,14 @@ public final class BeastWillForms {
 
     // ---------------------------------------------------------------------------------------------------------------- the per-frame budget of a crowd
     private static final int[] SEEN = new int[16];
-    private static int seenN, fullDrawn, farDrawn;
+    private static int seenN, fullDrawn, farDrawn, meshDrawn;
 
     /** Same crowd rule as the Noelle forms ({@link NoelleFormRules#budgeted}): the first players of a frame get the full model, the next ones the model without glow, the rest nothing. Render thread only. */
     private static NoelleFormRules.Lod frameBudget(int playerId, NoelleFormRules.Lod wanted) {
         for (int i = 0; i < seenN; i++) {
-            if (SEEN[i] == playerId) { seenN = 0; fullDrawn = 0; farDrawn = 0; break; }
+            if (SEEN[i] == playerId) { seenN = 0; fullDrawn = 0; farDrawn = 0; meshDrawn = 0; break; }
         }
-        if (seenN >= SEEN.length) { seenN = 0; fullDrawn = 0; farDrawn = 0; }
+        if (seenN >= SEEN.length) { seenN = 0; fullDrawn = 0; farDrawn = 0; meshDrawn = 0; }
         SEEN[seenN++] = playerId;
         NoelleFormRules.Lod l = NoelleFormRules.budgeted(wanted, 0, fullDrawn, farDrawn);
         if (l == NoelleFormRules.Lod.STANDARD) fullDrawn++; else if (l == NoelleFormRules.Lod.FAR) farDrawn++;
@@ -87,7 +97,14 @@ public final class BeastWillForms {
         if (lod == NoelleFormRules.Lod.NONE) return false;
         Forms s = of(kind);
         float glow = (phase == 2 ? 0.85f : 0.6f) * Mth.clamp(pulse, 0.5f, 1.2f);
-        NoelleFormRig.draw(c, phase == 2 ? s.full : s.acq, lod, rgb, glow, 0xFFFFFF);
+        // 3.77.0: the Blender tail / tentacles in place of the cube ones, for at most MAX_PLAYERS_PER_FRAME players a frame, inside 48 blocks, and not with the classic look or meshTails off
+        boolean mesh = phase == 2 && s.fullMesh != null && BeastWillSpiritOptions.meshTails() && meshDrawn < BeastTailRules.MAX_PLAYERS_PER_FRAME
+                && NoelleFormRig.dist2(c) <= BeastTailRules.RANGE_BLOCKS * BeastTailRules.RANGE_BLOCKS && BeastWillTails.usable(BeastWillLook.STEM[kind]);
+        NoelleFormRig.draw(c, phase == 2 ? (mesh ? s.fullMesh : s.full) : s.acq, lod, rgb, glow, 0xFFFFFF);
+        if (mesh) {
+            meshDrawn++;
+            BeastWillTails.paint(c, BeastWillLook.STEM[kind], lod, rgb, glow);
+        }
         return true;
     }
 }

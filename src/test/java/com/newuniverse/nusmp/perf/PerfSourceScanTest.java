@@ -596,4 +596,16 @@ class PerfSourceScanTest {
         assertTrue(draw.contains("LOD_RANGE") && draw.contains("GLOW_RANGE"), "the low-detail copy and the glow cut-off by distance are gone");
         assertFalse(BUILDS_LOCATION.matcher(draw).find(), "a location is built per frame");
     }
+
+    /** 3.77.0 (docs/beastwill_tails.md): the Beast Will mesh tails are drawn every frame: the painter, the chain placer, the sway and the form's own paint allocate nothing, and the crowd cap is applied in the form. */
+    @Test
+    void theBeastWillTailPathAllocatesNothingAndIsCapped() throws IOException {
+        for (String name : new String[]{"paint", "place"})
+            assertFalse(NEW_OBJECT.matcher(code(method("client/aura/BeastWillTails.java", name).body())).find(), "BeastWillTails." + name + " allocates per frame");
+        assertFalse(NEW_OBJECT.matcher(code(method("beastwill/BeastTailRules.java", "angles").body())).find(), "BeastTailRules.angles allocates");
+        String paint = code(method("client/aura/BeastWillForms.java", "paint").body());
+        assertFalse(NEW_OBJECT.matcher(paint).find(), "BeastWillForms.paint allocates per frame");
+        assertTrue(paint.contains("MAX_PLAYERS_PER_FRAME") && paint.contains("RANGE_BLOCKS") && paint.contains("meshTails()"), "the mesh tail's crowd cap, range or setting is gone");
+        assertFalse(code(read("beastwill/BeastTailRules.java")).contains("net.minecraft"), "BeastTailRules must stay pure");
+    }
 }

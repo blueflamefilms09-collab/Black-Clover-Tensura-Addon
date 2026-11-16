@@ -14,7 +14,7 @@ public final class BeastWillSpiritClientConfig {
     private BeastWillSpiritClientConfig() {}
 
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue CLASSIC_SPIRITS, FLAT_SPIRITS, CLASSIC_FORMS;
+    public static final ModConfigSpec.BooleanValue CLASSIC_SPIRITS, FLAT_SPIRITS, CLASSIC_FORMS, MESH_TAILS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -25,6 +25,8 @@ public final class BeastWillSpiritClientConfig {
                 .define("flatSpirits", false);
         CLASSIC_FORMS = b.comment("true: the 3D Beast Will forms are drawn with the models and colours of 3.61.0 / 3.62.0 (the pale, bulky ones) instead of the 3.76.0 look pass. Looks only.")
                 .define("classicForms", false);
+        MESH_TAILS = b.comment("true (default): the tails and tentacles of the 3D Beast Will forms are modelled meshes that sway (Kraken, Scylla, Kitsune, Apophis, Typhon, Nidhoggr, Dragon, Jormungandr, Flame-Serpent); false: the cube tails of 3.76.0. Looks only.")
+                .define("meshTails", true);
         b.pop();
         SPEC = b.build();
     }
@@ -37,6 +39,6 @@ public final class BeastWillSpiritClientConfig {
     }
 
     private static void apply() {
-        try { BeastWillSpiritOptions.setClassic(CLASSIC_SPIRITS.get()); BeastWillSpiritOptions.setFlat(FLAT_SPIRITS.get()); BeastWillSpiritOptions.setClassicForms(CLASSIC_FORMS.get()); } catch (IllegalStateException unloaded) { BeastWillSpiritOptions.setClassic(false); BeastWillSpiritOptions.setFlat(false); }
+        try { BeastWillSpiritOptions.setClassic(CLASSIC_SPIRITS.get()); BeastWillSpiritOptions.setFlat(FLAT_SPIRITS.get()); BeastWillSpiritOptions.setClassicForms(CLASSIC_FORMS.get()); BeastWillSpiritOptions.setMeshTails(MESH_TAILS.get()); } catch (IllegalStateException unloaded) { BeastWillSpiritOptions.setClassic(false); BeastWillSpiritOptions.setFlat(false); BeastWillSpiritOptions.setMeshTails(true); }
     }
 }

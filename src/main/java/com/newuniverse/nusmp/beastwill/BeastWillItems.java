@@ -24,10 +24,11 @@ public final class BeastWillItems {
     /** The one list the client's 3D hand renderer reads ({@code client.WeaponRenderer}, like {@code manacore.CoreItems.renderables()}): the core is drawn as a solid orb (docs/solid_cores.md). */
     public static java.util.List<java.util.function.Supplier<? extends Item>> renderables() { return java.util.List.of(CORE); }
 
-    /** The creative-tab cores: one per shipped will (display names, the will id decides what a core gives; the server reads the data file). */
+    /** The creative-tab cores: one per shipped will, all 27, each with the will's own rank from {@link BeastWillCores} (before, only four were listed and two were below their will's rank, so they were refused). */
     public static java.util.List<ItemStack> creativeStacks() {
-        return java.util.List.of(core("dragon_will", "Aether Dragon", BeastRank.S), core("shadow_panther_will", "Shadow Panther", BeastRank.A),
-                core("elderwood_guardian_will", "Elderwood Guardian", BeastRank.A), core("lion_will", "Mana Lion", BeastRank.A));
+        java.util.List<ItemStack> out = new java.util.ArrayList<>(BeastWillCores.ALL.size());
+        for (BeastWillCores.Entry e : BeastWillCores.ALL) out.add(core(e.will(), e.beast(), e.rank()));
+        return out;
     }
 
     /** A fresh core of this will with a new serial (every core is a different stack, so cores never merge and the ledger can tell a copy from a real one). */

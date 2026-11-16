@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.bossmesh;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.beastwill.BeastTailRules;
 import com.newuniverse.nusmp.client.SafeAdditive;
 import com.newuniverse.nusmp.mesh.EntityMeshData;
 import com.newuniverse.nusmp.mesh.MeshText;
@@ -85,6 +86,7 @@ public final class BossMeshDraw {
         for (int i = 0; i < r.length; i++) {
             r[i] = -1;
             for (int k = 0; k < MeshPose.ALL_ROLES; k++) if (MeshPose.ALL_ROLE_NAMES[k].equals(m.parts[i])) r[i] = k;
+            if (r[i] < 0) r[i] = BeastTailRules.role(m.parts[i]);               // the Beast Will tail chains (sw<chain>_<segment>): only drawParts' placer knows them
         }
         return r;
     }
@@ -122,7 +124,7 @@ public final class BossMeshDraw {
             Matrix4f mi = mats[i].set(par < 0 ? base : mats[par]);
             Matrix3f ni = norms[i].set(par < 0 ? baseN : norms[par]);
             int r = roles[i];
-            if (r < 0) continue;
+            if (r < 0 || r >= MeshPose.ALL_ROLES) continue;
             float rx = pose.get(r, 0), ry = pose.get(r, 1), rz = pose.get(r, 2);
             if (rx == 0f && ry == 0f && rz == 0f) continue;
             turn.rotationZYX(rz, ry, rx);                                       // X first, then Y, then Z (Blender's XYZ Euler, as the previews: tools/blender/bl_entity.py)

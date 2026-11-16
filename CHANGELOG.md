@@ -9,6 +9,8 @@
 - KEPT: the old Lucifero bodies and 13 moves (opMode off), the Charter Grimoire drop and every other old drop (`enabled` = false gives the old drops).
 - NEW: Saiyan hair is back as real 3D Blender hair, a different shape and gold for each of the 16 forms (SS gold spikes, SS2 brighter and more jagged, SS3 very long, SS4 black mane with fur, God red, Blue blue, Ultra Instinct silver), and the Saiyan tail is a real tapered, furred 3D tail. Client settings `saiyan.hair` and `saiyan.tail3d` (default on).
 - REPLACED: the flat camera-facing ribbon tail is no longer the default look. KEPT: the ribbon code, drawn when `saiyan.tail3d` is off; vanilla hair stays for the base form.
+- FIXED: Beast Will cores. A bare core (a plain give) now picks a will and opens the acquire screen instead of doing nothing, all 27 cores are in the creative tab at their own rank (before, only 4 were listed and 2 of those were refused for rank), and a refusal now says why in chat.
+- NEW: Beast Will tails and tentacles as real 3D Blender meshes that sway: dragon, nidhoggr, jormungandr, serpent, apophis, typhon, kitsune (nine tails), kraken (twelve tentacles) and Scylla and Charybdis (six waist tentacles). Client setting `beastwill.meshTails` (default on; off = the old cube tails). Forms without a mesh tail keep their cube tail. A broken model file is now logged once and skipped instead of throwing on the render thread.
 - KEPT: the old damage (full EP scale at any mastery) with the SERVER setting `epNeedsMastery` = false. Mastery still adds its small -15% to +15% on top.
 - Not covered: about 29 skills that apply their own EP factor outside the balance law keep the old damage; late-game (magicule) scaling is untouched.
 - Cost: one multiply per hit.

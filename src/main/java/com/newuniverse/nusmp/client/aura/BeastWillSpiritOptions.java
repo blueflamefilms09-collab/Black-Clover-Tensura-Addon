@@ -27,4 +27,11 @@ public final class BeastWillSpiritOptions {
     public static boolean classicForms() { return classicForms; }
 
     public static void setClassicForms(boolean on) { classicForms = on; }
+
+    private static volatile boolean meshTails = true;
+
+    /** True (the default) = the tails and tentacles of the forms are the Blender meshes (client setting {@code beastwill.meshTails}); false = the cube tails of 3.76.0, exactly as before. */
+    public static boolean meshTails() { return meshTails; }
+
+    public static void setMeshTails(boolean on) { meshTails = on; }
 }

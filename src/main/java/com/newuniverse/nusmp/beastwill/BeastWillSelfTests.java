@@ -38,6 +38,7 @@ public final class BeastWillSelfTests {
         SelfTests.register("beastwill.rules.bounds", BeastWillSelfTests::rules);
         SelfTests.register("beastwill.player.roundtrip", BeastWillSelfTests::player);
         SelfTests.register("beastwill.look.kinds", BeastWillSelfTests::look);
+        SelfTests.register("beastwill.cores.all", BeastWillSelfTests::cores);
     }
 
     private static final String[] IDS = {"dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will"};
@@ -79,6 +80,27 @@ public final class BeastWillSelfTests {
         for (String id : IDS) if (BeastWillLook.kindOf(id) == BeastWillLook.UNKNOWN) return Result.fail(id + " has no spirit look");
         for (String id : LATER) if (BeastWillLook.kindOf(id) == BeastWillLook.UNKNOWN || BeastWillPictures.of(BeastWillLook.kindOf(id)) == null) return Result.fail(id + " has no spirit look or no ability picture");
         return Result.ok("the aura style carries phase, look kind and tint for " + BeastWillCatalog.size() + " wills; " + seen.size() + " distinct spirits");
+    }
+
+    /** Every loaded will has a valid core stack (its own rank, a serial) and the ask for it opens on a stand-in; the bare-core pick is a will of the table. */
+    private static Result cores(MinecraftServer server) {
+        if (BeastWillCores.ALL.size() != BeastWillCatalog.size() || BeastWillItems.creativeStacks().size() != BeastWillCatalog.size()) return Result.fail("the creative cores (" + BeastWillCores.ALL.size() + ") do not match the loaded wills (" + BeastWillCatalog.size() + ")");
+        ServerLevel level = server.overworld();
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 2, 0);
+        ServerPlayer p = SelfTests.standIn(level, "beastwillcores", at.x, at.y, at.z);
+        try {
+            for (net.minecraft.world.item.ItemStack st : BeastWillItems.creativeStacks()) {
+                BeastWillComponents.Core c = BeastWillComponents.of(st);
+                BeastWillDef d = c == null ? null : BeastWillCatalog.get(c.will());
+                if (d == null) return Result.fail("a creative core names no loaded will: " + c);
+                if (!c.rankValue().atLeast(d.minRank())) return Result.fail(d.id() + ": the core's rank " + c.rank() + " is below the will's " + d.minRank());
+                if (!BeastWillAcquire.open(p, c.will(), c.beast(), c.rankValue(), BeastWillAcquire.CORE, c.serial())) return Result.fail(d.id() + ": the ask did not open");
+                BeastWillAcquire.decline(p);
+            }
+            return Result.ok(BeastWillCatalog.size() + " cores: each has its will's rank and opens its ask");
+        } finally {
+            BeastWillAcquire.decline(p);
+        }
     }
 
     private static Result rules(MinecraftServer server) {

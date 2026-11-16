@@ -37,6 +37,7 @@ public final class GeoModels {
     public static void clear() {
         MODELS.clear();
         ANIMS.clear();
+        com.newuniverse.nusmp.client.aura.BeastWillTails.reload();         // the Beast Will mesh tails read their files again too
     }
 
     /** Replaces where files come from (the headless preview reads them from disk). */
@@ -49,7 +50,12 @@ public final class GeoModels {
         GeoModelData m = MODELS.get(id);
         if (m == null) {
             JsonObject o = read(id, true);
-            m = o == null ? GeoModelData.empty(id.toString()) : GeoModelData.parse(id.toString(), o);
+            try {
+                m = o == null ? GeoModelData.empty(id.toString()) : GeoModelData.parse(id.toString(), o);
+            } catch (RuntimeException ex) {                                      // a broken file logs once (it is cached) and draws nothing, never a crash of the render thread
+                LOG.error("[anime_multiverse] geo file {} could not be parsed; it is not drawn", id, ex);
+                m = GeoModelData.empty(id.toString());
+            }
             MODELS.put(id, m);
         }
         return m;
@@ -60,7 +66,12 @@ public final class GeoModels {
         if (id == null) return null;
         if (ANIMS.containsKey(id)) return ANIMS.get(id);
         JsonObject o = read(id, false);
-        GeoAnim a = o == null ? null : GeoAnim.parse(o);
+        GeoAnim a = null;
+        try {
+            a = o == null ? null : GeoAnim.parse(o);
+        } catch (RuntimeException ex) {                                          // same rule as the model: log once, draw at rest
+            LOG.error("[anime_multiverse] animation file {} could not be parsed; the model stays at rest", id, ex);
+        }
         ANIMS.put(id, a);
         return a;
     }
