@@ -138,7 +138,8 @@ class DevilSourceScanTest {
         assertTrue(client("DevilClientConfig.java").contains("\"customForms\""), "the setting that restores the generic look");
         String r = client("DevilNpcRenderer.java");
         assertTrue(r.contains("CULL") && r.contains("PerfProbe.section(\"c.devil.npc\")"), "the figure is culled by distance and timed");
-        assertFalse(r.contains("new float[") || r.contains("new Vector") || r.contains("new Quaternionf"), "no allocation in the draw path");
+        String rr = r.replace("private final float[] alphas = new float[DevilExtras.ANCHORS];", "");                  // the one field the renderer makes once, with itself
+        assertFalse(rr.contains("new float[") || rr.contains("new Vector") || rr.contains("new Quaternionf"), "no allocation in the draw path");
     }
 
     @Test

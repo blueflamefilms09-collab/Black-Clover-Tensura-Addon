@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.22.1] — Build fix: three more scan tests
+- FIXED (no gameplay change): the Black Chakrams are a 0.62-block weapon, so they now use the dagger size class instead of the hand-axe class (which would have scaled them 1.77x at runtime; their grip golden is refreshed); the four glow textures of the new Berserk weapons had colour under fully transparent pixels and are cleaned by the safe-additive tool; the devil figure renderer's once-made `alphas` field is allowed in the draw-path scan like the layer's.
+- Cost: unchanged.
+
 ## [4.22.0] — Saiyan Prodigy, Saiyan-blooded evolution, damage scale-down and rankings
 - NEW (server settings in `nusmp-saiyan-prodigy-server.toml`; master switch `prodigy.prodigyHub`): the **Saiyan Prodigy**, one intrinsic skill with 18 modes that holds every Saiyan ability (Ki Blast, Barrage, Flight, Senses, Barrier, Deflection, Energy Transfer, Ki Wave, Form, Art, Dragon Fist, Kamehameha, Rock-Scissors-Paper, Instant Transmission, Spirit Bomb, Meteor Combination, God Bind, Style). Art mode performs the Dragon Ball rework techniques and the active moves of the 15 Dragon Ball characters, so the old Dragon Ball skills now have a use. Reusable multi-mode helper (`skill/modes`) for other skills; the keybind plan is in `docs/keybind_consolidation.md`. Docs: `docs/saiyan_prodigy.md`.
 - NEW (setting `blood.bloodEvolution`): the **Saiyan (Saiyan-blooded)** race evolution of Human, offered in Tensura's evolution screen through an optional mixin: existence points, worthy kills and surviving near death (all settings). Gives the Prodigy, and slight transient buffs (+4 max health, +3 % attack, +0.5 % Ki regen per second; no hunger effect). Commands `/saiyan prodigy`, `/saiyan blood`.

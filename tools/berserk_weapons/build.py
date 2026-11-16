@@ -106,7 +106,7 @@ def build_black_chakrams():
     lay_and_paint(m, atlas)
     for nm in ("hoop", "inner_rim", "blades"):
         paint_glow(atlas, m.part(nm), (255, 60, 80), 0.8, 0.45)
-    finish("black_chakrams", m, atlas, "handaxe", glow=("FF3C50", 0.12, 0.45, 1.0), real_m=0.62)
+    finish("black_chakrams", m, atlas, "dagger", glow=("FF3C50", 0.12, 0.45, 1.0), real_m=0.62)
 
 
 def build_seifort_holy_sword():
