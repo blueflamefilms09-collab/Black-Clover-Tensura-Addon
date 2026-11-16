@@ -5,6 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -24,11 +25,16 @@ public final class SaiyanEvents {
         bus.addListener(SaiyanManager::onIncomingDamage);
         bus.addListener(SaiyanFlight::onFall);
         bus.addListener((ServerStoppingEvent e) -> SaiyanManager.clearAll());
+        bus.addListener((ServerStartingEvent e) -> SaiyanRaceLink.listInMenu());          // the Saiyan race in Tensura's race menu
     }
 
     static void onTick(PlayerTickEvent.Post e) { if (e.getEntity() instanceof ServerPlayer p) SaiyanManager.tick(p); }
 
-    static void onLogin(PlayerEvent.PlayerLoggedInEvent e) { if (e.getEntity() instanceof ServerPlayer p) SaiyanManager.onEnter(p); }
+    static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
+        SaiyanManager.onEnter(p);
+        SaiyanRaceLink.onLogin(p);          // the real Tensura race and the flag agree (server setting phase.race.tensuraRace)
+    }
 
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { if (e.getEntity() instanceof ServerPlayer p) SaiyanManager.onLogout(p); }
 

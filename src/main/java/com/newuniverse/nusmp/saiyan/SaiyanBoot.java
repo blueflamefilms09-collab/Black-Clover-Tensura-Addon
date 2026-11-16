@@ -20,6 +20,8 @@ public final class SaiyanBoot {
         if (done) return;
         done = true;
         SaiyanStore.ATTACHMENTS.register(modBus);
+        SaiyanRaces.RACES.register(modBus);             // the real Tensura race anime_multiverse:saiyan (always registered; used only with phase.race.tensuraRace)
+        io.github.manasmods.manascore.race.api.RaceEvents.SET_RACE.register(SaiyanRaceLink::onSetRace);          // a race set through Tensura's own menu / commands sets the flag
         container.registerConfig(ModConfig.Type.SERVER, SaiyanConfig.SPEC, "nusmp-saiyan-server.toml");
         container.registerConfig(ModConfig.Type.SERVER, SaiyanPhaseConfig.SPEC, "nusmp-saiyan-phase2-server.toml");      // Dragon Ball rework (phases 2 to 6, Giant Ki Avatar)
         modBus.addListener(SaiyanNet::registerPayloads);
@@ -31,6 +33,7 @@ public final class SaiyanBoot {
         SaiyanTech3SelfTests.register();
         SaiyanLookSelfTests.register();
         SaiyanPhaseSelfTests.register();                // Dragon Ball rework: db.phase2.* and saiyan.t3.*
+        SaiyanRaceSelfTests.register();                 // db.phase2.tensura.*: the real Tensura race (inside the db.phase2 smoke prefix)
         SaiyanKiFx.registerSelfTests();                 // the anime Ki effects (KiLayer): saiyan.kivfx
     }
 }

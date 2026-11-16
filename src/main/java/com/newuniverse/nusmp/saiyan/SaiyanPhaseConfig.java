@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class SaiyanPhaseConfig {
     public static final ModConfigSpec SPEC;
 
-    private static final ModConfigSpec.BooleanValue TECH_ON, KAIO_EXT, APE_ON, BRANCH_KEY, BLOCK_AWAKEN, RITUAL_EP, GOD_MASK, REAL_RACE, RITUAL_ON, GIFTS_ON, AVATAR_ON, AVATAR_FORM, TENSURA_SRC, GRAVITY_ON;
+    private static final ModConfigSpec.BooleanValue TECH_ON, KAIO_EXT, APE_ON, BRANCH_KEY, BLOCK_AWAKEN, RITUAL_EP, GOD_MASK, REAL_RACE, RITUAL_ON, GIFTS_ON, AVATAR_ON, AVATAR_FORM, TENSURA_SRC, GRAVITY_ON, TENSURA_RACE, RACE_MENU;
     private static final ModConfigSpec.DoubleValue RACE_SCALE, PRIMAL_BP, AUTO_BP,
             STR_KI, STR_ST, STR_DMG, STR_RANGE, STR_KB, VAN_KI, VAN_ST, VAN_DIST, RSH_KI, RSH_ST, RSH_DMG, CNT_KI, CNT_ST, CNT_FACTOR, BRK_KI, BRK_ST, BRK_DMG, BRK_RAD, INS_KI, INS_ST, INS_SPEED, INS_ASPD,
             SPH_KI, SPH_ST, SPH_DMG, SPH_RANGE, SPH_SPEED, SPH_RAD, WAV_KI, WAV_COST, WAV_DMG, WAV_RANGE, REI_DRAIN, REI_DMG, REI_DEF, AFT_COST,
@@ -35,6 +35,8 @@ public final class SaiyanPhaseConfig {
 
         b.push("race");
         REAL_RACE = b.comment("Saiyan as a race with four stages (Saiyan, Primal Saiyan, Divine Saiyan, Autonomous Martial God): stages are earned, their buffs are added by the multiverse race buffs, the status panel shows the stage. false = the Saiyan flag alone, as before.").define("realRace", false);
+        TENSURA_RACE = b.comment("Saiyan as a REAL Tensura race (anime_multiverse:saiyan): becoming a Saiyan sets the Tensura race, choosing it in Tensura's race menu makes the player a Saiyan, and the race is listed in Tensura's race menu. false = exactly the old behaviour, the Saiyan flag alone (the race stays registered, so a saved race still loads, but nothing sets it).").define("tensuraRace", true);
+        RACE_MENU = b.comment("With tensuraRace on: add the Saiyan to the starting-race list of Tensura's race menu (the reincarnation config) once at server start. false = the menu list is left alone.").define("listInRaceMenu", true);
         RACE_SCALE = b.comment("Multiplier on the stage buffs (0 = none).").defineInRange("buffScale", 1.0, 0.0, 2.0);
         PRIMAL_BP = b.comment("Stage 2 (Primal Saiyan): the Battle Power needed, besides the Super Saiyan 3 form.").defineInRange("primalBattlePower", 400_000.0, 100.0, SaiyanRules.BP_HARD_CAP);
         AUTO_BP = b.comment("Stage 4 (Autonomous Martial God): the Battle Power needed, besides the Perfected Ultra Instinct form and the Zenkai below.").defineInRange("autonomousBattlePower", 8_000_000.0, 100.0, SaiyanRules.BP_HARD_CAP);
@@ -157,6 +159,8 @@ public final class SaiyanPhaseConfig {
 
     // ---- race
     public static boolean realRace() { return on(REAL_RACE, false); }
+    public static boolean tensuraRace() { return on(TENSURA_RACE, true); }
+    public static boolean listInRaceMenu() { return on(RACE_MENU, true); }
     public static double raceScale() { return num(RACE_SCALE, 1.0, 0, 2); }
     public static SaiyanRaceRules.Need raceNeed() {
         return new SaiyanRaceRules.Need(num(PRIMAL_BP, 400_000.0, 100, SaiyanRules.BP_HARD_CAP), num(AUTO_BP, 8_000_000.0, 100, SaiyanRules.BP_HARD_CAP), whole(AUTO_ZENKAI, 5, 0, 1000));

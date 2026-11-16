@@ -378,6 +378,7 @@ public final class SaiyanManager {
         s.saiyan = on;
         if (on) {
             onEnter(p);
+            SaiyanRaceLink.afterFlag(p, true);          // the real Tensura race follows the flag (phase.race.tensuraRace)
             return;
         }
         s.awakened = false;
@@ -385,6 +386,7 @@ public final class SaiyanManager {
         s.readyAt.clear();
         cleanRuntime(p);
         SaiyanNet.send(p, off());
+        SaiyanRaceLink.afterFlag(p, false);
     }
 
     // ================================================================== the client

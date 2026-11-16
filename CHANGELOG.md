@@ -2,6 +2,7 @@
 
 ## [4.2.0] — EP scaling needs mastery (more in this release as it lands)
 - NEW: the EP part of an addon skill's damage now grows in with the skill's mastery: x1 with no mastery, the full EP scale (up to x12) once the skill is mastered, a straight line between (`balance.EpMastery`). Applies to the plain law and to Ultimate-class hits.
+- NEW: Saiyan is a real Tensura race (`anime_multiverse:saiyan`): it is listed in Tensura's race menu, and the Saiyan flag and the Tensura race follow each other (`/saiyan race` sets the race, picking it in Tensura's menu sets the flag; leaving it restores the old race). Settings `phase.race.tensuraRace` (off = the old flag only) and `phase.race.listInRaceMenu`. Details: `docs/dragon_ball/phase_report.md`.
 - KEPT: the old damage (full EP scale at any mastery) with the SERVER setting `epNeedsMastery` = false. Mastery still adds its small -15% to +15% on top.
 - Not covered: about 29 skills that apply their own EP factor outside the balance law keep the old damage; late-game (magicule) scaling is untouched.
 - Cost: one multiply per hit.

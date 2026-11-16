@@ -7,8 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 /**
  * Why: Saiyan as a race with four stages (Dragon Ball rework, phase 2), the server glue of {@link SaiyanRaceRules}. It is built NEXT TO the existing Saiyan flag, which stays the source of truth: a player
  * is a Saiyan if {@code SaiyanState.saiyan} says so (the questionnaire, {@code /saiyan} and the race check all keep working), and the stage is one more saved number. With the server switch
- * {@code phase.race.realRace} off (the default) nothing here changes anything. A real Tensura race entry could not be registered because the race API could not be read in this build (see
- * docs/dragon_ball/phase_report.md). Cost: once a second per Saiyan, one small pure check and at most five attribute lookups; God Ki is read by the radar through {@link #hasGodKi}.
+ * {@code phase.race.realRace} off (the default) nothing here changes anything. The real Tensura race entry (anime_multiverse:saiyan) is now registered ({@link SaiyanRaces}, {@link SaiyanTensuraRace}) and linked to the flag by {@link SaiyanRaceLink}; the four stages stay this class's. Cost: once a second per Saiyan, one small pure check and at most five attribute lookups; God Ki is read by the radar through {@link #hasGodKi}.
  */
 final class SaiyanRace {
     private SaiyanRace() {}
@@ -45,7 +44,9 @@ final class SaiyanRace {
             r.dirty = true;
             p.displayClientMessage(Component.translatable("anime_multiverse.saiyan.msg.race_stage", Component.translatable(SaiyanRaceRules.nameKey(stage))), false);
         }
-        SaiyanAttributes.applyRace(p, SaiyanRaceRules.bonus(stage, SaiyanPhaseConfig.raceScale()));
+        SaiyanRaceRules.Bonus bonus = SaiyanRaceRules.bonus(stage, SaiyanPhaseConfig.raceScale());
+        if (SaiyanRaceLink.enabled() && SaiyanRaceLink.holdsRace(p)) bonus = SaiyanRaceRules.minus(bonus, SaiyanRaceRules.bonus(SaiyanRaceRules.SAIYAN, 1.0));          // the real Tensura race already gives the stage 1 numbers: not twice
+        SaiyanAttributes.applyRace(p, bonus);
         t.raceApplied = stage;
     }
 
