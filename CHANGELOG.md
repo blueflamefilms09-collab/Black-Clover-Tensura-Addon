@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.88.0] — creative tabs by franchise
+- NEW (asked for: "creative tabs by franchise"): seven new creative tabs, one per franchise: Black Clover, Tensura, Berserk, Fairy Tail, Magi, Hero Weapons and Other Anime Worlds (every other franchise of the franchise map). Items go into a tab by the franchise map and by id rules (`black_sword_greed*` to Berserk, `beast_will*` and the rank cores to Tensura, `djinn_*` to Magi, grimoires and devil items to Black Clover, the calling gem and crystals to Hero Weapons).
+- KEPT: the seven older tabs and their contents are unchanged (an item may show in both). CLIENT setting `visual.franchiseTabs` (`nusmp-franchise-tabs-client.toml`, default on); off = the new tabs are empty.
+- NEW: `FranchiseTabs` (pure rules) and `FranchiseTabsTest`.
+- Not done: a Dragon Ball tab (the saiyan package has no items yet), animated tab icons (the 1.21.1 tab icon is read once; a rotating icon would need a mixin), separate tabs for Beast Wills and devils (they sit under Tensura and Black Clover).
+- Cost: none on the server; the tabs are built client-side when the creative menu opens (seven extra builds), no packets, nothing per frame. Not compiled before CI, not seen in a game.
+
 ## [3.87.1] — fix: the animated Veldanava icons are back as they were
 - FIXED: the builds of 3.86.0 and 3.87.0 did not pass `AnimatedIconsTest`: the polish pass had also filtered the Veldanava still icons, whose stills must stay exact frames of their animation strips with no colour under transparent pixels. Those icons are restored byte for byte from 3.85.2, the copies under `textures/skill/classic/veldanava` are removed, and `tools/icon_polish.py` now skips the whole `veldanava` folder and clears colour under transparent pixels.
 - KEPT: everything of 3.87.0 (the redrawn grimoire and Beast Will icons, the 128 px HD copies, the originals under `textures/skill/classic`). Cost: none.
