@@ -28,7 +28,9 @@ class SaiyanSourceScanTest {
     private static String lang() throws IOException {
         String base = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
         Path frag = ROOT.resolve("tools/lang/db_phase2.json");
-        return Files.exists(frag) ? base + Files.readString(frag, StandardCharsets.UTF_8) : base;
+        String all = Files.exists(frag) ? base + Files.readString(frag, StandardCharsets.UTF_8) : base;
+        Path prodigy = ROOT.resolve("tools/lang/prodigy.json");      // the Saiyan Prodigy fragment (docs/saiyan_prodigy.md), merged into en_us.json at release
+        return Files.exists(prodigy) ? all + Files.readString(prodigy, StandardCharsets.UTF_8) : all;
     }
     private static final Path DIR = ROOT.resolve("src/main/java/com/newuniverse/nusmp/saiyan");
 

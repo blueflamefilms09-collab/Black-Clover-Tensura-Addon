@@ -68,6 +68,7 @@ public class DbSkill extends NUSkill {
     @Override
     public void onTick(ManasSkillInstance i, LivingEntity e) {
         if (!(e instanceof ServerPlayer p) || p.tickCount % DbRules.PASSIVE_PERIOD_TICKS != 0) return;
+        if (com.newuniverse.nusmp.saiyan.SaiyanProdigyHub.enabled() && !DbSkills.legacy()) return;      // the Saiyan Prodigy hub drives the passives now (the old skill is kept, inert)
         DbPassives.second(i, p, spec, ult, i.isMastered(p), DbSkills.active());
     }
 
@@ -82,6 +83,7 @@ public class DbSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer p) || !p.isAlive()) return;
+        if (com.newuniverse.nusmp.saiyan.SaiyanProdigyHub.enabled() && !DbSkills.legacy()) { com.newuniverse.nusmp.saiyan.SaiyanProdigyHub.forwarded(p); return; }      // the old skill points at the Saiyan Prodigy (its Art mode holds these moves)
         if (!DbSkills.active()) { SkillUtil.fail(p, SkillMsg.t("db.off", "The Dragon Ball skills are switched off on this server.")); return; }
         int idx = Math.floorMod(mode, wheel.size());
         Mode m = wheel.get(idx);

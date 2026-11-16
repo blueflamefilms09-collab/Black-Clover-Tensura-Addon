@@ -81,6 +81,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarSoulForgeConfig.SPEC, "nusmp-avatar-soulforge-server.toml");   // 1.58.0: the Soul Forge ritual, aptitudes, chosen skills
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.MobRelicsConfig.SPEC, "nusmp-mobrelics-server.toml");   // 1.50.0: named mobs carry relics
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.RelicPowerConfig.SPEC, "nusmp-relicpower-server.toml");   // 1.104.0: relics.attuneLock, relics.unattunedPower
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.balance.DamageScaleConfig.SPEC, "nusmp-damage-server.toml");   // damage scale-down: damage.* (docs/damage_scale_down.md)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.djinn.DjinnBindConfig.SPEC, "nusmp-djinn-bind-server.toml");   // 1.101.0: bind a Djinn by command / key / inventory click (default on)
         com.newuniverse.nusmp.avatar.AvatarSystem.init(modEventBus, modContainer);                                       // 1.51.0: Avatar creation system, Genesis Core (before NUItems.ITEMS.register; registers its own config)
         com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)
@@ -183,6 +184,9 @@ public class NUSMP {
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
+        com.newuniverse.nusmp.balance.DamageScaleSelfTests.register();                                      // damage scale-down: self-tests dmgscale.* (Djinn band, hit ceilings, rank table; docs/damage_scale_down.md)
+        com.newuniverse.nusmp.balance.DamageScaleEvents.register(NeoForge.EVENT_BUS);                        // damage scale-down: the last word on one hit (10,000; 15,000 for the apex weapon; Djinn band)
+        com.newuniverse.nusmp.tooltip.RankTooltip.register(NeoForge.EVENT_BUS);                              // rankings: the "Rank: X" line under the name of every item of the mod (docs/rankings.md)
         com.newuniverse.nusmp.skill.UltimateClassSelfTests.register();                                      // Ultimate classes: self-tests ultclass.* (docs/ultimate_classes.md)
         com.newuniverse.nusmp.skill.ArgonautSelfTests.register();                                           // Argonaut rework: self-tests argonaut.* (docs/argonaut_rework.md)
         com.newuniverse.nusmp.skill.ArgonautMerge.register();                                                // Argonaut rework: a Firebolt holder is moved to Argonaut at login

@@ -1,0 +1,50 @@
+{
+  "_doc": "The generic ranking table of the mod (docs/rankings.md). A rank is one of the relic grades (normal, special, rare, unique, legend, god, genesis, akashic) and, optionally, a place inside it (1 = best). Resolution order: a relic card's own grade, then items, then the djinn order, then rules (first match wins), then relics/WeaponGrades, then the tooltip category default.",
+  "djinnOrder": [
+    "baal", "paimon", "valefor", "zagan", "vinea", "amon", "focalor", "furcas", "zepar", "bifron", "marchosias", "furfur",
+    "sitri", "vassago", "bael", "belial", "andrealphus", "agares", "barbatos", "gusion", "vepar", "shax", "buer", "kimaris",
+    "amdusias", "decarabia", "seere", "dantalion", "andromalius", "glasya_labolas", "haagenti", "crocell", "balam", "alloces", "camio", "murmur"
+  ],
+  "djinnTiers": [["genesis", 3], ["god", 12], ["legend", 24], ["unique", 36]],
+  "items": {
+    "elsdocia": "genesis:1",
+    "demon_slayer_sword": "genesis:2",
+    "ea_sword_of_rupture": "genesis:3",
+    "sword_of_the_first_dawn": "genesis:4",
+    "astralis_the_eye_of_the_universe": "genesis:5",
+    "void_origin_katana": "genesis:6",
+    "blackrazor": "genesis:7",
+    "magic_emperors_black_halberd": "genesis:8",
+    "primordial_hearth_blade": "genesis:9",
+    "starsplitter_hammer": "genesis:10",
+    "gae_bolg_heartseeker": "genesis:11",
+    "starforged_aeon_bow": "genesis:12",
+    "cardinal_halo_chakram": "genesis:13",
+    "nekrathuls_pact_scythe": "genesis:14",
+    "fairy_glitter_gauntlets": "genesis:15",
+    "requiem_stand_arrow": "genesis:16",
+    "millennium_rod": "genesis:17",
+    "genesis_core": "genesis",
+    "genesis_seed": "genesis",
+    "miasma_infused_katana": "unique",
+    "demon_dweller_sword": "legend",
+    "demon_destroyer_sword": "legend",
+    "licht_dweller_sword": "legend",
+    "licht_destroyer_sword": "legend",
+    "rimeheart_runeblade": "legend",
+    "dark_rukh_shard": "legend",
+    "devils_core": "unique",
+    "grimoire": "unique",
+    "magic_key": "rare",
+    "shadow_key": "rare"
+  },
+  "rules": [
+    {"prefix": "djinn_seal_", "rank": "legend"},
+    {"prefix": "vassal_", "rank": "rare"},
+    {"prefix": "legendary_", "rank": "legend"},
+    {"suffix": "_core", "rank": "unique"},
+    {"suffix": "_key", "rank": "rare"},
+    {"prefix": "magic_tool_", "rank": "normal"},
+    {"suffix": "_spawn_egg", "rank": "normal"}
+  ]
+}

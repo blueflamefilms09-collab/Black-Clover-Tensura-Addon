@@ -1,0 +1,14 @@
+{
+  "tooltip.anime_multiverse.rank": "Rank: %s",
+  "tooltip.anime_multiverse.rank_hit": "Rank: %s  -  weapon hit %s",
+  "death.attack.anime_multiverse.djinn_water": "%1$s was swept away by a tide",
+  "death.attack.anime_multiverse.djinn_water.player": "%1$s was swept away by %2$s's tide",
+  "death.attack.anime_multiverse.djinn_wind": "%1$s was torn apart by a gale",
+  "death.attack.anime_multiverse.djinn_wind.player": "%1$s was torn apart by %2$s's gale",
+  "death.attack.anime_multiverse.djinn_life": "%1$s was overgrown by living thorns",
+  "death.attack.anime_multiverse.djinn_life.player": "%1$s was overgrown by %2$s's thorns",
+  "death.attack.anime_multiverse.djinn_light": "%1$s was burned away by holy light",
+  "death.attack.anime_multiverse.djinn_light.player": "%1$s was burned away by %2$s's light",
+  "death.attack.anime_multiverse.djinn_dark": "%1$s was swallowed by black fire",
+  "death.attack.anime_multiverse.djinn_dark.player": "%1$s was swallowed by %2$s's black fire"
+}

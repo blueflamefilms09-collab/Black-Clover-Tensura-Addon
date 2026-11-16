@@ -112,8 +112,9 @@ public final class BalanceLaw {
 
     /** Players: at most pvpHitCap of their max health per hit. Mobs: the config multiplier. */
     public static float cap(LivingEntity target, float r) {
-        if (target instanceof Player) return (float) Math.min(r, target.getMaxHealth() * com.newuniverse.nusmp.NUGameRules.pvpHitCap(target.level()));
-        return (float) (r * NUConfig.BAL_MOB_DAMAGE_MULT.get());
+        double ceiling = DamageScaleConfig.softCeiling();                          // damage scale-down: no hit of the law passes the widest ceiling (docs/damage_scale_down.md); off = no limit
+        if (target instanceof Player) return (float) Math.min(Math.min(r, target.getMaxHealth() * com.newuniverse.nusmp.NUGameRules.pvpHitCap(target.level())), ceiling);
+        return (float) Math.min(r * NUConfig.BAL_MOB_DAMAGE_MULT.get(), ceiling);
     }
 
     public static boolean isBoss(LivingEntity e) {

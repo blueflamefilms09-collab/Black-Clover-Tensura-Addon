@@ -47,6 +47,13 @@ public final class DbSkills {
         return UNIQUE.size() + ULTIMATE.size();
     }
 
+    /** The 30 holders (Uniques first, then Ultimates), for the Saiyan Prodigy's migration and arts (a copy, read only). */
+    public static List<DeferredHolder<ManasSkill, DbSkill>> allHolders() {
+        List<DeferredHolder<ManasSkill, DbSkill>> all = new java.util.ArrayList<>(UNIQUE.values());
+        all.addAll(ULTIMATE.values());
+        return all;
+    }
+
     /** Dragon Ball rework phase 1: the old skills are removed unless the server sets {@code dragonBallLegacySkills = true}. Removed = not offered, not evolved, not usable, taken from players at login. */
     public static boolean legacy() { return NUConfig.DB_LEGACY_SKILLS.get(); }
 
@@ -56,6 +63,7 @@ public final class DbSkills {
     /** Login, once per player: while the skills are removed, any of the 30 ids the player still owns is forgotten (30 map lookups, no tick work, nothing sent unless something was taken). */
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p) || legacy()) return;
+        if (com.newuniverse.nusmp.saiyan.SaiyanProdigyHub.enabled()) return;      // the Saiyan Prodigy hub keeps what a player owns (rule 2): the old ids stay owned, inert, and feed the Prodigy's arts
         Skills skills = SkillAPI.getSkillsFrom(p);
         if (skills == null) return;
         int taken = 0;

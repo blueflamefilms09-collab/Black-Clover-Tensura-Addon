@@ -63,6 +63,10 @@ public final class SaiyanCommands {
                         .then(Commands.argument("player", EntityArgument.player()).requires(s -> s.hasPermission(2))
                                 .then(Commands.argument("stage", com.mojang.brigadier.arguments.IntegerArgumentType.integer(SaiyanRaceRules.SAIYAN, SaiyanRaceRules.AUTONOMOUS))
                                         .executes(c -> setStage(c, EntityArgument.getPlayer(c, "player"), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "stage"))))))
+                .then(Commands.literal("prodigy").executes(c -> prodigy(c, c.getSource().getPlayerOrException()))          // the Saiyan Prodigy hub (docs/saiyan_prodigy.md)
+                        .then(Commands.literal("grant").requires(s -> s.hasPermission(2))
+                                .then(Commands.argument("player", EntityArgument.player()).executes(c -> prodigyGrant(c, EntityArgument.getPlayer(c, "player"))))))
+                .then(Commands.literal("blood").executes(c -> blood(c, c.getSource().getPlayerOrException())))             // progress of the Human to Saiyan evolution
                 .then(Commands.literal("awaken").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player()).executes(c -> awaken(c, EntityArgument.getPlayer(c, "player")))))
                 .then(Commands.literal("bp").requires(s -> s.hasPermission(2))
@@ -95,6 +99,28 @@ public final class SaiyanCommands {
         if (s == null || !s.saiyan) return no(c, p.getGameProfile().getName() + " is not a Saiyan.");
         SaiyanRace.set(p, s, stage);
         return say(c, p.getGameProfile().getName() + " is now at race stage " + stage + " (" + SaiyanRaceRules.name(stage) + ").");
+    }
+
+    // ---- the Saiyan Prodigy and the Saiyan-blooded evolution
+    private static int prodigy(CommandContext<CommandSourceStack> c, ServerPlayer p) {
+        if (!SaiyanProdigyHub.enabled()) return no(c, "The Saiyan Prodigy hub is off on this server (prodigy.prodigyHub = false): the old Saiyan keys work as before.");
+        boolean has = SaiyanProdigyHub.ownsProdigy(p);
+        return say(c, "Saiyan Prodigy: " + (has ? "you have it. Slot it, press its key for the mode, and the mode key to change the mode." : "you do not have it yet (a Saiyan gets it with the blood: /saiyan blood shows the evolution from Human).")
+                + " Modes: " + SaiyanProdigyModes.BUNDLE.size() + ".");
+    }
+
+    private static int prodigyGrant(CommandContext<CommandSourceStack> c, ServerPlayer p) {
+        return SaiyanProdigyHub.grant(p) ? say(c, "Gave the Saiyan Prodigy to " + p.getGameProfile().getName() + ".") : no(c, p.getGameProfile().getName() + " has it already, or it could not be given.");
+    }
+
+    private static int blood(CommandContext<CommandSourceStack> c, ServerPlayer p) {
+        if (!SaiyanProdigyConfig.bloodEvolution()) return no(c, "The Saiyan-blooded evolution is off on this server (blood.bloodEvolution = false).");
+        if (SaiyanStore.isSaiyan(p)) return say(c, "You already have the Saiyan blood.");
+        double pr = SaiyanBlood.progress(p);
+        if (pr < 0) return no(c, "Only a Human can evolve into a Saiyan-blooded.");
+        int[] n = SaiyanBlood.counters(p);
+        return say(c, "Saiyan-blooded evolution: " + Math.round(pr) + "% (worthy foes " + n[0] + "/" + SaiyanProdigyConfig.bloodKills() + ", edge-of-death survivals " + n[1] + "/" + SaiyanProdigyConfig.bloodNearDeath()
+                + ", existence points " + (int) SaiyanProdigyConfig.bloodEp() + "). At 100% evolve in Tensura's evolution screen.");
     }
 
     private static int say(CommandContext<CommandSourceStack> c, String text) {

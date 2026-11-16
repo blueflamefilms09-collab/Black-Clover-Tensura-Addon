@@ -116,6 +116,7 @@ public final class SaiyanManager {
         }
         SaiyanAttributes.apply(p, SaiyanConfig.bonuses(s.battlePower), SaiyanConfig.kiBase());
         r.applied = true;
+        SaiyanProdigyHub.second(p, s);          // the small permanent gifts of the Saiyan-blooded (docs/saiyan_prodigy.md)
         double max = staminaMax(s);
         if (s.stamina < 0.0) s.stamina = max;
         s.stamina = SaiyanRules.stamina(s.stamina, SaiyanConfig.staminaRegen() * (p.isSprinting() ? 1.0 / 3.0 : 1.0), max);
@@ -368,6 +369,7 @@ public final class SaiyanManager {
         endLook(p, RUN.remove(p.getUUID()));
         SaiyanRitual.end(p);
         SaiyanAttributes.clear(p);
+        SaiyanProdigyHub.clearPerks(p);
         SaiyanFlight.release(p);
     }
 
@@ -386,6 +388,7 @@ public final class SaiyanManager {
         if (on) {
             onEnter(p);
             SaiyanRaceLink.afterFlag(p, true);          // the real Tensura race follows the flag (phase.race.tensuraRace)
+            SaiyanProdigyHub.onSaiyan(p);               // the Saiyan Prodigy comes with the blood (prodigy.prodigyHub)
             return;
         }
         s.awakened = false;

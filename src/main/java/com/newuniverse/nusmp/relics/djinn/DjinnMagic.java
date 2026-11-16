@@ -121,17 +121,25 @@ final class DjinnMagic {
         }
     }
 
+    /** The damage types of the Extreme Magics of water, wind, life and light Djinn (data/anime_multiverse/tags/damage_type/is_djinn_*.json): their bearers' calm answers to them. */
+    private static final net.minecraft.tags.TagKey<net.minecraft.world.damagesource.DamageType> ELEMENT_WATER = elementTag("is_djinn_water"), ELEMENT_WIND = elementTag("is_djinn_wind"),
+            ELEMENT_LIFE = elementTag("is_djinn_life"), ELEMENT_LIGHT = elementTag("is_djinn_light");
+
+    private static net.minecraft.tags.TagKey<net.minecraft.world.damagesource.DamageType> elementTag(String path) {
+        return net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", path));
+    }
+
     /** The share of a damage source the bearer's elemental calm takes away (Half Equip half of it): a Heat Djinn's bearer shrugs off fire. */
     static double resist(Djinn d, DamageSource src, int phase) {
         double f = switch (d.affinity()) {
             case HEAT -> src.is(DamageTypeTags.IS_FIRE) ? 0.8 : 0.0;
             case LIGHTNING -> src.is(DamageTypeTags.IS_LIGHTNING) ? 0.8 : 0.0;
-            case WATER -> src.is(DamageTypeTags.IS_DROWNING) ? 1.0 : 0.0;
-            case WIND -> src.is(DamageTypeTags.IS_FALL) ? 1.0 : 0.0;
-            case LIFE -> src.is(DamageTypes.WITHER) || src.is(DamageTypes.MAGIC) ? 0.4 : 0.0;
+            case WATER -> src.is(DamageTypeTags.IS_DROWNING) ? 1.0 : src.is(ELEMENT_WATER) ? 0.8 : 0.0;
+            case WIND -> src.is(DamageTypeTags.IS_FALL) ? 1.0 : src.is(ELEMENT_WIND) ? 0.8 : 0.0;
+            case LIFE -> src.is(DamageTypes.WITHER) || src.is(DamageTypes.MAGIC) || src.is(ELEMENT_LIFE) ? 0.4 : 0.0;
             case STRENGTH -> src.is(DamageTypeTags.IS_EXPLOSION) ? 0.4 : 0.0;
             case SOUND -> src.is(DamageTypes.SONIC_BOOM) ? 0.8 : 0.0;
-            case LIGHT -> src.is(DamageTypes.MAGIC) ? 0.25 : 0.0;
+            case LIGHT -> src.is(DamageTypes.MAGIC) || src.is(ELEMENT_LIGHT) ? 0.25 : 0.0;
         };
         return phase >= DjinnPhaseRules.FULL ? f : f * 0.5;
     }
@@ -278,7 +286,14 @@ final class DjinnMagic {
         if (n >= cap) return false;
         r.hits.put(t.getUUID(), n + 1);
         Djinn.Extreme x = r.djinn.extreme();
-        Fx.damageHeavy(p, t, (float) (DarkRules.extremeDamage(x.damage(), r.dark) * scale), DjinnFx.damageType(r.djinn.affinity()));
+        String elementType = com.newuniverse.nusmp.balance.DamageScaleConfig.extremeTypes() ? DjinnExtremeTypes.typeId(r.djinn.id()) : null;                  // the damage type of the Djinn's own element or concept (damage scale-down; setting extremeElementTypes)
+        int rank = com.newuniverse.nusmp.relics.Rankings.djinnRank(r.djinn.id()), count = com.newuniverse.nusmp.relics.Rankings.djinnCount();
+        com.newuniverse.nusmp.balance.DamageScale.beginExtreme(rank > 0 ? rank : count, count);                                                                 // the per-hit ceiling follows the Djinn's rank (balance.DamageScaleEvents)
+        try {
+            Fx.damageHeavy(p, t, (float) (DarkRules.extremeDamage(x.damage(), r.dark) * scale), elementType != null ? elementType : DjinnFx.damageType(r.djinn.affinity()));
+        } finally {
+            com.newuniverse.nusmp.balance.DamageScale.endExtreme();
+        }
         if (!x.effectId().isEmpty()) {
             int ticks = x.effectAmp() >= 2 ? BalanceLaw.controlTicks(t, x.effectTicks()) : x.effectTicks();
             DjinnFx.effect(t, x.effectId(), ticks, x.effectAmp());

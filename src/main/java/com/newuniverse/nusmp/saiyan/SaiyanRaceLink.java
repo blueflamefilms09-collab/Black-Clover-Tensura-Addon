@@ -73,6 +73,7 @@ final class SaiyanRaceLink {
         try {
             ResourceLocation id = SaiyanRaces.id();
             apply(p, SaiyanRaceRules.onSetRace(true, SaiyanStore.isSaiyan(p), old != null && id.equals(old.getRaceId()), now != null && id.equals(now.getRaceId())));
+            if (evolution && now != null && id.equals(now.getRaceId())) SaiyanProdigyHub.onEvolved(p);          // the Saiyan-blooded evolution: the Ki awakens at once (prodigy.evolutionAwakens)
         } catch (RuntimeException | LinkageError e) {
             LOG.warn("Saiyan race link: the race change of {} was not mirrored to the flag ({})", p.getGameProfile().getName(), e.toString());
         }

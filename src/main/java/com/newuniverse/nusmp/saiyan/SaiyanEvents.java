@@ -34,6 +34,7 @@ public final class SaiyanEvents {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         SaiyanManager.onEnter(p);
         SaiyanRaceLink.onLogin(p);          // the real Tensura race and the flag agree (server setting phase.race.tensuraRace)
+        SaiyanProdigyHub.onLogin(p);        // the Saiyan Prodigy, once, for a Saiyan and for an owner of the old Dragon Ball skills (server setting prodigy.prodigyHub)
     }
 
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { if (e.getEntity() instanceof ServerPlayer p) SaiyanManager.onLogout(p); }
