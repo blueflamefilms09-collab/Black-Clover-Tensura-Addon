@@ -526,7 +526,7 @@ public enum VfxShape {
     SKILL_WINGS,
     SKILL_SIGIL,
     // ===== VFX wave 4 block (SkillAnimeLayer2, docs/vfx_remake/skill_anime_wave4.md): appended after SKILL_SIGIL, sent by skill/SkillAnimeFx2 only; the client setting skills.classicVfx2
-    // (nusmp-skill-anime-vfx-client.toml) draws nothing for them. Other families may be appended after ANIME2_GRIMOIRE; keep this block together and do not reorder it.
+    // (nusmp-skill-anime-vfx-client.toml) draws nothing for them. Other families may be appended after ANIME2_GRIMOIRE, keep this block together and do not reorder it.
     // ANIME2_SKILL a skill's signature at from (power = style + 1, SkillAnimeVfx2.SKILL_STYLES; the from -> to distance = radius or direction, see the style): Liaris Freese, Hati, Hawk Eye, Spirit Card,
     // summon cards, Shishou, the Gate's Armour / Vimana / King / Elixir, the Devil's Kick, The Almighty, The Visionary.
     // ANIME2_BEAST a Beast Will move (power = family * 20 + element + 0.5 for a finisher; family = SkillAnimeVfx2.BEAST_FAMILIES, element = SkillAnimeVfx2.ELEMENTS; from -> to = the move's line or area).
@@ -535,7 +535,10 @@ public enum VfxShape {
     ANIME2_SKILL,
     ANIME2_BEAST,
     ANIME2_HERO,
-    ANIME2_GRIMOIRE;
+    ANIME2_GRIMOIRE,
+    // ---- Dragon Ball rework (Giant Ki Avatar), appended after SKILL_SIGIL: a translucent silver Ki giant that follows the player (from = the feet, power = its height in blocks, duration = how long it stands).
+    // Drawn by vfx.client.layer.GiantAvatarLayer; sent by saiyan.SaiyanTechniques4. Other workers append their shapes after this block.
+    GIANT_AVATAR;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

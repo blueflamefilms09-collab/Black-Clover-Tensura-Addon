@@ -75,7 +75,7 @@ final class SaiyanTechniques3 {
     }
 
     /** The nearest foe in front of the Saiyan inside {@code range}: one query, at most {@link SaiyanAbilities#MAX_CANDIDATES} looked at. */
-    private static LivingEntity lockFoe(ServerPlayer p, double range) {
+    static LivingEntity lockFoe(ServerPlayer p, double range) {
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         List<LivingEntity> near = p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(eye, eye.add(look.scale(range))).inflate(2.5), e -> e != p && e.isAlive() && !(e instanceof ArmorStand));
         LivingEntity best = null;

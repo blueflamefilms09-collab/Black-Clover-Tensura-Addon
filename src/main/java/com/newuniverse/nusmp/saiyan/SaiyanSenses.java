@@ -112,6 +112,7 @@ final class SaiyanSenses {
         int seen = 0;
         for (LivingEntity e : near) {
             if (++seen > SaiyanSenseRules.MAX_CANDIDATES) break;
+            if (SaiyanPhaseConfig.godKiMask() && SaiyanRace.hasGodKi(e) && !SaiyanRace.hasGodKi(p)) continue;      // God Ki is not felt by a Saiyan who has none
             boolean hidden = e instanceof ServerPlayer sp && suppressed(sp);
             if (SaiyanSenseRules.detectable(Math.sqrt(p.distanceToSqr(e)), radius, hidden, e.isInvisible(), e.isShiftKeyDown())) felt.add(e);
         }

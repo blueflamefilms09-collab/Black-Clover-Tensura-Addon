@@ -31,16 +31,18 @@ final class SaiyanFormEngine {
     /** The outgoing damage factor of the active form (1.0 in Base). */
     static double damageFactor(SaiyanState s, SaiyanManager.Run r) {
         SaiyanForms.Form f = active(r);
-        if (f == null) return 1.0;
+        double reinforce = SaiyanTechniques4.damageMul(r);
+        if (f == null) return reinforce;
         double bonus = SaiyanConfig.formDamage(f) * effect(s, f);
         if (f == SaiyanForms.KAIOKEN) bonus *= SaiyanForms.kaioDamageMul(r.kaioStage);
-        return 1.0 + bonus;
+        return (1.0 + bonus) * reinforce;
     }
 
     /** The share of incoming damage that still goes through in the active form (1.0 in Base). */
     static double takenFactor(SaiyanState s, SaiyanManager.Run r) {
         SaiyanForms.Form f = active(r);
-        return f == null ? 1.0 : 1.0 / (1.0 + SaiyanConfig.formDefense(f) * effect(s, f));
+        double reinforce = SaiyanTechniques4.takenMul(r);
+        return f == null ? reinforce : reinforce / (1.0 + SaiyanConfig.formDefense(f) * effect(s, f));
     }
 
     /** The unlocked forms in roster order. */
@@ -130,7 +132,7 @@ final class SaiyanFormEngine {
             return false;
         }
         r.form = f.id();
-        r.kaioStage = f == SaiyanForms.KAIOKEN ? SaiyanForms.kaioMaxStage(s.mastery(f.id())) : 1;
+        r.kaioStage = f == SaiyanForms.KAIOKEN ? SaiyanPhaseRules.kaioMaxStage(s.mastery(f.id()), SaiyanPhaseConfig.kaiokenExtra()) : 1;
         double e = effect(s, f);
         SaiyanAttributes.applyForm(p, f.speed() * e, f.attackSpeed() * e);
         r.dirty = true;
@@ -193,7 +195,7 @@ final class SaiyanFormEngine {
             return;
         }
         double mastery = s.mastery(f.id());
-        double pct = SaiyanConfig.formDrain(f) * SaiyanForms.drainFactor(mastery) * (kaio ? SaiyanForms.kaioDrainMul(r.kaioStage) : 1.0);
+        double pct = SaiyanConfig.formDrain(f) * SaiyanPhaseRules.drainFactor(f.id(), mastery) * (kaio ? SaiyanForms.kaioDrainMul(r.kaioStage) : 1.0);
         if (!SaiyanKi.pay(p, pct)) {
             deactivate(p, s, r, now, "form_exhausted");
             return;

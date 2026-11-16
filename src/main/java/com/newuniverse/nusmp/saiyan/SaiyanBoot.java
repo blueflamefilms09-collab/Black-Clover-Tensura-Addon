@@ -21,6 +21,7 @@ public final class SaiyanBoot {
         done = true;
         SaiyanStore.ATTACHMENTS.register(modBus);
         container.registerConfig(ModConfig.Type.SERVER, SaiyanConfig.SPEC, "nusmp-saiyan-server.toml");
+        container.registerConfig(ModConfig.Type.SERVER, SaiyanPhaseConfig.SPEC, "nusmp-saiyan-phase2-server.toml");      // Dragon Ball rework (phases 2 to 6, Giant Ki Avatar)
         modBus.addListener(SaiyanNet::registerPayloads);
         SaiyanEvents.register(NeoForge.EVENT_BUS);
         SaiyanCommands.register(NeoForge.EVENT_BUS);
@@ -29,6 +30,7 @@ public final class SaiyanBoot {
         SaiyanTechSelfTests.register();
         SaiyanTech3SelfTests.register();
         SaiyanLookSelfTests.register();
+        SaiyanPhaseSelfTests.register();                // Dragon Ball rework: db.phase2.* and saiyan.t3.*
         SaiyanKiFx.registerSelfTests();                 // the anime Ki effects (KiLayer): saiyan.kivfx
     }
 }

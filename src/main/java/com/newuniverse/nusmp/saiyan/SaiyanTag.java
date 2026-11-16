@@ -56,6 +56,8 @@ public final class SaiyanTag {
         t.putDouble("strain", s.strain);
         t.putDouble("formToday", s.formSecondsToday);
         t.putLong("formDay", s.formDay);
+        t.putInt("raceStage", s.raceStage);
+        t.putInt("gravitySecs", s.gravitySecs);
         return t;
     }
 
@@ -118,6 +120,8 @@ public final class SaiyanTag {
         s.strain = SaiyanRules.clamp(t.getDouble("strain"), 0.0, 100.0);
         s.formSecondsToday = SaiyanRules.clamp(t.getDouble("formToday"), 0.0, 1.0e6);
         s.formDay = t.contains("formDay") ? t.getLong("formDay") : -1;
+        s.raceStage = SaiyanRaceRules.clampStage(t.getInt("raceStage"));
+        s.gravitySecs = Math.max(0, Math.min(10_000_000, t.getInt("gravitySecs")));
         return s;
     }
 

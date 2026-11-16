@@ -301,6 +301,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnimeLayer());
         // VFX wave 4: the wave 3 leftovers, the Beast Will moves, the hero weapon skills and the weakest grimoires: four style-driven shapes (ANIME2_SKILL ... ANIME2_GRIMOIRE), appended after SKILL_SIGIL; skills.classicVfx2 = true draws nothing for them.
         register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnime2Layer());
+        // Dragon Ball rework: the Giant Ki Avatar (GIANT_AVATAR), appended after SKILL_SIGIL; saiyan.classicVfx = true draws nothing for it.
+        register(new com.newuniverse.nusmp.vfx.client.layer.GiantAvatarLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

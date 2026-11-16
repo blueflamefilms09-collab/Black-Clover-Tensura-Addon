@@ -23,6 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class SaiyanSourceScanTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
+
+    /** The language file plus the Dragon Ball rework fragment (tools/lang/db_phase2.json is merged into en_us.json by the coordinator at release, like the other fragments). */
+    private static String lang() throws IOException {
+        String base = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
+        Path frag = ROOT.resolve("tools/lang/db_phase2.json");
+        return Files.exists(frag) ? base + Files.readString(frag, StandardCharsets.UTF_8) : base;
+    }
     private static final Path DIR = ROOT.resolve("src/main/java/com/newuniverse/nusmp/saiyan");
 
     private static String code(String file) throws IOException {
@@ -62,7 +69,7 @@ class SaiyanSourceScanTest {
     @Test
     void anAttackNeverPlacesABlockSpawnsAnEntityOrLoadsAChunk() throws IOException {
         Pattern bad = Pattern.compile("addFreshEntity|\\.setBlock\\(|setBlockAndUpdate|destroyBlock|getChunk\\(|forceChunk|setChunkForced|loadChunk|\\.explode\\(|Explosion|LightningBolt|createEntity|\\.spawn\\(|EntityType\\.[A-Z_]+\\.create");
-        for (String f : files()) if (!f.equals("SaiyanSelfTests.java") && !f.equals("SaiyanTechSelfTests.java") && !f.equals("SaiyanTech3SelfTests.java")) assertFalse(bad.matcher(code(f)).find(), f + " places a block, spawns an entity, loads a chunk or explodes: a Ki attack is a raycast and a few particles");
+        for (String f : files()) if (!f.equals("SaiyanSelfTests.java") && !f.equals("SaiyanTechSelfTests.java") && !f.equals("SaiyanTech3SelfTests.java") && !f.equals("SaiyanPhaseSelfTests.java")) assertFalse(bad.matcher(code(f)).find(), f + " places a block, spawns an entity, loads a chunk or explodes: a Ki attack is a raycast and a few particles");
     }
 
     @Test
@@ -105,7 +112,7 @@ class SaiyanSourceScanTest {
 
     @Test
     void everyTextKeyTheSaiyanCodeUsesIsInTheLanguageFile() throws IOException {
-        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
+        String lang = lang();
         List<String> keys = new ArrayList<>();
         for (SaiyanRules.Rank r : SaiyanRules.Rank.values()) keys.add(r.key());
         for (String m : List.of("not_awakened", "no_ki", "no_stamina", "awakened", "rank_up")) keys.add("anime_multiverse.saiyan.msg." + m);
@@ -183,7 +190,7 @@ class SaiyanSourceScanTest {
 
     @Test
     void everyStage2TextKeyIsInTheLanguageFile() throws IOException {
-        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/anime_multiverse/lang/en_us.json"), StandardCharsets.UTF_8);
+        String lang = lang();
         List<String> keys = new ArrayList<>();
         for (SaiyanForms.Form f : SaiyanForms.ALL) keys.add(f.key());
         for (SaiyanFlightRules.Tier t : SaiyanFlightRules.Tier.values()) keys.add(t.key());

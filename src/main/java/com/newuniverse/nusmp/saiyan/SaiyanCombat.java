@@ -44,6 +44,7 @@ final class SaiyanCombat {
         r.lastCombat = now;
         boolean attacked = src.getEntity() != null || src.getDirectEntity() != null;
         if (attacked && e.getAmount() > 0f && dodge(e, v, s, r, now)) return;
+        if (attacked && e.getAmount() > 0f && SaiyanTechniques4.defend(e, v, s, r, now)) return;          // Dragon Ball rework: Warrior's Counter, Afterimage
 
         double resist = 0.0;
         if (attacked) {

@@ -58,6 +58,11 @@ public final class SaiyanCommands {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.literal("on").executes(c -> race(c, EntityArgument.getPlayer(c, "player"), true)))
                                 .then(Commands.literal("off").executes(c -> race(c, EntityArgument.getPlayer(c, "player"), false)))))
+                .then(Commands.literal("ritual").executes(c -> ritual(c, c.getSource().getPlayerOrException())))
+                .then(Commands.literal("stage").executes(c -> stage(c, c.getSource().getPlayerOrException()))
+                        .then(Commands.argument("player", EntityArgument.player()).requires(s -> s.hasPermission(2))
+                                .then(Commands.argument("stage", com.mojang.brigadier.arguments.IntegerArgumentType.integer(SaiyanRaceRules.SAIYAN, SaiyanRaceRules.AUTONOMOUS))
+                                        .executes(c -> setStage(c, EntityArgument.getPlayer(c, "player"), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "stage"))))))
                 .then(Commands.literal("awaken").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player()).executes(c -> awaken(c, EntityArgument.getPlayer(c, "player")))))
                 .then(Commands.literal("bp").requires(s -> s.hasPermission(2))
@@ -66,6 +71,30 @@ public final class SaiyanCommands {
                                         .executes(c -> bp(c, EntityArgument.getPlayer(c, "player"), DoubleArgumentType.getDouble(c, "value"), false))))
                                 .then(Commands.literal("add").then(Commands.argument("value", DoubleArgumentType.doubleArg(-SaiyanRules.BP_HARD_CAP, SaiyanRules.BP_HARD_CAP))
                                         .executes(c -> bp(c, EntityArgument.getPlayer(c, "player"), DoubleArgumentType.getDouble(c, "value"), true)))))));
+    }
+
+    // ---- Dragon Ball rework: the Super Saiyan God ritual and the race stage
+    private static int ritual(CommandContext<CommandSourceStack> c, ServerPlayer p) {
+        SaiyanState s = SaiyanStore.peek(p);
+        if (s == null || !s.saiyan) return no(c, "You are not a Saiyan.");
+        return SaiyanRitual.start(p, s, SaiyanManager.runOf(p), p.level().getGameTime()) ? say(c, "The ritual begins: " + SaiyanPhaseConfig.ritualHelpers() + " other players must stand in a ring 3 to 7 blocks away and sneak.") : 0;
+    }
+
+    private static int stage(CommandContext<CommandSourceStack> c, ServerPlayer p) {
+        SaiyanState s = SaiyanStore.peek(p);
+        if (s == null || !s.saiyan) return no(c, "You are not a Saiyan.");
+        int st = Math.max(SaiyanRaceRules.SAIYAN, s.raceStage);
+        StringBuilder out = new StringBuilder("Race stage " + st + ": " + SaiyanRaceRules.name(st) + (SaiyanPhaseConfig.realRace() ? "" : " (the stages are off on this server: phase.race.realRace)"));
+        List<String> missing = SaiyanRaceRules.missing(st, SaiyanPhaseConfig.raceNeed(), new SaiyanRaceRules.Progress(s.battlePower, s.zenkai, s.unlocked, s.flags));
+        if (!missing.isEmpty()) out.append(". Next stage needs: ").append(String.join(", ", missing));
+        return say(c, out.toString());
+    }
+
+    private static int setStage(CommandContext<CommandSourceStack> c, ServerPlayer p, int stage) {
+        SaiyanState s = SaiyanStore.peek(p);
+        if (s == null || !s.saiyan) return no(c, p.getGameProfile().getName() + " is not a Saiyan.");
+        SaiyanRace.set(p, s, stage);
+        return say(c, p.getGameProfile().getName() + " is now at race stage " + stage + " (" + SaiyanRaceRules.name(stage) + ").");
     }
 
     private static int say(CommandContext<CommandSourceStack> c, String text) {

@@ -115,6 +115,10 @@ public final class SaiyanNet {
     static boolean valid(int op) { return op >= OP_BLAST && op <= OP_ENERGY; }
 
     static void onAction(ServerPlayer p, int op) {
+        if (SaiyanNet2.valid(op)) {                                  // the Dragon Ball rework range (22 to 35) has its own range check
+            SaiyanManager.onActionPhase(p, op);
+            return;
+        }
         if (!valid(op)) return;
         SaiyanManager.onAction(p, op);
     }

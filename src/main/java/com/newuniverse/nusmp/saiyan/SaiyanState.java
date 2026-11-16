@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public final class SaiyanState {
     public static final int MAX_RECENT = 24;
-    public static final int MAX_COOLDOWNS = 16;
+    public static final int MAX_COOLDOWNS = 32;
 
     public boolean saiyan, awakened;
     /** Stamina; negative = never set (full on the first look). */
@@ -52,6 +52,8 @@ public final class SaiyanState {
     public double strain;
     public double formSecondsToday;
     public long formDay = -1;
+    /** Dragon Ball rework (phase 2 and 3): the race stage (0 = not set, see {@link SaiyanRaceRules}) and the seconds of gravity training done, saved. */
+    public int raceStage, gravitySecs;
 
     public int uses(String tech) { return uses.getOrDefault(tech, 0); }
 
@@ -205,6 +207,6 @@ public final class SaiyanState {
     /** True when nothing is worth saving (not a Saiyan and no progress): the attachment is then not written. */
     public boolean isEmpty() {
         return !saiyan && !awakened && battlePower <= SaiyanRules.START_BP + 1.0e-9 && uses.isEmpty() && zenkai == 0 && ultimate.isEmpty() && hardMartialKills == 0 && trialKills == 0
-                && training.isEmpty() && formMastery.isEmpty() && unlocked.isEmpty() && flags.isEmpty() && strain <= 0.0;
+                && training.isEmpty() && formMastery.isEmpty() && unlocked.isEmpty() && flags.isEmpty() && strain <= 0.0 && raceStage == 0 && gravitySecs == 0;
     }
 }

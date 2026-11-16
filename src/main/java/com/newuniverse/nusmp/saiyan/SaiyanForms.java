@@ -124,14 +124,14 @@ public final class SaiyanForms {
     /** The highest Kaio-ken stage a Saiyan can enter: x2 at once, x3 from a third mastery, x4 from two thirds. */
     public static int kaioMaxStage(double mastery) { return 1 + (mastery >= 0.34 ? 1 : 0) + (mastery >= 0.67 ? 1 : 0); }
 
-    public static double kaioDamageMul(int stage) { return new double[] {1.0, 1.5, 2.0}[clampStage(stage) - 1]; }
+    public static double kaioDamageMul(int stage) { return new double[] {1.0, 1.5, 2.0, 3.0, 4.0}[clampStage(stage) - 1]; }
 
-    public static double kaioDrainMul(int stage) { return new double[] {1.0, 1.6, 2.4}[clampStage(stage) - 1]; }
+    public static double kaioDrainMul(int stage) { return new double[] {1.0, 1.6, 2.4, 3.5, 5.0}[clampStage(stage) - 1]; }
 
     /** Strain points a second (0..100 fills the bar): a hundred seconds at x2, about twenty-five at x4. */
-    public static double kaioStrainRate(int stage) { return new double[] {1.0, 2.2, 4.0}[clampStage(stage) - 1]; }
+    public static double kaioStrainRate(int stage) { return new double[] {1.0, 2.2, 4.0, 9.0, 18.0}[clampStage(stage) - 1]; }
 
-    private static int clampStage(int s) { return Math.max(1, Math.min(3, s)); }
+    private static int clampStage(int s) { return Math.max(1, Math.min(5, s)); }  // stages 4 and 5 (x10, x20) are reachable only with the server switch phase.owner_decisions.kaiokenExtraStages
 
     /** The strain after {@code seconds}: it rises while Kaio-ken is on and falls (two points a second) while it is off. */
     public static double strainAfter(double strain, boolean active, int stage, double seconds) {

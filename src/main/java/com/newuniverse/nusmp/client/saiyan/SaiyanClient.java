@@ -10,6 +10,7 @@ import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import com.newuniverse.nusmp.saiyan.SaiyanFlightRules;
 import com.newuniverse.nusmp.saiyan.SaiyanForms;
 import com.newuniverse.nusmp.saiyan.SaiyanNet;
+import com.newuniverse.nusmp.saiyan.SaiyanNet2;
 import com.newuniverse.nusmp.saiyan.SaiyanRules;
 import com.newuniverse.nusmp.saiyan.SaiyanSenseRules;
 import net.minecraft.client.DeltaTracker;
@@ -71,6 +72,11 @@ public final class SaiyanClient {
     public static final KeyMapping BIND = new KeyMapping("key.anime_multiverse.saiyan_god_bind", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_2, CATEGORY);
     public static final KeyMapping DEFLECT = new KeyMapping("key.anime_multiverse.saiyan_ki_deflection", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_3, CATEGORY);
     public static final KeyMapping ENERGY = new KeyMapping("key.anime_multiverse.saiyan_energy_transfer", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_4, CATEGORY);
+    // Dragon Ball rework (SaiyanNet2): the technique key pair (cycle, use), the Ki Wave (hold, release) and the branch key (a server switch decides if it does anything; G stays Ki Flight)
+    public static final KeyMapping TECH_NEXT = new KeyMapping("key.anime_multiverse.saiyan_tech_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_6, CATEGORY);
+    public static final KeyMapping TECH_USE = new KeyMapping("key.anime_multiverse.saiyan_tech_use", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_5, CATEGORY);
+    public static final KeyMapping WAVE = new KeyMapping("key.anime_multiverse.saiyan_ki_wave", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_7, CATEGORY);
+    public static final KeyMapping BRANCH = new KeyMapping("key.anime_multiverse.saiyan_branch", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, CATEGORY);
     public static final KeyMapping FORM = new KeyMapping("key.anime_multiverse.saiyan_form", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_GRAVE_ACCENT, CATEGORY);
     public static final KeyMapping FORM_NEXT = new KeyMapping("key.anime_multiverse.saiyan_form_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, CATEGORY);
     public static final KeyMapping FORM_PREV = new KeyMapping("key.anime_multiverse.saiyan_form_prev", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN, CATEGORY);
@@ -84,7 +90,9 @@ public final class SaiyanClient {
     private static volatile SaiyanNet.Ping ping;
     private static long pingUntil;
     /** True while the Kamehameha key is held (so a release is sent exactly once). */
-    private static boolean kameHeld, spiritHeld;
+    private static boolean kameHeld, spiritHeld, waveHeld;
+    /** The technique the cycle key points at (an index into {@link SaiyanNet2#CYCLE}). */
+    private static int techIndex;
     /** Tensura layer names already written to the log (so the owner can see the real ids if the bar is not hidden). */
     private static final Set<String> SEEN = new HashSet<>();
 
@@ -107,6 +115,10 @@ public final class SaiyanClient {
             e.register(BIND);
             e.register(DEFLECT);
             e.register(ENERGY);
+            e.register(TECH_NEXT);
+            e.register(TECH_USE);
+            e.register(WAVE);
+            e.register(BRANCH);
             e.register(FORM);
             e.register(FORM_NEXT);
             e.register(FORM_PREV);
@@ -125,6 +137,7 @@ public final class SaiyanClient {
         ping = null;
         kameHeld = false;
         spiritHeld = false;
+        waveHeld = false;
     }
 
     private static void onPing(SaiyanNet.Ping p) {
@@ -177,6 +190,7 @@ public final class SaiyanClient {
         press(BIND, can, now, SaiyanNet.OP_BIND);
         press(DEFLECT, can, now, SaiyanNet.OP_DEFLECT);
         press(ENERGY, can, now, SaiyanNet.OP_ENERGY);
+        techKeys(can, now);
         SaiyanNet.Ping pg = ping;
         if (pg != null && now > pingUntil) ping = null;
     }
@@ -206,6 +220,27 @@ public final class SaiyanClient {
         } else if (!down && spiritHeld) {
             spiritHeld = false;
             PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet.OP_SPIRIT_RELEASE));
+        }
+    }
+
+    /** Dragon Ball rework: the cycle key moves along the techniques and says which one it points at, the use key sends it, the wave key holds and releases, the branch key asks the server (which ignores it unless its switch is on). */
+    private static void techKeys(boolean can, long now) {
+        Minecraft mc = Minecraft.getInstance();
+        while (TECH_NEXT.consumeClick()) {
+            techIndex = (techIndex + 1) % SaiyanNet2.CYCLE.length;
+            if (mc.player != null) mc.player.displayClientMessage(Component.translatable(SaiyanNet2.nameKey(SaiyanNet2.CYCLE[techIndex])), true);
+        }
+        press(TECH_USE, can, now, SaiyanNet2.CYCLE[techIndex]);
+        press(BRANCH, can, now, SaiyanNet2.OP_BRANCH);
+        while (WAVE.consumeClick()) { /* the held state below is what counts */ }
+        boolean down = can && WAVE.isDown();
+        if (down && !waveHeld) {
+            waveHeld = true;
+            lastAsk = now;
+            PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet2.OP_WAVE_START));
+        } else if (!down && waveHeld) {
+            waveHeld = false;
+            PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet2.OP_WAVE_RELEASE));
         }
     }
 

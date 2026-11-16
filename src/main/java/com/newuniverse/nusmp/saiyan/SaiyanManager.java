@@ -65,6 +65,8 @@ public final class SaiyanManager {
         final SaiyanTechniques.State tech = new SaiyanTechniques.State();
         // ---- 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer
         final SaiyanTechniques3.State tech3 = new SaiyanTechniques3.State();
+        // ---- Dragon Ball rework (phases 3 and 4, Giant Ki Avatar, the SSG ritual, the race stage buff)
+        final SaiyanTechniques4.State tech4 = new SaiyanTechniques4.State();
     }
 
     private static final Map<UUID, Run> RUN = new ConcurrentHashMap<>();
@@ -95,6 +97,7 @@ public final class SaiyanManager {
         if (r.tech.bombFlying) SaiyanTechniques.flightTick(p, s, r, now);
         if (r.tech.meteorLeft > 0) SaiyanTechniques.meteorTick(p, s, r, now);
         if (r.tech3.busy()) SaiyanTechniques3.tick(p, s, r, now);
+        if (r.tech4.busy(now)) SaiyanTechniques4.tick(p, s, r, now);
         if (r.radarLeft > 0) SaiyanSenses.radarTick(p, s, r, now);
         if (!r.form.isEmpty() && (p.tickCount % 10) == 0) SaiyanFormEngine.aura(p, r);
         if (r.dirty && now - r.lastSent >= 5) send(p, s, r, now);
@@ -123,6 +126,7 @@ public final class SaiyanManager {
         SaiyanFormEngine.second(p, s, r, now);
         SaiyanCombat.second(p, s, r, now);
         GokuAbilities.second(r, now);
+        SaiyanTechniques4.second(p, s, r, now);
         SaiyanTechniques.second(p, r, now);
         if ((p.tickCount % 100) == 0) GokuAbilities.awakeningCheck(p, s, r);
         r.lx = p.getX();
@@ -142,6 +146,7 @@ public final class SaiyanManager {
         GokuAbilities.cancel(r);
         SaiyanTechniques.cancel(r);
         SaiyanTechniques3.cancel(r);
+        SaiyanTechniques4.cancel(p, r);
         r.radarLeft = 0;
         r.suppressed = false;
         r.comboStage = 0;
@@ -213,6 +218,27 @@ public final class SaiyanManager {
             default -> false;
         };
         if (did) r.dirty = true;
+    }
+
+    /** An ask of the Dragon Ball rework range ({@link SaiyanNet2}): the same guards as {@link #onAction} (a real, enabled Saiyan; rate limited; the Ki Wave release is never dropped). */
+    static void onActionPhase(ServerPlayer p, int op) {
+        SaiyanState s = SaiyanStore.peek(p);
+        if (s == null || !s.saiyan || !SaiyanNet2.valid(op)) return;
+        long now = p.level().getGameTime();
+        Run r = runOf(p);
+        if (op == SaiyanNet2.OP_WAVE_RELEASE) {
+            if (SaiyanConfig.enabled()) {
+                if (SaiyanTechniques4.waveRelease(p, s, r, now)) r.dirty = true;
+            } else {
+                r.tech4.waveStart = -1;
+            }
+            return;
+        }
+        if (!SaiyanConfig.enabled()) return;
+        if (now >= r.lastAsk && now - r.lastAsk < SaiyanNet.MIN_GAP_TICKS) return;
+        r.lastAsk = now;
+        s.clampClock(now, 24000);
+        if (SaiyanTechniques4.action(p, s, r, op, now)) r.dirty = true;
     }
 
     // ================================================================== Battle Power
@@ -311,6 +337,8 @@ public final class SaiyanManager {
         }
         long now = p.level().getGameTime();
         s.clampClock(now, 24000);
+        SaiyanRitual.end(p);
+        SaiyanAttributes.applyTech(p, 0.0, 0.0, 0.0);          // the run was just dropped: no Combat Instinct or gravity is on any more
         SaiyanAttributes.clearForm(p);          // the run was just dropped, so no form is active: a change of dimension must not leave its speed behind
         Run r = runOf(p);
         if (SaiyanFlight.release(p)) r.safeFallUntil = now + 100;          // a change of dimension ends the flight: the fall is safe
@@ -337,6 +365,7 @@ public final class SaiyanManager {
 
     static void cleanRuntime(ServerPlayer p) {
         RUN.remove(p.getUUID());
+        SaiyanRitual.end(p);
         SaiyanAttributes.clear(p);
         SaiyanFlight.release(p);
     }
