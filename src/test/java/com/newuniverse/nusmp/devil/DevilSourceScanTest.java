@@ -133,7 +133,8 @@ class DevilSourceScanTest {
         String l = client("DevilFormLayer.java");
         assertTrue(l.contains("NoelleFormRules.budgeted(") && l.contains("DevilFormRules.wanted(") && l.contains("newFrame()"), "the crowd budget and the distance cut");
         assertTrue(l.contains("PerfProbe.section(\"c.devil.form\")"), "timed");
-        assertFalse(l.contains("new float[") || l.contains("new Vector") || l.contains("Axis."), "no allocation in the draw path (the rotations are made once)");
+        String perFrame = l.replace("final float[] asm = new float[DevilFormRules.COUNT];", "");           // the one field the rig makes once, with the rig itself
+        assertFalse(perFrame.contains("new float[") || perFrame.contains("new Vector") || perFrame.contains("Axis."), "no allocation in the draw path (the rotations are made once)");
         assertTrue(client("DevilClientConfig.java").contains("\"customForms\""), "the setting that restores the generic look");
         String r = client("DevilNpcRenderer.java");
         assertTrue(r.contains("CULL") && r.contains("PerfProbe.section(\"c.devil.npc\")"), "the figure is culled by distance and timed");
