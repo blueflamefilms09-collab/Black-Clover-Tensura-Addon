@@ -67,6 +67,8 @@ public final class UpgradeSpecs {
             if (res.isEmpty()) return null;
             try (BufferedReader in = res.get().openAsReader()) {
                 JsonObject o = JsonParser.parseReader(in).getAsJsonObject();
+                // a table without "item" is the genesis_weapons format (visual/genesis/VuSpec reads it), not an error here
+                if (!o.has("item")) return null;
                 return new Entry(UpgradeSpec.parse(o));
             }
         } catch (Exception ex) {
