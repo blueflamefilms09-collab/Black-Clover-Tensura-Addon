@@ -58,6 +58,7 @@ public class TheVisionarySkill extends NUSkill {
                 SkillFx.beam(level, sky, c, false);
                 SkillFx.shape(level, VfxShape.DEMON_METEOR, sky, c, 0xFFFFA0E0, 24, 2.0f);
                 SkillFx.shape(level, VfxShape.FIRE_BURST, c, c.add(0, 1, 0), 0xFFFFA0E0, 24, (float) GodTierRules.meteorRadius(mastered) * 0.4f);
+                SkillAnimeFx2.visionStar(level, sky, c, GodTierRules.meteorRadius(mastered));      // VFX wave 4: the imagined meteor
                 for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.meteorRadius(mastered))) {
                     if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) t.igniteForSeconds(6);
                 }
@@ -75,6 +76,7 @@ public class TheVisionarySkill extends NUSkill {
                 }
                 SkillFx.shape(level, VfxShape.NIHILITY_ZONE, c, c.add(0, 1, 0), 0xFF7A3FB8, 60, (float) GodTierRules.voidRadius(mastered));
                 SkillFx.spray(level, true, c.add(0, 1, 0), 12, 3, 2, 3, 0.02);
+                SkillAnimeFx2.visionVoid(level, c, GodTierRules.voidRadius(mastered));             // VFX wave 4: the black sphere of imagination
                 SkillFx.sound(level, c, SoundEvents.SCULK_SHRIEKER_SHRIEK, 1.0F, 0.5F);
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.voidCooldown()));
             }
@@ -87,6 +89,7 @@ public class TheVisionarySkill extends NUSkill {
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ticks, 1));
                 SkillFx.aura(level, player, false);
                 SkillFx.spray(level, false, player.position().add(0, 1, 0), 12, 0.5, 1, 0.5, 0.3);
+                SkillAnimeFx2.visionSelf(player);                                                  // VFX wave 4: Perfect Body's rings and crown of rays
                 SkillFx.sound(level, player.position(), SoundEvents.BEACON_POWER_SELECT, 1.0F, 1.2F);
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.bodyCooldown()));
             }

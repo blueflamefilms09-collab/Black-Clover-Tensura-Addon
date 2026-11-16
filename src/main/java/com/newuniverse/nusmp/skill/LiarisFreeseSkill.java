@@ -75,5 +75,6 @@ public class LiarisFreeseSkill extends NUSkill {
             instance.markDirty();
         }
         SkillFx.spray(player.serverLevel(), false, player.position().add(0, 1.2, 0), 6, 0.3, 0.5, 0.3, 0.02);
+        SkillAnimeFx2.liaris(player);                                                   // VFX wave 4: the crimson seal and the helices of growth (once per second at most)
     }
 }

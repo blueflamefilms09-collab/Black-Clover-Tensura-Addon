@@ -36,6 +36,7 @@ public class TheAlmightySkill extends NUSkill {
         SkillUtil.actionbar(player, SkillMsg.t("almighty.rewritten", "The future has been rewritten.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         SkillFx.follow(level, com.newuniverse.nusmp.vfx.VfxShape.NIHILITY_ZONE, player, player.position(), 0xFF8A0A0A, ticks, 1.5f);
         SkillFx.sound(level, player.position(), SoundEvents.WITHER_SPAWN, 0.6F, 1.6F);
+        SkillAnimeFx2.almighty(player);                                                  // VFX wave 4: the golden eye above and the rays of every future
         cooldown(instance, mode, DMUtil.cooldown(GodTierRules.almightyCooldown()));
         SkillUtil.castVfx(player, 0xFF8A0A0A);
         grow(instance, player, 1);

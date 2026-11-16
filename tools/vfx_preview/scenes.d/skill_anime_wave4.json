@@ -1,0 +1,3468 @@
+{
+ "w4_skill_liaris": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "color": "FFFF5080",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   15,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_hati": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 2.0,
+  "duration": 24,
+  "color": "FFFF8A2A",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_hawk": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   14,
+   0,
+   0
+  ],
+  "power": 3.0,
+  "duration": 40,
+  "color": "FFFFE070",
+  "cam": [
+   -6,
+   3.2,
+   -8
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   5,
+   12,
+   22,
+   34
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_spirit_card": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   8,
+   0,
+   0
+  ],
+  "power": 4.0,
+  "duration": 36,
+  "color": "FF70FFA0",
+  "cam": [
+   -5,
+   3,
+   -7
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   5,
+   12,
+   22,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_summon": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2.5,
+   0,
+   0
+  ],
+  "power": 5.0,
+  "duration": 34,
+  "color": "FFFFC860",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   14,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_shishou": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   5,
+   0,
+   0
+  ],
+  "power": 6.0,
+  "duration": 26,
+  "color": "FF70C8FF",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   8,
+   14,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_gate_armor": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 7.0,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_gate_vimana": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   8
+  ],
+  "power": 8.0,
+  "duration": 30,
+  "color": "FFFFD060",
+  "cam": [
+   -5,
+   2.6,
+   -2
+  ],
+  "target": [
+   0,
+   1.4,
+   1
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_gate_king": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   7,
+   0,
+   0
+  ],
+  "power": 9.0,
+  "duration": 34,
+  "color": "FFFFD060",
+  "cam": [
+   -6,
+   3,
+   -8
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   16,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_gate_elixir": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 10.0,
+  "duration": 30,
+  "color": "FFC8FF80",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   15,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_devil_kick": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   0.4,
+   3
+  ],
+  "power": 11.0,
+  "duration": 16,
+  "color": "FFFF5A1E",
+  "cam": [
+   -4,
+   1.6,
+   1.5
+  ],
+  "target": [
+   0,
+   1,
+   1.5
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_almighty": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 12.0,
+  "duration": 44,
+  "color": "FFFFE0A0",
+  "cam": [
+   -5,
+   3.5,
+   -8
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   24,
+   36
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_vision_star": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   8,
+   40,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   6
+  ],
+  "power": 13.09,
+  "duration": 34,
+  "color": "FFFFA0E0",
+  "cam": [
+   -12,
+   6,
+   -10
+  ],
+  "target": [
+   2,
+   8,
+   4
+  ],
+  "ages": [
+   4,
+   9,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_vision_void": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   6,
+   0,
+   0
+  ],
+  "power": 14.0,
+  "duration": 50,
+  "color": "FF8A4FD8",
+  "cam": [
+   -8,
+   4,
+   -9
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   6,
+   14,
+   24,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_skill_vision_self": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_SKILL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   2,
+   0,
+   0
+  ],
+  "power": 15.0,
+  "duration": 36,
+  "color": "FFFFD0F0",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   4,
+   9,
+   15,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_line_fire": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 0,
+  "duration": 30,
+  "color": "FFFF3A00",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_rush_dark": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 26,
+  "duration": 30,
+  "color": "FF5B3FA8",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_burst_earth": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   6,
+   0,
+   5
+  ],
+  "power": 44,
+  "duration": 30,
+  "color": "FF8E7541",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_volley_ice": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 62,
+  "duration": 30,
+  "color": "FF87F1FF",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_seal_nature": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   4,
+   0,
+   5
+  ],
+  "power": 89,
+  "duration": 30,
+  "color": "FF1FBF5A",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_aura_spirit": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   4,
+   0,
+   5
+  ],
+  "power": 110,
+  "duration": 30,
+  "color": "FF7CFF8A",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_line_lightning": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FFF4F25C",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_burst_water": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   6,
+   0,
+   5
+  ],
+  "power": 41,
+  "duration": 30,
+  "color": "FF1F4FB0",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_volley_wind": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 65,
+  "duration": 30,
+  "color": "FF2CFAFF",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_rush_poison": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 28,
+  "duration": 30,
+  "color": "FFB8E03A",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_seal_void": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   4,
+   0,
+   5
+  ],
+  "power": 91,
+  "duration": 30,
+  "color": "FFB9A4FF",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_burst_light": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   6,
+   0,
+   5
+  ],
+  "power": 47,
+  "duration": 30,
+  "color": "FFE8B020",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_line_fire_big": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   1.3,
+   0.5
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 0.5,
+  "duration": 36,
+  "color": "FFFF3A00",
+  "cam": [
+   -9,
+   2.4,
+   6.2
+  ],
+  "target": [
+   0,
+   1.3,
+   6.2
+  ],
+  "ages": [
+   3,
+   7,
+   11,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_beast_burst_void_big": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_BEAST",
+  "from": [
+   0,
+   0,
+   5
+  ],
+  "to": [
+   8,
+   0,
+   5
+  ],
+  "power": 51.5,
+  "duration": 36,
+  "color": "FFB9A4FF",
+  "cam": [
+   -8,
+   4.5,
+   0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   12,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_sword": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 0,
+  "duration": 26,
+  "color": "FFE8504A",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_claw": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 2,
+  "duration": 26,
+  "color": "FFD8D8E8",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_fan": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 4,
+  "duration": 26,
+  "color": "FFFF9EC4",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_scythe_ult": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 7,
+  "duration": 26,
+  "color": "FF8A4BD6",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_katana": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 8,
+  "duration": 26,
+  "color": "FFA9D3F5",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_spear": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 20,
+  "duration": 26,
+  "color": "FF4DA3FF",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_harpoon": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 22,
+  "duration": 26,
+  "color": "FF2E86C1",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_bow": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 24,
+  "duration": 26,
+  "color": "FFF2C94C",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_projectile": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 26,
+  "duration": 26,
+  "color": "FF6FD05B",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_hammer": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 40,
+  "duration": 26,
+  "color": "FFC98A4B",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_gauntlet": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 42,
+  "duration": 26,
+  "color": "FFE08A2E",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_carriage": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 44,
+  "duration": 26,
+  "color": "FFE6C27A",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_shield": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 60,
+  "duration": 26,
+  "color": "FF3FD0A4",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_staff": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 80,
+  "duration": 26,
+  "color": "FF7B8CFF",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_book": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 82,
+  "duration": 26,
+  "color": "FFB28A5A",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_instrument": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 84,
+  "duration": 26,
+  "color": "FFE9B84A",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_whip": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 100,
+  "duration": 26,
+  "color": "FFC04BA8",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_chain": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 102,
+  "duration": 26,
+  "color": "FF7D8795",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_sewing": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 104,
+  "duration": 26,
+  "color": "FFE87BA1",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_hero_mirror": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_HERO",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   8
+  ],
+  "power": 120,
+  "duration": 26,
+  "color": "FF9FE3F0",
+  "cam": [
+   -5,
+   2.6,
+   -4
+  ],
+  "target": [
+   0,
+   1.3,
+   3.5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_cotton_cast": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 1.0,
+  "duration": 22,
+  "color": "FFFFF4FA",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_cotton_impact": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0.5,
+   5
+  ],
+  "to": [
+   0,
+   1.5,
+   5
+  ],
+  "power": 9.0,
+  "duration": 20,
+  "color": "FFFFF4FA",
+  "cam": [
+   -4,
+   2,
+   1
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_mirror_cast": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 21.0,
+  "duration": 22,
+  "color": "FFDDEEFF",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_mirror_impact": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0.5,
+   5
+  ],
+  "to": [
+   0,
+   1.5,
+   5
+  ],
+  "power": 29.0,
+  "duration": 20,
+  "color": "FFDDEEFF",
+  "cam": [
+   -4,
+   2,
+   1
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_plant_cast": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 41.0,
+  "duration": 22,
+  "color": "FF6CFF7A",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_plant_impact": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0.5,
+   5
+  ],
+  "to": [
+   0,
+   1.5,
+   5
+  ],
+  "power": 49.0,
+  "duration": 20,
+  "color": "FF6CFF7A",
+  "cam": [
+   -4,
+   2,
+   1
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_sealing_cast": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 61.0,
+  "duration": 22,
+  "color": "FFE8C26A",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_sealing_impact": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0.5,
+   5
+  ],
+  "to": [
+   0,
+   1.5,
+   5
+  ],
+  "power": 69.0,
+  "duration": 20,
+  "color": "FFE8C26A",
+  "cam": [
+   -4,
+   2,
+   1
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_thread_cast": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 81.0,
+  "duration": 22,
+  "color": "FFFF9ACD",
+  "cam": [
+   -3.2,
+   1.8,
+   -4.6
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ },
+ "w4_grim_thread_impact": {
+  "layer": "SkillAnime2Layer",
+  "shape": "ANIME2_GRIMOIRE",
+  "from": [
+   0,
+   0.5,
+   5
+  ],
+  "to": [
+   0,
+   1.5,
+   5
+  ],
+  "power": 89.0,
+  "duration": 20,
+  "color": "FFFF9ACD",
+  "cam": [
+   -4,
+   2,
+   1
+  ],
+  "target": [
+   0,
+   1,
+   5
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.55,
+   0.78
+  ],
+  "horizon": [
+   0.82,
+   0.84,
+   0.86
+  ],
+  "floor": [
+   0.36,
+   0.42,
+   0.3
+  ]
+ }
+}

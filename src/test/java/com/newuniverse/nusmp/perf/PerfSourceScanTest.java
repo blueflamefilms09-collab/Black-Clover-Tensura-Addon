@@ -137,7 +137,8 @@ class PerfSourceScanTest {
             "vfx/client/layer/RuneWritingLayer.java", "client/manamethod/RuneClient.java",
             "vfx/client/layer/KiLayer.java",
             "vfx/client/layer/GreedLayer.java", "vfx/client/layer/GreedDevilHits.java",
-            "vfx/client/layer/SkillAnimeLayer.java", "vfx/client/layer/SkillAnimeSigils.java");       // the Dragon Ball Ki effects: static final textures, no location built per frame       // the Mana Method rune (3.5.0, the held rune is drawn from a view every frame): static textures, no location built per frame or per tick       // the Star V2 look: the layer's textures are static finals, the painter resolves its textures once in register()
+            "vfx/client/layer/SkillAnimeLayer.java", "vfx/client/layer/SkillAnimeSigils.java",
+            "vfx/client/layer/SkillAnime2Layer.java", "vfx/client/layer/SkillAnime2More.java", "vfx/client/layer/SkillAnime2Beast.java", "vfx/client/layer/SkillAnime2Hero.java", "vfx/client/layer/SkillAnime2Grim.java");       // VFX wave 4: static final textures, no location built per frame       // the Dragon Ball Ki effects: static final textures, no location built per frame       // the Mana Method rune (3.5.0, the held rune is drawn from a view every frame): static textures, no location built per frame or per tick       // the Star V2 look: the layer's textures are static finals, the painter resolves its textures once in register()
 
     @Test
     void theHotRenderFilesBuildNoLocationInTheirFrameMethods() throws IOException {

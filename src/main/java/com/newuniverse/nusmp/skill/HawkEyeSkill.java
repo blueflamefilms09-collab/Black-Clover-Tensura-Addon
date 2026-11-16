@@ -38,6 +38,7 @@ public class HawkEyeSkill extends ToggleAuraSkill {
         for (int i = 0; i < seen.size() && i < AuraRules.hawkMaxMarked(); i++) {
             seen.get(i).addEffect(new MobEffectInstance(MobEffects.GLOWING, 30, 0, true, false));
         }
+        SkillAnimeFx2.hawk(player, range);                                              // VFX wave 4: the eye and the scanning ring (once per 3 seconds at most)
     }
 
     @Override

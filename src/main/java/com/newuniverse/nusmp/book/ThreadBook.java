@@ -112,4 +112,18 @@ public class ThreadBook extends GrimoireBook {
         i.markDirty();
         return false;
     }
+
+    /** VFX wave 4: the Thread sigil of the cast, next to the old circle (which stays; skills.classicVfx2 hides the new one). */
+    @Override
+    public void castCircle(ServerPlayer p, float power) {
+        super.castCircle(p, power);
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimCast(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.THREAD_BOOK, color, power);
+    }
+
+    /** VFX wave 4: the Thread impact, next to the old burst. */
+    @Override
+    public void impact(ServerPlayer p, net.minecraft.world.phys.Vec3 at, float power) {
+        super.impact(p, at, power);
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimImpact(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.THREAD_BOOK, color, at, power);
+    }
 }

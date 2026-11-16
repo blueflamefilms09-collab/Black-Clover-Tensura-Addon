@@ -39,6 +39,7 @@ final class BeastMoves {
             default -> DbMoves.cast(db, ult, mode, p, mastery);
         };
         if (!done) return false;
+        SkillAnimeFx2.beast(p, spec, mv, mode.mastery());                         // VFX wave 4: the family of the move in the element of the beast (one packet per press)
         if (mv.has(DbRules.HEAL) && mv.prim() != DbRules.Prim.GUARD && mv.prim() != DbRules.Prim.CAPSULE)
             p.heal((float) (p.getMaxHealth() * BeastSkillRules.FINISHER_HEAL_SHARE * BeastSkillRules.power(spec, ult)));
         if (mode.mastery()) finisherFx(level, p, spec, mv);

@@ -104,7 +104,8 @@ class SkillAnimeVfxAssetTest {
     void theShapesAreAppendedAfterTheDevilHitAndTheLayerIsRegistered() throws IOException {
         for (int i = 0; i < SHAPES.length; i++) assertEquals(VfxShape.DEVIL_HIT.ordinal() + 1 + i, SHAPES[i].ordinal(), "appended in order: " + SHAPES[i]);
         VfxShape[] all = VfxShape.values();
-        assertEquals(VfxShape.SKILL_SIGIL, all[all.length - 1], "wave 3: SKILL_SIGIL is the last shape (a later family is appended after it: move this pin and GreedVfxAssetTest's)");
+        assertEquals(VfxShape.DEVIL_HIT.ordinal() + SHAPES.length, VfxShape.SKILL_SIGIL.ordinal(), "wave 3: SKILL_SIGIL closes the nine skill shapes (later families, like wave 4's ANIME2_*, are appended after it)");
+        assertTrue(all[all.length - 1].ordinal() >= VfxShape.SKILL_SIGIL.ordinal(), "nothing may be inserted before SKILL_SIGIL");
         String layer = code(LAYER_DIR.resolve("SkillAnimeLayer.java"));
         for (VfxShape s : SHAPES) assertTrue(layer.contains("VfxShape." + s.name()) && layer.contains("case " + s.name()), s + " is not drawn by SkillAnimeLayer");
         assertTrue(code(ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/VfxManager.java")).contains("register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnimeLayer())"));

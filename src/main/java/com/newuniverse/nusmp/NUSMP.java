@@ -470,6 +470,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.GuideP1SelfTests.register();                                  // guide P1 #2, #3, #5
         com.newuniverse.nusmp.skill.GuideP2SelfTests.register();                                  // guide P2: legacy grimoire pay, cast event, class damage, Quenched bridge
         com.newuniverse.nusmp.skill.SkillAnimeFx.registerSelfTests();                                  // VFX wave 3: the anime skill effects (SkillAnimeLayer): skill.vfx
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.registerSelfTests();                                 // VFX wave 4: the Beast Will / hero weapon / grimoire / leftover skill effects (SkillAnime2Layer): skill.vfx2
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartingEvent e) -> { if (com.newuniverse.nusmp.skill.ResetGuard.enabled()) com.newuniverse.nusmp.skill.ResetGuard.protectScrollLists(); });
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);

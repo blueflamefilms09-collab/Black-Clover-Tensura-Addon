@@ -45,11 +45,13 @@ public class PlantBook extends GrimoireBook {
     @Override
     public void castCircle(ServerPlayer p, float power) {
         VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.PLANT_FX2, p, p.position().add(0, 0.05, 0), color, 22, 1.1f * Math.max(0.6f, Math.min(1.6f, power)));
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimCast(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.PLANT, color, power);      // VFX wave 4: leaves, petals and vines
     }
 
     @Override
     public void impact(ServerPlayer p, Vec3 at, float power) {
         VfxSpawn.send(p.serverLevel(), VfxShape.PLANT_FX3, at, at.add(0, 1, 0), color, 22, Math.max(0.3f, Math.min(1.2f, power)));
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimImpact(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.PLANT, color, at, power);
     }
 
     /** The Blossom armour: while it runs the blows are softened and each one mends the wearer a little. */

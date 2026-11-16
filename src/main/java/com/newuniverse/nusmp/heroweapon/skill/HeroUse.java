@@ -165,6 +165,7 @@ public final class HeroUse {
         BOOK.start(id, skill.id(), now, ticks);
         BOOK.lock(id, now, lock);
         HeroSync.sendCooldown(player, skill.id(), ticks);
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.hero(player, c.kind, skill.ultimate());      // VFX wave 4: the motif of the weapon in its colour (one packet per technique)
         afterCast(player, skill);
         return true;
     }

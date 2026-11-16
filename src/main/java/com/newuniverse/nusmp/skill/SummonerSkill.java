@@ -104,6 +104,7 @@ public class SummonerSkill extends NUSkill {
         }
         SkillFx.sound(player.serverLevel(), player.position(), SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, card == Card.STONE ? 0.8F : 1.2F);
         SkillFx.ring(player.serverLevel(), player.position(), 2.5, card == Card.WRAITH ? 0xB070FF : 0xFFC860);
+        SkillAnimeFx2.summon(player, card == Card.WRAITH, card == Card.LEGION);         // VFX wave 4: the card flips open on a rune circle (also the Lord of Summons' cards)
         cooldown(instance, mode, SummonRules.cooldown(card, NUConfig.SUMMON_COOLDOWN.get()));
         SkillUtil.castVfx(player, 0xFFB8A0FF);
         grow(instance, player, SummonRules.masteryGain(card));

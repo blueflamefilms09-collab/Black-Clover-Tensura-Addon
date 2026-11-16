@@ -112,6 +112,7 @@ public final class ShishouGrantService {
                 }
                 rec.select(cur);
                 ShishouService.cast(p, cur);
+                com.newuniverse.nusmp.skill.SkillAnimeFx2.shishou(p, modeIndex);                  // VFX wave 4: the Teacher's analysis rings (once per second at most)
             }
         }
     }

@@ -23,6 +23,7 @@ public class SpiritCardSkill extends ToggleAuraSkill {
 
     @Override
     protected void pulse(ManasSkillInstance instance, ServerPlayer player, Tier tier) {
+        SkillAnimeFx2.spiritCard(player, AuraRules.spiritRadius(tier));                 // VFX wave 4: the card and the healing rings (once per 3 seconds at most)
         for (LivingEntity ally : SkillTargets.alliesAround(player, player.position(), AuraRules.spiritRadius(tier))) {
             if (AuraRules.spiritCleanses(tier)) SkillUtil.cleanse(ally);
             if (ally.getHealth() >= ally.getMaxHealth()) continue;

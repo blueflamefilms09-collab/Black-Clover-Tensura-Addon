@@ -77,4 +77,18 @@ public class MirrorBook extends GrimoireBook {
         }
         return true;
     }
+
+    /** VFX wave 4: the Mirror sigil of the cast, next to the old circle (which stays; skills.classicVfx2 hides the new one). */
+    @Override
+    public void castCircle(ServerPlayer p, float power) {
+        super.castCircle(p, power);
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimCast(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.MIRROR, color, power);
+    }
+
+    /** VFX wave 4: the Mirror impact, next to the old burst. */
+    @Override
+    public void impact(ServerPlayer p, net.minecraft.world.phys.Vec3 at, float power) {
+        super.impact(p, at, power);
+        com.newuniverse.nusmp.skill.SkillAnimeFx2.grimImpact(p, com.newuniverse.nusmp.skill.SkillAnimeFx2.MIRROR, color, at, power);
+    }
 }

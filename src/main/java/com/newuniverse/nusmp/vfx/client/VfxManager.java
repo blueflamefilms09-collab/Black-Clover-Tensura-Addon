@@ -299,6 +299,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.GreedLayer());
         // VFX wave 3: the Unique / Ultimate skills in their anime look: their own nine shapes (SKILL_GATE ... SKILL_SIGIL), appended after DEVIL_HIT; skills.classicVfx = true draws nothing for them.
         register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnimeLayer());
+        // VFX wave 4: the wave 3 leftovers, the Beast Will moves, the hero weapon skills and the weakest grimoires: four style-driven shapes (ANIME2_SKILL ... ANIME2_GRIMOIRE), appended after SKILL_SIGIL; skills.classicVfx2 = true draws nothing for them.
+        register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnime2Layer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

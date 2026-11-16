@@ -89,6 +89,7 @@ public class DevilsFootprintsSkill extends NUSkill {
         SkillFx.shape(level, VfxShape.FIRE_BURST, tip, tip.add(0, 1, 0), 0xFFFF5A1E, 18, 1.2f);
         SkillFx.spray(level, false, tip, 10, 1.0, 0.3, 1.0, 0.05);
         SkillFx.sound(level, player.position(), SoundEvents.BLAZE_SHOOT, 1.5F, 0.7F);
+        SkillAnimeFx2.devilKick(player, FireForceRules.kickRange(tier));              // VFX wave 4: the flaming crescent of the kick
     }
 
     /** Shinra's own flames do not burn him. */

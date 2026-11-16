@@ -42,6 +42,7 @@ public class HatiSkill extends NUSkill {
         if (heal > 0) BalanceLaw.heal(owner, (float) heal);
         if (owner.level() instanceof ServerLevel level) {
             SkillFx.spray(level, false, owner.position().add(0, 1, 0), 8, 0.4, 0.6, 0.4, 0.02);
+            SkillAnimeFx2.hati(level, owner);                                           // VFX wave 4: the magic streaks into the body (once per second at most)
         }
         if (owner.getRandom().nextInt(4) == 0) instance.addMasteryPoint(owner);
         instance.markDirty();

@@ -164,6 +164,7 @@ public class GateOfBabylonSkill extends NUSkill {
         tag.putLong(GateRules.untilKey(GateRules.ARMOR), GateRules.endsAt(now, GateRules.ARMOR));
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, GateRules.duration(GateRules.ARMOR), GateRules.armorAbsorptionAmp()));
         SkillFx.aura(p.serverLevel(), p, false);
+        SkillAnimeFx2.gateArmor(p);                                                      // VFX wave 4: golden plates lock on the body
         SkillUtil.actionbar(p, SkillMsg.t("gate.armor", "The Golden Armour closes around you.").withStyle(ChatFormatting.GOLD));
         return true;
     }
@@ -178,6 +179,7 @@ public class GateOfBabylonSkill extends NUSkill {
         tag.putLong(GateRules.untilKey(GateRules.VIMANA), GateRules.endsAt(now, GateRules.VIMANA));
         p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, GateRules.duration(GateRules.VIMANA), 0, false, false, true));
         SkillFx.burst(p.serverLevel(), p.position().add(0, 0.5, 0), false, 14, 0.6);
+        SkillAnimeFx2.gateVimana(p);                                                     // VFX wave 4: golden gates trail behind the flight
         SkillUtil.actionbar(p, SkillMsg.t("gate.vimana", "Vimana carries you.").withStyle(ChatFormatting.YELLOW));
         return true;
     }
@@ -201,6 +203,7 @@ public class GateOfBabylonSkill extends NUSkill {
             f.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, GateRules.kingWeakTicks(), 0));
         }
         SkillFx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), GateRules.kingRadius() * 0.8, 0xFFD060);
+        SkillAnimeFx2.gateKing(p, GateRules.kingRadius());                               // VFX wave 4: the sunburst and the golden gates round the aura
         SkillUtil.actionbar(p, SkillMsg.t("gate.king", "The King's Aura: %s lifted.", lifted).withStyle(ChatFormatting.GOLD));
         return true;
     }
@@ -239,6 +242,7 @@ public class GateOfBabylonSkill extends NUSkill {
         SkillUtil.cleanse(p);
         p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, GateRules.elixirRegenTicks(), 0));
         SkillFx.burst(p.serverLevel(), p.position().add(0, 1, 0), false, 16, 0.6);
+        SkillAnimeFx2.gateElixir(p);                                                     // VFX wave 4: a fountain of golden droplets
         SkillUtil.actionbar(p, SkillMsg.t("gate.elixir", "The Elixir restores you.").withStyle(ChatFormatting.GREEN));
         return true;
     }

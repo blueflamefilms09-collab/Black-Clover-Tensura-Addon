@@ -101,6 +101,8 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
     if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
         layers = list(layers) + ["FireSpellLayer", "FlameFxLayer", "FlameMagicLayer"]
+    if any(l.split(".")[-1] == "SkillAnime2Layer" for l in layers) and "SkillAnimeLayer" not in layers:      # wave 4 draws with the wave 3 kit (SkillAnimeLayer's statics); every SkillAnime* helper travels with it
+        layers = list(layers) + ["SkillAnimeLayer"]
     storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):

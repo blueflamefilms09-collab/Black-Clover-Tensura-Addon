@@ -79,5 +79,6 @@ public class BookMakerSkill extends NUSkill {
         Vec3 at = target.position().add(0, target.getBbHeight() * 0.5, 0);
         SkillFx.shape(level, VfxShape.SEAL_CHAINS, at, at.add(0, 1, 0), 0xFF9A9AAA, 24, 1.4f);
         SkillFx.spray(level, false, at, 6, 0.4, 0.6, 0.4, 0.1);
+        SkillAnimeFx2.screw(player, target);                                           // VFX wave 4: the giant screw (the wave 3 screw shape; at most 4 per press)
     }
 }
