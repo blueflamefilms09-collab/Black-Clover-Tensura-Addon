@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.97.0] — Master guide fixes, part 1 (skill damage counts as Tensura skill damage, grimoire skill names, spell cleanup)
+- REPLACED (owner's master guide, Part 0 §0.5 P1 #2): mod skills now hit with Tensura's own skill damage source (magic hits as Tensura magic, attacks as player attacks), so Tensura's resistances, nullifications and kill credit apply to them. 37 call sites in 17 skill files. The damage amount is unchanged (same multipliers, PvP cap intact). SERVER setting `tensuraSkillDamageSource` (`nusmp-server.toml`, `[guide_fixes]`, default true); false = the old vanilla sources.
+- FIXED (P1 #3): the 43 `grimoire_<magic>` skills that had no name or description now have both (`tools/lang/grimoire_skills.json`, `GrimoireSkillLangTest`).
+- FIXED (P1 #5): temporary spell blocks are removed and the spell lists cleared when the server stops (they could become permanent before), and a spell bolt whose caster left or changed dimension now fizzles.
+- Still on the old source: the Dragon Ball / Beast Will move table (`DbMoves`) and about 160 files that build their own sources (listed in `docs/guide_fixes_p1.md`). Temp blocks are not saved across a crash.
+- Side effects to know: armour may now reduce skill magic (vanilla magic bypassed it); Nen, Hati and Liebe ward checks now also count skill magic.
+- NEW: `GuideP1SourceScanTest`, self-tests `guide.p1.*`, `docs/guide_fixes_p1.md`.
+- Cost: none per tick; one extra lookup per skill hit. Not compiled before CI, not seen in a game.
+
 ## [3.96.0] — Boss rework, wave 1 (abilities and effects)
 - NEW (asked for: "rework the bosses in my mod: models, abilities, and VFX"), worst-rated bosses first (audit in `docs/bosses/rework_wave1.md`):
   - Goliath (DanMachi): its own stone model is the default again (the stretched player body was a regression) and +5 moves: Magebane Roar, Boulder Hurl, Stone Skin (halves hits for 6 s; a shield, never a heal), Pound Shockwave, Stomp Chain.
