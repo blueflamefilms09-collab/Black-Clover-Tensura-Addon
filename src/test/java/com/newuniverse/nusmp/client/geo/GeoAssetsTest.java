@@ -31,6 +31,7 @@ class GeoAssetsTest {
     /** 3.61.0: the Beast Will form pieces ({@code bwf_<stem>_arm_<piece>}) all read ONE shared sheet {@code bwf_<stem>} (BeastWillForms sets it with GeoSpec.skin), so the sheet is the will's, not the piece's. */
     private static String sheet(File f) {
         String s = stem(f);
+        if (s.startsWith("pmx_bc_") && (s.endsWith("_fine") || s.endsWith("_fx"))) return s.substring(0, s.lastIndexOf('_'));   // 4.14.1: the Black Clover looks' fine/fx layers draw on the look's one atlas (extras name it)
         return s.startsWith("bwf_") && s.contains("_arm_") ? s.substring(0, s.indexOf("_arm_")) : s;
     }
 

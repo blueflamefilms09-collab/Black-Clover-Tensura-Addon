@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.14.1] — Build fix: Black Clover looks' fine/fx layers
+- FIXED: `GeoAssetsTest` demanded a texture named after each geo file, but the Black Clover looks' `_fine` and `_fx` layers draw on the look's single atlas (named in the look's extras). The test now maps those layers to their atlas. No game files changed: the 4.14.0 looks are unchanged.
+- Cost: none (test only).
+
 ## [4.14.0] — Black Clover bosses on the player model, with detailed anime looks
 - REPLACED (client setting `bossLooks.bcPlayerModel` in `nusmp-playermodel-client.toml`, default on; off = the previous rendering exactly): 14 new looks (`bc_<old id>`) for Lucius Zogratis (and his divine form and clones), Dante, Vanica and Zenon (normal and devil form each), Zagred and Zagred legacy (two forms each) and Lucifero (two forms; his Blender body returns when the setting is off). Each has a painted anime face on a 256x256 skin, layered cube hair tiers and fringe, crowns, horns, bat wings, bracers, mantles, tails and gem glow, in that boss's palette from the English Black Clover Fandom wiki. A faint shimmer (one particle every 4 ticks per boss, full detail only).
 - KEPT: entity ids, hitboxes, saves and drops; the previous looks stay registered. Skipped (current look kept): the Dark Disciples, Devil Avatar, God of Order, the Midnight Sun elves, the early-arc bosses and Black Clover NPCs.
