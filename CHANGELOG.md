@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.100.0] — Boss rework wave 2: Blender models for Goliath and the Minotaur
+- NEW (owner's boss rework): the Goliath (6.65 blocks tall, stone body with a glowing core) and the Minotaur (double-bitted great axe) are real Blender models drawn from a mesh file, in eight moving parts (torso, head, both arms and forearms, both legs). They breathe, walk by the ground they cover, swing, slam, stomp, roar, punch, hurl, rise, flinch and fall. Asterius keeps his old model.
+- NEW: far away they use a lighter copy of the model (beyond 40 blocks) and the glow stops beyond 48 blocks. Mesh files for entities are packed small in the jar (about 190 KB instead of 1.8 MB).
+- KEPT: the 3.96.0 looks. CLIENT settings `goliathBlenderModel` and `minotaurBlenderModel` (in `nusmp-playermodel-client.toml`, on by default); off gives the old look. Moves, stats and sounds are unchanged.
+- Not seen in a game: scale, facing, walk pacing and how the baked skins light. Legs are one part each, so knees do not bend. Previews are in `docs/bosses/previews/`; how to add the next boss is in `docs/bosses/rework_wave2_models.md`.
+- Cost: client drawing only: up to about 2,750 quads a boss close up, about 1,170 far away, nothing allocated per frame; no server work and no packets.
+
 ## [3.99.1] — Fix: Book Maker pin merge
 - Fixed a merge leftover in the Book Maker skill that stopped 3.99.0 from compiling. Nothing else changed; 3.99.0 contents (Ultimate classes, Magic Knight wiki pages) ship in this version.
 
