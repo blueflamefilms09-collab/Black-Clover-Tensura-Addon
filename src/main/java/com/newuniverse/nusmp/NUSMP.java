@@ -104,6 +104,7 @@ public class NUSMP {
         com.newuniverse.nusmp.shishou.ShishouBoot.init(modEventBus, modContainer);      // Shishou, the talking sword (Akashic Relic): item, entity, components, Black Flame, nusmp-shishou-server.toml (relic.shishouEnabled), the packets, the events, self-tests relic.shishou*
         com.newuniverse.nusmp.labyrinth.mega.cores.BossCoreBoot.init(modEventBus, modContainer);      // the Boss Cores: seven cores dropped by the deep Decennial bosses and four armour families (nusmp-boss-cores-server.toml, self-tests cores.*; docs/boss_cores.md)
         com.newuniverse.nusmp.greed.GreedBoot.init(modEventBus, modContainer);      // 3.85.0: the Black Sword Greed (Berserk of Gluttony): eight forms, the Ultimate skill Lord of Gluttonous Greed, nusmp-greed-server.toml, the packets, the events, self-tests greed.*
+        com.newuniverse.nusmp.attune.AttuneBoot.init(modEventBus, modContainer);    // meditation attunement: Beast Wills, Djinns, Devils and Spirits held together, clashing elements reject, nusmp-attune-server.toml, /meditate, self-tests attune.*
         com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.init(modEventBus);      // the Wind Spirit blades (creative display): Spirit of Zephyr sword and Spirit of Boreas bow, self-test magic.spirit_blades
         com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.init(modEventBus);    // the Valkyrie Drill Lance (creative display, spear class) and the Valkyrie armour v2 (player-fitted layer, three looks): self-test magic.valkyrie_armor
         com.newuniverse.nusmp.gnome.GnomeBoot.init(modEventBus, modContainer);      // the Gnome (Earth Spirit): its sound events, nusmp-gnome-server.toml (magic.gnome), the key packet, the events, self-test magic.gnome
@@ -216,6 +217,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.greed.GreedClient.init(modEventBus);      // 3.85.0 Black Sword Greed: the form key, the starvation vignette and the HUD
+            com.newuniverse.nusmp.client.attune.AttuneClient.init(modEventBus);    // meditation attunement: the meditation screen (opened by /meditate)
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
             com.newuniverse.nusmp.client.devil.DevilClient.init(modEventBus, modContainer);                                  // 3.48.0 Devil Contract: the key, the HUD, the Weg layer (markings, horns, wings), the eye shade, nusmp-devil-client.toml
             com.newuniverse.nusmp.client.beastwill.BeastWillClient.init(modEventBus);                                       // 3.45.0 Beast Will: the keys, the HUD panel, the absorption screen

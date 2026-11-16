@@ -62,4 +62,17 @@ public final class PowerEvents {
         if (c == null || c.stack.isEmpty()) return 1.0;
         return k.isHoly() ? PowerConfig.legendary() : PowerConfig.vassal();
     }
+
+    // ------------------------------------------------------------------ read by the meditation attunement (attune/AttuneService), appended: nothing above changed
+    /** The factor {@link #onDamage} puts on a blow dealt by {@code p} right now (1 = none), so another hook can aim at a total instead of multiplying on top. */
+    public static double appliedFactor(ServerPlayer p) {
+        if (!PowerConfig.enabled()) return 1.0;
+        return Math.max(PowerRules.factor(djinnOut(p) ? PowerConfig.djinn() : 1.0, beastHeld(p) ? PowerConfig.beastWill() : 1.0, 1.0), heroFactor(p));
+    }
+
+    /** The hero weapon part of {@link #appliedFactor} (1 = none or the raise is off). */
+    public static double heroFactorOf(ServerPlayer p) { return PowerConfig.enabled() ? heroFactor(p) : 1.0; }
+
+    /** Does the raise count this player's Djinn as out (their own Djinn, Lesser Summon and up)? */
+    public static boolean djinnRaised(ServerPlayer p) { return djinnOut(p); }
 }

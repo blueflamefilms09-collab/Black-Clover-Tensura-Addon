@@ -1,0 +1,20 @@
+{
+ "attune.screen.title": "Meditation",
+ "attune.screen.confirm": "Attune",
+ "attune.screen.cancel": "Leave",
+ "attune.screen.none": "You hold no Beast Will, Djinn, Devil or Spirit yet.",
+ "attune.screen.clash": "Clashing elements: these powers reject each other.",
+ "attune.screen.resonance": "Resonance +%s%%",
+ "attune.screen.cooldown": "Settling: %s s",
+ "attune.msg.off": "Meditation attunement is switched off on this server.",
+ "attune.msg.no_session": "Sit down with /meditate first.",
+ "attune.msg.moved": "Your meditation broke: stay still while you attune.",
+ "attune.msg.not_owned": "You do not hold that power.",
+ "attune.msg.too_many": "You have more powers chosen than meditation slots.",
+ "attune.msg.duplicate": "That power is chosen twice.",
+ "attune.msg.same_system": "Only one power of each kind (Beast Will, Djinn, Devil, Spirit) can be attuned.",
+ "attune.msg.cooldown": "Your mind is not settled yet: %s s.",
+ "attune.msg.reject": "%s and %s reject each other: their elements clash.",
+ "attune.msg.done": "Attuned: %s power(s), resonance +%s%%.",
+ "attune.msg.suppressed": "Clashing powers: %s. Meditate (/meditate) to settle them."
+}

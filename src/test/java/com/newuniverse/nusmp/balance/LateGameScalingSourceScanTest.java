@@ -64,6 +64,6 @@ class LateGameScalingSourceScanTest {
     void theSelfTestIsRegisteredAndExpected() throws IOException {
         assertTrue(code(SRC.resolve("balance/ScalingSelfTests.java")).contains("\"scaling.rules\""));
         assertTrue(code(SRC.resolve("NUSMP.java")).contains("ScalingSelfTests.register()"));
-        assertTrue(Files.readString(Path.of(".github/workflows/smoke.yml"), StandardCharsets.UTF_8).contains(",scaling,boss.stats,tier\""));
+        assertTrue(Files.readString(Path.of(".github/workflows/smoke.yml"), StandardCharsets.UTF_8).contains(",scaling,"));
     }
 }

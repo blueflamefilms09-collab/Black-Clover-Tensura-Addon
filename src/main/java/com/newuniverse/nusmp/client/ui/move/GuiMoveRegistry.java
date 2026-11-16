@@ -170,6 +170,7 @@ public final class GuiMoveRegistry {
         fixed("client/ui/gs/GsNotices.java", "the alert crest of the great_spirit look is placed by its own client setting ui.greatSpirit.noticePos (corner + offset), moved on its own screen (/nusmp_gui_crest)");
         fixed("client/ui/gs/GsCrestScreen.java", "the crest's own move screen (drag, Save, Reset); client only");
         fixed("client/beastwill/BeastWillConfirmScreen.java", "the absorption window of a Beast Will: a modal ask with two buttons that opens centred and is scaled by the GUI Size framework; it is closed in seconds, so there is nothing to move");
+        fixed("client/attune/MeditationScreen.java", "the meditation window: a modal choice of powers with two buttons that opens centred while the player sits still; it is closed in seconds, so there is nothing to move");
         // GUI Size entries that GUI Move leaves alone (by id)
         fixed("gui_scale:multiverse_status", "a full-window status book: nothing to move");
         fixed("gui_scale:skill_shop", "a full-window shop: nothing to move");
