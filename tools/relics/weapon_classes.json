@@ -978,7 +978,15 @@
     "legendary_shield__slime_shield": "shield",
     "legendary_sword__phoenix_sword": "longsword",
     "vassal_scythe__demon_dragon_scythe": "scythe",
-    "djinn_weapon_belial_scythe": "scythe"
+    "djinn_weapon_belial_scythe": "scythe",
+    "legendary_sword__assassin_sword": "longsword",
+    "legendary_sword__flash_sword": "longsword",
+    "legendary_sword__hundred_sword": "longsword",
+    "legendary_sword__meteor_sword": "longsword",
+    "legendary_sword__spirit_tortoise_sword": "longsword",
+    "legendary_sword__thunder_god_sword": "longsword",
+    "legendary_sword__tortoise_carapace_sword": "longsword",
+    "legendary_sword__wind_king_katana": "longsword"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

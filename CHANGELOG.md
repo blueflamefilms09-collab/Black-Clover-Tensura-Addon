@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.26.0] — Legendary sword forms: eight real 3D models (Blender)
+- NEW (made in Blender, `tools/blender/forms_legendary_sword.py`): a 3D model for each Legendary Sword form: Flash Sword, Wind King Katana, Meteor Sword, Assassin Sword, Spirit Tortoise Sword, Tortoise Carapace Sword, Hundred Sword, Thunder God Sword (`legendary_sword__<form>` skins, 3551 to 4997 quads, 1024 px skin + glow under 350 KB each, class longsword). They are skins of the sword (not items): the sword's existing Better Combat file and engravings apply.
+- KEPT: the Phoenix Sword form model and every older sword mesh, texture and item.
+- Cost: no new items, packets or server work; one sword model draws at most 4997 quads, and the jar's fixed mesh detail limit (3000 quads, `meshQuadCap`) trims the smallest quads of the biggest forms.
+- Honest caveats: previews only, nothing seen in a game; the Meteor Sword blade is still a rough column, five forms are readable but below the Genesis Demon-Slayer standard; designs come from the form names (the wikis were blocked); the grip fraction was not re-checked after the quad cuts (the grip golden was refreshed).
+
 ## [4.25.0] — Belial's white bone scythe and bone-dragon armour (3D models)
 - NEW (made in Blender, `tools/blender/belial_scythe.py`, `belial_bone.py`): the real 3D **Belial scythe** (`djinn_weapon_belial_scythe`, white bone blade, teal glow, 4798 quads, 1024 px skin) replaces the flat sprite in hand; the sprite stays as the inventory icon. Grip class scythe (Better Combat files from 4.24.0 apply).
 - NEW (Blender): the **bone-dragon set** `djinn/belial_bone/` (23 pieces: skull helm, horns, crest, ribcage chest, pauldrons, bat wings, bone tail, backdrop, mantle, weapon; 6012 quads, 64-colour 1024 px skin). New set kind BONE in the Djinn loader: it is tried first for Belial only while the canon Belial is on (`belialCanon`); with it off, or if the files are missing, the old unique/dark/base looks draw exactly as before.

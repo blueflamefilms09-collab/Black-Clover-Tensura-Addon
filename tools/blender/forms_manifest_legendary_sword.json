@@ -1,0 +1,42 @@
+{
+ "legendary_sword__assassin_sword": {
+  "class": "longsword",
+  "form": "assassin_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__flash_sword": {
+  "class": "longsword",
+  "form": "flash_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__hundred_sword": {
+  "class": "longsword",
+  "form": "hundred_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__meteor_sword": {
+  "class": "longsword",
+  "form": "meteor_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__spirit_tortoise_sword": {
+  "class": "longsword",
+  "form": "spirit_tortoise_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__thunder_god_sword": {
+  "class": "longsword",
+  "form": "thunder_god_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__tortoise_carapace_sword": {
+  "class": "longsword",
+  "form": "tortoise_carapace_sword",
+  "weapon": "legendary_sword"
+ },
+ "legendary_sword__wind_king_katana": {
+  "class": "longsword",
+  "form": "wind_king_katana",
+  "weapon": "legendary_sword"
+ }
+}

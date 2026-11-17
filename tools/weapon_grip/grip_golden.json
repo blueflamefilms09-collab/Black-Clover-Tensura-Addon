@@ -2191,6 +2191,38 @@
   "y": 11.4,
   "z": 0.0
  },
+ "legendary_sword__assassin_sword": {
+  "class": "longsword",
+  "fraction": 0.222,
+  "source": "directive",
+  "x": -0.158,
+  "y": 4.046,
+  "z": 0.329
+ },
+ "legendary_sword__flash_sword": {
+  "class": "longsword",
+  "fraction": 0.186,
+  "source": "directive",
+  "x": -2.807,
+  "y": 7.712,
+  "z": 0.0
+ },
+ "legendary_sword__hundred_sword": {
+  "class": "longsword",
+  "fraction": 0.197,
+  "source": "directive",
+  "x": 4.712,
+  "y": 30.068,
+  "z": 0.0
+ },
+ "legendary_sword__meteor_sword": {
+  "class": "longsword",
+  "fraction": 0.251,
+  "source": "directive",
+  "x": -0.36,
+  "y": 7.501,
+  "z": -0.081
+ },
  "legendary_sword__phoenix_sword": {
   "class": "longsword",
   "fraction": 0.174,
@@ -2198,6 +2230,38 @@
   "x": -0.059,
   "y": 14.488,
   "z": 1.31
+ },
+ "legendary_sword__spirit_tortoise_sword": {
+  "class": "longsword",
+  "fraction": 0.174,
+  "source": "directive",
+  "x": 0.75,
+  "y": 18.451,
+  "z": 0.042
+ },
+ "legendary_sword__thunder_god_sword": {
+  "class": "longsword",
+  "fraction": 0.134,
+  "source": "directive",
+  "x": 1.396,
+  "y": 15.975,
+  "z": 0.0
+ },
+ "legendary_sword__tortoise_carapace_sword": {
+  "class": "longsword",
+  "fraction": 0.086,
+  "source": "directive",
+  "x": -0.134,
+  "y": 11.201,
+  "z": -0.012
+ },
+ "legendary_sword__wind_king_katana": {
+  "class": "longsword",
+  "fraction": 0.169,
+  "source": "directive",
+  "x": 0.0,
+  "y": 2.151,
+  "z": -0.083
  },
  "legendary_sword_curse": {
   "class": "longsword",
