@@ -2143,6 +2143,14 @@
   "y": 0.0,
   "z": 4.824
  },
+ "legendary_shield__slime_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.66,
+  "y": -3.678,
+  "z": 2.331
+ },
  "legendary_shield_curse": {
   "class": "shield",
   "fraction": 0.5,
@@ -2174,6 +2182,14 @@
   "x": 0.0,
   "y": 11.4,
   "z": 0.0
+ },
+ "legendary_sword__phoenix_sword": {
+  "class": "longsword",
+  "fraction": 0.174,
+  "source": "directive",
+  "x": -0.059,
+  "y": 14.488,
+  "z": 1.31
  },
  "legendary_sword_curse": {
   "class": "longsword",
@@ -5230,6 +5246,14 @@
   "x": 0.0,
   "y": 33.396,
   "z": 0.0
+ },
+ "vassal_scythe__demon_dragon_scythe": {
+  "class": "scythe",
+  "fraction": 0.272,
+  "source": "directive",
+  "x": -0.172,
+  "y": 69.248,
+  "z": -0.395
  },
  "vassal_sewing_set": {
   "class": "rapier",

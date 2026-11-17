@@ -1,0 +1,17 @@
+{
+ "legendary_shield__slime_shield": {
+  "class": "shield",
+  "form": "slime_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_sword__phoenix_sword": {
+  "class": "longsword",
+  "form": "phoenix_sword",
+  "weapon": "legendary_sword"
+ },
+ "vassal_scythe__demon_dragon_scythe": {
+  "class": "scythe",
+  "form": "demon_dragon_scythe",
+  "weapon": "vassal_scythe"
+ }
+}
