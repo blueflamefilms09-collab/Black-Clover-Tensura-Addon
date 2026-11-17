@@ -222,6 +222,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.greed.GreedCommand.node());                                           // greed status|give|reset (op), form|recover|vault (the wielder)
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
+        root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.node());                                       // goku_boss spawn|status|clear (op): the Goku boss
         root.then(bossNode);
         root.then(com.newuniverse.nusmp.skill.DbSkills.node());                                          // 3.56.0: dragonball give|list
         root.then(com.newuniverse.nusmp.dragonballs.DbCommands.node());                                     // dragonballs status|scatter|lock|unlock|end (op): the Dragon Ball wish system

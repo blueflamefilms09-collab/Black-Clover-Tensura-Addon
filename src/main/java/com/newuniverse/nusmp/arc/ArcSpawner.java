@@ -60,6 +60,10 @@ public final class ArcSpawner {
             if (!ArcConfig.tierBosses()) return new Result(Outcome.DISABLED, null, List.of());
             if (!force && com.newuniverse.nusmp.arc.tier.TierBoss.liveCount() >= ArcConfig.tierBossMax()) return new Result(Outcome.FAILED, null, List.of());
         }
+        if (com.newuniverse.nusmp.arc.goku.GokuBosses.owns(c.id())) {                           // the Goku boss: his own switch and a hard global cap, for every door (forced summonings too)
+            Outcome no = com.newuniverse.nusmp.arc.goku.GokuBosses.gate(sl, at);
+            if (no != null) return new Result(no, null, List.of());
+        }
         if (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) return com.newuniverse.nusmp.arc.world.ExistingBossSpawner.summon(sl, c, at, yaw, party, force);   // 1.61.0: the seven older bosses are not ArcBosses; they are spawned by id
         EntityType<? extends ArcBoss> type = typeOf(c.id());
         if (type == null) return new Result(Outcome.NO_ENTITY, null, List.of());

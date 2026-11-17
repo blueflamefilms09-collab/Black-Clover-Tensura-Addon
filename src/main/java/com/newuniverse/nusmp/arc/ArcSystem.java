@@ -37,6 +37,9 @@ public final class ArcSystem {
         com.newuniverse.nusmp.arc.tier.LightSounds.register(modBus);                                             // 3.36.0: Light Yagami (gag boss): his three spoken lines (sound events)
         modBus.addListener(com.newuniverse.nusmp.arc.tier.LightNet::registerPayloads);                          // the one small scene packet (server to the players near him)
         com.newuniverse.nusmp.arc.tier.LightEvents.register(NeoForge.EVENT_BUS);                                // his scenes end on logout, death, dimension change, server stop
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.goku.GokuBossConfig.SPEC, "nusmp-goku-boss-server.toml");   // the Goku boss: its own server settings file
+        com.newuniverse.nusmp.arc.goku.GokuBossEvents.register(NeoForge.EVENT_BUS);                            // he forgets a player on logout, death, dimension change and server stop
+        com.newuniverse.nusmp.arc.goku.GokuBossSelfTests.register();                                          // keys goku.boss.*
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

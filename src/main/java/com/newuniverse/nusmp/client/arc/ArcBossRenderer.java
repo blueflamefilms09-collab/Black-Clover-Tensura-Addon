@@ -36,6 +36,8 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
     private final ArcClips firstClips, secondClips;
     /** Boss rework wave 2: the Blender-made body of a look that has one (the Minotaur: tools/blender/boss_minotaur.py), else null; drawn in the base form while its client setting is on. */
     private final BossMeshDraw blender;
+    /** The Goku boss: one body spec per skin of {@code GokuLadder.SKINS} (he changes skin with his form), else null. Built once; the choice per frame is an array lookup. */
+    private final GeoSpec[] gokuSkins;
 
     public ArcBossRenderer(EntityRendererProvider.Context ctx, ArcLook look) {
         super(ctx, look.shadow());
@@ -49,6 +51,15 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
         this.second = look.glow() ? b : b.noGlow();
         this.firstClips = new ArcClips(first);
         this.secondClips = new ArcClips(second);
+        GeoSpec[] gs = null;
+        if (com.newuniverse.nusmp.arc.goku.GokuLadder.SKINS.get(0).equals(look.skin())) {
+            gs = new GeoSpec[com.newuniverse.nusmp.arc.goku.GokuLadder.SKINS.size()];
+            for (int i = 0; i < gs.length; i++) {
+                GeoSpec g = GeoSpec.of(ArcModelKey.KEY, name.isEmpty() ? ArcModelKey.FALLBACK : name).skin(com.newuniverse.nusmp.arc.goku.GokuLadder.SKINS.get(i));
+                gs[i] = look.glow() ? g : g.noGlow();
+            }
+        }
+        this.gokuSkins = gs;
         this.blender = MINOTAUR.equals(name) && look.skin().isEmpty() ? new BossMeshDraw(MINOTAUR) : null;
     }
 
@@ -70,6 +81,7 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
         boolean hasSecond = ArcModels.has(second.model());
         boolean useSecond = hasSecond && newForm;
         GeoSpec spec = useSecond ? second : first;
+        if (gokuSkins != null && e instanceof com.newuniverse.nusmp.arc.goku.GokuBoss gb && !useSecond) spec = gokuSkins[Math.max(0, com.newuniverse.nusmp.arc.goku.GokuLadder.SKINS.indexOf(com.newuniverse.nusmp.arc.goku.GokuLadder.skin(gb.formIdx())))];
         ArcClips clips = useSecond ? secondClips : firstClips;
         Move move = casting ? e.castingMoveOrNull() : null;
         boolean ultimate = move != null && move.ultimate();

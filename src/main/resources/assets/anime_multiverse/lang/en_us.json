@@ -19654,5 +19654,6 @@
   "djinn_weapon.act.exile": "Exile",
   "djinn_weapon.act.exile.desc": "Sends the nearest foes (up to three) to another dimension for a few seconds: they cannot act or be hurt and come back where they stood. Never a boss; the rest of the cone takes a lighter sever.",
   "death.attack.anime_multiverse.spirit_sever": "%1$s had their spirit severed",
-  "death.attack.anime_multiverse.spirit_sever.player": "%1$s had their spirit severed by %2$s"
+  "death.attack.anime_multiverse.spirit_sever.player": "%1$s had their spirit severed by %2$s",
+  "entity.anime_multiverse.goku_boss": "Son Goku"
 }
