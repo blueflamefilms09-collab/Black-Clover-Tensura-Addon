@@ -58,7 +58,7 @@ public final class DjinnMeshes {
     private static final Data[][][] CACHE = new Data[2][N][Piece.values().length];
     /** The set each [dark][djinn] is drawn from, -1 until decided. */
     private static final int[][] SET = new int[2][N];
-    private static final ResourceLocation[][] SKIN = new ResourceLocation[3][N], GLOW = new ResourceLocation[3][N];
+    private static final ResourceLocation[][] SKIN = new ResourceLocation[4][N], GLOW = new ResourceLocation[4][N];
     private static final ResourceLocation[][] RUNE = new ResourceLocation[2][N], BUST = new ResourceLocation[2][N];
     private static final ResourceLocation[] ART = new ResourceLocation[N];
     private static final Map<String, Boolean> WARNED = new HashMap<>(), EXISTS = new HashMap<>();
@@ -138,7 +138,8 @@ public final class DjinnMeshes {
     public static int setOf(Djinn d, boolean dark) {
         int i = dark ? 1 : 0, cached = SET[i][d.ordinal()];
         if (cached >= 0) return cached;
-        int found = DjinnLook.pickSet(dark, kind -> exists("djinn/" + DjinnLook.dir(d.id(), kind) + "/" + DjinnLook.MARKER_PIECE + ".txt"));
+        boolean bone = d == Djinn.BELIAL && com.newuniverse.nusmp.relics.djinn.BelialCanon.on();   // 4.24.1: the white bone dragon, only while the canon Belial is on
+        int found = DjinnLook.pickSet(dark, bone, kind -> exists("djinn/" + DjinnLook.dir(d.id(), kind) + "/" + DjinnLook.MARKER_PIECE + ".txt"));
         return SET[i][d.ordinal()] = found;
     }
 

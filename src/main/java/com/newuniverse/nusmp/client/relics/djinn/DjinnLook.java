@@ -12,12 +12,23 @@ package com.newuniverse.nusmp.client.relics.djinn;
 public final class DjinnLook {
     private DjinnLook() {}
 
-    public static final int BASE = 0, UNIQUE = 1, DARK = 2;
+    public static final int BASE = 0, UNIQUE = 1, DARK = 2, BONE = 3;
 
     private static final int[] CHAIN_DARK = {DARK, UNIQUE, BASE}, CHAIN_LIGHT = {UNIQUE, BASE};
+    /** 4.24.1: the same chains with the white bone-dragon set ({@link #BONE}, the canon Belial) tried first. */
+    private static final int[] CHAIN_DARK_BONE = {DARK, BONE, UNIQUE, BASE}, CHAIN_LIGHT_BONE = {BONE, UNIQUE, BASE};
 
     /** The sets to try, best first. The arrays are shared and never modified. */
     public static int[] chain(boolean dark) { return dark ? CHAIN_DARK : CHAIN_LIGHT; }
+
+    /** The sets to try for a Djinn that has a bone set ({@code bone}), best first. */
+    public static int[] chain(boolean dark, boolean bone) { return bone ? (dark ? CHAIN_DARK_BONE : CHAIN_LIGHT_BONE) : chain(dark); }
+
+    /** {@link #pickSet(boolean, IntPredicate)} with the bone set offered first when {@code bone}. */
+    public static int pickSet(boolean dark, boolean bone, java.util.function.IntPredicate hasSet) {
+        for (int kind : chain(dark, bone)) if (kind == BASE || hasSet.test(kind)) return kind;
+        return BASE;
+    }
 
     /** The set a Djinn is drawn from: the first of the preferred chain whose marker piece exists ({@code hasSet} tells), the shared rig if none does. */
     public static int pickSet(boolean dark, java.util.function.IntPredicate hasSet) {
@@ -29,11 +40,11 @@ public final class DjinnLook {
     public static final String MARKER_PIECE = "chest";
 
     /** The mesh directory under assets/anime_multiverse/djinn/. */
-    public static String dir(String id, int kind) { return kind == DARK ? "d_" + id : kind == UNIQUE ? "u_" + id : id; }
+    public static String dir(String id, int kind) { return kind == DARK ? "d_" + id : kind == UNIQUE ? "u_" + id : kind == BONE ? id + "_bone" : id; }
 
     /** The armour skin (and with {@code glow} its additive twin) of a set: textures/entity/djinn/&lt;id&gt;[_u|_d]_armor[_glow].png. */
     public static String skinPath(String id, int kind, boolean glow) {
-        return "textures/entity/djinn/" + id + (kind == DARK ? "_d" : kind == UNIQUE ? "_u" : "") + "_armor" + (glow ? "_glow" : "") + ".png";
+        return "textures/entity/djinn/" + id + (kind == DARK ? "_d" : kind == UNIQUE ? "_u" : kind == BONE ? "_bone" : "") + "_armor" + (glow ? "_glow" : "") + ".png";
     }
 
     /** The additive body-art overlay: the dark one, the Djinn's own pattern, or (the first look) the shared rune. */

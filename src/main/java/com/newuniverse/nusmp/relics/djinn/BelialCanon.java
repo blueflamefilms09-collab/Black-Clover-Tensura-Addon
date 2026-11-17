@@ -7,8 +7,8 @@ package com.newuniverse.nusmp.relics.djinn;
  *
  * <p><b>Affinity.</b> LIGHT: of the eight kinds of the Magi guide it is the only white, pale one, and it is drawn with the divine rays and sigils (a clean cut of light),
  * and it needs no new enum value (so no switch over Affinity can miss it). Colours: white bone 0xE8EEF2, teal-blue glow 0x58B8D8. No flames.
- * <p><b>Look.</b> Spike horns (bone), membrane wings (bat), no tail, no halo. The part set {@code djinn/belial_bone/} of the model worker is NOT hooked in: the loader
- * ({@code client.relics.djinn.DjinnLook#dir}) only knows {@code djinn/<id>/}, {@code u_<id>} and {@code d_<id>}.
+ * <p><b>Look.</b> Spike horns (bone), membrane wings (bat), no tail, no halo. The part set {@code djinn/belial_bone/} (4.25.0) is hooked in as set kind BONE of the client loader
+ * ({@code client.relics.djinn.DjinnLook#dir}), offered first while {@link #on()} is true.
  */
 public final class BelialCanon {
     private BelialCanon() {}

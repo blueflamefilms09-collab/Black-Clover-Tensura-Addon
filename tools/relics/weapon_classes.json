@@ -977,7 +977,8 @@
     "seifort_holy_sword": "longsword",
     "legendary_shield__slime_shield": "shield",
     "legendary_sword__phoenix_sword": "longsword",
-    "vassal_scythe__demon_dragon_scythe": "scythe"
+    "vassal_scythe__demon_dragon_scythe": "scythe",
+    "djinn_weapon_belial_scythe": "scythe"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

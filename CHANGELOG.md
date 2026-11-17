@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.25.0] — Belial's white bone scythe and bone-dragon armour (3D models)
+- NEW (made in Blender, `tools/blender/belial_scythe.py`, `belial_bone.py`): the real 3D **Belial scythe** (`djinn_weapon_belial_scythe`, white bone blade, teal glow, 4798 quads, 1024 px skin) replaces the flat sprite in hand; the sprite stays as the inventory icon. Grip class scythe (Better Combat files from 4.24.0 apply).
+- NEW (Blender): the **bone-dragon set** `djinn/belial_bone/` (23 pieces: skull helm, horns, crest, ribcage chest, pauldrons, bat wings, bone tail, backdrop, mantle, weapon; 6012 quads, 64-colour 1024 px skin). New set kind BONE in the Djinn loader: it is tried first for Belial only while the canon Belial is on (`belialCanon`); with it off, or if the files are missing, the old unique/dark/base looks draw exactly as before.
+- REPLACED (look only, roster row `BELIAL_BONE`): 3 bone-tail segments, backdrop stands still. KEPT: the old `belial`, `u_belial` and `d_belial` sets and skins untouched.
+- Cost: one player in Full Equip draws at most 6282 quads at close range (test `DjinnBoneSetTest`, budget 6400); beyond the detail distance the crest, ears and tail are skipped; no new packets, no server work.
+- Honest caveats: not seen in a game; the skull and spine are lower-poly than the Genesis Demon-Slayer standard and the skin palette is coarse; the reference images were not fetchable, the look follows the owner's two pictures by description.
+
 ## [4.24.0] — Belial reworked: the white spirit-cutting scythe Djinn (game rules; 3D model still to come)
 - REPLACED (server setting `belialCanon` in `nusmp-belial-server.toml`, default on; off restores the old fire greatsword Belial exactly): the Djinn **Belial** is no longer a fire greatsword. His weapon is a **scythe** (new items `djinn_weapon_belial_scythe` and `_dark`; the old `djinn_weapon_belial` ones stay registered). Source of the design: the owner's notes (the wikis could not be fetched).
 - NEW: act **Spirit Sever**: a wide scythe arc whose hit (damage type `anime_multiverse:spirit_sever`) ignores armour and durability, enchantment protection, shields, resistance, invulnerability frames and the nullifications/negations the mod knows; bounded: 8% of max health plus a base value, capped per hit and per second; bosses take at most 3% per hit and 6% per second.

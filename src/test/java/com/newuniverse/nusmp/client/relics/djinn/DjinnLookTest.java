@@ -30,6 +30,19 @@ class DjinnLookTest {
     }
 
     @Test
+    void theBoneSetComesFirstOnlyWhenOffered() {
+        assertArrayEquals(new int[]{DjinnLook.BONE, DjinnLook.UNIQUE, DjinnLook.BASE}, DjinnLook.chain(false, true));
+        assertArrayEquals(new int[]{DjinnLook.DARK, DjinnLook.BONE, DjinnLook.UNIQUE, DjinnLook.BASE}, DjinnLook.chain(true, true));
+        assertArrayEquals(DjinnLook.chain(false), DjinnLook.chain(false, false));
+        assertEquals(DjinnLook.BONE, DjinnLook.pickSet(false, true, k -> true));
+        assertEquals(DjinnLook.UNIQUE, DjinnLook.pickSet(false, true, k -> k == DjinnLook.UNIQUE), "no bone files: the old look");
+        assertEquals(DjinnLook.UNIQUE, DjinnLook.pickSet(false, false, k -> true), "a Djinn with no bone set never asks for it");
+        assertEquals("belial_bone", DjinnLook.dir("belial", DjinnLook.BONE));
+        assertEquals("textures/entity/djinn/belial_bone_armor.png", DjinnLook.skinPath("belial", DjinnLook.BONE, false));
+        assertEquals("textures/entity/djinn/belial_bone_armor_glow.png", DjinnLook.skinPath("belial", DjinnLook.BONE, true));
+    }
+
+    @Test
     void theFileNamesFollowTheGeneratorsConvention() {
         assertEquals("baal", DjinnLook.dir("baal", DjinnLook.BASE));
         assertEquals("u_baal", DjinnLook.dir("baal", DjinnLook.UNIQUE));

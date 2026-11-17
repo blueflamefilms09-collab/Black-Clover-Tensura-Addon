@@ -62,7 +62,7 @@ public final class DjinnRoster36 {
             new Ambient("note", 4, "mote", 7, Anchor.ABOVE), new Dust(Motion.RING, 7));
         put("BELIAL", new Style(0.5f, 3, 0.4f, 0.3f, 0.06f, 0.72f, 0.4f),
             new Ambient("ash", 8, "smoke", 5, Anchor.ABOVE), new Dust(Motion.RISE, 9));
-        put("BELIAL_BONE", new Style(0.9f, 0, 0f, 0.2f, 0.03f, 0.95f, 0f),                         // Belial rework (owner notes): white bone, bat wings, no flames
+        put("BELIAL_BONE", new Style(0.9f, 3, 0f, 0f, 0.03f, 0.95f, 0.6f),                         // Belial rework (owner notes): white bone dragon, bat wings, bone tail, no flames; the backdrop stands still
             new Ambient("enchant", 6, "mote", 4, Anchor.ABOVE), new Dust(Motion.TWINKLE, 8));
         put("DECARABIA", new Style(0.75f, 3, 2.2f, 0.5f, 0f, 0.8f, 0.7f),
             new Ambient("drip", 5, "shard", 5, Anchor.FEET), new Dust(Motion.TWINKLE, 9));
