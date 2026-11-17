@@ -375,7 +375,7 @@ public class GokuBoss extends ArcBoss {
         AttributeInstance a = getAttribute(attr);
         if (a == null) return;
         if (Math.abs(amount) < 1.0e-9) a.removeModifier(modId);
-        else a.addOrReplaceTransientModifier(new AttributeModifier(modId, amount, op));
+        else a.addOrUpdateTransientModifier(new AttributeModifier(modId, amount, op));
     }
 
     private void removeModifiers(Holder<Attribute> attr) {

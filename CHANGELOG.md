@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.28.1] — Build fixes for the sword, bow, spear and Goku boss releases
+- FIXED (no gameplay change): the Better Combat inventory list now knows the new Legendary weapon form models (the 4.26.0 and 4.27.0 builds stopped at that check), and the Goku boss' attribute call uses the right method name for this game version (the 4.28.0 build did not compile). Everything from 4.26.0 to 4.28.0 ships in this release.
+
 ## [4.28.0] — Goku boss: an overpowered Goku who changes form like the anime
 - NEW: the **Goku boss** (`goku_boss`, an arc boss: operator `/multiverse goku_boss spawn|status|clear`, the arc summon command and spawn egg). He fights through ten forms in canon order (Base, Super Saiyan, SSJ2, SSJ3, SSJ God, Blue, Blue Kaio-ken, Ultra Instinct Sign, Perfected UI, True UI), entering each at an HP line or on the enrage clock, with a 40-tick windup, aura, skin change and a chat line. Damage, speed and armour of each form come from the owner's SaiyanForms chart. Moves: combo, Kamehameha (telegraphed), Instant Transmission, Kaio-ken burst, Spirit Bomb (interruptible), and a capped auto-dodge from UI Sign on.
 - NEW: **scales with the players' Tensura EP** (fallback Saiyan Battle Power, then a fixed preset): one scan at spawn and every 100 ticks, at most 10 players. Server settings in `nusmp-goku-boss-server.toml` (`enabled`, `difficulty`, `healthMultiplier`, `damageMultiplier`, `epScaling`, `epWeight`, `epCap`, `perPlayerBonus`, `playerCap`, `maxHitPercent`, `uiDodgeCap`, `enrageMinutes`, `blockDamage`, `globalCap`). `enabled=false` keeps him from spawning.
