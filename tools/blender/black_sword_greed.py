@@ -34,7 +34,7 @@ ROOT = bl.ROOT
 # the place line of each form: item-space origin of y = ymin, the axis angle (45 = the sprite diagonal, 225 for a bow, 90 for a shield), item units per mesh unit, ymin
 PLACE = {
     "black_sword_greed": (0.14, 0.13, 45.0, 0.013333, 0.0),                  # 135 cm -> 1.8 blocks, a longsword
-    "black_sword_greed_bow": (1.06961, 1.06961, 225.0, 0.009563, -84.239),   # the place line of the Legendary Bow, grown 1.34x about the grip (4.23.0): 168 cm tip to tip -> 1.61 blocks, apparent 1.45 (class range 1.3-1.6)
+    "black_sword_greed_bow": (0.99144, 0.99144, 225.0, 0.008251, -84.239),   # the place line of the Legendary Bow, grown 1.16x about the grip (4.23.0): 1.39 blocks, the top of the bow guard (BowDisplayGuardTest: 0.9 to 1.4)
     "black_sword_greed_scythe": (-0.32086, -0.32086, 45.0, 0.0105, 0.0),     # 240 cm -> 2.52 blocks
     "black_sword_greed_shield": (0.5, -0.0075, 90.0, 0.0145, -35.0),         # a shield mesh is upright (90) and centred on the item cube
     "black_sword_greed_staff": (-0.31331, -0.31331, 45.0, 0.008735, -9.0),   # the place line of the Vassal Staff: 2.5 blocks
