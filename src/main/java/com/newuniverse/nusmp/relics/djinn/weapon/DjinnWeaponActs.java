@@ -76,7 +76,7 @@ public final class DjinnWeaponActs {
         }
         int act = p.isShiftKeyDown() ? DjinnWeaponRules.ACT_TWO : DjinnWeaponRules.ACT_ONE;
         if (!DjinnWeaponRules.open(act, phase)) {
-            p.displayClientMessage(Component.translatable("djinn_weapon.msg.locked", Component.translatable("djinn_weapon.act." + DjinnWeaponRules.spec(d).two().key())), true);
+            p.displayClientMessage(Component.translatable("djinn_weapon.msg.locked", Component.translatable("djinn_weapon.act." + item.spec().two().key())), true);
             return false;
         }
         int tick = p.tickCount;
@@ -85,7 +85,7 @@ public final class DjinnWeaponActs {
         LAST_USE.put(p.getUUID(), tick);
         long now = p.level().getGameTime();
         ActClock clock = CLOCKS.computeIfAbsent(p.getUUID(), k -> new ActClock());
-        DjinnWeaponRules.Spec spec = DjinnWeaponRules.spec(d);
+        DjinnWeaponRules.Spec spec = item.spec();
         int left = clock.left(act, now);
         if (left > 0) {
             p.displayClientMessage(Component.translatable("djinn_weapon.msg.cooldown", Component.translatable("djinn_weapon.act." + spec.act(act).key()), String.format(java.util.Locale.ROOT, "%.1f", left / 20.0)), true);
@@ -203,6 +203,8 @@ public final class DjinnWeaponActs {
             case "heavenly_dash" -> heavenlyDash(c);
             case "abyssal_reap" -> abyssalReap(c);
             case "drowning_pull" -> drowningPull(c);
+            case "spirit_sever" -> spiritSever(c);
+            case "exile" -> exile(c);
             default -> {
                 ActLibrary.Gen g = ActLibrary.gen(key);                                    // the acts of the 1.93.0 weapons are data (ActLibrary)
                 if (g != null) generic(c, g);
@@ -743,6 +745,36 @@ public final class DjinnWeaponActs {
             }
         rings(c, at, c.range);
         snd(c, SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 1.0f, 0.5f);
+    }
+
+    // ================================================================ BELIAL (canon scythe, "owner notes")
+    /** Belior Goldorezza's cut: the spirit of every foe in a wide cone is severed (BelialSever: bypasses defences, capped per hit and per second). */
+    private static void spiritSever(Ctx c) {
+        for (LivingEntity t : cone(c, c.range, 85.0)) {
+            com.newuniverse.nusmp.relics.djinn.BelialSever.sever(c.p, t, c.power, com.newuniverse.nusmp.relics.djinn.BelialSeverRules.ACT_FRAC);
+            DjinnWeaponBridge.tinted(c.l, c.glow, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
+        }
+        arc(c, 3.0, 85, 24, DjinnWeaponBridge.particle(c.d), c.color);
+        arc(c, c.range * 0.8, 85, 32, DjinnWeaponBridge.particle(c.d), c.glow);
+        snd(c, SoundEvents.PLAYER_ATTACK_SWEEP, 1.3f, 0.6f);
+        snd(c, SoundEvents.AMETHYST_BLOCK_RESONATE, 1.0f, 0.5f);
+    }
+
+    /** The scythe sends the nearest foes to another dimension for a few seconds (BelialExile: in place, never bosses, bounded); the rest of the cone takes a lighter sever. */
+    private static void exile(Ctx c) {
+        int sent = 0;
+        for (LivingEntity t : cone(c, c.range, 60.0)) {
+            if (sent < com.newuniverse.nusmp.relics.djinn.BelialSeverRules.MAX_VICTIMS) {
+                var r = com.newuniverse.nusmp.relics.djinn.BelialExile.start(c.p, t, com.newuniverse.nusmp.relics.djinn.BelialSeverRules.exileTicks(t instanceof Player, c.full, c.dark));
+                if (r == com.newuniverse.nusmp.relics.djinn.BelialSeverRules.Refusal.OK) {
+                    sent++;
+                    continue;
+                }
+            }
+            com.newuniverse.nusmp.relics.djinn.BelialSever.sever(c.p, t, c.power * 0.5, com.newuniverse.nusmp.relics.djinn.BelialSeverRules.ACT_FRAC * 0.5);
+        }
+        arc(c, c.range * 0.6, 60, 24, DjinnWeaponBridge.particle(c.d), c.glow);
+        snd(c, SoundEvents.ENDERMAN_TELEPORT, 1.0f, 0.5f);
     }
 
     // ================================================================ the generic acts (ActLibrary): the weapons of 1.93.0

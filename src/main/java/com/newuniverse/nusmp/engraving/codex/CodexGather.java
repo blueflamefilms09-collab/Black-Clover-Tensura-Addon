@@ -90,6 +90,11 @@ public final class CodexGather {
                 List<String> specs = new ArrayList<>();
                 for (DjinnWeaponRules.Engraving g : DjinnWeaponRules.engravings(d, dark)) specs.add(g.id() + "@" + g.level());
                 addCarrier(carriers, names, DjinnWeaponRules.itemPath(d, dark), specs);
+                if (d == Djinn.BELIAL) {                                                                   // Belial rework: the canon scythe is a second carrier
+                    java.util.List<String> canonSpecs = new java.util.ArrayList<>();
+                    for (DjinnWeaponRules.Engraving g : DjinnWeaponRules.engravings(d, dark, true)) canonSpecs.add(g.id() + "@" + g.level());
+                    addCarrier(carriers, names, DjinnWeaponRules.itemPath(d, dark, true), canonSpecs);
+                }
             }
         }
 

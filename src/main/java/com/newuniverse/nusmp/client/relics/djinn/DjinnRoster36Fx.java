@@ -21,7 +21,7 @@ final class DjinnRoster36Fx {
     private DjinnRoster36Fx() {}
 
     static void emitPalette(ClientLevel level, AbstractClientPlayer p, Djinn d, Snap s, boolean dark) {
-        Dust dust = DjinnRoster36.dustOf(d.name());
+        Dust dust = DjinnRoster36.dustOf(DjinnRoster36.keyOf(d));
         if (dust == null) return;
         float share = DjinnLook.phaseShare(s.phase());
         if (share <= 0f) return;
@@ -29,7 +29,7 @@ final class DjinnRoster36Fx {
         int n = DjinnLook.spawnCount(dust.rate(), share, rnd.nextFloat());
         if (n <= 0) return;
         int[] c = DjinnRoster36.colours(d, dark);
-        Anchor anchor = DjinnLook.anchorAt(DjinnRoster36.ambientOfName(d.name()).anchor(), s.phase());
+        Anchor anchor = DjinnLook.anchorAt(DjinnRoster36.ambientOfName(DjinnRoster36.keyOf(d)).anchor(), s.phase());
         double yaw = Math.toRadians(p.yBodyRot), fx = -Math.sin(yaw), fz = Math.cos(yaw), lx = Math.cos(yaw), lz = Math.sin(yaw), h = p.getBbHeight();
         long gt = level.getGameTime();
         for (int i = 0; i < n; i++) {

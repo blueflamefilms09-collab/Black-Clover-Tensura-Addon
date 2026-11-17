@@ -29,30 +29,47 @@ public final class DjinnWeaponItems {
         }
     }
 
+    /** Belial rework: the canon Belial's scythe (owner notes), light and dark, registered next to the old greatsword weapons (which stay). */
+    private static final DeferredItem<Item> CANON_LIGHT = NUItems.ITEMS.register(DjinnWeaponRules.itemPath(Djinn.BELIAL, false, true),
+            () -> new DjinnWeaponItem(Djinn.BELIAL, false, true, DjinnWeaponItem.props(Djinn.BELIAL, false, true)));
+    private static final DeferredItem<Item> CANON_DARK = NUItems.ITEMS.register(DjinnWeaponRules.itemPath(Djinn.BELIAL, true, true),
+            () -> new DjinnWeaponItem(Djinn.BELIAL, true, true, DjinnWeaponItem.props(Djinn.BELIAL, true, true)));
+
     public static void init() {}
 
-    public static Item item(Djinn d, boolean dark) { return (dark ? DARK : LIGHT).get(d).get(); }
+    /** The weapon of a Djinn: for Belial, the canon scythe while the setting {@code belial.belialCanon} is on, else the old item. */
+    public static Item item(Djinn d, boolean dark) { return item(d, dark, d == Djinn.BELIAL && com.newuniverse.nusmp.relics.djinn.BelialCanon.on()); }
 
-    /** All of them (72), light then dark, in roster order: for the client registrations. */
+    /** The weapon of a Djinn, the canon scythe asked for explicitly (only Belial has one; anyone else gets their one weapon). */
+    public static Item item(Djinn d, boolean dark, boolean canon) {
+        if (canon && d == Djinn.BELIAL) return (dark ? CANON_DARK : CANON_LIGHT).get();
+        return (dark ? DARK : LIGHT).get(d).get();
+    }
+
+    /** All of them (72, light then dark, in roster order) and then the canon Belial's two: for the client registrations. */
     public static List<DeferredItem<Item>> all() {
         List<DeferredItem<Item>> out = new ArrayList<>();
         for (Djinn d : Djinn.values()) {
             out.add(LIGHT.get(d));
             out.add(DARK.get(d));
         }
+        out.add(CANON_LIGHT);
+        out.add(CANON_DARK);
         return out;
     }
 
     /** A bare weapon of a Djinn; it is adopted as an admin weapon by whoever holds it ({@link DjinnWeaponService#vet}). */
     public static ItemStack bare(Djinn d, boolean dark) { return new ItemStack(item(d, dark)); }
 
-    /** The 72 bare stacks for the creative tab (admin only): light then dark, in roster order. */
+    /** The 72 bare stacks for the creative tab (admin only): light then dark, in roster order, and then the canon Belial's two. */
     public static List<ItemStack> creativeStacks() {
         List<ItemStack> out = new ArrayList<>();
         for (Djinn d : Djinn.values()) {
-            out.add(bare(d, false));
-            out.add(bare(d, true));
+            out.add(new ItemStack(item(d, false, false)));
+            out.add(new ItemStack(item(d, true, false)));
         }
+        out.add(new ItemStack(item(Djinn.BELIAL, false, true)));
+        out.add(new ItemStack(item(Djinn.BELIAL, true, true)));
         return out;
     }
 

@@ -366,6 +366,16 @@
       "profile": "djinn_greatsword",
       "source": "djinn greatsword reach 0.40"
     },
+    "djinn_weapon_belial_scythe": {
+      "class": "scythe",
+      "profile": "djinn_scythe",
+      "source": "djinn scythe reach 1.00"
+    },
+    "djinn_weapon_belial_scythe_dark": {
+      "class": "scythe",
+      "profile": "djinn_scythe",
+      "source": "djinn scythe reach 1.00"
+    },
     "djinn_weapon_bifron": {
       "class": "glaive",
       "profile": "djinn_glaive",

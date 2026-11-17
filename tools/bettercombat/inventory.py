@@ -101,6 +101,11 @@ def djinn_weapons():
         did, kind, reach = m.group(1).lower(), m.group(2), float(m.group(5))
         out[prefix + did] = (kind, reach)
         out[prefix + did + dark] = (kind, reach)
+    cs = re.search(r'CANON_SUFFIX\s*=\s*"([a-z_]+)"', rules).group(1)                       # the canon Belial scythe: its own ids (docs/belial_rework.md)
+    for m in re.finditer(r'canonRow\(Djinn\.([A-Z_]+),\s*"([a-z]+)",\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),', rules):
+        did, kind, reach = m.group(1).lower(), m.group(2), float(m.group(5))
+        out[prefix + did + cs] = (kind, reach)
+        out[prefix + did + cs + dark] = (kind, reach)
     return out
 
 

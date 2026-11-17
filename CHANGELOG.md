@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.24.0] — Belial reworked: the white spirit-cutting scythe Djinn (game rules; 3D model still to come)
+- REPLACED (server setting `belialCanon` in `nusmp-belial-server.toml`, default on; off restores the old fire greatsword Belial exactly): the Djinn **Belial** is no longer a fire greatsword. His weapon is a **scythe** (new items `djinn_weapon_belial_scythe` and `_dark`; the old `djinn_weapon_belial` ones stay registered). Source of the design: the owner's notes (the wikis could not be fetched).
+- NEW: act **Spirit Sever**: a wide scythe arc whose hit (damage type `anime_multiverse:spirit_sever`) ignores armour and durability, enchantment protection, shields, resistance, invulnerability frames and the nullifications/negations the mod knows; bounded: 8% of max health plus a base value, capped per hit and per second; bosses take at most 3% per hit and 6% per second.
+- NEW: act **Exile** (setting `exile`, default on): up to 3 victims are cut loose from the fight for a few seconds (no AI, no collision, not targetable, frozen in place), then return where they were. No real dimension travel. Bosses cannot be exiled (they take the sever instead); players are not exiled near a boss fight.
+- NEW: Extreme Magic **Belior Zauto** (name from the owner's notes) for the canon Belial; the old Extreme stays in the data. Better Combat files (scythe profile, two-handed) and engravings for the new weapon; lore strings; roster row `BELIAL_BONE` (white bone and teal glow, bat wings).
+- KEPT: every old Belial item, mesh, act id, enum entry and save id. Cost: one sever or exile per swing; exile state is per victim with a hard cap and is cleaned up on logout, death, dimension change and server stop; no new packets.
+- Not done: the **3D scythe and the bone-dragon body parts** (Blender, in progress): until they land the scythe shows as a flat 16x16 item sprite, which does not meet the Blender-model rule; the white body look is not hooked in yet (the Djinn model loader keys by Djinn id, so it needs a small loader change). The code was written without being compiled or played; a sever bypasses the Totem of Undying.
+
 ## [4.23.1] — Build fix: form models are not items
 - FIXED (no gameplay change): the shield list test and the two Better Combat tests counted the new hero weapon form models (ids with `__`, e.g. `legendary_shield__slime_shield`) as items; they are skins of the base item, so the tests and the Better Combat inventory now skip them (the base item's Better Combat file applies). 4.23.0 (Unique Guardian) was not released because of this; its content is in 4.23.1.
 - Cost: unchanged.

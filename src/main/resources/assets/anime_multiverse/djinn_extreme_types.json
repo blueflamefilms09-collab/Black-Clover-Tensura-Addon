@@ -10,7 +10,8 @@
     "wind": "anime_multiverse:djinn_wind",
     "life": "anime_multiverse:djinn_life",
     "light": "anime_multiverse:djinn_light",
-    "dark": "anime_multiverse:djinn_dark"
+    "dark": "anime_multiverse:djinn_dark",
+    "sever": "anime_multiverse:spirit_sever"
   },
   "djinn": {
     "baal": "lightning",
@@ -48,6 +49,7 @@
     "balam": "fire",
     "alloces": "fire",
     "camio": "dark",
-    "murmur": "sound"
+    "murmur": "sound",
+    "belial_canon": "sever"
   }
 }

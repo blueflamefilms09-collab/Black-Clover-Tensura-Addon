@@ -41,7 +41,7 @@ public final class DjinnDarkSelfTests {
         StringBuilder sb = new StringBuilder();
         for (Djinn d : Djinn.values()) {
             String id = DjinnWeaponRules.itemPath(d, true);
-            if (!BuiltInRegistries.ITEM.getKey(DjinnWeaponItems.item(d, true)).getPath().equals(id)) return SelfTests.Result.fail(id + ": the dark weapon item is not registered under that id");
+            if (!BuiltInRegistries.ITEM.getKey(DjinnWeaponItems.item(d, true, false)).getPath().equals(id)) return SelfTests.Result.fail(id + ": the dark weapon item is not registered under that id");
             String table = text("/assets/anime_multiverse/visual_upgrade/" + id + ".json");
             if (table == null) return SelfTests.Result.fail(id + ": the data table is not in the jar");
             UpgradeSpec s = UpgradeSpec.parse(JsonParser.parseString(table).getAsJsonObject());

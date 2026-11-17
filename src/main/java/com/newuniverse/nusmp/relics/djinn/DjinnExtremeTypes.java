@@ -39,7 +39,10 @@ public final class DjinnExtremeTypes {
     /** The concept ("fire", "lightning", "ice", "water", "wind", "life", "light", "dark", "sound", "force") of a Djinn's Extreme Magic, or null. */
     public static String concept(String djinnId) {
         load();
-        return djinnId == null ? null : DJINN_CONCEPT.get(djinnId.toLowerCase(Locale.ROOT));
+        if (djinnId == null) return null;
+        String key = djinnId.toLowerCase(Locale.ROOT);
+        if (key.equals("belial") && BelialCanon.on()) key = "belial_canon";                    // the canon Belial's Extreme Magic is a sever, not a fire
+        return DJINN_CONCEPT.get(key);
     }
 
     /** The damage type id ("minecraft:lightning_bolt") of a Djinn's Extreme Magic, or null if the table does not know it. */

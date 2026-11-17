@@ -62,6 +62,8 @@ public final class DjinnRoster36 {
             new Ambient("note", 4, "mote", 7, Anchor.ABOVE), new Dust(Motion.RING, 7));
         put("BELIAL", new Style(0.5f, 3, 0.4f, 0.3f, 0.06f, 0.72f, 0.4f),
             new Ambient("ash", 8, "smoke", 5, Anchor.ABOVE), new Dust(Motion.RISE, 9));
+        put("BELIAL_BONE", new Style(0.9f, 0, 0f, 0.2f, 0.03f, 0.95f, 0f),                         // Belial rework (owner notes): white bone, bat wings, no flames
+            new Ambient("enchant", 6, "mote", 4, Anchor.ABOVE), new Dust(Motion.TWINKLE, 8));
         put("DECARABIA", new Style(0.75f, 3, 2.2f, 0.5f, 0f, 0.8f, 0.7f),
             new Ambient("drip", 5, "shard", 5, Anchor.FEET), new Dust(Motion.TWINKLE, 9));
         put("SEERE", new Style(1.9f, 4, 2.6f, -1.8f, 0f, 0.85f, 1.7f),
@@ -94,7 +96,7 @@ public final class DjinnRoster36 {
     /** The motion row of the Djinn with this ordinal, or null if it is not one of the 24. */
     static Style styleOf(int ordinal) {
         Djinn d = Djinn.byOrdinal(ordinal);
-        Style s = d == null ? null : STYLES.get(d.name());
+        Style s = d == null ? null : STYLES.get(keyOf(d));
         if (s == null) return null;
         boolean tail = d.look().tail() != Djinn.Look.Tail.NONE;
         if (tail == s.tailSegs() > 0) return s;
@@ -104,8 +106,11 @@ public final class DjinnRoster36 {
     /** The ambient particle recipe of the Djinn with this ordinal, or null if it is not one of the 24. */
     static Ambient ambientOf(int ordinal) {
         Djinn d = Djinn.byOrdinal(ordinal);
-        return d == null ? null : AMBIENT.get(d.name());
+        return d == null ? null : AMBIENT.get(keyOf(d));
     }
+
+    /** The roster key of a Djinn: its name, or BELIAL_BONE while the canon Belial is on. */
+    static String keyOf(Djinn d) { return d == Djinn.BELIAL && com.newuniverse.nusmp.relics.djinn.BelialCanon.on() ? "BELIAL_BONE" : d.name(); }
 
     /** The dust of the Djinn with this name, or null. */
     static Dust dustOf(String name) { return DUST.get(name); }

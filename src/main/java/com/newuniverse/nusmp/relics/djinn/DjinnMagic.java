@@ -290,7 +290,9 @@ final class DjinnMagic {
         int rank = com.newuniverse.nusmp.relics.Rankings.djinnRank(r.djinn.id()), count = com.newuniverse.nusmp.relics.Rankings.djinnCount();
         com.newuniverse.nusmp.balance.DamageScale.beginExtreme(rank > 0 ? rank : count, count);                                                                 // the per-hit ceiling follows the Djinn's rank (balance.DamageScaleEvents)
         try {
-            Fx.damageHeavy(p, t, (float) (DarkRules.extremeDamage(x.damage(), r.dark) * scale), elementType != null ? elementType : DjinnFx.damageType(r.djinn.affinity()));
+            if (r.djinn == Djinn.BELIAL && BelialCanon.on())                                                                                                  // Belior Zauto severs the spirit (BelialSever caps it per hit and per second)
+                BelialSever.sever(p, t, DarkRules.extremeDamage(x.damage(), r.dark) * scale, BelialSeverRules.EXTREME_FRAC * scale);
+            else Fx.damageHeavy(p, t, (float) (DarkRules.extremeDamage(x.damage(), r.dark) * scale), elementType != null ? elementType : DjinnFx.damageType(r.djinn.affinity()));
         } finally {
             com.newuniverse.nusmp.balance.DamageScale.endExtreme();
         }

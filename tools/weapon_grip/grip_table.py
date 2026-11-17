@@ -74,6 +74,7 @@ def djinn_classes():
         cls = KIND_CLASS[kind]
         out["djinn_weapon_" + name] = cls
         out["djinn_weapon_" + name + "_dark"] = cls
+    out["djinn_weapon_belial_scythe"] = out["djinn_weapon_belial_scythe_dark"] = "glaive"      # the canon Belial scythe (docs/belial_rework.md)
     return out
 
 

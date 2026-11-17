@@ -28,7 +28,8 @@ public final class DjinnWeaponEngrave {
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
         if (cd != null && cd.copyTag().getBoolean("NUEngraved")) return false;
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
-        for (DjinnWeaponRules.Engraving g : DjinnWeaponRules.engravings(djinn, dark)) {
+        boolean canon = stack.getItem() instanceof DjinnWeaponItem w && w.canon();                       // the canon Belial scythe has its own engravings
+        for (DjinnWeaponRules.Engraving g : DjinnWeaponRules.engravings(djinn, dark, canon)) {
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath("tensura", g.id());
             Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, id));
             if (h.isEmpty()) continue;

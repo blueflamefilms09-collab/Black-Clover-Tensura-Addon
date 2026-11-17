@@ -32,17 +32,23 @@ import java.util.List;
  */
 public class DjinnWeaponItem extends Item {
     private final Djinn djinn;
-    private final boolean dark;
+    private final boolean dark, canon;
 
-    public DjinnWeaponItem(Djinn djinn, boolean dark, Properties props) {
+    public DjinnWeaponItem(Djinn djinn, boolean dark, Properties props) { this(djinn, dark, false, props); }
+
+    /** {@code canon}: the canon Belial's scythe (Belial rework), a second item of the same Djinn with the scythe's own numbers, acts and engravings. */
+    public DjinnWeaponItem(Djinn djinn, boolean dark, boolean canon, Properties props) {
         super(props);
         this.djinn = djinn;
         this.dark = dark;
+        this.canon = canon;
     }
 
     /** The item properties of a Djinn weapon: never breaks, melee numbers from the table. */
-    public static Properties props(Djinn d, boolean dark) {
-        DjinnWeaponRules.Spec s = DjinnWeaponRules.spec(d);
+    public static Properties props(Djinn d, boolean dark) { return props(d, dark, false); }
+
+    public static Properties props(Djinn d, boolean dark, boolean canon) {
+        DjinnWeaponRules.Spec s = DjinnWeaponRules.spec(d, canon);
         return new Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant().component(DataComponents.UNBREAKABLE, new Unbreakable(false))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"),
@@ -57,6 +63,12 @@ public class DjinnWeaponItem extends Item {
     public Djinn djinn() { return djinn; }
 
     public boolean dark() { return dark; }
+
+    /** Is this the canon Belial's scythe? */
+    public boolean canon() { return canon; }
+
+    /** The spec of this weapon (the scythe's for the canon item). */
+    public DjinnWeaponRules.Spec spec() { return DjinnWeaponRules.spec(djinn, canon); }
 
     @Override public boolean isFoil(ItemStack stack) { return true; }
 
@@ -82,7 +94,7 @@ public class DjinnWeaponItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
-        DjinnWeaponRules.Spec s = DjinnWeaponRules.spec(djinn);
+        DjinnWeaponRules.Spec s = spec();
         int color = dark ? 0xC08CFF : djinn.glow();
         DjinnTemp.Data t = DjinnTemp.get(stack);
         boolean admin = t == null || t.admin();

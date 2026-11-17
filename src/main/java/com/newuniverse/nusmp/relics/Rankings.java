@@ -69,6 +69,7 @@ public final class Rankings {
             else if (s.startsWith("djinn_seal_")) s = s.substring("djinn_seal_".length());
             else return null;
             if (s.endsWith("_dark")) s = s.substring(0, s.length() - 5);
+            if (s.equals("belial_scythe")) s = "belial";                                       // the canon Belial scythe ranks as Belial
             return djinnRank(s) > 0 ? s : null;
         }
 

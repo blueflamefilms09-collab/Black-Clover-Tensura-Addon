@@ -264,20 +264,23 @@ public enum Djinn {
         this.extreme = extreme;
     }
 
+    /** Belial rework: while {@link BelialCanon#on()} is set, Belial answers with the canon row (a white scythe, owner notes); every other Djinn, and Belial with the setting off, with the row above. */
+    private boolean canon() { return this == BELIAL && BelialCanon.on(); }
+
     public String displayName() { return displayName; }
     /** "Baal, Lord of Thunder". */
-    public String fullName() { return displayName + ", " + title; }
-    public String title() { return title; }
-    public Affinity affinity() { return affinity; }
+    public String fullName() { return displayName + ", " + title(); }
+    public String title() { return canon() ? BelialCanon.TITLE : title; }
+    public Affinity affinity() { return canon() ? BelialCanon.AFFINITY : affinity; }
     /** The body colour (0xRRGGBB). */
-    public int color() { return color; }
+    public int color() { return canon() ? BelialCanon.COLOR : color; }
     /** The bright glow colour (0xRRGGBB): runes, eyes, the blow's flash. */
-    public int glow() { return glow; }
+    public int glow() { return canon() ? BelialCanon.GLOW : glow; }
     /** The name of the Full Equip form ("Thunder-Lord Maso"). */
-    public String formName() { return formName; }
-    public Look look() { return look; }
-    public Trait trait() { return trait; }
-    public Extreme extreme() { return extreme; }
+    public String formName() { return canon() ? BelialCanon.FORM_NAME : formName; }
+    public Look look() { return canon() ? BelialCanon.LOOK : look; }
+    public Trait trait() { return canon() ? BelialCanon.TRAIT : trait; }
+    public Extreme extreme() { return canon() ? BelialCanon.EXTREME : extreme; }
 
     /** The lower-case id used in item paths, commands, texture names and the saved state ("baal", "glasya_labolas"). */
     public String id() { return name().toLowerCase(); }

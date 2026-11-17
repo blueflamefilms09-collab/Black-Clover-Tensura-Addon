@@ -216,7 +216,7 @@ public final class DjinnWeaponService {
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, p.getX(), p.getY() + 1.2, p.getZ(), 10, 0.4, 0.5, 0.4, 0.04);
         com.newuniverse.nusmp.relics.djinn.DjinnWeaponBridge.tinted(l, dark ? 0x7A2CC8 : d.glow(), p.getX(), p.getY() + 1.2, p.getZ(), 14, 0.4, 0.5, 0.4, 0.02);
         l.playSound(null, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.PLAYERS, 1.2f, 1.6f);
-        p.displayClientMessage(Component.translatable("djinn_weapon.msg.summoned", Component.translatable("item.anime_multiverse." + DjinnWeaponRules.itemPath(d, dark))), true);
+        p.displayClientMessage(Component.translatable("djinn_weapon.msg.summoned", Component.translatable("item.anime_multiverse." + DjinnWeaponRules.itemPath(d, dark, com.newuniverse.nusmp.relics.djinn.BelialCanon.on()))), true);
     }
 
     static void dropProtected(ServerPlayer p, ItemStack st) {

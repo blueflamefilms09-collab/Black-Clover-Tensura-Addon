@@ -19646,5 +19646,13 @@
   "unique.msg.ops.lost": "[Unique Guardian] %s was lost (%s; last held by %s, last seen at %s). It is back in the loot pool. %s",
   "unique.msg.ops.own": "[Unique Guardian] %s was lost, and its own rules had already returned it to the loot pool.",
   "unique.msg.ops.forced": "[Unique Guardian] %s was returned to the loot pool by %s.",
-  "unique.msg.ops.hero": "[Unique Guardian] The %s lost its holder (away for good) and is back with its normal source: it can be claimed again."
+  "unique.msg.ops.hero": "[Unique Guardian] The %s lost its holder (away for good) and is back with its normal source: it can be claimed again.",
+  "item.anime_multiverse.djinn_weapon_belial_scythe": "Belial's Scythe, Belior Goldorezza",
+  "item.anime_multiverse.djinn_weapon_belial_scythe_dark": "Belial's Black Scythe, Belior Goldorezza",
+  "djinn_weapon.act.spirit_sever": "Spirit Sever",
+  "djinn_weapon.act.spirit_sever.desc": "A wide pale cut that severs the spirit of every foe in front of you. Armour, resistance and shields do not count; a boss loses only a sliver, and no target takes more than a set share per second.",
+  "djinn_weapon.act.exile": "Exile",
+  "djinn_weapon.act.exile.desc": "Sends the nearest foes (up to three) to another dimension for a few seconds: they cannot act or be hurt and come back where they stood. Never a boss; the rest of the cone takes a lighter sever.",
+  "death.attack.anime_multiverse.spirit_sever": "%1$s had their spirit severed",
+  "death.attack.anime_multiverse.spirit_sever.player": "%1$s had their spirit severed by %2$s"
 }

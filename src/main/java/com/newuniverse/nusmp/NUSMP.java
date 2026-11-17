@@ -83,6 +83,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.RelicPowerConfig.SPEC, "nusmp-relicpower-server.toml");   // 1.104.0: relics.attuneLock, relics.unattunedPower
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.balance.DamageScaleConfig.SPEC, "nusmp-damage-server.toml");   // damage scale-down: damage.* (docs/damage_scale_down.md)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.djinn.DjinnBindConfig.SPEC, "nusmp-djinn-bind-server.toml");   // 1.101.0: bind a Djinn by command / key / inventory click (default on)
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.djinn.BelialConfig.SPEC, "nusmp-belial-server.toml");   // Belial rework: belial.belialCanon (default on), belial.exile
         com.newuniverse.nusmp.avatar.AvatarSystem.init(modEventBus, modContainer);                                       // 1.51.0: Avatar creation system, Genesis Core (before NUItems.ITEMS.register; registers its own config)
         com.newuniverse.nusmp.arena.ArenaSystem.init(modEventBus);                                                         // 1.46.0: Lucius's arena, the Hourglass (before NUItems.ITEMS.register)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arena.ArenaConfig.SPEC, "nusmp-lucius-arena-server.toml");

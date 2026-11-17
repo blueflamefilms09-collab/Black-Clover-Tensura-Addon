@@ -85,6 +85,18 @@ public final class DjinnWeaponRules {
 
     public static Spec spec(Djinn d) { return TABLE.get(d); }
 
+    // ---------------------------------------------------------------- Belial rework: the canon scythe (owner notes), kept next to the old greatsword row
+    /** The canon Belial's weapon (a scythe; its own item ids, see {@link #CANON_SUFFIX}). The old greatsword row stays in the table and is what {@link #spec(Djinn)} answers. */
+    private static final Spec CANON_BELIAL = canonRow(Djinn.BELIAL, "scythe", 11.5, 1.05, 1.0,
+            new Act("spirit_sever", 0.035, 130, 10.0, 7.5), new Act("exile", 0.050, 300, 7.0, 9.0));
+
+    private static Spec canonRow(Djinn d, String kind, double damage, double speed, double reach, Act one, Act two) { return new Spec(d, kind, damage, speed, reach, one, two); }
+
+    /** The spec of a weapon: the canon scythe for Belial's canon item, the table's row otherwise. */
+    public static Spec spec(Djinn d, boolean canon) { return canon && d == Djinn.BELIAL ? CANON_BELIAL : TABLE.get(d); }
+
+    public static Spec canonSpec() { return CANON_BELIAL; }
+
     // ---------------------------------------------------------------- the numbers of a use
     /** Is this act open in this phase? The first from the Half Equip, the second from the Full Equip. */
     public static boolean open(int act, int phase) { return act == ACT_ONE ? phase >= HALF : phase >= FULL; }
@@ -112,15 +124,28 @@ public final class DjinnWeaponRules {
     /** The registry path of a Djinn's weapon: {@code djinn_weapon_baal}, or {@code djinn_weapon_baal_dark}. */
     public static String itemPath(Djinn d, boolean dark) { return PREFIX + d.id() + (dark ? DARK_SUFFIX : ""); }
 
+    /** The canon Belial's item ids: {@code djinn_weapon_belial_scythe} and {@code djinn_weapon_belial_scythe_dark} (the old {@code djinn_weapon_belial} stays registered). */
+    public static final String CANON_SUFFIX = "_scythe";
+
+    /** The registry path of a weapon: the canon variant is Belial's scythe, {@code djinn_weapon_belial_scythe[_dark]}. */
+    public static String itemPath(Djinn d, boolean dark, boolean canon) { return PREFIX + d.id() + (canon && d == Djinn.BELIAL ? CANON_SUFFIX : "") + (dark ? DARK_SUFFIX : ""); }
+
     /** The Djinn a weapon path belongs to, or null. */
     public static Djinn djinnOfPath(String path) {
         if (path == null || !path.startsWith(PREFIX)) return null;
         String rest = path.substring(PREFIX.length());
         if (rest.endsWith(DARK_SUFFIX)) rest = rest.substring(0, rest.length() - DARK_SUFFIX.length());
+        if (rest.equals("belial" + CANON_SUFFIX)) return Djinn.BELIAL;
         return Djinn.byName(rest);
     }
 
     public static boolean isDarkPath(String path) { return path != null && path.startsWith(PREFIX) && path.endsWith(DARK_SUFFIX) && djinnOfPath(path) != null; }
+
+    /** Is this the path of the canon Belial's scythe (light or dark)? */
+    public static boolean isCanonPath(String path) {
+        String base = PREFIX + "belial" + CANON_SUFFIX;
+        return base.equals(path) || (base + DARK_SUFFIX).equals(path);
+    }
 
     // ---------------------------------------------------------------- the engravings
     /** One Tensura engraving (an enchantment of the {@code #tensura:engraving} tag) and its level. */
@@ -171,6 +196,18 @@ public final class DjinnWeaponRules {
         eng(Djinn.ALLOCES, e("severance", 2), e("elemental_boost", 2), e("sturdy", 1), e("swift", 1));       // the lion-eyed knight's sword
         eng(Djinn.CAMIO, e("magic_interference", 1), e("swift", 2), e("elemental_boost", 1), e("soul_eater", 1)); // crows feed on the dead
         eng(Djinn.MURMUR, e("soul_eater", 1), e("enervation", 2), e("magic_interference", 1), e("crushing", 1)); // the drum that ends things
+    }
+
+    /** The canon Belial's scythe cuts the spirit (CLAUDE.md rule 6): Severance, Soul Eater, Barrier Piercing, Magic Interference, Enervation (levels are clamped to Tensura's own maximum). */
+    private static final List<Engraving> CANON_ENGRAVINGS = List.of(e("severance", 3), e("soul_eater", 1), e("barrier_piercing", 2), e("magic_interference", 1), e("enervation", 1));
+
+    /** The engravings of a weapon: the canon scythe's own list for Belial's canon item, the table's otherwise. */
+    public static List<Engraving> engravings(Djinn d, boolean dark, boolean canon) {
+        if (!(canon && d == Djinn.BELIAL)) return engravings(d, dark);
+        if (!dark) return CANON_ENGRAVINGS;
+        java.util.ArrayList<Engraving> out = new java.util.ArrayList<>(CANON_ENGRAVINGS);
+        out.add(new Engraving("ruination", 1));
+        return List.copyOf(out);
     }
 
     /** The engravings of a Djinn's weapon: its own, and for the dark one a Ruination on top. */
