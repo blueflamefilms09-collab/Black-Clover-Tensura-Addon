@@ -146,5 +146,7 @@ final class FormLoadout {
         if (!wanted.equals(current)) stack.set(DataComponents.ATTRIBUTE_MODIFIERS, wanted);
         String look = active.look();
         if (!look.equals(stack.get(HeroComponents.LOOK.get()))) stack.set(HeroComponents.LOOK.get(), look);
+        String formId = active.id();                                              // 4.23.0: the form itself, for the one-model-per-form look ("base" for the base form)
+        if (!formId.equals(stack.get(HeroComponents.FORM.get()))) stack.set(HeroComponents.FORM.get(), formId);
     }
 }

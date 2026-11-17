@@ -139,6 +139,7 @@ public final class HeroLoan {
         try {
             HeroForm f = HeroForms.active(b);
             if (f != null && HeroForm.LOOK_CURSE.equals(f.look())) st.set(HeroComponents.LOOK.get(), HeroForm.LOOK_CURSE);
+            if (f != null) st.set(HeroComponents.FORM.get(), f.id());
         } catch (RuntimeException brokenForm) {
             // a form that cannot be read leaves the base look; the forms system corrects it on its refresh
         }

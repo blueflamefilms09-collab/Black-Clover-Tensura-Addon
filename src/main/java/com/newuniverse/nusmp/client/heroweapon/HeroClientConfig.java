@@ -15,6 +15,8 @@ public final class HeroClientConfig {
     public static final ModConfigSpec.DoubleValue HUD_SCALE;
     /** 3.79.0: the 21 hero weapons (4 Legendary, 17 Vassal) got new models; true draws the models they had before (weapon_meshes/classic, textures/entity/weapon/classic). Looks only. */
     public static final ModConfigSpec.BooleanValue CLASSIC_LEGENDARY;
+    /** 4.23.0: one 3D model per hero weapon form (weapon_meshes/<weapon>__<form>.txt). Looks only; the classic models never use them. */
+    public static final ModConfigSpec.BooleanValue FORM_MODELS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -27,6 +29,8 @@ public final class HeroClientConfig {
         b.push("models");
         CLASSIC_LEGENDARY = b.comment("true = draw the hero weapons (the 4 Legendary with their curse looks, and the 17 Vassal Weapons) with the models they had before 3.79.0. Only the look changes.")
                 .define("classicHeroWeaponModels", false);
+        FORM_MODELS = b.comment("true = a hero weapon in a form that has a model of its own (Legendary, Seven Star, Vassal) is drawn with it. false = always the base (or curse) look. Looks only; ignored while classicHeroWeaponModels is on.")
+                .define("formModels", true);
         b.pop();
         SPEC = b.build();
     }
@@ -43,6 +47,8 @@ public final class HeroClientConfig {
     }
 
     public static boolean classicModels() { return get(CLASSIC_LEGENDARY); }
+
+    public static boolean formModels() { return get(FORM_MODELS); }
 
     public static boolean hud() { return get(HUD); }
 

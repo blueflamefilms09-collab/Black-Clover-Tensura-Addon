@@ -29,3 +29,24 @@ model. Every form that has a name of its own gets its own 3D model, made in Blen
 * The stack carries the active form id (`anime_multiverse:hero_form`, a new data component, set where the forms system sets `hero_look`). `WeaponRenderer.meshId` draws `<id>__<form>` when that mesh exists, else
   the curse look (curse forms), else the base look. Client setting `heroweapon.formModels` (default on) off = the old behaviour (base / curse look only).
 * Self-test prefix `heroforms`.
+
+## Done (engine side, 4.23.0)
+
+Everything below is NEW (nothing replaced); the old base / curse looks are the fallback and stay.
+
+* **Component** `anime_multiverse:hero_form` (string, persistent, network-synchronised, registered next to `hero_look` in `heroweapon/HeroComponents.java`; `HeroComponents.form(stack)` reads it, `base` when absent).
+  It is written at the same two places as `hero_look`: `FormLoadout.shape` (every refresh, only when the value differs; the base form writes `base`) and `HeroLoan.make` (a fresh projection carries the active form).
+* **Renderer** `client/WeaponRenderer.meshId`: for a `HeroWeaponItem` whose form is not `base`, with the setting on and the classic models off, `<id>__<form>` is used when that mesh exists; else the curse look; else the base look.
+  The joined id is cached per (weapon, form) in a small bounded map (`formMeshId`), so a frame allocates nothing. Bows: the draw stages come from `RangedStage.chain(meshId, stage)` inside `ItemStateVariants.resolve`,
+  which already works from the id it is given, so `<meshid>_pull1..3` resolve exactly as `legendary_bow_pull1..3` do (pinned by `FormMeshFilesTest`); no change was needed there. Grip / size class of a form mesh come from its own
+  `weapon_classes.json` entry (`WeaponClasses.baseId` strips `_pull1..3`, so bow stages need no entry).
+* **Setting** (CLIENT config, looks only, `nusmp-heroweapon-client.toml`, section `models`): `formModels`, default `true` (the key `heroweapon.formModels`). `false` = never a form mesh. `classicHeroWeaponModels = true` also means no form meshes
+  (the classic models keep the old look).
+* **Registering meshes** after the Blender builders ran: `python3 -B tools/heroweapon/register_form_meshes.py` reads every `tools/blender/forms_manifest_*.json`, adds `<meshid>: <class>` to `tools/relics/weapon_classes.json`
+  (existing entries are never overwritten; a different class is reported) and runs the three syncs (`audit_weapon_scale.py --write`, `grip_table.py --write`, `scan_textures.py --fix`). `--no-sync` only edits the class table; `--selftest` proves it on a fake manifest in a temp copy.
+* **Tests**: `FormMeshFilesTest` (every `weapon_meshes/*__*.txt` names a hero weapon and a non-base, non-Legendary-curse form of its forms file; skin and glow skin exist for every non-pull mesh; bow stages resolve),
+  `FormModelsSourceScanTest` (the renderer hook: component read, setting, classic off, cached join, curse fallback after it; the component is registered, synced and written with the look; the setting is a client config default on).
+  Self-test `heroforms.component` (prefix `heroforms`): a stand-in player's stack reads `base`, then the learned form, then `base` again; server-only code.
+* **Cost** (rule 11): at most one string compare (`"base".equals`) plus two map reads per hero weapon per frame; no new packet (the component rides the normal item sync, a few bytes, only when the form changes);
+  server work is one string compare per weapon stack inside the existing form refresh. Worst case memory: 256 weapon ids x 64 form ids of cached strings, cleared when exceeded.
+* **Not done here**: the meshes themselves (art builders), the smoke list (`heroforms` must be added to `SMOKE_EXPECT` in smoke.yml by the coordinator), the changelog and the version.

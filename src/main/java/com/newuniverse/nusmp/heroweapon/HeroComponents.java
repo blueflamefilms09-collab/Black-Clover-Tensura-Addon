@@ -24,6 +24,10 @@ public final class HeroComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> LOOK =
             COMPONENTS.registerComponentType("hero_look", b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /** 4.23.0: the id of the active form ({@code base} or a form id of the weapon's forms file), set with the look; the renderer draws {@code <weapon>__<form>} from it when that mesh exists. Absent means base. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> FORM =
+            COMPONENTS.registerComponentType("hero_form", b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
     /** The uuid (as text) of the player whose bond this projection belongs to. Absent on a creative-tab or command-made stack, which is adopted by its first holder. */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> OWNER =
             COMPONENTS.registerComponentType("hero_owner", b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
@@ -32,6 +36,12 @@ public final class HeroComponents {
     public static String look(ItemStack stack) {
         String l = stack.isEmpty() ? null : stack.get(LOOK.get());
         return l == null || l.isEmpty() ? "base" : l;
+    }
+
+    /** The active form id of a stack ({@code base} when none is set). */
+    public static String form(ItemStack stack) {
+        String f = stack.isEmpty() ? null : stack.get(FORM.get());
+        return f == null || f.isEmpty() ? "base" : f;
     }
 
     /** The owner uuid text of a stack, or an empty string. */

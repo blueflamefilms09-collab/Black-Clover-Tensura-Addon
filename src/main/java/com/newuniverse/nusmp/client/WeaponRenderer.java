@@ -179,10 +179,37 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             net.minecraft.world.item.component.CustomData d = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
             if (d != null && d.copyTag().getCompound("nusmp_w1").getLong("state") == 1L) return "marids_valor_liquid";
         }
+        // 4.23.0: a hero weapon in a form with a model of its own draws <id>__<form> (heroweapon.formModels; never with the classic models); no such mesh: the curse look / base look below
+        if (stack.getItem() instanceof com.newuniverse.nusmp.heroweapon.HeroWeaponItem) {
+            String form = com.newuniverse.nusmp.heroweapon.HeroComponents.form(stack);
+            if (!"base".equals(form) && com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.formModels() && !com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels()) {
+                String formMesh = formMeshId(id, form);
+                if (mesh(formMesh) != null) return formMesh;
+            }
+        }
         // 1.62.0: a hero weapon in a curse form (its stack says look=curse) is drawn from its <id>_curse mesh and skins; without that mesh it keeps the base look
         if (stack.getItem() instanceof com.newuniverse.nusmp.heroweapon.HeroWeaponItem && "curse".equals(com.newuniverse.nusmp.heroweapon.HeroComponents.look(stack)) && mesh(id + "_curse") != null)
             return id + "_curse";
         return GodMeleeBRender.meshFor(id);                                        // 1.102.0: the nine upgraded God melee weapons draw their up/<id> mesh while visual.upgrade is on (the old mesh is the fallback)
+    }
+
+    private static final java.util.HashMap<String, java.util.HashMap<String, String>> FORM_IDS = new java.util.HashMap<>();
+
+    /** {@code <id>__<form>}, joined once per (weapon, form) so a frame never allocates; bounded (a form id comes from the server). */
+    static String formMeshId(String id, String form) {
+        java.util.HashMap<String, String> byForm = FORM_IDS.get(id);
+        if (byForm == null) {
+            if (FORM_IDS.size() > 256) FORM_IDS.clear();
+            byForm = new java.util.HashMap<>();
+            FORM_IDS.put(id, byForm);
+        }
+        String joined = byForm.get(form);
+        if (joined == null) {
+            if (byForm.size() > 64) byForm.clear();
+            joined = id + "__" + form;
+            byForm.put(form, joined);
+        }
+        return joined;
     }
 
     @Override

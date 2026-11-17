@@ -52,6 +52,40 @@ final class FormsSelfTests {
     static void register() {
         SelfTests.register("hero.forms", FormsSelfTests::forms);
         SelfTests.register("hero.absorb", FormsSelfTests::absorb);
+        SelfTests.register("heroforms.component", FormsSelfTests::formComponent);          // 4.23.0: the hero_form component follows the active form (prefix "heroforms")
+    }
+
+    // ================================================================================================ heroforms.component
+    /** The weapon stack carries the active form id ({@code hero_form}): a learned form sets it, the base form brings back "base", and a stack with none reads as "base". */
+    private static SelfTests.Result formComponent(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        FakePlayer fp = SelfTests.player(level, "hero_forms_component_tester", 0.5, 100, 0.5);
+        HeroKind kind = HeroKind.HAMMER;
+        FormsSchema.Parsed parsed = FormsSchema.parseText(kind, TEST_FORMS, null);
+        if (!parsed.clean()) return SelfTests.Result.fail("the test forms are not clean: " + parsed.report().replace('\n', ' '));
+        HeroBond b = HeroBonds.of(fp);
+        List<HeroForm> before = FormsStore.swapLoaded(kind, parsed.forms());
+        List<String> bad = new ArrayList<>();
+        try {
+            reset(fp, b);
+            if (!"base".equals(HeroComponents.form(HeroItems.stack(kind)))) bad.add("a stack with no form must read as base");
+            b.bind(kind, level.getGameTime());
+            b.unlock("selftest_leather");
+            fp.setItemInHand(InteractionHand.MAIN_HAND, HeroItems.stack(kind));
+            b.setSummoned(true);
+            HeroForms.refresh(fp);
+            if (!"base".equals(fp.getMainHandItem().get(HeroComponents.FORM.get()))) bad.add("the base form is not written as base: " + fp.getMainHandItem().get(HeroComponents.FORM.get()));
+            if (HeroForms.trySetActive(fp, "selftest_leather") != null) bad.add("the learned form could not be activated");
+            if (!"selftest_leather".equals(HeroComponents.form(fp.getMainHandItem()))) bad.add("the form on the stack is " + HeroComponents.form(fp.getMainHandItem()));
+            if (HeroForms.trySetActive(fp, "base") != null) bad.add("the base form could not be activated");
+            if (!"base".equals(HeroComponents.form(fp.getMainHandItem()))) bad.add("after the base form the stack says " + HeroComponents.form(fp.getMainHandItem()));
+        } finally {
+            fp.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+            reset(fp, b);
+            FormsStore.restoreLoaded(kind, before);
+        }
+        if (!bad.isEmpty()) return problems(bad);
+        return SelfTests.Result.ok("hero_form is written with the look: base, a learned form, and back to base");
     }
 
     // ================================================================================================ hero.forms
