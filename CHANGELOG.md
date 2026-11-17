@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.23.1] — Build fix: form models are not items
+- FIXED (no gameplay change): the shield list test and the two Better Combat tests counted the new hero weapon form models (ids with `__`, e.g. `legendary_shield__slime_shield`) as items; they are skins of the base item, so the tests and the Better Combat inventory now skip them (the base item's Better Combat file applies). 4.23.0 (Unique Guardian) was not released because of this; its content is in 4.23.1.
+- Cost: unchanged.
+
 ## [4.23.0] — Unique Guardian: a destroyed 1-of-1 goes back into the loot pool; hero weapon form models (engine + first three)
 - NEW (server settings in `nusmp-unique-server.toml`: `enabled`, `graceSeconds` 300, `absenceDays` 21): the **Unique Guardian**. It watches the one copy of each 1-of-1 (Black Sword Greed, Shishou, the Charter grimoires, the Dragon Balls, the unique relics and the six Infinity Stones; the four Holy Weapons only in the "holder never returns" case). When the copy is confirmed lost (void, lava, fire, explosion, despawn, deleted, container destroyed, or not seen anywhere for the grace time) the owning system's "already exists / already dropped" flag is reset, so the item comes back through its normal source (boss drop, daily roll, command, Order) and the old copy is retired (it dissolves if it turns up). Nothing is put into an inventory. Theft or another holder is not loss. Dropped 1-of-1s are invulnerable, never despawn and are rescued from the void. Operators: `/multiverse unique list | status <id> | release <id>`. At most 3 returns per unique per hour.
 - NEW (client setting `formModels`, on by default): every hero weapon form can have its own 3D model (`<weapon>__<form>`; bows also `_pull1..3`); the game side (component, renderer, setting, tests) is in. Models made in Blender with a new quality kit: Phoenix Sword, Slime Shield, Demon Dragon Scythe. The other forms keep their old look until their models land.

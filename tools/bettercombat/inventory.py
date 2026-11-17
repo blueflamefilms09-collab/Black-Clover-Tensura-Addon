@@ -133,6 +133,9 @@ def build():
         weapons[wid] = {"class": cls, "profile": profile_name(wid, cls, source), "source": source}
 
     for wid, cls in table.items():
+        if "__" in wid:
+            excluded[wid] = "hero weapon form model (a skin of the base item, not an item: the base item's Better Combat file applies)"
+            continue
         if wid in PR.MESH_ONLY:
             excluded[wid] = PR.MESH_ONLY[wid]
             continue

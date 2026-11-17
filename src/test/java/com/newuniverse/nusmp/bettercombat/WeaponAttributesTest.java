@@ -47,7 +47,7 @@ class WeaponAttributesTest {
     private static Set<String> meleeIds() throws IOException {
         Set<String> ids = new TreeSet<>();
         Map<String, Object> classes = obj(parse(read(CLASSES)).get("weapons"));
-        for (Map.Entry<String, Object> e : classes.entrySet()) if (!NON_MELEE.contains((String) e.getValue())) ids.add(e.getKey());
+        for (Map.Entry<String, Object> e : classes.entrySet()) if (!NON_MELEE.contains((String) e.getValue()) && !e.getKey().contains("__")) ids.add(e.getKey());   // "__" = a hero weapon form model (a skin), not an item
         Map<String, Object> manifest = obj(obj(parse(read(MANIFEST))).get("weapons"));
         ids.addAll(manifest.keySet());
         Pattern of = Pattern.compile("RelicDef\\.of\\(\"([a-z0-9_]+)\"");

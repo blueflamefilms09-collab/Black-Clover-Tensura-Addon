@@ -89,7 +89,7 @@ class ShieldModelsTest {
     void theClassTableAndTheSetAgree() throws IOException {
         JsonObject weapons = json(RES.resolve("weapon_classes.json")).getAsJsonObject("weapons");
         Set<String> inTable = new TreeSet<>();
-        for (var e : weapons.entrySet()) if ("shield".equals(e.getValue().getAsString()) && !ShieldSet.CLASS_ONLY.contains(e.getKey())) inTable.add(e.getKey());
+        for (var e : weapons.entrySet()) if ("shield".equals(e.getValue().getAsString()) && !ShieldSet.CLASS_ONLY.contains(e.getKey()) && !e.getKey().contains("__")) inTable.add(e.getKey());
         assertEquals(new TreeSet<>(ShieldSet.IDS), inTable, "every id the class table files under shield (but the mirror) is in ShieldSet, and nothing more");
     }
 
