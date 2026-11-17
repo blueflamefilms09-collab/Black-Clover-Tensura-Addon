@@ -145,6 +145,17 @@ public final class UniqueLedger extends SavedData {
         return out;
     }
 
+    /**
+     * The Unique Guardian's door: the valid copy of this relic is gone for good (destroyed, deleted, its holder never came back), so the relic goes back into the loot pool: the ledger no longer knows a live copy (it can be
+     * issued and found again) and any old copy that shows up is a duplicate and dissolves. The same step as {@code /multiverse relic order release}. True if a live copy was written.
+     */
+    public static boolean releaseToPool(MinecraftServer server, String relicId) {
+        if (server == null || relicId == null) return false;
+        if (!get(server).lose(relicId)) return false;
+        OrderDirector.forget(relicId);
+        return true;
+    }
+
     /** The ids of the relics that have a live valid copy. */
     public static Set<String> liveIds(MinecraftServer server) {
         Set<String> out = new LinkedHashSet<>();

@@ -69,6 +69,20 @@ public final class DbManager {
         return g < 0 || g == data(s).gen[set.ordinal()];
     }
 
+    /** The Unique Guardian's doors. Is this ball of the current scatter? */
+    public static boolean isCurrent(MinecraftServer s, ItemStack st, BallSet set) { return current(s, st, set); }
+
+    /** Does the registry say this ball exists as an item (carried or lying), not waiting to be placed? */
+    public static boolean ballExists(MinecraftServer s, BallSet set, int star) {
+        DbData.Ball b = ball(data(s), set, star);
+        return b != null && !b.pending && star <= DbConfig.count();
+    }
+
+    /** The only copy of this ball is gone for good: it returns to the world at a new far place of its own, the way a ball lost in the void does. */
+    public static void returnToWorld(MinecraftServer s, BallSet set, int star) {
+        if (star >= 1 && star <= DbConfig.count()) relocate(s, set, star);
+    }
+
     static ServerLevel levelOf(MinecraftServer s, String dim) {
         ResourceLocation rl = ResourceLocation.tryParse(dim);
         return rl == null ? null : s.getLevel(ResourceKey.create(Registries.DIMENSION, rl));

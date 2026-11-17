@@ -59,6 +59,9 @@ public final class ModWorldDropData extends SavedData {
         return old;
     }
 
+    /** The Unique Guardian's door: the one grimoire of this boss is gone for good, so the world's drop lock is cleared and the boss can leave it again (the same step as {@code /multiverse charter reset}). Null when it was not claimed. */
+    public DropLedger.Claim releaseToPool(String bossId, String by) { return adminClear(bossId, by); }
+
     // ---------------------------------------------------------------- saving
     static ModWorldDropData load(CompoundTag tag, HolderLookup.Provider provider) {
         ModWorldDropData d = new ModWorldDropData();

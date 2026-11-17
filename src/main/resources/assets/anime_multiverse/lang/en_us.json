@@ -19640,5 +19640,11 @@
   "death.attack.anime_multiverse.djinn_light": "%1$s was burned away by holy light",
   "death.attack.anime_multiverse.djinn_light.player": "%1$s was burned away by %2$s's light",
   "death.attack.anime_multiverse.djinn_dark": "%1$s was swallowed by black fire",
-  "death.attack.anime_multiverse.djinn_dark.player": "%1$s was swallowed by %2$s's black fire"
+  "death.attack.anime_multiverse.djinn_dark.player": "%1$s was swallowed by %2$s's black fire",
+  "unique.msg.dissolved": "An old copy of an item that went back to the world crumbles to dust.",
+  "unique.msg.hero_dissolved": "Your bond has dissolved: the weapon was returned to the world while you were away and has a new wielder.",
+  "unique.msg.ops.lost": "[Unique Guardian] %s was lost (%s; last held by %s, last seen at %s). It is back in the loot pool. %s",
+  "unique.msg.ops.own": "[Unique Guardian] %s was lost, and its own rules had already returned it to the loot pool.",
+  "unique.msg.ops.forced": "[Unique Guardian] %s was returned to the loot pool by %s.",
+  "unique.msg.ops.hero": "[Unique Guardian] The %s lost its holder (away for good) and is back with its normal source: it can be claimed again."
 }

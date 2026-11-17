@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.23.0] — Unique Guardian: a destroyed 1-of-1 goes back into the loot pool; hero weapon form models (engine + first three)
+- NEW (server settings in `nusmp-unique-server.toml`: `enabled`, `graceSeconds` 300, `absenceDays` 21): the **Unique Guardian**. It watches the one copy of each 1-of-1 (Black Sword Greed, Shishou, the Charter grimoires, the Dragon Balls, the unique relics and the six Infinity Stones; the four Holy Weapons only in the "holder never returns" case). When the copy is confirmed lost (void, lava, fire, explosion, despawn, deleted, container destroyed, or not seen anywhere for the grace time) the owning system's "already exists / already dropped" flag is reset, so the item comes back through its normal source (boss drop, daily roll, command, Order) and the old copy is retired (it dissolves if it turns up). Nothing is put into an inventory. Theft or another holder is not loss. Dropped 1-of-1s are invulnerable, never despawn and are rescued from the void. Operators: `/multiverse unique list | status <id> | release <id>`. At most 3 returns per unique per hour.
+- NEW (client setting `formModels`, on by default): every hero weapon form can have its own 3D model (`<weapon>__<form>`; bows also `_pull1..3`); the game side (component, renderer, setting, tests) is in. Models made in Blender with a new quality kit: Phoenix Sword, Slime Shield, Demon Dragon Scythe. The other forms keep their old look until their models land.
+- CHANGED: the Black Sword Greed's bow is 1.39 blocks long (it was too small).
+- KEPT: every old model, form, setting and save format. REPLACED: nothing.
+- Cost: guardian = one inventory scan per player per second (staggered, at most about 200 stacks), a void/despawn rescue pass every 4th tick for at most 64 dropped uniques, a clock pass every second and a registry pass every minute; no packets; one log line plus one op message per return. Form models: one cached mesh per form id, drawn only for the held weapon.
+- Not played: the guardian has been written and unit-tested but never seen in a game; the form models were only previewed outside the game. Copies of Charter grimoires and Dragon Balls that the guardian never saw can survive a return.
+
 ## [4.22.2] — Build fix: chakram size class
 - FIXED (no gameplay change): 4.22.1 put the Black Chakrams in the dagger class, which the dagger size tests refuse; they now use the hand-held item class (0.5 to 0.9 blocks, which fits their 0.62-block mesh), with the grip golden refreshed. Their Better Combat file is unchanged.
 - Cost: unchanged.
