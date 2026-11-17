@@ -2087,6 +2087,294 @@
   "y": 0.0,
   "z": 0.0
  },
+ "legendary_bow__arrow_shower": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 21.558,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__arrow_shower_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 30.886,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__arrow_shower_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 12.886,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__arrow_shower_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 2.887,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__bind_arrow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 34.88,
+  "y": -0.094,
+  "z": 0.0
+ },
+ "legendary_bow__bind_arrow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 32.386,
+  "y": -0.094,
+  "z": 0.0
+ },
+ "legendary_bow__bind_arrow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 18.42,
+  "y": -0.094,
+  "z": 0.0
+ },
+ "legendary_bow__bind_arrow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 13.421,
+  "y": -0.094,
+  "z": 0.0
+ },
+ "legendary_bow__bird_hunting": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 17.956,
+  "y": -0.136,
+  "z": 0.0
+ },
+ "legendary_bow__bird_hunting_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 31.636,
+  "y": -0.136,
+  "z": 0.0
+ },
+ "legendary_bow__bird_hunting_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 13.636,
+  "y": -0.136,
+  "z": 0.0
+ },
+ "legendary_bow__bird_hunting_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 3.637,
+  "y": -0.136,
+  "z": 0.0
+ },
+ "legendary_bow__eagle_piercer": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 16.113,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__eagle_piercer_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 29.136,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__eagle_piercer_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 11.136,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__eagle_piercer_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.137,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "legendary_bow__frozen_rain": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 23.395,
+  "y": -0.053,
+  "z": 0.239
+ },
+ "legendary_bow__frozen_rain_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 32.636,
+  "y": -0.053,
+  "z": 0.239
+ },
+ "legendary_bow__frozen_rain_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 14.636,
+  "y": -0.053,
+  "z": 0.239
+ },
+ "legendary_bow__frozen_rain_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 4.637,
+  "y": -0.053,
+  "z": 0.239
+ },
+ "legendary_bow__hunters_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 19.785,
+  "y": -0.08,
+  "z": 0.0
+ },
+ "legendary_bow__hunters_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 32.136,
+  "y": -0.08,
+  "z": 0.0
+ },
+ "legendary_bow__hunters_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 14.136,
+  "y": -0.08,
+  "z": 0.0
+ },
+ "legendary_bow__hunters_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 4.137,
+  "y": -0.08,
+  "z": 0.0
+ },
+ "legendary_bow__meteor_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 21.546,
+  "y": 1.553,
+  "z": -0.008
+ },
+ "legendary_bow__meteor_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 32.386,
+  "y": 1.553,
+  "z": -0.008
+ },
+ "legendary_bow__meteor_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 14.386,
+  "y": 1.553,
+  "z": -0.008
+ },
+ "legendary_bow__meteor_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 4.387,
+  "y": 1.553,
+  "z": -0.008
+ },
+ "legendary_bow__sagittarius": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 30.288,
+  "y": 1.53,
+  "z": 0.0
+ },
+ "legendary_bow__sagittarius_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 32.386,
+  "y": 1.53,
+  "z": 0.0
+ },
+ "legendary_bow__sagittarius_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 14.386,
+  "y": 1.53,
+  "z": 0.0
+ },
+ "legendary_bow__sagittarius_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 8.837,
+  "y": 1.53,
+  "z": 0.0
+ },
+ "legendary_bow__scouts_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 18.201,
+  "y": -0.097,
+  "z": 0.0
+ },
+ "legendary_bow__scouts_bow_pull1": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 37.636,
+  "y": -0.097,
+  "z": 0.0
+ },
+ "legendary_bow__scouts_bow_pull2": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 19.636,
+  "y": -0.097,
+  "z": 0.0
+ },
+ "legendary_bow__scouts_bow_pull3": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 9.636,
+  "y": -0.097,
+  "z": 0.0
+ },
  "legendary_bow_curse": {
   "class": "bow",
   "fraction": 0.5,
@@ -2173,6 +2461,78 @@
   "source": "directive",
   "x": 0.0,
   "y": 76.89,
+  "z": 0.0
+ },
+ "legendary_spear__bruenack": {
+  "class": "spear",
+  "fraction": 0.289,
+  "source": "directive",
+  "x": 0.0,
+  "y": 85.343,
+  "z": 0.0
+ },
+ "legendary_spear__chaos_spear": {
+  "class": "spear",
+  "fraction": 0.357,
+  "source": "directive",
+  "x": 0.0,
+  "y": 123.081,
+  "z": 0.0
+ },
+ "legendary_spear__clockwork_spear": {
+  "class": "spear",
+  "fraction": 0.341,
+  "source": "directive",
+  "x": 0.0,
+  "y": 117.986,
+  "z": 0.0
+ },
+ "legendary_spear__dragon_minute_hand": {
+  "class": "spear",
+  "fraction": 0.5,
+  "source": "directive",
+  "x": -0.015,
+  "y": 173.0,
+  "z": -0.017
+ },
+ "legendary_spear__filolial_spear": {
+  "class": "spear",
+  "fraction": 0.233,
+  "source": "directive",
+  "x": 0.095,
+  "y": 79.22,
+  "z": 0.3
+ },
+ "legendary_spear__hunters_spear": {
+  "class": "spear",
+  "fraction": 0.247,
+  "source": "directive",
+  "x": 0.259,
+  "y": 83.362,
+  "z": -0.147
+ },
+ "legendary_spear__meteor_spear": {
+  "class": "spear",
+  "fraction": 0.271,
+  "source": "directive",
+  "x": 0.0,
+  "y": 94.821,
+  "z": 0.0
+ },
+ "legendary_spear__portal_spear": {
+  "class": "spear",
+  "fraction": 0.328,
+  "source": "directive",
+  "x": 0.0,
+  "y": 99.35,
+  "z": 0.0
+ },
+ "legendary_spear__triaina": {
+  "class": "spear",
+  "fraction": 0.287,
+  "source": "directive",
+  "x": 0.0,
+  "y": 99.302,
   "z": 0.0
  },
  "legendary_spear_curse": {

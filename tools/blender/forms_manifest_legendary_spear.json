@@ -1,0 +1,47 @@
+{
+ "legendary_spear__bruenack": {
+  "class": "spear",
+  "form": "bruenack",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__chaos_spear": {
+  "class": "spear",
+  "form": "chaos_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__clockwork_spear": {
+  "class": "spear",
+  "form": "clockwork_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__dragon_minute_hand": {
+  "class": "spear",
+  "form": "dragon_minute_hand",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__filolial_spear": {
+  "class": "spear",
+  "form": "filolial_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__hunters_spear": {
+  "class": "spear",
+  "form": "hunters_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__meteor_spear": {
+  "class": "spear",
+  "form": "meteor_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__portal_spear": {
+  "class": "spear",
+  "form": "portal_spear",
+  "weapon": "legendary_spear"
+ },
+ "legendary_spear__triaina": {
+  "class": "spear",
+  "form": "triaina",
+  "weapon": "legendary_spear"
+ }
+}

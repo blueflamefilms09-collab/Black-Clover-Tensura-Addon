@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.27.0] — Legendary bow and spear forms: 18 real 3D models (Blender)
+- NEW (made in Blender, `tools/blender/forms_legendary_bow.py`, `forms_legendary_spear.py`): a 3D model for each Legendary **Bow** form (Hunter's, Scout's, Bind Arrow, Bird Hunting, Arrow Shower, Meteor, Frozen Rain, Eagle Piercer, Sagittarius, each with its three pull stages, 1.35 to 1.39 blocks long so the bow-size guard holds) and each Legendary **Spear** form (Hunter's, Filolial, Chaos, Meteor, Portal, Triaina, Bruenack, Clockwork, Dragon Minute Hand; class spear, about 3.4 to 3.5 blocks). Skins are 1024 px (Chaos 768 px), skin + glow under 350 KB per form. They are skins of the weapon, not items: the base weapon's Better Combat files and engravings apply.
+- KEPT: every older bow and spear mesh, texture and item.
+- Cost: static geometry only, no new items, packets or server work; the idle bow meshes are under 5000 quads, three bow pull meshes reach 5146, and the jar's 3000-quad mesh detail limit trims the smallest quads of the biggest ones.
+- Honest caveats: previews only, nothing seen in a game; the wikis were blocked, designs come from the form names; the size audit still lists the bows as "small" for class bow because the bow-size guard caps them at 1.4 blocks; Meteor spear's point reads reddish-brown and Bruenack's flames pale; several spear skins are 40 to 56 colours (flatter than the raw bakes); Sagittarius' constellation is thin lines and its horse head small.
+
 ## [4.26.0] — Legendary sword forms: eight real 3D models (Blender)
 - NEW (made in Blender, `tools/blender/forms_legendary_sword.py`): a 3D model for each Legendary Sword form: Flash Sword, Wind King Katana, Meteor Sword, Assassin Sword, Spirit Tortoise Sword, Tortoise Carapace Sword, Hundred Sword, Thunder God Sword (`legendary_sword__<form>` skins, 3551 to 4997 quads, 1024 px skin + glow under 350 KB each, class longsword). They are skins of the sword (not items): the sword's existing Better Combat file and engravings apply.
 - KEPT: the Phoenix Sword form model and every older sword mesh, texture and item.

@@ -1,0 +1,47 @@
+{
+ "legendary_bow__arrow_shower": {
+  "class": "bow",
+  "form": "arrow_shower",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__bind_arrow": {
+  "class": "bow",
+  "form": "bind_arrow",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__bird_hunting": {
+  "class": "bow",
+  "form": "bird_hunting",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__eagle_piercer": {
+  "class": "bow",
+  "form": "eagle_piercer",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__frozen_rain": {
+  "class": "bow",
+  "form": "frozen_rain",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__hunters_bow": {
+  "class": "bow",
+  "form": "hunters_bow",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__meteor_bow": {
+  "class": "bow",
+  "form": "meteor_bow",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__sagittarius": {
+  "class": "bow",
+  "form": "sagittarius",
+  "weapon": "legendary_bow"
+ },
+ "legendary_bow__scouts_bow": {
+  "class": "bow",
+  "form": "scouts_bow",
+  "weapon": "legendary_bow"
+ }
+}
