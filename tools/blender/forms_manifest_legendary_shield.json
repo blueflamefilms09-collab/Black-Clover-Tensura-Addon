@@ -1,0 +1,42 @@
+{
+ "legendary_shield__chimera_viper_shield": {
+  "class": "shield",
+  "form": "chimera_viper_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__egg_shield": {
+  "class": "shield",
+  "form": "egg_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__leaf_shield": {
+  "class": "shield",
+  "form": "leaf_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__light_metal_shield": {
+  "class": "shield",
+  "form": "light_metal_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__needle_shield": {
+  "class": "shield",
+  "form": "needle_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__orange_balloon_shield": {
+  "class": "shield",
+  "form": "orange_balloon_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__soul_eater_shield": {
+  "class": "shield",
+  "form": "soul_eater_shield",
+  "weapon": "legendary_shield"
+ },
+ "legendary_shield__zombie_shield": {
+  "class": "shield",
+  "form": "zombie_shield",
+  "weapon": "legendary_shield"
+ }
+}

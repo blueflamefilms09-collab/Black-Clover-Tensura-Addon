@@ -1004,7 +1004,15 @@
     "legendary_spear__hunters_spear": "spear",
     "legendary_spear__meteor_spear": "spear",
     "legendary_spear__portal_spear": "spear",
-    "legendary_spear__triaina": "spear"
+    "legendary_spear__triaina": "spear",
+    "legendary_shield__chimera_viper_shield": "shield",
+    "legendary_shield__egg_shield": "shield",
+    "legendary_shield__leaf_shield": "shield",
+    "legendary_shield__light_metal_shield": "shield",
+    "legendary_shield__needle_shield": "shield",
+    "legendary_shield__orange_balloon_shield": "shield",
+    "legendary_shield__soul_eater_shield": "shield",
+    "legendary_shield__zombie_shield": "shield"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

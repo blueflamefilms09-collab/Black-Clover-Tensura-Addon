@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.29.0] — Legendary shield forms: eight real 3D models (Blender)
+- NEW (made in Blender, `tools/blender/forms_legendary_shield.py`): a 3D model for each Legendary Shield form: Leaf, Orange Balloon, Egg, Zombie, Chimera Viper, Needle, Light Metal and Soul Eater (`legendary_shield__<form>` skins, 3588 to 4958 quads, 1024 px skin + glow under 345 KB each, class shield). They are skins of the shield (not items); the shield's existing behaviour and engravings apply.
+- KEPT: the Slime Shield form model and every older shield mesh, texture and item. The Rage and Wrath curse forms are not done in this release.
+- Cost: static geometry only; no new items, packets or server work; the jar's 3000-quad mesh detail limit trims the smallest quads of the biggest forms.
+- Honest caveats: previews only, nothing seen in a game; designs come from the form names (wikis blocked); the Chimera Viper head is small seen head-on, the Soul Eater's wisps look like thin sticks, the Zombie's eyeball is mostly hidden.
+
 ## [4.28.1] — Build fixes for the sword, bow, spear and Goku boss releases
 - FIXED (no gameplay change): the Better Combat inventory list now knows the new Legendary weapon form models (the 4.26.0 and 4.27.0 builds stopped at that check), and the Goku boss' attribute call uses the right method name for this game version (the 4.28.0 build did not compile). Everything from 4.26.0 to 4.28.0 ships in this release.
 

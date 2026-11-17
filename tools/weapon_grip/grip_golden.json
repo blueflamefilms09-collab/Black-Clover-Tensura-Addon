@@ -2439,6 +2439,54 @@
   "y": 0.0,
   "z": 4.824
  },
+ "legendary_shield__chimera_viper_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -2.133,
+  "y": 5.103,
+  "z": 14.685
+ },
+ "legendary_shield__egg_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.772,
+  "y": 1.555,
+  "z": 0.785
+ },
+ "legendary_shield__leaf_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.191,
+  "y": 0.883,
+  "z": 3.005
+ },
+ "legendary_shield__light_metal_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.0,
+  "z": 2.112
+ },
+ "legendary_shield__needle_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 7.598,
+  "y": 0.302,
+  "z": 6.537
+ },
+ "legendary_shield__orange_balloon_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.059,
+  "y": -4.415,
+  "z": -0.667
+ },
  "legendary_shield__slime_shield": {
   "class": "shield",
   "fraction": 0.5,
@@ -2446,6 +2494,22 @@
   "x": -0.66,
   "y": -3.678,
   "z": 2.331
+ },
+ "legendary_shield__soul_eater_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -1.107,
+  "y": 4.009,
+  "z": 6.078
+ },
+ "legendary_shield__zombie_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 1.285,
+  "y": -1.227,
+  "z": 2.396
  },
  "legendary_shield_curse": {
   "class": "shield",
