@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public record GeoSpec(ResourceLocation model, ResourceLocation animations, ResourceLocation texture, ResourceLocation glow) {
     public static GeoSpec of(String key, String name) {
-        String id = key + "_" + name;
+        String id = (key + "_" + name).toLowerCase(java.util.Locale.ROOT); // piece names like legR: resource paths must be lowercase (the files are)
         return new GeoSpec(rl("geo/entity/" + id + ".geo.json"), rl("animations/entity/" + id + ".animation.json"),
                 rl("textures/entity/" + id + ".png"), rl("textures/entity/" + id + "_glow.png"));
     }

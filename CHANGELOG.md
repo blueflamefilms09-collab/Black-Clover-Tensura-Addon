@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.29.2] — Fixes: hero-form geo names (startup errors), Grimoire page scroll no longer casts
+- FIXED: the Beast Will / Noelle-style form pieces asked for model files with capital letters (`..._arm_legR.geo.json`, `armL`, `legL`, ...), which Minecraft refuses as invalid resource paths. That logged "Invalid path" and GeckoLib "Couldn't load ..." plus `.geo.json_condition.json` errors for every piece, and could stall startup in big modpacks. The model path is now always lowercase (the files already were), in `GeoSpec`, so every piece of every form loads.
+- FIXED: scrolling to another Grimoire page while the skill key is held no longer casts that page when the key is let go. The page the key went down on is remembered; a release on a different page only ends the hold.
+- KEPT: everything else; a tap or hold on the same page casts exactly as before.
+- Cost: none beyond one int in the skill's tag; no new packets.
+- Not seen in a game: both fixes are from reading the code and the reports; the scroll fix assumes the cast comes from the key release after the wheel changed the page.
+
 ## [4.29.1] — Build fixes for the Goku boss (particles, doc)
 - FIXED (no gameplay change): the Goku boss' vanilla particles now go through the mod's particle themes (the particle source scan refused the raw ones) and its doc names its worst case as its own test requires. Everything from 4.26.0 (sword forms), 4.27.0 (bow and spear forms), 4.28.x (Goku boss) and 4.29.0 (shield forms) ships in this release; none of those versions got a build of its own.
 

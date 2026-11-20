@@ -283,6 +283,7 @@ public abstract class GrimoireBook extends Skill {
         if (!(entity instanceof ServerPlayer p)) return;
         if (!instant(mode)) {
             instance.getOrCreateTag().putInt("ChargeMode", mode);
+            instance.getOrCreateTag().putInt("PressMode", mode + 1);      // 4.29.2: the page the key went down on (+1, 0 = none): scrolling to another page while the key is held must not cast on release
             instance.getOrCreateTag().putInt("ChargeTicks", 0);
             instance.markDirty();
             if (CastHoldFx.pressed(instance, p.level().getGameTime()) && com.newuniverse.nusmp.firecast.FireCasting.chants(this, p, mode)) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.CHANT);   // 1.27.0: a repeated press does not replay the chant (the fire styles: Mereoleona does not chant)
@@ -325,6 +326,14 @@ public abstract class GrimoireBook extends Skill {
     @Override
     public void onRelease(ManasSkillInstance instance, LivingEntity entity, int heldTicks, int keyNumber, int mode) {
         if (!(entity instanceof ServerPlayer player) || instant(mode)) return;
+        int pressed = instance.getOrCreateTag().getInt("PressMode");
+        instance.getOrCreateTag().putInt("PressMode", 0);
+        if (pressed != 0 && pressed - 1 != mode) {                                     // 4.29.2: the wheel changed the page during the hold: that release only ends the hold, it is not a cast
+            instance.getOrCreateTag().putInt("ChargeTicks", 0);
+            instance.markDirty();
+            CastHoldFx.released(instance, player, colorNow(), false, 0, 0f);
+            return;
+        }
         if (com.newuniverse.nusmp.firecast.FireCasting.release(this, instance, player, heldTicks, mode)) return;      // fire casting: Mereoleona readies the page (the fists release it); Leopold fixes his spiral level
         long now = player.level().getGameTime();
         long pendingUntil = instance.getOrCreateTag().getLong("PendingCastUntil");
