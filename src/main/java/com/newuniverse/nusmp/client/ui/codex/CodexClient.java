@@ -15,9 +15,12 @@ public final class CodexClient {
         modBus.addListener((RegisterClientReloadListenersEvent e) -> e.registerReloadListener(new CodexReloadListener()));
     }
 
-    /** Opens the Codex on the Wiki tab (client only; the Multiverse Wiki book calls this behind {@code level.isClientSide()}). */
+    /**
+     * Opens the Codex on the Wiki tab (client only; the Multiverse Wiki book calls this behind {@code level.isClientSide()}). Hub v2: with {@code ui.hub} on (the default) that is the hub's Codex page; with it off, the
+     * old book exactly as before ({@link com.newuniverse.nusmp.client.hub.MultiverseHubClient#openCodex}).
+     */
     public static void openWiki() {
         net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-        mc.setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(mc.screen).startOn(CodexSources.sectionTitle("wiki")));
+        mc.setScreen(com.newuniverse.nusmp.client.hub.MultiverseHubClient.openCodex(mc.screen, CodexSources.sectionTitle("wiki")));
     }
 }

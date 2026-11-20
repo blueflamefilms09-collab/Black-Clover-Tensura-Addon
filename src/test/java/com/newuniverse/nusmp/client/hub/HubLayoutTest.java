@@ -101,4 +101,117 @@ class HubLayoutTest {
         assertEquals(3, HubLayout.labelSide(HubNodes.COUNT / 2), "the bottom node's label is below it");
         assertEquals(2, HubLayout.labelSide(HubNodes.COUNT - 1), "a node on the left puts its label to the left");
     }
+
+    // ================================================================ Hub v2: the framed window, the icon strip, the Codex layout
+    private static final int[] SIZES = {40, 50, 62, 75, 99, 100};
+
+    @Test
+    void v2WindowFitsTheScreenSnapsToEighthsAndHundredIsTheOldFit() {
+        for (int[] win : WINDOWS) {
+            HubLayout.View old = HubLayout.view(win[0], win[1]);
+            assertEquals(old, HubLayout.view(win[0], win[1], 100), "100 percent = the old full fit at " + win[0] + "x" + win[1]);
+            for (int pct : SIZES) {
+                HubLayout.View v = HubLayout.view(win[0], win[1], pct);
+                assertTrue(v.scale() >= HubLayout.MIN_SCALE, "scale " + v.scale());
+                assertEquals(v.scale(), Math.round(v.scale() * 8f) / 8f, 1e-6, "scale snaps to eighths");
+                assertTrue(v.scale() <= old.scale() + 1e-6, "a smaller window is never bigger than the full fit (" + pct + "% at " + win[0] + "x" + win[1] + ")");
+                if (v.scale() > HubLayout.MIN_SCALE) {
+                    assertTrue(HubLayout.windowW(v) <= win[0] + 1 && HubLayout.windowH(v) <= win[1] + 1, "window does not fit " + win[0] + "x" + win[1] + " at " + pct + "%");
+                    assertTrue(v.ox() >= -1e-3 && v.oy() >= -1e-3, "window starts outside the screen");
+                }
+                assertEquals((win[0] - HubLayout.STAGE_W * v.scale()) / 2f, v.ox(), 1e-3, "centred");
+            }
+        }
+    }
+
+    @Test
+    void v2DefaultWindowIsAboutSixtyTwoPercentAndNeverMoreThanTheStage() {
+        for (int[] win : WINDOWS) {
+            if (win[0] < 640 || win[1] < 360) continue;
+            HubLayout.View v = HubLayout.view(win[0], win[1], HubLayout.DEFAULT_SIZE);
+            assertEquals(1.0f, v.scale(), 1e-6, "62% is capped to the 400 x 240 stage at " + win[0] + "x" + win[1]);
+            assertTrue(HubLayout.windowW(v) <= 400 && HubLayout.windowH(v) <= 240);
+        }
+        HubLayout.View small = HubLayout.view(427, 240, HubLayout.DEFAULT_SIZE);                      // a 1280x720 window at GUI scale 3
+        assertTrue(small.scale() >= HubLayout.MIN_READ_SCALE - 1e-6, "text stays readable when the screen allows it");
+        assertTrue(HubLayout.windowW(small) < 427 && HubLayout.windowH(small) < 240, "and the window is smaller than the screen");
+    }
+
+    @Test
+    void v2BiggerSettingNeverShrinksTheWindow() {
+        for (int[] win : WINDOWS) {
+            float last = 0f;
+            for (int pct = HubLayout.MIN_SIZE; pct <= HubLayout.MAX_SIZE; pct += 5) {
+                float s = HubLayout.view(win[0], win[1], pct).scale();
+                assertTrue(s >= last - 1e-6, "scale shrank from " + last + " to " + s + " at " + pct + "% on " + win[0] + "x" + win[1]);
+                last = s;
+            }
+        }
+    }
+
+    @Test
+    void v2SizeStepsCycleAndStayInTheOptionRange() {
+        int s = 50;
+        for (int i = 0; i < 12; i++) {
+            int n = HubLayout.nextSize(s);
+            assertTrue(n >= HubLayout.MIN_SIZE && n <= HubLayout.MAX_SIZE);
+            assertTrue(n != s);
+            s = n;
+        }
+        assertEquals(62, HubLayout.nextSize(50));
+        assertEquals(100, HubLayout.nextSize(75));
+        assertEquals(50, HubLayout.nextSize(100));
+        assertEquals(75, HubLayout.nextSize(63), "a size that is not a step goes to the next bigger step");
+    }
+
+    @Test
+    void v2StripNodesAreInsideTheStageNeverOverlapAndClearTheBackButtonAndPanel() {
+        int r = HubLayout.STRIP_NODE;
+        Rect back = new Rect(HubLayout.BACK_CX - HubLayout.BACK_R, HubLayout.BACK_CY - HubLayout.BACK_R, 2 * HubLayout.BACK_R, 2 * HubLayout.BACK_R);
+        for (int i = 0; i < HubNodes.COUNT; i++) {
+            Rect n = new Rect(Math.round(HubLayout.stripX(i)) - r, Math.round(HubLayout.stripY(i)) - r, 2 * r, 2 * r);
+            assertTrue(n.inside(STAGE), "strip node " + i + " leaves the stage");
+            assertTrue(n.right() <= HubLayout.PANEL2.x(), "strip node " + i + " runs into the page panel");
+            assertFalse(n.overlaps(back), "strip node " + i + " overlaps the back button");
+            assertFalse(n.overlaps(HubLayout.line()), "strip node " + i + " overlaps the bottom line");
+            for (int j = i + 1; j < HubNodes.COUNT; j++) {
+                Rect o = new Rect(Math.round(HubLayout.stripX(j)) - r, Math.round(HubLayout.stripY(j)) - r, 2 * r, 2 * r);
+                assertFalse(n.overlaps(o), "strip nodes " + i + " and " + j + " overlap");
+            }
+            assertEquals(i, HubLayout.stripNodeAt(HubLayout.stripX(i), HubLayout.stripY(i)));
+            assertFalse(HubLayout.onBack(HubLayout.stripX(i), HubLayout.stripY(i)), "a node is not the back button");
+            for (int[] win : WINDOWS) {
+                HubLayout.View v = HubLayout.view(win[0], win[1], HubLayout.DEFAULT_SIZE);
+                double wx = v.ox() + HubLayout.stripX(i) * v.scale(), wy = v.oy() + HubLayout.stripY(i) * v.scale();
+                assertEquals(i, HubLayout.stripNodeAt(v.sx(wx), v.sy(wy)), "click on strip node " + i + " at " + win[0] + "x" + win[1]);
+            }
+        }
+        assertTrue(back.inside(STAGE) && HubLayout.onBack(HubLayout.BACK_CX, HubLayout.BACK_CY));
+        assertEquals(-1, HubLayout.stripNodeAt(HubLayout.BACK_CX, HubLayout.BACK_CY), "the back button is not a node");
+    }
+
+    @Test
+    void v2PagePanelHoldsEveryBodyAndTheTitleAndTheScrollbars() {
+        Rect p = HubLayout.PANEL2;
+        assertTrue(p.inside(STAGE));
+        assertTrue(HubLayout.TITLE2.inside(p));
+        assertFalse(HubLayout.TITLE2.overlaps(HubLayout.BODY2));
+        assertFalse(HubLayout.line().overlaps(p));
+        for (Rect r : new Rect[] {HubLayout.BODY2, HubLayout.PLAYER, HubLayout.STATUS_LIST, HubLayout.SUBRAIL, HubLayout.CODEX_BODY}) {
+            assertTrue(r.inside(p), r + " is outside the panel");
+            assertFalse(r.overlaps(HubLayout.TITLE2), r + " overlaps the title");
+        }
+        for (HubNodes.Tab t : HubNodes.Tab.values()) {
+            Rect b = HubLayout.body(t);
+            assertTrue(b.right() + HubLayout.SCROLLBAR2_GAP + HubLayout.SCROLLBAR2_W <= p.right(), "the scrollbar of " + t + " leaves the panel");
+        }
+        assertFalse(HubLayout.PLAYER.overlaps(HubLayout.STATUS_LIST), "the player panel and the status list overlap");
+        assertFalse(HubLayout.SUBRAIL.overlaps(HubLayout.CODEX_BODY), "the Codex rail and its body overlap");
+        assertTrue(HubLayout.CODEX_BODY.x() - HubLayout.SUBRAIL.right() >= 4, "room for the divider line");
+        assertTrue(HubLayout.CODEX_BODY.w() >= 240 && HubLayout.STATUS_LIST.w() >= 230, "the old pages need about the width of the book's column pair");
+        assertEquals(HubLayout.BODY2, HubLayout.body(HubNodes.Tab.WEAPONS));
+        assertEquals(HubLayout.CODEX_BODY, HubLayout.body(HubNodes.Tab.CODEX));
+        assertEquals(HubLayout.STATUS_LIST, HubLayout.body(HubNodes.Tab.STATUS));
+        assertTrue(HubLayout.NAME_X > HubLayout.BACK_CX + HubLayout.BACK_R, "the hub name clears the back button");
+    }
 }

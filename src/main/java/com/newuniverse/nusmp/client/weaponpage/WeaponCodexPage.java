@@ -105,10 +105,10 @@ public final class WeaponCodexPage implements CodexPage {
             int cw = l.chipW(chips);
             for (int i = 0; i < chips; i++) {
                 int cx = l.chipX(i, chips);
-                button(g, font, cx, l.y(), cw, WeaponPageLayout.CHIP_H, pages[i].chip, i == sel, inside(mx, my, cx, l.y(), cw, WeaponPageLayout.CHIP_H), true, pages[i].rgb);
+                button(ctx, g, font, cx, l.y(), cw, WeaponPageLayout.CHIP_H, pages[i].chip, i == sel, inside(mx, my, cx, l.y(), cw, WeaponPageLayout.CHIP_H), true, pages[i].rgb);
             }
             int hx = l.x(), hy = l.bodyY(chips);
-            g.enableScissor(hx, hy, hx + l.leftW(), hy + WeaponPageLayout.HEAD_H);
+            ctx.scissor(g, hx, hy, hx + l.leftW(), hy + WeaponPageLayout.HEAD_H);                // Hub v2: the page may be drawn inside the hub's scaled window
             g.drawString(font, p.title, hx, hy, UiDraw.goldInk(), false);
             g.drawString(font, p.grade, hx, hy + 10, 0xFF000000 | p.rgb, false);
             g.drawString(font, p.level, hx, hy + 20, UiDraw.ink(), false);
@@ -119,13 +119,13 @@ public final class WeaponCodexPage implements CodexPage {
                 int ry = l.optionY(i, chips);
                 if (ry + rh < top || ry > bottom) continue;
                 WeaponPageClient.Row row = p.opts[i];
-                button(g, font, l.x(), ry, l.leftW(), rh, row.text, row.state == WeaponPageRules.ST_CURRENT, inside(mx, my, l.x(), ry, l.leftW(), rh) && row.clickable(),
+                button(ctx, g, font, l.x(), ry, l.leftW(), rh, row.text, row.state == WeaponPageRules.ST_CURRENT, inside(mx, my, l.x(), ry, l.leftW(), rh) && row.clickable(),
                         row.clickable() || row.state == WeaponPageRules.ST_CURRENT, p.rgb);
             }
             UiDraw.header(g, font, headMastery, l.rightX(), l.barsHeadingY(chips), l.rightW());
             for (int i = 0; i < p.barLabel.length; i++) {
                 int by = l.barY(i, chips);
-                if (by + WeaponPageLayout.BAR_H >= top && by <= bottom) bar(g, font, l.rightX(), by, l.rightW(), p.barLabel[i], p.barValue[i], p.barFrac[i], p.rgb);
+                if (by + WeaponPageLayout.BAR_H >= top && by <= bottom) bar(ctx, g, font, l.rightX(), by, l.rightW(), p.barLabel[i], p.barValue[i], p.barFrac[i], p.rgb);
             }
         }
         String[] el = WeaponPageClient.extraLabels();
@@ -136,7 +136,7 @@ public final class WeaponCodexPage implements CodexPage {
             float[] ef = WeaponPageClient.extraFracs();
             for (int i = 0; i < el.length; i++) {
                 int by = l.extraY(i, bars, chips);
-                if (by + WeaponPageLayout.BAR_H >= top && by <= bottom) bar(g, font, l.rightX(), by, l.rightW(), el[i], ev[i], ef[i], 0xB39CF0);
+                if (by + WeaponPageLayout.BAR_H >= top && by <= bottom) bar(ctx, g, font, l.rightX(), by, l.rightW(), el[i], ev[i], ef[i], 0xB39CF0);
             }
         }
     }
@@ -144,8 +144,8 @@ public final class WeaponCodexPage implements CodexPage {
     private static boolean inside(int mx, int my, int x, int y, int w, int h) { return mx >= x && my >= y && mx < x + w && my < y + h; }
 
     /** A label line with the value at the right and the bar under it. */
-    private static void bar(GuiGraphics g, Font font, int x, int y, int w, String label, String value, float frac, int rgb) {
-        g.enableScissor(x, y, x + w, y + 10);
+    private static void bar(CodexContext ctx, GuiGraphics g, Font font, int x, int y, int w, String label, String value, float frac, int rgb) {
+        ctx.scissor(g, x, y, x + w, y + 10);
         g.drawString(font, label, x, y, UiDraw.ink(), false);
         g.disableScissor();
         g.drawString(font, value, x + w - font.width(value), y, UiDraw.inkDim(), false);
@@ -158,14 +158,14 @@ public final class WeaponCodexPage implements CodexPage {
     }
 
     /** A chip or an option row in the theme's look; the text is clipped to the row, never wrapped. */
-    private static void button(GuiGraphics g, Font font, int x, int y, int w, int h, String text, boolean on, boolean hover, boolean enabled, int rgb) {
+    private static void button(CodexContext ctx, GuiGraphics g, Font font, int x, int y, int w, int h, String text, boolean on, boolean hover, boolean enabled, int rgb) {
         if (UiTheme.anime()) UiPanel.chip(g, x, y, w, h, on, hover, 0xFF000000 | rgb);
         else {
             g.fill(x, y, x + w, y + h, on ? UiDraw.GOLD : hover ? UiDraw.PAPER_SHADE : UiDraw.withAlpha(UiDraw.PAPER_SHADE, 110));
             g.renderOutline(x, y, w, h, UiDraw.RULE);
         }
         int color = !enabled ? UiDraw.inkDim() : on && !UiTheme.anime() ? UiDraw.COVER : UiDraw.ink();
-        g.enableScissor(x + 2, y, x + w - 3, y + h);
+        ctx.scissor(g, x + 2, y, x + w - 3, y + h);
         g.drawString(font, text, x + 4, y + (h - 8) / 2, color, false);
         g.disableScissor();
     }

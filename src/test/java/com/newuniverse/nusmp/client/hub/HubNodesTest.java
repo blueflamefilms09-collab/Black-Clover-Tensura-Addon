@@ -35,8 +35,10 @@ class HubNodesTest {
     }
 
     @Test
-    void theThreeLaunchersAreTheOnesThatOpenOldScreens() {
-        assertTrue(Tab.SKILLS.launcher && Tab.ATTUNEMENT.launcher && Tab.CODEX.launcher);
+    void onlySkillsAndAttunementStillOpenOldScreens() {
+        // Hub v2: the Codex is a native page of the hub (HubCodexBody), no longer a launcher of the old book
+        assertTrue(Tab.SKILLS.launcher && Tab.ATTUNEMENT.launcher);
+        assertFalse(Tab.CODEX.launcher, "the Codex is drawn by the hub");
         assertFalse(Tab.STATUS.launcher || Tab.WEAPONS.launcher || Tab.QUESTS.launcher || Tab.MULTIVERSE.launcher || Tab.SETTINGS.launcher);
     }
 

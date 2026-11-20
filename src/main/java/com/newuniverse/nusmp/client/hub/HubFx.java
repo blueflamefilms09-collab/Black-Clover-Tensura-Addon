@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.hub;
 
 import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
+import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -104,7 +105,7 @@ final class HubFx {
 
     /**
      * One node: an octagon in the tab's colour with its two-letter mark, brighter with the {@code lit} intro progress and the {@code hover} lerp, a bright edge when it is the open tab, a lock over the mark when
-     * its feature is locked. {@code alpha} fades the whole node. About 25 fills; the flare is drawn separately ({@link #flare}).
+     * its feature is locked. {@code alpha} fades the whole node. About 25 fills and, with {@code ui.hubIcons} on, one or two icon quads (Hub v2: the icon replaces the two-letter mark); the flare is drawn separately ({@link #flare}).
      */
     static void node(GuiGraphics g, Font font, int cx, int cy, int r, HubNodes.Tab tab, float lit, float hover, boolean active, boolean locked, float alpha) {
         float vis = UiMath.clamp01(lit);
@@ -118,7 +119,9 @@ final class HubFx {
         octagonEdge(g, cx, cy, r, UiMath.withAlpha(tab.rgb, Math.min(1f, (0.4f + 0.45f * vis + 0.25f * hover + (active ? 0.3f : 0f)) * dim * alpha)));
         if (active) octagonEdge(g, cx, cy, r + 2, UiMath.withAlpha(0xFFFFFF, 0.35f * alpha));
         float ta = vis * alpha * dim;
-        if (!locked && ta > 0.08f) g.drawCenteredString(font, tab.glyph, cx, cy - 4, UiMath.withAlpha(UiMath.mix(0xFF000000 | tab.rgb, 0xFFFFFFFF, 0.6f), ta));
+        boolean icons = HubIcons.on();
+        if (icons && ta > 0.08f) HubIcons.draw(g, HubIcons.node(tab), cx, cy, Math.round(r * 1.41f), locked ? ta * 0.4f : ta, active ? 1f : hover);   // Hub v2: the custom icon (24 on the ring, 16 on the strip)
+        else if (!locked && ta > 0.08f) g.drawCenteredString(font, tab.glyph, cx, cy - 4, UiMath.withAlpha(UiMath.mix(0xFF000000 | tab.rgb, 0xFFFFFFFF, 0.6f), ta));
         if (locked) lock(g, cx, cy, UiMath.withAlpha(tab.rgb, 0.85f * vis * alpha));
     }
 
@@ -129,6 +132,23 @@ final class HubFx {
         g.fill(cx + 3, cy - 5, cx + 4, cy - 1, argb);
         g.fill(cx - 4, cy - 1, cx + 5, cy + 5, argb);
         g.fill(cx, cy + 1, cx + 1, cy + 3, 0xCC0A1024);
+    }
+
+    // ---------------------------------------------------------------- Hub v2: the window and the back arrow
+    /** The frame of the hub window (stage coordinates, the whole stage): a dark glass gradient, a thin cyan edge with a fainter inner one, and gold corner brackets. 14 fills. */
+    static void window(GuiGraphics g, float alpha) {
+        int w = HubLayout.STAGE_W, h = HubLayout.STAGE_H;
+        g.fillGradient(0, 0, w, h, UiMath.withAlpha(0x0B1428, 0.86f * alpha), UiMath.withAlpha(0x050A16, 0.92f * alpha));
+        g.renderOutline(0, 0, w, h, UiMath.withAlpha(UiTheme.CYAN, 0.55f * alpha));
+        g.renderOutline(3, 3, w - 6, h - 6, UiMath.withAlpha(UiTheme.CYAN, 0.12f * alpha));
+        UiPanel.brackets(g, 1, 1, w - 2, h - 2, 12, UiMath.withAlpha(UiTheme.GOLD, 0.85f * alpha));
+    }
+
+    /** A left-pointing chevron centred on (cx, cy), 3 fills (the way back to the ring). */
+    static void chevron(GuiGraphics g, int cx, int cy, int argb) {
+        g.fill(cx - 1, cy - 3, cx + 1, cy - 1, argb);
+        g.fill(cx - 3, cy - 1, cx - 1, cy + 1, argb);
+        g.fill(cx - 1, cy + 1, cx + 1, cy + 3, argb);
     }
 
     // ---------------------------------------------------------------- ambient

@@ -76,3 +76,45 @@ Pure: `HubNodesTest` (enum order, append-only, lock rules), `HubLayoutTest` (win
 - Tensura screens (Skills, Magic) have no parent argument; the hub reopens when they close to the game, through a `ScreenEvent.Closing` listener. If another mod swaps the screen in between, the hub follows the new one.
 - The Wiki book still opens the old Codex.
 - Lang: English only (`en_us.json`, appended through `merge_hub.py`).
+
+## Hub v2: a framed window, custom icons, the Codex inside the hub
+
+Asked for by the owner: the Codex book must not survive next to the hub, the node icons must be real custom icons, and the menu must not fill the whole centre of the screen.
+
+What it is:
+
+- **A framed window.** The 400 x 240 stage is drawn as a window of about 62% of the screen width and 70% of its height (`HubLayout.view(w, h, pct)`; at 1280 x 720 / GUI scale 2 that is exactly the 400 x 240 stage, 62% x 67%), centred, clamped so it always fits, snapped to eighths, never under a readable 0.75 scale when the screen has room. A frame is drawn around it, the dim backdrop stays, and the animated background (motes, rings, circles) is clipped to the window with the real pointer mapped back into stage units. Option `ui.hubSize` (client, 40..100, default 62; 100 = the old full-screen fit, which is the old `HubLayout.view(w, h)` unchanged). Settings page: "Window size" steps 50, 62, 75, 100.
+- **Custom PNG icons.** 30 icons (32 x 32 and a `_glow` variant each, 60 PNGs): one per hub node (`node_<key>`), one per Codex page (`codex_<id>`, plus `codex_data` for any other data section) and one per Codex category (`cat_<key>`), painted by `tools/ui_icons/gen_hub_icons.py` into `textures/gui/hub/`. Drawn at 24 on the ring, 16 on the strip, 12 and 10 on the Codex rail; the glow variant is blended in for the hovered or open one. Option `ui.hubIcons` (client, default true); false draws the old two-letter glyphs as before. One class (`HubIcons`) names the textures; the lookup is a cached `ResourceLocation` per name.
+- **Page view = icon strip + panel.** The old ring rail (a small ring of eight nodes) is replaced, in the page view only, by a vertical strip of the eight node icons on the left with a round back button above it (Backspace still goes back to the ring). The ring view is unchanged apart from the icons.
+- **The Codex inside the hub.** The Codex node opens a page (`HubNodes.Tab.CODEX`, now native, no longer a launcher of the old screen): a left rail of every Codex page grouped into categories (You: Overview, Status, Weapon, Beast Will; Collection: Weapons, Relics, Bestiary, Spirit Lords; Magic: Spells, Magic, Effects; World: Blocks, Entities; Reference: Guide, Rules, Wiki, plus any other data section) and the picked page drawn into the body through the very same `CodexPage` objects of `CodexPages.all()` (no copy, a page registered later shows up by itself). The Multiverse page rows ("Codex", "Beast Will pages"), the Wiki book (`CodexClient.openWiki`) and the Multiverse Status key open the hub on the right page (`MultiverseHubClient.openCodex`); Esc closes the hub back to where it was opened from, Backspace goes to the ring, and links inside pages stay inside the hub.
+- **The player panel.** The Status page and the Codex "You" overview show the player's own model in a panel (`HubPlayerPanel`): idle sway, a slow turn, and a cycle of poses (`HubPoseCycle`: ready, wind-up and strike with the item in the main hand when there is one, cast, aura-gather, victory) eased through the existing `UiPoses` (three poses appended: `swing_back`, `swing_through`, `aura_charge`), a follow of the mouse of up to 28 degrees, a floor circle. The figure stands still (one pose, no sway) when `ui.motion` or `ui.hubFx` is off. One entity render per frame (`UiDraw.player`, the one the old Codex used), nothing allocated per frame.
+
+Settings (all client, in `nusmp-ui-client.toml`, no new config file): `ui.hub` (false restores the old Codex screen exactly), `ui.hubIcons`, `ui.hubSize`, plus the existing `ui.hubFx` and `ui.motion`.
+
+### NEW / REPLACED / KEPT (Hub v2)
+
+NEW: `HubIcons`, `HubCodexNav`, `HubCodexBody`, `HubPoseCycle`, `HubPlayerPanel`; `HubLayout` Hub v2 block (appended: `view(w, h, pct)`, `nextSize`, the strip, `PANEL2`, `PLAYER`, `STATUS_LIST`, `SUBRAIL`, `CODEX_BODY`); the 60 icon PNGs and mcmeta files, `tools/ui_icons/gen_hub_icons.py`, `tools/ui_icons/preview_hub_v2.py`; options `ui.hubIcons`, `ui.hubSize`; `tools/lang/hub_v2.json` + `merge_hub_v2.py` (15 keys); the tests below; `CodexContext.scissor`, `UiPoses.set(index, blendTicks)` and three poses (appended).
+
+REPLACED: the Codex node of the hub (it opened the old Codex book, it now is a hosted page); the rail of eight nodes in the page view (a strip of icons); the glyphs of the nodes (icons, unless `ui.hubIcons` is false); the full-screen stage (a framed window, unless `ui.hubSize` is 100); the value of the lang key `anime_multiverse.hub.desc.codex` ("Opens the old Codex book." became "Every Codex page in one place: ..."), asked for by the owner.
+
+KEPT: `CodexScreen`, every `CodexPage`, `CodexPages`, the Wiki and Rules data sections, the Weapon page; with `ui.hub=false` the old behaviour is exact. The old rail / glyph / full-size code paths stay (layout constants, `nodeX/nodeY(false, ...)`, the ring drawing in `HubFx`) and their tests still pass. Nothing deleted.
+
+### Worst-case cost (Hub v2)
+
+Client only, no server work, no packet, no tick handler. Per frame, page view: icon quads 8 nodes + 8 glow = 16 (ring view the same), up to 3 magic circles of 8 quads, one entity render (player panel, only on Status and Codex overview), about 250 flat fills, the Codex rail draws only its visible rows (about 12: an icon, a string and a chip each), the body is what the page drew in the book. One extra scissor for the window, one for the rail. Nothing allocated per frame (names cached, rows and labels cooked when the Codex opens, `HubPoseCycle.at` loops over eight steps, one `UiPoses.set` per step change). `HubSourceScanTest` fails the build if the new classes build strings, lists, int arrays or quaternions per frame.
+
+### Tests (Hub v2)
+
+`HubLayoutTest` (window fits any screen and snaps, 100% = the old fit, a bigger option never shrinks the window, strip nodes inside the stage and clear of the back button, clicks map back through the window, every body inside the panel without overlap), `HubNodesTest` (Codex is a native page), `HubCodexNavTest` (every page index appears once, unknown pages go to Reference, every stock title of `CodexPages` maps to its own id), `HubPoseCycleTest` (pose names exist in `UiPoses`, unarmed never shows the swing, wrap-around, clamps), `HubIconsTest` (every node, page and category has a 32 x 32 PNG, a glow PNG and an mcmeta, no stray files), `HubSourceScanTest` (appended: no per-frame allocation in the new classes). Guards run and passing: `ServerSafetyTest`, `ConfigFileNamesTest`, `PerfSourceScanTest`, `ScreenBlurGuardTest`, `GuiMoveRegistryTest`, `merge_hub.py --check`, `merge_hub_v2.py --check`.
+
+### Previews (Hub v2, PIL mock-ups, not game screenshots)
+
+`python3 -B tools/ui_icons/preview_hub_v2.py docs/previews/hub_v2` writes `hub_v2_ring.png` (the ring in the 62% window, Skills hovered), `hub_v2_status.png` (the Status page with the player panel), `hub_v2_codex_spells.png` (a Codex sub-page with the rail), `hub_v2_codex_weapons.png` (a catalog page) and `hub_v2_icons.png` (the icon sheet). The layout numbers and the icons are the real ones; the player, the text (6 px per character) and the page contents are stand-ins.
+
+### Caveats and decisions (Hub v2)
+
+- Not seen in a game. Compiled with plain `javac` against the real jars (hub, the edited Codex classes, tests); the unit tests and guards ran with the JUnit launcher, no Gradle in the session. The real player render, the pose blends and the window clipping are the parts most worth a look in game.
+- The icons are drawn by a Python script (PIL, supersampled): a script-made 2D icon set, not hand-painted art; the script is the source, edit and re-run it.
+- The aura pose is a stand-in (`aura_charge`): the panel does not read the Saiyan / aura state, so it plays in the cycle for everyone.
+- The old Codex pages draw into 252 x 166 units (two columns of 122), narrower than the book; they were patched where they used stage-space scissors (`CodexContext.scissor`), but a long entry title may be cut earlier than in the book.
+- Decisions for the owner: keep 62% as the default or go bigger (Settings steps 50 / 62 / 75 / 100); whether the Codex "You" overview should keep the old big figure or this panel (it uses the panel now); whether the ring view should also get a custom background art.

@@ -3,7 +3,7 @@ package com.newuniverse.nusmp.client.hub;
 /**
  * Why: the nodes of the Multiverse Hub (docs/ui_hub.md) as one append-only enum, with no Minecraft types so the order, the names and the lock rules are unit tested ({@code HubNodesTest}). The ring puts
  * node 0 at the top and goes clockwise, so the order of this enum IS the order on the ring: entries are only ever appended at the end (rule 2). A node is either a native tab (the hub draws its page: Status,
- * Weapons, Quests, Multiverse, Settings) or a launcher (a click opens the mod's own existing screen with the hub as its parent: Skills, Attunement, Codex). The lock rule uses only facts the client already
+ * Weapons, Quests, Multiverse, Codex, Settings) or a launcher (a click opens the mod's own existing screen with the hub as its parent: Skills, Attunement). Since Hub v2 the Codex is a native tab too (its pages are drawn by the hub, see {@link HubCodexNav}). The lock rule uses only facts the client already
  * holds; a locked node shows a lock and one hint line instead of its page.
  */
 public final class HubNodes {
@@ -17,7 +17,7 @@ public final class HubNodes {
         QUESTS("quests", "Qd", 0x7CF0B0, false),
         ATTUNEMENT("attunement", "At", 0xB39CF0, true),
         MULTIVERSE("multiverse", "Mv", 0xFF9F6A, false),
-        CODEX("codex", "Cx", 0x8FD0FF, true),
+        CODEX("codex", "Cx", 0x8FD0FF, false),
         SETTINGS("settings", "Se", 0xC0C8D8, false);
 
         /** The lang key tail: {@code anime_multiverse.hub.tab.<key>} (name), {@code anime_multiverse.hub.desc.<key>} (one line), {@code anime_multiverse.hub.locked.<key>} (the lock hint). */

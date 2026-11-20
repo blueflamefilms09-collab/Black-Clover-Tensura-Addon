@@ -42,12 +42,18 @@ public final class UiPoses {
             new Pose("meditating", "Meditating", v(LEG_R_X, -1.3, LEG_L_X, -1.3, LEG_R_Y, 0.9, LEG_L_Y, -0.9, ARM_R_X, -0.7, ARM_L_X, -0.7, ARM_R_Z, 0.35, ARM_L_Z, -0.35, HEAD_X, 0.18, LIFT, -0.66)),
             new Pose("victory", "Victory", v(ARM_R_X, -3.0, ARM_R_Z, 0.25, ARM_L_Z, -0.2, LEG_R_Z, 0.1, LEG_L_Z, -0.1, HEAD_X, -0.2, SWAY, 1)),
             new Pose("salute", "At attention", v(ARM_R_X, -2.5, ARM_R_Y, 0.9, ARM_L_Z, -0.05, HEAD_X, -0.05)),
-            new Pose("ready", "On guard", v(ARM_R_X, -1.2, ARM_R_Y, -0.35, ARM_L_X, -1.0, ARM_L_Y, 0.5, LEG_R_X, -0.4, LEG_L_X, 0.35, LEG_R_Y, 0.15, LEG_L_Y, 0.15, LEAN, 0.12)));
+            new Pose("ready", "On guard", v(ARM_R_X, -1.2, ARM_R_Y, -0.35, ARM_L_X, -1.0, ARM_L_Y, 0.5, LEG_R_X, -0.4, LEG_L_X, 0.35, LEG_R_Y, 0.15, LEG_L_Y, 0.15, LEAN, 0.12)),
+            // Hub v2 (appended): the wind-up and follow-through of a weapon swing, and a charging aura stance (client/hub/HubPoseCycle)
+            new Pose("swing_back", "Wind-up", v(ARM_R_X, -2.7, ARM_R_Y, -0.45, ARM_L_X, -0.6, ARM_L_Z, -0.5, LEG_R_X, 0.45, LEG_L_X, -0.4, LEAN, -0.1, HEAD_X, -0.1)),
+            new Pose("swing_through", "Strike", v(ARM_R_X, -0.55, ARM_R_Y, 0.7, ARM_L_X, 0.3, ARM_L_Z, -0.4, LEG_R_X, -0.55, LEG_L_X, 0.5, LEAN, 0.32, HEAD_X, 0.15)),
+            new Pose("aura_charge", "Gathering aura", v(ARM_R_Z, 0.95, ARM_L_Z, -0.95, ARM_R_X, -0.25, ARM_L_X, -0.25, LEG_R_Z, 0.18, LEG_L_Z, -0.18, HEAD_X, -0.12, LIFT, 0.12, SWAY, 3)));
 
     private static final Random RNG = new Random();
     private static float[] from = new float[N], to = new float[N], shown = new float[N];
     private static float blend = 1f;
     private static int current = 0;
+    /** Hub v2: how many ticks the next change of pose takes (14 by default; the hub's swing steps ask for fewer). */
+    private static float blendTicks = 14f;
 
     /** Starts easing to a random other pose. Returns its index. */
     public static int roll() {
@@ -56,19 +62,29 @@ public final class UiPoses {
         return set(n);
     }
 
-    public static int set(int index) {
+    public static int set(int index) { return set(index, 14f); }
+
+    /** Hub v2: the same with the number of ticks the change takes (at least 2); no allocation (the arrays are reused). */
+    public static int set(int index, float ticks) {
         current = Mth.clamp(index, 0, ALL.size() - 1);
-        from = shown.clone();
+        System.arraycopy(shown, 0, from, 0, N);
         to = ALL.get(current).v();
         blend = 0f;
+        blendTicks = Math.max(2f, ticks);
         return current;
+    }
+
+    /** Hub v2: the index of the pose with this name, or -1. */
+    public static int indexOf(String name) {
+        for (int i = 0; i < ALL.size(); i++) if (ALL.get(i).name().equals(name)) return i;
+        return -1;
     }
 
     public static Pose current() { return ALL.get(current); }
 
     /** Advances the blend by 'dt' ticks. Called once per frame by the screen. */
     public static void step(float dt, float time) {
-        blend = Math.min(1f, blend + dt / 14f);
+        blend = Math.min(1f, blend + dt / blendTicks);
         float e = blend * blend * (3 - 2 * blend);
         for (int i = 0; i < N; i++) shown[i] = Mth.lerp(e, from[i], to[i]);
         float sway = Mth.lerp(e, from[SWAY], to[SWAY]);

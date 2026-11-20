@@ -92,6 +92,8 @@ final class HubCards {
     // ---------------------------------------------------------------- Multiverse
     static HubListBody multiverse(Font font, int w, HubListBody.Host host) {
         HubListBody.Builder b = new HubListBody.Builder(font, w);
+        b.row(0xFFFF9F6A, tr("mv.codex"), tr("mv.codex.note"), true, () -> host.codex(null));                      // Hub v2: the Codex pages are inside the hub
+        b.row(0xFFFF9F6A, tr("mv.beastpage"), tr("mv.beastpage.note"), true, () -> host.codex(I18n.get("anime_multiverse.beastwill.codex.title")));
         b.row(0xFFFF9F6A, tr("mv.four"), tr("mv.four.note"), true, () -> host.open(new FourKingdomsScreen(host.screen())));
         b.row(0xFFFF9F6A, tr("mv.beast"), tr("mv.beast.note"), true, () -> host.open(new MultiverseStatusScreen(host.screen(), true)));
         b.row(0xFFFF9F6A, tr("mv.compat"), tr("mv.compat.note"), true, () -> host.open(new CompatCodexScreen(host.screen())));
@@ -106,6 +108,10 @@ final class HubCards {
         boolean fx = UiThemeOptions.hubFx(), motion = UiThemeOptions.motion();
         b.toggle(0xFFC0C8D8, tr("settings.fx"), tr(fx ? "settings.on" : "settings.off"), fx, () -> { UiThemeOptions.setFlag(UiThemeOptions.HUB_FX, !UiThemeOptions.hubFx()); host.refresh(); });
         b.toggle(0xFFC0C8D8, tr("settings.motion"), tr(motion ? "settings.on" : "settings.off"), motion, () -> { UiThemeOptions.setFlag(UiThemeOptions.MOTION, !UiThemeOptions.motion()); host.refresh(); });
+        boolean icons = UiThemeOptions.hubIcons();
+        b.toggle(0xFFC0C8D8, tr("settings.icons"), tr(icons ? "settings.on" : "settings.off"), icons, () -> { UiThemeOptions.setFlag(UiThemeOptions.HUB_ICONS, !UiThemeOptions.hubIcons()); host.refresh(); });
+        int size = UiThemeOptions.hubSize();
+        b.row(0xFFC0C8D8, tr("settings.winsize"), size >= HubLayout.MAX_SIZE ? tr("settings.winsize.full") : tr("settings.winsize.note", size), true, () -> { UiThemeOptions.setHubSize(HubLayout.nextSize(UiThemeOptions.hubSize())); host.refresh(); });
         b.row(0xFFC0C8D8, tr("settings.intro"), UiThemeOptions.hubIntroSeen() ? "" : tr("settings.intro.queued"), true, () -> { UiThemeOptions.setFlag(UiThemeOptions.HUB_INTRO_SEEN, false); host.refresh(); });
         b.row(0xFFC0C8D8, tr("settings.size"), "", true, () -> host.open(new GuiSizeScreen(host.screen(), null)));
         b.row(0xFFC0C8D8, tr("settings.move"), "", true, () -> host.open(new GuiMoveScreen(host.screen())));

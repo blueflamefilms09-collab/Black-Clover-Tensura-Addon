@@ -34,6 +34,9 @@ final class HubListBody {
 
         /** The page's data changed (a switch was flipped): cook it again. */
         void refresh();
+
+        /** Hub v2: switch to the hub's own Codex page, on the page whose tab title is {@code startTitle} (null = the first). Default: nothing (a host without a Codex). */
+        default void codex(String startTitle) { }
     }
 
     static final class Card {

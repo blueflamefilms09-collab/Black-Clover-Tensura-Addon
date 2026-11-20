@@ -112,4 +112,89 @@ public final class HubLayout {
     /** The frame of the page, its title line, and the scrolling body (the scrollbar sits in the 4 units right of the body). */
     public static final Rect PANEL = new Rect(132, 26, 264, 186), TITLE = new Rect(140, 32, 244, 10), BODY = new Rect(140, 48, 244, 160);
     public static final int SCROLLBAR_X = 387, SCROLLBAR_W = 3;
+
+    // ================================================================ Hub v2: the framed window, the icon strip, the Codex page layout
+    // (appended; every constant above stays, the tests of the old layout still pass. The screen reads the numbers below since 4.65.0.)
+
+    /** The hub window size in percent of the screen (option {@code ui.hubSize}): the default, the range, and the scale under which text stops being readable. */
+    public static final int DEFAULT_SIZE = 62, MIN_SIZE = 40, MAX_SIZE = 100;
+    public static final float MIN_READ_SCALE = 0.75f;
+
+    /**
+     * Where the framed window (the whole 400 x 240 stage) sits for a screen of {@code winW} by {@code winH} GUI units and a size of {@code pct} percent. 100 = the old full-screen fit ({@link #view(int, int)}).
+     * Under 100 the window takes about {@code pct}% of the width and {@code pct * 70 / 62}% of the height (62 -> 62% x 70%) but never more than {@code pct / 62} times the stage (62 -> 400 x 240 units), never
+     * less than {@link #MIN_READ_SCALE} when the screen has room for that, snaps to eighths, and always fits the screen.
+     */
+    public static View view(int winW, int winH, int pct) {
+        if (pct >= MAX_SIZE) return view(winW, winH);
+        int p = Math.max(MIN_SIZE, pct);
+        float w = Math.max(1, winW), h = Math.max(1, winH);
+        float full = Math.min(w / STAGE_W, h / STAGE_H);                                        // the biggest stage the screen holds
+        float s = Math.min(w * p / 100f / STAGE_W, h * Math.min(100f, p * 70f / 62f) / 100f / STAGE_H);
+        s = Math.min(s, p / (float) DEFAULT_SIZE);
+        s = Math.max(s, Math.min(MIN_READ_SCALE, full));
+        s = Math.min(Math.round(s * 8f) / 8f, (float) Math.floor(full * 8f) / 8f);               // snap, but never past what fits
+        s = Math.max(MIN_SCALE, s);
+        return new View(s, (winW - STAGE_W * s) / 2f, (winH - STAGE_H * s) / 2f);
+    }
+
+    /** The sizes the Settings page steps through (percent). */
+    public static final int[] SIZE_STEPS = {50, 62, 75, 100};
+
+    /** The next size after {@code pct} in {@link #SIZE_STEPS}, wrapping from the last back to the first (a size that is not a step goes to the next bigger step). */
+    public static int nextSize(int pct) {
+        for (int s : SIZE_STEPS) if (s > pct) return s;
+        return SIZE_STEPS[0];
+    }
+
+    /** The size of the window in screen (GUI) units; its top-left corner is {@code (view.ox(), view.oy())}. */
+    public static int windowW(View v) { return Math.round(STAGE_W * v.scale()); }
+
+    public static int windowH(View v) { return Math.round(STAGE_H * v.scale()); }
+
+    // ---------------------------------------------------------------- the icon strip (page view): the eight nodes in a column on the left, the way back to the ring above
+    public static final int STRIP_CX = 19, STRIP_NODE = 11, STRIP_TOP = 42, STRIP_BOTTOM = 210, BACK_CX = 19, BACK_CY = 17, BACK_R = 9;
+
+    /** The distance between two strip nodes: 24 for eight nodes, tighter when more are appended so the column keeps its place. */
+    public static float stripPitch() { return Math.min(24f, (STRIP_BOTTOM - STRIP_TOP) / (float) Math.max(1, HubNodes.COUNT - 1)); }
+
+    public static float stripX(int i) { return STRIP_CX; }
+
+    public static float stripY(int i) { return STRIP_TOP + i * stripPitch(); }
+
+    /** The strip node under the stage point, or -1. */
+    public static int stripNodeAt(float sx, float sy) {
+        int r = STRIP_NODE + 1;
+        for (int i = 0; i < HubNodes.COUNT; i++) {
+            float dx = sx - stripX(i), dy = sy - stripY(i);
+            if (dx * dx + dy * dy <= r * r) return i;
+        }
+        return -1;
+    }
+
+    /** True on the round button above the strip (the way back to the ring). */
+    public static boolean onBack(float sx, float sy) {
+        float dx = sx - BACK_CX, dy = sy - BACK_CY;
+        return dx * dx + dy * dy <= (BACK_R + 1) * (BACK_R + 1);
+    }
+
+    // ---------------------------------------------------------------- the page panel (page view)
+    /** The frame of the page, its title line and the scrolling body of every page but Status and Codex; the scrollbar sits in the 5 units right of the body. */
+    public static final Rect PANEL2 = new Rect(40, 24, 356, 192), TITLE2 = new Rect(48, 29, 340, 10), BODY2 = new Rect(48, 44, 338, 166);
+    /** The Status page: the player panel on the left (not scrolled), the card list on the right. */
+    public static final Rect PLAYER = new Rect(48, 44, 92, 166), STATUS_LIST = new Rect(146, 44, 240, 166);
+    /** The Codex page: the navigation rail on the left (scrolls by itself), the page body on the right. */
+    public static final Rect SUBRAIL = new Rect(48, 44, 80, 166), CODEX_BODY = new Rect(134, 44, 252, 166);
+    public static final int SCROLLBAR2_GAP = 2, SCROLLBAR2_W = 3;
+    /** The name of the hub, top left of the window, next to the back button. */
+    public static final int NAME_X = 34, NAME_Y = 10;
+
+    /** The scrolling body of the page of tab {@code t} (v2 layout). */
+    public static Rect body(HubNodes.Tab t) {
+        return switch (t) {
+            case STATUS -> STATUS_LIST;
+            case CODEX -> CODEX_BODY;
+            default -> BODY2;
+        };
+    }
 }

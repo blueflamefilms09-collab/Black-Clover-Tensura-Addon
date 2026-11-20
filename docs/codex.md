@@ -110,3 +110,15 @@ The Great-Sage analysis popup used to be drawn over Tensura's own Skills window.
   (`Minecraft`, `I18n`, `ResourceManager`, `Screen`), so those calls are checked by hand.
 * The legacy per-page `GrimoirePageSkill` skills are not listed; only grimoire books (the current system) are.
 * A magic's pages are listed under the magic's label; a merged book is listed under its own merged id.
+
+## Hub v2: the Codex lives inside the Multiverse Hub
+
+Since Hub v2 (`docs/ui_hub.md`, "Hub v2") the Codex node of the hub does not open this book: every page of it is hosted in the hub body, behind a left rail grouped into categories, drawn by the same `CodexPage` objects (`CodexPages.all()`, so stock pages, `BeastWillCodexPage`, `WeaponCodexPage` and every data section, "Rules" and "Wiki" included, are all there; nothing is copied). The Multiverse Status key, the Four Kingdoms slot, the Multiverse rows and `CodexClient.openWiki` open the hub on the right page (`MultiverseHubClient.openCodex`).
+
+NEW: `client/hub/HubCodexNav` (pure: page ids, categories You / Collection / Magic / World / Reference, rail rows, click arithmetic), `HubCodexBody` (the rail and the hosted page), `CodexContext.scissor` (pages clip in screen units, so they also work under the hub's window transform), the icons `textures/gui/hub/codex_*.png` and `cat_*.png`.
+
+REPLACED: what the hub's Codex node opens (the book became a hosted page), behind `ui.hub`.
+
+KEPT: `CodexScreen` and every page, unchanged in behaviour; `ui.hub=false` makes every entry point open the old book exactly as before. A page this version has never heard of (a data section) goes into Reference with the generic document icon and stays reachable (`HubCodexNavTest`).
+
+Cost: client only, the rail draws about 12 rows, the page costs what it cost in the book, no per-frame allocation. Caveats: the body is 252 units wide (the book's page was wider), so a long title may be cut earlier; not seen in a game.

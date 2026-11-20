@@ -21,6 +21,9 @@ public final class UiThemeOptions {
     public static final ModConfigSpec.BooleanValue TENSURA_OVERLAY;
     // ---- ui.hub*: the Multiverse Hub (client/hub, docs/ui_hub.md)
     public static final ModConfigSpec.BooleanValue HUB, HUB_FX, HUB_INTRO_SEEN;
+    // ---- ui.hubIcons / ui.hubSize: Hub v2 (the custom node icons, the framed window)
+    public static final ModConfigSpec.BooleanValue HUB_ICONS;
+    public static final ModConfigSpec.IntValue HUB_SIZE;
     // ---- ui.greatSpirit.*
     public static final ModConfigSpec.ConfigValue<String> GS_SKIN, GS_QUALITY, GS_NOTICE_CORNER;
     public static final ModConfigSpec.BooleanValue GS_NOTICES, GS_CLOVER_ICONS;
@@ -45,6 +48,10 @@ public final class UiThemeOptions {
                 .define("hubFx", true);
         HUB_INTRO_SEEN = b.comment("Set to true by the hub once its boot-up intro has played, so it plays once per profile. Set it back to false (or use the Settings tab of the hub) to see it again.")
                 .define("hubIntroSeen", false);
+        HUB_ICONS = b.comment("Hub v2: draw the custom icon textures on the hub nodes and in the Codex navigation. false = the old two-letter glyphs on the octagon nodes. Looks only.")
+                .define("hubIcons", true);
+        HUB_SIZE = b.comment("Hub v2: the size of the hub window as a percent of the screen (the hub is a framed window, not the whole screen). 62 = about 62% of the width and 70% of the height, at most about 400 x 240 GUI units. 100 = the old full-screen size. Looks only.")
+                .defineInRange("hubSize", 62, 40, 100);
         b.push("greatSpirit");
         GS_SKIN = b.comment("The skin of the great_spirit look: 'AUTO' = Parchment and Ink (B) for everybody and the Slime Crest (C) for devil users (a forbidden or devil-bound grimoire, Devil Union active or used, a Devil or Daemon race), or force 'B' or 'C'. Five-leaf clovers always use the Slime Crest styling.")
                 .define("skin", "AUTO", o -> o instanceof String s && (s.equalsIgnoreCase("AUTO") || s.equalsIgnoreCase("B") || s.equalsIgnoreCase("C")));
@@ -87,6 +94,24 @@ public final class UiThemeOptions {
 
     /** True when the hub's effects are on (default true). */
     public static boolean hubFx() { return get(HUB_FX); }
+
+    /** True when the hub draws its custom icon textures (default true). */
+    public static boolean hubIcons() { return get(HUB_ICONS); }
+
+    /** The hub window size in percent of the screen, 40..100 (default 62, also when the config is not loaded yet). */
+    public static int hubSize() {
+        try { return HUB_SIZE.get(); } catch (IllegalStateException notLoaded) { return 62; }
+    }
+
+    /** Stores the hub window size (clamped to 40..100) and writes the file. Never throws. */
+    public static void setHubSize(int percent) {
+        try {
+            HUB_SIZE.set(Math.max(40, Math.min(100, percent)));
+            SPEC.save();
+        } catch (RuntimeException notLoaded) {
+            // the config is not loaded yet or the file cannot be written: nothing to do
+        }
+    }
 
     /** True once the boot-up intro has played on this profile (default false, so it plays the first time). */
     public static boolean hubIntroSeen() {

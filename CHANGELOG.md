@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.69.0] — Hub v2: the Codex lives inside the hub, custom icons, a smaller framed window, a posing player
+Owner request: fully rework the Codex into the new hub (with the player doing animations), give status / weapons / skills and the rest custom icons, and make the menu smaller instead of filling the screen.
+- REPLACED (behind `ui.hub`, which still switches the whole hub off): the hub's Codex node is a native hub page. Every Codex page (status, weapons, relics, bestiary, spirit lords, guides, spellbooks, blocks, entities, magic, effects, beast wills, rules, wiki, and any page registered later) is hosted behind a left rail grouped You / Collection / Magic / World / Reference; the Multiverse rows, the wiki entry and the Multiverse Status key open the hub on the right page. Esc closes the hub, Backspace returns to the ring.
+- NEW: a player panel on the Status page and the Codex "You" overview: idle sway, slow turn, mouse follow up to 28 degrees, a floor circle and a pose cycle (ready, wind-up and strike with the main-hand item, cast, aura, victory; three poses appended to `UiPoses`).
+- REPLACED (behind `ui.hubIcons`): the node glyphs are 30 custom painted icons with glow variants (8 nodes, 17 Codex pages, 5 categories) drawn by `tools/ui_icons/gen_hub_icons.py`.
+- REPLACED (behind `ui.hubSize`, 40 to 100, default 62; 100 is the old full fit): the hub is a framed window of about 62 percent x 70 percent of the screen, with an icon strip and a round back button in page view. The build-up intro, sounds and background are kept. Settings page gets "Window size" and "Custom icons" rows.
+- KEPT: `CodexScreen` and every `CodexPage` (`ui.hub=false` opens the old book), every packet and server rule, the old ring code and its tests.
+- COST: client drawing only, no server work, no packet, no tick handler. Page view: 16 icon quads, up to 3 magic circles, one entity render on Status/overview, about 250 fills; nothing allocated per frame (scan test).
+- CAVEATS: nothing seen in a game; previews are mock-ups; icons are script-painted; hosted Codex pages are 252 units wide, so long titles may cut earlier; the aura pose is a stand-in not tied to the real aura state. Decisions for you: window size default 62, the "You" overview now using the new player panel, background art for the ring, wiring the aura pose.
+
 ## [4.68.0] — The curse bow gets its own stave
 Owner decision on the open point of 4.60.0: the Bow of Pride (`legendary_bow_curse`) should no longer share the base bow's stave.
 - REPLACED: `legendary_bow_curse` (rest and three pull stages) is a new horned M-shaped bow: riser in a notch, limbs that swell forward into razor-edged horn blades, three collars and five barbs per limb, a violet sin-vein of light, a steel nock and hooked horn at each tip, a black-iron riser with an almond eye in a steel bezel and a crown of three blades. Its outline overlap with every other bow is at most 0.17 (the old look overlapped the base bow at 0.88). Built in Blender as a Python module (scripted, no Blender window).

@@ -42,6 +42,14 @@ public final class MultiverseHubClient {
         return UiThemeOptions.hub() ? new MultiverseHubScreen(parent) : new CodexScreen(parent);
     }
 
+    /**
+     * Hub v2: the screen every old "open the Codex book" entry point opens, on the Codex page whose tab title is {@code startTitle} (null = the first page): the hub on its Codex page when {@code ui.hub} is on,
+     * the old Codex book on that tab when it is off, exactly as before.
+     */
+    public static Screen openCodex(Screen parent, String startTitle) {
+        return UiThemeOptions.hub() ? new MultiverseHubScreen(parent).startOnCodex(startTitle) : new CodexScreen(parent).startOn(startTitle);
+    }
+
     /** Called every client tick by the status key's handler: opens the hub on the hub key (only with {@code ui.hub} on, in a world). */
     public static void pollKey() {
         boolean pressed = false;

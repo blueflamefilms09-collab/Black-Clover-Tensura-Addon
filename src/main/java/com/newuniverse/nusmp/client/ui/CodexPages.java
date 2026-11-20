@@ -155,7 +155,7 @@ public final class CodexPages {
             g.drawCenteredString(font, UiPoses.current().caption(), fx, y + h - 20, UiDraw.inkDim());
             // right: the magic (scrolls)
             int rx = x + w / 2 + 8, rw = w / 2 - 8;
-            g.enableScissor(rx - 2, y, rx + rw + 2, y + h);
+            ctx.scissor(g, rx - 2, y, rx + rw + 2, y + h);                                                    // Hub v2: through the context, so the hub's scaled window clips right
             int cy = y - scroll;
             cy = UiDraw.header(g, font, "Your magic", rx, cy, rw - 6);
             List<String[]> list = skills(ctx);

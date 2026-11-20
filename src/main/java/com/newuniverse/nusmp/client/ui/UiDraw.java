@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.client.ui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -79,6 +78,8 @@ public final class UiDraw {
      * Draws the player standing (or sitting, bowing, floating ...) at the centre (cx, cy) of a box of the given height, turned by
      * 'yaw' degrees. The pose is whatever {@link UiPoses} is blending to; the figure is the real, fully dressed player model.
      */
+    private static final Quaternionf FLIP = new Quaternionf().rotateZ((float) Math.PI), YAW = new Quaternionf();
+
     public static void player(GuiGraphics g, LivingEntity e, int cx, int cy, int height, float yaw) {
         Minecraft mc = Minecraft.getInstance();
         EntityRenderDispatcher dispatcher = mc.getEntityRenderDispatcher();
@@ -92,8 +93,8 @@ public final class UiDraw {
         ps.translate(cx, cy, 50.0);
         ps.scale(scale, scale, -scale);
         ps.translate(0.0, bb / 2.0 - UiPoses.lift(), 0.0);
-        ps.mulPose(new Quaternionf().rotateZ((float) Math.PI));
-        ps.mulPose(Axis.YP.rotationDegrees(yaw));
+        ps.mulPose(FLIP);                                                               // Hub v2: two reused quaternions, no allocation per frame (the render thread is the only caller)
+        ps.mulPose(YAW.identity().rotateY((float) Math.toRadians(yaw)));
         Lighting.setupForEntityInInventory();
         dispatcher.setRenderShadow(false);
         UiPoses.subject = e;
