@@ -58,6 +58,7 @@ public final class GreedClient {
         if (mc.player == null || mc.screen != null || mc.getConnection() == null) return;
         while (FORM.consumeClick()) {
             if (state != null) PacketDistributor.sendToServer(new GreedNet.SwitchForm(mc.player.isShiftKeyDown() ? -2 : -1));
+            com.newuniverse.nusmp.client.lords.LordClient.switchForm(mc.player.isShiftKeyDown());       // the same key switches the form of a Lord weapon (the server decides)
         }
     }
 

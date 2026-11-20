@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
  * {@code SinSkillService}, on the server; the names are design names, not canon.
  */
 public class SinWeaponSkill extends NUSkill {
-    private static final String[] IDS = {"technique", "manifest", "ability_a", "ability_b"};
+    private static final String[] IDS = {"technique", "manifest", "ability_a", "ability_b", "decree", "form"};      // the last two (appended) only for the four Lord weapons, see lordModes()
 
     private final SinRules.Kind kind;
 
@@ -28,33 +28,40 @@ public class SinWeaponSkill extends NUSkill {
     static SkillText skillText(SinRules.Kind k) {
         return switch (k) {
             case SLOTH -> SkillText.of("lord_of_slothful_weight", "Lord of Slothful Weight",
-                    "Ultimate. The skill of the Black Axe of Sloth, a Weapon of Mortal Sin. Modes: Technique (Dead Weight, the right click of the axe in your main hand) and Manifest / Store (the axe is built out of the skill: hold it to store it back, otherwise a bound one is forged). Two more techniques follow as modes 3 and 4, each with its own cooldown: Stillness and Crushing Gravity. Passive: Sinking Weight, on every plain hit of its owner's axe.");
+                    "Ultimate. The skill of the Black Axe of Sloth, a Weapon of Mortal Sin. Modes: Technique (the art of the form in your hand, the right click of the axe), Manifest / Store (the axe is built out of the skill: hold it to store it back, otherwise a bound one is forged), two more techniques as modes 3 and 4 (Stillness and Crushing Gravity), the Lord's Decree as mode 5 (Abyssal Stillness, opens at level 8 of the Mastery of Stillness) and Switch form as mode 6 (the Titan's Cleaver opens at level 3, the Chained Anchor at level 6). Passive: Sinking Weight, on the plain hits of its owner's axe. Drawback: the Weight of Sloth, explained when the axe binds and in its tooltip.");
             case ENVY -> SkillText.of("lord_of_green_eyed_envy", "Lord of Green-Eyed Envy",
-                    "Ultimate. The skill of the Black Gunblade of Envy, a Weapon of Mortal Sin. Modes: Technique (Green-Eyed Shot, the right click of the gunblade in your main hand) and Manifest / Store (the gunblade is built out of the skill: hold it to store it back, otherwise a bound one is forged). Two more techniques follow as modes 3 and 4, each with its own cooldown: Green Eyes and Stolen Life. Passive: Glaring Eyes, on every plain hit of its owner's gunblade.");
+                    "Ultimate. The skill of the Black Gunblade of Envy, a Weapon of Mortal Sin. Modes: Technique (the art of the form in your hand, the right click of the gunblade), Manifest / Store (the gunblade is built out of the skill: hold it to store it back, otherwise a bound one is forged), two more techniques as modes 3 and 4 (Green Eyes and Stolen Life), the Lord's Decree as mode 5 (Covet All, opens at level 8 of the Mastery of Covetousness) and Switch form as mode 6 (the Coveted Rifle opens at level 3, the Serpent Coil at level 6). Passive: Glaring Eyes, on the plain hits of its owner's gunblade. Drawback: the Hollow of Envy, explained when the gunblade binds and in its tooltip.");
             case VANITY -> SkillText.of("lord_of_empty_vanity", "Lord of Empty Vanity",
-                    "Ultimate. The skill of the Black Spear of Vanity, a Weapon of Mortal Sin. Modes: Technique (Vain Thrust, the right click of the spear in your main hand) and Manifest / Store (the spear is built out of the skill: hold it to store it back, otherwise a bound one is forged). Two more techniques follow as modes 3 and 4, each with its own cooldown: Reflected Thrust and Narcissus. Passive: Vain Shine, on the plain hits of its owner's spear.");
+                    "Ultimate. The skill of the Black Spear of Vanity, a Weapon of Mortal Sin. Modes: Technique (the art of the form in your hand, the right click of the spear), Manifest / Store (the spear is built out of the skill: hold it to store it back, otherwise a bound one is forged), two more techniques as modes 3 and 4 (Reflected Thrust and Narcissus), the Lord's Decree as mode 5 (Hall of Mirrors, opens at level 8 of the Mastery of Reflection) and Switch form as mode 6 (the Mirror Glaive opens at level 3, the Peacock Halberd at level 6). Passive: Vain Shine, on the plain hits of its owner's spear. Drawback: the Cracked Mirror, explained when the spear binds and in its tooltip.");
             case CHAKRAMS -> SkillText.of("lord_of_the_twin_rings", "Lord of the Twin Rings",
                     "Ultimate. The skill of the Black Chakrams, a Weapon of Mortal Sin (the sin of the rings is unnamed in canon: the name is a placeholder). Modes: Technique (Spinning Ring, the right click of the chakrams in your main hand) and Manifest / Store (the chakrams are built out of the skill: hold them to store them back, otherwise a bound pair is forged). Two more techniques follow as modes 3 and 4, each with its own cooldown: Thrown Rings and Binding Embrace. Passive: Hungry Rings, on the plain hits of its owner's chakrams.");
             case HOLY -> SkillText.of("seifort_holy_judgement", "Seifort's Holy Judgement",
-                    "Ultimate. The skill of the holy sword Seifort. Modes: Technique (Grand Cross, the right click of the sword in your main hand) and Manifest / Store (the sword is built out of the skill: hold it to store it back, otherwise a bound one is forged). Two more techniques follow as modes 3 and 4, each with its own cooldown: Purge and Holy Ground. Passive: Smiting Light, on every plain hit of its owner's sword against the undead.");
+                    "Ultimate. The skill of the holy sword Seifort. Modes: Technique (the art of the form in your hand, the right click of the sword), Manifest / Store (the sword is built out of the skill: hold it to store it back, otherwise a bound one is forged), two more techniques as modes 3 and 4 (Purge and Holy Ground), the Lord's Decree as mode 5 (Holy Judgement, opens at level 8 of the Mastery of Devotion) and Switch form as mode 6 (Seifort, Radiant opens at level 3, Seifort, Sent Forth at level 6). Passive: Smiting Light, on the plain hits of its owner's sword. Drawback: Penance, explained when the sword binds and in its tooltip.");
         };
     }
 
     public SinRules.Kind sinKind() { return kind; }
 
-    @Override public int getModes(ManasSkillInstance instance) { return IDS.length; }
+    /** Six modes for the four Lord weapons (the Lord's decree and the form switch were appended), four for the Chakrams. */
+    private int count() { return kind == SinRules.Kind.CHAKRAMS ? 4 : IDS.length; }
+
+    private com.newuniverse.nusmp.lords.LordRules.Sin lord() { return com.newuniverse.nusmp.lords.LordItems.fromKind(kind); }
+
+    @Override public int getModes(ManasSkillInstance instance) { return count(); }
 
     @Override
     public int nextMode(LivingEntity entity, ManasSkillInstance instance, int mode, boolean reverse) {
-        return Math.floorMod(mode + (reverse ? -1 : 1), IDS.length);
+        return Math.floorMod(mode + (reverse ? -1 : 1), count());
     }
 
     @Override
-    public String getModeId(ManasSkillInstance instance, int mode) { return "sinskill." + kind.id + "." + IDS[Math.floorMod(mode, IDS.length)]; }
+    public String getModeId(ManasSkillInstance instance, int mode) { return "sinskill." + kind.id + "." + IDS[Math.floorMod(mode, count())]; }
 
     @Override
     public Component getModeName(ManasSkillInstance instance, int mode) {
-        int m = Math.floorMod(mode, IDS.length);
+        int m = Math.floorMod(mode, count());
+        if (m == 4) return Component.translatable(lord().ultimateKey());                      // the Lord's decree
+        if (m == 5) return SkillMsg.mode("lords.mode.form", "Switch form");
         if (m >= 2) {                                                                          // the two extra techniques of the weapon (docs/sin_weapons_abilities.md)
             SinRules.Ability a = SinRules.ability(kind, m - 1);
             return Component.translatableWithFallback(a.key(), a.english);
@@ -65,8 +72,12 @@ public class SinWeaponSkill extends NUSkill {
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
         if (!(entity instanceof ServerPlayer p) || !p.isAlive() || p.isSpectator()) return;
-        int m = Math.floorMod(mode, IDS.length);
-        if (m == 0) SinSkillService.technique(p, kind);
+        int m = Math.floorMod(mode, count());
+        com.newuniverse.nusmp.lords.LordRules.Sin lord = lord();
+        if (m == 4 && lord != null) com.newuniverse.nusmp.lords.LordService.decree(p, lord);
+        else if (m == 5 && lord != null) com.newuniverse.nusmp.lords.LordService.cycleForm(p, false);
+        else if (m == 0 && lord != null && p.getMainHandItem().getItem() instanceof com.newuniverse.nusmp.lords.LordItem li && li.sin() == lord) li.fire(p);   // a new form's art, with the right click's gates
+        else if (m == 0) SinSkillService.technique(p, kind);
         else if (m == 1) SinSkillService.manifest(p, kind);
         else SinSkillService.ability(p, kind, m - 1);
     }

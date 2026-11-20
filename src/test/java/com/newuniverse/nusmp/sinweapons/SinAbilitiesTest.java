@@ -205,7 +205,7 @@ class SinAbilitiesTest {
     @Test
     void theSkillModesAreAppendedInOrderAndEveryNameHasItsText() throws IOException {
         String skill = code(read("skill/SinWeaponSkill.java"));
-        assertTrue(skill.contains("{\"technique\", \"manifest\", \"ability_a\", \"ability_b\"}"), "the two old modes first, the two extra techniques appended");
+        assertTrue(skill.contains("{\"technique\", \"manifest\", \"ability_a\", \"ability_b\", \"decree\", \"form\"}"), "the four old modes first and in order, the Lords' decree and form switch appended");
         assertTrue(skill.contains("else SinSkillService.ability(p, kind, m - 1);") && skill.contains("if (m == 0) SinSkillService.technique(p, kind);") && skill.contains("else if (m == 1) SinSkillService.manifest(p, kind);"), "mode order");
         assertTrue(skill.contains("SinRules.ability(kind, m - 1)"), "the mode name is the technique's own name");
         String frag = file("tools/lang/berserk_abilities.json"), en = file("src/main/resources/assets/anime_multiverse/lang/en_us.json");

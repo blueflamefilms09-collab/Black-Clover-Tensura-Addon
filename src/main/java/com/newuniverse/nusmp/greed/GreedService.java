@@ -163,6 +163,7 @@ public final class GreedService {
         GreedGrantService.sync(p);
         applyAttributes(p, GreedStore.of(p));
         hud(p, true);
+        if (fresh) com.newuniverse.nusmp.lords.LordText.warn(p, com.newuniverse.nusmp.lords.LordRules.Sin.GREED);   // what the blade takes, how much, how it recovers, how to avoid it
         if (fresh && p.getServer() != null) {
             p.getServer().getPlayerList().broadcastSystemMessage(Component.translatableWithFallback("greed.msg.chosen", "A Mortal Sin has chosen its host...").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD), false);
         }
@@ -337,6 +338,7 @@ public final class GreedService {
         st.half = !st.half;
         applyAttributes(p, st);
         say(p, st.half ? "greed.msg.half_on" : "greed.msg.half_off", st.half ? "Half-Starvation: ACTIVE (double absorption)" : "Half-Starvation: off", st.half ? ChatFormatting.DARK_RED : ChatFormatting.GRAY);
+        if (st.half) com.newuniverse.nusmp.lords.LordFx.follow(p.serverLevel(), com.newuniverse.nusmp.lords.LordRules.Sin.GREED, com.newuniverse.nusmp.lords.LordVfxCodes.HALF, p, p.position(), 3.0f);
         hud(p, true);
     }
 
@@ -387,6 +389,8 @@ public final class GreedService {
         st.add(g[0], g[1], g[2], absorbed);
         st.setSatiation(st.satiation + GreedRules.feed(absorbed));
         if (GreedConfig.STEAL_SKILLS.get() && (victim instanceof ServerPlayer || killer.getRandom().nextDouble() < GreedRules.STEAL_MOB)) stealSkill(killer, victim, st);
+        if (com.newuniverse.nusmp.lords.LordConfig.hungerOfTheBlade() && st.half)
+            com.newuniverse.nusmp.lords.LordService.grow(killer, com.newuniverse.nusmp.lords.LordStore.of(killer), com.newuniverse.nusmp.lords.LordRules.Sin.GREED, (int) Math.round(com.newuniverse.nusmp.lords.LordRules.xpForKill(victim.getMaxHealth()) * com.newuniverse.nusmp.lords.LordConfig.masteryScale()));   // feeding in the state teaches it
         applyAttributes(killer, st);
         if (GreedFx.mawReady(killer.serverLevel().getGameTime()))
             GreedFx.send(killer.serverLevel(), com.newuniverse.nusmp.vfx.VfxShape.GREED_MAW, GreedFx.chest(victim), GreedFx.chest(killer), GreedFx.CRIMSON, 24, victim.getBbHeight());      // VFX wave 2: the sword devours (at most one maw every half second, so a technique that kills eight sends one)
@@ -468,7 +472,9 @@ public final class GreedService {
     /** Writes the devoured stats as three transient attribute modifiers (removed when there are none, 1.5 times in Half-Starvation). */
     public static void applyAttributes(ServerPlayer p, GreedState st) {
         boolean wielder = GreedData.bound() && data().isOwner(p.getUUID());
-        double m = st.half ? 1.5 : 1.0;
+        boolean blade = com.newuniverse.nusmp.lords.LordConfig.hungerOfTheBlade();
+        double m = st.half ? (blade ? com.newuniverse.nusmp.lords.LordRules.halfStats(halfLevel(p)) : 1.5) : 1.0;
+        if (blade && GreedConfig.STARVATION.get() && GreedData.bound() && data().tier() < GreedRules.MAX_TIER) m *= com.newuniverse.nusmp.lords.LordRules.bonusShare(st.satiation);     // a ravenous blade lends 70% of the devoured stats, a sleeping one none
         mod(p.getAttribute(Attributes.MAX_HEALTH), HP_MOD, wielder ? st.bonusHp * m : 0.0);
         mod(p.getAttribute(Attributes.ATTACK_DAMAGE), ATK_MOD, wielder ? st.bonusAtk * m : 0.0);
         mod(p.getAttribute(Attributes.ARMOR), ARMOR_MOD, wielder ? st.bonusArmor * m : 0.0);
@@ -488,11 +494,57 @@ public final class GreedService {
         GreedData d = data();
         if (!d.isOwner(p.getUUID())) return;
         GreedState st = GreedStore.of(p);
+        boolean blade = com.newuniverse.nusmp.lords.LordConfig.hungerOfTheBlade();
         if (GreedConfig.STARVATION.get() && !p.isCreative() && !p.isSpectator()) {
-            st.setSatiation(st.satiation - (float) GreedRules.decayPerSecond(st.bonusHp, st.bonusAtk, st.bonusArmor, st.half, d.tier(), GreedConfig.hunger()));
-            if (GreedRules.starving(st.satiation, d.tier())) starve(p, st, d);
+            double dec = GreedRules.decayPerSecond(st.bonusHp, st.bonusAtk, st.bonusArmor, st.half && !blade, d.tier(), GreedConfig.hunger());
+            if (blade && st.half) dec *= com.newuniverse.nusmp.lords.LordRules.halfHunger(halfLevel(p));       // Half-Starved Mastery: the hunger of the state eases with each level
+            st.setSatiation(st.satiation - (float) dec);
+            if (GreedRules.starving(st.satiation, d.tier())) {
+                if (blade) hungerOfTheBlade(p, st, d);
+                else starve(p, st, d);
+            }
         }
+        if (blade && st.half && !p.isCreative() && !p.isSpectator()) com.newuniverse.nusmp.lords.LordService.grow(p, com.newuniverse.nusmp.lords.LordStore.of(p), com.newuniverse.nusmp.lords.LordRules.Sin.GREED, halfXp(p));   // the mastery of the state grows with the seconds spent in it
         hud(p, false);
+    }
+
+    /** The level of Half-Starved Mastery (0 when the lords package is off). */
+    public static int halfLevel(ServerPlayer p) { return com.newuniverse.nusmp.lords.LordStore.of(p).level(com.newuniverse.nusmp.lords.LordRules.Sin.GREED); }
+
+    private static int halfXp(ServerPlayer p) {
+        double s = com.newuniverse.nusmp.lords.LordConfig.masteryScale() * com.newuniverse.nusmp.lords.LordRules.XP_PER_SECOND;
+        return s >= 1.0 ? (int) Math.round(s) : p.getRandom().nextDouble() < s ? 1 : 0;
+    }
+
+    /** The share of a heal the wielder still receives: below 20% satiation the blade takes half of it (Half-Starved Mastery gives it back); 1.0 otherwise or when the old rules are chosen. */
+    public static float healFactor(ServerPlayer p) {
+        if (!com.newuniverse.nusmp.lords.LordConfig.hungerOfTheBlade() || !GreedConfig.enabled() || !GreedData.bound() || !data().isOwner(p.getUUID())) return 1.0f;
+        GreedState st = GreedStore.peek(p);
+        return st != null && st.satiation < com.newuniverse.nusmp.lords.LordRules.RAVENOUS_BELOW && data().tier() < GreedRules.MAX_TIER ? com.newuniverse.nusmp.lords.LordRules.ravenousHeal(halfLevel(p)) : 1.0f;
+    }
+
+    /** Hunger of the Blade (the new rules): a ravenous blade keeps its night sight and speed, slows the weak around, and drinks 1.5% of the wielder's magicule a second; it never touches the food bar, never hurts the wielder and never leaves: at 0% it only sleeps (bonuses off) until it is fed. */
+    private static void hungerOfTheBlade(ServerPlayer p, GreedState st, GreedData d) {
+        p.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 60, 0, true, false));
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 1, true, false));
+        ServerLevel level = p.serverLevel();
+        int n = 0;
+        for (Mob m : level.getEntitiesOfClass(Mob.class, p.getBoundingBox().inflate(8.0), x -> x.isAlive() && x.getMaxHealth() < p.getMaxHealth())) {
+            if (n++ >= GreedRules.MAX_TARGETS) break;
+            m.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 4, true, false));
+        }
+        try {
+            var ex = TensuraStorages.getExistenceFrom(p);
+            if (ex != null && ex.getMagicule() > 0.0) {
+                ex.setMagicule(ex.getMagicule() * (1.0 - com.newuniverse.nusmp.lords.LordRules.RAVENOUS_DRAIN_PERCENT / 100.0));
+                ex.markDirty();
+            }
+        } catch (RuntimeException | LinkageError noTensura) {
+            // no Tensura data: nothing to drink
+        }
+        com.newuniverse.nusmp.lords.LordFx.follow(level, com.newuniverse.nusmp.lords.LordRules.Sin.GREED, com.newuniverse.nusmp.lords.LordVfxCodes.STATE, p, p.position(), 1.4f);
+        if (st.satiation <= 0.0f && p.tickCount % 400 < 20) say(p, "lords.msg.greed_dormant", "The blade sleeps: feed it by killing, or offer magicule.", ChatFormatting.DARK_RED);
+        applyAttributes(p, st);
     }
 
     private static void starve(ServerPlayer p, GreedState st, GreedData d) {
@@ -525,6 +577,7 @@ public final class GreedService {
         int sat = st == null ? 100 : Math.round(st.satiation), tier = d == null ? 0 : d.tier(), form = d == null ? 0 : d.form();
         int flags = (owner ? 1 : 0) | (st != null && GreedRules.starving(st.satiation, tier) ? 2 : 0) | (st != null && st.half ? 4 : 0);
         int vault = st == null ? 0 : Math.min(255, st.vaultSize());
+        com.newuniverse.nusmp.lords.LordService.greedHud(p, owner, sat, st != null && st.half, force);        // Half-Starved Mastery (its own deduplicated packet)
         int key = (sat & 0x7F) | (tier << 7) | (form << 10) | (flags << 13) | (vault << 16);
         Integer last = LAST_HUD.get(p.getUUID());
         if (!force && last != null && last == key) return;

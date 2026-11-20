@@ -57,6 +57,8 @@ public class SinWeaponItem extends SwordItem {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean r = super.hurtEnemy(stack, target, attacker);
         if (!(attacker instanceof ServerPlayer sp) || sp.level().isClientSide) return r;
+        com.newuniverse.nusmp.lords.LordRules.Sin lord = com.newuniverse.nusmp.lords.LordItems.fromKind(kind);
+        if (lord != null) com.newuniverse.nusmp.lords.LordService.onHit(sp, stack, target, lord);        // the Burden of the Lord weapons: a sliver per plain hit (a no-op when the lords setting is off)
         boolean passive = SinWeaponConfig.abilities() && SinWeaponConfig.techniques() && SinSkillService.mayUse(sp, stack);     // the passive of the owner's weapon (docs/sin_weapons_abilities.md)
         boolean atTarget = false, shined = false, fed = false;                                  // which picture the passive's proc gets
         switch (kind) {
@@ -146,19 +148,42 @@ public class SinWeaponItem extends SwordItem {
             SinSkillService.refuse(sp, this);
             return InteractionResultHolder.fail(stack);
         }
+        if (!lordGate(sp)) {                                                                    // the Burden: an overloaded wielder cannot use the weapon's arts
+            sp.getCooldowns().addCooldown(this, 20);
+            return InteractionResultHolder.fail(stack);
+        }
         if (technique(sp)) sp.getCooldowns().addCooldown(this, kind.cooldown);
         return InteractionResultHolder.sidedSuccess(stack, false);
+    }
+
+    /** The Lords' Burden gate: true when the weapon is not a managed Lord weapon or its wielder is not overloaded (a message says why not). */
+    private boolean lordGate(ServerPlayer sp) {
+        com.newuniverse.nusmp.lords.LordRules.Sin s = com.newuniverse.nusmp.lords.LordItems.fromKind(kind);
+        return s == null || !com.newuniverse.nusmp.lords.LordService.managed(s) || com.newuniverse.nusmp.lords.LordService.gate(sp, s);
+    }
+
+    /** Charges the Burden of a managed Lord weapon for an art of the old form (slot 0 = the right click, 1 and 2 = the skill's extra techniques). */
+    private void lordCharge(ServerPlayer sp, int slot) {
+        com.newuniverse.nusmp.lords.LordRules.Sin s = com.newuniverse.nusmp.lords.LordItems.fromKind(kind);
+        if (s != null && com.newuniverse.nusmp.lords.LordService.managed(s)) com.newuniverse.nusmp.lords.LordService.charge(sp, s, com.newuniverse.nusmp.lords.LordRules.artBurden(s, Math.min(slot, 2), 0));
     }
 
     /** The technique as the skill's Technique mode asks for it: the same gates, cooldown and caps as the right click, but the owner check is the skill's own. Returns whether it ran. */
     public boolean fire(ServerPlayer sp) {
         if (!SinWeaponConfig.techniques() || sp.isSpectator() || sp.getCooldowns().isOnCooldown(this)) return false;
+        if (!lordGate(sp)) return false;
         if (technique(sp)) sp.getCooldowns().addCooldown(this, kind.cooldown);
         return true;
     }
 
     /** Runs the kind's technique on the server. Returns whether it did anything (and so costs its cooldown). One box query at most; at most {@link SinRules#targetCap} creatures. */
     boolean technique(ServerPlayer p) {
+        boolean ran = runTechnique(p);
+        if (ran) lordCharge(p, 0);                                                               // a managed Lord weapon: the art adds to the Burden (every way into the technique goes here)
+        return ran;
+    }
+
+    private boolean runTechnique(ServerPlayer p) {
         ServerLevel level = p.serverLevel();
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         List<LivingEntity> foes = Fx.foesAround(p, kind == SinRules.Kind.SLOTH || kind == SinRules.Kind.CHAKRAMS ? kind.reach : kind.reach + 1.0);
@@ -250,8 +275,10 @@ public class SinWeaponItem extends SwordItem {
                     (SinRules.ticksLeft(now, ready, a.cooldown) + 19) / 20).withStyle(ChatFormatting.GRAY), true);
             return false;
         }
+        if (!lordGate(p)) return false;
         if (!runAbility(p, a)) return false;
         p.getPersistentData().putLong(key, now + a.cooldown);
+        lordCharge(p, a.slot);
         return true;
     }
 
@@ -360,6 +387,15 @@ public class SinWeaponItem extends SwordItem {
         }
     }
 
+    /** A managed Lord weapon on the ground never despawns, is never destroyed, is rescued from the void, and a ghost dissolves. */
+    @Override
+    public boolean onEntityItemUpdate(ItemStack stack, net.minecraft.world.entity.item.ItemEntity entity) {
+        com.newuniverse.nusmp.lords.LordRules.Sin s = com.newuniverse.nusmp.lords.LordItems.fromKind(kind);
+        if (s != null && !entity.level().isClientSide && com.newuniverse.nusmp.lords.LordService.managed(s))
+            com.newuniverse.nusmp.core.magic.profile.SafeCast.tick("lords.drop", () -> com.newuniverse.nusmp.lords.LordService.itemEntityTick(entity, stack, s));
+        return false;
+    }
+
     // ---------------------------------------------------------------- text
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
@@ -372,6 +408,8 @@ public class SinWeaponItem extends SwordItem {
                     Component.translatableWithFallback(a2.key(), a2.english), a2.cooldown / 20).withStyle(ChatFormatting.DARK_GRAY));
             lines.add(Component.translatableWithFallback("sinweapons.tooltip.passive", "Passive: %s", Component.translatableWithFallback(SinRules.passiveKey(kind), SinRules.passiveName(kind))).withStyle(ChatFormatting.DARK_GRAY));
         }
+        com.newuniverse.nusmp.lords.LordRules.Sin lord = com.newuniverse.nusmp.lords.LordItems.fromKind(kind);
+        if (lord != null) com.newuniverse.nusmp.lords.LordText.tooltip(lines, lord, 0);          // what the weapon takes from you, how much, how it recovers, how to avoid it
         if (kind == SinRules.Kind.CHAKRAMS) lines.add(Component.translatableWithFallback("greed.tooltip.twin", "Twin form: one in each hand. With the off hand empty every blow is followed by a second one from it (60%).").withStyle(ChatFormatting.DARK_GRAY));
     }
 

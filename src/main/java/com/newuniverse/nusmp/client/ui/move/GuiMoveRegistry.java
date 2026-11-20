@@ -158,6 +158,7 @@ public final class GuiMoveRegistry {
         fixed("client/mega/system/SystemEditScreen.java", "the System window's own edit tool (kept; global edit mode moves the same place)");
         fixed("client/companion/TalkScreen.java", "the companion talk screen: a modal conversation window that opens centred and is laid out by TalkLayout (the GUI Size framework scales it)");
         fixed("client/greed/GreedClient.java", "the Black Sword Greed starvation vignette: a full-screen red edge tint plus one status line, nothing to move or size");
+        fixed("client/lords/LordClient.java", "the Lord weapons' two thin bars (mastery and the named drawback) pinned above the hotbar corner, drawn only while one is wielded; the same state feeds the status menu's mastery bar");
         fixed("client/companion/gs/GsTalkScreen.java", "the Great Spirit companion talk screen: a modal conversation window that opens centred and is laid out by GsTalkLayout (the GUI Size framework scales it)");
         fixed("client/mega/system/SystemStatsScreen.java", "a full-window stat screen: nothing to move");
         fixed("client/multiverse/MultiverseStatusScreen.java", "a full-window status book: nothing to move");

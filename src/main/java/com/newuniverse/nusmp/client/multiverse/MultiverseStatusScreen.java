@@ -190,6 +190,8 @@ public class MultiverseStatusScreen extends Screen {
             int x = x0 + (i % cols) * (pw + gap), y = y0 + (i / cols) * (ph + gap);
             panel(g, font, x, y, pw, ph, blocks.get(i));
         }
+        int my = y0 + ((blocks.size() + cols - 1) / cols) * (ph + gap);
+        com.newuniverse.nusmp.client.lords.LordClient.drawMastery(g, font, x0, my, Math.min(200, width - 2 * x0), height - 4);
     }
 
     private final SageBlock sage = new SageBlock(), sageLine = new SageBlock();
@@ -217,6 +219,7 @@ public class MultiverseStatusScreen extends Screen {
         int bottom = y0 + ((blocks.size() + cols - 1) / cols) * (ph + gap);                  // where the last row of panels ends
         String body = warn ? UiLang.get(UiLang.WARNING, UiLang.get("anime_multiverse.ui.status.warn")) : UiLang.get("anime_multiverse.ui.status.read");
         sage.set(font, UiLang.get(UiLang.ANALYSIS_COMPLETE), body, UiLang.get(UiLang.RESULT, rank), sw, now);
+        com.newuniverse.nusmp.client.lords.LordClient.drawMastery(g, font, width / 2 + 6, Math.max(bottom + 2, height - 70), Math.min(180, width / 2 - 16), height - 4);       // the weapon masteries, right of the readout
         int sy = Math.max(bottom + 2, height - 38);
         if (sy + sage.height(font) <= height - 3) {
             sage.draw(g, font, 10, sy, now, 1f);
@@ -285,7 +288,11 @@ public class MultiverseStatusScreen extends Screen {
             if (b.title().equals("Social Class") || b.title().equals("Anti-Magic") && b.lines().get(0).equals("-")) continue;
             rows.add(new String[]{b.title(), b.lines().get(0)});
         }
-        int lineH = 10, needed = 14 + rows.size() * lineH;
+        List<int[]> bars = new ArrayList<>();                                                                              // a thin mastery bar under a row: {percent, rgb}; null for an ordinary row
+        for (int i = 0; i < rows.size(); i++) bars.add(null);
+        com.newuniverse.nusmp.client.lords.LordClient.masteryRows(rows, bars);                                             // the Lord weapons' and Greed's mastery, appended (empty unless the player wields one)
+        int lineH = 10, needed = 14;
+        for (int[] bar : bars) needed += lineH + (bar == null ? 0 : 3);
         float scale = Math.min(1f, (h - 4) / (float) needed);
         g.pose().pushPose();
         g.pose().translate(x + 4, y + 3, 0);
@@ -298,10 +305,17 @@ public class MultiverseStatusScreen extends Screen {
         int labelW = 0;
         for (String[] r : rows) labelW = Math.max(labelW, font.width(r[0]));
         labelW = Math.min(labelW, inner / 2);
-        for (String[] r : rows) {
+        for (int i = 0; i < rows.size(); i++) {
+            String[] r = rows.get(i);
             g.drawString(font, font.plainSubstrByWidth(r[0], labelW), 0, ly, anime ? UiTheme.TEXT_DIM : DIM, false);
             g.drawString(font, font.plainSubstrByWidth(r[1], inner - labelW - 6), labelW + 6, ly, anime ? UiTheme.TEXT : TEXT, false);
             ly += lineH;
+            int[] bar = bars.get(i);
+            if (bar != null) {                                                                                             // the second bar of the status menu: the mastery of the weapon, filling over time
+                g.fill(0, ly - 1, inner, ly + 2, 0xAA000000);
+                g.fill(0, ly - 1, Math.max(0, Math.min(inner, inner * bar[0] / 100)), ly + 2, 0xFF000000 | bar[1]);
+                ly += 3;
+            }
         }
         g.pose().popPose();
     }

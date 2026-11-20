@@ -49,12 +49,20 @@ public final class SinSkillService {
 
     public static SinSkillRules.Owner ownerOf(ItemStack s, ServerPlayer p) { return SinSkillRules.ownerOf(ownerText(s), p.getUUID().toString()); }
 
+    /** True when the Lords system (setting lordsEnabled) owns this weapon: one in the world, soul-bound to one wielder; the old carrier binding stays off for it. */
+    private static boolean lordManaged(SinRules.Kind k) {
+        com.newuniverse.nusmp.lords.LordRules.Sin s = com.newuniverse.nusmp.lords.LordItems.fromKind(k);
+        return s != null && com.newuniverse.nusmp.lords.LordService.managed(s);
+    }
+
     private static SinRules.Kind kindOf(ItemStack s) { return s.getItem() instanceof SinWeaponItem w ? w.kind() : null; }
 
     private static boolean isMine(ItemStack s, ServerPlayer p, SinRules.Kind k) { return kindOf(s) == k && ownerOf(s, p) == SinSkillRules.Owner.MINE; }
 
     /** The right click's check: may this player use the stack's technique? (the setting soulBound off lets anyone) */
     public static boolean mayUse(ServerPlayer p, ItemStack stack) {
+        com.newuniverse.nusmp.lords.LordRules.Sin lord = com.newuniverse.nusmp.lords.LordItems.sinOf(stack);
+        if (lord != null && com.newuniverse.nusmp.lords.LordService.managed(lord)) return com.newuniverse.nusmp.lords.LordService.mayUse(p, stack);      // 1-of-1 Lord weapons: the world's token and wielder decide
         return SinSkillRules.mayUseTechnique(SinWeaponConfig.soulBound(), ownerOf(stack, p));
     }
 
@@ -131,7 +139,7 @@ public final class SinSkillService {
         for (int i = 0; i < n; i++) {
             ItemStack s = inv.getItem(i);
             SinRules.Kind k = kindOf(s);
-            if (k == null || isOff(p, k) || !SinSkillRules.shouldBind(ownerOf(s, p), (mine & (1 << k.ordinal())) != 0)) continue;      // 4.30.1: a skill the player removed is not given again
+            if (k == null || lordManaged(k) || isOff(p, k) || !SinSkillRules.shouldBind(ownerOf(s, p), (mine & (1 << k.ordinal())) != 0)) continue;      // 4.30.1: a skill the player removed is not given again
             bindStack(s, p);
             mine |= 1 << k.ordinal();
             grant(p, k);
@@ -173,6 +181,10 @@ public final class SinSkillService {
 
     /** Manifest / Store: see {@link SinSkillRules#manifest}. Binds a stack the player holds first, so a /give'd weapon in the hand is theirs before it is stored. */
     public static void manifest(ServerPlayer p, SinRules.Kind k) {
+        if (lordManaged(k)) {                                                                  // one of each in the world: the wielder only calls their own back
+            com.newuniverse.nusmp.lords.LordService.manifest(p, com.newuniverse.nusmp.lords.LordItems.fromKind(k));
+            return;
+        }
         scan(p);
         Inventory inv = p.getInventory();
         boolean holds = isMine(p.getMainHandItem(), p, k), carries = holds;

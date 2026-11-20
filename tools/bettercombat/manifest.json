@@ -66,6 +66,16 @@
       "profile": "battleaxe",
       "source": "table"
     },
+    "black_axe_of_sloth_chains": {
+      "class": "battleaxe",
+      "profile": "battleaxe",
+      "source": "table"
+    },
+    "black_axe_of_sloth_titan": {
+      "class": "greataxe",
+      "profile": "greataxe",
+      "source": "table"
+    },
     "black_chakrams": {
       "class": "shortsword",
       "profile": "greed_twin_blade",
@@ -76,7 +86,27 @@
       "profile": "longsword",
       "source": "table"
     },
+    "black_gunblade_of_envy_coil": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
+    "black_gunblade_of_envy_rifle": {
+      "class": "greatsword",
+      "profile": "greatsword",
+      "source": "table"
+    },
     "black_spear_of_vanity": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
+    "black_spear_of_vanity_mirror": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
+    "black_spear_of_vanity_peacock": {
       "class": "spear",
       "profile": "spear",
       "source": "table"
@@ -1139,6 +1169,16 @@
     "seifort_holy_sword": {
       "class": "longsword",
       "profile": "longsword",
+      "source": "table"
+    },
+    "seifort_holy_sword_radiant": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
+    "seifort_holy_sword_sent": {
+      "class": "greatsword",
+      "profile": "greatsword",
       "source": "table"
     },
     "selection_hopefuls_bokken": {

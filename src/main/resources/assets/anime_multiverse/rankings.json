@@ -90,6 +90,11 @@
     {"suffix": "_core", "rank": "unique"},
     {"suffix": "_key", "rank": "rare"},
     {"prefix": "magic_tool_", "rank": "normal"},
-    {"suffix": "_spawn_egg", "rank": "normal"}
+    {"suffix": "_spawn_egg", "rank": "normal"},
+    {"prefix": "black_axe_of_sloth", "rank": "god"},
+    {"prefix": "black_gunblade_of_envy", "rank": "god"},
+    {"prefix": "black_spear_of_vanity", "rank": "god"},
+    {"prefix": "seifort_holy_sword", "rank": "god"},
+    {"prefix": "black_sword_greed", "rank": "genesis"}
   ]
 }

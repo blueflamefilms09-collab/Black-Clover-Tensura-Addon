@@ -115,20 +115,29 @@ public final class WeaponEngravings {
             // the Valkyrie Drill Lance (valkyrielance.ValkyrieLanceBoot; a creative-display item): the spiral lance of water of the Valkyrie Dress bores through wards, boosts water, breaks what it drills, a spell-made weapon
             Map.entry("valkyrie_drill_lance", List.of(e("barrier_piercing", 3), e("elemental_boost", 2), e("crushing", 1), e("magic_weapon", 1))),
             // the Black Sword Greed (greed.GreedBoot; eight forms, one item id each): a hungry blade that devours: severance and a breaker of wards in every form, each form adds what it does
-            Map.entry("black_sword_greed", List.of(e("severance", 2), e("barrier_piercing", 2), e("sturdy", 2))),                     // the broadsword: cuts clean, parts wards, never breaks
-            Map.entry("black_sword_greed_bow", List.of(e("barrier_piercing", 2), e("magic_weapon", 1), e("swift", 1))),                // the bow: its magicule arrow parts wards
-            Map.entry("black_sword_greed_scythe", List.of(e("severance", 3), e("magic_interference", 1), e("sturdy", 1))),            // the scythe: Soul Sever, severs and jams
-            Map.entry("black_sword_greed_shield", List.of(e("sturdy", 3), e("magic_interference", 1))),                                // the shield: hard, drinks magic
-            Map.entry("black_sword_greed_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 2), e("magic_interference", 1))),  // the staff: Black Flames, a casting focus
-            Map.entry("black_sword_greed_gauntlets", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 2))),             // the gauntlets: break what they grip
-            Map.entry("black_sword_greed_spear", List.of(e("barrier_piercing", 3), e("severance", 1), e("crushing", 1))),              // the spear: breaks guards and barriers
-            Map.entry("black_sword_greed_dual_blades", List.of(e("severance", 3), e("barrier_piercing", 3), e("swift", 2), e("sturdy", 2))),   // Level Zero: the most refined edge
+            Map.entry("black_sword_greed", List.of(e("severance", 2), e("barrier_piercing", 2), e("sturdy", 2), e("anime_multiverse:hunger_of_the_blade", 1))),                     // the broadsword: cuts clean, parts wards, never breaks
+            Map.entry("black_sword_greed_bow", List.of(e("barrier_piercing", 2), e("magic_weapon", 1), e("swift", 1), e("anime_multiverse:hunger_of_the_blade", 1))),                // the bow: its magicule arrow parts wards
+            Map.entry("black_sword_greed_scythe", List.of(e("severance", 3), e("magic_interference", 1), e("sturdy", 1), e("anime_multiverse:hunger_of_the_blade", 1))),            // the scythe: Soul Sever, severs and jams
+            Map.entry("black_sword_greed_shield", List.of(e("sturdy", 3), e("magic_interference", 1), e("anime_multiverse:hunger_of_the_blade", 1))),                                // the shield: hard, drinks magic
+            Map.entry("black_sword_greed_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 2), e("magic_interference", 1), e("anime_multiverse:hunger_of_the_blade", 1))),  // the staff: Black Flames, a casting focus
+            Map.entry("black_sword_greed_gauntlets", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 2), e("anime_multiverse:hunger_of_the_blade", 1))),             // the gauntlets: break what they grip
+            Map.entry("black_sword_greed_spear", List.of(e("barrier_piercing", 3), e("severance", 1), e("crushing", 1), e("anime_multiverse:hunger_of_the_blade", 1))),              // the spear: breaks guards and barriers
+            Map.entry("black_sword_greed_dual_blades", List.of(e("severance", 3), e("barrier_piercing", 3), e("swift", 2), e("sturdy", 2), e("anime_multiverse:hunger_of_the_blade", 1))),   // Level Zero: the most refined edge
             // the other Weapons of Mortal Sin and the holy sword Seifort (sinweapons.SinWeaponBoot; creative-display items)
-            Map.entry("black_axe_of_sloth", List.of(e("crushing", 2), e("enervation", 1), e("sturdy", 2))),                            // Sloth: a dead weight that saps and breaks
-            Map.entry("black_gunblade_of_envy", List.of(e("barrier_piercing", 2), e("magic_interference", 1), e("energy_steal", 1))),  // Envy: a shot that parts wards, covets what its prey has
-            Map.entry("black_spear_of_vanity", List.of(e("barrier_piercing", 3), e("severance", 1), e("magic_weapon", 1))),            // Vanity: a mirrored thrust through guards
+            Map.entry("black_axe_of_sloth", List.of(e("crushing", 3), e("enervation", 2), e("sturdy", 2), e("anime_multiverse:weight_of_sloth", 1))),                            // Sloth: a dead weight that saps and breaks
+            Map.entry("black_gunblade_of_envy", List.of(e("barrier_piercing", 2), e("energy_steal", 2), e("magic_interference", 1), e("anime_multiverse:hollow_of_envy", 1))),  // Envy: a shot that parts wards, covets what its prey has
+            Map.entry("black_spear_of_vanity", List.of(e("barrier_piercing", 3), e("severance", 1), e("magic_weapon", 1), e("anime_multiverse:cracked_mirror", 1))),            // Vanity: a mirrored thrust through guards
             Map.entry("black_chakrams", List.of(e("severance", 2), e("swift", 2), e("sturdy", 1))),                                    // the rings: fast, clean, one in each hand
-            Map.entry("seifort_holy_sword", List.of(e("holy_weapon", 3), e("severance", 2), e("barrier_piercing", 1))));               // Seifort: light that cuts the dark and the dead
+            Map.entry("seifort_holy_sword", List.of(e("holy_weapon", 3), e("severance", 2), e("barrier_piercing", 1), e("anime_multiverse:penance_of_seifort", 1))),
+            // the Lords of the Mortal Sins (lords.LordBoot): the eight new forms, each with the custom engraving of its weapon's drawback (data/anime_multiverse/enchantment)
+            Map.entry("black_axe_of_sloth_titan", List.of(e("crushing", 4), e("sturdy", 3), e("enervation", 1), e("anime_multiverse:weight_of_sloth", 1))),                    // the Titan's Cleaver: a falling mountain
+            Map.entry("black_axe_of_sloth_chains", List.of(e("enervation", 2), e("crushing", 2), e("magic_interference", 1), e("anime_multiverse:weight_of_sloth", 1))),       // the Chained Anchor: chains that drag and bind
+            Map.entry("black_gunblade_of_envy_rifle", List.of(e("barrier_piercing", 3), e("magic_weapon", 2), e("swift", 1), e("anime_multiverse:hollow_of_envy", 1))),       // the Coveted Rifle: a volley that parts wards
+            Map.entry("black_gunblade_of_envy_coil", List.of(e("energy_steal", 2), e("soul_eater", 1), e("severance", 1), e("anime_multiverse:hollow_of_envy", 1))),          // the Serpent Coil: coils round what it covets and drinks it
+            Map.entry("black_spear_of_vanity_mirror", List.of(e("magic_interference", 2), e("barrier_piercing", 2), e("severance", 1), e("anime_multiverse:cracked_mirror", 1))), // the Mirror Glaive: turns a gaze back on the gazer
+            Map.entry("black_spear_of_vanity_peacock", List.of(e("severance", 2), e("magic_weapon", 2), e("swift", 1), e("anime_multiverse:cracked_mirror", 1))),             // the Peacock Halberd: a fan of eyes and blades
+            Map.entry("seifort_holy_sword_radiant", List.of(e("holy_weapon", 3), e("elemental_boost", 2), e("severance", 1), e("anime_multiverse:penance_of_seifort", 1))),     // Seifort, Radiant: the halo of judgement
+            Map.entry("seifort_holy_sword_sent", List.of(e("holy_weapon", 3), e("barrier_piercing", 2), e("swift", 1), e("anime_multiverse:penance_of_seifort", 1))));          // Seifort, Sent Forth: the sword that is thrown as light               // Seifort: light that cuts the dark and the dead
 
     static final String FLAG = "NUEngraved";
 

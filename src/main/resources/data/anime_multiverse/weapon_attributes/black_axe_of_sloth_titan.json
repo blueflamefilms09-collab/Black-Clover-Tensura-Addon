@@ -1,0 +1,7 @@
+{
+  "parent": "bettercombat:double_axe",
+  "attributes": {
+    "range_bonus": 1.25,
+    "two_handed": true
+  }
+}

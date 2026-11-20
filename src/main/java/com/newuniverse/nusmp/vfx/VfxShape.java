@@ -547,7 +547,15 @@ public enum VfxShape {
     // STAR_MAGIC (one packet each, as before). HERO_ARROW a solid 3D arrow flying from -> to on a glow trail (power = size); HERO_SPEAR a solid 3D spear tip flying from -> to (power = size).
     // The client setting visual.heroSolidParts = false draws the old STAR_MAGIC streak instead. Other workers append their shapes after this block.
     HERO_ARROW,
-    HERO_SPEAR;
+    HERO_SPEAR,
+    // ---- Lords of the Mortal Sins (docs/berserk_weapons_remake.md), appended after HERO_SPEAR: ONE shape per weapon, drawn by vfx.client.layer.LordLayer, sent by lords.LordFx only. power = sin * 16 + style + 1 + radius / 40
+    // (lords.LordVfxCodes: style 0..2 the three arts, 3 the Lord's decree, 4 the strained state that follows the wielder, 5 a mastery level-up, 6 a hit flash, 7 Greed's Half-Starved awakening); from = the wielder's hand or feet,
+    // to = the aim (areas: = from). The client setting lords.classicVfx draws nothing for them. Other workers append their shapes after this block.
+    LORD_SLOTH,
+    LORD_ENVY,
+    LORD_VANITY,
+    LORD_HOLY,
+    LORD_GREED;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

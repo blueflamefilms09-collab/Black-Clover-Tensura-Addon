@@ -201,10 +201,26 @@
  },
  "black_axe_of_sloth": {
   "class": "battleaxe",
-  "fraction": 0.253,
+  "fraction": 0.3,
   "source": "directive",
   "x": 0.0,
-  "y": 28.131,
+  "y": 37.082,
+  "z": 0.0
+ },
+ "black_axe_of_sloth_chains": {
+  "class": "battleaxe",
+  "fraction": 0.3,
+  "source": "directive",
+  "x": -5.0,
+  "y": 35.6,
+  "z": 0.0
+ },
+ "black_axe_of_sloth_titan": {
+  "class": "greataxe",
+  "fraction": 0.3,
+  "source": "directive",
+  "x": 0.0,
+  "y": 36.8,
   "z": 0.0
  },
  "black_chakrams": {
@@ -217,18 +233,50 @@
  },
  "black_gunblade_of_envy": {
   "class": "longsword",
-  "fraction": 0.131,
+  "fraction": 0.14,
   "source": "directive",
-  "x": 3.19,
-  "y": 16.97,
+  "x": 4.42,
+  "y": 19.36,
+  "z": 0.0
+ },
+ "black_gunblade_of_envy_coil": {
+  "class": "longsword",
+  "fraction": 0.14,
+  "source": "directive",
+  "x": 4.42,
+  "y": 18.242,
+  "z": 0.0
+ },
+ "black_gunblade_of_envy_rifle": {
+  "class": "greatsword",
+  "fraction": 0.2,
+  "source": "directive",
+  "x": 1.876,
+  "y": 34.8,
   "z": 0.0
  },
  "black_spear_of_vanity": {
   "class": "spear",
-  "fraction": 0.222,
+  "fraction": 0.3,
   "source": "directive",
   "x": 0.0,
-  "y": 39.734,
+  "y": 89.4,
+  "z": 0.0
+ },
+ "black_spear_of_vanity_mirror": {
+  "class": "spear",
+  "fraction": 0.3,
+  "source": "directive",
+  "x": 0.0,
+  "y": 89.4,
+  "z": 0.0
+ },
+ "black_spear_of_vanity_peacock": {
+  "class": "spear",
+  "fraction": 0.3,
+  "source": "directive",
+  "x": 0.0,
+  "y": 89.4,
   "z": 0.0
  },
  "black_sword_greed": {
@@ -3209,10 +3257,26 @@
  },
  "seifort_holy_sword": {
   "class": "longsword",
-  "fraction": 0.118,
+  "fraction": 0.12,
   "source": "directive",
   "x": 0.0,
-  "y": 15.342,
+  "y": 16.4,
+  "z": 0.0
+ },
+ "seifort_holy_sword_radiant": {
+  "class": "longsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 16.4,
+  "z": 0.0
+ },
+ "seifort_holy_sword_sent": {
+  "class": "greatsword",
+  "fraction": 0.14,
+  "source": "directive",
+  "x": 0.0,
+  "y": 26.14,
   "z": 0.0
  },
  "selection_hopefuls_bokken": {

@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.53.0] — The four Berserk sin weapons remade to Greed's standard, Greed and the Lords get new effects, drawbacks explained, mastery bars in the status menu
+Owner request: remake the Black Axe of Sloth, Black Gunblade of Envy, Black Spear and Send Forth Holy Sword to Greed's level, rework the Berserk weapon abilities with Time-Magic-quality effects, explain every drawback on equip, and add a Half-Starved mastery bar.
+- NEW: 8 weapon forms made in Blender (Sloth: titan, chains; Envy: rifle, coil; Vanity: mirror, peacock; Seifort: radiant, sent), each with skin, glow skin, icon, item model, weapon class, Better Combat file and engravings. Three forms per weapon, opened at mastery levels 3 and 6 (R key or skill mode 6).
+- NEW: one-of-one rule per Lord weapon, a named and explained drawback (the Burden: Weight, Hollow, Cracked Mirror, Penance) with a chat warning on first binding, tooltip and skill text; a mastery track per weapon with a Lord's decree at level 8 (skill mode 5); server config `nusmp-lords-server.toml`.
+- NEW: effects of their own (`LordLayer`, `VfxShape.LORD_*`, preview scenes), 5 custom engravings (weight of sloth, hollow of envy, cracked mirror, penance of Seifort, hunger of the blade), mastery bars in the Tensura status menu (Half-Starved Mastery for Greed shows in the same bar), display grade GOD for the four Lords and GENESIS for Greed (damage is not regraded).
+- REPLACED (old kept behind settings): form 0 mesh, skin and glow of the 4 old ids now come from Blender (`lords.classicModels` restores the old ones, `lords.classicVfx` the old effects); Greed's half-starvation is now "Hunger of the Blade" and never touches the food bar (`hungerOfTheBlade=false` restores the old one); `lordsEnabled=false` restores the old soul-bound items.
+- KEPT: old meshes, skins and sprites, the old techniques and the four old skill modes in their order (decree and form are modes 5 and 6), the Chakrams unchanged.
+- COST: one per-player tick once a second, staggered; at most the existing target cap per art; no world scans; one shared effect packet to nearby players per art; one validated C2S packet for the form switch; each mesh at most 2800 quads. Docs: `docs/berserk_weapons_remake.md`.
+- CAVEATS: nothing seen in a game; the wikis could not be reached, so the designs come from memory of the anime and need your check; icons are procedural 16x16 sprites; the engravings carry no effect of their own.
+- DECISION: the mod's weapon is `black_spear_of_vanity` (Lord of Empty Vanity), not "Vitality"; kept as is.
+
 ## [4.52.1] — Build fix: hold audit passes for the book and carriage forms, hold golden covers the new vassal forms, bar emblem test knows the Goku and Sinbad emblems
 - FIXED: the grip fraction of 5 vassal forms (animal needle book, library tome, revised edition, queen's chariot, war carriage) is set to the middle of the span of grips the hold audit passes, so none floats, passes through the arm or sinks into the body (`HOLD_FIXES`, only used while `models.holdFit` is on).
 - FIXED: `hold_golden.json` and the grip golden now list the 18 axe, book, carriage and chain forms of 4.47.0.

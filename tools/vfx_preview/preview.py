@@ -100,6 +100,7 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "RobloxMath.java"), pkg)                 # the Roblox-style toolkit (docs/vfx_roblox_pass.md): the pure maths + switch, the primitives and the ten effects the old layers hand over to
     for name in ("RobloxStyle.java", "RobloxFx.java"):
         shutil.copy(os.path.join(VFX, "client", name), os.path.join(pkg, "client"))
+    shutil.copy(os.path.join(VFX, "HeroSolid.java"), pkg)                  # SolidParts.aim reads the pure hero-projectile maths (a pre-existing gap: the preview failed to compile without it)
     shutil.copy(os.path.join(VFX, "StarV2.java"), pkg)                     # Star V2: the pure rules (style switch, caps, reduced flashes, textures) StarMagicLayer reads
     shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
     if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
@@ -167,6 +168,11 @@ def build(layers):
         os.makedirs(sw_dst, exist_ok=True)
         for name in ("SinRules.java", "SinVfx.java"):
             shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "sinweapons", name), sw_dst)
+    if any(l.split(".")[-1] == "LordLayer" for l in layers):                  # the Lords of the Mortal Sins: the pure rules and the power encoding the layer reads (no game type in either)
+        lo_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "lords")
+        os.makedirs(lo_dst, exist_ok=True)
+        for name in ("LordRules.java", "LordVfxCodes.java"):
+            shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "lords", name), lo_dst)
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)

@@ -100,7 +100,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
-            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.greed.GreedItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.sinweapons.SinWeaponBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream(), com.newuniverse.nusmp.beastwill.BeastWillItems.renderables().stream(), com.newuniverse.nusmp.bossdrops.BossDropItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py); the Beast Will Core (docs/solid_cores.md)
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.greed.GreedItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.sinweapons.SinWeaponBoot.renderables().stream(), com.newuniverse.nusmp.lords.LordItems.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream(), com.newuniverse.nusmp.beastwill.BeastWillItems.renderables().stream(), com.newuniverse.nusmp.bossdrops.BossDropItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py); the Beast Will Core (docs/solid_cores.md)
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
@@ -450,11 +450,13 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static Mesh plainMesh(String id) {
         boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels();
         boolean greedClassic = GreedHandsClient.classic();
+        boolean lordClassic = com.newuniverse.nusmp.vfx.client.LordVfxConfig.classicModels();                 // lords.classicModels: the four remade Lord weapons draw their old meshes (weapon_meshes/classic)
         boolean solid = com.newuniverse.nusmp.vfx.HeroSolid.solid();                  // visual.heroSolidParts (docs/heroweapon/flat_parts.md): off = the old flat arrow / spear head meshes
         boolean hold = WeaponGrip.holdEnabled();                                       // 4.45.0: models.holdFit
-        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen || lordClassic != lordClassicSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
             greedClassicSeen = greedClassic;
+            lordClassicSeen = lordClassic;
             solidSeen = solid;
             holdSeen = hold;
             MESHES.clear();
@@ -463,7 +465,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (MESHES.containsKey(id)) return MESHES.get(id);
         Mesh mesh = null;
-        if (classic && isClassicLegendary(id) || greedClassic && GreedHands.isTwin(id)) {      // the model of before 3.79.0 (the Greed pair / double blade: before the two-hand looks), under the same id (so the class, grip and display tables still apply)
+        if (classic && isClassicLegendary(id) || greedClassic && GreedHands.isTwin(id) || lordClassic && com.newuniverse.nusmp.lords.LordItems.isRemade(id)) {      // the model of before 3.79.0 (the Greed pair / double blade: before the two-hand looks), under the same id (so the class, grip and display tables still apply)
             String skin = "textures/entity/weapon/classic/" + id.replaceAll("_pull[123]$", "");
             mesh = read(id, "weapon_meshes/classic/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
@@ -473,7 +475,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         return mesh;
     }
 
-    private static boolean classicSeen, greedClassicSeen, solidSeen = true, holdSeen = true;
+    private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true;
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {
