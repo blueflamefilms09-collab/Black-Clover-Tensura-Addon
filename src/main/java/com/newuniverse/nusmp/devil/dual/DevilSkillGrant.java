@@ -38,6 +38,11 @@ public final class DevilSkillGrant {
         return s != null && s.getSkill(NUSkills.DEVIL_BOND.getId()).isPresent();
     }
 
+    public static boolean hasAwakening(ServerPlayer p) {
+        Skills s = skillsOf(p);
+        return s != null && s.getSkill(NUSkills.DEVIL_AWAKENING.getId()).isPresent();
+    }
+
     /** Makes the player's skill list right for the contract: a holder has Devil Magic and Devil Bond once each, anybody else has neither. Returns the verdict applied to Devil Magic. */
     public static DualRules.Verdict sync(ServerPlayer p, DevilContract c) {
         Skills skills = skillsOf(p);
@@ -47,7 +52,21 @@ public final class DevilSkillGrant {
                 "granted", "The devil's power takes shape: the Ultimate skill Devil Magic is yours.", "revoked", "The bond is gone: Devil Magic fades from you.");
         one(skills, NUSkills.DEVIL_BOND.getId(), NUSkills.DEVIL_BOND.get(), contract && DualConfig.intrinsic(),
                 "bond_granted", "The devil settles in your body: the intrinsic skill Devil Bond is yours.", "bond_revoked", "The bond is gone: Devil Bond fades from you.");
+        boolean awakening = contract && DevilConfig.masteryOn();                                  // Devil Awakening (docs/devil_mastery.md): the extra skill with its own mastery
+        DualRules.Verdict a = one(skills, NUSkills.DEVIL_AWAKENING.getId(), NUSkills.DEVIL_AWAKENING.get(), awakening,
+                "awaken_granted", "The devil answers: the extra skill Devil Awakening is yours. Master it to wake more of its power.", "awaken_revoked", "The bond is gone: Devil Awakening fades from you.");
+        if (a == DualRules.Verdict.GRANT) mirror(p, c);
         return v;
+    }
+
+    /** The skill's own mastery bar follows the contract's mastery (percent of the skill's maximum); a no-op without the skill. */
+    public static void mirror(ServerPlayer p, DevilContract c) {
+        Skills skills = skillsOf(p);
+        if (skills == null || c == null || !c.hasContract()) return;
+        skills.getSkill(NUSkills.DEVIL_AWAKENING.getId()).ifPresent(i -> {
+            double want = com.newuniverse.nusmp.devil.mastery.Mastery.of(c) / 100.0 * i.getMaxMastery();
+            if (Math.abs(i.getMastery() - want) > 0.5) { i.setMastery(want); i.markDirty(); }
+        });
     }
 
     private static DualRules.Verdict one(Skills skills, ResourceLocation id, ManasSkill skill, boolean should, String gKey, String gText, String rKey, String rText) {

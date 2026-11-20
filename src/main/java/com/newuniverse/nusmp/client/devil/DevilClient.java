@@ -232,7 +232,7 @@ public final class DevilClient {
     }
 
     // ---------------------------------------------------------------- the HUD
-    private record Lines(long second, String title, String attr, String level, String stage, String union, int unionColour, String hint, String warn, String sacrifices, String card, int cardRgb) {}
+    private record Lines(long second, String title, String attr, String level, String stage, String union, int unionColour, String hint, String warn, String sacrifices, String card, int cardRgb, String mastery, String next, float masteryFrac) {}
 
     static String t(String key, String fallback, Object... args) { return Component.translatableWithFallback("anime_multiverse.devil.hud." + key, fallback, args).getString(); }
 
@@ -273,7 +273,20 @@ public final class DevilClient {
         String sacrifices = sac.isEmpty() ? "" : t("sacrifices", "Paid: %s", String.join(", ", sac));
         String card = java.util.Objects.requireNonNullElse(com.newuniverse.nusmp.tooltip.RankCards.text("devil", tier), "");   // the relic card line (stars, grade); "" in classic
         var relic = com.newuniverse.nusmp.tooltip.RankCards.of("devil", tier);
-        return new Lines(nowTicks / 20, name, attr, level, stage, union, unionColour, hint, warn, sacrifices, card, relic == null ? accent(s.tier()) : 0xFF000000 | relic.grade().rgb());   // built once a second, never per frame
+        String mastery = "", next = "";                                                                  // Devil Awakening (docs/devil_mastery.md): 0 = the server runs the old assimilation
+        float masteryFrac = 0f;
+        if (s.mastery() > 0) {
+            float m = s.mastery() / 10f;
+            masteryFrac = m / 100f;
+            int awakeLeft = left(s.awakeSec(), since), restLeft = left(s.restSec(), since);
+            mastery = t("mastery", "Mastery %s%%", String.format(java.util.Locale.ROOT, "%.1f", m))
+                    + (awakeLeft > 0 ? " " + t("awake_left", "(awake %s)", clock(awakeLeft)) : restLeft > 0 ? " " + t("rest_left", "(resting %s)", clock(restLeft)) : "");
+            float nx = com.newuniverse.nusmp.devil.mastery.MasteryRules.nextAt(m);
+            int step = com.newuniverse.nusmp.devil.mastery.MasteryRules.tier(m) + 1;
+            next = nx < 0 ? t("mastery_full", "Every power of the devil is open.")
+                    : t("mastery_next", "At %s%%: %s", Math.round(nx), t("open" + step, step == 1 ? "the second art" : step == 2 ? "wings, flight, the third art" : step == 3 ? "the fourth art, the third passive" : "the Devil Union"));
+        }
+        return new Lines(nowTicks / 20, name, attr, level, stage, union, unionColour, hint, warn, sacrifices, card, relic == null ? accent(s.tier()) : 0xFF000000 | relic.grade().rgb(), mastery, next, masteryFrac);   // built once a second, never per frame
     }
 
     private static void renderHud(GuiGraphics g, DeltaTracker delta) {
@@ -285,7 +298,7 @@ public final class DevilClient {
         if (l == null || now / 20 != l.second() || now < syncAt) lines = l = build(s, now);                  // the text is rebuilt once a second, not per frame
         Font font = mc.font;
         int accent = accent(s.tier());
-        int h = 8 + 11 + (l.card().isEmpty() ? 0 : 11) + 11 + 8 + 11 + 11 + 11 + (l.warn().isEmpty() ? 0 : 10) + (l.sacrifices().isEmpty() ? 0 : 10);
+        int h = 8 + 11 + (l.card().isEmpty() ? 0 : 11) + 11 + 8 + 11 + 11 + 11 + (l.warn().isEmpty() ? 0 : 10) + (l.sacrifices().isEmpty() ? 0 : 10) + (l.mastery().isEmpty() ? 0 : 8 + 11 + 11);
         int x = Math.max(4, g.guiWidth() - W - 6), y = Math.max(4, (g.guiHeight() - h) / 2);
         GuiMove.report("devil_hud", x, y, W, h);                                                         // GUI Move / GUI Size: where the panel is drawn
         float time = UiTheme.now();
@@ -306,6 +319,14 @@ public final class DevilClient {
         cy += 8;
         g.drawString(font, font.plainSubstrByWidth(l.stage(), iw), cx, cy, UiTheme.TEXT_DIM, false);
         cy += 11;
+        if (!l.mastery().isEmpty()) {                                                                    // the mastery bar and the next opening
+            g.drawString(font, font.plainSubstrByWidth(l.mastery(), iw), cx, cy, UiTheme.GOLD, false);
+            cy += 11;
+            UiBar.draw(g, cx, cy, iw, 4, l.masteryFrac(), UiTheme.GOLD, time, 1f);
+            cy += 8;
+            g.drawString(font, font.plainSubstrByWidth(l.next(), iw), cx, cy, UiTheme.TEXT_DIM, false);
+            cy += 11;
+        }
         g.drawString(font, font.plainSubstrByWidth(l.union(), iw), cx, cy, l.unionColour(), false);
         cy += 11;
         g.drawString(font, font.plainSubstrByWidth(l.hint(), iw), cx, cy, UiTheme.TEXT_FAINT, false);

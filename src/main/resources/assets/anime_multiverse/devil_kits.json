@@ -1,0 +1,3360 @@
+{
+ "version": 1,
+ "doc": "docs/devil_mastery.md. Written by tools/devil/gen_devil_kits.py.",
+ "devils": {
+  "liebe": {
+   "anime": "Black Clover",
+   "aspect": "anti_magic",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "black_slash",
+     "name": "Black Slash",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:weakness",
+       80,
+       0
+      ]
+     ],
+     "special": "strip",
+     "self": [],
+     "canon": "Asta's anti-magic blade: the cut cancels the magic it passes through.",
+     "tier": 0
+    },
+    {
+     "id": "black_hurricane",
+     "name": "Black Hurricane",
+     "kind": "burst",
+     "dmg": 0.9,
+     "cd": 14,
+     "cost": 0.6,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       1
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "Asta's whirling swing that throws everything around him back.",
+     "tier": 1
+    },
+    {
+     "id": "black_divider",
+     "name": "Black Divider",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 9,
+     "fx": [],
+     "special": "strip",
+     "self": [],
+     "canon": "Asta's lunging slash that splits magic in two.",
+     "tier": 2
+    },
+    {
+     "id": "black_meteorite",
+     "name": "Black Meteorite",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "launch",
+     "self": [],
+     "canon": "Asta's heavy anti-magic slam from above.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "anti_magic_skin",
+     "name": "Anti-Magic Skin",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "Liebe's anti-magic: spells lose their bite on the host."
+    },
+    {
+     "id": "mana_zone",
+     "name": "Mana Zone",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.12,
+     "canon": "Asta's Mana Zone: he feels the opponent's flow and moves ahead of it."
+    },
+    {
+     "id": "never_give_up",
+     "name": "Never Give Up",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Asta's endurance: the host keeps standing (design number)."
+    }
+   ],
+   "stages": [
+    "Black Asta",
+    "Anti-Magic Aura",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Liebe",
+   "union": [
+    {
+     "id": "union_swords",
+     "name": "Upgraded Swords",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 5.0,
+     "canon": "The Devil Union upgrades every sword Asta holds (Demon-Slayer, Demon-Dweller, Demon-Destroyer)."
+    },
+    {
+     "id": "union_anti_magic",
+     "name": "Union Anti-Magic Coat",
+     "tier": 4,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "In the union the anti-magic covers the whole body."
+    }
+   ]
+  },
+  "lucifero": {
+   "anime": "Black Clover",
+   "aspect": "gravity",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "gravity_crush",
+     "name": "Gravity Crush",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       2
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "Dante's gravity magic pins and drags foes in front of the host.",
+     "tier": 0
+    },
+    {
+     "id": "heavy_field",
+     "name": "Heavy Field",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       100,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A field where the weight of everything is multiplied.",
+     "tier": 1
+    },
+    {
+     "id": "devils_descent",
+     "name": "Devil's Descent",
+     "kind": "rush",
+     "dmg": 1.4,
+     "cd": 22,
+     "cost": 0.9,
+     "range": 10,
+     "fx": [],
+     "special": "launch",
+     "self": [],
+     "canon": "The king of devils falls on his prey.",
+     "tier": 2
+    },
+    {
+     "id": "black_hole",
+     "name": "Singularity",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.5,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:nausea",
+       80,
+       0
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "Gravity folded into a point that eats everything near it.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "weightless_body",
+     "name": "Weightless Body",
+     "tier": 0,
+     "kind": "resist",
+     "type": "fall",
+     "value": 0.5,
+     "canon": "A gravity devil's host does not feel the ground's pull."
+    },
+    {
+     "id": "heavy_fist",
+     "name": "Heavy Fist",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Blows that carry their own weight."
+    },
+    {
+     "id": "devil_king",
+     "name": "King of Devils",
+     "tier": 3,
+     "kind": "stat",
+     "type": "health",
+     "value": 4.0,
+     "canon": "Lucifero, the strongest of the devils, makes his host harder to kill."
+    }
+   ],
+   "stages": [
+    "Devil's Horns",
+    "Gravity Wings",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Lucifero",
+   "union": [
+    {
+     "id": "union_lord",
+     "name": "Underworld King's Might",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 6.0,
+     "canon": "A union with Lucifero carries the strongest devil's force."
+    },
+    {
+     "id": "union_weight",
+     "name": "Crushing Weight",
+     "tier": 4,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:slowness",
+      60,
+      2
+     ],
+     "canon": "In the union every blow adds weight to the foe."
+    }
+   ]
+  },
+  "beelzebub": {
+   "anime": "Black Clover",
+   "aspect": "spatial",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "spatial_slash",
+     "name": "Spatial Slash",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:nausea",
+       60,
+       0
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "Zenon's spatial magic cuts space itself; the foe is shoved back.",
+     "tier": 0
+    },
+    {
+     "id": "rift_step",
+     "name": "Rift Step",
+     "kind": "rush",
+     "dmg": 1.1,
+     "cd": 14,
+     "cost": 0.6,
+     "range": 12,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A step through folded space, striking what stands at the other end.",
+     "tier": 1
+    },
+    {
+     "id": "space_prison",
+     "name": "Space Prison",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       100,
+       4
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Space closed around the foes: they can barely move.",
+     "tier": 2
+    },
+    {
+     "id": "dimension_cut",
+     "name": "Dimension Cut",
+     "kind": "strike",
+     "dmg": 2.0,
+     "cd": 40,
+     "cost": 1.4,
+     "range": 12,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A cut that crosses worlds.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "spatial_sense",
+     "name": "Spatial Sense",
+     "tier": 0,
+     "kind": "stat",
+     "type": "reach",
+     "value": 1.0,
+     "canon": "A space devil's host reaches further than their arm."
+    },
+    {
+     "id": "fold_step",
+     "name": "Fold Step",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.15,
+     "canon": "Short folds of space make every step longer."
+    },
+    {
+     "id": "space_veil",
+     "name": "Space Veil",
+     "tier": 3,
+     "kind": "resist",
+     "type": "projectile",
+     "value": 0.3,
+     "canon": "Arrows and bolts bend around the host."
+    }
+   ],
+   "stages": [
+    "Horns of the Rift",
+    "Wings of the Rift",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Beelzebub",
+   "union": [
+    {
+     "id": "union_rift",
+     "name": "Ruler of the Underworld",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 5.0,
+     "canon": "A union with one of the three strongest devils."
+    },
+    {
+     "id": "union_fold",
+     "name": "Folded Skin",
+     "tier": 4,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.2,
+     "canon": "Blows land where the host is not."
+    }
+   ]
+  },
+  "astaroth": {
+   "anime": "Black Clover",
+   "aspect": "time",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "time_slow",
+     "name": "Slowed Time",
+     "kind": "strike",
+     "dmg": 0.8,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       3
+      ],
+      [
+       "minecraft:mining_fatigue",
+       60,
+       2
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Time crawls for the foes in front of the host.",
+     "tier": 0
+    },
+    {
+     "id": "time_skip",
+     "name": "Time Skip",
+     "kind": "rush",
+     "dmg": 1.2,
+     "cd": 14,
+     "cost": 0.6,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "The host is simply somewhere else a moment later.",
+     "tier": 1
+    },
+    {
+     "id": "stasis",
+     "name": "Stasis",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 28,
+     "cost": 1.0,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       4
+      ],
+      [
+       "minecraft:mining_fatigue",
+       80,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Everything around the host is held for a breath.",
+     "tier": 2
+    },
+    {
+     "id": "quickened",
+     "name": "Quickened Time",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:speed",
+       160,
+       2
+      ],
+      [
+       "minecraft:haste",
+       160,
+       1
+      ]
+     ],
+     "canon": "The host's own time runs faster.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "quick_hands",
+     "name": "Quick Hands",
+     "tier": 0,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.1,
+     "canon": "Time devils' hosts move a little ahead of everyone."
+    },
+    {
+     "id": "borrowed_moments",
+     "name": "Borrowed Moments",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Strikes arrive before the foe sees them."
+    },
+    {
+     "id": "time_mend",
+     "name": "Rewinding Wounds",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Wounds close as if time ran back (design number)."
+    }
+   ],
+   "stages": [
+    "Hourglass Horns",
+    "Clockwork Wings",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Astaroth",
+   "union": [
+    {
+     "id": "union_time",
+     "name": "Master of Time",
+     "tier": 4,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.2,
+     "canon": "A union with the time devil: the host lives a second ahead."
+    },
+    {
+     "id": "union_stop",
+     "name": "Stopped Blow",
+     "tier": 4,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:slowness",
+      40,
+      4
+     ],
+     "canon": "Blows stop the foe's time for a moment."
+    }
+   ]
+  },
+  "megicula": {
+   "anime": "Black Clover",
+   "aspect": "curse",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "curse_mark",
+     "name": "Curse Mark",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:wither",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Vanica's curse magic marks the foe; it rots from within.",
+     "tier": 0
+    },
+    {
+     "id": "ward_breaker",
+     "name": "Ward Breaker",
+     "kind": "burst",
+     "dmg": 0.9,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 6,
+     "fx": [],
+     "special": "strip",
+     "self": [],
+     "canon": "Protections of those near the host are torn off.",
+     "tier": 1
+    },
+    {
+     "id": "curse_chain",
+     "name": "Cursed Chain",
+     "kind": "strike",
+     "dmg": 1.3,
+     "cd": 22,
+     "cost": 0.9,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       3
+      ],
+      [
+       "minecraft:weakness",
+       80,
+       1
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "A chain of cursed light binds the foe.",
+     "tier": 2
+    },
+    {
+     "id": "megicula_wrath",
+     "name": "Megicula's Wrath",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:wither",
+       120,
+       2
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "The curse devil's wrath pours out of the host.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "curse_ward",
+     "name": "Curse-Warding",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "Megicula is a curse-warding devil: curses slide off its host."
+    },
+    {
+     "id": "hexed_edge",
+     "name": "Hexed Edge",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "The host's hits carry a little of the curse."
+    },
+    {
+     "id": "withering_touch",
+     "name": "Withering Touch",
+     "tier": 3,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:wither",
+      60,
+      0
+     ],
+     "canon": "Touch of the curse devil: wounds do not close at once."
+    }
+   ],
+   "stages": [
+    "Cursed Horns",
+    "Cursed Wings",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Megicula",
+   "union": [
+    {
+     "id": "union_curse",
+     "name": "Curse-Warding Union",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 4.5,
+     "canon": "A union with Megicula: the curse is the host's weapon."
+    },
+    {
+     "id": "union_ward",
+     "name": "Curse Wards",
+     "tier": 4,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "The union turns every curse aside."
+    }
+   ]
+  },
+  "lucifugus": {
+   "anime": "Black Clover",
+   "aspect": "word",
+   "source": "English wiki (blackclover.fandom.com) NOT reachable from the build machine; names and powers from web-search summaries of it and of sportskeeda, comicbook.com, fandomwire, animehunch, epicdope; Japanese wiki NOT reachable. Numbers are this mod's design.",
+   "arts": [
+    {
+     "id": "word_bind",
+     "name": "Word of Binding",
+     "kind": "strike",
+     "dmg": 0.8,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       2
+      ],
+      [
+       "minecraft:weakness",
+       80,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Kotodama: the spoken word binds the foe's limbs.",
+     "tier": 0
+    },
+    {
+     "id": "word_silence",
+     "name": "Word of Silence",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:blindness",
+       60,
+       0
+      ]
+     ],
+     "special": "strip",
+     "self": [],
+     "canon": "Kotodama: a command of silence that strips protections.",
+     "tier": 1
+    },
+    {
+     "id": "word_fall",
+     "name": "Word of Falling",
+     "kind": "strike",
+     "dmg": 1.2,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       4
+      ]
+     ],
+     "special": "launch",
+     "self": [],
+     "canon": "Kotodama: 'fall'; and the foe falls.",
+     "tier": 2
+    },
+    {
+     "id": "word_law",
+     "name": "Law of Words",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       160,
+       1
+      ],
+      [
+       "minecraft:absorption",
+       200,
+       2
+      ]
+     ],
+     "canon": "Kotodama: the host speaks their own safety into being.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "spoken_shield",
+     "name": "Spoken Shield",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.2,
+     "canon": "What the host says will not happen to them, mostly does not."
+    },
+    {
+     "id": "commanding_voice",
+     "name": "Commanding Voice",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Orders land with the weight of a blow."
+    },
+    {
+     "id": "word_heal",
+     "name": "Word of Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Kotodama: 'be healed' (design number)."
+    }
+   ],
+   "stages": [
+    "Horns of the Word",
+    "Wings of the Word",
+    "Devil Union"
+   ],
+   "unionName": "Devil Union: Lucifugus",
+   "union": [
+    {
+     "id": "union_word",
+     "name": "Kotodama Unbound",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 4.5,
+     "canon": "In the union a spoken word is as strong as a strike."
+    },
+    {
+     "id": "union_command",
+     "name": "Command",
+     "tier": 4,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:weakness",
+      60,
+      2
+     ],
+     "canon": "Every blow carries an order the foe has to obey."
+    }
+   ]
+  },
+  "fox_devil": {
+   "anime": "Chainsaw Man",
+   "aspect": "beast",
+   "source": "Chainsaw Man wiki NOT reachable; names from web-search summaries and the wiki's article titles as remembered (Fox Devil Kon, Aki's Curse Devil nail and hammer, Aki's Future Devil right eye, Himeno's Ghost Devil arm). Numbers are design.",
+   "arts": [
+    {
+     "id": "kon_bite",
+     "name": "Kon!",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:slowness",
+       40,
+       1
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "The Fox Devil bites at the call of 'Kon'.",
+     "tier": 0
+    },
+    {
+     "id": "fox_head",
+     "name": "Giant Fox Head",
+     "kind": "burst",
+     "dmg": 1.2,
+     "cd": 18,
+     "cost": 0.7,
+     "range": 6,
+     "fx": [],
+     "special": "push",
+     "self": [],
+     "canon": "A fox's giant head swallows what stands near the host.",
+     "tier": 1
+    },
+    {
+     "id": "hunting_pounce",
+     "name": "Hunting Pounce",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 9,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "The fox lunges, and the host with it.",
+     "tier": 2
+    },
+    {
+     "id": "fox_hunt",
+     "name": "Fox Hunt",
+     "kind": "strike",
+     "dmg": 1.8,
+     "cd": 40,
+     "cost": 1.2,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:weakness",
+       80,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "The whole pack bites at once.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "keen_nose",
+     "name": "Keen Nose",
+     "tier": 0,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.08,
+     "canon": "A fox's quick feet."
+    },
+    {
+     "id": "fox_fangs",
+     "name": "Fox Fangs",
+     "tier": 2,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:slowness",
+      40,
+      1
+     ],
+     "canon": "Bites that do not let go."
+    },
+    {
+     "id": "devil_pelt",
+     "name": "Devil Pelt",
+     "tier": 3,
+     "kind": "stat",
+     "type": "armor",
+     "value": 3.0,
+     "canon": "The devil's thick pelt."
+    }
+   ],
+   "stages": [
+    "Fox Ears",
+    "Fox Tail",
+    "Fox Form"
+   ],
+   "unionName": "Fox Form"
+  },
+  "curse_devil": {
+   "anime": "Chainsaw Man",
+   "aspect": "curse",
+   "source": "Chainsaw Man wiki NOT reachable; names from web-search summaries and the wiki's article titles as remembered (Fox Devil Kon, Aki's Curse Devil nail and hammer, Aki's Future Devil right eye, Himeno's Ghost Devil arm). Numbers are design.",
+   "arts": [
+    {
+     "id": "nail_hammer",
+     "name": "Nail and Hammer",
+     "kind": "strike",
+     "dmg": 1.2,
+     "cd": 8,
+     "cost": 0.5,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:wither",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Aki's Curse Devil: a nail hammered in; the wound opens after.",
+     "tier": 0
+    },
+    {
+     "id": "straw_doll",
+     "name": "Straw Doll",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:wither",
+       80,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "The curse jumps from foe to foe near the host.",
+     "tier": 1
+    },
+    {
+     "id": "hammer_blow",
+     "name": "Hammer Blow",
+     "kind": "rush",
+     "dmg": 1.4,
+     "cd": 22,
+     "cost": 0.9,
+     "range": 9,
+     "fx": [],
+     "special": "launch",
+     "self": [],
+     "canon": "The hammer comes down on the nail.",
+     "tier": 2
+    },
+    {
+     "id": "years_paid",
+     "name": "Years Paid",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:strength",
+       200,
+       1
+      ],
+      [
+       "minecraft:absorption",
+       200,
+       1
+      ]
+     ],
+     "canon": "The Curse Devil's price is paid in years: the host takes them back as strength.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "lifespan_price",
+     "name": "Price of Years",
+     "tier": 0,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Aki pays years of his life for the Curse Devil's power."
+    },
+    {
+     "id": "slow_curse",
+     "name": "Slow Curse",
+     "tier": 2,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:wither",
+      60,
+      0
+     ],
+     "canon": "Wounds of the Curse Devil keep eating."
+    },
+    {
+     "id": "curse_hide",
+     "name": "Curse Hide",
+     "tier": 3,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "The Curse Devil's host turns curses back."
+    }
+   ],
+   "stages": [
+    "Cursed Nail",
+    "Cursed Hammer",
+    "Curse Form"
+   ],
+   "unionName": "Curse Form"
+  },
+  "future_devil": {
+   "anime": "Chainsaw Man",
+   "aspect": "foresight",
+   "source": "Chainsaw Man wiki NOT reachable; names from web-search summaries and the wiki's article titles as remembered (Fox Devil Kon, Aki's Curse Devil nail and hammer, Aki's Future Devil right eye, Himeno's Ghost Devil arm). Numbers are design.",
+   "arts": [
+    {
+     "id": "future_sight",
+     "name": "Future Sight",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 20,
+     "cost": 0.5,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       120,
+       1
+      ],
+      [
+       "minecraft:speed",
+       120,
+       1
+      ]
+     ],
+     "canon": "Aki's right eye: he sees the next blow and steps out of it.",
+     "tier": 0
+    },
+    {
+     "id": "foretold_strike",
+     "name": "Foretold Strike",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 10,
+     "cost": 0.5,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:glowing",
+       100,
+       0
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A strike that lands where the foe will be.",
+     "tier": 1
+    },
+    {
+     "id": "seen_twice",
+     "name": "Seen Twice",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Everything near the host is seen a moment ahead.",
+     "tier": 2
+    },
+    {
+     "id": "destiny_cut",
+     "name": "Destiny Cut",
+     "kind": "rush",
+     "dmg": 1.8,
+     "cd": 40,
+     "cost": 1.2,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "The host runs the one line that ends the fight.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "dodge_sense",
+     "name": "Dodge Sense",
+     "tier": 0,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.12,
+     "canon": "The right eye warns of blows."
+    },
+    {
+     "id": "next_step",
+     "name": "Next Step",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.1,
+     "canon": "Steps taken before the foe moves."
+    },
+    {
+     "id": "clear_eye",
+     "name": "Clear Eye",
+     "tier": 3,
+     "kind": "resist",
+     "type": "projectile",
+     "value": 0.3,
+     "canon": "Shots are seen leaving the bow."
+    }
+   ],
+   "stages": [
+    "Right Eye Opens",
+    "Future Eye",
+    "Future Form"
+   ],
+   "unionName": "Future Form"
+  },
+  "ghost_devil": {
+   "anime": "Chainsaw Man",
+   "aspect": "ghost",
+   "source": "Chainsaw Man wiki NOT reachable; names from web-search summaries and the wiki's article titles as remembered (Fox Devil Kon, Aki's Curse Devil nail and hammer, Aki's Future Devil right eye, Himeno's Ghost Devil arm). Numbers are design.",
+   "arts": [
+    {
+     "id": "ghost_hands",
+     "name": "Ghost Hands",
+     "kind": "strike",
+     "dmg": 0.8,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       4
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "Himeno's Ghost Devil: a giant hand reaches from nowhere and holds the foe.",
+     "tier": 0
+    },
+    {
+     "id": "grasping_arms",
+     "name": "Grasping Arms",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Hands rise around the host and hold everything.",
+     "tier": 1
+    },
+    {
+     "id": "ghost_vanish",
+     "name": "Ghost Vanish",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 30,
+     "cost": 0.8,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:invisibility",
+       160,
+       0
+      ],
+      [
+       "minecraft:speed",
+       100,
+       1
+      ]
+     ],
+     "canon": "The host fades from sight.",
+     "tier": 2
+    },
+    {
+     "id": "ghost_rush",
+     "name": "Ghost Rush",
+     "kind": "rush",
+     "dmg": 1.2,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "Hands carry the host through the foes.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "ghostly_step",
+     "name": "Ghostly Step",
+     "tier": 0,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.08,
+     "canon": "Light as a haunting."
+    },
+    {
+     "id": "intangible",
+     "name": "Intangible",
+     "tier": 2,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.12,
+     "canon": "Part of every blow passes through."
+    },
+    {
+     "id": "ghost_grip",
+     "name": "Ghost Grip",
+     "tier": 3,
+     "kind": "stat",
+     "type": "attack",
+     "value": 1.5,
+     "canon": "A hand always helps the host's."
+    }
+   ],
+   "stages": [
+    "Ghost Hand",
+    "Ghost Arms",
+    "Ghost Form"
+   ],
+   "unionName": "Ghost Form"
+  },
+  "sebastian": {
+   "anime": "Black Butler",
+   "aspect": "soul",
+   "source": "Kuroshitsuji wiki NOT reachable; Sebastian's silver cutlery, speed and soul-eating from the series as summarised by web search. Numbers are design.",
+   "arts": [
+    {
+     "id": "silver_cutlery",
+     "name": "Silver Cutlery",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 12,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "Sebastian throws silverware by the dozen with perfect aim.",
+     "tier": 0
+    },
+    {
+     "id": "demonic_speed",
+     "name": "Demonic Speed",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 14,
+     "cost": 0.6,
+     "range": 11,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A butler is always where he is needed.",
+     "tier": 1
+    },
+    {
+     "id": "soul_reaping",
+     "name": "Soul Reaping",
+     "kind": "strike",
+     "dmg": 1.4,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:weakness",
+       60,
+       1
+      ]
+     ],
+     "special": "drain",
+     "self": [],
+     "canon": "A taste of the soul he is owed: the wound feeds the host.",
+     "tier": 2
+    },
+    {
+     "id": "hell_of_a_butler",
+     "name": "One Hell of a Butler",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:speed",
+       200,
+       1
+      ],
+      [
+       "minecraft:regeneration",
+       120,
+       1
+      ],
+      [
+       "minecraft:resistance",
+       200,
+       1
+      ]
+     ],
+     "canon": "Nothing is permitted to go wrong.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "composure",
+     "name": "Composure",
+     "tier": 0,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.15,
+     "canon": "Not a hair out of place."
+    },
+    {
+     "id": "flawless_service",
+     "name": "Flawless Service",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 3.0,
+     "canon": "Every strike is carried out perfectly."
+    },
+    {
+     "id": "hellish_vigor",
+     "name": "Hellish Vigour",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.4,
+     "canon": "Demonic recovery."
+    }
+   ],
+   "stages": [
+    "Horns of Service",
+    "Wings of Service",
+    "True Form"
+   ],
+   "unionName": "True Form"
+  },
+  "kin_of_iblis": {
+   "anime": "Blue Exorcist",
+   "aspect": "flame",
+   "source": "Ao no Exorcist wiki NOT reachable; the Demon Kings' domains (Iblis fire, Egyn water, Amaimon earth, Astaroth rot, Lucifer light) from web-search summaries. The 'kin of' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "blue_flames",
+     "name": "Blue Flames",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 10,
+     "cost": 0.5,
+     "range": 6,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "Iblis, King of Fire: blue flame that burns what it touches.",
+     "tier": 0
+    },
+    {
+     "id": "flame_lance",
+     "name": "Flame Lance",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 10,
+     "cost": 0.5,
+     "range": 9,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A lance of blue fire.",
+     "tier": 1
+    },
+    {
+     "id": "flame_rush",
+     "name": "Flame Rush",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 9,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "The host streaks through the foes on a trail of flame.",
+     "tier": 2
+    },
+    {
+     "id": "king_of_fire",
+     "name": "Wrath of the Fire King",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A ring of fire from the host.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "flame_skin",
+     "name": "Flame Skin",
+     "tier": 0,
+     "kind": "resist",
+     "type": "fire",
+     "value": 0.5,
+     "canon": "A flame demon is not hurt by fire."
+    },
+    {
+     "id": "burning_heart",
+     "name": "Burning Heart",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Flames feed the blows."
+    },
+    {
+     "id": "ember_mend",
+     "name": "Ember Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Blue flame closes wounds."
+    }
+   ],
+   "stages": [
+    "Flame Horns",
+    "Flame Wings",
+    "Fire King's Form"
+   ],
+   "unionName": "Fire King's Form"
+  },
+  "kin_of_egyn": {
+   "anime": "Blue Exorcist",
+   "aspect": "water",
+   "source": "Ao no Exorcist wiki NOT reachable; the Demon Kings' domains (Iblis fire, Egyn water, Amaimon earth, Astaroth rot, Lucifer light) from web-search summaries. The 'kin of' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "water_whip",
+     "name": "Water Whip",
+     "kind": "strike",
+     "dmg": 0.9,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:mining_fatigue",
+       80,
+       1
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "Egyn, King of Water: a whip of water.",
+     "tier": 0
+    },
+    {
+     "id": "tidal_wave",
+     "name": "Tidal Wave",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A wave from the host.",
+     "tier": 1
+    },
+    {
+     "id": "drowning_grip",
+     "name": "Drowning Grip",
+     "kind": "strike",
+     "dmg": 1.3,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:weakness",
+       80,
+       2
+      ],
+      [
+       "minecraft:slowness",
+       80,
+       2
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "Water closes in around the foe.",
+     "tier": 2
+    },
+    {
+     "id": "flowing_ward",
+     "name": "Flowing Ward",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       1
+      ],
+      [
+       "minecraft:regeneration",
+       100,
+       1
+      ]
+     ],
+     "canon": "Water takes the blow's strength.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "water_body",
+     "name": "Water Body",
+     "tier": 0,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.12,
+     "canon": "Blows sink into the flow."
+    },
+    {
+     "id": "swift_current",
+     "name": "Swift Current",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.1,
+     "canon": "Quick as a stream."
+    },
+    {
+     "id": "spring_mend",
+     "name": "Spring Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Clean water heals."
+    }
+   ],
+   "stages": [
+    "Tide Horns",
+    "Tide Wings",
+    "Water King's Form"
+   ],
+   "unionName": "Water King's Form"
+  },
+  "kin_of_amaimon": {
+   "anime": "Blue Exorcist",
+   "aspect": "earth",
+   "source": "Ao no Exorcist wiki NOT reachable; the Demon Kings' domains (Iblis fire, Egyn water, Amaimon earth, Astaroth rot, Lucifer light) from web-search summaries. The 'kin of' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "earth_fist",
+     "name": "Earth Fist",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:slowness",
+       40,
+       1
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "Amaimon, King of Earth: a fist of stone.",
+     "tier": 0
+    },
+    {
+     "id": "quake",
+     "name": "Quake",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "launch",
+     "self": [],
+     "canon": "The ground jumps.",
+     "tier": 1
+    },
+    {
+     "id": "stone_skin",
+     "name": "Stone Skin",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 30,
+     "cost": 0.8,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       2
+      ]
+     ],
+     "canon": "The host is rock.",
+     "tier": 2
+    },
+    {
+     "id": "earth_king",
+     "name": "Fall of the Earth King",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A mountain falls on the foes.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "heavy_frame",
+     "name": "Heavy Frame",
+     "tier": 0,
+     "kind": "stat",
+     "type": "armor",
+     "value": 2.0,
+     "canon": "A body of earth."
+    },
+    {
+     "id": "earth_fists",
+     "name": "Earth Fists",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Fists that hit like stones."
+    },
+    {
+     "id": "unmoving",
+     "name": "Unmoving",
+     "tier": 3,
+     "kind": "stat",
+     "type": "knockback",
+     "value": 0.4,
+     "canon": "Hard to push."
+    }
+   ],
+   "stages": [
+    "Stone Horns",
+    "Stone Wings",
+    "Earth King's Form"
+   ],
+   "unionName": "Earth King's Form"
+  },
+  "kin_of_astaroth": {
+   "anime": "Blue Exorcist",
+   "aspect": "rot",
+   "source": "Ao no Exorcist wiki NOT reachable; the Demon Kings' domains (Iblis fire, Egyn water, Amaimon earth, Astaroth rot, Lucifer light) from web-search summaries. The 'kin of' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "rot_miasma",
+     "name": "Rot Miasma",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 10,
+     "cost": 0.4,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:poison",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Astaroth, King of Rot: a cloud that spoils flesh.",
+     "tier": 0
+    },
+    {
+     "id": "spoiled_touch",
+     "name": "Spoiled Touch",
+     "kind": "strike",
+     "dmg": 0.9,
+     "cd": 10,
+     "cost": 0.5,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:poison",
+       80,
+       1
+      ],
+      [
+       "minecraft:weakness",
+       60,
+       0
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A touch that rots.",
+     "tier": 1
+    },
+    {
+     "id": "decay_rush",
+     "name": "Decay Rush",
+     "kind": "rush",
+     "dmg": 1.0,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:poison",
+       60,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A rush through a cloud of decay.",
+     "tier": 2
+    },
+    {
+     "id": "plague_wave",
+     "name": "Plague Wave",
+     "kind": "burst",
+     "dmg": 1.6,
+     "cd": 40,
+     "cost": 1.2,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:wither",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A wave of rot.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "rot_hide",
+     "name": "Rot Hide",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.15,
+     "canon": "Nothing living clings to a rotting thing."
+    },
+    {
+     "id": "festering",
+     "name": "Festering Wounds",
+     "tier": 2,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:poison",
+      60,
+      0
+     ],
+     "canon": "Blows that fester."
+    },
+    {
+     "id": "scavenge",
+     "name": "Scavenge",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.25,
+     "canon": "What rots feeds the host."
+    }
+   ],
+   "stages": [
+    "Rot Horns",
+    "Rot Wings",
+    "Rot King's Form"
+   ],
+   "unionName": "Rot King's Form"
+  },
+  "kin_of_lucifer": {
+   "anime": "Blue Exorcist",
+   "aspect": "light",
+   "source": "Ao no Exorcist wiki NOT reachable; the Demon Kings' domains (Iblis fire, Egyn water, Amaimon earth, Astaroth rot, Lucifer light) from web-search summaries. The 'kin of' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "holy_light",
+     "name": "Holy Light",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 10,
+     "fx": [
+      [
+       "minecraft:glowing",
+       100,
+       0
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "Lucifer, King of Light: a beam that marks the foe.",
+     "tier": 0
+    },
+    {
+     "id": "dawn_burst",
+     "name": "Dawn Burst",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:blindness",
+       60,
+       0
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A flash that blinds.",
+     "tier": 1
+    },
+    {
+     "id": "light_step",
+     "name": "Light Step",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 11,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "The host travels as light.",
+     "tier": 2
+    },
+    {
+     "id": "radiant_ward",
+     "name": "Radiant Ward",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       1
+      ],
+      [
+       "minecraft:absorption",
+       200,
+       2
+      ]
+     ],
+     "canon": "A veil of light.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "light_veil",
+     "name": "Light Veil",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.2,
+     "canon": "Light turns dark magic aside."
+    },
+    {
+     "id": "light_foot",
+     "name": "Light Foot",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.12,
+     "canon": "Quick as a ray."
+    },
+    {
+     "id": "morning_star",
+     "name": "Morning Star",
+     "tier": 3,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.5,
+     "canon": "The King of Light's strength."
+    }
+   ],
+   "stages": [
+    "Halo Horns",
+    "Wings of Light",
+    "Light King's Form"
+   ],
+   "unionName": "Light King's Form"
+  },
+  "daemon_noir": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "curse",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "abyssal_curse",
+     "name": "Abyssal Curse",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:wither",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "The black Primordial's curse.",
+     "tier": 0
+    },
+    {
+     "id": "gluttonous_maw",
+     "name": "Gluttonous Maw",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:weakness",
+       80,
+       1
+      ]
+     ],
+     "special": "drain",
+     "self": [],
+     "canon": "The black Primordial devours what is near.",
+     "tier": 1
+    },
+    {
+     "id": "black_decree",
+     "name": "Black Decree",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 36,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       200,
+       2
+      ],
+      [
+       "minecraft:absorption",
+       200,
+       2
+      ]
+     ],
+     "canon": "A Primordial's word is law: the host is hard to harm.",
+     "tier": 2
+    },
+    {
+     "id": "primordial_nova",
+     "name": "Primordial Nova",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.5,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:wither",
+       120,
+       2
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A black sun at the host's feet.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "noir_ward",
+     "name": "Noir Ward",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.25,
+     "canon": "The line of Noir shrugs spells off."
+    },
+    {
+     "id": "noir_might",
+     "name": "Primordial Might",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.5,
+     "canon": "A daemon's strength."
+    },
+    {
+     "id": "noir_regen",
+     "name": "Daemon Recovery",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.4,
+     "canon": "Daemons mend quickly."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_blanc": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "light",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "white_lance",
+     "name": "White Lance",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 10,
+     "fx": [
+      [
+       "minecraft:glowing",
+       100,
+       0
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A lance of white light.",
+     "tier": 0
+    },
+    {
+     "id": "pure_flash",
+     "name": "Pure Flash",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:blindness",
+       60,
+       0
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A blinding flash.",
+     "tier": 1
+    },
+    {
+     "id": "white_rush",
+     "name": "White Rush",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "Light itself.",
+     "tier": 2
+    },
+    {
+     "id": "blanc_aegis",
+     "name": "Blanc's Aegis",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       1
+      ],
+      [
+       "minecraft:absorption",
+       200,
+       2
+      ]
+     ],
+     "canon": "A shell of white light.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "white_veil",
+     "name": "White Veil",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.2,
+     "canon": "Light repels dark magic."
+    },
+    {
+     "id": "blanc_speed",
+     "name": "Light Speed",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.1,
+     "canon": "Daemon quickness."
+    },
+    {
+     "id": "blanc_edge",
+     "name": "Radiant Edge",
+     "tier": 3,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Light in every blow."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_jaune": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "flame",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "yellow_flare",
+     "name": "Yellow Flare",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A bolt of yellow fire.",
+     "tier": 0
+    },
+    {
+     "id": "flame_ring",
+     "name": "Flame Ring",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A ring of fire.",
+     "tier": 1
+    },
+    {
+     "id": "blazing_dash",
+     "name": "Blazing Dash",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 9,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A charge in a trail of fire.",
+     "tier": 2
+    },
+    {
+     "id": "jaune_inferno",
+     "name": "Jaune's Inferno",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [],
+     "special": "burn",
+     "self": [],
+     "canon": "A storm of yellow fire.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "fire_blood",
+     "name": "Fire Blood",
+     "tier": 0,
+     "kind": "resist",
+     "type": "fire",
+     "value": 0.5,
+     "canon": "A fire daemon does not burn."
+    },
+    {
+     "id": "jaune_heat",
+     "name": "Burning Strength",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Heat behind blows."
+    },
+    {
+     "id": "jaune_mend",
+     "name": "Cinder Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Fire cauterises."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_violet": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "rot",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "violet_miasma",
+     "name": "Violet Miasma",
+     "kind": "burst",
+     "dmg": 0.8,
+     "cd": 10,
+     "cost": 0.4,
+     "range": 6,
+     "fx": [
+      [
+       "minecraft:poison",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A cloud of purple spoilage.",
+     "tier": 0
+    },
+    {
+     "id": "rotting_touch",
+     "name": "Rotting Touch",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 10,
+     "cost": 0.5,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:poison",
+       80,
+       1
+      ],
+      [
+       "minecraft:weakness",
+       60,
+       0
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A touch that spoils.",
+     "tier": 1
+    },
+    {
+     "id": "decay_dash",
+     "name": "Decay Dash",
+     "kind": "rush",
+     "dmg": 1.1,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:poison",
+       60,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A dash through spoilage.",
+     "tier": 2
+    },
+    {
+     "id": "violet_plague",
+     "name": "Violet Plague",
+     "kind": "burst",
+     "dmg": 1.7,
+     "cd": 42,
+     "cost": 1.3,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:wither",
+       100,
+       1
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A plague on the foes.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "violet_hide",
+     "name": "Violet Hide",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.15,
+     "canon": "Spells rot before they land."
+    },
+    {
+     "id": "violet_fester",
+     "name": "Festering Blows",
+     "tier": 2,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:poison",
+      60,
+      0
+     ],
+     "canon": "Wounds fester."
+    },
+    {
+     "id": "violet_might",
+     "name": "Plague Might",
+     "tier": 3,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "A daemon's strength."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_rouge": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "soul",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "crimson_reap",
+     "name": "Crimson Reap",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:weakness",
+       60,
+       1
+      ]
+     ],
+     "special": "drain",
+     "self": [],
+     "canon": "The red Primordial reaps a little of the foe's life.",
+     "tier": 0
+    },
+    {
+     "id": "blood_tide",
+     "name": "Blood Tide",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [],
+     "special": "drain",
+     "self": [],
+     "canon": "A tide of red that feeds the host.",
+     "tier": 1
+    },
+    {
+     "id": "crimson_rush",
+     "name": "Crimson Rush",
+     "kind": "rush",
+     "dmg": 1.4,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A red streak.",
+     "tier": 2
+    },
+    {
+     "id": "rouge_feast",
+     "name": "Rouge's Feast",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.5,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:weakness",
+       100,
+       2
+      ]
+     ],
+     "special": "drain",
+     "self": [],
+     "canon": "A feast on every foe near the host.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "rouge_vigor",
+     "name": "Crimson Vigour",
+     "tier": 0,
+     "kind": "stat",
+     "type": "health",
+     "value": 4.0,
+     "canon": "Life taken is life kept."
+    },
+    {
+     "id": "rouge_might",
+     "name": "Primordial Might",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.5,
+     "canon": "A daemon's strength."
+    },
+    {
+     "id": "rouge_regen",
+     "name": "Blood Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.5,
+     "canon": "The red line heals fastest."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_vert": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "earth",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "vert_thorn",
+     "name": "Green Thorn",
+     "kind": "strike",
+     "dmg": 1.0,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       1
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A thorn of the earth.",
+     "tier": 0
+    },
+    {
+     "id": "vert_quake",
+     "name": "Vert Quake",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "launch",
+     "self": [],
+     "canon": "The ground jumps.",
+     "tier": 1
+    },
+    {
+     "id": "bark_skin",
+     "name": "Bark Skin",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 30,
+     "cost": 0.8,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       2
+      ]
+     ],
+     "canon": "The host is wood and stone.",
+     "tier": 2
+    },
+    {
+     "id": "vert_avalanche",
+     "name": "Vert Avalanche",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.4,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:slowness",
+       80,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "A slide of rock.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "vert_frame",
+     "name": "Rooted Frame",
+     "tier": 0,
+     "kind": "stat",
+     "type": "armor",
+     "value": 2.0,
+     "canon": "A sturdy body."
+    },
+    {
+     "id": "vert_fists",
+     "name": "Stone Fists",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.0,
+     "canon": "Heavy blows."
+    },
+    {
+     "id": "vert_still",
+     "name": "Unshaken",
+     "tier": 3,
+     "kind": "stat",
+     "type": "knockback",
+     "value": 0.4,
+     "canon": "Hard to move."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "daemon_bleu": {
+   "anime": "That Time I Got Reincarnated as a Slime",
+   "aspect": "water",
+   "source": "Tensura wiki NOT reachable; the seven Primordials and their colours from web-search summaries. The 'daemon of a line' devils and their arts are design.",
+   "arts": [
+    {
+     "id": "bleu_whip",
+     "name": "Blue Whip",
+     "kind": "strike",
+     "dmg": 0.9,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:mining_fatigue",
+       80,
+       1
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A whip of water.",
+     "tier": 0
+    },
+    {
+     "id": "bleu_wave",
+     "name": "Bleu Wave",
+     "kind": "burst",
+     "dmg": 1.0,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A wave of the blue Primordial.",
+     "tier": 1
+    },
+    {
+     "id": "bleu_grip",
+     "name": "Drowning Grip",
+     "kind": "strike",
+     "dmg": 1.3,
+     "cd": 24,
+     "cost": 0.9,
+     "range": 8,
+     "fx": [
+      [
+       "minecraft:weakness",
+       80,
+       2
+      ],
+      [
+       "minecraft:slowness",
+       80,
+       2
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "Water closes in around the foe.",
+     "tier": 2
+    },
+    {
+     "id": "bleu_ward",
+     "name": "Bleu's Ward",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:resistance",
+       180,
+       1
+      ],
+      [
+       "minecraft:regeneration",
+       100,
+       1
+      ]
+     ],
+     "canon": "A shell of water.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "bleu_body",
+     "name": "Water Body",
+     "tier": 0,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.12,
+     "canon": "Blows sink into the flow."
+    },
+    {
+     "id": "bleu_current",
+     "name": "Swift Current",
+     "tier": 2,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.1,
+     "canon": "Quick as a river."
+    },
+    {
+     "id": "bleu_spring",
+     "name": "Spring Mending",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.3,
+     "canon": "Clean water heals."
+    }
+   ],
+   "stages": [
+    "Daemon Horns",
+    "Daemon Wings",
+    "Primordial Form"
+   ],
+   "unionName": "Primordial Form"
+  },
+  "hall_demon": {
+   "anime": "Dororo",
+   "aspect": "beast",
+   "source": "Dororo wiki NOT reachable; Hyakkimaru's hidden arm blades and the Hall of Hell pact from web-search summaries. Numbers are design.",
+   "arts": [
+    {
+     "id": "hidden_blades",
+     "name": "Hidden Blades",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 5,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "Hyakkimaru's arms hide swords: a short, fast cut.",
+     "tier": 0
+    },
+    {
+     "id": "blade_dance",
+     "name": "Blade Dance",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 14,
+     "cost": 0.6,
+     "range": 5,
+     "fx": [],
+     "special": "push",
+     "self": [],
+     "canon": "A whirl of blades on both arms.",
+     "tier": 1
+    },
+    {
+     "id": "demon_hunt",
+     "name": "Demon Hunt",
+     "kind": "rush",
+     "dmg": 1.4,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 9,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A charge with the blades out.",
+     "tier": 2
+    },
+    {
+     "id": "prosperity_shield",
+     "name": "Price of Prosperity",
+     "kind": "ward",
+     "dmg": 0,
+     "cd": 40,
+     "cost": 1.0,
+     "range": 4,
+     "fx": [],
+     "special": "",
+     "self": [
+      [
+       "minecraft:absorption",
+       200,
+       3
+      ],
+      [
+       "minecraft:resistance",
+       160,
+       1
+      ]
+     ],
+     "canon": "The Hall's wealth turned to armour.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "borrowed_body",
+     "name": "Borrowed Body",
+     "tier": 0,
+     "kind": "stat",
+     "type": "health",
+     "value": 4.0,
+     "canon": "The Hall of Hell gives a body for the price of a body."
+    },
+    {
+     "id": "blade_arms",
+     "name": "Blade Arms",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.5,
+     "canon": "Arms that are swords."
+    },
+    {
+     "id": "demon_hide",
+     "name": "Demon Hide",
+     "tier": 3,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.15,
+     "canon": "A hide of the Hall."
+    }
+   ],
+   "stages": [
+    "Demon's Brow",
+    "Blade Arms",
+    "Hall Form"
+   ],
+   "unionName": "Hall Form"
+  },
+  "god_hand": {
+   "anime": "Berserk",
+   "aspect": "causality",
+   "source": "Berserk wiki NOT reachable; the God Hand, the Behelit and the Eclipse from web-search summaries. Numbers are design.",
+   "arts": [
+    {
+     "id": "fates_hand",
+     "name": "Fate's Hand",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:unluck",
+       200,
+       1
+      ],
+      [
+       "minecraft:weakness",
+       60,
+       1
+      ]
+     ],
+     "special": "pull",
+     "self": [],
+     "canon": "The God Hand closes its fist: fortune turns from the foe.",
+     "tier": 0
+    },
+    {
+     "id": "sacrificial_rite",
+     "name": "Sacrificial Rite",
+     "kind": "burst",
+     "dmg": 1.2,
+     "cd": 18,
+     "cost": 0.7,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:wither",
+       80,
+       1
+      ]
+     ],
+     "special": "drain",
+     "self": [],
+     "canon": "What is dear is taken.",
+     "tier": 1
+    },
+    {
+     "id": "causal_step",
+     "name": "Causal Step",
+     "kind": "rush",
+     "dmg": 1.4,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 11,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "The host arrives because it had already happened.",
+     "tier": 2
+    },
+    {
+     "id": "eclipse",
+     "name": "Eclipse",
+     "kind": "burst",
+     "dmg": 2.2,
+     "cd": 50,
+     "cost": 1.6,
+     "range": 10,
+     "fx": [
+      [
+       "minecraft:blindness",
+       80,
+       0
+      ],
+      [
+       "minecraft:slowness",
+       80,
+       3
+      ]
+     ],
+     "special": "",
+     "self": [],
+     "canon": "The sun goes out.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "inevitable",
+     "name": "Inevitable",
+     "tier": 0,
+     "kind": "resist",
+     "type": "physical",
+     "value": 0.15,
+     "canon": "A blow is only as bad as fate lets it be."
+    },
+    {
+     "id": "hand_of_fate",
+     "name": "Hand of Fate",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 3.0,
+     "canon": "Blows land because they had to."
+    },
+    {
+     "id": "branded_life",
+     "name": "Branded Life",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.4,
+     "canon": "What is sacrificed returns in another form."
+    }
+   ],
+   "stages": [
+    "Brand's Heat",
+    "Behelit's Wings",
+    "God Hand Form"
+   ],
+   "unionName": "God Hand Form"
+  },
+  "etherious": {
+   "anime": "Fairy Tail",
+   "aspect": "ether",
+   "source": "Fairy Tail wiki NOT reachable; Etherious and Zeref's books from web-search summaries. Numbers are design.",
+   "arts": [
+    {
+     "id": "ethernano_blast",
+     "name": "Ethernano Blast",
+     "kind": "strike",
+     "dmg": 1.1,
+     "cd": 8,
+     "cost": 0.4,
+     "range": 10,
+     "fx": [
+      [
+       "minecraft:levitation",
+       30,
+       0
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "Raw ethernano loosed from the host.",
+     "tier": 0
+    },
+    {
+     "id": "books_of_zeref",
+     "name": "Book of Zeref",
+     "kind": "burst",
+     "dmg": 1.1,
+     "cd": 16,
+     "cost": 0.6,
+     "range": 7,
+     "fx": [
+      [
+       "minecraft:slowness",
+       60,
+       2
+      ]
+     ],
+     "special": "push",
+     "self": [],
+     "canon": "A page of the book tears open.",
+     "tier": 1
+    },
+    {
+     "id": "etherious_dash",
+     "name": "Etherious Dash",
+     "kind": "rush",
+     "dmg": 1.3,
+     "cd": 20,
+     "cost": 0.8,
+     "range": 10,
+     "fx": [],
+     "special": "",
+     "self": [],
+     "canon": "A burst of speed from a demon's body.",
+     "tier": 2
+    },
+    {
+     "id": "etherious_release",
+     "name": "Etherious Release",
+     "kind": "burst",
+     "dmg": 2.0,
+     "cd": 45,
+     "cost": 1.5,
+     "range": 9,
+     "fx": [
+      [
+       "minecraft:weakness",
+       100,
+       1
+      ]
+     ],
+     "special": "launch",
+     "self": [],
+     "canon": "The demon's true form released for an instant.",
+     "tier": 3
+    }
+   ],
+   "passives": [
+    {
+     "id": "curse_blood",
+     "name": "Demon Blood",
+     "tier": 0,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.2,
+     "canon": "An Etherious is made of magic and shrugs it off."
+    },
+    {
+     "id": "ethernano_surge",
+     "name": "Ethernano Surge",
+     "tier": 2,
+     "kind": "stat",
+     "type": "attack",
+     "value": 2.5,
+     "canon": "More magic behind each strike."
+    },
+    {
+     "id": "etherious_heal",
+     "name": "Etherious Recovery",
+     "tier": 3,
+     "kind": "regen",
+     "value": 0.4,
+     "canon": "Demons close their own wounds."
+    }
+   ],
+   "stages": [
+    "Demon Horns",
+    "Demon Wings",
+    "Etherious Form"
+   ],
+   "unionName": "Etherious Form"
+  }
+ },
+ "fusions": [
+  {
+   "a": "lucifero",
+   "b": "megicula",
+   "name": "Dark Triad Union: Gravity and Curse",
+   "canon": false,
+   "note": "Canon: Dante hosts Lucifero and Vanica hosts Megicula (siblings of the Dark Triad, web-search summaries of sportskeeda / epicdope). A union of both at once is not shown in the series: DESIGN.",
+   "passives": [
+    {
+     "id": "fusion_weight_curse",
+     "name": "Weighted Curse",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 3.0,
+     "canon": "Gravity and curse together."
+    },
+    {
+     "id": "fusion_drag",
+     "name": "Dragging Curse",
+     "tier": 4,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:wither",
+      60,
+      1
+     ],
+     "canon": "Cursed blows are heavy."
+    }
+   ]
+  },
+  {
+   "a": "lucifero",
+   "b": "beelzebub",
+   "name": "Dark Triad Union: Gravity and Space",
+   "canon": false,
+   "note": "Canon: Dante hosts Lucifero and Zenon hosts Beelzebub. A fused union is not shown in the series: DESIGN.",
+   "passives": [
+    {
+     "id": "fusion_fold_weight",
+     "name": "Folded Weight",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 3.0,
+     "canon": "Space and gravity folded on a single blow."
+    },
+    {
+     "id": "fusion_reach",
+     "name": "Folded Reach",
+     "tier": 4,
+     "kind": "stat",
+     "type": "reach",
+     "value": 1.0,
+     "canon": "Space lengthens the arm."
+    }
+   ]
+  },
+  {
+   "a": "megicula",
+   "b": "beelzebub",
+   "name": "Dark Triad Union: Curse and Space",
+   "canon": false,
+   "note": "Canon: Vanica hosts Megicula and Zenon hosts Beelzebub. A fused union is not shown in the series: DESIGN.",
+   "passives": [
+    {
+     "id": "fusion_hex_rift",
+     "name": "Hexed Rift",
+     "tier": 4,
+     "kind": "stat",
+     "type": "attack",
+     "value": 3.0,
+     "canon": "Curses that cross space."
+    },
+    {
+     "id": "fusion_ward",
+     "name": "Spatial Ward",
+     "tier": 4,
+     "kind": "resist",
+     "type": "magic",
+     "value": 0.2,
+     "canon": "Curses and spells cannot find the host."
+    }
+   ]
+  },
+  {
+   "a": "liebe",
+   "b": "astaroth",
+   "name": "Anti-Magic Time Union",
+   "canon": false,
+   "note": "Canon: Asta's Devil Union with Liebe (comicbook.com / sportskeeda). A second union with a time devil is not shown in the series: DESIGN.",
+   "passives": [
+    {
+     "id": "fusion_cancel_time",
+     "name": "Cancelled Time",
+     "tier": 4,
+     "kind": "stat",
+     "type": "speed",
+     "value": 0.15,
+     "canon": "Anti-magic and time together."
+    },
+    {
+     "id": "fusion_strip_slow",
+     "name": "Stripping Stop",
+     "tier": 4,
+     "kind": "onhit",
+     "fx": [
+      "minecraft:slowness",
+      40,
+      3
+     ],
+     "canon": "Blows that cancel and hold."
+    }
+   ]
+  }
+ ]
+}

@@ -483,11 +483,42 @@ def clips():
     }
     return {"animation.devil_trial.idle": {"loop": True, "animation_length": L, "bones": idle},
             "animation.devil_trial.walk": {"loop": True, "animation_length": W, "bones": walk},
-            "animation.devil_trial.attack": {"loop": False, "animation_length": 0.6, "bones": attack}}
+            "animation.devil_trial.attack": {"loop": False, "animation_length": 0.6, "bones": attack},
+            **extra_clips()}
+
+
+def extra_clips():
+    """4.66.0, additive: the two clips of the summoning figure (devil/DevilNpc). rise: 1.5 s, once, from a crouch with the wings folded to standing with the wings open (the figure is sunk in the circle by the
+    renderer for the same time); roar: 2.0 s, once, head back, jaw open, arms flung out, wings wide, then relaxed (the offer's roar, ROAR_TICKS = 40)."""
+    def tl(rows):
+        return {("%.2f" % t): [float(a), float(b), float(c)] for t, (a, b, c) in rows}
+    rise = {
+        "body": {"position": tl([(0, (0, -5, 1.5)), (0.7, (0, -3, 1.0)), (1.5, (0, 0, 0))]), "rotation": tl([(0, (22, 0, 0)), (0.9, (10, 0, 0)), (1.5, (0, 0, 0))])},
+        "head": {"rotation": tl([(0, (28, 0, 0)), (1.0, (14, 0, 0)), (1.5, (-6, 0, 0))])},
+        "jaw": {"rotation": tl([(0, (0, 0, 0)), (1.0, (6, 0, 0)), (1.5, (14, 0, 0))])},
+        "arm_r": {"rotation": tl([(0, (12, 0, -6)), (1.0, (-30, 0, -20)), (1.5, (-14, 0, -12))])},
+        "arm_l": {"rotation": tl([(0, (12, 0, 6)), (1.0, (-30, 0, 20)), (1.5, (-14, 0, 12))])},
+        "wing_r": {"rotation": tl([(0, (0, 28, 38)), (1.0, (0, 10, 4)), (1.5, (0, 0, -8))])},
+        "wing_l": {"rotation": tl([(0, (0, -28, -38)), (1.0, (0, -10, -4)), (1.5, (0, 0, 8))])},
+        "wing_r_tip": {"rotation": tl([(0, (0, 20, 30)), (1.5, (0, 0, -6))])},
+        "wing_l_tip": {"rotation": tl([(0, (0, -20, -30)), (1.5, (0, 0, 6))])},
+        "tail1": {"rotation": tl([(0, (-30, 0, 0)), (1.5, (0, 0, 0))])},
+    }
+    roar = {
+        "chest": {"rotation": tl([(0, (0, 0, 0)), (0.4, (-12, 0, 0)), (1.4, (-8, 0, 0)), (2.0, (0, 0, 0))])},
+        "head": {"rotation": tl([(0, (0, 0, 0)), (0.4, (-26, 0, 0)), (1.4, (-22, 3, 0)), (2.0, (0, 0, 0))])},
+        "jaw": {"rotation": tl([(0, (0, 0, 0)), (0.4, (30, 0, 0)), (1.4, (24, 0, 0)), (2.0, (0, 0, 0))])},
+        "arm_r": {"rotation": tl([(0, (0, 0, -3)), (0.4, (-70, 0, -60)), (1.4, (-62, 0, -52)), (2.0, (0, 0, -3))])},
+        "arm_l": {"rotation": tl([(0, (0, 0, 3)), (0.4, (-70, 0, 60)), (1.4, (-62, 0, 52)), (2.0, (0, 0, 3))])},
+        "wing_r": {"rotation": tl([(0, (0, 0, 0)), (0.4, (0, 18, -26)), (1.4, (0, 14, -22)), (2.0, (0, 0, 0))])},
+        "wing_l": {"rotation": tl([(0, (0, 0, 0)), (0.4, (0, -18, 26)), (1.4, (0, -14, 22)), (2.0, (0, 0, 0))])},
+        "tail1": {"rotation": tl([(0, (0, 0, 0)), (0.4, (-14, 0, 0)), (2.0, (0, 0, 0))])},
+    }
+    return {"animation.devil_trial.rise": {"loop": False, "animation_length": 1.5, "bones": rise}, "animation.devil_trial.roar": {"loop": False, "animation_length": 2.0, "bones": roar}}
 
 
 # ---------------------------------------------------------------- the exports
-def geo_doc(k, pos):
+def geo_doc(k, pos, ident="devil_trial"):
     by_bone = {}
     for i, c in enumerate(CUBES):
         r = face_rects(c, k, pos[i])
@@ -505,7 +536,7 @@ def geo_doc(k, pos):
             e["rotation"] = b["rotation"]
         e["cubes"] = by_bone.get(b["name"], [])
         bones.append(e)
-    return {"format_version": "1.12.0", "minecraft:geometry": [{"description": {"identifier": "geometry.devil_trial", "texture_width": SHEET, "texture_height": SHEET,
+    return {"format_version": "1.12.0", "minecraft:geometry": [{"description": {"identifier": "geometry." + ident, "texture_width": SHEET, "texture_height": SHEET,
                                                                                  "visible_bounds_width": 5, "visible_bounds_height": 4, "visible_bounds_offset": [0, 1.2, 0]}, "bones": bones}]}
 
 
@@ -513,7 +544,7 @@ def uid(*parts):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, "devil_trial/" + "/".join(str(p) for p in parts)))
 
 
-def bb_doc(k, pos, sheet_png, anims):
+def bb_doc(k, pos, sheet_png, anims, name="devil_trial"):
     """The Blockbench source: free-model cubes with per-face UV, bones as groups. Rotations use the Bedrock codec's sign (x and y negated); see the module docstring."""
     elements, ids = [], {}
     for i, c in enumerate(CUBES):
@@ -537,22 +568,22 @@ def bb_doc(k, pos, sheet_png, anims):
         groups[c["bone"]]["children"].append(ids[c["name"]])
     buf = io.BytesIO()
     sheet_png.save(buf, "PNG")
-    tex = {"path": "", "name": "devil_trial.png", "folder": "", "namespace": "", "id": "0", "particle": False, "render_mode": "default", "render_sides": "auto", "frame_time": 1,
+    tex = {"path": "", "name": name + ".png", "folder": "", "namespace": "", "id": "0", "particle": False, "render_mode": "default", "render_sides": "auto", "frame_time": 1,
            "frame_order_type": "loop", "frame_order": "", "frame_interpolation": False, "visible": True, "internal": True, "saved": False, "uuid": uid("tex"),
            "source": "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")}
     banims = []
-    for name, a in anims.items():
+    for an, a in anims.items():
         animators = {}
         for bn, tr in a["bones"].items():
             kf = []
             for ch in ("rotation", "position"):
                 for t, v in tr.get(ch, {}).items():
                     x = -v[0] if ch == "position" else v[0]
-                    kf.append({"channel": ch, "data_points": [{"x": x, "y": v[1], "z": v[2]}], "uuid": uid("kf", name, bn, ch, t), "time": float(t), "color": -1, "interpolation": "linear"})
+                    kf.append({"channel": ch, "data_points": [{"x": x, "y": v[1], "z": v[2]}], "uuid": uid("kf", an, bn, ch, t), "time": float(t), "color": -1, "interpolation": "linear"})
             animators[groups[bn]["uuid"]] = {"name": bn, "type": "bone", "keyframes": kf}
-        banims.append({"uuid": uid("anim", name), "name": name.split(".")[-1], "loop": "loop" if a["loop"] else "once", "override": False, "length": a["animation_length"], "snapping": 20,
+        banims.append({"uuid": uid("anim", an), "name": an.split(".")[-1], "loop": "loop" if a["loop"] else "once", "override": False, "length": a["animation_length"], "snapping": 20,
                        "selected": False, "anim_time_update": "", "blend_weight": "", "start_delay": "", "loop_delay": "", "animators": animators})
-    return {"meta": {"format_version": "4.10", "model_format": "free", "box_uv": False}, "name": "devil_trial", "model_identifier": "devil_trial", "visible_box": [5, 4, 1],
+    return {"meta": {"format_version": "4.10", "model_format": "free", "box_uv": False}, "name": name, "model_identifier": name, "visible_box": [5, 4, 1],
             "variable_placeholders": "", "bedrock_animation_mode": "entity", "resolution": {"width": SHEET, "height": SHEET}, "elements": elements, "outliner": outliner,
             "textures": [tex], "animations": banims}
 

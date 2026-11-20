@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.shield;
 
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,7 +49,7 @@ final class ShieldTargets {
         if (isFriend(w, e)) return false;
         if (e instanceof Player p) return !p.isCreative() && w.canHarmPlayer(p);
         if (e instanceof OwnableEntity o && o.getOwnerUUID() != null) return false;                  // somebody's tamed animal
-        if (e instanceof Enemy || BalanceLaw.isBoss(e)) return true;
+        if (HeroConfig.anyTarget() || e instanceof Enemy || BalanceLaw.isBoss(e)) return true;        // 4.71.0: any living target
         return e instanceof Mob m && m.getTarget() != null && isFriend(w, m.getTarget());
     }
 

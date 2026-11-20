@@ -125,7 +125,7 @@ class DevilTrialModelTest {
         assertEquals(cubes, bb.getAsJsonArray("elements").size(), "the same cubes");
         assertEquals(1, bb.getAsJsonArray("textures").size());
         assertTrue(bb.getAsJsonArray("textures").get(0).getAsJsonObject().get("source").getAsString().startsWith("data:image/png;base64,"), "the sheet is embedded");
-        assertEquals(3, bb.getAsJsonArray("animations").size());
+        assertEquals(5, bb.getAsJsonArray("animations").size(), "idle, walk, attack and the rise and roar of the summoning figure");
         assertEquals("free", bb.getAsJsonObject("meta").get("model_format").getAsString());
         String gen = read("tools/blockbench/gen_devil_trial.py");
         assertTrue(gen.contains("Blockbench could not run") && gen.contains("FALLBACK") && gen.contains("NOT opened in Blockbench"), "the generator says plainly it is the fallback");

@@ -102,6 +102,13 @@ public final class GuardMeter {
         return Math.max(0.0, Math.min(1.0, resolve(maxHealth, multiple) / cap));
     }
 
+    /** 4.71.0 (vanilla guard): the Resolve is full again and any break is forgotten; the Counter is kept. */
+    public void refill() {
+        resolve = -1;
+        wasBroken = false;
+        brokenUntil = 0;
+    }
+
     /** True while the guard is broken at {@code now}. */
     public boolean broken(long now) { return now < brokenUntil; }
 

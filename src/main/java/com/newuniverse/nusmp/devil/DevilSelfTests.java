@@ -134,6 +134,8 @@ public final class DevilSelfTests {
             DevilNpc n = DevilNpcs.figure(server, c);
             if (n == null) return Result.fail("the figure is not found after it was made");
             if (!a.getUUID().equals(n.owner()) || !d.id().equals(n.devilId()) || n.state() != DevilNpcRules.RISING) return Result.fail("the figure's owner, devil or state is wrong");
+            if (n.getAnimatableInstanceCache() == null) return Result.fail("the figure is not a GeckoLib entity (canon looks, docs/devil_trial_model.md)");         // the full-size canon figure plays rise / roar / idle from its state
+            if (DevilCanonRules.riseParticlesTotal() > 80 || DevilCanonRules.riseBurst(DevilNpcRules.RISE_TICKS) <= 0 || DevilCanonRules.riseBurst(DevilNpcRules.RISE_TICKS + 1) != 0) return Result.fail("the figure's appearance effect is not bounded to its rise");
             double away = Math.hypot(n.getX() - at.x, n.getZ() - at.z);
             if (away < 1.0 || away > DevilNpcRules.FRONT + 0.1) return Result.fail("the figure stands " + away + " blocks from the circle, not in front of it");
             float wantYaw = DevilNpcRules.yawToward(at.x - n.getX(), at.z - n.getZ());               // 4.40.0: it faces the caller, and stands within reach of the circle's height (on the ground when there is any)

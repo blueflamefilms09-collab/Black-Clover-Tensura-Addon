@@ -14,7 +14,7 @@ public final class HeroConfig {
     public static final ModConfigSpec SPEC;
 
     public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES, ABANDON_ALLOWED;
-    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST;
+    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST, ANY_TARGET, SHIELD_VANILLA_GUARD, SHIELD_REFLECTS;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
@@ -39,6 +39,12 @@ public final class HeroConfig {
                 .define("castingRelicsAllowed", true);
         CONSUMABLES_FIRST = b.comment("3.63.0: a hero weapon in the main hand lets the use key go to a food (when hungry) or a potion in the OFF hand, so consumables can be used while holding the Shield, Bow, Sword or Spear. Sneak + use is still the weapon's own gesture. Off: the weapon takes every click (the old behaviour).")
                 .define("consumablesFirst", true);
+        ANY_TARGET = b.comment("4.71.0: the techniques of the hero and vassal weapons work on ANY living target (passive animals, villagers, neutral mobs, other players the wielder may harm), not only hostile monsters. Allies, the wielder's own pets and summons, other people's tamed pets, armour stands and creative or spectator players are still spared. Off: only hostile monsters, mobs hunting the wielder or an ally, bosses and harmable players (the old behaviour).")
+                .define("anyTarget", true);
+        SHIELD_VANILLA_GUARD = b.comment("4.71.0: the hero Shield blocks like a normal shield: every blow from the front is stopped in full and the guard never breaks from damage (an axe still disables it, as for any shield). The Guard meter still fills the Counter from what is soaked. Off: the Resolve meter (a limited amount of damage, then the guard breaks) as before.")
+                .define("shieldVanillaGuard", true);
+        SHIELD_REFLECTS = b.comment("4.71.0: a raised hero Shield turns arrows and other dangerous shots from the front back at their shooter, like a Mirror. Off: shots are only blocked.")
+                .define("shieldReflects", true);
         REPEL_XP = b.comment("Restriction three: two Holy wielders within repelRadius of each other gain no experience (orbs, kill experience, the weapon's own experience).")
                 .define("repelXp", true);
         REPEL_RADIUS = b.comment("Blocks within which two Holy wielders of the same dimension repel each other's experience.")
@@ -117,6 +123,9 @@ public final class HeroConfig {
     public static boolean holyRejectsOthers() { return get(HOLY_REJECTS_OTHERS); }
     public static boolean castingRelicsAllowed() { return get(CASTING_RELICS_ALLOWED); }
     public static boolean consumablesFirst() { return get(CONSUMABLES_FIRST); }
+    public static boolean anyTarget() { return get(ANY_TARGET); }
+    public static boolean shieldVanillaGuard() { return get(SHIELD_VANILLA_GUARD); }
+    public static boolean shieldReflects() { return get(SHIELD_REFLECTS); }
 
     public static boolean repelXp() { return get(REPEL_XP); }
 

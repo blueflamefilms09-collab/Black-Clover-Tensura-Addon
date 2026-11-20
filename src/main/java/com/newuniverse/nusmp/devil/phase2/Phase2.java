@@ -335,6 +335,7 @@ public final class Phase2 {
         DevilLedger l = ledger(server);
         long now = now(server);
         l.join(p.getUUID(), d.id(), kind, now);
+        com.newuniverse.nusmp.devil.mastery.Mastery.joined(c, d, d.id().equals(c.trialDevil) ? c.trialResult : Phase2Rules.TRIAL_NONE);   // a devil that was beaten or impressed starts the mastery a little higher
         Trials.end(server, c);
         c.trialResult = Phase2Rules.TRIAL_NONE;
         c.trialDevil = "";

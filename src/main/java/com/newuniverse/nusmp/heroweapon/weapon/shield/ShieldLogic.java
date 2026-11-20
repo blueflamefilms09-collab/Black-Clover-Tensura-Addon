@@ -128,6 +128,8 @@ public final class ShieldLogic implements HeroLogic {
             boolean parry = GuardMeter.isParry(p.getTicksUsingItem(), parryWindow(c.form));
             double rate = c.form.has("rage_fury") ? 1.5 : ShieldNumbers.COUNTER_RATE;                    // a Rage form turns more of what it soaks into Counter
             GuardMeter.Result r = st.guard.block(now, amount, p.getMaxHealth(), capacityMultiple(c.form), parry, rate);
+            boolean vanilla = com.newuniverse.nusmp.heroweapon.HeroConfig.shieldVanillaGuard();         // 4.71.0: block like a normal shield, in full
+            if (vanilla) st.guard.refill();
             Entity attacker = source.getEntity();
             boolean melee = attacker instanceof LivingEntity && source.getDirectEntity() == attacker;
             Vec3 at = p.getBoundingBox().getCenter();
@@ -136,7 +138,7 @@ public final class ShieldLogic implements HeroLogic {
                 ShieldFx.sound(c.level, p.position(), SoundEvents.SHIELD_BLOCK, 1.2f, 1.7f);
                 if (melee) c.shove((LivingEntity) attacker, p.position(), 0.6);
                 c.say("Parry");
-            } else if (r.broken()) {
+            } else if (r.broken() && !vanilla) {
                 ShieldFx.shatter(c.level, at, at.add(0, 1, 0), 1.0f, ShieldFx.STEEL);
                 ShieldFx.sound(c.level, p.position(), SoundEvents.SHIELD_BREAK, 1.2f, 0.9f);
                 if (!c.stack.isEmpty()) p.getCooldowns().addCooldown(c.stack.getItem(), ShieldNumbers.BREAK_TICKS);
@@ -144,7 +146,7 @@ public final class ShieldLogic implements HeroLogic {
                 c.say("The guard breaks");
             }
             if (melee && r.absorbed() > 0) answer(c, st, (LivingEntity) attacker, r.absorbed(), now);
-            return (float) Math.max(0.0, r.through());
+            return vanilla ? 0f : (float) Math.max(0.0, r.through());
         } catch (RuntimeException | LinkageError ex) {
             SafeCast.fault("hero.shield.onBlocked", ex);
             return amount;

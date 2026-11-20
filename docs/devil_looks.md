@@ -118,3 +118,12 @@ The devil that fights the caller in a trial has its own model (a horned brute, o
 - `dv_lucifero` and `bc_lucifero` are two builds of the same canon; the owner may want them unified later.
 - The Hall of Hell demon (Dororo) and Astaroth (Black Clover) are not backed by a fetched wiki page, and the kin devils are the mod's own designs.
 - Unverified in a game: pose of the NPC (the arms-raised roar), the stage timing of the worn parts, the scale of the heads on the player model at 4x skin, and every colour.
+
+## Canon looks (the trial devil and the summoning figure, later than the sections above)
+
+The look of a devil in the trial fight and in the summoning is now its own canon model (26 of them, GeckoLib, painted sheet and glow mask each), not the shared brute and not the player model with wings on top. Everything is in docs/devil_trial_model.md, section "Canon looks" (sources per devil, which tool made them, the cost, NEW / REPLACED / KEPT, what was not seen). What it means for this document:
+
+- **The player-model look described above is still the worn form** (what the signer wears after signing, `bossLooks.devilPlayerModel`): untouched.
+- **The summoning figure** is no longer drawn with that look by default. The old figure (player-model look, Blender mesh, plain humanoid fallback) is kept behind the client option `bossLooks.devilRitualFigure = false`. The reason: that figure used the game's player model without `young = false`, which is a child's proportions, with the adult-sized wings and horns drawn around it, so a small child stood under the wings. Both player models of the old figure are now adult-proportioned too (`young = false`).
+- **New default figure**: the same canon model, sheet, glow and rank scale as the trial devil, with the wings as bones of the body, rising out of the circle (sunk, fading in, a stand-up clip, dust ring) and roaring while it makes the offer; merge and dissolve fade it. Worst case: 882 quads per figure, at most 68 dust and 34 haze particles per ritual through the particle budget.
+- Previews (software mock-ups, not the game): `docs/previews/devil_canon_looks/overview.png` and one turnaround per devil.

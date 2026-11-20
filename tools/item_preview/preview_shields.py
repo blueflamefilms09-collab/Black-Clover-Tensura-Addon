@@ -285,8 +285,9 @@ def one(item_id, before_json):
     raw = [(ly, np.concatenate([p[:, :3], p[:, 3:5] * k], axis=1), n) for (ly, p, n) in raw]
     pal = palette_skin()
     skins = {"mod": skin, "pal": pal}
-    new_model = {s: json.load(open(os.path.join(ASSETS, "models", "item", item_id + s + ".json")))["display"] for s in ("", "_blocking")}
-    old_model = {s: (before_json.get(item_id + s) or before_json[item_id])["display"] for s in ("", "_blocking")}
+    model_id = item_id.split("__")[0]                  # a form mesh (legendary_shield__soul_eater_shield) is drawn under its item's model
+    new_model = {s: json.load(open(os.path.join(ASSETS, "models", "item", model_id + s + ".json")))["display"] for s in ("", "_blocking")}
+    old_model = {s: (before_json.get(model_id + s) or before_json[model_id])["display"] for s in ("", "_blocking")}
     vs = vanilla_shield()
     van = {"": VANILLA_SHIELD, "_blocking": VANILLA_BLOCKING}
     old_q = transform(raw, old_frame(place, raw))
@@ -338,8 +339,9 @@ def pick(display, ctx):
 def face_report(item_id, before_json):
     """Where the shield's face points (a world direction) and where its centre is, for the vanilla shield, before and after: the numbers behind the pictures."""
     place, glow, raw = load_raw(item_id)
-    new_model = {s: json.load(open(os.path.join(ASSETS, "models", "item", item_id + s + ".json")))["display"] for s in ("", "_blocking")}
-    old_model = {s: (before_json.get(item_id + s) or before_json[item_id])["display"] for s in ("", "_blocking")}
+    model_id = item_id.split("__")[0]                  # a form mesh (legendary_shield__soul_eater_shield) is drawn under its item's model
+    new_model = {s: json.load(open(os.path.join(ASSETS, "models", "item", model_id + s + ".json")))["display"] for s in ("", "_blocking")}
+    old_model = {s: (before_json.get(model_id + s) or before_json[model_id])["display"] for s in ("", "_blocking")}
     lines = []
     for ctx, left, blocking, fp in (("thirdperson_righthand", False, False, False), ("thirdperson_righthand", False, True, False), ("thirdperson_lefthand", True, False, False),
                                     ("thirdperson_lefthand", True, True, False), ("firstperson_righthand", False, False, True), ("firstperson_righthand", False, True, True)):

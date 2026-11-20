@@ -62,6 +62,70 @@ public final class DevilDualSelfTests {
         SelfTests.register("devil.double.corruption", DevilDualSelfTests::corruption);
         SelfTests.register("devil.double.ritual", DevilDualSelfTests::ritual);
         SelfTests.register("devil.double.icons", DevilDualSelfTests::icons);
+        SelfTests.register("devil.double.mastery", DevilDualSelfTests::mastery);                                  // Devil Awakening (docs/devil_mastery.md)
+    }
+
+    // ---------------------------------------------------------------- Devil Awakening: the kit table, the mastery and every art of every kit
+    private static Result mastery(MinecraftServer server) {
+        var table = com.newuniverse.nusmp.devil.mastery.DevilKit.table();
+        var problems = com.newuniverse.nusmp.devil.mastery.DevilKit.problems(table);
+        if (!problems.isEmpty()) return Result.fail("devil_kits.json: " + problems.get(0) + (problems.size() > 1 ? " (+" + (problems.size() - 1) + " more)" : ""));
+        if (table.kits().size() != WorldDevil.count()) return Result.fail("the kit table has " + table.kits().size() + " kits for " + WorldDevil.count() + " devils");
+        DevilContract c = new DevilContract();
+        c.tier = DevilTier.HIGH;
+        c.mastery = 37.5f;
+        c.masteryDay = 20000;
+        c.masteryUsed = 1234f;
+        c.awakenReadyAt = 999L;
+        c.masteryStash.put(WorldDevil.at(0).id(), 22f);
+        DevilContract back = DevilContract.fromTag(DevilContract.toTag(c));
+        if (back.mastery != 37.5f || back.masteryDay != 20000 || back.masteryUsed != 1234f || back.awakenReadyAt != 999L || back.masteryStash.get(WorldDevil.at(0).id()) != 22f) return Result.fail("the mastery did not survive its tag");
+        if (!new DevilContract().isEmpty() || DevilContract.fromTag(DevilContract.toTag(new DevilContract())).mastery != -1f) return Result.fail("a fresh contract is not empty or its mastery is not unset");
+        DevilContract fresh = new DevilContract();
+        fresh.tier = DevilTier.LOW;
+        float want = com.newuniverse.nusmp.devil.mastery.Mastery.on() && !DevilConfig.legacyAssimilation() ? DevilConfig.masteryStart() : 100f;
+        if (com.newuniverse.nusmp.devil.mastery.Mastery.ceiling(fresh) != want) return Result.fail("the ceiling of a fresh contract is " + com.newuniverse.nusmp.devil.mastery.Mastery.ceiling(fresh) + ", not " + want);
+        ServerLevel level = server.overworld();
+        double y = level.getMaxBuildHeight() - 60;
+        ServerPlayer p = SelfTests.standIn(level, "devil_double_mastery", 0.5, y, 0.5);
+        p.setYRot(0f);
+        p.setXRot(0f);
+        int cast = 0;
+        try {
+            DevilContract pc = DevilStore.of(p);
+            pc.tier = DevilTier.HIGH;
+            for (var kit : table.kits().values()) {
+                WorldDevil d = WorldDevil.byId(kit.devil());
+                pc.attribute = d.attribute();
+                pc.devil = d.id();
+                for (var art : kit.arts()) {
+                    Zombie z = EntityType.ZOMBIE.create(level);
+                    if (z == null) return Result.fail("no zombie");
+                    z.setNoAi(true);
+                    z.getAttribute(Attributes.MAX_HEALTH).setBaseValue(2000.0);
+                    z.setHealth(2000f);
+                    z.setPos(0.5, y, 2.0);
+                    level.addFreshEntity(z);
+                    try {
+                        int hits = com.newuniverse.nusmp.skill.DevilKitArts.cast(p, pc, art, 100f);
+                        if (art.kind().equals("ward") ? hits != 0 : hits > 8) return Result.fail(kit.devil() + " " + art.id() + " hit " + hits + " foes");
+                        if (art.kind().equals("strike") && art.range() >= 3 && hits != 1) return Result.fail(kit.devil() + " " + art.id() + " (strike) missed the zombie ahead");
+                        if ((art.kind().equals("strike") || art.kind().equals("burst")) && hits == 1 && z.getHealth() >= 2000f) return Result.fail(kit.devil() + " " + art.id() + " did no damage");
+                        cast++;
+                    } finally {
+                        z.discard();
+                        p.removeAllEffects();
+                    }
+                }
+            }
+            return Result.ok("devil mastery: " + table.kits().size() + " kits valid, the tag round trip, the ceiling, " + cast + " arts of every kit fired bounded on a stand-in");
+        } finally {
+            DevilContract pc = DevilStore.of(p);
+            pc.tier = DevilTier.NONE;
+            pc.attribute = DevilAttribute.NONE;
+            pc.devil = "";
+            p.getPersistentData().remove("nusmp_devil_fx");
+        }
     }
 
     // ---------------------------------------------------------------- rules
@@ -188,10 +252,11 @@ public final class DevilDualSelfTests {
             if (v != DualRules.Verdict.GRANT && !DevilSkillGrant.has(p)) return Result.fail("a contract did not give Devil Magic");
             if (!DevilSkillGrant.has(p)) return Result.fail("Devil Magic is not in the skill list after the grant");
             if (DualConfig.intrinsic() && !DevilSkillGrant.hasBond(p)) return Result.fail("Devil Bond is not in the skill list after the grant");
+            if (DevilConfig.masteryOn() && !DevilSkillGrant.hasAwakening(p)) return Result.fail("Devil Awakening (extra skill) is not in the skill list after the grant");
             if (DevilSkillGrant.sync(p, c) != DualRules.Verdict.KEEP) return Result.fail("a second sync granted again");
             c.tier = DevilTier.NONE;
             c.attribute = DevilAttribute.NONE;
-            if (DevilSkillGrant.sync(p, c) != DualRules.Verdict.REVOKE || DevilSkillGrant.has(p) || DevilSkillGrant.hasBond(p)) return Result.fail("the end of the contract did not take the skills");
+            if (DevilSkillGrant.sync(p, c) != DualRules.Verdict.REVOKE || DevilSkillGrant.has(p) || DevilSkillGrant.hasBond(p) || DevilSkillGrant.hasAwakening(p)) return Result.fail("the end of the contract did not take the skills");
             if (DevilSkillGrant.sync(p, c) != DualRules.Verdict.KEEP) return Result.fail("a sync with no contract changed something");
             return Result.ok("devil skills: a contract gives Devil Magic (Ultimate) and Devil Bond (intrinsic) once, a second sync keeps, the end takes both");
         } finally {
@@ -244,10 +309,14 @@ public final class DevilDualSelfTests {
         c.corruption = 432.5f;
         c.sacrifices.add(Sacrifice.LOST_EYE_RIGHT);
         if (DevilContract.fromTag(DevilContract.toTag(c)).corruption != 432.5f) return Result.fail("the corruption did not survive its tag");
-        DevilNet.Sync s = new DevilNet.Sync(3, 4, 50, 1, 4, 10, 20, 43);
+        DevilNet.Sync s = new DevilNet.Sync(3, 4, 50, 1, 4, 10, 20, 43, 372, 120, 45);
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         DevilNet.Sync.STREAM_CODEC.encode(buf, s);
         if (!DevilNet.Sync.STREAM_CODEC.decode(buf).equals(s)) return Result.fail("the sync packet changed on the wire");
+        FriendlyByteBuf corOnly = new FriendlyByteBuf(Unpooled.buffer());
+        corOnly.writeByte(3); corOnly.writeByte(4); corOnly.writeByte(50); corOnly.writeByte(1); corOnly.writeByte(4); corOnly.writeVarInt(10); corOnly.writeVarInt(20); corOnly.writeByte(43);
+        DevilNet.Sync read = DevilNet.Sync.STREAM_CODEC.decode(corOnly);
+        if (read.corruption() != 43 || read.mastery() != 0 || read.awakeSec() != 0 || read.restSec() != 0) return Result.fail("a packet of the corruption shape did not read as no mastery");
         FriendlyByteBuf old = new FriendlyByteBuf(Unpooled.buffer());
         old.writeByte(3); old.writeByte(4); old.writeByte(50); old.writeByte(1); old.writeByte(4); old.writeVarInt(10); old.writeVarInt(20);
         if (DevilNet.Sync.STREAM_CODEC.decode(old).corruption() != 0) return Result.fail("a packet of the old shape did not read as no corruption");

@@ -291,4 +291,6 @@ public final class NUSkills {
     // ---- Double Magic (docs/devil_double_magic.md): Devil Magic (Ultimate) and Devil Bond (Intrinsic), both given by a devil contract (devil.dual.DevilSkillGrant). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, DevilMagicSkill> DEVIL_MAGIC = SKILLS.register("devil_magic", DevilMagicSkill::new);
     public static final DeferredHolder<ManasSkill, DevilBondSkill> DEVIL_BOND = SKILLS.register("devil_bond", DevilBondSkill::new);
+    // ---- Devil Awakening (docs/devil_mastery.md): the extra skill a devil contract gives, with its own mastery. Registered last ----
+    public static final DeferredHolder<ManasSkill, DevilAwakeningSkill> DEVIL_AWAKENING = SKILLS.register("devil_awakening", DevilAwakeningSkill::new);
 }

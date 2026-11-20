@@ -43,6 +43,10 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue DEVIL_TRIAL_MODEL;
     /** Sinbad's Djinn Equip armour fit (docs/boss_redesign_goku_sinbad.md), key {@code bossLooks.bossArmorFit}, CLIENT config (appended last). True (default): the pieces his look already carries (crown, collar, belt, cuffs, shoulders, sandals) dissolve into the look once forged in. False = every piece stays over the look, as before. */
     public static final ModConfigSpec.BooleanValue BOSS_ARMOR_FIT;
+    /** Canon looks (docs/devil_trial_model.md, 'Canon looks'), key {@code bossLooks.devilCanonLooks}, CLIENT config (appended): each contract devil's own model from its anime design, in the trial fight and in the ritual. Off = the 4.64.0 generic horned brute. */
+    public static final ModConfigSpec.BooleanValue DEVIL_CANON_LOOKS;
+    /** Canon looks, key {@code bossLooks.devilRitualFigure}, CLIENT config (appended): the summoned devil of the ritual is drawn as the full-size canon model (true, the default). Off = the earlier figure (the player-model look or the Blender mesh). */
+    public static final ModConfigSpec.BooleanValue DEVIL_RITUAL_FIGURE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -82,6 +86,10 @@ public final class PlayerModelOptions {
                 + "attacking, painted in the devil's colours, with glowing eyes, brands, gems and horn tips. Off = the earlier stand-in (the vanilla humanoid with the zombie skin).").define("devilTrialModel", true);
         BOSS_ARMOR_FIT = b.comment("Sinbad's Djinn Equip: the armour pieces his new look already carries (crown, collar and chains, belt, cuffs, shoulders, sandals) are forged in and then dissolve into the look, so they "
                 + "no longer clip through it; wings, tail, halo, gauntlets, mantle and the rest stay (docs/boss_redesign_goku_sinbad.md). Off = every piece of the player's set stays drawn over the look, as before.").define("bossArmorFit", true);
+        DEVIL_CANON_LOOKS = b.comment("Each devil of the Devil Contract drawn as itself in the trial fight and in the summoning (docs/devil_trial_model.md, 'Canon looks'): its own model, painted sheet and glow from its "
+                + "anime design (Liebe, Lucifero, the Fox Devil, Sebastian, the God Hand ...). Off = the generic horned brute every devil shared in 4.64.0.").define("devilCanonLooks", true);
+        DEVIL_RITUAL_FIGURE = b.comment("The devil that rises from the summoning circle drawn as the full-size devil model (the same model and scale as in the trial; the old figure drew a child-sized body with the wings floating above it). "
+                + "Off = the earlier figure (the player-model look, or the Blender mesh).").define("devilRitualFigure", true);
         b.pop();
         SPEC = b.build();
     }
@@ -156,6 +164,24 @@ public final class PlayerModelOptions {
     public static boolean devilTrialModel() {
         try {
             return DEVIL_TRIAL_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when each devil is drawn with its own canon model (the config value; true while it is not loaded). */
+    public static boolean devilCanonLooks() {
+        try {
+            return DEVIL_CANON_LOOKS.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the ritual's devil is drawn as the full-size canon model (the config value; true while it is not loaded). */
+    public static boolean devilRitualFigure() {
+        try {
+            return DEVIL_RITUAL_FIGURE.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

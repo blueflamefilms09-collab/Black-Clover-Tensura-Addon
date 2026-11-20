@@ -59,7 +59,7 @@ public final class DevilArts {
         return hits;
     }
 
-    private static void apply(ServerPlayer p, LivingEntity t, String effectId, int ticks, int amp, String special, boolean strip, long now) {
+    static void apply(ServerPlayer p, LivingEntity t, String effectId, int ticks, int amp, String special, boolean strip, long now) {
         if (!effectId.isEmpty() && ticks > 0) {
             com.newuniverse.nusmp.relics.Fx.addEffect(t, effectId, amp >= 2 ? BalanceLaw.controlTicks(t, ticks) : ticks, amp);
             DevilMagic.markEffect(t, effectId, now + ticks);
@@ -79,7 +79,7 @@ public final class DevilArts {
     }
 
     /** Moves the foe toward {@code point} (strength > 0) or away from it (strength < 0); a bounded velocity, nothing teleports. */
-    private static void shove(LivingEntity t, Vec3 point, double strength) {
+    static void shove(LivingEntity t, Vec3 point, double strength) {
         Vec3 d = point.subtract(t.position());
         double len = Math.max(0.5, d.length());
         Vec3 v = d.scale(strength / len);

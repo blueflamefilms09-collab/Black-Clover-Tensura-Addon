@@ -17,6 +17,9 @@ public final class DevilConfig {
     private static final ModConfigSpec.IntValue DARK_LIGHT, DARK_RADIUS;
     private static final ModConfigSpec.ConfigValue<?> DARK_DIMS;   // a config value, not state (the scan test bans static collections)
     private static final ModConfigSpec.IntValue NPC_MAX, NPC_LIFE;
+    private static final ModConfigSpec.BooleanValue LEGACY, M_ENABLED, M_ARTS, M_PASSIVES, M_FUSIONS;
+    private static final ModConfigSpec.IntValue M_START, M_MAX, M_DAILY;
+    private static final ModConfigSpec.DoubleValue M_RATE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -65,6 +68,18 @@ public final class DevilConfig {
         DARK_RADIUS = b.comment("How far from the caller a player counts as a participant of the circle, in blocks (their dark magic lets the ritual begin).").defineInRange("participantRadius", 8, 0, 32);
         DARK_DIMS = b.comment("Dimensions that are dark enough for a ritual in any light (the End by default).").defineListAllowEmpty("darkDimensions", java.util.List.of("minecraft:the_end"), () -> "minecraft:the_end", o -> o instanceof String);
         b.pop();
+        LEGACY = b.comment("The old assimilation: the key climbs the level to 100 percent at once, no mastery ceiling, no time limit, no rest after. false (default) = the new Devil Awakening: the level can not pass the skill's mastery.")
+                .define("legacyAssimilation", false);
+        b.push("mastery");
+        M_ENABLED = b.comment("The Devil Awakening skill (docs/devil_mastery.md): the extra skill a contract gives, with a mastery that starts low and grows by use. false = no skill, no arts, no passives, no mastery ceiling.").define("enabled", true);
+        M_START = b.comment("The mastery (percent of the devil's power) a new contract starts with.").defineInRange("startPercent", 10, 1, 50);
+        M_MAX = b.comment("The highest mastery that can be reached (100 = the Devil Union can open).").defineInRange("maxPercent", 100, 10, 100);
+        M_RATE = b.comment("Multiplier on how fast mastery grows (1 = about 30 hours of active play to reach 100 percent).").defineInRange("gainRate", 1.0, 0.1, 10.0);
+        M_DAILY = b.comment("The most mastery-earning use one player can count a real (UTC) day, in minutes of effective use.").defineInRange("dailyCapMinutes", 360, 10, 1440);
+        M_ARTS = b.comment("The arts of the devil's kit (skill modes 2 to 5).").define("arts", true);
+        M_PASSIVES = b.comment("The passives of the devil's kit while the devil is let in.").define("passives", true);
+        M_FUSIONS = b.comment("Double unions: in the Devil Union, a second devil you hold adds its fusion passives (kits file, 'fusions').").define("fusions", true);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -100,6 +115,15 @@ public final class DevilConfig {
     public static boolean darkDimension(String id) {
         try { return id != null && DARK_DIMS.get() instanceof java.util.Collection<?> dims && dims.contains(id); } catch (RuntimeException notLoaded) { return "minecraft:the_end".equals(id); }
     }
+    public static boolean legacyAssimilation() { return on(LEGACY, false); }
+    public static boolean masteryOn() { return on(M_ENABLED, true); }
+    public static float masteryStart() { return whole(M_START, 10, 1, 50); }
+    public static float masteryMax() { return whole(M_MAX, 100, 10, 100); }
+    public static double masteryRate() { return num(M_RATE, 1.0, 0.1, 10.0); }
+    public static int masteryDailyMinutes() { return whole(M_DAILY, 360, 10, 1440); }
+    public static boolean kitArts() { return on(M_ARTS, true); }
+    public static boolean kitPassives() { return on(M_PASSIVES, true); }
+    public static boolean kitFusions() { return on(M_FUSIONS, true); }
     public static boolean npcEnabled() { return on(NPC_ENABLED, true); }
     public static int npcMax() { return DevilNpcRules.clampMax(whole(NPC_MAX, DevilNpcRules.DEFAULT_MAX, 0, DevilNpcRules.MAX_MAX)); }
     public static long npcLifetimeTicks() { return DevilNpcRules.lifetimeTicks(whole(NPC_LIFE, DevilNpcRules.DEFAULT_LIFE_SECONDS, DevilNpcRules.MIN_LIFE_SECONDS, DevilNpcRules.MAX_LIFE_SECONDS)); }

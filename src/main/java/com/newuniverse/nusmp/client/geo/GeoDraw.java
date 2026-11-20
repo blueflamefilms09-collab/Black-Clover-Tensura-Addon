@@ -62,6 +62,7 @@ public final class GeoDraw {
     public static void draw(PoseStack pose, VertexConsumer vc, GeoModelData m, GeoAnim.Clip clip, float seconds, Space space,
                             int light, int overlay, int argb) {
         if (m == null || m.roots.isEmpty()) return;
+        if (space == Space.PLAYER && WingFrame.isOnBack()) m = m.onBack();      // docs/wings_on_back.md: a wing that sweeps to the front of the body is drawn on the back (option visual.wingsOnBack)
         pose.pushPose();
         if (space == Space.PROP) {
             pose.scale(PX, -PX, -PX);                         // vanilla model space (y down, front -z) -> world (y up, front +z)
@@ -90,8 +91,9 @@ public final class GeoDraw {
         if (clip != null) {
             GeoAnim.BoneAnim a = clip.bones.get(b.name);
             if (a != null) {
-                if (a.rotation != null && a.rotation.sampleInto(t, ROT)) { rx += ROT[0]; ry += ROT[1]; rz += ROT[2]; }
-                if (a.position != null && a.position.sampleInto(t, POS)) { x += POS[0]; y -= POS[1]; z += POS[2]; }
+                float sg = b.zMirrored ? -1f : 1f;                                  // a wing turned to the back (WingFrame): the clip's x / y turn and z move mirror with it
+                if (a.rotation != null && a.rotation.sampleInto(t, ROT)) { rx += ROT[0] * sg; ry += ROT[1] * sg; rz += ROT[2]; }
+                if (a.position != null && a.position.sampleInto(t, POS)) { x += POS[0]; y -= POS[1]; z += POS[2] * sg; }
                 if (a.scale != null && a.scale.sampleInto(t, SCL)) { sx = SCL[0]; sy = SCL[1]; sz = SCL[2]; }
             }
         }

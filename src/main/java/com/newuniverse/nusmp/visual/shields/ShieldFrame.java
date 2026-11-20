@@ -18,7 +18,12 @@ public final class ShieldFrame {
     /** The plate's front plane (the emblem side) of vanilla's shield model after its flip, in blocks. */
     public static final float FACE_Z = 2f / 16f;
     /** The largest footprint of a mesh, in blocks: wider than the vanilla plate (0.75) for the winged Celestial Support, shorter than its 1.375. */
-    public static final float MAX_W = 1.3f, MAX_H = 1.2f;
+    public static final float MAX_W = 1.1f, MAX_H = 1.0f;
+    /** 4.71.0: the footprint before this version (1.3 x 1.2): a round or spiked shield stood out far beyond the arm; {@code -Danime_multiverse.shieldSize=old} restores it. */
+    public static final float OLD_MAX_W = 1.3f, OLD_MAX_H = 1.2f;
+    public static boolean oldSize() { return "old".equalsIgnoreCase(System.getProperty("anime_multiverse.shieldSize", "new")); }
+    public static float maxW() { return oldSize() ? OLD_MAX_W : MAX_W; }
+    public static float maxH() { return oldSize() ? OLD_MAX_H : MAX_H; }
 
     /**
      * 4.36.2: the footprint box in FIRST person, in blocks: vanilla's own plate width (12 / 16) and the usual height. Vanilla's first-person display multiplies a shield by 1.25 and
@@ -35,7 +40,7 @@ public final class ShieldFrame {
     /** 4.44.1: the lowest the back (the straps) of a mesh may reach behind the plate; vanilla's handle ends at -5/16, the fist holding it fills about -4/16..0. */
     public static final float BACK_MIN = -0.25f;
     /** 4.44.1: the deepest a mesh may be (face to straps) after scaling: a spiked form is shrunk a little instead of sticking a block out in front of the player. */
-    public static final float MAX_DEPTH = 0.85f;
+    public static final float MAX_DEPTH = 0.7f;
 
     /**
      * 4.44.1: the same fit, depth-aware. A flat shield (back above {@link #BACK_MIN} once its face is on the front plane) lands exactly as before; a deep one (the forms of the

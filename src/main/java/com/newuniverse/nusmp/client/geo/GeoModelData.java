@@ -76,6 +76,8 @@ public final class GeoModelData {
         public boolean mirror;
         public final List<Cube> cubes = new ArrayList<>();
         public final List<Bone> children = new ArrayList<>();
+        /** docs/wings_on_back.md: set by {@link WingFrame#fix} on a bone of a wing that was turned from the front of the body to the back (reflected in z): {@link GeoDraw} then mirrors the animation's x / y turn and z move too. */
+        public boolean zMirrored;
     }
 
     public final String id;
@@ -100,6 +102,53 @@ public final class GeoModelData {
         v.bones.putAll(bones);
         for (Bone b : roots) if (keep.test(b)) v.roots.add(b);
         return v;
+    }
+
+    // ================================================================ wings on the back (docs/wings_on_back.md)
+    private GeoModelData backTwin;
+    private boolean backChecked;
+
+    /**
+     * The model as it is drawn ON A PLAYER with {@code visual.wingsOnBack} on: this same instance when no wing of it sweeps to the front of the body, else a copy whose forward wings are turned to the back
+     * ({@link WingFrame#fix}). Worked out once per model (a resource reload parses a new instance); render thread only, nothing is allocated after the first call.
+     */
+    public GeoModelData onBack() {
+        if (!backChecked) {
+            backTwin = WingFrame.fix(this);
+            backChecked = true;
+        }
+        return backTwin != null ? backTwin : this;
+    }
+
+    /** Marks this instance as already checked (a copy made by {@link WingFrame#fix} has nothing left to turn). */
+    void markBackChecked() { backChecked = true; backTwin = null; }
+
+    /**
+     * A deep copy of what is reachable from the roots (bones, cubes, face rectangles; none of the draw caches, they are made again on the first draw). The original is never touched, so the
+     * option can be switched off again and the old drawing comes back exactly.
+     */
+    public GeoModelData copy() {
+        GeoModelData c = new GeoModelData(id, texW, texH);
+        for (Bone r : roots) c.roots.add(copyBone(r, c));
+        return c;
+    }
+
+    private static Bone copyBone(Bone b, GeoModelData into) {
+        Bone n = new Bone();
+        n.name = b.name; n.parent = b.parent;
+        n.px = b.px; n.py = b.py; n.pz = b.pz; n.rx = b.rx; n.ry = b.ry; n.rz = b.rz;
+        n.inflate = b.inflate; n.mirror = b.mirror; n.zMirrored = b.zMirrored;
+        for (Cube o : b.cubes) {
+            Cube c = new Cube();
+            c.ox = o.ox; c.oy = o.oy; c.oz = o.oz; c.sx = o.sx; c.sy = o.sy; c.sz = o.sz; c.inflate = o.inflate;
+            c.mirror = o.mirror; c.hasRot = o.hasRot;
+            c.px = o.px; c.py = o.py; c.pz = o.pz; c.rx = o.rx; c.ry = o.ry; c.rz = o.rz;
+            for (int f = 0; f < 6; f++) c.uv[f] = o.uv[f] == null ? null : o.uv[f].clone();
+            n.cubes.add(c);
+        }
+        into.bones.put(n.name, n);
+        for (Bone ch : b.children) n.children.add(copyBone(ch, into));
+        return n;
     }
 
     public int cubeCount() {

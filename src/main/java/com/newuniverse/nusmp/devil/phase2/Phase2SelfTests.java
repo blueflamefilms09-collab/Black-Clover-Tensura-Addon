@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.devil.phase2;
 
 import com.newuniverse.nusmp.NUGameRules;
+import com.newuniverse.nusmp.devil.DevilCanonRules;
 import com.newuniverse.nusmp.devil.DevilContract;
 import com.newuniverse.nusmp.devil.DevilEntities;
 import com.newuniverse.nusmp.devil.DevilStore;
@@ -283,6 +284,9 @@ public final class Phase2SelfTests {
     private static Result trial(MinecraftServer server) {
         double[] low = DevilTrialEntity.stats(DevilTier.LOW, 1.0), mid = DevilTrialEntity.stats(DevilTier.MID, 1.0), high = DevilTrialEntity.stats(DevilTier.HIGH, 1.0), top = DevilTrialEntity.stats(DevilTier.SUPREME, 1.0);
         if (!(low[0] < mid[0] && mid[0] < high[0] && high[0] < top[0] && low[1] < top[1] && low[2] < top[2])) return Result.fail("the trial devil does not grow with the rank");
+        if (DevilCanonRules.IDS.length != WorldDevil.count()) return Result.fail("the canon looks do not cover the roster (docs/devil_trial_model.md, Canon looks)");
+        for (int i = 0; i < WorldDevil.count(); i++)
+            if (!WorldDevil.at(i).id().equals(DevilCanonRules.IDS[i]) || DevilCanonRules.rankScale(WorldDevil.at(i).id()) < 0.85f || DevilCanonRules.rankScale(WorldDevil.at(i).id()) > 1.1f) return Result.fail("the canon look of " + WorldDevil.at(i).id() + " is out of the roster order or its rank scale is out of bounds");
         if (DevilTrialEntity.stats(DevilTier.LOW, 1000.0)[0] > low[0] * 20.0 + 1e-6 || DevilTrialEntity.stats(DevilTier.LOW, 0.0)[0] < low[0] * 0.1 - 1e-6) return Result.fail("the health scale is not bounded");
         if (Phase2Rules.trialResult(0, 0.4, false, 0.5) != Phase2Rules.TRIAL_IMPRESSED || Phase2Rules.trialResult(0, 0.9, false, 0.5) != Phase2Rules.TRIAL_NONE || Phase2Rules.trialResult(0, 0.9, true, 0.5) != Phase2Rules.TRIAL_WON || Phase2Rules.trialResult(2, 0.9, false, 0.5) != Phase2Rules.TRIAL_WON)
             return Result.fail("the trial result rule moved");

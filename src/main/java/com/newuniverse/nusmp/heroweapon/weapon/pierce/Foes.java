@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.pierce;
 
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,7 +40,7 @@ public final class Foes {
         if (e.isAlliedTo(p)) return false;
         if (e instanceof Player other) return !other.isCreative() && p.canHarmPlayer(other);
         if (e instanceof OwnableEntity own && p.getUUID().equals(own.getOwnerUUID())) return false;
-        if (e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;
+        if (HeroConfig.anyTarget() || e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;        // 4.71.0: any living target
         if (e instanceof Mob m && m.getTarget() == p) return true;
         return BalanceLaw.isBoss(e);
     }

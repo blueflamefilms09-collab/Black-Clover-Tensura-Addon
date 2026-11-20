@@ -645,7 +645,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
         return firstPerson ? com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z0, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_H)
-                : com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z0, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.MAX_H);
+                : com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z0, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.maxW(), com.newuniverse.nusmp.visual.shields.ShieldFrame.maxH());
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */

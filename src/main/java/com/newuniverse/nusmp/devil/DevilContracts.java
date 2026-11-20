@@ -116,12 +116,15 @@ public final class DevilContracts {
         if (oldUnionActive(p)) { msg(p, "old_union", "The Anti-Magic union is on. Only one devil at a time.", ChatFormatting.RED); return; }
         if (c.assimilating) {
             c.assimilating = false;
+            com.newuniverse.nusmp.devil.mastery.Mastery.ended(p, c, now, "withdraw");                           // Devil Awakening: a short rest, no fatigue
             msg(p, "withdraw", "You push the devil back.", ChatFormatting.GRAY);
         } else {
+            if (com.newuniverse.nusmp.devil.mastery.Mastery.refuseBegin(p, c, now)) return;                    // Devil Awakening: the devil still rests (not under devil.legacyAssimilation)
             if (!hasMana(p, drain(c, c.assimilation))) { msg(p, "no_mana", "Not enough magicules to hold a devil.", ChatFormatting.RED); return; }
             if (!com.newuniverse.nusmp.attune.AttuneGate.devil(p, c)) return;                                      // 3.95.0: the equip limit (pushing it back is never stopped)
             c.assimilating = true;
-            com.newuniverse.nusmp.devil.dual.DevilOwnership.renewed(p);                                          // 4.40.0: letting the devil in again keeps the bond from lapsing after a death
+            com.newuniverse.nusmp.devil.mastery.Mastery.began(p, c, now);
+            com.newuniverse.nusmp.devil.dual.DevilOwnership.renewed(p);                                         // 4.40.0: letting the devil in again keeps the bond from lapsing after a death
             msg(p, "embrace", "You let the devil in.", ChatFormatting.DARK_PURPLE);
         }
         syncNow(p, c);
@@ -154,11 +157,17 @@ public final class DevilContracts {
             boolean cooling = DevilRules.cooling(c.unionReadyAt, now);
             if (c.assimilating && !spendMana(p, drain(c, c.assimilation))) {
                 c.assimilating = false;
+                com.newuniverse.nusmp.devil.mastery.Mastery.ended(p, c, now, "dry");
                 msg(p, "dry", "Your magicules run dry. The devil withdraws.", ChatFormatting.RED);
+            } else if (c.assimilating && com.newuniverse.nusmp.devil.mastery.Mastery.expired(c, now)) {          // Devil Awakening: the timed state is over
+                c.assimilating = false;
+                com.newuniverse.nusmp.devil.mastery.Mastery.ended(p, c, now, "time");
+                msg(p, "awaken_over", "The awakening ends. The devil withdraws.", ChatFormatting.DARK_RED);
             }
-            c.assimilation = DevilRules.step(c.assimilation, c.assimilating, c.tier, DevilRules.cap(cooling));
+            c.assimilation = DevilRules.step(c.assimilation, c.assimilating, c.tier, Math.min(DevilRules.cap(cooling), com.newuniverse.nusmp.devil.mastery.Mastery.ceiling(c)));   // the mastery is the ceiling of the level
             if (c.assimilating && !cooling && c.assimilation >= 100f) beginUnion(p, c, now);
         }
+        com.newuniverse.nusmp.devil.mastery.Mastery.second(p, c, now);                                              // Devil Awakening: counts the awakened second, the stage, the regeneration
         applyStats(p, c);
         syncIfChanged(p, c, now);
     }
@@ -200,6 +209,7 @@ public final class DevilContracts {
         setModifier(p, Attributes.ATTACK_DAMAGE, STR, on ? DevilRules.strength(c.tier, level, union, scale) : 0, AttributeModifier.Operation.ADD_VALUE, false);
         setModifier(p, Attributes.MOVEMENT_SPEED, SPD, on ? DevilRules.speed(c.tier, level, union, scale) : 0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, false);
         flight(p, c, on && DevilConfig.allowFlight() && DevilRules.flight(level));
+        com.newuniverse.nusmp.devil.mastery.Mastery.applyPassives(p, on ? c : new DevilContract());                  // the kit's passives (an empty contract removes them)
     }
 
     /** The permanent costs, applied again on every login and respawn (the attachment is the source of truth). Idempotent. */
@@ -214,7 +224,7 @@ public final class DevilContracts {
     }
 
     /** Sets a modifier to an amount (0 removes it); does nothing when it already has that amount, because every attribute change is a packet. */
-    static void setModifier(ServerPlayer p, Holder<Attribute> attr, ResourceLocation id, double amount, AttributeModifier.Operation op, boolean permanent) {
+    public static void setModifier(ServerPlayer p, Holder<Attribute> attr, ResourceLocation id, double amount, AttributeModifier.Operation op, boolean permanent) {
         AttributeInstance inst = p.getAttribute(attr);
         if (inst == null) return;
         AttributeModifier cur = inst.getModifier(id);
@@ -341,8 +351,14 @@ public final class DevilContracts {
 
     /** Sends what changed since the last time (at most one packet to the owner and one to the viewers per call). */
     static void syncIfChanged(ServerPlayer p, DevilContract c, long now) {
-        int self = selfKey(p, c, now);
-        if (self != c.sentSelf) { c.sentSelf = self; DevilNet.sendSelf(p, buildSync(p, c, now)); }
+        int self = selfKey(p, c, now), mast = com.newuniverse.nusmp.devil.mastery.Mastery.tenths(c);
+        if (self != c.sentSelf || mast != c.sentMast) {
+            boolean mastChanged = mast != c.sentMast;
+            c.sentSelf = self;
+            c.sentMast = mast;
+            DevilNet.sendSelf(p, buildSync(p, c, now));
+            if (mastChanged) com.newuniverse.nusmp.devil.dual.DevilSkillGrant.mirror(p, c);                       // the skill's own mastery bar follows
+        }
         if (now < c.flashUntil) return;                                                       // 3.77.0: the devil shows itself on the signer for three seconds; the true picture follows
         int vis = visualKey(c);
         if (vis != c.sentVisual) {
@@ -352,7 +368,7 @@ public final class DevilContracts {
         }
     }
 
-    static void syncNow(ServerPlayer p, DevilContract c) {
+    public static void syncNow(ServerPlayer p, DevilContract c) {
         c.sentSelf = -1;
         syncIfChanged(p, c, time(p));
         com.newuniverse.nusmp.devil.dual.DevilSkillGrant.sync(p, c);                          // 4.40.0: the Ultimate skill Devil Magic follows the contract (one lookup)
@@ -368,6 +384,7 @@ public final class DevilContracts {
     public static void dissolve(ServerPlayer p, DevilContract c) {
         DevilNpcs.discard(p.getServer(), c);
         String gone = c.devil;
+        com.newuniverse.nusmp.devil.mastery.Mastery.forget(c, gone);
         c.tier = DevilTier.NONE;
         c.attribute = DevilAttribute.NONE;
         c.devil = "";
@@ -390,6 +407,7 @@ public final class DevilContracts {
 
     /** Phase 2: {@code d} becomes the active devil of a player who holds several (the one whose tier, attribute and power they use); the level starts again from nothing. */
     public static void activate(ServerPlayer p, DevilContract c, WorldDevil d) {
+        com.newuniverse.nusmp.devil.mastery.Mastery.swap(c, c.devil, d.id());                         // each devil keeps its own mastery
         c.tier = d.tier();
         c.attribute = d.attribute();
         c.devil = d.id();
@@ -401,7 +419,8 @@ public final class DevilContracts {
 
     static DevilNet.Sync buildSync(ServerPlayer p, DevilContract c, long now) {
         return new DevilNet.Sync(c.tier.ordinal(), c.attribute.ordinal(), Math.round(c.assimilation), flags(p, c, now), c.sacrificeMask(),
-                DevilRules.secondsLeft(c.unionUntil, now), DevilRules.secondsLeft(c.unionReadyAt, now), com.newuniverse.nusmp.devil.dual.CorruptionRules.percent(c.corruption));
+                DevilRules.secondsLeft(c.unionUntil, now), DevilRules.secondsLeft(c.unionReadyAt, now), com.newuniverse.nusmp.devil.dual.CorruptionRules.percent(c.corruption),
+                com.newuniverse.nusmp.devil.mastery.Mastery.hudTenths(c), DevilRules.secondsLeft(c.awakenUntil, now), DevilRules.secondsLeft(c.awakenReadyAt, now));
     }
 
     // ---------------------------------------------------------------- magicules and messages

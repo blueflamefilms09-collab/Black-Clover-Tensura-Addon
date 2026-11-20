@@ -59,6 +59,11 @@ public final class Strike {
     }
 
     // ------------------------------------------------------------------ who is a foe
+    /** 4.71.0: the relic scan: any living target while the server setting {@code heroweapon.anyTarget} is on, else only hostile foes (the old rule). */
+    private static List<LivingEntity> scan(ServerPlayer p, double radius) {
+        return com.newuniverse.nusmp.heroweapon.HeroConfig.anyTarget() ? Fx.targetsAround(p, radius) : Fx.foesAround(p, radius);
+    }
+
     private static List<LivingEntity> nearestFirst(List<LivingEntity> in, Vec3 ref, int max) {
         in.sort(Comparator.comparingDouble(t -> t.position().distanceToSqr(ref)));
         return in.size() > max ? new ArrayList<>(in.subList(0, max)) : in;
@@ -72,7 +77,7 @@ public final class Strike {
         double reach = Math.min(32.0, radius + centre.distanceTo(p.position()));
         double r2 = radius * radius, tall = 2.5 + radius * 0.3;
         List<LivingEntity> out = new ArrayList<>();
-        for (LivingEntity t : Fx.foesAround(p, reach)) if (t.position().distanceToSqr(centre) <= r2 && Math.abs(t.getY() - centre.y) <= tall) out.add(t);
+        for (LivingEntity t : scan(p, reach)) if (t.position().distanceToSqr(centre) <= r2 && Math.abs(t.getY() - centre.y) <= tall) out.add(t);
         return nearestFirst(out, centre, max);
     }
 
@@ -83,7 +88,7 @@ public final class Strike {
     public static List<LivingEntity> foesCone(ServerPlayer p, double range, double halfAngleDeg, int max) {
         Vec3 flat = flatLook(p);
         List<LivingEntity> out = new ArrayList<>();
-        for (LivingEntity t : Fx.foesAround(p, range + 2.0)) {
+        for (LivingEntity t : scan(p, range + 2.0)) {
             if (WeaponGeo.inCone(p.getX(), p.getZ(), flat.x, flat.z, t.getX(), t.getZ(), range + t.getBbWidth() * 0.5, halfAngleDeg)
                     && Math.abs(t.getY() - p.getY()) <= 2.5 + range * 0.3) out.add(t);
         }
@@ -94,7 +99,7 @@ public final class Strike {
     public static List<LivingEntity> foesLine(ServerPlayer p, Vec3 a, Vec3 b, double halfWidth, int max) {
         double reach = Math.min(32.0, p.position().distanceTo(a.add(b).scale(0.5)) + a.distanceTo(b) / 2 + halfWidth + 2.0);
         List<LivingEntity> out = new ArrayList<>();
-        for (LivingEntity t : Fx.foesAround(p, reach)) {
+        for (LivingEntity t : scan(p, reach)) {
             Vec3 m = center(t);
             if (WeaponGeo.segmentDistance(a.x, a.y, a.z, b.x, b.y, b.z, m.x, m.y, m.z) <= halfWidth + t.getBbWidth() * 0.5) out.add(t);
         }
@@ -107,7 +112,7 @@ public final class Strike {
         double min = Math.cos(Math.toRadians(halfAngleDeg));
         LivingEntity best = null;
         double bestScore = Double.MAX_VALUE;
-        for (LivingEntity t : Fx.foesAround(p, range + 2.0)) {
+        for (LivingEntity t : scan(p, range + 2.0)) {
             Vec3 to = center(t).subtract(eye);
             double dist = to.length();
             if (dist > range + t.getBbWidth() * 0.5) continue;

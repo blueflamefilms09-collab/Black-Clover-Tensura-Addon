@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.glassworld;
 
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.book.SpellRuntime;
@@ -55,7 +56,7 @@ public final class GlassKit {
         if (e == null || e == p || !e.isAlive() || e.isSpectator() || e instanceof ArmorStand || e.isAlliedTo(p)) return false;
         if (e instanceof Player o) return !o.isCreative() && p.canHarmPlayer(o);
         if (e instanceof OwnableEntity own && p.getUUID().equals(own.getOwnerUUID())) return false;
-        if (e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;
+        if (HeroConfig.anyTarget() || e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;        // 4.71.0: any living target
         return e instanceof Mob m && m.getTarget() == p;
     }
 

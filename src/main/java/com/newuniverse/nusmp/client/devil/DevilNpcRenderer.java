@@ -42,6 +42,10 @@ import java.util.Arrays;
  * its glow map, and the cube hair, horns, wings, tail, bracers and glowing gems of its look ({@link DevilExtras}); a slow breath, the arms raised for the roar. Off = exactly the figure described above. Added
  * cost per figure per frame: the look's quads once (at most 400 including hair, the fine layer only within the detail distance, no additive pass beyond the far distance) and one additive skin pass.
  *
+ * <p>Canon figure: while the client option {@code bossLooks.devilRitualFigure} is on (default) this class only hands the drawing to {@link DevilNpcGeoRenderer} (the full-size canon devil of the trial, rank
+ * scale kept, wings and horns bones of its body, risen out of the circle); everything described above is the earlier figure, kept behind the option. Both player models are now adult-proportioned ({@code young = false}):
+ * the game's player model starts as a child, which was the baby-sized body under adult-sized wings the owner saw.
+ *
  * <p>Cost per figure per frame (rule 11): the mesh's quads once (at most {@link DevilFormRules#MAX_QUADS}, the low-detail copy beyond 40 blocks, no glow beyond 48), two draw batches; nothing beyond 64 blocks and
  * no frustum test (at most {@code npc.max} figures, default 8, exist at all). One small rotation object per figure per frame (the game's own {@code Axis} helper), nothing else. Not seen in a running game by its author.
  */
@@ -61,19 +65,24 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
     private final float[] alphas = new float[DevilExtras.ANCHORS];
     private final DevilModels.Horns horns, hornsSwept;
     private final DevilModels.Wings wings;
+    /** The summoning figure as the full-size canon devil (docs/devil_trial_model.md, "Canon looks"); this class keeps the earlier figure behind {@code bossLooks.devilRitualFigure}. */
+    private final DevilNpcGeoRenderer figure;
 
     public DevilNpcRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
         this.shadowRadius = 0f;
+        this.figure = new DevilNpcGeoRenderer(ctx);
         this.body = new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false);
         this.slimBody = new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER_SLIM), true);
+        this.body.young = false;                                                               // the game's player model starts as a child: the earlier figure was baby-sized under adult-sized wings and horns
+        this.slimBody.young = false;
         this.horns = new DevilModels.Horns(ctx.bakeLayer(DevilModels.HORNS));
         this.hornsSwept = new DevilModels.Horns(ctx.bakeLayer(DevilModels.HORNS_SWEPT));
         this.wings = new DevilModels.Wings(ctx.bakeLayer(DevilModels.WINGS));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DevilNpc e) { return STEVE; }
+    public ResourceLocation getTextureLocation(DevilNpc e) { return PlayerModelOptions.devilRitualFigure() ? figure.getTextureLocation(e) : STEVE; }
 
     /** The figure may be taller than its box: only the distance culls it. */
     @Override
@@ -87,6 +96,10 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
 
     @Override
     public void render(DevilNpc e, float entityYaw, float partial, PoseStack ps, MultiBufferSource buffers, int light) {
+        if (PlayerModelOptions.devilRitualFigure()) {                                          // the default: the full-size canon devil, wings and horns attached to its body
+            figure.render(e, entityYaw, partial, ps, buffers, light);
+            return;
+        }
         WorldDevil d = e.devil();
         if (d == null) return;
         long t0 = PerfProbe.begin();

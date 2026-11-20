@@ -30,7 +30,18 @@ public final class DevilContract {
     /** Creeping corruption of the price (docs/devil_double_magic.md), 0 to 1000 (permille of the screen); saved, so logging out keeps it. */
     public float corruption;
 
+    /** Devil Awakening (docs/devil_mastery.md), saved: the skill's mastery in percent (-1 = not set yet: the server's start value), the UTC day and the effective seconds of use already counted that day, the game time the awakening may begin again, and the mastery of the devils that are held but not active (devil id to percent). */
+    public float mastery = -1f;
+    public int masteryDay;
+    public float masteryUsed;
+    public long awakenReadyAt;
+    public final java.util.HashMap<String, Float> masteryStash = new java.util.HashMap<>();
+
     // ---- live (not saved) ----
+    /** Devil Awakening, live: the game time the running awakening ends at, the game time of the last use that counts (a blow dealt or taken, an art, a kill), the last position sampled and the game time of the last move, the last kill counted, the last passive blow, the last stage seen, the mastery last sent. */
+    public long awakenUntil, lastAct = Long.MIN_VALUE / 2, movedAt = Long.MIN_VALUE / 2, lastKillCredit = Long.MIN_VALUE / 2, lastPassiveHit = Long.MIN_VALUE / 2;
+    public double lastX, lastZ;
+    public int lastStage, sentMast = -1;
     public boolean assimilating;
     public boolean flightOn;
     /** What was last sent to the owner and to the players who can see them (-1 = nothing yet). */
@@ -56,7 +67,7 @@ public final class DevilContract {
     public int ffHits;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
-    public boolean isEmpty() { return tier == DevilTier.NONE && corruption <= 0f && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }
+    public boolean isEmpty() { return tier == DevilTier.NONE && corruption <= 0f && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0 && mastery < 0f && masteryStash.isEmpty() && awakenReadyAt == 0; }
 
     public boolean hasContract() { return tier != DevilTier.NONE; }
 
@@ -80,6 +91,9 @@ public final class DevilContract {
         assimilating = false;
         unionUntil = 0;
         flightOn = false;
+        awakenUntil = 0;
+        lastStage = 0;
+        sentMast = -1;
         sentSelf = -1;
         sentVisual = -1;
     }
@@ -99,6 +113,14 @@ public final class DevilContract {
         if (!c.devil.isEmpty()) t.putString("devil", c.devil);
         if (c.registered) t.putBoolean("reg", true);
         if (c.corruption > 0f) t.putFloat("cor", c.corruption);
+        if (c.mastery >= 0f) t.putFloat("mast", c.mastery);
+        if (c.masteryDay > 0) { t.putInt("mday", c.masteryDay); t.putFloat("mused", c.masteryUsed); }
+        if (c.awakenReadyAt > 0) t.putLong("arest", c.awakenReadyAt);
+        if (!c.masteryStash.isEmpty()) {
+            CompoundTag st = new CompoundTag();
+            for (java.util.Map.Entry<String, Float> e : c.masteryStash.entrySet()) st.putFloat(e.getKey(), e.getValue());
+            t.put("mstash", st);
+        }
         return t;
     }
 
@@ -113,6 +135,12 @@ public final class DevilContract {
         c.devil = WorldDevil.byId(devil) != null ? WorldDevil.byId(devil).id() : "";
         c.registered = t.getBoolean("reg");
         c.corruption = DevilRules.clampF(t.getFloat("cor"), 0f, 1000f);
+        c.mastery = t.contains("mast") ? com.newuniverse.nusmp.devil.mastery.MasteryRules.clamp(t.getFloat("mast")) : -1f;
+        c.masteryDay = Math.max(0, t.getInt("mday"));
+        c.masteryUsed = DevilRules.clampF(t.getFloat("mused"), 0f, 1.0e6f);
+        c.awakenReadyAt = Math.max(0L, t.getLong("arest"));
+        CompoundTag st = t.getCompound("mstash");
+        for (String k : st.getAllKeys()) if (WorldDevil.byId(k) != null && c.masteryStash.size() < 32) c.masteryStash.put(k, com.newuniverse.nusmp.devil.mastery.MasteryRules.clamp(st.getFloat(k)));
         ListTag list = t.getList("sac", Tag.TAG_STRING);
         for (int i = 0; i < list.size() && i < Sacrifice.values().length * 2; i++) {
             Sacrifice s = Sacrifice.byName(list.getString(i));

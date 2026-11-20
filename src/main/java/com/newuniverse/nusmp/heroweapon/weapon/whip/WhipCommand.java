@@ -91,7 +91,7 @@ final class WhipCommand {
     // ------------------------------------------------------------------ choosing and commanding
     /** True for a monster the Command may take: a plain hostile mob that is not a boss, a pet, a summon, already commanded, or one whose blows break blocks or light fires. */
     static boolean eligible(LivingEntity e) {
-        if (!(e instanceof Mob m) || !(e instanceof Enemy) || !m.isAlive() || m.isNoAi() || BalanceLaw.isBoss(m) || isCommanded(m)) return false;
+        if (!(e instanceof Mob m) || !(e instanceof Enemy || com.newuniverse.nusmp.heroweapon.HeroConfig.anyTarget() && m.getAttributes().hasAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)) || !m.isAlive() || m.isNoAi() || BalanceLaw.isBoss(m) || isCommanded(m)) return false;
         if (m instanceof Creeper || m instanceof Ghast || m instanceof Blaze) return false;
         return !(m instanceof OwnableEntity own && own.getOwnerUUID() != null);
     }

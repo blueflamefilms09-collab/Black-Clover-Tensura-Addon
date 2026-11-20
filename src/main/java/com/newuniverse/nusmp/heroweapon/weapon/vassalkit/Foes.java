@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.vassalkit;
 
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.multiverse.Squads;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,7 +41,7 @@ public final class Foes {
         if (e instanceof Player o) return !o.isCreative() && p.canHarmPlayer(o);
         if (e instanceof OwnableEntity own && own.getOwnerUUID() != null) return false;          // a tamed or summoned creature belongs to its owner's side
         if (e.getPersistentData().hasUUID(RELIC_OWNER)) return false;
-        if (e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;
+        if (HeroConfig.anyTarget() || e instanceof Enemy || e.getType().getCategory() == MobCategory.MONSTER) return true;        // 4.71.0: any living target
         if (!(e instanceof Mob m)) return false;
         LivingEntity hunted = m.getTarget();
         return hunted != null && (hunted == p || isAlly(p, hunted));

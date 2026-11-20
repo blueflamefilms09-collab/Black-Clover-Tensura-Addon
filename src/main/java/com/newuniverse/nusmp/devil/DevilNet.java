@@ -40,7 +40,7 @@ public final class DevilNet {
 
     // ---------------------------------------------------------------- server to client
     /** The owner's state. {@code unionSec} and {@code coolSec} are whole seconds at the moment of sending. */
-    public record Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec, int corruption) implements CustomPacketPayload {
+    public record Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec, int corruption, int mastery, int awakeSec, int restSec) implements CustomPacketPayload {
         public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeByte(p.tier());
@@ -51,8 +51,22 @@ public final class DevilNet {
             buf.writeVarInt(p.unionSec());
             buf.writeVarInt(p.coolSec());
             buf.writeByte(p.corruption());                                                        // 4.40.0, appended: the creeping corruption in percent
-        }, buf -> new Sync(DevilRules.clampInt(buf.readByte(), 0, DevilTier.values().length - 1), DevilRules.clampInt(buf.readByte(), 0, DevilAttribute.values().length - 1),
-                DevilRules.clampInt(buf.readByte(), 0, 100), buf.readByte() & 0xF, buf.readByte() & 0x7, Math.max(0, buf.readVarInt()), Math.max(0, buf.readVarInt()), buf.isReadable() ? DevilRules.clampInt(buf.readByte(), 0, 100) : 0));
+            buf.writeVarInt(p.mastery());                                                         // Devil Awakening, appended: the mastery in tenths of a percent, the seconds of the awakening left, the seconds of rest left
+            buf.writeVarInt(p.awakeSec());
+            buf.writeVarInt(p.restSec());
+        }, buf -> {
+            int tier = DevilRules.clampInt(buf.readByte(), 0, DevilTier.values().length - 1), attr = DevilRules.clampInt(buf.readByte(), 0, DevilAttribute.values().length - 1);
+            int level = DevilRules.clampInt(buf.readByte(), 0, 100), flags = buf.readByte() & 0xF, sac = buf.readByte() & 0x7;
+            int union = Math.max(0, buf.readVarInt()), cool = Math.max(0, buf.readVarInt());
+            int cor = buf.isReadable() ? DevilRules.clampInt(buf.readByte(), 0, 100) : 0;
+            boolean more = buf.isReadable();                                                      // a packet of the older shape stops here (mastery 0 = not sent)
+            int mast = more ? DevilRules.clampInt(buf.readVarInt(), 0, 1000) : 0;
+            int awake = more ? Math.min(100000, Math.max(0, buf.readVarInt())) : 0;
+            int rest = more ? Math.min(100000, Math.max(0, buf.readVarInt())) : 0;
+            return new Sync(tier, attr, level, flags, sac, union, cool, cor, mast, awake, rest);
+        });
+        /** The 4.40.0 shape: corruption, no mastery. */
+        public Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec, int corruption) { this(tier, attribute, level, flags, sacMask, unionSec, coolSec, corruption, 0, 0, 0); }
         /** The 3.48.0 shape: no corruption. */
         public Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec) { this(tier, attribute, level, flags, sacMask, unionSec, coolSec, 0); }
 

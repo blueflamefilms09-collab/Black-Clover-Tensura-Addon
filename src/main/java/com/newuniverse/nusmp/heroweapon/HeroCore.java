@@ -33,6 +33,7 @@ public final class HeroCore {
         HeroBondEvents.register(NeoForge.EVENT_BUS);
         HeroLoanEvents.register(NeoForge.EVENT_BUS);
         HeroCombat.register(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.heroweapon.weapon.shield.ShieldReflect.init();           // 4.71.0: a raised hero Shield turns dangerous shots from the front back
         HeroRuleEvents.register(NeoForge.EVENT_BUS);
         HeroBondSelfTests.register();                    // keys hero.bond, hero.use, hero.rules (the smoke test expects the prefix "hero")
         HeroUseSelfTests.register();

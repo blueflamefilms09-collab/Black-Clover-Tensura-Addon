@@ -114,13 +114,25 @@ public final class Fx {
 
     // ---------------------------------------------------------------- foes and damage
     /** Hostile and non-allied living things within the radius (at most 24, nearest first). Never creative or spectator players, allies, pets or summons of the caster. */
-    public static List<LivingEntity> foesAround(ServerPlayer p, double radius) {
+    public static List<LivingEntity> foesAround(ServerPlayer p, double radius) { return scan(p, radius, false); }
+
+    /** 4.71.0: like {@link #foesAround} but any living target (animals, villagers, neutral mobs too); allies, own pets, relic summons, other people's pets and armour stands are still spared. */
+    public static List<LivingEntity> targetsAround(ServerPlayer p, double radius) { return scan(p, radius, true); }
+
+    private static List<LivingEntity> scan(ServerPlayer p, double radius, boolean any) {
         if (p == null || !p.isAlive()) return List.of();
         double r = Mth.clamp(radius, 0.5, MAX_RADIUS);
         Vec3 c = p.position();
-        List<LivingEntity> found = p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r), e -> isFoe(p, e) && e.distanceToSqr(c) <= r * r);
+        List<LivingEntity> found = p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r), e -> (any ? isTarget(p, e) : isFoe(p, e)) && e.distanceToSqr(c) <= r * r);
         found.sort(Comparator.comparingDouble(e -> e.distanceToSqr(c)));
         return found.size() > MAX_FOES ? new ArrayList<>(found.subList(0, MAX_FOES)) : found;
+    }
+
+    static boolean isTarget(ServerPlayer p, LivingEntity e) {
+        if (e == p || !e.isAlive() || e.isSpectator() || e instanceof ArmorStand || e.isAlliedTo(p)) return false;
+        if (e instanceof Player o) return !o.isCreative() && p.canHarmPlayer(o);
+        if (e instanceof OwnableEntity own && own.getOwnerUUID() != null) return false;          // somebody's tamed animal
+        return !e.getPersistentData().hasUUID(OWNER);
     }
 
     static boolean isFoe(ServerPlayer p, LivingEntity e) {
