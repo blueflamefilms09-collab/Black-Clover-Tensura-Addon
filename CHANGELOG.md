@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.56.1] — Fix: two sounds tests counted the new Goku and Sinbad voice lines
+- FIXED: `SalamanderSoundsTest` and `SylphSoundsTest` count the older spoken lines; they now also leave out the new `voice.goku_*` and `voice.sinbad_*` lines (4.55.0), so the two older tests pass again. This is the build that carries 4.55.0 (Goku, Sinbad and Kakashi voices) and 4.56.0 (Weapon page). No game change.
+
 ## [4.56.0] — Weapon page in the Codex: upgrade options and mastery bars for the weapon you hold
 Owner request: an updating (upgrade) system and mastery bars in the Tensura-style menu.
 - NEW: a "Weapon" page appended last of the stock Codex pages. It shows the held weapon, or one picked from chips when you own several: name, grade, level and form. Left: the upgrade options the weapons already have (change form, learn form, feed the gem an item you carry for hero and vassal weapons; switch form for the Lord weapons and the Black Sword; Half-Starvation on or off for the Black Sword). Right: mastery bars (weapon level, active-form mastery, Black Sword tier, Half-Starved mastery, plus Grimoire mastery and each Beast Will's mastery under "Other masteries").
