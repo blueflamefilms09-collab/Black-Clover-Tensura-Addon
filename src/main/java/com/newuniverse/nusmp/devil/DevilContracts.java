@@ -139,7 +139,7 @@ public final class DevilContracts {
 
     static void second(ServerPlayer p, DevilContract c, long now) {
         c.corruption = com.newuniverse.nusmp.devil.dual.CorruptionRules.step(c.corruption, DevilConfig.enabled() && !c.sacrifices.isEmpty(), c.assimilating, c.inUnion(), now - c.lastKill,
-                com.newuniverse.nusmp.devil.dual.DualConfig.corruption());                                          // 4.40.0: the price creeps (one float, once a second)
+                com.newuniverse.nusmp.devil.phase2.Phase2.corruption(p, c, com.newuniverse.nusmp.devil.dual.DualConfig.corruption()));      // 4.40.0: the price creeps (one float, once a second); phase 2: a submission contract creeps slower
         if (!DevilConfig.enabled()) {
             if (c.assimilation > 0 || c.assimilating || c.inUnion()) { c.assimilation = 0; c.assimilating = false; c.unionUntil = 0; }
             applyStats(p, c);
@@ -196,7 +196,7 @@ public final class DevilContracts {
         boolean on = DevilConfig.enabled() && c.hasContract();
         float level = on ? c.assimilation : 0f;
         boolean union = on && c.inUnion();
-        double scale = DevilConfig.statScale();
+        double scale = DevilConfig.statScale() * (on ? com.newuniverse.nusmp.devil.phase2.Phase2.power(p, c) : 1.0);      // phase 2: the kind's share, split between the holders, times the sabotage debuff
         setModifier(p, Attributes.ATTACK_DAMAGE, STR, on ? DevilRules.strength(c.tier, level, union, scale) : 0, AttributeModifier.Operation.ADD_VALUE, false);
         setModifier(p, Attributes.MOVEMENT_SPEED, SPD, on ? DevilRules.speed(c.tier, level, union, scale) : 0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, false);
         flight(p, c, on && DevilConfig.allowFlight() && DevilRules.flight(level));
@@ -367,6 +367,7 @@ public final class DevilContracts {
      */
     public static void dissolve(ServerPlayer p, DevilContract c) {
         DevilNpcs.discard(p.getServer(), c);
+        String gone = c.devil;
         c.tier = DevilTier.NONE;
         c.attribute = DevilAttribute.NONE;
         c.devil = "";
@@ -377,6 +378,24 @@ public final class DevilContracts {
         c.resetLive();
         applyStats(p, c);
         applySacrifices(p, c);
+        syncNow(p, c);
+        com.newuniverse.nusmp.devil.phase2.Phase2.onDissolve(p, gone);                       // phase 2: the ledger forgets it, the other holders' shares grow, the next devil of a stack becomes active
+    }
+
+    /** Phase 2: the stats and the picture follow a changed share (a holder joined or left, a debuff began). */
+    public static void refresh(ServerPlayer p, DevilContract c) {
+        applyStats(p, c);
+        syncNow(p, c);
+    }
+
+    /** Phase 2: {@code d} becomes the active devil of a player who holds several (the one whose tier, attribute and power they use); the level starts again from nothing. */
+    public static void activate(ServerPlayer p, DevilContract c, WorldDevil d) {
+        c.tier = d.tier();
+        c.attribute = d.attribute();
+        c.devil = d.id();
+        c.resetLive();
+        applySacrifices(p, c);
+        applyStats(p, c);
         syncNow(p, c);
     }
 

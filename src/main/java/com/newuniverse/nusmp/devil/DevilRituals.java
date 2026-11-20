@@ -4,6 +4,10 @@ import com.newuniverse.nusmp.blackclover.GrimoirePages;
 import com.newuniverse.nusmp.devil.dual.DarkRitualRules;
 import com.newuniverse.nusmp.devil.dual.DevilOwnership;
 import com.newuniverse.nusmp.devil.dual.DevilRanks;
+import com.newuniverse.nusmp.devil.phase2.Phase2;
+import com.newuniverse.nusmp.devil.phase2.Phase2Config;
+import com.newuniverse.nusmp.devil.phase2.Phase2Rules;
+import com.newuniverse.nusmp.devil.phase2.Trials;
 import com.newuniverse.nusmp.item.NUItems;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxTone;
@@ -77,9 +81,13 @@ public final class DevilRituals {
 
     static boolean offerOpen(DevilContract c, long now) { return c != null && !c.offer.isEmpty() && DevilRitualRules.offerOpen(c.offerAt, now); }
 
+    /** Phase 2: is the offer of this contract still open (the trial fight asks, once a second, whether it should go on)? */
+    public static boolean offerIsOpen(DevilContract c, long now) { return offerOpen(c, now); }
+
     static DevilRitualRules.Facts facts(ServerPlayer p, DevilContract c, long now) {
-        boolean bond = (c != null && c.hasContract()) || !Bonds.canBind(p, Bonds.Kind.DEVIL);
-        boolean busy = c != null && (c.ritual != null || offerOpen(c, now));
+        boolean holds = c != null && c.hasContract();
+        boolean bond = holds ? !Phase2.stacking() : !Bonds.canBind(p, Bonds.Kind.DEVIL);                  // phase 2: a holder may call another devil when stacking is on (the caps are the gate's)
+        boolean busy = c != null && (c.ritual != null || offerOpen(c, now) || Trials.running(p.getServer(), c));
         long since = c == null || c.lastRitual < 0 ? -1 : now - c.lastRitual;
         float max = Math.max(1f, p.getMaxHealth());
         return new DevilRitualRules.Facts(on(), bond, busy, since, p.getHealth() / max, p.getHealth(), has(p, NUItems.DEVIL_CONTRACT.get(), 1), has(p, Items.PAPER, 1), has(p, Items.BOOK, 1),
@@ -138,6 +146,7 @@ public final class DevilRituals {
             return no;
         }
         if (DevilOwnership.refuses(p, d)) return DevilRitualRules.Denial.TAKEN;                // 4.40.0: One of One: a devil with a holder is not called again
+        if (Phase2.denyBegin(p, c, d)) return DevilRitualRules.Denial.TAKEN;                   // phase 2: severed, full, not enough existence points, or the stack is at its cap (said to the caller)
         DarkRitualRules.Why dark = darkWhy(p);
         if (dark == DarkRitualRules.Why.NONE) {
             say(p, DevilRitualRules.Denial.NO_DARK.text, ChatFormatting.RED);
@@ -167,6 +176,8 @@ public final class DevilRituals {
         c.ritual.lightBound = DarkRitualRules.needsLightCheck(dark);
         c.lastRitual = now;
         c.offer = "";
+        c.trialResult = Phase2Rules.TRIAL_NONE;
+        c.trialDevil = "";
         p.sendSystemMessage(Component.literal(d.world().ritual + " (" + d.world().label + ")").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         stage(p, d, c.ritual, 0);
         DevilNpcs.spawn(p, c, d, c.ritual);                                                  // 3.97.0: the devil's figure, three blocks in front (docs/devil_forms.md); none over the cap or with npc.enabled = false
@@ -208,8 +219,18 @@ public final class DevilRituals {
         DevilNpcs.speakAt(p, c, d, t);
         if (t >= d.world().ticks) {
             c.ritual = null;
+            Phase2.Answer answer = Phase2.answer(p, c, d, r);                                          // phase 2: does it come at all, does it turn on the circle, does it fight first
+            if (answer == Phase2.Answer.FAIL) {
+                DevilNpcs.dissolve(p, c);
+                sound(p, SoundEvents.ELDER_GUARDIAN_CURSE, 1.0f, 0.7f);
+                return;
+            }
             Vec3 front = new Vec3(r.x + r.faceX * 3.0, r.y + 0.05, r.z + r.faceZ * 3.0);              // 3.77.0: the devil itself: a shadow with burning eyes over its sigil, three blocks in front, while it waits for the answer
             shape(p, VfxShape.BOSS_DEVIL_SIGIL, front, front.add(0, 1, 0), d.color(), 80, 2.5);
+            if (answer == Phase2.Answer.TRIAL) {
+                DevilNpcs.dissolve(p, c);                                                              // the trial devil is its own body: the figure of the ritual makes way
+                return;
+            }
             if (!DevilNpcs.offer(p, c, d)) shape(p, VfxShape.SHADOW_UNITE, front, front.add(0, 1, 0), d.color(), 200, 1.4);        // 3.97.0: with a figure it roars and speaks; without one (off, over the cap) the old shadow
             offer(p, c, d);
         }
@@ -321,6 +342,10 @@ public final class DevilRituals {
         say(p, "  Power: a " + d.tier().key() + " devil of " + d.attribute().key().replace('_', ' ') + ". " + fx.blurb(), ChatFormatting.GRAY);
         say(p, "  Rank: " + DevilRanks.line(DevilRanks.of(d)), ChatFormatting.GRAY);
         say(p, "  Price: " + priceText(d), ChatFormatting.GRAY);
+        if (Phase2.on() && Phase2Config.confirm()) {                                                  // phase 2: the signing screen: the terms, the count of contracts, your share, the kinds you may take
+            Phase2.confirm(p, c, d);
+            return;
+        }
         MutableComponent line = Component.literal("  ");
         line.append(Component.literal("[Sign]").withStyle(s -> s.withColor(ChatFormatting.DARK_RED).withBold(true).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/devil sign"))
                 .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("The price is taken at once and stays through death.")))));
@@ -330,17 +355,33 @@ public final class DevilRituals {
         p.sendSystemMessage(line);
     }
 
+    /** Phase 2: the trial fight reached "impressed" or "won": the devil makes its offer (again) where it stands. */
+    public static void offerAfterTrial(ServerPlayer p, DevilContract c, WorldDevil d, Vec3 at) {
+        shape(p, VfxShape.BOSS_DEVIL_SIGIL, at, at.add(0, 1, 0), d.color(), 40, 1.5);
+        offer(p, c, d);
+    }
+
     private static String cap(String s) { return s.isEmpty() ? s : Character.toUpperCase(s.charAt(0)) + s.substring(1); }
 
     /** The caller signs: the lasting price is taken and the contract written. False (with a line) when there is nothing to sign or it can no longer be signed. */
-    static boolean sign(ServerPlayer p) {
+    static boolean sign(ServerPlayer p) { return sign(p, null); }
+
+    /** {@code kindWord}: submit, even or dominate (phase 2; null = the default, or the terms panel when the confirmation is on). */
+    static boolean sign(ServerPlayer p, String kindWord) {
         DevilContract c = DevilStore.peek(p);
         long now = DevilContracts.time(p);
         if (!offerOpen(c, now)) { say(p, "No devil is waiting for your answer (or it grew tired of waiting).", ChatFormatting.RED); return false; }
         WorldDevil d = WorldDevil.byId(c.offer);
+        if (d == null || !on()) { c.offer = ""; return false; }
+        Phase2Rules.Kind kind = null;
+        if (Phase2.on()) {
+            if (kindWord == null && Phase2Config.confirm()) { Phase2.confirm(p, c, d); return false; }       // the screen: read the terms, then sign with a kind (the offer stays open)
+            kind = Phase2.choose(p, c, d, kindWord);
+            if (kind == null) return false;                                                               // said why; the offer stays open so the caller can choose again
+        }
         c.offer = "";
-        if (d == null || !on()) return false;
-        if (c.hasContract() || Bonds.refuse(p, Bonds.Kind.DEVIL, "a devil contract")) return false;
+        boolean stacking = c.hasContract();
+        if (stacking ? !Phase2.stacking() : Bonds.refuse(p, Bonds.Kind.DEVIL, "a devil contract")) return false;      // phase 2: a holder may take another devil when stacking is on (its caps were checked by the gate)
         if (DevilOwnership.refuses(p, d)) return false;
         if (d.world() == DevilWorld.BERSERK && !p.isCreative()) {
             if (p.experienceLevel < DevilRitualRules.BERSERK_LEVELS) { say(p, DevilRitualRules.Denial.NO_LEVELS.text, ChatFormatting.RED); return false; }
@@ -352,13 +393,16 @@ public final class DevilRituals {
             p.getInventory().placeItemBackInInventory(new ItemStack(Items.GOLD_INGOT, 16));
         }
         if (!DevilOwnership.claim(p, c, d)) { DevilOwnership.refuses(p, d); return false; }       // 4.40.0: One of One, decided again at the moment of signing
-        c.tier = d.tier();
-        c.attribute = d.attribute();
-        c.devil = d.id();
+        if (!stacking) {                                                                      // phase 2: a second devil is held, not active: the active one keeps its tier, attribute and level
+            c.tier = d.tier();
+            c.attribute = d.attribute();
+            c.devil = d.id();
+        }
         int mask = d.priceMask();
         for (Sacrifice s : Sacrifice.values()) if ((mask & s.bit()) != 0) c.sacrifices.add(s);
-        c.resetLive();
+        if (!stacking) c.resetLive();
         DevilContracts.applySacrifices(p, c);
+        if (Phase2.on() && kind != null) Phase2.joined(p, c, d, kind);                        // phase 2: the ledger, the other holders' shares, the trial's end (before the stats, which read the share)
         DevilContracts.applyStats(p, c);
         DevilContracts.syncNow(p, c);
         DevilNpcs.merge(p, c, d);                                                            // 3.97.0: the figure merges into the signer
@@ -385,6 +429,8 @@ public final class DevilRituals {
         if (c == null || c.offer.isEmpty()) return false;
         WorldDevil d = WorldDevil.byId(c.offer);
         c.offer = "";
+        Trials.end(p.getServer(), c);                                                         // phase 2: the trial devil goes too
+        c.trialResult = Phase2Rules.TRIAL_NONE;
         DevilNpcs.dissolve(p, c);
         say(p, (d == null ? "The devil" : cap(d.name())) + " withdraws.", ChatFormatting.GRAY);
         return true;

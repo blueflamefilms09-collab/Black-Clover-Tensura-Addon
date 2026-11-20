@@ -85,7 +85,7 @@ public final class DevilNpcs {
      * 4.40.0: the height the figure stands at: the top of the first block with a collision shape under the spot, within {@link DevilNpcRules#GROUND_UP} above to {@link DevilNpcRules#GROUND_DOWN} below the
      * circle, where it also has room (a ledge, a step or a slab no longer leaves it floating or sunk); the circle's own height when there is none. At most five block reads, once per ritual.
      */
-    static double standY(ServerLevel sl, double x, double circleY, double z) {
+    public static double standY(ServerLevel sl, double x, double circleY, double z) {
         int bx = net.minecraft.util.Mth.floor(x), bz = net.minecraft.util.Mth.floor(z), top = net.minecraft.util.Mth.floor(circleY) + DevilNpcRules.GROUND_UP;
         for (int by = top; by >= top - DevilNpcRules.GROUND_UP - DevilNpcRules.GROUND_DOWN; by--) {
             net.minecraft.core.BlockPos below = new net.minecraft.core.BlockPos(bx, by - 1, bz);

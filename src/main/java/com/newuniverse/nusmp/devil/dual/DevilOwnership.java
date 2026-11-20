@@ -43,6 +43,7 @@ public final class DevilOwnership {
     // ---------------------------------------------------------------- the verdict
     public static HolderRules.Verdict verdict(MinecraftServer server, String devilId, UUID who) {
         if (server == null || devilId == null || devilId.isEmpty()) return HolderRules.Verdict.FREE;
+        if (!com.newuniverse.nusmp.devil.phase2.Phase2.oneOfOne(devilId)) return HolderRules.Verdict.FREE;                  // phase 2: a lesser devil is shared (its cap is checked by the gate), not held by one
         return HolderRules.check(DevilHolders.get(server).slot(devilId), who, now(server), System.currentTimeMillis(), DualConfig.holderParams());
     }
 
@@ -63,10 +64,10 @@ public final class DevilOwnership {
         MinecraftServer server = p.getServer();
         HolderRules.Verdict v = verdict(server, d.id(), p.getUUID());
         if (!v.mayTake) return false;
-        if (!DualConfig.oneOfOne()) return true;                                              // the old behaviour: no table at all
+        if (!DualConfig.oneOfOne() || !com.newuniverse.nusmp.devil.phase2.Phase2.oneOfOne(d.id())) return true;      // the old behaviour: no table at all; phase 2: a shared devil has no row
         DevilHolders h = DevilHolders.get(server);
         UUID old = h.holderOf(d.id());
-        h.claim(d.id(), p.getUUID(), now(server));
+        if (com.newuniverse.nusmp.devil.phase2.Phase2.stacking()) h.claimKeep(d.id(), p.getUUID(), now(server)); else h.claim(d.id(), p.getUUID(), now(server));      // phase 2: a player who stacks keeps their other Supreme devils
         c.registered = true;
         if (old != null && !old.equals(p.getUUID())) {
             ServerPlayer was = server.getPlayerList().getPlayer(old);
@@ -76,6 +77,7 @@ public final class DevilOwnership {
                 was.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.devil.dual.lost", "Another has taken your devil. The bond is gone.").withStyle(ChatFormatting.DARK_RED));
             }
         }
+        if (old != null && !old.equals(p.getUUID()) && com.newuniverse.nusmp.devil.phase2.Phase2.on()) com.newuniverse.nusmp.devil.phase2.Phase2.lose(server, old, d.id(), false);      // phase 2: a held-but-not-active contract goes from the ledger too
         return true;
     }
 
@@ -99,6 +101,7 @@ public final class DevilOwnership {
         MinecraftServer server = p.getServer();
         DevilHolders h = DevilHolders.get(server);
         h.online(p.getUUID());
+        if (!com.newuniverse.nusmp.devil.phase2.Phase2.oneOfOne(c.devil)) return;                // phase 2: a shared devil has no holder row to reconcile
         UUID cur = h.holderOf(c.devil);
         if (cur == null) {
             if (h.slot(c.devil) == null) { h.claim(c.devil, p.getUUID(), now(server)); c.registered = true; }      // an older contract is adopted when its devil is free
@@ -142,6 +145,7 @@ public final class DevilOwnership {
     private static void won(MinecraftServer server, DevilHolders h, ServerPlayer loser, DevilHolders.Duel d, long now) {
         DevilContract lc = DevilStore.peek(loser);
         if (lc != null && d.devil().equals(lc.devil)) DevilContracts.dissolve(loser, lc);
+        if (com.newuniverse.nusmp.devil.phase2.Phase2.on()) com.newuniverse.nusmp.devil.phase2.Phase2.lose(server, loser.getUUID(), d.devil(), false);      // phase 2: and from the ledger, if it was held but not active
         h.reserve(d.devil(), d.challenger(), now + HolderRules.reserveTicks(DualConfig.reserveHours()));
         WorldDevil w = WorldDevil.byId(d.devil());
         String name = w == null ? d.devil() : w.name();

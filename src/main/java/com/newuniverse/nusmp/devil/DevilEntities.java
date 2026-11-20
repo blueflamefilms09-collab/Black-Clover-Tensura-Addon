@@ -20,5 +20,9 @@ public final class DevilEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<DevilNpc>> NPC = ENTITIES.register("devil_npc",
             () -> EntityType.Builder.<DevilNpc>of(DevilNpc::new, MobCategory.MISC).sized(0.7f, 1.9f).clientTrackingRange(8).updateInterval(10).fireImmune().noSave().build("devil_npc"));
 
+    /** Phase 2 (docs/devil_contract_phase2.md): the devil that fights before it agrees. Never saved, never counts toward a mob cap (MISC); attributes are registered by {@link DevilBoot}. */
+    public static final DeferredHolder<EntityType<?>, EntityType<com.newuniverse.nusmp.devil.phase2.DevilTrialEntity>> TRIAL = ENTITIES.register("devil_trial",
+            () -> EntityType.Builder.<com.newuniverse.nusmp.devil.phase2.DevilTrialEntity>of(com.newuniverse.nusmp.devil.phase2.DevilTrialEntity::new, MobCategory.MISC).sized(0.7f, 1.95f).clientTrackingRange(8).updateInterval(2).fireImmune().noSave().build("devil_trial"));
+
     public static void init(IEventBus modBus) { ENTITIES.register(modBus); }
 }

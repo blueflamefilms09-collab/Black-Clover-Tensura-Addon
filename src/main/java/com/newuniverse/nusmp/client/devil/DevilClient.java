@@ -119,6 +119,7 @@ public final class DevilClient {
         modBus.addListener(WegLayer::add);
         modBus.addListener(DevilFormLayer::add);
         modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> e.registerEntityRenderer(DevilEntities.NPC.get(), DevilNpcRenderer::new));
+        modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> e.registerEntityRenderer(DevilEntities.TRIAL.get(), DevilTrialRenderer::new));      // phase 2: the trial fight's devil (placeholder humanoid)
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> clear());
         NeoForge.EVENT_BUS.addListener((ViewportEvent.ComputeFov e) -> fov(e));

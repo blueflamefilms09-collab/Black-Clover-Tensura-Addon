@@ -48,6 +48,12 @@ public final class DevilContract {
     /** Live, not saved: the game time of the player's last kill (the corruption eases for a minute after one) and the corruption last sent. */
     public long lastKill = Long.MIN_VALUE / 2;
     public int sentCorruption = -1;
+    /** Phase 2 (docs/devil_contract_phase2.md), live, never saved: the trial fight's entity, what it ended in ({@code Phase2Rules.TRIAL_*}) and for which devil, the game time of the last swap of the active devil, and the friendly-fire count. */
+    public java.util.UUID trial;
+    public int trialResult;
+    public String trialDevil = "";
+    public long lastSwap = Long.MIN_VALUE / 2, ffStart;
+    public int ffHits;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
     public boolean isEmpty() { return tier == DevilTier.NONE && corruption <= 0f && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }

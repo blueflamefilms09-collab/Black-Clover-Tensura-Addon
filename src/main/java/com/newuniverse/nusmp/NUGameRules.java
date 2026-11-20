@@ -19,7 +19,7 @@ public final class NUGameRules {
     private NUGameRules() {}
 
     public static GameRules.Key<GameRules.BooleanValue> ZAGRED_BOSS, KOTODAMA_BOSS_REWARD, GRIEF_BLOCKS, WORLD_TREE_TREES_STAY, GOD_TIER_AFFECTS_PLAYERS,
-            FORBIDDEN_START, ANNOUNCE_THREE_LEAF, GRIMOIRE_ROLLS, SKILL_EVOLUTION, ANTI_MAGIC_EVENT_ONLY, GOD_OF_ORDER;
+            FORBIDDEN_START, ANNOUNCE_THREE_LEAF, GRIMOIRE_ROLLS, SKILL_EVOLUTION, ANTI_MAGIC_EVENT_ONLY, GOD_OF_ORDER, DEVIL_SEVER_ON_KILL;
     public static GameRules.Key<GameRules.IntegerValue> PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;
     static final int PVP_CAP_DEFAULT = 40, DAMAGE_DEFAULT = 100, COOLDOWN_DEFAULT = 60;
 
@@ -37,6 +37,7 @@ public final class NUGameRules {
         SKILL_EVOLUTION = GameRules.register("nusmpSkillEvolution", c, GameRules.BooleanValue.create(true));
         ANTI_MAGIC_EVENT_ONLY = GameRules.register("nusmpAntiMagicEventOnly", c, GameRules.BooleanValue.create(true));
         GOD_OF_ORDER = GameRules.register("nusmpGodOfOrder", c, GameRules.BooleanValue.create(true));                    // 1.68.0: false = the God of Order never appears (no visits, no taking of duplicates)
+        DEVIL_SEVER_ON_KILL = GameRules.register("devilSeverOnKill", c, GameRules.BooleanValue.create(true));                  // devil contracts phase 2: killing a fellow holder of the same shared devil severs that contract for good
         PVP_HIT_CAP_PERCENT = GameRules.register("nusmpPvpHitCapPercent", c, GameRules.IntegerValue.create(PVP_CAP_DEFAULT));
         SPELL_DAMAGE_PERCENT = GameRules.register("nusmpSpellDamagePercent", c, GameRules.IntegerValue.create(DAMAGE_DEFAULT));
         SPELL_COOLDOWN_PERCENT = GameRules.register("nusmpSpellCooldownPercent", c, GameRules.IntegerValue.create(COOLDOWN_DEFAULT));
@@ -69,6 +70,9 @@ public final class NUGameRules {
 
     /** 1.68.0: may the God of Order appear (and the Order enforce the one-world relics)? The gamerule {@code nusmpGodOfOrder}, default true. */
     public static boolean godOfOrder(Level l) { return rule(l, GOD_OF_ORDER, true); }
+
+    /** Devil contracts phase 2: does a holder who kills another holder of the same shared devil sever that contract? The gamerule {@code devilSeverOnKill}, default true (the server setting {@code devilPhase2.sever.enabled} must be on too). */
+    public static boolean devilSeverOnKill(Level l) { return rule(l, DEVIL_SEVER_ON_KILL, true); }
 
     // ---------------------------------------------------------------- numbers: the gamerule once changed, else the config
     /** The most one addon spell hit can take from a player, as a share of their max health (0..1). */

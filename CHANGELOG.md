@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.52.0] — Devil contract phase 2: stacked pacts, shared devils, price by Existence Points, betrayal, trial devil
+- NEW: a holder can stack several devil pacts (ledger of at most 16 pacts per player); the second Supreme devil costs 5x rising to 10x, at most 2 Supreme.
+- NEW: lesser devils can be shared by several holders; a join or sever refreshes the other holders (at most 4 by default, hard 16).
+- NEW: signing is gated by Existence Points (setting `ep.enabled`), with a chat panel of clickable words and a trial devil (at most 4 on the server by default, one per player, 150 s, never saved).
+- NEW: betrayal and sabotage rules between holders of the same devil (severing a holder is cursed); same-day trigger reserved as an event only.
+- NEW: self-test prefix `devil.phase2`, docs `docs/devil_contract_phase2.md`, 68 lang lines.
+- REPLACED (old behaviour kept behind settings): phase 1 lesser devils are now shared by default (`shared.enabled=false` or `enabled=false` restores it). Legacy contracts are adopted as dominance at login.
+- KEPT: every phase 1 contract, ritual and relic.
+- CAVEATS: nothing compiled by Gradle here and nothing seen in a game; the trial devil is a placeholder with no real model (rule 14 not met for it); the signing screen is a chat panel, not a client Screen.
+- OPEN DECISIONS: second-Supreme factor reading (`strongFirstFactor`), sabotage on a kill, the unfinished same-day rule, pact devils one-of-one (setting exists, default off), lesser devils shared by default.
+
 ## [4.51.1] — Build fix: Goku and Sinbad bars resolve for their boss entities, geo test knows the hair and fx layers
 - FIXED: the bar styles `dragon_ball` and `magi_djinn` are now also named for the entities `goku_boss` and `sinbad_boss` (the entity table; `BarStyleResolverTest` found nothing resolving to them).
 - FIXED: `GeoAssetsTest` expected a texture per hair, fine and fx layer of the Goku and Sinbad looks; those layers draw on the look's one atlas, as the Black Clover and devil layers do.

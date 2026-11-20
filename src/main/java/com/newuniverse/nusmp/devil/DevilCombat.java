@@ -37,7 +37,7 @@ public final class DevilCombat {
             if (c == null || !c.hasContract()) return;
             long now = DevilContracts.time(p);
             if (!DevilRules.effectReady(c.lastEffect, now)) return;
-            double power = DevilRules.effectPower(c.tier, c.assimilation, c.inUnion());
+            double power = DevilRules.effectPower(c.tier, c.assimilation, c.inUnion()) * com.newuniverse.nusmp.devil.phase2.Phase2.power(p, c);      // phase 2: the kind's share, split between holders, times the debuff (1.0 when off)
             DevilRules.Effect fx = DevilRules.effect(c.attribute);
             if (power <= 0 || (fx.bonus() <= 0 && fx.effectId().isEmpty() && !fx.strip() && fx.heal() <= 0)) return;
             c.lastEffect = now;

@@ -1,0 +1,26 @@
+{
+  "_about": "Phase 2 of the devil contracts (docs/devil_contract_phase2.md). Data, not code: edit here (or in a resource pack of the mod's assets) to change what a rank asks for. ep = the existence points (Tensura EP) the player needs per rank (the server setting ep.scale multiplies them); chance = the base chance that a finished ritual brings the devil; relicBonus = what holding an item of that devil adds (tag anime_multiverse:devil_relics/<id>); devils = per devil: trial (it fights before it agrees), betray (the chance it turns on everyone in the circle but the caller), ep (its own requirement, 0 or missing = its rank's).",
+  "ep": { "low": 1000000, "mid": 10000000, "high": 100000000, "supreme": 1000000000 },
+  "chance": { "low": 0.90, "mid": 0.75, "high": 0.55, "supreme": 0.35 },
+  "relicBonus": 0.35,
+  "minChance": 0.05,
+  "devils": {
+    "liebe":        { "trial": true,  "betray": 0.0 },
+    "lucifero":     { "trial": true,  "betray": 0.5 },
+    "beelzebub":    { "trial": true,  "betray": 0.15 },
+    "astaroth":     { "trial": true,  "betray": 0.1 },
+    "megicula":     { "trial": true,  "betray": 0.0 },
+    "lucifugus":    { "trial": true,  "betray": 0.0 },
+    "fox_devil":    { "trial": false, "betray": 0.0 },
+    "curse_devil":  { "trial": true,  "betray": 0.1 },
+    "future_devil": { "trial": false, "betray": 0.0 },
+    "ghost_devil":  { "trial": false, "betray": 0.0 },
+    "sebastian":    { "trial": false, "betray": 0.0 },
+    "kin_of_lucifer": { "trial": true, "betray": 0.0 },
+    "daemon_noir":  { "trial": true,  "betray": 0.3 },
+    "daemon_rouge": { "trial": true,  "betray": 0.3 },
+    "hall_demon":   { "trial": false, "betray": 0.2 },
+    "god_hand":     { "trial": false, "betray": 0.25 },
+    "etherious":    { "trial": false, "betray": 0.0 }
+  }
+}

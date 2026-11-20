@@ -101,9 +101,14 @@ public final class DevilHolders extends SavedData {
 
     // ---------------------------------------------------------------- writing
     /** {@code id} now holds {@code devil}: a clean row (no death, no absence, no reservation). Any other devil this player held is freed (a player has one contract). */
-    public void claim(String devil, UUID id, long now) {
+    public void claim(String devil, UUID id, long now) { claim(devil, id, now, true); }
+
+    /** Phase 2 (a player may hold several Supreme devils): the same claim, but the player's other devils stay theirs. */
+    public void claimKeep(String devil, UUID id, long now) { claim(devil, id, now, false); }
+
+    private void claim(String devil, UUID id, long now, boolean freeOthers) {
         if (devil == null || devil.isEmpty() || id == null) return;
-        for (Iterator<Map.Entry<String, Row>> it = rows.entrySet().iterator(); it.hasNext(); ) {
+        if (freeOthers) for (Iterator<Map.Entry<String, Row>> it = rows.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, Row> e = it.next();
             if (!e.getKey().equals(devil) && id.equals(e.getValue().holder)) it.remove();
         }
@@ -133,26 +138,29 @@ public final class DevilHolders extends SavedData {
 
     /** The holder died with the contract: the grace clock starts (once; a second death does not restart it). */
     public void died(UUID id, long now) {
-        Row r = rowOf(id);
-        if (r != null && r.diedAt == 0) { r.diedAt = Math.max(1L, now); setDirty(); }
+        for (Row r : rowsOf(id)) if (r.diedAt == 0) { r.diedAt = Math.max(1L, now); setDirty(); }
     }
 
     /** The holder let the devil in again: the death lapse is off. */
     public void renewed(UUID id) {
-        Row r = rowOf(id);
-        if (r != null && r.diedAt != 0) { r.diedAt = 0; setDirty(); }
+        for (Row r : rowsOf(id)) if (r.diedAt != 0) { r.diedAt = 0; setDirty(); }
     }
 
     /** The holder logged out at real time {@code ms}. */
     public void seen(UUID id, long ms) {
-        Row r = rowOf(id);
-        if (r != null) { r.seenMs = Math.max(1L, ms); setDirty(); }
+        for (Row r : rowsOf(id)) { r.seenMs = Math.max(1L, ms); setDirty(); }
     }
 
     /** The holder is online: the absence lapse is off. */
     public void online(UUID id) {
-        Row r = rowOf(id);
-        if (r != null && r.seenMs != 0) { r.seenMs = 0; setDirty(); }
+        for (Row r : rowsOf(id)) if (r.seenMs != 0) { r.seenMs = 0; setDirty(); }
+    }
+
+    /** Every row this player holds (one, except for a player with several Supreme devils; at most 8). */
+    private java.util.List<Row> rowsOf(UUID id) {
+        java.util.List<Row> out = new java.util.ArrayList<>(1);
+        if (id != null) for (Row r : rows.values()) if (id.equals(r.holder)) out.add(r);
+        return out;
     }
 
     private Row rowOf(UUID id) {

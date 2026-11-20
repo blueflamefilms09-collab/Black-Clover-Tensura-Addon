@@ -89,6 +89,7 @@ public final class ForbiddenMagic {
         if (g.isEmpty()) { GrimoireBook.fail(p, "You need a grimoire to bargain with."); return false; }
         if (devilOf(p) != null) { GrimoireBook.fail(p, "A devil already lives in your grimoire."); return false; }
         ManasSkillInstance inst = g.get();
+        if (com.newuniverse.nusmp.devil.phase2.Phase2.pactTaken(p, PactDevil.forMagic(GrimoirePages.magicOf(inst)).name())) return false;        // phase 2 (setting, off by default): a grimoire pact devil with a holder is not bound again; checked before the price is paid
         CompoundTag d = data(p);
         switch (price) {
             case "maxhp" -> {
@@ -116,6 +117,7 @@ public final class ForbiddenMagic {
         Pacts pacts = Pacts.get(p.getServer());
         pacts.pacts.put(p.getUUID(), devil.name());
         pacts.setDirty();
+        com.newuniverse.nusmp.devil.phase2.Phase2.pactClaim(p, devil.name());                                          // phase 2 (setting): this player now holds that pact devil
         // The cover darkens: Spade -> triple spade, everyone else -> five-leaf.
         GrimoireCover dark = GrimoirePages.coverOf(inst).kingdom == Kingdom.SPADE ? GrimoireCover.TRIPLE_SPADE : GrimoireCover.FIVE_LEAF;
         inst.getOrCreateTag().putString("Cover", dark.name());

@@ -32,7 +32,8 @@ public final class DevilArts {
         if (p == null || !p.isAlive() || tier == DevilTier.NONE || attr == DevilAttribute.NONE) return 0;
         DualRules.Art art = DualRules.art(attr);
         DualRules.Hit extra = combo ? DualRules.hit(grimoireHit) : DualRules.hit("");
-        double raw = DualRules.damage(tier, art.bonus() + extra.bonus(), combo, DualConfig.damageScale());
+        double share = com.newuniverse.nusmp.devil.phase2.Phase2.power(p, com.newuniverse.nusmp.devil.DevilStore.peek(p));      // phase 2: the kind's share, split between the holders, times the debuff (1.0 when off)
+        double raw = DualRules.damage(tier, art.bonus() + extra.bonus(), combo, DualConfig.damageScale() * share);
         List<LivingEntity> foes = SkillTargets.foesInCone(p, DualRules.RANGE, DualRules.CONE);
         ServerLevel level = p.serverLevel();
         long now = level.getGameTime();

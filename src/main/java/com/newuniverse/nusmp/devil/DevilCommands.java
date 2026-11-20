@@ -33,6 +33,8 @@ public final class DevilCommands {
     private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> SACS = (c, b) ->
             SharedSuggestionProvider.suggest(Arrays.stream(Sacrifice.values()).map(s -> s.name().toLowerCase(Locale.ROOT)), b);
 
+    private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> KINDS = (c, b) ->
+            SharedSuggestionProvider.suggest(java.util.stream.Stream.of("submit", "even", "dominate"), b);
     private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> WORLDS = (c, b) ->
             SharedSuggestionProvider.suggest(Arrays.stream(DevilWorld.values()).map(DevilWorld::key), b);
     private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> DEVILS = (c, b) -> {
@@ -53,7 +55,16 @@ public final class DevilCommands {
                 .then(Commands.literal("release").requires(s -> s.hasPermission(2)).then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS)
                         .executes(c -> handOver(c, StringArgumentType.getString(c, "devil"), null))
                         .then(Commands.argument("player", EntityArgument.player()).executes(c -> handOver(c, StringArgumentType.getString(c, "devil"), EntityArgument.getPlayer(c, "player"))))))
-                .then(Commands.literal("sign").executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException()) ? 1 : 0))
+                .then(Commands.literal("sign").executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException()) ? 1 : 0)
+                        .then(Commands.argument("kind", StringArgumentType.word()).suggests(KINDS)                                         // phase 2: submit, even or dominate
+                                .executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "kind")) ? 1 : 0)))
+                .then(Commands.literal("terms").executes(c -> { com.newuniverse.nusmp.devil.phase2.Phase2.explain(c.getSource().getPlayerOrException()); return 1; }))
+                .then(Commands.literal("pact")
+                        .then(Commands.literal("list").executes(c -> { com.newuniverse.nusmp.devil.phase2.Phase2.list(c.getSource().getPlayerOrException()); return 1; }))
+                        .then(Commands.literal("use").then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS)
+                                .executes(c -> com.newuniverse.nusmp.devil.phase2.Phase2.use(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "devil")) ? 1 : 0)))
+                        .then(Commands.literal("unban").requires(s -> s.hasPermission(2)).then(Commands.argument("player", EntityArgument.player()).then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS)
+                                .executes(c -> unban(c, EntityArgument.getPlayer(c, "player"), StringArgumentType.getString(c, "devil")))))))
                 .then(Commands.literal("refuse").executes(c -> DevilRituals.refuse(c.getSource().getPlayerOrException()) ? 1 : 0))
                 .then(Commands.literal("grant").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player()).then(Commands.argument("tier", StringArgumentType.word()).suggests(TIERS)
@@ -206,6 +217,14 @@ public final class DevilCommands {
         return say(c, to == null ? d.name() + " is free." : d.name() + " is reserved for " + to.getName().getString() + ".");
     }
 
+    /** An operator lifts a player's "severed for good" ban on a devil. */
+    private static int unban(CommandContext<CommandSourceStack> c, ServerPlayer p, String id) {
+        WorldDevil d = WorldDevil.byId(id);
+        if (d == null) return fail(c, "No devil answers to that name.");
+        if (!com.newuniverse.nusmp.devil.phase2.Phase2.unban(c.getSource().getServer(), p.getUUID(), d.id())) return fail(c, p.getName().getString() + " is not severed from " + d.name() + ".");
+        return say(c, p.getName().getString() + " may sign with " + d.name() + " again.");
+    }
+
     private static int cooldownReset(CommandContext<CommandSourceStack> c, ServerPlayer p) {
         DevilContract d = DevilStore.peek(p);
         if (d == null || !d.hasContract()) return fail(c, p.getName().getString() + " has no devil contract.");
@@ -218,6 +237,7 @@ public final class DevilCommands {
         DevilContract d = DevilStore.peek(p);
         if (d == null) return say(c, p.getName().getString() + " had no devil contract.");
         com.newuniverse.nusmp.devil.dual.DevilOwnership.release(p, d.devil);
+        com.newuniverse.nusmp.devil.phase2.Phase2.clearAll(p);                                  // phase 2: every contract of the ledger ends (bans stay: only /devil pact unban lifts them)
         d.registered = false;
         d.corruption = 0f;
         d.tier = DevilTier.NONE;
