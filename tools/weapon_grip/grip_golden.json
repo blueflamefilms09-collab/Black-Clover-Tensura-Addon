@@ -2427,33 +2427,33 @@
   "class": "bow",
   "fraction": 0.5,
   "source": "class",
-  "x": 19.73,
+  "x": 22.554,
   "y": 0.0,
   "z": 0.0
  },
  "legendary_bow_curse_pull1": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "gripxyz",
-  "x": 31.25,
+  "source": "class",
+  "x": 30.7,
   "y": 0.0,
-  "z": 0.068
+  "z": 0.175
  },
  "legendary_bow_curse_pull2": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "gripxyz",
-  "x": 13.25,
+  "source": "class",
+  "x": 12.7,
   "y": 0.0,
-  "z": 0.068
+  "z": 0.175
  },
  "legendary_bow_curse_pull3": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "gripxyz",
-  "x": 3.25,
+  "source": "class",
+  "x": 2.7,
   "y": 0.0,
-  "z": 0.068
+  "z": 0.175
  },
  "legendary_bow_pull1": {
   "class": "bow",

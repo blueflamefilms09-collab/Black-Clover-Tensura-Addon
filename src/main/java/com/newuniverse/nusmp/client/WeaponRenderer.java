@@ -510,7 +510,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
      */
     private static Mesh readFlatOld(String id) {
         String base = id.replaceAll("_pull[123]$", "");
-        if (RETIRED_OLD_SKINS.contains(base)) return null;                 // 4.62.1: the owner dropped the old flat-part skins (6 MB); without them the old meshes would be drawn with the wrong skin, so the new solid mesh stays
+        if (SHARED_STAVE_BOWS.contains(base)) {                            // 4.65.0: the Bow of Pride has its own stave; the look of before (the base bow's stave in violet) is in the shared_stave folders (docs/heroweapon/curse_bow.md)
+            net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
+            ResourceLocation skin = DemonSlayerRenderer.rl("textures/entity/weapon/shared_stave/" + base + ".png");
+            ResourceLocation glow = DemonSlayerRenderer.rl("textures/entity/weapon/shared_stave/" + base + "_glow.png");
+            if (!rm.getResource(skin).isPresent()) return null;
+            return read(id, "weapon_meshes/shared_stave/" + id + ".txt", skin, rm.getResource(glow).isPresent() ? glow : null);
+        }
+        if (RETIRED_OLD_SKINS.contains(base)) return null;                // 4.62.1: the owner dropped the old flat-part skins (6 MB); without them the old meshes would be drawn with the wrong skin, so the new solid mesh stays
         if (THIRD_LOOK_BOWS.contains(base)) return null;                   // 4.59.0: the six bows of the third look (docs/heroweapon/bow_designs.md) have a new rest mesh, so their draw stages must not be the pre-4.55 ones of another design
         net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
         ResourceLocation skin = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + ".png");
@@ -525,7 +532,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             "legendary_spear__meteor_spear", "legendary_spear__portal_spear", "legendary_spear__triaina", "legendary_spear_curse", "vassal_harpoon");
 
     private static final java.util.Set<String> THIRD_LOOK_BOWS = java.util.Set.of("legendary_bow__hunters_bow", "legendary_bow__scouts_bow", "legendary_bow__bird_hunting", "legendary_bow__frozen_rain",
-            "legendary_bow__eagle_piercer", "legendary_bow__sagittarius");
+            "legendary_bow__eagle_piercer", "legendary_bow__sagittarius", "legendary_bow_curse");
+
+    /** 4.65.0: the bows whose previous (shared-stave) look is archived in weapon_meshes/shared_stave and shown when visual.heroSolidParts is off. */
+    private static final java.util.Set<String> SHARED_STAVE_BOWS = java.util.Set.of("legendary_bow_curse");
 
     private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen;
 

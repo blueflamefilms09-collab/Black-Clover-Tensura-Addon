@@ -77,3 +77,7 @@ Client drawing only; no server code, no packet, no tick work, no new config. The
 ## 7. Previews
 
 `docs/previews/bows_v3/all_bows.png` (all 11 bows, labelled, same scale, before row above after row), `docs/previews/bows_v3/sagittarius_closeup.png` (whole, riser, limb), `docs/heroweapon/form_previews/legendary_bow_<form>.png` for the six rebuilt bows. Software-rasteriser stills.
+
+## 8. Follow-up (4.65.0)
+
+Decision 1 was taken: legendary_bow_curse now has its own stave, see `curse_bow.md`. The sections above describe 4.59.0 and stay as written.
