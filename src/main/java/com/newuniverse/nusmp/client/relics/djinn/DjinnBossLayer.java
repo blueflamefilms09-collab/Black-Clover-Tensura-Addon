@@ -1,7 +1,9 @@
 package com.newuniverse.nusmp.client.relics.djinn;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.newuniverse.nusmp.client.playermodel.GsArmorFit;
 import com.newuniverse.nusmp.client.playermodel.GsLooks;
+import com.newuniverse.nusmp.client.playermodel.PlayerModelOptions;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnClientState.Snap;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.Minecraft;
@@ -44,6 +46,21 @@ public class DjinnBossLayer<T extends LivingEntity> extends RenderLayer<T, Playe
 
     private static final Map<Integer, St> STATE = new HashMap<>();
     private static final Djinn[] DJINN = new Djinn[GsLooks.DJINN_NAME.size()];
+    /** The pieces the look of each equip number already wears, as a bit mask over {@code Piece.ordinal()} (built once per number; see {@link GsArmorFit}). -1 = not built yet. */
+    private static final int[] HIDE = new int[GsLooks.DJINN_NAME.size()];
+    static { java.util.Arrays.fill(HIDE, -1); }
+
+    /** The mask of pieces to dissolve into the look for this equip number (0 when the option {@code bossLooks.bossArmorFit} is off). */
+    static int hideMask(int idx) {
+        if (idx <= 0 || idx >= HIDE.length || !PlayerModelOptions.bossArmorFit()) return 0;
+        if (HIDE[idx] < 0) {
+            int m = 0;
+            java.util.Set<String> names = GsArmorFit.hiddenPieces(idx);
+            for (DjinnMeshes.Piece p : DjinnMeshes.Piece.values()) if (names.contains(p.file())) m |= 1 << p.ordinal();
+            HIDE[idx] = m;
+        }
+        return HIDE[idx];
+    }
 
     private final ToIntFunction<T> equipIdx;
     private final Predicate<T> extreme;
@@ -145,6 +162,6 @@ public class DjinnBossLayer<T extends LivingEntity> extends RenderLayer<T, Playe
             long pulse = phase == 4 ? gt : -1;
             s.snap = new Snap(phase, prev, d, gt, since, phase == 1 ? LESSER_TICKS : 0, 0, 0, 0, 0, 0, pulse, 0);
         }
-        DjinnArmorLayer.draw(pose, buffers, light, e, getParentModel(), s.snap, partial);
+        DjinnArmorLayer.draw(pose, buffers, light, e, getParentModel(), s.snap, partial, hideMask(s.idx != 0 ? s.idx : s.prevIdx));
     }
 }

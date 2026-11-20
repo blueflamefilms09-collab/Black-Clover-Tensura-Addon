@@ -72,6 +72,25 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
      * own (docs/boss_redesign_goku_sinbad.md). It is the same code and the same meshes, so a boss assembles, wears and shatters the set exactly as a player does.
      */
     static void draw(PoseStack pose, MultiBufferSource buffers, int light, LivingEntity p, PlayerModel<?> m, Snap s, float partial) {
+        draw(pose, buffers, light, p, m, s, partial, 0);
+    }
+
+    /**
+     * The pieces whose bit ({@code 1 << Piece.ordinal()}) is set in {@code hide} are forged in and then dissolve into the body's own gear instead of staying (docs/boss_redesign_goku_sinbad.md, armour fit): a boss look
+     * that already carries its own crown, collar, belt, cuffs or sandals would otherwise have the player's pieces clip through them. 0 = every piece stays, exactly as a player's. Render thread only (one static, set and cleared here).
+     */
+    static void draw(PoseStack pose, MultiBufferSource buffers, int light, LivingEntity p, PlayerModel<?> m, Snap s, float partial, int hide) {
+        hideMask = hide;
+        try {
+            draw0(pose, buffers, light, p, m, s, partial);
+        } finally {
+            hideMask = 0;
+        }
+    }
+
+    private static int hideMask;
+
+    private static void draw0(PoseStack pose, MultiBufferSource buffers, int light, LivingEntity p, PlayerModel<?> m, Snap s, float partial) {
         Minecraft mc = Minecraft.getInstance();
         Djinn d = s.djinn();
         if (d == null || mc.level == null || mc.gameRenderer.getMainCamera() == null) return;
@@ -185,6 +204,8 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
                       int light, float now, float glow) {
         float a = assembled(s, minPhase, delay, now);
         if (a == 0f) return;
+        boolean hid = (hideMask & (1 << piece.ordinal())) != 0;
+        if (hid && (a >= 1f || a < 0f)) return;                                    // the body's own gear stands in for it once it is forged in
         if (DjinnMeshes.get(d, piece, dark).isEmpty()) return;
         pose.pushPose();
         anchor.translateAndRotate(pose);
@@ -192,7 +213,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         float alpha = 1f, sc = 1f;
         if (a < 1f) {
             float off;
-            if (a > 0) { off = (1f - a) * (1f - a); alpha = a; sc = 0.85f + 0.15f * a; }
+            if (a > 0) { off = (1f - a) * (1f - a); alpha = hid ? 4f * a * (1f - a) : a; sc = 0.85f + 0.15f * a; }
             else { float p = -a; off = p * p * 1.4f; alpha = 1f - p; sc = 1f + 0.25f * p; }
             pose.translate(dx * off, dy * off, dz * off);
             pose.scale(sc, sc, sc);

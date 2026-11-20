@@ -1,0 +1,4 @@
+{
+ "anime_multiverse.configuration.bossArmorFit": "Sinbad's armour fits his look",
+ "anime_multiverse.configuration.bossArmorFit.tooltip": "On: when Sinbad forges a Djinn Equip, the pieces his look already wears (crown, collar, belt, cuffs, shoulders, sandals) are forged in and dissolve into the look instead of clipping through it. Off: every piece stays over the look, as before."
+}

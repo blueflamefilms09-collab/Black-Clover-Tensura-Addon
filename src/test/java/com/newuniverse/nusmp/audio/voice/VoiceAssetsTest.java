@@ -148,6 +148,7 @@ class VoiceAssetsTest {
         try (Stream<Path> files = Files.walk(VOICE)) {
             for (Path f : (Iterable<Path>) files.filter(x -> x.toString().endsWith(".ogg"))::iterator) {
                 String rel = ASSETS.resolve("sounds").relativize(f).toString().replace('\\', '/');
+                if (rel.contains("/classic/")) continue;       // the first-pass takes of the Goku and Sinbad lines, kept under voice/<boss>/classic/ (docs/boss_redesign_goku_sinbad.md): never played, not orphans
                 if (!expected.contains(rel)) bad.add("no line names the file " + rel);
             }
         }

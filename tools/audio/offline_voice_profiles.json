@@ -41,5 +41,7 @@
   "speed": 1.0, "pitch": -0.5, "formant": "preserved",
   "eq": [[250, 0.8, 1.5]],
   "reverb": {"seconds": 0.4, "wet": 0.08, "damp": 0.5}
- }
+ },
+ "goku2": {"note": "polish pass: bright young hero, dry room (tools/audio/boss_voice_polish.py)", "engine": "kokoro", "voice": {"am_eric": 0.5, "am_santa": 0.2, "am_liam": 0.3}, "lang": "en-us", "speed": 1.08, "pitch": -0.5, "formant": "preserved", "highpass": 80, "eq": [[3300, 1.0, 3.5], [5200, 1.5, 1.5]], "deess": 0.2, "compressor": ["-22dB", 2.5, 3], "reverb": {"seconds": 0.35, "wet": 0.05, "damp": 0.5, "predelay_ms": 8}},
+ "sinbad2": {"note": "polish pass: warm regal king, small hall (tools/audio/boss_voice_polish.py)", "engine": "kokoro", "voice": {"bm_george": 0.5, "bm_lewis": 0.3, "bm_fable": 0.2}, "lang": "en-gb", "speed": 0.95, "pitch": -0.7, "formant": "shifted", "highpass": 85, "eq": [[110, 1.0, -2.5], [250, 1.0, -1.5], [3200, 1.0, 2.0], [8000, 1.5, -1.5]], "deess": 0.3, "compressor": ["-22dB", 2.5, 3], "chorus": 16, "reverb": {"seconds": 0.7, "wet": 0.11, "damp": 0.6, "predelay_ms": 18}}
 }

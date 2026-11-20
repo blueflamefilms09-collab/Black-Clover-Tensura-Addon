@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.66.0] — Sinbad's armour fits his look; Goku and Sinbad voices polished
+Owner: "do what you think is best" on the Goku/Sinbad armour overlap and the Kokoro voice quality.
+- FIXED (client, behind `bossLooks.bossArmorFit`, default on): the bodies of Goku and Sinbad do not clip (checked cube by cube); the overlap came from the player's Djinn Equip pieces drawn over Sinbad's own crown, collar, belt, cuffs, shoulders and sandals. Those pieces now forge in and dissolve into the look; wings, tail, halo, gauntlets, mantle and weapon stay. A player's own Djinn Equip is untouched. `false` restores the old drawing.
+- REPLACED (voices): all 52 Goku and 65 Sinbad lines were regenerated offline with a new tool (`tools/audio/boss_voice_polish.py`, profiles `goku2`, `sinbad2`): fixed pronunciation (Kamehameha, Saiyan, Kaio-ken and 20 more), new voice blends, reverb after the pitch shift, de-esser, loudness to -16 LUFS. Same sound ids.
+- KEPT: the first-pass voice files as `sounds/voice/goku/classic/` and `sounds/voice/sinbad/classic/` (copy one back over a line if it is worse), the old voice profiles, every geo and texture file.
+- COST: no server work, no packets; fewer quads while the fit is on. About +2 MB in the jar for the classic copies.
+- CAVEATS: nothing seen or heard in a game; the new Java was not compiled before CI; judging how the voices sound is up to you (ten lines to compare are listed in `docs/boss_redesign_goku_sinbad.md` section 10).
+
 ## [4.65.0] — The Infernal Contract is a plain craftable item, held by its rod
 Owner request: the double / Infernal Contract still showed as a relic; it should be an item you craft, and sit in the player's hand.
 - REPLACED (owner asked): the Infernal Contract is no longer a relic: no relic grade, no relic acts, no relic card, not in the Relics catalogue (`item/DevilContractItem`, a plain item). The relic definition in `Wave0` was removed. Same id `anime_multiverse:devil_contract`, so worlds, recipes and advancements keep working.

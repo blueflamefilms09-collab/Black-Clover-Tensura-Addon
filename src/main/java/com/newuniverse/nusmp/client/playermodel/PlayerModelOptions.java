@@ -41,6 +41,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue KAKASHI_PLAYER_MODEL;
     /** The trial devil's own model (docs/devil_trial_model.md), key {@code bossLooks.devilTrialModel}, CLIENT config (appended after the Kakashi option). Off = the earlier vanilla-humanoid stand-in. */
     public static final ModConfigSpec.BooleanValue DEVIL_TRIAL_MODEL;
+    /** Sinbad's Djinn Equip armour fit (docs/boss_redesign_goku_sinbad.md), key {@code bossLooks.bossArmorFit}, CLIENT config (appended last). True (default): the pieces his look already carries (crown, collar, belt, cuffs, shoulders, sandals) dissolve into the look once forged in. False = every piece stays over the look, as before. */
+    public static final ModConfigSpec.BooleanValue BOSS_ARMOR_FIT;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -78,6 +80,8 @@ public final class PlayerModelOptions {
                 + "and the glowing Perfect Susanoo as an extras model (docs/bosses/kakashi.md). Off = the classic look, his Blender body.").define("kakashiPlayerModel", true);
         DEVIL_TRIAL_MODEL = b.comment("The devil that fights you in the trial of a Devil Contract (docs/devil_trial_model.md) with its own model: a horned brute with wings, a spade tail and clips for idle, walking and "
                 + "attacking, painted in the devil's colours, with glowing eyes, brands, gems and horn tips. Off = the earlier stand-in (the vanilla humanoid with the zombie skin).").define("devilTrialModel", true);
+        BOSS_ARMOR_FIT = b.comment("Sinbad's Djinn Equip: the armour pieces his new look already carries (crown, collar and chains, belt, cuffs, shoulders, sandals) are forged in and then dissolve into the look, so they "
+                + "no longer clip through it; wings, tail, halo, gauntlets, mantle and the rest stay (docs/boss_redesign_goku_sinbad.md). Off = every piece of the player's set stays drawn over the look, as before.").define("bossArmorFit", true);
         b.pop();
         SPEC = b.build();
     }
@@ -170,6 +174,15 @@ public final class PlayerModelOptions {
     public static boolean devilPlayerModel() {
         try {
             return DEVIL_PLAYER_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the boss Djinn Equip hides the pieces the look replaces (the config value; true while it is not loaded). */
+    public static boolean bossArmorFit() {
+        try {
+            return BOSS_ARMOR_FIT.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

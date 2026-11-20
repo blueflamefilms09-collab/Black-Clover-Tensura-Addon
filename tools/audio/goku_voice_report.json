@@ -1,267 +1,267 @@
 {
  "converted": {
   "goku_intro_1": {
-   "seconds": 2.13,
-   "bytes": 18035,
+   "seconds": 2.19,
+   "bytes": 17893,
    "text": "Hey! I'm Son Goku. Let's have a great fight!"
   },
   "goku_intro_2": {
    "seconds": 2.1,
-   "bytes": 17630,
+   "bytes": 17522,
    "text": "Wow, you look strong! This is going to be fun!"
   },
   "goku_intro_3": {
-   "seconds": 1.77,
-   "bytes": 15261,
+   "seconds": 1.82,
+   "bytes": 15474,
    "text": "I've been waiting for someone like you!"
   },
   "goku_form_ssj_1": {
-   "seconds": 1.36,
-   "bytes": 12628,
+   "seconds": 1.47,
+   "bytes": 13026,
    "text": "HAAAAAA! Super Saiyan!"
   },
   "goku_form_ssj_2": {
-   "seconds": 1.47,
-   "bytes": 13220,
+   "seconds": 1.59,
+   "bytes": 14032,
    "text": "Heh. Okay, now I'm serious."
   },
   "goku_form_ssj2_1": {
-   "seconds": 1.59,
-   "bytes": 14270,
+   "seconds": 1.71,
+   "bytes": 14899,
    "text": "Super Saiyan 2! Feel this!"
   },
   "goku_form_ssj2_2": {
-   "seconds": 1.54,
-   "bytes": 13897,
+   "seconds": 1.57,
+   "bytes": 14172,
    "text": "Not bad! Now it gets real!"
   },
   "goku_form_ssj3_1": {
-   "seconds": 1.78,
-   "bytes": 15530,
+   "seconds": 1.76,
+   "bytes": 15108,
    "text": "AAAAAAARGH! Super Saiyan 3!"
   },
   "goku_form_ssj3_2": {
-   "seconds": 2.65,
-   "bytes": 21562,
+   "seconds": 2.73,
+   "bytes": 21404,
    "text": "Hah... this takes a lot out of me. Better end it fast!"
   },
   "goku_form_god_1": {
-   "seconds": 2.71,
-   "bytes": 21733,
+   "seconds": 3.14,
+   "bytes": 24659,
    "text": "A calm, divine power... Super Saiyan God."
   },
   "goku_form_blue_1": {
-   "seconds": 1.79,
-   "bytes": 15627,
+   "seconds": 1.85,
+   "bytes": 15520,
    "text": "Super Saiyan Blue! Don't blink."
   },
   "goku_form_kaioken_1": {
-   "seconds": 2.01,
-   "bytes": 17287,
+   "seconds": 2.1,
+   "bytes": 17643,
    "text": "Kaio-ken times ten, on top of Blue!"
   },
   "goku_form_kaioken_2": {
-   "seconds": 1.74,
-   "bytes": 15070,
+   "seconds": 1.83,
+   "bytes": 15806,
    "text": "Kaio-ken! My body can take it!"
   },
   "goku_form_ui_sign_1": {
-   "seconds": 1.89,
-   "bytes": 16285,
+   "seconds": 2.04,
+   "bytes": 16919,
    "text": "My body... is moving by itself."
   },
   "goku_form_ui_sign_2": {
-   "seconds": 1.99,
-   "bytes": 16729,
+   "seconds": 2.13,
+   "bytes": 17484,
    "text": "Whoa, what is this feeling? It's amazing!"
   },
   "goku_form_mui_1": {
-   "seconds": 2.31,
-   "bytes": 19361,
+   "seconds": 2.39,
+   "bytes": 19416,
    "text": "This is it. Perfected Ultra Instinct."
   },
   "goku_form_mui_2": {
-   "seconds": 1.5,
-   "bytes": 13610,
+   "seconds": 1.73,
+   "bytes": 14978,
    "text": "No thinking. Just move."
   },
   "goku_form_tui_1": {
-   "seconds": 2.82,
-   "bytes": 22434,
+   "seconds": 2.9,
+   "bytes": 22357,
    "text": "True Ultra Instinct. Come on, give me everything!"
   },
   "goku_combo_1": {
-   "seconds": 1.3,
-   "bytes": 12275,
+   "seconds": 1.38,
+   "bytes": 12674,
    "text": "Hah! Hya! Take this!"
   },
   "goku_combo_2": {
-   "seconds": 0.93,
-   "bytes": 9883,
+   "seconds": 0.96,
+   "bytes": 9947,
    "text": "Here I come!"
   },
   "goku_kamehameha_1": {
-   "seconds": 1.67,
-   "bytes": 14723,
+   "seconds": 1.93,
+   "bytes": 16269,
    "text": "Ka... me... ha... me... HAAAAA!"
   },
   "goku_kamehameha_2": {
-   "seconds": 0.9,
-   "bytes": 9588,
+   "seconds": 1.15,
+   "bytes": 11220,
    "text": "Kamehameha!"
   },
   "goku_spirit_bomb_1": {
-   "seconds": 1.57,
-   "bytes": 13979,
+   "seconds": 1.7,
+   "bytes": 14909,
    "text": "Everyone... lend me your energy!"
   },
   "goku_spirit_bomb_2": {
-   "seconds": 1.76,
-   "bytes": 15405,
+   "seconds": 1.95,
+   "bytes": 16434,
    "text": "Just a little more... Spirit Bomb!"
   },
   "goku_spirit_bomb_broken_1": {
-   "seconds": 1.9,
-   "bytes": 16220,
+   "seconds": 1.49,
+   "bytes": 13396,
    "text": "Nngh... the Spirit Bomb!"
   },
   "goku_spirit_bomb_broken_2": {
-   "seconds": 1.28,
-   "bytes": 12185,
+   "seconds": 1.46,
+   "bytes": 13230,
    "text": "Ugh! It's coming apart!"
   },
   "goku_transmit_1": {
    "seconds": 1.34,
-   "bytes": 12458,
+   "bytes": 12285,
    "text": "Instant Transmission!"
   },
   "goku_transmit_2": {
-   "seconds": 1.36,
-   "bytes": 12656,
+   "seconds": 1.46,
+   "bytes": 13307,
    "text": "Too slow! Behind you!"
   },
   "goku_kaioken_burst_1": {
-   "seconds": 0.86,
-   "bytes": 9281,
+   "seconds": 0.79,
+   "bytes": 8770,
    "text": "Kaio-ken!"
   },
   "goku_kaioken_burst_2": {
    "seconds": 1.42,
-   "bytes": 13084,
+   "bytes": 12999,
    "text": "Kaio-ken times three!"
   },
   "goku_cage_1": {
-   "seconds": 1.96,
-   "bytes": 16748,
+   "seconds": 2.06,
+   "bytes": 17209,
    "text": "Zanzoken! Can you keep up with me?"
   },
   "goku_cage_2": {
-   "seconds": 1.19,
-   "bytes": 11499,
+   "seconds": 1.3,
+   "bytes": 12150,
    "text": "Try to follow this!"
   },
   "goku_flare_1": {
-   "seconds": 0.92,
-   "bytes": 9575,
+   "seconds": 0.97,
+   "bytes": 10036,
    "text": "Solar Flare!"
   },
   "goku_flare_2": {
-   "seconds": 0.81,
-   "bytes": 8899,
+   "seconds": 0.88,
+   "bytes": 9591,
    "text": "Taiyoken!"
   },
   "goku_disc_1": {
-   "seconds": 1.59,
-   "bytes": 14435,
+   "seconds": 1.7,
+   "bytes": 14952,
    "text": "Here, catch! It comes right back!"
   },
   "goku_disc_2": {
-   "seconds": 1.03,
-   "bytes": 10477,
+   "seconds": 1.12,
+   "bytes": 10858,
    "text": "Watch it spin!"
   },
   "goku_hurt_big_1": {
-   "seconds": 1.05,
-   "bytes": 10732,
+   "seconds": 1.17,
+   "bytes": 11252,
    "text": "Ow! That one hurt!"
   },
   "goku_hurt_big_2": {
-   "seconds": 1.44,
-   "bytes": 13122,
+   "seconds": 1.52,
+   "bytes": 13377,
    "text": "Heh, you got me good there!"
   },
   "goku_dodge_1": {
    "seconds": 1.79,
-   "bytes": 15503,
+   "bytes": 15303,
    "text": "Whoa, my body moved on its own!"
   },
   "goku_dodge_2": {
-   "seconds": 0.89,
-   "bytes": 9423,
+   "seconds": 0.94,
+   "bytes": 9794,
    "text": "Too slow!"
   },
   "goku_low_hp_1": {
    "seconds": 2.17,
-   "bytes": 18558,
+   "bytes": 17875,
    "text": "Phew... I'm running low. But I'm not done yet!"
   },
   "goku_low_hp_2": {
-   "seconds": 1.8,
-   "bytes": 15418,
+   "seconds": 1.98,
+   "bytes": 16547,
    "text": "Haa... haa... this is the best part!"
   },
   "goku_taunt_1": {
-   "seconds": 1.29,
-   "bytes": 12177,
+   "seconds": 1.41,
+   "bytes": 12792,
    "text": "Come on, show me more!"
   },
   "goku_taunt_2": {
-   "seconds": 1.53,
-   "bytes": 14014,
+   "seconds": 1.62,
+   "bytes": 14630,
    "text": "You're getting stronger! Great!"
   },
   "goku_taunt_3": {
-   "seconds": 1.33,
-   "bytes": 12460,
+   "seconds": 1.34,
+   "bytes": 12516,
    "text": "Don't hold back on me!"
   },
   "goku_player_death_1": {
-   "seconds": 1.9,
-   "bytes": 16203,
+   "seconds": 1.99,
+   "bytes": 16651,
    "text": "Oh no, did I go too far? Sorry!"
   },
   "goku_player_death_2": {
-   "seconds": 1.86,
-   "bytes": 16060,
+   "seconds": 1.93,
+   "bytes": 16384,
    "text": "Hey! You okay? Man, I overdid it."
   },
   "goku_victory_1": {
-   "seconds": 2.39,
-   "bytes": 19539,
+   "seconds": 2.42,
+   "bytes": 19398,
    "text": "That was a good fight! Come back when you're stronger!"
   },
   "goku_victory_2": {
-   "seconds": 1.96,
-   "bytes": 16828,
+   "seconds": 2.11,
+   "bytes": 17317,
    "text": "Huh? Come on, get up! Let's go again later."
   },
   "goku_defeat_1": {
-   "seconds": 1.81,
-   "bytes": 15409,
+   "seconds": 1.87,
+   "bytes": 15586,
    "text": "Heh... that was a great fight. Thanks."
   },
   "goku_defeat_2": {
-   "seconds": 1.92,
-   "bytes": 16313,
+   "seconds": 2.06,
+   "bytes": 16984,
    "text": "I haven't felt this alive in years!"
   },
   "goku_defeat_3": {
-   "seconds": 1.91,
-   "bytes": 16096,
+   "seconds": 2.02,
+   "bytes": 16891,
    "text": "You win. Let's do this again sometime!"
   }
  },
  "missing": [],
  "rejected": [],
- "bytes": 761394
+ "bytes": 781845
 }

@@ -20374,5 +20374,7 @@
   "anime_multiverse.weaponpage.other.saiyan": "%s (Saiyan form)",
   "anime_multiverse.weaponpage.status.tab": "Weapons",
   "anime_multiverse.configuration.devilTrialModel": "Trial devil's own model",
-  "anime_multiverse.configuration.devilTrialModel.tooltip": "On: the devil that fights you in a Devil Contract trial is drawn with its own model: a horned brute with wings and a spade tail in the devil's colours, glowing eyes, brands, gems and horn tips, and clips for idle, walking and attacking. Off: the earlier stand-in (a vanilla humanoid with the zombie skin)."
+  "anime_multiverse.configuration.devilTrialModel.tooltip": "On: the devil that fights you in a Devil Contract trial is drawn with its own model: a horned brute with wings and a spade tail in the devil's colours, glowing eyes, brands, gems and horn tips, and clips for idle, walking and attacking. Off: the earlier stand-in (a vanilla humanoid with the zombie skin).",
+  "anime_multiverse.configuration.bossArmorFit": "Sinbad's armour fits his look",
+  "anime_multiverse.configuration.bossArmorFit.tooltip": "On: when Sinbad forges a Djinn Equip, the pieces his look already wears (crown, collar, belt, cuffs, shoulders, sandals) are forged in and dissolve into the look instead of clipping through it. Off: every piece stays over the look, as before."
 }
