@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.31.1] — Build fix: the smoke-list test no longer pins `goku.boss` right before `scaling`
+- FIXED (no gameplay change): the Goku boss smoke-list test required `goku.boss,scaling` side by side, which broke when the Berserk skill self-test `berserk.skills` was added between them. It now checks the order and the tail only. Everything from 4.30.0 (Berserk weapons built with a skill), 4.30.1 (remove/restore command) and 4.31.0 (Belial canon gameplay) ships in the first green build; none of those got a build of its own.
+
 ## [4.31.0] — Belial follows the canon: Zakera, Goldoreza dead weight, Zauto's five senses, bone-dragon grip, Zagan link
 - NEW (settings in `BelialConfig`, all default on: `zakera`, `senses`, `dualDjinn`, `boneGrip`, `deadWeight`): third act Belior Zakera (memory manipulation), sprint + right-click from Half Equip. 10 blocks in Half Equip, 24 in Full, at most 6 targets. Mobs lose their target for 3-6 s, players get Nausea and Darkness (under the balance law's control cap), bosses only a short Darkness plus a little strain. A raised shield or barrier effect blocks it and the defender takes a small strain, as in canon.
 - NEW: Belior Goldoreza leaves the struck foe with dead weight (Slowness I, Weakness I, no normal healing) for 18 s on a mob, 8 s on a player, +2 s in Full Equip, 20 s at most. Never on a boss.

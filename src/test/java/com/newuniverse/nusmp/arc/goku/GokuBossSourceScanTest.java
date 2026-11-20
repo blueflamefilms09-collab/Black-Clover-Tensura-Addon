@@ -113,7 +113,7 @@ class GokuBossSourceScanTest {
     @Test
     void theSelfTestPrefixIsInTheSmokeListBeforeScalingAndTheTailIsKept() throws IOException {
         String smoke = read(".github/workflows/smoke.yml");
-        assertTrue(smoke.contains(",goku.boss,scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "goku.boss sits before scaling and the tail stays");
+        assertTrue(smoke.contains(",goku.boss,") && smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\"") && smoke.indexOf(",goku.boss,") < smoke.indexOf(",scaling,"), "goku.boss sits before scaling and the tail stays (other new tokens may sit between)");
         String tests = code(PKG.resolve("GokuBossSelfTests.java"));
         for (String key : new String[]{"goku.boss.data", "goku.boss.spawn", "goku.boss.cap"}) assertTrue(tests.contains("\"" + key + "\""), key);
     }
