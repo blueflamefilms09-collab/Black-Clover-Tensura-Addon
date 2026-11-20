@@ -1,0 +1,22 @@
+{
+ "vassal_whip__hourglass_whip": {
+  "class": "coilwhip",
+  "form": "hourglass_whip",
+  "weapon": "vassal_whip"
+ },
+ "vassal_whip__morning_star_whip": {
+  "class": "coilwhip",
+  "form": "morning_star_whip",
+  "weapon": "vassal_whip"
+ },
+ "vassal_whip__storm_whip": {
+  "class": "coilwhip",
+  "form": "storm_whip",
+  "weapon": "vassal_whip"
+ },
+ "vassal_whip__vine_whip": {
+  "class": "coilwhip",
+  "form": "vine_whip",
+  "weapon": "vassal_whip"
+ }
+}

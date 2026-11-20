@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.44.0] — 14 new vassal forms and 3 redone weapons, made in Blender
+- NEW: Blender-made 3D models with own skin and glow skin for Small Scythe, Demon Elephant Scythe, Scythe Zero; Silk Thread Set, Spider Wire Set, Ariadne's Thread; Focus Staff, Rune Staff, Mirror Staff, Archmage Staff; Vine Whip, Storm Whip, Morning Star Whip, Hourglass Whip. Each within 5000 quad lines and 350 KB of skins; registered in the class, grip and Better Combat tables.
+- REPLACED (the same mesh ids, as the owner asked for a redo; the old files are in git history): Demon Dragon Scythe (dragon-skull head, bone-wing blade, lava membrane), Slime Shield (gel dome in a claw cage with a bronze rim), Phoenix Sword (flame blade, plume wings, heart guard).
+- KEPT: every other model, skin and icon.
+- Cost: no packets; per-weapon quad budget as before.
+- Honest caveats: only seen in software preview, not in a game (the game renderer is opaque, so the Slime Shield gel will look darker than the preview); weakest: Demon Elephant Scythe (no visible trunk), Scythe Zero (abstract ring), Hourglass Whip (thin lash), Spider Wire Set (web floats beside the needle), Vine Whip is 0.01 under the lower length bound; no wiki was fetched, designs follow the form names and notes.
+
 ## [4.43.0] — Kakashi Hatake boss
 Owner request: a Kakashi boss, the most powerful version, with all his abilities and his style, custom boss bar, own voice lines, original abilities.
 - NEW (server settings `nusmp-kakashi-boss-server.toml`; `enabled = false` turns him off): boss `kakashi_hatake` (28,000 health, 4 phases at 75/50/25, 15 moves each with a telegraph) with Kamui, Raikiri and Kamui Raikiri, Lightning Beast Fang, Susanoo, ninken, shadow-clone and Sharingan-copy moves, Purple Lightning (original, not canon). Blender-made body (2137 quad lines, 913 far), 5 new mesh poses, boss bar style `naruto`, 13 particle themes, a 62-line voice set with subtitles (no audio yet), `/multiverse kakashi_boss spawn|status|clear`. Smoke prefix `kakashi.boss`.

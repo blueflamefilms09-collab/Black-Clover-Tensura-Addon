@@ -1,0 +1,22 @@
+{
+ "vassal_staff__archmage_staff": {
+  "class": "staff",
+  "form": "archmage_staff",
+  "weapon": "vassal_staff"
+ },
+ "vassal_staff__focus_staff": {
+  "class": "staff",
+  "form": "focus_staff",
+  "weapon": "vassal_staff"
+ },
+ "vassal_staff__mirror_staff": {
+  "class": "staff",
+  "form": "mirror_staff",
+  "weapon": "vassal_staff"
+ },
+ "vassal_staff__rune_staff": {
+  "class": "staff",
+  "form": "rune_staff",
+  "weapon": "vassal_staff"
+ }
+}

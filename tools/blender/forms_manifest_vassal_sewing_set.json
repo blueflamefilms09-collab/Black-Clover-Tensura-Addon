@@ -1,0 +1,17 @@
+{
+ "vassal_sewing_set__ariadnes_thread": {
+  "class": "rapier",
+  "form": "ariadnes_thread",
+  "weapon": "vassal_sewing_set"
+ },
+ "vassal_sewing_set__silk_thread_set": {
+  "class": "rapier",
+  "form": "silk_thread_set",
+  "weapon": "vassal_sewing_set"
+ },
+ "vassal_sewing_set__spider_wire_set": {
+  "class": "rapier",
+  "form": "spider_wire_set",
+  "weapon": "vassal_sewing_set"
+ }
+}

@@ -1032,7 +1032,21 @@
     "vassal_projectile__chakram": "dagger",
     "vassal_projectile__hatchet": "dagger",
     "vassal_projectile__kunai": "dagger",
-    "vassal_projectile__over_custom_arsenal": "dagger"
+    "vassal_projectile__over_custom_arsenal": "dagger",
+    "vassal_scythe__demon_elephant_scythe": "scythe",
+    "vassal_scythe__scythe_zero": "scythe",
+    "vassal_scythe__small_scythe": "scythe",
+    "vassal_sewing_set__ariadnes_thread": "rapier",
+    "vassal_sewing_set__silk_thread_set": "rapier",
+    "vassal_sewing_set__spider_wire_set": "rapier",
+    "vassal_staff__archmage_staff": "staff",
+    "vassal_staff__focus_staff": "staff",
+    "vassal_staff__mirror_staff": "staff",
+    "vassal_staff__rune_staff": "staff",
+    "vassal_whip__hourglass_whip": "coilwhip",
+    "vassal_whip__morning_star_whip": "coilwhip",
+    "vassal_whip__storm_whip": "coilwhip",
+    "vassal_whip__vine_whip": "coilwhip"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

@@ -1,0 +1,22 @@
+{
+ "vassal_scythe__demon_dragon_scythe": {
+  "class": "scythe",
+  "form": "demon_dragon_scythe",
+  "weapon": "vassal_scythe"
+ },
+ "vassal_scythe__demon_elephant_scythe": {
+  "class": "scythe",
+  "form": "demon_elephant_scythe",
+  "weapon": "vassal_scythe"
+ },
+ "vassal_scythe__scythe_zero": {
+  "class": "scythe",
+  "form": "scythe_zero",
+  "weapon": "vassal_scythe"
+ },
+ "vassal_scythe__small_scythe": {
+  "class": "scythe",
+  "form": "small_scythe",
+  "weapon": "vassal_scythe"
+ }
+}
