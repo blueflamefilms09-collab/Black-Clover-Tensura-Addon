@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.36.2] — Shields no longer cover the screen in first person
+- FIXED (looks only): the mod's shield models were fitted into a 1.3-block-wide box and vanilla's first-person display scales them by 1.25, so they filled the screen. In first person they are now fitted into vanilla's plate width (0.75 blocks), so they sit and raise like a vanilla shield. Third person, the ground, item frames and the inventory icon are unchanged; the display numbers were already vanilla's. Client kill switch `-Danime_multiverse.shieldFirstPerson=old` restores the old size. See docs/visual_upgrade/shield_fix.md.
+- Cost: one extra 4-number fit per shield mesh at load, nothing per frame.
+- Honest caveats: not seen in a game; the winged shield is smaller in first person than before; if a shield still feels wrong the cause may be its own model json, tell me which one.
+
 ## [4.36.1] — Build fix: the guard spark is on the particle allow-list
 - FIXED (no gameplay change): `FxSourceScanTest` failed the 4.36.0 build because the guard-block spark used a vanilla particle without the repo's `fx-allow` reason. The line now carries it (4 sparks, at most once per 8 ticks per boss, nearby players only). Everything from 4.36.0 ships in the first green build.
 

@@ -98,4 +98,37 @@ class ShieldFrameTest {
         assertTrue(ShieldFrame.MAX_H < 22f / 16f, "shorter than vanilla's plate");
         assertTrue(ShieldFrame.MAX_W > 12f / 16f, "room for the winged shield");
     }
+
+    @Test
+    void inFirstPersonAShieldIsNoWiderThanVanillasPlate() throws IOException {
+        assertEquals(12f / 16f, ShieldFrame.FP_MAX_W, 1e-9f);
+        assertTrue(ShieldFrame.FP_MAX_H <= 22f / 16f);
+        List<String> bad = new ArrayList<>();
+        for (Path p : shieldMeshes()) {
+            float[] place = new float[5];
+            float[] b = box(p, place);
+            if (!(b[1] > b[0]) || !(b[3] > b[2])) continue;
+            float[] fit = ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5], ShieldFrame.FP_MAX_W, ShieldFrame.FP_MAX_H);
+            float[] lo = ShieldFrame.apply(fit, b[0], b[2], b[4]), hi = ShieldFrame.apply(fit, b[1], b[3], b[5]);
+            String id = p.getFileName().toString();
+            if (hi[0] - lo[0] > ShieldFrame.FP_MAX_W + 1e-4f || hi[1] - lo[1] > ShieldFrame.FP_MAX_H + 1e-4f) bad.add(id + ": bigger than the first-person box");
+            if (Math.abs(hi[2] - ShieldFrame.FACE_Z) > 1e-5f) bad.add(id + ": the face left the plate's front plane");
+            if (fit[0] > ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5])[0] + 1e-6f) bad.add(id + ": the first-person fit is bigger than the normal one");
+        }
+        assertEquals(List.of(), bad);
+    }
+
+    @Test
+    void theFirstPersonSizeCanBeSwitchedBackToTheOldOne() {
+        String key = "anime_multiverse.shieldFirstPerson";
+        String was = System.getProperty(key);
+        try {
+            System.setProperty(key, "old");
+            assertFalse(ShieldFrame.firstPersonVanillaSize());
+            System.clearProperty(key);
+            assertTrue(ShieldFrame.firstPersonVanillaSize());
+        } finally {
+            if (was == null) System.clearProperty(key); else System.setProperty(key, was);
+        }
+    }
 }

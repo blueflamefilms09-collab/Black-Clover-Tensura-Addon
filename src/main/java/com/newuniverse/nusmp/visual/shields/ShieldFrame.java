@@ -20,11 +20,23 @@ public final class ShieldFrame {
     /** The largest footprint of a mesh, in blocks: wider than the vanilla plate (0.75) for the winged Celestial Support, shorter than its 1.375. */
     public static final float MAX_W = 1.3f, MAX_H = 1.2f;
 
+    /**
+     * 4.36.2: the footprint box in FIRST person, in blocks: vanilla's own plate width (12 / 16) and the usual height. Vanilla's first-person display multiplies a shield by 1.25 and
+     * holds it close to the camera, so the 1.3 wide box above filled the screen; this keeps a mod shield the size of a vanilla one in the hand.
+     */
+    public static final float FP_MAX_W = 12f / 16f, FP_MAX_H = 1.2f;
+
+    /** Client kill switch: {@code -Danime_multiverse.shieldFirstPerson=old} restores the 1.110.0 first-person size (the same box as every other view). */
+    public static boolean firstPersonVanillaSize() { return !"old".equalsIgnoreCase(System.getProperty("anime_multiverse.shieldFirstPerson", "vanilla")); }
+
     /** {scale, tx, ty, tz}: a mesh point p goes to {@code t + scale * p}. */
-    public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmax) {
+    public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmax) { return fit(xmin, xmax, ymin, ymax, zmax, MAX_W, MAX_H); }
+
+    /** The same fit into a box of {@code maxW} x {@code maxH} blocks. */
+    public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmax, float maxW, float maxH) {
         float w = xmax - xmin, h = ymax - ymin;
         if (!(w > 0f) || !(h > 0f) || Float.isNaN(zmax)) return new float[]{1f, 0f, 0f, 0f};
-        float k = Math.min(MAX_W / w, MAX_H / h);
+        float k = Math.min(maxW / w, maxH / h);
         return new float[]{k, -k * (xmin + xmax) * 0.5f, -k * (ymin + ymax) * 0.5f, FACE_Z - k * zmax};
     }
 

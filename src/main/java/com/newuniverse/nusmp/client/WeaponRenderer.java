@@ -262,8 +262,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
         }
         if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
-            pose.translate(mesh.shield[1], mesh.shield[2], mesh.shield[3]);
-            pose.scale(mesh.shield[0], mesh.shield[0], mesh.shield[0]);
+            float[] sf = ctx.firstPerson() && mesh.shieldFp != null && com.newuniverse.nusmp.visual.shields.ShieldFrame.firstPersonVanillaSize() ? mesh.shieldFp : mesh.shield;      // 4.36.2: in first person a shield is the size of vanilla's, not the 1.3-wide box (it filled the screen)
+            pose.translate(sf[1], sf[2], sf[3]);
+            pose.scale(sf[0], sf[0], sf[0]);
         } else if (wrap == null) {
             if (gripShift != null) pose.translate(gripShift[0], gripShift[1], gripShift[2]);       // 1.111.0 (docs/weapon_grip.md): the mesh's grip point lands on the hand (third person) / on a sword's hilt spot (first person)
             pose.translate(mesh.ox, mesh.oy, 0.5f);
@@ -409,6 +410,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static final class Mesh {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
+        float[] shieldFp;                                                        // 4.36.2: the same fit into vanilla's plate-sized box, used in first person (ShieldFrame.FP_MAX_W); null on every other mesh
         float[] shield;                                                          // 1.110.0: {scale, tx, ty, tz} of a shield mesh on vanilla's shield frame (ShieldFrame.fit); null on every other mesh
         String id;                                                               // 1.111.0: the mesh id (the model json and the grip table are found by it)
         GripState grip;                                                          // 1.111.0: where the hand holds this mesh and the shifts that put it there (docs/weapon_grip.md); null = placed the old way
@@ -483,7 +485,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
                 if (info[1] > 0f) mesh.manual = true;
                 applyOrient(mesh);
-                if (com.newuniverse.nusmp.visual.shields.ShieldSet.isShieldMesh(id)) mesh.shield = shieldFit(mesh);          // 1.110.0: a shield is framed like vanilla's, not normalised like a weapon on the sprite diagonal
+                if (com.newuniverse.nusmp.visual.shields.ShieldSet.isShieldMesh(id)) { mesh.shield = shieldFit(mesh, false); mesh.shieldFp = shieldFit(mesh, true); }          // 1.110.0 (4.36.2: and the first-person fit): a shield is framed like vanilla's, not normalised like a weapon on the sprite diagonal
                 else if (!mesh.manual && !HandWrap.isWrapped(id)) normalise(id, mesh, info[0]);                 // a wrapped weapon keeps its modelled axes (client/relics/item/HandWrap)
                 mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
@@ -514,7 +516,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     /** 1.110.0: the shield frame fit of a mesh: its box over the body, void and glow layers (an orbiting piece of an upgraded mesh is not part of the shield). */
-    private static float[] shieldFit(Mesh mesh) {
+    private static float[] shieldFit(Mesh mesh, boolean firstPerson) {
         float x0 = Float.MAX_VALUE, x1 = -Float.MAX_VALUE, y0 = Float.MAX_VALUE, y1 = -Float.MAX_VALUE, z1 = -Float.MAX_VALUE;
         for (List<float[]> layer : mesh.layers) {
             for (float[] v : layer) {
@@ -525,7 +527,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 z1 = Math.max(z1, v[2]);
             }
         }
-        return com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1);
+        return firstPerson ? com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_H)
+                : com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1);
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */
