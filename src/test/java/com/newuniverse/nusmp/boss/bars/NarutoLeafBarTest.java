@@ -42,8 +42,10 @@ class NarutoLeafBarTest {
         int n = BarStyle.EMBLEMS.size();
         assertEquals("sharingan", BarStyle.EMBLEMS.get(36));
         assertEquals("mangekyo", BarStyle.EMBLEMS.get(37));
-        assertEquals(java.util.List.of("sharingan_v2", "mangekyo_v2", "tomoe"), BarStyle.EMBLEMS.subList(38, n));
-        assertEquals(41, n);
+        assertEquals("dragon_ball", BarStyle.EMBLEMS.get(38));
+        assertEquals("vessel_star", BarStyle.EMBLEMS.get(39));
+        assertEquals(java.util.List.of("sharingan_v2", "mangekyo_v2", "tomoe"), BarStyle.EMBLEMS.subList(40, n));
+        assertEquals(43, n);
         assertEquals("chidori", BarStyle.FX.get(BarStyle.FX.size() - 1));
         assertEquals("shield", BarStyle.FX.get(12), "the older rows keep their numbers");
     }

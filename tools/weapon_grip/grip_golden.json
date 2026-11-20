@@ -5705,19 +5705,19 @@
  },
  "vassal_book__animal_needle_book": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 4.693,
-  "y": 30.855,
-  "z": 0.0
+  "fraction": 0.28,
+  "source": "override",
+  "x": 6.579,
+  "y": 16.768,
+  "z": 0.161
  },
  "vassal_book__library_tome": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.101,
-  "y": 16.842,
-  "z": 0.4
+  "fraction": 0.14,
+  "source": "override",
+  "x": 0.539,
+  "y": -3.648,
+  "z": 3.441
  },
  "vassal_book__pipe_book": {
   "class": "handitem",
@@ -5729,11 +5729,11 @@
  },
  "vassal_book__revised_edition": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.14,
-  "y": 15.058,
-  "z": 0.0
+  "fraction": 0.25,
+  "source": "override",
+  "x": -0.974,
+  "y": 0.088,
+  "z": 0.5
  },
  "vassal_carriage": {
   "class": "handitem",
@@ -5761,18 +5761,18 @@
  },
  "vassal_carriage__queens_chariot": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -47.647,
-  "y": 52.943,
-  "z": 0.587
+  "fraction": 0.68,
+  "source": "override",
+  "x": -52.975,
+  "y": 76.392,
+  "z": 0.0
  },
  "vassal_carriage__war_carriage": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -45.528,
-  "y": 63.508,
+  "fraction": 0.09,
+  "source": "override",
+  "x": -50.71,
+  "y": 11.431,
   "z": 0.0
  },
  "vassal_chain": {

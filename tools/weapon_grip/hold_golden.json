@@ -1119,6 +1119,62 @@
    "float": 0.037
   }
  },
+ "vassal_axe__curse_axe": {
+  "tp_left": {
+   "arm": 0.175,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  },
+  "tp_right": {
+   "arm": 0.175,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  }
+ },
+ "vassal_axe__pipe_axe": {
+  "tp_left": {
+   "arm": 0.263,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.033
+  },
+  "tp_right": {
+   "arm": 0.263,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.033
+  }
+ },
+ "vassal_axe__shine_axe": {
+  "tp_left": {
+   "arm": 0.247,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.032
+  },
+  "tp_right": {
+   "arm": 0.247,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.032
+  }
+ },
+ "vassal_axe__timber_axe": {
+  "tp_left": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.027
+  },
+  "tp_right": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.027
+  }
+ },
  "vassal_book": {
   "tp_left": {
    "arm": 0.278,
@@ -1131,6 +1187,62 @@
    "body": 0.0,
    "extra": 0.158,
    "float": 0.032
+  }
+ },
+ "vassal_book__animal_needle_book": {
+  "tp_left": {
+   "arm": 0.277,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.006
+  },
+  "tp_right": {
+   "arm": 0.278,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.049
+  }
+ },
+ "vassal_book__library_tome": {
+  "tp_left": {
+   "arm": 0.167,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  },
+  "tp_right": {
+   "arm": 0.12,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.005
+  }
+ },
+ "vassal_book__pipe_book": {
+  "tp_left": {
+   "arm": 0.29,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.28,
+   "body": 0.0,
+   "extra": 0.124,
+   "float": 0.009
+  }
+ },
+ "vassal_book__revised_edition": {
+  "tp_left": {
+   "arm": 0.262,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.019
+  },
+  "tp_right": {
+   "arm": 0.142,
+   "body": 0.0,
+   "extra": 0.123,
+   "float": 0.003
   }
  },
  "vassal_carriage": {
@@ -1147,6 +1259,62 @@
    "float": 0.056
   }
  },
+ "vassal_carriage__filolial_carriage": {
+  "tp_left": {
+   "arm": 0.319,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.01
+  },
+  "tp_right": {
+   "arm": 0.315,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.018
+  }
+ },
+ "vassal_carriage__hourglass_sand_carriage": {
+  "tp_left": {
+   "arm": 0.334,
+   "body": 0.0,
+   "extra": 0.105,
+   "float": 0.035
+  },
+  "tp_right": {
+   "arm": 0.334,
+   "body": 0.0,
+   "extra": 0.105,
+   "float": 0.035
+  }
+ },
+ "vassal_carriage__queens_chariot": {
+  "tp_left": {
+   "arm": 0.0,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  },
+  "tp_right": {
+   "arm": 0.0,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  }
+ },
+ "vassal_carriage__war_carriage": {
+  "tp_left": {
+   "arm": 0.122,
+   "body": 0.0,
+   "extra": 0.098,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.328,
+   "body": 0.0,
+   "extra": 0.098,
+   "float": 0.009
+  }
+ },
  "vassal_chain": {
   "tp_left": {
    "arm": 0.144,
@@ -1159,6 +1327,90 @@
    "body": 0.0,
    "extra": 0.0,
    "float": 0.025
+  }
+ },
+ "vassal_chain__drowsy_chain": {
+  "tp_left": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  },
+  "tp_right": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  }
+ },
+ "vassal_chain__hydra_chain": {
+  "tp_left": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  },
+  "tp_right": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  }
+ },
+ "vassal_chain__idle_chain": {
+  "tp_left": {
+   "arm": 0.242,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.242,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  }
+ },
+ "vassal_chain__long_afternoon": {
+  "tp_left": {
+   "arm": 0.215,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  },
+  "tp_right": {
+   "arm": 0.215,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  }
+ },
+ "vassal_chain__orochi_chain": {
+  "tp_left": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "vassal_chain__tempered_chain": {
+  "tp_left": {
+   "arm": 0.205,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.205,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
   }
  },
  "vassal_fan": {

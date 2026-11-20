@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.52.1] — Build fix: hold audit passes for the book and carriage forms, hold golden covers the new vassal forms, bar emblem test knows the Goku and Sinbad emblems
+- FIXED: the grip fraction of 5 vassal forms (animal needle book, library tome, revised edition, queen's chariot, war carriage) is set to the middle of the span of grips the hold audit passes, so none floats, passes through the arm or sinks into the body (`HOLD_FIXES`, only used while `models.holdFit` is on).
+- FIXED: `hold_golden.json` and the grip golden now list the 18 axe, book, carriage and chain forms of 4.47.0.
+- FIXED: `NarutoLeafBarTest` expected the Naruto emblems right after the Naruto ones; the Goku and Sinbad emblems (`dragon_ball`, `vessel_star`) sit before them.
+- CAVEAT: the Python audit still lists 2 `NONE` notes (library tome and queen's chariot: a closed thick mesh whose surface is more than 0.15 blocks from the display centre); the Java test does not check that rule, and the shape is the Blender worker's.
+- KEPT: everything else; no gameplay change.
+
 ## [4.52.0] — Devil contract phase 2: stacked pacts, shared devils, price by Existence Points, betrayal, trial devil
 - NEW: a holder can stack several devil pacts (ledger of at most 16 pacts per player); the second Supreme devil costs 5x rising to 10x, at most 2 Supreme.
 - NEW: lesser devils can be shared by several holders; a join or sever refreshes the other holders (at most 4 by default, hard 16).
