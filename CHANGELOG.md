@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.58.1] — Weapon style audit and sameness report (docs and tools only)
+- NEW: `docs/heroweapon/style/` (style audit, style guide with a ranked rework list in three waves, contact sheets) and `tools/heroweapon/style/sameness_report.py`, which scores how alike the Blender-made weapons look. No game change, no asset change.
+- KEPT: every weapon, mesh and skin as they were.
+- CAVEATS: the ranking mixes the script score with a by-eye correction; about 460 older non-Blender weapons were not rated.
+
 ## [4.58.0] — Belial's second pair of arms is drawn
 - NEW: the bone-dragon set (Belial) now shows its `arm2_l` / `arm2_r` pieces: two thin bone arms with clawed gauntlets hang from the lower ribs, flared out and a little forward, and forge in with the Full Equip (phase 3) like the rest of the set. Two new `DjinnMeshes.Piece` entries appended last (`ARM2_L`, `ARM2_R`); the meshes were already shipped in 4.25.x.
 - KEPT: every other piece and every other Djinn (sets without the piece draw nothing extra); no setting needed, the arms follow the set.
