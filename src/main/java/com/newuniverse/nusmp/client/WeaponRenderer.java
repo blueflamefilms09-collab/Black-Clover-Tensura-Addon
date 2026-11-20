@@ -262,6 +262,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 pose.translate(-px, -py, -pz);
             }
         }
+        float bowK = wrap == null && mesh.shield == null && (tpHand || ctx.firstPerson()) ? bowFactor(mesh, ctx.firstPerson()) : 1f;      // visual.bigBows: a bow of the mod is drawn bigger in the hand, about the point the hand holds (1 = as before)
+        if (bowK != 1f) {
+            float[] gs = gripShift;
+            float px = gs != null ? gs[3] : mesh.gripX, py = gs != null ? gs[4] : mesh.gripY, pz = gs != null ? gs[5] : 0.5f;
+            pose.translate(px, py, pz);
+            pose.scale(bowK, bowK, bowK);
+            pose.translate(-px, -py, -pz);
+        }
         if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
             float[] sf = ctx.firstPerson() && mesh.shieldFp != null && com.newuniverse.nusmp.visual.shields.ShieldFrame.firstPersonVanillaSize() ? mesh.shieldFp : mesh.shield;      // 4.36.2: in first person a shield is the size of vanilla's, not the 1.3-wide box (it filled the screen)
             pose.translate(sf[1], sf[2], sf[3] + com.newuniverse.nusmp.visual.shields.ShieldFrame.armGap());       // 4.71.2: a little off the arm
@@ -321,6 +329,31 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time, hitTone);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         swingNow = null;
         pose.popPose();
+    }
+
+    /**
+     * visual.bigBows (docs/heroweapon/bow_size.md): the multiplier a held bow is drawn with, 1 for every other weapon, and 1 while the setting is off. The factor is worked out once per mesh from the length of the
+     * bow's REST mesh (so a draw stage never jumps in size) and stored in the mesh ({@code bowBase}: 0 = not a bow of the table); per frame it is one field read and a multiply.
+     */
+    private static float bowFactor(Mesh mesh, boolean firstPerson) {
+        if (!com.newuniverse.nusmp.visual.sizes.BowSize.enabled()) return 1f;
+        if (Float.isNaN(mesh.bowBase)) {
+            String rest = mesh.id == null ? "" : com.newuniverse.nusmp.visual.sizes.BowSize.restId(mesh.id);
+            mesh.bowBase = 0f;
+            if (com.newuniverse.nusmp.visual.sizes.BowSize.tier(rest) != null) {
+                Mesh restMesh = rest.equals(mesh.id) ? mesh : mesh(rest);
+                mesh.bowLen = extentLength(mesh);
+                mesh.bowBase = com.newuniverse.nusmp.visual.sizes.BowSize.baseFactor(rest, restMesh == mesh || restMesh == null ? mesh.bowLen : extentLength(restMesh));
+            }
+        }
+        return com.newuniverse.nusmp.visual.sizes.BowSize.factor(mesh.bowBase, mesh.bowLen, firstPerson);
+    }
+
+    /** Tip to tip in blocks: the extent along the mesh's y over its three layers times the place scale (the place line's ymin only says where it sits; a few meshes reach past it). Once per mesh. */
+    private static float extentLength(Mesh mesh) {
+        float lo = Float.MAX_VALUE, hi = -Float.MAX_VALUE;
+        for (List<float[]> layer : mesh.layers) for (float[] v : layer) { lo = Math.min(lo, v[1]); hi = Math.max(hi, v[1]); }
+        return hi > lo ? (hi - lo) * mesh.scale : 0f;
     }
 
     /** The spec of Hellblaze when its katana look is on and it has a hit tone, else null (every other weapon: one string compare). */
@@ -450,6 +483,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         boolean gripFlipped;                                                     // 1.111.0: the runtime turned the mesh over along its length (its `grip` line then counts from the other end)
         boolean manual;                                                          // 1.29.0: `orient manual`: hand-tuned, never normalised
         float orientRot, orientFlip;                                             // 1.29.0: `orient <rotZ> <flipX>`
+        float bowLen;                                                            // visual.bigBows: this bow mesh's tip-to-tip length in blocks (set with bowBase)
+        float bowBase = Float.NaN;                                              // visual.bigBows: BowSize.baseFactor of this bow's rest mesh (0 = not a bow of the table, NaN = not worked out yet)
         float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
         int glowRgb;
         ResourceLocation tex, glowTex;

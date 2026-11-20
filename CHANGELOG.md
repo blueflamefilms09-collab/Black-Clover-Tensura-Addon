@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.72.0] — Bigger bows in the hand, and the 4.71.x build fixes
+Owner request: the hero bow and all bows are bigger in the hand, in third and first person.
+- NEW (client): every bow is drawn larger in hand (`visual/sizes/BowSize`): hero bows 1.50 blocks (third person) / 1.13 (first person), hero bow forms 1.40 / 1.06, relic bows 1.35 / 1.02; first person is capped at 1.2. Client options `visual.bigBows` (true; false restores the old size) and `visual.bowScale` (1.0, 0.5 to 2.0) in `nusmp-flatprops-client.toml`. Self-test `visual.bow_size`.
+- FIX: the first-person shield box is no taller than the normal one (`ShieldFrame.FP_MAX_H` 1.0, was 1.2), which the shield-size test of 4.71.0 required.
+- FIX: the Vassal Whip got its swing rig back (the 4.70.0 restyle wrote the mesh without it; `tools/weaponmotion/build_swing.py`).
+- KEPT: every old model, option and setting. REPLACED: nothing.
+- COST: client drawing only, one scale factor per bow draw, no packets, no server work.
+- CAVEATS: previews are software renders (`docs/previews/bows_bigger/`), not seen in a game.
+- Includes everything of 4.65.0 to 4.71.2: no release was published for those versions because of outdated tests, now fixed.
+
 ## [4.71.2] — The hero Shield sits a little off the arm
 Owner request: move the shield off the arm a bit.
 - REPLACED (client; `-Danime_multiverse.shieldSize=old` restores it together with the 4.71.0 size change): every shield mesh is drawn 0.14 blocks further along its front axis (`ShieldFrame.ARM_GAP`), away from the forearm when raised and from the hip when lowered. Facing and scale are unchanged.

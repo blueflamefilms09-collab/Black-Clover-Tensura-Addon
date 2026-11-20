@@ -67,6 +67,8 @@ TORSO_Y = (-4 * PX, 0.0)
 TORSO_Z = (0.0, 12 * PX)
 TORSO_NEAR, TORSO_FAR = 2 * PX, 10 * PX        # the torso's face toward the arm and its far side, measured toward the body
 
+BOW_K = None               # optional hook (tools/relics/bow_size.py): function (mesh id, first_person) -> the factor visual.bigBows draws the bow with about the grip; None = the audit of before, number for number
+
 HERO_PREFIX = ("legendary_", "vassal_")
 WORN = ("vassal_gauntlet", "vassal_claw")      # HandWrap: worn on the hand, own frame
 KEYS = ("thirdperson_righthand", "thirdperson_lefthand", "firstperson_righthand", "firstperson_lefthand")
@@ -344,6 +346,8 @@ def measure(w, rule=True):
             land = g_cube + shift
             apparent = length * d[2]
             k = max(0.4, 1.5 * 1.15 / apparent) if apparent > 1.5 * 1.15 else 1.0
+            if BOW_K is not None:
+                k *= BOW_K(w.id, True)                                    # visual.bigBows: the bow grows about the same point (WeaponRenderer.bowFactor)
             c = land + k * (cube + shift - land)
             row["share"], row["k"] = round(share, 3), round(k, 3)
             q = to_hand(d, left, c)
@@ -362,6 +366,9 @@ def measure(w, rule=True):
             if rule and applies(w.id):
                 extra = hold_extra(q, d, left, axis)
                 c = c + extra
+                q = to_hand(d, left, c)
+            if BOW_K is not None:                                         # visual.bigBows: the bow grows about the hand point (GripState.shift's t), after the hold rule moved it
+                c = target + BOW_K(w.id, False) * (c - target)
                 q = to_hand(d, left, c)
             row["extra"] = float(np.linalg.norm(extra) * d[2])
             dist = np.linalg.norm(q, axis=1)

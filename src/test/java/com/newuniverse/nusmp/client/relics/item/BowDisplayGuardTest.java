@@ -131,6 +131,29 @@ class BowDisplayGuardTest {
     }
 
     /**
+     * Bigger bows (docs/heroweapon/bow_size.md): the mesh files above stay the size of vanilla's bow (the classic path, visual.bigBows off); in the hand the renderer multiplies them by
+     * {@link com.newuniverse.nusmp.visual.sizes.BowSize}. Every bow-class item of the mod must have a tier there and then read bigger than vanilla's bow (1.08 blocks third person, 0.82 first person)
+     * in BOTH persons, without passing the first-person camera cap (the full per-mesh bands are BowSizeTest's).
+     */
+    @Test
+    void everyBowReadsBiggerThanVanillasInBothPersons() throws IOException {
+        WeaponClasses classes = WeaponMeshesTest.loadClasses();
+        List<String> bad = new ArrayList<>();
+        for (String id : bowIds()) {
+            if (!"bow".equals(classes.className(id))) continue;
+            var tier = com.newuniverse.nusmp.visual.sizes.BowSize.tier(id);
+            if (tier == null) { bad.add(id + " is a bow-class item with no tier in visual/sizes/BowSize (it would stay tiny in the hand)"); continue; }
+            Matcher pl = PLACE.matcher(Files.readString(RES.resolve("weapon_meshes/" + id + ".txt")));
+            if (!pl.find()) continue;
+            double len = com.newuniverse.nusmp.visual.sizes.BowSizeTest.length(RES.resolve("weapon_meshes/" + id + ".txt"));
+            float tp = com.newuniverse.nusmp.visual.sizes.BowSize.apparent(id, (float) len, (float) len, false, true, 1f), fp = com.newuniverse.nusmp.visual.sizes.BowSize.apparent(id, (float) len, (float) len, true, true, 1f);
+            if (tp < 1.2f) bad.add(id + " reads " + tp + " blocks in a third-person hand (vanilla's bow 1.08, a bow of the mod at least 1.2)");
+            if (fp < 0.9f || fp > com.newuniverse.nusmp.visual.sizes.BowSize.FP_MAX_APPARENT + 1e-4f) bad.add(id + " reads " + fp + " blocks in a first-person hand (0.9 to " + com.newuniverse.nusmp.visual.sizes.BowSize.FP_MAX_APPARENT + ")");
+        }
+        assertTrue(bad.isEmpty(), String.join("\n", bad));
+    }
+
+    /**
      * 1.72.0 (owner screenshots): a bow is SIZED like vanilla's too. The mesh bows were 1.76 to 2.58 blocks tip to tip (vanilla's is about 1.15), so the golden Legendary Bow filled the
      * screen in first person and stood taller than the player in third. Every mesh of a bow-class weapon, rest and draw stages, is between 0.9 and 1.4 blocks long (tools/relics/bow_vanilla.py).
      */

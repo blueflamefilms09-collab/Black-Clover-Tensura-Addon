@@ -33,7 +33,7 @@ public final class ShieldFrame {
      * 4.36.2: the footprint box in FIRST person, in blocks: vanilla's own plate width (12 / 16) and the usual height. Vanilla's first-person display multiplies a shield by 1.25 and
      * holds it close to the camera, so the 1.3 wide box above filled the screen; this keeps a mod shield the size of a vanilla one in the hand.
      */
-    public static final float FP_MAX_W = 12f / 16f, FP_MAX_H = 1.2f;
+    public static final float FP_MAX_W = 12f / 16f, FP_MAX_H = 1.0f;
 
     /** Client kill switch: {@code -Danime_multiverse.shieldFirstPerson=old} restores the 1.110.0 first-person size (the same box as every other view). */
     public static boolean firstPersonVanillaSize() { return !"old".equalsIgnoreCase(System.getProperty("anime_multiverse.shieldFirstPerson", "vanilla")); }

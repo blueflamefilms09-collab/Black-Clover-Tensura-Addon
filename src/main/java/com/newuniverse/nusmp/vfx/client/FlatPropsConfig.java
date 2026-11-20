@@ -12,12 +12,16 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * cut-outs of swords, axes, shields and paper figures are never drawn; the spells that owned them draw solid models. On: the old cut-outs are drawn again, exactly as before. The value is mirrored into the
  * pure {@link FlatProps} switch when the file loads or reloads; the dedicated server never registers this config.
  *
+ * <p>{@code visual.bigBows} (default true) and {@code visual.bowScale} (default 1.0, 0.5 to 2.0) are two more keys of the same file: the bigger bows in the hand ({@link com.newuniverse.nusmp.visual.sizes.BowSize}).
+ *
  * <p>{@code visual.heroSolidParts} (default true, docs/heroweapon/flat_parts.md) is a second key of the same file: the solid arrows and spear tips of the hero weapons; false restores the old flat look ({@link com.newuniverse.nusmp.vfx.HeroSolid}).
  */
 public final class FlatPropsConfig {
     public static final ModConfigSpec SPEC;
     private static final ModConfigSpec.BooleanValue FLAT_PROPS;
     private static final ModConfigSpec.BooleanValue HERO_SOLID_PARTS;
+    private static final ModConfigSpec.BooleanValue BIG_BOWS;
+    private static final ModConfigSpec.DoubleValue BOW_SCALE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -27,6 +31,11 @@ public final class FlatPropsConfig {
         HERO_SOLID_PARTS = b.comment("Draw the arrows of the Legendary Bow and the tips of the spears and the harpoon as solid 3D parts (a shaft, a diamond head, three vanes; a leaf blade with a ridge), in the hand and in flight. "
                         + "Off = the old flat look: the hairline arrow, the paper-thin spear head and the plain glow streak (docs/heroweapon/flat_parts.md).")
                 .define("heroSolidParts", true);
+        BIG_BOWS = b.comment("Draw every bow of the mod bigger in the hand, in third and first person (the Legendary Bow about 1.5 blocks, its forms 1.4, the relic bows 1.35; vanilla's bow is 1.08), "
+                        + "held at the same grip point. Off = the sizes of before exactly (docs/heroweapon/bow_size.md).")
+                .define("bigBows", true);
+        BOW_SCALE = b.comment("A multiplier on top of visual.bigBows (0.5 to 2.0, default 1.0) to tune the bow size without a rebuild. In first person a bow never grows past what the camera allows. Ignored while bigBows is off.")
+                .defineInRange("bowScale", 1.0, 0.5, 2.0);
         b.pop();
         SPEC = b.build();
     }
@@ -43,5 +52,7 @@ public final class FlatPropsConfig {
     static void apply() {
         try { FlatProps.setDrawFlat(FLAT_PROPS.get()); } catch (IllegalStateException notLoaded) { FlatProps.setDrawFlat(false); }
         try { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(HERO_SOLID_PARTS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(true); }
+        try { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(BIG_BOWS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(true); }
+        try { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(BOW_SCALE.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(1.0); }
     }
 }
