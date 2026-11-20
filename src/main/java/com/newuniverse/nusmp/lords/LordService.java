@@ -492,7 +492,7 @@ public final class LordService {
     /** Sends the state of one sin to its wielder when it changed (or when {@code force}); one small packet. A player who is no longer the wielder gets a "not the wielder" packet once so the client forgets it. */
     public static void hud(ServerPlayer p, LordRules.Sin sin, boolean force) {
         LordData d = LordData.bound() ? data() : null;
-        boolean owner = d != null && sin.isLord() && LordConfig.enabled() && d.isOwner(sin, p.getUUID());
+        boolean owner = d != null && sin.isLord() && LordConfig.enabled() && d.isOwner(sin, p.getUUID()) && !com.newuniverse.nusmp.sinweapons.SinSkillService.isOffById(p, sin.id);      // 4.64.1: a skill removed with /multiverse sin remove takes its side bar with it
         LordState st = LordStore.peek(p);
         if (!owner || st == null) {
             sendHud(p, sin, 0, 0, 0, 0, 0, force);

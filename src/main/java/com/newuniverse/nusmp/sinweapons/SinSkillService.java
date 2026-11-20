@@ -221,10 +221,15 @@ public final class SinSkillService {
     /** True when the player removed this weapon's skill (one byte in their persistent data): the scan then neither binds nor grants it. */
     public static boolean isOff(ServerPlayer p, SinRules.Kind k) { return p.getPersistentData().getBoolean(OFF_KEY + k.id); }
 
+    /** The same by weapon id (the Lords of the sins use the same ids); false for an id that is no weapon. */
+    public static boolean isOffById(ServerPlayer p, String id) { return p.getPersistentData().getBoolean(OFF_KEY + id); }
+
     /** Removes the weapon's skill from the player and keeps it from coming back by itself; the carried stacks they own are set free (unbound), nothing is taken. Returns true when anything changed. */
     public static boolean remove(ServerPlayer p, SinRules.Kind k) {
         boolean changed = !isOff(p, k);
         p.getPersistentData().putBoolean(OFF_KEY + k.id, true);
+        for (com.newuniverse.nusmp.lords.LordRules.Sin sin : com.newuniverse.nusmp.lords.LordRules.Sin.values())
+            if (sin.id.equals(k.id)) com.newuniverse.nusmp.lords.LordService.hud(p, sin, true);      // the side bar goes at once (4.64.1)
         Skills skills = skillsOf(p);
         if (skills != null && skills.getSkill(holder(k).getId()).isPresent()) {
             skills.forgetSkill(holder(k).getId(), Component.translatableWithFallback("sinskill.msg.removed", "%s fades from you.", holder(k).get().getName()).withStyle(ChatFormatting.GRAY));
@@ -243,6 +248,8 @@ public final class SinSkillService {
     public static boolean restore(ServerPlayer p, SinRules.Kind k) {
         boolean was = isOff(p, k);
         p.getPersistentData().remove(OFF_KEY + k.id);
+        for (com.newuniverse.nusmp.lords.LordRules.Sin sin : com.newuniverse.nusmp.lords.LordRules.Sin.values())
+            if (sin.id.equals(k.id)) com.newuniverse.nusmp.lords.LordService.hud(p, sin, true);
         return was;
     }
 

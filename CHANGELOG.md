@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.64.1] — Removing a Sin weapon skill also removes its side bar
+Owner report: removing the Berserk skill should remove the level bar on the side.
+- FIXED: `/multiverse sin remove <weapon>` now also hides that weapon's Lord mastery bar (the bar at the bottom left) at once, and it stays hidden while the skill is removed. `/multiverse sin restore` brings it back.
+- COST: one existing HUD packet per remove or restore; no new packet, no tick work.
+- CAVEATS: not seen in a game. The Black Sword Greed bar is cleared by `/multiverse greed reset`, as before. A Lord's weapon ownership itself is not changed by `sin remove`.
+
 ## [4.64.0] — The Trial Devil gets a real model; devil open points closed
 Owner: "do what you think is best" on the devil phase 2 open points and the trial devil model.
 - NEW: the Trial Devil is a horned brute with wings, a spade tail, hair locks, pauldrons and bracers (33 bones, 110 cubes, 660 quads) with idle, walk and attack clips and one painted sheet plus eye/brand glow mask per devil (26 devils and a default). Scaled by rank (Supreme 1.08 to Low 0.9). The entity syncs one string (the devil id) so the client picks the sheet.
