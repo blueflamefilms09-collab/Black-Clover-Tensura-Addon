@@ -18,11 +18,11 @@ public record BarStyle(String id, String family, String emblem, String fx, Strin
     public static final List<String> FAMILIES = List.of("theme", "arc", "boss");
     public static final List<String> ENTRANCES = List.of("slide", "rise", "fade", "flash");
     public static final List<String> DEATHS = List.of("shatter", "dissolve");
-    public static final List<String> FX = List.of("shimmer", "drip", "embers", "wave", "sparks", "frost", "souls", "leaves", "static", "glitch", "veins", "runes", "shield");
+    public static final List<String> FX = List.of("shimmer", "drip", "embers", "wave", "sparks", "frost", "souls", "leaves", "static", "glitch", "veins", "runes", "shield", "chidori");
     /** The emblems of {@code emblems.png}, in cell order (8 per row). Appended only. */
     public static final List<String> EMBLEMS = List.of("wing", "thorn_crown", "skull", "flame", "snowflake", "bolt", "void_eye", "leaf", "wave", "blood_drop", "gear", "mirror", "root", "gate", "horns",
             "crown_horns", "dragon", "feather", "halo", "lich", "broken_crown", "ankh", "plague", "triad", "eclipse", "sins", "spade", "knight", "labyrinth", "crown", "scales", "anvil", "whirlpool",
-            "key", "spirit", "rune", "sharingan", "mangekyo", "dragon_ball", "vessel_star");
+            "key", "spirit", "rune", "sharingan", "mangekyo", "dragon_ball", "vessel_star", "sharingan_v2", "mangekyo_v2", "tomoe");
     /** The colours every style gives (all {@code #RRGGBB}). */
     public static final List<String> COLOR_KEYS = List.of("fill_top", "fill_bottom", "glow", "accent", "ghost", "name", "title", "shadow", "frame", "shield", "invulnerable", "cast", "lair", "marker");
 

@@ -2992,6 +2992,91 @@
     ]
    }
   },
+  "boss.kakashi.core": {
+   "particles": [
+    "star4",
+    "glint",
+    "electric_orb",
+    "mote_soft"
+   ],
+   "color": "#F2FCFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.gates": {
+   "particles": [
+    "mote_soft",
+    "mana_mote",
+    "glint",
+    "smoke_wisp"
+   ],
+   "color": "#8FFFC0",
+   "dark": {
+    "particles": [
+     "spore",
+     "leaf_autumn",
+     "void_speck",
+     "poison_cloud"
+    ]
+   }
+  },
+  "boss.kakashi.sabre": {
+   "particles": [
+    "glint",
+    "star4",
+    "spark",
+    "mote_soft"
+   ],
+   "color": "#E8F6FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.fire": {
+   "particles": [
+    "ember",
+    "flame_tongue",
+    "spark",
+    "soot_puff"
+   ],
+   "color": "#FF7A2E",
+   "dark": {
+    "particles": [
+     "cinder",
+     "ember",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.thunder_god": {
+   "particles": [
+    "star4",
+    "glint",
+    "spark",
+    "mote_soft"
+   ],
+   "color": "#FFE27A",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
   "dungeon": {
    "particles": [
     "mote",

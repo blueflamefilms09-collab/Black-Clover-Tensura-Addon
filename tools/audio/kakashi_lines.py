@@ -150,6 +150,93 @@ GROUPS = {
         (CALM, "Well. I read the whole book and you wrote the last page. Good ending."),
         (CALM, "You are strong. Look after each other, that is where it comes from."),
     ]),
+    # ---- the canon kit pass (appended): one group per new move, plus the strain, counter and Six Paths calls
+    "lightning_cutter": ("Lightning Cutter", [
+        (SHOUT, "Lightning Cutter."),
+        (FOCUS, "Throw lightning at me and I will cut it in two."),
+    ]),
+    "cutter_cut": ("his Lightning Cutter cuts a bolt that reached him", [
+        (CALM, "Lightning cut in two. I did say so."),
+        (FOCUS, "A bolt is only a very fast line. I cut lines."),
+    ]),
+    "lightning_clone": ("Lightning Release: Shadow Clone", [
+        (FOCUS, "Lightning Release, Shadow Clone. Careful, it bites."),
+        (CALM, "Do not touch that one."),
+    ]),
+    "lclone_break": ("a foe breaks a clone of lightning and is paralysed", [
+        (CALM, "That is the lightning. It stops the legs, not the mind."),
+        (CALM, "I did warn you about the clone."),
+    ]),
+    "purple_strike": ("Purple Electricity: the empowered strike", [
+        (FOCUS, "Purple Electricity."),
+        (CALM, "Close range is where it hits hardest."),
+    ]),
+    "purple_burst": ("Purple Electricity: the burst all round him", [
+        (SHOUT, "Purple Electricity, all around me."),
+        (FOCUS, "Stay back, or stay down."),
+    ]),
+    "purple_chain": ("Purple Electricity: through the water", [
+        (FOCUS, "Wet ground carries it. Everyone connected, everyone shocked."),
+        (CALM, "Purple Electricity, through the water."),
+    ]),
+    "kamui_warp": ("Kamui, long range: the Distant Warp", [
+        (FOCUS, "Kamui. I only need to look at you."),
+        (FOCUS, "Into the other space. You will come out somewhere else."),
+    ]),
+    "earth_fang": ("Summoning: Earth Release: Tracking Fang", [
+        (SHOUT, "Earth Release, Tracking Fang."),
+        (CALM, "My dogs know your scent. Hold him."),
+    ]),
+    "eight_gates": ("the Eight Gates", [
+        (FOCUS, "Gate of Opening, Healing, Life. That is as far as I dare."),
+        (CALM, "Eight Gates. A little of it, only a little."),
+    ]),
+    "kubikiri": ("Kubikiribocho", [
+        (CALM, "Kubikiribocho. A heavy one, so stand clear."),
+        (CALM, "Not my sword, but it works for me."),
+    ]),
+    "chakra_sabre": ("White Light Chakra Sabre", [
+        (FOCUS, "White Light Chakra Sabre."),
+        (CALM, "My father's way of fighting. Quick and quiet."),
+    ]),
+    "kunai_wire": ("Kunai Wire", [
+        (CALM, "A wire. Simple, and you walked right into it."),
+        (FOCUS, "Come here."),
+    ]),
+    "thunder_god": ("Flying Thunder God Kunai", [
+        (FOCUS, "A kunai. Mark it and be gone."),
+        (CALM, "A marker, a flash, and I am wherever I left one."),
+    ]),
+    "great_fireball": ("Fire Release: Great Fireball", [
+        (SHOUT, "Fire Release, Great Fireball."),
+        (CALM, "I have seen this done. It is easier with an eye that copies."),
+    ]),
+    "six_paths": ("the Six Paths awakening", [
+        (FOCUS, "Obito. Lend me the rest. Both eyes, and a little more."),
+        (SHOUT, "This is not mine to keep. I will use it once."),
+    ]),
+    "sixpaths_end": ("the Six Paths chakra leaves him", [
+        (CALM, "That is all of it. It leaves as quickly as it came."),
+        (FOCUS, "Out of borrowed chakra. Hit me while you can."),
+    ]),
+    "strain": ("the Sharingan strain fills and his eye bleeds", [
+        (FOCUS, "My eye. It is bleeding. Give me a moment."),
+        (CALM, "The Sharingan never rests, and I never rest with it."),
+    ]),
+    "counter": ("he counters the kind of attack the players use most", [
+        (CALM, "You lean on that one move. So I prepared for it."),
+        (FOCUS, "I watched you. That no longer works on me."),
+        (CALM, "Observe first, attack second. An old habit."),
+    ]),
+}
+
+# lines that name a technique: the name is from the English Naruto wiki rundown the owner supplied (naruto.fandom.com), the wording is his manner
+WIKI = "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner"
+WIKI_LINES = {
+    "Lightning Cutter.", "Lightning Release, Shadow Clone. Careful, it bites.", "Purple Electricity.", "Purple Electricity, all around me.", "Purple Electricity, through the water.",
+    "Kamui. I only need to look at you.", "Earth Release, Tracking Fang.", "Gate of Opening, Healing, Life. That is as far as I dare.", "Eight Gates. A little of it, only a little.",
+    "Kubikiribocho. A heavy one, so stand clear.", "White Light Chakra Sabre.", "A kunai. Mark it and be gone.", "Fire Release, Great Fireball.",
+    "Obito. Lend me the rest. Both eyes, and a little more.", "My eye. It is bleeding. Give me a moment.",
 }
 
 
@@ -172,7 +259,7 @@ def lines():
         for n, (delivery, text) in enumerate(items, 1):
             lid = "kakashi_%s_%d" % (g, n)
             out.append({"id": lid, "group": g, "trigger": trigger, "text": text, "delivery": delivery,
-                        "source": CANON.get(text, "in his manner (original wording, no wiki source)"),
+                        "source": CANON.get(text, WIKI if text in WIKI_LINES else "in his manner (original wording, no wiki source)"),
                         "file": "assets/anime_multiverse/sounds/kakashi/%s.ogg" % lid})
     return out
 

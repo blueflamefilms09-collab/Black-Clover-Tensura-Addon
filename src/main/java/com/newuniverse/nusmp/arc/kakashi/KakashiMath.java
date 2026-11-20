@@ -32,7 +32,19 @@ public final class KakashiMath {
     public static final String KUNAI = "kunai_barrage", RAIKIRI = "raikiri", COPY_MOVE = "sharingan_copy", FANG = "beast_fang", DRAGON = "water_dragon", NINKEN = "ninken_pursuit",
             CLONES = "clone_ambush", MIST = "hidden_mist", WALL = "earth_wall", WARP = "kamui_step", KAMUI_RAIKIRI = "kamui_raikiri", KAMUI_SHURIKEN = "kamui_shuriken", VORTEX = "kamui_vortex",
             SUSANOO_MOVE = "perfect_susanoo", PURPLE = "purple_lightning";
-    public static final List<String> BOOK = List.of(KUNAI, RAIKIRI, COPY_MOVE, FANG, DRAGON, NINKEN, CLONES, MIST, WALL, WARP, KAMUI_RAIKIRI, KAMUI_SHURIKEN, VORTEX, SUSANOO_MOVE, PURPLE);
+    /**
+     * The canon kit pass (docs/bosses/kakashi.md, "Canon audit"; source: the English Naruto wiki rundown the owner supplied): fourteen moves appended after the first fifteen, in this order.
+     * Lightning Cutter (S rank, cuts lightning, 4 charges per phase), Lightning Release Shadow Clone (paralyses), the other three modes of Purple Electricity (empowered strike, self-centred
+     * burst, chain through water), Kamui long range (the Distant Warp), Earth Release Tracking Fang (the ninken root), the Eight Gates, Kubikiribocho, White Light Chakra Sabre, the kunai wire,
+     * the Flying Thunder God kunai, the copied Great Fireball and the Six Paths awakening.
+     */
+    public static final String CUTTER = "lightning_cutter", LCLONE = "lightning_clone", PURPLE_STRIKE = "purple_strike", PURPLE_BURST = "purple_burst", PURPLE_CHAIN = "purple_chain",
+            KAMUI_WARP = "kamui_warp", EARTH_FANG = "earth_fang", GATES = "eight_gates", KUBIKIRI = "kubikiribocho", SABRE = "chakra_sabre", WIRE = "kunai_wire", THUNDER_GOD = "thunder_god",
+            FIREBALL = "great_fireball", SIX_PATHS = "six_paths";
+    public static final List<String> BOOK = List.of(KUNAI, RAIKIRI, COPY_MOVE, FANG, DRAGON, NINKEN, CLONES, MIST, WALL, WARP, KAMUI_RAIKIRI, KAMUI_SHURIKEN, VORTEX, SUSANOO_MOVE, PURPLE,
+            CUTTER, LCLONE, PURPLE_STRIKE, PURPLE_BURST, PURPLE_CHAIN, KAMUI_WARP, EARTH_FANG, GATES, KUBIKIRI, SABRE, WIRE, THUNDER_GOD, FIREBALL, SIX_PATHS);
+    /** The first fifteen moves (the book before the canon kit pass): with {@code canonKit} off only these are chosen. */
+    public static final int CLASSIC_MOVES = 15;
 
     /** The first phase in which a move may be chosen. */
     public static int openingPhase(String move) {
@@ -41,6 +53,10 @@ public final class KakashiMath {
             case FANG, DRAGON, NINKEN, CLONES, MIST, WALL -> PACK;
             case WARP, KAMUI_RAIKIRI, KAMUI_SHURIKEN, VORTEX -> MANGEKYO;
             case SUSANOO_MOVE, PURPLE -> SUSANOO;
+            case SABRE, WIRE -> COPY;
+            case CUTTER, LCLONE, EARTH_FANG, KUBIKIRI, FIREBALL -> PACK;
+            case KAMUI_WARP, GATES, THUNDER_GOD -> MANGEKYO;
+            case PURPLE_STRIKE, PURPLE_BURST, PURPLE_CHAIN, SIX_PATHS -> SUSANOO;
             default -> 99;
         };
     }
@@ -217,6 +233,212 @@ public final class KakashiMath {
         for (int i = 0; i < distances.length; i++) idx.add(i);
         idx.sort((a, b) -> Double.compare(distances[a], distances[b]));
         return idx.subList(0, Math.min(max, idx.size()));
+    }
+
+    // ================================================================ canon limits as the balance rule (charges, strain, the observe-first rule, the Six Paths)
+    /** Part I canon: chakra for 4 Lightning Cutters or 3 Kamui. Here: charges per phase, refilled when a phase begins. Chidori (the plain Raikiri) is free. */
+    public static final class Charges {
+        public static final int CUTTERS = 4, KAMUI = 3;
+        private int cutters = CUTTERS, kamui = KAMUI;
+
+        /** Which pool a move draws from: 1 = Lightning Cutter, 2 = Kamui warp, 0 = none. */
+        public static int pool(String move) {
+            return switch (move) {
+                case CUTTER -> 1;
+                case WARP, KAMUI_RAIKIRI, KAMUI_WARP -> 2;
+                default -> 0;
+            };
+        }
+
+        public boolean canUse(String move) {
+            return switch (pool(move)) {
+                case 1 -> cutters > 0;
+                case 2 -> kamui > 0;
+                default -> true;
+            };
+        }
+
+        public void spend(String move) {
+            switch (pool(move)) {
+                case 1 -> cutters = Math.max(0, cutters - 1);
+                case 2 -> kamui = Math.max(0, kamui - 1);
+                default -> { }
+            }
+        }
+
+        public void refill() {
+            cutters = CUTTERS;
+            kamui = KAMUI;
+        }
+
+        public int cutters() { return cutters; }
+
+        public int kamui() { return kamui; }
+    }
+
+    /**
+     * The Sharingan drains him all the time (canon: he cannot switch it off). A meter that rises by itself and with every strong eye technique; when it is full the eye bleeds: he is
+     * exhausted for {@link #EXHAUST_TICKS} (open, no Kamui) and the meter falls to {@link #RESET_TO}. The Six Paths awakening has no strain (canon: Obito's chakra).
+     */
+    public static final class Strain {
+        public static final int MAX = 100, EXHAUST_TICKS = 80, RESET_TO = 35, PASSIVE_EVERY = 40;
+
+        /** What a move adds to the meter. */
+        public static int cost(String move) {
+            return switch (move) {
+                case COPY_MOVE -> 8;
+                case WARP -> 7;
+                case KAMUI_RAIKIRI -> 12;
+                case KAMUI_WARP -> 16;
+                case KAMUI_SHURIKEN -> 10;
+                case VORTEX -> 22;
+                case GATES -> 28;
+                case CUTTER -> 5;
+                case THUNDER_GOD -> 6;
+                default -> 0;
+            };
+        }
+
+        private int value;
+
+        public int value() { return value; }
+
+        /** Adds strain; true when the meter just filled (he is exhausted now). */
+        public boolean add(int n) {
+            if (n <= 0) return false;
+            value = Math.min(MAX, value + n);
+            if (value < MAX) return false;
+            value = RESET_TO;
+            return true;
+        }
+
+        public void reset() { value = 0; }
+    }
+
+    /** What kind of blow the player's damage is (the observe-and-counter rule reads it). */
+    public static final int E_FIRE = 0, E_LIGHTNING = 1, E_WATER = 2, E_EARTH = 3, E_PROJECTILE = 4, E_MELEE = 5, E_MAGIC = 6, E_COUNT = 7;
+
+    /** Sorts a hit by its damage type id and tags; {@code direct} = a player's own hand. */
+    public static int classify(String msgId, boolean fireTag, boolean lightningTag, boolean projectileTag, boolean direct) {
+        String m = msgId == null ? "" : msgId.toLowerCase(java.util.Locale.ROOT);
+        if (lightningTag || m.contains("lightning") || m.contains("thunder") || m.contains("electr")) return E_LIGHTNING;
+        if (fireTag || m.contains("fire") || m.contains("flame") || m.contains("burn") || m.contains("lava")) return E_FIRE;
+        if (m.contains("water") || m.contains("ice") || m.contains("frost") || m.contains("drown")) return E_WATER;
+        if (m.contains("earth") || m.contains("stone") || m.contains("rock")) return E_EARTH;
+        if (projectileTag || m.contains("arrow") || m.contains("trident") || m.contains("thrown")) return E_PROJECTILE;
+        if (m.contains("magic") || m.contains("tensura") || m.contains("spell")) return E_MAGIC;
+        return direct ? E_MELEE : E_MAGIC;
+    }
+
+    /** What the boss remembers of how the players hurt him: a decaying count per kind of blow (7 numbers, no allocation per hit). */
+    public static final class Elements {
+        public static final double DECAY = 0.96, MIN_HITS = 3.0, MIN_SHARE = 0.45;
+        private final double[] w = new double[E_COUNT];
+
+        public void record(int e) {
+            if (e < 0 || e >= E_COUNT) return;
+            for (int i = 0; i < E_COUNT; i++) w[i] *= DECAY;
+            w[e] += 1.0;
+        }
+
+        /** The kind of blow used most, or -1 when there are too few hits or no clear favourite. */
+        public int dominant() {
+            double sum = 0, best = 0;
+            int bi = -1;
+            for (int i = 0; i < E_COUNT; i++) {
+                sum += w[i];
+                if (w[i] > best) {
+                    best = w[i];
+                    bi = i;
+                }
+            }
+            return bi >= 0 && best >= MIN_HITS && best >= sum * MIN_SHARE ? bi : -1;
+        }
+
+        public void clear() { java.util.Arrays.fill(w, 0.0); }
+    }
+
+    /** The answers to a kind of blow, best first (the series' nature cycle: fire loses to water, water to lightning, lightning to earth, earth to water; a wall for arrows; a clone for fists). */
+    public static List<String> counters(int element) {
+        return switch (element) {
+            case E_FIRE -> List.of(DRAGON, MIST);
+            case E_LIGHTNING -> List.of(WALL, MIST);
+            case E_WATER -> List.of(CUTTER, PURPLE_CHAIN, RAIKIRI);
+            case E_EARTH -> List.of(DRAGON, FIREBALL);
+            case E_PROJECTILE -> List.of(WALL, CLONES);
+            case E_MELEE -> List.of(LCLONE, KUBIKIRI, CLONES);
+            default -> List.of(COPY_MOVE, KAMUI_WARP, KAMUI_SHURIKEN);
+        };
+    }
+
+    /** Observe first: for this many ticks after the fight starts he only uses clones, replacement and probing moves, and watches. */
+    public static final int OBSERVE_TICKS = 360;
+
+    public static boolean observeMove(String move) {
+        return switch (move) {
+            case KUNAI, CLONES, LCLONE, MIST, WIRE, WALL, SABRE -> true;
+            default -> false;
+        };
+    }
+
+    /** The Six Paths awakening: one per fight, below this share of health, for this many ticks; afterwards he is spent (open) for {@link #SIX_PATHS_SPENT}. */
+    public static final float SIX_PATHS_BELOW = 0.20f;
+    public static final int SIX_PATHS_TICKS = 400, SIX_PATHS_SPENT = 100;
+    /** How high (blocks) the Perfect Susanoo flight carries him above the ground. */
+    public static final double SIX_PATHS_HOVER = 2.6;
+
+    public static boolean sixPathsReady(float share, boolean used) { return !used && share <= SIX_PATHS_BELOW; }
+
+    /**
+     * Purple Electricity through water: from a first foe it jumps to the nearest not yet struck foe that is wet (or standing in water) within {@code reach}, at most {@code jumps} times.
+     * {@code pos} = x,z of each foe, {@code wet} = soaked. Returns the order of the foes struck (the first included).
+     */
+    public static List<Integer> chain(double[][] pos, boolean[] wet, int first, double reach, int jumps) {
+        List<Integer> out = new ArrayList<>();
+        if (first < 0 || first >= pos.length) return out;
+        out.add(first);
+        int at = first;
+        for (int j = 0; j < jumps; j++) {
+            int best = -1;
+            double bd = reach * reach;
+            for (int i = 0; i < pos.length; i++) {
+                if (out.contains(i) || !wet[i]) continue;
+                double dx = pos[i][0] - pos[at][0], dz = pos[i][1] - pos[at][1], d = dx * dx + dz * dz;
+                if (d <= bd) {
+                    bd = d;
+                    best = i;
+                }
+            }
+            if (best < 0) break;
+            out.add(best);
+            at = best;
+        }
+        return out;
+    }
+
+    /** Lightning Release Shadow Clone: how long it stands, how close a foe must come to break it, how long the paralysis lasts, how many stand at once. */
+    public static final int LCLONE_TICKS = 100, LCLONE_PARALYSE = 36, LCLONE_MAX = 2;
+    public static final double LCLONE_TOUCH = 1.7;
+
+    /** Flying Thunder God: kunai markers (at most this many standing) and how long they stay. */
+    public static final int FTG_MARKERS = 3, FTG_TICKS = 90;
+
+    /** Lightning Cutter: how long his hand cuts any lightning that reaches him (the counter window). */
+    public static final int CUTTER_COUNTER_TICKS = 40;
+
+    /** Eight Gates: how long the opened gates last and the damage factor they give. */
+    public static final int GATES_TICKS = 200;
+    public static final float GATES_DAMAGE = 1.25f;
+
+    /** The branching arcs of a Chidori: for each of {@code n} arcs, an angle (radians) and a length factor, deterministic from a seed so the same call draws the same hand. */
+    public static double[][] arcs(int n, long seed) {
+        java.util.Random r = new java.util.Random(seed);
+        double[][] out = new double[n][2];
+        for (int i = 0; i < n; i++) {
+            out[i][0] = (i + r.nextDouble() * 0.8) * Math.PI * 2.0 / Math.max(1, n);
+            out[i][1] = 0.6 + r.nextDouble() * 0.8;
+        }
+        return out;
     }
 
     // ================================================================ bounds (stated in docs/bosses/kakashi.md)

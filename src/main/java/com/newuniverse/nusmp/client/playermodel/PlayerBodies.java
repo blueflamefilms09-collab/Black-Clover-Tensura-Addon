@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.playermodel;
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcCharacter;
 import com.newuniverse.nusmp.arc.ArcNpcEntity;
+import com.newuniverse.nusmp.arc.kakashi.KakashiBoss;
 import com.newuniverse.nusmp.client.arc.ArcNpcRenderer;
 import com.newuniverse.nusmp.client.zogratis.ZogratisGlow;
 import com.newuniverse.nusmp.client.zogratis.ZogratisPose;
@@ -405,6 +406,80 @@ public final class PlayerBodies {
             float eased = 1f + (k + 1f) * u * u * u + k * u * u;
             float wide = 1f + 0.3f * (1f - c);
             return new float[]{wide, Math.max(0.04f, eased), wide};
+        }
+    }
+
+    // ================================================================================================ Kakashi Hatake
+    /**
+     * Kakashi Hatake (docs/bosses/kakashi.md): his four looks of the kit by state ({@link KakashiLooks#pick}: hitai-ate over the eye, the band pushed up while a move is in hand, the Mangekyo from
+     * phase 3, the glowing Susanoo model while the Susanoo or the Six Paths stands), a pose for each family of his moves ({@link PosePatterns}), half-transparent while he is in the Kamui window, a
+     * brighter glow in the Susanoo and white-cyan in the Six Paths, a bigger culling box for the Susanoo. While {@code bossLooks.kakashiPlayerModel} is off the Blender body draws instead
+     * ({@link com.newuniverse.nusmp.client.bossmesh.BossMeshRouting}) and this body is only its fallback. Everything is read from the boss's synced flags: nothing is asked of the server.
+     */
+    public static final class Kakashi implements PlayerBody<ArcBoss> {
+        private final Arc arc = new Arc();
+
+        private static boolean acting(ArcBoss e) {
+            return e.state() == ZogratisBoss.STATE_CASTING || (e instanceof KakashiBoss k && k.flag(KakashiBoss.F_RAIKIRI));
+        }
+
+        @Override
+        public PlayerLook look(ArcBoss e) {
+            if (e instanceof KakashiBoss k && PlayerModelOptions.kakashiPlayerModel()) {
+                String id = KakashiLooks.pick(k.flag(KakashiBoss.F_SUSANOO) || k.flag(KakashiBoss.F_SIXPATHS), k.phaseIdx(), acting(e));
+                if (PlayerAssets.hasLook(id)) return PlayerAssets.look(id);
+            }
+            return arc.look(e);
+        }
+
+        @Override
+        public void dynamic(ArcBoss e, float partial, Dynamic d) {
+            arc.dynamic(e, partial, d);
+            d.size = fit(e, look(e), 1f);
+            if (!(e instanceof KakashiBoss k)) return;
+            if (k.flag(KakashiBoss.F_SUSANOO) || k.flag(KakashiBoss.F_SIXPATHS)) d.glowLevel = Math.max(d.glowLevel, 0.85f);
+            if (k.flag(KakashiBoss.F_SIXPATHS)) d.glowRgb = 0xCFF3FF;
+            else if (k.flag(KakashiBoss.F_GATES)) {
+                d.flash = Math.max(d.flash, 0.12f);
+                d.flashRgb = 0x8FFFC0;
+            }
+            if (k.flag(KakashiBoss.F_INTANGIBLE)) d.alpha *= 0.55f;                       // the Kamui window: he is half here
+        }
+
+        @Override
+        public void pose(ArcBoss e, float partial, PoseState p) {
+            if (e.isDeadOrDying()) return;
+            float age = e.tickCount + partial;
+            if (e.state() == ZogratisBoss.STATE_CASTING) {
+                Move m = e.castingMoveOrNull();
+                float amount = e.phaseProgress();
+                switch (KakashiLooks.actionOf(m == null ? null : m.id())) {
+                    case KakashiLooks.RAIKIRI -> PosePatterns.raikiri(p, amount, age);
+                    case KakashiLooks.SEALS -> PosePatterns.seals(p, amount, age);
+                    case KakashiLooks.THROW -> PosePatterns.throwing(p, amount, age);
+                    case KakashiLooks.KAMUI_EYE -> PosePatterns.kamuiEye(p, amount, age);
+                    case KakashiLooks.SUSANOO_POSE -> PosePatterns.spread(p, amount, age);
+                    case KakashiLooks.SLASH -> PosePatterns.slash(p, amount, age);
+                    default -> PosePatterns.cast(p, amount, m != null && m.ultimate(), age);
+                }
+                return;
+            }
+            if (e instanceof KakashiBoss k) {
+                if (k.flag(KakashiBoss.F_STRAIN)) {                                       // the eye bleeds: he is spent
+                    PosePatterns.slump(p, 0.8f, age);
+                    return;
+                }
+                if (k.flag(KakashiBoss.F_RAIKIRI)) {                                      // the Raikiri hand is lit before the dash
+                    PosePatterns.raikiri(p, 0.4f, age);
+                    return;
+                }
+            }
+            arc.pose(e, partial, p);
+        }
+
+        @Override
+        public float cullGrow(ArcBoss e, PlayerLook look) {
+            return look != null && KakashiLooks.SUSANOO.equals(look.id()) ? 3.0f : PlayerBody.super.cullGrow(e, look);
         }
     }
 }

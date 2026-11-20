@@ -18,12 +18,16 @@ public final class BarStyleIds {
             GOD_OF_ORDER = "god_of_order", GOLIATH = "goliath", CHARYBDIS = "charybdis", WARDEN = "warden", ZAGRED = "zagred",
             NARUTO = "naruto",
             /** The bars made for Goku (Dragon Ball) and Sinbad (Magi), appended (docs/boss_redesign_goku_sinbad.md). */
-            DRAGON_BALL = "dragon_ball", MAGI_DJINN = "magi_djinn";
+            DRAGON_BALL = "dragon_ball", MAGI_DJINN = "magi_djinn",
+            NARUTO_LEAF = "naruto_leaf";
 
     /** Every style, in the order of the generator's table ({@code tools/boss_bar_art/styles.py}). */
     public static final List<String> ALL = List.of(HOLY, EVIL, UNDEAD, FIRE, ICE, STORM, VOID, FOREST, WATER, BLOOD, CLOCKWORK, MIRROR, UNDERWORLD, QLIPHOTH_GATE, DEVIL, SUPREME_DEVIL,
             DRAGON, ANGEL, ARCHON, LICH, FALLEN_KING, POCKET_TOMB, PLAGUE, ZOGRATIS, MIDNIGHT_SUN, SEVEN_SINS, SPADE_KINGDOM, MAGIC_KNIGHTS, DANMACHI, LUCIUS, GOD_OF_ORDER, GOLIATH,
-            CHARYBDIS, WARDEN, ZAGRED, NARUTO, DRAGON_BALL, MAGI_DJINN);
+            CHARYBDIS, WARDEN, ZAGRED, NARUTO, DRAGON_BALL, MAGI_DJINN, NARUTO_LEAF);
+
+    /** Styles the server never names: the client swaps one in for its base style while a client setting is on ({@code naruto_leaf} for {@code naruto}, setting {@code bossbar.narutoLeafBar}). */
+    public static final List<String> VARIANTS = List.of(NARUTO_LEAF);
 
     public static boolean known(String id) { return id != null && ALL.contains(id); }
 }

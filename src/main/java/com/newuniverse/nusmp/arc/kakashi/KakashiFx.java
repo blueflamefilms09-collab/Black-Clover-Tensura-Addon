@@ -68,6 +68,48 @@ final class KakashiFx {
         if (n > 0) Fx.send(sl, k, FxTone.DARK, at.x, at.y, at.z, n, spread, 0.05);
     }
 
+    /** The themes of the canon kit pass (appended): the white-cyan Chidori core, the gates, the sabre, the copied fireball, the Flying Thunder God flash. */
+    static final ThemeKey CORE = ThemeKey.of("boss.kakashi.core"), GATES = ThemeKey.of("boss.kakashi.gates"), SABRE = ThemeKey.of("boss.kakashi.sabre"), FIRE = ThemeKey.of("boss.kakashi.fire"),
+            THUNDER_GOD = ThemeKey.of("boss.kakashi.thunder_god");
+    static final int RGB_FIRE = 0xFF7A2E, RGB_GATES = 0x8FFFC0, RGB_SABRE = 0xE8F6FF, RGB_THUNDER_GOD = 0xFFE27A, RGB_CORE = 0xF2FCFF;
+
+    /**
+     * A jagged bolt from one point to another: {@code segments} straight pieces whose joints are pushed sideways by up to {@code jitter} blocks (deterministic from the seed, nothing is
+     * allocated but the joints). Each piece is a short {@link #line}, so the whole bolt is bounded by the shared particle budget, never more than {@code segments * 3} particles.
+     */
+    static void bolt(ServerLevel sl, ThemeKey k, Vec3 from, Vec3 to, int segments, double jitter, long seed) {
+        int n = Math.max(1, Math.min(6, segments));
+        java.util.Random r = new java.util.Random(seed);
+        Vec3 prev = from;
+        for (int i = 1; i <= n; i++) {
+            Vec3 p = from.add(to.subtract(from).scale(i / (double) n));
+            if (i < n) p = p.add((r.nextDouble() - 0.5) * 2 * jitter, (r.nextDouble() - 0.5) * 2 * jitter, (r.nextDouble() - 0.5) * 2 * jitter);
+            line(sl, k, prev, p, 3);
+            prev = p;
+        }
+    }
+
+    /**
+     * A Chidori round a hand (the reference look: a dense white-cyan core and many thin, forking arcs): a tight puff of the core theme and of the blue crackle on the hand, then
+     * {@code arcCount} (at most 5) jagged arcs from the hand outward, the first half of each forking once. Worst case about 70 particles requested from the shared budget in one call
+     * (the budget cuts it), no effect packet.
+     */
+    static void chidori(ServerLevel sl, Vec3 hand, double radius, int arcCount, long seed) {
+        puff(sl, CORE, hand, 8, 0.10);
+        puff(sl, RAIKIRI, hand, 6, 0.22);
+        double[][] arcs = KakashiMath.arcs(Math.max(1, Math.min(5, arcCount)), seed);
+        for (int i = 0; i < arcs.length; i++) {
+            double a = arcs[i][0], len = radius * arcs[i][1], el = (arcs[i][1] - 1.0) * 0.9;
+            Vec3 tip = hand.add(Math.cos(a) * len, el * len, Math.sin(a) * len);
+            bolt(sl, RAIKIRI, hand, tip, 3, radius * 0.18, seed + i * 31L);
+            if (i % 2 == 0) {                                                // a fork off the middle of the arc
+                Vec3 mid = hand.add(tip.subtract(hand).scale(0.55));
+                Vec3 fork = mid.add(Math.cos(a + 1.1) * len * 0.5, el * len * 0.3 + 0.1, Math.sin(a + 1.1) * len * 0.5);
+                bolt(sl, FANG, mid, fork, 2, radius * 0.12, seed + i * 57L);
+            }
+        }
+    }
+
     /** A big shape through the shared effect budget: false when the budget of this tick is spent. */
     static boolean shape(ServerLevel sl, VfxShape s, Vec3 from, Vec3 to, int rgb, int ticks, double size) { return BossMoveVfx.plain(sl, s, from, to, rgb, ticks, size); }
 }

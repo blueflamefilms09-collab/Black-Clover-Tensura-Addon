@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.51.0] — Kakashi remade on the player-model kit, 14 canon moves, ninja-scroll boss bar
+- NEW: Kakashi Hatake on the Black Clover player-model kit with 4 looks (covered eye, Sharingan open, Mangekyo, Susanoo); client setting `bossLooks.kakashiPlayerModel` (default on).
+- NEW: canon audit from the Naruto wiki rundown: 14 moves appended (Lightning Cutter, Lightning Clone, Purple Electricity strike, burst and chain, Kamui warp, Earth Fang, Eight Gates, Kubikiribocho, Chakra Sabre, Kunai wire, Thunder God, Great Fireball, Six Paths); canon limits as balance rules (4 Cutters, 3 Kamui, a strain meter, Elements reading with counter, Six Paths once below 20% for 400 ticks); server setting `canonKit` (default on). 5 new particle themes, 39 more voice lines (101 in all, audio not generated yet).
+- NEW: boss bar style `naruto_leaf` (ninja-scroll frame, Sharingan emblem and Mangekyo from phase III, three tomoe under the phase notches, Chidori fill); client setting `bossbar.narutoLeafBar` (default on). Emblems appended after the Goku and Sinbad ones.
+- REPLACED (old kept behind one setting each): Kakashi's Blender body (`bossLooks.kakashiPlayerModel = false`) and his first bar (`bossbar.narutoLeafBar = false`).
+- KEPT: his first 15 moves exactly (`canonKit = false` gives only these), the Blender mesh, the first bar, every old emblem cell and fill row (pixel-identical).
+- Cost: about 321 main plus 10 fine quads per Kakashi look (Susanoo adds 82), one draw per boss; at most 2 clones, a chain of 5 hits, 6 effect packets per move, no entity spawns, no block changes; the bar adds three 6 px blits and one emblem blit.
+- Not seen in a game; the Kakashi reference image was missing, so the likeness follows the written rundown. The Susanoo look is boxy, the Chidori and Purple VFX are particle themes (not a new client VFX layer).
+
 ## [4.50.1] — Build fix: devil magic no longer drains food, the craftable Devil Contract is a named exception
 - FIXED: the `devil_magic` damage type had exhaustion 0.1, which drains food on every hit (the global no-hunger rule); it is 0.0 now.
 - FIXED: `RelicExclusivityTest` rejected the craftable Devil Contract recipe of 4.48.0; that one recipe (behind `devil.contractCraftable`) is now an explicit exception in the test.

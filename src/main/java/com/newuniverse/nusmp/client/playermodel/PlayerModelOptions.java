@@ -37,6 +37,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue DEVIL_PLAYER_MODEL;
     /** Goku and Sinbad (docs/boss_redesign_goku_sinbad.md), key {@code bossLooks.bossLookClassic}, CLIENT config (appended): true brings back their earlier geo-model look exactly. Default false. */
     public static final ModConfigSpec.BooleanValue BOSS_LOOK_CLASSIC;
+    /** Kakashi Hatake on the kit's player model (docs/bosses/kakashi.md), key {@code bossLooks.kakashiPlayerModel}, CLIENT config (appended after the devil option). Off = his Blender body, the classic look. */
+    public static final ModConfigSpec.BooleanValue KAKASHI_PLAYER_MODEL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -70,6 +72,8 @@ public final class PlayerModelOptions {
                 + "horns, wings, tails, bracers and glowing gems in each devil's colours (docs/devil_looks.md). Off = exactly the previous figures (the Blender meshes, or the generic horns and wings).").define("devilPlayerModel", true);
         BOSS_LOOK_CLASSIC = b.comment("Draw the Goku and Sinbad bosses with their earlier look (the shared geo body in a skin) instead of the redesigned player model with its form hair, aura and the Djinn Equip armour "
                 + "(docs/boss_redesign_goku_sinbad.md). Off (default) = the redesigned look.").define("bossLookClassic", false);
+        KAKASHI_PLAYER_MODEL = b.comment("Kakashi Hatake on the same player-model kit as the Black Clover bosses: painted anime face with the Sharingan, silver cube hair, hitai-ate, mask, flak jacket, forearm guards, "
+                + "and the glowing Perfect Susanoo as an extras model (docs/bosses/kakashi.md). Off = the classic look, his Blender body.").define("kakashiPlayerModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -114,6 +118,7 @@ public final class PlayerModelOptions {
     public static boolean blender(String mesh) {
         try {
             if (mesh.startsWith("lucifero")) return !bcPlayerModel() && LUCIFERO_BLENDER.get();      // the redesigned player-model Lucifero wins while bossLooks.bcPlayerModel is on
+            if (mesh.equals("kakashi")) return !kakashiPlayerModel();                                 // the kit's Kakashi is the default; the Blender body is the classic look behind the switch
             if (mesh.startsWith("god_of_order")) return GOD_OF_ORDER_BLENDER.get() && !godOfOrderPlayerModel();      // the selectable player-model look wins while it is on
             return true;
         } catch (IllegalStateException notLoaded) {
@@ -125,6 +130,15 @@ public final class PlayerModelOptions {
     public static boolean bcPlayerModel() {
         try {
             return BC_PLAYER_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when Kakashi is drawn on the kit's player model (the config value; true while it is not loaded). */
+    public static boolean kakashiPlayerModel() {
+        try {
+            return KAKASHI_PLAYER_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

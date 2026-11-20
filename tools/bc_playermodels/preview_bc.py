@@ -38,6 +38,8 @@ ROOT = L.ROOT
 
 
 BG = (0.78, 0.82, 0.86)
+DARK = (0.07, 0.08, 0.13)
+BG_RGB = tuple(int(v * 255) for v in BG)
 
 
 def _bbox(im):
@@ -50,11 +52,11 @@ def _bbox(im):
     return (ys.min(), ys.max(), xs.min(), xs.max()) if len(ys) else (0, a.shape[0] - 1, 0, a.shape[1] - 1)
 
 
-def render(look, yaw, pitch=7, size=(340, 600), zoom=1.0, clip="idle", t=0.4, cy=7.5):
+def render(look, yaw, pitch=7, size=(340, 600), zoom=1.0, clip="idle", t=0.4, cy=7.5, bg=BG):
     s = look.get("scale", 1.0)
     sc = PV.scene_of(look, clip=clip, t=t)
     px = (7.9 / max(1.0, s * 0.92)) * zoom
-    return PV.R.render(sc, size=size, yaw=yaw, pitch=pitch, center=(0, cy, 0), scale=px, floor=True)
+    return PV.R.render(sc, size=size, yaw=yaw, pitch=pitch, center=(0, cy, 0), scale=px, floor=True, bg=bg)
 
 
 def fit(look):
@@ -76,13 +78,14 @@ def fit(look):
 def sheet(name, look, old=None):
     views = [(0, 7), (32, 7), (90, 7), (180, 7)]
     zoom, cy = fit(look)
-    tiles = [render(look, y, p, zoom=zoom, cy=cy) for y, p in views]
+    bg = DARK if name.endswith("_susanoo") else BG                           # a glowing (additive) figure is judged on a dark ground, as in the game
+    tiles = [render(look, y, p, zoom=zoom, cy=cy, bg=bg) for y, p in views]
     W, H = tiles[0].size
     n = len(tiles) + (1 if old else 0)
     out = Image.new("RGB", (W * n, H + 22), (232, 236, 242))
     x = 0
     if old:
-        out.paste(render(old, 32, 7, zoom=zoom, cy=cy), (0, 22))
+        out.paste(old if isinstance(old, Image.Image) else render(old, 32, 7, zoom=zoom, cy=cy), (0, 22))      # a look dict (rendered here) or a ready picture (Kakashi's Blender body)
         ImageDraw.Draw(out).text((6, 5), "before (3/4)", fill=(60, 60, 60))
         x = W
     for i, t in enumerate(tiles):
@@ -116,6 +119,7 @@ def main(argv):
     flt = []
     use_old = False
     wave2 = False
+    kakashi = False
     i = 0
     while i < len(argv):
         if argv[i] == "--out":
@@ -125,12 +129,15 @@ def main(argv):
         if argv[i] == "--wave2":                                  # wave 2 (docs/bosses_bc_wave2.md): only its looks, into docs/bosses_bc_wave2_previews
             wave2 = True
             out_dir = os.path.join(ROOT, "docs", "bosses_bc_wave2_previews")
+        elif argv[i] == "--kakashi":                              # docs/bosses/kakashi.md: Kakashi's looks (looks_bc_kakashi.json) into docs/boss_showcase/kakashi, the Blender body as "before"
+            kakashi = True
+            out_dir = os.path.join(ROOT, "docs", "boss_showcase", "kakashi")
         elif argv[i] == "--old":
             use_old = True
         else:
             flt.append(argv[i])
         i += 1
-    looks = json.load(open(LOOKS_BC))["looks"]
+    looks = json.load(open(os.path.join(L.ASSETS, "playermodel", "looks_bc_kakashi.json") if kakashi else LOOKS_BC))["looks"]
     if wave2:
         import bcchars2
         mine = {"bc_" + c["id"] for c in bcchars2.CHARS}
@@ -142,12 +149,19 @@ def main(argv):
         if flt and not any(f in lid for f in flt):
             continue
         old = olds.get(lid[3:]) if use_old else None
+        if kakashi and use_old:                                   # the old Blender render, fitted to the tile height
+            src = Image.open(os.path.join(ROOT, "docs", "boss_showcase", "kakashi", "model_three_quarter_old.png")).convert("RGB")
+            old = src.resize((340, int(src.height * 340 / src.width))).crop((0, 0, 340, 600)) if src.height * 340 / src.width >= 600 else src.resize((340, int(src.height * 340 / src.width)))
+            if old.height < 600:
+                pad = Image.new("RGB", (340, 600), BG_RGB)
+                pad.paste(old, (0, (600 - old.height) // 2))
+                old = pad
         im = sheet(lid, look, old)
-        p = os.path.join(out_dir, lid + ".png")
+        p = os.path.join(out_dir, ("kakashi_" + lid[len("bc_kakashi_hatake"):].strip("_") if kakashi else lid).rstrip("_") + ("_sheet" if kakashi else "") + ".png")
         im.save(p)
         made.append((lid, p))
         print(p)
-    if not flt:
+    if not flt and not kakashi:
         p = os.path.join(out_dir, "overview.png")
         overview(looks, "Black Clover bosses, wave 2, three-quarter view   (software renders, idle pose; not the game)" if wave2 else None or "Black Clover bosses on the player model, three-quarter view   (software renders, idle pose; not the game)").save(p)
         print(p)

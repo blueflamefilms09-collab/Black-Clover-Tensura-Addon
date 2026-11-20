@@ -379,12 +379,75 @@ def vessel_star_e(c, p):
     gem(c, C, C + 0.6, 3.6, p["gl"], p["hi"], p["dk"])
 
 
+# ---- appended with the second Naruto bar (naruto_leaf): fixed colours (a Sharingan is red whatever the palette), so they read at 11 px as a badge and at 26 px in the socket
+_INK = (7, 11, 28)
+_RED_L, _RED_D = (242, 70, 62), (146, 14, 24)
+
+
+def _comma(c, cx, cy, ang, r, head_r, sweep, col, grow=0.0):
+    """A tomoe: a round head on the ring of radius r at angle ang and a tail that tapers along the ring for sweep radians (clockwise). grow widens it (for an outline)."""
+    hx, hy = cx + math.cos(ang) * r, cy + math.sin(ang) * r
+    outer, inner = [], []
+    n = 12
+    for j in range(n + 1):
+        u = j / n
+        a = ang + u * sweep
+        w = head_r * 0.78 * (1 - u) ** 0.85 + grow
+        outer.append((cx + math.cos(a) * (r + w), cy + math.sin(a) * (r + w)))
+        inner.append((cx + math.cos(a) * (r - w), cy + math.sin(a) * (r - w)))
+    c.poly(outer + inner[::-1], col)
+    c.ell(hx, hy, head_r + grow, head_r + grow, col)
+
+
+def sharingan_v2(c, p):
+    """A clean Sharingan: red iris, black rim and inner ring, three tomoe, pupil and a small highlight."""
+    c.glow(lambda t: t.ell(C, C, 13, 13, WHITE), (255, 70, 60), 2.4, 0.75)
+    c.grad_ell(C, C, 14, 14, _RED_L, _RED_D)
+    c.d.ellipse([(C - 14) * 4, (C - 14) * 4, (C + 14) * 4, (C + 14) * 4], outline=_INK + (255,), width=5)
+    c.d.ellipse([(C - 8.6) * 4, (C - 8.6) * 4, (C + 8.6) * 4, (C + 8.6) * 4], outline=_INK + (255,), width=3)
+    for k in range(3):
+        _comma(c, C, C, math.radians(-90 + k * 120), 8.6, 2.5, 0.95, _INK)
+    c.ell(C, C, 2.5, 2.5, _INK)
+    c.ell(C - 6.2, C - 8.6, 2.2, 1.1, (255, 190, 180))
+
+
+def mangekyo_v2(c, p):
+    """Kakashi's Mangekyo (Kamui): a red iris with a black three-blade whirl."""
+    c.glow(lambda t: t.ell(C, C, 13, 13, WHITE), (255, 70, 60), 2.4, 0.75)
+    c.grad_ell(C, C, 14, 14, _RED_L, _RED_D)
+    c.d.ellipse([(C - 14) * 4, (C - 14) * 4, (C + 14) * 4, (C + 14) * 4], outline=_INK + (255,), width=5)
+    for k in range(3):
+        a0 = math.radians(-90 + k * 120)
+        lead, trail = [], []
+        n = 14
+        for j in range(n + 1):
+            t = j / n
+            rad = 2.2 + t * 10.4
+            a = a0 + t * 1.25
+            lead.append((C + math.cos(a) * rad, C + math.sin(a) * rad))
+            b = a + 0.66 * math.sin(math.pi * t)
+            trail.append((C + math.cos(b) * rad, C + math.sin(b) * rad))
+        c.poly(lead + trail[::-1], _INK)
+    c.ell(C, C, 2.6, 2.6, _INK)
+    c.ell(C - 6.2, C - 8.6, 2.2, 1.1, (255, 190, 180))
+
+
+def tomoe_e(c, p):
+    """One big red tomoe with a dark rim: the phase marker the painter blits (6 px) at the 75 / 50 / 25 percent notches."""
+    ang = math.radians(165)
+    _comma(c, C, C, ang, 8.4, 6.3, 3.3, _INK, grow=1.15)
+    _comma(c, C, C, ang, 8.4, 6.3, 3.3, _RED_D)
+    _comma(c, C - 0.5, C - 0.5, ang, 8.4, 5.2, 3.0, (226, 40, 46))
+    c.ell(C + math.cos(ang) * 8.4 - 1.8, C + math.sin(ang) * 8.4 - 2.0, 2.0, 1.3, (255, 200, 190))
+
+
 EMBLEMS = [("wing", wing), ("thorn_crown", thorn_crown), ("skull", skull_e), ("flame", flame_e), ("snowflake", snowflake), ("bolt", bolt_e), ("void_eye", void_eye), ("leaf", leaf_e),
            ("wave", wave_e), ("blood_drop", blood_drop), ("gear", gear_e), ("mirror", mirror_e), ("root", root_e), ("gate", gate_e), ("horns", horns_e), ("crown_horns", crown_horns),
            ("dragon", dragon_e), ("feather", feather_e), ("halo", halo_e), ("lich", lich_e), ("broken_crown", broken_crown_e), ("ankh", ankh_e), ("plague", plague_e), ("triad", triad_e),
            ("eclipse", eclipse_e), ("sins", sins_e), ("spade", spade_e), ("knight", knight_e), ("labyrinth", labyrinth_e), ("crown", crown_e), ("scales", scales_e), ("anvil", anvil_e),
            ("whirlpool", whirlpool_e), ("key", key_e), ("spirit", spirit_e), ("rune", rune_e), ("sharingan", sharingan_e), ("mangekyo", mangekyo_e),
-           ("dragon_ball", dragon_ball_e), ("vessel_star", vessel_star_e)]
+           ("dragon_ball", dragon_ball_e), ("vessel_star", vessel_star_e),
+           ("sharingan_v2", sharingan_v2), ("mangekyo_v2", mangekyo_v2), ("tomoe", tomoe_e)]
 NAMES = [n for n, _ in EMBLEMS]
 COLS = 8
 ROWS = (len(EMBLEMS) + COLS - 1) // COLS

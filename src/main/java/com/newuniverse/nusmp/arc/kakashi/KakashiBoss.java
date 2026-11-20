@@ -23,6 +23,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -73,7 +74,8 @@ public class KakashiBoss extends ArcBoss {
             .build();
 
     /** Synced flags the client draws from (the pose, the glow). */
-    public static final int F_INTANGIBLE = 1, F_SUSANOO = 2, F_BROKEN = 4, F_EYE = 8, F_RAIKIRI = 16, F_MIST = 32;
+    public static final int F_INTANGIBLE = 1, F_SUSANOO = 2, F_BROKEN = 4, F_EYE = 8, F_RAIKIRI = 16, F_MIST = 32,
+            F_SIXPATHS = 64, F_GATES = 128, F_STRAIN = 256;      // appended by the canon kit pass: the Six Paths flight, the opened gates, the bleeding eye
 
     private static final EntityDataAccessor<Integer> PHASE_IDX = SynchedEntityData.defineId(KakashiBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> FLAGS = SynchedEntityData.defineId(KakashiBoss.class, EntityDataSerializers.INT);
@@ -106,6 +108,14 @@ public class KakashiBoss extends ArcBoss {
     // ---- the vortex
     private Vec3 vortexAt;
     private int vortexLeft;
+    // ---- the canon kit pass (KakashiMath: charges, strain, elements, the Six Paths, the clones of lightning)
+    final KakashiMath.Charges charges = new KakashiMath.Charges();
+    final KakashiMath.Strain strain = new KakashiMath.Strain();
+    final KakashiMath.Elements elements = new KakashiMath.Elements();
+    private long fightStart, exhaustedUntil, cutterUntil, gatesUntil, sixPathsUntil, sixPhaseReadyAt, lcloneUntil;
+    private boolean sixPathsUsed;
+    private double hoverBase;
+    private final List<Vec3> lclones = new ArrayList<>();
 
     public KakashiBoss(EntityType<? extends KakashiBoss> type, Level level) {
         super(type, level);
@@ -205,7 +215,11 @@ public class KakashiBoss extends ArcBoss {
             if (fangLeft > 0) tickFang(sl);
             if (vortexLeft > 0) tickVortex(sl);
             if (susanooUntil != 0L) tickSusanoo(sl, now);
+            if (KakashiConfig.canonKit()) canonTick(sl, now);
         }
+        setFlag(F_SIXPATHS, sixPathsUntil > now);
+        setFlag(F_GATES, gatesUntil > now);
+        setFlag(F_STRAIN, exhaustedUntil > now);
         setFlag(F_INTANGIBLE, kamui.intangible(now) || intangibleUntil > now);
         setFlag(F_EYE, phaseIdx() >= KakashiMath.MANGEKYO);
         setFlag(F_SUSANOO, susanooUp());
@@ -233,13 +247,158 @@ public class KakashiBoss extends ArcBoss {
         if (m == null) return;
         kamui.moveStarted(tickCount, m.windUpTicks());
         speak(KakashiMoves.voiceGroup(m.id()), false);
+        if (!KakashiConfig.canonKit() || !(level() instanceof ServerLevel sl)) return;
+        if (KakashiMath.CUTTER.equals(m.id())) cutterUntil = tickCount + m.windUpTicks() + KakashiMath.CUTTER_COUNTER_TICKS;     // his hand cuts any lightning that reaches him
+        if (sixPathsUntil > tickCount) return;                                                                                   // the Six Paths chakra costs no strain and no charge
+        charges.spend(m.id());
+        if (strain.add(KakashiMath.Strain.cost(m.id()))) exhaust(sl);
+    }
+
+    // ================================================================ the canon kit pass
+    /** Per-tick work of the pass: the strain of the eye, the clones of lightning, the gates and the Six Paths. One comparison each while idle. */
+    private void canonTick(ServerLevel sl, long now) {
+        if (sixPathsUntil == 0L && now % KakashiMath.Strain.PASSIVE_EVERY == 0 && strain.add(1)) exhaust(sl);
+        if (!lclones.isEmpty()) tickLClones(sl, now);
+        if (gatesUntil != 0L) {
+            if (now >= gatesUntil) {
+                gatesUntil = 0L;
+                KakashiFx.puff(sl, KakashiFx.GATES, position().add(0, 1, 0), 8, 1.0);
+            } else if (now % 5 == 0) {
+                KakashiFx.puff(sl, KakashiFx.GATES, position().add(0, getBbHeight() * 0.5, 0), 5, 0.6);
+            }
+        }
+        if (sixPathsUntil != 0L) tickSixPaths(sl, now);
+        if (exhaustedUntil != 0L && now >= exhaustedUntil) exhaustedUntil = 0L;
+    }
+
+    /** The eye bleeds: he is spent for a moment (open to every blow, no Kamui) and says so. */
+    private void exhaust(ServerLevel sl) {
+        long now = tickCount;
+        exhaustedUntil = now + KakashiMath.Strain.EXHAUST_TICKS;
+        brokenUntil = Math.max(brokenUntil, exhaustedUntil);
+        staggerUntil = Math.max(staggerUntil, now + 50);
+        KakashiFx.burst(sl, KakashiFx.COPY, position().add(0, getBbHeight() * 0.85, 0), 10, 0.4);
+        KakashiFx.dark(sl, KakashiFx.COPY, position().add(0, getBbHeight() * 0.85, 0), 8, 0.3);
+        sl.playSound(null, blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2f, 0.5f);
+        speak("strain", true);
+    }
+
+    boolean exhausted() { return exhaustedUntil > tickCount; }
+
+    boolean sixPathsActive() { return sixPathsUntil > tickCount; }
+
+    /** Plants a clone of lightning (at most {@link KakashiMath#LCLONE_MAX} stand; the oldest goes). It breaks when a foe comes close and paralyses them. */
+    void plantLClone(Vec3 at) {
+        while (lclones.size() >= KakashiMath.LCLONE_MAX) lclones.remove(0);
+        lclones.add(at);
+        lcloneUntil = tickCount + KakashiMath.LCLONE_TICKS;
+    }
+
+    private void tickLClones(ServerLevel sl, long now) {
+        if (now >= lcloneUntil) {
+            for (Vec3 c : lclones) KakashiFx.puff(sl, KakashiFx.CLONE, c.add(0, 1, 0), 4, 0.4);
+            lclones.clear();
+            return;
+        }
+        if (now % 4 != 0) return;
+        for (int i = lclones.size() - 1; i >= 0; i--) {
+            Vec3 c = lclones.get(i);
+            KakashiFx.puff(sl, KakashiFx.CLONE, c.add(0, 1, 0), 2, 0.3);
+            KakashiFx.puff(sl, KakashiFx.RAIKIRI, c.add(0, 1.1, 0), 2, 0.5);                  // it crackles: the lightning shows through the clone
+            LivingEntity touched = null;
+            for (LivingEntity f : foesAround(c, KakashiMath.LCLONE_TOUCH)) {
+                touched = f;
+                break;
+            }
+            if (touched == null) continue;
+            lclones.remove(i);
+            KakashiFx.chidori(sl, c.add(0, 1.1, 0), 1.6, 4, now + i);
+            KakashiFx.ring(sl, KakashiFx.RAIKIRI, c, 2.2, 12);
+            sl.playSound(null, BlockPos.containing(c), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 1.4f, 1.9f);
+            for (LivingEntity f : foesAround(c, KakashiMath.LCLONE_TOUCH + 0.8)) {
+                lightning(f, 0.9f);
+                f.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, KakashiMath.LCLONE_PARALYSE, 6, true, false));       // paralysed: cannot walk for a moment
+                f.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, KakashiMath.LCLONE_PARALYSE, 2, true, false));
+            }
+            speak("lclone_break", false);
+        }
+    }
+
+    /** The Eight Gates opened: faster and 25 percent stronger for 10 s, at the price of strain. */
+    void openGates() {
+        gatesUntil = tickCount + KakashiMath.GATES_TICKS;
+        addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, KakashiMath.GATES_TICKS, 1, true, false));
+        if (level() instanceof ServerLevel sl) {
+            KakashiFx.burst(sl, KakashiFx.GATES, position().add(0, 1, 0), 18, 1.0);
+            KakashiFx.ring(sl, KakashiFx.GATES, position(), 4.0, 16);
+            KakashiFx.shape(sl, VfxShape.SPIRIT_AURA, position(), position().add(0, 1, 0), KakashiFx.RGB_GATES, KakashiMath.GATES_TICKS, 2.0);
+            sl.playSound(null, blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 2f, 1.5f);
+        }
+    }
+
+    /** The Six Paths awakening (once per fight): Susanoo flight, a bigger shield, frequent short Kamui windows, no strain; afterwards he is spent. */
+    void startSixPaths() {
+        if (sixPathsUntil > tickCount || !(level() instanceof ServerLevel sl)) return;
+        sixPathsUsed = true;
+        sixPathsUntil = tickCount + KakashiMath.SIX_PATHS_TICKS;
+        hoverBase = getY();
+        setNoGravity(true);
+        charges.refill();
+        strain.reset();
+        raiseSusanoo();
+        susanooShield *= 1.6f;
+        susanooUntil = sixPathsUntil;
+        Vec3 c = position().add(0, getBbHeight() * 0.5, 0);
+        KakashiFx.burst(sl, KakashiFx.CORE, c, 20, 1.4);
+        KakashiFx.ring(sl, KakashiFx.SUSANOO, position(), 8.0, 24);
+        KakashiFx.shape(sl, VfxShape.LIGHTNING_FIEND, c, c.add(0, 1, 0), KakashiFx.RGB_CORE, KakashiMath.SIX_PATHS_TICKS, 2.4);
+        sl.playSound(null, blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 3f, 0.5f);
+    }
+
+    private void tickSixPaths(ServerLevel sl, long now) {
+        if (now >= sixPathsUntil) {
+            endSixPaths(sl);
+            return;
+        }
+        double want = hoverBase + KakashiMath.SIX_PATHS_HOVER;
+        Vec3 dm = getDeltaMovement();
+        setDeltaMovement(dm.x, Math.max(-0.4, Math.min(0.4, (want - getY()) * 0.15)), dm.z);       // the flight of the Perfect Susanoo
+        if (now % 8 == 0) KakashiFx.chidori(sl, position().add(0, getBbHeight() * 0.6, 0), 1.8, 3, now);
+    }
+
+    private void endSixPaths(ServerLevel sl) {
+        sixPathsUntil = 0L;
+        setNoGravity(false);
+        long now = tickCount;
+        brokenUntil = Math.max(brokenUntil, now + KakashiMath.SIX_PATHS_SPENT);
+        staggerUntil = Math.max(staggerUntil, now + 60);
+        KakashiFx.burst(sl, KakashiFx.SUSANOO, position().add(0, 1, 0), 14, 1.4);
+        speak("sixpaths_end", true);
+    }
+
+    /** One short Kamui window per 2 s while the Six Paths chakra is with him (the dimension overlaps his body). */
+    private boolean sixPathsPhase(long now) {
+        if (sixPathsUntil <= now || now < sixPhaseReadyAt) return false;
+        sixPhaseReadyAt = now + 40;
+        intangibleUntil = Math.max(intangibleUntil, now + 10);
+        return true;
     }
 
     @Override
     protected int chooseMove(List<Move> bk, MoveScheduler.Situation s, long t) {
         if (staggerUntil > tickCount || fangLeft > 0 || vortexLeft > 0) return -1;
+        boolean canon = KakashiConfig.canonKit();
+        long since = tickCount - fightStart;
+        float share = getHealth() / Math.max(1f, getMaxHealth());
         List<Move> sub = new ArrayList<>(bk.size());
         for (Move m : bk) {
+            if (!canon && KakashiMath.BOOK.indexOf(m.id()) >= KakashiMath.CLASSIC_MOVES) continue;
+            if (canon) {
+                if (!charges.canUse(m.id()) && sixPathsUntil <= tickCount) continue;                                      // the canon limits: 4 Lightning Cutters, 3 Kamui per phase
+                if (KakashiMath.SIX_PATHS.equals(m.id()) && !(KakashiConfig.susanoo() && KakashiMath.sixPathsReady(share, sixPathsUsed) && sixPathsUntil <= tickCount)) continue;
+                if (sixPathsUntil > tickCount && KakashiMath.SIX_PATHS.equals(m.id())) continue;
+                if (since < KakashiMath.OBSERVE_TICKS && !KakashiMath.observeMove(m.id())) continue;                      // observe first: clones, probes and replacement only
+            }
             if (KakashiMath.openingPhase(m.id()) > phaseIdx()) continue;
             if (KakashiMoves.COPY.equals(m.id()) && (!KakashiConfig.copy() || ledger.strongest(tickCount) == null)) continue;
             if (KakashiMoves.SUSANOO.equals(m.id()) && (!KakashiConfig.susanoo() || susanooUp() || tickCount < susanooReadyAt)) continue;
@@ -248,6 +407,21 @@ public class KakashiBoss extends ArcBoss {
             sub.add(m);
         }
         if (sub.isEmpty()) return -1;
+        if (canon) {
+            for (Move m : sub) if (KakashiMath.SIX_PATHS.equals(m.id()) && moveEligible(m, s)) return bk.indexOf(m);       // the awakening comes as soon as it is allowed
+            int el = since >= KakashiMath.OBSERVE_TICKS ? elements.dominant() : -1;
+            if (el >= 0 && getRandom().nextFloat() < 0.5f) {                                                              // he has watched: he now counters what the players use most
+                List<Move> hit = new ArrayList<>(3);
+                for (String id : KakashiMath.counters(el)) for (Move m : sub) if (m.id().equals(id) && moveEligible(m, s)) hit.add(m);
+                if (!hit.isEmpty()) {
+                    int ci = super.chooseMove(hit, s, t);
+                    if (ci >= 0) {
+                        speak("counter", false);
+                        return bk.indexOf(hit.get(ci));
+                    }
+                }
+            }
+        }
         int i = super.chooseMove(sub, s, t);
         return i < 0 ? -1 : bk.indexOf(sub.get(i));
     }
@@ -255,6 +429,11 @@ public class KakashiBoss extends ArcBoss {
     @Override
     protected void onFightStart() {
         super.onFightStart();
+        fightStart = tickCount;
+        sixPathsUsed = false;
+        charges.refill();
+        strain.reset();
+        elements.clear();
         voice.reset();
         speak("intro", true);
     }
@@ -288,6 +467,9 @@ public class KakashiBoss extends ArcBoss {
         lock = null;
         marks.clear();
         kamui.reset();
+        lclones.clear();
+        lcloneUntil = cutterUntil = gatesUntil = sixPathsUntil = exhaustedUntil = sixPhaseReadyAt = 0L;
+        setNoGravity(false);                                               // the Six Paths flight never outlives the fight
         entityData.set(FLAGS, 0);
     }
 
@@ -336,6 +518,7 @@ public class KakashiBoss extends ArcBoss {
     // ================================================================ phases
     private void enterPhase(ServerLevel sl, int to) {
         entityData.set(PHASE_IDX, to);
+        charges.refill();                                                  // canon: chakra for 4 Lightning Cutters or 3 Kamui, per phase here
         interruptCast();
         getNavigation().stop();
         staggerUntil = tickCount + 30;
@@ -384,6 +567,8 @@ public class KakashiBoss extends ArcBoss {
         if (victim == null || !victim.isAlive() || isFamily(victim)) return false;
         DamageSource src = magic ? damageSources().indirectMagic(this, this) : damageSources().mobAttack(this);
         float dealt = bossDamage(victim, baseDamage);
+        if (gatesUntil > tickCount) dealt *= KakashiMath.GATES_DAMAGE;
+        if (sixPathsUntil > tickCount) dealt *= 1.2f;
         if (victim instanceof Player) {
             double share = KakashiConfig.maxHitPercent();
             if (src.scalesWithDifficulty() && level().getDifficulty() == Difficulty.HARD) share /= 1.5;
@@ -459,7 +644,8 @@ public class KakashiBoss extends ArcBoss {
         if (level().isClientSide) return super.hurt(source, amount);
         if (!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && amount > 0f) {
             long now = tickCount;
-            if (intangibleUntil > now || kamui.tryPhase(now, phaseIdx(), KakashiConfig.kamui())) {
+            boolean canon = KakashiConfig.canonKit();
+            if (intangibleUntil > now || (!(canon && exhaustedUntil > now) && kamui.tryPhase(now, phaseIdx(), KakashiConfig.kamui())) || (canon && KakashiConfig.kamui() && sixPathsPhase(now))) {
                 if (level() instanceof ServerLevel sl) {
                     KakashiFx.dark(sl, KakashiFx.KAMUI, position().add(0, getBbHeight() * 0.5, 0), 6, 0.4);
                     if (now % 7 == 0) speak("kamui_phase", false);
@@ -476,7 +662,21 @@ public class KakashiBoss extends ArcBoss {
         float a = super.filterDamage(source, amount);
         if (a <= 0f || !(level() instanceof ServerLevel sl)) return a;
         long now = tickCount;
-        if (source.getEntity() instanceof ServerPlayer p) ledger.record(p.getUUID(), a, now);
+        if (source.getEntity() instanceof ServerPlayer p) {
+            ledger.record(p.getUUID(), a, now);
+            if (KakashiConfig.canonKit()) {                                          // he watches how he is hurt (fire, lightning, water, arrows, fists, other magic)
+                boolean lightningHit = source.is(DamageTypes.LIGHTNING_BOLT);
+                elements.record(KakashiMath.classify(source.getMsgId(), source.is(DamageTypeTags.IS_FIRE), lightningHit, source.is(DamageTypeTags.IS_PROJECTILE), source.getDirectEntity() == source.getEntity()));
+            }
+        }
+        if (cutterUntil > now && KakashiMath.E_LIGHTNING == KakashiMath.classify(source.getMsgId(), false, source.is(DamageTypes.LIGHTNING_BOLT), false, false)) {
+            Vec3 hand = position().add(0, getBbHeight() * 0.6, 0);                  // the Lightning Cutter: a bolt that reaches him is cut in two
+            KakashiFx.chidori(sl, hand, 2.2, 5, now);
+            KakashiFx.burst(sl, KakashiFx.CORE, hand, 10, 0.6);
+            sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 1.2f, 2.0f);
+            speak("cutter_cut", false);
+            return 0f;
+        }
         if (KakashiMath.kawarimi(a, getMaxHealth(), now, kawarimiReadyAt) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             kawarimiReadyAt = now + KakashiMath.KAWARIMI_COOLDOWN;
             kawarimi(sl);
@@ -754,5 +954,11 @@ public class KakashiBoss extends ArcBoss {
 
     List<Move> moveListForTest() { return moves(); }
 
-    boolean hasStatesForTest() { return fangLeft > 0 || vortexLeft > 0 || susanooUntil != 0L || mistUntil != 0L || earthWallUntil != 0L; }
+    /** Runs the clones of lightning, the gates and the Six Paths for a while (the self-test cannot wait). */
+    void runCanonForTest(ServerLevel sl) {
+        if (lclones.isEmpty() && gatesUntil == 0L && sixPathsUntil == 0L) return;
+        for (int i = 0; i < 6; i++) canonTick(sl, tickCount + i);
+    }
+
+    boolean hasStatesForTest() { return fangLeft > 0 || vortexLeft > 0 || susanooUntil != 0L || mistUntil != 0L || earthWallUntil != 0L || !lclones.isEmpty() || gatesUntil != 0L || sixPathsUntil != 0L || cutterUntil != 0L || exhaustedUntil != 0L || isNoGravity(); }
 }

@@ -111,8 +111,9 @@ Roster column = how many of the 200 Decennial bosses wear it.
 
 * Art generator: `tools/gen_boss_bar_textures.py` (+ `tools/boss_bar_art/{lib,styles,motifs,emblems}.py`). Deterministic. `--json` rewrites the style
   json files from the table; the committed json is the source of truth after that (edit it by hand). Output: `textures/gui/boss_bar/frame_<id>.png`
-  (+ `.mcmeta` blur; 512x268: back / frame / glow layers of 512x84 = the 256x42 widget at 2x), `emblems.png` (32x32 x 36), `fillfx.png` (13 tileable
-  effects), `chains.png`; data `assets/anime_multiverse/boss_bars/<id>.json` and `_index.json` (ids, emblem names, effect names, layout numbers).
+  (+ `.mcmeta` blur; 512x268: back / frame / glow layers of 512x84 = the 256x42 widget at 2x), `emblems.png` (32x32 x 41; the sheet height follows the list, `BarStyles.SHEET_H`), `fillfx.png` (14 tileable
+  effects, `chidori` appended), `chains.png`; the second Naruto bar `naruto_leaf` has its own frame base (`tools/boss_bar_art/naruto_v2.py`, a `base=` entry of `styles.py`) and is
+  swapped in by the client for `naruto` while `bossbar.narutoLeafBar` is on (docs/bosses/kakashi.md); data `assets/anime_multiverse/boss_bars/<id>.json` and `_index.json` (ids, emblem names, effect names, layout numbers).
 * Pure Java (`boss/bars`): `BarStyleIds`, `BarStyle`, `BarStyleResolver`, `BossBarState` (+ byte layout), `BossBarSource`, `GhostBar`, `PhaseMarkers`,
   `BarLayoutMath`, `DpsMeter`. Server: `BossBarHub`, `BossBarSources`, `BossBarStatePayload`, `BossBarCommands`, `BossBarSelfTests`.
 * Client (`client/gui/bossbar`): `BarStyles` (reload listener), `CustomBarClient`, `CustomBarState`, `CustomBarOverlay`, `CustomBarPainter`.

@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.gui.bossbar;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.boss.bars.BarStyle;
+import com.newuniverse.nusmp.boss.bars.BarStyleIds;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -29,6 +30,10 @@ public final class BarStyles implements ResourceManagerReloadListener {
         public final int emblemU, emblemV;
         /** Index in {@link BarStyle#ENTRANCES} / {@link BarStyle#DEATHS}: 0 slide, 1 rise, 2 fade, 3 flash; 0 shatter, 1 dissolve. */
         public final int entrance, death;
+        /** Source position of the emblem used from phase {@link #ALT_PHASE} on (the Mangekyo of the second Naruto bar); the same as the main one for the other styles. */
+        public final int altEmblemU, altEmblemV;
+        /** True for the styles whose phase notches are the 'tomoe' emblem instead of the plain triangles (the second Naruto bar). */
+        public final boolean tomoeMarkers;
 
         Loaded(BarStyle style) {
             this.style = style;
@@ -36,12 +41,24 @@ public final class BarStyles implements ResourceManagerReloadListener {
             int i = Math.max(0, style.emblemIndex());
             this.emblemU = (i % 8) * 32;
             this.emblemV = (i / 8) * 32;
+            int alt = ALT_EMBLEM.containsKey(style.emblem()) ? BarStyle.EMBLEMS.indexOf(ALT_EMBLEM.get(style.emblem())) : -1;
+            this.altEmblemU = alt >= 0 ? (alt % 8) * 32 : this.emblemU;
+            this.altEmblemV = alt >= 0 ? (alt / 8) * 32 : this.emblemV;
+            this.tomoeMarkers = alt >= 0;
             this.entrance = Math.max(0, BarStyle.ENTRANCES.indexOf(style.entrance()));
             this.death = Math.max(0, BarStyle.DEATHS.indexOf(style.death()));
         }
     }
 
     public static final ResourceLocation EMBLEMS = tex("emblems"), FILLFX = tex("fillfx"), CHAINS = tex("chains");
+    /** The emblem sheet: 8 cells of 32 per row, as many rows as {@link BarStyle#EMBLEMS} needs (it grows when emblems are appended). */
+    public static final int SHEET_W = 256, SHEET_H = ((BarStyle.EMBLEMS.size() + 7) / 8) * 32;
+    /** The phase from which a style with an alternative emblem shows it (phase III: Kakashi's Mangekyo). */
+    public static final int ALT_PHASE = 3;
+    /** Emblem -> the emblem shown from {@link #ALT_PHASE} on. */
+    private static final Map<String, String> ALT_EMBLEM = Map.of("sharingan_v2", "mangekyo_v2");
+    /** Where the tomoe marker sits in {@code emblems.png}. */
+    public static final int TOMOE_U = (BarStyle.EMBLEMS.indexOf("tomoe") % 8) * 32, TOMOE_V = (BarStyle.EMBLEMS.indexOf("tomoe") / 8) * 32;
 
     private static volatile Map<String, Loaded> styles = Map.of();
 
@@ -49,6 +66,11 @@ public final class BarStyles implements ResourceManagerReloadListener {
 
     /** The style of an id, or null when it is not loaded. */
     public static Loaded get(String id) { return styles.get(id); }
+
+    /** The id the client actually draws for the id the server named: {@code naruto} becomes {@code naruto_leaf} while the setting is on and that style is loaded. Looks only; nothing is sent. */
+    public static String effective(String id) {
+        return BarStyleIds.NARUTO.equals(id) && BossBarOptions.narutoLeafBar() && styles.containsKey(BarStyleIds.NARUTO_LEAF) ? BarStyleIds.NARUTO_LEAF : id;
+    }
 
     public static int count() { return styles.size(); }
 

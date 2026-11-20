@@ -30,7 +30,26 @@
   "kill": "a fighter falls",
   "victory": "every fighter is down, he wins",
   "idle": "idle taunt while the fight pauses",
-  "defeat": "he is beaten"
+  "defeat": "he is beaten",
+  "lightning_cutter": "Lightning Cutter",
+  "cutter_cut": "his Lightning Cutter cuts a bolt that reached him",
+  "lightning_clone": "Lightning Release: Shadow Clone",
+  "lclone_break": "a foe breaks a clone of lightning and is paralysed",
+  "purple_strike": "Purple Electricity: the empowered strike",
+  "purple_burst": "Purple Electricity: the burst all round him",
+  "purple_chain": "Purple Electricity: through the water",
+  "kamui_warp": "Kamui, long range: the Distant Warp",
+  "earth_fang": "Summoning: Earth Release: Tracking Fang",
+  "eight_gates": "the Eight Gates",
+  "kubikiri": "Kubikiribocho",
+  "chakra_sabre": "White Light Chakra Sabre",
+  "kunai_wire": "Kunai Wire",
+  "thunder_god": "Flying Thunder God Kunai",
+  "great_fireball": "Fire Release: Great Fireball",
+  "six_paths": "the Six Paths awakening",
+  "sixpaths_end": "the Six Paths chakra leaves him",
+  "strain": "the Sharingan strain fills and his eye bleeds",
+  "counter": "he counters the kind of attack the players use most"
  },
  "lines": [
   {
@@ -590,6 +609,357 @@
    "delivery": "calm, lazy, a little amused, relaxed breathing",
    "source": "in his manner (original wording, no wiki source)",
    "file": "assets/anime_multiverse/sounds/kakashi/kakashi_defeat_2.ogg"
+  },
+  {
+   "id": "kakashi_lightning_cutter_1",
+   "group": "lightning_cutter",
+   "trigger": "Lightning Cutter",
+   "text": "Lightning Cutter.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lightning_cutter_1.ogg"
+  },
+  {
+   "id": "kakashi_lightning_cutter_2",
+   "group": "lightning_cutter",
+   "trigger": "Lightning Cutter",
+   "text": "Throw lightning at me and I will cut it in two.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lightning_cutter_2.ogg"
+  },
+  {
+   "id": "kakashi_cutter_cut_1",
+   "group": "cutter_cut",
+   "trigger": "his Lightning Cutter cuts a bolt that reached him",
+   "text": "Lightning cut in two. I did say so.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_cutter_cut_1.ogg"
+  },
+  {
+   "id": "kakashi_cutter_cut_2",
+   "group": "cutter_cut",
+   "trigger": "his Lightning Cutter cuts a bolt that reached him",
+   "text": "A bolt is only a very fast line. I cut lines.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_cutter_cut_2.ogg"
+  },
+  {
+   "id": "kakashi_lightning_clone_1",
+   "group": "lightning_clone",
+   "trigger": "Lightning Release: Shadow Clone",
+   "text": "Lightning Release, Shadow Clone. Careful, it bites.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lightning_clone_1.ogg"
+  },
+  {
+   "id": "kakashi_lightning_clone_2",
+   "group": "lightning_clone",
+   "trigger": "Lightning Release: Shadow Clone",
+   "text": "Do not touch that one.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lightning_clone_2.ogg"
+  },
+  {
+   "id": "kakashi_lclone_break_1",
+   "group": "lclone_break",
+   "trigger": "a foe breaks a clone of lightning and is paralysed",
+   "text": "That is the lightning. It stops the legs, not the mind.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lclone_break_1.ogg"
+  },
+  {
+   "id": "kakashi_lclone_break_2",
+   "group": "lclone_break",
+   "trigger": "a foe breaks a clone of lightning and is paralysed",
+   "text": "I did warn you about the clone.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_lclone_break_2.ogg"
+  },
+  {
+   "id": "kakashi_purple_strike_1",
+   "group": "purple_strike",
+   "trigger": "Purple Electricity: the empowered strike",
+   "text": "Purple Electricity.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_strike_1.ogg"
+  },
+  {
+   "id": "kakashi_purple_strike_2",
+   "group": "purple_strike",
+   "trigger": "Purple Electricity: the empowered strike",
+   "text": "Close range is where it hits hardest.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_strike_2.ogg"
+  },
+  {
+   "id": "kakashi_purple_burst_1",
+   "group": "purple_burst",
+   "trigger": "Purple Electricity: the burst all round him",
+   "text": "Purple Electricity, all around me.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_burst_1.ogg"
+  },
+  {
+   "id": "kakashi_purple_burst_2",
+   "group": "purple_burst",
+   "trigger": "Purple Electricity: the burst all round him",
+   "text": "Stay back, or stay down.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_burst_2.ogg"
+  },
+  {
+   "id": "kakashi_purple_chain_1",
+   "group": "purple_chain",
+   "trigger": "Purple Electricity: through the water",
+   "text": "Wet ground carries it. Everyone connected, everyone shocked.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_chain_1.ogg"
+  },
+  {
+   "id": "kakashi_purple_chain_2",
+   "group": "purple_chain",
+   "trigger": "Purple Electricity: through the water",
+   "text": "Purple Electricity, through the water.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_chain_2.ogg"
+  },
+  {
+   "id": "kakashi_kamui_warp_1",
+   "group": "kamui_warp",
+   "trigger": "Kamui, long range: the Distant Warp",
+   "text": "Kamui. I only need to look at you.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_warp_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_warp_2",
+   "group": "kamui_warp",
+   "trigger": "Kamui, long range: the Distant Warp",
+   "text": "Into the other space. You will come out somewhere else.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_warp_2.ogg"
+  },
+  {
+   "id": "kakashi_earth_fang_1",
+   "group": "earth_fang",
+   "trigger": "Summoning: Earth Release: Tracking Fang",
+   "text": "Earth Release, Tracking Fang.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_earth_fang_1.ogg"
+  },
+  {
+   "id": "kakashi_earth_fang_2",
+   "group": "earth_fang",
+   "trigger": "Summoning: Earth Release: Tracking Fang",
+   "text": "My dogs know your scent. Hold him.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_earth_fang_2.ogg"
+  },
+  {
+   "id": "kakashi_eight_gates_1",
+   "group": "eight_gates",
+   "trigger": "the Eight Gates",
+   "text": "Gate of Opening, Healing, Life. That is as far as I dare.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_eight_gates_1.ogg"
+  },
+  {
+   "id": "kakashi_eight_gates_2",
+   "group": "eight_gates",
+   "trigger": "the Eight Gates",
+   "text": "Eight Gates. A little of it, only a little.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_eight_gates_2.ogg"
+  },
+  {
+   "id": "kakashi_kubikiri_1",
+   "group": "kubikiri",
+   "trigger": "Kubikiribocho",
+   "text": "Kubikiribocho. A heavy one, so stand clear.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kubikiri_1.ogg"
+  },
+  {
+   "id": "kakashi_kubikiri_2",
+   "group": "kubikiri",
+   "trigger": "Kubikiribocho",
+   "text": "Not my sword, but it works for me.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kubikiri_2.ogg"
+  },
+  {
+   "id": "kakashi_chakra_sabre_1",
+   "group": "chakra_sabre",
+   "trigger": "White Light Chakra Sabre",
+   "text": "White Light Chakra Sabre.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_chakra_sabre_1.ogg"
+  },
+  {
+   "id": "kakashi_chakra_sabre_2",
+   "group": "chakra_sabre",
+   "trigger": "White Light Chakra Sabre",
+   "text": "My father's way of fighting. Quick and quiet.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_chakra_sabre_2.ogg"
+  },
+  {
+   "id": "kakashi_kunai_wire_1",
+   "group": "kunai_wire",
+   "trigger": "Kunai Wire",
+   "text": "A wire. Simple, and you walked right into it.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kunai_wire_1.ogg"
+  },
+  {
+   "id": "kakashi_kunai_wire_2",
+   "group": "kunai_wire",
+   "trigger": "Kunai Wire",
+   "text": "Come here.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kunai_wire_2.ogg"
+  },
+  {
+   "id": "kakashi_thunder_god_1",
+   "group": "thunder_god",
+   "trigger": "Flying Thunder God Kunai",
+   "text": "A kunai. Mark it and be gone.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_thunder_god_1.ogg"
+  },
+  {
+   "id": "kakashi_thunder_god_2",
+   "group": "thunder_god",
+   "trigger": "Flying Thunder God Kunai",
+   "text": "A marker, a flash, and I am wherever I left one.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_thunder_god_2.ogg"
+  },
+  {
+   "id": "kakashi_great_fireball_1",
+   "group": "great_fireball",
+   "trigger": "Fire Release: Great Fireball",
+   "text": "Fire Release, Great Fireball.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_great_fireball_1.ogg"
+  },
+  {
+   "id": "kakashi_great_fireball_2",
+   "group": "great_fireball",
+   "trigger": "Fire Release: Great Fireball",
+   "text": "I have seen this done. It is easier with an eye that copies.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_great_fireball_2.ogg"
+  },
+  {
+   "id": "kakashi_six_paths_1",
+   "group": "six_paths",
+   "trigger": "the Six Paths awakening",
+   "text": "Obito. Lend me the rest. Both eyes, and a little more.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_six_paths_1.ogg"
+  },
+  {
+   "id": "kakashi_six_paths_2",
+   "group": "six_paths",
+   "trigger": "the Six Paths awakening",
+   "text": "This is not mine to keep. I will use it once.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_six_paths_2.ogg"
+  },
+  {
+   "id": "kakashi_sixpaths_end_1",
+   "group": "sixpaths_end",
+   "trigger": "the Six Paths chakra leaves him",
+   "text": "That is all of it. It leaves as quickly as it came.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_sixpaths_end_1.ogg"
+  },
+  {
+   "id": "kakashi_sixpaths_end_2",
+   "group": "sixpaths_end",
+   "trigger": "the Six Paths chakra leaves him",
+   "text": "Out of borrowed chakra. Hit me while you can.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_sixpaths_end_2.ogg"
+  },
+  {
+   "id": "kakashi_strain_1",
+   "group": "strain",
+   "trigger": "the Sharingan strain fills and his eye bleeds",
+   "text": "My eye. It is bleeding. Give me a moment.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "technique name from the English Naruto wiki rundown supplied by the owner (naruto.fandom.com), wording in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_strain_1.ogg"
+  },
+  {
+   "id": "kakashi_strain_2",
+   "group": "strain",
+   "trigger": "the Sharingan strain fills and his eye bleeds",
+   "text": "The Sharingan never rests, and I never rest with it.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_strain_2.ogg"
+  },
+  {
+   "id": "kakashi_counter_1",
+   "group": "counter",
+   "trigger": "he counters the kind of attack the players use most",
+   "text": "You lean on that one move. So I prepared for it.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_counter_1.ogg"
+  },
+  {
+   "id": "kakashi_counter_2",
+   "group": "counter",
+   "trigger": "he counters the kind of attack the players use most",
+   "text": "I watched you. That no longer works on me.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_counter_2.ogg"
+  },
+  {
+   "id": "kakashi_counter_3",
+   "group": "counter",
+   "trigger": "he counters the kind of attack the players use most",
+   "text": "Observe first, attack second. An old habit.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_counter_3.ogg"
   }
  ]
 }

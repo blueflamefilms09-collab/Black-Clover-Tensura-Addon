@@ -23,7 +23,7 @@ class KakashiMathTest {
 
     @Test
     void everyMoveOfTheBookOpensInAKnownPhaseAndHasAVoiceGroup() {
-        assertEquals(15, KakashiMath.BOOK.size());
+        assertEquals(29, KakashiMath.BOOK.size(), "the first fifteen plus the fourteen of the canon kit pass");
         assertEquals(KakashiMath.BOOK.size(), List.copyOf(new java.util.LinkedHashSet<>(KakashiMath.BOOK)).size(), "no duplicate move id");
         for (String m : KakashiMath.BOOK) {
             int p = KakashiMath.openingPhase(m);

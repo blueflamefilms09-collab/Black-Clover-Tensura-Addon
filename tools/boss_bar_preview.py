@@ -132,7 +132,8 @@ def render(sid, hp=1.0, ghost=None, phase=1, phases=3, thresholds=(0.66, 0.33), 
 
     comp(canvas, layer(0), 0, 0)
     # socket content: the emblem
-    em = A.emblem(st["emblem"]).resize((26 * S, 26 * S), Image.LANCZOS)
+    leaf = sid == "naruto_leaf"                                   # the second Naruto bar: Mangekyo from phase 3, tomoe phase markers (BarStyles.Loaded / CustomBarPainter)
+    em = A.emblem("mangekyo_v2" if leaf and phase >= 3 else st["emblem"]).resize((26 * S, 26 * S), Image.LANCZOS)
     comp(canvas, np.array(em).astype(np.float32), int((L["socket"][0] - 13) * S), int((L["socket"][1] - 13) * S))
     wx, wy, ww, wh = WIN
     fw = int(round(hp * ww)) if hp > 0 else 0
@@ -191,11 +192,20 @@ def render(sid, hp=1.0, ghost=None, phase=1, phases=3, thresholds=(0.66, 0.33), 
         strip = np.tile(ch, (1, int(math.ceil(ww / 64)) + 1, 1))[:, :ww]
         im = Image.fromarray(strip.astype(np.uint8)).resize((ww * S, 16 * S), Image.NEAREST)
         comp(canvas, tinted(np.array(im), hexc(c["invulnerable"]), 0.95), wx * S, int((wy + wh / 2 - 8) * S), add=True)
+    late = []
     for th in thresholds if phases > 1 else ():
         mx = wx + int(round(th * ww))
         passed = hp <= th
         rect(mx, wy, 1, wh, (0, 0, 0), 0.85)
         rect(mx + 1, wy, 1, wh, hexc(c["marker"]), 0.35 if passed else 0.85)
+        if leaf:                                                  # a 6 px tomoe on the plate under the notch, dark while the phase is behind
+            tm = A.emblem("tomoe").resize((6 * S, 6 * S), Image.LANCZOS)
+            arr = np.array(tm).astype(np.float32)
+            if passed:
+                arr[..., :3] *= 0.3
+                arr[..., 3] *= 0.8
+            late.append((arr, (mx + 1 - 3) * S, 36 * S))
+            continue
         for r in range(3):
             rect(mx - 1 + r * 0 - (2 - r) + 1, wy - 3 + r, 1 + (2 - r) * 2 - 0, 1, hexc(c["marker"]), 0.45 if passed else 1.0)
     if hp < 0.2 and hp > 0:
@@ -203,6 +213,8 @@ def render(sid, hp=1.0, ghost=None, phase=1, phases=3, thresholds=(0.66, 0.33), 
     # frame and glow
     fr = layer(1)
     comp(canvas, fr, 0, 0)
+    for arr, lx, ly in late:                                      # the markers the painter draws after the frame
+        comp(canvas, arr, lx, ly)
     gl = layer(2)
     gcol = (255, 90, 60) if enraged else (hexc(c["invulnerable"]) if invulnerable else hexc(c["glow"]))
     comp(canvas, tinted(gl, gcol, 0.85), 0, 0, add=True)

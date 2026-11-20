@@ -63,7 +63,7 @@ def scene_of(look, pose=None, chain_angles=None, clip="idle", t=0.4, helmet=Fals
     if look.get("hair") and look["hair"] != "bald" and not nohair:
         sc.add(R.hair_faces(look["hair"], hex_rgb(look.get("hair_color")), slim=slim, pose=pose, chain_angles=chain_angles, helmet=helmet))
     anchors = {}
-    for name in ("head", "body", "arm_r", "arm_l"):
+    for name in ("head", "body", "arm_r", "arm_l", "leg_r", "leg_l"):          # the legs too: BC and Kakashi extras anchor on them (the kit draws them; the sheets did not)
         m, piv = R.part_pose_matrix(name, slim, pose)
         anchors[name] = (m, piv)
     for ex in look.get("extras", []):

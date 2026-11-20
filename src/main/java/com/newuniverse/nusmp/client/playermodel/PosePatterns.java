@@ -85,4 +85,61 @@ public final class PosePatterns {
     public static void hover(PoseState p, float height, float age) {
         p.lift = height + 0.06f * (float) Math.sin(age * 0.12f);
     }
+
+    // ---- Kakashi Hatake (docs/bosses/kakashi.md), appended: each takes the 0..1 progress of the move and the age; all finite, all fade with the amount
+
+    /** Raikiri: the right hand drawn back at the hip with the left hand steadying its wrist, the body leaning into the lunge as the amount runs out. */
+    public static void raikiri(PoseState p, float amount, float age) {
+        float k = smooth(amount * 3f), lunge = smooth((amount - 0.75f) * 4f);
+        float chirp = (float) Math.sin(age * 1.7f) * 0.03f;
+        p.pull(PoseState.ARM_R, k, -0.55f + lunge * -0.95f + chirp, -0.25f, -0.35f);
+        p.pull(PoseState.ARM_L, k * 0.9f, -0.95f + chirp, 0.45f, 0.30f);
+        p.pull(PoseState.BODY, k * 0.7f, 0.12f + lunge * 0.25f, -0.18f, 0f);
+        p.pull(PoseState.HEAD, k * 0.6f, 0.08f, 0.12f, 0f);
+    }
+
+    /** Hand seals: both forearms raised and brought together in front of the chest, the fingers working (a small fast tremble). */
+    public static void seals(PoseState p, float amount, float age) {
+        float k = smooth(amount * 3f);
+        float work = (float) Math.sin(age * 1.3f) * 0.05f * k;
+        p.pull(PoseState.ARM_R, k, -1.35f + work, 0.38f, 0.55f);
+        p.pull(PoseState.ARM_L, k, -1.35f - work, -0.38f, -0.55f);
+        p.pull(PoseState.HEAD, k * 0.5f, 0.14f, 0f, 0f);
+        p.pull(PoseState.BODY, k * 0.4f, 0.08f, 0f, 0f);
+    }
+
+    /** A throw: the right arm cocked back and up, then whipped forward as the amount passes the middle. */
+    public static void throwing(PoseState p, float amount, float age) {
+        float wind = smooth(amount * 2f), snap = smooth((amount - 0.5f) * 4f);
+        p.pull(PoseState.ARM_R, wind, -2.35f + snap * 1.55f, -0.1f, -0.35f + snap * 0.35f);
+        p.pull(PoseState.ARM_L, wind * 0.6f, -0.35f, 0.25f, 0.5f);
+        p.pull(PoseState.BODY, wind * 0.5f, -0.06f + snap * 0.2f, -0.35f * (1f - snap), 0f);
+    }
+
+    /** The hand to the covered eye: the left forearm raised to the forehead, the head tilted (Sharingan, Kamui). */
+    public static void kamuiEye(PoseState p, float amount, float age) {
+        float k = smooth(amount * 3f);
+        float breath = (float) Math.sin(age * 0.2f) * 0.02f;
+        p.pull(PoseState.ARM_L, k, -2.55f + breath, -0.2f, 0.25f);
+        p.pull(PoseState.ARM_R, k * 0.5f, -0.25f, -0.1f, -0.15f);
+        p.pull(PoseState.HEAD, k * 0.7f, -0.12f, -0.18f, 0.06f);
+    }
+
+    /** The arms spread wide and slightly raised, the chest open: the Susanoo, the Six Paths, the burst of lightning. Steadier than the power-up (no shake). */
+    public static void spread(PoseState p, float amount, float age) {
+        float k = smooth(amount * 2.5f);
+        float sway = (float) Math.sin(age * 0.15f) * 0.04f;
+        p.pull(PoseState.ARM_R, k, -0.55f + sway, 0f, -1.15f);
+        p.pull(PoseState.ARM_L, k, -0.55f - sway, 0f, 1.15f);
+        p.pull(PoseState.HEAD, k * 0.6f, -0.28f, 0f, 0f);
+        p.pull(PoseState.BODY, k * 0.5f, -0.1f, 0f, 0f);
+    }
+
+    /** A sword cut across: the right arm from high over the shoulder down across the body, the body turning with it. */
+    public static void slash(PoseState p, float amount, float age) {
+        float wind = smooth(amount * 2f), cut = smooth((amount - 0.45f) * 3f);
+        p.pull(PoseState.ARM_R, wind, -2.5f + cut * 1.9f, 0.2f - cut * 0.5f, -0.5f + cut * 0.45f);
+        p.pull(PoseState.ARM_L, wind * 0.5f, -0.4f, 0.3f, 0.4f);
+        p.pull(PoseState.BODY, wind * 0.8f, 0.04f, 0.45f * (1f - 2f * cut), 0f);
+    }
 }

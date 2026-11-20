@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join(HERE, "boss_bar_art"))
 import emblems as EM          # noqa: E402
 import lib                    # noqa: E402
 import motifs as MO           # noqa: E402
+import naruto_v2 as NV            # noqa: E402  (the second Naruto bar: its own frame base)
 from styles import STYLES, FX  # noqa: E402
 
 ASSETS = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
@@ -58,7 +59,7 @@ def write(path, data, mode="w"):
 # ================================================================ frames
 def frame_atlas(style):
     x = MO.Ctx(pal_of(style), style["seed"] * 1000 + sum(map(ord, style["id"])))
-    MO.base(x)
+    NV.BASES.get(style.get("base"), MO.base)(x)
     for m in style["motifs"]:
         MO.MOTIFS[m](x)
     MO.finish(x)
@@ -119,6 +120,28 @@ def fx_tile(name):
                 put(x0 + 1, y, 0.5)
                 x0 += rnd.choice((-1, 1))
                 y += 1
+    elif name == "chidori":
+        # two forking lightning arcs running along the bar (rows 3..12 are the ones the painter draws), closed over the tile so it tiles
+        for k, (base_y, amp, gain) in enumerate(((6.8, 3.0, 0.8), (9.8, 1.5, 0.42))):
+            ys = [base_y]
+            for xx in range(1, FX_W):
+                ys.append(min(11.5, max(4.2, ys[-1] + rnd.choice((-2, -1, 0, 1, 2)) * 0.9 * (1 if xx % 3 else -1) * (amp / 2.4))))
+            for xx in range(FX_W):
+                ys[xx] += (base_y - ys[-1]) * xx / (FX_W - 1)          # pull the end back to the start: periodic
+                ys[xx] = min(11.0, max(4.2, ys[xx]))                  # keep it inside rows 3..12, the ones the painter draws
+            for xx in range(FX_W):
+                y0, y1 = ys[xx], ys[(xx + 1) % FX_W]
+                for s in range(3):
+                    put(xx, y0 + (y1 - y0) * s / 3.0, gain)
+                put(xx, y0 - 1, gain * 0.3)
+                put(xx, y0 + 1, gain * 0.3)
+            for fx0 in range(6 + k * 11, FX_W, 22):                      # forks
+                dy = rnd.choice((-1, 1))
+                yy, xx = ys[fx0], fx0
+                for s in range(7):
+                    xx += 1
+                    yy += dy * (0.8 if s % 2 else 0.2)
+                    put(xx, max(3, min(12, yy)), (0.6 - s * 0.06) * (1.0 if k == 0 else 0.7))
     elif name == "frost":
         for _ in range(9):
             cx, cy, s = rnd.uniform(0, FX_W), rnd.uniform(2, 14), rnd.uniform(1.5, 3.5)

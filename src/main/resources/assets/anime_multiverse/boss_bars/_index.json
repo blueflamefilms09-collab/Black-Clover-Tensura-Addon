@@ -38,7 +38,8 @@
     "zagred",
     "naruto",
     "dragon_ball",
-    "magi_djinn"
+    "magi_djinn",
+    "naruto_leaf"
   ],
   "emblems": [
     "wing",
@@ -80,7 +81,10 @@
     "sharingan",
     "mangekyo",
     "dragon_ball",
-    "vessel_star"
+    "vessel_star",
+    "sharingan_v2",
+    "mangekyo_v2",
+    "tomoe"
   ],
   "fx": [
     "shimmer",
@@ -95,7 +99,8 @@
     "glitch",
     "veins",
     "runes",
-    "shield"
+    "shield",
+    "chidori"
   ],
   "layout": {
     "width": 256,
@@ -126,7 +131,7 @@
     ],
     "layer_h": 84,
     "emblem_cols": 8,
-    "emblem_rows": 5,
+    "emblem_rows": 6,
     "emblem_cell": 32,
     "fx_w": 64,
     "fx_row_h": 16

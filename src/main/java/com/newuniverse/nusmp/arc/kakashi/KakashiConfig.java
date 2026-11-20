@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class KakashiConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK;
+    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK, CANON_KIT;
     public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, MAX_HIT_PERCENT;
     public static final ModConfigSpec.IntValue GLOBAL_CAP;
 
@@ -35,6 +35,9 @@ public final class KakashiConfig {
                 .define("copy", true);
         SPEAK = b.comment("He speaks (chat lines, and the recorded voice lines once their files are added). False: silent; the fight is unchanged.")
                 .define("speak", true);
+        CANON_KIT = b.comment("The canon kit pass (docs/bosses/kakashi.md): the fourteen extra moves (Lightning Cutter, Lightning Clone, the Purple Electricity modes, Distant Warp, Earth Fang, Eight Gates, "
+                + "Kubikiribocho, the Chakra Sabre, the kunai wire, Flying Thunder God, Great Fireball, the Six Paths awakening), the observe-first and counter behaviour, the Sharingan strain and the "
+                + "charge limits. False: exactly the first fifteen moves and the behaviour before the pass.").define("canonKit", true);
         GLOBAL_CAP = b.comment("How many Kakashi bosses may stand in the whole server at once (a hard cap so it cannot lag).")
                 .defineInRange("globalCap", DEFAULT_GLOBAL_CAP, 1, 4);
         b.pop();
@@ -57,6 +60,8 @@ public final class KakashiConfig {
     public static boolean copy() { return get(COPY); }
 
     public static boolean speak() { return get(SPEAK); }
+
+    public static boolean canonKit() { return get(CANON_KIT); }
 
     public static double maxHitPercent() { return get(MAX_HIT_PERCENT); }
 

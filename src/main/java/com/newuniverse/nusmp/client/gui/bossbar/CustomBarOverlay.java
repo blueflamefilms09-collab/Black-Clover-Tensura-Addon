@@ -87,7 +87,7 @@ final class CustomBarOverlay {
 
     /** True when the state's style is loaded (resolving it on the first look and when the server changes it). */
     private static boolean resolve(CustomBarState st) {
-        String id = st.s.style();
+        String id = BarStyles.effective(st.s.style());
         if (!id.equals(st.styleId) || st.style == null) {
             st.styleId = id;
             st.style = BarStyles.get(id);

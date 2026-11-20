@@ -1,0 +1,106 @@
+{
+ "bc_kakashi_hatake": {
+  "atlas_fill": 0.211,
+  "atlas_glow": false,
+  "atlas_tiles": 44,
+  "bones": {
+   "fine": 5,
+   "fx": 0,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 10,
+   "fx": 0,
+   "main": 83
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 10,
+   "fx": 0,
+   "main": 327
+  }
+ },
+ "bc_kakashi_hatake_mangekyo": {
+  "atlas_fill": 0.211,
+  "atlas_glow": false,
+  "atlas_tiles": 44,
+  "bones": {
+   "fine": 5,
+   "fx": 0,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 10,
+   "fx": 0,
+   "main": 82
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 10,
+   "fx": 0,
+   "main": 321
+  }
+ },
+ "bc_kakashi_hatake_open": {
+  "atlas_fill": 0.211,
+  "atlas_glow": false,
+  "atlas_tiles": 44,
+  "bones": {
+   "fine": 5,
+   "fx": 0,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 10,
+   "fx": 0,
+   "main": 82
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "main": 0
+  },
+  "quads": {
+   "fine": 10,
+   "fx": 0,
+   "main": 321
+  }
+ },
+ "bc_kakashi_hatake_susanoo": {
+  "atlas_fill": 0.226,
+  "atlas_glow": true,
+  "atlas_tiles": 54,
+  "bones": {
+   "fine": 5,
+   "fx": 2,
+   "main": 6
+  },
+  "cubes": {
+   "fine": 10,
+   "fx": 82,
+   "main": 82
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 82,
+   "main": 0
+  },
+  "quads": {
+   "fine": 10,
+   "fx": 82,
+   "main": 321
+  }
+ }
+}

@@ -306,6 +306,200 @@
     "id": "kakashi_defeat_2",
     "text": "You are strong. Look after each other, that is where it comes from."
    }
+  ],
+  "lightning_cutter": [
+   {
+    "id": "kakashi_lightning_cutter_1",
+    "text": "Lightning Cutter."
+   },
+   {
+    "id": "kakashi_lightning_cutter_2",
+    "text": "Throw lightning at me and I will cut it in two."
+   }
+  ],
+  "cutter_cut": [
+   {
+    "id": "kakashi_cutter_cut_1",
+    "text": "Lightning cut in two. I did say so."
+   },
+   {
+    "id": "kakashi_cutter_cut_2",
+    "text": "A bolt is only a very fast line. I cut lines."
+   }
+  ],
+  "lightning_clone": [
+   {
+    "id": "kakashi_lightning_clone_1",
+    "text": "Lightning Release, Shadow Clone. Careful, it bites."
+   },
+   {
+    "id": "kakashi_lightning_clone_2",
+    "text": "Do not touch that one."
+   }
+  ],
+  "lclone_break": [
+   {
+    "id": "kakashi_lclone_break_1",
+    "text": "That is the lightning. It stops the legs, not the mind."
+   },
+   {
+    "id": "kakashi_lclone_break_2",
+    "text": "I did warn you about the clone."
+   }
+  ],
+  "purple_strike": [
+   {
+    "id": "kakashi_purple_strike_1",
+    "text": "Purple Electricity."
+   },
+   {
+    "id": "kakashi_purple_strike_2",
+    "text": "Close range is where it hits hardest."
+   }
+  ],
+  "purple_burst": [
+   {
+    "id": "kakashi_purple_burst_1",
+    "text": "Purple Electricity, all around me."
+   },
+   {
+    "id": "kakashi_purple_burst_2",
+    "text": "Stay back, or stay down."
+   }
+  ],
+  "purple_chain": [
+   {
+    "id": "kakashi_purple_chain_1",
+    "text": "Wet ground carries it. Everyone connected, everyone shocked."
+   },
+   {
+    "id": "kakashi_purple_chain_2",
+    "text": "Purple Electricity, through the water."
+   }
+  ],
+  "kamui_warp": [
+   {
+    "id": "kakashi_kamui_warp_1",
+    "text": "Kamui. I only need to look at you."
+   },
+   {
+    "id": "kakashi_kamui_warp_2",
+    "text": "Into the other space. You will come out somewhere else."
+   }
+  ],
+  "earth_fang": [
+   {
+    "id": "kakashi_earth_fang_1",
+    "text": "Earth Release, Tracking Fang."
+   },
+   {
+    "id": "kakashi_earth_fang_2",
+    "text": "My dogs know your scent. Hold him."
+   }
+  ],
+  "eight_gates": [
+   {
+    "id": "kakashi_eight_gates_1",
+    "text": "Gate of Opening, Healing, Life. That is as far as I dare."
+   },
+   {
+    "id": "kakashi_eight_gates_2",
+    "text": "Eight Gates. A little of it, only a little."
+   }
+  ],
+  "kubikiri": [
+   {
+    "id": "kakashi_kubikiri_1",
+    "text": "Kubikiribocho. A heavy one, so stand clear."
+   },
+   {
+    "id": "kakashi_kubikiri_2",
+    "text": "Not my sword, but it works for me."
+   }
+  ],
+  "chakra_sabre": [
+   {
+    "id": "kakashi_chakra_sabre_1",
+    "text": "White Light Chakra Sabre."
+   },
+   {
+    "id": "kakashi_chakra_sabre_2",
+    "text": "My father's way of fighting. Quick and quiet."
+   }
+  ],
+  "kunai_wire": [
+   {
+    "id": "kakashi_kunai_wire_1",
+    "text": "A wire. Simple, and you walked right into it."
+   },
+   {
+    "id": "kakashi_kunai_wire_2",
+    "text": "Come here."
+   }
+  ],
+  "thunder_god": [
+   {
+    "id": "kakashi_thunder_god_1",
+    "text": "A kunai. Mark it and be gone."
+   },
+   {
+    "id": "kakashi_thunder_god_2",
+    "text": "A marker, a flash, and I am wherever I left one."
+   }
+  ],
+  "great_fireball": [
+   {
+    "id": "kakashi_great_fireball_1",
+    "text": "Fire Release, Great Fireball."
+   },
+   {
+    "id": "kakashi_great_fireball_2",
+    "text": "I have seen this done. It is easier with an eye that copies."
+   }
+  ],
+  "six_paths": [
+   {
+    "id": "kakashi_six_paths_1",
+    "text": "Obito. Lend me the rest. Both eyes, and a little more."
+   },
+   {
+    "id": "kakashi_six_paths_2",
+    "text": "This is not mine to keep. I will use it once."
+   }
+  ],
+  "sixpaths_end": [
+   {
+    "id": "kakashi_sixpaths_end_1",
+    "text": "That is all of it. It leaves as quickly as it came."
+   },
+   {
+    "id": "kakashi_sixpaths_end_2",
+    "text": "Out of borrowed chakra. Hit me while you can."
+   }
+  ],
+  "strain": [
+   {
+    "id": "kakashi_strain_1",
+    "text": "My eye. It is bleeding. Give me a moment."
+   },
+   {
+    "id": "kakashi_strain_2",
+    "text": "The Sharingan never rests, and I never rest with it."
+   }
+  ],
+  "counter": [
+   {
+    "id": "kakashi_counter_1",
+    "text": "You lean on that one move. So I prepared for it."
+   },
+   {
+    "id": "kakashi_counter_2",
+    "text": "I watched you. That no longer works on me."
+   },
+   {
+    "id": "kakashi_counter_3",
+    "text": "Observe first, attack second. An old habit."
+   }
   ]
  }
 }

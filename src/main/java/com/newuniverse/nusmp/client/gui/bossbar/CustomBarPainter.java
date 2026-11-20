@@ -159,11 +159,13 @@ final class CustomBarPainter {
         if (e != null && BossBarOptions.portrait() && !portraitFailed && !compact) live = portrait(g, e, BarLayoutMath.SOCK_X, BarLayoutMath.SOCK_Y, BarLayoutMath.SOCK_R - 1);
         if (!live) {
             tint(g, WHITE, alpha);
-            g.blit(BarStyles.EMBLEMS, BarLayoutMath.SOCK_X - 13, BarLayoutMath.SOCK_Y - 13, 26, 26, (float) ls.emblemU, (float) ls.emblemV, 32, 32, 256, 160);
+            boolean alt = s.phase() >= BarStyles.ALT_PHASE;
+            g.blit(BarStyles.EMBLEMS, BarLayoutMath.SOCK_X - 13, BarLayoutMath.SOCK_Y - 13, 26, 26, (float) (alt ? ls.altEmblemU : ls.emblemU), (float) (alt ? ls.altEmblemV : ls.emblemV), 32, 32, BarStyles.SHEET_W, BarStyles.SHEET_H);
         } else {
             g.pose().translate(0f, 0f, 150f);                                   // everything from here on is in front of the entity's depth
             tint(g, WHITE, alpha);
-            g.blit(BarStyles.EMBLEMS, BarLayoutMath.SOCK_X + 4, BarLayoutMath.SOCK_Y + 4, 11, 11, (float) ls.emblemU, (float) ls.emblemV, 32, 32, 256, 160);   // the emblem as a badge
+            boolean alt = s.phase() >= BarStyles.ALT_PHASE;
+            g.blit(BarStyles.EMBLEMS, BarLayoutMath.SOCK_X + 4, BarLayoutMath.SOCK_Y + 4, 11, 11, (float) (alt ? ls.altEmblemU : ls.emblemU), (float) (alt ? ls.altEmblemV : ls.emblemV), 32, 32, BarStyles.SHEET_W, BarStyles.SHEET_H);   // the emblem as a badge
         }
         // the fill
         int fw = BarLayoutMath.fillPixels(hp);
@@ -172,7 +174,7 @@ final class CustomBarPainter {
         // frame and glow
         tint(g, bs.color("frame"), alpha);
         layer(g, atlas, 1, 0, W, 0f, 0f);
-        markers(g, st, bs, s, hp, alpha);
+        markers(g, st, ls, bs, s, hp, alpha);
         glow(g, atlas, bs, st, s, hp, time, alpha, flash, invul, rage, 0, W, 0f, 0f);
         g.setColor(1f, 1f, 1f, 1f);
         // texts
@@ -252,7 +254,7 @@ final class CustomBarPainter {
     private static float hpOf(CustomBarState st) { return st.lastHp; }
 
     /** The phase notches (after the frame: the triangles sit in the bezel above the window). */
-    private static void markers(GuiGraphics g, CustomBarState st, BarStyle bs, BossBarState s, float hp, float alpha) {
+    private static void markers(GuiGraphics g, CustomBarState st, BarStyles.Loaded ls, BarStyle bs, BossBarState s, float hp, float alpha) {
         if (s.phaseCount() <= 1 || !BossBarOptions.showPhaseMarkers()) return;
         int mc = bs.color("marker");
         for (int t : s.thresholds()) {
@@ -261,6 +263,13 @@ final class CustomBarPainter {
             float a = (passed ? 0.4f : 1f) * alpha;
             g.fill(mx, WY, mx + 1, WY + WH, argb(0x000000, 0.85f * alpha));
             g.fill(mx + 1, WY, mx + 2, WY + WH, argb(mc, a * 0.85f));
+            if (ls.tomoeMarkers) {                                                // the second Naruto bar: a 6 px tomoe on the plate under the notch, dark once the phase is behind
+                float k = passed ? 0.3f : 1f;
+                g.setColor(k, k, k, (passed ? 0.8f : 1f) * alpha);
+                g.blit(BarStyles.EMBLEMS, mx + 1 - 3, 36, 6, 6, (float) BarStyles.TOMOE_U, (float) BarStyles.TOMOE_V, 32, 32, BarStyles.SHEET_W, BarStyles.SHEET_H);
+                g.setColor(1f, 1f, 1f, 1f);
+                continue;
+            }
             g.fill(mx - 1, WY - 3, mx + 3, WY - 2, argb(mc, a));
             g.fill(mx, WY - 2, mx + 2, WY - 1, argb(mc, a));
         }

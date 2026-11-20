@@ -213,6 +213,12 @@ OTHER = {
     "boss.kakashi.kamui": ("space", "void_speck nebula_puff rune_eye mana_mote", "8F5BFF"),
     "boss.kakashi.susanoo": ("light", "mana_mote glint star4 mote_soft", "A89CFF"),
     "boss.kakashi.log": ("earth", "earth_chip ash_flake smoke_wisp mote_soft", "A0784A"),
+    # Kakashi canon kit pass (appended): the white-cyan Chidori core, the Eight Gates steam, the White Light Chakra Sabre, the copied Great Fireball, the Flying Thunder God flash
+    "boss.kakashi.core": ("light", "star4 glint electric_orb mote_soft", "F2FCFF"),
+    "boss.kakashi.gates": ("life", "mote_soft mana_mote glint smoke_wisp", "8FFFC0"),
+    "boss.kakashi.sabre": ("light", "glint star4 spark mote_soft", "E8F6FF"),
+    "boss.kakashi.fire": ("fire", "ember flame_tongue spark soot_puff", "FF7A2E"),
+    "boss.kakashi.thunder_god": ("light", "star4 glint spark mote_soft", "FFE27A"),
     # dungeon
     "dungeon": ("space", "mote mana_mote glint mote_soft", "B8C8FF"),
     "dungeon.gate": ("space", "rune_key mana_mote glint mote_soft", "9F8FFF"),

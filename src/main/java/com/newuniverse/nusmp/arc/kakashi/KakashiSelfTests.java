@@ -65,7 +65,8 @@ public final class KakashiSelfTests {
         List<String> bad = new ArrayList<>();
         if (KakashiLines.ids().size() < 40) bad.add("only " + KakashiLines.ids().size() + " lines are loaded");
         for (Move m : KakashiMoves.build()) if (KakashiLines.group(KakashiMoves.voiceGroup(m.id())).isEmpty()) bad.add("no lines for " + m.id());
-        for (String g : new String[]{"intro", "phase_pack", "phase_mangekyo", "phase_susanoo", "hurt", "low", "defeat", "victory", "kill", "idle", "kawarimi", "kamui_phase", "susanoo_break", "raikiri_miss"}) {
+        for (String g : new String[]{"intro", "phase_pack", "phase_mangekyo", "phase_susanoo", "hurt", "low", "defeat", "victory", "kill", "idle", "kawarimi", "kamui_phase", "susanoo_break", "raikiri_miss",
+                "strain", "counter", "cutter_cut", "lclone_break", "sixpaths_end"}) {
             if (KakashiLines.group(g).isEmpty()) bad.add("no lines in group " + g);
         }
         for (String id : KakashiLines.recorded()) if (!KakashiLines.ids().contains(id)) bad.add("recorded id " + id + " has no line");
@@ -126,6 +127,7 @@ public final class KakashiSelfTests {
                     for (int left : new int[]{total, total / 2, KakashiBoss.FREEZE, 1}) m.tell().tell(boss, aim, left, total);
                     m.run().run(boss, aim);
                     boss.runStatesForTest(level);
+                    boss.runCanonForTest(level);
                     fired++;
                 } catch (RuntimeException e) {
                     bad.add(m.id() + ": " + e);

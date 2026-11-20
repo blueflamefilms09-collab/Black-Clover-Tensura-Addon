@@ -1,0 +1,83 @@
+{
+ "version": 1,
+ "note": "Kakashi Hatake player models (docs/bosses/kakashi.md), written by tools/bc_playermodels/gen_kakashi.py. Ids are bc_kakashi_hatake + a state suffix; the Blender body stays as the classic look.",
+ "looks": {
+  "bc_kakashi_hatake": {
+   "skin": "bc_kakashi_hatake",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_kakashi_hatake",
+     "texture": "pmx_bc_kakashi_hatake",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kakashi_hatake_fine",
+     "texture": "pmx_bc_kakashi_hatake",
+     "glow": false
+    }
+   ]
+  },
+  "bc_kakashi_hatake_open": {
+   "skin": "bc_kakashi_hatake_open",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_kakashi_hatake_open",
+     "texture": "pmx_bc_kakashi_hatake_open",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kakashi_hatake_open_fine",
+     "texture": "pmx_bc_kakashi_hatake_open",
+     "glow": false
+    }
+   ]
+  },
+  "bc_kakashi_hatake_mangekyo": {
+   "skin": "bc_kakashi_hatake_mangekyo",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_kakashi_hatake_mangekyo",
+     "texture": "pmx_bc_kakashi_hatake_mangekyo",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kakashi_hatake_mangekyo_fine",
+     "texture": "pmx_bc_kakashi_hatake_mangekyo",
+     "glow": false
+    }
+   ]
+  },
+  "bc_kakashi_hatake_susanoo": {
+   "skin": "bc_kakashi_hatake_susanoo",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_bc_kakashi_hatake_susanoo",
+     "texture": "pmx_bc_kakashi_hatake_susanoo",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kakashi_hatake_susanoo_fine",
+     "texture": "pmx_bc_kakashi_hatake_susanoo",
+     "glow": false
+    },
+    {
+     "model": "pmx_bc_kakashi_hatake_susanoo_fx",
+     "texture": "pmx_bc_kakashi_hatake_susanoo",
+     "glow": true
+    }
+   ]
+  }
+ }
+}

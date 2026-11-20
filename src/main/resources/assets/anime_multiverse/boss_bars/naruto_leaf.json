@@ -1,0 +1,28 @@
+{
+  "id": "naruto_leaf",
+  "family": "boss",
+  "emblem": "sharingan_v2",
+  "fx": "chidori",
+  "entrance": "flash",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#8FEAFF",
+    "fill_bottom": "#1F50E0",
+    "glow": "#9FEAFF",
+    "accent": "#FF5A4A",
+    "ghost": "#FFFFFF",
+    "name": "#F4F8FF",
+    "title": "#9FB6E8",
+    "shadow": "#070B1C",
+    "frame": "#FFFFFF",
+    "shield": "#A89CFF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FF5A4A",
+    "lair": "#FFB347",
+    "marker": "#8FE0FF"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

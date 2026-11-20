@@ -14,6 +14,8 @@ public final class BossBarOptions {
     public static final ModConfigSpec.BooleanValue PERCENT;
     // 1.106.0: the custom boss bar (CustomBarOverlay): bossbar.custom, bossbar.scale, bossbar.showPhaseMarkers, bossbar.showHp, bossbar.portrait, bossbar.showDps
     public static final ModConfigSpec.BooleanValue CUSTOM, SHOW_PHASE_MARKERS, SHOW_HP, PORTRAIT, SHOW_DPS;
+    /** The second Naruto bar (docs/bosses/kakashi.md): key {@code bossbar.narutoLeafBar}, CLIENT config (looks only), appended after showDps. Off = the first Naruto bar. */
+    public static final ModConfigSpec.BooleanValue NARUTO_LEAF_BAR;
     public static final ModConfigSpec.DoubleValue SCALE;
 
     static {
@@ -32,6 +34,8 @@ public final class BossBarOptions {
         SHOW_HP = b.comment("Also show the boss's health as a number (current / maximum) next to the percentage. Off: the percentage only.").define("showHp", false);
         PORTRAIT = b.comment("Draw the boss itself (its head and shoulders) in the round socket of the custom bar while it is near enough to be seen; off = the emblem only.").define("portrait", true);
         SHOW_DPS = b.comment("Show how much of the boss's health the party has taken off per second under the bar.").define("showDps", false);
+        NARUTO_LEAF_BAR = b.comment("Kakashi's boss bar with the new scroll-and-leaf frame, Sharingan emblem (Mangekyo from phase III), lightning fill and tomoe phase marks. Off = the first Naruto bar.")
+                .define("narutoLeafBar", true);
         b.pop();
         SPEC = b.build();
     }
@@ -47,6 +51,7 @@ public final class BossBarOptions {
     public static boolean showHp() { return get(SHOW_HP, false); }
     public static boolean portrait() { return get(PORTRAIT, true); }
     public static boolean showDps() { return get(SHOW_DPS, false); }
+    public static boolean narutoLeafBar() { return get(NARUTO_LEAF_BAR, true); }
 
     public static float scale() {
         try { return (float) (double) SCALE.get(); } catch (IllegalStateException notLoaded) { return 1f; }

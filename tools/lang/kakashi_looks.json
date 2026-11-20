@@ -1,0 +1,6 @@
+{
+ "anime_multiverse.configuration.kakashiPlayerModel": "Kakashi on the anime player model",
+ "anime_multiverse.configuration.kakashiPlayerModel.tooltip": "On: Kakashi Hatake is drawn on the same player-model kit as the Black Clover bosses: painted face with the Sharingan, silver cube hair, hitai-ate, mask, flak jacket and a glowing Perfect Susanoo. Off: his classic Blender body.",
+ "anime_multiverse.configuration.narutoLeafBar": "Kakashi's new boss bar",
+ "anime_multiverse.configuration.narutoLeafBar.tooltip": "On: Kakashi's boss bar uses the scroll-and-leaf frame with the Sharingan emblem (Mangekyo from phase III), a lightning fill and tomoe phase marks. Off: the first Naruto bar."
+}

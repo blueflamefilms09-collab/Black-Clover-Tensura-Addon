@@ -46,7 +46,9 @@ public final class BcLooks {
     /** The particle theme id of a redesigned look's shimmer, or null. */
     public static String theme(String bcId) {
         String t = bcId == null ? null : THEME_OF.get(bcId);
-        return t != null ? t : BcWave2.theme(bcId);
+        if (t != null) return t;
+        t = BcWave2.theme(bcId);
+        return t != null ? t : KakashiLooks.theme(bcId);                 // Kakashi Hatake (docs/bosses/kakashi.md)
     }
 
     /** Every old look id that has a redesigned look (for the tests and docs). */

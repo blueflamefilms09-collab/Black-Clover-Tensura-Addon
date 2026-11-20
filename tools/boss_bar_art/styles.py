@@ -2,16 +2,17 @@
 Palette keys: dk outline/dark, md body, lt light body, hi highlight, gl glow (emissive), ac accent (gems, cast bar).
 fill = (top, bottom) of the health fill. motifs = functions of motifs.py, drawn in order. emblem = a name of emblems.py."""
 
-FX = ["shimmer", "drip", "embers", "wave", "sparks", "frost", "souls", "leaves", "static", "glitch", "veins", "runes", "shield"]
+FX = ["shimmer", "drip", "embers", "wave", "sparks", "frost", "souls", "leaves", "static", "glitch", "veins", "runes", "shield", "chidori"]   # appended only
 
 STYLES = []
 
 
 def S(id, family, emblem, motifs, dk, md, lt, hi, gl, ac, fill_top, fill_bottom, fx="shimmer", entrance="slide", death="shatter",
-      name="#FFFFFF", title=None, lair="#FFB347", lair_name=None, shield="#9FE8FF", seed=1):
+      name="#FFFFFF", title=None, lair="#FFB347", lair_name=None, shield="#9FE8FF", seed=1, base=None):
+    """base = the name of a frame base in naruto_v2.BASES (None: the shared base of motifs.py)."""
     STYLES.append(dict(id=id, family=family, emblem=emblem, motifs=motifs, pal=dict(dk=dk, md=md, lt=lt, hi=hi, gl=gl, ac=ac),
                        fill=(fill_top, fill_bottom), fx=fx, entrance=entrance, death=death, name=name, title=title or lt, lair=lair,
-                       shield=shield, seed=seed))
+                       shield=shield, seed=seed, base=base))
 
 
 # ---- the themes of the Decennial halls / boss families
@@ -54,6 +55,9 @@ S("zagred", "boss", "rune", ["runes_motif", "quills"], "#0a0414", "#3a1a6a", "#8
 S("naruto", "boss", "sharingan", ["tomoe_ring", "shuriken_row"], "#070a18", "#222a52", "#8a94b8", "#e8ecff", "#ff3030", "#8ad0ff", "#bfe6ff", "#1a3a9a", "sparks", "flash", "dissolve", name="#F0F4FF", title="#A8B4D8", shield="#A89CFF", seed=9)
 S("dragon_ball", "boss", "dragon_ball", ["dragon_balls_clean"], "#1e0c04", "#8a420c", "#e8902a", "#ffe9a0", "#ffd24a", "#4aa8ff", "#ffd84a", "#f07210", "shimmer", "slide", "dissolve", name="#FFF4D0", title="#FFB030", lair="#4aa8ff", shield="#4aa8ff", seed=7)
 S("magi_djinn", "boss", "vessel_star", ["magi_chain_clean"], "#0c0a1e", "#2a2468", "#e8c25a", "#fff6d0", "#7affe8", "#7affe8", "#9af8ee", "#2a8ac8", "shimmer", "slide", "shatter", name="#F4FFFF", title="#E8C25A", lair="#ffb347", shield="#7affe8", seed=11)
+# ---- appended: the second Naruto bar (the first, "naruto", stays; the client setting bossbar.narutoLeafBar picks this one for it)
+S("naruto_leaf", "boss", "sharingan_v2", [], "#070b1c", "#4a64a4", "#88a4da", "#8fe0ff", "#9feaff", "#ff5a4a", "#8feaff", "#1f50e0", "chidori", "flash", "dissolve",
+  name="#F4F8FF", title="#9FB6E8", shield="#A89CFF", seed=9, base="naruto_scroll")
 
 IDS = [s["id"] for s in STYLES]
 assert len(set(IDS)) == len(IDS)

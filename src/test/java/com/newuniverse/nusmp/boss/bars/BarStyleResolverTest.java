@@ -112,6 +112,7 @@ class BarStyleResolverTest {
         used.add(BarStyleResolver.forDecennial("evil", "qliphoth", "qliphoth_root_throne", "devil", ""));
         Set<String> unused = new HashSet<>(BarStyleIds.ALL);
         unused.removeAll(used);
+        unused.removeAll(BarStyleIds.VARIANTS);                                                      // client-side variants: the server never names them
         assertTrue(unused.isEmpty(), "styles that nothing resolves to: " + unused);
     }
 }
