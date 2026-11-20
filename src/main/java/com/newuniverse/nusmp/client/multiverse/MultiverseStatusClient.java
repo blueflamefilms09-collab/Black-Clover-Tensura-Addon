@@ -45,8 +45,10 @@ public final class MultiverseStatusClient {
 
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(KEY));
+        com.newuniverse.nusmp.client.hub.MultiverseHubClient.init(modBus);
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
-            while (KEY.consumeClick()) Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(Minecraft.getInstance().screen));
+            while (KEY.consumeClick()) Minecraft.getInstance().setScreen(com.newuniverse.nusmp.client.hub.MultiverseHubClient.menu(Minecraft.getInstance().screen));
+            com.newuniverse.nusmp.client.hub.MultiverseHubClient.pollKey();      // the hub key rides on this existing tick: no new handler
         });
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> status = new CompoundTag());
         NeoForge.EVENT_BUS.addListener(MultiverseStatusClient::onScreenInit);
@@ -168,13 +170,13 @@ public final class MultiverseStatusClient {
     private static void onScreenClickUnsafe(ScreenEvent.MouseButtonPressed.Pre event) {
         int[] l = LABELS.get(event.getScreen());
         if (l != null && event.getButton() == 0 && inside(l, event.getMouseX(), event.getMouseY())) {
-            Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(event.getScreen()));      // 1.11.0: one menu
+            Minecraft.getInstance().setScreen(com.newuniverse.nusmp.client.hub.MultiverseHubClient.menu(event.getScreen()));      // 1.11.0: one menu
             event.setCanceled(true);
             return;
         }
         int[] r = PANELS.get(event.getScreen());
         if (r == null || event.getButton() != 0 || !inside(r, event.getMouseX(), event.getMouseY())) return;
-        Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(event.getScreen()));
+        Minecraft.getInstance().setScreen(com.newuniverse.nusmp.client.hub.MultiverseHubClient.menu(event.getScreen()));
         event.setCanceled(true);
     }
 

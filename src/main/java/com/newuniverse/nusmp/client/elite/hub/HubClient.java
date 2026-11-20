@@ -37,6 +37,8 @@ public final class HubClient {
     static volatile HubNet.BoardSync board = new HubNet.BoardSync(0, List.of());
     static volatile HubNet.ShopSync shop = new HubNet.ShopSync(0, "coins", List.of());
     static volatile boolean trackerShown = true;
+    /** The last dungeon map the server sent (the Multiverse Hub's Quests page can reopen it); forgotten at logout. */
+    static volatile HubNet.MapSync lastMap;
 
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterMenuScreensEvent e) -> {
@@ -68,7 +70,14 @@ public final class HubClient {
         hud = List.of();
         board = new HubNet.BoardSync(0, List.of());
         shop = new HubNet.ShopSync(0, "coins", List.of());
+        lastMap = null;
     }
+
+    /** The quest tracker's entries as the server last sent them (read-only; used by the Multiverse Hub). */
+    public static List<HubNet.HudEntry> hudEntries() { return hud; }
+
+    /** The last dungeon map the server sent, or null (used by the Multiverse Hub to reopen it). */
+    public static HubNet.MapSync lastMap() { return lastMap; }
 
     // ================================================================ from the packets (client thread)
     public static void hud(HubNet.HudSync p) { hud = List.copyOf(p.entries()); }
@@ -77,5 +86,11 @@ public final class HubClient {
 
     public static void shop(HubNet.ShopSync p) { shop = p; }
 
-    public static void map(HubNet.MapSync p) { Minecraft.getInstance().setScreen(new DungeonMapScreen(p)); }
+    public static void map(HubNet.MapSync p) {
+        lastMap = p;
+        Minecraft.getInstance().setScreen(new DungeonMapScreen(p));
+    }
+
+    /** A Dungeon Map screen on a map the server sent earlier (the Multiverse Hub's shortcut; the caller opens it). */
+    public static net.minecraft.client.gui.screens.Screen mapScreen(HubNet.MapSync p) { return new DungeonMapScreen(p); }
 }

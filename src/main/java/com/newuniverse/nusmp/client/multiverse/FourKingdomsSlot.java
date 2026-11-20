@@ -74,7 +74,7 @@ public final class FourKingdomsSlot {
     private static void onClick(ScreenEvent.MouseButtonPressed.Pre e) {
         int[] r = SLOTS.get(e.getScreen());
         if (e.getButton() != 0 || !inside(r, e.getMouseX(), e.getMouseY())) return;
-        Minecraft.getInstance().setScreen(new com.newuniverse.nusmp.client.ui.CodexScreen(e.getScreen()));      // 1.11.0: one menu
+        Minecraft.getInstance().setScreen(com.newuniverse.nusmp.client.hub.MultiverseHubClient.menu(e.getScreen()));      // 1.11.0: one menu
         e.setCanceled(true);
     }
 

@@ -172,6 +172,7 @@ public final class GuiMoveRegistry {
         fixed("client/ui/gs/GsCrestScreen.java", "the crest's own move screen (drag, Save, Reset); client only");
         fixed("client/beastwill/BeastWillConfirmScreen.java", "the absorption window of a Beast Will: a modal ask with two buttons that opens centred and is scaled by the GUI Size framework; it is closed in seconds, so there is nothing to move");
         fixed("client/attune/MeditationScreen.java", "the meditation window: a modal choice of powers with two buttons that opens centred while the player sits still; it is closed in seconds, so there is nothing to move");
+        fixed("client/hub/MultiverseHubScreen.java", "the Multiverse Hub: a full-window stage that scales itself to the window (HubLayout), so there is nothing to move");
         fixed("client/heroweapon/WeaponTrackerScreen.java", "the Weapon Tracker window: a modal list that opens centred and is scaled by the GUI Size framework; it is closed once the player has looked, so there is nothing to move");
         // GUI Size entries that GUI Move leaves alone (by id)
         fixed("gui_scale:weapon_tracker", "a modal list that opens centred: nothing to move");

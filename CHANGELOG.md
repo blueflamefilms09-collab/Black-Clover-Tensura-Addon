@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.59.0] — Multiverse Hub: the new menu takes over from the Codex book
+Owner request: the new UI should take over from the old Codex look (Ascension-style menu with a boot-up).
+- NEW: the Multiverse Hub screen: a radial ring of 8 nodes (Status, Weapons, Skills, Quests, Attunement, Multiverse, Codex, Settings) with a one-time intro (about 128 ticks, skippable, off with motion off), motes, hover and click effects, a padlock and hint on locked tabs. Key F7 (rebindable; H is taken by the Rukh key).
+- NEW: a native Weapons tab (weapon chips, head card, upgrade rows, mastery bars; scrolls; cut text shows a tooltip), using the same Weapon page data and the one `weaponpage_act` packet. A native Status tab (EP, magicule, aura, summary, effects). Other tabs open the existing screens (Tensura skills, quests and last dungeon map, meditation, Four Kingdoms / Beast Will / Compat, the old Codex book, GUI size and move) and return to the hub.
+- NEW: client options `ui.hub` (default on), `ui.hubFx`, intro-seen flag; 62 lang keys; tests; previews in `docs/previews/ui_hub/`; doc `docs/ui_hub.md`.
+- REPLACED (entry points only): the Multiverse Status key, the Four Kingdoms slot and the status panel open the hub instead of the Codex book. `ui.hub = false` gives exactly the old behaviour.
+- KEPT: the Codex screen and its Weapon page, Multiverse Status, Four Kingdoms, every other screen, every packet and server rule. Nothing deleted.
+- COST: client only; no new packets, no tick handler, nothing when closed; ring view at most 24 textured quads and about 500 fills, page view 16 quads.
+- CAVEATS: nothing seen in a game; previews are mock-ups with real layout numbers; the quest board (a server NPC menu) cannot be opened from the client, so that tab shows the tracker; Esc in Meditation does not return to the hub; English only.
+
 ## [4.58.1] — Weapon style audit and sameness report (docs and tools only)
 - NEW: `docs/heroweapon/style/` (style audit, style guide with a ranked rework list in three waves, contact sheets) and `tools/heroweapon/style/sameness_report.py`, which scores how alike the Blender-made weapons look. No game change, no asset change.
 - KEPT: every weapon, mesh and skin as they were.

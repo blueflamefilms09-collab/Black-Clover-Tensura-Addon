@@ -19,6 +19,8 @@ public final class UiThemeOptions {
     public static final ModConfigSpec.BooleanValue TYPING;
     public static final ModConfigSpec.BooleanValue PAGE_TOAST;
     public static final ModConfigSpec.BooleanValue TENSURA_OVERLAY;
+    // ---- ui.hub*: the Multiverse Hub (client/hub, docs/ui_hub.md)
+    public static final ModConfigSpec.BooleanValue HUB, HUB_FX, HUB_INTRO_SEEN;
     // ---- ui.greatSpirit.*
     public static final ModConfigSpec.ConfigValue<String> GS_SKIN, GS_QUALITY, GS_NOTICE_CORNER;
     public static final ModConfigSpec.BooleanValue GS_NOTICES, GS_CLOVER_ICONS;
@@ -37,6 +39,12 @@ public final class UiThemeOptions {
                 .define("pageToast", true);
         TENSURA_OVERLAY = b.comment("Draw the magic circle, cyan brackets and the Great-Sage analysis readout over Tensura's own Skills windows (ability selection, sub-ability mode, categories). Off by default: the analysis look belongs to the mod's own menus (the Codex) only.")
                 .define("tensuraOverlay", false);
+        HUB = b.comment("The Multiverse Hub takes over the entry points of the old Codex: the Multiverse Status key, the Four Kingdoms slot and the status panel open the new hub (a ring of tabs with the Weapons page, Status, Settings and shortcuts to every old screen) instead of the Codex book. false = exactly the old behaviour (the Codex book opens, the hub key does nothing). Looks only: nothing the server does changes.")
+                .define("hub", true);
+        HUB_FX = b.comment("Hub effects: the floating motes, the intro, the open sweep, the click ripple and the turning rings. Off = the hub is drawn still (the same layout, no motion). The general switch ui.motion also freezes the hub.")
+                .define("hubFx", true);
+        HUB_INTRO_SEEN = b.comment("Set to true by the hub once its boot-up intro has played, so it plays once per profile. Set it back to false (or use the Settings tab of the hub) to see it again.")
+                .define("hubIntroSeen", false);
         b.push("greatSpirit");
         GS_SKIN = b.comment("The skin of the great_spirit look: 'AUTO' = Parchment and Ink (B) for everybody and the Slime Crest (C) for devil users (a forbidden or devil-bound grimoire, Devil Union active or used, a Devil or Daemon race), or force 'B' or 'C'. Five-leaf clovers always use the Slime Crest styling.")
                 .define("skin", "AUTO", o -> o instanceof String s && (s.equalsIgnoreCase("AUTO") || s.equalsIgnoreCase("B") || s.equalsIgnoreCase("C")));
@@ -71,6 +79,28 @@ public final class UiThemeOptions {
     /** Whether the analysis overlay may be drawn over Tensura's own screens. Default false, also when the config is not loaded yet. */
     public static boolean tensuraOverlay() {
         try { return TENSURA_OVERLAY.get(); } catch (IllegalStateException notLoaded) { return false; }
+    }
+
+    // ---------------------------------------------------------------- ui.hub*
+    /** True when the hub takes over the old Codex entry points (default true, also when the config is not loaded yet). */
+    public static boolean hub() { return get(HUB); }
+
+    /** True when the hub's effects are on (default true). */
+    public static boolean hubFx() { return get(HUB_FX); }
+
+    /** True once the boot-up intro has played on this profile (default false, so it plays the first time). */
+    public static boolean hubIntroSeen() {
+        try { return HUB_INTRO_SEEN.get(); } catch (IllegalStateException notLoaded) { return false; }
+    }
+
+    /** Stores a yes / no option and writes the file. Never throws (a read-only file or an unloaded config only keeps the change for this session at most). */
+    public static void setFlag(ModConfigSpec.BooleanValue v, boolean on) {
+        try {
+            v.set(on);
+            SPEC.save();
+        } catch (RuntimeException notLoaded) {
+            // the config is not loaded yet or the file cannot be written: nothing to do
+        }
     }
 
     // ---------------------------------------------------------------- ui.greatSpirit.*

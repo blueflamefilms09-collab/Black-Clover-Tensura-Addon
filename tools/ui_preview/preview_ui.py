@@ -671,6 +671,304 @@ def relic(t=120.0):
     return g
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Multiverse Hub (docs/ui_hub.md). PIL MOCK-UPS, not game screenshots: the stage is the real 400 x 240 stage of HubLayout, the node, panel and weapon-
+# column numbers below were dumped from HubLayout / HubWeaponLayout (client/hub), text width is approximated at 6 px per character (Minecraft's font is
+# narrower on average, so a cut here is a worst case), and no sound or motion is shown. Run:  python tools/ui_preview/preview_ui.py --hub docs/previews/ui_hub
+# ---------------------------------------------------------------------------------------------------------------------
+HUB_W = 400
+HUB_HOME = [(200.0, 40.0), (253.74011, 62.259884), (276.0, 116.0), (253.74011, 169.74011), (200.0, 192.0), (146.25989, 169.74011), (124.0, 116.0), (146.25989, 62.259884)]
+HUB_RAIL = [(66.0, 82.0), (99.941124, 96.058876), (114.0, 130.0), (99.941124, 163.94113), (66.0, 178.0), (32.058876, 163.94113), (18.0, 130.0), (32.058876, 96.058876)]
+HUB_SIDES = [0, 1, 1, 1, 3, 2, 2, 2]
+HUB_PANEL, HUB_TITLE, HUB_BODY, HUB_LINE = (132, 26, 264, 186), (140, 32, 244, 10), (140, 48, 244, 160), (14, 226, 372, 9)
+HUB_HOME_C, HUB_HOME_R, HUB_HOME_NODE = (200, 116), 76, 17
+HUB_RAIL_C, HUB_RAIL_R, HUB_RAIL_NODE = (66, 130), 48, 11
+# key, glyph, rgb, label, hover description
+HUB_TABS = [("status", "St", 0x5CD8FF, "Status", "Your power, your standing and your active effects."),
+            ("weapons", "Wp", 0xE8C468, "Weapons", "Your bound weapons: forms, upgrades and mastery."),
+            ("skills", "Sk", 0x9A7CFF, "Skills", "Opens the skill screen."),
+            ("quests", "Qd", 0x7CF0B0, "Quests", "Quest tracker and the last dungeon map."),
+            ("attunement", "At", 0xB39CF0, "Attunement", "Opens attunement (meditation)."),
+            ("multiverse", "Mv", 0xFF9F6A, "Multiverse", "Four Kingdoms, Beast Will, compat codex, magic."),
+            ("codex", "Cx", 0x8FD0FF, "Codex", "Opens the old Codex book."),
+            ("settings", "Se", 0xC0C8D8, "Settings", "Hub options, GUI size and GUI move.")]
+HUB_FOOTER = "Click a node. Esc closes. Backspace goes back to the ring."
+# the weapon column (HubWeaponLayout.of(244, 3 chips, 4 options, 3 bars, 2 extras)): x, y, w, h
+WL_CHIPS = [(0, 0, 79, 14), (82, 0, 79, 14), (164, 0, 79, 14)]
+WL_HEAD, WL_OH, WL_OPTS = (0, 20, 244, 46), 72, [(0, 85, 244, 13), (0, 99, 244, 13), (0, 113, 244, 13), (0, 127, 244, 13)]
+WL_BH, WL_BARS, WL_EH, WL_EXTRAS, WL_HEIGHT = 147, [(0, 160, 244, 17), (0, 180, 244, 17), (0, 200, 244, 17)], 226, [(0, 239, 244, 17), (0, 259, 244, 17)], 285
+
+
+def _smooth(v):
+    v = max(0.0, min(1.0, v))
+    return v * v * (3 - 2 * v)
+
+
+def _back(v):
+    v = max(0.0, min(1.0, v))
+    c1 = 1.70158
+    return 1 + (c1 + 1) * (v - 1) ** 3 + c1 * (v - 1) ** 2
+
+
+def hub_fit(s_, max_w):
+    """HubText.fit at 6 px per character: (shown, cut)."""
+    if len(s_) * 6 <= max_w:
+        return s_, False
+    n = max(0, (max_w - 18) // 6)
+    return s_[:n] + "...", True
+
+
+def hub_octagon(g, cx, cy, r, argb):
+    c = max(2, r // 3)
+    g.fill(cx - r + c, cy - r, cx + r - c, cy - r + c, argb)
+    g.fill(cx - r, cy - r + c, cx + r, cy + r - c, argb)
+    g.fill(cx - r + c, cy + r - c, cx + r - c, cy + r, argb)
+
+
+def hub_octagon_edge(g, cx, cy, r, argb):
+    c = max(2, r // 3)
+    x0, y0, x1, y1 = cx - r, cy - r, cx + r, cy + r
+    g.fill(x0 + c, y0, x1 - c, y0 + 1, argb); g.fill(x0 + c, y1 - 1, x1 - c, y1, argb)
+    g.fill(x0, y0 + c, x0 + 1, y1 - c, argb); g.fill(x1 - 1, y0 + c, x1, y1 - c, argb)
+    for k in range(0, c, 2):
+        g.fill(x0 + c - k - 2, y0 + k, x0 + c - k, y0 + k + 2, argb); g.fill(x1 - c + k, y0 + k, x1 - c + k + 2, y0 + k + 2, argb)
+        g.fill(x0 + c - k - 2, y1 - k - 2, x0 + c - k, y1 - k, argb); g.fill(x1 - c + k, y1 - k - 2, x1 - c + k + 2, y1 - k, argb)
+
+
+def hub_lock(g, cx, cy, argb):
+    g.fill(cx - 2, cy - 6, cx + 3, cy - 5, argb); g.fill(cx - 3, cy - 5, cx - 2, cy - 1, argb); g.fill(cx + 3, cy - 5, cx + 4, cy - 1, argb)
+    g.fill(cx - 4, cy - 1, cx + 5, cy + 5, argb); g.fill(cx, cy + 1, cx + 1, cy + 3, 0xCC0A1024)
+
+
+def hub_node(g, cx, cy, r, tab, lit=1.0, hover=0.0, active=False, locked=False, alpha=1.0):
+    rgb = tab[2]
+    vis = max(0.0, min(1.0, lit))
+    if vis <= 0.02:
+        hub_octagon_edge(g, cx, cy, r, with_alpha(rgb, 0.18 * alpha))
+        return
+    dim = 0.55 if locked else 1.0
+    body = with_alpha(mix(0xFF0A1024, 0xFF000000 | rgb, 0.12 + 0.22 * hover + (0.16 if active else 0.0)), (0.55 + 0.35 * vis) * alpha)
+    hub_octagon(g, cx, cy, r, body)
+    hub_octagon_edge(g, cx, cy, r, with_alpha(rgb, min(1.0, (0.4 + 0.45 * vis + 0.25 * hover + (0.3 if active else 0.0)) * dim * alpha)))
+    if active:
+        hub_octagon_edge(g, cx, cy, r + 2, with_alpha(0xFFFFFF, 0.35 * alpha))
+    if not locked and vis * alpha * dim > 0.08:
+        g.center(tab[1], cx, cy - 4, with_alpha(mix(0xFF000000 | rgb, 0xFFFFFFFF, 0.6), vis * alpha * dim))
+    if locked:
+        hub_lock(g, cx, cy, with_alpha(rgb, 0.85 * vis * alpha))
+
+
+def hub_ring(g, cx, cy, r, n, rot, rgb, alpha, reveal, big_every):
+    if alpha <= 0.01 or reveal <= 0:
+        return
+    shown = min(n, int(math.ceil(n * min(1.0, reveal))))
+    for i in range(shown):
+        a = i * 2 * math.pi / n + rot
+        x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+        big = i % big_every == 0
+        sz = 3 if big else 2
+        px, py = int(round(x - sz / 2)), int(round(y - sz / 2))
+        g.fill(px, py, px + sz, py + sz, with_alpha(rgb, min(1.0, 0.95 * alpha) if big else 0.5 * alpha))
+
+
+def hub_spoke(g, x0, y0, x1, y1, rgb, alpha, reveal):
+    if alpha <= 0.01 or reveal <= 0:
+        return
+    dx, dy = x1 - x0, y1 - y0
+    ln = math.hypot(dx, dy)
+    n = max(1, int(ln / 5))
+    shown = min(n, int(math.ceil(n * min(1.0, reveal))))
+    for i in range(1, shown + 1):
+        t = i / (n + 1)
+        px, py = int(round(x0 + dx * t)) - 1, int(round(y0 + dy * t)) - 1
+        g.fill(px, py, px + 2, py + 2, with_alpha(rgb, 0.6 * alpha))
+
+
+def hub_motes(g, t, alpha):
+    rng = np.random.RandomState(0xB10C)
+    for i in range(24):
+        x, y, ph, sz = rng.uniform(4, 396), rng.uniform(4, 236), rng.uniform(0, 1), 1 + (i % 3 == 0)
+        tw = 0.5 + 0.5 * math.sin((t / 70.0 + ph) * 2 * math.pi)
+        g.fill(int(x), int(y), int(x) + sz, int(y) + sz, with_alpha(CYAN, min(1.0, (0.12 + 0.5 * tw) * alpha)))
+
+
+def hub_new(scrim=True):
+    """A Gui the size of the stage (400 x 240)."""
+    global W
+    keep, W = W, HUB_W
+    try:
+        g = Gui()
+    finally:
+        W = keep
+    g.w = HUB_W
+    if scrim:
+        g.gradient(0, 0, HUB_W, H, with_alpha(0x050812, 0.62), with_alpha(0x020409, 0.82))
+    return g
+
+
+def hub_line(g, text, color=TEXT_DIM, alpha=1.0):
+    shown, cut = hub_fit(text, HUB_LINE[2])
+    g.center(shown, HUB_LINE[0] + HUB_LINE[2] // 2, HUB_LINE[1], scale_alpha(color, alpha))
+    return cut
+
+
+def hub_home(t=220.0, age=None, hover=-1, locked=(1,)):
+    """The ring. age = intro age in ticks (None: the finished ring)."""
+    g = hub_new()
+    cx, cy = HUB_HOME_C
+    fin = age is None
+    a = 1e6 if fin else age
+    rings, core, labels = _smooth((a - 14) / 40.0), _back(a / 30.0), _smooth((a - 96) / 24.0)
+    hub_motes(g, t, 0.8 * rings)
+    g.magic_circle(cx, cy, 100, t, CYAN, 0.2, CALM, max(0.01, rings))
+    hub_ring(g, cx, cy, HUB_HOME_R, 72, t * 0.003, CYAN, 0.5, rings, 6)
+    hub_ring(g, cx, cy, HUB_HOME_R - 24, 48, -t * 0.004, VIOLET, 0.35, rings, 4)
+    for i, tab in enumerate(HUB_TABS):
+        nx, ny = HUB_HOME[i]
+        dx, dy = nx - cx, ny - cy
+        ln = math.hypot(dx, dy)
+        ux, uy = dx / ln, dy / ln
+        lit = _smooth((a - 40 - i * 9) / 10.0)
+        hub_spoke(g, cx + ux * 34, cy + uy * 34, nx - ux * (HUB_HOME_NODE + 3), ny - uy * (HUB_HOME_NODE + 3), 0xFF000000 | tab[2], 1.0, lit)
+    g.magic_circle(cx, cy, 52, t, VIOLET, 0.85, STANDARD, max(0.01, core))
+    if labels > 0.05:
+        g.fill(cx - 24, cy - 24, cx + 24, cy + 24, with_alpha(0x0A1024, 0.6 * labels))
+        g.center("MULTI", cx, cy - 10, scale_alpha(GOLD, labels)); g.center("VERSE", cx, cy + 1, scale_alpha(CYAN, labels))
+    for i, tab in enumerate(HUB_TABS):
+        nx, ny = HUB_HOME[i]
+        hv = 1.0 if i == hover else 0.0
+        if hv > 0:
+            g.magic_circle(nx, ny, HUB_HOME_NODE * 1.9, t, 0xFF000000 | tab[2], 0.9, FAST, 1.0)
+        hub_node(g, int(round(nx)), int(round(ny)), HUB_HOME_NODE, tab, _smooth((a - 40 - i * 9) / 10.0), hv, False, i in locked)
+        if labels > 0.05:
+            shown, _ = hub_fit(tab[3], 92)
+            w = len(shown) * 6
+            side = HUB_SIDES[i]
+            ix, iy = int(round(nx)), int(round(ny))
+            lx, ly = {0: (ix - w // 2, iy - HUB_HOME_NODE - 4 - 9), 1: (ix + HUB_HOME_NODE + 4, iy - 4), 2: (ix - HUB_HOME_NODE - 4 - w, iy - 4), 3: (ix - w // 2, iy + HUB_HOME_NODE + 4)}[side]
+            g.text(shown, lx, ly, scale_alpha(mix(TEXT_FAINT if i in locked else TEXT, GOLD, hv), labels))
+    if labels > 0.05:
+        if hover >= 0:
+            tab = HUB_TABS[hover]
+            hub_line(g, tab[3] + ": " + (("Bind a hero, Lord or Greed weapon to unlock this page." if tab[0] == "weapons" else "Locked.") if hover in locked else tab[4]), TEXT, labels)
+        else:
+            hub_line(g, HUB_FOOTER, TEXT_DIM, labels)
+    return g
+
+
+def hub_frame(g, tab_index, t, scroll=0.0, content=None, content_h=0, hover_node=-1):
+    """The TAB view: the rail on the left, the page panel on the right; content(g, ox, oy) draws the body in local coordinates."""
+    tab = HUB_TABS[tab_index]
+    rcx, rcy = HUB_RAIL_C
+    g.magic_circle(rcx, rcy, 52, t, CYAN, 0.2, CALM, 1.0)
+    hub_ring(g, rcx, rcy, HUB_RAIL_R, 72, t * 0.003, CYAN, 0.5, 1.0, 6)
+    hub_octagon(g, rcx, rcy, 15, with_alpha(0x0A1024, 0.8)); hub_octagon_edge(g, rcx, rcy, 15, with_alpha(GOLD, 0.55))
+    g.center("VERSE", rcx, rcy - 4, GOLD)
+    for i, tb in enumerate(HUB_TABS):
+        nx, ny = HUB_RAIL[i]
+        hv = 1.0 if i == hover_node else 0.0
+        if hv > 0:
+            g.magic_circle(nx, ny, HUB_RAIL_NODE * 1.9, t, 0xFF000000 | tb[2], 0.9, FAST, 1.0)
+        hub_node(g, int(round(nx)), int(round(ny)), HUB_RAIL_NODE, tb, 1.0, hv, i == tab_index, False)
+    g.text("MULTIVERSE HUB", 8, 8, with_alpha(GOLD, 0.8))
+    px, py, pw, ph = HUB_PANEL
+    g.panel_scan(px, py, pw, ph, 0xFF000000 | tab[2], 0.7, 1.0, t)
+    g.heading(tab[3], HUB_TITLE[0], HUB_TITLE[1], HUB_TITLE[2], tab[2])
+    bx, by, bw, bh = HUB_BODY
+    keep = g.clip
+    s = g.s
+    g.clip = (bx * s, by * s, (bx + bw) * s, (by + bh) * s)
+    if content:
+        content(g, bx, by - int(round(scroll)), scroll)
+    g.clip = keep
+    mx = content_h - bh
+    if mx > 0:
+        bar = max(12, bh * bh // (mx + bh))
+        pos = int((bh - bar) * (scroll / mx))
+        g.fill(387, by, 390, by + bh, with_alpha(0xFFFFFF, 0.08)); g.fill(387, by + pos, 390, by + pos + bar, with_alpha(tab[2], 0.85))
+
+
+def hub_weapons(t=300.0, scroll=0.0, hover_chip=-1):
+    g = hub_new()
+    hub_motes(g, t, 0.8)
+    rgbs = [0xE8C468, 0x9A7CFF, 0xFF6A6A]
+    chips = ["Demon-Slayer", "Lord's Edge", "Greed Blade of the Hollow"]
+    opts = [("Reforge: Void Edge   (current form)", "current"), ("Awaken the Twin-Fang Shadow Form   3 cores", "ready"),
+            ("Raise the grade to Mythic   needs level 20", "ready"), ("Soul bind: Heaven's Wrath   locked", "locked")]
+    bars = [("Weapon level", "14 / 20", 0.7), ("Void mastery", "62%", 0.62), ("Edge synchronisation of the bearer", "31%", 0.31)]
+    extras = [("Lord's Edge", "Lv 6", 0.3), ("Greed Blade of the Hollow", "Lv 2", 0.1)]
+    rgb = rgbs[0]
+
+    def body(g, ox, oy, scroll):
+        def R(r):
+            return (ox + r[0], oy + r[1], r[2], r[3])
+        for i, r in enumerate(WL_CHIPS):
+            x, y, w, h = R(r)
+            g.chip(x, y, w, h, i == 0, i == hover_chip, 0xFF000000 | rgbs[i])
+            shown, _ = hub_fit(chips[i], w - 8)
+            g.text(shown, x + 4, y + (h - 8) // 2, WHITE if i == 0 or i == hover_chip else TEXT)
+        x, y, w, h = R(WL_HEAD)
+        g.well(x, y, w, h, 0xFF000000 | rgb, 1.0)
+        g.fill(x, y, x + 2, y + h, with_alpha(rgb, 0.9))
+        g.text(hub_fit("Genesis Demon-Slayer", w - 12)[0], x + 7, y + 4, GOLD)
+        g.text("Grade: Mythic", x + 7, y + 15, 0xFF000000 | rgb)
+        g.text("Level 14 / 20", x + 7, y + 26, TEXT)
+        g.text("Form: Void Blade", x + 7, y + 36, TEXT_DIM)
+        g.heading("Upgrades", ox, oy + WL_OH, 244, GOLD)
+        for (text, state), r in zip(opts, WL_OPTS):
+            x, y, w, h = R(r)
+            g.chip(x, y, w, h, state == "current", False, 0xFF000000 | rgb)
+            shown, _ = hub_fit(text, w - 10)
+            g.text(shown, x + 5, y + (h - 8) // 2, TEXT_FAINT if state == "locked" else TEXT)
+        g.heading("Mastery", ox, oy + WL_BH, 244, CYAN)
+        for (label, value, fr), r in zip(bars, WL_BARS):
+            x, y, w, h = R(r)
+            shown, _ = hub_fit(label, w - 8 - len(value) * 6 - 6)
+            g.text(shown, x + 2, y, TEXT); g.text(value, x + w - 2 - len(value) * 6, y, TEXT_DIM)
+            g.bar(x + 2, y + 11, w - 4, 4, fr, 0xFF000000 | rgb, t)
+        g.heading("Other masteries", ox, oy + WL_EH, 244, VIOLET)
+        for (label, value, fr), r in zip(extras, WL_EXTRAS):
+            x, y, w, h = R(r)
+            shown, _ = hub_fit(label, w - 8 - len(value) * 6 - 6)
+            g.text(shown, x + 2, y, TEXT); g.text(value, x + w - 2 - len(value) * 6, y, TEXT_DIM)
+            g.bar(x + 2, y + 11, w - 4, 4, fr, VIOLET, t)
+
+    hub_frame(g, 1, t, scroll, body, WL_HEIGHT, hover_node=1)
+    hub_line(g, "Weapons: Your bound weapons: forms, upgrades and mastery.", TEXT)
+    return g
+
+
+def hub_status(t=300.0):
+    g = hub_new()
+    hub_motes(g, t, 0.8)
+    cards = [(CYAN, "Power", ["Existence points: 1,245,300", "Magicule: 88,200   Aura: 40,100"], -1),
+             (GOLD, "Magic Knight Rank", ["5th Class Junior Magic Knight"], -1),
+             (GOLD, "Stars", ["Gold 2   Black 0", "Net 2"], -1),
+             (GOLD, "Grimoire", ["Four-leaf Clover", "Time Magic", "Pages 3/12  slots 6  mastery 25%"], 0.25),
+             (RED, "Squad", ["Requires a Magic Knight rank"], -1),
+             (VIOLET, "Active effects", ["Strength II   4:12", "Regeneration   endless", "Night Vision   9:40"], -1)]
+    total = sum(4 + 11 + len(ls) * 10 + (8 if fr >= 0 else 0) + 3 + 4 for _, _, ls, fr in cards)
+
+    def body(g, ox, oy, scroll):
+        y = oy
+        for rgb, title, lines, fr in cards:
+            h = 4 + 11 + len(lines) * 10 + (8 if fr >= 0 else 0) + 3
+            g.well(ox, y, 244, h, 0xFF000000 | rgb, 1.0)
+            g.fill(ox, y, ox + 2, y + h, with_alpha(rgb, 0.9))
+            g.text(hub_fit(title, 232)[0], ox + 6, y + 4, 0xFF000000 | rgb)
+            ly = y + 15
+            for l in lines:
+                g.text(hub_fit(l, 232)[0], ox + 6, ly, TEXT)
+                ly += 10
+            if fr >= 0:
+                g.bar(ox + 6, ly + 1, 232, 4, fr, 0xFF000000 | rgb, t)
+            y += h + 4
+
+    hub_frame(g, 0, t, 0.0, body, total, hover_node=-1)
+    hub_line(g, HUB_FOOTER, TEXT_DIM)
+    return g
+
+
 def main():
     global S
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -685,6 +983,12 @@ def main():
         "toast_in.png": lambda: toast(6, 100, 0), "toast_mid.png": lambda: toast(34, 130, 38), "toast_full.png": lambda: toast(70, 160, None),
         "toast_out.png": lambda: toast(ToastOut, 200, None), "tensura_select.png": lambda: tensura_select(250), "relic_tooltip.png": lambda: relic(120),
     }
+    hub_jobs = {
+        "hub_ring.png": lambda: hub_home(220, None, hover=2), "hub_intro.png": lambda: hub_home(70, 70), "hub_intro_start.png": lambda: hub_home(10, 10),
+        "hub_weapons.png": lambda: hub_weapons(300, 0.0), "hub_weapons_scrolled.png": lambda: hub_weapons(300, WL_HEIGHT - HUB_BODY[3]), "hub_status.png": lambda: hub_status(300),
+    }
+    if "--hub" in sys.argv:
+        jobs = hub_jobs          # only the hub mock-ups (the other jobs stay as they were)
     for name, fn in jobs.items():
         fn().save(os.path.join(out, name))
         print("wrote", name)
