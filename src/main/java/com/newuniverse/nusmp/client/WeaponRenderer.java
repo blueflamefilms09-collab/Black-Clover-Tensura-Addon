@@ -510,12 +510,16 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
      */
     private static Mesh readFlatOld(String id) {
         String base = id.replaceAll("_pull[123]$", "");
+        if (THIRD_LOOK_BOWS.contains(base)) return null;                   // 4.59.0: the six bows of the third look (docs/heroweapon/bow_designs.md) have a new rest mesh, so their draw stages must not be the pre-4.55 ones of another design
         net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
         ResourceLocation skin = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + ".png");
         ResourceLocation glow = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + "_glow.png");
         boolean own = rm.getResource(skin).isPresent();
         return read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", own ? skin : null, own && rm.getResource(glow).isPresent() ? glow : null);
     }
+
+    private static final java.util.Set<String> THIRD_LOOK_BOWS = java.util.Set.of("legendary_bow__hunters_bow", "legendary_bow__scouts_bow", "legendary_bow__bird_hunting", "legendary_bow__frozen_rain",
+            "legendary_bow__eagle_piercer", "legendary_bow__sagittarius");
 
     private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen;
 

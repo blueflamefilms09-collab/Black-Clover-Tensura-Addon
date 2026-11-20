@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.60.0] — Bows: Sagittarius symbol on the bow, six bows no longer look alike
+Owner request: the Sagittarius symbol must sit on the bow, not float in front of it; bows that look too similar get reworked.
+- REPLACED (new look; old look kept as the classic copy): Sagittarius is a slim S-curve bow with the zodiac wheel as two medallions sunk into the riser and the nine-star constellation as plates lifted on the limb faces, joined by thin gold wire. Every build now runs a connectivity check (no floating parts; the old build had 19). Also reworked: hunters_bow (two horns and a beast skull), scouts_bow (slim reflex bow with a brass spyglass), bird_hunting (compound bow with cams and cables), frozen_rain (short heavy prod, faceted ice limbs), eagle_piercer (asymmetric: scaled upper limb ending in an eagle head, talon lower limb).
+- Mean outline overlap across all 55 bow pairs went from 0.387 to 0.258; the highest pair now outside the base/curse pair is 0.46.
+- KEPT: legendary_bow, legendary_bow_curse, bind_arrow, arrow_shower, meteor_bow unchanged (the four curse looks are by design the same model corrupted by its sin). Ids, lore, engravings, Better Combat files, pull stages untouched. The six previous looks (36 files) are copied to the classic folders; `heroSolidParts=false` shows the old design for all stages.
+- COST: client drawing only; worst case one bow in hand is 4681 quad lines. No server, packet or tick work.
+- CAVEATS: scripted bpy builds (no Blender window, no Blockbench); stills are software-rasteriser previews; nothing seen in a game; the new `THIRD_LOOK_BOWS` guard in WeaponRenderer was not compiled locally. Decision for the owner: legendary_bow_curse still shares the base bow's stave; a separate build is needed if you want a different one.
+
 ## [4.59.0] — Multiverse Hub: the new menu takes over from the Codex book
 Owner request: the new UI should take over from the old Codex look (Ascension-style menu with a boot-up).
 - NEW: the Multiverse Hub screen: a radial ring of 8 nodes (Status, Weapons, Skills, Quests, Attunement, Multiverse, Codex, Settings) with a one-time intro (about 128 ticks, skippable, off with motion off), motes, hover and click effects, a padlock and hint on locked tabs. Key F7 (rebindable; H is taken by the Rukh key).

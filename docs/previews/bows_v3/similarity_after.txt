@@ -1,0 +1,17 @@
+silhouette overlap (IoU of the profile masks, 1.00 = identical outline), /home/user/Black-Clover-Tensura-Addon/.claude/worktrees/agent-a138f813f7463def8/src/main/resources/assets/anime_multiverse
+
+                 base base_c hunter scouts bind_a bird_h arrow_ meteor frozen eagle_ sagitt
+base             1.00   0.88   0.07   0.14   0.26   0.31   0.43   0.37   0.14   0.36   0.30
+base_curse       0.88   1.00   0.05   0.14   0.28   0.32   0.44   0.39   0.13   0.38   0.30
+hunters_bow      0.07   0.05   1.00   0.03   0.16   0.09   0.09   0.08   0.42   0.12   0.18
+scouts_bow       0.14   0.14   0.03   1.00   0.09   0.16   0.15   0.21   0.10   0.14   0.08
+bind_arrow       0.26   0.28   0.16   0.09   1.00   0.26   0.30   0.25   0.35   0.28   0.37
+bird_hunting     0.31   0.32   0.09   0.16   0.26   1.00   0.30   0.43   0.17   0.46   0.36
+arrow_shower     0.43   0.44   0.09   0.15   0.30   0.30   1.00   0.40   0.22   0.37   0.28
+meteor_bow       0.37   0.39   0.08   0.21   0.25   0.43   0.40   1.00   0.13   0.46   0.23
+frozen_rain      0.14   0.13   0.42   0.10   0.35   0.17   0.22   0.13   1.00   0.13   0.34
+eagle_piercer    0.36   0.38   0.12   0.14   0.28   0.46   0.37   0.46   0.13   1.00   0.30
+sagittarius      0.30   0.30   0.18   0.08   0.37   0.36   0.28   0.23   0.34   0.30   1.00
+
+most similar other bow: base ~ base_curse 0.88; base_curse ~ base 0.88; hunters_bow ~ frozen_rain 0.42; scouts_bow ~ meteor_bow 0.21; bind_arrow ~ sagittarius 0.37; bird_hunting ~ eagle_piercer 0.46; arrow_shower ~ base_curse 0.44; meteor_bow ~ eagle_piercer 0.46; frozen_rain ~ hunters_bow 0.42; eagle_piercer ~ meteor_bow 0.46; sagittarius ~ bind_arrow 0.37
+mean of all 55 pairs 0.258, highest 0.881
