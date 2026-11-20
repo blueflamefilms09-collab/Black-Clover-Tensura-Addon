@@ -52,7 +52,8 @@ public final class CodexPages {
      */
     public static List<CodexPage> all() {
         if (PAGES.isEmpty()) defaults();
-        List<CodexPage> out = new ArrayList<>(PAGES);
+        List<CodexPage> out = new ArrayList<>(PAGES.size());
+        for (CodexPage p : PAGES) if (!p.hidden()) out.add(p);                                               // a page a client setting switched off is not a tab
         for (String section : CodexData.get().sections().keySet()) {
             String title = CodexSources.sectionTitle(section);
             out.add(DATA_PAGES.computeIfAbsent(section + "|" + title, k -> new EntryListPage(title, CodexData.glyph(title), 40, () -> CodexSources.section(section))));
@@ -97,6 +98,7 @@ public final class CodexPages {
         register(new EntryListPage("Magic", "Mg", 40, CodexSources::magic));
         register(new EntryListPage("Effects", "Ef", 0, CodexSources::effects));
         register(new com.newuniverse.nusmp.client.beastwill.BeastWillCodexPage());                         // 3.45.0: Beast Will (how to get one, the forms, strain, keys, your wills)
+        register(new com.newuniverse.nusmp.client.weaponpage.WeaponCodexPage());                           // the Weapon page: your hero / Lord / Greed weapon, its upgrade options and every mastery bar (hidden by weaponpage.show = false)
     }
 
     // ---------------------------------------------------------------- overview

@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.56.0] — Weapon page in the Codex: upgrade options and mastery bars for the weapon you hold
+Owner request: an updating (upgrade) system and mastery bars in the Tensura-style menu.
+- NEW: a "Weapon" page appended last of the stock Codex pages. It shows the held weapon, or one picked from chips when you own several: name, grade, level and form. Left: the upgrade options the weapons already have (change form, learn form, feed the gem an item you carry for hero and vassal weapons; switch form for the Lord weapons and the Black Sword; Half-Starvation on or off for the Black Sword). Right: mastery bars (weapon level, active-form mastery, Black Sword tier, Half-Starved mastery, plus Grimoire mastery and each Beast Will's mastery under "Other masteries").
+- NEW: one validated client packet `weaponpage_act` (open, form, learn, feed, half): the server rebuilds the page and runs the action only if that page offers exactly that option as ready; a per-player gap (10 ticks per click, 20 per open); ownership, cost and form rules stay in the existing services. One small page packet back to the requester only, skipped when the checksum matches. No tick handler.
+- NEW: client setting `[weaponpage] show` (default on) hides the page; read when the Codex opens. New self-test prefixes `weaponpage.rules` and `weaponpage.world`; docs `docs/ui_weapon_page.md`.
+- KEPT: the Weapon Book, the Lord and Greed HUD packets, the status screen with its bars, and every older Codex page. No new currency, gear or gameplay numbers.
+- COST: at most one page build per accepted request per player (at most 6 weapon entries, 4 bars and 24 options each); about 100 bytes per request, under 2 KB back; about 30 to 60 draw calls per frame.
+- CAVEATS: nothing compiled against Minecraft until CI, nothing seen in a game; the page sits before the data tabs (Rules); the Weapon Book may lag until it refreshes; feed options cover item requirements only; grade text is blank for weapons not in `rankings.json`.
+- OWNER DECISIONS: is the existing set enough for "updating", or should real upgrade gear or a currency be designed? Should other mastery tracks be added (Saiyan, mana, Djinn, per-form)? Should the page also appear in the old status screen?
+
 ## [4.55.0] — Goku, Sinbad and Kakashi speak: 218 generated voice clips
 - NEW: real audio for the boss lines that were only text: Goku 52 clips, Sinbad 65, Kakashi 101 (Ogg Vorbis, mono, 32 kHz, 4.6 MB in all), made offline with the free Kokoro voice model through `tools/audio/offline_voice.py` and the existing `goku`, `sinbad` and `kakashi` profiles, with the profile's reverb, pitch and EQ chain.
 - NEW: 218 sound ids registered (`voice.goku_*`, `voice.sinbad_*`, `kakashi.voice.*`), appended to `sounds.json`; conversion reports in `tools/audio/*_voice_report.json`.

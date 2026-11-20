@@ -23,6 +23,9 @@ public interface CodexPage {
     /** 1.37.0: the Codex was just opened; a page that caches (registry catalogues, learned spells) forgets what it built. Default: nothing to do. */
     default void opened() {}
 
+    /** The page can be switched off by a client setting (looks only): a hidden page is left out of the tabs. Default: shown. */
+    default boolean hidden() { return false; }
+
     /** A click inside the spread (returns true if it was used). */
     default boolean click(CodexContext ctx, double mouseX, double mouseY, int button, int x, int y, int w, int h) { return false; }
 }

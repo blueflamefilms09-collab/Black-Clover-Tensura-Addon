@@ -12,6 +12,7 @@ public final class MultiverseClientConfig {
     public static final ModConfigSpec.BooleanValue HIDE_HEAD_TEXT;
     public static final ModConfigSpec.BooleanValue BEASTWILL_HUD;
     public static final ModConfigSpec.BooleanValue BEASTWILL_CONFIRM_IN_MENU;
+    public static final ModConfigSpec.BooleanValue WEAPON_PAGE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -31,6 +32,10 @@ public final class MultiverseClientConfig {
         BEASTWILL_HUD = b.comment("Draw the always-on Beast Will panel on the screen (the old look). Off: the Beast Will lives in the main menu (Multiverse status screen, Beast Will tab).")
                 .define("hud", false);
         BEASTWILL_CONFIRM_IN_MENU = b.comment("Show the 'absorb this will?' ask as a page of the main menu. Off: the old pop-up window.").define("confirmInMenu", true);
+        b.pop();
+        b.push("weaponpage");
+        WEAPON_PAGE = b.comment("Show the Weapon page (your hero / Lord / Greed weapon, its upgrade options and every mastery bar) as the last tab of the Codex. Off: the tab is not drawn. Looks only: the weapons and their other screens do not change.")
+                .define("show", true);
         b.pop();
         SPEC = b.build();
     }

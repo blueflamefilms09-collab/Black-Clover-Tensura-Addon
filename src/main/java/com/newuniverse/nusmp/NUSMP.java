@@ -110,6 +110,7 @@ public class NUSMP {
         com.newuniverse.nusmp.attune.AttuneBoot.init(modEventBus, modContainer);    // meditation attunement: Beast Wills, Djinns, Devils and Spirits held together, clashing elements reject, nusmp-attune-server.toml, /meditate, self-tests attune.*
         com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.init(modEventBus);      // the Wind Spirit blades (creative display): Spirit of Zephyr sword and Spirit of Boreas bow, self-test magic.spirit_blades
         com.newuniverse.nusmp.sinweapons.SinWeaponBoot.init(modEventBus, modContainer);    // the five other Berserk of Gluttony weapons (Sloth axe, Envy gunblade, Vanity spear, chakrams, Seifort): self-test berserk.weapons
+        com.newuniverse.nusmp.weaponpage.WeaponPageBoot.init(modEventBus);         // the Weapon page of the Codex: the two packets, the bookkeeping cleanup, self-tests weaponpage.* (client setting weaponpage.show)
         com.newuniverse.nusmp.lords.LordBoot.init(modEventBus, modContainer);       // the Lords of the Mortal Sins: forms, 1-of-1, the Burden, the mastery, nusmp-lords-server.toml, self-tests lords.*
         com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.init(modEventBus);    // the Valkyrie Drill Lance (creative display, spear class) and the Valkyrie armour v2 (player-fitted layer, three looks): self-test magic.valkyrie_armor
         com.newuniverse.nusmp.dragonballs.DbBoot.init(modEventBus, modContainer);   // the Dragon Balls: two sets of seven (Earth, Super), scatter, Dragon Radar, the spoken ritual, Shenron, the wishes, nusmp-dragonballs-server.toml, self-tests dragonballs.* (docs/dragon_balls.md)
@@ -239,6 +240,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.greed.GreedClient.init(modEventBus);      // 3.85.0 Black Sword Greed: the form key, the starvation vignette and the HUD
+            com.newuniverse.nusmp.client.weaponpage.WeaponPageClient.init();      // the Weapon page of the Codex: keeps the one page the server sends, sends the clicks
             com.newuniverse.nusmp.client.lords.LordClient.init(modEventBus);      // the Lord weapons: the mastery and Burden bars (the form key is Greed's R, forwarded)
             com.newuniverse.nusmp.vfx.client.LordVfxConfig.init(modEventBus, modContainer);      // lords.classicVfx (nusmp-lords-vfx-client.toml): hides the drawn effects of the Lord weapons and Greed's hunger
             com.newuniverse.nusmp.vfx.client.GreedVfxConfig.init(modEventBus, modContainer);      // VFX wave 2: greed.classicVfx / devil.classicVfx (nusmp-greed-devil-vfx-client.toml): the old particles only
