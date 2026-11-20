@@ -43,7 +43,8 @@ class SizedMeshNormaliserTest {
                 }
             }
         }
-        assertTrue(checked >= 28, "checked " + checked);
+        // 28 before katanas v2 retired the thickened copies of the rebuilt katanas into classic_vassal (docs/heroweapon/katanas.md); 19 daggers and other katanas are left
+        assertTrue(checked >= 15, "checked " + checked);
         assertEquals(List.of(), changed);
     }
 }

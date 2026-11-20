@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.61.0] — Katanas rebuilt thin, so they look like real katanas
+Owner request: katanas must be shaped like katanas and not look so thick, for every katana in the mod.
+- ROOT CAUSE: the old script meshes were already thin, but the 1.110.0 size rule swapped in thickened copies (blade about 1/7 to 1/11 of its length wide) and the renderer preferred those. The fix is new thin meshes plus taking the katanas out of the size rule.
+- REPLACED (same ids, grips, glow tints, Better Combat files and engravings): 14 script katanas (bloodbound, demon slasher, miasma, hakurou, bokken, carnage, crimson shogun, shadowsteel, void origin, corpse eater, ilmare gin, kusanagi, dragon tooth, wavebreaker), each with its own guard, wrap, temper line and one lore feature; vassal_katana; Hellblaze katana, its low-detail mesh and sheath. Drawn blade width went from about 1/8 to about 1/30 of the length.
+- THINNED ONLY (blade width 0.42 to 0.8 of before, ornaments unchanged): the hero katana forms tiger, soul eater, siderite, sakura and wind king.
+- KEPT: the old mesh, skin and thickened copy of every replaced katana are moved to the classic_vassal folders. The `classicVassalForms` setting brings the old katanas back. Nothing deleted.
+- NEW: tools `katanas.py`, `katanas_specs.py`, `katanas_classic.py`, `katana_measure.py`, `katana_sheet.py`; test `ThinKatanasTest`; doc `docs/heroweapon/katanas.md`; before/after sheet `docs/previews/katanas_v2/`. Tests updated for the new counts (WeaponSizesTest, SizedMeshNormaliserTest).
+- COST: client drawing only; 1187 to 4614 quad lines per katana in hand; no server, packet or tick work.
+- CAVEATS: scripted Blender builds, no Blender window and no Blockbench; stills are rasteriser previews; nothing seen in a game. The blades are now thinner than the old 0.115 block minimum, so lower `div` in `katanas_specs.py` if they look too fine in hand. The hero forms and Hellblaze still carry fantasy ornaments, and making them true katanas is your call. Check the Kusanagi and Void Origin bodies in game.
+
 ## [4.60.0] — Bows: Sagittarius symbol on the bow, six bows no longer look alike
 Owner request: the Sagittarius symbol must sit on the bow, not float in front of it; bows that look too similar get reworked.
 - REPLACED (new look; old look kept as the classic copy): Sagittarius is a slim S-curve bow with the zodiac wheel as two medallions sunk into the riser and the nine-star constellation as plates lifted on the limb faces, joined by thin gold wire. Every build now runs a connectivity check (no floating parts; the old build had 19). Also reworked: hunters_bow (two horns and a beast skull), scouts_bow (slim reflex bow with a brass spyglass), bird_hunting (compound bow with cams and cables), frozen_rain (short heavy prod, faceted ice limbs), eagle_piercer (asymmetric: scaled upper limb ending in an eagle head, talon lower limb).

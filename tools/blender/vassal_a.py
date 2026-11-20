@@ -19,6 +19,7 @@ from mathutils import Vector  # noqa: E402
 FAST = False
 HEADERS = bl.MESH_DIR
 SOLID = "--classic-flat" not in sys.argv
+THIN_KATANA = "--broad-katana" not in sys.argv      # katanas v2: the Vassal Katana is a real katana (blade width 1/18 of its length); --broad-katana rebuilds the old broad one
 
 
 # ================================================================ helpers
@@ -156,8 +157,11 @@ def katana(out):
     wrap = sharpen(bl.mat("k_wrap", rgb(24, 32, 96), rough=0.6, bump="cross", bscale=1.25, bstr=0.9, groove=rgb(236, 230, 208), gamount=1.0, bevel=0.0), 0.18, 0.42)
     cord = bl.mat("k_cord", rgb(200, 26, 70), rough=0.6, bump="wrap", bscale=2.5, bstr=0.6, groove=rgb(90, 8, 30), gamount=0.8, bevel=0.0)
     habaki = bl.mat("k_habaki", rgb(240, 186, 82), metallic=1.0, rough=0.24, bump="rings", bscale=3.2, bstr=0.25, bevel=0.15, groove=rgb(170, 112, 38), gamount=0.5)
-    Y0, Y1, T, W0 = 30.0, 102.6, 0.85, 2.8
+    Y0, Y1 = 30.0, 102.6
+    T, W0 = (0.58, 1.95) if THIN_KATANA else (0.85, 2.8)                     # katanas v2: a blade 1/18 as wide as long (was half width 2.8 = 1/13), a third as thick as wide
     YK = 92.0                                                                # the kissaki begins
+    SORI = 2.9 if THIN_KATANA else 3.25                                      # the back's curve: 4 percent of the blade (was 4.5)
+    HB = 0.7 if THIN_KATANA else 1.0                                         # the habaki and its stone follow the blade
 
     def hw(y):
         if y <= YK:
@@ -167,7 +171,7 @@ def katana(out):
 
     def cx(y):                                                               # the back line keeps its curve, the edge runs to it in the point
         u = max(0.0, (y - Y0) / (Y1 - Y0))
-        return -3.25 * u * u - ((W0 - 0.45) - hw(y) if y > YK else 0.0)
+        return -SORI * u * u - ((W0 - 0.45) - hw(y) if y > YK else 0.0)
 
     def th(y):
         return T if y <= YK else T * (0.35 + 0.65 * (1 - (y - YK) / (Y1 - YK)))
@@ -201,8 +205,9 @@ def katana(out):
         yy = [36.5, 40, 44, 47, 50.5]                                        # a gold tongue up the back face from the habaki
         sheet("langet%d" % s, [[shi(y, 0.05, s, 0.13), shi(y, 0.05 + (0.9 if y < 47 else 0.9 * (50.5 - y) / 3.5 + 0.02), s, 0.13)] for y in yy], M["gold_line"], s=s)
     # ---- habaki with a blossom-pink stone on both faces
-    bl.loft("habaki", [bl.ring(y, bl.rrect(w, t, 0.55), ox=cx(y)) for y, w, t in ((28.8, 3.35, 1.95), (32.5, 3.3, 1.9), (35.6, 3.1, 1.55), (37.1, 2.95, 1.2))], habaki)
-    g = bl.gem("habaki_gem", 1.5, pink, center=(0, 32.6, 1.78), depth=0.3, crown=0.2, sides=6, axis="z")
+    hab_rows = ((28.8, 2.5, 1.4), (32.5, 2.45, 1.35), (35.6, 2.3, 1.1), (37.1, 2.2, 0.85)) if THIN_KATANA else ((28.8, 3.35, 1.95), (32.5, 3.3, 1.9), (35.6, 3.1, 1.55), (37.1, 2.95, 1.2))
+    bl.loft("habaki", [bl.ring(y, bl.rrect(w, t, 0.55 * HB), ox=cx(y)) for y, w, t in hab_rows], habaki)
+    g = bl.gem("habaki_gem", 1.5 * (0.8 if THIN_KATANA else 1.0), pink, center=(0, 32.6, 1.25 if THIN_KATANA else 1.78), depth=0.3, crown=0.2, sides=6, axis="z")
     bl.copy(g, "habaki_gem_b", scale=(1, 1, -1))
     # ---- tsuba: a cherry blossom of gold, lacquer and light
     def blossom(R, n=60, notch=0.08):

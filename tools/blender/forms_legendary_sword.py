@@ -322,28 +322,32 @@ def wind_palette():
     return P
 
 
+THIN_WIND = "--broad-katana" not in sys.argv
+
+
 def wind_king_katana(opts):
     begin(opts)
     weights(blade=1.35, wind=0.7, plumage=1.1, tsuba=1.15, floats=0.6)
     P = wind_palette()
     rr = K.rng(5202)
     ymid = 31.0
-    SORI = 5.2
+    W = 0.8 if THIN_WIND else 1.0                                 # katanas v2: the blade is 1/18 as wide as long (was half width 3.3..4.1 on 118 cm = 1/14); --broad-katana builds the old one
+    SORI = 4.0 if THIN_WIND else 5.2                              # 3.4 percent of the blade (was 4.4)
 
     def xc(y):                                                    # the curve of the blade: the edge side (+x) bows out, the tip comes back
         u = (y - 32.0) / 118.0
         return SORI * 4.0 * u * (1.0 - u) * (1.0 - 0.25 * u)
 
     def hw(y):
-        return K.interp([(32, 3.9), (40, 4.1), (90, 3.7), (125, 3.3), (134, 3.5), (141, 2.4), (146, 1.2), (150.5, 0.3)], y)
+        return W * K.interp([(32, 3.9), (40, 4.1), (90, 3.7), (125, 3.3), (134, 3.5), (141, 2.4), (146, 1.2), (150.5, 0.3)], y)
     # ---------------------------------------------------------------- blade: single edge, shinogi ridge, a groove along the spine, a swept kissaki (tip)
     stL = [(y, hw(y)) for y in (32, 40, 90, 125, 134, 141, 146, 150.5)]
-    L = K.blade_edge(-1, stL, 32, 150.5, notches=[(61, 0.35, 1.8, "chip"), (101, 0.3, 1.6, "chip")], jitter=0.04, res=8.0, seed=63, tip=(0.2, 151.0))
-    R = K.blade_edge(1, stL, 32, 150.5, notches=[(76, 0.4, 2.0, "chip"), (118, 0.35, 1.8, "chip")], jitter=0.04, res=8.0, seed=64, tip=(0.9, 150.0))
+    L = K.blade_edge(-1, stL, 32, 150.5, notches=[(61, 0.35 * W, 1.8, "chip"), (101, 0.3 * W, 1.6, "chip")], jitter=0.04, res=8.0, seed=63, tip=(0.2 * W, 151.0))
+    R = K.blade_edge(1, stL, 32, 150.5, notches=[(76, 0.4 * W, 2.0, "chip"), (118, 0.35 * W, 1.8, "chip")], jitter=0.04, res=8.0, seed=64, tip=(0.9 * W, 150.0))
     L = [V((p.x + xc(p.y), p.y, 0)) for p in L]
     R = [V((p.x + xc(p.y), p.y, 0)) for p in R]
     sec = ((-1.0, -0.9, -0.62, -0.5, -0.24, -0.12, 0.66, 1.0), (0.55, 0.9, 1.0, 0.55, 0.55, 1.0, 0.55, 0.0))
-    K.blade("blade", P["steel"], L, R, thick=lambda t: 1.15 * (1.0 - 0.45 * t ** 2.0), section=sec, seed=9, wob=0.03)
+    K.blade("blade", P["steel"], L, R, thick=lambda t: 1.15 * W * (1.0 - 0.45 * t ** 2.0), section=sec, seed=9, wob=0.03)
     # a glowing line of wind lying in the spine groove: real geometry
     for s_ in (1, -1):
         rowsI = []
@@ -354,8 +358,8 @@ def wind_king_katana(opts):
         K.strip("windline%d" % s_, rowsI, P["wind"], (-1.0, 0.0, 1.0), (0.0, 1.0, 0.0), lambda t: 0.45 * (1 - 0.3 * t), part="wind_line", up=(0, 0, s_))
     # habaki (blade collar): gold, stepped, with a cut line, both faces
     for s_ in (1, -1):
-        hab = [(-4.4, 31.6), (4.6, 31.6), (4.8, 40.6), (3.4, 43.6), (-3.2, 43.6), (-4.6, 40.6)]
-        K.stepped_plate("habaki%d" % s_, hab, 1.0 * s_, P["gold"], steps=2, step_h=0.6, inset=0.7, part="habaki", up=s_, bevel_w=0.0)
+        hab = [(x * (0.9 if THIN_WIND else 1.0) * W, y) for x, y in ((-4.4, 31.6), (4.6, 31.6), (4.8, 40.6), (3.4, 43.6), (-3.2, 43.6), (-4.6, 40.6))]
+        K.stepped_plate("habaki%d" % s_, hab, 1.0 * W * s_, P["gold"], steps=2, step_h=0.6 * (0.8 if THIN_WIND else 1.0), inset=0.7 * W, part="habaki", up=s_, bevel_w=0.0)
     # ---------------------------------------------------------------- the feather crown on the guard: a lobed bronze tsuba, three steps, a ring of 14 real feathers radiating on both faces
     lobes = []
     for i in range(24):
@@ -1090,6 +1094,7 @@ def main(argv):
     ap.add_argument("--samples", type=int, default=24)
     ap.add_argument("--threads", type=int, default=2)
     ap.add_argument("--bake", type=int, default=2048)
+    ap.add_argument("--broad-katana", action="store_true", help="the Wind King Katana with its old broad blade (read at import: THIN_WIND)")
     a = ap.parse_args(argv)
     THREADS[0] = max(1, min(2, a.threads))
     BAKE_PX[0] = a.bake

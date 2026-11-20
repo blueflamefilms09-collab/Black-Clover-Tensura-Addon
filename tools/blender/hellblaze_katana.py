@@ -37,6 +37,7 @@ HAND_LENGTH = 1.72                       # blocks (item units) the whole weapon 
 GRIP = 0.15                              # share of the length from the butt where the hand holds the tsuka
 GLOW = ("A8142A", 0.16, 0.55, 1.0)       # the tint of the glow layer: dark red; WeaponRenderer shifts it to purple on a hit
 FAST = False
+THIN = "--broad" not in sys.argv     # katanas v2: a real katana blade (width 1/18 of its length, thickness a third of the width); --broad builds the old broad one (its meshes are kept in weapon_meshes/classic_vassal)
 
 
 # ================================================================ materials
@@ -70,19 +71,21 @@ def katana(out, lod=False):
     reset()
     M = metals()
     random.seed(11)
-    Y0, Y1, T, W0 = 29.0, 99.6, 1.3, 3.0                                       # the machi, the tip, half thickness, half width at the machi
+    Y0, Y1 = 29.0, 99.6                                                        # the machi, the tip
+    T, W0 = (0.52, 1.95) if THIN else (1.3, 3.0)                               # half thickness, half width at the machi (was 1.3 and 3.0: 1/12 as wide as long)
     YK = 90.0                                                                  # the kissaki begins
+    K0 = 1.0 if THIN else 5.0 / 3.0                                            # the taper to the yokote: 0.3 cm (was 0.5)
     SIDES = 5 if lod else 12
 
     def hw(y):
         if y <= YK:
-            return W0 - 0.5 * (y - Y0) / (YK - Y0)
+            return W0 - 0.3 * K0 * (y - Y0) / (YK - Y0)
         u = (y - YK) / (Y1 - YK)
-        return max(0.05, (W0 - 0.5) * (1.0 - u ** 1.7))
+        return max(0.05, (W0 - 0.3 * K0) * (1.0 - u ** 1.7))
 
     def cx(y):                                                                 # the back line keeps its curve (sori), the edge runs to it in the point
         u = max(0.0, (y - Y0) / (Y1 - Y0))
-        return -3.0 * u * u - ((W0 - 0.5) - hw(y) if y > YK else 0.0)
+        return -(2.6 if THIN else 3.0) * u * u - ((W0 - 0.3 * K0) - hw(y) if y > YK else 0.0)
 
     def th(y):
         return T if y <= YK else T * (0.35 + 0.65 * (1 - (y - YK) / (Y1 - YK)))
@@ -129,7 +132,10 @@ def katana(out, lod=False):
                 y += 0.9
             sheet("vein%d_%d" % (s, v), rows3, M["vein"], s=s)
     # ---- the habaki: a dark-red collar with rings
-    bl.loft("habaki", [bl.ring(y, bl.rrect(w, t, 0.55, 1 if lod else 2), ox=cx(y)) for y, w, t in (((27.8, 3.55, 1.95), (36.2, 3.1, 1.25)) if lod else ((27.8, 3.55, 1.95), (31.4, 3.5, 1.9), (34.6, 3.3, 1.6), (36.2, 3.1, 1.25)))], M["habaki"])
+    hab = ((27.8, 2.45, 1.0), (36.2, 2.2, 0.75)) if lod else ((27.8, 2.45, 1.0), (31.4, 2.4, 0.98), (34.6, 2.3, 0.85), (36.2, 2.2, 0.75))
+    if not THIN:
+        hab = ((27.8, 3.55, 1.95), (36.2, 3.1, 1.25)) if lod else ((27.8, 3.55, 1.95), (31.4, 3.5, 1.9), (34.6, 3.3, 1.6), (36.2, 3.1, 1.25))
+    bl.loft("habaki", [bl.ring(y, bl.rrect(w, t, 0.55 if not THIN else 0.4, 1 if lod else 2), ox=cx(y)) for y, w, t in hab], M["habaki"])
     # ---- the tsuba: a ring of eight thorns, the sin
     n = 16 if lod else 64
     thorn = [((3.0 + 2.1 * abs(math.cos(4 * (2 * math.pi * k / n))) ** 2.6) * math.cos(2 * math.pi * k / n),
@@ -162,13 +168,14 @@ def saya(out):
     """The scabbard: lacquered black, a dark-red mouth collar, a kurikata knob, a chape, thin glowing lines; the mouth is at y = 0, the tip at y = L. It follows the sori of the blade."""
     reset()
     M = metals()
-    L, T = 78.0, 1.75
+    SF = 0.62 if THIN else 1.0                                                 # the sheath follows the thinner blade (was half width 3.75, half thickness 1.75)
+    L, T = 78.0, 1.75 * SF
 
     def cx(y):
         return -3.2 * (y / L) ** 2
 
     def hw(y):
-        return 3.75 - 0.85 * (y / L)
+        return (3.75 - 0.85 * (y / L)) * SF
 
     ys = [0, 5, 12, 21, 30, 39, 48, 57, 65, 71, 75.5, L]
     bl.loft("saya_body", [bl.ring(y, bl.rrect(hw(y), T, 1.0), ox=cx(y)) for y in ys], M["lacquer"], part="saya")
@@ -178,13 +185,13 @@ def saya(out):
     bl.lathe("kurikata_bar", [(0.55, -1.4), (0.55, 1.4)], M["rim"], sides=6, origin=(hw(11.0) + cx(11.0) + 1.3, 11.0, 0.0), axis="z", part="kurikata")
     for s in (1, -1):                                                          # thin dark-red lines of light down both faces and a ring of thorns at the mouth, baked only
         pts = [(cx(y) - 0.9 + 0.9 * math.sin(y * 0.35) * 0.0, y) for y in range(6, 72, 2)]
-        rows = [[(cx(y) - 1.1, y, s * (T + 0.06)), (cx(y) - 0.85, y, s * (T + 0.06))] for y in range(7, 70, 2)]
+        rows = [[(cx(y) - 1.1 * SF, y, s * (T + 0.06)), (cx(y) - 0.85 * SF, y, s * (T + 0.06))] for y in range(7, 70, 2)]
         sheet("line%d" % s, rows, M["vein"], s=s)
-        rows = [[(cx(y) + 1.6, y, s * (T + 0.06)), (cx(y) + 1.82, y, s * (T + 0.06))] for y in range(7, 70, 2)]
+        rows = [[(cx(y) + 1.6 * SF, y, s * (T + 0.06)), (cx(y) + 1.82 * SF, y, s * (T + 0.06))] for y in range(7, 70, 2)]
         sheet("lineb%d" % s, rows, M["hamon"], s=s)
         for k in range(3):                                                     # three flame-veins climbing from the chape
             y0 = 66.0 - 5.0 * k
-            rows = [[(cx(y) + 0.2 + 0.7 * math.sin(y * 0.9 + k) - 0.1, y, s * (T + 0.07)), (cx(y) + 0.2 + 0.7 * math.sin(y * 0.9 + k) + 0.1, y, s * (T + 0.07))] for y in [y0 + 0.9 * i for i in range(int((L - 4 - y0) / 0.9))]]
+            rows = [[(cx(y) + (0.2 + 0.7 * math.sin(y * 0.9 + k)) * SF - 0.1, y, s * (T + 0.07)), (cx(y) + (0.2 + 0.7 * math.sin(y * 0.9 + k)) * SF + 0.1, y, s * (T + 0.07))] for y in [y0 + 0.9 * i for i in range(int((L - 4 - y0) / 0.9))]]
             sheet("flame%d_%d" % (s, k), rows, M["vein"], s=s)
     bl.tube("saya_sageo", [(hw(11.0) + cx(11.0) + 1.6, 11.0, 0.0), (hw(11.0) + 5.0, 6.0, 1.4), (hw(11.0) + 7.0, 1.0, 0.0), (hw(11.0) + 5.4, -4.0, -1.0)], 0.38, M["cord"], sides=5, sub=3)
     bl.lathe("saya_tassel", [(0.42, -4.2), (0.78, -5.4), (0.82, -9.0)], M["cord"], sides=6, origin=(hw(11.0) + 5.4, 0, -1.0), part="saya_sageo")

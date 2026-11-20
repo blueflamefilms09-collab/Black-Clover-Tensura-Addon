@@ -525,8 +525,18 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 4.48.0: the vassal axe, book and carriage forms remodelled in the v2 pass (their old meshes and skins are in the classic_vassal folders). */
     static boolean isRemodelledVassalForm(String id) {
-        return id.startsWith("vassal_axe__") || id.startsWith("vassal_book__") || id.startsWith("vassal_carriage__");
+        return id.startsWith("vassal_axe__") || id.startsWith("vassal_book__") || id.startsWith("vassal_carriage__") || THIN_KATANAS.contains(id);
     }
+
+    /**
+     * Katanas v2 (docs/heroweapon/katanas.md): the katanas rebuilt as real, thin katanas. Their old meshes and skins (and the thickened copies the game drew since 1.110.0) are in the same
+     * classic_vassal folders, so the vassalForms.classic setting shows the old looks of these too.
+     */
+    private static final java.util.Set<String> THIN_KATANAS = java.util.Set.of(
+            "bloodbound_katana", "demon_slasher_katana", "miasma_infused_katana", "hakurou_school_practice_katana", "selection_hopefuls_bokken", "katana_of_carnage",
+            "katana_of_the_crimson_shogun", "shadowsteel_katana", "void_origin_katana", "corpse_eater", "ilmare_gin_the_starlight_silver", "kusanagi_the_grass_cutter",
+            "dragon_tooth_blade_red", "wavebreaker", "vassal_katana", "vassal_katana__white_tiger_katana", "vassal_katana__soul_eater_katana", "vassal_katana__siderite_katana",
+            "vassal_katana__sakura_stone_katana", "legendary_sword__wind_king_katana");
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {

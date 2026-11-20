@@ -23,6 +23,17 @@ from forms_vassal_run import main  # noqa: E402
 MANIFEST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "forms_manifest_vassal_katana.json")
 BASE = "vassal_katana"
 YG = 30.0                      # guard height (the base's tsuba)
+THIN = True                    # katanas v2: real-katana proportions (blade width about 1/18 of its length, thickness at most a third of the width); False builds the old broad blades again
+
+
+def ws(w):
+    """The width and thickness factor of one form (1.0 = the old broad blade, the old meshes are kept in weapon_meshes/classic_vassal)."""
+    return w if THIN else 1.0
+
+
+def sc(notches, w):
+    """Notch depths of a blade scaled with its width."""
+    return [(y, d * w, ln, k) for (y, d, ln, k) in notches]
 
 
 def hilt(core, wrap, band, kash, *, wrap2=None, seed=3, turns=8.0, r=1.8, bands=(2.4, 14.5, 26.6), kash_r=2.6):
@@ -60,20 +71,21 @@ def white_tiger(opts):
     P = tiger_palette()
     rr = K.rng(7101)
     Y0, Y1 = 31.0, 106.0
-    stations = [(y, h) for y, h in ((31, 3.7), (40, 4.0), (60, 3.9), (90, 3.5), (96, 3.4), (100, 2.6), (103.5, 1.3), (106, 0.3))]
+    W = ws(0.55)                                                                             # was 1.0: half widths 3.4..4.0 on a 75 cm blade (1/10), now 1/17
+    stations = [(y, h * W) for y, h in ((31, 3.7), (40, 4.0), (60, 3.9), (90, 3.5), (96, 3.4), (100, 2.6), (103.5, 1.3), (106, 0.3))]
     # claw bites cut into the spine (the left, -x edge): three deep, slanted, tiger-claw nicks; the edge side gets small chips
-    notL = [(52.0, 1.5, 5.0, "tooth"), (64.0, 1.6, 5.4, "tooth"), (77.0, 1.4, 5.0, "tooth"), (89.0, 0.9, 3.4, "v")]
-    notR = [(58.0, 0.35, 1.8, "chip"), (82.0, 0.3, 1.6, "chip")]
-    xc = Lb.katana_blade("blade", P["steel"], Y0, Y1, stations, 4.4, notL=notL, notR=notR, seed=11, tipL=(-0.2, 106.4), tipR=(0.9, 105.4), thick=1.05, fuller=1.0)
+    notL = sc([(52.0, 1.5, 5.0, "tooth"), (64.0, 1.6, 5.4, "tooth"), (77.0, 1.4, 5.0, "tooth"), (89.0, 0.9, 3.4, "v")], W)
+    notR = sc([(58.0, 0.35, 1.8, "chip"), (82.0, 0.3, 1.6, "chip")], W)
+    xc = Lb.katana_blade("blade", P["steel"], Y0, Y1, stations, 4.4 * (0.62 if THIN else 1.0), notL=notL, notR=notR, seed=11, tipL=(-0.2 * W, 106.4), tipR=(0.9 * W, 105.4), thick=1.05 * W, fuller=1.0)
     # tiger stripes: black bake-only relief bands slanting across both faces, thick at the spine and tapering to a point toward the edge (free in quads)
     for s_ in (1, -1):
         for k in range(12):
             y = 38.0 + k * 5.7 + rr.uniform(-0.7, 0.7)
-            half = 3.0 * (1.0 - 0.45 * (y - 31) / 75.0)
+            half = 3.0 * W * (1.0 - 0.45 * (y - 31) / 75.0)
             x0 = xc(y) - half * rr.uniform(0.85, 1.0)
             x1 = xc(y) + half * rr.uniform(0.2, 0.55) * (1 if k % 3 else 0.8)
-            slant = rr.uniform(2.0, 3.6)
-            wid = rr.uniform(0.8, 1.35)
+            slant = rr.uniform(2.0, 3.6) * W
+            wid = rr.uniform(0.8, 1.35) * W
             rows = []
             for j in range(6):
                 t = j / 5.0
@@ -81,11 +93,11 @@ def white_tiger(opts):
                 cy = y + slant * t * t
                 w = wid * (1.0 - t ** 1.6) + 0.04
                 rows.append((V((cx, cy - w, 0.0)), V((cx, cy + w, 0.0))))
-            zt = 1.0 * (1.0 - 0.45 * ((y - Y0) / (Y1 - Y0)) ** 2.0)
+            zt = 1.0 * W * (1.0 - 0.45 * ((y - Y0) / (Y1 - Y0)) ** 2.0)
             K.strip("stripe%d_%d" % (s_, k), [(l + V((0, 0, s_ * (zt - 0.05))), r + V((0, 0, s_ * (zt - 0.05)))) for l, r in rows], P["black"], (-1.0, 0.0, 1.0), (0.0, 1.0, 0.0), 0.28,
                     part="stripes", up=(0, 0, s_), detail=True)
     # the phantom second blade (Double Sword): a slimmer pale echo behind and to the edge side, slightly shorter, glowing, tied to the habaki by two light rods
-    gst = [(38, 2.4), (46, 2.8), (80, 2.6), (90, 2.3), (95, 1.5), (99, 0.3)]
+    gst = [(y, h * (0.7 if THIN else 1.0)) for y, h in ((38, 2.4), (46, 2.8), (80, 2.6), (90, 2.3), (95, 1.5), (99, 0.3))]
     GL = K.blade_edge(-1, gst, 38, 99, jitter=0.03, res=6.0, seed=21, tip=(0.2, 99.6))
     GR = K.blade_edge(1, gst, 38, 99, jitter=0.03, res=6.0, seed=22, tip=(0.6, 98.6))
     K.blade("ghost", P["ghost"], [V((p.x + xc(p.y) * 0.9 + 7.4, p.y, -2.6)) for p in GL], [V((p.x + xc(p.y) * 0.9 + 7.4, p.y, -2.6)) for p in GR], thick=0.4, section=((-1.0, -0.5, 0.5, 1.0), (0.0, 1.0, 1.0, 0.0)),
@@ -94,9 +106,9 @@ def white_tiger(opts):
         K.tapered("lightrod%d" % k, [V((3.0, 34.0 + k * 3, 0.4)), V((5.6, yy, -1.4)), V((7.4 + dx, yy + 1.0, -2.6))], 0.5, 0.18, P["ice"], sides=5, sub=1, part="ghost")
     # habaki + ricasso: a white-gold collar with a cut-out tiger-claw step
     for s_ in (1, -1):
-        hab = [(-4.2, 30.6), (4.4, 30.6), (4.6, 39.0), (2.6, 43.0), (-2.4, 41.0), (-4.4, 38.0)]
-        K.stepped_plate("habaki%d" % s_, hab, 1.05 * s_, P["gold"], steps=2, step_h=0.55, inset=0.8, part="habaki", up=s_, bevel_w=0.0)
-        K.rivets("hab_rv%d" % s_, [(V((x, y, 2.0 * s_)), (0, 0, s_)) for x, y in ((-2.6, 34.0), (2.8, 34.0), (0.0, 38.0))], P["black"], r=0.6, rng_=rr, jitter=0.15, detail=False)
+        hab = [(x * (W * 1.1 if THIN else 1.0), y) for x, y in ((-4.2, 30.6), (4.4, 30.6), (4.6, 39.0), (2.6, 43.0), (-2.4, 41.0), (-4.4, 38.0))]
+        K.stepped_plate("habaki%d" % s_, hab, 1.05 * W * s_, P["gold"], steps=2, step_h=0.55 * (0.7 if THIN else 1.0), inset=0.8 * W, part="habaki", up=s_, bevel_w=0.0)
+        K.rivets("hab_rv%d" % s_, [(V((x * W, y, (1.05 * W + 1.0 * (0.7 if THIN else 1.0)) * s_)), (0, 0, s_)) for x, y in ((-2.6, 34.0), (2.8, 34.0), (0.0, 38.0))], P["black"], r=0.6 * W, rng_=rr, jitter=0.15, detail=False)
     # ---------------------------------------------------------------- guard: a lobed round tsuba, four tiger-claw wings (upper pair swept up, lower pair down), a fur ruff
     Lb.disc_guard("tsuba", YG - 0.6, 5.8, P["gold"], "guard", steps=2, step_h=0.65, inset=0.9, lobes=5, lobe_amp=0.07, rr=rr)
     for sx, ang, ln, wd, mat in ((1, 22, 20.0, 5.4, "steel"), (-1, 158, 16.5, 4.8, "steel"), (1, -30, 12.0, 3.6, "black"), (-1, -150, 10.0, 3.4, "black")):
@@ -167,11 +179,12 @@ def soul_eater(opts):
     P = soul_palette()
     rr = K.rng(7202)
     Y0, Y1 = 31.0, 104.5
-    hw = lambda y: K.interp([(31, 4.2), (42, 4.6), (70, 4.3), (92, 3.8), (98, 3.5), (101.5, 2.2), (104.5, 0.4)], y)     # noqa: E731
+    W = ws(0.47)                                                                              # was 1.0: half widths 3.5..4.6 on a 73 cm blade (1/8), now 1/17
+    hw = lambda y: W * K.interp([(31, 4.2), (42, 4.6), (70, 4.3), (92, 3.8), (98, 3.5), (101.5, 2.2), (104.5, 0.4)], y)     # noqa: E731
     stations = [(y, hw(y)) for y in (31, 42, 70, 92, 98, 101.5, 104.5)]
-    notL = [(46.0, 0.5, 2.0, "chip"), (62.0, 0.6, 2.4, "chip"), (79.0, 0.5, 2.0, "chip")]
-    notR = [(52.0, 1.1, 4.4, "tooth"), (66.0, 1.2, 4.8, "tooth"), (80.0, 1.1, 4.4, "tooth"), (92.0, 0.9, 3.4, "tooth")]       # the blade bites: a row of hungry teeth along the edge
-    xc = Lb.katana_blade("blade", P["iron"], Y0, Y1, stations, 4.0, notL=notL, notR=notR, seed=31, tipL=(-1.2, 105.2), tipR=(1.0, 103.6), thick=1.15, fuller=1.0)
+    notL = sc([(46.0, 0.5, 2.0, "chip"), (62.0, 0.6, 2.4, "chip"), (79.0, 0.5, 2.0, "chip")], W)
+    notR = sc([(52.0, 1.1, 4.4, "tooth"), (66.0, 1.2, 4.8, "tooth"), (80.0, 1.1, 4.4, "tooth"), (92.0, 0.9, 3.4, "tooth")], W * 1.2)       # the blade bites: a row of hungry teeth along the edge
+    xc = Lb.katana_blade("blade", P["iron"], Y0, Y1, stations, 4.0 * (0.62 if THIN else 1.0), notL=notL, notR=notR, seed=31, tipL=(-1.2 * W, 105.2), tipR=(1.0 * W, 103.6), thick=1.15 * W, fuller=1.0)
     for s_ in (1, -1):                                                                        # a soul channel glowing down the groove: real geometry
         rows = []
         for y in range(40, 100, 4):
@@ -180,9 +193,9 @@ def soul_eater(opts):
             rows.append((c - V((w, 0, 0)), c + V((w, 0, 0))))
         K.strip("channel%d" % s_, rows, P["soul"], (-1.0, 0.0, 1.0), (0.0, 1.0, 0.0), lambda t: 0.55 * (1 - 0.3 * t), part="blade_glow", up=(0, 0, s_))
     for s_ in (1, -1):
-        hab = [(-4.4, 30.6), (4.6, 30.6), (4.8, 38.6), (3.2, 42.0), (-3.4, 42.0), (-4.8, 38.6)]
-        K.stepped_plate("habaki%d" % s_, hab, 1.1 * s_, P["dark"], steps=2, step_h=0.55, inset=0.8, part="habaki", up=s_, bevel_w=0.0)
-        K.rivets("hab_rv%d" % s_, [(V((x, y, 2.1 * s_)), (0, 0, s_)) for x, y in ((-2.8, 34.0), (2.8, 34.0), (0.0, 38.5))], P["bone"], r=0.6, rng_=rr, jitter=0.15, detail=False)
+        hab = [(x * (W * 1.2 if THIN else 1.0), y) for x, y in ((-4.4, 30.6), (4.6, 30.6), (4.8, 38.6), (3.2, 42.0), (-3.4, 42.0), (-4.8, 38.6))]
+        K.stepped_plate("habaki%d" % s_, hab, 1.1 * W * s_, P["dark"], steps=2, step_h=0.55 * (0.7 if THIN else 1.0), inset=0.8 * W, part="habaki", up=s_, bevel_w=0.0)
+        K.rivets("hab_rv%d" % s_, [(V((x * W, y, (1.1 * W + 1.0 * (0.7 if THIN else 1.0)) * s_)), (0, 0, s_)) for x, y in ((-2.8, 34.0), (2.8, 34.0), (0.0, 38.5))], P["bone"], r=0.6 * W, rng_=rr, jitter=0.15, detail=False)
     # the rib cage: seven curved ribs grow from the spine (alternating front and back) with a vertebra at each root
     for k in range(7):
         y = 38.0 + k * 8.6
@@ -255,30 +268,31 @@ def siderite(opts):
     P = sid_palette()
     rr = K.rng(7303)
     Y0, Y1 = 31.0, 108.0
-    hw = lambda y: K.interp([(31, 4.8), (44, 5.3), (75, 5.1), (96, 4.7), (103, 3.9), (106, 1.9), (108, 0.4)], y)           # noqa: E731
+    W = ws(0.42)                                                                              # was 1.0: half widths 4.7..5.3 on a 77 cm blade (1/7), now 1/17
+    hw = lambda y: W * K.interp([(31, 4.8), (44, 5.3), (75, 5.1), (96, 4.7), (103, 3.9), (106, 1.9), (108, 0.4)], y)           # noqa: E731
     stations = [(y, hw(y)) for y in (31, 44, 75, 96, 103, 106, 108)]
-    notL = [(50.0, 0.9, 3.0, "chip"), (58.0, 0.7, 2.0, "chip"), (68.0, 1.0, 3.4, "step"), (80.0, 0.8, 2.4, "chip"), (92.0, 0.9, 3.0, "step"), (101.0, 0.6, 2.0, "chip")]     # the spine is rough meteor crust
-    notR = [(56.0, 0.5, 2.0, "chip"), (74.0, 0.6, 2.4, "chip"), (97.0, 0.5, 2.0, "chip")]
-    xc = Lb.katana_blade("blade", P["iron"], Y0, Y1, stations, 3.6, notL=notL, notR=notR, seed=51, tipL=(-0.8, 108.8), tipR=(1.2, 107.4), thick=1.55, fuller=1.0, jit=0.07)
+    notL = sc([(50.0, 0.9, 3.0, "chip"), (58.0, 0.7, 2.0, "chip"), (68.0, 1.0, 3.4, "step"), (80.0, 0.8, 2.4, "chip"), (92.0, 0.9, 3.0, "step"), (101.0, 0.6, 2.0, "chip")], W * 1.3)     # the spine is rough meteor crust
+    notR = sc([(56.0, 0.5, 2.0, "chip"), (74.0, 0.6, 2.4, "chip"), (97.0, 0.5, 2.0, "chip")], W)
+    xc = Lb.katana_blade("blade", P["iron"], Y0, Y1, stations, 3.6 * (0.7 if THIN else 1.0), notL=notL, notR=notR, seed=51, tipL=(-0.8 * W, 108.8), tipR=(1.2 * W, 107.4), thick=1.55 * W, fuller=1.0, jit=0.07)
     # crust nodules on the spine: lumps of fallen rock fused to the metal
     for k in range(7):
         y = 46.0 + k * 9.0 + rr.uniform(-2, 2)
-        K.blob("crust%d" % k, (xc(y) - hw(y) + rr.uniform(-0.2, 0.6), y, rr.uniform(-0.7, 0.7)), (rr.uniform(1.2, 2.2), rr.uniform(1.6, 3.0), rr.uniform(1.1, 1.8)), P["crust"], seed=80 + k, lump=0.28,
-               lump_scale=0.14, rings=6, segs=9, part="crust")
+        K.blob("crust%d" % k, (xc(y) - hw(y) + rr.uniform(-0.2, 0.6), y, rr.uniform(-0.7, 0.7) * W), (rr.uniform(1.2, 2.2) * (0.6 if THIN else 1.0), rr.uniform(1.6, 3.0), rr.uniform(1.1, 1.8) * (0.55 if THIN else 1.0)),
+               P["crust"], seed=80 + k, lump=0.28, lump_scale=0.14, rings=6, segs=9, part="crust")
     # star studs: four-point stars lying on both faces along the blade (glowing), a few little ones between
     prev = {1: None, -1: None}
     for s_ in (1, -1):
         for k in range(9 if s_ > 0 else 7):
             y = 40.0 + k * (7.4 if s_ > 0 else 9.0) + rr.uniform(-1, 1)
-            x = xc(y) + rr.uniform(-1.2, 1.2) + (0.8 if s_ < 0 else 0.0)
+            x = xc(y) + rr.uniform(-1.2, 1.2) * W + (0.8 * W if s_ < 0 else 0.0)
             big = (k % 3 == 0)
-            ro = 1.9 if big else 1.15
-            th = 1.55 * (1.0 - 0.45 * ((y - Y0) / (Y1 - Y0)) ** 2.0)
+            ro = (1.9 if big else 1.15) * (0.72 if THIN else 1.0)
+            th = 1.55 * W * (1.0 - 0.45 * ((y - Y0) / (Y1 - Y0)) ** 2.0)
             pts = Lb.star_outline(4, ro, ro * 0.32, x, y, phase=rr.uniform(0, 1.5), jit=0.1, rng_=rr)
             K.plate("stud%d_%d" % (s_, k), pts, s_ * (th - 0.08) if s_ > 0 else s_ * (th - 0.08) - 0.5, s_ * (th - 0.08) + (0.5 if s_ > 0 else 0.0), P["star"], part="studs", bevel_w=0.0)
     for s_ in (1, -1):
-        hab = [(-5.0, 30.6), (5.2, 30.6), (5.6, 40.0), (3.8, 44.0), (-3.6, 44.0), (-5.6, 40.0)]
-        K.stepped_plate("habaki%d" % s_, hab, 1.6 * s_, P["silver"], steps=2, step_h=0.6, inset=0.9, part="habaki", up=s_, bevel_w=0.0)
+        hab = [(x * (W * 1.25 if THIN else 1.0), y) for x, y in ((-5.0, 30.6), (5.2, 30.6), (5.6, 40.0), (3.8, 44.0), (-3.6, 44.0), (-5.6, 40.0))]
+        K.stepped_plate("habaki%d" % s_, hab, 1.6 * W * s_, P["silver"], steps=2, step_h=0.6 * (0.7 if THIN else 1.0), inset=0.9 * W, part="habaki", up=s_, bevel_w=0.0)
     # ---------------------------------------------------------------- guard: an eight-point star plate (three steps, both faces), a gem hub, rivets, and an orbit ring behind it with three bead-stars
     star = Lb.star_outline(8, 13.0, 5.6, 0.0, YG, phase=math.pi / 8 + 0.07, jit=0.14, rng_=rr)
     for s_ in (1, -1):
@@ -334,11 +348,12 @@ def sakura(opts):
     P = sakura_palette()
     rr = K.rng(7404)
     Y0, Y1 = 31.0, 104.5
-    hw = lambda y: K.interp([(31, 3.9), (40, 4.2), (80, 3.8), (95, 3.5), (100, 2.6), (103, 1.2), (104.5, 0.3)], y)        # noqa: E731
+    W = ws(0.5)                                                                               # was 1.0: half widths 3.5..4.2 on a 73 cm blade (1/9), now 1/17
+    hw = lambda y: W * K.interp([(31, 3.9), (40, 4.2), (80, 3.8), (95, 3.5), (100, 2.6), (103, 1.2), (104.5, 0.3)], y)        # noqa: E731
     stations = [(y, hw(y)) for y in (31, 40, 80, 95, 100, 103, 104.5)]
-    notR = [(y, 0.5, 2.6, "chip") for y in (47, 54, 61, 68, 75, 82, 89)]                       # a wavy, rippling edge, like a hamon turned into the outline
-    notL = [(56.0, 0.6, 2.2, "chip"), (84.0, 0.5, 2.0, "chip")]
-    xc = Lb.katana_blade("blade", P["stone"], Y0, Y1, stations, 4.6, notL=notL, notR=notR, seed=61, tipL=(-0.2, 105.0), tipR=(0.9, 104.0), thick=1.1, fuller=1.0, res=8.0)
+    notR = sc([(y, 0.5, 2.6, "chip") for y in (47, 54, 61, 68, 75, 82, 89)], W * 0.8)         # a wavy, rippling edge, like a hamon turned into the outline
+    notL = sc([(56.0, 0.6, 2.2, "chip"), (84.0, 0.5, 2.0, "chip")], W)
+    xc = Lb.katana_blade("blade", P["stone"], Y0, Y1, stations, 4.6 * (0.62 if THIN else 1.0), notL=notL, notR=notR, seed=61, tipL=(-0.2 * W, 105.0), tipR=(0.9 * W, 104.0), thick=1.1 * W, fuller=1.0, res=8.0)
     P["line"] = Lb.glow("sak_line", rgb(255, 170, 210), 0.9, 414, flicker=0.7, ramp=("y", 31.0, 105.0, [(0.0, rgb(255, 120, 180)), (0.6, rgb(255, 190, 220)), (1.0, rgb(255, 235, 245))]))
     for s_ in (1, -1):                                                                          # a glowing line of light down the stone's groove
         rows = []
@@ -348,8 +363,8 @@ def sakura(opts):
             rows.append((c - V((w, 0, 0)), c + V((w, 0, 0))))
         K.strip("line%d" % s_, rows, P["line"], (-1.0, 0.0, 1.0), (0.0, 1.0, 0.0), lambda t: 0.5 * (1 - 0.3 * t), part="blade_glow", up=(0, 0, s_))
     for s_ in (1, -1):
-        hab = [(-4.0, 30.6), (4.2, 30.6), (4.4, 38.0), (2.4, 41.0), (-2.4, 41.0), (-4.2, 38.0)]
-        K.stepped_plate("habaki%d" % s_, hab, 1.0 * s_, P["rose"], steps=2, step_h=0.5, inset=0.8, part="habaki", up=s_, bevel_w=0.0)
+        hab = [(x * (W * 1.2 if THIN else 1.0), y) for x, y in ((-4.0, 30.6), (4.2, 30.6), (4.4, 38.0), (2.4, 41.0), (-2.4, 41.0), (-4.2, 38.0))]
+        K.stepped_plate("habaki%d" % s_, hab, 1.0 * W * s_, P["rose"], steps=2, step_h=0.5 * (0.7 if THIN else 1.0), inset=0.8 * W, part="habaki", up=s_, bevel_w=0.0)
     # petals grow from the spine like a leafy ridge (alternating faces), blossoms sit on the flats
     for k in range(9):
         y = 40.0 + k * 7.2 + rr.uniform(-1, 1)

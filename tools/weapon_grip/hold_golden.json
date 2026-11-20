@@ -1077,20 +1077,6 @@
    "float": 0.023
   }
  },
- "sz/vassal_katana": {
-  "tp_left": {
-   "arm": 0.2,
-   "body": 0.0,
-   "extra": 0.0,
-   "float": 0.034
-  },
-  "tp_right": {
-   "arm": 0.2,
-   "body": 0.0,
-   "extra": 0.0,
-   "float": 0.034
-  }
- },
  "sz/vassal_projectile": {
   "tp_left": {
    "arm": 0.252,
@@ -1525,6 +1511,20 @@
    "float": 0.008
   }
  },
+ "vassal_katana": {
+  "tp_left": {
+   "arm": 0.2,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.2,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
  "vassal_katana__sakura_stone_katana": {
   "tp_left": {
    "arm": 0.254,
@@ -1541,16 +1541,16 @@
  },
  "vassal_katana__siderite_katana": {
   "tp_left": {
-   "arm": 0.251,
+   "arm": 0.255,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.007
+   "float": 0.01
   },
   "tp_right": {
-   "arm": 0.251,
+   "arm": 0.255,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.007
+   "float": 0.01
   }
  },
  "vassal_katana__soul_eater_katana": {

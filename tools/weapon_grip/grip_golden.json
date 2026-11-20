@@ -361,11 +361,11 @@
  },
  "bloodbound_katana": {
   "class": "katana",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.773,
-  "z": 0.0
+  "fraction": 0.255,
+  "source": "directive",
+  "x": 0.01,
+  "y": 0.668,
+  "z": 0.102
  },
  "bolt_thrower": {
   "class": "crossbow",
@@ -745,11 +745,11 @@
  },
  "corpse_eater": {
   "class": "katana",
-  "fraction": 0.188,
-  "source": "handle",
-  "x": 0.01,
-  "y": 21.081,
-  "z": -0.002
+  "fraction": 0.131,
+  "source": "directive",
+  "x": 0.006,
+  "y": 14.729,
+  "z": 0.101
  },
  "crimson_lions_flame_lance": {
   "class": "spear",
@@ -913,11 +913,11 @@
  },
  "demon_slasher_katana": {
   "class": "katana",
-  "fraction": 0.125,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.775,
-  "z": 0.0
+  "fraction": 0.131,
+  "source": "directive",
+  "x": 0.011,
+  "y": -8.399,
+  "z": 0.102
  },
  "devil_bound_sheath": {
   "class": "handitem",
@@ -1601,11 +1601,11 @@
  },
  "dragon_tooth_blade_red": {
   "class": "katana",
-  "fraction": 0.2,
-  "source": "class",
-  "x": -0.008,
-  "y": 20.8,
-  "z": 0.0
+  "fraction": 0.181,
+  "source": "directive",
+  "x": 0.006,
+  "y": 20.77,
+  "z": 0.101
  },
  "dragoons_halberd": {
   "class": "glaive",
@@ -1921,11 +1921,11 @@
  },
  "hakurou_school_practice_katana": {
   "class": "katana",
-  "fraction": 0.154,
+  "fraction": 0.131,
   "source": "directive",
-  "x": 0.0,
-  "y": 14.953,
-  "z": 0.0
+  "x": 0.007,
+  "y": 12.75,
+  "z": 0.101
  },
  "hammer_of_thunderbolts": {
   "class": "hammer",
@@ -2065,11 +2065,11 @@
  },
  "ilmare_gin_the_starlight_silver": {
   "class": "katana",
-  "fraction": 0.206,
+  "fraction": 0.131,
   "source": "directive",
-  "x": 0.0,
-  "y": 21.63,
-  "z": 0.0
+  "x": 0.006,
+  "y": 13.755,
+  "z": 0.102
  },
  "jade_xiphos": {
   "class": "shortsword",
@@ -2089,19 +2089,19 @@
  },
  "katana_of_carnage": {
   "class": "katana",
-  "fraction": 0.365,
+  "fraction": 0.231,
   "source": "directive",
-  "x": 0.0,
-  "y": 26.892,
-  "z": 0.0
+  "x": 0.006,
+  "y": 11.111,
+  "z": 0.101
  },
  "katana_of_the_crimson_shogun": {
   "class": "katana",
-  "fraction": 0.195,
+  "fraction": 0.131,
   "source": "directive",
-  "x": 0.0,
-  "y": 21.45,
-  "z": 0.122
+  "x": 0.006,
+  "y": 14.41,
+  "z": 0.102
  },
  "krakeblade": {
   "class": "greatsword",
@@ -2113,11 +2113,11 @@
  },
  "kusanagi_the_grass_cutter": {
   "class": "katana",
-  "fraction": 0.155,
+  "fraction": 0.203,
   "source": "directive",
-  "x": 0.0,
-  "y": 18.065,
-  "z": 0.0
+  "x": 0.006,
+  "y": 24.725,
+  "z": 0.101
  },
  "last_word": {
   "class": "shortsword",
@@ -2905,11 +2905,11 @@
  },
  "miasma_infused_katana": {
   "class": "katana",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.888,
-  "z": 0.0
+  "fraction": 0.131,
+  "source": "directive",
+  "x": 0.01,
+  "y": -9.006,
+  "z": 0.102
  },
  "millennium_rod": {
   "class": "staff",
@@ -3281,11 +3281,11 @@
  },
  "selection_hopefuls_bokken": {
   "class": "katana",
-  "fraction": 0.165,
+  "fraction": 0.126,
   "source": "directive",
-  "x": 0.0,
-  "y": 15.677,
-  "z": 0.0
+  "x": -0.009,
+  "y": 12.019,
+  "z": -0.016
  },
  "serpant_head_staff": {
   "class": "staff",
@@ -3313,11 +3313,11 @@
  },
  "shadowsteel_katana": {
   "class": "katana",
-  "fraction": 0.176,
+  "fraction": 0.131,
   "source": "directive",
-  "x": 0.0,
-  "y": 16.351,
-  "z": 0.0
+  "x": 0.005,
+  "y": 11.236,
+  "z": 0.101
  },
  "shishou": {
   "class": "longsword",
@@ -3639,14 +3639,6 @@
   "y": 3.83,
   "z": 1.362
  },
- "sz/bloodbound_katana": {
-  "class": "katana",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.773,
-  "z": 0.0
- },
  "sz/brooch_pin": {
   "class": "dagger",
   "fraction": 0.141,
@@ -3671,14 +3663,6 @@
   "y": 6.897,
   "z": 0.0
  },
- "sz/corpse_eater": {
-  "class": "katana",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.007,
-  "y": 14.933,
-  "z": 0.007
- },
  "sz/dagger_of_betrayal": {
   "class": "dagger",
   "fraction": 0.141,
@@ -3686,14 +3670,6 @@
   "x": 0.0,
   "y": 8.141,
   "z": 0.001
- },
- "sz/demon_slasher_katana": {
-  "class": "katana",
-  "fraction": 0.125,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.775,
-  "z": 0.0
  },
  "sz/disintegration_dagger": {
   "class": "dagger",
@@ -3710,14 +3686,6 @@
   "x": 0.0,
   "y": 3.026,
   "z": 0.0
- },
- "sz/dragon_tooth_blade_red": {
-  "class": "katana",
-  "fraction": 0.109,
-  "source": "handle",
-  "x": 1.797,
-  "y": 10.469,
-  "z": -0.021
  },
  "sz/gate_scavengers_knife": {
   "class": "dagger",
@@ -3743,54 +3711,6 @@
   "y": 3.444,
   "z": 0.0
  },
- "sz/hakurou_school_practice_katana": {
-  "class": "katana",
-  "fraction": 0.154,
-  "source": "directive",
-  "x": 0.0,
-  "y": 14.953,
-  "z": 0.0
- },
- "sz/ilmare_gin_the_starlight_silver": {
-  "class": "katana",
-  "fraction": 0.206,
-  "source": "directive",
-  "x": 0.0,
-  "y": 21.63,
-  "z": 0.0
- },
- "sz/katana_of_carnage": {
-  "class": "katana",
-  "fraction": 0.365,
-  "source": "directive",
-  "x": 0.0,
-  "y": 26.892,
-  "z": 0.0
- },
- "sz/katana_of_the_crimson_shogun": {
-  "class": "katana",
-  "fraction": 0.195,
-  "source": "directive",
-  "x": 0.0,
-  "y": 21.45,
-  "z": 0.131
- },
- "sz/kusanagi_the_grass_cutter": {
-  "class": "katana",
-  "fraction": 0.155,
-  "source": "directive",
-  "x": 0.0,
-  "y": 18.065,
-  "z": 0.0
- },
- "sz/miasma_infused_katana": {
-  "class": "katana",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.888,
-  "z": 0.0
- },
  "sz/primordial_hearth_blade": {
   "class": "dagger",
   "fraction": 0.171,
@@ -3806,22 +3726,6 @@
   "x": 0.017,
   "y": 26.812,
   "z": 0.018
- },
- "sz/selection_hopefuls_bokken": {
-  "class": "katana",
-  "fraction": 0.165,
-  "source": "directive",
-  "x": 0.0,
-  "y": 15.677,
-  "z": 0.0
- },
- "sz/shadowsteel_katana": {
-  "class": "katana",
-  "fraction": 0.176,
-  "source": "directive",
-  "x": 0.0,
-  "y": 16.351,
-  "z": 0.0
  },
  "sz/the_dagger_of_many_daggers": {
   "class": "dagger",
@@ -3855,28 +3759,12 @@
   "y": 4.594,
   "z": 0.121
  },
- "sz/vassal_katana": {
-  "class": "katana",
-  "fraction": 0.125,
-  "source": "directive",
-  "x": 3.203,
-  "y": 9.062,
-  "z": 0.0
- },
  "sz/vassal_projectile": {
   "class": "dagger",
   "fraction": 0.394,
   "source": "directive",
   "x": 0.0,
   "y": 28.018,
-  "z": 0.0
- },
- "sz/void_origin_katana": {
-  "class": "katana",
-  "fraction": 0.15,
-  "source": "directive",
-  "x": 0.0,
-  "y": 18.05,
   "z": 0.0
  },
  "sz_up/dragon_force_twin_fangs": {
@@ -3894,22 +3782,6 @@
   "x": 0.0,
   "y": 14.303,
   "z": 0.0
- },
- "sz_up/kusanagi_the_grass_cutter": {
-  "class": "katana",
-  "fraction": 0.155,
-  "source": "directive",
-  "x": 0.04,
-  "y": 0.285,
-  "z": 0.0
- },
- "sz_up/kusanagi_the_grass_cutter_lod": {
-  "class": "katana",
-  "fraction": 0.155,
-  "source": "directive",
-  "x": 0.01,
-  "y": 18.065,
-  "z": 0.057
  },
  "the_bifrost": {
   "class": "staff",
@@ -5443,9 +5315,9 @@
   "class": "item",
   "fraction": 0.5,
   "source": "class",
-  "x": 2.455,
+  "x": 2.317,
   "y": 34.95,
-  "z": 0.0
+  "z": 0.025
  },
  "up/hellblaze_the_demon_sin_lod": {
   "class": "longsword",
@@ -5993,10 +5865,10 @@
  },
  "vassal_katana__siderite_katana": {
   "class": "katana",
-  "fraction": 0.234,
+  "fraction": 0.237,
   "source": "directive",
   "x": 0.0,
-  "y": 10.998,
+  "y": 11.381,
   "z": -1.046
  },
  "vassal_katana__soul_eater_katana": {
@@ -6281,11 +6153,11 @@
  },
  "void_origin_katana": {
   "class": "katana",
-  "fraction": 0.15,
+  "fraction": 0.131,
   "source": "directive",
-  "x": 0.0,
-  "y": 18.05,
-  "z": 0.0
+  "x": 0.003,
+  "y": 15.637,
+  "z": 0.101
  },
  "vorpal_sword": {
   "class": "longsword",
@@ -6583,22 +6455,6 @@
   "y": 4.302,
   "z": 0.008
  },
- "vu_sz/void_origin_katana": {
-  "class": "katana",
-  "fraction": 0.102,
-  "source": "gripxyz",
-  "x": 0.0,
-  "y": 11.539,
-  "z": 0.0
- },
- "vu_sz/void_origin_katana_lod": {
-  "class": "katana",
-  "fraction": 0.102,
-  "source": "gripxyz",
-  "x": 0.0,
-  "y": 11.539,
-  "z": 0.0
- },
  "wand_o_wisp": {
   "class": "wand",
   "fraction": 0.238,
@@ -6684,7 +6540,7 @@
   "fraction": 0.08,
   "source": "override",
   "x": 0.0,
-  "y": -4.919,
+  "y": -3.66,
   "z": 0.0
  },
  "weapon_of_resurgence": {

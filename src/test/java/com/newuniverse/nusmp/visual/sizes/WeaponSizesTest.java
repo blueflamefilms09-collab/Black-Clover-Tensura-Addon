@@ -68,11 +68,11 @@ class WeaponSizesTest {
         Map<String, String> ids = ids();
         long daggers = ids.values().stream().filter(c -> c.equals("dagger")).count(), katanas = ids.values().stream().filter(c -> c.equals("katana")).count();
         assertTrue(daggers >= 12, "daggers " + daggers);
-        assertTrue(katanas >= 12, "katanas " + katanas);
-        assertTrue(ids.containsKey("void_origin_katana") && ids.containsKey("kusanagi_the_grass_cutter") && ids.containsKey("unicorn_dagger"));
+        assertEquals(0, katanas, "katanas v2: every katana is a real, thin katana now and is excluded from the thickening (ThinKatanasTest checks its shape): " + ids);
+        assertTrue(ids.containsKey("unicorn_dagger"));
         int variants = 0;
         for (String id : ids.keySet()) variants += variants(id).size();
-        assertTrue(variants >= 28, "variants " + variants);
+        assertTrue(variants >= 16, "variants " + variants);
     }
 
     @Test
@@ -92,7 +92,7 @@ class WeaponSizesTest {
                 checked++;
             }
         }
-        assertTrue(checked >= 28, "checked " + checked);
+        assertTrue(checked >= 16, "checked " + checked);
         assertEquals(List.of(), problems);
     }
 
@@ -115,8 +115,8 @@ class WeaponSizesTest {
             }
         }
         assertTrue(slivers * 10 >= total * 7, "the old blades are slivers (" + slivers + " of " + total + "): the negative control");
-        // the negative control for the check itself: the old Void Origin Katana fails it
-        WeaponSizeRule.Measure oldVoid = WeaponSizeRule.measure(Files.readAllLines(RES.resolve("weapon_meshes/void_origin_katana.txt")));
+        // the negative control for the check itself: the old Void Origin Katana (kept in classic_vassal since katanas v2: the thin one is the mesh now) fails it
+        WeaponSizeRule.Measure oldVoid = WeaponSizeRule.measure(Files.readAllLines(RES.resolve("weapon_meshes/classic_vassal/void_origin_katana.txt")));
         double[] rot = triple("void_origin_katana", "firstperson_righthand", "rotation"), tr = triple("void_origin_katana", "firstperson_righthand", "translation");
         List<String> p = WeaponSizeRule.problems("old", oldVoid, rules.limits.get("katana"), 0.85, scale("void_origin_katana", "firstperson_righthand"), rot, tr);
         assertTrue(p.stream().anyMatch(s -> s.contains("blade width")) && p.stream().anyMatch(s -> s.contains("thickness")), p.toString());
@@ -163,7 +163,7 @@ class WeaponSizesTest {
                 lods++;
             }
         }
-        assertTrue(lods >= 4, "lods " + lods);
+        assertTrue(lods >= 2, "lods " + lods);
     }
 
     @Test

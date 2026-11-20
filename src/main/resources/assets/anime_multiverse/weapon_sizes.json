@@ -18,6 +18,14 @@
     "dagger": { "len3p_min": 0.62, "len3p_max": 0.76, "len1p_min": 0.50, "len1p_max": 0.76, "bw_1p_min": 0.115, "bw_3p_min": 0.10, "bd_min": 0.045, "bw_1p_max": 0.40, "bd_max": 0.22 },
     "katana": { "len3p_min": 1.40, "len3p_max": 1.80, "len1p_min": 0.85, "len1p_max": 1.55, "bw_1p_min": 0.115, "bw_3p_min": 0.10, "bd_min": 0.055, "bw_1p_max": 0.40, "bd_max": 0.22 }
   },
-  "excluded": ["fairy_glitter_gauntlets", "fairy_heart_gauntlets"],
+  "excluded": ["fairy_glitter_gauntlets", "fairy_heart_gauntlets",
+               "bloodbound_katana", "demon_slasher_katana", "miasma_infused_katana", "hakurou_school_practice_katana", "selection_hopefuls_bokken", "katana_of_carnage",
+               "katana_of_the_crimson_shogun", "shadowsteel_katana", "void_origin_katana", "corpse_eater", "ilmare_gin_the_starlight_silver", "kusanagi_the_grass_cutter",
+               "dragon_tooth_blade_red", "vassal_katana",
+               "vassal_katana__white_tiger_katana", "vassal_katana__soul_eater_katana", "vassal_katana__siderite_katana", "vassal_katana__sakura_stone_katana"],
+  "thin_katanas": ["bloodbound_katana", "demon_slasher_katana", "miasma_infused_katana", "hakurou_school_practice_katana", "selection_hopefuls_bokken", "katana_of_carnage",
+                   "katana_of_the_crimson_shogun", "shadowsteel_katana", "void_origin_katana", "corpse_eater", "ilmare_gin_the_starlight_silver", "kusanagi_the_grass_cutter",
+                   "dragon_tooth_blade_red", "wavebreaker", "vassal_katana"],
+  "thin_katanas_doc": "katanas v2: these are real katanas (blade width about 1/18 of the blade length, thickness at most a third of the width, drawn as they are in weapon_meshes). The 1.110.0 thickening (weapon_meshes_sz) made them broadswords in the hand, so they are in `excluded` (no thickened copy; the old thickened copies are kept in weapon_meshes_sz/classic_vassal) and ThinKatanasTest checks their shape instead. Appended; nothing removed.",
   "sword_reference": { "length_3p": 1.0, "blade_width_px": 2.5 }
 }
