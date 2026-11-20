@@ -35,8 +35,10 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     private static final double FAR2 = 32.0 * 32.0;
     private static final String BASE = "textures/entity/devil/";
     private static final ResourceLocation HORNS_TEX = tex("horns"), WINGS_TEX = tex("wings"), WINGS_GLOW = tex("wings_glow");
+    /** 4.40.0: the new look (tools/gen_devil_textures_v2.py): flowing Weg lines, swept horns, veined wings. {@code devil.classicLook = true} draws the old files above and below instead. */
+    private static final ResourceLocation HORNS2_TEX = tex("horns2"), WINGS2_TEX = tex("wings2"), WINGS2_GLOW = tex("wings2_glow");
     /** [tier 0..3][slim][glow]. */
-    private static final ResourceLocation[][][] WEG = new ResourceLocation[4][2][2];
+    private static final ResourceLocation[][][] WEG = new ResourceLocation[4][2][2], WEG2 = new ResourceLocation[4][2][2];
 
     static {
         String[] tiers = {"low", "mid", "high", "supreme"};
@@ -44,20 +46,23 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             for (int s = 0; s < 2; s++) {
                 WEG[t][s][0] = tex("weg_" + tiers[t] + (s == 1 ? "_slim" : ""));
                 WEG[t][s][1] = tex("weg_" + tiers[t] + (s == 1 ? "_slim" : "") + "_glow");
+                WEG2[t][s][0] = tex("weg2_" + tiers[t] + (s == 1 ? "_slim" : ""));
+                WEG2[t][s][1] = tex("weg2_" + tiers[t] + (s == 1 ? "_slim" : "") + "_glow");
             }
     }
 
     private static ResourceLocation tex(String name) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", BASE + name + ".png"); }
 
     private final PlayerModel<AbstractClientPlayer> overlay;
-    private final DevilModels.Horns horns;
+    private final DevilModels.Horns horns, hornsSwept;
     private final DevilModels.Wings wings;
     private final boolean slim;
 
-    private WegLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent, PlayerModel<AbstractClientPlayer> overlay, DevilModels.Horns horns, DevilModels.Wings wings, boolean slim) {
+    private WegLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> parent, PlayerModel<AbstractClientPlayer> overlay, DevilModels.Horns horns, DevilModels.Horns hornsSwept, DevilModels.Wings wings, boolean slim) {
         super(parent);
         this.overlay = overlay;
         this.horns = horns;
+        this.hornsSwept = hornsSwept;
         this.wings = wings;
         this.slim = slim;
     }
@@ -65,12 +70,13 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
     /** Mod bus, client: puts the layer on both player renderers (wide and slim arms). */
     static void add(EntityRenderersEvent.AddLayers e) {
         DevilModels.Horns horns = new DevilModels.Horns(e.getEntityModels().bakeLayer(DevilModels.HORNS));
+        DevilModels.Horns swept = new DevilModels.Horns(e.getEntityModels().bakeLayer(DevilModels.HORNS_SWEPT));
         DevilModels.Wings wings = new DevilModels.Wings(e.getEntityModels().bakeLayer(DevilModels.WINGS));
         for (PlayerSkin.Model skin : e.getSkins()) {
             boolean slim = skin == PlayerSkin.Model.SLIM;
             if (e.getSkin(skin) instanceof PlayerRenderer r) {
                 PlayerModel<AbstractClientPlayer> body = new PlayerModel<>(e.getEntityModels().bakeLayer(slim ? DevilModels.WEG_SLIM : DevilModels.WEG_WIDE), slim);
-                r.addLayer(new WegLayer(r, body, horns, wings, slim));
+                r.addLayer(new WegLayer(r, body, horns, swept, wings, slim));
             }
         }
     }
@@ -92,13 +98,14 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             float level = v.shown;
             boolean union = v.union;
             int s = slim ? 1 : 0;
+            boolean classic = DevilClientConfig.classicLook();                                          // 4.40.0: true = the look of before
 
             // ---- the markings: the body, a hair larger, in the tier's texture, fainter when the level is low
             float markA = Mth.clamp(0.18f + 0.82f * level / 100f, 0f, 1f);
             boolean custom = v.devil >= 0 && DevilClientConfig.customForms();                          // 3.97.0: a devil of another world: the markings in its colour, and its mesh instead of the generic horns and wings
             int tint = custom ? tintOf(WorldDevil.at(v.devil).color()) : 0xFFFFFF;
             boolean ownForm = custom && DevilFormLayer.usable(v.devil);
-            drawMarks(pose, buffers, light, p, tier, s, markA, glowAmount(level, union, age), tint);
+            drawMarks(pose, buffers, light, p, tier, s, markA, glowAmount(level, union, age), tint, classic);
 
             // ---- horns from 20 %
             if (level >= DevilRules.HORNS_AT && !ownForm) {
@@ -109,7 +116,7 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
                 pose.translate(0f, -0.5f, 0f);
                 pose.scale(grow, grow, grow);
                 pose.translate(0f, 0.5f, 0f);
-                horns.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(HORNS_TEX)), light, OverlayTexture.NO_OVERLAY, -1);
+                (classic ? horns : hornsSwept).render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(classic ? HORNS_TEX : HORNS2_TEX)), light, OverlayTexture.NO_OVERLAY, -1);
                 pose.popPose();
             }
 
@@ -120,10 +127,10 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
                 wings.pose(v.spread, flap, size);
                 pose.pushPose();
                 getParentModel().body.translateAndRotate(pose);
-                wings.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(WINGS_TEX)), light, OverlayTexture.NO_OVERLAY, -1);
+                wings.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(classic ? WINGS_TEX : WINGS2_TEX)), light, OverlayTexture.NO_OVERLAY, -1);
                 float g = union ? 0.95f : 0.35f + 0.25f * Mth.clamp((level - 50f) / 50f, 0f, 1f);
                 g *= 0.85f + 0.15f * Mth.sin(age * 0.12f);
-                wings.render(pose, buffers.getBuffer(SafeAdditive.additive(WINGS_GLOW)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (g * 255f), 0, 255), 255, 255, 255));
+                wings.render(pose, buffers.getBuffer(SafeAdditive.additive(classic ? WINGS_GLOW : WINGS2_GLOW)), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (g * 255f), 0, 255), 255, 255, 255));
                 pose.popPose();
             }
         } finally {
@@ -143,14 +150,15 @@ public final class WegLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         return r << 16 | g << 8 | b;
     }
 
-    private void drawMarks(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, int tier, int s, float markA, float glow, int tint) {
+    private void drawMarks(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, int tier, int s, float markA, float glow, int tint, boolean classic) {
+        ResourceLocation[][][] weg = classic ? WEG : WEG2;
         int tr = tint >> 16 & 255, tg = tint >> 8 & 255, tb = tint & 255;
         PlayerModel<AbstractClientPlayer> parent = getParentModel();
         parent.copyPropertiesTo(overlay);
         overlay.setAllVisible(false);
         overlay.head.visible = overlay.body.visible = overlay.rightArm.visible = overlay.leftArm.visible = overlay.rightLeg.visible = overlay.leftLeg.visible = true;   // the base layer only: the marks are painted there
-        overlay.renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucent(WEG[tier][s][0])), light, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (markA * 255f), 0, 255), tr, tg, tb));
+        overlay.renderToBuffer(pose, buffers.getBuffer(RenderType.entityTranslucent(weg[tier][s][0])), light, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (markA * 255f), 0, 255), tr, tg, tb));
         if (glow > 0.02f)
-            overlay.renderToBuffer(pose, buffers.getBuffer(SafeAdditive.additive(WEG[tier][s][1])), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (glow * 255f), 0, 255), tr, tg, tb));
+            overlay.renderToBuffer(pose, buffers.getBuffer(SafeAdditive.additive(weg[tier][s][1])), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(Mth.clamp((int) (glow * 255f), 0, 255), tr, tg, tb));
     }
 }

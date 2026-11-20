@@ -61,5 +61,33 @@ public final class DevilNpcRules {
         };
     }
 
+    // ---------------------------------------------------------------- where it stands and which way it faces (4.40.0)
+    /**
+     * The extra turn about Y (degrees) the renderer adds for a model whose front is -z (the player model: the game's own living renderer turns it by 180 - yaw) over a Blender mesh whose front is +z (turned by -yaw,
+     * as the bosses are). Without it the player-model look of a devil (the default) stood with its back to the caller.
+     */
+    public static final float PLAYER_MODEL_TURN = 180f;
+
+    /** How far the figure may be moved to stand on the ground: up one block, down three (a ledge, a step, a slab); further and it stays where the ritual began. */
+    public static final int GROUND_UP = 1, GROUND_DOWN = 3;
+
+    /** The game's yaw (degrees; 0 faces +z, 90 faces -x) of a figure that looks along (dx, dz); 0 for no direction. */
+    public static float yawToward(double dx, double dz) {
+        return dx == 0.0 && dz == 0.0 ? 0f : (float) (Math.atan2(-dx, dz) * 180.0 / Math.PI);
+    }
+
+    /** The horizontal world direction (x, z) a figure of the given yaw is drawn facing: the renderer's turn of -yaw (plus {@link #PLAYER_MODEL_TURN} for the player model) on the model's own front. */
+    public static double[] drawnFront(float yawDegrees, boolean playerModel) {
+        double fx = 0.0, fz = playerModel ? -1.0 : 1.0;                    // the model's front in its own frame (the player model's scale(-1, -1, 1) keeps z)
+        double turn = Math.toRadians((playerModel ? PLAYER_MODEL_TURN : 0f) - yawDegrees);
+        double c = Math.cos(turn), s = Math.sin(turn);
+        return new double[] {fx * c + fz * s, -fx * s + fz * c};            // a turn about Y (the same convention as the game's Axis.YP)
+    }
+
+    /** The y a figure stands at on ground whose top is {@code topY}: that top when it is within reach of the circle, the circle's own y when it is not or there is none ({@code NaN}). */
+    public static double standY(double topY, double circleY) {
+        return Double.isNaN(topY) || topY > circleY + GROUND_UP + 1e-6 || topY < circleY - GROUND_DOWN - 1e-6 ? circleY : topY;
+    }
+
     public static final int LINES = 4;
 }

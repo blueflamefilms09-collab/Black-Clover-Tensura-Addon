@@ -42,7 +42,10 @@ public final class DevilRitualRules {
         OPEN_SKY("The Hall of Hell has a roof: this cannot be done under the open sky."),
         NOT_LOWEST("The Behelit sleeps. It wakes only at your lowest point: a quarter of your health or less."),
         NO_LEVELS("You have too little to sacrifice: 30 experience levels."),
-        NO_BOOK("You need a book to open.");
+        NO_BOOK("You need a book to open."),
+        /** 4.40.0, appended: One of One (that devil already has a contract holder) and the dark rule (a devil is not called into the light). */
+        TAKEN("That devil already has a contract holder."),
+        NO_DARK("The devil will not come into the light. Bring somebody with a dark magic, or call it in a dark place (a very low light level, a dark biome, the End).");
 
         public final String text;
 

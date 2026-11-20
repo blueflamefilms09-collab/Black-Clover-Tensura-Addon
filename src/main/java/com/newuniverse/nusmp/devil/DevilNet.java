@@ -40,7 +40,7 @@ public final class DevilNet {
 
     // ---------------------------------------------------------------- server to client
     /** The owner's state. {@code unionSec} and {@code coolSec} are whole seconds at the moment of sending. */
-    public record Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec) implements CustomPacketPayload {
+    public record Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec, int corruption) implements CustomPacketPayload {
         public static final Type<Sync> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_sync"));
         public static final StreamCodec<FriendlyByteBuf, Sync> STREAM_CODEC = StreamCodec.of((buf, p) -> {
             buf.writeByte(p.tier());
@@ -50,8 +50,12 @@ public final class DevilNet {
             buf.writeByte(p.sacMask());
             buf.writeVarInt(p.unionSec());
             buf.writeVarInt(p.coolSec());
+            buf.writeByte(p.corruption());                                                        // 4.40.0, appended: the creeping corruption in percent
         }, buf -> new Sync(DevilRules.clampInt(buf.readByte(), 0, DevilTier.values().length - 1), DevilRules.clampInt(buf.readByte(), 0, DevilAttribute.values().length - 1),
-                DevilRules.clampInt(buf.readByte(), 0, 100), buf.readByte() & 0xF, buf.readByte() & 0x7, Math.max(0, buf.readVarInt()), Math.max(0, buf.readVarInt())));
+                DevilRules.clampInt(buf.readByte(), 0, 100), buf.readByte() & 0xF, buf.readByte() & 0x7, Math.max(0, buf.readVarInt()), Math.max(0, buf.readVarInt()), buf.isReadable() ? DevilRules.clampInt(buf.readByte(), 0, 100) : 0));
+        /** The 3.48.0 shape: no corruption. */
+        public Sync(int tier, int attribute, int level, int flags, int sacMask, int unionSec, int coolSec) { this(tier, attribute, level, flags, sacMask, unionSec, coolSec, 0); }
+
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 

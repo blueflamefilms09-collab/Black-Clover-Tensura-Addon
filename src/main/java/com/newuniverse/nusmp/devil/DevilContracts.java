@@ -105,7 +105,7 @@ public final class DevilContracts {
 
     // ---------------------------------------------------------------- the key
     /** The ask of the key. Everything is checked here again; the client only said "toggle". */
-    static void onToggleAsk(ServerPlayer p) {
+    public static void onToggleAsk(ServerPlayer p) {
         DevilContract c = DevilStore.peek(p);
         if (c == null || !c.hasContract()) return;
         long now = time(p);
@@ -121,6 +121,7 @@ public final class DevilContracts {
             if (!hasMana(p, drain(c, c.assimilation))) { msg(p, "no_mana", "Not enough magicules to hold a devil.", ChatFormatting.RED); return; }
             if (!com.newuniverse.nusmp.attune.AttuneGate.devil(p, c)) return;                                      // 3.95.0: the equip limit (pushing it back is never stopped)
             c.assimilating = true;
+            com.newuniverse.nusmp.devil.dual.DevilOwnership.renewed(p);                                          // 4.40.0: letting the devil in again keeps the bond from lapsing after a death
             msg(p, "embrace", "You let the devil in.", ChatFormatting.DARK_PURPLE);
         }
         syncNow(p, c);
@@ -137,6 +138,8 @@ public final class DevilContracts {
     }
 
     static void second(ServerPlayer p, DevilContract c, long now) {
+        c.corruption = com.newuniverse.nusmp.devil.dual.CorruptionRules.step(c.corruption, DevilConfig.enabled() && !c.sacrifices.isEmpty(), c.assimilating, c.inUnion(), now - c.lastKill,
+                com.newuniverse.nusmp.devil.dual.DualConfig.corruption());                                          // 4.40.0: the price creeps (one float, once a second)
         if (!DevilConfig.enabled()) {
             if (c.assimilation > 0 || c.assimilating || c.inUnion()) { c.assimilation = 0; c.assimilating = false; c.unionUntil = 0; }
             applyStats(p, c);
@@ -299,6 +302,7 @@ public final class DevilContracts {
         if (c == null || !c.hasContract()) return;
         if (c.inUnion()) endUnion(p, c, time(p), "death");
         else { c.assimilation = 0f; c.assimilating = false; }
+        c.corruption = com.newuniverse.nusmp.devil.dual.CorruptionRules.onDeath(c.corruption, com.newuniverse.nusmp.devil.dual.DualConfig.corruption());      // 4.40.0: a death eases it
         if (DevilConfig.enabled() && c.sacrifices.contains(Sacrifice.SOUL_DEBT) && p.experienceLevel > 0) p.giveExperienceLevels(-p.experienceLevel);      // 3.76.0: the soul is owed: a death takes every level
     }
 
@@ -328,7 +332,7 @@ public final class DevilContracts {
 
     private static int selfKey(ServerPlayer p, DevilContract c, long now) {
         int flags = flags(p, c, now);
-        return c.tier.ordinal() | (c.attribute.ordinal() << 3) | (Math.round(c.assimilation) << 8) | (flags << 15) | (c.sacrificeMask() << 19);      // 3.77.0: the attribute has 5 bits now (18 of them), the sacrifices 6
+        return c.tier.ordinal() | (c.attribute.ordinal() << 3) | (Math.round(c.assimilation) << 8) | (flags << 15) | (c.sacrificeMask() << 19) | (com.newuniverse.nusmp.devil.dual.CorruptionRules.percent(c.corruption) / 5 << 25);      // 4.40.0: the corruption in steps of five percent; 3.77.0: the attribute has 5 bits now (18 of them), the sacrifices 6
     }
 
     private static int flags(ServerPlayer p, DevilContract c, long now) {
@@ -351,11 +355,34 @@ public final class DevilContracts {
     static void syncNow(ServerPlayer p, DevilContract c) {
         c.sentSelf = -1;
         syncIfChanged(p, c, time(p));
+        com.newuniverse.nusmp.devil.dual.DevilSkillGrant.sync(p, c);                          // 4.40.0: the Ultimate skill Devil Magic follows the contract (one lookup)
+    }
+
+    /** The game time the contracts count in (the overworld's), for the code of {@code devil.dual}. */
+    public static long gameTime(ServerPlayer p) { return time(p); }
+
+    /**
+     * 4.40.0 (One of One): the contract ends here, because another player took the devil (a lapsed bond) or won it in a duel: tier, attribute, devil, the open ritual and offer and the level go; the
+     * sacrifices STAY (nothing removes them but an operator), as they always have. The skill Devil Magic is taken back by the sync.
+     */
+    public static void dissolve(ServerPlayer p, DevilContract c) {
+        DevilNpcs.discard(p.getServer(), c);
+        c.tier = DevilTier.NONE;
+        c.attribute = DevilAttribute.NONE;
+        c.devil = "";
+        c.registered = false;
+        c.corruption = 0f;
+        c.offer = "";
+        c.ritual = null;
+        c.resetLive();
+        applyStats(p, c);
+        applySacrifices(p, c);
+        syncNow(p, c);
     }
 
     static DevilNet.Sync buildSync(ServerPlayer p, DevilContract c, long now) {
         return new DevilNet.Sync(c.tier.ordinal(), c.attribute.ordinal(), Math.round(c.assimilation), flags(p, c, now), c.sacrificeMask(),
-                DevilRules.secondsLeft(c.unionUntil, now), DevilRules.secondsLeft(c.unionReadyAt, now));
+                DevilRules.secondsLeft(c.unionUntil, now), DevilRules.secondsLeft(c.unionReadyAt, now), com.newuniverse.nusmp.devil.dual.CorruptionRules.percent(c.corruption));
     }
 
     // ---------------------------------------------------------------- magicules and messages

@@ -31,7 +31,9 @@ class SkillIconsV3Test {
             // the Saiyan Prodigy (docs/saiyan_prodigy.md): its own painted icon, outside the repaint manifest
             "saiyan_prodigy",
             // the five Berserk weapon skills (docs/berserk_weapons.md): painted by tools/gen_sin_skill_icons.py, outside the repaint manifest like the Saiyan Prodigy
-            "lord_of_slothful_weight", "lord_of_green_eyed_envy", "lord_of_empty_vanity", "lord_of_the_twin_rings", "seifort_holy_judgement");
+            "lord_of_slothful_weight", "lord_of_green_eyed_envy", "lord_of_empty_vanity", "lord_of_the_twin_rings", "seifort_holy_judgement",
+            // Devil Magic and Devil Bond (docs/devil_double_magic.md): painted by tools/gen_devil_emblems.py, animated at runtime from emblems, outside the repaint manifest
+            "devil_magic", "devil_bond");
 
     private static Map<String, String[]> manifest() throws Exception {
         Map<String, String[]> m = new LinkedHashMap<>();

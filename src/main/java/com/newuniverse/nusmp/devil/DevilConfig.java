@@ -13,7 +13,9 @@ public final class DevilConfig {
     private static final ModConfigSpec.BooleanValue ENABLED, ALLOW_FLIGHT, HALF_HEALTH, EYE_REACH, DEATH_COOLDOWN, WORLDS, EFFECTS;
     private static final ModConfigSpec.DoubleValue DRAIN_SCALE, STAT_SCALE, EFFECT_SCALE;
     private static final ModConfigSpec.IntValue UNION_SECONDS, COOLDOWN_HOURS;
-    private static final ModConfigSpec.BooleanValue NPC_ENABLED;
+    private static final ModConfigSpec.BooleanValue NPC_ENABLED, CRAFTABLE, DARK_RULE;
+    private static final ModConfigSpec.IntValue DARK_LIGHT, DARK_RADIUS;
+    private static final ModConfigSpec.ConfigValue<?> DARK_DIMS;   // a config value, not state (the scan test bans static collections)
     private static final ModConfigSpec.IntValue NPC_MAX, NPC_LIFE;
 
     static {
@@ -54,6 +56,15 @@ public final class DevilConfig {
         NPC_LIFE = b.comment("The longest a figure may live, in seconds, whatever else happens (the ritual and the 30 second offer fit inside the default 60).")
                 .defineInRange("lifetimeSeconds", DevilNpcRules.DEFAULT_LIFE_SECONDS, DevilNpcRules.MIN_LIFE_SECONDS, DevilNpcRules.MAX_LIFE_SECONDS);
         b.pop();
+        CRAFTABLE = b.comment("4.40.0: the Devil Contract item can be crafted (very expensive: a Tensura Royal Blood or Zane Blood, or the fallback Gneiss Crystal, with a nether star and more). false = only the old way (relic loot). Read when data packs load (world start, /reload); old copies work either way.")
+                .define("contractCraftable", true);
+        b.push("ritual");
+        DARK_RULE = b.comment("4.40.0: a contract ritual needs a dark magic at the circle (devil_dark_magic.json) or a dark place (a dark dimension or biome, or light at or under maxLight). false = the old rituals, in any light.")
+                .define("darkRule", true);
+        DARK_LIGHT = b.comment("The highest light level (block and sky together, 0 to 15) that counts as a dark place; the default 4 is a night in the open or a cave.").defineInRange("maxLight", 4, 0, 15);
+        DARK_RADIUS = b.comment("How far from the caller a player counts as a participant of the circle, in blocks (their dark magic lets the ritual begin).").defineInRange("participantRadius", 8, 0, 32);
+        DARK_DIMS = b.comment("Dimensions that are dark enough for a ritual in any light (the End by default).").defineListAllowEmpty("darkDimensions", java.util.List.of("minecraft:the_end"), () -> "minecraft:the_end", o -> o instanceof String);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -82,6 +93,13 @@ public final class DevilConfig {
     public static boolean worlds() { return on(WORLDS, true); }
     public static boolean attributeEffects() { return on(EFFECTS, true); }
     public static double effectScale() { return num(EFFECT_SCALE, 1.0, 0, 10); }
+    public static boolean contractCraftable() { return on(CRAFTABLE, true); }
+    public static boolean darkRule() { return on(DARK_RULE, true); }
+    public static int darkMaxLight() { return whole(DARK_LIGHT, 4, 0, 15); }
+    public static int darkRadius() { return whole(DARK_RADIUS, 8, 0, 32); }
+    public static boolean darkDimension(String id) {
+        try { return id != null && DARK_DIMS.get() instanceof java.util.Collection<?> dims && dims.contains(id); } catch (RuntimeException notLoaded) { return "minecraft:the_end".equals(id); }
+    }
     public static boolean npcEnabled() { return on(NPC_ENABLED, true); }
     public static int npcMax() { return DevilNpcRules.clampMax(whole(NPC_MAX, DevilNpcRules.DEFAULT_MAX, 0, DevilNpcRules.MAX_MAX)); }
     public static long npcLifetimeTicks() { return DevilNpcRules.lifetimeTicks(whole(NPC_LIFE, DevilNpcRules.DEFAULT_LIFE_SECONDS, DevilNpcRules.MIN_LIFE_SECONDS, DevilNpcRules.MAX_LIFE_SECONDS)); }

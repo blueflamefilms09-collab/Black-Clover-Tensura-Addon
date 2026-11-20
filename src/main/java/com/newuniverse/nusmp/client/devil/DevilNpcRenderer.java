@@ -51,13 +51,15 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
     private static final ResourceLocation STEVE = ResourceLocation.withDefaultNamespace("textures/entity/player/wide/steve.png");
     private static final ResourceLocation HORNS_TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/devil/horns.png");
     private static final ResourceLocation WINGS_TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/devil/wings.png");
+    private static final ResourceLocation HORNS2_TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/devil/horns2.png");   // 4.40.0 (devil.classicLook = false)
+    private static final ResourceLocation WINGS2_TEX = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "textures/entity/devil/wings2.png");
 
     /** One mesh drawer per devil, made on first use (the mesh file is read then). */
     private final BossMeshDraw[] meshes = new BossMeshDraw[WorldDevil.count()];
     private final PlayerModel<LivingEntity> body;
     private final PlayerModel<LivingEntity> slimBody;
     private final float[] alphas = new float[DevilExtras.ANCHORS];
-    private final DevilModels.Horns horns;
+    private final DevilModels.Horns horns, hornsSwept;
     private final DevilModels.Wings wings;
 
     public DevilNpcRenderer(EntityRendererProvider.Context ctx) {
@@ -66,6 +68,7 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
         this.body = new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false);
         this.slimBody = new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER_SLIM), true);
         this.horns = new DevilModels.Horns(ctx.bakeLayer(DevilModels.HORNS));
+        this.hornsSwept = new DevilModels.Horns(ctx.bakeLayer(DevilModels.HORNS_SWEPT));
         this.wings = new DevilModels.Wings(ctx.bakeLayer(DevilModels.WINGS));
     }
 
@@ -191,6 +194,7 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
         float pulse = 0.75f + 0.25f * Mth.sin(age * 0.15f);
         float s = PlayerModelRenderer.VANILLA_SCALE * look.scale();
         ps.pushPose();
+        ps.mulPose(Axis.YP.rotationDegrees(DevilNpcRules.PLAYER_MODEL_TURN));                  // 4.40.0: the player model's front is -z, the figure's turn assumes +z (the living renderer's 180 - yaw): without this it faced away
         ps.scale(-1f, -1f, 1f);
         ps.scale(s, s, s);
         ps.translate(0f, -1.501f, 0f);
@@ -218,6 +222,7 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
         int argb = (a255 << 24) | 0xFFFFFF;
         int tint = (a255 << 24) | rgb;
         ps.pushPose();
+        ps.mulPose(Axis.YP.rotationDegrees(DevilNpcRules.PLAYER_MODEL_TURN));                  // 4.40.0: the same turn for the generic figure (also a player model)
         ps.scale(-1f, -1f, 1f);
         ps.translate(0f, -1.501f, 0f);
         body.renderToBuffer(ps, buffers.getBuffer(RenderType.entityTranslucent(STEVE)), light, OverlayTexture.NO_OVERLAY, tint);
@@ -226,12 +231,13 @@ public final class DevilNpcRenderer extends EntityRenderer<DevilNpc> {
         ps.translate(0f, -0.5f, 0f);
         ps.scale(1.1f, 1.1f, 1.1f);
         ps.translate(0f, 0.5f, 0f);
-        horns.render(ps, buffers.getBuffer(RenderType.entityTranslucent(HORNS_TEX)), light, OverlayTexture.NO_OVERLAY, argb);
+        boolean classic = DevilClientConfig.classicLook();
+        (classic ? horns : hornsSwept).render(ps, buffers.getBuffer(RenderType.entityTranslucent(classic ? HORNS_TEX : HORNS2_TEX)), light, OverlayTexture.NO_OVERLAY, argb);
         ps.popPose();
         ps.pushPose();
         body.body.translateAndRotate(ps);
         wings.pose(1f, Mth.sin(age * 0.07f) * 0.12f, 0.75f);
-        wings.render(ps, buffers.getBuffer(RenderType.entityTranslucent(WINGS_TEX)), light, OverlayTexture.NO_OVERLAY, argb);
+        wings.render(ps, buffers.getBuffer(RenderType.entityTranslucent(classic ? WINGS_TEX : WINGS2_TEX)), light, OverlayTexture.NO_OVERLAY, argb);
         ps.popPose();
         ps.popPose();
     }

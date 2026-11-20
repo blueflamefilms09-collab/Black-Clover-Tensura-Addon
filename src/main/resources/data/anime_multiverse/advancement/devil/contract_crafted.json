@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    { "type": "anime_multiverse:config", "key": "devil.contractCraftable" }
+  ],
+  "display": {
+    "icon": { "id": "anime_multiverse:devil_contract" },
+    "title": { "translate": "advancement.anime_multiverse.devil.contract_crafted.title" },
+    "description": { "translate": "advancement.anime_multiverse.devil.contract_crafted.desc" },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [ { "items": "anime_multiverse:devil_contract" } ]
+      }
+    }
+  },
+  "requirements": [ [ "crafted" ] ]
+}

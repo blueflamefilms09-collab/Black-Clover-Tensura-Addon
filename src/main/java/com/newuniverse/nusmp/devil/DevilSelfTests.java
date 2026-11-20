@@ -136,6 +136,9 @@ public final class DevilSelfTests {
             if (!a.getUUID().equals(n.owner()) || !d.id().equals(n.devilId()) || n.state() != DevilNpcRules.RISING) return Result.fail("the figure's owner, devil or state is wrong");
             double away = Math.hypot(n.getX() - at.x, n.getZ() - at.z);
             if (away < 1.0 || away > DevilNpcRules.FRONT + 0.1) return Result.fail("the figure stands " + away + " blocks from the circle, not in front of it");
+            float wantYaw = DevilNpcRules.yawToward(at.x - n.getX(), at.z - n.getZ());               // 4.40.0: it faces the caller, and stands within reach of the circle's height (on the ground when there is any)
+            if (Math.abs(net.minecraft.util.Mth.wrapDegrees(n.getYRot() - wantYaw)) > 1.0f) return Result.fail("the figure faces " + n.getYRot() + " degrees, not the caller (" + wantYaw + ")");
+            if (n.getY() > at.y + DevilNpcRules.GROUND_UP + 1e-3 || n.getY() < at.y - DevilNpcRules.GROUND_DOWN - 1e-3) return Result.fail("the figure stands at y " + n.getY() + ", out of reach of the circle at " + at.y);
             if (n.isPickable() || n.isPushable() || n.canBeCollidedWith() || n.shouldBeSaved() || !n.isInvulnerableTo(level.damageSources().generic())) return Result.fail("the figure can be touched or saved");
             if (!DevilNpcs.spawn(a, c, d, run)) return Result.fail("a second ritual made no figure");
             DevilNpc second = DevilNpcs.figure(server, c);

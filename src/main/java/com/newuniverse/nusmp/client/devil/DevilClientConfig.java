@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DevilClientConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue WEG, HUD, FORMS;
+    private static final ModConfigSpec.BooleanValue WEG, HUD, FORMS, CLASSIC, ICONS;
     private static final ModConfigSpec.DoubleValue EYE;
 
     static {
@@ -19,6 +19,8 @@ public final class DevilClientConfig {
         EYE = b.comment("How strong the shade of a lost eye is on your own screen: 0 = no shade and no narrower view, 1 = full.").defineInRange("eyeOverlayStrength", 1.0, 0.0, 1.0);
         FORMS = b.comment("3.97.0: a devil of another world has its own form: its Blender mesh worn on the body (head, arms, wings, tail, legs by stage) and the markings in its colour. false = the generic horns and wings exactly as before (docs/devil_forms.md).")
                 .define("customForms", true);
+        CLASSIC = b.comment("true = the look of before 4.40.0: the old Weg dots, the old horns and wings, and no creeping corruption on the screen (the server still counts it).").define("classicLook", false);
+        ICONS = b.comment("4.40.0: the icons of Devil Magic and Devil Bond are composed from small emblems (your devil's and your grimoire's) and animate. false = the plain still icons.").define("animatedIcons", true);
         b.pop();
         SPEC = b.build();
     }
@@ -26,6 +28,10 @@ public final class DevilClientConfig {
     private DevilClientConfig() {}
 
     public static boolean weg() { try { return WEG.get(); } catch (RuntimeException notLoaded) { return true; } }
+
+    public static boolean classicLook() { try { return CLASSIC.get(); } catch (RuntimeException notLoaded) { return false; } }
+
+    public static boolean animatedIcons() { try { return ICONS.get(); } catch (RuntimeException notLoaded) { return true; } }
 
     public static boolean customForms() { try { return FORMS.get(); } catch (RuntimeException notLoaded) { return true; } }
 

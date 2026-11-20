@@ -9,6 +9,8 @@ public final class DevilRitualRun {
     public final long start;
     public final double x, y, z, faceX, faceZ;
     public final String dimension;
+    /** 4.40.0: the ritual was allowed only because the place is dark (light level), so a bright light breaks it. Live, set by {@code DevilRituals.begin}. */
+    public boolean lightBound;
 
     public DevilRitualRun(String devil, long start, double x, double y, double z, double faceX, double faceZ, String dimension) {
         this.devil = devil;

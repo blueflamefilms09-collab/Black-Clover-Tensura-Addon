@@ -25,6 +25,10 @@ public final class DevilContract {
     public final EnumSet<Sacrifice> sacrifices = EnumSet.noneOf(Sacrifice.class);
     /** 3.76.0: the id of the devil of another world this contract is with ({@link WorldDevil}); "" for the old grimoire devils. */
     public String devil = "";
+    /** One of One (docs/devil_double_magic.md): true once this contract was entered in the world's table of holders; a contract older than that (false) is only adopted if its devil is free, never dissolved. */
+    public boolean registered;
+    /** Creeping corruption of the price (docs/devil_double_magic.md), 0 to 1000 (permille of the screen); saved, so logging out keeps it. */
+    public float corruption;
 
     // ---- live (not saved) ----
     public boolean assimilating;
@@ -39,9 +43,14 @@ public final class DevilContract {
     /** Live, not saved: the devil's figure of the running ritual (docs/devil_forms.md) and the game time it was made; null = none. */
     public java.util.UUID npc;
     public long npcAt;
+    /** Live, not saved: the game time of the last bound duel this player opened (the cooldown between two). */
+    public long lastDuel = Long.MIN_VALUE / 2;
+    /** Live, not saved: the game time of the player's last kill (the corruption eases for a minute after one) and the corruption last sent. */
+    public long lastKill = Long.MIN_VALUE / 2;
+    public int sentCorruption = -1;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
-    public boolean isEmpty() { return tier == DevilTier.NONE && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }
+    public boolean isEmpty() { return tier == DevilTier.NONE && corruption <= 0f && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }
 
     public boolean hasContract() { return tier != DevilTier.NONE; }
 
@@ -82,6 +91,8 @@ public final class DevilContract {
         for (Sacrifice s : c.sacrifices) list.add(StringTag.valueOf(s.name()));
         t.put("sac", list);
         if (!c.devil.isEmpty()) t.putString("devil", c.devil);
+        if (c.registered) t.putBoolean("reg", true);
+        if (c.corruption > 0f) t.putFloat("cor", c.corruption);
         return t;
     }
 
@@ -94,6 +105,8 @@ public final class DevilContract {
         c.unionReadyAt = Math.max(0L, t.getLong("ready"));
         String devil = t.getString("devil");
         c.devil = WorldDevil.byId(devil) != null ? WorldDevil.byId(devil).id() : "";
+        c.registered = t.getBoolean("reg");
+        c.corruption = DevilRules.clampF(t.getFloat("cor"), 0f, 1000f);
         ListTag list = t.getList("sac", Tag.TAG_STRING);
         for (int i = 0; i < list.size() && i < Sacrifice.values().length * 2; i++) {
             Sacrifice s = Sacrifice.byName(list.getString(i));

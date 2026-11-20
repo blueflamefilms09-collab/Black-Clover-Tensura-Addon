@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.48.0] — Devil Double Magic: devil plus grimoire, one-of-one devils, ranks, craftable contract
+- NEW: Double Magic arts (a devil art per attribute plus a double art that mixes the devil with the grimoire magic); One of One devils (a holder store keyed by player UUID; the lapse overrides are death, long absence and a bound duel; setting `devilDual.oneOfOne.enabled`); devil ranks from the relic grades (Low = Rare, Mid = Unique, High = Legend, Supreme = God; all 30 devils ranked in `rankings.json`); the Time devil version (Time counts from the grimoire, the devil, or both; no Time VFX file touched); ultimate skill Devil Magic and intrinsic skill Devil Bond; animated icons composed from emblems; devil magic cannot be adapted to and Law Domination has no effect on it (a tag plus an API); creeping screen corruption for body-part and sacrifice prices; a new Weg look (markings, swept horns, new horn and wing textures); a craftable Devil Contract (dark-magic ritual rule); the ritual layout image and how-to (`docs/devil_ritual_layout.png`, `_discord.png`, `docs/devil_ritual_howto.md`).
+- FIXED: the devil NPC faced away and could hang in the air; it now faces the player and stands on the ground.
+- REPLACED (old behaviour kept behind a setting): the default Weg, horn and wing look (client `devil.classicLook`); rituals need a dark magic or a dark place (`devil.ritual.darkRule = false` restores the old rituals); the contract is craftable (`devil.contractCraftable = false` restores loot only); one holder per devil.
+- KEPT: the relic form of the contract and old contracts, `/devilpact`, the four Infernal Contracts, Anti-Magic union and Devil Union, the 8 worlds and 26 devils, every old Weg, horn and wing texture.
+- Cost: at most 6 targets per art (range 10, cooldowns 160 and 240 ticks), 8 open duels, 256 holder rows, 8 NPCs (60 s life), one light read per second during a ritual, client icons 2 textures and at most 8 cached strips.
+- Not in this release: the contract stacking, EP requirements, trial fights, shared weaker devils and sever-by-kill rules (phase 2), and the sabotage rule (waiting for the rest of the owner's message). Not seen in a game; the recipe's blood item is a tag (`devil_contract_blood`: Royal Blood, Zane Blood, Gneiss Crystal as fallback) because "Tinsel" does not exist in the repo.
+
 ## [4.47.1] — Build fix
 - FIXED: `WeaponSizesTest` judged the Blender form meshes (`base__form`) like the old thickened daggers and katanas and failed on the first one; forms are now left to the form and grip audits. The grip golden file matches the restored Slime Shield again. No game change.
 

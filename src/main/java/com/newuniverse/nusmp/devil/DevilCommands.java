@@ -47,6 +47,12 @@ public final class DevilCommands {
                 .then(Commands.literal("worlds").executes(c -> worlds(c)))
                 .then(Commands.literal("world").then(Commands.argument("world", StringArgumentType.word()).suggests(WORLDS).executes(c -> world(c, StringArgumentType.getString(c, "world")))))
                 .then(Commands.literal("call").then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS).executes(c -> call(c, StringArgumentType.getString(c, "devil")))))
+                .then(Commands.literal("duel").then(Commands.argument("holder", EntityArgument.player())
+                        .executes(c -> com.newuniverse.nusmp.devil.dual.DevilOwnership.duel(c.getSource().getPlayerOrException(), EntityArgument.getPlayer(c, "holder")) ? 1 : 0)))
+                .then(Commands.literal("holders").executes(c -> holders(c)))
+                .then(Commands.literal("release").requires(s -> s.hasPermission(2)).then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS)
+                        .executes(c -> handOver(c, StringArgumentType.getString(c, "devil"), null))
+                        .then(Commands.argument("player", EntityArgument.player()).executes(c -> handOver(c, StringArgumentType.getString(c, "devil"), EntityArgument.getPlayer(c, "player"))))))
                 .then(Commands.literal("sign").executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException()) ? 1 : 0))
                 .then(Commands.literal("refuse").executes(c -> DevilRituals.refuse(c.getSource().getPlayerOrException()) ? 1 : 0))
                 .then(Commands.literal("grant").requires(s -> s.hasPermission(2))
@@ -88,6 +94,9 @@ public final class DevilCommands {
         if (d.inUnion()) sb.append(", Devil Union ").append(DevilRules.secondsLeft(d.unionUntil, now)).append(" s left");
         else if (DevilRules.cooling(d.unionReadyAt, now)) sb.append(", union locked for ").append(DevilRules.secondsLeft(d.unionReadyAt, now)).append(" s");
         else sb.append(", union ready");
+        WorldDevil wd = WorldDevil.byId(d.devil);
+        sb.append(", rank ").append(com.newuniverse.nusmp.devil.dual.DevilRanks.of(wd == null ? "" : wd.id(), d.tier).label()).append(", time origin ").append(com.newuniverse.nusmp.devil.dual.DevilMagic.timeOrigin(p, d).label());
+        if (d.corruption > 0f) sb.append(", corruption ").append(com.newuniverse.nusmp.devil.dual.CorruptionRules.percent(d.corruption)).append("%");
         if (!d.sacrifices.isEmpty()) sb.append(", sacrifices ").append(d.sacrifices.toString().toLowerCase(Locale.ROOT));
         if (!DevilConfig.enabled()) sb.append(" [system is off on this server]");
         return say(c, sb.toString());
@@ -169,6 +178,34 @@ public final class DevilCommands {
         return DevilRituals.begin(p, d) == DevilRitualRules.Denial.NONE ? 1 : 0;
     }
 
+    /** Who holds which devil (one line each; the table is at most 256 rows). */
+    private static int holders(CommandContext<CommandSourceStack> c) {
+        net.minecraft.server.MinecraftServer server = c.getSource().getServer();
+        com.newuniverse.nusmp.devil.dual.DevilHolders h = com.newuniverse.nusmp.devil.dual.DevilHolders.get(server);
+        int n = 0;
+        for (int i = 0; i < WorldDevil.count(); i++) {
+            WorldDevil d = WorldDevil.at(i);
+            com.newuniverse.nusmp.devil.dual.HolderRules.Slot slot = h.slot(d.id());
+            String who = slot == null ? "free" : slot.holder() != null ? name(server, slot.holder()) : "reserved for " + name(server, slot.reservedFor());
+            if (slot != null) n++;
+            c.getSource().sendSuccess(() -> Component.literal("  " + d.name() + " [" + com.newuniverse.nusmp.devil.dual.DevilRanks.of(d).label() + "]: " + who), false);
+        }
+        return n;
+    }
+
+    private static String name(net.minecraft.server.MinecraftServer server, java.util.UUID id) {
+        ServerPlayer online = server.getPlayerList().getPlayer(id);
+        if (online != null) return online.getName().getString();
+        return server.getProfileCache() == null ? id.toString() : server.getProfileCache().get(id).map(com.mojang.authlib.GameProfile::getName).orElse(id.toString());
+    }
+
+    /** An operator frees a devil, or reserves it for a player. */
+    private static int handOver(CommandContext<CommandSourceStack> c, String id, ServerPlayer to) {
+        WorldDevil d = WorldDevil.byId(id);
+        if (d == null || !com.newuniverse.nusmp.devil.dual.DevilOwnership.adminSet(c.getSource().getServer(), d.id(), to)) return fail(c, "No devil answers to that name.");
+        return say(c, to == null ? d.name() + " is free." : d.name() + " is reserved for " + to.getName().getString() + ".");
+    }
+
     private static int cooldownReset(CommandContext<CommandSourceStack> c, ServerPlayer p) {
         DevilContract d = DevilStore.peek(p);
         if (d == null || !d.hasContract()) return fail(c, p.getName().getString() + " has no devil contract.");
@@ -180,6 +217,9 @@ public final class DevilCommands {
     private static int clear(CommandContext<CommandSourceStack> c, ServerPlayer p) {
         DevilContract d = DevilStore.peek(p);
         if (d == null) return say(c, p.getName().getString() + " had no devil contract.");
+        com.newuniverse.nusmp.devil.dual.DevilOwnership.release(p, d.devil);
+        d.registered = false;
+        d.corruption = 0f;
         d.tier = DevilTier.NONE;
         d.attribute = DevilAttribute.NONE;
         d.devil = "";

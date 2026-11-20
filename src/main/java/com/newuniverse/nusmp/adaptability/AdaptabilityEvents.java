@@ -47,6 +47,7 @@ public final class AdaptabilityEvents {
         if (!(e.getEntity() instanceof ServerPlayer p) || e.isCanceled() || e.getAmount() <= 0f || !AdaptabilityConfig.enabled()) return;
         Optional<ManasSkillInstance> opt = AdaptabilitySkill.active(p);
         if (opt.isEmpty()) return;
+        if (com.newuniverse.nusmp.devil.dual.DevilMagic.adaptationBlocked(e.getSource())) return;         // 4.40.0: Adaptability never adapts to devil magic (docs/devil_double_magic.md)
         ManasSkillInstance inst = opt.get();
         CompoundTag tag = inst.getOrCreateTag();
         boolean mastered = inst.isMastered(p);

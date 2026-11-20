@@ -27,12 +27,16 @@ public final class DevilModels {
 
     public static final ModelLayerLocation HORNS = loc("devil_horns", "main"), WINGS = loc("devil_wings", "main"), WEG_WIDE = loc("devil_weg", "wide"), WEG_SLIM = loc("devil_weg", "slim");
 
+    /** 4.40.0: the swept-back horns (four tapering segments, textures/entity/devil/horns2.png); the old ones above stay for {@code devil.classicLook}. */
+    public static final ModelLayerLocation HORNS_SWEPT = loc("devil_horns_swept", "main");
+
     private static ModelLayerLocation loc(String name, String part) { return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", name), part); }
 
     /** Game bus on the mod bus: registers the four layer definitions. */
     static void register(EntityRenderersEvent.RegisterLayerDefinitions e) {
         e.registerLayerDefinition(HORNS, Horns::create);
         e.registerLayerDefinition(WINGS, Wings::create);
+        e.registerLayerDefinition(HORNS_SWEPT, Horns::createSwept);
         e.registerLayerDefinition(WEG_WIDE, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.02F), false), 64, 64));
         e.registerLayerDefinition(WEG_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.02F), true), 64, 64));
     }
@@ -58,6 +62,28 @@ public final class DevilModels {
                         PartPose.offsetAndRotation(0f, -3f, 0f, -0.32f, 0f, s * 0.26f));                                     // the curve goes on
                 b.addOrReplaceChild("horn_" + n + "_3", CubeListBuilder.create().texOffs(0, 16).addBox(-0.5f, -3f, -0.5f, 1f, 3f, 1f),
                         PartPose.offsetAndRotation(0f, -2.85f, 0f, -0.34f, 0f, s * 0.12f));                                  // the tip
+            }
+            return LayerDefinition.create(mesh, 32, 32);
+        }
+
+        /**
+         * 4.40.0: four segments that rise out of the head, lean out, and sweep back and then down like a ram's, each thinner than the one below (a negative deformation) with a small ridge step between
+         * them; the texture offsets (0, 0), (0, 8), (0, 16), (0, 24) of horns2.png. Every segment is turned a little further back than the last ({@code BACK}) and a little less outward ({@code OUT}).
+         */
+        static LayerDefinition createSwept() {
+            MeshDefinition mesh = new MeshDefinition();
+            PartDefinition root = mesh.getRoot();
+            final float[] back = {-0.30f, -0.42f, -0.55f, -0.62f}, out = {0.40f, 0.22f, 0.10f, 0.04f}, len = {3f, 3f, 2.8f, 2.4f}, thin = {0f, -0.12f, -0.28f, -0.42f};
+            for (int i = 0; i < 2; i++) {
+                float s = i == 0 ? -1f : 1f;
+                String n = i == 0 ? "r" : "l";
+                PartDefinition parent = root;
+                for (int k = 0; k < 4; k++) {
+                    PartPose pose = k == 0 ? PartPose.offsetAndRotation(s * 2.5f, -7.7f, -1.0f, back[0], 0f, s * out[0])
+                            : PartPose.offsetAndRotation(0f, -len[k - 1] + 0.1f, 0f, back[k], 0f, s * out[k]);
+                    parent = parent.addOrReplaceChild("horn_" + n + "_" + (k + 1), CubeListBuilder.create().texOffs(0, 8 * k)
+                            .addBox(-1f, -len[k], -1f, 2f, len[k], 2f, new CubeDeformation(thin[k])), pose);
+                }
             }
             return LayerDefinition.create(mesh, 32, 32);
         }

@@ -1,0 +1,11 @@
+{
+  "_doc": "What counts as a dark magic for the devil ritual (docs/devil_double_magic.md): somebody at the circle with one of these may call a devil in any light. magics = grimoire MagicType names; devilAttributes = DevilAttribute names; skills = skill ids of any mod (an id of a mod that is not installed is never found, so it is harmless to list). Add your own.",
+  "magics": ["DARK", "SHADOW", "CURSE", "CURSE_WARDING", "DEMON_FIRE", "DEMON_ICE", "DEMON_LIGHT", "DEMON_WATER", "DEMON_BEAST", "BLOOD", "BONE", "SOUL", "SOUL_CORPSE", "ANTI_MAGIC", "BLACK_OIL"],
+  "devilAttributes": ["CURSE", "ANTI_MAGIC", "GHOST", "SOUL", "ROT"],
+  "skills": [
+    "tensura:black_flame", "tensura:black_lightning", "tensura:demon_lord_haki", "tensura:magic_darkness_transform", "tensura:shadow_motion",
+    "tensura:darkness_transform", "tensura:darkness_attack_resistance", "tensura:darkness_attack_nullification", "tensura:shadow_striker", "tensura:blood_mist",
+    "mysticism:darkness_domination", "mysticism:darkness_manipulation", "mysticism:hell_gate", "mysticism:hell_hall",
+    "tensuramoreskills:hellfire", "tensuramoreskills:cursed_menagerie", "tensuranoindex:dark_matter", "tensuranoindex:aspect_lilith_nightside", "tensuranoindex:aspect_demon"
+  ]
+}

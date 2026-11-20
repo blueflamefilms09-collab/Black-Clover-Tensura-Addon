@@ -287,4 +287,8 @@ public final class NUSkills {
 
     // ---- weapon skills (docs/weapon_skills.md): the ten Vassal weapon skills, the Djinn Equip skill and the Beast Will skill (12). Registered last so no older order changes ----
     public static final int WEAPON_SKILLS = WeaponSkills.registerAll(SKILLS);
+
+    // ---- Double Magic (docs/devil_double_magic.md): Devil Magic (Ultimate) and Devil Bond (Intrinsic), both given by a devil contract (devil.dual.DevilSkillGrant). Registered last so no older order changes ----
+    public static final DeferredHolder<ManasSkill, DevilMagicSkill> DEVIL_MAGIC = SKILLS.register("devil_magic", DevilMagicSkill::new);
+    public static final DeferredHolder<ManasSkill, DevilBondSkill> DEVIL_BOND = SKILLS.register("devil_bond", DevilBondSkill::new);
 }

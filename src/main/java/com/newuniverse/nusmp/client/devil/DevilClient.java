@@ -12,6 +12,7 @@ import com.newuniverse.nusmp.devil.DevilNet;
 import com.newuniverse.nusmp.devil.DevilRules;
 import com.newuniverse.nusmp.devil.DevilTier;
 import com.newuniverse.nusmp.devil.Sacrifice;
+import com.newuniverse.nusmp.devil.dual.CorruptionRules;
 import com.newuniverse.nusmp.devil.WorldDevil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
@@ -113,6 +114,7 @@ public final class DevilClient {
             e.registerBelowAll(EYES, DevilClient::renderEyes);
             e.registerAboveAll(HUD, DevilClient::renderHud);
         });
+        DevilIconClient.init(modBus);                                                          // 4.40.0: the animated icons of Devil Magic and Devil Bond, composed from emblems
         modBus.addListener(DevilModels::register);
         modBus.addListener(WegLayer::add);
         modBus.addListener(DevilFormLayer::add);
@@ -124,6 +126,9 @@ public final class DevilClient {
         DevilNet.clientSync = DevilClient::onSync;
         DevilNet.clientVisual = DevilClient::onVisual;
     }
+
+    /** The owner's last state from the server, or null (read by the icon and layers of {@code client.devil}). */
+    public static DevilNet.Sync ownSync() { return own; }
 
     private static void clear() {
         own = null;
@@ -182,12 +187,35 @@ public final class DevilClient {
 
     private static void renderEyes(GuiGraphics g, DeltaTracker delta) {
         DevilNet.Sync s = own;
-        if (s == null || (s.sacMask() & Sacrifice.EYES) == 0) return;
+        if (s == null || s.sacMask() == 0) return;
         float st = (float) DevilClientConfig.eyeStrength();
         if (st <= 0.01f) return;
         int w = g.guiWidth(), h = g.guiHeight();
         if ((s.sacMask() & Sacrifice.LOST_EYE_LEFT.bit()) != 0) strips(g, w, h, true, st);
         if ((s.sacMask() & Sacrifice.LOST_EYE_RIGHT.bit()) != 0) strips(g, w, h, false, st);
+        if (s.corruption() > 0 && !DevilClientConfig.classicLook()) creep(g, w, h, CorruptionRules.cover(s.corruption(), st));
+    }
+
+    /**
+     * The creeping corruption of the price (docs/devil_double_magic.md): dark frames laid from the edge toward the centre, the dark growing with the level, until at the server's cap (85 percent by default) only a
+     * small window around the crosshair stays clear ({@link CorruptionRules#clearRadius}). 24 rings of 4 fills per frame, no texture, no allocation.
+     */
+    private static void creep(GuiGraphics g, int w, int h, float cover) {
+        if (cover <= 0.01f) return;
+        float clear = CorruptionRules.clearRadius(cover);
+        int n = 24, cx = w / 2, cy = h / 2;
+        for (int i = n - 1; i >= 0; i--) {
+            float t0 = clear + (1f - clear) * i / n, t1 = clear + (1f - clear) * (i + 1) / n;
+            int a = (int) (255f * CorruptionRules.ringAlpha((i + 1) / (float) n, cover));
+            if (a <= 0) continue;
+            int col = (a << 24) | 0x0A0006;
+            int ix0 = Math.round(cx - cx * t0), ix1 = Math.round(cx + cx * t0), iy0 = Math.round(cy - cy * t0), iy1 = Math.round(cy + cy * t0);
+            int ox0 = Math.round(cx - cx * t1), ox1 = Math.round(cx + cx * t1), oy0 = Math.round(cy - cy * t1), oy1 = Math.round(cy + cy * t1);
+            g.fill(ox0, oy0, ox1, iy0, col);
+            g.fill(ox0, iy1, ox1, oy1, col);
+            g.fill(ox0, iy0, ix0, iy1, col);
+            g.fill(ix1, iy0, ox1, iy1, col);
+        }
     }
 
     /** A dark band down one edge of the screen, black at the edge and clear a fifth of the way in: 16 strips, so no texture and no allocation. */

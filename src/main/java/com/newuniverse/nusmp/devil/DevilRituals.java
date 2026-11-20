@@ -1,5 +1,9 @@
 package com.newuniverse.nusmp.devil;
 
+import com.newuniverse.nusmp.blackclover.GrimoirePages;
+import com.newuniverse.nusmp.devil.dual.DarkRitualRules;
+import com.newuniverse.nusmp.devil.dual.DevilOwnership;
+import com.newuniverse.nusmp.devil.dual.DevilRanks;
 import com.newuniverse.nusmp.item.NUItems;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxTone;
@@ -20,6 +24,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import io.github.manasmods.manascore.skill.api.SkillAPI;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -84,6 +93,40 @@ public final class DevilRituals {
         if (!p.isCreative()) p.getInventory().clearOrCountMatchingItems(s -> s.is(item), n, p.inventoryMenu.getCraftSlots());
     }
 
+    // ---------------------------------------------------------------- the dark rule (4.40.0)
+    private static final TagKey<Biome> DARK_BIOMES = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_dark_places"));
+
+    /** Does this player carry a dark magic (the data list devil_dark_magic.json: a grimoire magic, a devil attribute or a skill of any mod)? At most 64 skill lookups. */
+    static boolean carriesDark(ServerPlayer q) {
+        try {
+            DarkRitualRules.Dark list = DarkRitualRules.table();
+            String magic = GrimoirePages.grimoireOf(q).map(i -> GrimoirePages.magicOf(i).name()).orElse(null);
+            DevilContract qc = DevilStore.peek(q);
+            if (DarkRitualRules.isDark(list, magic, qc != null && qc.hasContract() ? qc.attribute.name() : null)) return true;
+            var skills = SkillAPI.getSkillsFrom(q);
+            for (String id : list.skills()) {
+                ResourceLocation rl = ResourceLocation.tryParse(id);
+                if (rl != null && skills.getSkill(rl).isPresent()) return true;
+            }
+        } catch (RuntimeException | LinkageError unknown) {
+            return false;                                                                // a player whose skills can not be read counts as having none
+        }
+        return false;
+    }
+
+    /** The ground on which the ritual may begin, or NONE. One biome tag lookup, one light read, and one pass over the level's players (the caller's circle). */
+    static DarkRitualRules.Why darkWhy(ServerPlayer p) {
+        if (!DevilConfig.darkRule()) return DarkRitualRules.Why.OFF;
+        ServerLevel l = p.serverLevel();
+        boolean magic = carriesDark(p);
+        double r = DevilConfig.darkRadius(), r2 = r * r;
+        if (!magic) for (ServerPlayer q : l.players()) {                                   // the level's player list: no world query
+            if (q != p && q.isAlive() && !q.isSpectator() && q.distanceToSqr(p) <= r2 && carriesDark(q)) { magic = true; break; }
+        }
+        return DarkRitualRules.allow(true, magic, DevilConfig.darkDimension(l.dimension().location().toString()), l.getBiome(p.blockPosition()).is(DARK_BIOMES),
+                l.getMaxLocalRawBrightness(p.blockPosition()), DevilConfig.darkMaxLight());
+    }
+
     // ---------------------------------------------------------------- begin
     /** Starts the ritual that calls this devil, or tells the caller the first thing that is wrong. */
     static DevilRitualRules.Denial begin(ServerPlayer p, WorldDevil d) {
@@ -93,6 +136,12 @@ public final class DevilRituals {
         if (no != DevilRitualRules.Denial.NONE) {
             say(p, no.text, ChatFormatting.RED);
             return no;
+        }
+        if (DevilOwnership.refuses(p, d)) return DevilRitualRules.Denial.TAKEN;                // 4.40.0: One of One: a devil with a holder is not called again
+        DarkRitualRules.Why dark = darkWhy(p);
+        if (dark == DarkRitualRules.Why.NONE) {
+            say(p, DevilRitualRules.Denial.NO_DARK.text, ChatFormatting.RED);
+            return DevilRitualRules.Denial.NO_DARK;
         }
         c = DevilStore.of(p);
         switch (d.world()) {                                                                 // what the ritual itself costs, paid when it begins (a broken ritual does not give it back)
@@ -115,6 +164,7 @@ public final class DevilRituals {
         double len = Math.hypot(look.x, look.z);
         double fx = len < 1.0E-4 ? 0 : look.x / len, fz = len < 1.0E-4 ? 1 : look.z / len;
         c.ritual = new DevilRitualRun(d.id(), now, p.getX(), p.getY(), p.getZ(), fx, fz, p.level().dimension().location().toString());
+        c.ritual.lightBound = DarkRitualRules.needsLightCheck(dark);
         c.lastRitual = now;
         c.offer = "";
         p.sendSystemMessage(Component.literal(d.world().ritual + " (" + d.world().label + ")").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
@@ -136,7 +186,14 @@ public final class DevilRituals {
             return;
         }
         int t = (int) Math.max(0, DevilContracts.time(p) - r.start);
-        if (t == 0) return;                                                                  // tick 0 was played by begin
+        if (t == 0) return;
+        if (r.lightBound && t % 20 == 0 && DarkRitualRules.lightBroken(p.serverLevel().getMaxLocalRawBrightness(p.blockPosition()), DevilConfig.darkMaxLight())) {
+            c.ritual = null;
+            DevilNpcs.dissolve(p, c);
+            say(p, "The light frightens the devil away. The ritual breaks.", ChatFormatting.RED);
+            sound(p, SoundEvents.ELDER_GUARDIAN_CURSE, 1.0f, 0.7f);
+            return;
+        }                                                                  // tick 0 was played by begin
         float max = Math.max(1f, p.getMaxHealth());
         String why = DevilRitualRules.broken(d.world(), Math.sqrt(p.distanceToSqr(r.x, r.y, r.z)), p.getHealth() / max);
         if (why != null) {
@@ -262,6 +319,7 @@ public final class DevilRituals {
         DevilRules.Effect fx = DevilRules.effect(d.attribute());
         p.sendSystemMessage(Component.literal(cap(d.name()) + ", " + d.title() + " (" + d.world().label + "), offers you a contract.").withColor(d.color() | 0x404040));
         say(p, "  Power: a " + d.tier().key() + " devil of " + d.attribute().key().replace('_', ' ') + ". " + fx.blurb(), ChatFormatting.GRAY);
+        say(p, "  Rank: " + DevilRanks.line(DevilRanks.of(d)), ChatFormatting.GRAY);
         say(p, "  Price: " + priceText(d), ChatFormatting.GRAY);
         MutableComponent line = Component.literal("  ");
         line.append(Component.literal("[Sign]").withStyle(s -> s.withColor(ChatFormatting.DARK_RED).withBold(true).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/devil sign"))
@@ -283,6 +341,7 @@ public final class DevilRituals {
         c.offer = "";
         if (d == null || !on()) return false;
         if (c.hasContract() || Bonds.refuse(p, Bonds.Kind.DEVIL, "a devil contract")) return false;
+        if (DevilOwnership.refuses(p, d)) return false;
         if (d.world() == DevilWorld.BERSERK && !p.isCreative()) {
             if (p.experienceLevel < DevilRitualRules.BERSERK_LEVELS) { say(p, DevilRitualRules.Denial.NO_LEVELS.text, ChatFormatting.RED); return false; }
             p.giveExperienceLevels(-p.experienceLevel);
@@ -292,6 +351,7 @@ public final class DevilRituals {
             p.getInventory().placeItemBackInInventory(new ItemStack(Items.DIAMOND, 8));
             p.getInventory().placeItemBackInInventory(new ItemStack(Items.GOLD_INGOT, 16));
         }
+        if (!DevilOwnership.claim(p, c, d)) { DevilOwnership.refuses(p, d); return false; }       // 4.40.0: One of One, decided again at the moment of signing
         c.tier = d.tier();
         c.attribute = d.attribute();
         c.devil = d.id();

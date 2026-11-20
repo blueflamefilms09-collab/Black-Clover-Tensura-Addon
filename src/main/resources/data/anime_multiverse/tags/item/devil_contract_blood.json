@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "tensura:royal_blood", "required": false },
+    { "id": "tensura:zane_blood", "required": false },
+    "anime_multiverse:gneiss_crystal"
+  ]
+}
