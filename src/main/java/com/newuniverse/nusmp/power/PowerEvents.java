@@ -60,7 +60,8 @@ public final class PowerEvents {
         if (k == null) return 1.0;
         HeroCtx c = HeroCtx.of(p);
         if (c == null || c.stack.isEmpty()) return 1.0;
-        return k.isHoly() ? PowerConfig.legendary() : PowerConfig.vassal();
+        double full = k.isHoly() ? PowerConfig.legendary() : PowerConfig.vassal();
+        return PowerConfig.levelRamp() ? PowerRules.ramp(full, HeroBonds.of(p).level(), PowerConfig.levelStart()) : full;
     }
 
     // ------------------------------------------------------------------ read by the meditation attunement (attune/AttuneService), appended: nothing above changed

@@ -10,8 +10,8 @@ public final class PowerConfig {
     private PowerConfig() {}
 
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED;
-    public static final ModConfigSpec.DoubleValue DJINN, BEAST_WILL, VASSAL, TAKEN, LEGENDARY_MARGIN;
+    public static final ModConfigSpec.BooleanValue ENABLED, LEVEL_RAMP;
+    public static final ModConfigSpec.DoubleValue DJINN, BEAST_WILL, VASSAL, TAKEN, LEGENDARY_MARGIN, LEVEL_START;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -29,6 +29,10 @@ public final class PowerConfig {
                 .defineInRange("legendaryMargin", 1.5, PowerRules.MIN_LEGENDARY_MARGIN, 100.0);
         TAKEN = b.comment("Factor on the damage a wielder TAKES while a Djinn is out or a Beast Will phase is held (0.5 = half). 1 = off. Vassal wielders already have damageTakenFactor of the hero weapons.")
                 .defineInRange("damageTakenFactor", 0.5, 0.0, 1.0);
+        LEVEL_RAMP = b.comment("4.38.0: the hero / vassal weapon raise grows with the weapon's level instead of being full from the first blow. false = the old behaviour (full factor at level 0).")
+                .define("levelRamp", true);
+        LEVEL_START = b.comment("4.38.0: the share of the hero / vassal raise a weapon has at level 0 (0.05 = 5 percent of the extra); it rises in a straight line to 1.0 (all of it) at level 100. Only used when levelRamp is on.")
+                .defineInRange("levelStartShare", 0.05, 0.0, 1.0);
         b.pop();
         SPEC = b.build();
     }
@@ -42,5 +46,7 @@ public final class PowerConfig {
     public static double beastWill() { return get(BEAST_WILL); }
     public static double vassal() { return get(VASSAL); }
     public static double taken() { return get(TAKEN); }
+    public static boolean levelRamp() { return get(LEVEL_RAMP); }
+    public static double levelStart() { return get(LEVEL_START); }
     public static double legendary() { return PowerRules.legendary(vassal(), get(LEGENDARY_MARGIN)); }
 }

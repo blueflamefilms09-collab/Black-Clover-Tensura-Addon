@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.37.1] — Hero and vassal weapons no longer start at about 10 000 damage
+- FIXED (server setting `levelRamp` in `nusmp-power-server.toml`, default on; `false` restores the old numbers exactly): the x25 (x37.5 Legendary) power raise was full from the first blow, stacked on the x4 hero buff and the x2 anime factor. It now starts at 5% of its extra (`levelStartShare`) and grows in a straight line to full at weapon level 100. A level-0 Vassal Scythe blow is about 140 (was about 1 600); a maxed weapon is unchanged. See docs/power_level_ramp.md.
+- KEPT: every other factor, the PvP hit cap and the boss caps.
+- Cost: one level lookup in the existing damage hook. Honest caveat: not played; the new unit test was not run locally, CI runs it.
+
 ## [4.37.0] — Hellblaze, The Demon Sin is now a katana
 Owner request: rework the sword into a katana with a sheath in the other hand, black and dark red, with a purplish tone on every hit.
 - REPLACED (client setting `visual.hellblazeKatana` in `nusmp-visual-upgrade-god-client.toml`, default on; `false` restores the old broadsword exactly): the in-hand model is now a black and dark-red katana made in Blender (1190 quad lines, 223 for the far LOD), same hand spot and length as the old sword.

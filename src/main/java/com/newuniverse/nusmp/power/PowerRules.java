@@ -41,4 +41,15 @@ public final class PowerRules {
         if (!(amount > 0f)) return amount;
         return (float) (amount * Math.max(0.0, Math.min(1.0, takenFactor)));
     }
+
+    /**
+     * 4.38.0: the hero / vassal raise by weapon level. The extra (factor - 1) is scaled by {@code start} at level 0 and rises in a straight line to all of it at level 100, so a new weapon
+     * does not hit 10 000 on its first blow. A factor of 1 or less, or a bad number, comes back as it is; the level is held between 0 and 100.
+     */
+    public static double ramp(double factor, int level, double start) {
+        if (!(factor > 1.0)) return factor;
+        double st = Double.isNaN(start) ? 0.0 : Math.max(0.0, Math.min(1.0, start));
+        double lv = Math.max(0, Math.min(100, level)) / 100.0;
+        return 1.0 + (factor - 1.0) * (st + (1.0 - st) * lv);
+    }
 }

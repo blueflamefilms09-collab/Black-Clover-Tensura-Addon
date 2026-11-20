@@ -35,4 +35,18 @@ class PowerRulesTest {
         for (double v : new double[] {1.01, 2, 25, 400, 1000}) for (double m : new double[] {-3, 0, 1, 1.1, 1.5, 100})
             assertTrue(PowerRules.legendary(v, m) >= v * PowerRules.MIN_LEGENDARY_MARGIN - 1e-9, v + " x " + m);
     }
+
+    @Test void theRaiseGrowsWithTheWeaponLevel() {
+        assertEquals(2.2, PowerRules.ramp(25, 0, 0.05), 1e-9);              // a new weapon: 5 % of the extra
+        assertEquals(25.0, PowerRules.ramp(25, 100, 0.05), 1e-9);           // a maxed one: all of it
+        assertEquals(1.0 + 24.0 * (0.05 + 0.95 * 0.5), PowerRules.ramp(25, 50, 0.05), 1e-9);
+        assertEquals(25.0, PowerRules.ramp(25, 500, 0.05), 1e-9);           // the level is held at 100
+        assertEquals(2.2, PowerRules.ramp(25, -9, 0.05), 1e-9);
+        assertEquals(25.0, PowerRules.ramp(25, 0, 1.0), 1e-9);              // start share 1 = no ramp
+        assertEquals(1.0, PowerRules.ramp(25, 0, 0.0), 1e-9);
+        assertEquals(1.0, PowerRules.ramp(1, 40, 0.05), 1e-9);              // no raise stays no raise
+        assertEquals(0.5, PowerRules.ramp(0.5, 40, 0.05), 1e-9);
+        double prev = 0;
+        for (int l = 0; l <= 100; l++) { double f = PowerRules.ramp(37.5, l, 0.05); assertTrue(f >= prev); prev = f; }
+    }
 }
