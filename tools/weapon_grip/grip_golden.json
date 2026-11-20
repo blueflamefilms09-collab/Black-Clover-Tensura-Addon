@@ -2729,11 +2729,11 @@
  },
  "legendary_sword__wind_king_katana": {
   "class": "longsword",
-  "fraction": 0.169,
+  "fraction": 0.187,
   "source": "directive",
-  "x": 0.0,
-  "y": 2.151,
-  "z": -0.083
+  "x": 0.01,
+  "y": 14.075,
+  "z": 0.0
  },
  "legendary_sword_curse": {
   "class": "longsword",
@@ -5299,25 +5299,25 @@
   "class": "longsword",
   "fraction": 0.15,
   "source": "directive",
-  "x": 2.535,
-  "y": 12.475,
-  "z": 0.0
+  "x": 1.329,
+  "y": 14.005,
+  "z": 0.001
  },
  "up/hellblaze_the_demon_sin__katana_lod": {
   "class": "longsword",
   "fraction": 0.15,
   "source": "directive",
-  "x": 0.168,
-  "y": 12.475,
+  "x": 0.0,
+  "y": 13.938,
   "z": 0.0
  },
  "up/hellblaze_the_demon_sin__saya": {
   "class": "item",
   "fraction": 0.5,
   "source": "class",
-  "x": 2.317,
-  "y": 34.95,
-  "z": 0.025
+  "x": -1.669,
+  "y": 35.071,
+  "z": 0.0
  },
  "up/hellblaze_the_demon_sin_lod": {
   "class": "longsword",
@@ -5857,35 +5857,35 @@
  },
  "vassal_katana__sakura_stone_katana": {
   "class": "katana",
-  "fraction": 0.236,
+  "fraction": 0.288,
   "source": "directive",
-  "x": 0.772,
-  "y": 6.73,
-  "z": -1.149
+  "x": 0.007,
+  "y": 13.744,
+  "z": 0.0
  },
  "vassal_katana__siderite_katana": {
   "class": "katana",
-  "fraction": 0.237,
+  "fraction": 0.246,
   "source": "directive",
-  "x": 0.0,
-  "y": 11.381,
-  "z": -1.046
+  "x": 0.006,
+  "y": 14.26,
+  "z": 0.0
  },
  "vassal_katana__soul_eater_katana": {
   "class": "katana",
-  "fraction": 0.279,
+  "fraction": 0.264,
   "source": "directive",
-  "x": 0.0,
-  "y": 7.865,
-  "z": 0.0
+  "x": 0.006,
+  "y": 13.789,
+  "z": -0.005
  },
  "vassal_katana__white_tiger_katana": {
   "class": "katana",
-  "fraction": 0.317,
+  "fraction": 0.313,
   "source": "directive",
-  "x": 0.0,
-  "y": 14.259,
-  "z": 0.0
+  "x": 0.007,
+  "y": 13.965,
+  "z": 0.008
  },
  "vassal_mirror": {
   "class": "shield",

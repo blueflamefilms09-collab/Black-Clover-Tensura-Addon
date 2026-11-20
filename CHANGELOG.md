@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.74.0] — The six hero katanas are rebuilt as true katanas
+Owner request (earlier): the katanas should read as real katanas.
+- REPLACED (same ids): the Vassal White Tiger, Soul Eater, Siderite and Sakura Stone katanas, the Wind King katana and Hellblaze the Demon Sin (katana, lod and a new saya): single-edged curved blade, hamon, shinogi, kissaki, a thin tsuba with cut-outs, habaki, wrapped grip, kashira and menuki; the lore sits on that silhouette (tiger stripes, rib arcs and skull menuki, star tsuba, petals, feathers, sin eyes). Blade width is about 1/30 of the length. Built with scripted Blender (`tools/blender/hero_katanas.py`, `hero_hellblaze.py`), not hand-modelled.
+- KEPT: ids, hand placement, glow headers, Better Combat files, engravings, and the `classicVassalForms` setting (the old look); the 4.61.0 files are archived in `classic_thin` folders (not selectable).
+- COST: client drawing only, 3.3k to 3.7k quad lines per katana (was 4.0k to 4.6k); Hellblaze 1.3k.
+- CAVEATS: software-rendered previews (`docs/previews/hero_katanas_v2/`), not seen in a game; Soul Eater is about 8 % shorter in hand.
+
 ## [4.73.0] — Real arrows with magic, real falling meteors, longer technique durations
 Owner requests: bows shoot real arrows with physical and magic damage and arrow rain summons actual arrows; meteors are real falling meteor models everywhere; short ability durations are longer.
 - NEW (bow): `HeroArrow`, a real arrow entity (vanilla arrow physics, not saved, not pickable) for the hero bow: physical hit plus a magic hit sized per bow form (25 to 40 %), with a per-form effect (poison and mark, glow, root, extra pierce, three child arrows, fire burst, ice slow, star burst, curse). Arrow Rain, Frozen Rain, Starfall Volley, Autocracy Justice and Arrow Squall now spawn real arrows. Server settings `heroweapon.bow.realArrows` (true; false = the old hitscan release and instant waves), `maxArrowsPerPlayer` 24, `maxArrowsGlobal` 256, `magicShareScale` 1.0. Self-test `hero.bow.arrows`. Doc `docs/heroweapon/bow_arrows.md`.

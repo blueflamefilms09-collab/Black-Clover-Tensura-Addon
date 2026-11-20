@@ -1051,16 +1051,16 @@
  },
  "legendary_sword__wind_king_katana": {
   "tp_left": {
-   "arm": 0.261,
+   "arm": 0.262,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.03
   },
   "tp_right": {
-   "arm": 0.261,
+   "arm": 0.262,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.03
   }
  },
  "legendary_sword_curse": {
@@ -1527,58 +1527,58 @@
  },
  "vassal_katana__sakura_stone_katana": {
   "tp_left": {
-   "arm": 0.254,
+   "arm": 0.24,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.007
+   "float": 0.029
   },
   "tp_right": {
-   "arm": 0.254,
+   "arm": 0.24,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.007
+   "float": 0.029
   }
  },
  "vassal_katana__siderite_katana": {
   "tp_left": {
-   "arm": 0.255,
+   "arm": 0.246,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.031
   },
   "tp_right": {
-   "arm": 0.255,
+   "arm": 0.246,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.031
   }
  },
  "vassal_katana__soul_eater_katana": {
   "tp_left": {
-   "arm": 0.249,
+   "arm": 0.246,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.024
+   "float": 0.029
   },
   "tp_right": {
-   "arm": 0.249,
+   "arm": 0.246,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.024
+   "float": 0.029
   }
  },
  "vassal_katana__white_tiger_katana": {
   "tp_left": {
-   "arm": 0.256,
+   "arm": 0.254,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.03
   },
   "tp_right": {
-   "arm": 0.256,
+   "arm": 0.254,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.03
   }
  },
  "vassal_mirror": {
