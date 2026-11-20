@@ -341,6 +341,7 @@ class Wave102DefsTest {
         for (String line : lines) {
             String[] p = line.trim().split("\\s+");
             perGrade.merge(p[1], 1, Integer::sum);
+            if (p[0].equals("devil_contract")) continue;                  // 4.65.0: now a plain craftable item (DevilContractPlainItemTest), no relic def
             if (!src.contains("\"" + p[0] + "\"")) {
                 bad.add(p[0] + " is no longer in the sources");
                 continue;

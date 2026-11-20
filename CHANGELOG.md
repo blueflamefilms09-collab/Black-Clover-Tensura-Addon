@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.71.1] — Build fix for 4.65.0 to 4.71.0 (the Devil Contract is a plain item)
+- Fix: three relic tests (`RelicHandCoverageTest`, `RelicThemesDataTest`, `Wave102DefsTest`) still expected `devil_contract` to be a relic def, which 4.65.0 turned into a plain craftable item; every build since 4.65.0 failed on them, so no release was published for 4.65.0 to 4.71.0. The tests now know that item. The Devil Contract itself is unchanged.
+- This release carries everything of 4.65.0 to 4.71.0 (see the sections below): infernal contract item, Sinbad armour fit and voices, reset scrolls, curse bow stave, Hub v2, style wave 2, the hero Shield (vanilla guard, reflect, size), any-target techniques, wings on the back, devil mastery and canon devil looks.
+
 ## [4.71.0] — Hero Shield like a real shield, targets on anything, wings on the back, devil mastery, canon devil looks
 Owner requests: the hero Shield should protect and reflect like a normal shield and sit right; hero and vassal abilities should work on any mob or player; wings on the back; devil awakening and mastery; each devil drawn as itself.
 - NEW (server `heroweapon.shieldVanillaGuard`, default on): the hero Shield blocks every frontal blow in full and the guard no longer breaks from damage (axes still disable it); the Counter still charges from what it soaks. Off: the Resolve meter as before.

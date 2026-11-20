@@ -79,7 +79,7 @@ class RelicHandCoverageTest {
         assertTrue(all.size() >= 360, "the parser should see about 370 relics, saw " + all.size());
         assertTrue(all.stream().anyMatch(d -> d.id().equals("arcanists_notebook")), "the notebooks of wave 17 are found");
         assertTrue(all.stream().anyMatch(d -> d.id().equals("the_infinity_gauntlet")), "the stones and the gauntlet of wave 30 are found");
-        assertTrue(all.stream().filter(d -> d.slot().equals("CONSUMABLE")).count() >= 22, "the consumables are found");
+        assertTrue(all.stream().filter(d -> d.slot().equals("CONSUMABLE")).count() >= 21, "the consumables are found");
     }
 
     @Test

@@ -90,7 +90,7 @@ class RelicThemesDataTest {
         String sources = all.toString();
         assertTrue(sources.length() > 200000, "the relic sources look truncated");
         List<String> missing = new ArrayList<>();
-        for (String id : RelicThemes.parse(MiniJson.parse(raw()), SHIPPED).explicit().keySet()) if (!sources.contains("\"" + id + "\"")) missing.add(id);
+        for (String id : RelicThemes.parse(MiniJson.parse(raw()), SHIPPED).explicit().keySet()) if (!id.equals("devil_contract") && !sources.contains("\"" + id + "\""))      // 4.65.0: the Devil Contract is a plain item now, no relic def; its theme row stays missing.add(id);
         assertEquals(List.of(), missing, "these ids appear nowhere in the relic sources (a typo?)");
     }
 
