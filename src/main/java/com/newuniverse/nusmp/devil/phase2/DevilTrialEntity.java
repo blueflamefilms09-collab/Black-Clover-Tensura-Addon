@@ -3,6 +3,9 @@ package com.newuniverse.nusmp.devil.phase2;
 import com.newuniverse.nusmp.devil.DevilTier;
 import com.newuniverse.nusmp.devil.WorldDevil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -20,6 +23,13 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.UUID;
 
@@ -29,12 +39,19 @@ import java.util.UUID;
  * name, and the glow of the vanilla glowing flag. It never saves, never drops, never despawns by itself and is removed by {@link Trials#check} (every second) when its caller is gone or dead, in another level, too far, or the trial
  * ran out of time. The result goes to {@link Trials#report}: IMPRESSED when its health falls to the impress share, WON when it dies.
  *
+ * <p>Look (docs/devil_trial_model.md): a GeckoLib entity ({@link GeoEntity}). The devil's id is a synced string so the client can pick that devil's painted sheet; the clips idle / walk / attack play from the
+ * model's own animation file, the attack clip follows the vanilla swing flag. Nothing else is synced and no packet of its own is sent.
+ *
  * <p>Cost: at most one per player and {@code trial.max} (default 4) on the server, each living at most {@code trial.seconds} (default 150); vanilla mob AI for one target; one boss-bar update every 10 ticks;
  * no scan, no packet of its own.
  */
-public final class DevilTrialEntity extends Monster {
+public final class DevilTrialEntity extends Monster implements GeoEntity {
+    private static final EntityDataAccessor<String> DEVIL_ID = SynchedEntityData.defineId(DevilTrialEntity.class, EntityDataSerializers.STRING);
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.devil_trial.idle");
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.devil_trial.walk");
+    private static final RawAnimation ATTACK = RawAnimation.begin().thenPlay("animation.devil_trial.attack");
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private UUID challenger;
-    private String devil = "";
     private int result;
     private final ServerBossEvent bar = new ServerBossEvent(Component.literal("Trial"), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS);
 
@@ -60,7 +77,7 @@ public final class DevilTrialEntity extends Monster {
     /** Sets the trial up for this caller and devil; called once by {@link Trials#start}. */
     void init(ServerPlayer caller, WorldDevil d, double healthScale) {
         this.challenger = caller.getUUID();
-        this.devil = d.id();
+        entityData.set(DEVIL_ID, d.id());
         double[] s = stats(d.tier(), healthScale);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(s[0]);
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(s[1]);
@@ -76,9 +93,29 @@ public final class DevilTrialEntity extends Monster {
 
     public UUID challenger() { return challenger; }
 
-    public String devilId() { return devil; }
+    public String devilId() { return entityData.get(DEVIL_ID); }
 
     public int result() { return result; }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder b) {
+        super.defineSynchedData(b);
+        b.define(DEVIL_ID, "");
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<DevilTrialEntity>(this, "main", 4, state -> state.setAndContinue(state.isMoving() ? WALK : IDLE)));
+        controllers.add(new AnimationController<DevilTrialEntity>(this, "attack", 0, state -> {          // the vanilla swing flag starts the clip once; no packet of its own
+            if (state.getAnimatable().swinging && state.getController().getAnimationState() == AnimationController.State.STOPPED) {
+                state.getController().forceAnimationReset();
+                state.setAnimation(ATTACK);
+            }
+            return PlayState.CONTINUE;
+        }));
+    }
+
+    @Override public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
     protected void registerGoals() {

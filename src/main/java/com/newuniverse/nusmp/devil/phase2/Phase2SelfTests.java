@@ -300,6 +300,8 @@ public final class Phase2SelfTests {
             if (e.hurt(level.damageSources().generic(), 3f) || e.getHealth() != before) return Result.fail("a stranger could hurt the trial devil");
             if (e.shouldBeSaved() || e.removeWhenFarAway(1.0E6)) return Result.fail("the trial devil is saved or despawns by itself");
             if (Trials.live(server) < 0 || Trials.live(server) > Phase2Config.trialMax() + 64) return Result.fail("the count of running trials is not read");
+            if (!e.devilId().isEmpty() || e.getAnimatableInstanceCache() == null) return Result.fail("the trial devil's synced devil id or its GeckoLib cache is wrong (docs/devil_trial_model.md)");
+            if (Phase2Config.betrayalLeaves() < 0 || Phase2Config.betrayalLeaves() > 20) return Result.fail("the betrayal's floor is not bounded");
         } finally {
             e.discard();
         }

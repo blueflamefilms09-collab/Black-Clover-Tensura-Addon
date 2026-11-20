@@ -69,6 +69,24 @@ Example: a shared devil with 4 contracts, one of them dominance: that player has
 * "Impressed": the devil's health at or under `trial.impressShare` (half). Dominance needs the kill.
 * "Three players within the same Minecraft day": the owner's message ended there, so no rule acts on it (section 7).
 
+### 4a. The open points, closed (the owner said "do what you think is best")
+
+Each point below was read once more and the most sensible reading was chosen. Nothing that was a clear owner decision was touched (the four pact devils stay open to everybody, the numbers of the EP table, the three kinds, the sever rule). Every choice is behind a server setting, so another reading is a config line, not a code change.
+
+| Point | Choice | Why | Switch |
+|---|---|---|---|
+| "5 times to 10 times the single requirement" | Kept: the second Supreme devil asks 5 times, each further one more, up to 10 times; the default cap is two Supreme devils, so 10 times is only met if the cap is raised. | Raising the default cap would hand out a third god-rank devil by default, a bigger balance change than the owner's sentence asks for. A server that wants the full range sets `supremeMax = 3` (second 5x, third 10x), one that wants a flat tenfold second devil sets `strongFirstFactor = 10`. | `stack.supremeMax`, `stack.strongFirstFactor`, `stack.strongMaxFactor` |
+| "The 10-star menu" | Kept: it is the existing intrinsic skill Devil Bond, the list the player already opens for all intrinsic skills. | A second menu would show the same list twice and need a packet pair, and the owner gave no other screen when asked (docs/devil_double_magic.md). | none needed |
+| "Tinsel" | Kept: the tag `#anime_multiverse:devil_contract_blood`. | The item was never named; the tag lets a pack list any item. | the tag (data) |
+| Sabotage debuff "on the killer" | Kept: the killer of a fellow holder both severs the contract and is cursed; friendly fire without a kill costs the same curse after 5 blows in 30 seconds; a kill between strangers is neither. | Both readings of the sentence (sever, curse) are in the owner's list, and a curse that only comes with a sever would let a holder grind a rival with blows for free. | `sever.enabled`, `sabotage.*`, game rule `devilSeverOnKill` |
+| The betrayal strike | Kept non-lethal by default, now configurable: `summon.betrayalLeaves` (default 2 health = one heart; `0` lets the strike kill). | A summon that can kill a bystander in one blow is a grief tool on a public server; a server that wants the harsher reading sets it to 0. | `summon.betrayal`, **new** `summon.betrayalLeaves` |
+| "Impressed" | Kept: the devil's health at or under half; dominance needs the kill. | One number the player can read off the boss bar, and it leaves the kill for dominance. | `trial.impressShare` |
+| The same-day triple | Left as the reserved hook, off by default. | The sentence stops before its consequence. Every consequence I could invent (curse all three, shrink their shares, ban the third) punishes a player for other players' timing, which is a griefing lever on a public server, and an invented rule is worse than none. The hook is bounded (one event per signature, nothing scanned) and is the place for the owner's rule once it is written. | `sabotage.sameDayTripleHook` |
+| Held devils give no power | Kept: only the active devil gives powers; held ones are paid for and counted. | Matches "only one devil at a time". | `stack.enabled` |
+| Without Tensura the EP reads 0 | Closed: moot. Tensura Reincarnated is a **required** dependency in `neoforge.mods.toml`, so the case cannot occur. | | `ep.enabled` still switches the rule off |
+| The earlier guide's four questions (docs/devil_contract_guide.md section 9: separate union, where the tier comes from, death in the union, the key) | Closed by the build of 3.48.0 (docs/devil_contract.md): a separate union, the old one kept; the tier from the price and the attribute from the devil; a death in the union starts the cooldown (`union.deathStartsCooldown`); the key is N and rebindable. | | the settings of docs/devil_contract.md |
+| Double Magic's four questions (docs/devil_double_magic.md "Decisions for the owner") | One (pact devils) stays the owner's: open to everybody, `shared.pactDevilsOneOfOne` for the other reading. Two and three as above. Four (a new wing mesh) is not a rule and is not part of this change. | | |
+
 ## 5. Commands, game rule
 
 * `/devil sign [submit|even|dominate]`: with the panel on and no word, shows the panel; with a word, signs that kind if the server allows it. `/devil refuse`, `/devil terms` (the explanation).
@@ -84,6 +102,7 @@ All gameplay settings are SERVER settings (`serverconfig/nusmp-devil-phase2-serv
 |---|---|---|
 | `devilPhase2.enabled` | true | master switch: false = phase 1 as it was |
 | `summon.enabled` / `summon.betrayal` | true / true | chance of the answer / the strike on the circle |
+| `summon.betrayalLeaves` | 2 | health points the strike always leaves a bystander (0 = it may kill); added with the decisions of section 4a |
 | `ep.enabled` / `ep.scale` | true / 1.0 | the ego rule / multiplier on the EP table |
 | `trial.enabled`, `seconds`, `max`, `impressShare`, `healthScale` | true, 150, 4, 0.5, 1.0 | the trial fight, its length, the most at once on the server, the impress share, the health multiplier |
 | `kinds.enabled`, `dominanceEpFactor`, `confirm` | true, 3.0, true | three kinds, the dominance EP factor, the panel |
@@ -115,13 +134,13 @@ The owner's last section began "if three players make a contract within the same
 | Server work per tick | none. No tick event of its own. The existing once-a-second contract step reads the share: one ledger lookup (at most 16 pacts) and a few multiplications per player with a contract. |
 | Work per event | gate: one ledger lookup, one EP read, at most 41 stacks checked against a tag (once per ritual end); a death between holders: a compare of at most 16 by 16 ids, and for each severed devil a refresh of its holders (default at most 8 devils x 4 holders = 32 refreshes, hard 16 x 16 = 256, once per kill); a blow between two players: two row lookups, allocation-free when they share no devil; a trial check once a second per trial entity. |
 | Memory | the ledger: at most 4096 rows of 16 contracts and 64 bans; written to disk only when something changed. |
-| Client draw cost | one vanilla humanoid per trial (at most 4 exist). Nothing else is drawn. |
+| Client draw cost | one model of 660 quads plus a glow pass per trial (at most 4 exist; the old vanilla humanoid with the option off). Nothing else is drawn. See docs/devil_trial_model.md. |
 
 `PerfProbe` sections are not added: there is no new per-frame or per-tick path to time.
 
 ## 10. NEW, REPLACED, KEPT
 
-NEW: the summon chance and the relic tags (`tags/item/devil_relics/<devil>.json`); the betrayal; the EP rule and table; the trial entity, its control and its renderer; the contract kinds; the signing panel and `/devil terms`; stacking and `/devil pact use|list`; shared lesser devils; sever by killing and the game rule `devilSeverOnKill`; the sabotage debuff and friendly-fire count; the ban list and `/devil pact unban`; the pact-devil setting; the reserved same-day event; the server config `nusmp-devil-phase2-server.toml`; the lang lines; the self-tests `devil.phase2.*`; the tests `Phase2RulesTest`, `Phase2TableTest`, `Phase2SourceScanTest`.
+NEW: the summon chance and the relic tags (`tags/item/devil_relics/<devil>.json`); the betrayal; the EP rule and table; the trial entity, its control and its renderer; the contract kinds; the signing panel and `/devil terms`; stacking and `/devil pact use|list`; shared lesser devils; sever by killing and the game rule `devilSeverOnKill`; the sabotage debuff and friendly-fire count; the ban list and `/devil pact unban`; the pact-devil setting; the reserved same-day event; (added after the first release: the trial devil's own model and the setting `bossLooks.devilTrialModel`, the setting `summon.betrayalLeaves`, the closed decisions of section 4a); the server config `nusmp-devil-phase2-server.toml`; the lang lines; the self-tests `devil.phase2.*`; the tests `Phase2RulesTest`, `Phase2TableTest`, `Phase2SourceScanTest`.
 
 REPLACED: nothing was removed. One behaviour changed under a switch: with phase 2 on, a lesser (non-Supreme) devil is no longer One of One (it is shared up to 4). `shared.enabled = false` or `enabled = false` restores phase 1 for it. The single `[Sign]` button of the offer is replaced by the panel while `kinds.confirm` is on (`/devil sign` itself is kept).
 
@@ -132,13 +151,13 @@ Shared files that were touched, each by a few appended lines: `DevilRituals`, `D
 ## 11. Not verified, and what is a placeholder
 
 * Nothing here was seen in a running game. The pure classes (rules, table) were compiled and their 17 unit tests, the 8 source-scan tests of this package and the older devil, double-magic, config-name, server-safety and perf scans were run (all green); the code that touches Minecraft was written against the repo's APIs but could not be compiled offline (CI is the compiler). The self-tests `devil.phase2.rules|ep|summon|stack|share|sever|trial|save` run on the server smoke test.
-* The trial devil's look is a vanilla zombie-skinned humanoid with the glowing flag and the devil's name over a boss bar. There is no Blender or Blockbench model for it: CLAUDE.md rule 14 is not met for it. The figure of the ritual (the real devil model) is unchanged.
+* The trial devil's look WAS a vanilla zombie-skinned humanoid with the glowing flag and the devil's name over a boss bar. It now has its own model (docs/devil_trial_model.md: a GeckoLib horned brute, one painted sheet per devil, glow mask, idle / walk / attack clips), made by a script that writes Blockbench's source format, **not** in Blockbench itself (reported there). The old stand-in is kept behind the client option `bossLooks.devilTrialModel = false`. The figure of the ritual (the real devil model) is unchanged.
 * The panel is a chat panel with clickable words (no new packet, no client screen). A real client screen would need a packet pair and was not built.
 * Held-but-not-active devils are ledger entries: their price is paid and their share counts, but only the active devil gives powers. `/devil pact use` swaps.
 * The pact-devil one-of-one is enforced when a pact is bound, not afterwards (there is no unbind of a grimoire pact to hook).
-* The EP of a body is `EnergyHelper.getMaxEP`; if Tensura is absent it reads as 0, so with the rule on nobody can sign (switch `ep.enabled` off in such a pack).
+* The EP of a body is `EnergyHelper.getMaxEP`. (Earlier note: "if Tensura is absent it reads as 0". Tensura is a required dependency, so this case cannot occur; `ep.enabled` still switches the rule off.)
 * A player killed by a fellow holder keeps the sacrifices of the severed devil (they are only removed by an operator, as for every dissolved contract).
 
 ## 12. Files
 
-Code: `devil/phase2/` (`Phase2`, `Phase2Rules`, `Phase2Table`, `Phase2Config`, `Phase2Text`, `DevilLedger`, `DevilTrialEntity`, `Trials`, `DevilPactJoinedEvent`, `Phase2SelfTests`), `client/devil/DevilTrialRenderer`. Data: `assets/anime_multiverse/devil_phase2.json`, `data/anime_multiverse/tags/item/devil_relics/*.json`. Lang: `tools/lang/gen_devil_phase2.py`, `tools/lang/devil_phase2.json`. Tests: `Phase2RulesTest`, `Phase2TableTest`, `Phase2SourceScanTest`. New smoke prefix: `devil.phase2`.
+Code: `devil/phase2/` (`Phase2`, `Phase2Rules`, `Phase2Table`, `Phase2Config`, `Phase2Text`, `DevilLedger`, `DevilTrialEntity`, `Trials`, `DevilPactJoinedEvent`, `Phase2SelfTests`), `client/devil/DevilTrialRenderer`, `client/devil/DevilTrialGeoRenderer`. The trial devil's model and its tests: docs/devil_trial_model.md (`DevilTrialModelTest`). Data: `assets/anime_multiverse/devil_phase2.json`, `data/anime_multiverse/tags/item/devil_relics/*.json`. Lang: `tools/lang/gen_devil_phase2.py`, `tools/lang/devil_phase2.json`. Tests: `Phase2RulesTest`, `Phase2TableTest`, `Phase2SourceScanTest`. New smoke prefix: `devil.phase2`.

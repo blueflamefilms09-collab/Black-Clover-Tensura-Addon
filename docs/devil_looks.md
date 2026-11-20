@@ -107,6 +107,10 @@ All of it is **client draw cost**. Nothing runs on the server except the self-te
 
 Generator and previews: `tools/bc_playermodels/{dvlib,dvskin,dvchars,dvtable,gen_dv,preview_dv}.py`, `stats_dv.json`, `docs/devil_looks_previews/`. Resources: `playermodel/looks_dv.json`, `textures/entity/playermodel/dv_<id>(_glow).png`, `textures/entity/pmx_dv_<id>(_glow).png`, `geo/entity/pmx_dv_<id>{,_fine,_fx,_hair,_hair_fine}.geo.json`, `animations/entity/pmx_dv_*.animation.json`. Java: `client/playermodel/{DevilLooks,DevilLooksAudit,DevilExtras}.java`; appended to `PlayerLookTables.FILES`, `PlayerModelOptions`, `PlayerModelSelfTests`; `BcAudit.geoProblems` made package-private; edited `client/devil/DevilNpcRenderer.java` and `DevilFormLayer.java`. Lang fragment `tools/lang/devil_looks.json`.
 
+## The trial devil
+
+The devil that fights the caller in a trial has its own model (a horned brute, one sheet per devil in the same palettes as these looks): docs/devil_trial_model.md. Previews: `docs/devil_looks_previews/trial_*.png`.
+
 ## Limits and decisions for the owner
 
 - No hair on a worn form: the signer keeps their own hair and skin, only the devil's parts (horns, wings, tail, bracers, mantle, gems) appear. If the owner wants the devil's face and hair on the signer, that needs a skin swap and is a separate decision.

@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.64.0] — The Trial Devil gets a real model; devil open points closed
+Owner: "do what you think is best" on the devil phase 2 open points and the trial devil model.
+- NEW: the Trial Devil is a horned brute with wings, a spade tail, hair locks, pauldrons and bracers (33 bones, 110 cubes, 660 quads) with idle, walk and attack clips and one painted sheet plus eye/brand glow mask per devil (26 devils and a default). Scaled by rank (Supreme 1.08 to Low 0.9). The entity syncs one string (the devil id) so the client picks the sheet.
+- NEW: client option `bossLooks.devilTrialModel` (default true); `false` brings back the old zombie-skinned look exactly, live.
+- NEW: server setting `summon.betrayalLeaves` (default 2 = one heart, as before; 0 lets the betrayal strike kill).
+- DOCS: every open point is decided and written up in `docs/devil_contract_phase2.md` section 4a (5x to 10x kept, Devil Bond kept, Tinsel kept, sabotage kept, "impressed" kept, same-day triple left as an off hook). Nothing in the owner's decisions was changed.
+- KEPT: every server rule of the trial, the boss bar, the glowing flag, the ritual figure, the worn forms, every earlier model (the old look lives on as `DevilTrialRenderer.Old`).
+- COST: at most 4 trial devils at once, each at most 660 quads plus one glow pass; no per-frame allocation; no new packet. The jar grows by about 1.8 MB of PNG.
+- CAVEATS: made by a script that writes the Blockbench source format and the game files, not opened in Blockbench or Blender; the Java was checked against the GeckoLib jar but not compiled before CI; nothing seen in a game (pose signs, glow-mask naming and the attack clip start are unverified).
+
 ## [4.63.1] — Fix: the build test that blocked the 4.61.0 to 4.63.0 releases
 - FIXED: `UpgradeGodMeleeATest` compared the placement of the upgraded Kusanagi mesh with the base mesh, which the thin-katana rebuild (4.61.0) had changed on purpose; it now compares with the classic copy of the mesh the upgrade was authored against. No game change. This is the build that carries 4.61.0 (thin katanas), 4.62.0 (hub in the Coming Soon spot), 4.62.1 (old flat-part skins dropped), 4.62.2 (bosses ignore effect damage nobody cast) and 4.63.0 (weapon page v2).
 

@@ -39,6 +39,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue BOSS_LOOK_CLASSIC;
     /** Kakashi Hatake on the kit's player model (docs/bosses/kakashi.md), key {@code bossLooks.kakashiPlayerModel}, CLIENT config (appended after the devil option). Off = his Blender body, the classic look. */
     public static final ModConfigSpec.BooleanValue KAKASHI_PLAYER_MODEL;
+    /** The trial devil's own model (docs/devil_trial_model.md), key {@code bossLooks.devilTrialModel}, CLIENT config (appended after the Kakashi option). Off = the earlier vanilla-humanoid stand-in. */
+    public static final ModConfigSpec.BooleanValue DEVIL_TRIAL_MODEL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -74,6 +76,8 @@ public final class PlayerModelOptions {
                 + "(docs/boss_redesign_goku_sinbad.md). Off (default) = the redesigned look.").define("bossLookClassic", false);
         KAKASHI_PLAYER_MODEL = b.comment("Kakashi Hatake on the same player-model kit as the Black Clover bosses: painted anime face with the Sharingan, silver cube hair, hitai-ate, mask, flak jacket, forearm guards, "
                 + "and the glowing Perfect Susanoo as an extras model (docs/bosses/kakashi.md). Off = the classic look, his Blender body.").define("kakashiPlayerModel", true);
+        DEVIL_TRIAL_MODEL = b.comment("The devil that fights you in the trial of a Devil Contract (docs/devil_trial_model.md) with its own model: a horned brute with wings, a spade tail and clips for idle, walking and "
+                + "attacking, painted in the devil's colours, with glowing eyes, brands, gems and horn tips. Off = the earlier stand-in (the vanilla humanoid with the zombie skin).").define("devilTrialModel", true);
         b.pop();
         SPEC = b.build();
     }
@@ -139,6 +143,15 @@ public final class PlayerModelOptions {
     public static boolean kakashiPlayerModel() {
         try {
             return KAKASHI_PLAYER_MODEL.get();
+        } catch (IllegalStateException notLoaded) {
+            return true;
+        }
+    }
+
+    /** True when the trial devil is drawn with its own model (the config value; true while it is not loaded). */
+    public static boolean devilTrialModel() {
+        try {
+            return DEVIL_TRIAL_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return true;
         }

@@ -212,7 +212,7 @@ public final class Phase2 {
         for (ServerPlayer q : p.serverLevel().players()) {
             if (struck >= MAX_STRUCK) break;
             if (q == p || !q.isAlive() || q.isSpectator() || q.isCreative() || q.distanceToSqr(r.x, r.y, r.z) > rad2) continue;
-            float dmg = Math.min((float) (q.getMaxHealth() * BETRAY_SHARE), Math.max(0f, q.getHealth() - 2f));
+            float dmg = Math.min((float) (q.getMaxHealth() * BETRAY_SHARE), Math.max(0f, q.getHealth() - Phase2Config.betrayalLeaves()));
             if (dmg > 0f) q.hurt(q.damageSources().magic(), dmg);
             q.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1));
             q.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100, 0));

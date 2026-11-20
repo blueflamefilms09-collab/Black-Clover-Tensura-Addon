@@ -12,7 +12,7 @@ public final class Phase2Config {
     public static final ModConfigSpec SPEC;
     private static final ModConfigSpec.BooleanValue ENABLED, SUMMON, BETRAY, EP, TRIAL, KINDS, CONFIRM, STACK, SHARED, SEVER, SABOTAGE, CURSE, PACT_ONE, HOOK;
     private static final ModConfigSpec.DoubleValue EP_SCALE, IMPRESS, HEALTH_SCALE, DOMINANCE, FIRST, MAX, DEBUFF_POWER;
-    private static final ModConfigSpec.IntValue TRIAL_SECONDS, TRIAL_MAX, WEAK_MAX, STRONG_MAX, CONTRACTS_MAX, DEBUFF_SECONDS, FF_HITS, FF_WINDOW;
+    private static final ModConfigSpec.IntValue TRIAL_SECONDS, TRIAL_MAX, WEAK_MAX, STRONG_MAX, CONTRACTS_MAX, DEBUFF_SECONDS, FF_HITS, FF_WINDOW, BETRAY_LEAVES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -23,6 +23,8 @@ public final class Phase2Config {
         SUMMON = b.comment("A finished ritual does not always bring the devil: the chance is the rank's (data) plus a bonus when you carry an item of that devil (tag anime_multiverse:devil_relics/<devil>). false = it always comes.")
                 .define("enabled", true);
         BETRAY = b.comment("A devil that is flagged in the data (devil_phase2.json, betray) may turn on everyone in the circle except the caller when it appears. false = it never does.").define("betrayal", true);
+        BETRAY_LEAVES = b.comment("The betrayal strike never takes the last health points of a bystander: this many are always left (2 = one heart, the default: a ritual can not be used to kill someone in one blow). 0 = the strike may kill.")
+                .defineInRange("betrayalLeaves", 2, 0, 20);
         b.pop();
         b.push("ep");
         EP = b.comment("The ego rule: a contract asks the player's Tensura existence points (EP), by rank (data: Supreme about 1 billion, a tenth less for each rank down). false = no requirement.").define("enabled", true);
@@ -82,6 +84,7 @@ public final class Phase2Config {
     public static boolean enabled() { return on(ENABLED, true); }
     public static boolean summon() { return enabled() && on(SUMMON, true); }
     public static boolean betrayal() { return summon() && on(BETRAY, true); }
+    public static int betrayalLeaves() { return whole(BETRAY_LEAVES, 2, 0, 20); }
     public static boolean ep() { return enabled() && on(EP, true); }
     public static double epScale() { return real(EP_SCALE, 1.0, 0.0, 1000.0); }
     public static boolean trial() { return enabled() && on(TRIAL, true); }
