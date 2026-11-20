@@ -990,7 +990,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (tickCount - lastGuardFx >= 8 && level() instanceof ServerLevel sl) {              // one sound and a few sparks per action, to the players near it
             lastGuardFx = tickCount;
             sl.playSound(null, getX(), getY(), getZ(), v == ReactiveGuard.Verdict.DODGE ? SoundEvents.PLAYER_ATTACK_SWEEP : SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1f, 1f);
-            sl.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT, getX(), getY() + getBbHeight() * 0.6, getZ(), 4, 0.3, 0.3, 0.3, 0.1);
+            sl.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT, getX(), getY() + getBbHeight() * 0.6, getZ(), 4, 0.3, 0.3, 0.3, 0.1); // fx-allow: 4 sparks at most once per 8 ticks per boss, nearby players only
         }
         return guard.apply(v, a);
     }

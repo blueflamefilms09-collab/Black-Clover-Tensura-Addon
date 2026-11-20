@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.36.1] — Build fix: the guard spark is on the particle allow-list
+- FIXED (no gameplay change): `FxSourceScanTest` failed the 4.36.0 build because the guard-block spark used a vanilla particle without the repo's `fx-allow` reason. The line now carries it (4 sparks, at most once per 8 ticks per boss, nearby players only). Everything from 4.36.0 ships in the first green build.
+
 ## [4.36.0] — Boss reference study: reactive guard and attack timing
 From the Leon boss study (docs/boss_reference_leon.md), fixes #4 and #2. Both have a server setting (`[bossCombat]` in `nusmp-boss-rules-server.toml`) that restores today's behaviour exactly.
 - NEW (setting `reactiveGuard`, default on; `guardBlockChance` 0.70, `guardDodgeChance` 0.30): Meliodas, Ban, Heath Grice, Vetto, Mars and Udaeus block (12-tick window, 40-tick cooldown, 25% of the hit gets through, one counter swing) or dodge (8 invulnerable ticks, 60-tick cooldown). Off while the boss is exposed, casting, recovering, transforming or refilling, and for armour-bypassing damage. A foe hitting every tick still lands at least 64% of its damage.
