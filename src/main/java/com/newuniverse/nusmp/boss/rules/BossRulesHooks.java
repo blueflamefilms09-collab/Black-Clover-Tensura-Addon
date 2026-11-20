@@ -62,7 +62,8 @@ public final class BossRulesHooks {
     static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
         try {
             if (e.getEntity().level().isClientSide() || !BossRulesConfig.ENVIRONMENT_IMMUNE.get()) return;
-            if (BossIdentity.isBoss(e.getEntity()) && BossEnvironment.shrugsOff(e.getEntity(), e.getSource())) e.setCanceled(true);
+            if (!BossIdentity.isBoss(e.getEntity())) return;
+            if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())) e.setCanceled(true);
         } catch (RuntimeException | LinkageError ignored) {
             // the rule must never reach the server loop: a boss that cannot be judged takes the damage as before
         }

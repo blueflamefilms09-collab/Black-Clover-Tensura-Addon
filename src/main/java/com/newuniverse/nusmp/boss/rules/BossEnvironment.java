@@ -4,6 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
@@ -29,6 +32,19 @@ public final class BossEnvironment {
             BlockPos at = boss.blockPosition();
             return boss.level().isDay() && boss.level().canSeeSky(at);
         }
+        return false;
+    }
+
+    /**
+     * 4.62.2: damage that comes from an EFFECT on the boss. Poison, wither, a lingering cloud and the damage-over-time effects of other mods all hurt with no attacker, so to the player the boss
+     * loses health "randomly" (Goku). It counts as effect damage when nothing attacked, the boss carries a harmful effect and the type is not the void or {@code /kill}. A blow with an attacker
+     * (a player's spell, a weapon, a thrown potion that names its thrower) is a real blow and is never caught here.
+     */
+    public static boolean effectDamage(LivingEntity boss, DamageSource source) {
+        if (source == null || source.getEntity() != null || source.getDirectEntity() != null) return false;
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
+        for (MobEffectInstance e : boss.getActiveEffects())
+            if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) return true;
         return false;
     }
 }

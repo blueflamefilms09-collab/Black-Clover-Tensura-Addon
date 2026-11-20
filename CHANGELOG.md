@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.62.2] — Bosses no longer lose health to effects nobody cast
+Owner report: Goku was "taking random damage from some kind of effect"; check the other bosses too.
+- FIXED: every boss of the mod (Goku and the whole Zogratis family, the Black Clover, Midnight and dungeon bosses, anything `BossIdentity` counts as a boss) now takes none of the damage a harmful effect on it deals when nothing attacked: poison, wither, lingering clouds and the damage-over-time effects of other mods. A blow with an attacker (a spell, a weapon, a thrown potion with a named thrower) is untouched, and the void and `/kill` stay real.
+- NEW: server setting `bossRules.effectImmune` (default true, `nusmp-boss-rules-server.toml`); `false` restores the old behaviour. It sits next to `bossRules.environmentImmune` (1.68.0), which already covered the world's own damage.
+- COST: one tick-free check inside the existing damage event; it walks the boss's active effects only when the hit has no attacker. No packet, no entity, no allocation.
+- CAVEATS: not seen in a game; the cause was found by reading the code (no self-damage in Goku's own code), so if some other source is still hurting him, send the damage type shown on the death or damage log.
+
 ## [4.62.1] — The old flat-part skins are dropped (owner's decision)
 Owner answer: the 6 MB of old flat-part skins are not kept.
 - REMOVED (on the owner's request): `textures/entity/weapon/flat_parts_old/` (44 skin and glow files of the old bows, spears and the harpoon). The jar gets about 6 MB smaller.
