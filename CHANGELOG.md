@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.47.1] — Build fix
+- FIXED: `WeaponSizesTest` judged the Blender form meshes (`base__form`) like the old thickened daggers and katanas and failed on the first one; forms are now left to the form and grip audits. The grip golden file matches the restored Slime Shield again. No game change.
+
 ## [4.47.0] — 18 new vassal forms: axe, book, carriage, chain (Blender)
 - NEW: Blender-made 3D models with own skin and glow skin, registered in the class, grip and Better Combat tables: Timber, Pipe, Shine and Curse Axe; Pipe, Animal Needle, Revised Edition and Library Tome books; Filolial, War, Hourglass Sand carriages and the Queen's Chariot; Tempered, Hydra, Orochi, Idle, Drowsy chains and the Long Afternoon chain. Each within 5000 quad lines and 350 KB of skins.
 - REPLACED: nothing. KEPT: every other model, skin and icon.

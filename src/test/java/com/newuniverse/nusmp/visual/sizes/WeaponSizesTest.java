@@ -32,13 +32,13 @@ class WeaponSizesTest {
 
     static WeaponSizeRule.Rules rules() throws IOException { return WeaponSizeRule.parseRules(Files.readString(RES.resolve("weapon_sizes.json"))); }
 
-    /** Every dagger and katana id of weapon_classes.json (the reviewed map) that is not excluded, with its class. */
+    /** Every dagger and katana id of weapon_classes.json (the reviewed map) that is not excluded, with its class. A form mesh ({@code base__form}, Blender-made, own display and scale) is judged by the form and grip audits, not here. */
     static Map<String, String> ids() throws IOException {
         WeaponSizeRule.Rules r = rules();
         Map<String, String> out = new TreeMap<>();
         for (var e : json(RES.resolve("weapon_classes.json")).getAsJsonObject("weapons").entrySet()) {
             String c = e.getValue().getAsString();
-            if ((c.equals("dagger") || c.equals("katana")) && !r.excluded.contains(e.getKey())) out.put(e.getKey(), c);
+            if ((c.equals("dagger") || c.equals("katana")) && !r.excluded.contains(e.getKey()) && !e.getKey().contains("__")) out.put(e.getKey(), c);
         }
         return out;
     }
