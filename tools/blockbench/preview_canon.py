@@ -62,6 +62,23 @@ def overview(sheets, specs, stats_by_id):
     return out
 
 
+def before_after(specs):
+    """The polish pass at a glance (docs/previews/devil_canon_looks/before_after.png): the 4.71.0 three-quarter view (docs/previews/devil_canon_classic/, kept) next to the new one, per devil."""
+    cols, w, h = 3, 240, 340
+    rows = (len(specs) + cols - 1) // cols
+    out = Image.new("RGB", (cols * 2 * w, rows * (h + 16)), (30, 26, 36))
+    d = ImageDraw.Draw(out)
+    old_dir = os.path.join(ROOT, "docs", "previews", "devil_canon_classic")
+    for i, spec in enumerate(specs):
+        x, y = (i % cols) * 2 * w, (i // cols) * (h + 16)
+        d.text((x + 6, y + 2), "%s   4.71.0 (left)  /  polished (right)" % spec["id"], fill=(235, 230, 240))
+        for j, folder in enumerate((old_dir, OUT)):
+            p = os.path.join(folder, "%s.png" % spec["id"])
+            if os.path.isfile(p):
+                out.paste(Image.open(p).crop((240, 20, 480, 20 + h)), (x + j * w, y + 16))
+    out.save(os.path.join(OUT, "before_after.png"))
+
+
 def main(sheets, specs, stats_list):
     os.makedirs(OUT, exist_ok=True)
     stats = {s["id"]: s for s in stats_list}
@@ -72,4 +89,6 @@ def main(sheets, specs, stats_list):
             continue
         st = stats.get(spec["id"]) or dict(top_px=44.0)
         turnaround(sheets[spec["id"]], spec, st, spec["id"]).save(os.path.join(OUT, "%s.png" % spec["id"]))
+    if len(sheets) == len(specs):
+        before_after(specs)
     print("previews ->", OUT)

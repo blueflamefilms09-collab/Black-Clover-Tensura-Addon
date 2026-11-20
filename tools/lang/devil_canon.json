@@ -2,5 +2,7 @@
  "anime_multiverse.configuration.devilCanonLooks": "Devils drawn as themselves",
  "anime_multiverse.configuration.devilCanonLooks.tooltip": "On: each devil of the Devil Contract is drawn with its own model, painted sheet and glow, built from the design of that devil in its story (Liebe, Lucifero, the Fox Devil, Sebastian, the God Hand, and the rest of the 26), in the trial fight and in the summoning. Off: every devil shares the generic horned brute.",
  "anime_multiverse.configuration.devilRitualFigure": "Summoned devil at full size",
- "anime_multiverse.configuration.devilRitualFigure.tooltip": "On: the devil that rises from the summoning circle is the full-size devil model of the trial (the same model and size, wings and horns attached to its body), climbing out of the circle with a burst of dust. Off: the earlier figure (the player-model look, or the Blender mesh)."
+ "anime_multiverse.configuration.devilRitualFigure.tooltip": "On: the devil that rises from the summoning circle is the full-size devil model of the trial (the same model and size, wings and horns attached to its body), climbing out of the circle with a burst of dust. Off: the earlier figure (the player-model look, or the Blender mesh).",
+ "anime_multiverse.configuration.devilCanonClassic": "Classic devil models",
+ "anime_multiverse.configuration.devilCanonClassic.tooltip": "On: the 26 devils are drawn as they were in version 4.71.0 (before the polish pass: plainer sheets, thinner horns, curtain wings). Off (default): the polished models. Only matters while Devils drawn as themselves is on."
 }

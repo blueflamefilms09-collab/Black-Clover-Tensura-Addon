@@ -37,6 +37,17 @@ public final class DevilCanonRules {
 
     public static String glowPath(String id) { return "textures/entity/" + PREFIX + id + "_glowmask.png"; }
 
+    /** The folder name of the 4.71.0 versions of the canon models, kept for the client option {@code bossLooks.devilCanonClassic} (same file names, one folder deeper). */
+    public static final String CLASSIC_DIR = "classic_devil_canon/";
+
+    public static String classicGeoPath(String id) { return "geo/entity/" + CLASSIC_DIR + PREFIX + id + ".geo.json"; }
+
+    public static String classicAnimationPath(String id) { return "animations/entity/" + CLASSIC_DIR + PREFIX + id + ".animation.json"; }
+
+    public static String classicTexturePath(String id) { return "textures/entity/" + CLASSIC_DIR + PREFIX + id + ".png"; }
+
+    public static String classicGlowPath(String id) { return "textures/entity/" + CLASSIC_DIR + PREFIX + id + "_glowmask.png"; }
+
     /** The clips every devil model has (the generic brute and all canon models): the three of the trial plus the two of the summoning figure. Append only. */
     public static final String CLIP_IDLE = "animation.devil_trial.idle", CLIP_WALK = "animation.devil_trial.walk", CLIP_ATTACK = "animation.devil_trial.attack",
             CLIP_RISE = "animation.devil_trial.rise", CLIP_ROAR = "animation.devil_trial.roar";

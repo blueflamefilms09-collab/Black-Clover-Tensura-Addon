@@ -153,3 +153,66 @@ Shared rig, but not the same look: all humanoids share one parametric body build
 - Keep the script-made models, or have them redone by hand in Blockbench one by one (the Supreme devils first)? Any replacement needs only the same file names and clip names.
 - Astaroth, the Hall of Hell demon, the God Hand and the Etherious need a better source than the wiki pages that could be fetched; send the Japanese-wiki text or reference art if you want them closer.
 - Does the figure's size feel right? It uses the trial's rank scale on the canon heights (1.9 to 2.6 blocks before scale); a single number (`rankScale`) changes all of them.
+
+## Polish pass (canon models, looks only)
+
+A polish of the 26 script-made canon models, not a redesign: the owner's own shapes and palettes stay, the flaws below were fixed in `devil_canon_lib.py`, the specs and `gen_devil_canon.py`, and everything was regenerated (geo, clips, sheets, glow masks, `.bbmodel` sources, previews). File names, clip names (idle, walk, attack, rise, roar), the rank scale, the glow-mask contract and all server rules are unchanged.
+
+### What was fixed for every devil (shared generator)
+
+- **Silhouette:** ears are leaf-shaped with a tip piece and point up and out (they drooped before); the fringe tuft is capped; horns are re-shaped (bull and curve kinds have 4 to 5 segments and a base ring) and scaled so none leaves the frame; bat wings have wider overlapping fan panels and ribs (clean membrane edge); a new `insect` wing kind; halos are an 8-bar octagon; new extras `back_spikes`, `mandibles`, `cloak`, `tongue`.
+- **Face:** eyes are bigger and built in layers (shadow, sclera, iris, glowing pupil, lid), brows are doubled, so the face reads at a distance; the glow comes from the glow mask.
+- **Texture detail pass** (`detail_pass` in `gen_devil_canon.py`, switched per devil by `spec["detail"]`): ambient-occlusion edge darkening, cloth folds, scales, plate panel lines and rivets, blotch noise, rim light on dark materials. Texture only, no extra geometry.
+
+### Per-devil change table
+
+Quads are the old (4.71.0) count and the polished count; budget rule: at most +25 percent of the model's own old count and at most 882, with one documented exception (the Ghost Devil).
+
+| Devil | Quads | Main changes |
+|---|---|---|
+| Liebe | 558 -> 618 | white demon body with horns and Black-Clover-style dark markings, simpler marks, spikes fixed |
+| Lucifero | 708 -> 834 | three horns, wings, armour plates, golden halo marks, skirt cross removed |
+| Megicula | 702 -> 870 | taller, spiked, pale with dark armour |
+| Beelzebub | 642 -> 798 | bulkier, fly wings (insect kind) bigger and steeper, greed motifs, belly maw reworked |
+| Astaroth | 708 -> 804 | formal butler look, gloves, red eyes |
+| Sebastian | 666 -> 666 | formal butler look, gloves, red eyes, detail pass |
+| Lucifugus | 576 -> 606 | face, wings, detail pass |
+| Fox Devil | 312 -> 354 | ears, tails, face |
+| Curse Devil | 528 -> 564 | body extras, face, detail pass |
+| Future Devil | 378 -> 432 | tree additions, face |
+| Ghost Devil | 882 -> 1086 | six-petal flowers on one centre, hair locks (the one exception to the 882 rule) |
+| Iblis | 336 -> 336 | lava cracks as small texel marks |
+| Egyn | 456 -> 456 | detail pass, face |
+| Amaimon | 426 -> 450 | detail pass, face |
+| Astaroth kin | 510 -> 534 | detail pass, face |
+| Lucifer kin | 444 -> 456 | detail pass, face |
+| Noir | 630 -> 654 | horn scale 0.8, face, detail |
+| Blanc | 600 -> 624 | horn scale 0.7, face, detail |
+| Jaune | 582 -> 594 | face, detail |
+| Violet | 600 -> 612 | face, detail |
+| Rouge | 582 -> 594 | face, detail |
+| Vert | 570 -> 594 | horn scale 0.6, face, detail |
+| Bleu | 540 -> 552 | face, detail |
+| Hall of Hell demon | 540 -> 558 | octagon halo of four bars, detail |
+| God Hand | 864 -> 876 | cloak, second wing pair trimmed to stay under 882 |
+| Etherious | 492 -> 504 | face, detail |
+
+Reading notes: the brief asked for a tall Megicula and a three-horned Lucifero, so those two follow the brief and not the older wiki-based spec (petite, four horns). Astaroth in the brief is a butler with gloves and red eyes, which is not his canon look (Black Clover time devil); it follows the brief. Each spec also carries a `polish` line saying what changed.
+
+### Classic option (rule 2, the old models are kept)
+
+The 4.71.0 models are copied unchanged to `geo|animations|textures/entity/classic_devil_canon/` (26 geo, 26 clips, 52 textures), their `.bbmodel` sources to `tools/blockbench/devil_canon_classic/` and previews to `docs/previews/devil_canon_classic/`. The CLIENT option `bossLooks.devilCanonClassic` (default **false**, in `PlayerModelOptions`) makes `DevilCanonAssets.of(id)` return the classic paths. Before and after: `docs/previews/devil_canon_looks/before_after.png`.
+
+### Worst-case cost (rule 11)
+
+Unchanged in kind: no new packets, no server work, no new entities, no per-frame allocation. The detail pass is baked into the PNGs (no runtime cost). The classic option adds one more table of 26 x 3 locations built once at class load and one boolean read per lookup. Client draw: at most **1086 quads** per figure (Ghost Devil, up from 882); all others at most 882. Worst case for eight figures at once rises from about 7,000 to about 8,700 quads only if all eight are Ghost Devils, which needs eight rituals within 64 blocks of the viewer; the distance cull and the figure cap (default 8) are unchanged.
+
+### NEW / REPLACED / KEPT
+
+- **NEW**: the client option `devilCanonClassic` with its lang keys, the classic folders, the `detail_pass`, the `insect` wing kind, the extras `back_spikes`, `mandibles`, `cloak`, `tongue`, the before/after sheet, 3 tests in `DevilCanonLooksTest` (15 now).
+- **REPLACED**: the 26 canon geo files, clip files, sheets, glow masks, `.bbmodel` sources and previews (same names, polished content).
+- **KEPT**: the 4.71.0 versions (classic folders), every name, clip, option, rank scale and server rule; the generic brute.
+
+### Tool and not verified
+
+Script fallback only (`gen_devil_canon.py`); no Blender or Blockbench window was available, and the `.bbmodel` files were not opened in Blockbench. Previews come from the numpy renderer, not the game. Not seen in a game: the polished clips on GeckoLib (the wing and ear sway, the second wing pairs only have sway motion), the glow layer on the new eyes, and the classic switch at runtime. The Java compiles with javac and the pure tests pass (DevilCanonLooksTest 15, DevilTrialModelTest, DevilPlayerModelsTest, GeoAssetsTest, TextureAlphaTest, SafeAdditiveTextureScanTest, ConfigFileNamesTest, PerfSourceScanTest, ServerSafetyTest, ParticleThemesTest, SoundsJsonTest, lang tests); Gradle and the CI smoke test were not run.

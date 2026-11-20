@@ -47,6 +47,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue DEVIL_CANON_LOOKS;
     /** Canon looks, key {@code bossLooks.devilRitualFigure}, CLIENT config (appended): the summoned devil of the ritual is drawn as the full-size canon model (true, the default). Off = the earlier figure (the player-model look or the Blender mesh). */
     public static final ModConfigSpec.BooleanValue DEVIL_RITUAL_FIGURE;
+    /** Canon looks, polish pass (docs/devil_trial_model.md, 'Polish pass'), key {@code bossLooks.devilCanonClassic}, CLIENT config (appended last): true draws the 4.71.0 versions of the 26 canon devil models (kept in the classic_devil_canon folders) instead of the polished ones. Default false. */
+    public static final ModConfigSpec.BooleanValue DEVIL_CANON_CLASSIC;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -90,6 +92,8 @@ public final class PlayerModelOptions {
                 + "anime design (Liebe, Lucifero, the Fox Devil, Sebastian, the God Hand ...). Off = the generic horned brute every devil shared in 4.64.0.").define("devilCanonLooks", true);
         DEVIL_RITUAL_FIGURE = b.comment("The devil that rises from the summoning circle drawn as the full-size devil model (the same model and scale as in the trial; the old figure drew a child-sized body with the wings floating above it). "
                 + "Off = the earlier figure (the player-model look, or the Blender mesh).").define("devilRitualFigure", true);
+        DEVIL_CANON_CLASSIC = b.comment("Draw the 26 canon devil models as they were in 4.71.0 (before the polish pass: plainer sheets, thinner horns, curtain wings) instead of the polished ones "
+                + "(docs/devil_trial_model.md, 'Polish pass'). Only matters while devilCanonLooks is on. Default off.").define("devilCanonClassic", false);
         b.pop();
         SPEC = b.build();
     }
@@ -184,6 +188,15 @@ public final class PlayerModelOptions {
             return DEVIL_RITUAL_FIGURE.get();
         } catch (IllegalStateException notLoaded) {
             return true;
+        }
+    }
+
+    /** True when the 4.71.0 versions of the canon devil models are drawn instead of the polished ones (the config value; false while it is not loaded). */
+    public static boolean devilCanonClassic() {
+        try {
+            return DEVIL_CANON_CLASSIC.get();
+        } catch (IllegalStateException notLoaded) {
+            return false;
         }
     }
 

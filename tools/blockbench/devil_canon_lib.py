@@ -139,12 +139,13 @@ def humanoid(spec):
         hcube(D, "chin_spike", (-0.6, -1.1, -4.2), (1.2, 1.3, 1.0), "horn", bone_name="jaw")
     ears = spec.get("ears", "pointed")
     if ears:
-        L = {"pointed": (2.4, 24, 1.0), "long": (4.6, 20, 1.0), "short": (1.6, 10, 1.0), "round": (1.4, 0, 1.4), "fox": (3.2, 14, 2.4)}[ears]
+        # polish pass: an ear is a flat leaf (wide in height, thin in depth) that points out and up; the 4.71.0 ear was a one pixel stick
+        L = {"pointed": (3.0, 22, 2.4), "long": (5.2, 20, 2.6), "short": (2.0, 10, 2.0), "round": (1.8, 0, 2.2), "fox": (3.2, 14, 2.4)}[ears]
 
         def ear(sd, n):
-            hcube(D, "ear_" + n, (-4.3 - L[0], 3.4, -0.8), (L[0], L[2], 2.0), spec.get("head_mat", "skin"), rot=(0, 0, L[1]), side=sd)
+            hcube(D, "ear_" + n, (-4.2 - L[0], 3.2, -0.7), (L[0], L[2], 1.4), spec.get("head_mat", "skin"), rot=(0, 0, -L[1]), pv=(-4.0, 3.4, 0.0), side=sd)
             if ears in ("pointed", "long"):
-                hcube(D, "ear_tip_" + n, (-4.5 - L[0] - 1.4, 4.0, -0.5), (1.8, 0.8, 1.4), spec.get("head_mat", "skin"), rot=(0, 0, L[1] + 14), side=sd)
+                hcube(D, "ear_tip_" + n, (-4.2 - L[0] - 2.0, 3.2 + L[2] * 0.45, -0.5), (2.2, L[2] * 0.5, 1.0), spec.get("head_mat", "skin"), rot=(0, 0, -(L[1] + 10)), pv=(-4.0, 3.4, 0.0), side=sd)
         pair(ear)
     if spec.get("cheeks", False):
         def cheek(sd, n):
@@ -218,7 +219,7 @@ def hair(h, D, spec):
         n = h.get("fringe", 3)
         for i in range(n):
             x = -4.2 + i * (7.2 / max(1, n - 1)) if n > 1 else -0.6
-            ln = h.get("fringe_len", 2.4) * (1.0 if i % 2 == 0 else 0.7)
+            ln = min(h.get("fringe_len", 2.4), 1.9) * (1.0 if i % 2 == 0 else 0.65)          # polish pass: the tufts stop above the eyes (they hid them in 4.71.0)
             hcube(D, "fringe_tuft_%d" % i, (x, 6.4 - ln, -4.9), (1.2, ln, 0.8), m)
     for i in range(h.get("spikes", 0)):                                   # spikes standing up from the crown, fanned
         a = (i - (h["spikes"] - 1) / 2.0) * (h.get("spike_fan", 24))
@@ -257,12 +258,12 @@ def horns(hs_list, D):
         kind = h["kind"]
         mat = h.get("mat", "horn")
         tipmat = h.get("tip", "horn_tip")
-        if kind == "bull":     # up and out, then up
-            segs = [(3.2 * s, 2.8 * s, 2.8 * s, (8, 0, 24)), (3.4 * s, 2.2 * s, 2.2 * s, (-18, 0, 20)), (3.6 * s, 1.4 * s, 1.4 * s, (-26, 0, 22))]
+        if kind == "bull":     # polish pass: thick at the root, out, then up and a little in (4.71.0 pointed every segment further out, so it read as an antenna)
+            segs = [(3.0 * s, 3.4 * s, 3.4 * s, (6, 0, 40)), (3.2 * s, 2.8 * s, 2.8 * s, (-6, 0, -10)), (3.2 * s, 2.2 * s, 2.2 * s, (-8, 0, -26)), (3.4 * s, 1.5 * s, 1.5 * s, (-10, 0, -22))]
         elif kind == "ram":    # out, round and forward
             segs = [(3.0 * s, 3.4 * s, 3.4 * s, (0, 0, 52)), (3.6 * s, 3.0 * s, 3.0 * s, (0, 0, 54)), (3.4 * s, 2.4 * s, 2.4 * s, (0, 0, 62)), (3.0 * s, 1.5 * s, 1.5 * s, (-26, 0, 50))]
-        elif kind == "curve":  # long, curving up and back (Lucifero)
-            segs = [(4.0 * s, 2.6 * s, 2.6 * s, (-4, 0, 26)), (4.4 * s, 2.0 * s, 2.0 * s, (-12, 0, 22)), (4.4 * s, 1.4 * s, 1.4 * s, (-20, 0, 18)), (3.2 * s, 0.9 * s, 0.9 * s, (-24, 0, 16))]
+        elif kind == "curve":  # long C-curve: out, up, then in at the tip (Lucifero); 4.71.0 ended almost level with the ground line
+            segs = [(4.0 * s, 3.0 * s, 3.0 * s, (-4, 0, 32)), (4.2 * s, 2.5 * s, 2.5 * s, (-8, 0, -10)), (4.2 * s, 2.0 * s, 2.0 * s, (-10, 0, -16)), (3.8 * s, 1.4 * s, 1.4 * s, (-8, 0, -18)), (3.0 * s, 0.9 * s, 0.9 * s, (-6, 0, -16))]
         elif kind == "up":     # small and upright
             segs = [(3.0 * s, 1.8 * s, 1.8 * s, (0, 0, 8)), (2.6 * s, 1.0 * s, 1.0 * s, (-4, 0, 6))]
         elif kind == "spike":  # a single short cone
@@ -279,6 +280,7 @@ def horns(hs_list, D):
         px, py, pz = hpt(D, -x, y, z)
 
         def one(sd, n):
+            cube("head", "%s_base_%s" % (pfx, n), (px - segs[0][1] * 0.75, py - 0.9 * hk, pz - segs[0][2] * 0.75), (segs[0][1] * 1.5, 1.5 * hk, segs[0][2] * 1.5), mat, side=sd)
             chain(pfx, "head", sd, n, (px, py, pz), segs, mat, axis="y", mats=[mat] * (len(segs) - 1) + [tipmat])
         pair(one)
 
@@ -307,11 +309,18 @@ def wings(w, D):
             cube("%s_%s_tip" % (pfx, n), "%s_hook_%s" % (pfx, n), (-xb - 1.6, sh - 2.4 + ry, 3.0), (1.8, 1.0, 2.2), "claw", side=sd)
             lens = (8.5, 10.5, 9.0, 6.5, 4.0)
             npan = w.get("panels", 5)
+            topy = sh - 1.6 + ry
+
+            def fan(xc):                                                    # polish pass: the trailing edge fans out from the arm (the 4.71.0 panels hung straight, like a curtain)
+                return -(2.0 + 22.0 * (xc - 3.4 * sp) / (15.5 * sp))
             for i in range(npan):
                 x1 = 3.4 * sp + i * (3.1 * sp)
-                cube("%s_%s" % (pfx, n) if i < 3 else "%s_%s_tip" % (pfx, n), "%s_mem_%d_%s" % (pfx, i, n), (-(x1 + 3.1 * sp), sh - 1.6 + ry - lens[i] * dr, 4.1), (3.1 * sp, lens[i] * dr, 0.4), mem, side=sd, paint="membrane")
+                wd = 3.1 * sp + 1.1                                         # wider than its step: neighbours overlap, so the fan has no slits
+                xc = x1 + 1.55 * sp
+                ln = lens[i] * dr
+                cube("%s_%s" % (pfx, n) if i < 3 else "%s_%s_tip" % (pfx, n), "%s_mem_%d_%s" % (pfx, i, n), (-(xc + wd / 2), topy - ln, 4.1 + 0.07 * (i % 2)), (wd, ln, 0.4), mem, rot=(0, 0, fan(xc)), pv=(-xc, topy, 4.3), side=sd, paint="membrane")
             for i, (x, ln) in enumerate(((7.0, 10.5), (12.0, 9.0), (17.0, 5.0))):
-                cube("%s_%s" % (pfx, n) if i < 2 else "%s_%s_tip" % (pfx, n), "%s_rib_%d_%s" % (pfx, i, n), (-x * sp - 0.4, sh - 1.2 + ry - ln * dr, 3.9), (0.8, ln * dr, 0.9), arm, side=sd)
+                cube("%s_%s" % (pfx, n) if i < 2 else "%s_%s_tip" % (pfx, n), "%s_rib_%d_%s" % (pfx, i, n), (-x * sp - 0.4, sh - 1.2 + ry - ln * dr, 3.9), (0.8, ln * dr, 0.9), arm, rot=(0, 0, fan(x * sp)), pv=(-x * sp, sh - 1.2 + ry, 4.3), side=sd)
         pair(one)
     elif kind == "feather":                                               # a bone arm and three rows of long feathers
         rows = w.get("rows", 3)
@@ -330,6 +339,21 @@ def wings(w, D):
                     cube("%s_%s" % (pfx, n) if i < nf // 2 + 1 else "%s_%s_tip" % (pfx, n), "%s_f_%d_%d_%s" % (pfx, r, i, n), (-fx - 0.9, sh - 1.4 + ry - ln, 3.4 + r * 0.55), (1.8, ln, 0.5), mem if r % 2 == 0 else w.get("mem2", mem),
                          rot=(0, 0, ang), pv=(-fx, sh - 1.4 + ry, 3.4 + r * 0.55), side=sd)
         pair(one)
+    elif kind == "insect":                                                # polish pass: translucent-looking fly wings, a long upper pair and a short lower pair, each a veined leaf of slices
+        def one(sd, n):
+            for j, (ln, wd, rot, yo) in enumerate(((w.get("len", 17.0) * sp, w.get("wid", 6.4), w.get("rot1", (0, 24, -22)), 0.0), (w.get("len", 17.0) * sp * 0.68, w.get("wid", 6.4) * 0.7, w.get("rot2", (0, 34, 10)), -3.4))):
+                nm = "%s_%s" % (pfx, n) if j == 0 else "%s_low_%s" % (pfx, n)
+                bone(nm, "chest", (-2.4, sh - 2.4 + ry + yo, 3.6), rot=rot, side=sd)
+                x = 2.4
+                prof = (0.55, 0.85, 1.0, 0.95, 0.78, 0.5, 0.25)
+                seg = ln / len(prof)
+                for i, f in enumerate(prof):
+                    cube(nm, "%s_slice_%d" % (nm, i), (-(x + seg + 0.05), sh - 2.4 + ry + yo - wd * f * 0.5, 3.9 + 0.1 * j), (seg + 0.05, wd * f, 0.4), mem if i % 2 == 0 else w.get("mem2", mem), side=sd, paint="membrane")
+                    x += seg
+                cube(nm, "%s_vein_%d" % (nm, j), (-(2.4 + ln), sh - 2.4 + ry + yo - 0.4, 4.3), (ln, 0.8, 0.7), arm, side=sd)
+                for i in (2, 4):
+                    cube(nm, "%s_cross_%d_%d" % (nm, j, i), (-(2.4 + seg * i + 0.4), sh - 2.4 + ry + yo - wd * prof[i] * 0.5, 4.3), (0.6, wd * prof[i], 0.6), arm, side=sd)
+        pair(one)
     elif kind == "blades":                                                # a fan of bony blades (Ultima's six wings a side)
         nb = w.get("n", 6)
 
@@ -340,7 +364,7 @@ def wings(w, D):
                 ln = (13.0 - 4.0 * abs(i - nb / 2.0) / nb * 2) * sp
                 bn = "%s_%s_b%d" % (pfx, n, i)
                 bone(bn, "%s_%s" % (pfx, n), (-2.2, sh - 2.0 + ry, 3.4 + 0.5 * (i % 2)), rot=(0, 20 + (i % 3) * 10, a), side=sd)
-                cube(bn, bn + "_c", (-2.2 - ln, sh - 2.0 + ry - 0.6, 3.4 + 0.5 * (i % 2)), (ln, 1.2, 0.6), mem if i % 2 == 0 else arm, side=sd)
+                cube(bn, bn + "_c", (-2.2 - ln, sh - 2.0 + ry - 0.6 * w.get("bw", 1.2) / 1.2, 3.4 + 0.5 * (i % 2)), (ln, w.get("bw", 1.2), 0.6), mem if i % 2 == 0 else arm, side=sd)
                 cube(bn, bn + "_t", (-2.2 - ln - 2.2, sh - 2.0 + ry - 0.3, 3.4 + 0.5 * (i % 2)), (2.4, 0.6, 0.5), "claw", side=sd)
         pair(one)
     else:
@@ -397,12 +421,16 @@ def extra(fn):
 def outfit(o, D, spec):
     if not o:
         return
+    if isinstance(o, (list, tuple)):                                      # polish pass: several outfits stacked (armour over a long skirt)
+        for one in o:
+            outfit(one, D, spec)
+        return
     cw, cd, ch_y, chh, ab_y, ah, hip, pw = D["cw"], D["cd"], D["ch_y"], D["chh"], D["ab_y"], D["ah"], D["hip"], D["pw"]
     cl, cl2 = "cloth", "cloth2"
     if o in ("butler", "prince", "military", "coat", "maid", "dress"):
         # a jacket shell over the chest and the abdomen
-        cube("chest", "jacket", (-cw / 2 - 0.5, ch_y - 0.2, -cd / 2 - 0.4), (cw + 1.0, chh - 0.6, cd + 0.8), cl)
-        cube("body", "jacket_low", (-D["aw"] / 2 - 0.4, ab_y - 0.2, -2.8), (D["aw"] + 0.8, ah + 0.2, 5.6), cl)
+        cube("chest", "jacket", (-cw / 2 - 0.5, ch_y - 0.2, -cd / 2 - 0.4), (cw + 1.0, chh - 0.6, cd + 0.8), cl, paint="jacket")
+        cube("body", "jacket_low", (-D["aw"] / 2 - 0.4, ab_y - 0.2, -2.8), (D["aw"] + 0.8, ah + 0.2, 5.6), cl, paint="jacket_low")
         cube("chest", "collar", (-3.6, D["sh_y"] - 0.9, -2.6), (7.2, 1.4, 5.2), cl2)
         if o in ("butler", "prince", "coat"):
             cube("chest", "vest", (-2.4, ch_y + 0.4, -cd / 2 - 0.9), (4.8, chh - 1.4, 0.6), "white" if o == "butler" else cl2)
@@ -428,10 +456,10 @@ def outfit(o, D, spec):
         if o in ("maid", "dress"):
             cube("body", "skirt_a", (-pw / 2 - 1.4, hip - 3.0, -4.6), (pw + 2.8, 4.8, 9.2), cl)
             cube("body", "skirt_b", (-pw / 2 - 2.6, hip - 7.4, -5.6), (pw + 5.2, 4.8, 11.2), cl)
-            cube("body", "apron", (-3.0, hip - 6.8, -6.0), (6.0, 9.0, 0.6), "white")
+            cube("body", "apron", (-3.0, hip - 6.8, -6.0), (6.0, 9.0, 0.6), "white", paint="apron")
             cube("chest", "apron_top", (-2.8, ch_y + 0.2, -cd / 2 - 1.0), (5.6, chh - 0.8, 0.5), "white")
         if o == "coat" and spec.get("coat_len"):
-            cube("body", "coat_skirt", (-pw / 2 - 1.0, hip - spec["coat_len"], -3.6), (pw + 2.0, spec["coat_len"] + 1.0, 7.2), cl)
+            cube("body", "coat_skirt", (-pw / 2 - 1.0, hip - spec["coat_len"], -3.6), (pw + 2.0, spec["coat_len"] + 1.0, 7.2), cl, paint="skirt")
     elif o == "open_jacket":                                              # bare chest, jacket sleeves and shoulders, a sash
         def sleeves(sd, n):
             cube("arm_" + n, "sleeve_up_" + n, (-cw / 2 - 1.0 - D["at"] / 2 - 0.4, D["sh_y"] - 1.0 - D["ua"], -D["at"] / 2 - 0.5), (D["at"] + 0.8, D["ua"] + 0.4, D["at"] + 1.0), cl, side=sd)
@@ -444,10 +472,10 @@ def outfit(o, D, spec):
             cube("chest", "necklace_%d" % i, (-2.2 + i * 0.3, ch_y + 3.4 - i * 0.9, -cd / 2 - 0.5 - 0.1 * i), (4.4 - i * 0.6, 0.6, 0.5), "tooth" if i != 1 else "metal")
         cube("body", "coat_tail", (-3.6, hip - 8.0, 2.6), (7.2, 8.8, 1.0), cl, rot=(-4, 0, 0))
     elif o == "robe":                                                     # a long dark coat with a high collar
-        cube("chest", "jacket", (-cw / 2 - 0.6, ch_y - 0.2, -cd / 2 - 0.5), (cw + 1.2, chh - 0.6, cd + 1.0), cl)
-        cube("body", "jacket_low", (-D["aw"] / 2 - 0.5, ab_y - 0.2, -2.9), (D["aw"] + 1.0, ah + 0.2, 5.8), cl)
+        cube("chest", "jacket", (-cw / 2 - 0.6, ch_y - 0.2, -cd / 2 - 0.5), (cw + 1.2, chh - 0.6, cd + 1.0), cl, paint="jacket")
+        cube("body", "jacket_low", (-D["aw"] / 2 - 0.5, ab_y - 0.2, -2.9), (D["aw"] + 1.0, ah + 0.2, 5.8), cl, paint="jacket_low")
         cube("chest", "collar_hi", (-4.4, D["sh_y"] - 0.5, -3.0), (8.8, 3.4, 6.0), cl2)
-        cube("body", "coat_skirt_f", (-pw / 2 - 1.2, 1.4, -4.0), (pw + 2.4, hip - 0.4, 2.6), cl)
+        cube("body", "coat_skirt_f", (-pw / 2 - 1.2, 1.4, -4.0), (pw + 2.4, hip - 0.4, 2.6), cl, paint="skirt")
         cube("body", "coat_skirt_b", (-pw / 2 - 1.2, 1.0, 2.0), (pw + 2.4, hip, 3.0), cl)
         def sleeves(sd, n):
             cube("arm_" + n, "sleeve_up_" + n, (-cw / 2 - 1.0 - D["at"] / 2 - 0.5, D["sh_y"] - 1.0 - D["ua"], -D["at"] / 2 - 0.6), (D["at"] + 1.0, D["ua"] + 0.4, D["at"] + 1.2), cl, side=sd)
@@ -456,7 +484,7 @@ def outfit(o, D, spec):
     elif o == "long_skirt":                                               # Lucifero: a long dark skirt to the feet
         cube("body", "skirt_a", (-pw / 2 - 1.2, hip - 5.0, -4.2), (pw + 2.4, 7.0, 8.4), cl)
         cube("body", "skirt_b", (-pw / 2 - 2.4, hip - 10.4, -5.2), (pw + 4.8, 5.8, 10.4), cl)
-        cube("body", "skirt_c", (-pw / 2 - 3.2, 0.4, -5.8), (pw + 6.4, hip - 10.0, 11.6), cl2)
+        cube("body", "skirt_c", (-pw / 2 - 3.2, 0.4, -5.8), (pw + 6.4, hip - 10.0, 11.6), cl2, paint="skirt")
     elif o == "fur":                                                      # Beelzebub: fur on the chest and shoulders
         cube("chest", "fur_chest", (-cw / 2 - 0.8, ch_y + 0.4, -cd / 2 - 0.9), (cw + 1.6, chh - 0.4, cd * 0.55), "fur")
         cube("chest", "fur_back", (-cw / 2 - 0.8, ch_y + 0.6, cd / 2 - 1.2), (cw + 1.6, chh - 0.6, 1.8), "fur")
@@ -476,7 +504,7 @@ def outfit(o, D, spec):
         cube("chest", "cape_mid", (-cw / 2 - 1.2, ch_y - 6.0, cd / 2 + 0.4), (cw + 2.4, 6.4, 1.0), cl)
         cube("chest", "cape_low", (-cw / 2 - 1.8, ch_y - 14.0, cd / 2 + 0.8), (cw + 3.6, 8.2, 1.0), cl2)
     elif o == "plate":                                                    # sleek armour: breastplate, pauldrons, greaves
-        cube("chest", "breastplate", (-cw / 2 - 0.6, ch_y - 0.2, -cd / 2 - 0.7), (cw + 1.2, chh - 0.5, cd * 0.5), "white")
+        cube("chest", "breastplate", (-cw / 2 - 0.6, ch_y - 0.2, -cd / 2 - 0.7), (cw + 1.2, chh - 0.5, cd * 0.5), "white", paint="jacket")
         cube("chest", "plate_trim", (-cw / 2 - 0.7, ch_y + chh - 1.2, -cd / 2 - 0.8), (cw + 1.4, 0.9, cd * 0.5 + 0.2), "metal")
         cube("body", "tasset", (-pw / 2 - 0.6, hip - 4.8, -3.6), (pw + 1.2, 5.2, 1.2), "white")
 
@@ -508,16 +536,64 @@ def crown(D, spec, mat="metal", spikes=5):
 
 
 @extra
-def halo(D, spec, mat="gem", r=7.0):
-    """A ring behind the head (a clock or a halo): four bars around a hollow centre."""
+def halo(D, spec, mat="gem", r=7.0, hands=False, octagon=True):
+    """A ring behind the head. Polish pass: an octagon (four straight bars and four diagonals) instead of a square; the clock hands are only drawn when asked (Astaroth's time ring)."""
     t = 1.2
     y0 = D["top"] + 0.6 * D["hk"]
-    cube("head", "halo_top", (-r / 2, y0 + r - t + 0.6, 6.4), (r, t, 0.8), mat)
-    cube("head", "halo_bot", (-r / 2, y0 + 0.6, 6.4), (r, t, 0.8), mat)
-    cube("head", "halo_l", (-r / 2, y0 + 0.6, 6.4), (t, r, 0.8), mat)
-    cube("head", "halo_r", (r / 2 - t, y0 + 0.6, 6.4), (t, r, 0.8), mat)
-    cube("head", "halo_hand_a", (-0.4, y0 + r / 2 + 0.6, 6.5), (0.8, r / 2 - 0.8, 0.8), mat)
-    cube("head", "halo_hand_b", (-0.4, y0 + r / 2 + 0.6, 6.5), (r / 2 - 0.8, 0.8, 0.8), mat)
+    z = 6.4
+    if octagon:
+        sd = r / (1 + math.sqrt(2))                                       # the side of the octagon
+        cube("head", "halo_top", (-sd / 2, y0 + r - t, z), (sd, t, 0.8), mat)
+        cube("head", "halo_bot", (-sd / 2, y0, z), (sd, t, 0.8), mat)
+        cube("head", "halo_l", (-r / 2, y0 + (r - sd) / 2, z), (t, sd, 0.8), mat)
+        cube("head", "halo_r", (r / 2 - t, y0 + (r - sd) / 2, z), (t, sd, 0.8), mat)
+        dg = sd * math.sqrt(2) * 0.5 + 0.9                                # the diagonals: a bar of that length turned 45 degrees at each corner
+        for nm, cx, cy, a in (("tr", r / 2 - sd / 2 - 0.2, y0 + r - sd / 2 - 0.2, 45), ("tl", -r / 2 + sd / 2 + 0.2, y0 + r - sd / 2 - 0.2, -45), ("br", r / 2 - sd / 2 - 0.2, y0 + sd / 2 + 0.2, -45), ("bl", -r / 2 + sd / 2 + 0.2, y0 + sd / 2 + 0.2, 45)):
+            cube("head", "halo_d_" + nm, (cx - t / 2, cy - dg / 2 - 0.2, z), (t, dg + 0.4, 0.8), mat, rot=(0, 0, a), pv=(cx, cy, z + 0.4))
+    else:
+        cube("head", "halo_top", (-r / 2, y0 + r - t + 0.6, z), (r, t, 0.8), mat)
+        cube("head", "halo_bot", (-r / 2, y0 + 0.6, z), (r, t, 0.8), mat)
+        cube("head", "halo_l", (-r / 2, y0 + 0.6, z), (t, r, 0.8), mat)
+        cube("head", "halo_r", (r / 2 - t, y0 + 0.6, z), (t, r, 0.8), mat)
+    if hands:
+        cube("head", "halo_hand_a", (-0.4, y0 + r / 2 + 0.6, 6.5), (0.8, r / 2 - 0.8, 0.8), mat)
+        cube("head", "halo_hand_b", (-0.4, y0 + r / 2 + 0.6, 6.5), (r / 2 - 0.8, 0.8, 0.8), mat)
+
+
+@extra
+def back_spikes(D, spec, mat="horn", n=4):
+    """A row of spines down the back (Amaimon's rock plates, Megicula's armour)."""
+    for i in range(n):
+        y = D["sh_y"] - 1.2 - i * (D["chh"] + D["ah"] - 2.0) / max(1, n - 1)
+        cube("chest" if i < 2 else "body", "back_spike_%d" % i, (-0.9, y - 0.9, D["cd"] / 2 + 0.2), (1.8, 1.8, 3.2 - 0.4 * i), mat, rot=(-18 + 4 * i, 0, 0), pv=(0, y, D["cd"] / 2 + 0.2))
+
+
+@extra
+def mandibles(D, spec, mat="horn"):
+    """Insect pincers beside the mouth (Beelzebub, Lord of the Flies)."""
+    def one(sd, n):
+        hcube(D, "mandible_" + n, (-4.4, 0.4, -4.4), (1.2, 2.6, 1.0), mat, bone_name="jaw", rot=(0, 0, -16), pv=(-3.8, 2.6, -4.0), side=sd)
+        hcube(D, "mandible_tip_" + n, (-3.4, -1.0, -4.4), (0.9, 1.8, 0.9), "tooth", bone_name="jaw", rot=(0, 0, -34), pv=(-3.4, 0.8, -4.0), side=sd)
+    pair(one)
+
+
+@extra
+def cloak(D, spec, mat="cloth", mat2="cloth2", width=1.0):
+    """A long cape from the shoulders to the heels, behind the wings (the God Hand's crimson cloak)."""
+    cw = D["cw"] * width
+    cube("chest", "cloak_top", (-cw / 2 - 1.6, D["sh_y"] - 5.6, D["cd"] / 2 + 0.2), (cw + 3.2, 6.0, 1.2), mat)
+    cube("body", "cloak_mid", (-cw / 2 - 2.2, D["hip"] - 8.0, D["cd"] / 2 + 0.5), (cw + 4.4, 12.0, 1.0), mat)
+    cube("body", "cloak_low", (-cw / 2 - 2.8, 1.0, D["cd"] / 2 + 0.8), (cw + 5.6, D["hip"] - 8.8, 1.0), mat2)
+    def clasp(sd, n):
+        cube("chest", "cloak_clasp_" + n, (-cw / 2 - 1.0, D["sh_y"] - 1.6, -D["cd"] / 2 - 0.5), (2.0, 1.6, 0.8), "metal", side=sd)
+    pair(clasp)
+
+
+@extra
+def tongue(D, spec, mat="accent"):
+    """A long tongue hanging from the mouth (Astaroth's kin)."""
+    hcube(D, "tongue_a", (-0.7, -1.0, -4.5), (1.4, 0.7, 2.6), mat, bone_name="jaw")
+    hcube(D, "tongue_b", (-0.7, -2.6, -4.5), (1.4, 1.8, 0.7), mat, bone_name="jaw")
 
 
 @extra
@@ -590,6 +666,8 @@ def custom_fox(spec):
     cube("chest", "chest", (-7.0, 17.0, -4.4), (14.0, 7.0, 8.4), "fur", paint="chest")
     cube("chest", "chest_ruff", (-6.0, 18.0, -5.4), (12.0, 5.2, 2.0), "white")
     cube("chest", "back_ridge", (-3.0, 22.4, 3.6), (6.0, 2.4, 1.6), "fur2")
+    for i in range(3):                                                         # polish pass: fur spines down the back
+        cube("chest" if i < 2 else "body", "back_fur_%d" % i, (-1.2, 23.4 - i * 3.6, 4.6), (2.4, 3.0, 2.0 - 0.2 * i), "fur2", rot=(-20, 0, 0), pv=(0, 23.4 - i * 3.6, 4.6))
     # the head: huge, with a long muzzle, many eyes
     cube("head", "head", (-6.0, 22.0, -6.0), (12.0, 11.0, 10.0), "fur", paint="face")
     cube("head", "brow", (-6.4, 30.4, -6.4), (12.8, 1.6, 2.0), "fur2")
@@ -601,10 +679,12 @@ def custom_fox(spec):
     cube("jaw", "jaw", (-2.8, 20.6, -11.0), (5.6, 2.0, 9.0), "white", paint="jaw")
     cube("jaw", "fang_r", (-2.6, 22.5, -11.0), (0.9, 1.6, 0.9), "tooth")
     cube("jaw", "fang_l", (1.7, 22.5, -11.0), (0.9, 1.6, 0.9), "tooth")
-    for sd, n in ((-1, "r"), (1, "l")):
-        cube("head", "ear_a_" + n, (-6.0, 32.4, -2.0), (4.0, 4.0, 2.0), "fur", rot=(0, 0, 14), pv=(-4, 32.4, -1), side=sd)
-        cube("head", "ear_b_" + n, (-5.4, 36.0, -1.6), (2.8, 3.4, 1.6), "fur", rot=(0, 0, 18), pv=(-4, 36, -1), side=sd)
-        cube("head", "ear_in_" + n, (-5.0, 33.0, -2.2), (2.0, 3.8, 0.6), "ink", rot=(0, 0, 14), pv=(-4, 33, -1.9), side=sd)
+    for sd, n in ((-1, "r"), (1, "l")):                                         # polish pass: bigger, upright ears with a dark inner and a pale rim
+        cube("head", "ear_a_" + n, (-6.4, 32.2, -2.2), (5.0, 4.6, 2.4), "fur", rot=(0, 0, 12), pv=(-4, 32.2, -1), side=sd)
+        cube("head", "ear_b_" + n, (-5.8, 36.4, -1.8), (3.4, 4.4, 1.8), "fur", rot=(0, 0, 16), pv=(-4, 36, -1), side=sd)
+        cube("head", "ear_in_" + n, (-5.4, 33.0, -2.5), (2.6, 4.8, 0.6), "ink", rot=(0, 0, 12), pv=(-4, 33, -2.2), side=sd)
+        cube("head", "ear_rim_" + n, (-6.8, 32.6, -1.6), (0.9, 4.4, 1.2), "white", rot=(0, 0, 12), pv=(-4, 32.2, -1), side=sd)
+        cube("chest", "ruff_" + n, (-7.6, 20.6, -3.4), (2.6, 4.8, 6.4), "white", rot=(0, 0, 16), pv=(-6, 24, 0), side=sd)
     hair_cube = [("tuft_%d" % i, (-2.6 + i * 2.6, 32.8, -5.6), (2.0, 2.0 + (i % 2), 1.6)) for i in range(3)]
     for nm, o, s in hair_cube:
         cube("head", nm, o, s, "fur2")
@@ -626,9 +706,9 @@ def custom_fox(spec):
     bone("arm_r_hand", "arm_r_low", (-12.0, 7.6, 0))
     cube("arm_r_hand", "palm_r", (-16.0, 4.0, -5.0), (8.8, 4.0, 10.0), "white", paint="eyes_arm")
     for i in range(4):
-        cube("arm_r_hand", "claw_%d_r" % i, (-15.6 + i * 2.2, 0.0, -4.4 + i * 2.5), (1.8, 4.4, 1.8), "claw")
+        cube("arm_r_hand", "claw_%d_r" % i, (-15.6 + i * 2.2, -1.4, -4.4 + i * 2.5), (2.0, 5.8, 2.0), "claw")
     # the tail: three bushy segments, white tip
-    segs = [(6.0, 5.0, 5.0, (-14, 0, 0)), (6.4, 6.4, 6.4, (10, 0, 0)), (6.0, 6.4, 6.4, (-12, 0, 0))]
+    segs = [(6.0, 5.4, 5.4, (-14, 0, 0)), (6.6, 7.6, 7.6, (10, 0, 0)), (6.4, 7.8, 7.8, (-12, 0, 0))]
     chain("tail", "body", -1, "", (0, 12.0, 3.0), segs, "fur", axis="z", mats=["fur", "fur", "white"])
     return dict(hip=12, top=37)
 
@@ -667,9 +747,14 @@ def custom_curse(spec):
         pair(rib)
     cube("chest", "heart_glow", (-1.5, 21.0, -1.0), (3.0, 3.0, 3.0), "glow")
     cube("chest", "clavicle", (-7.4, 26.0, -1.6), (14.8, 1.2, 2.4), "bone")
+    for sd2, n2 in ((-1, "r"), (1, "l")):                                      # polish pass: bone spikes on the shoulders and a spine of thorns, and a dark rotten lining in the ribcage
+        cube("chest", "shoulder_spike_" + n2, (-11.6, 25.6, -0.8), (1.6, 4.2, 1.6), "claw", rot=(0, 0, 24), pv=(-10, 25.6, 0), side=sd2)
+    cube("chest", "rib_lining", (-5.6, 20.4, -2.6), (11.2, 6.8, 0.8), "cloth")
+    for i in range(3):
+        cube("chest" if i < 2 else "body", "thorn_%d" % i, (-0.7, 24.0 - i * 4.0, 2.2), (1.4, 2.4, 2.6), "claw", rot=(-24, 0, 0), pv=(0, 24.0 - i * 4.0, 2.4))
     # the right head: nearly human skull; the left: three eye slits, long mandible teeth
     for hd, jw, cx, nm in (("head", "jaw", 3.4, "a"), ("head2", "jaw2", -3.6, "b")):
-        big = 6.6 if nm == "a" else 7.4
+        big = 7.4 if nm == "a" else 8.2
         cube(hd, "skull_" + nm, (cx - big / 2, 27.0, -big / 2), (big, big, big), "bone", paint="face_" + nm)
         cube(jw, "jaw_" + nm, (cx - (big - 1.6) / 2, 25.6, -big / 2 - 0.2), (big - 1.6, 1.8 + (1.4 if nm == "b" else 0.0), big - 2.0 + (1.4 if nm == "b" else 0.0)), "bone")
         for i in range(4 if nm == "b" else 3):
@@ -743,6 +828,12 @@ def custom_tree(spec):
     pair(arms)
     for i, x in enumerate((-4.0, 0.0, 4.0)):                                     # streamers hanging from the chest
         chain("stream", "chest", -1, str(i), (x, 17.0, -4.0), [(4.0, 1.4, 0.4, (0, 0, 0)), (4.0, 1.2, 0.4, (-6, 0, 0)), (4.0, 1.0, 0.4, (-10, 0, 0))], "leaf", axis="ny")
+    for sd, n in ((-1, "r"), (1, "l")):                                          # polish pass: leaf clusters on the horn tips and the branches, moss on the shoulders
+        cube("head", "leaf_a_" + n, (-6.6, 33.0, -2.2), (3.4, 2.0, 3.4), "leaf", rot=(0, 0, 20), side=sd)
+        cube("head", "leaf_b_" + n, (-9.0, 36.4, -1.8), (3.0, 1.8, 3.0), "leaf", rot=(0, 0, 30), side=sd)
+        cube("chest", "moss_" + n, (-8.4, 22.4, -2.6), (3.6, 1.6, 5.2), "leaf", side=sd)
+        cube("arm_%s_low" % n, "leaf_arm_" + n, (-21.0, 22.6, -2.2), (3.0, 1.4, 4.4), "leaf", side=sd)
+    cube("body", "root_flare_f", (-6.6, 6.0, -6.4), (13.2, 1.4, 2.2), "wood2")
     return dict(hip=12, top=39)
 
 
@@ -765,10 +856,16 @@ def custom_flower(spec):
                 for col in (-2.6, 2.6):
                     cx = (ring + 0.4) * dx + (col if dx == 0 else 0)
                     cz = (ring + 0.4) * dz + (col if dz == 0 else 0)
-                    sx, sz = (4.2, 1.0) if dz else (1.0, 4.2)
-                    cube(b, "petal_%d" % k, (cx - sx / 2, yy - 2.1 + 2.0, cz - sz / 2), (sx, 4.2, sz), "flower")
-                    cube(b, "petal2_%d" % k, (cx - (sz if dz else 4.2) / 2 + (0.0), yy - 0.6, cz - (4.2 if dz else sz) / 2 + 0.0), (4.2 if dz else 1.0, 1.0, 1.0 if dz else 4.2), "flower")
-                    cube(b, "heart_%d" % k, (cx - 0.8 + (0.4 * dx), yy + 1.0, cz - 0.8 + (0.4 * dz)), (1.6, 1.6, 1.6), "flower2")
+                    cy = yy + 1.6                                                   # polish pass: one centre for every part, a star of three bars (0, 90 and 45 degrees) and the heart
+                    if dz:
+                        cube(b, "petal_%d" % k, (cx - 0.75, cy - 2.3, cz - 0.5), (1.5, 4.6, 1.0), "flower")
+                        cube(b, "petal2_%d" % k, (cx - 2.3, cy - 0.75, cz - 0.5), (4.6, 1.5, 1.0), "flower")
+                        cube(b, "petal3_%d" % k, (cx - 0.75, cy - 2.3, cz - 0.5), (1.5, 4.6, 1.0), "flower", rot=(0, 0, 45), pv=(cx, cy, cz))
+                    else:
+                        cube(b, "petal_%d" % k, (cx - 0.5, cy - 2.3, cz - 0.75), (1.0, 4.6, 1.5), "flower")
+                        cube(b, "petal2_%d" % k, (cx - 0.5, cy - 0.75, cz - 2.3), (1.0, 1.5, 4.6), "flower")
+                        cube(b, "petal3_%d" % k, (cx - 0.5, cy - 2.3, cz - 0.75), (1.0, 4.6, 1.5), "flower", rot=(45, 0, 0), pv=(cx, cy, cz))
+                    cube(b, "heart_%d" % k, (cx - 0.9 + (0.4 * dx), cy - 0.9, cz - 0.9 + (0.4 * dz)), (1.8, 1.8, 1.8), "flower2")
                     k += 1
     hair_len = 18
     cube("head", "head", (-4.4, 27.0, -4.4), (8.8, 9.0, 8.8), "skin", paint="stitched_face")
@@ -782,6 +879,8 @@ def custom_flower(spec):
         cube("lock_" + n, "hair_side_a_" + n, (-6.2, 22.0, -2.8), (1.8, 13.0, 5.6), "hair", side=sd)
         cube("lock_" + n, "hair_side_b_" + n, (-6.6, 14.0, -2.4), (1.4, 8.4, 4.8), "hair", side=sd)
     pair(locks)
+    for sd2, n2 in ((-1, "r"), (1, "l")):                                      # polish pass: long wavy locks fall in front of the shoulders
+        cube("lock_" + n2, "hair_front_" + n2, (-6.0, 17.0, -5.6), (1.8, 11.0, 1.4), "hair", rot=(-4, 0, 0), side=sd2)
     def arms(sd, n):                                                           # two upper arms, long and thin
         bone("arm_" + n, "chest", (-8.4, 25.0, 0), side=sd)
         cube("arm_" + n, "upper_" + n, (-10.4, 17.4, -1.8), (3.2, 8.4, 3.6), "skin", side=sd)
@@ -835,7 +934,11 @@ def custom_statue(spec):
     cube("chest", "chest", (-8.0, 18.2, -4.4), (16.0, 8.0, 8.8), "stone", paint="chest")
     cube("chest", "collar_beads", (-5.0, 25.0, -4.0), (10.0, 1.6, 8.0), "accent")
     cube("chest", "neck", (-2.4, 25.4, -2.0), (4.8, 1.6, 4.0), "stone")
-    cube("head", "halo_disc", (-9.0, 24.0, 5.2), (18.0, 18.0, 1.2), "flame")
+    # polish pass: a true octagon, four bars of width 7.45 through the centre at 0, 45, 90 and 135 degrees (the 4.71.0 disc was one flat square)
+    cube("head", "halo_disc", (-9.0, 29.3, 5.2), (18.0, 7.45, 1.2), "flame")
+    cube("head", "halo_disc_v", (-3.725, 24.0, 5.25), (7.45, 18.0, 1.2), "flame")
+    cube("head", "halo_disc_d1", (-9.0, 29.3, 5.3), (18.0, 7.45, 1.2), "flame", rot=(0, 0, 45), pv=(0, 33.0, 5.9))
+    cube("head", "halo_disc_d2", (-9.0, 29.3, 5.35), (18.0, 7.45, 1.2), "flame", rot=(0, 0, -45), pv=(0, 33.0, 5.9))
     cube("head", "halo_core", (-6.4, 26.6, 5.6), (12.8, 12.8, 1.0), "stone2")
     for hd, ang, pre in (("head", 0, "c"), ("head_r", 0, "r"), ("head_l", 0, "l")):
         cx = 0.0 if hd == "head" else (-5.2 if hd == "head_r" else 5.2)

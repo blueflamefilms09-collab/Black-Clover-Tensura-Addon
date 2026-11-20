@@ -20,16 +20,23 @@ final class DevilCanonAssets {
     private record Files(ResourceLocation model, ResourceLocation texture, ResourceLocation animation) {}
 
     private static final Map<String, Files> BY_ID = new HashMap<>();
+    /** The 4.71.0 versions (option {@code bossLooks.devilCanonClassic}), one folder deeper; made once like the table above. */
+    private static final Map<String, Files> CLASSIC_BY_ID = new HashMap<>();
 
     static {
-        for (String id : DevilCanonRules.IDS)
+        for (String id : DevilCanonRules.IDS) {
             BY_ID.put(id, new Files(loc(DevilCanonRules.geoPath(id)), loc(DevilCanonRules.texturePath(id)), loc(DevilCanonRules.animationPath(id))));
+            CLASSIC_BY_ID.put(id, new Files(loc(DevilCanonRules.classicGeoPath(id)), loc(DevilCanonRules.classicTexturePath(id)), loc(DevilCanonRules.classicAnimationPath(id))));
+        }
     }
 
     private static ResourceLocation loc(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
     /** The canon assets of this devil, or null when it has none or the option is off (then the generic brute is drawn). */
-    private static Files of(String id) { return id == null || !PlayerModelOptions.devilCanonLooks() ? null : BY_ID.get(id); }
+    private static Files of(String id) {
+        if (id == null || !PlayerModelOptions.devilCanonLooks()) return null;
+        return (PlayerModelOptions.devilCanonClassic() ? CLASSIC_BY_ID : BY_ID).get(id);
+    }
 
     static boolean canon(String id) { return of(id) != null; }
 

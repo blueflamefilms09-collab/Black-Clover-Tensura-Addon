@@ -262,4 +262,47 @@ class DevilCanonLooksTest {
         assertFalse(e.contains("net.minecraft.client") || e.contains("com.newuniverse.nusmp.client"), "no client class in common code (rule 9)");
         assertEquals(30, DevilNpcRules.RISE_TICKS, "the rise lasts as before");
     }
+
+    // ---------------------------------------------------------------- the polish pass (docs/devil_trial_model.md, "Polish pass")
+    private static int quads(JsonObject g) {
+        int cubes = 0;
+        for (JsonElement e : g.getAsJsonArray("bones")) if (e.getAsJsonObject().has("cubes")) cubes += e.getAsJsonObject().getAsJsonArray("cubes").size();
+        return cubes * 6;
+    }
+
+    @Test
+    void theClassicModelsOfTheFourSeventyOneAreKeptAndEveryPolishedModelStaysInsideItsBudget() throws Exception {
+        for (String id : DevilCanonRules.IDS) {
+            for (String p : new String[]{DevilCanonRules.classicGeoPath(id), DevilCanonRules.classicAnimationPath(id), DevilCanonRules.classicTexturePath(id), DevilCanonRules.classicGlowPath(id)})
+                assertTrue(new File(ASSETS, p).isFile(), "the 4.71.0 file is kept: " + p);
+            int old = quads(json(new File(ASSETS, DevilCanonRules.classicGeoPath(id))).getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject()), now = quads(geo(id));
+            assertTrue(now <= old * 1.25 + 0.5, id + ": a model may grow by 25 percent at most (" + old + " -> " + now + ")");
+            if (!id.equals("ghost_devil")) assertTrue(now <= 882, id + ": the existing budget is 882 quads, only the Ghost Devil (its flowers) may pass it, it has " + now);
+            assertTrue(now <= 1100, id);
+        }
+    }
+
+    @Test
+    void theClassicOptionIsAClientConfigOffByDefaultAndPicksTheKeptFolder() throws Exception {
+        String o = read(ROOT + "client/playermodel/PlayerModelOptions.java");
+        assertTrue(o.contains(".define(\"devilCanonClassic\", false)") && o.contains("public static boolean devilCanonClassic()"), "default off, client config");
+        assertTrue(read(ROOT + "client/devil/DevilCanonAssets.java").contains("PlayerModelOptions.devilCanonClassic()") && read(ROOT + "client/devil/DevilCanonAssets.java").contains("CLASSIC_BY_ID"), "the assets table switches on it");
+        assertEquals("geo/entity/classic_devil_canon/devil_canon_liebe.geo.json", DevilCanonRules.classicGeoPath("liebe"));
+        assertEquals("textures/entity/classic_devil_canon/devil_canon_liebe_glowmask.png", DevilCanonRules.classicGlowPath("liebe"));
+        String en = read("src/main/resources/assets/anime_multiverse/lang/en_us.json"), frag = read("tools/lang/devil_canon.json");
+        for (String k : new String[]{"devilCanonClassic", "devilCanonClassic.tooltip"}) {
+            String key = "anime_multiverse.configuration." + k;
+            assertTrue(frag.contains("\"" + key + "\"") && en.contains("\"" + key + "\""), key + " in the fragment and en_us.json");
+        }
+    }
+
+    @Test
+    void thePolishedModelsDifferFromTheClassicOnesAndKeepTheirClipNames() throws Exception {
+        for (String id : DevilCanonRules.IDS) {
+            assertTrue(!Files.readString(new File(ASSETS, DevilCanonRules.geoPath(id)).toPath()).equals(Files.readString(new File(ASSETS, DevilCanonRules.classicGeoPath(id)).toPath())), id + ": the polished geometry differs from the classic one");
+            assertTrue(!java.util.Arrays.equals(Files.readAllBytes(new File(ASSETS, DevilCanonRules.texturePath(id)).toPath()), Files.readAllBytes(new File(ASSETS, DevilCanonRules.classicTexturePath(id)).toPath())), id + ": the polished sheet differs from the classic one");
+            JsonObject anims = json(new File(ASSETS, DevilCanonRules.animationPath(id))).getAsJsonObject("animations");
+            for (String clip : new String[]{DevilCanonRules.CLIP_IDLE, DevilCanonRules.CLIP_WALK, DevilCanonRules.CLIP_ATTACK, DevilCanonRules.CLIP_RISE, DevilCanonRules.CLIP_ROAR}) assertTrue(anims.has(clip), id + " keeps " + clip);
+        }
+    }
 }

@@ -20427,5 +20427,7 @@
   "anime_multiverse.configuration.devilRitualFigure": "Summoned devil at full size",
   "anime_multiverse.configuration.devilRitualFigure.tooltip": "On: the devil that rises from the summoning circle is the full-size devil model of the trial (the same model and size, wings and horns attached to its body), climbing out of the circle with a burst of dust. Off: the earlier figure (the player-model look, or the Blender mesh).",
   "entity.anime_multiverse.hero_arrow": "Hero Arrow",
-  "entity.anime_multiverse.meteor": "Meteor"
+  "entity.anime_multiverse.meteor": "Meteor",
+  "anime_multiverse.configuration.devilCanonClassic": "Classic devil models",
+  "anime_multiverse.configuration.devilCanonClassic.tooltip": "On: the 26 devils are drawn as they were in version 4.71.0 (before the polish pass: plainer sheets, thinner horns, curtain wings). Off (default): the polished models. Only matters while Devils drawn as themselves is on."
 }

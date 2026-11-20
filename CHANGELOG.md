@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.76.0] — The 26 canon devils polished, and the 4.73.0 build fix
+Owner request: "just fix them a bit" (the devil models).
+- REPLACED (same names): the 26 canon devil models, animations and sheets are polished: leaf-shaped ears pointing up and out, reshaped horns that are no longer cut off, wider overlapping wing panels, bigger layered eyes, edge shading, cloth folds, scales and panel lines baked into the textures, new insect wings and four new extras (back spikes, mandibles, cloak, tongue). Liebe is white with dark markings, Lucifero has three horns, Megicula is tall, Astaroth and Sebastian wear gloves and have red eyes (as the owner's brief said). Made by script (`tools/blockbench/gen_devil_canon.py`), not opened in Blockbench.
+- NEW (client): option `bossLooks.devilCanonClassic` (default false) draws the 4.71.0 versions, kept in the `classic_devil_canon` folders.
+- FIX: the meteor particles now go through the mod's particle facade (the particle source-scan tests of the 4.73.0 build failed on vanilla particle calls).
+- KEPT: file names, the five clip names, the glow-mask contract, all server rules and the generic brute. COST: client only, at most 882 quads per devil (Ghost 1086), no packets, no per-frame allocation.
+- CAVEATS: software previews (`docs/previews/devil_canon_looks/`), not seen in a game or in GeckoLib.
+- Includes 4.73.0 (real arrows with magic, real falling meteors, longer technique durations), 4.74.0 (true katanas) and 4.75.0 (shield arm straps) as published below, whose builds did not finish.
+
 ## [4.75.0] — Straps on the arm for every shield
 Owner request: add straps that wrap around the player's arm.
 - NEW (client): every shield mesh is drawn with two leather rings round the forearm, a grip bar over the hand and two strap tabs to the plate, with metal buckles in each shield's accent colour (`visual/shields/ShieldStraps`, `shield_straps.json`, `shield_straps.png`). Client option `visual.shieldStraps` (true; false draws exactly what 4.71.2 drew). First person shows only the grip bar and two mounts. Self-test `visual.shields.straps`.

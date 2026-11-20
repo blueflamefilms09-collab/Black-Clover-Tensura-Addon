@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.meteor;
 
 import com.newuniverse.nusmp.perf.PerfBudgets;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -16,6 +15,9 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * One falling meteor (docs/meteor_fall.md). It is a plain {@link Entity}: no AI, no collision, no gravity, never saved. Its whole flight is
@@ -129,12 +131,12 @@ public class MeteorEntity extends Entity {
 
     private static ParticleOptions[] particles(MeteorStyle s) {
         return switch (s) {
-            case FIRE -> new ParticleOptions[]{ParticleTypes.FLAME, ParticleTypes.LARGE_SMOKE};
-            case ICE -> new ParticleOptions[]{ParticleTypes.SNOWFLAKE, ParticleTypes.CLOUD};
-            case DARK -> new ParticleOptions[]{ParticleTypes.SOUL_FIRE_FLAME, ParticleTypes.SMOKE};
-            case KI -> new ParticleOptions[]{ParticleTypes.ELECTRIC_SPARK, ParticleTypes.END_ROD};
-            case HOLY -> new ParticleOptions[]{ParticleTypes.END_ROD, ParticleTypes.GLOW};
-            case STAR -> new ParticleOptions[]{ParticleTypes.END_ROD, ParticleTypes.FIREWORK};
+            case FIRE -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.FLAME), Fx.options(FxThemes.WORLD, FxOld.LARGE_SMOKE)};
+            case ICE -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.SNOWFLAKE), Fx.options(FxThemes.WORLD, FxOld.CLOUD)};
+            case DARK -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.SOUL_FIRE_FLAME), Fx.options(FxThemes.WORLD, FxOld.SMOKE)};
+            case KI -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.ELECTRIC_SPARK), Fx.options(FxThemes.WORLD, FxOld.END_ROD)};
+            case HOLY -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.END_ROD), Fx.options(FxThemes.WORLD, FxOld.GLOW)};
+            case STAR -> new ParticleOptions[]{Fx.options(FxThemes.WORLD, FxOld.END_ROD), Fx.options(FxThemes.WORLD, FxOld.FIREWORK)};
         };
     }
 

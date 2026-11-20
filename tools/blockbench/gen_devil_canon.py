@@ -142,6 +142,54 @@ def mat_extra(mat, img, face, fw, fh, seed, tn):
     return img
 
 
+def detail_pass(img, mat, face, fw, fh, seed, spec, rgb):
+    """Polish pass, the second texture pass (docs/devil_trial_model.md, 'Polish pass'), on the base colour only (the glow mask is not touched): ambient occlusion down the tall faces, a rim light on dark
+    materials so a black coat still reads cube by cube, cloth folds, scales and plate panel lines where the spec asks (spec['detail']), a soft blotch noise on skin, fur and stone grain. Deterministic."""
+    if mat in ("glow", "gem", "flame", "horn_tip") or fw < 3 or fh < 3:
+        return img
+    cfg = spec.get("detail", {})
+    rs = T.rng_for(*seed, "detail")
+    ys = np.arange(fh, dtype=np.float32)[:, None]
+    xs = np.arange(fw, dtype=np.float32)[None, :]
+    side = face not in ("up", "down")
+    mean = float(T.lum(tuple(img.reshape(-1, 3).mean(axis=0))))
+    mult = np.ones((fh, fw), np.float32)
+    if side and fh >= 5:                                                       # AO: the lower third is darker, the top row catches light
+        mult *= 1.0 - 0.16 * np.clip((ys / (fh - 1.0) - 0.62) / 0.38, 0, 1)
+        mult[0:1, :] *= 1.07
+    if mat in cfg.get("folds", ("cloth", "cloth2", "boot", "glove", "white", "fur2")) and side:     # cloth folds: slightly slanted ridges and a deeper crease
+        period = 4.0 + float(rs.randint(0, 3))
+        ph = float(rs.rand()) * 6.28
+        mult *= 1.0 + 0.085 * np.sin(xs * 6.2832 / period + ys * 0.22 + ph)
+        crease = int(rs.randint(1, max(2, fw - 1)))
+        mult[:, crease:crease + 1] *= 0.86
+    if mat in cfg.get("scales", ()) and side:                                    # scales / plates in rows, offset every other row
+        row = (ys // 3).astype(np.int32)
+        col = ((xs + (row % 2) * 2) % 4).astype(np.int32)
+        mult *= np.where(ys % 3 == 2, 0.80, 1.0) * np.where(col == 0, 0.88, 1.0)
+        mult *= np.where((ys % 3 == 0) & (col == 2), 1.10, 1.0)
+    if mat in cfg.get("plates", ()) and fw > 5 and fh > 5:                      # an inset panel line and a rivet in each corner
+        mult[2:3, 2:fw - 2] *= 0.78
+        mult[fh - 3:fh - 2, 2:fw - 2] *= 0.78
+        mult[2:fh - 2, 2:3] *= 0.78
+        mult[2:fh - 2, fw - 3:fw - 2] *= 0.78
+        for yy, xx in ((3, 3), (3, fw - 4), (fh - 4, 3), (fh - 4, fw - 4)):
+            mult[yy, xx] *= 1.22
+    if mat in ("skin", "skin2", "fur", "stone", "stone2", "wood", "wood2", "rot", "hair", "mist") and fw > 4:   # low-frequency blotches break the flat colour
+        blot = rs.rand(max(2, fh // 3), max(2, fw // 3)).astype(np.float32)
+        blot = np.kron(blot, np.ones((3, 3), np.float32))[:fh, :fw]
+        mult *= 0.95 + 0.1 * np.pad(blot, ((0, fh - blot.shape[0]), (0, fw - blot.shape[1])), mode="edge")
+    img = img * mult[..., None]
+    if mean < 62:                                                              # dark materials: a faint cool rim light on the top and left edge so the shapes read
+        rim = np.zeros((fh, fw), np.float32)
+        rim[0, :] += 11
+        rim[:, 0] += 7
+        if face == "up":
+            rim += 9
+        img = img + rim[..., None] * np.array([0.9, 0.95, 1.1], np.float32)
+    return img
+
+
 def sheet_for(spec, k, pos, size):
     rgb, glow_c = color_table(spec)
     tn = {m: tones(c) for m, c in rgb.items()}
@@ -159,6 +207,7 @@ def sheet_for(spec, k, pos, size):
         for face, (u, v, fw, fh) in T.face_rects(c, k, pos[i]).items():
             img = T.paint_material(mat, tn[mat], face, fw, fh, (c["name"], face))
             img = mat_extra(mat, img, face, fw, fh, (c["name"], face), tn)
+            img = detail_pass(img, mat, face, fw, fh, (c["name"], face), spec, rgb)
             g = np.zeros((fh, fw, 4), np.float32)
             if mat in ("glow", "gem"):
                 img = img * 0.45 + gl_rgb * 0.55
@@ -170,9 +219,9 @@ def sheet_for(spec, k, pos, size):
                 g[..., 3] = 255
             elif mat == "horn_tip":
                 t = np.linspace(1.0, 0.0, fh, dtype=np.float32)[:, None, None] if face not in ("up", "down") else 1.0
-                img = img * (1 - 0.55 * t) + gl_rgb * 0.55 * t
+                img = img * (1 - 0.4 * t) + gl_rgb * 0.4 * t                     # polish pass: a soft glow at the very tip (4.71.0 lit the whole last segment, which read as a detached chip)
                 g[..., :3] = gl_rgb
-                g[..., 3] = (255 * np.broadcast_to(t, (fh, fw, 1))[..., 0]) if face not in ("up", "down") else 255
+                g[..., 3] = (255 * np.clip((np.broadcast_to(t, (fh, fw, 1))[..., 0] - 0.5) / 0.5, 0, 1)) if face not in ("up", "down") else 255
             img = np.clip(img, 0, 255)
             fkey = {"north": "n", "south": "s", "east": "e", "west": "w", "up": "u", "down": "d"}[face]
             for key, ops in paint.items():
@@ -225,7 +274,7 @@ def build_devil(spec):
     L.reset()
     if spec["body"] == "humanoid":
         D = L.humanoid(spec)
-        top = D["top"] + (4.0 if spec.get("horns") else 0.0)
+        top = D["top"] + (8.0 if spec.get("horns") else 0.0)
     else:
         info = L.CUSTOM[spec["body"]](spec)
         top = info["top"]
