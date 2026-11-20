@@ -110,6 +110,8 @@ def djinn_weapons():
 
 
 def profile_name(wid, cls, source):
+    if wid in PR.PROFILE_OVERRIDE:
+        return PR.PROFILE_OVERRIDE[wid]
     if wid in PR.FORCE_MELEE:
         return PR.FORCE_MELEE[wid][1]
     if wid == "demon_slayer_sword":

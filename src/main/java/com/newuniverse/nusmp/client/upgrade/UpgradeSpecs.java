@@ -29,6 +29,11 @@ public final class UpgradeSpecs {
 
     /** The spec of an upgraded weapon, or null when it has none (or it is broken). */
     public static UpgradeSpec get(String id) {
+        UpgradeSpec s = load(id);
+        return s != null && s.alt != null && UpgradeConfig.hellblazeKatana() ? s.alt : s;       // Hellblaze: the katana look (the "katana" block of its json) unless the client switch is off
+    }
+
+    private static UpgradeSpec load(String id) {
         if (id == null) return null;
         if (SPECS.containsKey(id)) return SPECS.get(id);
         UpgradeSpec spec = null;

@@ -798,7 +798,7 @@
     },
     "hellblaze_the_demon_sin": {
       "class": "longsword",
-      "profile": "longsword",
+      "profile": "hellblaze_katana",
       "source": "relic"
     },
     "holy_avenger": {
@@ -1614,6 +1614,8 @@
     "golem_core_belt": "hand item / charm / book / key: not a weapon",
     "grimoire_chain": "hand item / charm / book / key: not a weapon",
     "hand_of_providence": "hand item / charm / book / key: not a weapon",
+    "hellblaze_the_demon_sin__katana": "hero weapon form model (a skin of the base item, not an item: the base item's Better Combat file applies)",
+    "hellblaze_the_demon_sin__saya": "hero weapon form model (a skin of the base item, not an item: the base item's Better Combat file applies)",
     "heros_shield": "shield: no swing",
     "hylian_hero_shield": "shield: no swing",
     "hyperborean_crossbow": "ranged (crossbow): Better Combat only handles melee",

@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.37.0] — Hellblaze, The Demon Sin is now a katana
+Owner request: rework the sword into a katana with a sheath in the other hand, black and dark red, with a purplish tone on every hit.
+- REPLACED (client setting `visual.hellblazeKatana` in `nusmp-visual-upgrade-god-client.toml`, default on; `false` restores the old broadsword exactly): the in-hand model is now a black and dark-red katana made in Blender (1190 quad lines, 223 for the far LOD), same hand spot and length as the old sword.
+- NEW: a sheath (saya, 496 quad lines) drawn in the off hand in first and third person while that hand is empty; a purple tone that washes over the blade for 10 ticks on every hit you land; a Better Combat profile `hellblaze_katana` (katana swings, +0.25 reach).
+- REPLACED: the item description now says katana (lang line only).
+- KEPT: the old broadsword meshes, skins, LOD and inventory icon, the damage row, the class, the engravings (elemental boost 3, severance, ruination, energy steal).
+- Cost: no packets. Katana at most 1190 quad lines (LOD past 12 blocks, glow off past 24); sheath capped at 600 quad lines, only within 32 blocks; the hit watcher does one box query (reach 5) per wielder within 48 blocks, only during a 12-tick swing window, at most 8 slots, cleared on leaving the world.
+- Honest caveats: only seen in Blender renders, not in a game; sheath angles are computed, not tuned by eye; a hit on a target with hurt immunity may not flash purple.
+
 ## [4.36.2] — Shields no longer cover the screen in first person
 - FIXED (looks only): the mod's shield models were fitted into a 1.3-block-wide box and vanilla's first-person display scales them by 1.25, so they filled the screen. In first person they are now fitted into vanilla's plate width (0.75 blocks), so they sit and raise like a vanilla shield. Third person, the ground, item frames and the inventory icon are unchanged; the display numbers were already vanilla's. Client kill switch `-Danime_multiverse.shieldFirstPerson=old` restores the old size. See docs/visual_upgrade/shield_fix.md.
 - Cost: one extra 4-number fit per shield mesh at load, nothing per frame.

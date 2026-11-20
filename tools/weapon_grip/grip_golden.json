@@ -1121,10 +1121,10 @@
  },
  "djinn_weapon_belial_scythe": {
   "class": "scythe",
-  "fraction": 0.24,
+  "fraction": 0.239,
   "source": "directive",
   "x": 0.0,
-  "y": 64.963,
+  "y": 64.867,
   "z": 0.0
  },
  "djinn_weapon_bifron": {
@@ -5357,6 +5357,30 @@
   "source": "directive",
   "x": 0.146,
   "y": 0.9,
+  "z": 0.0
+ },
+ "up/hellblaze_the_demon_sin__katana": {
+  "class": "longsword",
+  "fraction": 0.15,
+  "source": "directive",
+  "x": 2.535,
+  "y": 12.475,
+  "z": 0.0
+ },
+ "up/hellblaze_the_demon_sin__katana_lod": {
+  "class": "longsword",
+  "fraction": 0.15,
+  "source": "directive",
+  "x": 0.168,
+  "y": 12.475,
+  "z": 0.0
+ },
+ "up/hellblaze_the_demon_sin__saya": {
+  "class": "item",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 2.455,
+  "y": 34.95,
   "z": 0.0
  },
  "up/hellblaze_the_demon_sin_lod": {

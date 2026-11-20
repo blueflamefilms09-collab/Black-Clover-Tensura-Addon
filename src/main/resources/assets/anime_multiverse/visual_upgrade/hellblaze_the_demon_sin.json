@@ -319,5 +319,299 @@
   }
  ],
  "ambient_sound": "anime_multiverse:item.upgrade.hellblaze_the_demon_sin.hum",
- "note": "a demon sin: black flames turning round the blade, a thorn ring, the Sin's eye"
+ "note": "a demon sin: black flames turning round the blade, a thorn ring, the Sin's eye",
+ "katana": {
+  "note": "the katana look (3.x): black steel and dark red, the sheath in the off hand, a purple flash on every hit",
+  "palette": {
+   "primary": [
+    150,
+    15,
+    40
+   ],
+   "secondary": [
+    28,
+    22,
+    34
+   ]
+  },
+  "mesh": "up/hellblaze_the_demon_sin__katana",
+  "maps": {
+   "skin": "up/hellblaze_the_demon_sin__katana.png",
+   "glow": "up/hellblaze_the_demon_sin__katana_glow.png",
+   "veins": "up/hellblaze_the_demon_sin__katana_veins.png"
+  },
+  "lod": {
+   "mesh": "up/hellblaze_the_demon_sin__katana_lod",
+   "near": 12.0,
+   "glow_off": 24.0,
+   "skin": "up/hellblaze_the_demon_sin__katana_lod.png",
+   "glow": "up/hellblaze_the_demon_sin__katana_lod_glow.png"
+  },
+  "idle": [
+   "glow_breath",
+   "flow_veins",
+   "halo_breath",
+   "rune_flicker"
+  ],
+  "pass_cfg": {
+   "veins": {
+    "rgb": [
+     168,
+     20,
+     42
+    ],
+    "speed": 0.55,
+    "wavelength": 22.0,
+    "min": 0.2,
+    "max": 1.0,
+    "tint": true
+   },
+   "halo": {
+    "rgb": [
+     110,
+     12,
+     34
+    ],
+    "scale": 1.05,
+    "alpha_min": 8,
+    "alpha_max": 34,
+    "speed": 0.09
+   },
+   "flicker": {
+    "amount": 0.1,
+    "speed": 0.7
+   }
+  },
+  "hit_tone": {
+   "rgb": [
+    150,
+    60,
+    200
+   ],
+   "ticks": 10
+  },
+  "ambient": [
+   {
+    "type": "motes",
+    "anchor": "mid",
+    "particle": "anime_multiverse:smoke_wisp",
+    "rgb": [
+     90,
+     10,
+     28
+    ],
+    "rate": 8,
+    "radius": 0.4,
+    "rise": 0.03
+   },
+   {
+    "type": "edge",
+    "anchor": "blade",
+    "particle": "anime_multiverse:smoke_wisp",
+    "rgb": [
+     28,
+     22,
+     34
+    ],
+    "rate": 8,
+    "radius": 0.08,
+    "from": 0.2,
+    "to": 1.0
+   },
+   {
+    "type": "drip",
+    "anchor": "tip",
+    "particle": "anime_multiverse:lava_blob",
+    "rgb": [
+     150,
+     15,
+     34
+    ],
+    "rate": 3,
+    "radius": 0.2
+   },
+   {
+    "type": "ground",
+    "anchor": "feet",
+    "particle": "anime_multiverse:flame_tongue",
+    "rgb": [
+     120,
+     12,
+     30
+    ],
+    "rate": 5,
+    "radius": 0.9,
+    "speed": 0.07,
+    "size": 0.45
+   }
+  ],
+  "hand": {
+   "length": 1.3,
+   "tilt": 26
+  },
+  "swing": {
+   "pattern": "arc",
+   "particle": "anime_multiverse:flame_tongue",
+   "rgb": [
+    170,
+    22,
+    42
+   ],
+   "rgb2": [
+    28,
+    22,
+    34
+   ],
+   "count": 4,
+   "size": 0.7,
+   "reach": 1.4
+  },
+  "acts": [
+   {
+    "act": "hellblaze_slash",
+    "id": 1778498801,
+    "recipe": [
+     {
+      "t": "beam",
+      "from": "caster",
+      "to": "to",
+      "w": 1.6,
+      "rgb": [
+       170,
+       22,
+       42
+      ],
+      "tex": "flame_trail",
+      "dur": 14
+     },
+     {
+      "t": "burst",
+      "at": "to",
+      "n": 8,
+      "len": 3.6,
+      "rgb": [
+       200,
+       40,
+       60
+      ],
+      "tex": "flame_trail",
+      "dur": 14
+     },
+     {
+      "t": "flash",
+      "at": "to",
+      "size": 3.0,
+      "rgb": [
+       190,
+       70,
+       130
+      ],
+      "dur": 6
+     }
+    ]
+   },
+   {
+    "act": "demon_mark",
+    "id": 854570833,
+    "recipe": [
+     {
+      "t": "glyph",
+      "at": "caster",
+      "r": 6.0,
+      "rgb": [
+       150,
+       15,
+       40
+      ],
+      "tex": "devil_circle",
+      "dur": 44,
+      "spin": 0.06
+     },
+     {
+      "t": "ring",
+      "at": "caster",
+      "r0": 1.0,
+      "r1": 7.0,
+      "rgb": [
+       170,
+       22,
+       42
+      ],
+      "dur": 26,
+      "tex": "rune_ring"
+     },
+     {
+      "t": "column",
+      "at": "caster",
+      "h": 10.0,
+      "r": 0.9,
+      "rgb": [
+       160,
+       18,
+       40
+      ],
+      "dur": 24
+     }
+    ]
+   },
+   {
+    "act": "black_inferno",
+    "id": 1867767442,
+    "recipe": [
+     {
+      "t": "glyph",
+      "at": "caster",
+      "r": 9.0,
+      "rgb": [
+       150,
+       15,
+       40
+      ],
+      "tex": "devil_circle",
+      "dur": 44,
+      "spin": -0.07
+     },
+     {
+      "t": "rain",
+      "at": "caster",
+      "r": 9.0,
+      "h": 12.0,
+      "n": 22,
+      "len": 4.0,
+      "rgb": [
+       170,
+       22,
+       42
+      ],
+      "tex": "flame_trail",
+      "dur": 40
+     },
+     {
+      "t": "burst",
+      "at": "caster",
+      "n": 12,
+      "len": 8.0,
+      "rgb": [
+       200,
+       40,
+       60
+      ],
+      "tex": "flame_trail",
+      "dur": 24
+     },
+     {
+      "t": "flash",
+      "at": "caster",
+      "size": 8.0,
+      "rgb": [
+       190,
+       70,
+       130
+      ],
+      "dur": 8
+     }
+    ]
+   }
+  ]
+ }
 }

@@ -44,10 +44,20 @@ public final class UpgradeSpec {
     public final List<Act> acts;
     public final String ambientSound;
     public final int primary, secondary;
+    /** Hellblaze katana: the mesh file of this look (relative to weapon_meshes/, no .txt; "" = the weapon's own up/<id>), the hit tone (colour, ticks; 0 ticks = none), a grey veins skin that the veins tint colours, and the optional alternative look (the "katana" block merged over this spec). */
+    public final String mesh;
+    public final int hitRgb, hitTicks;
+    public final boolean veinsTint;
+    public final UpgradeSpec alt;
 
     private final Set<String> idleSet;
 
     private UpgradeSpec(JsonObject o) {
+        alt = o.has("katana") && o.get("katana").isJsonObject() ? new UpgradeSpec(merge(o, o.getAsJsonObject("katana"))) : null;
+        mesh = str(o, "mesh", "");
+        JsonObject hit = obj(o, "hit_tone");
+        hitRgb = rgb(hit.get("rgb"), 0x9632C8);
+        hitTicks = (int) flt(hit, "ticks", 0f);
         id = str(o, "id", "");
         version = o.has("version") ? o.get("version").getAsInt() : 1;
         JsonObject maps = obj(o, "maps");
@@ -66,6 +76,7 @@ public final class UpgradeSpec {
         JsonObject pc = obj(o, "pass_cfg");
         JsonObject vc = obj(pc, "veins"), hc = obj(pc, "halo"), fc = obj(pc, "flicker");
         veinsRgb = rgb(vc.get("rgb"), 0xFFFFFF);
+        veinsTint = vc.has("tint") && vc.get("tint").getAsBoolean();
         veinsSpeed = flt(vc, "speed", 0.5f);
         veinsWavelength = flt(vc, "wavelength", 26f);
         veinsMin = flt(vc, "min", 0.25f);
@@ -132,6 +143,17 @@ public final class UpgradeSpec {
     public Act actByKey(String act) {
         for (Act a : acts) if (a.act().equals(act)) return a;
         return null;
+    }
+
+    /** {@code base} without its "katana" block, with the objects of {@code over} merged into it (objects key by key, anything else replaced): the spec of the alternative look. */
+    private static JsonObject merge(JsonObject base, JsonObject over) {
+        JsonObject out = new JsonObject();
+        for (var e : base.entrySet()) if (!e.getKey().equals("katana")) out.add(e.getKey(), e.getValue());
+        for (var e : over.entrySet()) {
+            if (out.has(e.getKey()) && out.get(e.getKey()).isJsonObject() && e.getValue().isJsonObject()) out.add(e.getKey(), merge(out.getAsJsonObject(e.getKey()), e.getValue().getAsJsonObject()));
+            else out.add(e.getKey(), e.getValue());
+        }
+        return out;
     }
 
     // ---------------------------------------------------------------- json helpers

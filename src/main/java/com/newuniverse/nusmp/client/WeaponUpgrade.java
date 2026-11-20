@@ -81,6 +81,8 @@ final class WeaponUpgrade {
         return SIN[i & (SIN.length - 1)];
     }
 
+    private static boolean katanaSeen = true;
+
     static void clear() {
         UP.clear();
         UpgradeSpecs.clear();
@@ -92,6 +94,13 @@ final class WeaponUpgrade {
     /** The upgraded mesh of a mesh id (a weapon or one of its draw states), or null: option off, no upgrade, or it did not load. */
     static WeaponRenderer.Mesh mesh(String id) {
         if (!UpgradeConfig.enabled()) return null;
+        boolean katana = UpgradeConfig.hellblazeKatana();
+        if (katana != katanaSeen) {                                                // the client switch of the Hellblaze katana was flipped: read the meshes again (as a resource reload does)
+            katanaSeen = katana;
+            UP.clear();
+            WeaponGrip.clear();
+            com.newuniverse.nusmp.client.relics.item.ItemStateVariants.clearCache();
+        }
         WeaponRenderer.Mesh cached = UP.get(id);                                   // asked several times per frame for every weapon drawn: a map hit, nothing else
         if (cached != null) return cached == NONE ? null : cached;
         String base = UpgradeItems.baseId(id);
@@ -103,13 +112,13 @@ final class WeaponUpgrade {
         try {
             UpgradeSpec spec = UpgradeSpecs.get(base);
             if (spec != null) {
-                m = WeaponRenderer.read(id, "weapon_meshes/up/" + id + ".txt", tex(spec.skin), tex(spec.glow));
+                m = WeaponRenderer.read(id, spec.mesh.isEmpty() ? "weapon_meshes/up/" + id + ".txt" : "weapon_meshes/" + spec.mesh + ".txt", tex(spec.skin), tex(spec.glow));
                 if (m != null) {
                     Data d = data(m);
                     d.spec = spec;
                     d.veinsTex = tex(spec.veins);
                     if (id.equals(base)) {
-                        WeaponRenderer.Mesh lod = WeaponRenderer.read(id, "weapon_meshes/up/" + id + "_lod.txt", tex(spec.lodSkin), tex(spec.lodGlow));       // the low-detail mesh is classed and placed as its weapon
+                        WeaponRenderer.Mesh lod = WeaponRenderer.read(id, spec.mesh.isEmpty() ? "weapon_meshes/up/" + id + "_lod.txt" : "weapon_meshes/" + spec.lodMesh + ".txt", tex(spec.lodSkin), tex(spec.lodGlow));       // the low-detail mesh is classed and placed as its weapon
                         if (lod != null) {
                             lod.grip = m.grip;                                           // 1.111.0: the level-of-detail mesh is held at the same spot as the full one (no jump when it takes over)
                             d.lod = lod;
@@ -211,6 +220,11 @@ final class WeaponUpgrade {
     // ================================================================ the extra drawing
     /** Draws the orbiting parts and the extra passes of an upgraded mesh, in the pose the body was drawn in. */
     static void draw(WeaponRenderer.Mesh mesh, PoseStack pose, MultiBufferSource buffers, int light, int overlay, float time) {
+        draw(mesh, pose, buffers, light, overlay, time, 0f);
+    }
+
+    /** {@code tone}: the hit tone (0..1, {@link com.newuniverse.nusmp.client.upgrade.HellblazeTone}) that shifts the veins and the halo toward the spec's hit colour; 0 for every weapon but Hellblaze. */
+    static void draw(WeaponRenderer.Mesh mesh, PoseStack pose, MultiBufferSource buffers, int light, int overlay, float time, float tone) {
         Data d = mesh.up;
         if (d == null) return;
         VfxQuality q = PerfSettings.vfxQuality();
@@ -234,14 +248,15 @@ final class WeaponUpgrade {
         }
         if (!UpgradeConfig.extraPasses() || mesh.glowTex == null || mesh.layers[WeaponRenderer.GLOW].isEmpty()) return;
         if (s.idles("flow_veins") && d.veinsTex != null) {
-            emitWave(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(d.veinsTex)), mesh.layers[WeaponRenderer.GLOW], s, time);
+            emitWave(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(d.veinsTex)), mesh.layers[WeaponRenderer.GLOW], s, time, tone);
         }
         if (s.idles("halo_breath") && q != VfxQuality.LOW && q != VfxQuality.MEDIUM) {
             pose.pushPose();
             pose.scale(s.haloScale, 1f, s.haloScale);
             float t = 0.5f + 0.5f * sin(time * s.haloSpeed * 2f);
-            int a = Math.round(s.haloAlphaMin + (s.haloAlphaMax - s.haloAlphaMin) * t);
-            emitQuads(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], a << 24 | (s.haloRgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
+            int a = Math.round(s.haloAlphaMin + (s.haloAlphaMax - s.haloAlphaMin) * t + 50f * tone);
+            int halo = tone > 0f ? com.newuniverse.nusmp.client.upgrade.HellblazeTone.mix(s.haloRgb, s.hitRgb, tone) : s.haloRgb;
+            emitQuads(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[WeaponRenderer.GLOW], Math.min(255, a) << 24 | (halo & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
             pose.popPose();
         }
     }
@@ -260,20 +275,22 @@ final class WeaponUpgrade {
     }
 
     /** The veins pass: the same quads as the glow, each vertex lit by a wave that runs along the weapon (model y), so the energy seems to flow through it. */
-    private static void emitWave(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, UpgradeSpec s, float time) {
+    private static void emitWave(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, UpgradeSpec s, float time, float tone) {
         Matrix4f m = p.pose();
         Matrix3f nm = p.normal();
         Vector3f q = SCRATCH_POS, n = SCRATCH_NORMAL;
         float k = 2f * (float) Math.PI / Math.max(4f, s.veinsWavelength);
         float phase = time * s.veinsSpeed;
         float lo = s.veinsMin, hi = s.veinsMax;
+        int tint = s.veinsTint ? com.newuniverse.nusmp.client.upgrade.HellblazeTone.mix(s.veinsRgb, s.hitRgb, tone) : 0xFFFFFF;       // a grey veins skin is coloured by the tint (Hellblaze); the other weapons' skins carry their own colour
+        int tr = tint >> 16 & 255, tg = tint >> 8 & 255, tb = tint & 255;
         for (int i = 0, size = verts.size(); i < size; i++) {
             float[] v = verts.get(i);
             m.transformPosition(v[0], v[1], v[2], q);
             nm.transform(v[5], v[6], v[7], n).normalize();
             float w = 0.5f + 0.5f * sin(v[1] * k - phase);
             int a = Math.max(0, Math.min(255, Math.round(255f * (lo + (hi - lo) * w))));
-            vc.addVertex(q.x, q.y, q.z).setColor(255, 255, 255, a).setUv(v[3] / 128f, v[4] / 128f).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(n.x, n.y, n.z);
+            vc.addVertex(q.x, q.y, q.z).setColor(tr, tg, tb, a).setUv(v[3] / 128f, v[4] / 128f).setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(n.x, n.y, n.z);
         }
     }
 }

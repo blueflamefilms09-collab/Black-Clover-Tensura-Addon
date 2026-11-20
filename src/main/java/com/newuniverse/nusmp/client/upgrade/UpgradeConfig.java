@@ -12,7 +12,7 @@ public final class UpgradeConfig {
     private UpgradeConfig() {}
 
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue UPGRADE, ORBITS, PASSES, TRAILS, SIGNATURES;
+    private static final ModConfigSpec.BooleanValue UPGRADE, ORBITS, PASSES, TRAILS, SIGNATURES, HELLBLAZE_KATANA;
     private static final ModConfigSpec.DoubleValue DENSITY;
 
     static {
@@ -24,6 +24,8 @@ public final class UpgradeConfig {
         PASSES = b.comment("The extra glow passes of the upgraded weapons (flowing veins, halo shell). false = only the core glow.").define("extraPasses", true);
         TRAILS = b.comment("The swing trail particles of the upgraded weapons.").define("swingTrails", true);
         SIGNATURES = b.comment("The signature effect an upgraded weapon draws on each of its acts.").define("signatures", true);
+        HELLBLAZE_KATANA = b.comment("Hellblaze, The Demon Sin as a black and dark-red katana with its sheath in the off hand and a purple flash on every hit. false = the old broadsword look, exactly as before. Only the look changes.")
+                .define("hellblazeKatana", true);
         DENSITY = b.comment("Density of the ambient particle layers round a held upgraded weapon: 0 = none, 1 = as designed. The effect budget (clientParticlesPerTick) and the distance cut-off apply on top.")
                 .defineInRange("ambientDensity", 1.0, 0.0, 1.0);
         b.pop();
@@ -39,6 +41,9 @@ public final class UpgradeConfig {
     }
 
     public static boolean enabled() { return bool(UPGRADE, true); }
+
+    /** Hellblaze drawn as the katana (needs the upgraded looks on too); false = the classic broadsword. */
+    public static boolean hellblazeKatana() { return enabled() && bool(HELLBLAZE_KATANA, true); }
 
     public static boolean orbits() { return bool(ORBITS, true); }
 

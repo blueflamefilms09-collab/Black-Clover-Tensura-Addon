@@ -273,6 +273,8 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             pose.translate(0f, -mesh.ymin, 0f);
         }
         PoseStack.Pose p = pose.last();
+        com.newuniverse.nusmp.client.upgrade.UpgradeSpec hitSpec = hitSpec(id);
+        float hitTone = hitSpec == null ? 0f : com.newuniverse.nusmp.client.upgrade.HellblazeHits.tone(ctx, time, hitSpec.hitTicks);
         String coreWill = coreWill(stack);                                         // a Beast Will Core: its will's colour tints the body and the glow
         float spin = mesh.drillFrom == null ? 0f : drillAngle(ctx, time);                      // Valkyrie Drill Lance: the turn of the `drill*` part (0 and unused on every other mesh)
         emitLayer(pose, p, mesh, BODY, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()),
@@ -289,6 +291,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && upTier < com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_FAR) {      // 1.102.0: no additive pass beyond 24 blocks for an upgraded weapon
             float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f) * GodMeleeBRender.flicker(upTier, state.meshId(), time) * WeaponUpgrade.flicker(mesh, time);
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
+            if (hitTone > 0f) rgb = com.newuniverse.nusmp.client.upgrade.HellblazeTone.mix(rgb, hitSpec.hitRgb, hitTone);          // Hellblaze: the glow shifts toward purple on a hit and decays back
             if (coreWill != null) rgb = com.newuniverse.nusmp.beastwill.BeastCoreLook.glowRgb(coreWill);
             if (ExSingularityFx.applies(id)) rgb = ExSingularityFx.glowRgb(time);          // EX-Singularity (Shishou): the glow walks through every hue (client/ExSingularityFx)
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
@@ -310,8 +313,15 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (ExSingularityFx.applies(id) && mesh.glowTex != null) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards
         if (SpiritBladesFx.applies(id) && mesh.glowTex != null) SpiritBladesFx.extras(pose, buffers, mesh, time);              // the Wind Spirit blades (Zephyr, Boreas): a few drifting leaves (client/SpiritBladesFx)
         if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
-        if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
+        if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time, hitTone);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
         pose.popPose();
+    }
+
+    /** The spec of Hellblaze when its katana look is on and it has a hit tone, else null (every other weapon: one string compare). */
+    private static com.newuniverse.nusmp.client.upgrade.UpgradeSpec hitSpec(String id) {
+        if (!com.newuniverse.nusmp.client.upgrade.HellblazeHits.ID.equals(id)) return null;
+        com.newuniverse.nusmp.client.upgrade.UpgradeSpec s = com.newuniverse.nusmp.client.upgrade.UpgradeSpecs.get(id);
+        return s != null && s.hitTicks > 0 ? s : null;
     }
 
     /** The mesh a hand draws: the Black Sword Greed's gauntlets draw their left glove in a left hand (the new two-hand looks; the old one-mesh look when {@code classicHands} is on). */

@@ -1012,7 +1012,9 @@
     "legendary_shield__needle_shield": "shield",
     "legendary_shield__orange_balloon_shield": "shield",
     "legendary_shield__soul_eater_shield": "shield",
-    "legendary_shield__zombie_shield": "shield"
+    "legendary_shield__zombie_shield": "shield",
+    "hellblaze_the_demon_sin__katana": "longsword",
+    "hellblaze_the_demon_sin__saya": "item"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

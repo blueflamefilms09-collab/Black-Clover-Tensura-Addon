@@ -19,5 +19,8 @@ public final class UpgradeClient {
         container.registerConfig(ModConfig.Type.CLIENT, UpgradeConfig.SPEC, "nusmp-visual-upgrade-god-client.toml");
         NeoForge.EVENT_BUS.addListener(UpgradeFx::onClientTick);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> UpgradeFx.clear());
+        com.newuniverse.nusmp.client.HellblazeSayaLayer.init(modBus);                          // the sheath in the off hand while Hellblaze is held (client only, purely visual)
+        NeoForge.EVENT_BUS.addListener(HellblazeHits::onClientTick);                            // the purple flash of Hellblaze's glow on a hit (client only, no packet)
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> HellblazeHits.clear());
     }
 }

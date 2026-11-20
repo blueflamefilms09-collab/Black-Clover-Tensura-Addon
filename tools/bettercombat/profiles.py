@@ -166,5 +166,9 @@ SPECIAL_PROFILES["greed_twin_blade"] = P("twin_blade", 0.0, True)
 SPECIAL_PROFILES["greed_fists"] = P("fist", 0.0, True, GREED_FIST_COMBO)
 # item id -> (class for the manifest, profile): items whose class in weapon_classes.json is a non-melee one (the gauntlets are a "handitem" there, which also picks their grip) but that are real melee weapons
 FORCE_MELEE = {"black_sword_greed_gauntlets": ("fist", "greed_fists"), "black_sword_greed_dual_blades": ("shortsword", "greed_twin_blade"), "black_chakrams": ("shortsword", "greed_twin_blade")}
+# item id -> profile, for a weapon whose swing is not the one of its class: Hellblaze, The Demon Sin is a katana in the hand (docs/hellblaze_katana.md) but keeps its class "longsword" (damage row, size band); Better Combat's own
+# `katana` preset, the reach of the longsword it was (0.25), one-handed
+SPECIAL_PROFILES["hellblaze_katana"] = P("katana", 0.25)
+PROFILE_OVERRIDE = {"hellblaze_the_demon_sin": "hellblaze_katana"}
 # table ids that are a mesh only, not an item (the left glove of the gauntlets): no file, listed as excluded
 MESH_ONLY = {"black_sword_greed_gauntlets_left": "mesh only: the left glove of the Black Sword Greed gauntlets, not an item"}
