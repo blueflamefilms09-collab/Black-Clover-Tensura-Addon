@@ -25,6 +25,7 @@ public final class BossHooks {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.boss.data.BossData::onJoin);                                                                       // Leon study fix 9: arc_bosses data files
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.AddReloadListenerEvent e) -> e.addListener(new com.newuniverse.nusmp.boss.data.BossData()));
         BossLeonSelfTests.register();                                                 // keys boss.leon1 (fixes 1 and 5) and boss.leon3 (fix 9)
+        Leon2SelfTests.register();                                                    // keys boss.leon2.tables, boss.leon2.live (Leon study fixes #4 and #2)
         com.newuniverse.nusmp.boss.rework.BossReworkSelfTests.register();              // key boss.rework1 (boss rework wave 1)
         com.newuniverse.nusmp.boss.rework3.Rework3SelfTests.register();                // key boss.rework3 (boss rework wave 3)
         com.newuniverse.nusmp.dungeon.rework.DungeonBossSelfTests.register();           // key dboss (dungeon-boss rework)

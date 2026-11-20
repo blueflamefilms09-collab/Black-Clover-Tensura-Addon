@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.36.0] — Boss reference study: reactive guard and attack timing
+From the Leon boss study (docs/boss_reference_leon.md), fixes #4 and #2. Both have a server setting (`[bossCombat]` in `nusmp-boss-rules-server.toml`) that restores today's behaviour exactly.
+- NEW (setting `reactiveGuard`, default on; `guardBlockChance` 0.70, `guardDodgeChance` 0.30): Meliodas, Ban, Heath Grice, Vetto, Mars and Udaeus block (12-tick window, 40-tick cooldown, 25% of the hit gets through, one counter swing) or dodge (8 invulnerable ticks, 60-tick cooldown). Off while the boss is exposed, casting, recovering, transforming or refilling, and for armour-bypassing damage. A foe hitting every tick still lands at least 64% of its damage.
+- NEW (setting `attackTimeline`, default on): nine bosses (Meliodas, Ban, Escanor, Heath, Vetto, Mars, Udaeus, Minotaur, Black Goliath) swing on a timeline: damage lands on the hit tick (a second tick for cross combos) and the client arm raise is stretched to end on it. Damage per second is unchanged.
+- REPLACED (behind the setting, those nine bosses only): the instant melee and the fixed 0.2 s arm lead. KEPT: the old paths, power curve, DPS budget, no-regen rules, every move, clip and model.
+- Cost: two integer compares per boss per tick, O(1) per hit, at most one sound and one particle packet per 8 ticks plus one synced-data packet per swing, nearby players only. Details in docs/boss_leon_combat.md.
+- Honest caveats: nothing played; not compiled locally against Minecraft (CI is the first compile); the block/dodge feel, the stretched arm raise on each model and the stacking with Meliodas's Full Counter, Mars's armour and Ban's immortality were only read, not exercised; the second hit of a cross combo has no pose of its own (needs the clips of study fix #3).
+
 ## [4.35.0] — Boss reference study: Black Clover x3 counts, party scaling, data-pack boss numbers
 From the Leon boss study (docs/boss_reference_leon.md), fixes #1, #5 and #9. All three have a server setting that restores today's behaviour.
 - CHANGED (setting `bosses.dpsCapUsesBaseHealth`, default on): the per-second damage cap of a Black Clover x3 boss is now a share of its base health, so the x3 lengthens the shortest possible kill from about 17 s to about 50 s.

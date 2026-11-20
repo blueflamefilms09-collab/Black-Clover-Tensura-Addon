@@ -36,6 +36,11 @@ public abstract class ArcBoss extends ZogratisBoss {
 
     @Override public String bossName() { return character().name(); }
 
+    /** Leon study fixes #4 and #2 (docs/boss_leon_combat.md): who guards and whose melee has a per-attack timeline are tables of the pure classes, keyed by the character id. */
+    @Override protected boolean reactiveGuard() { return com.newuniverse.nusmp.entity.zogratis.ReactiveGuard.OPT_IN.contains(character().id()); }
+
+    @Override protected String timelineKey() { return character().id(); }
+
     /** Never null: neutral ({@link Devil#LILITH}) unless the character is bound to a devil. The framework's own lines that name the devil are all overridden below. */
     @Override public Devil devil() { return character().devil(); }
 

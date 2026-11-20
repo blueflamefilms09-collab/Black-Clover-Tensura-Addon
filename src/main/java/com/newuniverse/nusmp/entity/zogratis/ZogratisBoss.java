@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.NUGameRules;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.blackclover.Devil;
 import com.newuniverse.nusmp.book.SpellRuntime;
+import com.newuniverse.nusmp.boss.rules.BossRulesConfig;
 import com.newuniverse.nusmp.entity.TensuraCaster;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -109,6 +110,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     private static final EntityDataAccessor<Integer> PHASE_LEFT = SynchedEntityData.defineId(ZogratisBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PHASE_TOTAL = SynchedEntityData.defineId(ZogratisBoss.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TARGET = SynchedEntityData.defineId(ZogratisBoss.class, EntityDataSerializers.INT);
+    /** Leon study fix #2: index in the boss's {@link AttackTimeline} rotation of the swing being drawn, -1 = the old fixed cooldown and lead. */
+    private static final EntityDataAccessor<Integer> SWING_MOVE = SynchedEntityData.defineId(ZogratisBoss.class, EntityDataSerializers.INT);
 
     private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "zogratis_power_speed");
 
@@ -137,6 +140,11 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     private Move casting;
     private UUID castTarget;
     private double bandLo = 1.5, bandHi = 4;
+    /** Leon study fixes #4 and #2 (docs/boss_leon_combat.md): the reactive guard (null until the first hit of an opted-in boss) and the swing in progress. */
+    private ReactiveGuard guard;
+    private final AttackTimeline.Runner swingRunner = new AttackTimeline.Runner();
+    private int swingCount;
+    private long lastGuardFx;
 
     protected ZogratisBoss(EntityType<? extends ZogratisBoss> type, Level level) {
         super(type, level);
@@ -216,6 +224,11 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     /** 1.45.0: drops the move being wound up (for a stage change or an answer that preempts it). */
     protected void interruptCast() { cancelCast(); }
 
+    /** Leon study fix #4: does this boss block and dodge ({@link ReactiveGuard})? Opt-in; the arc layer answers from {@link ReactiveGuard#OPT_IN}. */
+    protected boolean reactiveGuard() { return false; }
+    /** Leon study fix #2: the key of its {@link AttackTimeline} rows ("" = none: the fixed melee cooldown). */
+    protected String timelineKey() { return ""; }
+
     /** 1.35.0: the id under which the Gates refill is recorded (a subclass with several modes calls {@link #refillForMode} with its own ids). */
     protected String gatesModeId() { return "gates"; }
 
@@ -240,6 +253,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         b.define(PHASE_LEFT, 0);
         b.define(PHASE_TOTAL, 1);
         b.define(TARGET, -1);
+        b.define(SWING_MOVE, -1);
     }
 
     /** Percent of its devil's power it has drawn: 20 .. 80, 100 once the Gates are open (rage can give values like 50 or 70). */
@@ -564,11 +578,13 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         entityData.set(TARGET, valid ? target.getId() : -1);
         if (!valid) {
             if (casting != null) cancelCast();
+            leonInterrupted();
             if (state() != STATE_RECOVERING || t >= recoveryUntil) setState(fightActive ? STATE_COMBAT : STATE_IDLE);
         } else {
             if (!fightActive) startFight(sl, t);
-            if (casting != null) tickCast(sl, target, t);
+            if (casting != null) { leonInterrupted(); tickCast(sl, target, t); }
             else if (t >= recoveryUntil) {
+                tickLeon(sl, target, t);
                 if (state() == STATE_RECOVERING) setState(STATE_COMBAT);
                 if (t >= nextThink) think(sl, target, t);
                 melee(sl, target, t);
@@ -908,6 +924,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     private void melee(ServerLevel sl, LivingEntity target, long t) {
         if (casting != null || t < nextMelee || t < recoveryUntil) return;
         if (!getBoundingBox().inflate(0.8, 0.4, 0.8).intersects(target.getBoundingBox())) return;
+        if (startTimedSwing(t)) return;
         nextMelee = t + Math.max(16, Math.round(20 * (float) tuning.cooldownMultiplier()));
         swing(InteractionHand.MAIN_HAND);
         if (strike(target, meleeDamage(), false)) {
@@ -915,6 +932,71 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
             if (away.lengthSqr() > 1e-4) target.knockback(0.6, -away.x, -away.z);
         }
     }
+
+    // ================================================================ Leon study fixes #4 (guard) and #2 (attack timeline)
+    /** A timed swing instead of the plain blow, when this boss has a row, the key is on and nothing is in progress. Returns true when it took over this melee. */
+    private boolean startTimedSwing(long t) {
+        AttackTimeline.Swing sw = BossRulesConfig.attackTimeline() ? AttackTimeline.pick(timelineKey(), swingCount) : null;
+        if (sw == null) {
+            if (entityData.get(SWING_MOVE) != -1) entityData.set(SWING_MOVE, -1);
+            return false;
+        }
+        if (swingRunner.busy(t)) return true;
+        entityData.set(SWING_MOVE, AttackTimeline.indexOf(timelineKey(), swingCount));
+        swingCount++;
+        swingRunner.start(t, sw);
+        nextMelee = t + Math.max(16, Math.round(sw.clipTicks() * (float) tuning.cooldownMultiplier()));
+        swing(InteractionHand.MAIN_HAND);
+        return true;
+    }
+
+    /** Lands the hit that is due, and answers a block, once per tick at most (two long compares when nothing is going on). */
+    private void tickLeon(ServerLevel sl, LivingEntity target, long t) {
+        int hit = swingRunner.due(t);
+        if (hit > 0) {
+            AttackTimeline.Swing sw = swingRunner.current();
+            if (sw != null && getBoundingBox().inflate(1.0, 0.5, 1.0).intersects(target.getBoundingBox())) timedHit(target, meleeDamage() * sw.damageMult());
+        }
+        if (guard != null) {
+            int id = guard.takeCounter(t);
+            if (id >= 0 && level().getEntity(id) instanceof LivingEntity foe && isFoe(foe) && distanceToSqr(foe) <= 16.0) {
+                nextMelee = Math.max(nextMelee, t + 16);
+                swing(InteractionHand.MAIN_HAND);
+                timedHit(foe, meleeDamage());
+            }
+        }
+    }
+
+    private void timedHit(LivingEntity victim, float base) {
+        if (!strike(victim, base, false)) return;
+        Vec3 away = victim.position().subtract(position()).multiply(1, 0, 1);
+        if (away.lengthSqr() > 1e-4) victim.knockback(0.6, -away.x, -away.z);
+    }
+
+    /** A move began or the fight stopped: a swing in the air and a pending counter are dropped. */
+    private void leonInterrupted() {
+        swingRunner.cancel();
+        if (guard != null) guard.reset();
+    }
+
+    /** The guard's verdict on one hit; returns the damage that is left (the framework's clamp and the budget still run on it). */
+    private float guardHurt(DamageSource source, float a) {
+        if (!reactiveGuard() || !BossRulesConfig.reactiveGuard() || !(source.getEntity() instanceof LivingEntity foe) || !isFoe(foe) || source.is(DamageTypeTags.BYPASSES_ARMOR)) return a;
+        ReactiveGuard.Params want = ReactiveGuard.Params.of(BossRulesConfig.guardBlockChance(), BossRulesConfig.guardDodgeChance());
+        if (guard == null || !guard.params().equals(want)) guard = new ReactiveGuard(want);
+        boolean can = !exposed() && !transforming() && casting == null && !refill.active() && tickCount >= recoveryUntil;
+        ReactiveGuard.Verdict v = guard.judge(tickCount, distanceTo(foe), can, getRandom().nextDouble(), getRandom().nextDouble(), foe.getId());
+        if (v == ReactiveGuard.Verdict.NONE) return a;
+        if (tickCount - lastGuardFx >= 8 && level() instanceof ServerLevel sl) {              // one sound and a few sparks per action, to the players near it
+            lastGuardFx = tickCount;
+            sl.playSound(null, getX(), getY(), getZ(), v == ReactiveGuard.Verdict.DODGE ? SoundEvents.PLAYER_ATTACK_SWEEP : SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1f, 1f);
+            sl.sendParticles(net.minecraft.core.particles.ParticleTypes.CRIT, getX(), getY() + getBbHeight() * 0.6, getZ(), 4, 0.3, 0.3, 0.3, 0.1);
+        }
+        return guard.apply(v, a);
+    }
+
+    /** Client-safe: the row of the swing being drawn (null = the old fixed lead). Read by the pose clock through {@code ZogratisRenderer.frame}. */
+    public AttackTimeline.Swing swingRow() { return AttackTimeline.at(timelineKey(), entityData.get(SWING_MOVE)); }
 
     // ================================================================ helpers for moves
     /** True for the Zogratis family: the four bosses, Dark Disciples, Blood Beasts and clones. */
@@ -1100,6 +1182,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         if (a <= 0f) return false;
         if (exposed()) a *= EXPOSED_BONUS;
         else a = mitigate(source, a);
+        a = guardHurt(source, a);                                                  // Leon study fix #4: only ever cuts the hit, before the clamp and the budget
         a = PowerCurve.clampDamage(powerHealth(), powerMaxHealth(), due, a);
         a = lastCap(a);
         return a > 0f && dpsBudget.hurt(this, source, a, x -> super.hurt(source, x));

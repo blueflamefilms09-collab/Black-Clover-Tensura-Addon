@@ -24,6 +24,9 @@ public final class BossRulesConfig {
     public static final ModConfigSpec.BooleanValue DUNGEON_REWORK, DUNGEON_WARDEN, DUNGEON_CREATURES;
     /** Dungeon-boss rework 2 (docs/dungeon_bosses_rework2.md): the Labyrinth Guardians' telegraphed move sets and colourways, and the new boss sound set. */
     public static final ModConfigSpec.BooleanValue DUNGEON_GUARDIANS, DUNGEON_SOUNDS, DUNGEON_THEMES;
+    /** Leon study fixes #4 and #2 (docs/boss_leon_combat.md): the reactive guard of the opted-in sword bosses and the per-attack hit timeline. */
+    public static final ModConfigSpec.BooleanValue REACTIVE_GUARD, ATTACK_TIMELINE;
+    public static final ModConfigSpec.DoubleValue GUARD_BLOCK_CHANCE, GUARD_DODGE_CHANCE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -85,6 +88,19 @@ public final class BossRulesConfig {
                 .define("sounds", true);
         DUNGEON_THEMES = b.comment("Dungeon-boss rework 2: each boss and creature has its own particle theme (colours and particles) instead of the shared seal theme. Needs dungeonBosses.rework. false = the old seal theme. A looks-only setting the server decides because it sends the effects.")
                 .define("themes", true);
+        b.pop();
+        b.push("bossCombat");
+        REACTIVE_GUARD = b.comment("Leon study fix #4: Meliodas, Ban, Heath Grice, Vetto, Mars and Udaeus guard when a foe is within 5 blocks (blocks let a quarter of the hit through, dodges take none and last 8 ticks, a block is answered with a counter swing).",
+                        "Cooldown limited (block 40 ticks, dodge 60, at most one dodge a second), never while the boss is exposed, winding up a move or transforming, and it runs before the power-step clamp and the damage budget, which stay the arbiters.",
+                        "false = these bosses take every hit as before.")
+                .define("reactiveGuard", true);
+        GUARD_BLOCK_CHANCE = b.comment("Chance that a hit on a guarding boss starts a block (when its block cooldown is over). Leon's 0.70. Clamped to 0.9 at most.")
+                .defineInRange("guardBlockChance", 0.70, 0.0, 0.9);
+        GUARD_DODGE_CHANCE = b.comment("Chance that a hit on a guarding boss starts a dodge (8 invulnerable ticks, when its dodge cooldown is over). Leon's 0.30. Clamped to 0.9 at most.")
+                .defineInRange("guardDodgeChance", 0.30, 0.0, 0.9);
+        ATTACK_TIMELINE = b.comment("Leon study fix #2: the melee of Meliodas, Ban, Escanor, Heath Grice, Vetto, Mars, Udaeus, the Minotaur and the Black Goliath lands on the hit tick of a per-attack clip (the swing is drawn to that tick) instead of on a fixed cooldown.",
+                        "Damage per second is unchanged (each move's multiplier is its clip length over 20 ticks). false = the old fixed cooldown and the old client lead.")
+                .define("attackTimeline", true);
         b.pop();
         SPEC = b.build();
     }
@@ -154,4 +170,14 @@ public final class BossRulesConfig {
 
     /** Dungeon-boss rework 2: the per-boss particle themes (master switch and their own). */
     public static boolean dungeonThemes() { return get(DUNGEON_REWORK) && get(DUNGEON_THEMES); }
+
+    /** Leon study fix #4: the opted-in sword bosses block and dodge (false = every hit lands as before). */
+    public static boolean reactiveGuard() { return get(REACTIVE_GUARD); }
+
+    public static double guardBlockChance() { return get(GUARD_BLOCK_CHANCE); }
+
+    public static double guardDodgeChance() { return get(GUARD_DODGE_CHANCE); }
+
+    /** Leon study fix #2: melee damage on the hit tick of a per-attack timeline (false = the old fixed cooldown). */
+    public static boolean attackTimeline() { return get(ATTACK_TIMELINE); }
 }

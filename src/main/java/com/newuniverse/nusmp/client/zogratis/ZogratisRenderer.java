@@ -51,6 +51,10 @@ public abstract class ZogratisRenderer<T extends LivingEntity> extends EntityRen
         f.deathTicks = e.deathTime + partial;
         f.deathSpan = DEATH_TICKS;
         f.swinging = e.swinging;
+        if (e instanceof com.newuniverse.nusmp.entity.zogratis.ZogratisBoss zb) {          // Leon study fix #2: the swing is drawn to the hit tick of the shared timeline
+            var row = zb.swingRow();
+            f.attackHit = row == null ? 0 : row.hitTick();
+        }
         f.hurtTicks = e.hurtTime > 0 ? e.hurtDuration - e.hurtTime + partial : -1f;
         f.rawSpeed = (float) Math.hypot(e.getX() - e.xo, e.getZ() - e.zo);
         return f;

@@ -49,6 +49,8 @@ public final class ZogratisPose {
         /** 0..1 of the wind-up. */
         public float castProgress;
         public boolean swinging;
+        /** Leon study fix #2: the hit tick of the swing being drawn (from the shared pure {@code AttackTimeline}); 0 = no timeline, the old fixed lead. */
+        public int attackHit;
         /** True while the chest gem is out (Lucius): its rising edge starts the {@link #REVEAL} clip. */
         public boolean gemOut;
         /** Ticks since the last hit landed, negative when there is none lately. */
@@ -68,6 +70,7 @@ public final class ZogratisPose {
     private int lastTick = Integer.MIN_VALUE;
     private float speed, prevRaw, travelBase, travel;
     private boolean running, wasSwinging, wasGemOut;
+    private int attackHitAt;
     private float attackStart = -1e9f, castStart = -1e9f, releaseAge = -1e9f, revealStart = -1e9f, lastCastProgress;
     private int lastCast;
     private float scale = Float.NaN, lastScaleAge, yaw = Float.NaN, lastYawAge;
@@ -85,7 +88,7 @@ public final class ZogratisPose {
         }
         prevRaw = raw;
         travel = travelBase + raw * clamp01(f.age - f.tick);
-        if (f.swinging && !wasSwinging) attackStart = f.age;
+        if (f.swinging && !wasSwinging) { attackStart = f.age; attackHitAt = f.attackHit; }
         wasSwinging = f.swinging;
         if (f.gemOut && !wasGemOut) revealStart = f.age;
         wasGemOut = f.gemOut;
@@ -115,6 +118,7 @@ public final class ZogratisPose {
         wasGemOut = false;
         revealStart = -1e9f;
         attackStart = -1e9f;
+        attackHitAt = 0;
         castStart = -1e9f;
         releaseAge = -1e9f;
         lastCastProgress = 0f;
@@ -140,7 +144,7 @@ public final class ZogratisPose {
         } else if (settling(f.age, c)) {
             set(CAST_BIG, CAST_BIG_RELEASE * len(c, CAST_BIG) + (f.age - releaseAge) / 20f);
         } else if (attacking(f.age, c)) {
-            set(ATTACK, ATTACK_LEAD + (f.age - attackStart) / 20f);
+            set(ATTACK, attackSeconds(f.age));
         } else if (f.hurtTicks >= 0f && f.hurtTicks / 20f < len(c, HURT)) {
             set(HURT, f.hurtTicks / 20f);
         } else if (speed > WALK_ON) {
@@ -161,7 +165,12 @@ public final class ZogratisPose {
 
     private boolean attacking(float age, Clips c) {
         float l = len(c, ATTACK);
-        return l > 0f && age >= attackStart && ATTACK_LEAD + (age - attackStart) / 20f < l;
+        return l > 0f && age >= attackStart && attackSeconds(age) < l;
+    }
+
+    /** Second of the attack clip: the old fixed lead, or the shared timeline's (the arm raise is stretched to end on the hit tick). */
+    private float attackSeconds(float age) {
+        return com.newuniverse.nusmp.entity.zogratis.AttackTimeline.clipSeconds(attackHitAt, (age - attackStart) * 1f, ATTACK_LEAD);
     }
 
     private boolean settling(float age, Clips c) {
