@@ -510,6 +510,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
      */
     private static Mesh readFlatOld(String id) {
         String base = id.replaceAll("_pull[123]$", "");
+        if (RETIRED_OLD_SKINS.contains(base)) return null;                 // 4.62.1: the owner dropped the old flat-part skins (6 MB); without them the old meshes would be drawn with the wrong skin, so the new solid mesh stays
         if (THIRD_LOOK_BOWS.contains(base)) return null;                   // 4.59.0: the six bows of the third look (docs/heroweapon/bow_designs.md) have a new rest mesh, so their draw stages must not be the pre-4.55 ones of another design
         net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
         ResourceLocation skin = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + ".png");
@@ -517,6 +518,11 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         boolean own = rm.getResource(skin).isPresent();
         return read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", own ? skin : null, own && rm.getResource(glow).isPresent() ? glow : null);
     }
+
+    private static final java.util.Set<String> RETIRED_OLD_SKINS = java.util.Set.of("legendary_bow", "legendary_bow__arrow_shower", "legendary_bow__bind_arrow", "legendary_bow__bird_hunting", "legendary_bow__eagle_piercer",
+            "legendary_bow__frozen_rain", "legendary_bow__hunters_bow", "legendary_bow__meteor_bow", "legendary_bow__sagittarius", "legendary_bow__scouts_bow", "legendary_bow_curse", "legendary_spear",
+            "legendary_spear__chaos_spear", "legendary_spear__clockwork_spear", "legendary_spear__dragon_minute_hand", "legendary_spear__filolial_spear", "legendary_spear__hunters_spear",
+            "legendary_spear__meteor_spear", "legendary_spear__portal_spear", "legendary_spear__triaina", "legendary_spear_curse", "vassal_harpoon");
 
     private static final java.util.Set<String> THIRD_LOOK_BOWS = java.util.Set.of("legendary_bow__hunters_bow", "legendary_bow__scouts_bow", "legendary_bow__bird_hunting", "legendary_bow__frozen_rain",
             "legendary_bow__eagle_piercer", "legendary_bow__sagittarius");

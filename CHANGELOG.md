@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.62.1] — The old flat-part skins are dropped (owner's decision)
+Owner answer: the 6 MB of old flat-part skins are not kept.
+- REMOVED (on the owner's request): `textures/entity/weapon/flat_parts_old/` (44 skin and glow files of the old bows, spears and the harpoon). The jar gets about 6 MB smaller.
+- CHANGED: with `heroSolidParts = false` these 22 weapons now keep the new solid mesh instead of the old flat one (an old mesh drawn with the new skin would look garbled); `WeaponRenderer.readFlatOld` skips the retired ids. The old flat meshes themselves stay in `weapon_meshes/flat_parts_old/`. `HeroSolidTest` now checks the skins are retired instead of kept.
+- CAVEATS: not compiled or seen in a game; the flat-parts preview script `tools/heroweapon/flat_parts_v2_previews.py` skips ids whose old skin is gone.
+
 ## [4.62.0] — The Multiverse Hub sits in the "Coming Soon" spot
 Owner request: the new hub should go in the Coming Soon spot, placed the same way the existing menu is.
 - REPLACED (looks only, behind `ui.hub`): on Tensura's magic categories screen the slot that showed the Four Kingdoms logo now shows the hub's own emblem (a slowly turning ring with the eight tab nodes in their colours around a core); hovering gives the gold ring, the magic circle and the tooltip "Multiverse Hub: every menu is in here". On the status screen the placeholder area now shows a hub card (emblem, "Multiverse Hub", "Click, or press F7") instead of the compact status panel, and the small label that replaces the placeholder text reads "Multiverse Hub" instead of "Four Kingdoms". Same positions, same click (opens the hub), found the same way as before.
