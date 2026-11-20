@@ -157,7 +157,7 @@ integer, no packets). Size 1.97 blocks.
 **No new 3D model was made, and Blender was not used** (rule 14): the body is the existing shared one. Hair is a skin colour; spiked hair meshes and aura layers exist only for player models in this mod,
 so the per-form hair and aura are the skin colour plus server-side particles.
 
-## Worst-case cost (rule 11)
+## Worst-case cost (rule 11, the worst case)
 
 * Entities: at most `globalCap` (2, hard maximum 4) bosses; no move spawns an entity.
 * Per boss per tick: a few comparisons. Every 20 ticks the framework's upkeep. **Every 100 ticks one box query** (64 blocks) with at most **10 EP reads** (one per player). A form change at most every 120 ticks.

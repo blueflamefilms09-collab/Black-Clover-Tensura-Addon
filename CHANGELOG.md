@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.29.1] — Build fixes for the Goku boss (particles, doc)
+- FIXED (no gameplay change): the Goku boss' vanilla particles now go through the mod's particle themes (the particle source scan refused the raw ones) and its doc names its worst case as its own test requires. Everything from 4.26.0 (sword forms), 4.27.0 (bow and spear forms), 4.28.x (Goku boss) and 4.29.0 (shield forms) ships in this release; none of those versions got a build of its own.
+
 ## [4.29.0] — Legendary shield forms: eight real 3D models (Blender)
 - NEW (made in Blender, `tools/blender/forms_legendary_shield.py`): a 3D model for each Legendary Shield form: Leaf, Orange Balloon, Egg, Zombie, Chimera Viper, Needle, Light Metal and Soul Eater (`legendary_shield__<form>` skins, 3588 to 4958 quads, 1024 px skin + glow under 345 KB each, class shield). They are skins of the shield (not items); the shield's existing behaviour and engravings apply.
 - KEPT: the Slime Shield form model and every older shield mesh, texture and item. The Rage and Wrath curse forms are not done in this release.

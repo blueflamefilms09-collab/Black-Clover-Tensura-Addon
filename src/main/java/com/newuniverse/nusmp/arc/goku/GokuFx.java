@@ -2,11 +2,13 @@ package com.newuniverse.nusmp.arc.goku;
 
 import com.newuniverse.nusmp.perf.PerfBudgets;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: every particle of the Goku boss (the form aura, the power-up, the Kamehameha, the Spirit Bomb) goes through ONE place that takes its count from the shared per-tick particle budget
@@ -31,7 +33,7 @@ final class GokuFx {
         if (n > 0) sl.sendParticles(dust(rgb, 1.5f), e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), n, e.getBbWidth() * 0.6, e.getBbHeight() * 0.45, e.getBbWidth() * 0.6, 0.01);
         if (electric) {
             int s = take(sl, 2);
-            if (s > 0) sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), s, e.getBbWidth() * 0.7, e.getBbHeight() * 0.5, e.getBbWidth() * 0.7, 0.2);
+            if (s > 0) Fx.spray(sl, FxThemes.WORLD, FxOld.ELECTRIC_SPARK, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), s, e.getBbWidth() * 0.7, e.getBbHeight() * 0.5, e.getBbWidth() * 0.7, 0.2);
         }
     }
 
@@ -57,7 +59,7 @@ final class GokuFx {
         int n = take(sl, count);
         if (n > 0) {
             sl.sendParticles(dust(rgb, 2.0f), at.x, at.y, at.z, n, 0.5, 0.5, 0.5, 0.2);
-            sl.sendParticles(ParticleTypes.END_ROD, at.x, at.y, at.z, Math.max(1, n / 3), 0.4, 0.4, 0.4, 0.15);
+            Fx.spray(sl, FxThemes.WORLD, FxOld.END_ROD, at.x, at.y, at.z, Math.max(1, n / 3), 0.4, 0.4, 0.4, 0.15);
         }
     }
 
@@ -76,6 +78,6 @@ final class GokuFx {
     /** The silver flicker that tells the players his Ultra Instinct dodge is ready (and the afterimage when it fires). */
     static void shimmer(ServerLevel sl, LivingEntity e, int count) {
         int n = take(sl, count);
-        if (n > 0) sl.sendParticles(ParticleTypes.END_ROD, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), n, 0.5, 0.8, 0.5, 0.05);
+        if (n > 0) Fx.spray(sl, FxThemes.WORLD, FxOld.END_ROD, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), n, 0.5, 0.8, 0.5, 0.05);
     }
 }
