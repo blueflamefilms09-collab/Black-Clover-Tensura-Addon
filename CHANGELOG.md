@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.49.1] — Build fix, classic skill icons for the 20 new animated icons
+- FIXED: `SkillIconsForgeTest` failed because 20 animated skill icons (adaptability, airiel, arcs_ray, argonaut, book_maker, devils_footprints, faith, freya, futsunomitama, hati, hell_walker, hephaestus, hestia, liaris_freese, loki, rea_laevateinn, summoner, uchide_no_kozuchi, unbreakable_will, wynn_fimbulvetr) had no classic picture under `textures/skill_old/anim`; they were new animations, so the classic picture is the old still of the same skill.
+- KEPT: everything else; no gameplay change.
+
 ## [4.49.0] — Goku and Sinbad redesigned from the owner's references, own voice lines, own boss bars
 - NEW: 16 boss looks built on the player-model kit (Goku 8 forms: base, Super Saiyan 1/2/3, God, Blue, Ultra Instinct sign, Mastered; Sinbad 8: base king plus the seven Djinn bodies Baal, Valefor, Zepar, Focalor, Vepar, Crocell, Furfur); Goku's form aura layer; Sinbad's Djinn Equip drawn on the boss through a synced equip index.
 - NEW: Goku arts Zanzoken Cage, Solar Flare, Kienzan Boomerang; Sinbad arts Rukh Orrery and Kingdom Sigil (self-tests `goku.boss.arts`, `sinbad.boss.arts`).
