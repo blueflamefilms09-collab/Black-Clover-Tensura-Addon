@@ -493,6 +493,42 @@ def _clean(ob):
     ob.data.update()
 
 
+def _weight_islands(me, names, weights):
+    """Scales the UV islands (faces joined where they share a vertex AND its uv) of the weighted parts about their own centre."""
+    uv = me.uv_layers.active.data
+    pid = me.attributes["part_id"].data
+    n = len(me.polygons)
+    parent = list(range(n))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+    seen = {}
+    for poly in me.polygons:
+        for l in poly.loop_indices:
+            key = (me.loops[l].vertex_index, round(uv[l].uv.x, 4), round(uv[l].uv.y, 4))
+            if key in seen:
+                ra, rb = find(seen[key]), find(poly.index)
+                if ra != rb:
+                    parent[ra] = rb
+            else:
+                seen[key] = poly.index
+    isl = {}
+    for poly in me.polygons:
+        isl.setdefault(find(poly.index), []).append(poly)
+    for polys in isl.values():
+        w = weights.get(names[pid[polys[0].index].value])
+        if not w or w == 1.0:
+            continue
+        ls = [l for p in polys for l in p.loop_indices]
+        pts = np.array([(uv[l].uv.x, uv[l].uv.y) for l in ls])
+        c = pts.mean(axis=0)
+        for l, q in zip(ls, pts):
+            uv[l].uv = tuple(c + (q - c) * w)
+
+
 def _image(name, px):
     img = bpy.data.images.new(name, px, px, alpha=True, float_buffer=False)
     img.generated_color = (0, 0, 0, 0)
@@ -516,11 +552,12 @@ def _pixels(img, px, out):
 
 
 def finish(item_id, glow=("FFFFFF", 0.12, 0.5, 1.0), header_from=None, smooth=38.0, skin=512, bake=1024, out_mesh=None, out_skin=None,
-           preview=None, write=True, deform=None, extra_meshes=None, budget=QUAD_BUDGET, cage=0.45):
+           preview=None, write=True, deform=None, extra_meshes=None, budget=QUAD_BUDGET, cage=0.45, uv_weights=None):
     """Joins every object of the scene into the weapon, unwraps it, bakes its skin and glow skin with Cycles and writes the mod's files.
 
     header_from: a mesh file whose `place` line is reused (the weapon keeps its length and grip, so it keeps its place in the hand).
     deform: {suffix: function(Vector) -> Vector} writes extra meshes on the same skin with moved points (a bow's draw stages).
+    uv_weights: {part name: linear factor} makes the UV islands of those parts that much bigger before packing (more texels for a blade, fewer for a hidden thorn); None = even.
     Returns (mesh_lib Mesh, Atlas, stats)."""
     sc = bpy.context.scene
     lows = [o for o in sc.collection.objects if o.type == "MESH" and not o.get("detail")]
@@ -540,6 +577,11 @@ def finish(item_id, glow=("FFFFFF", 0.12, 0.5, 1.0), header_from=None, smooth=38
     bpy.ops.mesh.select_all(action="SELECT")
     bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.0, area_weight=0.0, scale_to_bounds=False)
     bpy.ops.uv.average_islands_scale()
+    if uv_weights:
+        bpy.ops.object.mode_set(mode="OBJECT")
+        _weight_islands(low.data, names, uv_weights)
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
     bpy.ops.uv.pack_islands(margin=0.006, rotate=True)
     bpy.ops.object.mode_set(mode="OBJECT")
     # ---- bake

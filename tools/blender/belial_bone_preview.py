@@ -31,6 +31,7 @@ PLACE = {
     "tail_seg": [(0, -10.4, -3.0 - 5.8 * i * 0.9, i) for i in range(TAIL_N)],
     "tail_tip": [(0, -10.4 - 0.0, -3.0 - 5.8 * 0.9 * TAIL_N, 0)],
     "weapon": [(-9.5, -9.0, 4.0)],
+    "arm2_l": [(6.0, -4.6, 0.8)], "arm2_r": [(-6.0, -4.6, 0.8)],
 }
 
 
@@ -109,8 +110,12 @@ def main(argv):
     render(quads, skin, glow, ("profile", "three_quarter", "back"), (520, 760), out=os.path.join(a.out, "bone_set_assembled.png"))
     dragon = assemble(a.root, ["backdrop", "tail_seg", "tail_tip", "wing_in_l", "wing_in_r", "wing_out_l", "wing_out_r", "mantle"])
     render(dragon, skin, glow, ("profile", "three_quarter", "back"), (520, 760), out=os.path.join(a.out, "bone_dragon_parts.png"))
+    head = assemble(a.root, ["helm", "crest", "horn_l", "horn_r"])
+    render(head, skin, glow, ("profile", "edge", "three_quarter"), (560, 600), out=os.path.join(a.out, "bone_helm_closeup.png"))
+    arms = assemble(a.root, ["chest", "pauldron_l", "vambrace_l", "gauntlet_l", "arm2_l", "pauldron_r", "vambrace_r", "gauntlet_r", "arm2_r"])
+    render(arms, skin, glow, ("profile", "three_quarter", "edge"), (560, 600), out=os.path.join(a.out, "bone_four_arms.png"))
     skull = assemble(a.root, ["backdrop"])
-    render(skull, skin, glow, ("profile", "three_quarter", "profile"), (620, 620), focus=(-8, 14, 12, 28, -4, 14), out=os.path.join(a.out, "bone_skull_closeup.png"))
+    render(skull, skin, glow, ("profile", "edge", "three_quarter"), (700, 700), focus=(-8, 14, 12, 28, -4, 14), out=os.path.join(a.out, "bone_skull_closeup.png"))
 
 
 if __name__ == "__main__":

@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.34.0] — Belial scythe and bone set remade in Blender
+- REPLACED (models only): the Belial scythe mesh (4778 quads, apparent length 2.52, scutes, cracks, teal fuller, eight-pointed gold-teal star on the blade, deeper emblem ring with a teal dragon eye, cloth tassels) and its skin and glow textures; the 23 bone-set pieces re-baked (set total 6358 of the 6400-quad budget, atlas about 341 KB).
+- NEW: two extra bone-set pieces `arm2_l` and `arm2_r` (the second pair of arms, 118 and 117 quads), appended after the old pieces. They have no client anchor yet, so nothing draws them in game yet.
+- KEPT: every old piece name, the scythe's id, sprite icon, grip and Better Combat file.
+- Made in Blender: yes (`tools/blender/belial_bone.py`, `belial_scythe.py`). Docs and previews: docs/belial/models.md.
+- Cost: no new entity, packet or tick work; the bone set stays inside the existing quad budget.
+- Honest caveats: not seen in a game; the skull is still faceted close up and the 96-colour atlas is blocky; the Gradle bone-budget test was not run locally.
+
 ## [4.33.0] — Sinbad boss, Weapon Tracker, engravings locked to their weapon
 - NEW: Sinbad boss (Magi saga, ally tier): 17 moves, one Djinn at a time, a seven-step finale; `/multiverse sinbad_boss spawn|status|clear`; server config `nusmp-sinbad-boss-server.toml` (`enabled`, `globalCap` 2). Uses the default body (no model or texture yet); Furfur, the Crocell moves and the finale are invented, not canon. See docs/sinbad_boss.md.
 - NEW: Weapon Tracker: a screen (`/multiverse weapons`, or the unbound key "Open the Weapon Tracker") that lists the 21 hero weapons as Free, Taken, Yours or Shared with a holder name (setting `trackerShowNames`), filters, and a refresh every 10 s while open. Answers at most once per 2 s per player (a reply is at most 613 bytes, to that player only). See docs/weapon_tracker.md.

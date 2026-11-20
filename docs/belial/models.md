@@ -14,9 +14,9 @@ NEW vs REPLACEMENT (rule 5): the scythe mesh id and the `belial_bone` part set a
 |---|---|
 | Files | `weapon_meshes/djinn_weapon_belial_scythe.txt`, `textures/entity/weapon/djinn_weapon_belial_scythe.png`, `..._glow.png` |
 | Script | `tools/blender/belial_scythe.py` (`python tools/blender/belial_scythe.py --samples 24 --threads 2`) |
-| Size class | `scythe` (2.0 - 2.6 blocks); apparent length 2.515 (inside the class). Mesh runs y 0 .. 270.7, blade toward -x |
-| Quad lines | 4097 body + 701 glow copies = 4798 (inside 3000-5000) |
-| PNG | skin 321 KB + glow 24 KB = about 345 KB (1024 px, 80-colour palette PNG) |
+| Size class | `scythe` (2.0 - 2.6 blocks); apparent length 2.522 (inside the class). Mesh runs y 0 .. 270.7, blade toward -x |
+| Quad lines | 4056 body + 722 glow copies = 4778 (was 4798; inside 3000-5000) |
+| PNG | skin 322.6 KB + glow 25.9 KB = about 349 KB (1024 px, 80-colour palette PNG; was about 345 KB) |
 | Grip | header `grip 0.240` (grip section y 38-92 of 270.7); suggested grip point `[0.0, 65.0, 0.0]` |
 | Made in Blender | yes: all of it, modelled and baked (Cycles COMBINED + EMIT) through bl_lib / forms_kit; bake-only detail objects (runes, studs, glow seams, pupil seams) are high-poly detail baked onto the low mesh |
 
@@ -36,11 +36,11 @@ Lines for the coordinator (shared files, NOT edited here):
 
 | | |
 |---|---|
-| Files | `djinn/belial_bone/<piece>.txt` (23 pieces), atlas `textures/entity/djinn/belial_bone_armor.png` + `belial_bone_armor_glow.png` |
+| Files | `djinn/belial_bone/<piece>.txt` (25 pieces: the old 23 plus `arm2_l`, `arm2_r` appended last), atlas `textures/entity/djinn/belial_bone_armor.png` + `belial_bone_armor_glow.png` |
 | Script | `tools/blender/belial_bone.py`; preview `tools/blender/belial_bone_preview.py` |
-| Pieces | helm, horn_l/r, crest, chest, belt, pauldron_l/r, vambrace_l/r, gauntlet_l/r, greave_l/r, wing_in_l/r, wing_out_l/r (bat wings), tail_seg, tail_tip (bone-dragon spine), backdrop (bone dragon: spine, ribs, clawed forelimb, horned skull), mantle (dark cape), weapon (the scythe at 0.22 scale, in item space) |
-| Quad lines | 5123 body + 889 glow = 6012 for all 23 pieces once each (the tail segment is drawn n times by the layer on top). Largest: backdrop 810, weapon 850, chest 761 |
-| Atlas | 1024 px, one atlas for all pieces: skin 303 KB + glow 36 KB = about 339 KB (64-colour palette) |
+| Pieces | helm, horn_l/r, crest, chest, belt, pauldron_l/r, vambrace_l/r, gauntlet_l/r, greave_l/r, wing_in_l/r, wing_out_l/r (bat wings), tail_seg, tail_tip (bone-dragon spine), backdrop (bone dragon: spine, ribs, clawed forelimb, horned skull), mantle (dark cape), arm2_l/r (thin bone-white second vambrace + gauntlet; NO client-layer anchor yet, appended at the end of the table), weapon (the scythe at 0.22 scale, in item space) |
+| Quad lines | DjinnBoneSetTest total 6358 of 6400 (was 6282): core pieces with tail_seg x3, plus mantle and horns. Largest: backdrop 1124, weapon 751, chest 685, helm 440. `arm2_l/r` 118 / 117 are extra and not in that total |
+| Atlas | 1024 px, one atlas for all pieces: skin 310.7 KB (96-colour palette, denoised) + glow 30.2 KB (40 colours) = about 341 KB |
 | Made in Blender | yes (same pipeline), one shared bake |
 
 Frames: authored y up, +z front, in each piece's own frame (djinn_parts ANCHOR), exported `(x, y, z) -> (x, -y, -z)` (model space); the weapon piece stays in item space.
@@ -58,9 +58,13 @@ backdrop does not spin.
 
 ## 4. Honest quality verdict
 
-- Scythe: reads correctly (white bone, vertebra-ring emblem with a teal dragon eye, notched crescent blade, thorns). Weak: a flat pale patch remains on the blade near the
-  root (the blade gets little texel density because the unwrap packs thousands of small islands at equal density), the tassels are plain ribbons, and the emblem is only
-  moderately deep. It is below Genesis Demon-Slayer detail.
-- Bone set: the dragon backdrop, skull, bat wings and cape read at a distance. Close up the skull and spine are low-poly and the 64-colour atlas shows blocky texels.
-  The assembly preview is an approximation of DjinnArmorLayer (wing hinge, tail chain and hand position are guessed), so the in-game pose can differ. Not seen in a game.
-- Not done: no Java, no engravings, no Better Combat file, no 2D inventory icon (the old icon is kept).
+- Scythe: the flat pale patch at the blade root is gone (blade UV density x1.75, baked scutes, ribs and cracks). The emblem ring is deeper (vertebrae with spinous
+  shape), the tassels are tapered folded cloth, and a gold-teal eight-pointed star is inlaid on the blade and the ring studs. Orientation: the mesh matches vassal_scythe
+  and black_sword_greed_scythe on every `weapon_orientation.py` measure (imbalance -0.345, head at -x, centroid 0.70, no flags); no mirror or turn was found, so an
+  in-hand complaint is in the pose / grip anchor (Java / json), not the mesh. Still weak: the blade relief is texture, not geometry; PNG sits at 349 KB.
+- Bone set: real horned dragon skull (brow ridges, cheekbones, sockets, hinged jaw with teeth, nasal ridge), vertebrae with spines, curved ribs, finer wing bones,
+  black-violet jagged wing membranes with bone-white fingers, forelimb claws curling forward. Canon extras: two vertical teal forehead eyes, swept-back white hair
+  and gold studs on the helm, dragon-bone graft on the pauldrons, `arm2_l/r` (no anchor yet). Weak: close up the skull is still faceted and the 96-colour atlas is
+  blocky; the helm crest is busy. Assembly previews approximate DjinnArmorLayer, so the in-game pose can differ. Not seen in a game.
+- Worst case: assets only, no server cost, no packets; client about 6360 body quads per wearer plus the repeated tail, far wearers skipped by the layer LOD.
+- Not done: no Java, no engravings, no Better Combat file, no inventory icon change; the test sweep was not run.
