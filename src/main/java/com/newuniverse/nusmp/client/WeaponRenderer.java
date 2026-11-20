@@ -451,10 +451,12 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels();
         boolean greedClassic = GreedHandsClient.classic();
         boolean solid = com.newuniverse.nusmp.vfx.HeroSolid.solid();                  // visual.heroSolidParts (docs/heroweapon/flat_parts.md): off = the old flat arrow / spear head meshes
-        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        boolean hold = WeaponGrip.holdEnabled();                                       // 4.45.0: models.holdFit
+        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
             greedClassicSeen = greedClassic;
             solidSeen = solid;
+            holdSeen = hold;
             MESHES.clear();
             WeaponGrip.clear();
             ItemStateVariants.clearCache();
@@ -471,7 +473,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         return mesh;
     }
 
-    private static boolean classicSeen, greedClassicSeen, solidSeen = true;
+    private static boolean classicSeen, greedClassicSeen, solidSeen = true, holdSeen = true;
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {
@@ -505,7 +507,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
                 mesh.gripY = mesh.oy + along * (float) Math.sin(Math.toRadians(mesh.angle));
                 mesh.id = id;
-                if (mesh.shield == null && !HandWrap.isWrapped(id)) mesh.grip = WeaponGrip.resolve(id, mesh.layers[BODY].isEmpty() ? mesh.layers[GLOW] : mesh.layers[BODY], classes(), mesh.gripAt, mesh.gripFlipped, mesh.explicitGrip);      // 1.111.0
+                if (mesh.shield == null && !HandWrap.isWrapped(id)) mesh.grip = WeaponGrip.resolve(id, mesh.layers[BODY].isEmpty() ? mesh.layers[GLOW] : mesh.layers[BODY], classes(), mesh.gripAt, mesh.gripFlipped, mesh.explicitGrip, mesh.scale);      // 1.111.0 (4.45.0: and the scale, for the hold fit)
             }
         } catch (Exception ex) {
             LogUtils.getLogger().error("[anime_multiverse] weapon mesh {} failed to load; its icon is used instead", id, ex);

@@ -35,6 +35,37 @@ public final class GripState {
     /** The four hand display entries of a model json as a Display array (a missing entry is vanilla's NO_TRANSFORM). */
     public GripMath.Display display(int ctx) { return display == null || display[ctx] == null ? GripMath.Display.NONE : display[ctx]; }
 
+    private float[] samples;                                                    // 4.45.0: the surface samples (mesh space) HoldFit measures; dropped once both third-person shifts are made
+    private float[][] hold;                                                     // 4.45.0: HoldFit's extra move per third-person hand (right, left), unit cube
+
+    /** 4.45.0 (docs/weapon_hold.md): this mesh is a hero weapon's, so the third-person shifts also clear the forearm and the torso ({@link HoldFit}); {@code samples} from {@link HoldFit#surfaceSamples}. */
+    public GripState withHold(float[] samples) {
+        this.samples = samples;
+        return this;
+    }
+
+    /** HoldFit's two third-person moves, made once (the grip landed on the hand for each hand, then the rule), after which the samples are dropped. */
+    private void makeHold(float[] place) {
+        int n = samples.length / 3;
+        float a = (float) Math.toRadians(place[2]);
+        float[][] out = new float[2][];
+        for (int ctx = TP_RIGHT; ctx <= TP_LEFT; ctx++) {
+            boolean left = ctx == TP_LEFT;
+            GripMath.Display d = display(ctx);
+            float[] s = GripMath.shift(place, grip, GripMath.handPoint(d, left));
+            float[] cube = new float[n * 3];
+            for (int i = 0; i < n; i++) {
+                float[] p = GripMath.cubePoint(place[0], place[1], place[2], place[3], place[4], samples[i * 3], samples[i * 3 + 1], samples[i * 3 + 2]);
+                cube[i * 3] = p[0] + s[0];
+                cube[i * 3 + 1] = p[1] + s[1];
+                cube[i * 3 + 2] = p[2] + s[2];
+            }
+            out[ctx] = HoldFit.extra(cube, n, d, left, (float) Math.cos(a), (float) Math.sin(a));
+        }
+        hold = out;
+        samples = null;
+    }
+
     /** {sx, sy, sz, tx, ty, tz} for a context index 0..3 and the mesh's placement {ox, oy, angle, scale, ymin}; cached (the placement of a loaded mesh does not change). */
     public float[] shift(int ctx, float ox, float oy, float angle, float scale, float ymin) {
         float[] c = cache[ctx];
@@ -44,6 +75,10 @@ public final class GripState {
         GripMath.Display d = display(ctx);
         float[] t = fp ? GripMath.firstPersonTarget(d, left) : GripMath.handPoint(d, left);
         float[] s = GripMath.shift(place, grip, t);
+        if (!fp) {
+            if (samples != null) makeHold(place);
+            if (hold != null) s = new float[]{s[0] + hold[ctx][0], s[1] + hold[ctx][1], s[2] + hold[ctx][2]};      // 4.45.0: clear the forearm and the torso (HoldFit)
+        }
         if (fp) {                                                              // first person: as far as the weapon stays in view (display_presets.py's camera bounds)
             float k = GripMath.firstPersonShare(place, box, s, d, left);
             s = new float[]{s[0] * k, s[1] * k, s[2] * k};

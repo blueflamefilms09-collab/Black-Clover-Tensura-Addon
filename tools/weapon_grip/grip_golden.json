@@ -5953,59 +5953,59 @@
  },
  "vassal_mirror": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
+  "fraction": 0.216,
+  "source": "override",
   "x": 0.0,
-  "y": 37.165,
+  "y": 8.955,
   "z": 0.0
  },
  "vassal_mirror__envious_glass": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.928,
-  "y": 32.42,
-  "z": 0.0
+  "fraction": 0.262,
+  "source": "override",
+  "x": 0.466,
+  "y": 10.975,
+  "z": -0.845
  },
  "vassal_mirror__green_eyed_mirror": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.951,
-  "y": 34.631,
-  "z": 0.0
+  "fraction": 0.317,
+  "source": "override",
+  "x": -0.645,
+  "y": 17.332,
+  "z": 0.817
  },
  "vassal_mirror__hetsu_kagami": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 2.771,
-  "y": 28.719,
+  "fraction": 0.27,
+  "source": "override",
+  "x": 0.0,
+  "y": 9.698,
   "z": 0.0
  },
  "vassal_mirror__mirror_of_envy": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.545,
-  "y": 35.718,
-  "z": 0.0
+  "fraction": 0.259,
+  "source": "override",
+  "x": -0.139,
+  "y": 12.413,
+  "z": -0.272
  },
  "vassal_mirror__white_tiger_clone_mirror": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
+  "fraction": 0.272,
+  "source": "override",
   "x": 0.0,
-  "y": 28.647,
+  "y": 9.824,
   "z": 0.0
  },
  "vassal_mirror__yata_mirror": {
   "class": "shield",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.068,
-  "y": 30.453,
-  "z": -0.297
+  "fraction": 0.313,
+  "source": "override",
+  "x": 0.005,
+  "y": 14.339,
+  "z": -0.002
  },
  "vassal_projectile": {
   "class": "dagger",

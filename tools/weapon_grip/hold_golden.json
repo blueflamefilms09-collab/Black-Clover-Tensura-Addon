@@ -1,0 +1,1752 @@
+{
+ "legendary_bow": {
+  "tp_left": {
+   "arm": 0.245,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.245,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_bow__arrow_shower": {
+  "tp_left": {
+   "arm": 0.252,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.252,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__arrow_shower_pull1": {
+  "tp_left": {
+   "arm": 0.326,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.326,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__arrow_shower_pull2": {
+  "tp_left": {
+   "arm": 0.299,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.299,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__arrow_shower_pull3": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__bind_arrow": {
+  "tp_left": {
+   "arm": 0.297,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.297,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "legendary_bow__bind_arrow_pull1": {
+  "tp_left": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.003
+  },
+  "tp_right": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.003
+  }
+ },
+ "legendary_bow__bind_arrow_pull2": {
+  "tp_left": {
+   "arm": 0.318,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  },
+  "tp_right": {
+   "arm": 0.318,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  }
+ },
+ "legendary_bow__bind_arrow_pull3": {
+  "tp_left": {
+   "arm": 0.348,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.348,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "legendary_bow__bird_hunting": {
+  "tp_left": {
+   "arm": 0.24,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.022
+  },
+  "tp_right": {
+   "arm": 0.24,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.022
+  }
+ },
+ "legendary_bow__bird_hunting_pull1": {
+  "tp_left": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__bird_hunting_pull2": {
+  "tp_left": {
+   "arm": 0.3,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.3,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__bird_hunting_pull3": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__eagle_piercer": {
+  "tp_left": {
+   "arm": 0.241,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.021
+  },
+  "tp_right": {
+   "arm": 0.241,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.021
+  }
+ },
+ "legendary_bow__eagle_piercer_pull1": {
+  "tp_left": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  }
+ },
+ "legendary_bow__eagle_piercer_pull2": {
+  "tp_left": {
+   "arm": 0.301,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.301,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  }
+ },
+ "legendary_bow__eagle_piercer_pull3": {
+  "tp_left": {
+   "arm": 0.287,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.287,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  }
+ },
+ "legendary_bow__frozen_rain": {
+  "tp_left": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.253,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__frozen_rain_pull1": {
+  "tp_left": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__frozen_rain_pull2": {
+  "tp_left": {
+   "arm": 0.3,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  },
+  "tp_right": {
+   "arm": 0.3,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  }
+ },
+ "legendary_bow__frozen_rain_pull3": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  }
+ },
+ "legendary_bow__hunters_bow": {
+  "tp_left": {
+   "arm": 0.242,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.242,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__hunters_bow_pull1": {
+  "tp_left": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__hunters_bow_pull2": {
+  "tp_left": {
+   "arm": 0.299,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.299,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__hunters_bow_pull3": {
+  "tp_left": {
+   "arm": 0.284,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.284,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__meteor_bow": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  }
+ },
+ "legendary_bow__meteor_bow_pull1": {
+  "tp_left": {
+   "arm": 0.312,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.312,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__meteor_bow_pull2": {
+  "tp_left": {
+   "arm": 0.285,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.285,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__meteor_bow_pull3": {
+  "tp_left": {
+   "arm": 0.284,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.285,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__sagittarius": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.002
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.002
+  }
+ },
+ "legendary_bow__sagittarius_pull1": {
+  "tp_left": {
+   "arm": 0.317,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.317,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_bow__sagittarius_pull2": {
+  "tp_left": {
+   "arm": 0.29,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  },
+  "tp_right": {
+   "arm": 0.29,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  }
+ },
+ "legendary_bow__sagittarius_pull3": {
+  "tp_left": {
+   "arm": 0.316,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.316,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  }
+ },
+ "legendary_bow__scouts_bow": {
+  "tp_left": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__scouts_bow_pull1": {
+  "tp_left": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.325,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow__scouts_bow_pull2": {
+  "tp_left": {
+   "arm": 0.298,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.298,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_bow__scouts_bow_pull3": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_bow_curse": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_bow_curse_pull1": {
+  "tp_left": {
+   "arm": 0.269,
+   "body": 0.156,
+   "extra": 0.0,
+   "float": 0.006
+  },
+  "tp_right": {
+   "arm": 0.269,
+   "body": 0.055,
+   "extra": 0.0,
+   "float": 0.006
+  }
+ },
+ "legendary_bow_curse_pull2": {
+  "tp_left": {
+   "arm": 0.243,
+   "body": 0.118,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.243,
+   "body": 0.135,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_bow_curse_pull3": {
+  "tp_left": {
+   "arm": 0.245,
+   "body": 0.094,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.245,
+   "body": 0.179,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_bow_pull1": {
+  "tp_left": {
+   "arm": 0.312,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  },
+  "tp_right": {
+   "arm": 0.312,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  }
+ },
+ "legendary_bow_pull2": {
+  "tp_left": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  },
+  "tp_right": {
+   "arm": 0.286,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  }
+ },
+ "legendary_bow_pull3": {
+  "tp_left": {
+   "arm": 0.274,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  },
+  "tp_right": {
+   "arm": 0.274,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  }
+ },
+ "legendary_shield": {
+  "tp_left": {
+   "arm": 0.768,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  },
+  "tp_right": {
+   "arm": 0.768,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.01
+  }
+ },
+ "legendary_shield__chimera_viper_shield": {
+  "tp_left": {
+   "arm": 0.758,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  },
+  "tp_right": {
+   "arm": 0.752,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  }
+ },
+ "legendary_shield__egg_shield": {
+  "tp_left": {
+   "arm": 0.682,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.03
+  },
+  "tp_right": {
+   "arm": 0.726,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.047
+  }
+ },
+ "legendary_shield__leaf_shield": {
+  "tp_left": {
+   "arm": 0.767,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.76,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.022
+  }
+ },
+ "legendary_shield__light_metal_shield": {
+  "tp_left": {
+   "arm": 0.775,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.776,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_shield__needle_shield": {
+  "tp_left": {
+   "arm": 0.755,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.747,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.014
+  }
+ },
+ "legendary_shield__orange_balloon_shield": {
+  "tp_left": {
+   "arm": 0.742,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.032
+  },
+  "tp_right": {
+   "arm": 0.742,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.031
+  }
+ },
+ "legendary_shield__slime_shield": {
+  "tp_left": {
+   "arm": 0.78,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.04
+  },
+  "tp_right": {
+   "arm": 0.78,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.04
+  }
+ },
+ "legendary_shield__soul_eater_shield": {
+  "tp_left": {
+   "arm": 0.772,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.024
+  },
+  "tp_right": {
+   "arm": 0.764,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.024
+  }
+ },
+ "legendary_shield__zombie_shield": {
+  "tp_left": {
+   "arm": 0.781,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  },
+  "tp_right": {
+   "arm": 0.758,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  }
+ },
+ "legendary_shield_curse": {
+  "tp_left": {
+   "arm": 0.763,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.056
+  },
+  "tp_right": {
+   "arm": 0.776,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.056
+  }
+ },
+ "legendary_spear": {
+  "tp_left": {
+   "arm": 0.24,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.24,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "legendary_spear__bruenack": {
+  "tp_left": {
+   "arm": 0.238,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.238,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "legendary_spear__chaos_spear": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.015
+  }
+ },
+ "legendary_spear__clockwork_spear": {
+  "tp_left": {
+   "arm": 0.263,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.021
+  },
+  "tp_right": {
+   "arm": 0.263,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.021
+  }
+ },
+ "legendary_spear__dragon_minute_hand": {
+  "tp_left": {
+   "arm": 0.245,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.245,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "legendary_spear__filolial_spear": {
+  "tp_left": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  },
+  "tp_right": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  }
+ },
+ "legendary_spear__hunters_spear": {
+  "tp_left": {
+   "arm": 0.26,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  },
+  "tp_right": {
+   "arm": 0.26,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  }
+ },
+ "legendary_spear__meteor_spear": {
+  "tp_left": {
+   "arm": 0.248,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.026
+  },
+  "tp_right": {
+   "arm": 0.248,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.026
+  }
+ },
+ "legendary_spear__portal_spear": {
+  "tp_left": {
+   "arm": 0.257,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.257,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "legendary_spear__triaina": {
+  "tp_left": {
+   "arm": 0.257,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.257,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "legendary_spear_curse": {
+  "tp_left": {
+   "arm": 0.259,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.259,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "legendary_sword": {
+  "tp_left": {
+   "arm": 0.129,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  },
+  "tp_right": {
+   "arm": 0.129,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  }
+ },
+ "legendary_sword__assassin_sword": {
+  "tp_left": {
+   "arm": 0.306,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.005
+  },
+  "tp_right": {
+   "arm": 0.306,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.005
+  }
+ },
+ "legendary_sword__flash_sword": {
+  "tp_left": {
+   "arm": 0.288,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.288,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "legendary_sword__hundred_sword": {
+  "tp_left": {
+   "arm": 0.248,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.248,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  }
+ },
+ "legendary_sword__meteor_sword": {
+  "tp_left": {
+   "arm": 0.315,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  },
+  "tp_right": {
+   "arm": 0.315,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  }
+ },
+ "legendary_sword__phoenix_sword": {
+  "tp_left": {
+   "arm": 0.273,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  },
+  "tp_right": {
+   "arm": 0.273,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  }
+ },
+ "legendary_sword__spirit_tortoise_sword": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_sword__thunder_god_sword": {
+  "tp_left": {
+   "arm": 0.236,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.236,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "legendary_sword__tortoise_carapace_sword": {
+  "tp_left": {
+   "arm": 0.176,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  },
+  "tp_right": {
+   "arm": 0.176,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.006
+  }
+ },
+ "legendary_sword__wind_king_katana": {
+  "tp_left": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  },
+  "tp_right": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.011
+  }
+ },
+ "legendary_sword_curse": {
+  "tp_left": {
+   "arm": 0.129,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  },
+  "tp_right": {
+   "arm": 0.129,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  }
+ },
+ "sz/vassal_katana": {
+  "tp_left": {
+   "arm": 0.2,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.034
+  },
+  "tp_right": {
+   "arm": 0.2,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.034
+  }
+ },
+ "sz/vassal_projectile": {
+  "tp_left": {
+   "arm": 0.252,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  },
+  "tp_right": {
+   "arm": 0.252,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  }
+ },
+ "vassal_axe": {
+  "tp_left": {
+   "arm": 0.26,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.037
+  },
+  "tp_right": {
+   "arm": 0.26,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.037
+  }
+ },
+ "vassal_book": {
+  "tp_left": {
+   "arm": 0.278,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.044
+  },
+  "tp_right": {
+   "arm": 0.283,
+   "body": 0.0,
+   "extra": 0.158,
+   "float": 0.032
+  }
+ },
+ "vassal_carriage": {
+  "tp_left": {
+   "arm": 0.289,
+   "body": 0.0,
+   "extra": 0.126,
+   "float": 0.056
+  },
+  "tp_right": {
+   "arm": 0.289,
+   "body": 0.0,
+   "extra": 0.126,
+   "float": 0.056
+  }
+ },
+ "vassal_chain": {
+  "tp_left": {
+   "arm": 0.144,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.144,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "vassal_fan": {
+  "tp_left": {
+   "arm": 0.097,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.002
+  },
+  "tp_right": {
+   "arm": 0.097,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.002
+  }
+ },
+ "vassal_hammer": {
+  "tp_left": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.035
+  },
+  "tp_right": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.035
+  }
+ },
+ "vassal_harpoon": {
+  "tp_left": {
+   "arm": 0.243,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  },
+  "tp_right": {
+   "arm": 0.243,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.028
+  }
+ },
+ "vassal_instrument": {
+  "tp_left": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  },
+  "tp_right": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.023
+  }
+ },
+ "vassal_instrument__grilled_fish_horn": {
+  "tp_left": {
+   "arm": 0.243,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  },
+  "tp_right": {
+   "arm": 0.243,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  }
+ },
+ "vassal_instrument__guitar": {
+  "tp_left": {
+   "arm": 0.292,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  },
+  "tp_right": {
+   "arm": 0.292,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  }
+ },
+ "vassal_instrument__humming_fairy_lyre": {
+  "tp_left": {
+   "arm": 0.187,
+   "body": 0.0,
+   "extra": 0.08,
+   "float": 0.058
+  },
+  "tp_right": {
+   "arm": 0.187,
+   "body": 0.0,
+   "extra": 0.08,
+   "float": 0.058
+  }
+ },
+ "vassal_instrument__instrument_zero": {
+  "tp_left": {
+   "arm": 0.277,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.277,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "vassal_katana__sakura_stone_katana": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  }
+ },
+ "vassal_katana__siderite_katana": {
+  "tp_left": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  },
+  "tp_right": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.007
+  }
+ },
+ "vassal_katana__soul_eater_katana": {
+  "tp_left": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.024
+  },
+  "tp_right": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.024
+  }
+ },
+ "vassal_katana__white_tiger_katana": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  }
+ },
+ "vassal_mirror": {
+  "tp_left": {
+   "arm": 0.253,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  },
+  "tp_right": {
+   "arm": 0.253,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.025
+  }
+ },
+ "vassal_mirror__envious_glass": {
+  "tp_left": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  }
+ },
+ "vassal_mirror__green_eyed_mirror": {
+  "tp_left": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.012
+  }
+ },
+ "vassal_mirror__hetsu_kagami": {
+  "tp_left": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_mirror__mirror_of_envy": {
+  "tp_left": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  },
+  "tp_right": {
+   "arm": 0.249,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.017
+  }
+ },
+ "vassal_mirror__white_tiger_clone_mirror": {
+  "tp_left": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_mirror__yata_mirror": {
+  "tp_left": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.255,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_projectile__chakram": {
+  "tp_left": {
+   "arm": 0.195,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.005
+  },
+  "tp_right": {
+   "arm": 0.195,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.005
+  }
+ },
+ "vassal_projectile__hatchet": {
+  "tp_left": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.25,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "vassal_projectile__kunai": {
+  "tp_left": {
+   "arm": 0.199,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.199,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "vassal_projectile__over_custom_arsenal": {
+  "tp_left": {
+   "arm": 0.218,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.022
+  },
+  "tp_right": {
+   "arm": 0.218,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.022
+  }
+ },
+ "vassal_scythe": {
+  "tp_left": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.079,
+   "float": 0.057
+  },
+  "tp_right": {
+   "arm": 0.261,
+   "body": 0.0,
+   "extra": 0.079,
+   "float": 0.057
+  }
+ },
+ "vassal_scythe__demon_dragon_scythe": {
+  "tp_left": {
+   "arm": 0.259,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.259,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ },
+ "vassal_scythe__demon_elephant_scythe": {
+  "tp_left": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.026
+  },
+  "tp_right": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.026
+  }
+ },
+ "vassal_scythe__scythe_zero": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.013
+  }
+ },
+ "vassal_scythe__small_scythe": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.018
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.018
+  }
+ },
+ "vassal_sewing_set": {
+  "tp_left": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.044,
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.327,
+   "body": 0.0,
+   "extra": 0.044,
+   "float": 0.012
+  }
+ },
+ "vassal_sewing_set__ariadnes_thread": {
+  "tp_left": {
+   "arm": 0.328,
+   "body": 0.0,
+   "extra": 0.02,
+   "float": 0.099
+  },
+  "tp_right": {
+   "arm": 0.328,
+   "body": 0.0,
+   "extra": 0.02,
+   "float": 0.099
+  }
+ },
+ "vassal_sewing_set__silk_thread_set": {
+  "tp_left": {
+   "arm": 0.0,
+   "body": 0.0,
+   "extra": 0.045,
+   "float": 0.03
+  },
+  "tp_right": {
+   "arm": 0.0,
+   "body": 0.0,
+   "extra": 0.045,
+   "float": 0.03
+  }
+ },
+ "vassal_sewing_set__spider_wire_set": {
+  "tp_left": {
+   "arm": 0.202,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.037
+  },
+  "tp_right": {
+   "arm": 0.202,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.037
+  }
+ },
+ "vassal_staff": {
+  "tp_left": {
+   "arm": 0.244,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.033
+  },
+  "tp_right": {
+   "arm": 0.244,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.033
+  }
+ },
+ "vassal_staff__archmage_staff": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_staff__focus_staff": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_staff__mirror_staff": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_staff__rune_staff": {
+  "tp_left": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  },
+  "tp_right": {
+   "arm": 0.258,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.02
+  }
+ },
+ "vassal_whip": {
+  "tp_left": {
+   "arm": 0.267,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.038
+  },
+  "tp_right": {
+   "arm": 0.267,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.038
+  }
+ },
+ "vassal_whip__hourglass_whip": {
+  "tp_left": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  },
+  "tp_right": {
+   "arm": 0.251,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.009
+  }
+ },
+ "vassal_whip__morning_star_whip": {
+  "tp_left": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  },
+  "tp_right": {
+   "arm": 0.256,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.016
+  }
+ },
+ "vassal_whip__storm_whip": {
+  "tp_left": {
+   "arm": 0.185,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  },
+  "tp_right": {
+   "arm": 0.185,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.019
+  }
+ },
+ "vassal_whip__vine_whip": {
+  "tp_left": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  },
+  "tp_right": {
+   "arm": 0.254,
+   "body": 0.0,
+   "extra": 0.0,
+   "float": 0.008
+  }
+ }
+}

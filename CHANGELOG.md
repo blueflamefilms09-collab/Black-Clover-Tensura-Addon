@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.50.0] — Weapons are held in the hand: hero forms find their hold, no floating, no clipping through arm or body
+- FIXED: hero form meshes (`<item>__<form>`) had no model display block, so the grip point was the cube centre (about 0.22 blocks off the hand in third person, no display at all in first person). Forms now use the display of their item. Audit of 127 hero meshes: 34 badly held before (float 25, arm 14, body 6, low in first person 8), 0 now (numbers only, not seen in a game).
+- NEW: `HoldFit` (moves a weapon out of the torso and out of the forearm by at most 0.20, never so far that the grip floats), `tools/weapon_grip/hold_audit.py` with `hold_golden.json`, `HoldAuditTest`, `docs/weapon_hold.md`, client setting `models.holdFit` (default on; `-Danime_multiverse.weaponHold=off` too).
+- REPLACED (old kept behind the setting): the hero-weapon hold placement of 4.44.x; the seven mirror grip fractions are now per form.
+- KEPT: every model, mesh and skin, all non-hero weapons (placement unchanged), ShieldFrame, hand-wrapped gauntlet and claw.
+- Cost: at most 60,000 surface samples per hero mesh, once per mesh load; no packets, no per-frame work, no server code.
+- Known: five vassal book and carriage forms made after the audit baseline are still flagged (animal_needle_book, library_tome, revised_edition, queens_chariot, war_carriage); the form rework in progress replaces them.
+
 ## [4.49.1] — Build fix, classic skill icons for the 20 new animated icons
 - FIXED: `SkillIconsForgeTest` failed because 20 animated skill icons (adaptability, airiel, arcs_ray, argonaut, book_maker, devils_footprints, faith, freya, futsunomitama, hati, hell_walker, hephaestus, hestia, liaris_freese, loki, rea_laevateinn, summoner, uchide_no_kozuchi, unbreakable_will, wynn_fimbulvetr) had no classic picture under `textures/skill_old/anim`; they were new animations, so the classic picture is the old still of the same skill.
 - KEPT: everything else; no gameplay change.

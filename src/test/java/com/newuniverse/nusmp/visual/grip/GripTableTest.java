@@ -123,7 +123,7 @@ class GripTableTest {
     /** The four hand display entries of the model json of an id (then its base id), NONE where missing. */
     static GripMath.Display[] displays(String id) throws IOException {
         GripMath.Display[] out = {GripMath.Display.NONE, GripMath.Display.NONE, GripMath.Display.NONE, GripMath.Display.NONE};
-        for (String cand : new String[]{id, GripTable.baseId(id)}) {
+        for (String cand : HoldFit.applies(id) ? GripTable.modelIds(id) : new String[]{id, GripTable.baseId(id)}) {      // 4.45.0: a hero form is held with its item's display block
             Path p = RES.resolve("models/item/" + cand + ".json");
             if (!Files.exists(p)) continue;
             JsonObject o = JsonParser.parseString(Files.readString(p)).getAsJsonObject();

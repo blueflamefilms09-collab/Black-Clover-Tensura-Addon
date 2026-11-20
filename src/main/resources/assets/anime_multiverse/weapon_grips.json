@@ -93,6 +93,15 @@
   "wavebreaker": 0.08,
   "whirling_blades": 0.08
  },
+ "holdFractions": {
+  "vassal_mirror": 0.216,
+  "vassal_mirror__envious_glass": 0.262,
+  "vassal_mirror__green_eyed_mirror": 0.317,
+  "vassal_mirror__hetsu_kagami": 0.27,
+  "vassal_mirror__mirror_of_envy": 0.259,
+  "vassal_mirror__white_tiger_clone_mirror": 0.272,
+  "vassal_mirror__yata_mirror": 0.313
+ },
  "points": {
   "astralis_the_eye_of_the_universe": [
    0.0,

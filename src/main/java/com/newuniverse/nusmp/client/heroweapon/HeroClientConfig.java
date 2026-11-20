@@ -18,6 +18,9 @@ public final class HeroClientConfig {
     /** 4.23.0: one 3D model per hero weapon form (weapon_meshes/<weapon>__<form>.txt). Looks only; the classic models never use them. */
     public static final ModConfigSpec.BooleanValue FORM_MODELS;
 
+    /** 4.45.0 (docs/weapon_hold.md): a hero weapon is held so that no part of it passes through the forearm or the body, and a form is held by the hand of its item (look only). false = the placement of 4.44.x. */
+    public static final ModConfigSpec.BooleanValue HOLD_FIT;
+
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("hud");
@@ -31,6 +34,8 @@ public final class HeroClientConfig {
                 .define("classicHeroWeaponModels", false);
         FORM_MODELS = b.comment("true = a hero weapon in a form that has a model of its own (Legendary, Seven Star, Vassal) is drawn with it. false = always the base (or curse) look. Looks only; ignored while classicHeroWeaponModels is on.")
                 .define("formModels", true);
+        HOLD_FIT = b.comment("true = a hero weapon (Legendary, Seven Star, Vassal, every form) is held by the grip of the hand: a form uses its item's hand placement, and a part that would pass through the forearm or the body is moved clear. false = the placement of version 4.44.x. Looks only.")
+                .define("holdFit", true);
         b.pop();
         SPEC = b.build();
     }
@@ -49,6 +54,8 @@ public final class HeroClientConfig {
     public static boolean classicModels() { return get(CLASSIC_LEGENDARY); }
 
     public static boolean formModels() { return get(FORM_MODELS); }
+
+    public static boolean holdFit() { return get(HOLD_FIT); }
 
     public static boolean hud() { return get(HUD); }
 

@@ -54,6 +54,12 @@ OVERRIDES = {
     "fairy_glitter_gauntlets": 0.45, "fairy_heart_gauntlets": 0.45,                          # a pair of gauntlets: held in the middle
     "valkyrie_drill_lance": 0.25,                                # the Valkyrie Drill Lance: the hand guard sits a quarter up the length (docs/vfx_remake/valkyrie_ingame.md); the mesh also states `gripxyz`
 }
+# 4.45.0 (docs/weapon_hold.md): grip fractions of hero weapon forms, read off the mesh's own `grip <fraction>` line, which the finder ignores for the class "shield" (a hand mirror is filed under it for its size only)
+HOLD_FIXES = {
+    "vassal_mirror": 0.216, "vassal_mirror__envious_glass": 0.262, "vassal_mirror__green_eyed_mirror": 0.317, "vassal_mirror__mirror_of_envy": 0.259,
+    "vassal_mirror__white_tiger_clone_mirror": 0.272, "vassal_mirror__yata_mirror": 0.313,        # the `grip` line of each mesh: the middle of its handle
+    "vassal_mirror__hetsu_kagami": 0.27,                          # no `grip` line: the thin stretch of its profile (16 to 38 percent of the length) has its middle there
+}
 POINT_OVERRIDES = {"demon_slayer_sword": (0.0, -12.0, 0.0)}      # the middle of the cloth grip (hilt() of DemonSlayerMesh: y -22 to -2)
 
 
@@ -92,13 +98,16 @@ def listed(item_id, classes_json):
     return item_id in w or gl.STATE_SUFFIX.sub("", item_id) in w
 
 
-def build():
+def build(hold_fixes=True):
+    overrides = dict(OVERRIDES)
+    if hold_fixes:
+        overrides.update(HOLD_FIXES)
     cj = gl.classes()
     class_of = {}
     djinn = djinn_classes()
     class_of.update(djinn)
     class_of.update(EXTRA_CLASS)
-    table_now = {"classOf": class_of, "fractions": dict(OVERRIDES), "points": {}}
+    table_now = {"classOf": class_of, "fractions": overrides, "points": {}}
     golden = {}
     points = {}
     for pass_no in (0, 1):                      # pass 0 freezes the points of the full upgraded meshes; pass 1 writes every mesh (a lod or thickened copy uses its full mesh's point)
@@ -112,7 +121,7 @@ def build():
             cls = gl.grip_class(lod_base(i), cj, table_now)
             row = cj["classes"].get(cls) or {"grip": 0.5}
             base = gl.STATE_SUFFIX.sub("", lod_base(i))
-            ov = OVERRIDES.get(lod_base(i), OVERRIDES.get(base))
+            ov = overrides.get(lod_base(i), overrides.get(base))
             if kind == "vu":
                 explicit = POINT_OVERRIDES.get(lod_base(i)) or points.get(lod_base(i))
             else:
@@ -147,7 +156,8 @@ def main(argv=None):
         print("meshes with no grip class (add them to weapon_classes.json or EXTRA_CLASS):", ", ".join(sorted(needed)))
     table_out = {"version": 1, "_doc": "assets/anime_multiverse/weapon_grips.json, written by tools/weapon_grip/grip_table.py (docs/weapon_grip.md): classOf = grip class of weapons "
                  "weapon_classes.json does not list; points = grip point (mesh space) of the upgraded meshes; fractions = per-weapon grip fraction (share of the length from the butt)",
-                 "classOf": table["classOf"], "fractions": table["fractions"], "points": table["points"]}
+                 "classOf": table["classOf"], "fractions": OVERRIDES, "points": table["points"],
+                 "holdFractions": HOLD_FIXES}              # 4.45.0: kept apart so the holdFit setting off restores the old fractions
     if args.list:
         for key, g in sorted(golden.items()):
             print("%-44s %-12s %.3f %s" % (key, g["class"], g["fraction"], g["source"]))

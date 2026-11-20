@@ -9,6 +9,8 @@ import com.newuniverse.nusmp.visual.grip.GripFinder;
 import com.newuniverse.nusmp.visual.grip.GripMath;
 import com.newuniverse.nusmp.visual.grip.GripState;
 import com.newuniverse.nusmp.visual.grip.GripTable;
+import com.newuniverse.nusmp.visual.grip.HoldFit;
+import com.newuniverse.nusmp.client.heroweapon.HeroClientConfig;
 import com.newuniverse.nusmp.client.relics.item.WeaponClasses;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.resources.Resource;
@@ -37,6 +39,14 @@ public final class WeaponGrip {
     /** Is the grip placement on? (default yes; -Danime_multiverse.weaponGrip=off restores the old placement). */
     public static boolean enabled() {
         return !"off".equalsIgnoreCase(System.getProperty("anime_multiverse.weaponGrip", "on"));
+    }
+
+    /**
+     * 4.45.0 (docs/weapon_hold.md): is the hero weapon hold fit on? The client setting {@code models.holdFit} (default yes) and {@code -Danime_multiverse.weaponHold=off} both
+     * restore the 4.44.x placement (a form without a model json of its own, no clearing of the forearm and the torso, no per-form fractions).
+     */
+    public static boolean holdEnabled() {
+        return !"off".equalsIgnoreCase(System.getProperty("anime_multiverse.weaponHold", "on")) && HeroClientConfig.holdFit();
     }
 
     public static void clear() {
@@ -73,15 +83,15 @@ public final class WeaponGrip {
         } catch (Exception ex) {
             LogUtils.getLogger().error("[anime_multiverse] weapon_grips.json failed to load; class grips only", ex);
         }
-        table = t;
-        return t;
+        table = t.hold(holdEnabled());
+        return table;
     }
 
     /**
      * The grip state of a mesh given its body vertices and facts, or null (placed the old way). {@code classes} is the class table; {@code gripLine} the mesh's {@code grip}
      * line (NaN = none), {@code flipped} whether the runtime normaliser turned the mesh over, {@code explicit} its {@code gripxyz} or null.
      */
-    static GripState resolve(String id, List<float[]> body, WeaponClasses classes, float gripLine, boolean flipped, float[] explicit) {
+    static GripState resolve(String id, List<float[]> body, WeaponClasses classes, float gripLine, boolean flipped, float[] explicit, float unit) {
         if (!enabled()) return null;
         try {
             GripTable t = table();
@@ -90,7 +100,8 @@ public final class WeaponGrip {
             if (row == null) row = classes.classOf(id);
             GripFinder.Grip g = GripState.find(body, cls, row.grip(), t.fraction(id), gripLine, flipped, flipped ? null : explicit);      // a stated point is in the mesh as the file has it, so not for a mesh the runtime turned over
             if (g == null) return null;
-            return new GripState(g, displays(id), GripState.box(body));
+            GripState st = new GripState(g, displays(id), GripState.box(body));
+            return holdEnabled() && HoldFit.applies(id) ? st.withHold(HoldFit.surfaceSamples(body, unit)) : st;      // 4.45.0: hero weapons also clear the forearm and the torso
         } catch (Exception ex) {
             LogUtils.getLogger().error("[anime_multiverse] grip of weapon mesh {} could not be found; it is placed the old way", id, ex);
             return null;
@@ -139,7 +150,8 @@ public final class WeaponGrip {
         GripMath.Display[] cached = DISPLAYS.get(id);
         if (cached != null) return cached;
         GripMath.Display[] out = {GripMath.Display.NONE, GripMath.Display.NONE, GripMath.Display.NONE, GripMath.Display.NONE};
-        for (String cand : new String[]{id, WeaponClasses.baseId(id)}) {
+        // 4.45.0: a hero weapon form has no json of its own, its item's json carries the display block (docs/weapon_hold.md)
+        for (String cand : holdEnabled() && HoldFit.applies(id) ? GripTable.modelIds(id) : new String[]{id, WeaponClasses.baseId(id)}) {
             try {
                 Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(DemonSlayerRenderer.rl("models/item/" + cand + ".json"));
                 if (res.isEmpty()) continue;

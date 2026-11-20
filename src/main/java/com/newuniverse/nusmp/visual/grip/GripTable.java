@@ -35,6 +35,30 @@ public final class GripTable {
         return STATE_SUFFIX.matcher(id).replaceFirst("");
     }
 
+    /**
+     * 4.45.0 (docs/weapon_hold.md): the model json ids whose {@code display} block a mesh is held with, in order: its own, the rest id of a state mesh, and the item before the
+     * {@code __} of a hero weapon form ({@code vassal_katana__siderite_katana} is the item {@code vassal_katana}, whose json carries the display block vanilla applies; there is no
+     * json of the form). Before 4.45.0 a form mesh found no json, so its grip was put at the centre of the item's cube instead of the hand: the weapon floated 0.2 blocks off the
+     * hand and every form was first-person-placed against no display at all.
+     */
+    public static String[] modelIds(String id) {
+        String rest = baseId(id);
+        int form = id.indexOf("__");
+        if (form <= 0) return rest.equals(id) ? new String[]{id} : new String[]{id, rest};
+        String item = id.substring(0, form);
+        String itemRest = baseId(item);
+        return itemRest.equals(item) ? new String[]{id, rest, item} : new String[]{id, rest, item, itemRest};
+    }
+
+    /** 4.45.0: the per-weapon fractions of {@code holdFractions} (hero weapon forms whose own `grip` line the class "shield" made the finder ignore) count while this is on. */
+    private boolean hold = true;
+    private final Map<String, Float> holdFractions = new HashMap<>();
+
+    public GripTable hold(boolean on) {
+        hold = on;
+        return this;
+    }
+
     private final Map<String, Float> fractions = new HashMap<>();
     private final Map<String, String> classOf = new HashMap<>();
     private final Map<String, float[]> points = new HashMap<>();
@@ -46,6 +70,7 @@ public final class GripTable {
         if (json == null || json.isBlank()) return t;
         JsonObject root = JsonParser.parseString(json).getAsJsonObject();
         if (root.has("fractions")) for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("fractions").entrySet()) t.fractions.put(e.getKey(), e.getValue().getAsFloat());
+        if (root.has("holdFractions")) for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("holdFractions").entrySet()) t.holdFractions.put(e.getKey(), e.getValue().getAsFloat());
         if (root.has("classOf")) for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("classOf").entrySet()) t.classOf.put(e.getKey(), e.getValue().getAsString());
         if (root.has("points")) {
             for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("points").entrySet()) {
@@ -68,6 +93,10 @@ public final class GripTable {
     public float fraction(String id) {
         Float f = fractions.get(id);
         if (f == null) f = fractions.get(baseId(id));
+        if (f == null && hold) {
+            f = holdFractions.get(id);
+            if (f == null) f = holdFractions.get(baseId(id));
+        }
         return f == null ? Float.NaN : f;
     }
 
