@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.46.1] — Working rule: Blockbench allowed for Minecraft models
+- Docs only: CLAUDE.md rule 15 (Blockbench may be used instead of Blender for Minecraft-native models; sources in `tools/blockbench/`; honest reporting). No game change.
+
 ## [4.46.0] — Skill icons redrawn in the Tensura-mod pixel style
 - REPLACED (old pictures kept in `textures/skill_old/` and shown by the client setting `skillIcons.classic`, default off): 121 root icons (root, Beast Will, Dragon Ball), 105 grimoire icons, 75 buff and 75 ultimate icons, 6 symbol icons (5 sin lords, Saiyan Prodigy), 5 Veldanava 32 px pictures. They are painted directly on the 32 px grid: flat tones lit from the top left, 1 px outline, banded backgrounds, rank pips in the grade colours. Colour counts dropped from about 600 to 800 to 60 to 80, like the reference Tensura mods.
 - NEW: 76 animated icons (all Ultimates plus the root Uniques; 20 root Uniques had no animation) as 12-frame strips; the Veldanava medallions keep their 32 frames.
