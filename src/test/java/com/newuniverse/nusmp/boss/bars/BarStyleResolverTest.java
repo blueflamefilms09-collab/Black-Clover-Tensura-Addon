@@ -104,7 +104,7 @@ class BarStyleResolverTest {
         Set<String> used = new HashSet<>();
         for (DecennialProfile p : roster()) used.add(styleOf(p));
         for (ArcSaga s : ArcSaga.values()) used.add(BarStyleResolver.forArc(s.id(), ""));
-        for (String path : List.of("dante_zogratis", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred", "floor_warden", "kakashi_hatake")) used.add(BarStyleResolver.forEntityPath(path));
+        for (String path : List.of("dante_zogratis", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred", "floor_warden", "kakashi_hatake", "goku_boss", "sinbad_boss")) used.add(BarStyleResolver.forEntityPath(path));
         used.add(BarStyleResolver.forGuardian(true));
         used.add(BarStyleResolver.forArc("elf_reincarnation", "fana"));
         used.add(BarStyleResolver.forArc("x", "morris"));

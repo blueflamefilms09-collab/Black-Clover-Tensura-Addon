@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.51.1] — Build fix: Goku and Sinbad bars resolve for their boss entities, geo test knows the hair and fx layers
+- FIXED: the bar styles `dragon_ball` and `magi_djinn` are now also named for the entities `goku_boss` and `sinbad_boss` (the entity table; `BarStyleResolverTest` found nothing resolving to them).
+- FIXED: `GeoAssetsTest` expected a texture per hair, fine and fx layer of the Goku and Sinbad looks; those layers draw on the look's one atlas, as the Black Clover and devil layers do.
+- KEPT: everything else; no gameplay change.
+
 ## [4.51.0] — Kakashi remade on the player-model kit, 14 canon moves, ninja-scroll boss bar
 - NEW: Kakashi Hatake on the Black Clover player-model kit with 4 looks (covered eye, Sharingan open, Mangekyo, Susanoo); client setting `bossLooks.kakashiPlayerModel` (default on).
 - NEW: canon audit from the Naruto wiki rundown: 14 moves appended (Lightning Cutter, Lightning Clone, Purple Electricity strike, burst and chain, Kamui warp, Earth Fang, Eight Gates, Kubikiribocho, Chakra Sabre, Kunai wire, Thunder God, Great Fireball, Six Paths); canon limits as balance rules (4 Cutters, 3 Kamui, a strain meter, Elements reading with counter, Six Paths once below 20% for 400 ticks); server setting `canonKit` (default on). 5 new particle themes, 39 more voice lines (101 in all, audio not generated yet).

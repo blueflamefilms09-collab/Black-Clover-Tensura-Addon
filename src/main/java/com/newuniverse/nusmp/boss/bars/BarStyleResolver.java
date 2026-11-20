@@ -90,6 +90,8 @@ public final class BarStyleResolver {
         put(ENTITY, BarStyleIds.ZAGRED, "zagred");
         put(ENTITY, BarStyleIds.WARDEN, "floor_warden", "labyrinth_guardian");
         put(ENTITY, BarStyleIds.NARUTO, "kakashi_hatake");
+        put(ENTITY, BarStyleIds.DRAGON_BALL, "goku_boss");
+        put(ENTITY, BarStyleIds.MAGI_DJINN, "sinbad_boss");
 
         put(CHARACTER, BarStyleIds.MIDNIGHT_SUN, "fana", "patolli", "rades", "rhya");
         put(CHARACTER, BarStyleIds.ZAGRED, "zagred");
