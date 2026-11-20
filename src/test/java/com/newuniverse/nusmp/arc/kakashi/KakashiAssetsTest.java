@@ -74,6 +74,27 @@ class KakashiAssetsTest {
     }
 
     @Test
+    void recordedIsExactlyTheLinesWithAFileAndEachHasASoundEvent() throws IOException {
+        JsonObject groups = json(RES.resolve("data/anime_multiverse/kakashi/lines.json")).getAsJsonObject("groups");
+        JsonObject sounds = json(RES.resolve("assets/anime_multiverse/sounds.json"));
+        Set<String> rec = new HashSet<>();
+        for (JsonElement r : json(RES.resolve("data/anime_multiverse/kakashi/recorded.json")).getAsJsonArray("recorded")) rec.add(r.getAsString());
+        for (var e : groups.entrySet()) {
+            for (JsonElement l : e.getValue().getAsJsonArray()) {
+                String id = l.getAsJsonObject().get("id").getAsString();
+                boolean file = Files.exists(RES.resolve("assets/anime_multiverse/sounds/kakashi/" + id + ".ogg"));
+                assertEquals(file, rec.contains(id), id + ": recorded must equal 'has a file'");
+                if (file) {
+                    JsonObject ev = sounds.getAsJsonObject(KakashiLines.eventPath(id));
+                    assertNotNull(ev, id + " has a file but no sound event");
+                    assertEquals("anime_multiverse:kakashi/" + id, ev.getAsJsonArray("sounds").get(0).getAsJsonObject().get("name").getAsString());
+                    assertTrue(Files.size(RES.resolve("assets/anime_multiverse/sounds/kakashi/" + id + ".ogg")) < 120_000, "a short clip: " + id);
+                }
+            }
+        }
+    }
+
+    @Test
     void theNarutoBarStyleIsRegisteredAndItsArtExists() throws IOException {
         JsonObject s = json(RES.resolve("assets/anime_multiverse/boss_bars/naruto.json"));
         assertEquals("naruto", s.get("id").getAsString());

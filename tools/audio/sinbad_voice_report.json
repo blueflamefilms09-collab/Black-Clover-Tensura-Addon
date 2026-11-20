@@ -1,0 +1,332 @@
+{
+ "converted": {
+  "sinbad_intro_1": {
+   "seconds": 3.67,
+   "bytes": 28206,
+   "text": "So, you came all this way to meet me. How flattering."
+  },
+  "sinbad_intro_2": {
+   "seconds": 3.73,
+   "bytes": 28072,
+   "text": "Let me show you what the King of the Seven Seas can do."
+  },
+  "sinbad_intro_3": {
+   "seconds": 2.92,
+   "bytes": 23138,
+   "text": "An adventure at last. Shall we begin?"
+  },
+  "sinbad_equip_baal_1": {
+   "seconds": 4.7,
+   "bytes": 35335,
+   "text": "Spirit of Wrath and Heroes, Baal! Dwell in my body: Djinn Equip!"
+  },
+  "sinbad_equip_baal_2": {
+   "seconds": 1.64,
+   "bytes": 14701,
+   "text": "Come forth, Baal!"
+  },
+  "sinbad_equip_valefor_1": {
+   "seconds": 4.7,
+   "bytes": 35444,
+   "text": "Spirit of Falsehood and Confidence, Valefor! Dwell in my body!"
+  },
+  "sinbad_equip_valefor_2": {
+   "seconds": 2.24,
+   "bytes": 18540,
+   "text": "Valefor, lend me your cunning!"
+  },
+  "sinbad_equip_zepar_1": {
+   "seconds": 4.4,
+   "bytes": 33242,
+   "text": "Spirit of Spirit and Puppetry, Zepar! Dwell in my body!"
+  },
+  "sinbad_equip_zepar_2": {
+   "seconds": 1.99,
+   "bytes": 16768,
+   "text": "Zepar, make them listen."
+  },
+  "sinbad_equip_focalor_1": {
+   "seconds": 4.6,
+   "bytes": 34252,
+   "text": "Spirit of Control and Obedience, Focalor! Dwell in my body!"
+  },
+  "sinbad_equip_focalor_2": {
+   "seconds": 2.34,
+   "bytes": 19340,
+   "text": "Focalor, carry me on the wind!"
+  },
+  "sinbad_equip_vepar_1": {
+   "seconds": 4.1,
+   "bytes": 30717,
+   "text": "Vepar! Dwell in my body, and draw every blade to me!"
+  },
+  "sinbad_equip_vepar_2": {
+   "seconds": 2.89,
+   "bytes": 22845,
+   "text": "Vepar, rain steel on my enemies."
+  },
+  "sinbad_equip_crocell_1": {
+   "seconds": 3.82,
+   "bytes": 28713,
+   "text": "Crocell! Dwell in my body, and let your light cut through!"
+  },
+  "sinbad_equip_crocell_2": {
+   "seconds": 1.92,
+   "bytes": 16787,
+   "text": "Crocell, shine for me!"
+  },
+  "sinbad_equip_furfur_1": {
+   "seconds": 4.3,
+   "bytes": 32055,
+   "text": "Furfur! Dwell in my body, and tear the darkness open!"
+  },
+  "sinbad_equip_furfur_2": {
+   "seconds": 1.79,
+   "bytes": 15618,
+   "text": "Furfur... come."
+  },
+  "sinbad_unequip_1": {
+   "seconds": 2.42,
+   "bytes": 19965,
+   "text": "That is enough of that, for now."
+  },
+  "sinbad_unequip_2": {
+   "seconds": 1.7,
+   "bytes": 14991,
+   "text": "Rest, my djinn."
+  },
+  "sinbad_sword_1": {
+   "seconds": 1.26,
+   "bytes": 11890,
+   "text": "Allow me."
+  },
+  "sinbad_sword_2": {
+   "seconds": 2.76,
+   "bytes": 22245,
+   "text": "A simple blade is enough for you."
+  },
+  "sinbad_magoi_1": {
+   "seconds": 4.4,
+   "bytes": 32786,
+   "text": "Your magic means nothing to me. Magoi Manipulation."
+  },
+  "sinbad_magoi_2": {
+   "seconds": 2.42,
+   "bytes": 19464,
+   "text": "I will take that power from you."
+  },
+  "sinbad_bararaq_1": {
+   "seconds": 1.54,
+   "bytes": 14085,
+   "text": "Bararaq Saiqa!"
+  },
+  "sinbad_bararaq_2": {
+   "seconds": 2.43,
+   "bytes": 19756,
+   "text": "Lightning, answer me! Bararaq!"
+  },
+  "sinbad_inqerad_1": {
+   "seconds": 2.26,
+   "bytes": 19174,
+   "text": "Bararaq... Inqerad-Saiqa!"
+  },
+  "sinbad_inqerad_2": {
+   "seconds": 2.78,
+   "bytes": 22226,
+   "text": "Stand in the light, or be struck down!"
+  },
+  "sinbad_garufor_1": {
+   "seconds": 1.8,
+   "bytes": 15613,
+   "text": "Garufor Zairu!"
+  },
+  "sinbad_garufor_2": {
+   "seconds": 2.59,
+   "bytes": 21174,
+   "text": "Garufor Kirestal! Freeze!"
+  },
+  "sinbad_stagnation_1": {
+   "seconds": 2.86,
+   "bytes": 22925,
+   "text": "Everything slows. Everything stops."
+  },
+  "sinbad_stagnation_2": {
+   "seconds": 1.26,
+   "bytes": 11874,
+   "text": "Be still."
+  },
+  "sinbad_scream_1": {
+   "seconds": 2.42,
+   "bytes": 19455,
+   "text": "Look away, if you value your mind!"
+  },
+  "sinbad_scream_2": {
+   "seconds": 1.0,
+   "bytes": 10654,
+   "text": "Sleep!"
+  },
+  "sinbad_foraz_1": {
+   "seconds": 1.55,
+   "bytes": 13880,
+   "text": "Foraz Zora!"
+  },
+  "sinbad_foraz_2": {
+   "seconds": 2.23,
+   "bytes": 18514,
+   "text": "Two storms, become one!"
+  },
+  "sinbad_vepar_istella_1": {
+   "seconds": 2.81,
+   "bytes": 22228,
+   "text": "Vepar Istella! A thousand swords!"
+  },
+  "sinbad_vepar_istella_2": {
+   "seconds": 1.91,
+   "bytes": 16449,
+   "text": "Fall, blades of steel!"
+  },
+  "sinbad_crocell_saber_1": {
+   "seconds": 2.63,
+   "bytes": 21632,
+   "text": "Three cuts, and not one you will see."
+  },
+  "sinbad_crocell_saber_2": {
+   "seconds": 2.1,
+   "bytes": 17872,
+   "text": "Crocell's saber, hah!"
+  },
+  "sinbad_furfur_rend_1": {
+   "seconds": 1.44,
+   "bytes": 13149,
+   "text": "Rend the dark!"
+  },
+  "sinbad_furfur_rend_2": {
+   "seconds": 2.02,
+   "bytes": 17192,
+   "text": "Darkness, open wide."
+  },
+  "sinbad_orrery_1": {
+   "seconds": 3.37,
+   "bytes": 26570,
+   "text": "Seven djinn, seven lights. Fly, my Rukh!"
+  },
+  "sinbad_orrery_2": {
+   "seconds": 2.69,
+   "bytes": 21681,
+   "text": "The Rukh love me. Let them show you."
+  },
+  "sinbad_sigil_1": {
+   "seconds": 3.49,
+   "bytes": 27374,
+   "text": "This circle is my kingdom. Choose where you stand."
+  },
+  "sinbad_sigil_2": {
+   "seconds": 2.36,
+   "bytes": 19554,
+   "text": "Only the dark is safe here."
+  },
+  "sinbad_seven_seas_1": {
+   "seconds": 2.61,
+   "bytes": 21319,
+   "text": "Seven Seas, answer your king!"
+  },
+  "sinbad_seven_seas_2": {
+   "seconds": 1.92,
+   "bytes": 16814,
+   "text": "All seven, together!"
+  },
+  "sinbad_foresight_1": {
+   "seconds": 1.87,
+   "bytes": 16125,
+   "text": "I already saw that coming."
+  },
+  "sinbad_foresight_2": {
+   "seconds": 2.62,
+   "bytes": 21406,
+   "text": "The flow of destiny never lies."
+  },
+  "sinbad_gates_1": {
+   "seconds": 3.32,
+   "bytes": 26251,
+   "text": "Enough games. I will use every djinn I have."
+  },
+  "sinbad_gates_2": {
+   "seconds": 3.22,
+   "bytes": 25295,
+   "text": "Do not make me regret taking you seriously."
+  },
+  "sinbad_hurt_big_1": {
+   "seconds": 1.74,
+   "bytes": 15625,
+   "text": "Ha! Now that stung."
+  },
+  "sinbad_hurt_big_2": {
+   "seconds": 2.38,
+   "bytes": 19604,
+   "text": "Careful. A king bleeds too."
+  },
+  "sinbad_low_hp_1": {
+   "seconds": 2.73,
+   "bytes": 22037,
+   "text": "Not yet. A king never kneels first."
+  },
+  "sinbad_low_hp_2": {
+   "seconds": 3.83,
+   "bytes": 28774,
+   "text": "My Household would never forgive me for losing here."
+  },
+  "sinbad_taunt_1": {
+   "seconds": 2.61,
+   "bytes": 21010,
+   "text": "Is that all? Come, impress me."
+  },
+  "sinbad_taunt_2": {
+   "seconds": 3.25,
+   "bytes": 25123,
+   "text": "You fight well. Almost as well as I sail."
+  },
+  "sinbad_taunt_3": {
+   "seconds": 2.9,
+   "bytes": 23230,
+   "text": "Do not stop now. I am just warming up."
+  },
+  "sinbad_player_death_1": {
+   "seconds": 2.05,
+   "bytes": 17720,
+   "text": "A pity. You had courage."
+  },
+  "sinbad_player_death_2": {
+   "seconds": 3.26,
+   "bytes": 25221,
+   "text": "Rest well. The sea remembers brave ones."
+  },
+  "sinbad_victory_1": {
+   "seconds": 3.45,
+   "bytes": 26380,
+   "text": "The Seven Seas are mine. Try again someday."
+  },
+  "sinbad_victory_2": {
+   "seconds": 2.79,
+   "bytes": 22185,
+   "text": "A fine fight. Go home and train."
+  },
+  "sinbad_defeat_1": {
+   "seconds": 3.19,
+   "bytes": 25719,
+   "text": "Well fought. The sea has taken me, this time."
+  },
+  "sinbad_defeat_2": {
+   "seconds": 3.66,
+   "bytes": 28490,
+   "text": "You are stronger than I judged. I will not forget it."
+  },
+  "sinbad_defeat_3": {
+   "seconds": 3.02,
+   "bytes": 23942,
+   "text": "So this is how a king falls. Worth it."
+  }
+ },
+ "missing": [],
+ "rejected": [],
+ "bytes": 1420415
+}

@@ -1,0 +1,410 @@
+{
+ "converted": {
+  "kakashi_intro_1": {
+   "seconds": 4.7,
+   "bytes": 34036
+  },
+  "kakashi_intro_2": {
+   "seconds": 3.45,
+   "bytes": 26599
+  },
+  "kakashi_intro_3": {
+   "seconds": 4.2,
+   "bytes": 31675
+  },
+  "kakashi_intro_4": {
+   "seconds": 3.13,
+   "bytes": 24833
+  },
+  "kakashi_phase_pack_1": {
+   "seconds": 3.71,
+   "bytes": 28067
+  },
+  "kakashi_phase_pack_2": {
+   "seconds": 3.03,
+   "bytes": 23948
+  },
+  "kakashi_phase_mangekyo_1": {
+   "seconds": 3.87,
+   "bytes": 29185
+  },
+  "kakashi_phase_mangekyo_2": {
+   "seconds": 3.86,
+   "bytes": 29095
+  },
+  "kakashi_phase_susanoo_1": {
+   "seconds": 4.4,
+   "bytes": 32730
+  },
+  "kakashi_phase_susanoo_2": {
+   "seconds": 3.57,
+   "bytes": 26780
+  },
+  "kakashi_raikiri_1": {
+   "seconds": 1.04,
+   "bytes": 10434
+  },
+  "kakashi_raikiri_2": {
+   "seconds": 2.71,
+   "bytes": 21511
+  },
+  "kakashi_raikiri_miss_1": {
+   "seconds": 2.01,
+   "bytes": 17020
+  },
+  "kakashi_raikiri_miss_2": {
+   "seconds": 2.78,
+   "bytes": 22154
+  },
+  "kakashi_kunai_1": {
+   "seconds": 2.05,
+   "bytes": 17401
+  },
+  "kakashi_kunai_2": {
+   "seconds": 2.01,
+   "bytes": 16822
+  },
+  "kakashi_copy_1": {
+   "seconds": 2.29,
+   "bytes": 18944
+  },
+  "kakashi_copy_2": {
+   "seconds": 1.69,
+   "bytes": 14960
+  },
+  "kakashi_beast_fang_1": {
+   "seconds": 2.12,
+   "bytes": 17394
+  },
+  "kakashi_beast_fang_2": {
+   "seconds": 1.81,
+   "bytes": 15426
+  },
+  "kakashi_water_dragon_1": {
+   "seconds": 1.18,
+   "bytes": 11571
+  },
+  "kakashi_water_dragon_2": {
+   "seconds": 2.94,
+   "bytes": 23007
+  },
+  "kakashi_ninken_1": {
+   "seconds": 2.32,
+   "bytes": 19221
+  },
+  "kakashi_ninken_2": {
+   "seconds": 1.97,
+   "bytes": 16499
+  },
+  "kakashi_clones_1": {
+   "seconds": 2.93,
+   "bytes": 22810
+  },
+  "kakashi_clones_2": {
+   "seconds": 1.03,
+   "bytes": 10613
+  },
+  "kakashi_mist_1": {
+   "seconds": 2.81,
+   "bytes": 22092
+  },
+  "kakashi_mist_2": {
+   "seconds": 3.37,
+   "bytes": 25851
+  },
+  "kakashi_wall_1": {
+   "seconds": 2.36,
+   "bytes": 18955
+  },
+  "kakashi_kamui_step_1": {
+   "seconds": 1.1,
+   "bytes": 11001
+  },
+  "kakashi_kamui_step_2": {
+   "seconds": 2.95,
+   "bytes": 22924
+  },
+  "kakashi_kamui_raikiri_1": {
+   "seconds": 1.38,
+   "bytes": 12962
+  },
+  "kakashi_kamui_raikiri_2": {
+   "seconds": 1.92,
+   "bytes": 16221
+  },
+  "kakashi_kamui_shuriken_1": {
+   "seconds": 1.48,
+   "bytes": 13408
+  },
+  "kakashi_kamui_shuriken_2": {
+   "seconds": 2.22,
+   "bytes": 18557
+  },
+  "kakashi_kamui_vortex_1": {
+   "seconds": 2.72,
+   "bytes": 21663
+  },
+  "kakashi_kamui_vortex_2": {
+   "seconds": 2.53,
+   "bytes": 20379
+  },
+  "kakashi_kamui_phase_1": {
+   "seconds": 0.96,
+   "bytes": 9989
+  },
+  "kakashi_kamui_phase_2": {
+   "seconds": 2.82,
+   "bytes": 22484
+  },
+  "kakashi_kawarimi_1": {
+   "seconds": 2.88,
+   "bytes": 22682
+  },
+  "kakashi_kawarimi_2": {
+   "seconds": 1.61,
+   "bytes": 14130
+  },
+  "kakashi_susanoo_1": {
+   "seconds": 1.0,
+   "bytes": 10258
+  },
+  "kakashi_susanoo_2": {
+   "seconds": 3.3,
+   "bytes": 25697
+  },
+  "kakashi_susanoo_break_1": {
+   "seconds": 3.6,
+   "bytes": 28081
+  },
+  "kakashi_susanoo_break_2": {
+   "seconds": 1.99,
+   "bytes": 16761
+  },
+  "kakashi_purple_1": {
+   "seconds": 3.18,
+   "bytes": 24871
+  },
+  "kakashi_purple_2": {
+   "seconds": 1.78,
+   "bytes": 15536
+  },
+  "kakashi_hurt_1": {
+   "seconds": 1.41,
+   "bytes": 12787
+  },
+  "kakashi_hurt_2": {
+   "seconds": 1.81,
+   "bytes": 15827
+  },
+  "kakashi_hurt_3": {
+   "seconds": 1.85,
+   "bytes": 15867
+  },
+  "kakashi_hurt_4": {
+   "seconds": 4.3,
+   "bytes": 31897
+  },
+  "kakashi_low_1": {
+   "seconds": 4.4,
+   "bytes": 32672
+  },
+  "kakashi_low_2": {
+   "seconds": 2.27,
+   "bytes": 18929
+  },
+  "kakashi_kill_1": {
+   "seconds": 3.29,
+   "bytes": 25788
+  },
+  "kakashi_kill_2": {
+   "seconds": 3.34,
+   "bytes": 26185
+  },
+  "kakashi_victory_1": {
+   "seconds": 2.98,
+   "bytes": 23485
+  },
+  "kakashi_victory_2": {
+   "seconds": 3.62,
+   "bytes": 27640
+  },
+  "kakashi_idle_1": {
+   "seconds": 3.03,
+   "bytes": 23694
+  },
+  "kakashi_idle_2": {
+   "seconds": 2.09,
+   "bytes": 17525
+  },
+  "kakashi_idle_3": {
+   "seconds": 3.16,
+   "bytes": 24900
+  },
+  "kakashi_defeat_1": {
+   "seconds": 4.1,
+   "bytes": 30394
+  },
+  "kakashi_defeat_2": {
+   "seconds": 3.71,
+   "bytes": 28230
+  },
+  "kakashi_lightning_cutter_1": {
+   "seconds": 1.2,
+   "bytes": 11669
+  },
+  "kakashi_lightning_cutter_2": {
+   "seconds": 3.03,
+   "bytes": 23768
+  },
+  "kakashi_cutter_cut_1": {
+   "seconds": 2.62,
+   "bytes": 21232
+  },
+  "kakashi_cutter_cut_2": {
+   "seconds": 3.68,
+   "bytes": 28062
+  },
+  "kakashi_lightning_clone_1": {
+   "seconds": 3.22,
+   "bytes": 25048
+  },
+  "kakashi_lightning_clone_2": {
+   "seconds": 1.49,
+   "bytes": 13781
+  },
+  "kakashi_lclone_break_1": {
+   "seconds": 3.38,
+   "bytes": 26650
+  },
+  "kakashi_lclone_break_2": {
+   "seconds": 2.01,
+   "bytes": 17181
+  },
+  "kakashi_purple_strike_1": {
+   "seconds": 1.45,
+   "bytes": 13117
+  },
+  "kakashi_purple_strike_2": {
+   "seconds": 2.35,
+   "bytes": 18957
+  },
+  "kakashi_purple_burst_1": {
+   "seconds": 2.27,
+   "bytes": 18782
+  },
+  "kakashi_purple_burst_2": {
+   "seconds": 1.71,
+   "bytes": 15049
+  },
+  "kakashi_purple_chain_1": {
+   "seconds": 4.0,
+   "bytes": 30190
+  },
+  "kakashi_purple_chain_2": {
+   "seconds": 2.24,
+   "bytes": 18225
+  },
+  "kakashi_kamui_warp_1": {
+   "seconds": 2.15,
+   "bytes": 17709
+  },
+  "kakashi_kamui_warp_2": {
+   "seconds": 3.08,
+   "bytes": 23895
+  },
+  "kakashi_earth_fang_1": {
+   "seconds": 1.76,
+   "bytes": 15178
+  },
+  "kakashi_earth_fang_2": {
+   "seconds": 2.24,
+   "bytes": 18811
+  },
+  "kakashi_eight_gates_1": {
+   "seconds": 4.0,
+   "bytes": 30158
+  },
+  "kakashi_eight_gates_2": {
+   "seconds": 2.39,
+   "bytes": 19426
+  },
+  "kakashi_kubikiri_1": {
+   "seconds": 3.21,
+   "bytes": 24790
+  },
+  "kakashi_kubikiri_2": {
+   "seconds": 1.98,
+   "bytes": 16681
+  },
+  "kakashi_chakra_sabre_1": {
+   "seconds": 1.69,
+   "bytes": 14817
+  },
+  "kakashi_chakra_sabre_2": {
+   "seconds": 2.89,
+   "bytes": 22796
+  },
+  "kakashi_kunai_wire_1": {
+   "seconds": 2.65,
+   "bytes": 21158
+  },
+  "kakashi_kunai_wire_2": {
+   "seconds": 0.87,
+   "bytes": 9450
+  },
+  "kakashi_thunder_god_1": {
+   "seconds": 1.94,
+   "bytes": 16632
+  },
+  "kakashi_thunder_god_2": {
+   "seconds": 3.29,
+   "bytes": 25389
+  },
+  "kakashi_great_fireball_1": {
+   "seconds": 2.01,
+   "bytes": 16728
+  },
+  "kakashi_great_fireball_2": {
+   "seconds": 3.84,
+   "bytes": 29564
+  },
+  "kakashi_six_paths_1": {
+   "seconds": 3.63,
+   "bytes": 27641
+  },
+  "kakashi_six_paths_2": {
+   "seconds": 3.09,
+   "bytes": 23978
+  },
+  "kakashi_sixpaths_end_1": {
+   "seconds": 3.19,
+   "bytes": 25093
+  },
+  "kakashi_sixpaths_end_2": {
+   "seconds": 2.84,
+   "bytes": 22555
+  },
+  "kakashi_strain_1": {
+   "seconds": 2.8,
+   "bytes": 22235
+  },
+  "kakashi_strain_2": {
+   "seconds": 2.97,
+   "bytes": 23118
+  },
+  "kakashi_counter_1": {
+   "seconds": 3.15,
+   "bytes": 24728
+  },
+  "kakashi_counter_2": {
+   "seconds": 2.76,
+   "bytes": 22006
+  },
+  "kakashi_counter_3": {
+   "seconds": 2.86,
+   "bytes": 22767
+  }
+ },
+ "rejected": [],
+ "bytes": 2132071
+}

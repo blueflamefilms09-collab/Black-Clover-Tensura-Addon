@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.55.0] — Goku, Sinbad and Kakashi speak: 218 generated voice clips
+- NEW: real audio for the boss lines that were only text: Goku 52 clips, Sinbad 65, Kakashi 101 (Ogg Vorbis, mono, 32 kHz, 4.6 MB in all), made offline with the free Kokoro voice model through `tools/audio/offline_voice.py` and the existing `goku`, `sinbad` and `kakashi` profiles, with the profile's reverb, pitch and EQ chain.
+- NEW: 218 sound ids registered (`voice.goku_*`, `voice.sinbad_*`, `kakashi.voice.*`), appended to `sounds.json`; conversion reports in `tools/audio/*_voice_report.json`.
+- KEPT: every old sound; playback code is unchanged (server-driven, nearby players only, a gap and cooldown per boss, about one sound packet per 2 seconds per boss per nearby player).
+- HONEST QUALITY: nobody has listened to these. They are text-to-speech with a character tint, not the anime voice actors and not acted; shouted cries such as the Super Saiyan shout will sound weak and invented spell names may be mispronounced. Play `goku_form_*` and `sinbad_equip_*` first. If weak, re-run with a tweaked profile or use a paid voice route.
+- CAVEAT: the subtitle and the chat text of a voiced Goku or Sinbad line may show the same words twice (not changed).
+
 ## [4.54.0] — Better vassal axes, books and carriages (12 forms remade in Blender), whips and flails swing
 Owner request: improve the axe, book and carriage forms, and animate the mace, flail and whip on attack.
 - REPLACED (old kept behind `vassalForms.classic`, default off): the mesh, skin and glow of 12 forms, same ids. Axes: timber, shine, pipe, curse. Books: pipe, animal needle, revised edition, library tome. Carriages: filolial, war, hourglass sand, queen's chariot. Shine and curse axes are strong changes; timber and pipe axes are modest ones. Old meshes and skins are kept in `weapon_meshes/classic_vassal` and `textures/entity/weapon/classic_vassal`.

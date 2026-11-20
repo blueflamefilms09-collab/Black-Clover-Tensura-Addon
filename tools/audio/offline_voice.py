@@ -49,7 +49,7 @@ def profiles():
 
 def spoken(line):
     text = line.get("text") or re.sub(r"\[[^\]]*\]\s*", "", line.get("prompt", "")).strip()
-    tags = " ".join(re.findall(r"\[([^\]]*)\]", line.get("prompt", "")))
+    tags = " ".join(re.findall(r"\[([^\]]*)\]", line.get("prompt") or line.get("delivery", "")))   # the boss manifests carry the note as "delivery"
     return text, tags
 
 
