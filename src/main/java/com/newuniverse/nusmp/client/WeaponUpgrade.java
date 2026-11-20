@@ -217,8 +217,7 @@ final class WeaponUpgrade {
         UpgradeSpec s = d.spec;
         if (!d.orbits.isEmpty()) {
             float turn = UpgradeConfig.orbits() && s.idles("orbit_parts") ? time : 0f;                  // off: the groups stand still at their start angle
-            VertexConsumer body = buffers.getBuffer(RenderType.entityCutout(mesh.tex));
-            float k = com.newuniverse.nusmp.client.relics.item.VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, 1f);
+            float k =com.newuniverse.nusmp.client.relics.item.VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, 1f);
             int g = com.newuniverse.nusmp.client.relics.item.VariantRules.channel(255, k);
             for (Orbit o : d.orbits) {
                 if (o.verts.isEmpty()) continue;
@@ -226,7 +225,7 @@ final class WeaponUpgrade {
                 pose.translate(o.px, o.py, o.pz);
                 pose.mulPose(SCRATCH_Q.rotationAxis((float) Math.toRadians(o.phase + o.speed * turn), o.ax, o.ay, o.az));
                 pose.translate(-o.px, -o.py, -o.pz);
-                emitQuads(pose.last(), body, o.verts, 0xFFFFFFFF, light, overlay);
+                emitQuads(pose.last(), buffers.getBuffer(RenderType.entityCutout(mesh.tex)), o.verts, 0xFFFFFFFF, light, overlay);   // fetched per orbit: asking for the glow buffer below ends this one (crash "Not building!")
                 if (o.glow && mesh.glowTex != null && q != VfxQuality.LOW) {
                     emitQuads(pose.last(), buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(mesh.glowTex)), o.verts, 0xFF000000 | g << 16 | g << 8 | g, 0xF000F0, OverlayTexture.NO_OVERLAY);
                 }

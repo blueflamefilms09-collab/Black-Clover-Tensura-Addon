@@ -113,6 +113,7 @@ public final class BeastWillAcquire {
         if (!s.bind(def.id())) return false;
         if (s.active.isEmpty()) s.activate(def.id(), 0L);
         BeastWillManager.markDirty(p);
+        com.newuniverse.nusmp.skill.WeaponSkills.syncBeast(p);                          // weapon skills (docs/weapon_skills.md): the Beast Will skill follows the bond
         if (announce) {
             BeastWillFeedback.say(p, "absorbed", true, BeastWillText.name(def));
             BeastWillFeedback.say(p, "assimilation_begins", true);

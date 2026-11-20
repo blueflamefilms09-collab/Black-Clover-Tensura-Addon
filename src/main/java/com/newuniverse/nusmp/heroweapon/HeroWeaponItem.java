@@ -51,6 +51,15 @@ public class HeroWeaponItem extends Item {
 
     public HeroKind kind() { return kind; }
 
+    /** Vassal weapons (docs/vassal_enchanting.md) can be enchanted at the table, with books and on the anvil. The item tags under data/minecraft/tags/item/enchantable list them; the rest of the hero weapons stay as they were. */
+    public static boolean enchantable(HeroKind kind) { return kind.enchantable(); }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) { return enchantable(kind) && stack.getCount() == 1; }
+
+    @Override
+    public int getEnchantmentValue(ItemStack stack) { return enchantable(kind) ? 15 : 0; }
+
     /** The item properties of a hero weapon: one in a stack, epic, fire-proof, unbreakable, with the melee numbers (damage, speed, reach) of its row in {@link HeroBaseStats}. */
     public static Properties props(HeroKind kind) {
         HeroBaseStats.Row row = HeroBaseStats.of(kind);

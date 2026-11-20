@@ -40,6 +40,9 @@ public final class ArcSystem {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.goku.GokuBossConfig.SPEC, "nusmp-goku-boss-server.toml");   // the Goku boss: its own server settings file
         com.newuniverse.nusmp.arc.goku.GokuBossEvents.register(NeoForge.EVENT_BUS);                            // he forgets a player on logout, death, dimension change and server stop
         com.newuniverse.nusmp.arc.goku.GokuBossSelfTests.register();                                          // keys goku.boss.*
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.magi.SinbadBossConfig.SPEC, "nusmp-sinbad-boss-server.toml");   // the Sinbad boss: its own server settings file
+        com.newuniverse.nusmp.arc.magi.SinbadBossEvents.register(NeoForge.EVENT_BUS);                         // he forgets a player on logout, death, dimension change and server stop
+        com.newuniverse.nusmp.arc.magi.SinbadBossSelfTests.register();                                        // keys sinbad.boss.*
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

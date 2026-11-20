@@ -18,6 +18,7 @@ public final class HeroConfig {
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
+    public static final ModConfigSpec.BooleanValue TRACKER_SHOW_NAMES;
     public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN;
     public static final ModConfigSpec.DoubleValue WEAPON_EXP_MULTIPLIER, SHOCK_DAMAGE, KILL_EXP_SHARE, BOSS_KILL_EXP_FACTOR;
 
@@ -70,6 +71,8 @@ public final class HeroConfig {
                 .define("showMessages", true);
         ABANDON_ALLOWED = b.comment("3.72.0: a player may give up their own hero weapon with /multiverse hero abandon (then abandon confirm within 30 seconds). Its level, forms and mastery are lost. Off: only an operator can release a weapon. Never while the curse holds the wielder.")
                 .define("abandonAllowed", true);
+        TRACKER_SHOW_NAMES = b.comment("Weapon Tracker (/multiverse weapons): show the name of the player who holds a weapon. Off: the tracker still says which weapons are free or taken, but names a holder 'another player'.")
+                .define("trackerShowNames", true);
         b.push("buff");
         BUFF_ENABLED = b.comment("3.55.0 master switch of the hero weapon buffs below. Off: every weapon behaves exactly as before 3.55.0.").define("enabled", true);
         BUFF_DAMAGE = b.comment("Factor on EVERY point of damage a bound wielder deals while their hero weapon is out (blows, techniques, arrows). Bosses still obey the boss damage cap.")
@@ -146,4 +149,6 @@ public final class HeroConfig {
     public static boolean showMessages() { return get(SHOW_MESSAGES); }
 
     public static boolean abandonAllowed() { return get(ABANDON_ALLOWED); }
+
+    public static boolean trackerShowNames() { return get(TRACKER_SHOW_NAMES); }
 }

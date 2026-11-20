@@ -58,6 +58,7 @@ public final class GuiScaleRegistry {
         screen("system_stats", "client.mega.system.SystemStatsScreen", 0, 0, "System stat points");
         screen("engraving_codex", "client.engraving.EngravingCodexScreen", 540, 300, "Engravement codex");
         screen("shishou_stomach", "client.shishou.ShishouStomachScreen", -1, -1, "Shishou Stomach");
+        screen("weapon_tracker", "client.heroweapon.WeaponTrackerScreen", 360, 252, "Weapon tracker");
         // HUD overlays scaled by a render-layer hook
         layer("quest_tracker", "hub_quest_tracker", GuiScaleMath.Anchor.TOP_RIGHT, "Quest tracker");
         layer("arts_bar", "line_arts_bar", GuiScaleMath.Anchor.BOTTOM_CENTER, "Arts bar");

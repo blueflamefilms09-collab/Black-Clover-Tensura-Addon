@@ -157,16 +157,19 @@ public final class WeaponEngravings {
         List<Engraving> list = ENGRAVINGS.get(key.getPath());
         if (list == null) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
-        if (cd != null && cd.contains(FLAG)) return false;                      // 1.112.0 (lag audit): the marker is only ever set to true; no copy of the whole tag every second
+        boolean done = cd != null && cd.contains(FLAG);                          // 1.112.0 (lag audit): the marker is only ever set to true; no copy of the whole tag every second
+        if (done && !EngravingLock.on()) return false;
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        boolean changed = false;
         for (Engraving g : list) {
             ResourceLocation id = g.id().contains(":") ? ResourceLocation.parse(g.id())
                     : ResourceLocation.fromNamespaceAndPath("tensura", g.id());
             Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, id));
             if (h.isEmpty()) continue;
             int level = Math.max(1, Math.min(g.level(), h.get().value().getMaxLevel()));
-            if (stack.getEnchantments().getLevel(h.get()) < level) stack.enchant(h.get(), level);
+            if (stack.getEnchantments().getLevel(h.get()) < level) { stack.enchant(h.get(), level); changed = true; }   // engravingLock: an engraved weapon gets a stripped engraving back
         }
+        if (done) return changed;
         CustomData.update(DataComponents.CUSTOM_DATA, stack, (CompoundTag t) -> t.putBoolean(FLAG, true));
         return true;
     }

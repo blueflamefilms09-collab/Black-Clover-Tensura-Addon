@@ -224,10 +224,12 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
         root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.node());                                       // goku_boss spawn|status|clear (op): the Goku boss
+        root.then(com.newuniverse.nusmp.arc.magi.SinbadBossCommand.node());                                     // sinbad_boss spawn|status|clear (op): the Sinbad boss
         root.then(bossNode);
         root.then(com.newuniverse.nusmp.skill.DbSkills.node());                                          // 3.56.0: dragonball give|list
         root.then(com.newuniverse.nusmp.dragonballs.DbCommands.node());                                     // dragonballs status|scatter|lock|unlock|end (op): the Dragon Ball wish system
         root.then(com.newuniverse.nusmp.skill.BeastSkills.node());                                    // 3.58.0: beastskill give|list
+        root.then(com.newuniverse.nusmp.skill.WeaponSkills.node());                                   // weapon skills: weaponskill give|take|sync|list (op)
         root.then(com.newuniverse.nusmp.adaptability.AdaptabilityCommand.node());                          // 3.70.0: adaptability give
         root.then(com.newuniverse.nusmp.entity.veldanava.skills.UltimateCommand.node());                    // ultimate give|take: the five ultimate skills, now given by an admin (the Veldanava boss was removed)
         root.then(com.newuniverse.nusmp.labyrinth.mega.MegaCommands.node());                                           // 1.54.0: mega status|sector|tp|expand|regen|audit|plan|unseal|rooms|pools + dm|faction|rest|core|floors|system|flow|gear|selftest
@@ -401,6 +403,7 @@ public final class MultiverseCommands {
             ServerPlayer p = ctx.getSource().getPlayerOrException();
             return Ceremony.pick(p, StringArgumentType.getString(ctx, "magic")) ? 1 : fail(ctx, "There is no such choice waiting for you.");
         })));
+        root.then(com.newuniverse.nusmp.heroweapon.tracker.WeaponTrackerService.node());                       // weapons: the Weapon Tracker screen (which hero weapons are free, taken, yours)
         d.register(root);
         com.newuniverse.nusmp.relics.djinn.DjinnCommand.registerAlias(d);                                              // 1.101.0: /djinn bind|status|... as well as /multiverse djinn ...
     }

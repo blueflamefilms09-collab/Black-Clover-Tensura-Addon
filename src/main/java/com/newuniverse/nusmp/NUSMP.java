@@ -486,6 +486,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.RemovedSkillsSelfTests.register();
         com.newuniverse.nusmp.skill.DbSkillSelfTests.register();                                  // 3.56.0
         com.newuniverse.nusmp.skill.BeastSkillSelfTests.register();                               // 3.58.0
+        com.newuniverse.nusmp.skill.WeaponSkills.init();                                          // weapon skills (docs/weapon_skills.md): the grant hooks and the self-test weapon.skills
         com.newuniverse.nusmp.skill.ShinraSelfTests.register();                                   // Shinra rework: self-tests shinra.rules, shinra.skills (docs/shinra_rework.md)
         com.newuniverse.nusmp.skill.icons.SkillIconSelfTests.register();                          // skill icon rework: skillicons.index, skillicons.bounds (docs/skill_icons_rework.md)
         com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
@@ -555,6 +556,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.ext.AttributeEvents::onLogout);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.WeaponEngravings::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.EngravingLock::onAnvil);                    // engravings stay on their weapon: the anvil will not move them
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.EngravingLock::onGrindstone);               // ... and the grindstone will not strip them (setting engravingLock)
+        com.newuniverse.nusmp.item.EngravingLockSelfTests.register();                                         // self-test engraving.lock
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.BossRelics::onIncomingDamage);              // 0.52: Shroud of Margins
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.MagebaneShieldArts::onIncomingDamage);     // the Magebane Shield: magic damage cut, Spellbreak Parry
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.item.BroochPinArts::onIncomingDamage);          // the Brooch Pin: Ruby Ward absorbs damage

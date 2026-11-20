@@ -34,6 +34,7 @@ public final class DjinnState {
         setAssimilation(0f);
         t.remove("lentFrom");
         t.remove("lentDjinn");
+        weaponSkills();
     }
 
     /** The Djinn lent to this player by a household owner, or null. */
@@ -47,12 +48,19 @@ public final class DjinnState {
         t.putString("lentDjinn", d.name());
         t.putInt("phase", 0);
         setAssimilation(0f);
+        weaponSkills();
     }
 
     /** Clears the bond (owner or household): the Djinn, its serial, the phase and what use built up. Clocks stay: a wait is not washed away. */
     public void clearBond() {
         for (String k : new String[]{"djinn", "serial", "lentFrom", "lentDjinn", "phase", "start", "end", "used", "trust", "assim", "active", "fly", "dark"}) t.remove(k);
         DjinnBody.clear(player);
+        weaponSkills();
+    }
+
+    /** Weapon skills (docs/weapon_skills.md): the Djinn Equip skill follows the bond; told after every change of it (a no-op for a player that is not a server player). */
+    private void weaponSkills() {
+        if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.newuniverse.nusmp.skill.WeaponSkills.syncDjinn(sp);
     }
 
     /** The Djinn this player can call: their own, or the one lent to them. */

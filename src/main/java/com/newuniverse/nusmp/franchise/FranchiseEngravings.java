@@ -80,16 +80,19 @@ public final class FranchiseEngravings {
         String fid = franchiseOf(stack);
         if (fid == null) return false;
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
-        if (cd != null && cd.contains(FLAG)) return false;                       // 1.112.0: no copy of the whole tag for a question that is asked every second
+        boolean done = cd != null && cd.contains(FLAG);                          // 1.112.0: no copy of the whole tag for a question that is asked every second
+        if (done && !com.newuniverse.nusmp.item.EngravingLock.on()) return false;
         if (!engravable(stack)) return false;
         HolderLookup.RegistryLookup<Enchantment> lookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         int level = levelOf(stack);
+        boolean changed = false;
         for (FranchiseData.Engraving en : FranchiseData.table().of(fid)) {
             Optional<? extends Holder<Enchantment>> h = lookup.get(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath("anime_multiverse", en.id())));
             if (h.isEmpty()) continue;                                              // a datapack without it: skipped, nothing breaks
             int lv = Math.max(1, Math.min(level, h.get().value().getMaxLevel()));
-            if (stack.getEnchantments().getLevel(h.get()) < lv) stack.enchant(h.get(), lv);
+            if (stack.getEnchantments().getLevel(h.get()) < lv) { stack.enchant(h.get(), lv); changed = true; }   // engravingLock: a stripped engraving is put back
         }
+        if (done) return changed;
         CustomData.update(DataComponents.CUSTOM_DATA, stack, (CompoundTag t) -> t.putBoolean(FLAG, true));
         return true;
     }

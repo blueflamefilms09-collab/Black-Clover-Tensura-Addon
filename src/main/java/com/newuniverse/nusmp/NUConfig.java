@@ -75,6 +75,8 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue NEN_VFX_V2;          // 3.57.0
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
+    public static final ModConfigSpec.BooleanValue ENGRAVING_LOCK;                                       // engravings are locked to their weapon (item.EngravingLock)
+    public static final ModConfigSpec.BooleanValue WEAPON_SKILLS;                                        // weapon skills (docs/weapon_skills.md): SERVER setting weaponSkills
     public static final ModConfigSpec.BooleanValue DB_LEGACY_SKILLS;                                     // Dragon Ball rework phase 1
     public static final ModConfigSpec.BooleanValue SHINRA_CANON;                                         // Shinra canon pass (docs/shinra_rework.md, Fire Force wiki)
     public static final ModConfigSpec.BooleanValue SHINRA_REWORK;                                        // Shinra rework (docs/shinra_rework.md)
@@ -243,10 +245,15 @@ public final class NUConfig {
         KI_ENABLED = b.comment("Ki (Dragon Ball Ultimate, 3.47.0). false = the skill stays registered but every mode refuses and its damage hook does nothing.").define("kiEnabled", true);
         DB_ENABLED = b.comment("The 15 Dragon Ball skills (3.56.0). false = they stay registered but every mode refuses and the passives do nothing.").define("dragonBallEnabled", true);
         BEAST_SKILLS_ENABLED = b.comment("The 54 Beast Will skills (3.59.0, a Unique and an Ultimate for each of the 27 wills). false = they stay registered but every mode refuses, the passives do nothing and they do not evolve.").define("beastSkillsEnabled", true);
+        ENGRAVING_LOCK = b.comment("Engravings of this mod's weapons are locked to the weapon: the grindstone and any other stripping cannot take them off (they are put back), and the anvil will not use an engraved weapon to move its enchantments to another item. false = the old behaviour (they can be stripped and moved).").define("engravingLock", true);
         BEAST_SKILL_GRANT_ON_MASTERY = b.comment("Mastering a Beast Will to 100 % grants the Unique skill of that beast once (3.59.0). false = the skills come only from the admin command or /tensura edit.").define("beastSkillGrantOnMastery", true);
         DB_LEGACY_SKILLS = b.comment("Dragon Ball rework, phase 1. The 15 old Dragon Ball skills (30 ids, 3.56.0) are REMOVED by default: false = no command, no evolution, no use, and they are taken from players at login (the ids stay registered so old worlds load). true = the old behaviour (dragonBallEnabled still applies).").define("dragonBallLegacySkills", false);
         SHINRA_REWORK = b.comment("Shinra rework (docs/shinra_rework.md). true = Hell Walker is the Shinra Kusakabe skill (the dash, kick and Rapid-Man Kick on the wheel, the devil's grin and Adolla Link under low health, fire immunity), Devil's Footprints is folded into it at login and Hell Walker evolves into Adolla Burst. false = the old behaviour: Hell Walker is only the toggle, no wheel, no folding, Hell Walker evolves into Hell Conqueror.").define("shinraRework", true);
         SHINRA_CANON = b.comment("Shinra canon pass (docs/shinra_rework.md). true = the Shinra skill follows the Fire Force wiki: Rapid, Hellfire (Corna), Adolla Link and Adolla Grace join the wheel (unlocked by tier), Rapid boosts the Rapid-Man Kick, the low-health passive is Hysterical Strength (blue flames) and the Devil's Grin is only a look. false = the first rework (shinraRework) exactly as shipped. Needs shinraRework.").define("shinraCanon", true);
+        b.pop();
+
+        b.push("weapon_skills");
+        WEAPON_SKILLS = b.comment("The Vassal weapons, the Djinn Equip and the Beast Will as normal skills of the skill list and the skill wheel (docs/weapon_skills.md), so their separate keys are not needed. They are granted when you bond a Vassal weapon, bind or are lent a Djinn, or absorb a Beast Will. false = no new skill is granted and the skills already held refuse every mode; the old keys work either way.").define("weaponSkills", true);
         b.pop();
 
         b.push("guide_fixes");

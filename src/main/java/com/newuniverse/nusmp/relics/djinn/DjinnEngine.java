@@ -296,6 +296,29 @@ public final class DjinnEngine {
         go(p, ph >= DjinnPhaseRules.FULL ? DjinnPhaseRules.EXTREME : ph + 1, false);
     }
 
+    /**
+     * Weapon skills (docs/weapon_skills.md): the Djinn Equip skill's wheel asks for a phase by name (1 Lesser Summon, 2 Half Equip, 3 Full Equip, 4 Extreme Magic) instead of "one step up". Same guards as {@link #onKey}
+     * (alive, not severed, the key spacing) and then the same {@link #go} the keys end in, so every rule, cost and refusal is the key's. An Extreme Magic already charging is not started twice (the key's own guard). Server thread.
+     */
+    public static void onSkillTarget(ServerPlayer p, int target) {
+        if (target < DjinnPhaseRules.LESSER || target > DjinnPhaseRules.EXTREME) return;
+        if (!p.isAlive() || p.isSpectator()) return;
+        if (com.newuniverse.nusmp.relics.Severance.isSevered(p)) {
+            p.displayClientMessage(Component.literal("Your Djinn is severed from you for a moment.").withStyle(ChatFormatting.DARK_PURPLE), true);
+            return;
+        }
+        Run r = run(p);
+        long now = p.level().getGameTime();
+        if (now - r.lastKey < DjinnPhaseRules.KEY_SPACING) return;
+        r.lastKey = now;
+        if (DjinnState.of(p).active() == null) {
+            p.displayClientMessage(Component.literal("You hold no Djinn. Bind a Djinn Seal to a Legend-grade vessel.").withStyle(ChatFormatting.GRAY), true);
+            return;
+        }
+        if (r.charging && target > DjinnPhaseRules.FULL) return;
+        go(p, target, false);
+    }
+
     /** Moves the bearer to {@code target} (0 off, 1-3 phases, 4 the Extreme Magic) if the rules allow it. {@code admin} skips cost, trust and waits. */
     static boolean go(ServerPlayer p, int target, boolean admin) {
         DjinnState s = DjinnState.of(p);

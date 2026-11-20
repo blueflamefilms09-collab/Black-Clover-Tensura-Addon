@@ -284,4 +284,7 @@ public final class NUSkills {
             SKILLS.register("lord_of_the_twin_rings", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.CHAKRAMS));
     public static final DeferredHolder<ManasSkill, SinWeaponSkill> SEIFORT_HOLY_JUDGEMENT =
             SKILLS.register("seifort_holy_judgement", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.HOLY));
+
+    // ---- weapon skills (docs/weapon_skills.md): the ten Vassal weapon skills, the Djinn Equip skill and the Beast Will skill (12). Registered last so no older order changes ----
+    public static final int WEAPON_SKILLS = WeaponSkills.registerAll(SKILLS);
 }

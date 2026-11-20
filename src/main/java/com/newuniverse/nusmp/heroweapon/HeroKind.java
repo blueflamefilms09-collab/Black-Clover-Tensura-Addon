@@ -60,6 +60,8 @@ public enum HeroKind {
     public String display() { return display; }
 
     public HeroClass heroClass() { return heroClass; }
+    /** True for the 17 items named {@code vassal_*}: the ones that can be enchanted (docs/vassal_enchanting.md). */
+    public boolean enchantable() { return itemId.startsWith("vassal_"); }
 
     public HeroStyle style() { return style; }
 

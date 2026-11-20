@@ -40,6 +40,7 @@ public final class HeroClient {
         FormsClient.init(modBus);
         CurseClient.init(modBus);
         CarriageClient.init(modBus);                       // the Vassal Carriage's renderer; idempotent, its logic also calls it
+        WeaponTrackerClient.init(modBus);                  // the Weapon Tracker: the screen (opened by /multiverse weapons or its unbound key) and its reply hook
     }
 
     /** The vanilla predicate names for a raised guard and a drawn string, for the two weapons that use them. */

@@ -37,5 +37,6 @@ public final class HeroCore {
         HeroBondSelfTests.register();                    // keys hero.bond, hero.use, hero.rules (the smoke test expects the prefix "hero")
         HeroUseSelfTests.register();
         HeroRulesSelfTests.register();
+        com.newuniverse.nusmp.heroweapon.tracker.WeaponTrackerBoot.init(modBus);       // the Weapon Tracker: /multiverse weapons, two payloads, self-tests weapons.tracker.*
     }
 }

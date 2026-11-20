@@ -119,6 +119,7 @@ public final class BeastWillCommands {
         s.swapLockUntil = 0;
         BeastWillManager.onEnter(p);
         BeastWillManager.markDirty(p);
+        com.newuniverse.nusmp.skill.WeaponSkills.syncBeast(p);                          // weapon skills: no will left, the skill goes
         return say(c, "Cleared every will of " + p.getName().getString());
     }
 
