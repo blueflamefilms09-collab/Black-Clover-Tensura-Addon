@@ -95,6 +95,51 @@ public class ShishouEntity extends PathfinderMob {
         this.goalSelector.addGoal(4, new ShishouGoals.PatrolGoal(this));
         this.goalSelector.addGoal(5, new ShishouGoals.WanderAirGoal(this));
         this.targetSelector.addGoal(1, new ShishouGoals.HuntHostilesGoal(this));
+        // rework: pet mode (server setting pet.mode; each goal guards itself, off = the goals above behave as before)
+        this.goalSelector.addGoal(3, new ShishouPetGoals.PetKeepGoal(this));
+        this.targetSelector.addGoal(0, new ShishouPetGoals.PetOwnerTargetGoal(this));
+    }
+
+    // ---------------------------------------------------------------- pet mode (rework)
+    private ShishouPet.Order order = ShishouPet.Order.FOLLOW;
+    private ShishouPet.State petState = ShishouPet.State.HUNT;
+    private int petTargetId = -1;
+    private long petTargetUntil;
+    /** The game time each borrowed entry (by idx) is ready again, for this body only (a fixed array, never grows). */
+    private final long[] borrowReady = new long[ShishouBorrowTable.MAX];
+    private long borrowGateUntil;
+
+    public ShishouPet.Order order() { return order; }
+
+    public void setOrder(ShishouPet.Order o) { order = o == null ? ShishouPet.Order.FOLLOW : o; }
+
+    public ShishouPet.State petState() { return petState; }
+
+    public void setPetState(ShishouPet.State s) { petState = s == null ? ShishouPet.State.HUNT : s; }
+
+    /** Is this body a thrown sword that behaves as a pet (the server setting {@code pet.mode})? */
+    public boolean isPet() { return isMinion() && ShishouConfig.petMode(); }
+
+    /** The wielder's blow or attacker is his target for {@link ShishouPet#OWNER_TARGET_TICKS}. */
+    public void setPetTarget(LivingEntity t, long until) {
+        petTargetId = t.getId();
+        petTargetUntil = until;
+        setTarget(t);
+    }
+
+    public int stuckTicks() { return stuckTicks; }
+
+    public void resetStuck() { stuckTicks = 0; lastPos = position(); }
+
+    public boolean borrowReady(int idx, long now) { return idx >= 0 && idx < borrowReady.length && now >= borrowReady[idx]; }
+
+    public void borrowStart(int idx, long now, int cooldown) { if (idx >= 0 && idx < borrowReady.length) borrowReady[idx] = now + cooldown; }
+
+    /** One borrowed cast at most every {@code gap} ticks for this body (a hard cap on the lookups and the noise). */
+    public boolean borrowGate(long now, int gap) {
+        if (now < borrowGateUntil) return false;
+        borrowGateUntil = now + gap;
+        return true;
     }
 
     // ---------------------------------------------------------------- state
@@ -178,6 +223,12 @@ public class ShishouEntity extends PathfinderMob {
             ownerCache = s == null ? null : s.getPlayerList().getPlayer(ownerUuid);
         }
         return ownerCache;
+    }
+
+    /** Self-test hook: a stand-in wielder is not in the player list, so the cached lookup would never find it; this pins it for ten minutes. Server only, never called by the game itself. */
+    void pinOwner(ServerPlayer p) {
+        ownerCache = p;
+        ownerCacheTick = level().getGameTime() + 12_000L;
     }
 
     // ---------------------------------------------------------------- the hunt (2.1.0)
@@ -269,8 +320,27 @@ public class ShishouEntity extends PathfinderMob {
                 return;
             }
         } else stuckTicks = 0;
+        if (isPet() && ((tickCount + getId()) % ShishouPet.PROBE_GAP) == 0) nv = probeWall(nv, dist);
         setDeltaMovement(nv);
         hasImpulse = true;
+    }
+
+    /**
+     * Pet mode: one ray a few ticks of flight ahead (at most 12 blocks, never past the aim, only into loaded chunks) every {@link ShishouPet#PROBE_GAP} ticks; a wall in the way takes the velocity's part along its
+     * normal and adds a lift ({@link ShishouPet#deflect}), so he slides up and along it instead of stalling. Worst case: 10 rays a second per thrown sword (one body in the world).
+     */
+    private Vec3 probeWall(Vec3 nv, double distToAim) {
+        double sp = nv.length();
+        if (sp < 0.05) return nv;
+        double len = Math.min(Math.min(sp * ShishouPet.PROBE_TICKS, 12.0), distToAim);
+        if (len < 0.5) return nv;
+        Vec3 from = position().add(0.0, 0.3, 0.0), to = from.add(nv.scale(len / sp));
+        if (!level().hasChunkAt(BlockPos.containing(to))) return nv;
+        net.minecraft.world.phys.BlockHitResult hit = level().clip(new net.minecraft.world.level.ClipContext(from, to, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this));
+        if (hit.getType() == net.minecraft.world.phys.HitResult.Type.MISS) return nv;
+        net.minecraft.core.Direction f = hit.getDirection();
+        double[] v = ShishouPet.deflect(nv.x, nv.y, nv.z, f.getStepX(), f.getStepY(), f.getStepZ(), 0.12);
+        return new Vec3(v[0], v[1], v[2]);
     }
 
     /** May this creature be hunted by this body? */
@@ -280,10 +350,26 @@ public class ShishouEntity extends PathfinderMob {
             ServerPlayer o = owner();
             if (o == null || o.level() != level()) return false;
             int leash = ShishouConfig.minionLeash();
+            if (ShishouConfig.petMode()) return petValid(o, t, leash);
             if (t.distanceToSqr(o) > (double) leash * leash) return false;
             return ShishouTargets.hostileFor(o, t);
         }
         return ShishouTargets.hostileFor(null, t);
+    }
+
+    /** Pet mode: may he hunt this creature now? What the wielder gave him (a blow, an attacker) within the soft line, else a hostile creature within the hunt radius of the state. Never a protected kind. */
+    private boolean petValid(ServerPlayer o, LivingEntity t, int leash) {
+        if (!ShishouPet.mayHunt(petState) || !t.isAlive() || ShishouTargets.protectedKind(o, t)) return false;
+        long now = level().getGameTime();
+        if (t.getId() == petTargetId && now < petTargetUntil) {
+            if (petState == ShishouPet.State.STAY) return distanceToSqr(t) <= (ShishouPet.STAY_GUARD + 2.0) * (ShishouPet.STAY_GUARD + 2.0);       // a staying sword keeps his place even for what the wielder hit
+            double line = leash + ShishouPet.FAR_SLACK + (order == ShishouPet.Order.ATTACK ? ShishouPet.ATTACK_EXTRA : 0.0);
+            return o.distanceToSqr(t) <= line * line;
+        }
+        if (!ShishouTargets.hostileFor(o, t)) return false;
+        Vec3 c = ShishouPet.aroundOwner(petState) ? o.position() : position();
+        double r = ShishouPet.huntRadius(petState, order, leash) + (t == getTarget() ? (petState == ShishouPet.State.STAY ? 2.0 : 8.0) : 0.0);
+        return r > 0.0 && c.distanceToSqr(t.position()) <= r * r;
     }
 
     // ---------------------------------------------------------------- claiming
@@ -406,6 +492,7 @@ public class ShishouEntity extends PathfinderMob {
         tag.putInt("State", state());
         tag.putBoolean("Minion", isMinion());
         if (ownerUuid != null) tag.putUUID("Owner", ownerUuid);
+        tag.putInt("PetOrder", order.ordinal());
     }
 
     @Override
@@ -413,6 +500,7 @@ public class ShishouEntity extends PathfinderMob {
         super.readAdditionalSaveData(tag);
         if (tag.hasUUID("Owner")) ownerUuid = tag.getUUID("Owner");
         entityData.set(MINION, tag.getBoolean("Minion"));
+        order = ShishouPet.Order.byOrdinal(tag.getInt("PetOrder"));
         int s = tag.getInt("State");
         if (s == ShishouRules.STATE_DORMANT) makeDormant();
         else setState(ShishouRules.STATE_IDLE);

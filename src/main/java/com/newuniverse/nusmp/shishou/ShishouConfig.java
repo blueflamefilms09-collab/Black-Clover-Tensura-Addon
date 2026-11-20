@@ -13,6 +13,9 @@ import java.util.Map;
 public final class ShishouConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, VOICE, NATURAL, MINION_EATS_LOOT, MINION_AUTOCAST, HELD_AUTOCAST, ALLOW_BROADCAST, SENSE_NEUTRALS, PATROL, FEED, GRANT_SKILL, BOUNCE, FLURRY_FAST;
+    /** Rework: the pet mode of the thrown sword, the canon passives of the new skills, and the compat switches (borrowed skills of other mods). */
+    public static final ModConfigSpec.BooleanValue PET_MODE, CANON_PASSIVES, COMPAT, COMPAT_TENSURA, COMPAT_NIGHTMARES, COMPAT_MYSTICISM, COMPAT_MULTIVERSE;
+    public static final ModConfigSpec.IntValue BORROW_GAP;
     public static final ModConfigSpec.DoubleValue NATURAL_CHANCE, STRIKE_CAP, VIBRATION_PCT, FLAME_CAP, LIGHTNING_CAP, DIVINE_CAP;
     public static final ModConfigSpec.IntValue DORMANT_KILLS, DORMANT_DAYS, RESERVE_DAYS, STEAL_SCALE, STORAGE_ROWS, MINION_LEASH,
             HUNT_RADIUS, HUNT_SCAN_TICKS, HUNT_EXAMINED, CHARGE_PERCENT, START_LEVEL, EXP_PERCENT, DAMAGE_PERCENT, FEED_PER_CLICK, FEED_GAP;
@@ -59,6 +62,20 @@ public final class ShishouConfig {
         MINION_AUTOCAST = b.comment("The thrown Shishou fires his absorbed spells on his own, on his own cooldowns, with the sword's mana.").define("minionAutoCast", true);
         HELD_AUTOCAST = b.comment("While held, he also fires an absorbed spell on his own at what the wielder is fighting (sword mana).").define("heldAutoCast", false);
         MINION_LEASH = b.comment("Blocks around the wielder in which a thrown Shishou hunts (2.0.0: 16).").defineInRange("minionLeash", 24, 4, 48);
+        b.pop();
+        b.push("pet");
+        PET_MODE = b.comment("Pet mode of the thrown Shishou: he follows the wielder like a tamed pet, hunts hostile mobs near them, strikes what the wielder hits or what hits the wielder, never a player, tamed creature, ally or villager, retreats when his mana is low and comes back when he is too far or stuck. Orders (follow / stay / attack) are given with Telekinesis + sneak or /multiverse shishou order. false = the old minion behaviour.").define("mode", true);
+        b.pop();
+        b.push("canon");
+        CANON_PASSIVES = b.comment("The canon passives of the added skills: Self-Repair and High-Speed Self-Repair mend his mana pool faster (+50% / +100%), Self-Evolution adds 10% experience and a free mana step every 25 kills. false = the 3.x numbers (the skills are then only shown).").define("skills", true);
+        b.pop();
+        b.push("compat");
+        COMPAT = b.comment("Borrowed skills: Shishou may cast skills of other mods and echoes of this mod's grimoire magics with the SWORD's mana (see data/anime_multiverse/shishou/borrowed_skills.json). false = none.").define("borrowedSkills", true);
+        COMPAT_TENSURA = b.comment("Borrowed skills of base Tensura Reincarnated.").define("tensura", true);
+        COMPAT_NIGHTMARES = b.comment("Borrowed skills of TR Nightmares (only when that mod is installed).").define("nightmares", true);
+        COMPAT_MYSTICISM = b.comment("Borrowed skills of Tensura Mysticism (only when that mod is installed).").define("mysticism", true);
+        COMPAT_MULTIVERSE = b.comment("Echoes of this mod's Black Clover grimoire magics.").define("multiverse", true);
+        BORROW_GAP = b.comment("Ticks between two borrowed casts of one body (a hard cap on the work and the noise).").defineInRange("borrowGapTicks", 40, 10, 1200);
         b.pop();
         b.push("telepathy");
         ALLOW_BROADCAST = b.comment("Thought Communication may be switched to nearby players by the wielder (/multiverse shishou broadcast on). Off by default for each wielder either way.").define("allowBroadcast", true);
@@ -109,6 +126,23 @@ public final class ShishouConfig {
     public static boolean minionAutoCast() { return get(MINION_AUTOCAST); }
     public static boolean heldAutoCast() { return get(HELD_AUTOCAST); }
     public static int minionLeash() { return get(MINION_LEASH); }
+    public static boolean petMode() { return enabled() && get(PET_MODE); }
+    public static boolean canonPassives() { return get(CANON_PASSIVES); }
+    public static boolean compat() { return enabled() && get(COMPAT); }
+    public static int borrowGap() { return get(BORROW_GAP); }
+
+    /** Is the source of a borrowed skill switched on? ({@link ShishouBorrowTable#TENSURA} ...) */
+    public static boolean compatSource(String source) {
+        if (!compat()) return false;
+        return switch (source) {
+            case ShishouBorrowTable.TENSURA -> get(COMPAT_TENSURA);
+            case ShishouBorrowTable.NIGHTMARES -> get(COMPAT_NIGHTMARES);
+            case ShishouBorrowTable.MYSTICISM -> get(COMPAT_MYSTICISM);
+            case ShishouBorrowTable.MULTIVERSE -> get(COMPAT_MULTIVERSE);
+            default -> false;
+        };
+    }
+
     public static boolean allowBroadcast() { return get(ALLOW_BROADCAST); }
     public static boolean senseNeutrals() { return get(SENSE_NEUTRALS); }
     public static boolean patrol() { return get(PATROL); }

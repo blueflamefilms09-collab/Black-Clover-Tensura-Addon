@@ -47,6 +47,14 @@ SKILLS = {
     "purification": ("Purification", "浄化 Joka"),
     "poison_coat": ("Poison Coat", "毒 Doku"),
     "spatial_motion_short": ("Spatial Motion (short)", "空間移動 Kuukan Idou"),
+    # rework (docs/items/shishou_rework.md): kanji are editorial readings, NOT verified against a wiki page (wiki hosts were not reachable)
+    "self_repair": ("Self-Repair", "自己修復 Jiko Shuufuku"),
+    "high_speed_self_repair": ("High-Speed Self-Repair", "高速自己修復 Kousoku Jiko Shuufuku"),
+    "self_evolution": ("Self-Evolution", "自己進化 Jiko Shinka"),
+    "telekinetic_grasp": ("Telekinetic Grasp", "念動掌握 Nennou Shuaku"),
+    "akashic_index": ("Akashic Index", "記録索引 Akashikku Sakuin"),
+    "record_blades": ("Blades of the Record", "記録の剣 Kiroku no Ken"),
+    "akashic_sanctuary": ("Akashic Sanctuary", "記録聖域 Akashikku Seiiki"),
 }
 
 TEXT = {

@@ -37,6 +37,21 @@ public final class ShishouTargets {
         return true;
     }
 
+    /** A creature the pet sword must never strike: a player, an NPC or villager, another Shishou, a tamed or owned creature, an ally of the wielder. */
+    public static boolean protectedKind(Player wielder, LivingEntity t) {
+        if (t == null || t instanceof Player || t instanceof Npc || t instanceof AbstractVillager || t instanceof com.newuniverse.nusmp.shishou.ShishouEntity) return true;
+        if (t instanceof OwnableEntity o && o.getOwnerUUID() != null) return true;
+        if (t instanceof TamableAnimal ta && ta.isTame()) return true;
+        return wielder != null && (wielder.isAlliedTo(t) || t.isAlliedTo(wielder));
+    }
+
+    /** May the pet sword attack this creature for this reason ({@link ShishouPet#mayAttack})? */
+    public static boolean petMayAttack(ShishouPet.Reason reason, Player wielder, LivingEntity t) {
+        if (t == null || !t.isAlive() || !(t instanceof Mob m)) return false;
+        boolean hostile = t instanceof Enemy || t.getType().getCategory() == MobCategory.MONSTER;
+        return ShishouPet.mayAttack(reason, hostile, m.getTarget() == wielder && wielder != null, protectedKind(wielder, t));
+    }
+
     /** Hostile or neutral (Magic Sense's overlay): any non-player, non-NPC, non-owned living thing. */
     public static boolean markable(Player wielder, LivingEntity t, boolean neutrals) {
         if (t == null || !t.isAlive() || t instanceof Player || t instanceof Npc || t instanceof AbstractVillager || t instanceof com.newuniverse.nusmp.shishou.ShishouEntity) return false;

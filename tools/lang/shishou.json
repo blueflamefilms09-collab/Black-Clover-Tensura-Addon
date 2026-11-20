@@ -106,5 +106,19 @@
   "shishou.skill.poison_coat": "Poison Coat",
   "shishou.skill.poison_coat.jp": "毒 Doku",
   "shishou.skill.spatial_motion_short": "Spatial Motion (short)",
-  "shishou.skill.spatial_motion_short.jp": "空間移動 Kuukan Idou"
+  "shishou.skill.spatial_motion_short.jp": "空間移動 Kuukan Idou",
+  "shishou.skill.self_repair": "Self-Repair",
+  "shishou.skill.self_repair.jp": "自己修復 Jiko Shuufuku",
+  "shishou.skill.high_speed_self_repair": "High-Speed Self-Repair",
+  "shishou.skill.high_speed_self_repair.jp": "高速自己修復 Kousoku Jiko Shuufuku",
+  "shishou.skill.self_evolution": "Self-Evolution",
+  "shishou.skill.self_evolution.jp": "自己進化 Jiko Shinka",
+  "shishou.skill.telekinetic_grasp": "Telekinetic Grasp",
+  "shishou.skill.telekinetic_grasp.jp": "念動掌握 Nennou Shuaku",
+  "shishou.skill.akashic_index": "Akashic Index",
+  "shishou.skill.akashic_index.jp": "記録索引 Akashikku Sakuin",
+  "shishou.skill.record_blades": "Blades of the Record",
+  "shishou.skill.record_blades.jp": "記録の剣 Kiroku no Ken",
+  "shishou.skill.akashic_sanctuary": "Akashic Sanctuary",
+  "shishou.skill.akashic_sanctuary.jp": "記録聖域 Akashikku Seiiki"
 }

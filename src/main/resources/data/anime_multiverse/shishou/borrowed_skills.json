@@ -1,0 +1,512 @@
+{
+ "_comment": "Shishou borrowed skills (docs/items/shishou_rework.md). idx = the bit in the saved mask: never reuse one. level 0 = Skill Eater only. A skill id that is not in the registry (the mod is absent, or the id is wrong) is simply unavailable.",
+ "skills": [
+  {
+   "idx": 0,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:fire_ball",
+   "label": "Fire Ball",
+   "level": 12,
+   "mana": 14,
+   "cooldown": 100,
+   "hold": 6,
+   "steal": [
+    "fire",
+    "flame",
+    "blaze"
+   ],
+   "percent": 15
+  },
+  {
+   "idx": 1,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:wind_cutter",
+   "label": "Wind Cutter",
+   "level": 15,
+   "mana": 12,
+   "cooldown": 80,
+   "hold": 6,
+   "steal": [
+    "wind",
+    "sylph"
+   ],
+   "percent": 15
+  },
+  {
+   "idx": 2,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:stone_shot",
+   "label": "Stone Shot",
+   "level": 15,
+   "mana": 12,
+   "cooldown": 80,
+   "hold": 6,
+   "steal": [
+    "golem",
+    "stone",
+    "gnome"
+   ],
+   "percent": 15
+  },
+  {
+   "idx": 3,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:icicle_lance",
+   "label": "Icicle Lance",
+   "level": 28,
+   "mana": 22,
+   "cooldown": 140,
+   "hold": 8,
+   "steal": [
+    "ice",
+    "frost",
+    "stray"
+   ],
+   "percent": 12
+  },
+  {
+   "idx": 4,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:fire_lance",
+   "label": "Fire Lance",
+   "level": 30,
+   "mana": 22,
+   "cooldown": 140,
+   "hold": 8,
+   "steal": [
+    "magma",
+    "ifrit",
+    "lava"
+   ],
+   "percent": 12
+  },
+  {
+   "idx": 5,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:thunder_lance",
+   "label": "Thunder Lance",
+   "level": 35,
+   "mana": 26,
+   "cooldown": 160,
+   "hold": 8,
+   "steal": [
+    "thunder",
+    "lightning",
+    "storm"
+   ],
+   "percent": 12
+  },
+  {
+   "idx": 6,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:earth_spikes",
+   "label": "Earth Spikes",
+   "level": 38,
+   "mana": 24,
+   "cooldown": 140,
+   "hold": 8,
+   "steal": [
+    "ravager",
+    "gnome"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 7,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:wind_blade",
+   "label": "Wind Blade",
+   "level": 40,
+   "mana": 24,
+   "cooldown": 140,
+   "hold": 8,
+   "steal": [
+    "phantom",
+    "vex"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 8,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:fire_bolt",
+   "label": "Fire Bolt",
+   "level": 22,
+   "mana": 18,
+   "cooldown": 100,
+   "hold": 6,
+   "steal": [
+    "ghast",
+    "blaze"
+   ],
+   "percent": 12
+  },
+  {
+   "idx": 9,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:lightning_lance",
+   "label": "Lightning Lance",
+   "level": 48,
+   "mana": 32,
+   "cooldown": 180,
+   "hold": 8,
+   "steal": [
+    "thunder",
+    "lightning"
+   ],
+   "percent": 8
+  },
+  {
+   "idx": 10,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:dark_cube",
+   "label": "Dark Cube",
+   "level": 50,
+   "mana": 30,
+   "cooldown": 200,
+   "hold": 10,
+   "steal": [
+    "shadow",
+    "dark",
+    "wraith"
+   ],
+   "percent": 8
+  },
+  {
+   "idx": 11,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:solar_beam",
+   "label": "Solar Beam",
+   "level": 60,
+   "mana": 42,
+   "cooldown": 260,
+   "hold": 12,
+   "steal": [
+    "holy",
+    "angel"
+   ],
+   "percent": 6
+  },
+  {
+   "idx": 12,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:black_lightning",
+   "label": "Black Lightning (Tensura)",
+   "level": 55,
+   "mana": 40,
+   "cooldown": 200,
+   "hold": 10
+  },
+  {
+   "idx": 13,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:black_flame",
+   "label": "Black Flame (Tensura)",
+   "level": 45,
+   "mana": 30,
+   "cooldown": 200,
+   "hold": 10
+  },
+  {
+   "idx": 14,
+   "source": "tensura",
+   "kind": "SKILL",
+   "id": "tensura:water_blade",
+   "label": "Water Blade",
+   "level": 20,
+   "mana": 14,
+   "cooldown": 100,
+   "hold": 6,
+   "steal": [
+    "water",
+    "drowned",
+    "guardian"
+   ],
+   "percent": 15
+  },
+  {
+   "idx": 20,
+   "source": "nightmares",
+   "kind": "SKILL",
+   "id": "trnightmare:divine_lightning",
+   "label": "Divine Lightning",
+   "level": 65,
+   "mana": 45,
+   "cooldown": 260,
+   "hold": 12
+  },
+  {
+   "idx": 21,
+   "source": "nightmares",
+   "kind": "SKILL",
+   "id": "trnightmare:freezing_flame",
+   "label": "Freezing Flame",
+   "level": 58,
+   "mana": 38,
+   "cooldown": 240,
+   "hold": 10
+  },
+  {
+   "idx": 22,
+   "source": "nightmares",
+   "kind": "SKILL",
+   "id": "trnightmare:coffin_of_darkness",
+   "label": "Coffin of Darkness",
+   "level": 62,
+   "mana": 40,
+   "cooldown": 260,
+   "hold": 12
+  },
+  {
+   "idx": 23,
+   "source": "nightmares",
+   "kind": "SKILL",
+   "id": "trnightmare:sun_wheel",
+   "label": "Sun Wheel",
+   "level": 66,
+   "mana": 44,
+   "cooldown": 280,
+   "hold": 12
+  },
+  {
+   "idx": 30,
+   "source": "mysticism",
+   "kind": "SKILL",
+   "id": "mysticism:gravitational_void",
+   "label": "Gravitational Void",
+   "level": 60,
+   "mana": 50,
+   "cooldown": 320,
+   "hold": 12
+  },
+  {
+   "idx": 31,
+   "source": "mysticism",
+   "kind": "SKILL",
+   "id": "mysticism:cryogenic_cessation",
+   "label": "Cryogenic Cessation",
+   "level": 52,
+   "mana": 38,
+   "cooldown": 240,
+   "hold": 10
+  },
+  {
+   "idx": 32,
+   "source": "mysticism",
+   "kind": "SKILL",
+   "id": "mysticism:profaned_prominence",
+   "label": "Profaned Prominence",
+   "level": 64,
+   "mana": 44,
+   "cooldown": 280,
+   "hold": 12
+  },
+  {
+   "idx": 33,
+   "source": "mysticism",
+   "kind": "SKILL",
+   "id": "mysticism:gravity_flux",
+   "label": "Gravity Flux",
+   "level": 46,
+   "mana": 30,
+   "cooldown": 200,
+   "hold": 10
+  },
+  {
+   "idx": 40,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:flame",
+   "label": "Grimoire Echo: Flame",
+   "level": 10,
+   "mana": 10,
+   "cooldown": 80,
+   "hold": 0,
+   "steal": [
+    "fire",
+    "flame",
+    "blaze"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 41,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:ice",
+   "label": "Grimoire Echo: Ice",
+   "level": 14,
+   "mana": 10,
+   "cooldown": 80,
+   "hold": 0,
+   "steal": [
+    "ice",
+    "frost",
+    "snow"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 42,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:lightning",
+   "label": "Grimoire Echo: Lightning",
+   "level": 18,
+   "mana": 12,
+   "cooldown": 90,
+   "hold": 0,
+   "steal": [
+    "thunder",
+    "lightning"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 43,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:wind",
+   "label": "Grimoire Echo: Wind",
+   "level": 12,
+   "mana": 10,
+   "cooldown": 80,
+   "hold": 0,
+   "steal": [
+    "wind",
+    "sylph",
+    "phantom"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 44,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:earth",
+   "label": "Grimoire Echo: Earth",
+   "level": 16,
+   "mana": 12,
+   "cooldown": 90,
+   "hold": 0,
+   "steal": [
+    "golem",
+    "stone"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 45,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:poison",
+   "label": "Grimoire Echo: Poison",
+   "level": 20,
+   "mana": 12,
+   "cooldown": 90,
+   "hold": 0,
+   "steal": [
+    "spider",
+    "venom",
+    "poison"
+   ],
+   "percent": 10
+  },
+  {
+   "idx": 46,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:dark",
+   "label": "Grimoire Echo: Dark",
+   "level": 24,
+   "mana": 14,
+   "cooldown": 100,
+   "hold": 0,
+   "steal": [
+    "shadow",
+    "dark",
+    "wither"
+   ],
+   "percent": 8
+  },
+  {
+   "idx": 47,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:light",
+   "label": "Grimoire Echo: Light",
+   "level": 26,
+   "mana": 14,
+   "cooldown": 100,
+   "hold": 0,
+   "steal": [
+    "holy",
+    "angel"
+   ],
+   "percent": 8
+  },
+  {
+   "idx": 48,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:sword",
+   "label": "Grimoire Echo: Sword",
+   "level": 30,
+   "mana": 16,
+   "cooldown": 100,
+   "hold": 0
+  },
+  {
+   "idx": 49,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:spatial",
+   "label": "Grimoire Echo: Spatial",
+   "level": 40,
+   "mana": 20,
+   "cooldown": 120,
+   "hold": 0,
+   "steal": [
+    "enderman",
+    "ender"
+   ],
+   "percent": 6
+  },
+  {
+   "idx": 50,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:gravity",
+   "label": "Grimoire Echo: Gravity",
+   "level": 44,
+   "mana": 22,
+   "cooldown": 140,
+   "hold": 0
+  },
+  {
+   "idx": 51,
+   "source": "multiverse",
+   "kind": "ECHO",
+   "id": "echo:curse",
+   "label": "Grimoire Echo: Curse",
+   "level": 50,
+   "mana": 24,
+   "cooldown": 160,
+   "hold": 0
+  }
+ ]
+}

@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.45.0] — Shishou rework: a real pet AI, canon skills, borrowed skills
+- NEW: Shishou pet mode (setting `pet.mode`, default on): the thrown sword follows the owner, hunts hostile mobs, and attacks what the owner punched or what attacked the owner. It never attacks tamed animals, allies, players or peaceful creatures, retreats at low mana and avoids walls. Orders: `/multiverse shishou order follow|stay|attack`, or Telekinesis mode plus sneak while he is thrown.
+- NEW: seven skills appended: Self-Repair, High-Speed Self-Repair, Self-Evolution, Telekinetic Grasp (canon) and Akashic Index, Blades of the Record, Akashic Sanctuary (original). Setting `canon.skills` (default on).
+- NEW: two Ultimate modes (Akashic, Borrowed) and a borrowed-skill table of 35 entries: base Tensura, TR Nightmares, Tensura Mysticism (soft compat, never class-linked, a wrong id only disables that entry) and 12 echoes of this mod's grimoires. Settings `compat.*`.
+- FIXED: a Wind Magic cast from the thrown body flung the wielder.
+- KEPT: the old AI when `pet.mode` is off, all 31 old skills, every config key and save field (old saves load, new keys are clamped).
+- Cost: wall probe 10 rays/s per sword (12 blocks, loaded chunks only); no new scans, spawns, packets or chunk loads; blades 30 hurts per cast; sanctuary 120 touches per cast; particles at most 60 per step through the perf budget, nearby players only.
+- Not seen in a game; canon from memory (wikis unreachable); the optional boss encounter is not built.
+
 ## [4.44.1] — Shield placement fix (forms no longer float or sink into the arm)
 - FIXED: the nine form meshes of the Legendary Shield (Slime, Egg, Leaf, Light Metal, Needle, Orange Balloon, Soul Eater, Zombie, Chimera Viper) were placed like swords, so the shield hung in front of the player or went through the arm and hand. They now sit on vanilla's shield frame like every other shield, held by the strap.
 - FIXED: a deep shield (spikes, eggs, balloons) keeps its straps in the hand and grows forward; no shield is deeper than 0.85 blocks, so a spiked form is shrunk a little at most (only the Chimera Viper Shield is affected).

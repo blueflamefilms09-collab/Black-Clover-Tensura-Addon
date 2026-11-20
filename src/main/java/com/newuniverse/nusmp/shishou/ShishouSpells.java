@@ -90,6 +90,10 @@ public final class ShishouSpells {
             case DARKNESS_MAGIC -> darkness(c);
             case HEALING_MAGIC -> healing(c);
             case PURIFICATION -> purification(c);
+            case TELEKINETIC_GRASP -> ShishouAbilities.grasp(c);
+            case AKASHIC_INDEX -> ShishouAbilities.index(c);
+            case RECORD_BLADES -> ShishouAbilities.blades(c);
+            case AKASHIC_SANCTUARY -> ShishouAbilities.sanctuary(c);
             default -> Result.FAIL;
         };
     }
@@ -342,7 +346,7 @@ public final class ShishouSpells {
                 m.knockback(0.9, -away.x, -away.z);
             }
         }
-        if (c.wielder() != null) {                                                       // a wind burst that changes his flight: the wielder is carried along the look direction
+        if (c.wielder() != null && c.body() == null) {                                   // a wind burst that changes his flight: the wielder is carried along the look direction (rework fix: a thrown body's burst never flung its wielder)
             Vec3 v = c.look().normalize().scale(1.2);
             c.wielder().setDeltaMovement(v.x, Math.max(v.y, 0.2), v.z);
             c.wielder().hurtMarked = true;

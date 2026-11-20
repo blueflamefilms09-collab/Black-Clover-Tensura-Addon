@@ -13,7 +13,7 @@ public final class ShishouModes {
     private ShishouModes() {}
 
     /** What a press of the skill key does in a mode. */
-    public enum Action { CAST, CYCLE, OPEN_STORAGE, THROW_RECALL, STATUS }
+    public enum Action { CAST, CYCLE, OPEN_STORAGE, THROW_RECALL, STATUS, ORDER, BORROW_CAST, BORROW_CYCLE }
 
     /** The modes, in the order of the skill system's mode key. */
     public enum Mode {
@@ -23,7 +23,11 @@ public final class ShishouModes {
         OFFENCE("offence", "Offence"),
         STORAGE("storage", "Storage"),
         MAGIC("magic", "Magic"),
-        COUNSEL("counsel", "Counsel");
+        COUNSEL("counsel", "Counsel"),
+        /** 3.x rework: the canon Telekinetic Grasp and his own Akashic abilities (appended: a saved mode index is a position). */
+        AKASHIC("akashic", "Akashic"),
+        /** 3.x rework: the skills and spells of other mods (and this mod's grimoire echoes) that his body casts with the sword's mana ({@link ShishouBorrow}). */
+        BORROWED("borrowed", "Borrowed");
 
         private final String id, english;
 
@@ -45,7 +49,8 @@ public final class ShishouModes {
                 case OFFENCE -> List.of(ShishouSkill.BLACK_LIGHTNING, ShishouSkill.DIVINE_SWORD_RELEASE, ShishouSkill.DOPPELGANGER);
                 case STORAGE -> List.of(ShishouSkill.STOMACH);
                 case MAGIC -> List.of(ShishouSkill.FIRE_MAGIC, ShishouSkill.WIND_MAGIC, ShishouSkill.EARTH_MAGIC, ShishouSkill.WATER_ICE_MAGIC, ShishouSkill.DARKNESS_MAGIC, ShishouSkill.HEALING_MAGIC, ShishouSkill.PURIFICATION);
-                case COUNSEL -> List.of();
+                case COUNSEL, BORROWED -> List.of();
+                case AKASHIC -> List.of(ShishouSkill.TELEKINETIC_GRASP, ShishouSkill.AKASHIC_INDEX, ShishouSkill.RECORD_BLADES, ShishouSkill.AKASHIC_SANCTUARY);
             };
         }
     }
@@ -95,6 +100,16 @@ public final class ShishouModes {
             case STORAGE -> sneaking ? Action.OPEN_STORAGE : Action.CAST;
             default -> sneaking && availableCount > 1 ? Action.CYCLE : Action.CAST;
         };
+    }
+
+    /**
+     * 3.x pet mode: the same as {@link #action(Mode, boolean, int)}, except that with {@code petOrders} (server setting {@code pet.mode}) sneaking in the Telekinesis mode gives an ORDER (follow, stay, attack) to a thrown sword
+     * and the Borrowed mode casts or cycles his borrowed skills. With {@code petOrders} false the Telekinesis mode is exactly the 2.1.0 routing. (The Borrowed mode always casts or cycles; with {@code compat.borrowedSkills} off it answers that it has nothing to lend.)
+     */
+    public static Action action(Mode m, boolean sneaking, int availableCount, boolean petOrders) {
+        if (m == Mode.TELEKINESIS && sneaking && petOrders) return Action.ORDER;
+        if (m == Mode.BORROWED) return sneaking ? Action.BORROW_CYCLE : Action.BORROW_CAST;
+        return action(m, sneaking, availableCount);
     }
 
     /** Every castable ability is reachable through exactly one mode (a test pins this): used by the tests and the docs. */

@@ -392,6 +392,7 @@ public final class ShishouService {
         Vec3 at = p.getEyePosition().add(look.scale(1.2));
         e.moveTo(at.x, at.y - 0.3, at.z, p.getYRot(), p.getXRot());
         e.makeMinion(p.getUUID());
+        e.setOrder(rec.petOrder());
         e.setSwordLevel(rec.level());
         e.setDeltaMovement(look.scale(0.8));
         if (!cap.throwOut(ShishouComponents.token(stack), e.getUUID(), dimOf(sl), (int) at.x, (int) at.y, (int) at.z)) {
@@ -576,6 +577,10 @@ public final class ShishouService {
             target.invulnerableTime = 0;
             target.hurt(sl.damageSources().indirectMagic(p, p), (float) (hit * ShishouRules.DIVINE_RELEASE_BONUS));
         }
+        if (ShishouLive.WINDOWS.anyActive(ShishouWindows.Kind.INDEX) && usable(rec, ShishouSkill.AKASHIC_INDEX)) {                     // the Akashic Index names the creature: +15% of the blow
+            UUID named = attacker instanceof ServerPlayer p2 ? p2.getUUID() : attacker instanceof ShishouEntity se && se.isMinion() ? se.ownerUuid() : null;
+            if (named != null) ShishouAbilities.indexBonus(attacker, named, target, hit, sl, now);
+        }
     }
 
     // ================================================================ the body's strikes
@@ -607,10 +612,15 @@ public final class ShishouService {
     }
 
     /** The experience after the server's percentage (100 = as listed). */
-    static long scaleExp(long exp) { return Math.max(0L, Math.round(exp * ShishouConfig.expPercent() / 100.0)); }
+    static long scaleExp(long exp) {
+        long e = Math.max(0L, Math.round(exp * ShishouConfig.expPercent() / 100.0));
+        if (ShishouConfig.canonPassives() && ShishouData.bound() && usable(ShishouData.get().record(), ShishouSkill.SELF_EVOLUTION)) e = ShishouCanon.evolvedExp(e, true);      // Self-Evolution: +10% experience
+        return e;
+    }
 
-    /** The floor of the level (2.1.0: a fresh or old sword is at least level 10, the config may ask for more); never lowers. */
+    /** The floor of the level (2.1.0: a fresh or old sword is at least level 10, the config may ask for more); never lowers. Also mirrors the canon-regeneration setting into the record. */
     static void floorLevel(ShishouRecord rec, long now) {
+        rec.setCanonRegen(ShishouConfig.canonPassives());
         if (rec.raiseTo(ShishouConfig.startLevel(), now)) ShishouData.get().touch();
     }
 
@@ -633,6 +643,7 @@ public final class ShishouService {
         } else if (killer instanceof ServerPlayer sp && ShishouLive.isLinked(sp.getUUID(), now) && holding(sp)) wielder = sp;
         else return;
         if (wild) rec.countWildKill(); else rec.countKill();
+        if (ShishouConfig.canonPassives() && usable(rec, ShishouSkill.SELF_EVOLUTION) && ShishouCanon.evolveDue(rec.kills())) rec.step(true, false);      // Self-Evolution: a free mana step every 25 kills (capped by the rules)
         boolean boss = victim.getType().is(Tags.EntityTypes.BOSSES);
         ShishouRecord.Gain g = rec.addExp(scaleExp(ShishouPredation.killExp(victim.getMaxHealth(), boss)));
         ShishouStealTable.Row row = ShishouStealTable.lookup(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(victim.getType()).toString(), victim instanceof Creeper c && c.isPowered());
@@ -643,8 +654,10 @@ public final class ShishouService {
             rec.step(isNew, true);
             stolen = row.skill();
         }
+        ShishouBorrowTable.Entry borrowedNew = ShishouBorrow.steal(rec, victim);                       // rework: Skill Eater may also take a borrowed skill of another mod
         d.touch();
         if (wielder != null) {
+            if (borrowedNew != null) wielder.displayClientMessage(Component.translatableWithFallback("shishou.msg.borrowed_learned", "I have eaten %s.", borrowedNew.label()).withStyle(ChatFormatting.AQUA), true);
             ShishouSpeech.say(wielder, sl, ShishouVoiceLines.Group.EAT);
             if (g.leveled()) levelUp(wielder, sl, g);
             if (isNew) ShishouSpeech.say(wielder, sl, groupOf(stolen), Component.translatableWithFallback(stolen.langKey(), stolen.english()));
@@ -728,7 +741,53 @@ public final class ShishouService {
             return;
         }
         e.setVeiled(ShishouLive.WINDOWS.active(owner.getUUID(), ShishouWindows.Kind.STEALTH, now));
+        if (e.isPet()) petUpkeep(e, owner, rec, sl, now);
         if (ShishouConfig.minionAutoCast() && e.getTarget() != null) minionCast(e, owner, rec, sl, now);
+    }
+
+    /**
+     * Pet mode, once a second: his state from the order, his mana share and the wielder's health ({@link ShishouPet#decide}); a target he may no longer hunt (retreating, out of range) is dropped, a chase that
+     * ran past the soft line is given up and he comes home. Nothing is scanned here: a few reads.
+     */
+    private static void petUpkeep(ShishouEntity e, ServerPlayer owner, ShishouRecord rec, ServerLevel sl, long now) {
+        double max = rec.maxMana(), share = max <= 0.0 ? 0.0 : rec.mana(now) / max;
+        double hp = owner.getMaxHealth() <= 0.0f ? 1.0 : owner.getHealth() / owner.getMaxHealth();
+        ShishouPet.State before = e.petState(), st = ShishouPet.decide(e.order(), share, hp, before == ShishouPet.State.RETREAT);
+        e.setPetState(st);
+        if (st == ShishouPet.State.RETREAT && before != ShishouPet.State.RETREAT) ShishouSpeech.say(owner, sl, ShishouVoiceLines.Group.LOWMANA);
+        LivingEntity t = e.getTarget();
+        if (t == null) return;
+        if (ShishouPet.tooFar(Math.sqrt(e.distanceToSqr(owner)), ShishouConfig.minionLeash(), e.order())) {
+            e.giveUp(t);                                                                       // too far from the wielder: this chase is over, he comes home
+            e.setTarget(null);
+        } else if (!e.isValidTarget(t)) e.setTarget(null);
+    }
+
+    /** Orders (follow / stay / attack) for the thrown sword: kept in the record, applied to the body at once. Only the wielder. */
+    public static void setOrder(ServerPlayer p, ShishouPet.Order o) {
+        if (!enabled() || p.isSpectator() || o == null) return;
+        ShishouData d = ShishouData.get();
+        ShishouCap cap = d.cap();
+        if (!cap.isOwner(p.getUUID())) return;
+        if (!ShishouConfig.petMode()) {
+            p.displayClientMessage(Component.translatableWithFallback("shishou.msg.pet_off", "Pet mode is off on this server.").withStyle(ChatFormatting.GRAY), true);
+            return;
+        }
+        d.record().setPetOrder(o);
+        d.touch();
+        if (cap.form() == ShishouCap.Form.MINION && p.getServer() != null) {
+            for (ServerLevel l : p.getServer().getAllLevels()) if (l.getEntity(cap.entity()) instanceof ShishouEntity se) {
+                se.setOrder(o);
+                break;
+            }
+        }
+        p.displayClientMessage(Component.translatableWithFallback("shishou.msg.order", "Shishou: %s.", Component.translatableWithFallback(o.langKey(), o.id())).withStyle(ChatFormatting.AQUA), true);
+    }
+
+    /** The next order in the cycle (the Telekinesis mode with sneak). */
+    public static void cycleOrder(ServerPlayer p) {
+        if (!enabled() || !ShishouData.get().cap().isOwner(p.getUUID())) return;
+        setOrder(p, ShishouData.get().record().petOrder().next());
     }
 
     private static void minionCast(ShishouEntity e, ServerPlayer owner, ShishouRecord rec, ServerLevel sl, long now) {
@@ -745,6 +804,7 @@ public final class ShishouService {
                 return;
             }
         }
+        if (ShishouConfig.compat() && ShishouPet.mayHunt(e.petState())) ShishouBorrow.autoCast(e, owner, rec, sl, now, look);          // rework: a borrowed skill of another mod, when none of his own fired
     }
 
     /** The wild sword settles: it is embedded in the ground, static, and the record says so. */

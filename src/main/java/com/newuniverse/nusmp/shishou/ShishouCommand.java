@@ -19,7 +19,7 @@ import java.util.UUID;
  * Why: {@code /multiverse shishou ...}, attached to the root by {@code MultiverseCommands} with one line. For operators (permission 2): {@code spawn} (a wild Shishou where the operator stands, refused when one
  * exists), {@code status}, {@code reset} (every body and stack of him becomes a ghost and dissolves, so the world has none and {@code spawn} works again; his level, skills and Stomach are KEPT),
  * {@code recover} (the recovery rule: to his wielder, or a dormant sword at their home / the spawn) and {@code level set <n>}. For the wielder (any player who holds him): {@code skills} (what he knows, with the
- * Japanese names) and {@code broadcast on|off} (Thought Communication to players within 32 blocks, off by default) and {@code stomach auto on|off}. All validated and server side.
+ * Japanese names) and {@code broadcast on|off} (Thought Communication to players within 32 blocks, off by default) and {@code stomach auto on|off} and {@code order follow|stay|attack} (the thrown sword's pet order). All validated and server side.
  */
 public final class ShishouCommand {
     private ShishouCommand() {}
@@ -35,6 +35,7 @@ public final class ShishouCommand {
                 .then(Commands.literal("skills").executes(ShishouCommand::skills))
                 .then(Commands.literal("cast").then(Commands.argument("ability", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(castable(), b)).executes(ShishouCommand::cast)))
                 .then(Commands.literal("throw").executes(ShishouCommand::throwRecall))
+                .then(Commands.literal("order").then(Commands.argument("mode", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(new String[] {"follow", "stay", "attack"}, b)).executes(ShishouCommand::order)))
                 .then(Commands.literal("broadcast").then(Commands.argument("on", BoolArgumentType.bool()).executes(ShishouCommand::broadcast)))
                 .then(Commands.literal("stomach").then(Commands.literal("auto").then(Commands.argument("on", BoolArgumentType.bool()).executes(ShishouCommand::stomachAuto))));
     }
@@ -119,6 +120,16 @@ public final class ShishouCommand {
         if (p == null || !ShishouService.enabled() || !ShishouData.get().cap().isOwner(p.getUUID())) return fail(c, "Only his wielder may throw him.");
         if (!ShishouService.pressAllowed(p)) return fail(c, "Too fast.");
         ShishouService.throwRecall(p);
+        return 1;
+    }
+
+    private static int order(CommandContext<CommandSourceStack> c) {
+        ServerPlayer p = c.getSource().getPlayer();
+        if (p == null || !ShishouService.enabled() || !ShishouData.get().cap().isOwner(p.getUUID())) return fail(c, "Only his wielder may give him orders.");
+        ShishouPet.Order o = ShishouPet.Order.byId(StringArgumentType.getString(c, "mode"));
+        if (o == null) return fail(c, "Orders: follow, stay, attack.");
+        if (!ShishouConfig.petMode()) return fail(c, "Pet mode is off on this server (pet.mode).");
+        ShishouService.setOrder(p, o);
         return 1;
     }
 

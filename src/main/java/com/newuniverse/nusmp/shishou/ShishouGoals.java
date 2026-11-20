@@ -92,8 +92,16 @@ public final class ShishouGoals {
         boolean minion = s.isMinion();
         ServerPlayer o = minion ? s.owner() : null;
         if (minion && (o == null || o.level() != sl)) return null;
-        double r = ShishouHunt.scanRadius(minion, ShishouConfig.huntRadius(), ShishouConfig.minionLeash()), h = ShishouHunt.scanHeight(r);
+        double r = ShishouHunt.scanRadius(minion, ShishouConfig.huntRadius(), ShishouConfig.minionLeash());
         Vec3 c = minion ? o.position() : s.position();
+        if (s.isPet()) {                                                                      // pet mode: the radius and the centre come from his state (stay / guard / attack), none while he retreats
+            ShishouPet.State st = s.petState();
+            if (!ShishouPet.mayHunt(st)) return null;
+            r = ShishouPet.huntRadius(st, s.order(), ShishouConfig.minionLeash());
+            if (r <= 0.0) return null;
+            if (!ShishouPet.aroundOwner(st)) c = s.position();
+        }
+        double h = ShishouHunt.scanHeight(r);
         AABB box = new AABB(c.x - r, c.y - h, c.z - r, c.x + r, c.y + h, c.z + r);
         List<Mob> list = sl.getEntitiesOfClass(Mob.class, box, m -> m.isAlive() && !s.isIgnored(m) && s.isValidTarget(m));
         if (list.isEmpty()) return null;
@@ -212,7 +220,7 @@ public final class ShishouGoals {
 
         @Override
         public boolean canUse() {
-            if (sword.isDormant() || !sword.isMinion() || sword.getTarget() != null) return false;
+            if (sword.isDormant() || !sword.isMinion() || sword.getTarget() != null || sword.isPet()) return false;   // pet mode: ShishouPetGoals.PetKeepGoal follows
             ServerPlayer o = sword.owner();
             return o != null && o.level() == sword.level() && sword.distanceToSqr(o) > 9.0;
         }

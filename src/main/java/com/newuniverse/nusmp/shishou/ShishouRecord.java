@@ -17,6 +17,12 @@ public final class ShishouRecord {
     private long kills;
     private int selected = -1;
     private boolean broadcast, autoStomach;
+    /** Rework: the borrowed skills Skill Eater took (a bit per {@link ShishouBorrowTable.Entry#idx}), the one the wielder picked (-1 = the first open), and whether the canon regeneration of Self-Repair applies (the server setting, mirrored by the service). */
+    private long borrowed;
+    private int borrowedSel = -1;
+    private boolean canonRegen;
+    /** The wielder's last order to the thrown sword ({@link ShishouPet.Order#ordinal()}), kept so a new throw obeys it. */
+    private int petOrder;
     /** Wild phase counters: kills since the sword woke, the game time it woke, and its wild mana (which only the strikes of the wild phase spend). */
     private int wildKills;
     private long wildSince;
@@ -77,9 +83,33 @@ public final class ShishouRecord {
     /** The mana at game time {@code now}: the stored value plus the regeneration since the stamp (nothing runs in between). */
     public double mana(long now) {
         if (now <= manaStamp) return mana;
-        double m = Math.min(maxMana(), mana + (now - manaStamp) * ShishouRules.regenPerTick(level()));
+        double m = Math.min(maxMana(), mana + (now - manaStamp) * ShishouRules.regenPerTick(level()) * regenFactor());
         return m;
     }
+
+    /** Self-Repair (+50%) and High-Speed Self-Repair (+100%) mend him faster when the canon setting is on; otherwise 1 (the old numbers). */
+    public double regenFactor() { return canonRegen ? ShishouCanon.regenFactor(has(ShishouSkill.SELF_REPAIR), has(ShishouSkill.HIGH_SPEED_SELF_REPAIR)) : 1.0; }
+
+    public void setCanonRegen(boolean on) { canonRegen = on; }
+
+    // ---------------------------------------------------------------- borrowed skills (other mods' skills and the grimoire echoes)
+    public long borrowed() { return borrowed; }
+
+    /** Records a borrowed entry Skill Eater took; true when it was new. */
+    public boolean learnBorrowed(ShishouBorrowTable.Entry e) {
+        long bit = ShishouBorrowTable.bit(e);
+        if ((borrowed & bit) != 0L) return false;
+        borrowed |= bit;
+        return true;
+    }
+
+    public ShishouPet.Order petOrder() { return ShishouPet.Order.byOrdinal(petOrder); }
+
+    public void setPetOrder(ShishouPet.Order o) { petOrder = o == null ? 0 : o.ordinal(); }
+
+    public int borrowedSel() { return borrowedSel; }
+
+    public void selectBorrowed(int idx) { borrowedSel = idx >= 0 && idx < ShishouBorrowTable.MAX ? idx : -1; }
 
     private void settle(long now) {
         mana = mana(now);
@@ -187,6 +217,9 @@ public final class ShishouRecord {
         m.put("wsince", wildSince);
         m.put("wmana", Double.doubleToLongBits(wildMana));
         m.put("ver", (long) ShishouLevels.CURVE_VERSION);
+        m.put("bmask", borrowed);
+        m.put("bsel", (long) borrowedSel);
+        m.put("ord", (long) petOrder);
         return m;
     }
 
@@ -217,6 +250,9 @@ public final class ShishouRecord {
         long f = get(m, "flags", 0L);
         r.broadcast = (f & 1L) != 0L;
         r.autoStomach = (f & 2L) != 0L;
+        r.borrowed = get(m, "bmask", 0L);
+        r.borrowedSel = (int) Math.max(-1L, Math.min(ShishouBorrowTable.MAX - 1L, get(m, "bsel", -1L)));
+        r.petOrder = ShishouPet.Order.byOrdinal((int) Math.max(0L, Math.min(100L, get(m, "ord", 0L)))).ordinal();
         r.wildKills = (int) Math.max(0L, get(m, "wkills", 0L));
         r.wildSince = get(m, "wsince", 0L);
         double wm = Double.longBitsToDouble(get(m, "wmana", Double.doubleToLongBits(ShishouRules.WILD_MANA)));

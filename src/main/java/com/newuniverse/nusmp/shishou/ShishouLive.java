@@ -40,6 +40,7 @@ public final class ShishouLive {
         THEFT.forget(who);
         COOLDOWNS.forget(who);
         WINDOWS.forget(who);
+        ShishouAbilities.forget(who);
         CLONES.forget(who);
         GATE.forget(who);
         LINKED.remove(who);
@@ -57,6 +58,7 @@ public final class ShishouLive {
         THEFT.clear();
         COOLDOWNS.clear();
         WINDOWS.clear();
+        ShishouAbilities.clearAll();
         CLONES.clear();
         GATE.clear();
         LINKED.clear();

@@ -60,12 +60,15 @@ class ShishouProgressionTest {
             if (s.kind() == ShishouSkill.Kind.ACTIVE) assertTrue(s.cooldown() > 0 && s.manaCost() > 0, s + " is cast: it has a cost and a cooldown");
             assertEquals(s.absorbed() ? s.tier() >= 1 : s.tier() == ShishouSkill.tierOf(s.unlockLevel()), true, s + " tier");
         }
-        assertEquals(31, ShishouSkill.values().length);
+        assertEquals(38, ShishouSkill.values().length, "31 skills of 3.x and the 7 of the rework (appended)");
+        assertEquals(31, ShishouSkill.SELF_REPAIR.bit(), "the rework bits start after the old ones");
+        assertEquals(37, ShishouSkill.AKASHIC_SANCTUARY.bit());
         assertEquals(0, ShishouSkill.TELEKINESIS.bit(), "bits are only appended");
         assertEquals(30, ShishouSkill.SPATIAL_MOTION_SHORT.bit());
         assertEquals(List.of(ShishouSkill.MULTILAYER_BARRIER), ShishouSkill.unlockedBetween(9, 10));
         assertEquals(ShishouSkill.STOMACH, ShishouSkill.nextCastable(ShishouSkill.MULTILAYER_BARRIER, 21, 0L));
-        assertEquals(ShishouSkill.MULTILAYER_BARRIER, ShishouSkill.nextCastable(ShishouSkill.STOMACH, 21, 0L), "the cycle wraps while Stomach is last");
+        assertEquals(ShishouSkill.TELEKINETIC_GRASP, ShishouSkill.nextCastable(ShishouSkill.STOMACH, 21, 0L), "the rework's Telekinetic Grasp (level 12) is appended after Stomach");
+        assertEquals(ShishouSkill.MULTILAYER_BARRIER, ShishouSkill.nextCastable(ShishouSkill.TELEKINETIC_GRASP, 21, 0L), "the cycle wraps while the newest castable skill is last");
         assertNull(ShishouSkill.nextCastable(null, 1, 0L), "nothing castable at level one");
     }
 

@@ -46,7 +46,15 @@ public enum ShishouSkill {
     HEALING_MAGIC(27, 2, 0, Kind.ACTIVE, 15, 100, "kaifuku", "Healing Magic"),
     PURIFICATION(28, 2, 0, Kind.ACTIVE, 10, 120, "joka", "Purification"),
     POISON_COAT(29, 2, 0, Kind.PASSIVE, 0, 0, "doku", "Poison Coat"),
-    SPATIAL_MOTION_SHORT(30, 2, 0, Kind.ACTIVE, 10, 100, "kuukan_idou_short", "Spatial Motion (short)");
+    SPATIAL_MOTION_SHORT(30, 2, 0, Kind.ACTIVE, 10, 100, "kuukan_idou_short", "Spatial Motion (short)"),
+    // ---- 3.x rework (docs/items/shishou_rework.md): canon abilities and his own, appended (bits 31..37 are never reused)
+    SELF_REPAIR(31, 1, 15, Kind.PASSIVE, 0, 0, "jiko_shuufuku", "Self-Repair"),
+    HIGH_SPEED_SELF_REPAIR(32, 2, 40, Kind.PASSIVE, 0, 0, "kousoku_jiko_shuufuku", "High-Speed Self-Repair"),
+    SELF_EVOLUTION(33, 3, 60, Kind.PASSIVE, 0, 0, "jiko_shinka", "Self-Evolution"),
+    TELEKINETIC_GRASP(34, 1, 12, Kind.ACTIVE, 8, 80, "nennou_shuaku", "Telekinetic Grasp"),
+    AKASHIC_INDEX(35, 2, 30, Kind.ACTIVE, 10, 200, "akashikku_sakuin", "Akashic Index"),
+    RECORD_BLADES(36, 3, 55, Kind.ACTIVE, 35, 300, "kiroku_no_ken", "Blades of the Record"),
+    AKASHIC_SANCTUARY(37, 3, 70, Kind.ACTIVE, 50, 900, "akashikku_seiiki", "Akashic Sanctuary");
 
     /** PASSIVE: always on once available (some pay mana per use); ACTIVE: cast with the cast key; TOGGLE: the cast key switches it on and off (or starts its timed window). */
     public enum Kind { PASSIVE, ACTIVE, TOGGLE }

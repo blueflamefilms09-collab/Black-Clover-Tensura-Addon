@@ -28,5 +28,9 @@
   "shishou.feed.full": "I can grow no more. Keep it.",
   "shishou.feed.ate": "Ate %s: +%s experience.",
   "shishou.gui.stomach": "Stomach",
-  "anime_multiverse.gui_scale.gui.shishou_stomach": "Shishou Stomach"
+  "anime_multiverse.gui_scale.gui.shishou_stomach": "Shishou Stomach",
+  "anime_multiverse.skill.mode.shishou.akashic": "Shishou: Akashic",
+  "anime_multiverse.skill.mode.shishou.borrowed": "Shishou: Borrowed",
+  "shishou.mode.akashic": "Akashic",
+  "shishou.mode.borrowed": "Borrowed"
 }

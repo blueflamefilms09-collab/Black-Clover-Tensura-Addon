@@ -12,7 +12,7 @@ import java.util.UUID;
  * something is open). Server thread only.
  */
 public final class ShishouWindows {
-    public enum Kind { BARRIER, SENSE, STEALTH, RELEASE, IFRAMES, VEIL }
+    public enum Kind { BARRIER, SENSE, STEALTH, RELEASE, IFRAMES, VEIL, INDEX, SANCTUARY }
 
     private static final int KINDS = Kind.values().length;
 

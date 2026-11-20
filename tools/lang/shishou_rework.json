@@ -1,0 +1,12 @@
+{
+  "shishou.order.follow": "I follow you and strike what threatens you.",
+  "shishou.order.stay": "I hold this place and strike only what comes near.",
+  "shishou.order.attack": "I hunt far and chase what I find.",
+  "shishou.msg.order": "Shishou: %s",
+  "shishou.msg.pet_off": "Pet mode is off on this server.",
+  "shishou.msg.borrowed_learned": "I have eaten %s.",
+  "shishou.msg.borrow_throw": "Throw me first: I only lend my borrowed skills as a thrown sword.",
+  "shishou.msg.borrow_none": "I have no borrowed skill to lend.",
+  "shishou.msg.borrow_wait": "That skill is not ready, or my mana is too low.",
+  "shishou.msg.borrow_pick": "Borrowed skill: %s (%s mana)."
+}

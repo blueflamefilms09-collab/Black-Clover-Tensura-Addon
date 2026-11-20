@@ -190,7 +190,7 @@ class ShishouUpdate21Test {
             if (s == ShishouSkill.TELEKINESIS) assertEquals(ShishouModes.Mode.TELEKINESIS, ShishouModes.modeOf(s));
             else if (!s.castable()) assertNull(ShishouModes.modeOf(s), s + " is passive: no mode");
         }
-        assertEquals(7, ShishouModes.COUNT, "a bounded number of modes");
+        assertEquals(9, ShishouModes.COUNT, "a bounded number of modes (7 of 2.1.0, Akashic and Borrowed appended)");
         assertEquals(ShishouModes.Mode.MAGIC, ShishouModes.modeOf(ShishouSkill.HEALING_MAGIC));
         for (ShishouModes.Mode m : ShishouModes.Mode.values()) assertEquals("shishou.mode." + m.id(), m.langKey());
         assertNull(ShishouModes.byIndex(-1));

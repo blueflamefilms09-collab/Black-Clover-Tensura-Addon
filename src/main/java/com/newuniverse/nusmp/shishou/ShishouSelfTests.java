@@ -38,6 +38,11 @@ public final class ShishouSelfTests {
         SelfTests.register("relic.shishou_skill_grant", ShishouSelfTests::skillGrant);
         SelfTests.register("relic.shishou_feed", ShishouSelfTests::feed);
         SelfTests.register("relic.shishou_hunt", ShishouSelfTests::hunt);
+        // rework (docs/items/shishou_rework.md): all four start with the smoke prefix relic.shishou
+        SelfTests.register("relic.shishou_pet", ShishouSelfTests::pet);
+        SelfTests.register("relic.shishou_canon", ShishouSelfTests::canon);
+        SelfTests.register("relic.shishou_borrow", ShishouSelfTests::borrow);
+        SelfTests.register("relic.shishou_abilities", ShishouSelfTests::abilities);
     }
 
     private static boolean exists(String path) {
@@ -59,7 +64,7 @@ public final class ShishouSelfTests {
         for (String f : new String[]{"/assets/anime_multiverse/weapon_meshes/shishou.txt", "/assets/anime_multiverse/textures/entity/weapon/shishou.png", "/assets/anime_multiverse/textures/item/shishou.png",
                 "/assets/anime_multiverse/animations/entity/shishou_sword.animation.json", "/assets/anime_multiverse/models/item/shishou.json", "/assets/anime_multiverse/models/item/shishou_icon.json"})
             if (!exists(f)) return Result.fail("missing asset " + f);
-        if (ShishouSkill.values().length != 31) return Result.fail("the skill table changed size");
+        if (ShishouSkill.values().length != 38) return Result.fail("the skill table changed size");
         if (ShishouRules.THEFT_SLOW_AMP != 9 || ShishouRules.THEFT_TICKS != 200) return Result.fail("the anti-theft numbers moved");
         if (ShishouLevels.levelFor(ShishouLevels.totalFor(50)) != 50) return Result.fail("the XP curve does not invert");
         if (ShishouStealTable.size() > 64) return Result.fail("the steal table is unbounded");
@@ -392,6 +397,305 @@ public final class ShishouSelfTests {
             d.cap().reset();
             d.touch();
             ShishouLive.clearAll();
+        }
+    }
+
+    // ================================================================ rework: a shared rig (a stand-in wielder with the sword in hand, optionally thrown)
+    private static final class Rig implements AutoCloseable {
+        final ShishouData d = ShishouData.get();
+        final ShishouCap cap = d.cap();
+        final ServerLevel level;
+        final ServerPlayer p;
+        final Vec3 at;
+        final int levelBefore;
+        final List<net.minecraft.world.entity.Entity> made = new ArrayList<>();
+        ShishouEntity body;
+
+        Rig(MinecraftServer server, String name, int swordLevel) {
+            level = server.overworld();
+            at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 3, 0);
+            p = SelfTests.standIn(level, name, at.x, at.y, at.z);
+            cap.reset();
+            ShishouLive.clearAll();
+            cap.adopt(p.getUUID());
+            ShishouLive.LINKED.put(p.getUUID(), level.getGameTime());
+            ItemStack sword = ShishouItems.creativeStack();
+            sword.set(ShishouComponents.TOKEN.get(), cap.token());
+            sword.set(ShishouComponents.OWNER.get(), p.getUUID().toString());
+            p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sword);
+            p.tickCount = 200;                                                                  // a stand-in is never ticked: the 'last hurt' stamps need a tick count above 0
+            levelBefore = d.record().level();
+            if (swordLevel > 0) d.record().setLevel(swordLevel);
+            d.record().refill(level.getGameTime());
+        }
+
+        /** Throws the sword out; the body's wielder is pinned (a stand-in is not in the player list). */
+        boolean throwBody() {
+            if (!ShishouService.throwOut(p)) return false;
+            if (!(level.getEntity(cap.entity()) instanceof ShishouEntity e)) return false;
+            body = e;
+            body.pinOwner(p);
+            made.add(e);
+            return true;
+        }
+
+        Zombie zombie(double dx, double dy, double dz) {
+            Zombie z = EntityType.ZOMBIE.create(level);
+            if (z == null) return null;
+            z.moveTo(at.x + dx, at.y + dy, at.z + dz, 0, 0);
+            z.setPersistenceRequired();
+            z.setNoAi(true);
+            if (!level.addFreshEntity(z)) return null;
+            made.add(z);
+            return z;
+        }
+
+        @Override
+        public void close() {
+            for (var e : made) if (!e.isRemoved()) {
+                if (e instanceof ShishouEntity se) se.expectRemoval();
+                e.discard();
+            }
+            d.record().setLevel(levelBefore);
+            p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+            cap.reset();
+            d.touch();
+            ShishouLive.clearAll();
+        }
+    }
+
+    private static boolean petOn() { return ShishouConfig.enabled() && ShishouConfig.petMode(); }
+
+    // ================================================================ relic.shishou_pet: the thrown sword as a pet
+    private static Result pet(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+        if (!petOn()) return Result.ok("skipped: pet.mode is false (the old minion behaviour runs)");
+        try (Rig r = new Rig(server, "shishou_pet", 100)) {
+            if (!r.throwBody()) return Result.fail("the throw was refused");
+            ShishouEntity b = r.body;
+            long now = r.level.getGameTime();
+            if (!b.isPet() || b.order() != ShishouPet.Order.FOLLOW) return Result.fail("the thrown sword is not a pet that follows");
+            b.setPetState(ShishouPet.State.HUNT);
+            Zombie near = r.zombie(5, 0, 0), second = r.zombie(-5, 0, 3), far = r.zombie(15, 0, 0);
+            net.minecraft.world.entity.animal.Cow cow = EntityType.COW.create(r.level);
+            net.minecraft.world.entity.npc.Villager villager = EntityType.VILLAGER.create(r.level);
+            net.minecraft.world.entity.animal.Wolf wolf = EntityType.WOLF.create(r.level);
+            if (near == null || second == null || far == null || cow == null || villager == null || wolf == null) return Result.fail("could not make the stand-in creatures");
+            for (var e : new net.minecraft.world.entity.Mob[]{cow, villager, wolf}) {
+                e.moveTo(r.at.x + 3, r.at.y, r.at.z - 3, 0, 0);
+                e.setPersistenceRequired();
+                e.setNoAi(true);
+                if (r.level.addFreshEntity(e)) r.made.add(e);
+            }
+            wolf.tame(r.p);
+            // who may be hunted
+            if (!b.isValidTarget(near)) return Result.fail("a hostile creature near the wielder is not a target");
+            if (b.isValidTarget(cow) || b.isValidTarget(villager) || b.isValidTarget(wolf) || b.isValidTarget(r.p)) return Result.fail("the pet would strike a peaceful animal, a villager, a tamed wolf or the wielder");
+            if (ShishouTargets.petMayAttack(ShishouPet.Reason.OWNER_HIT, r.p, cow) || ShishouTargets.petMayAttack(ShishouPet.Reason.OWNER_ATTACKER, r.p, villager) || ShishouTargets.petMayAttack(ShishouPet.Reason.OWNER_ATTACKER, r.p, wolf))
+                return Result.fail("the owner-target rule allows a protected or peaceful creature");
+            if (!ShishouTargets.petMayAttack(ShishouPet.Reason.OWNER_ATTACKER, r.p, second)) return Result.fail("what attacks the wielder is not a target");
+            // the wielder's blow and the wielder's attacker become the target (the wolf's idea), a punched cow does not
+            r.p.setLastHurtMob(cow);
+            ShishouPetGoals.PetOwnerTargetGoal g1 = new ShishouPetGoals.PetOwnerTargetGoal(b);
+            if (g1.canUse()) return Result.fail("a punched cow became the target");
+            r.p.setLastHurtMob(second);
+            ShishouPetGoals.PetOwnerTargetGoal g2 = new ShishouPetGoals.PetOwnerTargetGoal(b);
+            if (!g2.canUse()) return Result.fail("what the wielder hit (a zombie) did not become the target");
+            g2.start();
+            if (b.getTarget() != second) return Result.fail("the pet did not take the creature the wielder hit");
+            b.setTarget(null);
+            r.p.setLastHurtMob(null);
+            r.p.setLastHurtByMob(near);
+            if (!new ShishouPetGoals.PetOwnerTargetGoal(b).canUse()) return Result.fail("what attacked the wielder did not become the target");
+            r.p.setLastHurtByMob(villager);
+            if (new ShishouPetGoals.PetOwnerTargetGoal(b).canUse()) return Result.fail("a villager that 'attacked' the wielder became the target");
+            // the scan: the zombie in the radius, nothing for the cow, the villager and the wolf
+            net.minecraft.world.entity.LivingEntity found = ShishouGoals.scan(b, r.level, now);
+            if (found != near && found != second) return Result.fail("the pet scan found " + found);
+            // orders: stay, attack, follow, kept in the record and applied to the body
+            ShishouService.setOrder(r.p, ShishouPet.Order.STAY);
+            if (b.order() != ShishouPet.Order.STAY || r.d.record().petOrder() != ShishouPet.Order.STAY) return Result.fail("the stay order was not applied");
+            ShishouService.bodyUpkeep(b, r.level, now);
+            if (b.petState() != ShishouPet.State.STAY) return Result.fail("a stay order did not make the state STAY (" + b.petState() + ")");
+            if (b.isValidTarget(far)) return Result.fail("a staying sword hunts a creature 15 blocks away");
+            ShishouService.cycleOrder(r.p);
+            if (b.order() != ShishouPet.Order.ATTACK) return Result.fail("the order did not cycle to attack");
+            ShishouService.cycleOrder(r.p);
+            if (b.order() != ShishouPet.Order.FOLLOW) return Result.fail("the order did not cycle back to follow");
+            // retreat when the sword's mana is low, hunt again when it is back
+            r.d.record().refill(now);
+            r.d.record().spend(now, r.d.record().maxMana() * 0.92);
+            ShishouService.bodyUpkeep(b, r.level, now);
+            if (b.petState() != ShishouPet.State.RETREAT) return Result.fail("low mana did not make him retreat (" + b.petState() + ")");
+            if (b.isValidTarget(near)) return Result.fail("a retreating sword still hunts");
+            r.d.record().refill(now);
+            ShishouService.bodyUpkeep(b, r.level, now);
+            if (b.petState() == ShishouPet.State.RETREAT || !b.isValidTarget(near) || !b.isValidTarget(far)) return Result.fail("with his mana back he does not hunt again (" + b.petState() + ")");
+            // the follow: far from the wielder he comes to the shoulder (one tick of the goal, no stall)
+            b.setPos(r.at.x + 18, r.at.y + 6, r.at.z);
+            ShishouPetGoals.PetKeepGoal keep = new ShishouPetGoals.PetKeepGoal(b);
+            if (!keep.canUse()) return Result.fail("a pet 18 blocks away does not follow");
+            double d0 = b.distanceTo(r.p);
+            for (int i = 0; i < 10; i++) {
+                keep.tick();
+                b.setPos(b.position().add(b.getDeltaMovement()));
+            }
+            if (!(b.distanceTo(r.p) < d0)) return Result.fail("the follow did not bring him closer: " + d0 + " -> " + b.distanceTo(r.p));
+            return Result.ok("pet mode: hunts hostiles, never a cow, villager, tamed wolf or the wielder; takes what the wielder hits or what attacks them; stay / attack / follow orders cycle and stick; retreats at low mana and returns; follows");
+        }
+    }
+
+    // ================================================================ relic.shishou_canon: Self-Repair, High-Speed Self-Repair, Self-Evolution
+    private static Result canon(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+        try (Rig r = new Rig(server, "shishou_canon", 100)) {
+            ShishouRecord rec = r.d.record();
+            long now = r.level.getGameTime();
+            boolean on = ShishouConfig.canonPassives();
+            ShishouService.floorLevel(rec, now);
+            if (!rec.has(ShishouSkill.SELF_REPAIR) || !rec.has(ShishouSkill.HIGH_SPEED_SELF_REPAIR) || !rec.has(ShishouSkill.SELF_EVOLUTION)) return Result.fail("the three passives are not open at level 100");
+            double want = on ? 2.0 : 1.0;
+            if (Math.abs(rec.regenFactor() - want) > 1e-9) return Result.fail("the regeneration factor is " + rec.regenFactor() + ", wanted " + want + " (canon.skills is " + on + ")");
+            rec.spend(now, rec.maxMana());
+            double slow = ShishouRules.regenPerTick(rec.level()) * 40;
+            double got = rec.mana(now + 40);
+            if (Math.abs(got - slow * want) > 1e-6 && got < rec.maxMana() - 1e-6) return Result.fail("40 ticks gave " + got + ", wanted " + slow * want);
+            long base = Math.round(100 * ShishouConfig.expPercent() / 100.0), exp = ShishouService.scaleExp(100);
+            long expect = on && ShishouConfig.skillOn(ShishouSkill.SELF_EVOLUTION) ? ShishouCanon.evolvedExp(base, true) : base;
+            if (exp != expect) return Result.fail("Self-Evolution experience " + exp + ", wanted " + expect);
+            // every 25th kill gives a free mana step (when canon.skills is on and the skill is on)
+            while (rec.kills() % ShishouCanon.EVOLVE_KILLS != ShishouCanon.EVOLVE_KILLS - 1) rec.countKill();
+            int steps = rec.manaSteps();
+            Zombie victim = r.zombie(6, 0, 0);
+            if (victim == null) return Result.fail("could not make the victim");
+            ShishouService.onKill(victim, r.level.damageSources().playerAttack(r.p));
+            boolean stepped = rec.manaSteps() > steps;
+            boolean shouldStep = on && ShishouConfig.skillOn(ShishouSkill.SELF_EVOLUTION) && ShishouConfig.skillOn(ShishouSkill.SKILL_EATER) && steps < ShishouRules.MAX_STEPS;
+            if (shouldStep && !stepped) return Result.fail("the 25th kill gave no mana step");
+            return Result.ok("the passives are open at level 100; regeneration x" + want + ", experience " + exp + " for 100, the 25th kill " + (stepped ? "gave" : "gave no") + " a mana step (canon.skills " + on + ")");
+        }
+    }
+
+    // ================================================================ relic.shishou_borrow: skills of other mods and the grimoire echoes
+    private static Result borrow(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+        List<ShishouBorrowTable.Entry> all = ShishouBorrowTable.entries();
+        if (all.size() < 20 || all.size() > ShishouBorrowTable.MAX) return Result.fail("the borrowed table has " + all.size() + " entries");
+        if (ShishouConfig.compatSource("bogus")) return Result.fail("an unknown source is on");
+        // Skill Eater's table: a blaze can teach the fire skills (a copy of the record, nothing of the world's)
+        ShishouRecord copy = ShishouRecord.fromMap(ShishouData.get().record().toMap());
+        ShishouBorrowTable.Entry fire = ShishouBorrowTable.stealMatch(all, "minecraft:blaze", 1, 0L);
+        if (fire == null || !copy.learnBorrowed(fire) || copy.learnBorrowed(fire)) return Result.fail("the steal table lost the blaze rows");
+        int resolved = 0, cast = 0, echoes = 0, missing = 0;
+        StringBuilder gone = new StringBuilder();
+        try (Rig r = new Rig(server, "shishou_borrow", 100)) {
+            if (ShishouBorrow.castSelected(r.p)) return Result.fail("a held sword lent a borrowed skill");
+            if (!r.throwBody()) return Result.fail("the throw was refused");
+            ShishouEntity b = r.body;
+            ShishouRecord rec = r.d.record();
+            Zombie z = r.zombie(9, 0, 0);
+            if (z == null) return Result.fail("could not make the target");
+            z.setInvulnerable(true);                                                            // the casts must not kill the stand-in target
+            b.setTarget(z);
+            Vec3 look = z.getEyePosition().subtract(b.position().add(0, 0.3, 0));
+            for (ShishouBorrowTable.Entry en : all) {
+                if (!ShishouBorrow.usableNow(en)) {
+                    missing++;
+                    if (gone.length() < 300) gone.append(en.id()).append(' ');
+                    continue;
+                }
+                resolved++;
+                rec.refill(r.level.getGameTime());
+                long now = r.level.getGameTime();
+                float hp = z.getHealth();
+                boolean ok;
+                try {
+                    ok = ShishouBorrow.tryCast(b, r.p, rec, r.level, now, en, z, look);
+                } catch (Throwable t) {
+                    return Result.fail("casting " + en.id() + " threw " + t);
+                }
+                if (ok) {
+                    cast++;
+                    if (en.kind() == ShishouBorrowTable.Kind.ECHO) echoes++;
+                    if (b.borrowReady(en.idx(), now)) return Result.fail(en.id() + " has no cooldown after a cast");
+                    if (ShishouBorrow.tryCast(b, r.p, rec, r.level, now, en, z, look)) return Result.fail(en.id() + " cast twice in the same tick");
+                }
+                if (en.kind() == ShishouBorrowTable.Kind.ECHO && !ok) return Result.fail("the echo " + en.id() + " did not cast");
+                z.setHealth(Math.max(z.getHealth(), Math.min(z.getMaxHealth(), hp)));
+            }
+            if (echoes < 1) return Result.fail("no grimoire echo was castable");
+            // the gap: one borrowed cast at most every borrowGapTicks per body
+            long t0 = r.level.getGameTime();
+            boolean first = b.borrowGate(t0 + 100000L, ShishouConfig.borrowGap()), second = b.borrowGate(t0 + 100000L, ShishouConfig.borrowGap()), later = b.borrowGate(t0 + 100000L + ShishouConfig.borrowGap(), ShishouConfig.borrowGap());
+            if (!first || second || !later) return Result.fail("the borrow gap does not hold: " + first + "," + second + "," + later);
+            return Result.ok("borrowed skills: " + all.size() + " entries, " + resolved + " resolve on this server (" + missing + " not installed or not found: " + gone + "), " + cast + " cast without an error (" + echoes + " echoes), cooldowns and the gap hold, a held sword lends nothing");
+        }
+    }
+
+    // ================================================================ relic.shishou_abilities: every castable skill is fired once on the server
+    private static Result abilities(MinecraftServer server) {
+        if (!ShishouData.bound()) return Result.fail("the data is not bound to the server");
+        if (!ShishouConfig.enabled()) return Result.ok("skipped: relic.shishouEnabled is false");
+        try (Rig r = new Rig(server, "shishou_abilities", 100)) {
+            ShishouRecord rec = r.d.record();
+            List<Zombie> zs = new ArrayList<>();
+            for (int i = 0; i < 8; i++) {
+                Zombie z = r.zombie(5 + (i % 4) * 0.7, 0, (i / 4) * 0.7);
+                if (z == null) return Result.fail("could not make the targets");
+                zs.add(z);
+            }
+            long now = r.level.getGameTime();
+            Vec3 look = new Vec3(1, 0, 0);
+            java.util.function.Supplier<ShishouSpells.Caster> caster = () -> new ShishouSpells.Caster(r.level, r.p, null, r.p.getEyePosition(), look, 100, rec, r.level.getGameTime(), r.p.getUUID());
+            // Telekinetic Grasp
+            ShishouSpells.Result g = ShishouSpells.cast(ShishouSkill.TELEKINETIC_GRASP, caster.get());
+            if (!g.ok()) return Result.fail("Telekinetic Grasp did not fire at a group of zombies");
+            long lifted = zs.stream().filter(z -> z.hasEffect(MobEffects.LEVITATION)).count();
+            if (lifted < 1 || lifted > ShishouCanon.GRASP_TARGETS) return Result.fail("Telekinetic Grasp lifted " + lifted + " creatures");
+            // Akashic Index
+            ShishouSpells.Result ix = ShishouSpells.cast(ShishouSkill.AKASHIC_INDEX, caster.get());
+            if (!ix.ok()) return Result.fail("Akashic Index did not fire");
+            long named = zs.stream().filter(z -> ShishouAbilities.isIndexed(r.p.getUUID(), z.getId(), r.level.getGameTime())).count();
+            if (named < 1 || named > ShishouCanon.INDEX_TARGETS) return Result.fail("Akashic Index named " + named + " creatures (cap " + ShishouCanon.INDEX_TARGETS + ")");
+            ShishouLive.forget(r.p.getUUID());
+            if (zs.stream().anyMatch(z -> ShishouAbilities.isIndexed(r.p.getUUID(), z.getId(), r.level.getGameTime()))) return Result.fail("the index names survived the wielder leaving");
+            ShishouLive.LINKED.put(r.p.getUUID(), r.level.getGameTime());
+            // Blades of the Record: the first wave lands at once
+            float before = 0f, after = 0f;
+            for (Zombie z : zs) before += z.getHealth();
+            ShishouSpells.Result bl = ShishouSpells.cast(ShishouSkill.RECORD_BLADES, caster.get());
+            if (!bl.ok()) return Result.fail("Blades of the Record did not fire");
+            for (Zombie z : zs) after += z.getHealth();
+            if (!(after < before)) return Result.fail("the first wave of the blades hurt nobody");
+            // Akashic Sanctuary: one at a time
+            ShishouSpells.Result sa = ShishouSpells.cast(ShishouSkill.AKASHIC_SANCTUARY, caster.get());
+            if (!sa.ok() || ShishouSpells.cast(ShishouSkill.AKASHIC_SANCTUARY, caster.get()).ok()) return Result.fail("Akashic Sanctuary did not fire once, or stacked");
+            if (!ShishouLive.WINDOWS.active(r.p.getUUID(), ShishouWindows.Kind.SANCTUARY, r.level.getGameTime())) return Result.fail("the sanctuary window is not open");
+            ShishouLive.WINDOWS.clear();
+            // every castable skill is fired once through the dispatcher: none may throw
+            int fired = 0, refused = 0;
+            for (ShishouSkill s : ShishouSkill.values()) {
+                if (!s.castable() || s == ShishouSkill.TELEKINESIS) continue;
+                r.p.setPos(r.at.x, r.at.y, r.at.z);
+                rec.refill(r.level.getGameTime());
+                try {
+                    if (ShishouSpells.cast(s, caster.get()).ok()) fired++; else refused++;
+                } catch (Throwable t) {
+                    return Result.fail(s.id() + " threw " + t);
+                }
+                ShishouLive.WINDOWS.clear();
+            }
+            // the Wind Magic of a thrown body no longer flings its wielder (rework fix)
+            if (!r.throwBody()) return Result.fail("the throw was refused");
+            r.p.setDeltaMovement(Vec3.ZERO);
+            ShishouSpells.cast(ShishouSkill.WIND_MAGIC, new ShishouSpells.Caster(r.level, r.p, r.body, r.body.position(), look, 100, rec, r.level.getGameTime(), ShishouEntity.selfKey()));
+            if (r.p.getDeltaMovement().lengthSqr() > 1e-6) return Result.fail("a thrown body's Wind Magic pushed its wielder");
+            // the particle budgets of the effect geometry
+            if (ShishouVfx.bladeWaveParticles(4.0) > ShishouVfx.STEP_MAX || ShishouVfx.sanctuaryPulseParticles(ShishouCanon.SANCTUARY_RADIUS) > ShishouVfx.STEP_MAX) return Result.fail("an effect step is over the particle cap");
+            return Result.ok("the four new skills fire on a group of zombies within their caps (grasp " + lifted + ", index " + named + "); " + fired + " castable skills fired through the dispatcher, " + refused + " refused for want of a precondition, none threw; a body's wind spares its wielder");
         }
     }
 }

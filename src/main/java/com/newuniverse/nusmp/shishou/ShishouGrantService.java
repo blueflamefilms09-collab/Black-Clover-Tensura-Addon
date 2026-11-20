@@ -88,8 +88,13 @@ public final class ShishouGrantService {
         int level = rec.level();
         long learned = rec.learned();
         List<ShishouSkill> avail = ShishouModes.available(m, level, learned);
-        ShishouModes.Action a = ShishouModes.action(m, p.isShiftKeyDown(), avail.size());
+        ShishouModes.Action a = ShishouModes.action(m, p.isShiftKeyDown(), avail.size(), ShishouConfig.petMode() && d.cap().form() == ShishouCap.Form.MINION);
         switch (a) {
+            case ORDER -> ShishouService.cycleOrder(p);                                       // rework: Telekinesis + sneak while the sword is thrown (pet mode)
+            case BORROW_CAST -> {
+                if (ShishouBorrow.castSelected(p)) ShishouService.syncHud(p);
+            }
+            case BORROW_CYCLE -> ShishouBorrow.cycle(p);
             case THROW_RECALL -> ShishouService.throwRecall(p);
             case STATUS -> ShishouService.counsel(p);
             case OPEN_STORAGE -> ShishouService.openStorage(p);
