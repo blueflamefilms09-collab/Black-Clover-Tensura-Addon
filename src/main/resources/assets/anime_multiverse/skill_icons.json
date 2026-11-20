@@ -1,6 +1,6 @@
 {
- "version": 1,
- "frametime": 6,
+ "version": 2,
+ "frametime": 4,
  "styled": [
   "lord_of_summons",
   "goddess_of_faith",
@@ -139,6 +139,26 @@
   "ki",
   "lord_of_gluttonous_greed",
   "shishou",
+  "summoner",
+  "faith",
+  "argonaut",
+  "hell_walker",
+  "unbreakable_will",
+  "devils_footprints",
+  "book_maker",
+  "airiel",
+  "liaris_freese",
+  "hati",
+  "adaptability",
+  "hestia",
+  "freya",
+  "hephaestus",
+  "loki",
+  "wynn_fimbulvetr",
+  "rea_laevateinn",
+  "arcs_ray",
+  "futsunomitama",
+  "uchide_no_kozuchi",
   "bw_ammit",
   "bw_apophis",
   "bw_cerberus",
@@ -182,5 +202,5 @@
   "db_future_trunks",
   "db_bulma"
  ],
- "frames": 8
+ "frames": 12
 }

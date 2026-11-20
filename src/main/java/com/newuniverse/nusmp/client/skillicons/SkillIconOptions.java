@@ -11,14 +11,17 @@ public final class SkillIconOptions {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue NEW_STYLE;
     public static final ModConfigSpec.BooleanValue ANIMATE;
+    public static final ModConfigSpec.BooleanValue CLASSIC;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("skillIcons");
         NEW_STYLE = b.comment("true = the skill icons painted in the Tensura house style (class frame, shaded symbol); false = the icons of 4.4.0.")
                 .define("newStyle", true);
-        ANIMATE = b.comment("true = Ultimate skill icons play a short 8-frame loop (glow, glint, sparkles); false = they stay still. Ignored when newStyle is false.")
+        ANIMATE = b.comment("true = Ultimate skill icons play a short 12-frame loop (glow, glint, sparkles); false = they stay still. Ignored when newStyle is false.")
                 .define("animate", true);
+        CLASSIC = b.comment("true = show every skill icon as it looked before the pixel-art redesign of docs/skill_icons_v3.md (textures/skill_old); false (default) = the redesigned icons. Ignored when newStyle is false (that shows the 4.4.0 icons).")
+                .define("classic", false);
         b.pop();
         SPEC = b.build();
     }
@@ -30,6 +33,14 @@ public final class SkillIconOptions {
             return NEW_STYLE.get();
         } catch (IllegalStateException notLoaded) {
             return true;
+        }
+    }
+
+    public static boolean classic() {
+        try {
+            return CLASSIC.get();
+        } catch (IllegalStateException notLoaded) {
+            return false;
         }
     }
 

@@ -21,14 +21,18 @@ import java.util.regex.Pattern;
 public final class SkillIconIndex {
     private SkillIconIndex() {}
 
-    /** The most frames an animated strip may have (a loop of at most 8 pictures). */
-    public static final int MAX_FRAMES = 8;
+    /** The most frames an animated strip may have (a loop of at most 16 pictures; the redesign of docs/skill_icons_v3.md uses 12, like Tensura No Index's 12 to 16 frame icons). */
+    public static final int MAX_FRAMES = 16;
+    /** The most pictures the list of replaced icons (skill_icons_old.json) may name; bounds the client's once-a-second check. */
+    public static final int MAX_OLD = 640;
+    public static final String OLD_INDEX_RESOURCE = "/assets/anime_multiverse/skill_icons_old.json";
     /** The most icons the index may name (bounds the client's once-a-second check). */
     public static final int MAX_STYLED = 256;
     public static final int DEFAULT_FRAMETIME = 6;
     public static final String INDEX_RESOURCE = "/assets/anime_multiverse/skill_icons.json";
 
     private static final Pattern ID = Pattern.compile("[a-z0-9_]{1,64}");
+    private static final Pattern REL = Pattern.compile("[a-z0-9_]{1,64}(/[a-z0-9_]{1,64}){0,2}\\.png");
 
     /** styled: every repainted skill id; animated: the subset that has a strip; frames: frames per strip; frameTime: game ticks per frame. */
     public record Index(List<String> styled, List<String> animated, int frames, int frameTime) {
@@ -47,6 +51,43 @@ public final class SkillIconIndex {
 
     /** The icon that shipped up to 4.4.0, shown when the client setting skillIcons.newStyle is off. */
     public static String classicPath(String id) { return "textures/skill/classic/v440/" + id + ".png"; }
+
+    /** A replaced icon's path relative to textures/skill (for example {@code grimoire/flame.png}): lower-case segments only, so it cannot leave the skill folder. */
+    public static boolean validRel(String rel) { return rel != null && REL.matcher(rel).matches(); }
+
+    /** Where the icon is drawn from (the new picture). */
+    public static String livePath(String rel) { return "textures/skill/" + rel; }
+
+    /** The icon as it was before the v3 redesign (docs/skill_icons_v3.md), shown when the client setting skillIcons.classic is on. */
+    public static String oldPath(String rel) { return "textures/skill_old/" + rel; }
+
+    /** Parses the list of replaced icons (skill_icons_old.json: {@code {"paths": ["grimoire/flame.png", ...]}}); any problem (not JSON, a bad or repeated path, more than {@link #MAX_OLD}) gives the empty list. */
+    public static List<String> parseOld(String json) {
+        if (json == null || json.isBlank()) return List.of();
+        try {
+            JsonArray arr = JsonParser.parseString(json).getAsJsonObject().getAsJsonArray("paths");
+            if (arr == null || arr.size() > MAX_OLD) return List.of();
+            List<String> out = new ArrayList<>(arr.size());
+            for (JsonElement e : arr) {
+                String rel = e.getAsString();
+                if (!validRel(rel) || out.contains(rel)) return List.of();
+                out.add(rel);
+            }
+            return List.copyOf(out);
+        } catch (RuntimeException notTheShape) {
+            return List.of();
+        }
+    }
+
+    /** Reads the list shipped in the mod jar. */
+    public static List<String> loadOld() {
+        try (InputStream in = SkillIconIndex.class.getResourceAsStream(OLD_INDEX_RESOURCE)) {
+            if (in == null) return List.of();
+            return parseOld(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+        } catch (IOException | RuntimeException unreadable) {
+            return List.of();
+        }
+    }
 
     /** Parses the index text; any problem (not JSON, bad id, animated id that is not styled, too many ids, frames out of range) gives {@link Index#EMPTY}. */
     public static Index parse(String json) {

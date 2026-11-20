@@ -21,6 +21,18 @@ public final class SkillIconSelfTests {
         registered = true;
         SelfTests.register("skillicons.index", SkillIconSelfTests::index);
         SelfTests.register("skillicons.bounds", s -> bounds());
+        SelfTests.register("skillicons.old", s -> old());
+    }
+
+    /** The redesign (docs/skill_icons_v3.md) keeps every replaced picture under textures/skill_old for the client switch skillIcons.classic: the list parses and both files of every entry ship. */
+    private static Result old() {
+        java.util.List<String> paths = SkillIconIndex.loadOld();
+        if (paths.isEmpty()) return Result.fail("skill_icons_old.json is missing or invalid");
+        for (String rel : paths) {
+            if (!has(SkillIconIndex.livePath(rel))) return Result.fail(rel + ": the new picture is missing");
+            if (!has(SkillIconIndex.oldPath(rel))) return Result.fail(rel + ": the pre-redesign picture is missing");
+        }
+        return Result.ok(paths.size() + " replaced icons keep their old picture (max " + SkillIconIndex.MAX_OLD + ")");
     }
 
     private static boolean has(String path) { return SkillIconSelfTests.class.getResource("/assets/anime_multiverse/" + path) != null; }

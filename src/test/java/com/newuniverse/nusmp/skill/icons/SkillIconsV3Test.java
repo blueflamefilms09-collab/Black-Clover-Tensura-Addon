@@ -97,31 +97,38 @@ class SkillIconsV3Test {
         }
     }
 
+    /** The icon redesign (docs/skill_icons_v3.md) animates every Ultimate and every root Unique (not the Beast Will / Dragon Ball Uniques): a 12-frame loop. */
+    private static boolean animatedClass(String[] e) {
+        return e[1].equals("ultimate") || (e[1].equals("unique") && !e[0].startsWith("bw_") && !e[0].startsWith("db_"));
+    }
+
     @Test
-    void ultimatesAreAnimatedAndNothingElseIs() throws Exception {
+    void ultimatesAndRootUniquesAreAnimatedAndNothingElseIs() throws Exception {
         for (String[] e : manifest().values()) {
-            boolean ult = e[1].equals("ultimate");
-            assertEquals(ult ? 8 : 1, Integer.parseInt(e[2]), e[0]);
+            boolean anim = animatedClass(e);
+            assertEquals(anim ? 12 : 1, Integer.parseInt(e[2]), e[0]);
             Path strip = TEX.resolve("anim/" + e[0] + "_anim.png");
-            assertEquals(ult, Files.exists(strip), e[0] + ": only Ultimates have a strip");
+            assertEquals(anim, Files.exists(strip), e[0] + ": only Ultimates and root Uniques have a strip");
         }
     }
 
     @Test
     void animatedStripsAreValid() throws Exception {
         for (String[] e : manifest().values()) {
-            if (!e[1].equals("ultimate")) continue;
+            if (!animatedClass(e)) continue;
+            int n = Integer.parseInt(e[2]);
             Path strip = TEX.resolve("anim/" + e[0] + "_anim.png");
             BufferedImage im = png(strip);
             assertEquals(32, im.getWidth(), e[0]);
-            assertEquals(32 * SkillIconIndex.MAX_FRAMES, im.getHeight(), e[0] + ": 8 frames of 32 x 32");
+            assertTrue(n <= SkillIconIndex.MAX_FRAMES, e[0] + ": at most MAX_FRAMES frames");
+            assertEquals(32 * n, im.getHeight(), e[0] + ": " + n + " frames of 32 x 32");
             JsonObject meta = JsonParser.parseString(Files.readString(Path.of(strip + ".mcmeta"))).getAsJsonObject();
             int ft = meta.getAsJsonObject("animation").get("frametime").getAsInt();
             assertTrue(ft >= 1 && ft <= 40, e[0] + " frametime");
             double moved = 0;
-            for (int f = 1; f < 8; f++) moved = Math.max(moved, meanDiff(im, 0, im, f * 32, 32));
+            for (int f = 1; f < n; f++) moved = Math.max(moved, meanDiff(im, 0, im, f * 32, 32));
             assertTrue(moved > 0.3, e[0] + ": the frames must not all be the same picture");
-            double loop = meanDiff(im, 7 * 32, im, 0, 32), step = meanDiff(im, 3 * 32, im, 4 * 32, 32);
+            double loop = meanDiff(im, (n - 1) * 32, im, 0, 32), step = meanDiff(im, (n / 2 - 1) * 32, im, (n / 2) * 32, 32);
             assertTrue(loop <= Math.max(step * 2.5, 6.0), e[0] + ": the loop must be seamless (last to first " + loop + ", a normal step " + step + ")");
         }
     }
@@ -132,9 +139,9 @@ class SkillIconsV3Test {
         Map<String, String[]> m = manifest();
         assertEquals(List.copyOf(m.keySet()), idx.styled());
         List<String> anim = new ArrayList<>();
-        m.forEach((k, v) -> { if (v[1].equals("ultimate")) anim.add(k); });
+        m.forEach((k, v) -> { if (animatedClass(v)) anim.add(k); });
         assertEquals(anim, idx.animated());
-        assertEquals(8, idx.frames());
+        assertEquals(12, idx.frames());
         assertTrue(idx.animated().size() * 20.0 / idx.frameTime() <= 400, "bounded upload rate");
     }
 
@@ -145,7 +152,8 @@ class SkillIconsV3Test {
         assertTrue(SkillIconIndex.parse("not json").isEmpty());
         assertTrue(SkillIconIndex.parse("{\"styled\":[\"a\"],\"animated\":[\"b\"],\"frames\":8}").isEmpty(), "animated must be styled");
         assertTrue(SkillIconIndex.parse("{\"styled\":[\"A B\"],\"animated\":[],\"frames\":8}").isEmpty(), "bad id");
-        assertTrue(SkillIconIndex.parse("{\"styled\":[\"a\"],\"animated\":[\"a\"],\"frames\":9}").isEmpty(), "too many frames");
+        assertTrue(SkillIconIndex.parse("{\"styled\":[\"a\"],\"animated\":[\"a\"],\"frames\":17}").isEmpty(), "too many frames");
+        assertFalse(SkillIconIndex.parse("{\"styled\":[\"a\"],\"animated\":[\"a\"],\"frames\":12}").isEmpty(), "12 frames are fine");
         assertTrue(SkillIconIndex.parse("{\"styled\":[\"a\",\"a\"],\"animated\":[],\"frames\":8}").isEmpty(), "duplicate");
         SkillIconIndex.Index ok = SkillIconIndex.parse("{\"styled\":[\"a\",\"b\"],\"animated\":[\"b\"],\"frames\":8,\"frametime\":999}");
         assertEquals(2, ok.styled().size());

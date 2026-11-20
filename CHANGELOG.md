@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.46.0] — Skill icons redrawn in the Tensura-mod pixel style
+- REPLACED (old pictures kept in `textures/skill_old/` and shown by the client setting `skillIcons.classic`, default off): 121 root icons (root, Beast Will, Dragon Ball), 105 grimoire icons, 75 buff and 75 ultimate icons, 6 symbol icons (5 sin lords, Saiyan Prodigy), 5 Veldanava 32 px pictures. They are painted directly on the 32 px grid: flat tones lit from the top left, 1 px outline, banded backgrounds, rank pips in the grade colours. Colour counts dropped from about 600 to 800 to 60 to 80, like the reference Tensura mods.
+- NEW: 76 animated icons (all Ultimates plus the root Uniques; 20 root Uniques had no animation) as 12-frame strips; the Veldanava medallions keep their 32 frames.
+- KEPT: every id, path and size, the 4.4.0 classic set, the Veldanava HD strips, the `ws_*` and legacy icons, the `mod_*` badges, and Time Magic untouched.
+- Cost: no server work, no packets; client ceiling is 76 animated icons x 5 uploads/s of 4 KiB if every one is on screen at once (not profiled in a game); the jar grows by about 3.7 MB.
+- Weak spots: the Dragon Ball busts share one template, Beast Will Unique/Ultimate pairs differ mostly in frame and animation, the magic stone glyph is plain, contrast is still below No Index. Not seen in a game.
+
 ## [4.45.1] — Build fix
 - FIXED: the smoke list had `boss.realm` after `scaling`, and `docs/rank_audit.md` had lost the names `SaiyanRules.Rank` and `Aptitude.Rarity` that nine source-scan tests pin; both are back as the tests expect. No game change.
 
