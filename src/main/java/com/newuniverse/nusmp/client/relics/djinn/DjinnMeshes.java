@@ -39,7 +39,9 @@ public final class DjinnMeshes {
         /** The unique piece standing behind the back: a ring, an arch, a pair of extra arms. */
         BACKDROP,
         /** The mantle: a cape, scarves, a ruff. */
-        MANTLE;
+        MANTLE,
+        /** The second pair of arms of the bone-dragon set (Belial): thin bone arm with its own gauntlet, one piece each, worn on the body (appended last, 4.57.1). */
+        ARM2_L, ARM2_R;
 
         public String file() { return name().toLowerCase(); }
     }

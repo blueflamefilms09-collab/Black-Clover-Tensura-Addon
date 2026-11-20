@@ -116,6 +116,9 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         part(pose, buffers, armO, d, dark, pauO, s, 3, 3, mainRight ? 14f : -14f, -4f, 0f, light, now, glow);
         part(pose, buffers, armO, d, dark, vamO, s, 3, 4, mainRight ? 12f : -12f, 2f, -6f, light, now, glow);
         part(pose, buffers, armO, d, dark, gauO, s, 3, 5, mainRight ? 10f : -10f, 8f, -6f, light, now, glow);
+        // ---- the second pair of arms (the bone-dragon set only: other sets have no such piece and draw nothing)
+        arm2(pose, buffers, m, d, dark, Piece.ARM2_L, 1f, s, light, now, glow);
+        arm2(pose, buffers, m, d, dark, Piece.ARM2_R, -1f, s, light, now, glow);
         // ---- legs
         part(pose, buffers, m.rightLeg, d, dark, Piece.GREAVE_R, s, 3, 6, -3f, 14f, -6f, light, now, glow);
         part(pose, buffers, m.leftLeg, d, dark, Piece.GREAVE_L, s, 3, 7, 3f, 14f, -6f, light, now, glow);
@@ -192,6 +195,28 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
             if (a > 0) { off = (1f - a) * (1f - a); alpha = a; sc = 0.85f + 0.15f * a; }
             else { float p = -a; off = p * p * 1.4f; alpha = 1f - p; sc = 1f + 0.25f * p; }
             pose.translate(dx * off, dy * off, dz * off);
+            pose.scale(sc, sc, sc);
+        }
+        DjinnDraw.piece(pose, buffers, d, piece, dark, light, alpha, glow * Math.max(0.0f, alpha));
+        pose.popPose();
+    }
+
+    /** The extra arm: hung from the lower ribs just in front of the main arm, flared out and a little forward, forged in with the Full Equip like the rest of the set. {@code side} +1 = wearer's left. */
+    private static void arm2(PoseStack pose, MultiBufferSource buffers, PlayerModel<?> m, Djinn d, boolean dark, Piece piece, float side, Snap s, int light, float now, float glow) {
+        float a = assembled(s, 3, 9, now);
+        if (a == 0f || DjinnMeshes.get(d, piece, dark).isEmpty()) return;
+        pose.pushPose();
+        m.body.translateAndRotate(pose);
+        pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
+        pose.translate(4.2f * side, 6.5f, -0.8f);
+        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(-22f * side));
+        pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-14f));
+        float alpha = 1f, sc = 1f;
+        if (a < 1f) {
+            float off;
+            if (a > 0) { off = (1f - a) * (1f - a); alpha = a; sc = 0.85f + 0.15f * a; }
+            else { float p = -a; off = p * p * 1.4f; alpha = 1f - p; sc = 1f + 0.25f * p; }
+            pose.translate(6f * side * off, 0f, 0f);
             pose.scale(sc, sc, sc);
         }
         DjinnDraw.piece(pose, buffers, d, piece, dark, light, alpha, glow * Math.max(0.0f, alpha));

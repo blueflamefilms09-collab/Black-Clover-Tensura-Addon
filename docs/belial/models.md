@@ -38,7 +38,7 @@ Lines for the coordinator (shared files, NOT edited here):
 |---|---|
 | Files | `djinn/belial_bone/<piece>.txt` (25 pieces: the old 23 plus `arm2_l`, `arm2_r` appended last), atlas `textures/entity/djinn/belial_bone_armor.png` + `belial_bone_armor_glow.png` |
 | Script | `tools/blender/belial_bone.py`; preview `tools/blender/belial_bone_preview.py` |
-| Pieces | helm, horn_l/r, crest, chest, belt, pauldron_l/r, vambrace_l/r, gauntlet_l/r, greave_l/r, wing_in_l/r, wing_out_l/r (bat wings), tail_seg, tail_tip (bone-dragon spine), backdrop (bone dragon: spine, ribs, clawed forelimb, horned skull), mantle (dark cape), arm2_l/r (thin bone-white second vambrace + gauntlet; NO client-layer anchor yet, appended at the end of the table), weapon (the scythe at 0.22 scale, in item space) |
+| Pieces | helm, horn_l/r, crest, chest, belt, pauldron_l/r, vambrace_l/r, gauntlet_l/r, greave_l/r, wing_in_l/r, wing_out_l/r (bat wings), tail_seg, tail_tip (bone-dragon spine), backdrop (bone dragon: spine, ribs, clawed forelimb, horned skull), mantle (dark cape), arm2_l/r (thin bone-white second vambrace + gauntlet; drawn since 4.58.0 on the body below the main arms, appended at the end of the table), weapon (the scythe at 0.22 scale, in item space) |
 | Quad lines | DjinnBoneSetTest total 6358 of 6400 (was 6282): core pieces with tail_seg x3, plus mantle and horns. Largest: backdrop 1124, weapon 751, chest 685, helm 440. `arm2_l/r` 118 / 117 are extra and not in that total |
 | Atlas | 1024 px, one atlas for all pieces: skin 310.7 KB (96-colour palette, denoised) + glow 30.2 KB (40 colours) = about 341 KB |
 | Made in Blender | yes (same pipeline), one shared bake |
@@ -64,7 +64,7 @@ backdrop does not spin.
   in-hand complaint is in the pose / grip anchor (Java / json), not the mesh. Still weak: the blade relief is texture, not geometry; PNG sits at 349 KB.
 - Bone set: real horned dragon skull (brow ridges, cheekbones, sockets, hinged jaw with teeth, nasal ridge), vertebrae with spines, curved ribs, finer wing bones,
   black-violet jagged wing membranes with bone-white fingers, forelimb claws curling forward. Canon extras: two vertical teal forehead eyes, swept-back white hair
-  and gold studs on the helm, dragon-bone graft on the pauldrons, `arm2_l/r` (no anchor yet). Weak: close up the skull is still faceted and the 96-colour atlas is
+  and gold studs on the helm, dragon-bone graft on the pauldrons, `arm2_l/r` (anchored since 4.58.0). Weak: close up the skull is still faceted and the 96-colour atlas is
   blocky; the helm crest is busy. Assembly previews approximate DjinnArmorLayer, so the in-game pose can differ. Not seen in a game.
 - Worst case: assets only, no server cost, no packets; client about 6360 body quads per wearer plus the repeated tail, far wearers skipped by the layer LOD.
 - Not done: no Java, no engravings, no Better Combat file, no inventory icon change; the test sweep was not run.

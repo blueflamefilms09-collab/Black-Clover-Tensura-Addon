@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.58.0] — Belial's second pair of arms is drawn
+- NEW: the bone-dragon set (Belial) now shows its `arm2_l` / `arm2_r` pieces: two thin bone arms with clawed gauntlets hang from the lower ribs, flared out and a little forward, and forge in with the Full Equip (phase 3) like the rest of the set. Two new `DjinnMeshes.Piece` entries appended last (`ARM2_L`, `ARM2_R`); the meshes were already shipped in 4.25.x.
+- KEPT: every other piece and every other Djinn (sets without the piece draw nothing extra); no setting needed, the arms follow the set.
+- COST: client only, at most 2 extra meshes (about 235 quad lines) per Belial wearer in range, same culling as the rest of the set; no packets, no server work.
+- CAVEATS: the shoulder position and flare (4.2 / 6.5 / -0.8 model pixels, 22 degrees out, 14 degrees forward) are a first guess from the piece's authored frame; not seen in a game, so a tweak may be needed. The boss layer and first-person view do not draw them.
+
 ## [4.57.0] — Spear heads, harpoon head and bow arrows rebuilt solid in Blender
 - REPLACED: the 44 script-patched meshes that had flat or hairline parts: 33 bow pull stages and 11 bow rest meshes (new solid arrow: octagonal shaft, nock collar, hexagonal broadhead, three crossed vanes), 10 spears (head thickened in the builder or stretched solid) and the vassal harpoon (head and barbs). Skins and glow skins of 21 weapons were re-baked. Bows, spears and the harpoon keep ids, place lines, grips and Better Combat files.
 - NEW: `tools/heroweapon/flat_parts_audit.py --md` (audit of all parts, doc `docs/heroweapon/flat_parts_audit.md`), `install_solid_meshes.py`, preview stills `docs/previews/flat_parts_v2/` (before and after for all 44), doc `docs/heroweapon/flat_parts_blender.md`. 44 of 44 must-be-solid parts are solid now; 24 sheet-like parts (bow limb panels, fins, streamers) are listed but not redone.
