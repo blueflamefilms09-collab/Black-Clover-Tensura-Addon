@@ -84,7 +84,7 @@ Weapon hit = Extreme Magic per-hit ceiling = `4000 + 4000 x (36 - rank) / 35`. G
 | 4 | zagan | God | 7,657 | life | `anime_multiverse:djinn_life` |
 | 5 | vinea | God | 7,543 | ice | `minecraft:freeze` |
 | 6 | amon | God | 7,429 | fire | `minecraft:in_fire` |
-| 7 | focalor | God | 7,314 | water | `anime_multiverse:djinn_water` |
+| 7 | focalor | God | 7,314 | wind | `anime_multiverse:djinn_wind` |
 | 8 | furcas | God | 7,200 | wind | `anime_multiverse:djinn_wind` |
 | 9 | zepar | God | 7,086 | force | `minecraft:player_explosion` |
 | 10 | bifron | God | 6,971 | lightning | `minecraft:lightning_bolt` |

@@ -260,7 +260,10 @@ final class AptitudesPage extends ForgePage {
             t.add(ForgeText.t("anime_multiverse.avatar.forge.apt.slot.empty", "An empty slot: pick an aptitude below, or use the free roll.").withStyle(ChatFormatting.GRAY));
             return t;
         }
-        t.add(Component.literal(row.name()).withStyle(rarityFormat(SoulForgeClientData.aptitude(row.id()) == null ? Aptitude.Rarity.COMMON : SoulForgeClientData.aptitude(row.id()).rarity())));
+        Aptitude.Rarity rarity = SoulForgeClientData.aptitude(row.id()) == null ? Aptitude.Rarity.COMMON : SoulForgeClientData.aptitude(row.id()).rarity();
+        t.add(Component.literal(row.name()).withStyle(rarityFormat(rarity)));
+        net.minecraft.network.chat.MutableComponent card = com.newuniverse.nusmp.tooltip.RankCards.line("aptitude", rarity);   // the relic card line (stars, grade) unless rankDisplayClassic
+        if (card != null) t.add(card);
         t.add(rolled ? ForgeText.t("anime_multiverse.avatar.forge.apt.slot.rolled", "Won from the free roll: no tax. Click to let it go.").withStyle(ChatFormatting.GREEN)
                 : ForgeText.t("anime_multiverse.avatar.forge.apt.slot.picked", "Taken by hand. Click to give it back.").withStyle(ChatFormatting.GRAY));
         return t;

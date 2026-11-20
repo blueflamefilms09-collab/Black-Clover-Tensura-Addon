@@ -260,7 +260,7 @@ public final class SaiyanClient {
 
     /** The text of the panel, rebuilt when a packet lands and twice a second. {@code extra}: the optional lines (form, flight, senses, Goku techniques), each with whether it is "ready" (bright) or not. */
     record Lines(long builtAt, String rank, String power, String ki, String stamina, String awaken, String blast, String barrage, boolean blastReady, boolean barrageReady, List<String> extra,
-                 List<Boolean> extraReady, String strain, String charge) {}
+                 List<Boolean> extraReady, String strain, String charge, String card, int cardRgb) {}
 
     private static int left(int cdAtSync, long now) { return (int) Math.max(0, cdAtSync - Math.max(0, now - syncAt)); }
 
@@ -303,7 +303,9 @@ public final class SaiyanClient {
         return new Lines(now, Component.translatable(SaiyanRules.Rank.byOrdinal(s.rank()).key()).getString(), t("bp", num(s.battlePower())), t("ki", num(s.ki()), num(s.kiMax())),
                 t("stamina", num(s.stamina()), num(s.staminaMax())), s.awakened() ? "" : t("meditate", s.meditate()),
                 attack(BLAST, "blast", b), attack(BARRAGE, "barrage", r), b <= 0, r <= 0, extra, ready,
-                s.strain() > 0 ? t("strain", s.strain()) : "", s.charge() > 0 ? t("charge", s.charge()) : "");
+                s.strain() > 0 ? t("strain", s.strain()) : "", s.charge() > 0 ? t("charge", s.charge()) : "",
+                java.util.Objects.requireNonNullElse(com.newuniverse.nusmp.tooltip.RankCards.text("saiyan", SaiyanRules.Rank.byOrdinal(s.rank())), ""),   // the relic card line (stars, grade); "" in classic
+                saiyanCardRgb(s.rank()));
     }
 
     private static String attack(KeyMapping key, String id, int cdTicks) {
@@ -328,8 +330,13 @@ public final class SaiyanClient {
         paint(g, mc.font, x, y, l, s, pg, mc.player.getYRot());
     }
 
+    private static int saiyanCardRgb(int rank) {
+        var r = com.newuniverse.nusmp.tooltip.RankCards.of("saiyan", SaiyanRules.Rank.byOrdinal(rank));
+        return r == null ? UiTheme.GOLD : 0xFF000000 | r.grade().rgb();
+    }
+
     static int height(Lines l, boolean radar) {
-        return 8 + 11 + 2 * 15 + (l.awaken().isEmpty() ? 0 : 15) + 2 * 10 + 4 + 10 * l.extra().size() + (l.strain().isEmpty() ? 0 : 15) + (l.charge().isEmpty() ? 0 : 15) + (radar ? RADAR + 6 : 0);
+        return 8 + 11 + (l.card().isEmpty() ? 0 : 11) + 2 * 15 + (l.awaken().isEmpty() ? 0 : 15) + 2 * 10 + 4 + 10 * l.extra().size() + (l.strain().isEmpty() ? 0 : 15) + (l.charge().isEmpty() ? 0 : 15) + (radar ? RADAR + 6 : 0);
     }
 
     private static void paint(GuiGraphics g, Font font, int x, int y, Lines l, SaiyanNet.Sync s, SaiyanNet.Ping pg, float yaw) {
@@ -340,6 +347,10 @@ public final class SaiyanClient {
         g.drawString(font, font.plainSubstrByWidth(l.rank(), iw - 60), cx, cy, UiTheme.GOLD, true);
         g.drawString(font, l.power(), x + W - 7 - font.width(l.power()), cy, UiTheme.TEXT, false);
         cy += 12;
+        if (!l.card().isEmpty()) {                                                      // the relic card: stars and grade in the grade colour
+            g.drawString(font, font.plainSubstrByWidth(l.card(), iw), cx, cy - 1, l.cardRgb(), true);
+            cy += 11;
+        }
         cy = bar(g, font, l.ki(), s.kiMax() <= 0f ? 0f : s.ki() / s.kiMax(), UiTheme.CYAN, cx, cy, iw, time);
         cy = bar(g, font, l.stamina(), s.staminaMax() <= 0f ? 0f : s.stamina() / s.staminaMax(), UiTheme.GREEN, cx, cy, iw, time);
         if (!l.awaken().isEmpty()) cy = bar(g, font, l.awaken(), s.meditate() / 100f, UiTheme.VIOLET, cx, cy, iw, time);

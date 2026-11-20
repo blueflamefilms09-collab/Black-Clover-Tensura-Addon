@@ -27,6 +27,9 @@ public final class Rankings {
     public record Rank(Grade grade, int place, int of, String source) {
         /** "Genesis Grade", "God Grade #4". */
         public String label() { return grade.label() + (place > 0 ? " #" + place : ""); }
+
+        /** The relic card's rank line: the stars, then the label ("★★★★★☆☆  God Grade #4"), the same as {@code UnifiedTooltipRules.banner}. */
+        public String card() { return grade.stars() + "  " + label(); }
     }
 
     /** One loaded table; {@link #table()} is the mod's own. */
@@ -35,12 +38,20 @@ public final class Rankings {
         private final List<Object[]> djinnTiers = new ArrayList<>();       // {Grade, Integer upTo}
         private final Map<String, Rank> items = new LinkedHashMap<>();
         private final List<String[]> rules = new ArrayList<>();            // {kind, value, grade}
+        private final Map<String, Rank> legacy = new LinkedHashMap<>();    // "beast.ss" -> Rank: the mod's own older ranks (docs/rank_audit.md) shown as relic grades
 
         public List<String> djinnOrder() { return java.util.Collections.unmodifiableList(djinnOrder); }
 
         public Map<String, Rank> items() { return java.util.Collections.unmodifiableMap(items); }
 
         public int rules() { return rules.size(); }
+
+        public Map<String, Rank> legacy() { return java.util.Collections.unmodifiableMap(legacy); }
+
+        /** The relic grade of one of the mod's own ranks ("beast", "SS"; "devil", "SUPREME": the enum constant's name, any case), or null if the table has no entry. */
+        public Rank legacy(String kind, String key) {
+            return kind == null || key == null ? null : legacy.get((kind + "." + key).toLowerCase(Locale.ROOT));
+        }
 
         /** The 1-based rank of a Djinn id (1 = the strongest), 0 if it is not listed. */
         public int djinnRank(String djinnId) { return djinnId == null ? 0 : djinnOrder.indexOf(djinnId.toLowerCase(Locale.ROOT)) + 1; }
@@ -115,6 +126,19 @@ public final class Rankings {
                 }
                 t.items.put(e.getKey().toLowerCase(Locale.ROOT), new Rank(g, place, 0, "item"));
             }
+            if (o.has("legacy")) for (Map.Entry<String, JsonElement> k : o.getAsJsonObject("legacy").entrySet()) {
+                if (k.getKey().startsWith("_") || !k.getValue().isJsonObject()) continue;
+                for (Map.Entry<String, JsonElement> e : k.getValue().getAsJsonObject().entrySet()) {
+                    String[] parts = e.getValue().getAsString().split(":");
+                    Grade g = Grade.byName(parts[0]);
+                    if (g == null) continue;
+                    int place = 0;
+                    if (parts.length > 1) {
+                        try { place = Math.max(0, Integer.parseInt(parts[1].trim())); } catch (NumberFormatException ignored) { place = 0; }
+                    }
+                    t.legacy.put((k.getKey() + "." + e.getKey()).toLowerCase(Locale.ROOT), new Rank(g, place, 0, "legacy"));
+                }
+            }
             if (o.has("rules")) for (JsonElement e : o.getAsJsonArray("rules")) {
                 JsonObject r = e.getAsJsonObject();
                 String kind = r.has("prefix") ? "prefix" : r.has("suffix") ? "suffix" : r.has("contains") ? "contains" : null;
@@ -145,6 +169,9 @@ public final class Rankings {
     }
 
     public static Rank of(String path) { return table().of(path); }
+
+    /** The relic grade of one of the mod's own ranks (BeastRank, DevilTier, Saiyan rank, Magic Knight rank, loot and aptitude rarity), null if unmapped. */
+    public static Rank legacy(String kind, String key) { return table().legacy(kind, key); }
 
     /** The Djinn's rank number (1 = strongest) in the mod's table, 0 if unknown. */
     public static int djinnRank(String djinnId) { return table().djinnRank(djinnId); }

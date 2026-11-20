@@ -23,13 +23,21 @@ public final class TinyDjinnAssets {
     /** A model has 55 to 175 cubes (the brief says about 60 to 150; the extra room is for the busiest). */
     public static final int MIN_CUBES = 55, MAX_CUBES = 175;
 
+    /** The Djinn whose tiny figure was a near copy of another's (the design audit) and has a reworked v2 (tools/gen_tiny_djinn.py --v2, tools/tiny_djinn/specs_v2.json). */
+    public static final java.util.Set<String> REWORKED = java.util.Set.of("vepar", "barbatos");
+
     public static String key(Djinn d) { return "tinydjinn_" + d.id(); }
 
-    public static String model(Djinn d) { return "geo/entity/" + key(d) + ".geo.json"; }
+    /** The file stem the game loads: {@link #key} (the old figure) or {@code key + "_v2"} for a reworked Djinn unless {@code djinnLookClassic} is on. */
+    public static String fileKey(Djinn d) {
+        return REWORKED.contains(d.id()) && !com.newuniverse.nusmp.client.relics.djinn.DjinnLookConfig.classic() ? key(d) + "_v2" : key(d);
+    }
 
-    public static String texture(Djinn d, boolean dark) { return "textures/entity/" + key(d) + (dark ? "_dark" : "") + ".png"; }
+    public static String model(Djinn d) { return "geo/entity/" + fileKey(d) + ".geo.json"; }
 
-    public static String glow(Djinn d, boolean dark) { return "textures/entity/" + key(d) + (dark ? "_dark" : "") + "_glow.png"; }
+    public static String texture(Djinn d, boolean dark) { return "textures/entity/" + fileKey(d) + (dark ? "_dark" : "") + ".png"; }
+
+    public static String glow(Djinn d, boolean dark) { return "textures/entity/" + fileKey(d) + (dark ? "_dark" : "") + "_glow.png"; }
 
     /** The name floating over the figure: the Djinn's own name ("Alloces"). */
     public static String label(Djinn d) { return d.displayName(); }

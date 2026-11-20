@@ -116,7 +116,9 @@ public class MultiverseStatusScreen extends Screen {
 
     static List<Block> blocks(CompoundTag s) {
         List<Block> out = new ArrayList<>();
-        out.add(new Block("Magic Knight Rank", List.of(s.getString("Rank").isEmpty() ? "5th Class Junior Magic Knight" : s.getString("Rank")), false));
+        String knight = s.getString("Rank").isEmpty() ? "5th Class Junior Magic Knight" : s.getString("Rank");
+        String knightCard = com.newuniverse.nusmp.tooltip.RankCards.knightText(knight);                                  // the relic card line (stars, grade) unless rankDisplayClassic
+        out.add(new Block("Magic Knight Rank", knightCard == null ? List.of(knight) : List.of(knight, knightCard), false));
         out.add(new Block("Stars", List.of("Gold " + s.getInt("Gold") + "   Black " + s.getInt("Black"), "Net " + s.getInt("Net")), false));
         CompoundTag sq = s.getCompound("Squad");
         if (sq.contains("Name")) out.add(new Block("Squad", List.of(sq.getString("Name"), sq.getString("Role") + "  " + sq.getString("Standing"), "Score " + sq.getInt("Score")), false));

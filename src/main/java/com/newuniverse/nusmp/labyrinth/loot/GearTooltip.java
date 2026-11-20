@@ -27,6 +27,8 @@ final class GearTooltip {
         LootRarity r = roll.rarity();
         ChatFormatting colour = ChatFormatting.valueOf(r.colour());
         tip.add(LootText.text("tooltip.anime_multiverse.loot.header", LootText.text("tooltip.anime_multiverse.loot.rarity." + r.id()), roll.depth() == 0 ? "?" : Integer.toString(roll.depth())).withStyle(colour));
+        net.minecraft.network.chat.MutableComponent card = com.newuniverse.nusmp.tooltip.RankCards.line("loot", r);   // the relic card line under the header (stars, grade) unless rankDisplayClassic
+        if (card != null) tip.add(card);
         if (g.gearKind() == GearKind.WEAPON) {
             double dmg = GearRollMath.totalDamage(r, g.weaponType(), roll);
             String grade = r.grade() == 0 ? "normal" : r.grade() == 1 ? "special" : "rare";

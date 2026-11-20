@@ -229,6 +229,8 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::register);
             modEventBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.client.corpse.CorpseClient::registerLooks);     // after the dungeon player-model kit: the new looks of Jimmy, Alfredo and Carl win
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.relics.djinn.DjinnLookConfig.SPEC, "nusmp-djinn-look-client.toml");   // djinnLook.djinnLookClassic: the Djinn designs the design audit reworked (busts, tiny Vepar / Barbatos) as they were
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.tooltip.RankDisplayConfig.SPEC, "nusmp-rank-display-client.toml");   // rankDisplay.rankDisplayClassic: the old text lines for ranks instead of the relic grade card
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
             com.newuniverse.nusmp.client.aura.NoelleFormsClientConfig.init(modEventBus, modContainer);                       // 1.99.0: noelleForms.classicLook (nusmp-noelle-forms-client.toml): the first Valkyrie Dress look
             com.newuniverse.nusmp.client.aura.SaiyanLookClientConfig.init(modEventBus, modContainer);                         // 3.69.0: saiyan.looks / armour / chargeUp / fullDetail (nusmp-saiyan-look-client.toml)

@@ -221,7 +221,7 @@ BONE_NAMES = [b[0] for b in BONES]
 class Ctx:
     def __init__(self, spec):
         self.spec = spec
-        self.m = Model("tinydjinn", spec["id"], TEX, TEX)
+        self.m = Model("tinydjinn", spec.get("out", spec["id"]), TEX, TEX)
         for n, par, pv in BONES:
             self.m.bone(n, parent=par, pivot=pv)
         self.atlas = Atlas()

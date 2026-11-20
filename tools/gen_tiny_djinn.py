@@ -33,9 +33,16 @@ ANIMDIR = os.path.join(ROOT, "animations", "entity")
 ANIM_NAME = "tinydjinn_anim"
 
 
-def load_specs():
-    with open(SPECS) as f:
+SPECS_V2 = os.path.join(HERE, "tiny_djinn", "specs_v2.json")   # reworked Djinn (design audit): written under <id>_v2, the old files stay (owner rule 2)
+
+
+def load_specs(v2=False):
+    with open(SPECS_V2 if v2 else SPECS) as f:
         return json.load(f)["djinn"]
+
+
+def out_id(spec):
+    return spec.get("out", spec["id"])
 
 
 def build(spec):
@@ -69,14 +76,14 @@ def write(spec):
     os.makedirs(GEODIR, exist_ok=True)
     os.makedirs(TEXDIR, exist_ok=True)
     c.m.save(None)
-    gp = os.path.join(GEODIR, "tinydjinn_%s.geo.json" % spec["id"])
+    gp = os.path.join(GEODIR, "tinydjinn_%s.geo.json" % out_id(spec))
     with open(gp) as f:                                           # compact: 100 small cubes with per-face uvs are big when indented
         g = json.load(f)
     with open(gp, "w") as f:
         json.dump(g, f, separators=(",", ":"))
     for tag, (img, glow) in textures(c, spec).items():
-        img.save(os.path.join(TEXDIR, "tinydjinn_%s%s.png" % (spec["id"], tag)))
-        glow.save(os.path.join(TEXDIR, "tinydjinn_%s%s_glow.png" % (spec["id"], tag)))
+        img.save(os.path.join(TEXDIR, "tinydjinn_%s%s.png" % (out_id(spec), tag)))
+        glow.save(os.path.join(TEXDIR, "tinydjinn_%s%s_glow.png" % (out_id(spec), tag)))
     return c.count()
 
 
@@ -100,7 +107,7 @@ def check(specs):
             print("missing clip", cname)
             bad = 1
     for spec in specs:
-        mid = "tinydjinn_" + spec["id"]
+        mid = "tinydjinn_" + out_id(spec)
         probs = []
         g = json.load(open(os.path.join(GEODIR, mid + ".geo.json")))["minecraft:geometry"][0]
         tw, th = g["description"]["texture_width"], g["description"]["texture_height"]
@@ -141,7 +148,7 @@ def check(specs):
             for bn in cl["bones"]:
                 if bn not in names:
                     probs.append("clip %s moves the unknown bone %s" % (cn, bn))
-        print("%-16s cubes %3d  %s" % (spec["id"], n, "OK" if not probs else "PROBLEMS"))
+        print("%-16s cubes %3d  %s" % (out_id(spec), n, "OK" if not probs else "PROBLEMS"))
         for p in probs:
             print("   ", p)
             bad = 1
@@ -149,7 +156,8 @@ def check(specs):
 
 
 def main(argv):
-    specs = load_specs()
+    v2 = "--v2" in argv                                           # python3 -B tools/gen_tiny_djinn.py --v2 [--check]: the reworked Djinn of specs_v2.json
+    specs = load_specs(v2)
     if "--check" in argv:
         return check(specs)
     ids = [a for a in argv if not a.startswith("-")]
@@ -157,7 +165,7 @@ def main(argv):
     write_anim()
     for s in todo:
         n = write(s)
-        print("%-16s %3d cubes" % (s["id"], n))
+        print("%-16s %3d cubes" % (out_id(s), n))
     return 0
 
 

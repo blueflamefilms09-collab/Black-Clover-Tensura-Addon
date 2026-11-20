@@ -19,7 +19,7 @@ Ranking is cosmetic (a "Rank: X" tooltip line in the grade's colour). The only g
 
 `tooltip/RankTooltip` (the one shared helper): `rankOf(stack)` and `line(stack)`. A listener on the tooltip event adds "Rank: God Grade #4" under the name of every item of the mod
 (spawn eggs left out; relics, Djinn weapons, hero weapons, books, keys and the rest the same). A Djinn weapon adds its number ("Rank: God Grade #4  -  weapon hit 7,657"). The line is a
-translatable component with an English fallback (`tooltip.anime_multiverse.rank`, `tools/lang/damage_scale.json`). The existing banner of the unified tooltip and the relic tooltip are untouched.
+translatable component with an English fallback (`tooltip.anime_multiverse.rank`, `tools/lang/damage_scale.json`). The existing banner of the unified tooltip and the relic tooltip are untouched. From 2.x the rank line is the relic card (stars, grade, place) and the mod's own older ranks (beast, mana, devil, saiyan, knight, loot, aptitude) map to grades in `rankings.json` `"legacy"`: see `docs/rank_audit.md`. `rankDisplayClassic` brings the plain "Rank: X" text back.
 
 ## How to add a rank
 

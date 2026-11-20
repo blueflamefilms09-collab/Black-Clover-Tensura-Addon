@@ -47,7 +47,13 @@ public final class BeastWillCoreItem extends Item {
             return;
         }
         tip.add(Component.translatable("item.anime_multiverse.beast_will_core.of", BeastWillText.name(c.will())).withStyle(ChatFormatting.GOLD));
-        tip.add(Component.translatable("item.anime_multiverse.beast_will_core.beast", c.beast().isBlank() ? "?" : c.beast(), c.rankValue().name()).withStyle(ChatFormatting.GRAY));
+        Component card = com.newuniverse.nusmp.tooltip.RankCards.line("beast", c.rankValue());                          // the relic card (stars, grade) unless rankDisplayClassic
+        if (card != null) {
+            tip.add(Component.literal(c.beast().isBlank() ? "?" : c.beast()).withStyle(ChatFormatting.GRAY));
+            tip.add(card);
+        } else {
+            tip.add(Component.translatable("item.anime_multiverse.beast_will_core.beast", c.beast().isBlank() ? "?" : c.beast(), c.rankValue().name()).withStyle(ChatFormatting.GRAY));
+        }
         String lore = "anime_multiverse.beastwill." + c.will() + ".lore";
         String canon = "anime_multiverse.beastwill." + c.will() + ".canon_lore", source = "anime_multiverse.beastwill." + c.will() + ".canon_source";
         net.minecraft.locale.Language lang = net.minecraft.locale.Language.getInstance();

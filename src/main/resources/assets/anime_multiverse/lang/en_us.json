@@ -19635,6 +19635,7 @@
   "anime_multiverse.saiyan.blood.near": "Edge-of-death survivals: %s / %s",
   "tooltip.anime_multiverse.rank": "Rank: %s",
   "tooltip.anime_multiverse.rank_hit": "Rank: %s  -  weapon hit %s",
+  "tooltip.anime_multiverse.rank_card_hit": "%s  -  weapon hit %s",
   "death.attack.anime_multiverse.djinn_water": "%1$s was swept away by a tide",
   "death.attack.anime_multiverse.djinn_water.player": "%1$s was swept away by %2$s's tide",
   "death.attack.anime_multiverse.djinn_wind": "%1$s was torn apart by a gale",

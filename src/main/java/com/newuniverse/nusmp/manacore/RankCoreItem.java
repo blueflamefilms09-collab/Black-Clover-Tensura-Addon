@@ -40,6 +40,8 @@ public class RankCoreItem extends Item {
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tip, TooltipFlag flag) {
         String id = core.id();
         tip.add(Component.translatable("manacore.tooltip.rank", ManaCoreRules.RANK_LABEL[core.rank()], Component.translatable("manacore.variant." + ManaCoreRules.VARIANTS[core.variant()])).withStyle(ChatFormatting.GOLD));
+        Component card = com.newuniverse.nusmp.tooltip.RankCards.line("mana", ManaCoreRules.RANK_LABEL[core.rank()]);   // the relic card (stars, grade, place) unless rankDisplayClassic
+        if (card != null) tip.add(card);
         tip.add(Component.translatable("manacore." + id + ".passive").withStyle(ChatFormatting.AQUA));
         tip.add(Component.translatable("manacore." + id + ".a1", ManaCoreRules.mpText(core.a1())).withStyle(ChatFormatting.GRAY));
         tip.add(Component.translatable("manacore." + id + ".a2", ManaCoreRules.mpText(core.a2())).withStyle(ChatFormatting.GRAY));

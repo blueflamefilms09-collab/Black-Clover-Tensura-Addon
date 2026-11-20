@@ -203,7 +203,7 @@ public final class DevilClient {
     }
 
     // ---------------------------------------------------------------- the HUD
-    private record Lines(long second, String title, String attr, String level, String stage, String union, int unionColour, String hint, String warn, String sacrifices) {}
+    private record Lines(long second, String title, String attr, String level, String stage, String union, int unionColour, String hint, String warn, String sacrifices, String card, int cardRgb) {}
 
     static String t(String key, String fallback, Object... args) { return Component.translatableWithFallback("anime_multiverse.devil.hud." + key, fallback, args).getString(); }
 
@@ -242,7 +242,9 @@ public final class DevilClient {
         if ((s.sacMask() & Sacrifice.LOST_EYE_LEFT.bit()) != 0) sac.add(t("sac_eye_left", "left eye"));
         if ((s.sacMask() & Sacrifice.LOST_EYE_RIGHT.bit()) != 0) sac.add(t("sac_eye_right", "right eye"));
         String sacrifices = sac.isEmpty() ? "" : t("sacrifices", "Paid: %s", String.join(", ", sac));
-        return new Lines(nowTicks / 20, name, attr, level, stage, union, unionColour, hint, warn, sacrifices);
+        String card = java.util.Objects.requireNonNullElse(com.newuniverse.nusmp.tooltip.RankCards.text("devil", tier), "");   // the relic card line (stars, grade); "" in classic
+        var relic = com.newuniverse.nusmp.tooltip.RankCards.of("devil", tier);
+        return new Lines(nowTicks / 20, name, attr, level, stage, union, unionColour, hint, warn, sacrifices, card, relic == null ? accent(s.tier()) : 0xFF000000 | relic.grade().rgb());   // built once a second, never per frame
     }
 
     private static void renderHud(GuiGraphics g, DeltaTracker delta) {
@@ -254,7 +256,7 @@ public final class DevilClient {
         if (l == null || now / 20 != l.second() || now < syncAt) lines = l = build(s, now);                  // the text is rebuilt once a second, not per frame
         Font font = mc.font;
         int accent = accent(s.tier());
-        int h = 8 + 11 + 11 + 8 + 11 + 11 + 11 + (l.warn().isEmpty() ? 0 : 10) + (l.sacrifices().isEmpty() ? 0 : 10);
+        int h = 8 + 11 + (l.card().isEmpty() ? 0 : 11) + 11 + 8 + 11 + 11 + 11 + (l.warn().isEmpty() ? 0 : 10) + (l.sacrifices().isEmpty() ? 0 : 10);
         int x = Math.max(4, g.guiWidth() - W - 6), y = Math.max(4, (g.guiHeight() - h) / 2);
         GuiMove.report("devil_hud", x, y, W, h);                                                         // GUI Move / GUI Size: where the panel is drawn
         float time = UiTheme.now();
@@ -265,6 +267,10 @@ public final class DevilClient {
         g.drawString(font, font.plainSubstrByWidth(l.title(), iw - 44), cx, cy, accent, true);
         g.drawString(font, l.attr(), x + W - 7 - font.width(l.attr()), cy, UiTheme.TEXT_DIM, false);
         cy += 11;
+        if (!l.card().isEmpty()) {                                                                       // the relic card: stars and grade in the grade colour
+            g.drawString(font, font.plainSubstrByWidth(l.card(), iw), cx, cy, l.cardRgb(), true);
+            cy += 11;
+        }
         g.drawString(font, font.plainSubstrByWidth(l.level(), iw), cx, cy, UiTheme.TEXT, false);
         cy += 11;
         UiBar.draw(g, cx, cy, iw, 4, s.level() / 100f, accent, time, 1f);

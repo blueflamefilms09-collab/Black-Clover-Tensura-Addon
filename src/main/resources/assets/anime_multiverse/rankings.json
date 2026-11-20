@@ -38,6 +38,18 @@
     "magic_key": "rare",
     "shadow_key": "rare"
   },
+  "legacy": {
+    "_doc": "The mod's own older ranks, shown as relic grades (docs/rank_audit.md). kind.CONSTANT -> grade[:place]. The old enums stay for saves; only what the player reads changes (stars, grade name, place).",
+    "beast": {"C": "special", "B": "rare", "A": "unique", "S": "legend", "SS": "god"},
+    "mana": {"E": "normal", "D": "special:2", "C": "special:1", "B": "rare", "A": "unique", "AA": "legend:2", "S": "legend:1", "SS": "god"},
+    "devil": {"LOW": "rare", "MID": "unique", "HIGH": "legend", "SUPREME": "god"},
+    "saiyan": {"LOW_CLASS": "normal", "ELITE": "rare", "SUPER_ELITE": "unique", "LEGENDARY": "legend", "DIVINE": "god", "TRANSCENDENT": "genesis"},
+    "knight": {"JUNIOR": "rare", "INTERMEDIATE": "unique", "SENIOR": "legend", "GRAND": "god", "WIZARD_KING": "genesis"},
+    "loot": {"COMMON": "normal", "UNCOMMON": "special", "RARE": "rare", "EPIC": "unique", "LEGENDARY": "legend"},
+    "aptitude": {"COMMON": "normal", "UNCOMMON": "special", "RARE": "rare", "EPIC": "unique", "LEGENDARY": "legend"},
+    "rift": {"COMMON": "special", "RARE": "unique", "MEGA_RARE": "god"},
+    "ceremony": {"COMMON": "normal", "UNCOMMON": "special", "RARE": "rare", "BLACK": "legend", "GOD": "god"}
+  },
   "rules": [
     {"prefix": "djinn_seal_", "rank": "legend"},
     {"prefix": "vassal_", "rank": "rare"},

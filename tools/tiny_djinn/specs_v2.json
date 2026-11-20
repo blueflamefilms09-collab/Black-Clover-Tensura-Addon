@@ -1,0 +1,69 @@
+{
+ "_doc": "Reworked tiny Djinn (design audit, owner rule 2: the old rows in specs.json stay). python tools/gen_tiny_djinn.py --v2 writes tinydjinn_<id>_v2.*",
+ "djinn": [
+  {
+   "id": "vepar",
+   "name": "Vepar",
+   "color": "00A6B8",
+   "glow": "BFFCFF",
+   "skin": "teal",
+   "pal": {
+    "hair": "0A8A6A",
+    "cloth": "08788A",
+    "cloth2": "70D8E0",
+    "trim": "F0C860",
+    "metal": "3A8A90",
+    "accent": "00A6B8",
+    "glow": "BFFCFF",
+    "eye": "BFFCFF"
+   },
+   "eyes": "wide",
+   "mouth": "smile",
+   "chest": "plate",
+   "pauldron": "big",
+   "hair": "braids",
+   "head": [
+    "coral_crown"
+   ],
+   "ears": "round",
+   "cape": "tattered",
+   "weapon": "anchor",
+   "tail": "tendril",
+   "acc": "wheel",
+   "note": "v2 (design audit): a coral crown, braided seaweed hair, a wrecked captain's plate and torn sail-cloak, a ship's anchor and a wheel in orbit (was: the same fin ears, veil and bubbles as Vinea)",
+   "out": "vepar_v2"
+  },
+  {
+   "id": "barbatos",
+   "name": "Barbatos",
+   "color": "2E7D32",
+   "glow": "CFFFB0",
+   "skin": "tan",
+   "pal": {
+    "hair": "3A6A28",
+    "cloth": "2A6A30",
+    "cloth2": "6AB040",
+    "trim": "C8A060",
+    "metal": "5A4A2A",
+    "accent": "2E7D32",
+    "glow": "CFFFB0",
+    "eye": "CFFFB0"
+   },
+   "eyes": "sharp",
+   "mouth": "flat",
+   "chest": "harness",
+   "pauldron": "spiked",
+   "hair": "short",
+   "head": [
+    "hood"
+   ],
+   "ears": "deer",
+   "cape": "cape",
+   "weapon": "antler_bow",
+   "tail": "vine",
+   "acc": "quiver",
+   "note": "v2 (design audit): a hunter's hood, deer ears, a harness and a cloak, the antler bow and a quiver (was: the same antlers, moss hair and leaf ears as Zagan)",
+   "out": "barbatos_v2"
+  }
+ ]
+}

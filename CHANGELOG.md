@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.41.0] — Djinn designs no longer duplicated, ranks now use the relic grades
+Owner request: find Djinn with copied designs and rework them, make each match its concept, and make rankings use the existing relic ranks and stars.
+- FOUND: 9 light-bust pairs were the same picture, all 36 dark busts were one black figure with a different gem, tiny Vepar was a near copy of tiny Vinea and tiny Barbatos of tiny Zagan. Focalor (Wind) had a water Extreme damage concept.
+- NEW (client setting `djinnLook.djinnLookClassic` in `nusmp-djinn-look-client.toml`, default off; on brings the old look back): 43 new busts (own headgear, element mantle and glyph), new tiny Vepar and Barbatos, a repeatable audit `tools/djinn/design_audit.py` (0 duplicates, 0 concept findings; 8 findings accepted with reasons in docs/djinn_design_audit.md).
+- REPLACED: the bust the Lesser Summon draws, tiny Vepar and Barbatos, and Focalor's Extreme concept (now wind).
+- NEW (client setting `rankDisplay.rankDisplayClassic` in `nusmp-rank-display-client.toml`; on restores the old text): the rank line of items, the Beast Will Core and panel, the Devil and Saiyan panels, the Magic Knight block, loot gear and Soul Forge aptitudes, and Mana Core tooltips now show the relic card line (stars, grade name and place in the grade colour) through a `legacy` mapping in `rankings.json`. Left on their own scales on purpose, with reasons in docs/rank_audit.md.
+- KEPT: every old bust, tiny model, texture, mesh, animation, enum, save, packet and lang key; the Djinn rank order.
+- Cost: no tick work, packet or server state; a card is built when a tooltip opens or a panel rebuilds.
+- Caveats: not seen in a game (software renders only); the Devil, Saiyan and Beast Will panels grow one line, layout unseen; Blender not used (Python generators); the Java was not compiled before CI. Decisions for you: should the two chat lines also show the card; should Mana Core letters get eight separate grades (SS is kept at God).
+
 ## [4.40.2] — Build fix: the Berserk shape test no longer requires its shape to be the last
 - FIXED (test only): after the solid 3D weapon parts were added behind the Berserk effect shape, one Berserk test still demanded `SIN_WEAPON;` be the final entry. It now accepts later shapes. No game behaviour changes. Builds 4.39.0 and 4.40.x failed on this test; the 4.38.0 jar built and only its release step failed.
 

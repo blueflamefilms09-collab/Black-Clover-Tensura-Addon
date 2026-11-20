@@ -57,6 +57,19 @@ public final class DjinnLook {
         return "textures/entity/djinn/" + id + (dark && darkExists ? "_d" : "") + "_bust.png";
     }
 
+    /** The light busts that were a copy of another Djinn's picture and have a v2 of their own (tools/djinn/bust2.py, docs/djinn_design_audit.md). Every dark bust has a v2. */
+    public static final java.util.Set<String> BUST2_LIGHT = java.util.Set.of("balam", "haagenti", "vinea", "alloces", "furfur", "furcas", "amdusias");
+
+    /**
+     * The bust file the game draws: the reworked {@code _bust2} one, or the old one when {@code classic} ({@code DjinnLookConfig}, owner rule 2: nothing old is removed). {@link #bustPath} still answers
+     * the old file, so the old look stays one call away.
+     */
+    public static String bustFile(String id, boolean dark, boolean darkExists, boolean classic) {
+        String old = bustPath(id, dark, darkExists);
+        boolean v2 = !classic && (dark ? darkExists : BUST2_LIGHT.contains(id));
+        return v2 ? old.substring(0, old.length() - "_bust.png".length()) + "_bust2.png" : old;
+    }
+
     /** The black veins drawn over the skin of a dark Djinn (alpha blended). */
     public static String artPath(String id) { return "textures/entity/djinn/" + id + "_d_art.png"; }
 

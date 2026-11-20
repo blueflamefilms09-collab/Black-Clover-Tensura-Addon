@@ -55,7 +55,20 @@ public final class RankTooltip {
     public static Component line(ItemStack stack) {
         Rankings.Rank r = rankOf(stack);
         if (r == null) return null;
-        Component label = Component.literal(r.label());
+        boolean classic = RankDisplayConfig.classic();
+        // the relic card's own rank line: the stars, then the grade name and the place, all in the grade colour
+        Component label = Component.literal(classic ? r.label() : r.card());
+        if (!classic) {
+            if (stack.getItem() instanceof DjinnWeaponItem w) {
+                int rank = Rankings.djinnRank(w.djinn().id());
+                if (rank > 0) {
+                    var l = DamageScaleConfig.limits();
+                    String hit = String.format(Locale.ROOT, "%,.0f", DamageScale.djinnHit(rank, Rankings.djinnCount(), l.djinnMin(), l.djinnMax()));
+                    return Component.translatableWithFallback("tooltip.anime_multiverse.rank_card_hit", "%s  -  weapon hit %s", label, hit).withStyle(r.grade().colour());
+                }
+            }
+            return Component.empty().append(label).withStyle(r.grade().colour());
+        }
         if (stack.getItem() instanceof DjinnWeaponItem w) {
             int rank = Rankings.djinnRank(w.djinn().id());
             if (rank > 0) {

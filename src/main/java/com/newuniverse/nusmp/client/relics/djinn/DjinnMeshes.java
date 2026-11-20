@@ -101,7 +101,8 @@ public final class DjinnMeshes {
         int i = dark ? 1 : 0;
         ResourceLocation r = BUST[i][d.ordinal()];
         if (r != null) return r;
-        return BUST[i][d.ordinal()] = rl(DjinnLook.bustPath(d.id(), dark, dark && exists(DjinnLook.bustPath(d.id(), true, true))));
+        boolean darkBust = dark && exists(DjinnLook.bustPath(d.id(), true, true));
+        return BUST[i][d.ordinal()] = rl(DjinnLook.bustFile(d.id(), dark, darkBust, DjinnLookConfig.classic()));   // the design audit's v2 busts unless djinnLookClassic
     }
 
     public static ResourceLocation bust(Djinn d) { return bust(d, false); }

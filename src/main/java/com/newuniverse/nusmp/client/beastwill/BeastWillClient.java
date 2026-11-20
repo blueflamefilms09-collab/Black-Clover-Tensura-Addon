@@ -168,14 +168,18 @@ public final class BeastWillClient {
     // ---------------------------------------------------------------- the HUD
     /** The text of the panel, rebuilt when a packet lands and twice a second. */
     record Lines(long builtAt, String title, String rank, String sub, String fit, String form, String assim, String mastery, String strain, int tier,
-                         List<String> unlock, List<String> abilities, String status, String keys, boolean mustWarn) {}
+                         List<String> unlock, List<String> abilities, String status, String keys, boolean mustWarn, boolean rankCard, int rankRgb) {}
 
     private static volatile Lines lines;
 
     static Lines build(BeastWillNet.Sync s, BeastWillNet.Info i, long now) {
         boolean known = i != null;
         String title = name(s.active());
-        String rank = known ? t("rank", rankName(i.rank())) : "";
+        BeastRank[] ranks = BeastRank.values();
+        String card = known ? com.newuniverse.nusmp.tooltip.RankCards.text("beast", ranks[Math.max(0, Math.min(ranks.length - 1, i.rank()))]) : null;   // the relic card (stars, grade) unless rankDisplayClassic
+        String rank = known ? (card != null ? card : t("rank", rankName(i.rank()))) : "";
+        var rankRelic = known && card != null ? com.newuniverse.nusmp.tooltip.RankCards.of("beast", ranks[Math.max(0, Math.min(ranks.length - 1, i.rank()))]) : null;
+        int rankRgb = rankRelic == null ? UiTheme.GOLD : 0xFF000000 | rankRelic.grade().rgb();
         String sub = known ? i.beast() + "  ·  " + i.affinity() : "";
         String fit = t("fit", s.compat());
         String form = t("form", t("phase." + (s.phase() == BeastWillRules.INTEGRATE ? "integrate" : s.phase() == BeastWillRules.ACQUIRE ? "acquire" : "off")));
@@ -213,7 +217,7 @@ public final class BeastWillClient {
         if (swap > 0 && s.phase() == BeastWillRules.OFF) flags.add(t("swap", swap));
         String status = String.join("  ·  ", flags);
         String keys = t("keys", ACQUIRE.getTranslatedKeyMessage().getString(), INTEGRATE.getTranslatedKeyMessage().getString(), SWAP.getTranslatedKeyMessage().getString());
-        return new Lines(now, title, rank, sub, fit, form, assim, mastery, strain, tier, unlock, abilities, status, keys, lock > 0 || tier >= 2);
+        return new Lines(now, title, rank, sub, fit, form, assim, mastery, strain, tier, unlock, abilities, status, keys, lock > 0 || tier >= 2, card != null, rankRgb);
     }
 
     private static final int W = 176;
@@ -235,7 +239,7 @@ public final class BeastWillClient {
     }
 
     static int height(Lines l) {
-        return 8 + 11 + 11 + 11 + 3 * 15 + l.unlock().size() * 10 + l.abilities().size() * 10 + (l.status().isEmpty() ? 0 : 10) + 11 + 4;
+        return 8 + 11 + (l.rankCard() ? 11 : 0) + 11 + 11 + 3 * 15 + l.unlock().size() * 10 + l.abilities().size() * 10 + (l.status().isEmpty() ? 0 : 10) + 11 + 4;
     }
 
     /** The panel itself (the HUD layer and the main menu draw the same thing). */
@@ -248,8 +252,12 @@ public final class BeastWillClient {
 
         int cx = x + 7, cy = y + 6, iw = W - 14;
         g.drawString(font, font.plainSubstrByWidth(l.title(), iw - 40), cx, cy, tint, true);
-        if (!l.rank().isEmpty()) g.drawString(font, l.rank(), x + W - 7 - font.width(l.rank()), cy, UiTheme.GOLD, false);
+        if (!l.rank().isEmpty() && !l.rankCard()) g.drawString(font, l.rank(), x + W - 7 - font.width(l.rank()), cy, UiTheme.GOLD, false);
         cy += 11;
+        if (l.rankCard()) {                                                                  // the relic card: stars and grade in the grade colour, on its own line
+            g.drawString(font, font.plainSubstrByWidth(l.rank(), iw), cx, cy, l.rankRgb(), true);
+            cy += 11;
+        }
         g.drawString(font, font.plainSubstrByWidth(l.sub(), iw - 44), cx, cy, UiTheme.TEXT_DIM, false);
         g.drawString(font, l.fit(), x + W - 7 - font.width(l.fit()), cy, s.compat() >= 100 ? UiTheme.GREEN : UiTheme.GOLD, false);
         cy += 11;
