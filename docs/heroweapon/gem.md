@@ -210,3 +210,10 @@ seven ways of making the registry reader less strict).
    once all four are held. `/multiverse hero gem holders` lists who holds what.
 5. Set `recipes = false` in `nusmp-heroweapon-gem-server.toml` and use a crafted gem as a non-operator in survival: "The gem is silent. This server has closed the Choosing".
 6. `/multiverse mega selftest` must show `hero.gem` and `hero.gem.ritual` as OK.
+
+## 4.37.2: the Holy Calling Gem is a dungeon drop only
+Owner request: make the Calling Gem harder to get, or only a dungeon drop. It is now only a dungeon drop.
+- NEW: a 10% chance (one roll per chest) of one `calling_gem` in the Dungeon Relic Vault chest (`loot_table/chests/dungeon_relic_vault.json`).
+- REPLACED: crafting. `recipe/calling_gem.json` now carries `"neoforge:conditions": [{"type": "neoforge:false"}]`, so the recipe is off. The pattern and keys are KEPT in the file (the tests and `GemRecipes` still describe it); to craft it again, copy the file into a data pack without that line. The Gem Fragment and the 17 Vassal Seal recipes are unchanged.
+- Cost: loot table data only, no code, no tick, no packet.
+- Not checked: how often a vault chest generates in a world was not measured; if gems are too rare, raise the 0.1 in the vault file.

@@ -19,6 +19,13 @@
       ]
     },
     {
+      "rolls": 1,
+      "conditions": [ { "condition": "minecraft:random_chance", "chance": 0.1 } ],
+      "entries": [
+        { "type": "minecraft:item", "name": "anime_multiverse:calling_gem", "weight": 1 }
+      ]
+    },
+    {
       "rolls": { "type": "minecraft:uniform", "min": 3, "max": 5 },
       "entries": [
         { "type": "minecraft:item", "name": "minecraft:gold_ingot", "weight": 10,

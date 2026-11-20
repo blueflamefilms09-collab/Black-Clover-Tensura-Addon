@@ -71,6 +71,8 @@ def recipes():
     out = {}
     used = sorted({c for row in pattern for c in row})
     out[HOLY_ID + ".json"] = {
+        # 4.37.2: the Calling Gem is a dungeon drop only (chests/dungeon_relic_vault.json); the recipe stays but is switched off. Delete this line in a data pack copy to craft it again.
+        "neoforge:conditions": [{"type": "neoforge:false"}],
         "type": "minecraft:crafting_shaped",
         "category": "misc",
         "key": {c: {"item": keys[c]} for c in used},

@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.37.2] — The Holy Calling Gem is a dungeon drop only
+- REPLACED: crafting the Calling Gem is switched off (the recipe file stays with a `neoforge:false` condition; a data pack copy without that line brings it back). KEPT: the Gem Fragment and every Vassal Seal recipe, and how the gem works.
+- NEW: 10% chance of one Calling Gem in each Dungeon Relic Vault chest.
+- Cost: data only. Caveat: not played; the vault's spawn rate was not measured, raise the chance in `loot_table/chests/dungeon_relic_vault.json` if the gem is too rare. Docs: docs/heroweapon/gem.md.
+
 ## [4.37.1] — Hero and vassal weapons no longer start at about 10 000 damage
 - FIXED (server setting `levelRamp` in `nusmp-power-server.toml`, default on; `false` restores the old numbers exactly): the x25 (x37.5 Legendary) power raise was full from the first blow, stacked on the x4 hero buff and the x2 anime factor. It now starts at 5% of its extra (`levelStartShare`) and grows in a straight line to full at weapon level 100. A level-0 Vassal Scythe blow is about 140 (was about 1 600); a maxed weapon is unchanged. See docs/power_level_ramp.md.
 - KEPT: every other factor, the PvP hit cap and the boss caps.
