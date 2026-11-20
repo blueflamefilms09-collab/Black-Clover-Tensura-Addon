@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.35.0] — Boss reference study: Black Clover x3 counts, party scaling, data-pack boss numbers
+From the Leon boss study (docs/boss_reference_leon.md), fixes #1, #5 and #9. All three have a server setting that restores today's behaviour.
+- CHANGED (setting `bosses.dpsCapUsesBaseHealth`, default on): the per-second damage cap of a Black Clover x3 boss is now a share of its base health, so the x3 lengthens the shortest possible kill from about 17 s to about 50 s.
+- NEW (setting `bossRules.partyScaling`, default on): every boss of the Zogratis framework scales at fight start by party size: health x0.70 / 1.00 / 1.15 / 1.30 and damage x0.80 / 1.00 / 1.06 / 1.12 for 1 / 2 / 3 / 4+ fighters within 100 blocks, with one combined cap (at most x8 health, x5 damage with the x3 and the floor scale). Lucius and the Tier List bosses are not double-scaled. Not covered: Labyrinth Guardians, Decennial bosses, Floor Warden, Zagred.
+- NEW (setting `bossRules.bossData`, default on): boss health, attack, speed, armor and move-cooldown scale can be overridden by data-pack files at `data/anime_multiverse/arc_bosses/<id>.json` (format in docs/boss_data_files.md). No file ships, so nothing changes until one is added.
+- REPLACED: nothing removed. KEPT: Lucius's scaling, the 50% one-hit cap, floor scaling, every Java boss number.
+- Cost: no per-tick work, no packets; one pass over the fighters at fight start.
+- Honest caveats: nothing played; the 50 s minimum kill and the solo x0.70 are not tuned in a game; some boss moves that call `hurt` directly are not damage-scaled by party size; `/reload` does not change bosses already in the world.
+
 ## [4.34.1] — Build fix: the skill-icon test knows the weapon-skill icons
 - FIXED (no gameplay change): `SkillIconsV3Test` failed the 4.33.0 and 4.34.0 builds because the 12 new weapon-skill icons (`ws_*`) are not part of the 121 repainted icons. The test now skips the `ws_` icons, which are drawn by their own tool. Everything from 4.33.0 and 4.34.0 ships in the first green build; neither got a build of its own.
 

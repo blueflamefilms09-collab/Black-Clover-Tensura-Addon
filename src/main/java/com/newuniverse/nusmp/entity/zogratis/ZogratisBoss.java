@@ -647,13 +647,67 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         nextThink = t + 20;
         setState(STATE_COMBAT);
         say(openingLine());
+        applyPartyScale(partyCount(sl));
         onFightStart();
     }
+
+    // ================================================================ Leon study fix 5: party-size scaling, read once at fight start
+    private static final ResourceLocation PARTY_HEALTH_ID = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "boss_stat/party_health");
+    private double partyDamage = 1.0;
+    /** Leon study fix 9: the data-file factor on every move's cooldown (1 = the Java numbers); set when the boss joins the world. */
+    private double moveCooldownScale = 1.0;
+
+    /** Does the party-size table apply to this boss? Lucius (his own {@code ArenaScaling} use) and the Tier List rows say no. */
+    protected boolean partyScaled() { return true; }
+
+    public double moveCooldownScale() { return moveCooldownScale; }
+
+    public void setMoveCooldownScale(double scale) { moveCooldownScale = scale; }
+
+    /** The fighters that count: players of the fight who are alive, in survival or adventure, in this level and within 100 blocks of the arena. At most the number of online players. */
+    private int partyCount(ServerLevel sl) {
+        int n = 0;
+        double r2 = 100.0 * 100.0;
+        for (UUID id : fighters) {
+            if (sl.getPlayerByUUID(id) instanceof ServerPlayer p && ArcSteps.fair(p) && p.distanceToSqr(arenaCenter()) <= r2) n++;
+        }
+        return Math.max(1, n);
+    }
+
+    /**
+     * Scales this boss to 'players' fighters ({@link com.newuniverse.nusmp.boss.god.ArenaScaling}): one health modifier under a fixed id, and a damage factor read by {@link #bossDamage} and
+     * {@link #strike}. Both are cut back so they never stack past the stated maximum with the Black Clover x3 and the floor scale ({@code healthCombined}, {@code damageCombined}).
+     * Does nothing but clear itself when the setting is off or the boss opts out. Server side; called once per fight start.
+     */
+    public void applyPartyScale(int players) {
+        if (level().isClientSide) return;
+        if (!partyScaled() || !com.newuniverse.nusmp.boss.rules.BossRulesConfig.partyScaling()) {
+            clearPartyScale();
+            return;
+        }
+        AttributeInstance max = getAttribute(Attributes.MAX_HEALTH), atk = getAttribute(Attributes.ATTACK_DAMAGE);
+        if (max == null) return;
+        AttributeModifier mine = max.getModifier(PARTY_HEALTH_ID);
+        double others = max.getValue() / Math.max(1.0e-6, max.getBaseValue()) / (mine == null ? 1.0 : 1.0 + mine.amount());
+        com.newuniverse.nusmp.boss.BossStatBuff.setFactor(this, Attributes.MAX_HEALTH, PARTY_HEALTH_ID,
+                com.newuniverse.nusmp.boss.god.ArenaScaling.healthCombined(players, others));
+        double atkOthers = atk == null ? 1.0 : atk.getValue() / Math.max(1.0e-6, atk.getBaseValue());
+        partyDamage = com.newuniverse.nusmp.boss.god.ArenaScaling.damageCombined(players, atkOthers * com.newuniverse.nusmp.boss.BossStatBuff.multiplier(this));
+    }
+
+    /** Takes the party scale off again (an abandoned fight, or the setting turned off). */
+    public void clearPartyScale() {
+        partyDamage = 1.0;
+        com.newuniverse.nusmp.boss.BossStatBuff.setFactor(this, Attributes.MAX_HEALTH, PARTY_HEALTH_ID, 1.0);
+    }
+
+    public double partyDamage() { return partyDamage; }
 
     /** Nobody is left: it heals, falls back to 20% power, forgets the fight, and the world is put back. */
     private void resetFight(ServerLevel sl) {
         fightActive = false;
         fighters.clear();
+        clearPartyScale();                                                                    // Leon study fix 5: the next fight reads its own party
         cancelCast();
         pendingEdits.clear();
         removeDisciples(sl);
@@ -781,7 +835,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     }
 
     private void beginCast(ServerLevel sl, int idx, Move m, LivingEntity target, MoveScheduler.Situation s, long t) {
-        scheduler.commit(m, s, Math.max(10, (int) Math.round(m.cooldownTicks() * tuning.cooldownMultiplier())));
+        scheduler.commit(m, s, Math.max(10, (int) Math.round(m.cooldownTicks() * tuning.cooldownMultiplier() * moveCooldownScale)));
         mana.spend(m.manaCost());
         int wind = windUpOf(m);
         casting = m;
@@ -891,13 +945,13 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
      * victim's EP, then the balance law (a sliver of the victim's max health; a player takes at most the pvp cap per hit).
      */
     public float bossDamage(LivingEntity victim, float base) {
-        return ZogratisDamage.amount(this, victim, base, tuning.damageMultiplier(), damageScale(), power() / 100.0);
+        return ZogratisDamage.amount(this, victim, base, tuning.damageMultiplier(), damageScale() * partyDamage, power() / 100.0);
     }
 
     /** Hurts 'victim' with {@link #bossDamage}: magic damage ignores armour, otherwise it is a mob attack. Returns whether it landed. */
     public boolean strike(LivingEntity victim, float base, boolean magic) {
         if (victim == null || !victim.isAlive() || ZogratisEntities.isFamily(victim)) return false;
-        return ZogratisDamage.hit(this, victim, base, tuning.damageMultiplier(), damageScale(), power() / 100.0, magic);
+        return ZogratisDamage.hit(this, victim, base, tuning.damageMultiplier(), damageScale() * partyDamage, power() / 100.0, magic);
     }
 
     /** A line of speech, shown in chat to everyone fighting it and everyone within 64 blocks. */

@@ -355,6 +355,8 @@ public class LuciusBoss extends ZogratisBoss {
     @Override protected int gatesForm() { return FORM_DIVINE; }
     @Override protected float formScale(int form) { return form == FORM_DIVINE ? 1.2f : form == FORM_BASE ? 1.05f : 1.0f; }
     @Override protected float damageScale() { return 1.25f; }
+    /** Leon study fix 5: Lucius keeps his own {@code ArenaScaling} use ({@link LuciusGod}); the generic party scale would scale him twice. */
+    @Override protected boolean partyScaled() { return false; }
 
     /** His plain blow is light (a god does not need his hands); none at all while Julius holds him, and none in act 1, a chain, a channel or a stagger. */
     @Override
@@ -478,7 +480,7 @@ public class LuciusBoss extends ZogratisBoss {
             if (id == null) return super.chooseMove(bk, s, t);
             for (int i = 0; i < bk.size(); i++) {
                 if (!bk.get(i).id().equals(id)) continue;
-                combo.commit(id, t, Math.max(10, (int) Math.round(bk.get(i).cooldownTicks() * tuning().cooldownMultiplier())));
+                combo.commit(id, t, Math.max(10, (int) Math.round(bk.get(i).cooldownTicks() * tuning().cooldownMultiplier() * moveCooldownScale())));
                 return i;
             }
         } catch (RuntimeException planner) {

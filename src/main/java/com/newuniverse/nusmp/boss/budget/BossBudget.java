@@ -28,9 +28,10 @@ public final class BossBudget {
     private static boolean active() { return BossBudgetConfig.enabled(); }
 
     /** The cap of this boss now. */
-    private static float capNow(LivingEntity e, BudgetedBoss b) {
+    public static float capNow(LivingEntity e, BudgetedBoss b) {
         double scale = BudgetPolicy.phaseScale(b.budgetStage(), b.budgetFinalStage(), BossBudgetConfig.finalScale());
-        return BudgetPolicy.capPerSecond(e.getMaxHealth(), BossBudgetConfig.fraction(), BossBudgetConfig.minimum(), scale);
+        float basis = BudgetPolicy.capBasis(e.getMaxHealth(), com.newuniverse.nusmp.boss.BossStatBuff.healthFactor(e), BossBudgetConfig.baseHealth());     // Leon study fix 1
+        return BudgetPolicy.capPerSecond(basis, BossBudgetConfig.fraction(), BossBudgetConfig.minimum(), scale);
     }
 
     /** From the boss's baseTick (server side only): keeps the cap current and restores the budget every 20 ticks. */

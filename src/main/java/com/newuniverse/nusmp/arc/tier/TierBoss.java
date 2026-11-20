@@ -69,6 +69,9 @@ public class TierBoss extends ArcBoss {
 
     @Override public ArcCharacter character() { return row.character(); }
 
+    /** Leon study fix 5: the Tier List rows are data rows and keep their numbers (no party-size scaling). */
+    @Override protected boolean partyScaled() { return false; }
+
     @Override
     protected List<Move> moves() {
         if (book == null) book = TierMoves.build(row);

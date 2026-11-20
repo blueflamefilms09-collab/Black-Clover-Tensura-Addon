@@ -18,6 +18,8 @@ public final class BossRulesConfig {
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
     /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
     public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX, REWORK3_MOVES, REWORK3_DECENNIAL;
+    /** Leon study fixes 5 and 9 (docs/boss_leon_scaling.md, docs/boss_data_files.md). */
+    public static final ModConfigSpec.BooleanValue PARTY_SCALING, BOSS_DATA;
     /** Dungeon-boss rework (docs/dungeon_bosses_rework.md): the master switch and the per-boss switches of the Floor Warden and the three creatures. */
     public static final ModConfigSpec.BooleanValue DUNGEON_REWORK, DUNGEON_WARDEN, DUNGEON_CREATURES;
     /** Dungeon-boss rework 2 (docs/dungeon_bosses_rework2.md): the Labyrinth Guardians' telegraphed move sets and colourways, and the new boss sound set. */
@@ -50,6 +52,13 @@ public final class BossRulesConfig {
         BLACK_CLOVER_STATS = b.comment("3.64.0: the Black Clover bosses (Dark Triad, Lucius, Devil Avatar, Zagred, the Midnight Sun elves, the early-arc and Spade Kingdom bosses) have this many times their maximum health",
                         "and deal this many times the damage (a boosted hit never takes more than half of a victim's maximum health). 3 = three times as strong, 1 = off (the old numbers).")
                 .defineInRange("blackCloverStatMultiplier", 3.0, 1.0, 10.0);
+        PARTY_SCALING = b.comment("Leon study fix 5: every boss of the Zogratis framework (not Lucius, who has his own arena scaling, and not the Tier List rows) scales by the fighters present when the fight starts:",
+                        "health x0.70 / 1.00 / 1.15 / 1.30 and damage x0.80 / 1.00 / 1.06 / 1.12 for 1 / 2 / 3 / 4+ players, read once at fight start and kept under a combined cap with the Black Clover x3 and the floor scale",
+                        "(health at most x8, damage at most x5 in total). false = no party scaling (the old numbers).")
+                .define("partyScaling", true);
+        BOSS_DATA = b.comment("Leon study fix 9: data packs may override a boss's health, attack, speed, armor and move cooldown scale in data/anime_multiverse/arc_bosses/<boss id>.json (read when the boss joins the world).",
+                        "false = the files are ignored and the Java numbers stand. No file ships with the mod.")
+                .define("bossData", true);
         REWORK_MOVES = b.comment("Boss rework wave 1: the new moves appended to the Goliath, the God of Order, the Charybdis Spawn and seven Tier List bosses. false = their old move lists (read when a boss is built).")
                 .define("bossRework1Moves", true);
         REWORK_VFX = b.comment("Boss rework wave 1: Lucifero's shaped gravity effects and the signature effects of the Black Goliath, the Minotaur, the Amphisbaena and the new moves. false = the old dust bursts.",
@@ -90,6 +99,12 @@ public final class BossRulesConfig {
 
     /** 3.64.0: the factor on the health and damage of the Black Clover bosses (1 = off). */
     public static double blackCloverStatMultiplier() { return get(BLACK_CLOVER_STATS); }
+
+    /** Leon study fix 5: party-size scaling of every framework boss (false = the old numbers). */
+    public static boolean partyScaling() { return get(PARTY_SCALING); }
+
+    /** Leon study fix 9: the arc_bosses data files are read (false = ignored). */
+    public static boolean bossData() { return get(BOSS_DATA); }
 
     public static boolean luciusComboAi() { return get(LUCIUS_COMBO_AI); }
 

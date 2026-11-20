@@ -33,4 +33,24 @@ public final class ArenaScaling {
 
     /** The attribute modifier amount (factor minus one) for ADD_MULTIPLIED_TOTAL on the maximum health. */
     public static double healthModifier(int players) { return health(players) - 1.0; }
+
+    // ---- Leon study fix 5: the same table for every boss of the framework, under one combined cap
+    /**
+     * The most the whole health stack (Black Clover x3 times the floor scale (at most x2.5) times the party factor) may reach, and the same for damage (x3 times the floor scale (at most
+     * x1.6) times the party factor). A party factor above 1 is cut back so the product stays under the maximum (never below 1); a factor below 1 (a small party) is never touched.
+     * x3 * x2.5 = 7.5 and x3 * x1.6 = 4.8 leave the full table x1.30 / x1.12 only a little room on the deepest floors, which is the point.
+     */
+    public static final double MAX_TOTAL_HEALTH = 8.0, MAX_TOTAL_DAMAGE = 5.0;
+
+    /** The party factor on health for 'players' fighters when 'others' (the product of every other health factor already on the boss) is already there. */
+    public static double healthCombined(int players, double others) { return combined(health(players), others, MAX_TOTAL_HEALTH); }
+
+    /** The party factor on damage, the same rule with its own maximum. */
+    public static double damageCombined(int players, double others) { return combined(damage(players), others, MAX_TOTAL_DAMAGE); }
+
+    private static double combined(double raw, double others, double max) {
+        if (!(raw > 1.0)) return raw;
+        double o = Double.isNaN(others) || others < 1.0 ? 1.0 : others;
+        return Math.max(1.0, Math.min(raw, max / o));
+    }
 }

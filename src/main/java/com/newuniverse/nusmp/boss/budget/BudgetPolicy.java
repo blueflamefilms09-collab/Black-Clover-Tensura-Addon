@@ -5,6 +5,15 @@ public final class BudgetPolicy {
     private BudgetPolicy() {}
 
     /**
+     * The health the cap is a share of. With 'useBase' it is the max health divided by the Black Clover health factor (1 = none), so a x3 boss keeps the cap of its
+     * unbuffed bar and the kill takes three times as long; without it, or with no factor, it is the max health itself (the old behaviour).
+     */
+    public static float capBasis(float maxHealth, double bcFactor, boolean useBase) {
+        if (!useBase || Double.isNaN(bcFactor) || bcFactor <= 1.0) return maxHealth;
+        return (float) (maxHealth / bcFactor);
+    }
+
+    /**
      * Health per second a boss may lose: max health * fraction * phase scale, never below the absolute minimum (so a test boss of a few
      * hearts still dies) and never above its max health (a cap above the whole bar is no cap, but is still finite).
      */

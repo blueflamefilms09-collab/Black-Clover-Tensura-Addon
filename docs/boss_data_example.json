@@ -1,0 +1,8 @@
+{
+  "_comment": "EXAMPLE ONLY, not loaded from here. Copy to data/anime_multiverse/arc_bosses/<boss id>.json in a data pack or the mod's resources to use it. Every key is optional; a key you leave out keeps the Java number.",
+  "health": 3600,
+  "attack": 26,
+  "speed": 0.3,
+  "armor": 12,
+  "move_cooldown_scale": 0.9
+}
