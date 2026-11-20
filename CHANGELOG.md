@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.39.0] — Spear tips and bow arrows are solid 3D, not flat
+Owner request: make the parts that should be 3D (the tip of the spear, the arrows of the bow) really 3D.
+- FIXED (client setting `heroSolidParts` in `nusmp-flatprops-client.toml`, default on; `false` restores the old look exactly): an audit found 85 flat or paper-thin parts (`tools/heroweapon/flat_parts_audit.py`), now 0. The in-hand spear heads, the harpoon barbs and the 33 Legendary Bow pull meshes were rebuilt with real thickness, and the flying arrow of light and flying spear tip (11 plus 6 server call sites, plus the hero thrust) are solid models on a glow trail instead of a glow streak.
+- NEW: shapes `HERO_ARROW` and `HERO_SPEAR` with `HeroProjectileLayer`, the pure `HeroSolid`, self-test `visual.hero_solid`, docs/heroweapon/flat_parts.md with before/after previews.
+- REPLACED: 44 weapon meshes (the originals are kept in `weapon_meshes/flat_parts_old/` and used when the setting is off); the effect shape of the bow and spear call sites (same single packet).
+- KEPT: scythe blades (thin by design), the harpoon lightning throw, all textures and gameplay. Hand positions are unchanged (30 bow meshes pinned to their old grip point).
+- Cost: no new packet or entity. Client at most 48 quads per solid model, at most 16 models per frame, none beyond 40 blocks.
+- Honest caveats: NOT made in Blender (no Blender here; a script thickened the meshes), so rule 14 is still open for these 44 meshes; nothing seen in a game; the Java was not compiled before CI.
+
 ## [4.38.0] — The other five Berserk weapons get more abilities and their own effects
 Owner request: fix the weapon effects and give the Berserk weapons more abilities, like the first one.
 - NEW: each of the five other sin weapons has 2 extra techniques and 1 passive, added as Lord-skill modes 3 and 4 (the old modes keep their order). Sloth Axe: Stillness, Crushing Gravity, Sinking Weight. Envy Gunblade: Green Eyes, Stolen Life, Glaring Eyes. Vanity Spear: Reflected Thrust, Narcissus, Vain Shine. Chakrams: Thrown Rings, Binding Embrace, Hungry Rings. Seifort Holy Sword: Purge, Holy Ground, Smiting Light.

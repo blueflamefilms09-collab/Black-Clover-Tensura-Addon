@@ -49,7 +49,7 @@ final class BowDirect {
             Hits hits = new Hits();
             for (Vec3 end : ends) {
                 List<LivingEntity> in = Foes.along(c, eye, end, BowNumbers.SQUALL_WIDTH, 1);
-                c.fx(VfxShape.STAR_MAGIC, muzzle, end, BowFx.main(c), 3, 0.6f);
+                c.fx(VfxShape.HERO_ARROW, muzzle, end, BowFx.main(c), 3, 0.6f);
                 if (!in.isEmpty()) hits.add(in.get(0), (float) BowNumbers.SQUALL_PER_ARROW);
             }
             for (LivingEntity t : hits.apply(c, Foes.MAX)) {
@@ -75,7 +75,7 @@ final class BowDirect {
         for (int i = 0; i < BowNumbers.BIRD_SHAFTS; i++) {
             double side = (i - (BowNumbers.BIRD_SHAFTS - 1) / 2.0) * 0.5;
             Vec3 from = eye.add(right.scale(side)).add(0.0, 0.3 - 0.15 * Math.abs(side), 0.0).add(look.scale(0.6));
-            Tasks.later(c, i, () -> c.fx(VfxShape.STAR_MAGIC, from, to, BowFx.main(c), BowNumbers.BIRD_DELAY, 0.6f));
+            Tasks.later(c, i, () -> c.fx(VfxShape.HERO_ARROW, from, to, BowFx.main(c), BowNumbers.BIRD_DELAY, 0.6f));
         }
         BowFx.swing(c);
         BowFx.sound(c, eye, SoundEvents.ARROW_SHOOT, 1.0f, 1.6f);
@@ -121,7 +121,7 @@ final class BowDirect {
         BowFx.sound(c, dest, SoundEvents.PLAYER_ATTACK_SWEEP, 0.8f, 1.6f);
         if (prey != null && prey.isAlive()) {
             Vec3 muzzle = BowFx.muzzle(c, Rays.dir(c.eye(), BowFx.mid(prey), look));
-            c.fx(VfxShape.STAR_MAGIC, muzzle, BowFx.mid(prey), BowFx.main(c), 4, 0.6f);
+            c.fx(VfxShape.HERO_ARROW, muzzle, BowFx.mid(prey), BowFx.main(c), 4, 0.6f);
             if (Foes.hit(c, prey, (float) BowNumbers.RETREAT_RAW)) BowFx.flare(c, BowFx.mid(prey), 0.5f);
         }
         return true;

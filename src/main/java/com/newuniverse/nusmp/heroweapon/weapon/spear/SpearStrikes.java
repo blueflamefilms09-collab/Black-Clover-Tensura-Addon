@@ -38,7 +38,7 @@ final class SpearStrikes {
         Tasks.later(c, SpearNumbers.THRUST_DELAY, () -> {
             Hits hits = new Hits();
             for (LivingEntity t : Foes.along(c, eye, end, SpearNumbers.THRUST_WIDTH, SpearNumbers.THRUST_TARGETS)) hits.add(t, (float) SpearNumbers.THRUST_RAW);
-            c.fx(VfxShape.STAR_MAGIC, hand, end, SpearFx.main(c), 4, 0.9f);
+            c.fx(VfxShape.HERO_SPEAR, hand, end, SpearFx.main(c), 4, 0.9f);
             for (LivingEntity t : hits.apply(c, SpearNumbers.THRUST_TARGETS)) {
                 SpearFx.flare(c, SpearFx.mid(t), 0.45f);
                 c.shove(t, eye, 0.25);
@@ -127,7 +127,7 @@ final class SpearStrikes {
             for (LivingEntity t : Foes.along(c, eye, end, SpearNumbers.METEOR_WIDTH, SpearNumbers.METEOR_TARGETS)) hits.add(t, (float) SpearNumbers.METEOR_RAW);
             for (LivingEntity t : Foes.around(c, end, SpearNumbers.METEOR_SPLASH_RADIUS, Foes.MAX)) hits.add(t, (float) SpearNumbers.METEOR_SPLASH);
             c.fx(VfxShape.LIGHT_BLADE, hand, end, SpearFx.light(c), 8, 1.1f);
-            c.fx(VfxShape.STAR_MAGIC, hand, end, SpearFx.main(c), 6, 1.0f);
+            c.fx(VfxShape.HERO_SPEAR, hand, end, SpearFx.main(c), 6, 1.0f);
             for (LivingEntity t : hits.apply(c, SpearNumbers.METEOR_TARGETS)) {
                 SpearFx.flare(c, SpearFx.mid(t), 0.5f);
                 c.shove(t, eye, 0.5);
@@ -173,7 +173,7 @@ final class SpearStrikes {
             Hits hits = new Hits();
             for (LivingEntity t : Foes.along(c, eye, end, width, targets)) hits.add(t, (float) raw);
             c.fx(VfxShape.LIGHT_BLADE, hand, end, SpearFx.light(c), 10, size);
-            c.fx(VfxShape.STAR_MAGIC, hand, end, SpearFx.main(c), 6, size);
+            c.fx(VfxShape.HERO_SPEAR, hand, end, SpearFx.main(c), 6, size);
             for (LivingEntity t : hits.apply(c, targets)) {
                 SpearFx.flare(c, SpearFx.mid(t), grand ? 0.9f : 0.6f);
                 c.shove(t, eye, grand ? 0.9 : 0.5);

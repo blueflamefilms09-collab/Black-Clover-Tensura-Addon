@@ -37,6 +37,14 @@ public final class SolidParts {
         return MODEL.reset(centre, yaw, tilt, scale, alpha);
     }
 
+    /**
+     * Like {@link #begin} but the model's local +y axis points along {@code dir} (any direction, need not be normalised; the roll about it is whatever the yaw / tilt basis gives). For arrows and spear tips that fly.
+     */
+    public static Model beginAimed(Vector3f centre, Vector3f dir, float scale, float alpha) {
+        float[] a = com.newuniverse.nusmp.vfx.HeroSolid.aim(dir.x, dir.y, dir.z);
+        return MODEL.reset(centre, a[0], a[1], scale, alpha);
+    }
+
     public static final class Model {
         private final Vector3f o = new Vector3f();
         private final Matrix3f basis = new Matrix3f();

@@ -107,7 +107,7 @@ final class BowShots {
             r *= BowNumbers.PIERCE_FACTOR;
         }
         Vec3 muzzle = BowFx.muzzle(c, dir);
-        c.fx(VfxShape.STAR_MAGIC, muzzle, end, BowFx.main(c), Math.max(3, (int) (muzzle.distanceTo(end) / 10.0) + 2), (float) (0.5 + 0.5 * f + (width > 0.6 ? 0.6 : 0.0)));
+        c.fx(VfxShape.HERO_ARROW, muzzle, end, BowFx.main(c), Math.max(3, (int) (muzzle.distanceTo(end) / 10.0) + 2), (float) (0.5 + 0.5 * f + (width > 0.6 ? 0.6 : 0.0)));
         List<LivingEntity> struck = hits.apply(c, pierce);
         for (LivingEntity t : struck) BowFx.flare(c, BowFx.mid(t), 0.4f);
         reward(c, struck);
@@ -132,7 +132,7 @@ final class BowShots {
 
     private static void line(HeroCtx c, double range, int ticks, float size) {
         Vec3 dir = c.look(), eye = c.eye();
-        c.fx(VfxShape.STAR_MAGIC, BowFx.muzzle(c, dir), Rays.clipEnd(c, eye, eye.add(dir.scale(range))), BowFx.main(c), ticks, size);
+        c.fx(VfxShape.HERO_ARROW, BowFx.muzzle(c, dir), Rays.clipEnd(c, eye, eye.add(dir.scale(range))), BowFx.main(c), ticks, size);
     }
 
     /** Eagle Piercing Shot: a sniper arrow along the whole lane, through up to six foes. */
@@ -143,7 +143,7 @@ final class BowShots {
         Hits hits = new Hits();
         for (LivingEntity t : Foes.along(c, eye, end, BowNumbers.SNIPER_WIDTH, BowNumbers.SNIPER_TARGETS)) hits.add(t, (float) BowNumbers.SNIPER_RAW);
         c.fx(VfxShape.LIGHT_BLADE, muzzle, end, BowFx.main(c), 10, 1.0f);
-        c.fx(VfxShape.STAR_MAGIC, muzzle, end, BowFx.main(c), 6, 1.2f);
+        c.fx(VfxShape.HERO_ARROW, muzzle, end, BowFx.main(c), 6, 1.2f);
         List<LivingEntity> struck = hits.apply(c, BowNumbers.SNIPER_TARGETS);
         for (LivingEntity t : struck) {
             BowFx.flare(c, BowFx.mid(t), 0.8f);
@@ -197,7 +197,7 @@ final class BowShots {
         Vec3 end = Rays.clipEnd(c, eye, eye.add(dir.scale(BowNumbers.BURST_RANGE)));
         List<LivingEntity> in = Foes.along(c, eye, end, BowNumbers.BASIC_WIDTH, 1);
         Vec3 impact = in.isEmpty() ? end : BowFx.mid(in.get(0));
-        c.fx(VfxShape.STAR_MAGIC, BowFx.muzzle(c, dir), impact, BowFx.main(c), 4, 1.0f);
+        c.fx(VfxShape.HERO_ARROW, BowFx.muzzle(c, dir), impact, BowFx.main(c), 4, 1.0f);
         Tells.ring(c.level, impact, BowNumbers.BURST_RADIUS, BowFx.rgb(c));
         BowFx.flare(c, impact, 0.6f);
         BowFx.sound(c, impact, SoundEvents.FIREWORK_ROCKET_LAUNCH, 1.0f, 1.2f);

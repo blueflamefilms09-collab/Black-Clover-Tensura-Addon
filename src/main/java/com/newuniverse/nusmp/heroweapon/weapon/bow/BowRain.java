@@ -71,7 +71,7 @@ final class BowRain {
         if (s.frost()) c.fx(VfxShape.ICE_FX2, centre, centre, BowFx.light(c), lasts, (float) s.radius());
         else if (s.grand()) c.fx(VfxShape.MAGIC_CIRCLE, centre.add(0.0, 0.1, 0.0), centre.add(0.0, 1.0, 0.0), BowFx.main(c), lasts, (float) (s.radius() * 0.7));
         Vec3 dir = c.look(), muzzle = BowFx.muzzle(c, dir);
-        c.fx(VfxShape.STAR_MAGIC, muzzle, centre.add(0.0, 18.0, 0.0), BowFx.main(c), 6, 1.0f);
+        c.fx(VfxShape.HERO_ARROW, muzzle, centre.add(0.0, 18.0, 0.0), BowFx.main(c), 6, 1.0f);
         if (s.lion()) c.fx(VfxShape.FIRE_LION, muzzle, centre.add(0.0, 1.0, 0.0), BowFx.PRIDE, s.delay() + 10, 2.4f);
         BowFx.swing(c);
         BowFx.sound(c, muzzle, SoundEvents.ARROW_SHOOT, 1.2f, 0.7f);
@@ -79,7 +79,7 @@ final class BowRain {
             Hits hits = new Hits();
             for (LivingEntity e : Foes.around(c, centre, s.radius(), Foes.MAX)) hits.add(e, (float) s.rawWave());
             for (double[] pt : Volley.scatter(s.arrows(), s.radius(), k)) {
-                c.fx(VfxShape.STAR_MAGIC, centre.add(pt[0], 16.0, pt[1]), centre.add(pt[0], 0.2, pt[1]), BowFx.main(c), 4, 0.5f);
+                c.fx(VfxShape.HERO_ARROW, centre.add(pt[0], 16.0, pt[1]), centre.add(pt[0], 0.2, pt[1]), BowFx.main(c), 4, 0.5f);
             }
             for (LivingEntity e : hits.apply(c, Foes.MAX)) {
                 if (s.frost()) e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BowNumbers.FROZEN_SLOW_TICKS, 1));
@@ -102,13 +102,13 @@ final class BowRain {
         }
         Vec3 dir = c.look(), muzzle = BowFx.muzzle(c, dir);
         Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c));
-        c.fx(VfxShape.STAR_MAGIC, muzzle, centre.add(0.0, 40.0, 0.0), BowFx.main(c), 8, 1.2f);
+        c.fx(VfxShape.HERO_ARROW, muzzle, centre.add(0.0, 40.0, 0.0), BowFx.main(c), 8, 1.2f);
         BowFx.swing(c);
         BowFx.sound(c, muzzle, SoundEvents.FIREWORK_ROCKET_LAUNCH, 1.2f, 0.8f);
         Tasks.later(c, BowNumbers.METEOR_DELAY / 2, () -> Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c)));
         Tasks.later(c, BowNumbers.METEOR_DELAY - 6, () -> {
             Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c));
-            c.fx(VfxShape.STAR_MAGIC, centre.add(3.0, 40.0, 2.0), centre, BowFx.main(c), 6, 2.2f);
+            c.fx(VfxShape.HERO_ARROW, centre.add(3.0, 40.0, 2.0), centre, BowFx.main(c), 6, 2.2f);
         });
         Tasks.later(c, BowNumbers.METEOR_DELAY, () -> {
             Hits hits = new Hits();

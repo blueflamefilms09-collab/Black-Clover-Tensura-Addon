@@ -450,9 +450,11 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     static Mesh plainMesh(String id) {
         boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels();
         boolean greedClassic = GreedHandsClient.classic();
-        if (classic != classicSeen || greedClassic != greedClassicSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        boolean solid = com.newuniverse.nusmp.vfx.HeroSolid.solid();                  // visual.heroSolidParts (docs/heroweapon/flat_parts.md): off = the old flat arrow / spear head meshes
+        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
             greedClassicSeen = greedClassic;
+            solidSeen = solid;
             MESHES.clear();
             WeaponGrip.clear();
             ItemStateVariants.clearCache();
@@ -463,12 +465,13 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             String skin = "textures/entity/weapon/classic/" + id.replaceAll("_pull[123]$", "");
             mesh = read(id, "weapon_meshes/classic/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
+        if (mesh == null && !solid && isClassicLegendary(id)) mesh = read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", null, null);       // the hairline arrow / paper-thin spear head of before the flat parts were made solid (null when this id was not changed)
         if (mesh == null) mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
         MESHES.put(id, mesh);
         return mesh;
     }
 
-    private static boolean classicSeen, greedClassicSeen;
+    private static boolean classicSeen, greedClassicSeen, solidSeen = true;
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {

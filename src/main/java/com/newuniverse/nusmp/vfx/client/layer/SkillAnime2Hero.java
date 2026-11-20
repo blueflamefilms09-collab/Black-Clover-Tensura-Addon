@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx.client.layer;
 
+import com.newuniverse.nusmp.vfx.HeroSolid;
 import com.newuniverse.nusmp.vfx.client.*;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -102,6 +103,7 @@ final class SkillAnime2Hero {
             buf.beam(ctx, STREAK, VfxBlend.ALPHA, tail, head, 0.3f, 1.6f * k, 1, 0, al(col, 0.1f * fade), al(col, 0.8f * fade));
             buf.beam(ctx, BOLT, VfxBlend.ADD, tail, head, 0.1f, 0.6f * k, 1, 0, al(col, 0.1f * fade), al(WHITE, fade));
             buf.billboard(ctx, SPARKLE, VfxBlend.ADD, head, 1.0f * k, age * 0.4f, al(hot(col, 0.7f), fade));
+            if (grow > 0.02f && fade > 0.05f && HeroSolid.solid() && HeroSolid.takeSlot(ctx)) solidPoint(buf, head, dir, v, k, col, Math.min(1f, fade * 3f));   // docs/heroweapon/flat_parts.md: a real tip / harpoon head / arrow leads the streak
         }
         for (int j = 1; j <= 4; j++) {                                                 // sonic rings shed behind the point
             float u = grow - 0.12f * j;
@@ -120,6 +122,20 @@ final class SkillAnime2Hero {
         }
         impact(ctx, buf, age, 5f, b, 1.5f * k, col, fade);
         if (grow >= 1f) buf.ring(RING, VfxBlend.ADD, VfxPose.ground(new Vector3f(b).add(0, 0.08f, 0)), 0.3f * k + (age - 5f) * 0.14f, 0.6f * k + (age - 5f) * 0.3f, ctx.seg(12, 6), 3, 0, al(col, Math.max(0, 1 - (age - 5f) / 9f) * fade));
+    }
+
+    /** The solid point of a thrust: 0 spear tip, 1 harpoon head (barbed), 2 arrow. Same models as HERO_SPEAR / HERO_ARROW (at most {@link HeroSolid#MAX_QUADS_EACH} quads, one slot of the frame budget). */
+    private static void solidPoint(VfxVertexBuffer buf, Vector3f head, Vector3f dir, int v, float k, int col, float alpha) {
+        Vector3f centre = new Vector3f(head);
+        if (v == 2) {
+            float s = Mth.clamp(0.7f + 0.35f * k, 0.8f, 1.5f);
+            centre.fma(-0.5f * s, dir);                                                // the arrow model is 1.0 long, centred, the point at +0.5
+            SolidModels.arrow(buf, centre, dir, s, alpha, col);
+        } else {
+            float s = Mth.clamp(0.8f + 0.4f * k, 0.9f, 1.8f);
+            centre.fma(-0.56f * s, dir);                                               // the collar is the origin, the point 0.56 ahead of it
+            SolidModels.spearTip(buf, centre, dir, s, alpha, col, v == 1);
+        }
     }
 
     // ------------------------------------------------------------------ SHOCK: a hammer, a gauntlet, a carriage

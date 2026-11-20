@@ -65,7 +65,7 @@ final class SpearMotion {
         Hits hits = new Hits();
         for (LivingEntity t : Foes.along(c, a, b, SpearNumbers.LUNGE_WIDTH, SpearNumbers.LUNGE_TARGETS)) hits.add(t, (float) SpearNumbers.LUNGE_RAW);
         c.fx(VfxShape.LIGHT_BLADE, a, b, SpearFx.light(c), 8, 0.9f);
-        c.fx(VfxShape.STAR_MAGIC, a, b, SpearFx.main(c), 6, 0.9f);
+        c.fx(VfxShape.HERO_SPEAR, a, b, SpearFx.main(c), 6, 0.9f);
         SpearFx.swing(c);
         for (LivingEntity t : hits.apply(c, SpearNumbers.LUNGE_TARGETS)) SpearFx.flare(c, SpearFx.mid(t), 0.5f);
         Moves.teleport(p, dest);

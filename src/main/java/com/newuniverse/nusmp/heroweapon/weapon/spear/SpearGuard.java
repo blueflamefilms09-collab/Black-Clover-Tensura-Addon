@@ -83,7 +83,7 @@ final class SpearGuard {
         }
         if (Foes.valid(c, foe) && foe.distanceTo(c.player) <= SpearNumbers.RIPOSTE_REACH) {
             Vec3 at = SpearFx.mid(foe);
-            c.fx(VfxShape.STAR_MAGIC, SpearFx.hand(c, at.subtract(c.eye()).normalize()), at, SpearFx.main(c), 4, 1.0f);
+            c.fx(VfxShape.HERO_SPEAR, SpearFx.hand(c, at.subtract(c.eye()).normalize()), at, SpearFx.main(c), 4, 1.0f);
             if (Foes.hit(c, foe, (float) SpearNumbers.RIPOSTE_RAW)) {
                 SpearFx.flare(c, at, 0.9f);
                 c.shove(foe, c.player.position(), 0.6);

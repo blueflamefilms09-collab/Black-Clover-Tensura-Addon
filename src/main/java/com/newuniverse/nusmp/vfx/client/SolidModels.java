@@ -72,4 +72,41 @@ public final class SolidModels {
         m.box(-0.18f, -0.90f, -0.08f, 0.18f, -0.02f, 0.08f, SolidParts.GLASS, glass);                // legs
         return m.draw(buf);
     }
+
+    // ---- the hero weapon projectiles (docs/heroweapon/flat_parts.md): local +y is the way it flies; about 30 quads each once the faces turned away are dropped (HeroSolid.MAX_QUADS_EACH)
+    private static final float[] ARROW_LEAF = {0f, 0.50f, -0.034f, 0.355f, -0.026f, 0.29f, 0.026f, 0.29f, 0.034f, 0.355f};                              // a broadhead, counter-clockwise
+    private static final float[] SPEAR_LEAF = {0f, 0.56f, -0.072f, 0.34f, -0.088f, 0.17f, -0.040f, 0.0f, 0.040f, 0.0f, 0.088f, 0.17f, 0.072f, 0.34f};     // a leaf blade, convex
+
+    /** An arrow about 1 block long at scale 1, flying along {@code dir} (its point leads): a shaft, a nock, a broadhead with a ridge (a bevelled plate) and two crossed vanes. */
+    public static boolean arrow(VfxVertexBuffer buf, Vector3f c, Vector3f dir, float scale, float alpha, int accent) {
+        SolidParts.Model m = SolidParts.beginAimed(c, dir, scale, alpha);
+        if (m.culled()) return false;
+        int shaft = tint(accent, 0.18f), steel = tint(accent, 0.12f), fletch = tint(accent, 0.6f);
+        m.box(-0.016f, -0.46f, -0.016f, 0.016f, 0.31f, 0.016f, SolidParts.BONE, shaft);
+        m.box(-0.021f, -0.50f, -0.021f, 0.021f, -0.46f, 0.021f, SolidParts.DARK, 0xFFFFFFFF);
+        m.plate(ARROW_LEAF, 0f, 0.034f, 0.55f, SolidParts.STEEL, steel);
+        m.box(-0.036f, -0.47f, -0.0035f, 0.036f, -0.31f, 0.0035f, SolidParts.SILVER, fletch);                // the vanes cross in 3D
+        m.box(-0.0035f, -0.47f, -0.036f, 0.0035f, -0.31f, 0.036f, SolidParts.SILVER, fletch);
+        return m.draw(buf);
+    }
+
+    /**
+     * A spear tip about 0.85 block long at scale 1, flying along {@code dir} (the point leads, the local origin is the collar): a socket, a collar with two lugs and a leaf blade with a sharp ridge (a bevelled plate).
+     * {@code barbed} adds the two backward wedges of a harpoon head.
+     */
+    public static boolean spearTip(VfxVertexBuffer buf, Vector3f c, Vector3f dir, float scale, float alpha, int accent, boolean barbed) {
+        SolidParts.Model m = SolidParts.beginAimed(c, dir, scale, alpha);
+        if (m.culled()) return false;
+        int steel = tint(accent, 0.22f), trim = tint(accent, 0.55f);
+        m.box(-0.030f, -0.30f, -0.030f, 0.030f, -0.04f, 0.030f, SolidParts.GOLD, trim);
+        m.box(-0.048f, -0.06f, -0.048f, 0.048f, 0.0f, 0.048f, SolidParts.GOLD, trim);
+        m.box(-0.088f, -0.05f, -0.011f, -0.048f, 0.03f, 0.011f, SolidParts.GOLD, trim);
+        m.box(0.048f, -0.05f, -0.011f, 0.088f, 0.03f, 0.011f, SolidParts.GOLD, trim);
+        m.plate(SPEAR_LEAF, 0f, 0.075f, 0.85f, SolidParts.STEEL, steel);
+        if (barbed) {
+            m.wedge(0.05f, 0.14f, 0.32f, 0.018f, 0.115f, 0.04f, 0.17f, SolidParts.STEEL, steel);
+            m.wedge(-0.05f, 0.14f, 0.32f, 0.018f, -0.115f, 0.04f, 0.17f, SolidParts.STEEL, steel);
+        }
+        return m.draw(buf);
+    }
 }

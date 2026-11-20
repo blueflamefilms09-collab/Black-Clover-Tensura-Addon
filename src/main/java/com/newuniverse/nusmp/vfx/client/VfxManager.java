@@ -305,6 +305,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.GiantAvatarLayer());
         // Berserk of Gluttony weapons: the one shape SIN_WEAPON (docs/sin_weapons_abilities.md), appended after GIANT_AVATAR; sinweapons.classicVfx = true draws nothing for it.
         register(new com.newuniverse.nusmp.vfx.client.layer.SinWeaponLayer());
+        // Hero weapon projectiles (flat parts made solid): HERO_ARROW and HERO_SPEAR, appended after GIANT_AVATAR; visual.heroSolidParts = false draws the old starlight streak for them.
+        register(new com.newuniverse.nusmp.vfx.client.layer.HeroProjectileLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
