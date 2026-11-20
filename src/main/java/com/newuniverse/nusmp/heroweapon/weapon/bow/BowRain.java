@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.heroweapon.weapon.bow;
 
 import com.newuniverse.nusmp.entity.zogratis.Tells;
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.weapon.pierce.Foes;
@@ -76,6 +77,11 @@ final class BowRain {
         BowFx.swing(c);
         BowFx.sound(c, muzzle, SoundEvents.ARROW_SHOOT, 1.2f, 0.7f);
         Tasks.pulses(c, s.delay(), s.waves(), s.interval(), k -> {
+            if (HeroConfig.realArrows()) {                                       // real arrows fall from above (docs/heroweapon/bow_arrows.md); off: the old instant wave below
+                BowArrows.rainWave(c, centre, s.radius(), s.arrows(), s.rawWave(), k, s.lion() ? ArrowKind.PRIDE : s.frost() ? ArrowKind.FROST : s.grand() ? ArrowKind.STAR : null);
+                if (k % 2 == 0) BowFx.sound(c, centre, SoundEvents.ARROW_HIT, 0.8f, 1.3f);
+                return;
+            }
             Hits hits = new Hits();
             for (LivingEntity e : Foes.around(c, centre, s.radius(), Foes.MAX)) hits.add(e, (float) s.rawWave());
             for (double[] pt : Volley.scatter(s.arrows(), s.radius(), k)) {
@@ -105,12 +111,21 @@ final class BowRain {
         c.fx(VfxShape.HERO_ARROW, muzzle, centre.add(0.0, 40.0, 0.0), BowFx.main(c), 8, 1.2f);
         BowFx.swing(c);
         BowFx.sound(c, muzzle, SoundEvents.FIREWORK_ROCKET_LAUNCH, 1.2f, 0.8f);
-        Tasks.later(c, BowNumbers.METEOR_DELAY / 2, () -> Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c)));
-        Tasks.later(c, BowNumbers.METEOR_DELAY - 6, () -> {
+        Runnable oldWay = () -> {
+            Tasks.later(c, BowNumbers.METEOR_DELAY / 2, () -> Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c)));
+            Tasks.later(c, BowNumbers.METEOR_DELAY - 6, () -> {
             Tells.ring(level, centre, BowNumbers.METEOR_RADIUS, BowFx.rgb(c));
             c.fx(VfxShape.HERO_ARROW, centre.add(3.0, 40.0, 2.0), centre, BowFx.main(c), 6, 2.2f);
         });
-        Tasks.later(c, BowNumbers.METEOR_DELAY, () -> {
+            Tasks.later(c, BowNumbers.METEOR_DELAY, () -> landMeteor(c, centre));
+        };
+        // 4.73.0: the shared falling meteor (setting meteor.realMeteors; off, or over the caps, runs the old streak and delayed hit)
+        com.newuniverse.nusmp.meteor.MeteorFall.dropOr(c.player, centre, com.newuniverse.nusmp.meteor.MeteorWiring.spec("bow.meteor_bow")
+                .onImpact((lvl, at, who) -> { if (who != null) landMeteor(c, centre); }), oldWay);
+        return true;
+    }
+
+    private static void landMeteor(HeroCtx c, Vec3 centre) {
             Hits hits = new Hits();
             for (LivingEntity e : Foes.around(c, centre, BowNumbers.METEOR_RADIUS, Foes.MAX)) hits.add(e, (float) BowNumbers.METEOR_RAW);
             c.fx(VfxShape.FIRE_BURST, centre, centre, BowFx.main(c), 18, 2.2f);
@@ -120,7 +135,5 @@ final class BowRain {
             }
             BowFx.flare(c, centre.add(0.0, 0.5, 0.0), 2.0f);
             BowFx.sound(c, centre, SoundEvents.FIREWORK_ROCKET_BLAST, 1.6f, 0.6f);
-        });
-        return true;
-    }
+        }
 }

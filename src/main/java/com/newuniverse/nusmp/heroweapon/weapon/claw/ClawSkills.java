@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.claw;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.blackclover.TimedModifiers;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
@@ -249,7 +250,7 @@ final class ClawSkills {
         if (!t.isAlive() || t.level() != c.level || c.player.distanceTo(t) > ClawNumbers.RUSH_REACH) return;
         if (!Strike.hit(c, t, damage, true)) return;
         ClawBleed.add(c, t, 1);
-        TimedModifiers.apply(t, Attributes.ARMOR, SHRED, ClawNumbers.RUSH_ARMOR_STEP * (cut + 1), ClawNumbers.RUSH_ARMOR_TICKS, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        TimedModifiers.apply(t, Attributes.ARMOR, SHRED, ClawNumbers.RUSH_ARMOR_STEP * (cut + 1), Dur.t(ClawNumbers.RUSH_ARMOR_TICKS), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         StrikeFx.shape(c.level, VfxShape.WIND_SLASH, c.player.getEyePosition().add(0, -0.3, 0), Strike.center(t), AMBER, 6, 0.8f);
         StrikeFx.sound(c.level, c.player.position(), SoundEvents.PLAYER_ATTACK_SWEEP, 0.8f, 1.4f + 0.1f * cut);
     }
@@ -290,7 +291,7 @@ final class ClawSkills {
                     StrikeFx.tellCrack(c.level, p.position(), new Vec3(end.x, p.getY(), end.z), AMBER, ClawNumbers.REND_WARN + 4);
                     StrikeFx.gather(c.level, p.position().add(0, 1.0, 0), 1.2, AMBER, 12);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.WOLF_GROWL, 1.0f, 0.5f);
-                    Strike.effect(p, "minecraft:slowness", ClawNumbers.REND_WARN, 3);                  // held still while the line shows, so the line shown is the line run
+                    Strike.hold(p, "minecraft:slowness", ClawNumbers.REND_WARN, 3);                  // held still while the line shows, so the line shown is the line run
                     Strike.later(p, ClawNumbers.REND_WARN, cx -> rush(cx, dir));
                     return true;
                 });

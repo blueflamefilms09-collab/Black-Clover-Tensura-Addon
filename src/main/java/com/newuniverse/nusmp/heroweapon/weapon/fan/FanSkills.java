@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.fan;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.skill.HeroSkill;
@@ -192,7 +193,7 @@ final class FanSkills {
                 if (GlassKit.strike(c, e, FanNumbers.DANCE_RAW)) GlassKit.push(c, e, start, FanNumbers.DANCE_SHOVE);
             }
             GlassKit.impulse(c.player, new Vec3(v.x(), v.y(), v.z()), false);
-            c.player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, FanNumbers.DANCE_SLOW_FALL_TICKS, 0, false, false, true));
+            c.player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Dur.t(FanNumbers.DANCE_SLOW_FALL_TICKS), 0, false, false, true));
             GlassKit.follow(c, VfxShape.WIND_ZEPHYR, WIND, 36, 0.9f);
             c.fx(VfxShape.WIND_SLASH, start, end, PETAL, 12, 1.0f);
             c.sound(SoundEvents.ELYTRA_FLYING, 0.8f, 1.5f);
@@ -204,15 +205,15 @@ final class FanSkills {
     private static HeroSkill mistVeil() {
         return make(FanNumbers.MIST_VEIL, c -> {
             UUID id = c.player.getUUID();
-            FanState.VEIL.set(id, c.level.getGameTime() + FanNumbers.VEIL_TICKS);
-            c.player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, FanNumbers.VEIL_TICKS, 0, false, false, true));
+            FanState.VEIL.set(id, c.level.getGameTime() + Dur.t(FanNumbers.VEIL_TICKS));
+            c.player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Dur.t(FanNumbers.VEIL_TICKS), 0, false, false, true));
             Vec3 feet = c.player.position();
             int lost = 0;
             for (Mob m : c.level.getEntitiesOfClass(Mob.class, new AABB(feet, feet).inflate(FanNumbers.VEIL_RADIUS), m -> m.getTarget() == c.player)) {
                 m.setTarget(null);
                 lost++;
             }
-            GlassKit.follow(c, VfxShape.MIST_MAGIC, MIST, FanNumbers.VEIL_TICKS, 1.2f);
+            GlassKit.follow(c, VfxShape.MIST_MAGIC, MIST, Dur.t(FanNumbers.VEIL_TICKS), 1.2f);
             c.sound(SoundEvents.ILLUSIONER_CAST_SPELL, 0.7f, 1.6f);
             c.say(lost > 0 ? "The mist closes round you; " + lost + (lost == 1 ? " hunter loses" : " hunters lose") + " you." : "The mist closes round you.");
             return true;
@@ -225,7 +226,7 @@ final class FanSkills {
             Vec3 feet = c.player.position();
             List<LivingEntity> friends = GlassKit.friends(c, FanNumbers.PLUM_RADIUS, FanNumbers.PLUM_TARGETS);
             for (LivingEntity f : friends) {
-                f.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, FanNumbers.PLUM_TICKS, 0, false, true, true));
+                f.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Dur.t(FanNumbers.PLUM_TICKS), 0, false, true, true));
                 if (f.getHealth() < f.getMaxHealth()) c.heal(f, (float) FanNumbers.plumHeal(f.getMaxHealth()));
             }
             c.fx(VfxShape.CHERRY_BLOSSOM_FX2, feet, feet, PETAL, 60, (float) FanNumbers.PLUM_RADIUS);

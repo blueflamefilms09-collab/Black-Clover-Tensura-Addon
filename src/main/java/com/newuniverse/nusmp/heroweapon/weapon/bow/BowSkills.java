@@ -31,7 +31,7 @@ final class BowSkills {
         add(out, BowNumbers.ARROW_SQUALL, BowDirect::squall);
         add(out, BowNumbers.BIRD_HUNTING, BowDirect::bird);
         add(out, BowNumbers.RETREAT_SHOT, BowDirect::retreat);
-        add(out, BowNumbers.METEOR_BOW, BowRain::meteor);
+        add(out, BowNumbers.METEOR_BOW, BowSkills::meteor);
         add(out, BowNumbers.FROZEN_RAIN, BowRain::frozen);
         add(out, BowNumbers.STARFALL_VOLLEY, BowRain::starfall);
         add(out, BowNumbers.LAW_FANATIC, BowDirect::law);
@@ -50,6 +50,15 @@ final class BowSkills {
             BowFx.sound(c, c.eye(), SoundEvents.EXPERIENCE_ORB_PICKUP, 0.8f, 1.6f);
             return true;
         };
+    }
+
+    /**
+     * The one seam of the Meteor Bow technique: today the star falls as the old drawn arrow and the fire burst at the impact point ({@link BowRain#meteor}); the
+     * shared falling-meteor entity (built by another change for every meteor-like technique) is swapped in HERE, and nowhere else. The Meteor Bow FORM's arrows
+     * (a fire burst where each lands, {@link ArrowKind#FIRE}) are a separate thing and stay.
+     */
+    private static boolean meteor(com.newuniverse.nusmp.heroweapon.skill.HeroCtx c) {
+        return BowRain.meteor(c);
     }
 
     private static void add(List<HeroSkill> out, SkillRow row, SimpleSkill.Body body) {

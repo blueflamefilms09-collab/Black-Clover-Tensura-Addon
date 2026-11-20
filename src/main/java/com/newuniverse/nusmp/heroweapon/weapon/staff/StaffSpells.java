@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.staff;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.weapon.kit.Budget;
@@ -115,7 +116,7 @@ final class StaffSpells {
         Vec3 eye = c.eye();
         double d = Geometry.clamp(eye.distanceTo(c.aim(PRISM_REACH)) - 0.4, 3.0, PRISM_REACH);
         Vec3 pos = eye.add(c.look().scale(d));
-        int life = PRISM_TICKS + (c.form.has("wide_prism") ? PRISM_WIDE_TICKS : 0);
+        int life = Dur.t(PRISM_TICKS + (c.form.has("wide_prism") ? PRISM_WIDE_TICKS : 0));
         long now = c.level.getGameTime();
         StaffState.setPrism(c.player.getUUID(), new StaffState.Prism(c.level, pos, now + life, PRISM_CHARGES));
         cast(c);
@@ -195,7 +196,7 @@ final class StaffSpells {
     // ================================================================ Float Mirror
     static boolean floatMirror(HeroCtx c) {
         boolean deep = c.form.has("deep_mirror");
-        int life = MIRROR_TICKS + (deep ? MIRROR_DEEP_TICKS : 0);
+        int life = Dur.task(MIRROR_TICKS + (deep ? MIRROR_DEEP_TICKS : 0));
         long now = c.level.getGameTime();
         StaffState.setMirror(c.player.getUUID(), new StaffState.Mirror(c.level, now + life, deep ? MIRROR_DEEP_NEGATE : MIRROR_NEGATE, MIRROR_RETURNS));
         cast(c);
@@ -239,10 +240,10 @@ final class StaffSpells {
     // ================================================================ Fenrir Rod
     static boolean fenrirRod(HeroCtx c) {
         long now = c.level.getGameTime();
-        StaffState.rhythm(c.player.getUUID()).haste(now + HASTE_TICKS);
+        StaffState.rhythm(c.player.getUUID()).haste(now + Dur.t(HASTE_TICKS));
         cast(c);
         c.fx(VfxShape.MANA_CHARGE, c.player.position().add(0.0, 1.0, 0.0), c.player.position().add(0.0, 1.0, 0.0), ARGB, 30, 1.0f);
-        VfxSpawn.sendFollowing(c.level, VfxShape.WIND_ZEPHYR, c.player, c.player.position(), ARGB, HASTE_TICKS, 0.8f);
+        VfxSpawn.sendFollowing(c.level, VfxShape.WIND_ZEPHYR, c.player, c.player.position(), ARGB, Dur.t(HASTE_TICKS), 0.8f);
         c.sound(SoundEvents.BEACON_POWER_SELECT, 0.8f, 1.8f);
         c.say("Fenrir Rod: your chant quickens");
         return true;
@@ -256,7 +257,7 @@ final class StaffSpells {
             return false;
         }
         long now = c.level.getGameTime();
-        int life = MARK_TICKS + (c.form.has("star_mark") ? MARK_EXTRA_TICKS : 0);
+        int life = Dur.t(MARK_TICKS + (c.form.has("star_mark") ? MARK_EXTRA_TICKS : 0));
         cast(c);
         for (LivingEntity t : seen) {
             StaffState.mark(c.player.getUUID(), t.getUUID(), now + life, now);

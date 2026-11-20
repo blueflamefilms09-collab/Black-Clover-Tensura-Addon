@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sword;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import java.util.function.Predicate;
 
 /**
@@ -35,9 +36,9 @@ public final class HitLedger {
     }
 
     /** The step of an afterimage: the next blow within {@code ticks} leaves a ghost strike. */
-    public void armGhost(long now, int ticks) { ghostUntil = now + Math.max(0, ticks); }
+    public void armGhost(long now, int ticks) { ghostUntil = now + Dur.t(Math.max(0, ticks)); }
 
-    public boolean ghostArmed(long now) { return now < ghostUntil && ghostUntil - now <= SwordNumbers.GHOST_TICKS * 2L; }
+    public boolean ghostArmed(long now) { return now < ghostUntil && ghostUntil - now <= Dur.t(SwordNumbers.GHOST_TICKS) * 2L; }
 
     /** A kill adds to the Tempo (the wielder is in the flow of the fight). */
     public void kill(long now) {

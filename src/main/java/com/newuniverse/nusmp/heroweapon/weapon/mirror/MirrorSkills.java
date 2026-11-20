@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.mirror;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
@@ -77,7 +78,7 @@ final class MirrorSkills {
         for (LivingEntity t : foes) {
             if (!c.hit(t, (float) (MirrorNumbers.BASH.raw() * scale))) continue;
             c.shove(t, origin, MirrorNumbers.BASH_KNOCK * scale);
-            t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, MirrorNumbers.BASH_STAGGER_TICKS, 3, false, true));
+            t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Dur.t(MirrorNumbers.BASH_STAGGER_TICKS), 3, false, true));
             led.gleam.add(now, MirrorNumbers.GLEAM_PER_BASH_HIT);
         }
         return true;
@@ -91,10 +92,10 @@ final class MirrorSkills {
         Vec3 flat = flatLook(c);
         Vec3 centre = c.eye().add(flat.scale(MirrorNumbers.PANE_DISTANCE)).add(0, -0.2, 0);
         for (PaneBook.Pane old : led.panes.makeRoom(now)) shatter(c, old);
-        PaneBook.Pane pane = led.panes.place(now, centre.x, centre.y, centre.z, flat.x, 0, flat.z, MirrorNumbers.PANE_RADIUS, MirrorNumbers.PANE_LIFE, MirrorNumbers.PANE_CHARGES);
-        c.fx(VfxShape.MIRROR_FRAME, centre, centre.add(flat), ICE, MirrorNumbers.PANE_LIFE, 1.5f);
+        PaneBook.Pane pane = led.panes.place(now, centre.x, centre.y, centre.z, flat.x, 0, flat.z, MirrorNumbers.PANE_RADIUS, Dur.task(MirrorNumbers.PANE_LIFE), MirrorNumbers.PANE_CHARGES);
+        c.fx(VfxShape.MIRROR_FRAME, centre, centre.add(flat), ICE, Dur.task(MirrorNumbers.PANE_LIFE), 1.5f);
         c.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 1.2f, 1.1f);
-        Safe.zone(c, MirrorNumbers.PANE_LIFE, 1, "mirror.pane", false, (f, age) -> paneStep(f, pane));
+        Safe.zone(c, Dur.task(MirrorNumbers.PANE_LIFE), 1, "mirror.pane", false, (f, age) -> paneStep(f, pane));
         return true;
     }
 
@@ -207,13 +208,13 @@ final class MirrorSkills {
         if (aimed == null && !group.contains(p)) group.add(0, p);
         while (group.size() > MirrorNumbers.STARDUST.targets()) group.remove(group.size() - 1);
         for (LivingEntity e : group) {
-            e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, MirrorNumbers.STARDUST_TICKS, MirrorNumbers.absorptionAmp(e.getMaxHealth()), false, true));
-            VfxSpawn.sendFollowing(c.level, VfxShape.MIRROR_ARRAY, e, e.position().add(0, 1, 0), ICE, MirrorNumbers.STARDUST_TICKS, 3f);
+            e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Dur.t(MirrorNumbers.STARDUST_TICKS), MirrorNumbers.absorptionAmp(e.getMaxHealth()), false, true));
+            VfxSpawn.sendFollowing(c.level, VfxShape.MIRROR_ARRAY, e, e.position().add(0, 1, 0), ICE, Dur.t(MirrorNumbers.STARDUST_TICKS), 3f);
         }
         c.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 1.2f, 1.5f);
         int[] charges = new int[group.size()];
         java.util.Arrays.fill(charges, MirrorNumbers.STARDUST_CATCHES);
-        Safe.zone(c, MirrorNumbers.STARDUST_TICKS, 1, "mirror.stardust", false, (f, age) -> {
+        Safe.zone(c, Dur.task(MirrorNumbers.STARDUST_TICKS), 1, "mirror.stardust", false, (f, age) -> {
             for (int i = 0; i < group.size(); i++) {
                 LivingEntity e = group.get(i);
                 if (charges[i] <= 0 || !e.isAlive()) continue;
@@ -233,17 +234,17 @@ final class MirrorSkills {
     /** For four seconds spells are turned back (half, capped, with a budget); the wielder is also cleansed of two harmful effects, which may be sent on to a foe. */
     static boolean releaseRebound(HeroCtx c) {
         ServerPlayer p = c.player;
-        ledger(c).openRebound(c.level.getGameTime(), MirrorNumbers.REBOUND_TICKS, MirrorNumbers.REBOUND_BUDGET);
+        ledger(c).openRebound(c.level.getGameTime(), Dur.t(MirrorNumbers.REBOUND_TICKS), MirrorNumbers.REBOUND_BUDGET);
         List<LivingEntity> near = Foes.around(p, p.position(), MirrorNumbers.REBOUND_RETURN_RANGE, 1);
         LivingEntity foe = near.isEmpty() ? null : near.get(0);
         List<MobEffectInstance> cleansed = Effects.strip(p, false, MirrorNumbers.REBOUND_CLEANSE);
         for (MobEffectInstance e : cleansed) {
             if (foe == null || !"minecraft".equals(Effects.namespace(e)) || !MirrorNumbers.returnable(Effects.path(e), e.getAmplifier())) continue;
             if (com.newuniverse.nusmp.balance.HungerBan.refuses(e.getEffect(), foe)) continue;       // 1.99.0, the hunger ban: a player foe never receives Hunger back
-            foe.addEffect(new MobEffectInstance(e.getEffect(), Effects.ticks(e, MirrorNumbers.REBOUND_RETURN_TICKS), Math.min(e.getAmplifier(), MirrorNumbers.REBOUND_RETURN_AMP), false, true));
+            foe.addEffect(new MobEffectInstance(e.getEffect(), Effects.ticks(e, Dur.t(MirrorNumbers.REBOUND_RETURN_TICKS)), Math.min(e.getAmplifier(), MirrorNumbers.REBOUND_RETURN_AMP), false, true));
             c.fx(VfxShape.MIRROR_RAY, p.getEyePosition(), foe.getBoundingBox().getCenter(), ICE, 12, 0.8f);
         }
-        VfxSpawn.sendFollowing(c.level, VfxShape.MIRROR_ARRAY, p, p.position().add(0, 1, 0), ICE, MirrorNumbers.REBOUND_TICKS, 4f);
+        VfxSpawn.sendFollowing(c.level, VfxShape.MIRROR_ARRAY, p, p.position().add(0, 1, 0), ICE, Dur.t(MirrorNumbers.REBOUND_TICKS), 4f);
         c.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 1.3f, 0.8f);
         c.say(cleansed.isEmpty() ? "Release Rebound: spells are turned back." : "Release Rebound: " + cleansed.size() + " curse(s) turned back.");
         return true;
@@ -322,10 +323,10 @@ final class MirrorSkills {
             c.say("There is no room to step.");
             return false;
         }
-        led.placeImage(now, from.x, from.y, from.z, p.getYRot(), MirrorNumbers.IMAGE_LIFE);
+        led.placeImage(now, from.x, from.y, from.z, p.getYRot(), Dur.t(MirrorNumbers.IMAGE_LIFE));
         Vec3 facing = c.look();
         c.fx(VfxShape.MIRROR_STEP, from, from.add(0, 2, 0), ICE, 18, 1.8f);
-        c.fx(VfxShape.MIRROR_FRAME, from.add(0, 1.1, 0), from.add(0, 1.1, 0).add(facing.x, 0, facing.z), AQUA, MirrorNumbers.IMAGE_LIFE, 1.2f);
+        c.fx(VfxShape.MIRROR_FRAME, from.add(0, 1.1, 0), from.add(0, 1.1, 0).add(facing.x, 0, facing.z), AQUA, Dur.t(MirrorNumbers.IMAGE_LIFE), 1.2f);
         c.fx(VfxShape.MIRROR_STEP, landed, landed.add(0, 2, 0), ICE, 18, 1.8f);
         c.sound(SoundEvents.AMETHYST_BLOCK_CHIME, 1.4f, 1.6f);
         return true;
@@ -363,7 +364,7 @@ final class MirrorSkills {
                 best = a.distanceToSqr(t.position());
                 from = a;
             }
-            int ticks = BalanceLaw.controlTicks(t, MirrorNumbers.CHAIN_BIND_TICKS);
+            int ticks = BalanceLaw.controlTicks(t, Dur.t(MirrorNumbers.CHAIN_BIND_TICKS));
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true));
             t.setDeltaMovement(0, Math.min(0, t.getDeltaMovement().y), 0);
             t.hurtMarked = true;
@@ -426,7 +427,7 @@ final class MirrorSkills {
         int taken = 0;
         for (MobEffectInstance e : gifts) {
             if (taken >= MirrorNumbers.COVET_MAX) break;
-            p.addEffect(new MobEffectInstance(e.getEffect(), Effects.ticks(e, MirrorNumbers.COVET_TICKS), Math.min(e.getAmplifier(), MirrorNumbers.COVET_AMP_CAP), false, true));
+            p.addEffect(new MobEffectInstance(e.getEffect(), Effects.ticks(e, Dur.t(MirrorNumbers.COVET_TICKS)), Math.min(e.getAmplifier(), MirrorNumbers.COVET_AMP_CAP), false, true));
             taken++;
         }
         c.fx(VfxShape.MIRROR_RAY, t.getBoundingBox().getCenter(), p.getEyePosition(), ENVY, 14, 1.0f);
@@ -455,7 +456,7 @@ final class MirrorSkills {
         }
         c.fx(VfxShape.MIRROR_STEP, p.position(), p.position().add(0, 2, 0), ENVY, 20, 2.0f);
         c.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 1.2f, 0.4f);
-        Safe.zone(c, MirrorNumbers.RESSENT_TICKS, MirrorNumbers.RESSENT_EVERY, "mirror.ressentiment", false, (f, age) -> {
+        Safe.zone(c, Dur.t(MirrorNumbers.RESSENT_TICKS), MirrorNumbers.RESSENT_EVERY, "mirror.ressentiment", false, (f, age) -> {
             for (Mob m : mobs) {
                 if (!m.isAlive()) continue;
                 Mob rival = null;

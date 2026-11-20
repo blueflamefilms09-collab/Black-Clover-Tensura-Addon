@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sword;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.heroweapon.HeroKind;
@@ -79,8 +80,8 @@ public final class SwordLogic implements HeroLogic {
             double health = target.getMaxHealth() > 0 ? target.getHealth() / target.getMaxHealth() : 1.0;
             HitLedger.Plan plan = st.ledger.hit(now, fullSwing, c.form::has, behind, health, st.marks.has(target.getUUID(), now));
             if (c.form.has("gravity_edge") && !BalanceLaw.isBoss(target))
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SwordNumbers.GRAVITY_EDGE_TICKS, 0));
-            if (c.form.has("ember_edge")) target.igniteForSeconds(SwordNumbers.EMBER_FIRE_SECONDS);
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Dur.t(SwordNumbers.GRAVITY_EDGE_TICKS), 0));
+            if (c.form.has("ember_edge")) target.igniteForSeconds(Dur.seconds(SwordNumbers.EMBER_FIRE_SECONDS));
             if (c.form.has("plunder") && now >= st.plunderReadyAt) {
                 st.plunderReadyAt = now + SwordNumbers.PLUNDER_PAUSE;
                 SwordOps.plunder(c, target, SwordNumbers.PLUNDER_TAKE, SwordNumbers.PLUNDER_KEEP);

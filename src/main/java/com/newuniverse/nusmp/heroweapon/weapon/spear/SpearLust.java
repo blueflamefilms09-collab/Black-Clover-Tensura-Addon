@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.spear;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
@@ -44,7 +45,7 @@ final class SpearLust {
         if (!c.form.has(SpearIds.LUST_FERVOR)) return;
         long now = c.level.getGameTime();
         int stacks = Math.min(SpearNumbers.FERVOR_MAX, SpearState.fervor(c, now) + 1);
-        SpearState.setFervor(c, stacks, now + SpearNumbers.FERVOR_TICKS);
+        SpearState.setFervor(c, stacks, now + Dur.t(SpearNumbers.FERVOR_TICKS));
         apply(c.player, stacks);
     }
 

@@ -227,6 +227,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.particle.fx.FxClient.init(modEventBus, modContainer);                                 // 1.103.0: providers of the custom particles, nusmp-particles-client.toml
             com.newuniverse.nusmp.client.relics.forge.ForgeClient.init(modEventBus);                                         // 1.40.0
             modEventBus.addListener(com.newuniverse.nusmp.client.thread.ThreadClient::register);                          // 1.44.0: Rouge, thread traps
+            modEventBus.addListener(com.newuniverse.nusmp.client.heroweapon.bow.BowArrowClient::register);                 // the Legendary Bow's real arrow
             com.newuniverse.nusmp.client.soul.PaladinClient.register(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::register);
             modEventBus.addListener(net.neoforged.bus.api.EventPriority.LOWEST, com.newuniverse.nusmp.client.corpse.CorpseClient::registerLooks);     // after the dungeon player-model kit: the new looks of Jimmy, Alfredo and Carl win
@@ -421,6 +422,9 @@ public class NUSMP {
         com.newuniverse.nusmp.thread.ThreadEntities.init();
         com.newuniverse.nusmp.thread.ThreadEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.thread.ThreadEntities::attributes);
+        com.newuniverse.nusmp.heroweapon.weapon.bow.HeroArrowEntities.init();                                          // the Legendary Bow's real arrow (docs/heroweapon/bow_arrows.md)
+        com.newuniverse.nusmp.heroweapon.weapon.bow.HeroArrowEntities.ENTITIES.register(modEventBus);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStoppedEvent e) -> com.newuniverse.nusmp.heroweapon.weapon.bow.ArrowBudget.clear());
         com.newuniverse.nusmp.thread.ThreadEffects.init();
         com.newuniverse.nusmp.thread.ThreadEffects.EFFECTS.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.thread.ThreadConfig.SPEC, "nusmp-thread-server.toml");
@@ -527,6 +531,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onIncomingDamage);          // 0.48: "Reverse"
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
         com.newuniverse.nusmp.mana.zone.ManaZoneBoot.init(modEventBus, modContainer);                           // 1.99.0: the Mana Zone (late-game) and the Grand Magic Zones: config, packets, data, events, self-tests mana.zone_gate and mana.zone_core
+        com.newuniverse.nusmp.meteor.MeteorBoot.init(modEventBus, modContainer);                                  // the shared Meteor (docs/meteor_fall.md): entity, nusmp-meteor-server.toml (meteor.realMeteors), self-test meteor.fall
         com.newuniverse.nusmp.ultimate.UltimateBoot.init(modEventBus, modContainer);                              // Ultimate Magic (docs/magic/ultimate_magic.md): nusmp-ultimate-server.toml (ultimate.enabled), self-tests magic.ultimate.rules and magic.ultimate.cast
         com.newuniverse.nusmp.perf.PerfBoot.init(modEventBus, modContainer);                                      // 1.99.0: performance pass: nusmp-performance-common.toml, /multiverse perf, the server probe, self-test perf.core
         com.newuniverse.nusmp.mana.method.ManaMethodBoot.init(modEventBus, modContainer);                       // Mana Method: the Mana Method (rune constructs, Homing and Growth, True Magic blocks): config, packet, events, self-tests magic.mana_method*

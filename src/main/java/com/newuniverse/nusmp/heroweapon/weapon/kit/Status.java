@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.kit;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -18,15 +19,24 @@ import java.util.ArrayList;
 public final class Status {
     private Status() {}
 
-    /** Adds an effect of {@code amp} (0 is level I) for {@code ticks}; the icon shows, the particles do not. */
-    public static void add(LivingEntity t, Holder<MobEffect> effect, int ticks, int amp) {
+    /**
+     * Adds an effect of {@code amp} (0 is level I) for the BASE length {@code ticks}, which goes through the duration scale ({@link Dur}, setting
+     * {@code heroweapon.durationScale}) here, once; the icon shows, the particles do not. A length that is already final goes through {@link #addRaw}.
+     */
+    public static void add(LivingEntity t, Holder<MobEffect> effect, int ticks, int amp) { addRaw(t, effect, Dur.t(ticks), amp); }
+
+    /** The same effect for exactly {@code ticks} (a length the balance law has already decided, or a mechanical hold). Never scaled. */
+    public static void addRaw(LivingEntity t, Holder<MobEffect> effect, int ticks, int amp) {
         if (t != null && t.isAlive() && ticks > 0) t.addEffect(new MobEffectInstance(effect, ticks, Math.max(0, amp), false, true));
     }
 
-    /** Slowness of level {@code amp + 1}. */
+    /** Slowness of level {@code amp + 1} for a base length (scaled). */
     public static void slow(LivingEntity t, int ticks, int amp) { add(t, MobEffects.MOVEMENT_SLOWDOWN, ticks, amp); }
 
-    /** Weakness I. */
+    /** Slowness of level {@code amp + 1} for exactly {@code ticks} (never scaled). */
+    public static void slowRaw(LivingEntity t, int ticks, int amp) { addRaw(t, MobEffects.MOVEMENT_SLOWDOWN, ticks, amp); }
+
+    /** Weakness I for a base length (scaled). */
     public static void weaken(LivingEntity t, int ticks) { add(t, MobEffects.WEAKNESS, ticks, 0); }
 
     /** Removes the first harmful effect the target carries; true when one was removed. */

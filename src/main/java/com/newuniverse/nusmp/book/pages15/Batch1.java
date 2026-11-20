@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.book.pages15;
 
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.ElementBook;
 import com.newuniverse.nusmp.book.pages15.Pages15Kit.Ctx;
@@ -230,7 +232,7 @@ public final class Batch1 {
                 Pages15Kit.zone("stardust_field", "Stardust Field",
                         field(Tier.ZONE, 5, 100, 20, true, VfxShape.STAR_MAGIC, all(glow(40), slow(30, 1)))).withCooldown(450),
                 Pages15Kit.signature("meteor_swarm", "Meteor Swarm",
-                        cast(Tier.SIGNATURE, c -> strikes(c, 6, 6, 3.5, false, 2.6, VfxShape.MAGIC_CIRCLE_EXPLOSION, knock(0.8)))).withCooldown(900).withAnim("up")));
+                        cast(Tier.SIGNATURE, c -> meteorSwarm(c, knock(0.8)))).withCooldown(900).withAnim("up")));
 
     private static final List<BookPage> LIGHTNING = register("book_lightning", List.of(
                 Pages15Kit.starter("spark_shot", "Spark Shot",
@@ -312,6 +314,31 @@ public final class Batch1 {
                 for (LivingEntity t : c.foes(at, r)) { c.hit(t, raw); rider.apply(t, c.caster); }
                 c.fx(shape, at, at.add(0, 1, 0), 20, (float) (r / 3));
             });
+        }
+        return true;
+    }
+
+    /**
+     * Meteor Swarm (docs/meteor_fall.md): the same six blasts scattered round the aim point as {@link #strikes}, but each one is a real meteor that is dropped 6 ticks after the one before and lands
+     * 16 ticks later (at most 3 in the air at once). With {@code meteor.realMeteors} off, or for a meteor the caps refuse, the blast is the old one: {@link #strikes} for the whole page, or the blast at once.
+     */
+    private static boolean meteorSwarm(Ctx c, ElementBook.Rider rider) {
+        if (!MeteorFall.enabled()) return strikes(c, 6, 6, 3.5, false, 2.6, VfxShape.MAGIC_CIRCLE_EXPLOSION, rider);
+        int count = 6;
+        Vec3 base = c.aim(24);
+        double r = 2.6 * c.size();
+        float raw = c.tier.hit * 1.4f / count;
+        c.circle(1f);
+        for (int k = 0; k < count; k++) {
+            double ring = 3.5 * 0.8 * (0.35 + 0.65 * k / count), ang = k * 2.4;
+            Vec3 at = base.add(Math.cos(ang) * ring, 0, Math.sin(ang) * ring);
+            Runnable blast = () -> {
+                for (LivingEntity t : c.foes(at, r)) { c.hit(t, raw); rider.apply(t, c.caster); }
+                c.fx(VfxShape.MAGIC_CIRCLE_EXPLOSION, at, at.add(0, 1, 0), 20, (float) (r / 3));
+            };
+            c.later(Math.max(1, k * 6), () -> MeteorFall.dropOr(c.caster, at, MeteorWiring.spec("star.meteor_swarm").radius(r).fall(16).onImpact((lvl, hit, who) -> {
+                if (c.caster.isAlive() && !c.caster.isRemoved()) blast.run();
+            }), blast));
         }
         return true;
     }

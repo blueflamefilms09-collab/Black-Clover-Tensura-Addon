@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sewingset;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -47,7 +48,7 @@ public final class NeedleBoard {
             it.next();
             it.remove();
         }
-        marks.put(id, new Mark(id, side, now + life));
+        marks.put(id, new Mark(id, side, now + Dur.t(life)));
     }
 
     public boolean has(UUID id, long now) {

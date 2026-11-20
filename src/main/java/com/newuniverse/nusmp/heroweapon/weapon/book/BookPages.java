@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.book;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -111,7 +112,7 @@ final class BookPages {
     // ------------------------------------------------------------------ the support chapter
     /** Paper Wall: a wall of paper wards you and your friends, a few hearts of absorption for ten seconds. */
     static boolean wall(HeroCtx c, boolean revised) {
-        int ticks = (int) Math.round(BookNumbers.WALL_TICKS * (revised ? BookNumbers.REVISED : 1.0));
+        int ticks = Dur.t((int) Math.round(BookNumbers.WALL_TICKS * (revised ? BookNumbers.REVISED : 1.0)));
         for (LivingEntity f : GlassKit.friends(c, BookNumbers.WALL_RADIUS, BookNumbers.WALL_TARGETS)) {
             f.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, 0, false, true, true));
         }
@@ -146,7 +147,7 @@ final class BookPages {
             return false;
         }
         if (!GlassKit.control(c)) return false;
-        int ticks = BalanceLaw.controlTicks(target, BookNumbers.CAGE_ROOT);
+        int ticks = BalanceLaw.controlTicks(target, Dur.t(BookNumbers.CAGE_ROOT));
         target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6));
         Vec3 centre = target.getBoundingBox().getCenter();
         c.fx(VfxShape.SEAL_CUBE, centre, centre, PAPER, ticks + BookNumbers.CAGE_CEILING_DELAY, (float) BookNumbers.CAGE_EDGE);

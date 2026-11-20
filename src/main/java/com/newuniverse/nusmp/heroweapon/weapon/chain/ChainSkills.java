@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.chain;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
@@ -122,7 +123,7 @@ final class ChainSkills {
             c.say(controlMessage(p));
             return false;
         }
-        int ticks = BalanceLaw.controlTicks(t, ChainNumbers.BINDING_TICKS);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(ChainNumbers.BINDING_TICKS));
         t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true));
         t.setDeltaMovement(0, Math.min(0, t.getDeltaMovement().y), 0);
         t.hurtMarked = true;
@@ -171,10 +172,10 @@ final class ChainSkills {
         if (!group.contains(p)) group.add(0, p);
         while (group.size() > ChainNumbers.DEFENCE.targets()) group.remove(group.size() - 1);
         for (LivingEntity e : group) {
-            e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ChainNumbers.DEFENCE_TICKS, ChainNumbers.absorptionAmp(e.getMaxHealth()), false, true));
-            e.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ChainNumbers.DEFENCE_TICKS, 0, false, true));
+            e.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Dur.t(ChainNumbers.DEFENCE_TICKS), ChainNumbers.absorptionAmp(e.getMaxHealth()), false, true));
+            e.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Dur.t(ChainNumbers.DEFENCE_TICKS), 0, false, true));
         }
-        VfxSpawn.sendFollowing(c.level, VfxShape.CHAIN_FX2, p, p.position(), STEEL, ChainNumbers.DEFENCE_TICKS, (float) ChainNumbers.DEFENCE_RADIUS);
+        VfxSpawn.sendFollowing(c.level, VfxShape.CHAIN_FX2, p, p.position(), STEEL, Dur.t(ChainNumbers.DEFENCE_TICKS), (float) ChainNumbers.DEFENCE_RADIUS);
         c.sound(SoundEvents.CHAIN_PLACE, 1.2f, 1.1f);
         return true;
     }
@@ -228,7 +229,7 @@ final class ChainSkills {
         Safe.later(c, ChainNumbers.OROCHI_TELL, "chain.orochi", f -> {
             List<UUID> bound = new ArrayList<>();
             for (LivingEntity t : Foes.around(f.player, centre, ChainNumbers.OROCHI_RADIUS, ChainNumbers.OROCHI.targets())) {
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, ChainNumbers.OROCHI_BIND_TICKS), 9, false, true));
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, Dur.t(ChainNumbers.OROCHI_BIND_TICKS)), 9, false, true));
                 f.hit(t, (float) ChainNumbers.OROCHI.raw());
                 f.fx(VfxShape.CHAIN_FX3, t.position(), t.position().add(0, 1, 0), STEEL, 24, 1.2f);
                 bound.add(t.getUUID());
@@ -255,7 +256,7 @@ final class ChainSkills {
 
     private static void hangLink(HeroCtx c, LivingEntity t) {
         if (WEIGHT.of(c.player).add(t.getUUID(), c.level.getGameTime()) < WeightLedger.MAX_STACKS) return;
-        t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ChainNumbers.WEIGHT_SLOW_TICKS, 0, false, true));
+        t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Dur.t(ChainNumbers.WEIGHT_SLOW_TICKS), 0, false, true));
         c.fx(VfxShape.CHAIN_FX3, t.position(), t.position().add(0, 1, 0), SLATE, 14, 0.6f);
         c.sound(SoundEvents.CHAIN_HIT, 0.9f, 0.5f);
     }
@@ -344,7 +345,7 @@ final class ChainSkills {
             for (LivingEntity t : owing) {
                 f.hit(t, (float) ChainNumbers.DEBT.raw());
                 // the stagger belongs to the control use taken at the cast: the lock lasts 12 s, so asking for it again here (6 s later) could never succeed
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, ChainNumbers.DEBT_STAGGER), 9, false, true));
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, Dur.t(ChainNumbers.DEBT_STAGGER)), 9, false, true));
                 f.fx(VfxShape.CHAIN_FX3, t.position(), t.position().add(0, 1, 0), SLATE, 26, 1.4f);
             }
             f.fx(VfxShape.CHAIN_FX3, at, at.add(0, 1, 0), SLATE, 30, 2.0f);

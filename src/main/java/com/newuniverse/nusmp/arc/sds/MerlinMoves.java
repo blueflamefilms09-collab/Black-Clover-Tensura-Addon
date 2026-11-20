@@ -9,6 +9,8 @@ import com.newuniverse.nusmp.entity.zogratis.DomainCube;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import com.newuniverse.nusmp.vfx.VfxPayload;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -87,9 +89,21 @@ final class MerlinMoves {
 
     // ================================================================ Starfall
     /** One falling star: a streak from the sky, a pillar where it lands, and a blow to everyone in the ring who has not been struck by an earlier star of this fall. */
-    static void starImpact(MerlinBoss b, Vec3 at, Set<Integer> struck) {
+    static void starImpact(MerlinBoss b, Vec3 at, Set<Integer> struck) { starImpact(b, at, struck, true); }
+
+    /**
+     * One star of Starfall as a real meteor (docs/meteor_fall.md, {@code meteor.realMeteors}): it falls for 14 ticks and the same blow, pillar and sound land with it. With the setting off, or when the
+     * caps refuse the meteor (Merlin may have 4 in the air; the rest of a big fall lands at once as before), it is {@link #starImpact} exactly as it was.
+     */
+    static void starFall(MerlinBoss b, Vec3 at, Set<Integer> struck) {
+        MeteorFall.dropOr(b, at, MeteorWiring.spec("merlin.starfall").radius(MerlinTable.STAR_RADIUS).fall(14).onImpact((lvl, hit, who) -> {
+            if (b.isAlive()) starImpact(b, hit, struck, false);
+        }), () -> starImpact(b, at, struck, true));
+    }
+
+    private static void starImpact(MerlinBoss b, Vec3 at, Set<Integer> struck, boolean streak) {
         if (!(b.level() instanceof ServerLevel sl)) return;
-        VfxSpawn.send(sl, VfxShape.STAR_MAGIC, at.add(0, 14, 0), at, GOLD, 8, 1.2f);
+        if (streak) VfxSpawn.send(sl, VfxShape.STAR_MAGIC, at.add(0, 14, 0), at, GOLD, 8, 1.2f);
         ZogratisVfx.pillar(sl, at, 1.6, 12, ACCENT, false);
         FourSinsKit.sound(sl, at, SoundEvents.AMETHYST_CLUSTER_BREAK, 1.6f, 0.7f);
         for (LivingEntity e : FourSinsKit.inDisc(b, at, MerlinTable.STAR_RADIUS, 2, 5)) {

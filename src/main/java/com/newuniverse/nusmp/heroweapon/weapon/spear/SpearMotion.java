@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.spear;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -79,7 +80,7 @@ final class SpearMotion {
         Vec3 flat = Moves.flat(c.look(), new Vec3(0.0, 0.0, 1.0));
         Vec3 feet = p.position();
         Moves.launch(p, flat.x * SpearNumbers.VAULT_FORWARD, SpearNumbers.VAULT_UP, flat.z * SpearNumbers.VAULT_FORWARD);
-        p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, SpearNumbers.VAULT_SLOW_FALL, 0, false, false, true));
+        p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Dur.t(SpearNumbers.VAULT_SLOW_FALL), 0, false, false, true));
         c.fx(VfxShape.WIND_RING, feet.add(0.0, 0.2, 0.0), feet.add(0.0, 1.0, 0.0), SpearFx.light(c), 12, 1.2f);
         SpearFx.swing(c);
         SpearFx.sound(c, feet, SoundEvents.PLAYER_ATTACK_SWEEP, 0.8f, 0.8f);
@@ -120,7 +121,7 @@ final class SpearMotion {
                 SpearFx.flare(c, SpearFx.mid(t), 0.5f);
                 c.shove(t, dest, 0.6);
             }
-            if (c.form.has(SpearIds.PORTAL_ECHO)) p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, SpearNumbers.PORTAL_ECHO_TICKS, 1, false, false, true));
+            if (c.form.has(SpearIds.PORTAL_ECHO)) p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Dur.t(SpearNumbers.PORTAL_ECHO_TICKS), 1, false, false, true));
             SpearFx.sound(c, dest, SoundEvents.ENDERMAN_TELEPORT, 0.9f, 1.4f);
         });
         return true;
@@ -129,12 +130,12 @@ final class SpearMotion {
     // ================================================================ Filo Rush
     static boolean rush(HeroCtx c) {
         ServerPlayer p = c.player;
-        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, SpearNumbers.RUSH_TICKS, SpearNumbers.RUSH_AMP, false, false, true));
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Dur.t(SpearNumbers.RUSH_TICKS), SpearNumbers.RUSH_AMP, false, false, true));
         Set<UUID> struck = new HashSet<>();
         Vec3[] last = {p.position()};
         SpearFx.swing(c);
         SpearFx.sound(c, p.position(), SoundEvents.PHANTOM_FLAP, 1.0f, 1.6f);
-        SpellRuntime.zone(c.level, SpearNumbers.RUSH_TICKS, SpearNumbers.RUSH_INTERVAL, age -> {
+        SpellRuntime.zone(c.level, Dur.task(SpearNumbers.RUSH_TICKS), SpearNumbers.RUSH_INTERVAL, age -> {
             if (!Tasks.live(c)) return;
             Vec3 now = p.position();
             for (LivingEntity e : Foes.around(c, now.add(0.0, 0.9, 0.0), SpearNumbers.RUSH_RADIUS, Foes.MAX)) {

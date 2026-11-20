@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.shield;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.heroweapon.HeroKind;
@@ -101,13 +102,13 @@ public final class ShieldLogic implements HeroLogic {
             if (c.form.has("rage_fury")) {
                 boolean running = st.furyUntil > now;
                 st.furyLevel = running ? Math.min(ShieldNumbers.FURY_MAX_LEVEL, st.furyLevel + 1) : 0;
-                st.furyUntil = now + ShieldNumbers.FURY_TICKS;
-                p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ShieldNumbers.FURY_TICKS, st.furyLevel, true, true));
+                st.furyUntil = now + Dur.t(ShieldNumbers.FURY_TICKS);
+                p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, Dur.t(ShieldNumbers.FURY_TICKS), st.furyLevel, true, true));
             }
             if (c.form.has("rotting_endurance") && now >= st.enduranceReadyAt && p.getHealth() - a < p.getMaxHealth() * ShieldNumbers.ENDURANCE_BELOW) {
                 st.enduranceReadyAt = now + ShieldNumbers.ENDURANCE_COOLDOWN;
-                p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, ShieldNumbers.ENDURANCE_REGEN_TICKS, 1));
-                p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60, 0));
+                p.addEffect(new MobEffectInstance(MobEffects.REGENERATION, Dur.t(ShieldNumbers.ENDURANCE_REGEN_TICKS), 1));
+                p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Dur.t(60), 0));
                 c.say("The flesh holds");
             }
             return Math.max(0f, a);
@@ -166,7 +167,7 @@ public final class ShieldLogic implements HeroLogic {
             }
         }
         if (c.form.has("venom_fang") && !(attacker instanceof Player) && !BalanceLaw.isBoss(attacker) && ShieldTargets.isFoe(c.player, attacker))
-            attacker.addEffect(new MobEffectInstance(MobEffects.POISON, ShieldNumbers.VENOM_TICKS, 0));
+            attacker.addEffect(new MobEffectInstance(MobEffects.POISON, Dur.t(ShieldNumbers.VENOM_TICKS), 0));
     }
 
     @Override

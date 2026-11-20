@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.katana;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.skill.HeroSkill;
@@ -203,8 +204,8 @@ final class KatanaSkills {
     private static HeroSkill doubleSword() {
         return make(KatanaNumbers.DOUBLE_SWORD, c -> {
             flow(c, KatanaNumbers.DOUBLE_SWORD);
-            session(c).openDouble(c.level.getGameTime(), KatanaNumbers.DOUBLE_TICKS, KatanaNumbers.ECHO_MAX);
-            GlassKit.follow(c, VfxShape.SPIRIT_AURA, PINK, KatanaNumbers.DOUBLE_TICKS, 0.9f);
+            session(c).openDouble(c.level.getGameTime(), Dur.t(KatanaNumbers.DOUBLE_TICKS), KatanaNumbers.ECHO_MAX);
+            GlassKit.follow(c, VfxShape.SPIRIT_AURA, PINK, Dur.t(KatanaNumbers.DOUBLE_TICKS), 0.9f);
             c.sound(SoundEvents.EVOKER_PREPARE_ATTACK, 0.7f, 1.8f);
             c.say("A phantom blade follows yours.");
             return true;

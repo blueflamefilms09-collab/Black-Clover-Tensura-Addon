@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.whip;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -60,17 +61,17 @@ final class WhipCommand {
         CompoundTag d = e.getPersistentData();
         if (!d.contains(UNTIL)) return false;
         long left = d.getLong(UNTIL) - e.level().getGameTime();
-        return left > 0 && left <= WhipNumbers.COMMAND_TICKS + 20;
+        return left > 0 && left <= Dur.task(WhipNumbers.COMMAND_TICKS) + 20;
     }
 
-    static void markBound(LivingEntity t, int ticks) { t.getPersistentData().putLong(BOUND, t.level().getGameTime() + ticks); }
+    static void markBound(LivingEntity t, int ticks) { t.getPersistentData().putLong(BOUND, t.level().getGameTime() + Math.min(400, Dur.t(ticks))); }
 
     static boolean isBound(LivingEntity t) {
         long left = t.getPersistentData().getLong(BOUND) - t.level().getGameTime();
         return left > 0 && left <= 400;
     }
 
-    static void markCharged(LivingEntity t, int ticks) { t.getPersistentData().putLong(CHARGE, t.level().getGameTime() + ticks); }
+    static void markCharged(LivingEntity t, int ticks) { t.getPersistentData().putLong(CHARGE, t.level().getGameTime() + Math.min(400, Dur.t(ticks))); }
 
     /** True once if the foe carries a charge, and the charge is used up. */
     static boolean takeCharge(LivingEntity t) {
@@ -106,7 +107,8 @@ final class WhipCommand {
     /** Takes the monsters: marks them, clears their targets, draws the strings and starts the steering. The caller has already passed the control lock. */
     static void begin(HeroCtx c, List<Mob> mobs) {
         ServerPlayer p = c.player;
-        long until = c.level.getGameTime() + WhipNumbers.COMMAND_TICKS;
+        int span = Dur.task(WhipNumbers.COMMAND_TICKS);
+        long until = c.level.getGameTime() + span;
         boolean strong = c.form.has(WhipNumbers.TASKMASTER);
         for (Mob m : mobs) {
             CompoundTag d = m.getPersistentData();
@@ -114,14 +116,14 @@ final class WhipCommand {
             d.putLong(UNTIL, until);
             m.setTarget(null);
             m.getNavigation().stop();
-            if (strong) Strike.effect(m, "minecraft:strength", WhipNumbers.COMMAND_TICKS, 0);
+            if (strong) Strike.hold(m, "minecraft:strength", span, 0);
         }
         strings(c, mobs);
-        Strike.zone(p, WhipNumbers.COMMAND_TICKS, WhipNumbers.COMMAND_STEER, (cx, age) -> steer(cx, mobs, age));
+        Strike.zone(p, span, WhipNumbers.COMMAND_STEER, (cx, age) -> steer(cx, mobs, age));
     }
 
     private static void steer(HeroCtx c, List<Mob> mobs, int age) {
-        boolean end = age + WhipNumbers.COMMAND_STEER >= WhipNumbers.COMMAND_TICKS;
+        boolean end = age + WhipNumbers.COMMAND_STEER >= Dur.task(WhipNumbers.COMMAND_TICKS);
         for (Mob m : mobs) {
             if (!m.isAlive()) continue;
             if (end) {

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.axe;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
 import com.newuniverse.nusmp.heroweapon.Sin;
@@ -84,7 +85,7 @@ final class AxeSkills {
                     StrikeFx.ring(c.level, t.position(), 1.2, GREEN);
                     StrikeFx.gather(c.level, Strike.center(t), 0.7, GREEN, 8);
                     StrikeFx.sound(c.level, c.player.position(), SoundEvents.ANVIL_USE, 0.8f, 0.7f);
-                    Strike.effect(c.player, "minecraft:slowness", AxeNumbers.POWER_DELAY, 1);
+                    Strike.hold(c.player, "minecraft:slowness", AxeNumbers.POWER_DELAY, 1);
                     Strike.later(c.player, AxeNumbers.POWER_DELAY, cx -> breakPower(cx, t));
                     return true;
                 });
@@ -110,7 +111,7 @@ final class AxeSkills {
                 "Spins with the axe held out for a second: a green tornado grows round you and four times in a row everything within four blocks is cut and shoved, the last time hardest. You are slowed while it turns.",
                 c -> {
                     ServerPlayer p = c.player;
-                    Strike.effect(p, "minecraft:slowness", AxeNumbers.TORNADO_TICKS + 4, 1);
+                    Strike.hold(p, "minecraft:slowness", AxeNumbers.TORNADO_TICKS + 4, 1);
                     StrikeFx.follow(c.level, VfxShape.WIND_TORNADO, p, p.position(), GREEN, AxeNumbers.TORNADO_TICKS + 4, 3.2f);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.PLAYER_ATTACK_SWEEP, 1.0f, 0.6f);
                     Strike.later(p, 4, cx -> Strike.zone(cx.player, AxeNumbers.TORNADO_TICKS, AxeNumbers.TORNADO_GAP, AxeSkills::spin));
@@ -149,7 +150,7 @@ final class AxeSkills {
                     StrikeFx.tellCrack(c.level, from, to, GREEN, AxeNumbers.MOUNTAIN_DELAY + 4);
                     StrikeFx.line(c.level, from, to, GREEN);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.ANVIL_USE, 0.9f, 0.6f);
-                    Strike.effect(p, "minecraft:slowness", AxeNumbers.MOUNTAIN_DELAY, 2);
+                    Strike.hold(p, "minecraft:slowness", AxeNumbers.MOUNTAIN_DELAY, 2);
                     Strike.later(p, AxeNumbers.MOUNTAIN_DELAY, cx -> mountain(cx, from, to));
                     return true;
                 });
@@ -309,7 +310,7 @@ final class AxeSkills {
                     StrikeFx.ring(c.level, centre, AxeNumbers.SHINE_RADIUS, GREEN);
                     StrikeFx.gather(c.level, centre.add(0, 1.2, 0), 1.5, GREEN, 24);
                     StrikeFx.sound(c.level, centre, SoundEvents.BELL_BLOCK, 1.2f, 0.6f);
-                    Strike.effect(p, "minecraft:slowness", AxeNumbers.SHINE_DELAY, 3);
+                    Strike.hold(p, "minecraft:slowness", AxeNumbers.SHINE_DELAY, 3);
                     Strike.later(p, AxeNumbers.SHINE_DELAY, cx -> shine(cx, centre, damage));
                     return true;
                 });

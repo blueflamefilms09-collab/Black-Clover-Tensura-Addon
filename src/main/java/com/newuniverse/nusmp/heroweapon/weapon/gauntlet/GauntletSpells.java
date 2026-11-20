@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.gauntlet;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -260,8 +261,8 @@ final class GauntletSpells {
     // ================================================================ Iron Guard
     static boolean ironGuard(HeroCtx c) {
         long now = now(c);
-        GauntletState.setGuard(c.player.getUUID(), new GauntletState.Guard(now + GUARD_TICKS));
-        VfxSpawn.sendFollowing(c.level, VfxShape.GRAVITY_AURA, c.player, c.player.position(), ORANGE, GUARD_TICKS, 0.8f);
+        GauntletState.setGuard(c.player.getUUID(), new GauntletState.Guard(now + Dur.t(GUARD_TICKS)));
+        VfxSpawn.sendFollowing(c.level, VfxShape.GRAVITY_AURA, c.player, c.player.position(), ORANGE, Dur.t(GUARD_TICKS), 0.8f);
         c.sound(SoundEvents.SHIELD_BLOCK, 0.9f, 0.6f);
         c.say("Iron Guard");
         return true;

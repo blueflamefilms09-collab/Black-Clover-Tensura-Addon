@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.heroweapon.weapon.bow;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.weapon.pierce.Foes;
 import com.newuniverse.nusmp.heroweapon.weapon.pierce.Geo;
@@ -46,6 +47,16 @@ final class BowDirect {
         BowFx.swing(c);
         BowFx.sound(c, eye, SoundEvents.CROSSBOW_SHOOT, 0.8f, 1.5f);
         Tasks.later(c, BowNumbers.SQUALL_DELAY, () -> {
+            if (HeroConfig.realArrows()) {                                       // seven real arrows leave the string along the fan (docs/heroweapon/bow_arrows.md); off: the old instant fan below
+                List<Vec3> dirs = new ArrayList<>();
+                for (double off : offsets) {
+                    double[] r = Geo.rotate(look.x, look.z, off);
+                    dirs.add(new Vec3(r[0], look.y, r[1]));
+                }
+                BowArrows.squall(c, muzzle, dirs, BowNumbers.SQUALL_PER_ARROW);
+                BowFx.sound(c, eye, SoundEvents.ARROW_SHOOT, 1.0f, 1.8f);
+                return;
+            }
             Hits hits = new Hits();
             for (Vec3 end : ends) {
                 List<LivingEntity> in = Foes.along(c, eye, end, BowNumbers.SQUALL_WIDTH, 1);

@@ -507,7 +507,7 @@ public class MerlinBoss extends ArcBoss {
         Set<Integer> struck = new HashSet<>();
         for (int i = 0; i < stars.size(); i++) {
             final Vec3 at = stars.get(i);
-            later(i * 3, MerlinMoves.safe("star", () -> MerlinMoves.starImpact(this, at, struck)));
+            later(i * 3, MerlinMoves.safe("star", () -> MerlinMoves.starFall(this, at, struck)));
         }
         quip("Look up.", "Stars, by the dozen.");
     }

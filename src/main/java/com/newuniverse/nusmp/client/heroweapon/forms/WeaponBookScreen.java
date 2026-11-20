@@ -775,6 +775,7 @@ public final class WeaponBookScreen extends Screen {
         if (sk != null && sk.ultimate()) g.drawString(font, "*", x + w - 6, y, cGold(), false);
         if (!over(mx, my, x, y - 1, w, font.lineHeight + 2)) return;
         String desc = I18n.exists("hero.skill." + id + ".desc") ? I18n.get("hero.skill." + id + ".desc") : sk != null ? sk.desc() : "";
+        desc = com.newuniverse.nusmp.heroweapon.skill.DurText.apply("skill." + id, desc);
         List<FormattedCharSequence> lines = new ArrayList<>();
         lines.add(Component.literal(name).withStyle(ChatFormatting.GOLD).getVisualOrderText());
         if (!desc.isEmpty()) lines.addAll(font.split(Component.literal(desc), 200));
@@ -806,7 +807,7 @@ public final class WeaponBookScreen extends Screen {
         if (I18n.exists(key + ".desc") && over(mx, my, x, y - 1, w, font.lineHeight + 2)) {
             List<FormattedCharSequence> lines = new ArrayList<>();
             lines.add(Component.literal(name).withStyle(ChatFormatting.GOLD).getVisualOrderText());
-            lines.addAll(font.split(Component.literal(I18n.get(key + ".desc")), 200));
+            lines.addAll(font.split(Component.literal(com.newuniverse.nusmp.heroweapon.skill.DurText.apply(key.substring("hero.".length()), I18n.get(key + ".desc"))), 200));
             tip = lines;
         }
     }

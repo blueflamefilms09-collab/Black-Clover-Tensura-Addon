@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.carriage;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.weapon.kit.Foes;
@@ -137,7 +138,7 @@ final class CarriageSpells {
             c.say("Drive the carriage to gallop");
             return false;
         }
-        car.startBoost(BOOST_TICKS);
+        car.startBoost(Dur.t(BOOST_TICKS));
         Vec3 from = car.position().add(0.0, 0.8, 0.0);
         c.fx(VfxShape.WIND_GALE, from, from.add(forward(car).scale(9.0)), GOLD, 14, 1.4f);
         c.sound(SoundEvents.HORSE_GALLOP, 1.0f, 1.2f);
@@ -214,9 +215,9 @@ final class CarriageSpells {
             c.say("Raise the barrier from the driver's seat");
             return false;
         }
-        car.startBarrier(BARRIER_TICKS);
+        car.startBarrier(Dur.t(BARRIER_TICKS));
         for (Entity p : car.getPassengers()) if (p instanceof LivingEntity l) Status.add(l, MobEffects.DAMAGE_RESISTANCE, BARRIER_TICKS, BARRIER_AMP);
-        VfxSpawn.sendFollowing(c.level, VfxShape.BARRIER_FX2, car, car.position(), BLUE, BARRIER_TICKS, 2.6f);
+        VfxSpawn.sendFollowing(c.level, VfxShape.BARRIER_FX2, car, car.position(), BLUE, Dur.t(BARRIER_TICKS), 2.6f);
         c.sound(SoundEvents.SHIELD_BLOCK, 0.9f, 0.7f);
         return true;
     }
@@ -226,7 +227,7 @@ final class CarriageSpells {
         CarriageEntity car = driven(c);
         List<LivingEntity> who = new ArrayList<>();
         if (car != null) {
-            car.startHaste(HAIKUIKKU_TICKS);
+            car.startHaste(Dur.t(HAIKUIKKU_TICKS));
             for (Entity p : car.getPassengers()) if (p instanceof LivingEntity l) add(who, l, HAIKUIKKU.maxTargets());
         } else {                                                                    // on foot: the wielder and the allies beside them
             for (LivingEntity e : Foes.alliesAround(c, c.player.position(), COMFORT_RADIUS, HAIKUIKKU.maxTargets())) add(who, e, HAIKUIKKU.maxTargets());

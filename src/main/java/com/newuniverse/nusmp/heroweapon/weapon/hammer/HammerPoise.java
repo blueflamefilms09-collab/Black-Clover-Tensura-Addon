@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.hammer;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.blackclover.TimedModifiers;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -59,15 +60,15 @@ final class HammerPoise {
     private static void shatter(HeroCtx c, LivingEntity t, boolean boss) {
         Vec3 at = t.position();
         if (boss) {
-            Strike.effect(t, "minecraft:slowness", PoiseMath.BREAK_TICKS_BOSS, 1);
+            Strike.hold(t, "minecraft:slowness", PoiseMath.BREAK_TICKS_BOSS, 1);
         } else {
-            Strike.effect(t, "minecraft:slowness", PoiseMath.BREAK_TICKS, 3);
+            Strike.hold(t, "minecraft:slowness", PoiseMath.BREAK_TICKS, 3);               // the slow of a broken foe ends with the break
             Strike.effect(t, "minecraft:weakness", HammerNumbers.BREAK_WEAKNESS_TICKS, 0);
             Strike.effect(t, "tensura:fragility", HammerNumbers.BREAK_FRAGILITY_TICKS, 0);
             if (c.control()) {
-                int root = BalanceLaw.controlTicks(t, HammerNumbers.BREAK_ROOT_BASE);
-                Strike.effect(t, "minecraft:slowness", root, 6);
-                Strike.effect(t, "tensura:movement_interference", root, 0);
+                int root = BalanceLaw.controlTicks(t, Dur.t(HammerNumbers.BREAK_ROOT_BASE));
+                Strike.hold(t, "minecraft:slowness", root, 6);
+                Strike.hold(t, "tensura:movement_interference", root, 0);
             }
         }
         StrikeFx.dustColumn(c.level, at, AMBER, boss ? 1.4 : 0.9);
@@ -78,7 +79,7 @@ final class HammerPoise {
 
     /** Takes a share off a foe's armour and toughness for a while (the mod's own timed modifier: it removes itself, nothing is saved). */
     static void crackArmor(LivingEntity t, double armorShare, double toughnessShare, int ticks) {
-        TimedModifiers.apply(t, Attributes.ARMOR, CRACK_ARMOR, armorShare, ticks, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-        if (toughnessShare != 0.0) TimedModifiers.apply(t, Attributes.ARMOR_TOUGHNESS, CRACK_TOUGHNESS, toughnessShare, ticks, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        TimedModifiers.apply(t, Attributes.ARMOR, CRACK_ARMOR, armorShare, Dur.t(ticks), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        if (toughnessShare != 0.0) TimedModifiers.apply(t, Attributes.ARMOR_TOUGHNESS, CRACK_TOUGHNESS, toughnessShare, Dur.t(ticks), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 }

@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.book.pages15;
 
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.ElementBook;
 import com.newuniverse.nusmp.book.EnergyBridge;
@@ -230,7 +232,7 @@ public final class Batch2 {
                 Pages15Kit.mid("demon_ice_chains", "Demon Ice: Frozen Chains",
                         Pages15Kit.bind(Tier.MID, 16, true, VfxShape.DEMON_ICE_FX2, NONE)).withCooldown(300).withAnim("thrust"),
                 Pages15Kit.zone("demon_ice_comet", "Demon Ice: Black Comet",
-                        trap(Tier.ZONE, 20, 5.0, VfxShape.DEMON_ICE_FX1, VfxShape.DEMON_ICE_FX3, slow(80, 3))).withCooldown(450).withAnim("slam")));
+                        cometTrap(Tier.ZONE, 20, 5.0, VfxShape.DEMON_ICE_FX1, VfxShape.DEMON_ICE_FX3, slow(80, 3))).withCooldown(450).withAnim("slam")));
 
     private static final List<BookPage> BUBBLE = register("book_bubble", List.of(
                 Pages15Kit.starter("soap_slide", "Soap Slide",
@@ -349,6 +351,31 @@ public final class Batch2 {
     }
 
     /** A delayed strike: the aim point is marked now and hit after {@code delay} ticks (at most 20; the kit's wait is 100 at most), once. At most the tier's targets, two packets. */
+    /**
+     * {@link #trap} for Black Comet (docs/meteor_fall.md): the same ring on the ground and the same blast {@code delay} ticks later, but the blast is the landing of a real ice meteor that falls onto the ring.
+     * With {@code meteor.realMeteors} off, or a meteor the caps refuse, the blast is the old delayed task.
+     */
+    private static BookPage.Cast cometTrap(Tier t, int delay, double radius, VfxShape mark, VfxShape burst, ElementBook.Rider rider) {
+        int wait = Math.max(4, Math.min(delay, 20));
+        double r = Math.min(radius, 8.0);
+        return Pages15Kit.cast(t, c -> {
+            Vec3 at = c.aim(24);
+            c.circle(0.9f);
+            c.fx(mark, at, at.add(0, 1, 0), wait + 8, (float) r / 3f);
+            Runnable blast = () -> {
+                for (LivingEntity f : c.foes(at, r * c.size())) {
+                    c.hit(f);
+                    rider.apply(f, c.caster);
+                }
+                c.fx(burst, at, at.add(0, 1, 0), 24, (float) r / 3f);
+            };
+            MeteorFall.dropOr(c.caster, at, MeteorWiring.spec("demon_ice.black_comet").radius(r * c.size()).fall(wait).onImpact((lvl, hit, who) -> {
+                if (c.caster.isAlive() && !c.caster.isRemoved()) blast.run();
+            }), () -> c.later(wait, blast));
+            return true;
+        });
+    }
+
     private static BookPage.Cast trap(Tier t, int delay, double radius, VfxShape mark, VfxShape burst, ElementBook.Rider rider) {
         int wait = Math.max(4, Math.min(delay, 20));
         double r = Math.min(radius, 8.0);

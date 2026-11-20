@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sword;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,8 +20,8 @@ public final class MarkBook {
         if (foe == null || ticks <= 0) return;
         prune(now);
         Long old = marks.get(foe);
-        long until = now + ticks;
-        if (old != null && old > until && old - now <= SwordNumbers.GILDED_TICKS * 2L) until = old;
+        long until = now + Dur.t(ticks);
+        if (old != null && old > until && old - now <= Dur.t(SwordNumbers.GILDED_TICKS) * 2L) until = old;
         if (old == null && marks.size() >= SwordNumbers.MARK_CAP) {
             UUID soonest = null;
             for (Map.Entry<UUID, Long> e : marks.entrySet()) if (soonest == null || e.getValue() < marks.get(soonest)) soonest = e.getKey();
@@ -33,7 +34,7 @@ public final class MarkBook {
     public boolean has(UUID foe, long now) {
         Long u = marks.get(foe);
         if (u == null) return false;
-        if (u <= now || u - now > SwordNumbers.GILDED_TICKS * 4L) {
+        if (u <= now || u - now > Dur.t(SwordNumbers.GILDED_TICKS) * 4L) {
             marks.remove(foe);
             return false;
         }

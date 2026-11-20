@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.carriage;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.HeroKind;
@@ -310,7 +311,7 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
                 crashed.add(t);
                 if (!stunned && c.control()) {
                     stunned = true;
-                    Status.slow(t, BalanceLaw.controlTicks(t, CarriageNumbers.CHARGE_STUN_TICKS), 6);
+                    Status.slowRaw(t, BalanceLaw.controlTicks(t, Dur.t(CarriageNumbers.CHARGE_STUN_TICKS)), 6);
                 }
             }
         }

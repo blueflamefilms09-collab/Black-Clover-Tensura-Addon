@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.whip;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisVfx;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -46,12 +47,12 @@ final class WhipSkills {
     /** The whip can never hold a boss: it is only slowed. Everything else is held for the time the balance law allows, and marked as bound. */
     private static void hold(HeroCtx c, LivingEntity t, int baseTicks) {
         if (BalanceLaw.isBoss(t)) {
-            Strike.effect(t, "minecraft:slowness", 20, 2);
+            Strike.hold(t, "minecraft:slowness", 20, 2);                                      // a boss keeps the old, short slow (boss rules)
             return;
         }
-        int ticks = BalanceLaw.controlTicks(t, baseTicks);
-        Strike.effect(t, "minecraft:slowness", ticks, 6);
-        Strike.effect(t, "tensura:movement_interference", ticks, 0);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(baseTicks));                         // the length is scaled first, then the balance law caps it
+        Strike.hold(t, "minecraft:slowness", ticks, 6);
+        Strike.hold(t, "tensura:movement_interference", ticks, 0);
         WhipCommand.markBound(t, WhipNumbers.BOUND_TICKS);
         StrikeFx.shape(c.level, VfxShape.SEAL_CHAINS, t.position(), t.position().add(0, 1, 0), GOLD, ticks, 1.2f);
     }
@@ -253,7 +254,7 @@ final class WhipSkills {
                     StrikeFx.tellRing(c.level, spot, WhipNumbers.STAR_RADIUS, VIOLET, WhipNumbers.STAR_DELAY + 4);
                     StrikeFx.ring(c.level, spot, WhipNumbers.STAR_RADIUS, VIOLET);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.CHAIN_HIT, 1.0f, 0.5f);
-                    Strike.effect(p, "minecraft:slowness", WhipNumbers.STAR_DELAY, 2);
+                    Strike.hold(p, "minecraft:slowness", WhipNumbers.STAR_DELAY, 2);
                     Strike.later(p, WhipNumbers.STAR_DELAY, cx -> slam(cx, spot));
                     return true;
                 });
@@ -320,7 +321,7 @@ final class WhipSkills {
                     ZogratisVfx.gate(c.level, p.position().add(0, 2.4, 0), new Vec3(0, -1, 0), 2.0, WhipNumbers.DIMENSION_DELAY + 6, VIOLET);
                     for (LivingEntity t : foes) StrikeFx.shape(c.level, VfxShape.THREAD_STRINGS, hand, Strike.center(t), VIOLET, WhipNumbers.DIMENSION_DELAY + 6, 1.0f);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.ENDERMAN_TELEPORT, 1.0f, 0.5f);
-                    Strike.effect(p, "minecraft:slowness", WhipNumbers.DIMENSION_DELAY, 3);
+                    Strike.hold(p, "minecraft:slowness", WhipNumbers.DIMENSION_DELAY, 3);
                     Strike.later(p, WhipNumbers.DIMENSION_DELAY, cx -> lashAll(cx, foes));
                     return true;
                 });
@@ -333,7 +334,7 @@ final class WhipSkills {
         for (LivingEntity t : foes) {
             if (!t.isAlive() || t.level() != c.level || t.distanceTo(c.player) > WhipNumbers.DIMENSION_RADIUS + 2.0) continue;
             if (Strike.hit(c, t, damage, false)) n++;
-            if (BalanceLaw.isBoss(t)) Strike.effect(t, "minecraft:slowness", 20, 2);
+            if (BalanceLaw.isBoss(t)) Strike.hold(t, "minecraft:slowness", 20, 2);
             else if (control) hold(c, t, WhipNumbers.DIMENSION_BIND_TICKS);
             else Strike.effect(t, "minecraft:slowness", 40, 2);
             ZogratisVfx.bloodArcs(c.level, hand(c.player), Strike.center(t), 1.0, 10, VIOLET);

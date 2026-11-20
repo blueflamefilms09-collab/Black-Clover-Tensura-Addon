@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.shield;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
@@ -138,12 +139,12 @@ final class ShieldOps {
         Vec3 centre = new Vec3(at.x + n.x * 0.8, cy, at.z + n.z * 0.8);
         long now = c.level.getGameTime();
         ShieldState.Floating f = new ShieldState.Floating(PanelMath.Panel.facing(centre.x, centre.y, centre.z, n.x, n.z, PANEL_HALF_WIDTH, PANEL_HALF_HEIGHT, PANEL_THICKNESS),
-                PANEL_HP, now + PANEL_TICKS);
+                PANEL_HP, now + Dur.task(PANEL_TICKS));
         for (ShieldState.Floating old : st.addFloating(f, now))
             ShieldFx.shatter(c.level, new Vec3(old.geo.cx(), old.geo.cy(), old.geo.cz()), centre, 0.7f, ShieldFx.STEEL);
-        ShieldFx.pane(c.level, centre, centre.add(n), PANEL_TICKS);
+        ShieldFx.pane(c.level, centre, centre.add(n), Dur.task(PANEL_TICKS));
         ShieldFx.sound(c.level, centre, SoundEvents.IRON_TRAPDOOR_CLOSE, 1.0f, 1.2f);
-        ShieldRuntime.every(c, PANEL_TICKS, 1, age -> panelStep(c, st, f, age));
+        ShieldRuntime.every(c, Dur.task(PANEL_TICKS), 1, age -> panelStep(c, st, f, age));
         return true;
     }
 
@@ -195,8 +196,8 @@ final class ShieldOps {
             target = near.isEmpty() ? c.player : near.get(0);
         }
         double bank = Math.min(WARD_BANK_CAP, target.getMaxHealth() * WARD_BANK_SHARE * bondBoost(c));
-        ShieldRuntime.book().ward(c.player.getUUID(), target.getUUID(), c.level.getGameTime(), WARD_TICKS, bank);
-        ShieldFx.orbit(c.level, target, WARD_TICKS, ShieldFx.JEWEL);
+        ShieldRuntime.book().ward(c.player.getUUID(), target.getUUID(), c.level.getGameTime(), Dur.t(WARD_TICKS), bank);
+        ShieldFx.orbit(c.level, target, Dur.t(WARD_TICKS), ShieldFx.JEWEL);
         ShieldFx.sound(c.level, target.position(), SoundEvents.BEACON_POWER_SELECT, 0.8f, 1.6f);
         c.say(target == c.player ? "Second Shield on you" : "Second Shield on " + name(target));
         return true;
@@ -211,8 +212,8 @@ final class ShieldOps {
         }
         List<UUID> ids = new ArrayList<>();
         for (LivingEntity f : friends) ids.add(f.getUUID());
-        int bound = ShieldRuntime.book().cover(c.player.getUUID(), ids, c.level.getGameTime(), COVER_TICKS, COVER_SHARE);
-        ShieldFx.seal(c.level, c.player.position(), COVER_RADIUS * 0.6, COVER_TICKS, ShieldFx.JEWEL);
+        int bound = ShieldRuntime.book().cover(c.player.getUUID(), ids, c.level.getGameTime(), Dur.t(COVER_TICKS), COVER_SHARE);
+        ShieldFx.seal(c.level, c.player.position(), COVER_RADIUS * 0.6, Dur.t(COVER_TICKS), ShieldFx.JEWEL);
         int shown = 0;
         for (LivingEntity f : friends) {
             if (shown++ >= COVER_MAX_ALLIES) break;
@@ -235,11 +236,11 @@ final class ShieldOps {
             c.say("Nothing to provoke");
             return false;
         }
-        c.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, PROVOKE_TICKS, 0, true, true));
+        c.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Dur.t(PROVOKE_TICKS), 0, true, true));
         ShieldFx.tellRing(c.level, c.player.position(), 3.0, ShieldFx.TELL_EMBER);
         ShieldFx.brand(c.level, c.player.position().add(0, 1, 0), c.player.position().add(0, 2, 0), 0.8f);
         ShieldFx.sound(c.level, c.player.position(), SoundEvents.RAVAGER_ROAR, 0.9f, 1.3f);
-        ShieldRuntime.every(c, PROVOKE_TICKS, 10, age -> {
+        ShieldRuntime.every(c, Dur.task(PROVOKE_TICKS), 10, age -> {
             for (Mob m : mobs) if (m.isAlive() && !m.isRemoved() && m.getTarget() != c.player) m.setTarget(c.player);
         });
         return true;
@@ -255,7 +256,7 @@ final class ShieldOps {
             for (LivingEntity f : ShieldTargets.friendsAround(c.player, c.player.position(), HERB_RADIUS, true)) {
                 double share = Math.min(0.25, HERB_SHARE * boost);
                 c.heal(f, (float) (f.getMaxHealth() * share));
-                f.addEffect(new MobEffectInstance(MobEffects.REGENERATION, HERB_REGEN_TICKS, 0, true, true));
+                f.addEffect(new MobEffectInstance(MobEffects.REGENERATION, Dur.t(HERB_REGEN_TICKS), 0, true, true));
             }
         });
         return true;
@@ -272,7 +273,7 @@ final class ShieldOps {
             c.say("Control is not ready for " + seconds(c.player) + " s");
             return false;
         }
-        int ticks = BalanceLaw.controlTicks(t, PRISON_TICKS);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(PRISON_TICKS));
         Vec3 centre = t.position();
         long now = c.level.getGameTime();
         ShieldState st = ShieldRuntime.state(c.player);
@@ -459,7 +460,7 @@ final class ShieldOps {
         st.souls.spendAll(now);
         for (LivingEntity f : ShieldTargets.friendsAround(c.player, c.player.position(), AEGIS_RADIUS, true)) {
             int level = f == c.player ? souls - 1 : Math.max(0, (souls + 1) / 2 - 1);
-            f.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, AEGIS_TICKS, level, true, true));
+            f.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, Dur.t(AEGIS_TICKS), level, true, true));
         }
         ShieldFx.souls(c.level, c.player.position(), AEGIS_RADIUS);
         ShieldFx.sound(c.level, c.player.position(), SoundEvents.SCULK_SHRIEKER_SHRIEK, 0.6f, 1.6f);
@@ -486,7 +487,7 @@ final class ShieldOps {
         }
         ShieldFx.souls(c.level, c.player.position(), UNDEAD_RADIUS * 0.5);
         ShieldFx.sound(c.level, c.player.position(), SoundEvents.ELDER_GUARDIAN_CURSE, 0.7f, 1.4f);
-        ShieldRuntime.every(c, UNDEAD_TICKS, 2, age -> {                          // a mob's own goals look for a target again every few ticks, so it is cleared often
+        ShieldRuntime.every(c, Dur.task(UNDEAD_TICKS), 2, age -> {                          // a mob's own goals look for a target again every few ticks, so it is cleared often
             for (Mob m : undead) {
                 if (!m.isAlive() || m.isRemoved()) continue;
                 if (m.getLastHurtByMob() == c.player && m.tickCount - m.getLastHurtByMobTimestamp() < 40) continue;      // one that was struck may answer (the timestamp is in the mob's own ticks)
@@ -502,11 +503,11 @@ final class ShieldOps {
      */
     static boolean absoluteDefence(HeroCtx c) {
         Vec3 at = c.player.position();
-        ShieldFx.guardian(c.level, at, DEFENCE_RADIUS, DEFENCE_TICKS);
+        ShieldFx.guardian(c.level, at, DEFENCE_RADIUS, Dur.task(DEFENCE_TICKS));
         ShieldFx.circle(c.level, at, DEFENCE_RADIUS * 0.5, 30, ShieldFx.STEEL);
         ShieldFx.sound(c.level, at, SoundEvents.BEACON_ACTIVATE, 1.4f, 0.7f);
         ShieldFx.sound(c.level, at, SoundEvents.ANVIL_LAND, 1.0f, 0.5f);
-        ShieldRuntime.every(c, DEFENCE_TICKS, 5, age -> {
+        ShieldRuntime.every(c, Dur.task(DEFENCE_TICKS), 5, age -> {
             for (LivingEntity f : ShieldTargets.friendsAround(c.player, at, DEFENCE_RADIUS, true))
                 f.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 12, f == c.player ? DEFENCE_SELF_LEVEL : DEFENCE_ALLY_LEVEL, true, false));
             c.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 12, DEFENCE_SLOW_LEVEL, true, false));
@@ -541,7 +542,7 @@ final class ShieldOps {
             Vec3 at = c.player.position().add(dir.scale(1.2));
             for (LivingEntity t : ShieldTargets.foesAround(c, at, RAGE_BASH_RADIUS)) {
                 strike(c, t, RAGE_BASH.raw());
-                t.igniteForSeconds(RAGE_BASH_FIRE_SECONDS);
+                t.igniteForSeconds(Dur.seconds(RAGE_BASH_FIRE_SECONDS));
                 c.shove(t, c.player.position(), 0.9);
             }
             ShieldFx.slam(c.level, at, at.add(dir), 1.0f);
@@ -562,9 +563,9 @@ final class ShieldOps {
             for (LivingEntity t : in) {
                 strike(c, t, RAGE_ROAR.raw());
                 c.shove(t, c.player.position(), 1.1);
-                if (hold) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, ROAR_SLOW_TICKS), 1));
+                if (hold) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, Dur.t(ROAR_SLOW_TICKS)), 1));
             }
-            c.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ROAR_FRENZY_TICKS, 0, false, true));
+            c.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, Dur.t(ROAR_FRENZY_TICKS), 0, false, true));
             ShieldFx.brand(c.level, c.player.position().add(dir.scale(2.0)).add(0, 1, 0), c.player.position().add(dir.scale(5.0)).add(0, 1, 0), 1.2f);
         });
         return true;
@@ -602,7 +603,7 @@ final class ShieldOps {
             boolean hold = c.control();
             for (LivingEntity v : caught) {
                 strike(c, v, v == t ? BLOOD_SACRIFICE.raw() : BLOOD_SPLASH);
-                if (hold) v.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(v, BLOOD_ROOT_TICKS), 6));
+                if (hold) v.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(v, Dur.t(BLOOD_ROOT_TICKS)), 6));
             }
             c.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, BLOOD_CURSE_TICKS, 0));
             c.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BLOOD_CURSE_TICKS, 0));
@@ -636,7 +637,7 @@ final class ShieldOps {
             c.player.setHealth(c.player.getHealth() - (float) pay);
             for (LivingEntity t : ShieldTargets.foesAround(c, at, MEGIDDO_RADIUS)) {
                 strike(c, t, MEGIDDO.raw());
-                t.igniteForSeconds(4);
+                t.igniteForSeconds(Dur.seconds(4));
                 c.shove(t, at, 1.4);
             }
             c.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, BLOOD_CURSE_TICKS, 1));

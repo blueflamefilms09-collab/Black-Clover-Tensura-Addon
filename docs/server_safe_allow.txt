@@ -33,6 +33,7 @@ labyrinth/mega/system/SystemNet.java
 labyrinth/mega/system/SystemPointsNet.java
 mana/zone/ManaZoneBoot.java
 mana/zone/ManaZoneNet.java
+meteor/MeteorBoot.java
 multiverse/MultiverseSync.java
 particle/fx/Fx.java
 relics/ArmorSlotSelfTests.java

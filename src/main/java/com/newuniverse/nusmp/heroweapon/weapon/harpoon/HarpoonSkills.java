@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.harpoon;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -190,7 +191,7 @@ final class HarpoonSkills {
             f.hit(prey, (float) HarpoonNumbers.whaleRaw(prey.getMaxHealth()));
             prey.setDeltaMovement(0, -0.8, 0);
             prey.hurtMarked = true;
-            if (f.control()) prey.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(prey, HarpoonNumbers.WHALE_STAGGER), 9, false, true));
+            if (f.control()) prey.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(prey, Dur.t(HarpoonNumbers.WHALE_STAGGER)), 9, false, true));
             f.fx(VfxShape.LIGHTNING_GOD, prey.position(), prey.position(), BLUE, 20, 1.5f);
             f.sound(SoundEvents.LIGHTNING_BOLT_THUNDER, 0.9f, 1.4f);
         });
@@ -210,7 +211,7 @@ final class HarpoonSkills {
             c.say("Your control magic needs " + (BalanceLaw.controlCooldownLeft(p) + 19) / 20 + "s.");
             return false;
         }
-        int ticks = BalanceLaw.controlTicks(t, HarpoonNumbers.CRUCIFY_TICKS);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(HarpoonNumbers.CRUCIFY_TICKS));
         t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true));
         t.setDeltaMovement(0, Math.min(0, t.getDeltaMovement().y), 0);
         t.hurtMarked = true;
@@ -314,7 +315,7 @@ final class HarpoonSkills {
             boolean stagger = !hit.isEmpty() && f.control();
             for (LivingEntity t : hit) {
                 f.hit(t, (float) HarpoonNumbers.FISH_BLASTER.raw());
-                if (stagger) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, HarpoonNumbers.FISH_STAGGER), 9, false, true));
+                if (stagger) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, Dur.t(HarpoonNumbers.FISH_STAGGER)), 9, false, true));
             }
         });
         return true;

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.hammer;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.heroweapon.skill.HeroSkill;
@@ -60,7 +61,7 @@ final class HammerSkills {
                     StrikeFx.tellRing(c.level, spot, HammerNumbers.SMASH_RADIUS, AMBER, HammerNumbers.SMASH_DELAY + 4);
                     StrikeFx.ring(c.level, spot, HammerNumbers.SMASH_RADIUS, AMBER);
                     StrikeFx.sound(c.level, p.position(), SoundEvents.ANVIL_USE, 0.9f, 0.6f);
-                    Strike.effect(p, "minecraft:slowness", HammerNumbers.SMASH_DELAY, 2);
+                    Strike.hold(p, "minecraft:slowness", HammerNumbers.SMASH_DELAY, 2);
                     Strike.later(p, HammerNumbers.SMASH_DELAY, cx -> smash(cx, spot));
                     return true;
                 });
@@ -153,7 +154,7 @@ final class HammerSkills {
                     StrikeFx.tellRing(c.level, spot, HammerNumbers.QUAKE_RADIUS, AMBER, HammerNumbers.QUAKE_DELAY + 4);
                     StrikeFx.ring(c.level, spot, HammerNumbers.QUAKE_RADIUS, AMBER);
                     StrikeFx.sound(c.level, spot, SoundEvents.ANVIL_USE, 1.0f, 0.5f);
-                    Strike.effect(p, "minecraft:slowness", HammerNumbers.QUAKE_DELAY, 3);
+                    Strike.hold(p, "minecraft:slowness", HammerNumbers.QUAKE_DELAY, 3);
                     Strike.later(p, HammerNumbers.QUAKE_DELAY, cx -> quake(cx, spot));
                     return true;
                 });

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sewingset;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -124,7 +125,7 @@ final class SewingSkills {
             return false;
         }
         long now = c.level.getGameTime();
-        int ticks = BalanceLaw.controlTicks(t, SewingNumbers.BIND_TICKS);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(SewingNumbers.BIND_TICKS));
         t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 9, false, true));
         Effects.named("tensura", "silence").ifPresent(h -> t.addEffect(new MobEffectInstance(h, ticks, 0, false, true)));
         if (t instanceof Player) t.getPersistentData().putLong("nusmp_sealed_until", now + ticks);
@@ -263,7 +264,7 @@ final class SewingSkills {
         c.sound(SoundEvents.WOOL_PLACE, 1.3f, 0.6f);
         int[] caught = {0};
         Set<LivingEntity> pricked = Collections.newSetFromMap(new IdentityHashMap<>());
-        Safe.zone(c, SewingNumbers.BARRIER_TICKS, 1, "sewing.barrier", false, (f, age) -> {
+        Safe.zone(c, Dur.t(SewingNumbers.BARRIER_TICKS), 1, "sewing.barrier", false, (f, age) -> {
             if (age > 0 && age % 40 == 0) drawSeam(f, a, b);
             if (caught[0] < SewingNumbers.BARRIER_CATCHES) {
                 AABB box = new AABB(a, b).inflate(1.5, 4.0, 1.5);
@@ -278,7 +279,7 @@ final class SewingSkills {
             for (LivingEntity t : Foes.around(f.player, centre, SewingNumbers.BARRIER_HALF + 1.5, SewingNumbers.STITCHED_BARRIER.targets())) {
                 Vec3 at = t.position();
                 if (Geo.segDist(at.x, a.y, at.z, a.x, a.y, a.z, b.x, a.y, b.z) > SewingNumbers.BARRIER_TOUCH) continue;
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SewingNumbers.BARRIER_SLOW_TICKS, 1, false, true));
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Dur.t(SewingNumbers.BARRIER_SLOW_TICKS), 1, false, true));
                 if (pricked.add(t)) f.hit(t, (float) SewingNumbers.BARRIER_PRICK);
             }
             return true;
@@ -310,13 +311,13 @@ final class SewingSkills {
         NeedleBoard board = BOARD.of(p);
         int mark = SewingNumbers.foeMarkTicks(c.form.has("fine_stitch"));
         for (LivingEntity x : caught) {
-            int ticks = BalanceLaw.controlTicks(x, SewingNumbers.NET_TICKS);
+            int ticks = BalanceLaw.controlTicks(x, Dur.t(SewingNumbers.NET_TICKS));
             x.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 4, false, true));
             c.hit(x, (float) SewingNumbers.SPIDER_NET.raw());
             board.mark(x.getUUID(), Side.FOE, now, mark);
         }
         Vec3 ground = Foes.groundBelow(p, t.position(), 3.0);
-        c.fx(VfxShape.THREAD_WEB, ground, ground.add(0, 1, 0), SOFT, SewingNumbers.NET_TICKS, (float) SewingNumbers.NET_RADIUS);
+        c.fx(VfxShape.THREAD_WEB, ground, ground.add(0, 1, 0), SOFT, Dur.t(SewingNumbers.NET_TICKS), (float) SewingNumbers.NET_RADIUS);
         c.fx(VfxShape.THREAD_STRINGS, hand(c), t.getBoundingBox().getCenter(), SILK, 16, 1.0f);
         c.sound(SoundEvents.WOOL_PLACE, 1.2f, 0.5f);
         return true;
@@ -362,7 +363,7 @@ final class SewingSkills {
                 Tells.burst(f.level, spot, VIOLET_RGB, 8);
             }
             for (LivingEntity t : Foes.around(f.player, f.player.position(), SewingNumbers.ARIADNE_REVEAL, SewingNumbers.ARIADNE_FOES)) {
-                t.addEffect(new MobEffectInstance(MobEffects.GLOWING, SewingNumbers.ARIADNE_GLOW, 0, false, false));
+                t.addEffect(new MobEffectInstance(MobEffects.GLOWING, Dur.t(SewingNumbers.ARIADNE_GLOW), 0, false, false));
             }
             f.sound(SoundEvents.ENDERMAN_TELEPORT, 1.0f, 1.4f);
         });

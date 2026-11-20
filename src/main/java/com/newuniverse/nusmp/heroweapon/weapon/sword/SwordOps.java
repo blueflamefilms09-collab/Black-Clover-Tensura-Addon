@@ -1,10 +1,14 @@
 package com.newuniverse.nusmp.heroweapon.weapon.sword;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.heroweapon.curse.HeroCurse;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorStyle;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
 import net.minecraft.server.level.ServerPlayer;
@@ -187,8 +191,8 @@ final class SwordOps {
         }
         SwordFx.afterimage(c.level, from, 1.8f);
         SwordFx.streak(c.level, from.add(0, 1, 0), p.position().add(0, 1, 0), SwordFx.SKY, 0.8f);
-        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, STEP_SPEED_TICKS, STEP_SPEED_LEVEL, true, true));
-        p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, STEP_GUARD_TICKS, 0, true, false));
+        p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Dur.t(STEP_SPEED_TICKS), STEP_SPEED_LEVEL, true, true));
+        p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, Dur.t(STEP_GUARD_TICKS), 0, true, false));
         SwordRuntime.state(p).ledger.armGhost(c.level.getGameTime(), GHOST_TICKS);
         SwordFx.sound(c.level, from, SoundEvents.ENDERMAN_TELEPORT, 0.7f, 1.8f);
         return true;
@@ -202,11 +206,11 @@ final class SwordOps {
         SwordFx.sound(c.level, c.player.position(), SoundEvents.FIREWORK_ROCKET_BLAST, 1.1f, 1.6f);
         for (LivingEntity t : SwordTargets.foesInCone(c, dir, FLASH_RANGE, FLASH_HALF_ANGLE)) {
             strike(c, t, FLASHING.raw());
-            t.addEffect(new MobEffectInstance(MobEffects.GLOWING, FLASH_GLOW_TICKS, 0));
+            t.addEffect(new MobEffectInstance(MobEffects.GLOWING, Dur.t(FLASH_GLOW_TICKS), 0));
             if (t instanceof Player) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 0));
-            else t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, FLASH_BLIND_TICKS, 0));
+            else t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, Dur.t(FLASH_BLIND_TICKS), 0));
         }
-        c.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, FLASH_SPEED_TICKS, 0, true, true));
+        c.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Dur.t(FLASH_SPEED_TICKS), 0, true, true));
         return true;
     }
 
@@ -240,11 +244,20 @@ final class SwordOps {
         double[][] ring = SwordGeo.ring(at.x, at.z, METEOR_RING, METEOR_STARS, 45.0);
         for (int i = 0; i < METEOR_STARS; i++) {
             Vec3 spot = new Vec3(ring[i][0], at.y, ring[i][1]);
-            SwordRuntime.after(c, METEOR_DELAY + i * METEOR_GAP, () -> {
-                SwordFx.star(c.level, spot);
+            int delay = METEOR_DELAY + i * METEOR_GAP;
+            Runnable blast = () -> {
                 for (LivingEntity t : SwordTargets.foesAround(c, spot, METEOR_RADIUS)) strike(c, t, METEOR.raw(), cap);
                 SwordFx.sound(c.level, spot, SoundEvents.FIREWORK_ROCKET_BLAST, 0.9f, 1.2f);
-            });
+            };
+            // meteor.realMeteors (docs/meteor_fall.md): a real star falls and lands exactly when the old task fired; off or refused = the old task and its streak
+            MeteorFall.dropOr(c.player, spot, MeteorWiring.spec("sword.meteor").fall(delay).onImpact((lvl, hit, who) -> {
+                if (!SwordRuntime.live(c)) return;
+                MeteorFall.burst(lvl, hit, MeteorStyle.STAR, METEOR_RADIUS);
+                blast.run();
+            }), () -> SwordRuntime.after(c, delay, () -> {
+                SwordFx.star(c.level, spot);
+                blast.run();
+            }));
         }
         return true;
     }
@@ -396,7 +409,7 @@ final class SwordOps {
             Vec3 eye = c.eye();
             for (LivingEntity t : SwordTargets.foesInCone(c, dir, PHOENIX_RANGE, PHOENIX_HALF_ANGLE)) {
                 strike(c, t, PHOENIX_STORM, cap);
-                t.igniteForSeconds(PHOENIX_FIRE_SECONDS);
+                t.igniteForSeconds(Dur.seconds(PHOENIX_FIRE_SECONDS));
             }
             SwordFx.storm(c.level, eye.add(dir.scale(0.6)), eye.add(dir.scale(PHOENIX_RANGE)));
             Vec3 start = eye.add(dir.scale(1.2));
@@ -405,7 +418,7 @@ final class SwordOps {
                     (bolt, target) -> {
                         if (!SwordTargets.isFoe(c.player, target)) return;
                         strike(c, target, PHOENIX_BIRD, cap);
-                        target.igniteForSeconds(PHOENIX_FIRE_SECONDS);
+                        target.igniteForSeconds(Dur.seconds(PHOENIX_FIRE_SECONDS));
                     }, (bolt, end) -> SwordFx.flame(c.level, end, 1.2f));
             SwordFx.sound(c.level, c.player.position(), SoundEvents.BLAZE_SHOOT, 1.2f, 0.8f);
         });
@@ -416,13 +429,13 @@ final class SwordOps {
     static boolean floatBlades(HeroCtx c) {
         SwordState st = SwordRuntime.state(c.player);
         long now = c.level.getGameTime();
-        st.floatUntil = now + FLOAT_TICKS;
+        st.floatUntil = now + Dur.task(FLOAT_TICKS);
         int mine = ++st.castNumber;
-        SwordFx.orbit(c.level, c.player, FLOAT_TICKS, SwordFx.STEEL);
+        SwordFx.orbit(c.level, c.player, Dur.task(FLOAT_TICKS), SwordFx.STEEL);
         SwordFx.sound(c.level, c.player.position(), SoundEvents.AMETHYST_BLOCK_CHIME, 1.1f, 1.0f);
         HitCap cap = new HitCap(FLOAT_BLADES.total());
         int[] stops = {FLOAT_BLOCKS};
-        SwordRuntime.every(c, FLOAT_TICKS, 2, age -> {
+        SwordRuntime.every(c, Dur.task(FLOAT_TICKS), 2, age -> {
             if (st.castNumber != mine || c.level.getGameTime() >= st.floatUntil) return;
             Vec3 pos = c.player.position();
             if (stops[0] > 0) {
@@ -561,7 +574,7 @@ final class SwordOps {
         SwordRuntime.after(c, DECLINE_DELAY, () -> {
             for (LivingEntity t : SwordTargets.foesAlong(c, from.add(0, 0.5, 0), to.add(0, 0.5, 0), DECLINE_HALF_WIDTH)) {
                 strike(c, t, STRONG_DECLINE.raw());
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, DECLINE_SLOW_TICKS, 1));
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Dur.t(DECLINE_SLOW_TICKS), 1));
             }
             SwordFx.fissure(c.level, from, to);
             SwordFx.sound(c.level, from.add(dir.scale(DECLINE_LENGTH * 0.5)), SoundEvents.MACE_SMASH_GROUND_HEAVY, 1.4f, 0.6f);

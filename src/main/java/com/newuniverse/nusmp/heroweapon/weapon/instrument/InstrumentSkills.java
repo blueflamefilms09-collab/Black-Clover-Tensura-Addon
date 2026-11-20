@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.instrument;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -143,8 +144,8 @@ final class InstrumentSkills {
             for (LivingEntity t : foes) {
                 f.hit(t, (float) InstrumentNumbers.STUN_BEAT.raw());
                 if (!stun) continue;
-                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, InstrumentNumbers.STUN_CONTROL_TICKS), 9, false, true));
-                t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, InstrumentNumbers.STUN_BLIND_TICKS, 0, false, true));
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, BalanceLaw.controlTicks(t, Dur.t(InstrumentNumbers.STUN_CONTROL_TICKS)), 9, false, true));
+                t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, Dur.t(InstrumentNumbers.STUN_BLIND_TICKS), 0, false, true));
             }
         });
         return true;
@@ -166,7 +167,7 @@ final class InstrumentSkills {
         c.fx(VfxShape.SONG_RING, foot, foot, color, 28, (float) radius);
         VfxSpawn.sendFollowing(c.level, VfxShape.SONG_NOTES, c.player, foot.add(0, 1.6, 0), color, 60, 1.0f);
         note(c, h, 1.2f);
-        Safe.zone(c, InstrumentNumbers.songTicks(baseTicks, h), InstrumentNumbers.PULSE_EVERY, "instrument.song", true, (f, age) -> {
+        Safe.zone(c, Dur.t(InstrumentNumbers.songTicks(baseTicks, h)), InstrumentNumbers.PULSE_EVERY, "instrument.song", true, (f, age) -> {
             Vec3 here = f.player.position();
             pulse.run(f, allies ? Foes.alliesAround(f.player, here, radius, 8) : List.of(), foes ? Foes.around(f.player, here, radius, 8) : List.of());
             if (age > 0 && age % (2 * InstrumentNumbers.PULSE_EVERY) == 0) f.fx(VfxShape.SONG_RING, here, here, color, 24, (float) radius);
@@ -237,8 +238,8 @@ final class InstrumentSkills {
         }
         int ticks = InstrumentNumbers.DIRGE_TICKS + (h >= InstrumentNumbers.STRONG_HARMONY ? InstrumentNumbers.DIRGE_EXTRA_TICKS : 0);
         for (LivingEntity t : foes) {
-            t.addEffect(new MobEffectInstance(MobEffects.POISON, ticks, 0, false, true));
-            t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 0, false, true));
+            t.addEffect(new MobEffectInstance(MobEffects.POISON, ticks, 0, false, true));                  // poison keeps its length: it is damage and the length is budgeted
+            t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, Dur.t(ticks), 0, false, true));
         }
         Vec3 foot = p.position();
         c.fx(VfxShape.SONG_RING, foot, foot, PURPLE, 28, (float) radius);

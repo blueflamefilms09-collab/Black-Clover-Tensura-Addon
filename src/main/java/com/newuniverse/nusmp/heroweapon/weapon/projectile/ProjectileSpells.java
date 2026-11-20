@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.heroweapon.weapon.projectile;
 
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -54,7 +55,7 @@ final class ProjectileSpells {
         long now = c.level.getGameTime();
         UUID who = c.player.getUUID();
         boolean fresh = !ProjectileState.marked(who, t.getUUID(), now);
-        ProjectileState.mark(who, t.getUUID(), now + MARK_TICKS, now);
+        ProjectileState.mark(who, t.getUUID(), now + Dur.t(MARK_TICKS), now);
         if (fresh) {
             Vec3 at = t.position().add(0.0, t.getBbHeight() * 0.5, 0.0);
             c.fx(VfxShape.COMPASS_LOCK, at, at, TEAL, 20, 0.8f);
@@ -324,8 +325,8 @@ final class ProjectileSpells {
             return false;
         }
         swing(c);
-        int ticks = BalanceLaw.controlTicks(t, BIND_TICKS);
-        Status.slow(t, ticks, 6);
+        int ticks = BalanceLaw.controlTicks(t, Dur.t(BIND_TICKS));
+        Status.slowRaw(t, ticks, 6);
         Vec3 shadow = t.position();
         line(c, c.eye(), shadow);
         c.fx(VfxShape.SEAL_CHAINS, shadow, shadow, TEAL, ticks, 1.1f);

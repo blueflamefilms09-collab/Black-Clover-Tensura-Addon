@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import com.newuniverse.nusmp.skill.rules.UltimateClass;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.skill.rules.GodTierRules;
@@ -55,14 +57,26 @@ public class TheVisionarySkill extends NUSkill {
                 if (!pay(instance, player, mode, DMUtil.cost(GodTierRules.meteorCost()))) return;
                 Vec3 c = DMUtil.lookPoint(player, 64);
                 Vec3 sky = c.add(8, 40, 0);
-                SkillFx.beam(level, sky, c, false);
-                SkillFx.shape(level, VfxShape.DEMON_METEOR, sky, c, 0xFFFFA0E0, 24, 2.0f);
-                SkillFx.shape(level, VfxShape.FIRE_BURST, c, c.add(0, 1, 0), 0xFFFFA0E0, 24, (float) GodTierRules.meteorRadius(mastered) * 0.4f);
-                SkillAnimeFx2.visionStar(level, sky, c, GodTierRules.meteorRadius(mastered));      // VFX wave 4: the imagined meteor
-                for (LivingEntity t : SkillTargets.foes(player, c, GodTierRules.meteorRadius(mastered))) {
-                    if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) t.igniteForSeconds(6);
+                double mr = GodTierRules.meteorRadius(mastered);
+                Runnable burst = () -> SkillFx.shape(level, VfxShape.FIRE_BURST, c, c.add(0, 1, 0), 0xFFFFA0E0, 24, (float) mr * 0.4f);
+                Runnable blast = () -> {
+                    for (LivingEntity t : SkillTargets.foes(player, c, mr)) {
+                        if (SkillDamage.hit(player, t, GodTierRules.meteorDamage(mastered), mastery, SkillDamage.Kind.MAGIC, instance) > 0f) t.igniteForSeconds(6);
+                    }
+                    SkillFx.sound(level, c, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.7F);
+                };
+                // meteor.realMeteors (docs/meteor_fall.md): the imagined meteor is a real one that lands 36 ticks later; off or refused = the old instant strike with its sky streaks
+                if (!MeteorFall.drop(player, c, MeteorWiring.spec("visionary.meteor").radius(mr).onImpact((lvl, at, who) -> {
+                    if (!player.isAlive()) return;
+                    burst.run();
+                    blast.run();
+                }))) {
+                    SkillFx.beam(level, sky, c, false);
+                    SkillFx.shape(level, VfxShape.DEMON_METEOR, sky, c, 0xFFFFA0E0, 24, 2.0f);
+                    burst.run();
+                    SkillAnimeFx2.visionStar(level, sky, c, mr);      // VFX wave 4: the imagined meteor
+                    blast.run();
                 }
-                SkillFx.sound(level, c, SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.7F);
                 cooldown(instance, mode, DMUtil.cooldown(GodTierRules.meteorCooldown()));
             }
             case GodTierRules.VOID -> {

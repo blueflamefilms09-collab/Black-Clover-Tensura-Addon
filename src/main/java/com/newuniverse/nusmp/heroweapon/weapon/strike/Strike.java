@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.heroweapon.weapon.strike;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.book.SpellRuntime;
+import com.newuniverse.nusmp.heroweapon.skill.Dur;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
 import com.newuniverse.nusmp.relics.Fx;
 import com.newuniverse.nusmp.relics.djinn.weapon.WeaponGeo;
@@ -166,8 +167,15 @@ public final class Strike {
         t.hurtMarked = true;
     }
 
-    /** A mob effect by id (the relics' helper: a missing effect is skipped, the time is capped). */
-    public static void effect(LivingEntity t, String effectId, int ticks, int amp) { Fx.addEffect(t, effectId, ticks, amp); }
+    /**
+     * A mob effect by id (the relics' helper: a missing effect is skipped, the time is capped). The length is the technique's BASE length: it goes through the duration
+     * scale ({@link Dur}, setting {@code heroweapon.durationScale}) here, once, so a caller never scales it itself. A length that is already final (a tell, or the
+     * answer of the balance law) goes through {@link #hold} instead.
+     */
+    public static void effect(LivingEntity t, String effectId, int ticks, int amp) { Fx.addEffect(t, effectId, Dur.t(ticks), amp); }
+
+    /** The same effect for exactly {@code ticks}: a hold during a wind-up, or a length the balance law has already decided. Never scaled. */
+    public static void hold(LivingEntity t, String effectId, int ticks, int amp) { Fx.addEffect(t, effectId, ticks, amp); }
 
     // ------------------------------------------------------------------ moving the wielder
     /** Launches the wielder: {@code horizontal} blocks per tick along {@code dir} (flat) and {@code vertical} up; the technique's own leap never hurts them. */

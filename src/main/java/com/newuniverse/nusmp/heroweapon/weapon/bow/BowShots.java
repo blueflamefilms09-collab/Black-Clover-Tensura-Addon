@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.heroweapon.weapon.bow;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
+import com.newuniverse.nusmp.heroweapon.HeroConfig;
 import com.newuniverse.nusmp.heroweapon.forms.FormMastery;
 import com.newuniverse.nusmp.heroweapon.rules.HeroXp;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCtx;
@@ -44,6 +45,10 @@ final class BowShots {
         if (BowState.shotLocked(c, now)) return true;
         ArmedMode mode = BowState.armed(c, now);
         if (mode != ArmedMode.NONE && f < mode.minFraction() - 1e-9) mode = ArmedMode.NONE;          // too weak for the change: a plain arrow, the arming waits
+        if (HeroConfig.realArrows() && BowArrows.full(c)) {                                     // real arrows: the caps of docs/heroweapon/bow_arrows.md
+            c.say("Too many arrows in the air.");
+            return true;
+        }
         if (!c.pay(DrawMath.cost(f))) {
             c.say("The string goes slack: no magicules to make the arrow.");
             return true;
@@ -53,6 +58,7 @@ final class BowShots {
         BowFx.swing(c);
         Vec3 eye = c.eye();
         BowFx.sound(c, eye, SoundEvents.ARROW_SHOOT, 1.0f, 1.2f + 0.4f * (float) f);
+        if (HeroConfig.realArrows() && BowArrows.release(c, mode, f)) return true;               // the arrow is a real entity; false setting: the hitscan below, as before
         switch (mode) {
             case SNIPER -> sniper(c);
             case NET -> net(c);
@@ -86,7 +92,7 @@ final class BowShots {
     }
 
     // ================================================================ the plain arrow of light
-    private static double plainRaw(HeroCtx c, double f) {
+    static double plainRaw(HeroCtx c, double f) {
         long now = c.level.getGameTime();
         return DrawMath.raw(f, c.form.stat("attack_damage"), BowState.lawUp(c, now) ? BowNumbers.LAW_BONUS : 1.0, c.form.has(BowIds.PRIDE_ARROWS) ? BowNumbers.PRIDE_BONUS : 1.0);
     }
@@ -115,7 +121,7 @@ final class BowShots {
     }
 
     /** A hit with an arrow is a hit of the weapon: a point of mastery for the form and a little experience, as a melee blow would give. */
-    private static void reward(HeroCtx c, List<LivingEntity> struck) {
+    static void reward(HeroCtx c, List<LivingEntity> struck) {
         if (struck.isEmpty()) return;
         FormMastery.hit(c.player);
         HeroXp.gain(c.player, 1L);

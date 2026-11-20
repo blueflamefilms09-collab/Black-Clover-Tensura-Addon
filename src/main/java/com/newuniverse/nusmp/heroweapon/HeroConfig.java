@@ -20,7 +20,12 @@ public final class HeroConfig {
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
     public static final ModConfigSpec.BooleanValue TRACKER_SHOW_NAMES;
     public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN;
+    /** The Legendary Bow's real arrows (section [heroweapon.bow]): see docs/heroweapon/bow_arrows.md. */
+    public static final ModConfigSpec.BooleanValue BOW_REAL_ARROWS;
+    public static final ModConfigSpec.IntValue BOW_ARROWS_PER_PLAYER, BOW_ARROWS_GLOBAL;
+    public static final ModConfigSpec.DoubleValue BOW_MAGIC_SHARE_SCALE;
     public static final ModConfigSpec.DoubleValue WEAPON_EXP_MULTIPLIER, SHOCK_DAMAGE, KILL_EXP_SHARE, BOSS_KILL_EXP_FACTOR;
+    public static final ModConfigSpec.DoubleValue DURATION_SCALE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -79,6 +84,10 @@ public final class HeroConfig {
                 .define("abandonAllowed", true);
         TRACKER_SHOW_NAMES = b.comment("Weapon Tracker (/multiverse weapons): show the name of the player who holds a weapon. Off: the tracker still says which weapons are free or taken, but names a holder 'another player'.")
                 .define("trackerShowNames", true);
+        DURATION_SCALE = b.comment("Factor on how long the effects of the hero and vassal techniques last (buffs, debuffs, binds, marks, barriers, wards, fields, floats, fire). 2.0 = twice as long, "
+                        + "1.0 = exactly the old lengths, 0.25 = a quarter. Wind-ups, pulse intervals, parry windows and cooldowns are never changed by it. Hard control still obeys the balance law "
+                        + "(3 seconds on a player, 5 on a mob, 1 on a boss), no repeating task runs longer than 20 seconds and nothing lasts more than 20 minutes.")
+                .defineInRange("durationScale", 2.0, 0.25, 6.0);
         b.push("buff");
         BUFF_ENABLED = b.comment("3.55.0 master switch of the hero weapon buffs below. Off: every weapon behaves exactly as before 3.55.0.").define("enabled", true);
         BUFF_DAMAGE = b.comment("Factor on EVERY point of damage a bound wielder deals while their hero weapon is out (blows, techniques, arrows). Bosses still obey the boss damage cap.")
@@ -97,6 +106,16 @@ public final class HeroConfig {
         ANIME_TAKEN = b.comment("3.73.0: one more factor on all damage a bound wielder takes, on top of damageTakenFactor / shieldDamageTakenFactor (0.75 = a quarter less again; 1.0 = off).")
                 .defineInRange("animeDamageTakenFactor", 0.75, 0.0, 1.0);
         b.pop();
+        b.push("bow");
+        BOW_REAL_ARROWS = b.comment("The Legendary Bow looses REAL arrow entities (normal arrow physics, a physical hit plus a magic hit, a magic effect by bow form), also in Arrow Rain, the other rains and the Arrow Squall. Off: the old hitscan lines and instant rain waves, exactly as before.")
+                .define("realArrows", true);
+        BOW_ARROWS_PER_PLAYER = b.comment("The most hero arrows one wielder may have in the air or stuck at once; a shot over the cap does not leave the string.")
+                .defineInRange("maxArrowsPerPlayer", 24, 1, 128);
+        BOW_ARROWS_GLOBAL = b.comment("The most hero arrows the whole server may have at once.")
+                .defineInRange("maxArrowsGlobal", 256, 1, 2048);
+        BOW_MAGIC_SHARE_SCALE = b.comment("Factor on the magic hit of a hero arrow (1.0 = the shares of the form table; 0 = physical hit only).")
+                .defineInRange("magicShareScale", 1.0, 0.0, 2.0);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -113,6 +132,9 @@ public final class HeroConfig {
     }
 
     public static boolean enabled() { return get(ENABLED); }
+
+    /** The duration scale of the techniques ({@code heroweapon.durationScale}), or its default while the config is not loaded. */
+    public static double durationScale() { return get(DURATION_SCALE); }
 
     public static int maxBonds() { return get(MAX_BONDS); }
 
@@ -160,4 +182,13 @@ public final class HeroConfig {
     public static boolean abandonAllowed() { return get(ABANDON_ALLOWED); }
 
     public static boolean trackerShowNames() { return get(TRACKER_SHOW_NAMES); }
+
+    // ---- the Legendary Bow's real arrows
+    public static boolean realArrows() { return get(BOW_REAL_ARROWS); }
+
+    public static int bowArrowsPerPlayer() { return get(BOW_ARROWS_PER_PLAYER); }
+
+    public static int bowArrowsGlobal() { return get(BOW_ARROWS_GLOBAL); }
+
+    public static double bowMagicShareScale() { return get(BOW_MAGIC_SHARE_SCALE); }
 }

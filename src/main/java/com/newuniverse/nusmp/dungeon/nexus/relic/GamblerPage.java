@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.dungeon.nexus.relic;
 
+import com.newuniverse.nusmp.meteor.MeteorFall;
+import com.newuniverse.nusmp.meteor.MeteorWiring;
 import com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment;
 import com.newuniverse.nusmp.particle.rukh.RukhFx;
 import com.newuniverse.nusmp.balance.BalanceLaw;
@@ -185,8 +187,7 @@ final class GamblerPage {
     private static void boneMeteor(ServerPlayer p, ServerLevel level, PageSpell s, Vec3 point) {
         Vec3 sky = point.add((p.getRandom().nextDouble() - 0.5) * 6.0, 26.0, (p.getRandom().nextDouble() - 0.5) * 6.0);
         VfxSpawn.send(level, VfxShape.BONE_FX2, point.add(0, 0.1, 0), point, BONE, s.telegraph + 6, (float) s.size);
-        VfxSpawn.send(level, VfxShape.DEMON_METEOR, sky, point, BONE, s.telegraph, 2.0f);
-        SpellRuntime.later(level, s.telegraph, () -> {
+        Runnable land = () -> {
             if (!here(p, level)) return;
             VfxSpawn.send(level, VfxShape.BONE_FX3, point, point, BONE, 16, 1.2f);
             RukhFx.spray(level, Alignment.LIGHT, point.x, point.y + 0.5, point.z, 3, s.size * 0.3, 0.3, s.size * 0.3, 0.0);
@@ -197,6 +198,11 @@ final class GamblerPage {
                 hit(p, t, s.raw);
                 t.knockback(0.8, point.x - t.getX(), point.z - t.getZ());
             }
+        };
+        // meteor.realMeteors (docs/meteor_fall.md): a real bone-dark meteor falls and lands when the telegraph ends; off or refused = the old sky streak and the old delayed task
+        MeteorFall.dropOr(p, point, MeteorWiring.spec("gambler.meteor_of_bones").radius(s.size).fall(s.telegraph).onImpact((lvl, at, who) -> land.run()), () -> {
+            VfxSpawn.send(level, VfxShape.DEMON_METEOR, sky, point, BONE, s.telegraph, 2.0f);
+            SpellRuntime.later(level, s.telegraph, land);
         });
     }
 

@@ -29,6 +29,7 @@ public final class HeroCore {
         if (done) return;
         done = true;
         modContainer.registerConfig(ModConfig.Type.SERVER, HeroConfig.SPEC, "nusmp-heroweapon-server.toml");
+        com.newuniverse.nusmp.heroweapon.skill.Dur.source(HeroConfig::durationScale);          // the one reader of heroweapon.durationScale (the client reads the synced copy)
         modBus.addListener(HeroNet::register);
         HeroBondEvents.register(NeoForge.EVENT_BUS);
         HeroLoanEvents.register(NeoForge.EVENT_BUS);
@@ -37,6 +38,7 @@ public final class HeroCore {
         HeroRuleEvents.register(NeoForge.EVENT_BUS);
         HeroBondSelfTests.register();                    // keys hero.bond, hero.use, hero.rules (the smoke test expects the prefix "hero")
         HeroUseSelfTests.register();
+        com.newuniverse.nusmp.heroweapon.skill.HeroDurSelfTests.register();              // key hero.durations
         HeroRulesSelfTests.register();
         com.newuniverse.nusmp.heroweapon.tracker.WeaponTrackerBoot.init(modBus);       // the Weapon Tracker: /multiverse weapons, two payloads, self-tests weapons.tracker.*
     }
