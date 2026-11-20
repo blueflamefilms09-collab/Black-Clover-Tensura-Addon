@@ -12,7 +12,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +37,7 @@ import java.util.List;
  * Not creative-only by accident: like the Valkyrie lance they are in the creative tab and nowhere else (no loot, no recipe).
  */
 public class SinWeaponItem extends SwordItem {
-    private static final String K_COVET = "nusmp_sin_covet";
+    private static final String K_COVET = "nusmp_sin_covet", K_PASSIVE = "nusmp_sin_passive", K_ABILITY = "nusmp_sin_cd_";
     private final SinRules.Kind kind;
 
     public SinWeaponItem(SinRules.Kind kind) {
@@ -55,17 +57,66 @@ public class SinWeaponItem extends SwordItem {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean r = super.hurtEnemy(stack, target, attacker);
         if (!(attacker instanceof ServerPlayer sp) || sp.level().isClientSide) return r;
+        boolean passive = SinWeaponConfig.abilities() && SinWeaponConfig.techniques() && SinSkillService.mayUse(sp, stack);     // the passive of the owner's weapon (docs/sin_weapons_abilities.md)
+        boolean atTarget = false, shined = false, fed = false;                                  // which picture the passive's proc gets
         switch (kind) {
             case SLOTH -> {
-                if (SinWeaponConfig.techniques()) Fx.addEffect(target, "minecraft:slowness", SinRules.HIT_SLOW_TICKS, SinRules.HIT_SLOW_AMP);
+                if (SinWeaponConfig.techniques()) {
+                    boolean slowed = passive && target.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);     // Sinking Weight: slowed already = a deeper, longer slow
+                    Fx.addEffect(target, "minecraft:slowness", SinRules.hitSlowTicks(slowed), SinRules.hitSlowAmp(slowed));
+                    atTarget = slowed;
+                }
             }
             case ENVY -> {
                 if (SinWeaponConfig.covet()) covet(sp, target);
+                if (passive) {                                                                  // Glaring Eyes
+                    Fx.addEffect(target, "minecraft:glowing", SinRules.GLARE_TICKS, 0);
+                    atTarget = true;
+                }
             }
-            case CHAKRAMS -> GreedForms.offBlow(sp, target);                                  // the twin blow: empty off hand, 60%, one per 12 ticks, checked there
-            default -> { }
+            case VANITY -> {
+                if (passive && passiveReady(sp)) {                                              // Vain Shine
+                    Fx.shield(sp, SinRules.SHINE_ABSORB, SinRules.SHINE_TICKS);
+                    shined = true;
+                }
+            }
+            case CHAKRAMS -> {
+                GreedForms.offBlow(sp, target);                                                 // the twin blow: empty off hand, 60%, one per 12 ticks, checked there
+                if (passive && passiveReady(sp)) {                                              // Hungry Rings
+                    Fx.heal(sp, SinRules.HUNGRY_HEAL);
+                    fed = true;
+                }
+            }
+            case HOLY -> {
+                if (passive && target.getType().is(EntityTypeTags.UNDEAD)) {                    // Smiting Light
+                    target.setRemainingFireTicks(SinRules.SMITE_FIRE_TICKS);
+                    atTarget = true;
+                }
+            }
+        }
+        if (SinWeaponConfig.themedVfx() && SinWeaponConfig.techniques()) {                      // a plain hit: one small flash and at most one proc, two packets at most
+            ServerLevel lv = (ServerLevel) sp.level();
+            Vec3 at = SinFx.chest(target);
+            if (shined) {
+                SinFx.send(lv, kind, SinVfx.HIT, at, at);
+                SinFx.send(lv, kind, SinVfx.PASSIVE, SinFx.chest(sp), SinFx.chest(sp));
+            } else if (fed) {
+                SinFx.send(lv, kind, SinVfx.HIT, at, at);
+                SinFx.send(lv, kind, SinVfx.PASSIVE, at, SinFx.chest(sp));
+            } else {
+                SinFx.send(lv, kind, atTarget ? SinVfx.PASSIVE : SinVfx.HIT, at, at);
+            }
         }
         return r;
+    }
+
+    /** The passive's own clock (one number in the wielder's persistent data): true, and the clock is set, when the kind's gap has passed. */
+    private boolean passiveReady(ServerPlayer p) {
+        int gap = SinRules.passiveGap(kind);
+        long now = p.level().getGameTime();
+        if (!SinRules.clockReady(now, p.getPersistentData().getLong(K_PASSIVE), gap)) return false;
+        p.getPersistentData().putLong(K_PASSIVE, now + gap);
+        return true;
     }
 
     /** Takes one beneficial effect from the target and lends it to the wielder (at most 10 s, at most one theft per 2 s). */
@@ -81,7 +132,8 @@ public class SinWeaponItem extends SwordItem {
         p.getPersistentData().putLong(K_COVET, now + SinRules.COVET_GAP_TICKS);
         target.removeEffect(taken.getEffect());
         p.addEffect(new MobEffectInstance(taken.getEffect(), SinRules.covetTicks(taken.getDuration()), Math.min(taken.getAmplifier(), 4)));
-        spray((ServerLevel) p.level(), target.position().add(0, target.getBbHeight() * 0.6, 0), SinRules.PARTICLES_PER_TARGET, FxTone.LIGHT);
+        if (SinWeaponConfig.themedVfx() && SinWeaponConfig.techniques()) SinFx.send((ServerLevel) p.level(), SinRules.Kind.ENVY, SinVfx.STEAL, SinFx.chest(target), SinFx.chest(p));       // a thread from the victim to the wielder
+        else spray((ServerLevel) p.level(), target.position().add(0, target.getBbHeight() * 0.6, 0), SinRules.PARTICLES_PER_TARGET, FxTone.LIGHT);
     }
 
     // ---------------------------------------------------------------- the right click
@@ -131,8 +183,13 @@ public class SinWeaponItem extends SwordItem {
             hit.clear();
             hit.add(first);
         }
-        trail(level, eye, look);
+        boolean themed = SinWeaponConfig.themedVfx();
+        if (themed) {                                                                           // one cast picture and a small puff for players who hide it; the old trail otherwise
+            SinFx.cast(level, p, kind, SinVfx.TECH, kind == SinRules.Kind.SLOTH || kind == SinRules.Kind.CHAKRAMS, kind.reach);
+            spray(level, eye.add(look), 3, FxTone.DARK);
+        } else trail(level, eye, look);
         if (hit.isEmpty()) return kind != SinRules.Kind.SLOTH && kind != SinRules.Kind.CHAKRAMS;     // a shot or a thrust at nothing still costs; a slam with no one near does not
+        int shown = 0;
         for (LivingEntity t : hit) {
             if (kind == SinRules.Kind.SLOTH) {
                 Fx.addEffect(t, "minecraft:slowness", SinRules.WEIGHT_TICKS, SinRules.WEIGHT_SLOW_AMP);
@@ -141,7 +198,7 @@ public class SinWeaponItem extends SwordItem {
                 boolean extra = kind == SinRules.Kind.HOLY && t.getType().is(EntityTypeTags.UNDEAD);
                 Fx.damage(p, t, SinRules.techniqueDamage(kind.techDamage, SinWeaponConfig.damagePercent(), extra), "minecraft:player_attack");
             }
-            spray(level, t.position().add(0, t.getBbHeight() * 0.55, 0), SinRules.PARTICLES_PER_TARGET, FxTone.DARK);
+            hitFx(level, t, themed, shown++);
         }
         return true;
     }
@@ -167,12 +224,154 @@ public class SinWeaponItem extends SwordItem {
         com.newuniverse.nusmp.particle.fx.Fx.spray(level, FxThemes.ITEM_ROTDOOM, tone, at.x, at.y, at.z, count, 0.15, 0.15, 0.15, 0.03);
     }
 
+    /** The picture of one creature hurt: a small themed flash (at most {@link SinRules#HIT_FX_MAX} per use) or, with the setting themedVfx off, the old puff. */
+    private void hitFx(ServerLevel level, LivingEntity t, boolean themed, int shown) {
+        Vec3 at = t.position().add(0, t.getBbHeight() * 0.55, 0);
+        if (!themed) spray(level, at, SinRules.PARTICLES_PER_TARGET, FxTone.DARK);
+        else if (shown < SinRules.HIT_FX_MAX) SinFx.send(level, kind, SinVfx.HIT, at, at);
+    }
+
+    // ---------------------------------------------------------------- the extra techniques (skill modes 3 and 4, docs/sin_weapons_abilities.md)
+    /** The persistent-data key of one extra technique's own clock (the self-test resets it). */
+    static String abilityKey(SinRules.Kind k, int slot) { return K_ABILITY + k.id + "_" + slot; }
+
+    /**
+     * An extra technique as the skill's modes ask for it: its OWN cooldown (a clock in the wielder's persistent data, the item cooldown of the right click is not touched), the setting {@code abilities} and the
+     * owner check are the caller's and this method's. Returns whether it ran (and so started its cooldown). One box query, at most {@link SinRules.Ability#cap} creatures.
+     */
+    public boolean ability(ServerPlayer p, int slot) {
+        SinRules.Ability a = SinRules.ability(kind, slot);
+        if (a == null || !SinWeaponConfig.techniques() || !SinWeaponConfig.abilities() || p.isSpectator()) return false;
+        long now = p.level().getGameTime();
+        String key = abilityKey(kind, slot);
+        long ready = p.getPersistentData().getLong(key);
+        if (!SinRules.clockReady(now, ready, a.cooldown)) {
+            p.displayClientMessage(Component.translatableWithFallback("sinweapons.ability.wait", "%s is not ready yet (%s s).", Component.translatableWithFallback(a.key(), a.english),
+                    (SinRules.ticksLeft(now, ready, a.cooldown) + 19) / 20).withStyle(ChatFormatting.GRAY), true);
+            return false;
+        }
+        if (!runAbility(p, a)) return false;
+        p.getPersistentData().putLong(key, now + a.cooldown);
+        return true;
+    }
+
+    /** Runs one extra technique on the server (no cooldown check). Returns whether it did anything that costs its cooldown. */
+    boolean runAbility(ServerPlayer p, SinRules.Ability a) {
+        ServerLevel level = p.serverLevel();
+        Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
+        boolean area = a.shape == SinRules.Shape.AREA;
+        List<LivingEntity> foes = Fx.foesAround(p, area ? a.reach : a.reach + 1.0);
+        Vec3 right = look.cross(new Vec3(0, 1, 0));
+        right = right.lengthSqr() < 1.0e-6 ? new Vec3(1, 0, 0) : right.normalize();
+        Vec3 vert = right.cross(look).normalize();
+        List<LivingEntity> hit = new ArrayList<>();
+        for (LivingEntity t : foes) {
+            if (hit.size() >= Math.min(a.cap, 24)) break;
+            Vec3 c = t.getBoundingBox().getCenter().subtract(eye);
+            double lateral = c.dot(right), vertical = c.dot(vert);
+            if (SinRules.inAbility(a, c.dot(look), Math.sqrt(lateral * lateral + vertical * vertical), c.length(), t.getBbWidth() * 0.5)) hit.add(t);
+        }
+        if (hit.isEmpty() && !a.emptyCosts) return false;                                       // a slam with no one near costs nothing and shows nothing
+        boolean themed = SinWeaponConfig.themedVfx();
+        if (themed) {                                                                           // one cast picture and a small puff for players who hide it
+            SinFx.cast(level, p, kind, SinVfx.styleOfSlot(a.slot), area, a.reach);
+            spray(level, area ? p.position().add(0, 1.0, 0) : eye.add(look), 3, FxTone.DARK);
+        } else spray(level, area ? p.position().add(0, 1.0, 0) : eye.add(look), 6, FxTone.DARK);
+        if (a == SinRules.Ability.HOLY_PURGE) cleanse(p);
+        if (a == SinRules.Ability.HOLY_GROUND) {
+            Fx.heal(p, SinRules.GROUND_HEAL);
+            Fx.addEffect(p, "minecraft:regeneration", SinRules.GROUND_REGEN_TICKS, 0);
+        }
+        int stolen = 0, shown = 0;
+        for (LivingEntity t : hit) {
+            boolean undeadHoly = kind == SinRules.Kind.HOLY && t.getType().is(EntityTypeTags.UNDEAD);
+            switch (a) {
+                case SLOTH_STILLNESS -> Fx.addEffect(t, "minecraft:slowness", SinRules.STILL_TICKS, SinRules.STILL_AMP);
+                case SLOTH_GRAVITY -> {
+                    abilityDamage(p, t, a, false);
+                    shove(t, 0.0, -SinRules.push(SinRules.GRAVITY_DOWN), 0.0);
+                }
+                case ENVY_EYES -> {
+                    Fx.addEffect(t, "minecraft:glowing", SinRules.EYES_TICKS, 0);
+                    Fx.addEffect(t, "minecraft:weakness", SinRules.EYES_TICKS, 0);
+                    stolen += steal(p, t, SinRules.EYES_STEAL_MAX - stolen);
+                }
+                case ENVY_LIFE, VANITY_REFLECT, CHAKRAMS_THROW -> abilityDamage(p, t, a, false);
+                case VANITY_NARCISSUS -> {
+                    Fx.addEffect(t, "minecraft:weakness", SinRules.NARCISSUS_WEAK_TICKS, 1);
+                    Fx.addEffect(t, "minecraft:slowness", SinRules.NARCISSUS_SLOW_TICKS, SinRules.NARCISSUS_SLOW_AMP);
+                }
+                case CHAKRAMS_BIND -> {
+                    Fx.addEffect(t, "minecraft:slowness", SinRules.BIND_TICKS, 1);
+                    Fx.addEffect(t, "minecraft:weakness", SinRules.BIND_TICKS, 0);
+                    Vec3 to = p.position().subtract(t.position());
+                    Vec3 pull = to.lengthSqr() < 1.0e-6 ? Vec3.ZERO : to.normalize().scale(SinRules.push(SinRules.BIND_PULL));
+                    shove(t, pull.x, 0.1, pull.z);
+                }
+                case HOLY_PURGE -> {
+                    if (undeadHoly) abilityDamage(p, t, a, true);
+                    else Fx.addEffect(t, "minecraft:glowing", SinRules.PURGE_GLOW_TICKS, 0);
+                }
+                case HOLY_GROUND -> {
+                    if (undeadHoly) abilityDamage(p, t, a, true);
+                    Vec3 away = t.position().subtract(p.position());
+                    Vec3 push = away.lengthSqr() < 1.0e-6 ? Vec3.ZERO : away.normalize().scale(SinRules.push(SinRules.GROUND_PUSH));
+                    shove(t, push.x, 0.3, push.z);
+                }
+            }
+            hitFx(level, t, themed, shown++);
+        }
+        if (a == SinRules.Ability.ENVY_LIFE) Fx.heal(p, SinRules.lifeHeal(hit.size()));          // Stolen Life: health for every foe it drained
+        return true;
+    }
+
+    /** The damage of an extra technique, only through the balance law. */
+    private static void abilityDamage(ServerPlayer p, LivingEntity t, SinRules.Ability a, boolean undeadHoly) {
+        if (a.damage > 0f) Fx.damage(p, t, SinRules.abilityDamage(a, SinWeaponConfig.damagePercent(), undeadHoly), "minecraft:player_attack");
+    }
+
+    private static void shove(LivingEntity t, double x, double y, double z) {
+        t.push(x, y, z);
+        t.hurtMarked = true;                                                                    // the client is told its new motion, as for a knock-back
+    }
+
+    /** Takes up to {@code room} beneficial effects from {@code t} and lends them to the wielder (each at most 10 s). Returns how many. */
+    private static int steal(ServerPlayer p, LivingEntity t, int room) {
+        int n = 0;
+        for (MobEffectInstance e : new ArrayList<>(t.getActiveEffects())) {
+            if (n >= room) break;
+            if (!e.getEffect().value().isBeneficial()) continue;
+            t.removeEffect(e.getEffect());
+            p.addEffect(new MobEffectInstance(e.getEffect(), SinRules.covetTicks(e.getDuration()), Math.min(e.getAmplifier(), 4)));
+            n++;
+        }
+        return n;
+    }
+
+    /** Purge: removes up to {@link SinRules#CLEANSE_MAX} harmful effects from the wielder. */
+    private static void cleanse(ServerPlayer p) {
+        int n = 0;
+        for (MobEffectInstance e : new ArrayList<>(p.getActiveEffects())) {
+            if (n >= SinRules.CLEANSE_MAX) break;
+            if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
+                p.removeEffect(e.getEffect());
+                n++;
+            }
+        }
+    }
+
     // ---------------------------------------------------------------- text
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
         lines.add(Component.translatableWithFallback("item.anime_multiverse." + kind.id + ".lore", loreFallback()).withStyle(ChatFormatting.GRAY));
         lines.add(Component.translatableWithFallback("sinweapons.tooltip.technique", "Right click: %s (cooldown %s s)",
                 Component.translatableWithFallback(kind.techniqueKey(), kind.technique), kind.cooldown / 20).withStyle(ChatFormatting.DARK_GRAY));
+        SinRules.Ability a1 = SinRules.ability(kind, 1), a2 = SinRules.ability(kind, 2);
+        if (a1 != null && a2 != null) {                                                        // the extra techniques are the skill's modes 3 and 4; the passive works on every plain hit of the owner
+            lines.add(Component.translatableWithFallback("sinweapons.tooltip.abilities", "Skill modes: %s (%s s), %s (%s s)", Component.translatableWithFallback(a1.key(), a1.english), a1.cooldown / 20,
+                    Component.translatableWithFallback(a2.key(), a2.english), a2.cooldown / 20).withStyle(ChatFormatting.DARK_GRAY));
+            lines.add(Component.translatableWithFallback("sinweapons.tooltip.passive", "Passive: %s", Component.translatableWithFallback(SinRules.passiveKey(kind), SinRules.passiveName(kind))).withStyle(ChatFormatting.DARK_GRAY));
+        }
         if (kind == SinRules.Kind.CHAKRAMS) lines.add(Component.translatableWithFallback("greed.tooltip.twin", "Twin form: one in each hand. With the off hand empty every blow is followed by a second one from it (60%).").withStyle(ChatFormatting.DARK_GRAY));
     }
 

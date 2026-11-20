@@ -153,6 +153,24 @@ public final class SinSkillService {
         w.fire(p);
     }
 
+    /** The extra techniques (modes 3 and 4, slot 1 and 2): the weapon of this kind in the main hand, the owner check, then its own technique with its own cooldown ({@link SinWeaponItem#ability}). */
+    public static void ability(ServerPlayer p, SinRules.Kind k, int slot) {
+        ItemStack s = p.getMainHandItem();
+        if (!(s.getItem() instanceof SinWeaponItem w) || w.kind() != k) {
+            say(p, "sinskill.msg.hold", "Hold %s in your main hand.", ChatFormatting.GRAY, Component.translatableWithFallback("item.anime_multiverse." + k.id, k.english));
+            return;
+        }
+        if (!SinWeaponConfig.abilities()) {
+            say(p, "sinskill.msg.abilities_off", "The extra techniques are switched off on this server.", ChatFormatting.GRAY);
+            return;
+        }
+        if (!mayUse(p, s)) {
+            refuse(p, w);
+            return;
+        }
+        w.ability(p, slot);
+    }
+
     /** Manifest / Store: see {@link SinSkillRules#manifest}. Binds a stack the player holds first, so a /give'd weapon in the hand is theirs before it is stored. */
     public static void manifest(ServerPlayer p, SinRules.Kind k) {
         scan(p);

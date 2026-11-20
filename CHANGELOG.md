@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.38.0] — The other five Berserk weapons get more abilities and their own effects
+Owner request: fix the weapon effects and give the Berserk weapons more abilities, like the first one.
+- NEW: each of the five other sin weapons has 2 extra techniques and 1 passive, added as Lord-skill modes 3 and 4 (the old modes keep their order). Sloth Axe: Stillness, Crushing Gravity, Sinking Weight. Envy Gunblade: Green Eyes, Stolen Life, Glaring Eyes. Vanity Spear: Reflected Thrust, Narcissus, Vain Shine. Chakrams: Thrown Rings, Binding Embrace, Hungry Rings. Seifort Holy Sword: Purge, Holy Ground, Smiting Light.
+- NEW: a themed effect per weapon and per technique (new shape `SIN_WEAPON`, one client layer), a small matching flash on a plain hit, and a thread from the victim to you when Envy's Covet steals.
+- REPLACED (settings: server `abilities` and `themedVfx` in `nusmp-sinweapons-server.toml`, client `sinweapons.classicVfx`; turning them off restores the old behaviour): the old puff effect, which could send up to 30 packets per use, is now at most 6.
+- KEPT: every old technique, cooldown, plain-hit rule, Covet, the twin off-hand blow, Manifest/Store and every old lang key.
+- Cost: per use one box query (at most 24 seen, 8 hit), no spawned entities, at most 6 effect packets through the perf budget; client at most 400 vertices per effect. Docs: docs/sin_weapons_abilities.md.
+- Honest caveats: not played or seen in a game (look checked in the headless preview only); technique names and numbers are first guesses, not canon; the Java was not compiled before CI.
+
 ## [4.37.2] — The Holy Calling Gem is a dungeon drop only
 - REPLACED: crafting the Calling Gem is switched off (the recipe file stays with a `neoforge:false` condition; a data pack copy without that line brings it back). KEPT: the Gem Fragment and every Vassal Seal recipe, and how the gem works.
 - NEW: 10% chance of one Calling Gem in each Dungeon Relic Vault chest.

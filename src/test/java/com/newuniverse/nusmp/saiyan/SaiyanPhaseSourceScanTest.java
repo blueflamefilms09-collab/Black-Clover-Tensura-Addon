@@ -77,7 +77,7 @@ class SaiyanPhaseSourceScanTest {
     @Test
     void theShapeIsAppendedAndTheSmokePrefixesAreListed() throws IOException {
         String shape = read("src/main/java/com/newuniverse/nusmp/vfx/VfxShape.java");
-        assertTrue(shape.indexOf("GIANT_AVATAR;") > shape.indexOf("SKILL_SIGIL,"), "GIANT_AVATAR is appended after SKILL_SIGIL");
+        assertTrue(shape.indexOf("    GIANT_AVATAR,") > shape.indexOf("SKILL_SIGIL,"), "GIANT_AVATAR is appended after SKILL_SIGIL");
         assertTrue(read("src/main/java/com/newuniverse/nusmp/vfx/client/VfxManager.java").contains("GiantAvatarLayer"), "the layer is registered");
         assertTrue(read(".github/workflows/smoke.yml").contains("saiyan.kivfx,db.phase2,saiyan.t3,"), "the self-test prefixes sit right after saiyan.kivfx");
         String boot = read(DIR + "SaiyanBoot.java");

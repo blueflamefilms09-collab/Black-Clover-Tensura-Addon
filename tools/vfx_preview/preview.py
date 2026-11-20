@@ -162,6 +162,11 @@ def build(layers):
         os.makedirs(sk_dst, exist_ok=True)
         for name in ("SolomonRules.java", "JudgmentRules.java", "IsrafilRules.java", "JibrilRules.java", "HerculesRules.java"):      # JudgmentRules lists every Veldanava spec
             shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "entity", "veldanava", "skills", name), sk_dst)
+    if any(l.split(".")[-1] == "SinWeaponLayer" for l in layers):             # Berserk of Gluttony weapons: the pure rules and the power encoding the layer reads (no game type in either)
+        sw_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "sinweapons")
+        os.makedirs(sw_dst, exist_ok=True)
+        for name in ("SinRules.java", "SinVfx.java"):
+            shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "sinweapons", name), sw_dst)
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)

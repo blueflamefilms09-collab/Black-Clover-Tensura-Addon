@@ -538,7 +538,11 @@ public enum VfxShape {
     ANIME2_GRIMOIRE,
     // ---- Dragon Ball rework (Giant Ki Avatar), appended after SKILL_SIGIL: a translucent silver Ki giant that follows the player (from = the feet, power = its height in blocks, duration = how long it stands).
     // Drawn by vfx.client.layer.GiantAvatarLayer; sent by saiyan.SaiyanTechniques4. Other workers append their shapes after this block.
-    GIANT_AVATAR;
+    GIANT_AVATAR,
+    // ---- Berserk of Gluttony weapons (docs/sin_weapons_abilities.md), appended after GIANT_AVATAR: ONE shape for the Black Axe of Sloth, Gunblade of Envy, Spear of Vanity, Chakrams and the Seifort Holy Sword, sent by
+    // sinweapons.SinFx, drawn by vfx.client.layer.SinWeaponLayer. power = weapon * 8 + style + 1 (sinweapons.SinVfx: weapon = SinRules.Kind ordinal, style 0 technique, 1 and 2 the extra techniques, 3 a plain hit,
+    // 4 the passive, 5 Covet's thread); from = the wielder's chest (areas: centre, lines: the hand), to = the aim (areas: = from). The client setting sinweapons.classicVfx draws nothing for it.
+    SIN_WEAPON;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

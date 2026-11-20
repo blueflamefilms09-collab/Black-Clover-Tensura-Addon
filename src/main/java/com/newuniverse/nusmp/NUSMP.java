@@ -237,6 +237,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.greed.GreedClient.init(modEventBus);      // 3.85.0 Black Sword Greed: the form key, the starvation vignette and the HUD
             com.newuniverse.nusmp.vfx.client.GreedVfxConfig.init(modEventBus, modContainer);      // VFX wave 2: greed.classicVfx / devil.classicVfx (nusmp-greed-devil-vfx-client.toml): the old particles only
+            com.newuniverse.nusmp.vfx.client.SinWeaponVfxConfig.init(modEventBus, modContainer);    // Berserk weapons: sinweapons.classicVfx (nusmp-sinweapons-vfx-client.toml): hides the drawn effects of the five weapons
             com.newuniverse.nusmp.vfx.client.SkillAnimeVfxConfig.init(modEventBus, modContainer);  // VFX wave 3: skills.classicVfx (nusmp-skill-anime-vfx-client.toml): the old skill effects only
             com.newuniverse.nusmp.client.attune.AttuneClient.init(modEventBus);    // meditation attunement: the meditation screen (opened by /meditate)
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml

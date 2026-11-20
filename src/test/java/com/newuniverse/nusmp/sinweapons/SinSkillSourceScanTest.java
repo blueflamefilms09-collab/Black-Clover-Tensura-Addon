@@ -85,7 +85,7 @@ class SinSkillSourceScanTest {
         }
         String c = code(cls);
         assertTrue(c.contains("super(SkillType.ULTIMATE, skillText(kind), true)") && c.contains("ultimateClass() { return UltimateClass.LORD; }"), "an Ultimate of the Lord class, like Greed's");
-        assertTrue(c.contains("getModes(ManasSkillInstance instance) { return IDS.length; }") && c.contains("{\"technique\", \"manifest\"}"), "two modes");
+        assertTrue(c.contains("getModes(ManasSkillInstance instance) { return IDS.length; }") && c.contains("{\"technique\", \"manifest\", \"ability_a\", \"ability_b\"}"), "four modes: the two old ones first, the two extra techniques appended");
     }
 
     @Test

@@ -1,0 +1,1609 @@
+{
+ "_comment": "Berserk of Gluttony weapons (SinWeaponLayer): ONE shape SIN_WEAPON, power = weapon*8 + style + 1 (sinweapons.SinVfx). One scene per weapon and picture; figures are the wielder at the origin and a foe (1.8 tall). Colour = the weapon's own (SinRules.Kind.rgb). docs/sin_weapons_abilities.md.",
+ "sin_sloth_dead_weight": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 1,
+  "duration": 22,
+  "color": "FF7A3FD1",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_sloth_stillness": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 2,
+  "duration": 22,
+  "color": "FF7A3FD1",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_sloth_crushing_gravity": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 3,
+  "duration": 22,
+  "color": "FF7A3FD1",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_sloth_hit": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 4,
+  "duration": 10,
+  "color": "FF7A3FD1",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_sloth_sinking_weight": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 5,
+  "duration": 10,
+  "color": "FF7A3FD1",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_green_eyed_shot": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   28
+  ],
+  "power": 9,
+  "duration": 22,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -9.2,
+   3.8,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   12.6
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    28.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_green_eyes": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   20
+  ],
+  "power": 10,
+  "duration": 22,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -8.0,
+   3.4,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   9.0
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    20.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_stolen_life": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 11,
+  "duration": 22,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_hit": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 12,
+  "duration": 10,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_glaring_eyes": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 13,
+  "duration": 10,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_envy_covet": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   3.0
+  ],
+  "to": [
+   0,
+   1.1,
+   0.1
+  ],
+  "power": 14,
+  "duration": 14,
+  "color": "FF2FBF5A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4,
+   2.0,
+   -1.5
+  ],
+  "target": [
+   0,
+   1.0,
+   1.5
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   9
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    3.0,
+    1.8
+   ]
+  ]
+ },
+ "sin_vanity_vain_thrust": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   8
+  ],
+  "power": 17,
+  "duration": 22,
+  "color": "FFD64FB0",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6.2,
+   2.8,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   3.6
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_vanity_reflected_thrust": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   8
+  ],
+  "power": 18,
+  "duration": 22,
+  "color": "FFD64FB0",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6.2,
+   2.8,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   3.6
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_vanity_narcissus": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   8
+  ],
+  "power": 19,
+  "duration": 22,
+  "color": "FFD64FB0",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6.2,
+   2.8,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   3.6
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    8.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_vanity_hit": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 20,
+  "duration": 10,
+  "color": "FFD64FB0",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_vanity_vain_shine": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.1,
+   0
+  ],
+  "to": [
+   0,
+   1.1,
+   0
+  ],
+  "power": 21,
+  "duration": 10,
+  "color": "FFD64FB0",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.4,
+   1.7,
+   -2.6
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_chakrams_spinning_ring": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 25,
+  "duration": 22,
+  "color": "FFE23B4B",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_chakrams_thrown_rings": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   14
+  ],
+  "power": 26,
+  "duration": 22,
+  "color": "FFE23B4B",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -7.1,
+   3.1,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   6.3
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_chakrams_binding_embrace": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 27,
+  "duration": 22,
+  "color": "FFE23B4B",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_chakrams_hit": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 28,
+  "duration": 10,
+  "color": "FFE23B4B",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_chakrams_hungry_rings": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   3.0
+  ],
+  "to": [
+   0,
+   1.1,
+   0.1
+  ],
+  "power": 29,
+  "duration": 10,
+  "color": "FFE23B4B",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4,
+   2.0,
+   -1.5
+  ],
+  "target": [
+   0,
+   1.0,
+   1.5
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   9
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    3.0,
+    1.8
+   ]
+  ]
+ },
+ "sin_holy_grand_cross": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.4,
+   0.5
+  ],
+  "to": [
+   0,
+   1.4,
+   12
+  ],
+  "power": 33,
+  "duration": 22,
+  "color": "FFE8B98A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -6.8,
+   3.0,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   5.4
+  ],
+  "ages": [
+   2,
+   4,
+   7,
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12.5,
+    1.8
+   ]
+  ]
+ },
+ "sin_holy_purge": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 34,
+  "duration": 22,
+  "color": "FFE8B98A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_holy_holy_ground": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   0.05,
+   0
+  ],
+  "power": 35,
+  "duration": 22,
+  "color": "FFE8B98A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -4.5,
+   3.2,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    2.2,
+    0,
+    1.6,
+    1.8
+   ],
+   [
+    -2.4,
+    0,
+    2.4,
+    1.8
+   ]
+  ]
+ },
+ "sin_holy_hit": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 36,
+  "duration": 10,
+  "color": "FFE8B98A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "sin_holy_smiting_light": {
+  "layer": "SinWeaponLayer",
+  "shape": "SIN_WEAPON",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1.0,
+   0
+  ],
+  "power": 37,
+  "duration": 10,
+  "color": "FFE8B98A",
+  "sky": [
+   0.5,
+   0.52,
+   0.6
+  ],
+  "horizon": [
+   0.82,
+   0.78,
+   0.74
+  ],
+  "floor": [
+   0.4,
+   0.37,
+   0.33
+  ],
+  "cam": [
+   -2.2,
+   1.6,
+   -2.4
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

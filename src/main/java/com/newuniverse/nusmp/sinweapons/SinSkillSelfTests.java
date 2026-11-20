@@ -48,7 +48,7 @@ public final class SinSkillSelfTests {
             ManasSkill skill = SkillAPI.getSkillRegistry().get(id);
             if (!(skill instanceof SinWeaponSkill s) || s.sinKind() != k) return Result.fail(id + " is not the registered skill of " + k.id);
             if (s.ultimateClass() != UltimateClass.LORD) return Result.fail(id + " is not a Lord class Ultimate");
-            if (s.getModes(s.createDefaultInstance()) != 2) return Result.fail(id + " has not two modes");
+            if (s.getModes(s.createDefaultInstance()) != 4) return Result.fail(id + " has not four modes (technique, manifest, two extra techniques)");
         }
         double y = level.getMaxBuildHeight() - 40;
         ServerPlayer fake = SelfTests.standIn(level, "berserk_skills", 0.5, y, 0.5);
@@ -96,6 +96,13 @@ public final class SinSkillSelfTests {
             SinSkillService.technique(fake, sloth);
             if (dummy.getActiveEffects().isEmpty()) return Result.fail("the Technique mode did not slow the zombie ahead");
             if (!fake.getCooldowns().isOnCooldown(SinWeaponBoot.SLOTH.get())) return Result.fail("the Technique mode did not pay the weapon's cooldown");
+            // the first extra technique (mode 3, Stillness): it freezes the zombie ahead, runs on its own clock and not twice in a row
+            dummy.removeAllEffects();
+            SinSkillService.ability(fake, sloth, 1);
+            if (dummy.getActiveEffects().isEmpty()) return Result.fail("the extra technique Stillness did not freeze the zombie ahead");
+            dummy.removeAllEffects();
+            SinSkillService.ability(fake, sloth, 1);
+            if (!dummy.getActiveEffects().isEmpty()) return Result.fail("Stillness ran twice inside its own cooldown");
             dummy.discard();
 
             // Manifest / Store: the held bound weapon is stored (stack removed), the cooldown holds the next forge, then one bound weapon is forged and not a second
@@ -113,8 +120,8 @@ public final class SinSkillSelfTests {
             inv.setItem(13, forged);
             SinSkillService.manifest(fake, sloth);
             if (count(inv, sloth) != 1) return Result.fail("Manifest forged a second weapon while one was carried");
-            return Result.ok("five Ultimate skills registered with two modes, an unbound weapon binds once and gives its skill, a foreign stack is untouched, the technique gate follows soulBound=" + bound
-                    + ", Technique fires like the right click, Manifest stores, waits and forges one bound weapon");
+            return Result.ok("five Ultimate skills registered with four modes, an unbound weapon binds once and gives its skill, a foreign stack is untouched, the technique gate follows soulBound=" + bound
+                    + ", Technique fires like the right click, an extra technique runs on its own clock, Manifest stores, waits and forges one bound weapon");
         } finally {
             dummy.discard();
             cleanup(fake);
@@ -134,6 +141,7 @@ public final class SinSkillSelfTests {
         }
         for (SinRules.Kind k : SinRules.Kind.values()) {
             p.getPersistentData().remove(SinSkillService.forgeKey(k));
+            for (int slot = 1; slot <= SinRules.ABILITIES_PER_KIND; slot++) p.getPersistentData().remove(SinWeaponItem.abilityKey(k, slot));
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath("anime_multiverse", SinSkillRules.skillId(k));
             if (skills != null && skills.getSkill(id).isPresent()) skills.forgetSkill(id, Component.literal("self-test"));
         }

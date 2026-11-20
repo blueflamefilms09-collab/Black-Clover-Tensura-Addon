@@ -303,6 +303,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.SkillAnime2Layer());
         // Dragon Ball rework: the Giant Ki Avatar (GIANT_AVATAR), appended after SKILL_SIGIL; saiyan.classicVfx = true draws nothing for it.
         register(new com.newuniverse.nusmp.vfx.client.layer.GiantAvatarLayer());
+        // Berserk of Gluttony weapons: the one shape SIN_WEAPON (docs/sin_weapons_abilities.md), appended after GIANT_AVATAR; sinweapons.classicVfx = true draws nothing for it.
+        register(new com.newuniverse.nusmp.vfx.client.layer.SinWeaponLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
