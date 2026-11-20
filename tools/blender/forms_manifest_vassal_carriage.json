@@ -1,0 +1,22 @@
+{
+ "vassal_carriage__filolial_carriage": {
+  "class": "handitem",
+  "form": "filolial_carriage",
+  "weapon": "vassal_carriage"
+ },
+ "vassal_carriage__hourglass_sand_carriage": {
+  "class": "handitem",
+  "form": "hourglass_sand_carriage",
+  "weapon": "vassal_carriage"
+ },
+ "vassal_carriage__queens_chariot": {
+  "class": "handitem",
+  "form": "queens_chariot",
+  "weapon": "vassal_carriage"
+ },
+ "vassal_carriage__war_carriage": {
+  "class": "handitem",
+  "form": "war_carriage",
+  "weapon": "vassal_carriage"
+ }
+}

@@ -2491,9 +2491,9 @@
   "class": "shield",
   "fraction": 0.5,
   "source": "class",
-  "x": -0.529,
-  "y": -0.323,
-  "z": 4.562
+  "x": -0.66,
+  "y": -3.678,
+  "z": 2.331
  },
  "legendary_shield__soul_eater_shield": {
   "class": "shield",
@@ -5663,6 +5663,38 @@
   "y": 45.948,
   "z": 0.0
  },
+ "vassal_axe__curse_axe": {
+  "class": "battleaxe",
+  "fraction": 0.091,
+  "source": "directive",
+  "x": -0.112,
+  "y": 7.963,
+  "z": 0.049
+ },
+ "vassal_axe__pipe_axe": {
+  "class": "battleaxe",
+  "fraction": 0.256,
+  "source": "directive",
+  "x": 0.009,
+  "y": 44.192,
+  "z": -0.002
+ },
+ "vassal_axe__shine_axe": {
+  "class": "battleaxe",
+  "fraction": 0.251,
+  "source": "directive",
+  "x": 0.0,
+  "y": 44.499,
+  "z": -0.007
+ },
+ "vassal_axe__timber_axe": {
+  "class": "battleaxe",
+  "fraction": 0.248,
+  "source": "directive",
+  "x": 0.645,
+  "y": 42.436,
+  "z": 0.384
+ },
  "vassal_book": {
   "class": "handitem",
   "fraction": 0.5,
@@ -5670,6 +5702,38 @@
   "x": 0.833,
   "y": 18.186,
   "z": 1.415
+ },
+ "vassal_book__animal_needle_book": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 4.693,
+  "y": 30.855,
+  "z": 0.0
+ },
+ "vassal_book__library_tome": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.101,
+  "y": 16.842,
+  "z": 0.4
+ },
+ "vassal_book__pipe_book": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.413,
+  "y": 18.2,
+  "z": 3.15
+ },
+ "vassal_book__revised_edition": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.14,
+  "y": 15.058,
+  "z": 0.0
  },
  "vassal_carriage": {
   "class": "handitem",
@@ -5679,6 +5743,38 @@
   "y": 59.864,
   "z": 0.0
  },
+ "vassal_carriage__filolial_carriage": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -35.732,
+  "y": 51.948,
+  "z": 0.841
+ },
+ "vassal_carriage__hourglass_sand_carriage": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -47.544,
+  "y": 54.64,
+  "z": 0.0
+ },
+ "vassal_carriage__queens_chariot": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -47.647,
+  "y": 52.943,
+  "z": 0.587
+ },
+ "vassal_carriage__war_carriage": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -45.528,
+  "y": 63.508,
+  "z": 0.0
+ },
  "vassal_chain": {
   "class": "whip",
   "fraction": 0.082,
@@ -5686,6 +5782,54 @@
   "x": -0.765,
   "y": 8.613,
   "z": 0.0
+ },
+ "vassal_chain__drowsy_chain": {
+  "class": "whip",
+  "fraction": 0.15,
+  "source": "class",
+  "x": 4.519,
+  "y": 19.839,
+  "z": -0.004
+ },
+ "vassal_chain__hydra_chain": {
+  "class": "whip",
+  "fraction": 0.129,
+  "source": "directive",
+  "x": 4.519,
+  "y": 19.898,
+  "z": -0.004
+ },
+ "vassal_chain__idle_chain": {
+  "class": "whip",
+  "fraction": 0.15,
+  "source": "class",
+  "x": 4.519,
+  "y": 21.013,
+  "z": -0.004
+ },
+ "vassal_chain__long_afternoon": {
+  "class": "whip",
+  "fraction": 0.124,
+  "source": "directive",
+  "x": 4.51,
+  "y": 16.231,
+  "z": -0.004
+ },
+ "vassal_chain__orochi_chain": {
+  "class": "whip",
+  "fraction": 0.14,
+  "source": "directive",
+  "x": 4.529,
+  "y": 21.848,
+  "z": -0.004
+ },
+ "vassal_chain__tempered_chain": {
+  "class": "whip",
+  "fraction": 0.116,
+  "source": "directive",
+  "x": 3.056,
+  "y": 14.828,
+  "z": 0.672
  },
  "vassal_claw": {
   "class": "shortsword",

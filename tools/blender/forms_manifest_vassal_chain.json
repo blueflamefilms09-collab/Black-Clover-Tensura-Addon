@@ -1,0 +1,32 @@
+{
+ "vassal_chain__drowsy_chain": {
+  "class": "whip",
+  "form": "drowsy_chain",
+  "weapon": "vassal_chain"
+ },
+ "vassal_chain__hydra_chain": {
+  "class": "whip",
+  "form": "hydra_chain",
+  "weapon": "vassal_chain"
+ },
+ "vassal_chain__idle_chain": {
+  "class": "whip",
+  "form": "idle_chain",
+  "weapon": "vassal_chain"
+ },
+ "vassal_chain__long_afternoon": {
+  "class": "whip",
+  "form": "long_afternoon",
+  "weapon": "vassal_chain"
+ },
+ "vassal_chain__orochi_chain": {
+  "class": "whip",
+  "form": "orochi_chain",
+  "weapon": "vassal_chain"
+ },
+ "vassal_chain__tempered_chain": {
+  "class": "whip",
+  "form": "tempered_chain",
+  "weapon": "vassal_chain"
+ }
+}

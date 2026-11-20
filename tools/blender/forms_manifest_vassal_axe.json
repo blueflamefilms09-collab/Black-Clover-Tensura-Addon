@@ -1,0 +1,22 @@
+{
+ "vassal_axe__curse_axe": {
+  "class": "battleaxe",
+  "form": "curse_axe",
+  "weapon": "vassal_axe"
+ },
+ "vassal_axe__pipe_axe": {
+  "class": "battleaxe",
+  "form": "pipe_axe",
+  "weapon": "vassal_axe"
+ },
+ "vassal_axe__shine_axe": {
+  "class": "battleaxe",
+  "form": "shine_axe",
+  "weapon": "vassal_axe"
+ },
+ "vassal_axe__timber_axe": {
+  "class": "battleaxe",
+  "form": "timber_axe",
+  "weapon": "vassal_axe"
+ }
+}

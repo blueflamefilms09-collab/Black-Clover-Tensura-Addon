@@ -1,0 +1,22 @@
+{
+ "vassal_book__animal_needle_book": {
+  "class": "handitem",
+  "form": "animal_needle_book",
+  "weapon": "vassal_book"
+ },
+ "vassal_book__library_tome": {
+  "class": "handitem",
+  "form": "library_tome",
+  "weapon": "vassal_book"
+ },
+ "vassal_book__pipe_book": {
+  "class": "handitem",
+  "form": "pipe_book",
+  "weapon": "vassal_book"
+ },
+ "vassal_book__revised_edition": {
+  "class": "handitem",
+  "form": "revised_edition",
+  "weapon": "vassal_book"
+ }
+}

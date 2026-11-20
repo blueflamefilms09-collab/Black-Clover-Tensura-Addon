@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.47.0] — 18 new vassal forms: axe, book, carriage, chain (Blender)
+- NEW: Blender-made 3D models with own skin and glow skin, registered in the class, grip and Better Combat tables: Timber, Pipe, Shine and Curse Axe; Pipe, Animal Needle, Revised Edition and Library Tome books; Filolial, War, Hourglass Sand carriages and the Queen's Chariot; Tempered, Hydra, Orochi, Idle, Drowsy chains and the Long Afternoon chain. Each within 5000 quad lines and 350 KB of skins.
+- REPLACED: nothing. KEPT: every other model, skin and icon.
+- Cost: no packets; per-weapon quad budget as before.
+- Weakest: Orochi Chain (small serpent heads at the quad budget), Hydra Chain heads (simple wedge skulls), Shine Axe crescents (plain), Animal Needle Book (thin sheet, tall leaves, apparent size 1.32 against 0.84 for the base book), Curse Axe jaw and eye. Seen only in software previews, not in a game; designs follow the form names, no wiki was fetched.
+
 ## [4.46.1] — Working rule: Blockbench allowed for Minecraft models
 - Docs only: CLAUDE.md rule 15 (Blockbench may be used instead of Blender for Minecraft-native models; sources in `tools/blockbench/`; honest reporting). No game change.
 
