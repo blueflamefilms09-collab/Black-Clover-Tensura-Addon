@@ -18,9 +18,9 @@ import java.util.List;
  * Why: the Weapons tab of the hub: the Weapon page (docs/ui_weapon_page.md) redrawn in the hub's style, over exactly the same data, packet and rules as the page inside the old Codex ({@link WeaponPageClient}: one
  * validated {@code weaponpage_act} packet, the server decides everything, the client only draws and asks). Weapon chips, a head card (name, grade, level, form), the upgrade option rows, the mastery bars and the other
  * masteries, stacked in one column by {@link HubWeaponLayout} so nothing can overlap at any size or count, scrolled by the screen when taller than the body. Texts are fitted once when the page arrives or the width
- * changes (a cut text shows in full in a tooltip); a frame draws from the cooked arrays and builds no string, list or location. Local coordinates: (0, 0) is the top-left of the scrolled content.
+ * changes (a cut text shows in full in a tooltip); public because the old Multiverse Status screen draws the same body in its Weapon tab ({@code client.multiverse.WeaponStatusPage}), so the page is never duplicated; a frame draws from the cooked arrays and builds no string, list or location. Local coordinates: (0, 0) is the top-left of the scrolled content.
  */
-final class HubWeaponsBody {
+public final class HubWeaponsBody {
     private HubWeaponLayout layout;
     private WeaponPageClient.Page[] fitPages;
     private WeaponPageClient.Page fitPage;
@@ -32,7 +32,7 @@ final class HubWeaponsBody {
     private int msgW = -1;
 
     /** Translates the fixed texts (call when the tab opens: the language may have changed). */
-    void opened() {
+    public void opened() {
         headOptions = Component.translatable("anime_multiverse.hub.weapons.options").getString();
         headMastery = Component.translatable("anime_multiverse.weaponpage.heading.mastery").getString();
         headOthers = Component.translatable("anime_multiverse.weaponpage.heading.others").getString();
@@ -86,14 +86,14 @@ final class HubWeaponsBody {
         return msgLines;
     }
 
-    int height(Font font, int w) {
+    public int height(Font font, int w) {
         if (!haveWeapons()) return 4 + message(font, w).size() * 10;
         ensure(font, w);
         return layout.height();
     }
 
     // ---------------------------------------------------------------- drawing
-    void draw(GuiGraphics g, Font font, int w, int top, int bottom, int mx, int my, float now) {
+    public void draw(GuiGraphics g, Font font, int w, int top, int bottom, int mx, int my, float now) {
         if (!haveWeapons()) {
             int y = 2;
             for (FormattedCharSequence line : message(font, w)) {
@@ -158,7 +158,7 @@ final class HubWeaponsBody {
 
     // ---------------------------------------------------------------- input
     /** A click in local coordinates: a chip picks the weapon, a ready option sends the one packet. Returns true when it hit something. */
-    boolean click(Font font, int w, double lx, double ly) {
+    public boolean click(Font font, int w, double lx, double ly) {
         if (!haveWeapons()) return false;
         ensure(font, w);
         int c = layout.chipAt(lx, ly);
@@ -174,7 +174,7 @@ final class HubWeaponsBody {
     }
 
     /** The full text of a cut text under the local point (a chip, an option, a bar label, the head card), or null. */
-    String tipAt(Font font, int w, double lx, double ly) {
+    public String tipAt(Font font, int w, double lx, double ly) {
         if (!haveWeapons()) return null;
         ensure(font, w);
         int o = layout.optionAt(lx, ly);

@@ -13,6 +13,8 @@ public final class MultiverseClientConfig {
     public static final ModConfigSpec.BooleanValue BEASTWILL_HUD;
     public static final ModConfigSpec.BooleanValue BEASTWILL_CONFIRM_IN_MENU;
     public static final ModConfigSpec.BooleanValue WEAPON_PAGE;
+    public static final ModConfigSpec.BooleanValue WEAPON_MORE_MASTERY;
+    public static final ModConfigSpec.BooleanValue WEAPON_STATUS_PAGE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -36,6 +38,10 @@ public final class MultiverseClientConfig {
         b.push("weaponpage");
         WEAPON_PAGE = b.comment("Show the Weapon page (your hero / Lord / Greed weapon, its upgrade options and every mastery bar) as the last tab of the Codex. Off: the tab is not drawn. Looks only: the weapons and their other screens do not change.")
                 .define("show", true);
+        WEAPON_MORE_MASTERY = b.comment("Weapon page: list every mastery the server really tracks (the other weapons, the hero weapon's other forms, Saiyan form mastery, the mod's skills in training) under 'Other masteries', each with its level and progress to the next. Off: the page is exactly as before (only the weapon's own bars, the Grimoire and the Beast Wills). Looks only.")
+                .define("moreMastery", true);
+        WEAPON_STATUS_PAGE = b.comment("Show the same Weapon page as a tab of the old Multiverse Status screen (after the Beast Will tab). Off: the Status screen has no Weapon tab. Looks only.")
+                .define("statusPage", true);
         b.pop();
         SPEC = b.build();
     }

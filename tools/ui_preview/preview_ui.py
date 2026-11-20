@@ -969,6 +969,118 @@ def hub_status(t=300.0):
     return g
 
 
+# ---------------------------------------------------------------- Weapon page v2 (docs/ui_weapon_page.md): the longer "Other masteries" list and the Status-screen tab. PIL MOCK-UPS, not game screenshots.
+def wl_layout(w, chips, options, bars, extras):
+    """A port of HubWeaponLayout (pure integer arithmetic): returns the rectangles and the content height."""
+    CHIP_H, CHIP_GAP, MIN_CHIP_W, MAX_CHIP_W, HEAD_H, ROW_H, BAR_H, HEADING_H, GAP = 14, 3, 44, 96, 46, 14, 20, 13, 6
+    w = max(MIN_CHIP_W, w)
+    has = chips > 1
+    per = max(1, min(max(1, chips), (w + CHIP_GAP) // (MIN_CHIP_W + CHIP_GAP)))
+    rows = (chips + per - 1) // per if has else 0
+    cw = max(MIN_CHIP_W, min(MAX_CHIP_W, (w - CHIP_GAP * (per - 1)) // per))
+    chips_h = rows * CHIP_H + (rows - 1) * CHIP_GAP if has else 0
+    L = {"chips": [((i % per) * (cw + CHIP_GAP), (i // per) * (CHIP_H + CHIP_GAP), cw, CHIP_H) for i in range(chips)] if has else []}
+    head_y = chips_h + GAP if has else 0
+    L["head"] = (0, head_y, w, HEAD_H)
+    oh = head_y + HEAD_H + GAP
+    L["oh"] = oh
+    L["opts"] = [(0, oh + HEADING_H + i * ROW_H, w, ROW_H - 1) for i in range(options)]
+    o_end = oh + HEADING_H + options * ROW_H if options > 0 else head_y + HEAD_H
+    bh = o_end + GAP
+    L["bh"] = bh
+    L["bars"] = [(0, bh + HEADING_H + i * BAR_H, w, BAR_H - 3) for i in range(bars)]
+    b_end = bh + HEADING_H + bars * BAR_H if bars > 0 else o_end
+    eh = b_end + GAP
+    L["eh"] = eh
+    L["extras"] = [(0, eh + HEADING_H + i * BAR_H, w, BAR_H - 3) for i in range(extras)]
+    L["height"] = (eh + HEADING_H + extras * BAR_H if extras > 0 else b_end) + GAP
+    return L
+
+
+V2_WEAPONS = ["Demon-Slayer", "Lord's Edge", "Black Sword"]
+V2_OPTS = [("Reforge: Void Edge   (current form)", "current"), ("Awaken the Twin-Fang Shadow Form - learn", "ready"),
+           ("Raise the grade to Mythic - locked", "locked")]
+# the open weapon's own bars (the hero weapon: level, active form, two more learned forms) with the new "value (progress)" text
+V2_BARS = [("Weapon level", "14/100 (40%)", 0.40), ("Void Edge mastery", "62/100 (62%)", 0.62), ("Twin-Fang mastery", "20/80 (25%)", 0.25), ("Shadow Step mastery", "9/60 (15%)", 0.15)]
+# other masteries: Grimoire, Beast Will, Saiyan form, skills in training, then every OTHER weapon's bars
+V2_EXTRAS = [("Grimoire mastery", "25%", 0.25, VIOLET), ("Rimuru (Beast Will)", "58%", 0.58, VIOLET), ("Super Saiyan (Saiyan form)", "33%", 0.33, VIOLET),
+             ("Void Slash", "41/100 (41%)", 0.41, VIOLET), ("Flame Coat", "12/50 (24%)", 0.24, VIOLET),
+             ("Lord's Edge: Lord's Edge mastery", "6/100 (30%)", 0.30, VIOLET), ("Black Sword: Mastery", "2/100 (10%)", 0.10, VIOLET),
+             ("Black Sword: Black Sword tier", "3/8 (45%)", 0.45, VIOLET)]
+
+
+def weapon_body(g, ox, oy, w, t, hover_chip=-1):
+    L = wl_layout(w, len(V2_WEAPONS), len(V2_OPTS), len(V2_BARS), len(V2_EXTRAS))
+    rgbs = [0xE8C468, 0x9A7CFF, 0xFF6A6A]
+    rgb = rgbs[0]
+
+    def R(r):
+        return (ox + r[0], oy + r[1], r[2], r[3])
+    for i, r in enumerate(L["chips"]):
+        x, y, cw, ch = R(r)
+        g.chip(x, y, cw, ch, i == 0, i == hover_chip, 0xFF000000 | rgbs[i])
+        g.text(hub_fit(V2_WEAPONS[i], cw - 8)[0], x + 4, y + (ch - 8) // 2, WHITE if i == 0 or i == hover_chip else TEXT)
+    x, y, hw, hh = R(L["head"])
+    g.well(x, y, hw, hh, 0xFF000000 | rgb, 1.0)
+    g.fill(x, y, x + 2, y + hh, with_alpha(rgb, 0.9))
+    g.text("Genesis Demon-Slayer", x + 7, y + 4, GOLD)
+    g.text("Grade: Mythic", x + 7, y + 15, 0xFF000000 | rgb)
+    g.text("Level 14 / 100", x + 7, y + 26, TEXT)
+    g.text("Form: Void Edge", x + 7, y + 36, TEXT_DIM)
+    g.heading("Upgrades", ox, oy + L["oh"], w, GOLD)
+    for (text, state), r in zip(V2_OPTS, L["opts"]):
+        x, y, rw, rh = R(r)
+        g.chip(x, y, rw, rh, state == "current", False, 0xFF000000 | rgb)
+        g.text(hub_fit(text, rw - 10)[0], x + 5, y + (rh - 8) // 2, TEXT_FAINT if state == "locked" else TEXT)
+    g.heading("Mastery", ox, oy + L["bh"], w, CYAN)
+    for (label, value, fr), r in zip(V2_BARS, L["bars"]):
+        x, y, bw, bh = R(r)
+        g.text(hub_fit(label, bw - 8 - len(value) * 6 - 6)[0], x + 2, y, TEXT); g.text(value, x + bw - 2 - len(value) * 6, y, TEXT_DIM)
+        g.bar(x + 2, y + 11, bw - 4, 4, fr, 0xFF000000 | rgb, t)
+    g.heading("Other masteries", ox, oy + L["eh"], w, VIOLET)
+    for (label, value, fr, col), r in zip(V2_EXTRAS, L["extras"]):
+        x, y, bw, bh = R(r)
+        g.text(hub_fit(label, bw - 8 - len(value) * 6 - 6)[0], x + 2, y, TEXT); g.text(value, x + bw - 2 - len(value) * 6, y, TEXT_DIM)
+        g.bar(x + 2, y + 11, bw - 4, 4, fr, col, t)
+    return L["height"]
+
+
+def hub_weapons_v2(t=300.0, scroll=0.0):
+    g = hub_new()
+    hub_motes(g, t, 0.8)
+    height = wl_layout(244, len(V2_WEAPONS), len(V2_OPTS), len(V2_BARS), len(V2_EXTRAS))["height"]
+    scroll = min(scroll, max(0, height - HUB_BODY[3]))              # as the screen clamps it
+    hub_frame(g, 1, t, scroll, lambda g, ox, oy, sc: weapon_body(g, ox, oy, 244, t), height, hover_node=1)
+    hub_line(g, "Weapons: Your bound weapons: forms, upgrades and mastery.", TEXT)
+    return g
+
+
+def status_weapons(t=300.0, scroll=0.0):
+    """MultiverseStatusScreen with the Weapon tab on (WeaponStatusPage.area: centred, at most 280 wide, y 26 to height-52)."""
+    g = Gui()
+    g.scrim(0.0)
+    g.scrim(0.7)
+    g.magic_circle(W / 2, H / 2, min(W, H) * 0.5, t, VIOLET, 0.20, CALM)
+    g.center("Weapon", W // 2, 10, GOLD)
+    aw = max(100, min(280, W - 24)); ah = max(40, H - 26 - 52); ax = (W - aw) // 2; ay = 26
+    height = wl_layout(aw, len(V2_WEAPONS), len(V2_OPTS), len(V2_BARS), len(V2_EXTRAS))["height"]
+    scroll = min(scroll, max(0, height - ah))
+    keep = g.clip
+    g.clip = (ax * g.s, ay * g.s, (ax + aw) * g.s, (ay + ah) * g.s)
+    weapon_body(g, ax, ay - int(round(scroll)), aw, t)
+    g.clip = keep
+    mx = height - ah
+    if mx > 0:
+        bar = max(12, ah * ah // (mx + ah)); pos = int((ah - bar) * (scroll / mx))
+        g.fill(ax + aw + 2, ay, ax + aw + 4, ay + ah, with_alpha(0xFFFFFF, 0.08)); g.fill(ax + aw + 2, ay + pos, ax + aw + 4, ay + pos + bar, with_alpha(GOLD, 0.85))
+    wide = W >= 450
+    ty = H - 26 if wide else H - 46
+    g.button(8, H - 26, 88, 18, "GUI Size"); g.button(W // 2 - 40, H - 26, 80, 18, "Back"); g.button(W - 96, H - 26, 88, 18, "Grimoire Slot")
+    g.button(104, ty, 80, 18, "Beast Will")
+    g.button(max(188, W - 184), ty, 80, 18, "Status", 1.0)
+    return g
+
+
 def main():
     global S
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -987,8 +1099,14 @@ def main():
         "hub_ring.png": lambda: hub_home(220, None, hover=2), "hub_intro.png": lambda: hub_home(70, 70), "hub_intro_start.png": lambda: hub_home(10, 10),
         "hub_weapons.png": lambda: hub_weapons(300, 0.0), "hub_weapons_scrolled.png": lambda: hub_weapons(300, WL_HEIGHT - HUB_BODY[3]), "hub_status.png": lambda: hub_status(300),
     }
+    wp2_jobs = {
+        "hub_weapons_v2.png": lambda: hub_weapons_v2(300, 0.0), "hub_weapons_v2_scrolled.png": lambda: hub_weapons_v2(300, 9999.0),
+        "status_weapons.png": lambda: status_weapons(300, 0.0), "status_weapons_scrolled.png": lambda: status_weapons(300, 9999.0),
+    }
     if "--hub" in sys.argv:
         jobs = hub_jobs          # only the hub mock-ups (the other jobs stay as they were)
+    if "--weapon-v2" in sys.argv:
+        jobs = wp2_jobs          # the Weapon page v2 mock-ups (docs/previews/weapon_page_v2/)
     for name, fn in jobs.items():
         fn().save(os.path.join(out, name))
         print("wrote", name)

@@ -34,6 +34,11 @@ public class MultiverseStatusScreen extends Screen {
     /** 3.52.0: the Beast Will page of the menu (also opened straight by an absorb ask). */
     private boolean beastView;
     private ThemedButton tab;
+    /** 4.63.0: the Weapon page of the menu (the hub's Weapons tab through shared code), appended after the Beast Will page; off with the client setting {@code weaponpage.statusPage}. */
+    private boolean weaponView;
+    private ThemedButton weaponTab;
+    private final WeaponStatusPage weaponPage = new WeaponStatusPage();
+    private int[] weaponArea = new int[] {0, 26, 100, 40};
     /** This screen showed an absorb ask, so closing it unanswered declines (a screen it replaced must not decline the new ask). */
     private boolean asking;
     private final List<ThemedButton> beastButtons = new ArrayList<>();
@@ -72,13 +77,33 @@ public class MultiverseStatusScreen extends Screen {
             beastButtons.add(addRenderableWidget(new ThemedButton(bx + 122, by, 58, 18, Component.translatable("anime_multiverse.beastwill.menu.swap"), b -> BeastWillMenu.swap())));
             for (ThemedButton t : beastButtons) t.active = BeastWillMenu.has();
         }
+        weaponTab = null;
+        weaponArea = WeaponStatusPage.area(width, height);
+        if (MultiverseClientConfig.get(MultiverseClientConfig.WEAPON_STATUS_PAGE)) {          // 4.63.0: the Weapon tab, left of the Grimoire Slot button (the old buttons keep their places)
+            weaponTab = addRenderableWidget(new ThemedButton(Math.max(188, width - 184), wide ? height - 26 : height - 46, 80, 18, Component.empty(), b -> toggleWeapons()));
+        }
+        refreshBeast();
+    }
+
+    private void toggleWeapons() {
+        weaponView = !weaponView;
+        if (weaponView) {
+            beastView = false;
+            weaponPage.opened();
+        }
         refreshBeast();
     }
 
     private void refreshBeast() {
+        if (beastView) weaponView = false;
         tab.setMessage(Component.translatable(beastView ? "anime_multiverse.beastwill.menu.back" : "anime_multiverse.beastwill.menu.tab"));
         tab.active = !asking;                                                               // an unanswered ask keeps the page until Absorb / Decline / close
         for (ThemedButton t : beastButtons) t.visible = beastView;
+        if (weaponTab != null) {
+            weaponTab.setMessage(Component.translatable(weaponView ? "anime_multiverse.beastwill.menu.back" : "anime_multiverse.weaponpage.status.tab"));
+            weaponTab.visible = !beastView;                                                 // the Beast Will page's own buttons use that row
+            weaponTab.active = !asking;
+        }
     }
 
     private void rebuild() { if (minecraft != null) minecraft.setScreen(new MultiverseStatusScreen(parent, true)); }
@@ -91,6 +116,24 @@ public class MultiverseStatusScreen extends Screen {
         g.drawCenteredString(font, Component.translatable("anime_multiverse.beastwill.menu.title"), width / 2, 10, UiTheme.GOLD);
         int h = BeastWillMenu.height();
         BeastWillMenu.draw(g, font, width / 2 - BeastWillMenu.W / 2, Math.max(24, (height - 56 - h) / 2 + 12));
+    }
+
+    private void renderWeapons(GuiGraphics g, int mouseX, int mouseY) {
+        g.drawCenteredString(font, Component.translatable("anime_multiverse.weaponpage.title"), width / 2, 10, UiTheme.GOLD);
+        String tip = weaponPage.draw(g, font, weaponArea, mouseX, mouseY);
+        if (tip != null) g.renderTooltip(font, Component.literal(tip), mouseX, mouseY);
+    }
+
+    @Override
+    public boolean mouseClicked(double mx, double my, int button) {
+        if (weaponView && button == 0 && weaponPage.click(font, weaponArea, mx, my)) return true;
+        return super.mouseClicked(mx, my, button);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mx, double my, double sx, double sy) {
+        if (weaponView && weaponPage.scrolled(font, weaponArea, sy)) return true;
+        return super.mouseScrolled(mx, my, sx, sy);
     }
 
     @Override
@@ -180,6 +223,7 @@ public class MultiverseStatusScreen extends Screen {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
         super.render(g, mouseX, mouseY, partial);
         if (beastView) { renderBeast(g); return; }
+        if (weaponView) { renderWeapons(g, mouseX, mouseY); return; }
         if (UiTheme.anime()) { renderAnime(g); return; }
         g.drawCenteredString(font, "MULTIVERSE STATUS", width / 2, 10, GOLD);
         List<Block> blocks = blocks(MultiverseStatusClient.status());

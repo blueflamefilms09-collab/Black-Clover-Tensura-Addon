@@ -51,6 +51,12 @@ public final class HeroPageView {
             int have = Math.min(b.mastery(active.id()), active.mastery());
             bars.add(new Bar("anime_multiverse.weaponpage.bar.form", cut(active.name()), have, active.mastery(), have * 100 / active.mastery()));
         }
+        for (HeroForm f : forms) {                                              // the other learned forms that have started to fill (own key: a client with moreMastery off hides these); bounded by MAX_BARS
+            if (bars.size() >= WeaponPageRules.MAX_BARS) break;
+            if (f == active || f.mastery() <= 0 || !learned.contains(f.id()) || b.mastery(f.id()) <= 0) continue;
+            int have = Math.min(b.mastery(f.id()), f.mastery());
+            bars.add(new Bar("anime_multiverse.weaponpage.bar.formmore", cut(f.name()), have, f.mastery(), have * 100 / f.mastery()));
+        }
 
         List<Opt> opts = new ArrayList<>();
         Set<String> wanted = new HashSet<>();                                   // item requirements of the forms that could be learned next that the gem still lacks

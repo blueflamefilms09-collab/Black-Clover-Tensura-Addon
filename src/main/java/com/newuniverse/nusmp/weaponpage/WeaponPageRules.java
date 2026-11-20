@@ -21,7 +21,7 @@ public final class WeaponPageRules {
     public static final int ST_LOCKED = 0, ST_READY = 1, ST_CURRENT = 2;
 
     /** Bounds of every list and string of the two packets. */
-    public static final int MAX_ENTRIES = 6, MAX_BARS = 4, MAX_OPTIONS = 24, TEXT = 96, ID = 48, ITEM_ID = 96, ARG = 96;
+    public static final int MAX_ENTRIES = 6, MAX_BARS = 8, MAX_OPTIONS = 24, TEXT = 96, ID = 48, ITEM_ID = 96, ARG = 96;
 
     /** Forms of a Lord weapon (the item ids of one sin) and of Greed (the eight forms of the Black Sword). */
     public static final int LORD_FORMS = 3, GREED_FORMS = 8;

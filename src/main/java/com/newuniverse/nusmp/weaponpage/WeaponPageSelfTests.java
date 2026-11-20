@@ -50,6 +50,13 @@ public final class WeaponPageSelfTests {
         if (a.sum() == b.sum() || a.sum() != sample(3).sum()) return Result.fail("the checksum does not follow the view");
         if (!a.bounded() || new View(5, a.entries()).bounded()) return Result.fail("the bounds of a view are wrong");
         if (a.option("hero", WeaponPageRules.ACT_FORM, "base") == null || a.option("hero", WeaponPageRules.ACT_FORM, "nothing") != null || a.option("greed", WeaponPageRules.ACT_HALF, "") != null) return Result.fail("option lookup is wrong");
+        List<Bar> eight = new java.util.ArrayList<>(), nine = new java.util.ArrayList<>();                               // 4.63.0: the hero weapon may send up to MAX_BARS bars (the other forms' mastery), no more
+        for (int i = 0; i < WeaponPageRules.MAX_BARS; i++) eight.add(new Bar("anime_multiverse.weaponpage.bar.formmore", "F" + i, i, 100, i));
+        nine.addAll(eight);
+        nine.add(new Bar("anime_multiverse.weaponpage.bar.formmore", "x", 1, 100, 1));
+        Entry e0 = a.entries().get(0);
+        if (!new View(0, List.of(new Entry(e0.id(), e0.name(), e0.grade(), e0.level(), e0.max(), e0.pct(), e0.form(), eight, e0.opts()))).bounded()
+                || new View(0, List.of(new Entry(e0.id(), e0.name(), e0.grade(), e0.level(), e0.max(), e0.pct(), e0.form(), nine, e0.opts()))).bounded()) return Result.fail("the bar bound of an entry is wrong");
         return Result.ok("request checks, argument shapes, the checksum, the bounds and the option lookup hold");
     }
 

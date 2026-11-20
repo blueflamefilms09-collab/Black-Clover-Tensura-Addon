@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Why: the Weapons tab must fit any number of weapons (0 to 6), options (0 to 24), bars (0 to 4) and other tracks (0 to 8) at any width the hub gives it, with nothing overlapping and nothing outside the width,
+ * Why: the Weapons tab must fit any number of weapons (0 to 6), options (0 to 24), bars (0 to 8) and other tracks (0 to 24) at any width the hub gives it, with nothing overlapping and nothing outside the width,
  * a click landing on the row that was drawn, and the height being exactly what the last section needs. The old page could overlap on a narrow spread; this is the proof the new one cannot. Pure: no game types.
  */
 class HubWeaponLayoutTest {
     private static final int[] WIDTHS = {44, 90, 140, 244, 320, 700};
-    private static final int[] CHIPS = {0, 1, 2, 3, 6}, OPTIONS = {0, 1, 5, 24}, BARS = {0, 1, 4}, EXTRAS = {0, 1, 3, 8};
+    private static final int[] CHIPS = {0, 1, 2, 3, 6}, OPTIONS = {0, 1, 5, 24}, BARS = {0, 1, 4, 8}, EXTRAS = {0, 1, 3, 8, 24};
 
     private static void collect(HubWeaponLayout l, java.util.List<Rect> out) {
         if (l.hasChips()) for (int i = 0; i < l.chips(); i++) out.add(l.chip(i));
@@ -71,6 +71,6 @@ class HubWeaponLayoutTest {
             int last = e > 0 ? l.extra(e - 1).bottom() : b > 0 ? l.bar(b - 1).bottom() : o > 0 ? l.option(o - 1).bottom() : l.head().bottom();
             assertTrue(l.height() >= last && l.height() <= last + 3 + HubWeaponLayout.GAP, "height " + l.height() + " vs last bottom " + last);
         }
-        assertTrue(HubWeaponLayout.of(244, 6, 24, 4, 8).height() > 160, "the biggest page is taller than the body and scrolls");
+        assertTrue(HubWeaponLayout.of(244, 6, 24, 8, 24).height() > 160, "the biggest page is taller than the body and scrolls");
     }
 }

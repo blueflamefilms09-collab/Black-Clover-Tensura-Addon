@@ -19,5 +19,8 @@
   "anime_multiverse.weaponpage.note.off": "off",
   "anime_multiverse.weaponpage.other.grimoire": "Grimoire mastery",
   "anime_multiverse.weaponpage.other.beast": "%s (Beast Will)",
-  "anime_multiverse.weaponpage.msg.refused": "The weapon cannot do that now."
+  "anime_multiverse.weaponpage.msg.refused": "The weapon cannot do that now.",
+  "anime_multiverse.weaponpage.track.fmt": "%s (%s%%)",
+  "anime_multiverse.weaponpage.other.saiyan": "%s (Saiyan form)",
+  "anime_multiverse.weaponpage.status.tab": "Weapons"
 }

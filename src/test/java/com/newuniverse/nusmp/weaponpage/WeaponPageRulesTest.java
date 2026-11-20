@@ -122,6 +122,11 @@ class WeaponPageRulesTest {
         List<Opt> many = new ArrayList<>();
         for (int i = 0; i <= WeaponPageRules.MAX_OPTIONS; i++) many.add(new Opt(WeaponPageRules.ACT_FORM, "f" + i, "F", WeaponPageRules.ST_READY, ""));
         assertFalse(new View(0, List.of(new Entry(e.id(), e.name(), e.grade(), e.level(), e.max(), e.pct(), e.form(), e.bars(), many))).bounded(), "too many options");
+        List<Bar> bars = new ArrayList<>();
+        for (int i = 0; i < WeaponPageRules.MAX_BARS; i++) bars.add(new Bar("anime_multiverse.weaponpage.bar.formmore", "F" + i, i, 100, i));
+        assertTrue(new View(0, List.of(new Entry(e.id(), e.name(), e.grade(), e.level(), e.max(), e.pct(), e.form(), bars, e.opts()))).bounded(), "MAX_BARS bars are fine (the hero weapon's other forms)");
+        bars.add(new Bar("anime_multiverse.weaponpage.bar.formmore", "x", 1, 100, 1));
+        assertFalse(new View(0, List.of(new Entry(e.id(), e.name(), e.grade(), e.level(), e.max(), e.pct(), e.form(), bars, e.opts()))).bounded(), "one bar too many");
         assertFalse(new View(0, List.of(new Entry("nobody", e.name(), e.grade(), e.level(), e.max(), e.pct(), e.form(), e.bars(), e.opts()))).bounded(), "unknown weapon id");
         assertFalse(new View(0, List.of(new Entry(e.id(), "x".repeat(WeaponPageRules.TEXT + 1), e.grade(), e.level(), e.max(), e.pct(), e.form(), e.bars(), e.opts()))).bounded(), "a long name");
         List<Opt> badState = List.of(new Opt(WeaponPageRules.ACT_FORM, "a", "A", 7, ""));

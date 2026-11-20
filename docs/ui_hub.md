@@ -11,7 +11,7 @@ A ring of eight nodes round a turning core, drawn from fills and the mod's own m
 | Node | What it does | Where it lives |
 | --- | --- | --- |
 | Status | Power (EP, magicule, aura), the status summary the server already sends, your active effects. | Native page, read only. |
-| Weapons | The Weapon page redrawn in the hub style: weapon chips, head card, upgrade rows, mastery bars, other masteries. Same data, same packet, same rules as the old page. Scrolls, nothing overlaps at any size or count. | Native page. |
+| Weapons | The Weapon page redrawn in the hub style: weapon chips, head card, upgrade rows, mastery bars, other masteries (a longer list since 4.63.0: the other weapons, the hero weapon's other forms, Saiyan form, skills in training, each with its progress; setting `weaponpage.moreMastery`, see `docs/ui_weapon_page.md`). Same data, same packet, same rules as the old page. Scrolls, nothing overlaps at any size or count. | Native page. |
 | Skills | Opens the Tensura skill screen. | Launcher (Esc comes back to the hub). |
 | Quests | The quest tracker and the last dungeon map. | Native page. |
 | Attunement | Sends the server's own `/meditate`; the window it opens is the old Meditation screen. | Launcher (no way back, see caveats). |
@@ -45,6 +45,8 @@ All three are CLIENT config (looks only). No new config file.
 NEW: `client/hub/*` (the screen, `HubLayout`, `HubNodes`, `HubText`, `HubWeaponLayout`, `HubMotes`, `HubTimeline`, `HubFx`, `HubListBody`, `HubWeaponsBody`, `HubCards`, `MultiverseHubClient`), the hub key, the three options, `tools/lang/hub.json` + `merge_hub.py`, the tests, the previews.
 
 REPLACED (entry points only, behind `ui.hub`): what the Multiverse Status key, the Four Kingdoms slot and the status panel open: the hub instead of the Codex book.
+
+KEPT (and, since 4.63.0, shared): `HubWeaponsBody` is now also drawn by a Weapon tab of the old Multiverse Status screen (`weaponpage.statusPage`, `docs/ui_weapon_page.md`: same body, same packet, no copy; cost: the same body in a 160 px window, one open request when the tab is switched on).
 
 KEPT: the Codex screen and book, the Weapon page inside it, the Multiverse Status screen, Four Kingdoms, Compat codex, the Meditation screen, GUI Size / Move, the Wiki book (`CodexClient.startOn(...)` still opens the Codex), every packet, every server rule. Nothing deleted.
 

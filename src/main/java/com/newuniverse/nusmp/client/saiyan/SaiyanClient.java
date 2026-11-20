@@ -157,6 +157,14 @@ public final class SaiyanClient {
     /** True while the local player is a Saiyan (the server said so). */
     public static boolean active() { return sync != null; }
 
+    /** The Saiyan form in use and its mastery percent (what the server last sent), or null when not awakened or no form is active. Read when a page is cooked, never per frame. */
+    public static String[] formMasteryRow() {
+        SaiyanNet.Sync s = sync;
+        if (s == null || !s.awakened()) return null;
+        SaiyanForms.Form f = SaiyanForms.ofCode(s.form());
+        return f == null ? null : new String[] {name(f.key()), Integer.toString(Math.max(0, Math.min(100, s.formMastery())))};
+    }
+
     // ---------------------------------------------------------------- Ki replaces the magicule bar
     /** Hides Tensura's magicule bar while the local player is a Saiyan: the Ki bar of the Saiyan HUD takes its place. Best effort by layer name; the Tensura layer names are logged once. */
     private static void onLayer(RenderGuiLayerEvent.Pre e) {

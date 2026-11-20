@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.client.weaponpage;
 
+import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.client.beastwill.BeastWillMasteryView;
+import com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig;
+import com.newuniverse.nusmp.client.saiyan.SaiyanClient;
 import com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient;
 import com.newuniverse.nusmp.lords.LordRules;
 import com.newuniverse.nusmp.weaponpage.WeaponPageData.Bar;
@@ -9,6 +12,8 @@ import com.newuniverse.nusmp.weaponpage.WeaponPageData.Opt;
 import com.newuniverse.nusmp.weaponpage.WeaponPageData.View;
 import com.newuniverse.nusmp.weaponpage.WeaponPageNet;
 import com.newuniverse.nusmp.weaponpage.WeaponPageRules;
+import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
+import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,10 +55,15 @@ public final class WeaponPageClient {
         public float[] barFrac = new float[0];
     }
 
+    /** The label key of the hero weapon's other-form mastery bars (the server's {@code HeroPageView}); the client text is the same as the active form's. */
+    private static final String BAR_FORM_MORE = "anime_multiverse.weaponpage.bar.formmore";
+
     private static View view = View.EMPTY;
     private static Page[] pages = new Page[0];
     private static String[] exLabel = new String[0], exValue = new String[0];
     private static float[] exFrac = new float[0];
+    /** Every "Other masteries" track the last cook found (owner = the weapon index it belongs to); the arrays above are this list minus the selected weapon's own. */
+    private static List<MasteryTracks.Track> tracks = List.of();
     private static boolean have, asked, picked;
     private static int sum, sel;
     private static long lastAct = Long.MIN_VALUE / 2;
@@ -70,6 +80,7 @@ public final class WeaponPageClient {
         exLabel = new String[0];
         exValue = new String[0];
         exFrac = new float[0];
+        tracks = List.of();
         have = asked = picked = false;
         sum = sel = 0;
     }
@@ -85,6 +96,7 @@ public final class WeaponPageClient {
         if (i >= 0 && i < pages.length) {
             sel = i;
             picked = true;
+            refilter();
         }
     }
 
@@ -151,24 +163,68 @@ public final class WeaponPageClient {
         for (int i = 0; i < out.length; i++) out[i] = cook(entries.get(i));
         pages = out;
         sel = Math.max(0, Math.min(Math.max(0, out.length - 1), sel));
-        List<String> label = new ArrayList<>(), value = new ArrayList<>();
-        List<Float> frac = new ArrayList<>();
+        boolean more = MultiverseClientConfig.get(MultiverseClientConfig.WEAPON_MORE_MASTERY);
+        List<MasteryTracks.Track> t = new ArrayList<>();
         CompoundTag g = MultiverseStatusClient.status().getCompound("Grimoire");
         if (g.contains("Mastery")) {
             int m = Math.max(0, Math.min(100, g.getInt("Mastery")));
-            label.add(I18n.get("anime_multiverse.weaponpage.other.grimoire"));
-            value.add(m + "%");
-            frac.add(m / 100f);
+            t.add(new MasteryTracks.Track(I18n.get("anime_multiverse.weaponpage.other.grimoire"), m + "%", m / 100f, MasteryTracks.GLOBAL));
         }
         for (BeastWillMasteryView.Row r : BeastWillMasteryView.rows()) {
-            label.add(I18n.get("anime_multiverse.weaponpage.other.beast", r.name()));
-            value.add(r.pct() + "%");
-            frac.add(r.pct() / 100f);
+            t.add(new MasteryTracks.Track(I18n.get("anime_multiverse.weaponpage.other.beast", r.name()), r.pct() + "%", r.pct() / 100f, MasteryTracks.GLOBAL));
         }
-        exLabel = label.toArray(new String[0]);
-        exValue = value.toArray(new String[0]);
-        exFrac = new float[frac.size()];
-        for (int i = 0; i < exFrac.length; i++) exFrac[i] = frac.get(i);
+        if (more) {
+            String[] sy = SaiyanClient.formMasteryRow();                                   // what the server last sent; null unless the player is an awakened Saiyan in a form
+            if (sy != null) t.add(new MasteryTracks.Track(I18n.get("anime_multiverse.weaponpage.other.saiyan", sy[0]), sy[1] + "%", Integer.parseInt(sy[1]) / 100f, MasteryTracks.GLOBAL));
+            skills(t);
+            for (int i = 0; i < out.length; i++) {                                         // every weapon's own bars; the open weapon's are left out when the list is filtered
+                for (int k = 0; k < out[i].barLabel.length; k++) {
+                    t.add(new MasteryTracks.Track(out[i].title + ": " + out[i].barLabel[k], out[i].barValue[k], out[i].barFrac[k], i));
+                }
+            }
+        }
+        tracks = t;
+        refilter();
+    }
+
+    /** The skills of this mod the player is training (mastery below the maximum), at most {@link MasteryTracks#MAX_SKILLS}: one pass over the learned skills, once per cook. */
+    private static void skills(List<MasteryTracks.Track> out) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+        try {
+            var skills = SkillAPI.getSkillsFrom(mc.player);
+            if (skills == null) return;
+            List<ManasSkillInstance> mine = new ArrayList<>();
+            for (ManasSkillInstance inst : new ArrayList<>(skills.getLearnedSkills())) {
+                ResourceLocation id = inst.getSkillId();
+                if (id != null && "anime_multiverse".equals(id.getNamespace()) && !(inst.getSkill() instanceof GrimoireBook)) mine.add(inst);
+            }
+            double[] have = new double[mine.size()];
+            int[] max = new int[mine.size()];
+            for (int i = 0; i < have.length; i++) {
+                have[i] = mine.get(i).getMastery();
+                max[i] = mine.get(i).getMaxMastery();
+            }
+            for (int i : MasteryTracks.inTraining(have, max, MasteryTracks.MAX_SKILLS)) {
+                float f = MasteryTracks.frac(have[i], max[i]);
+                out.add(new MasteryTracks.Track(mine.get(i).getDisplayName().getString(), I18n.get("anime_multiverse.weaponpage.track.fmt", (int) have[i] + "/" + max[i], MasteryTracks.pct(f)), f, MasteryTracks.GLOBAL));
+            }
+        } catch (RuntimeException | LinkageError ignored) {
+            // no skills readable: no skill tracks
+        }
+    }
+
+    /** Rebuilds the three arrays the pages read: every track except the open weapon's own. Cheap (at most {@link MasteryTracks#MAX_TRACKS} rows), run on a sync, an open or a chip click. */
+    private static void refilter() {
+        MasteryTracks.Track[] t = MasteryTracks.forSelection(tracks, selected());
+        exLabel = new String[t.length];
+        exValue = new String[t.length];
+        exFrac = new float[t.length];
+        for (int i = 0; i < t.length; i++) {
+            exLabel[i] = t[i].label();
+            exValue[i] = t[i].value();
+            exFrac[i] = t[i].frac();
+        }
     }
 
     private static Page cook(Entry e) {
@@ -185,11 +241,20 @@ public final class WeaponPageClient {
         p.barLabel = new String[bars.size()];
         p.barValue = new String[bars.size()];
         p.barFrac = new float[bars.size()];
+        boolean more = MultiverseClientConfig.get(MultiverseClientConfig.WEAPON_MORE_MASTERY);
+        if (!more) {                                                                       // off = the page as before: the hero weapon's other-form bars are not shown
+            List<Bar> kept = new ArrayList<>(bars.size());
+            for (Bar b : bars) if (!b.label().equals(BAR_FORM_MORE)) kept.add(b);
+            bars = kept;
+            p.barLabel = new String[bars.size()];
+            p.barValue = new String[bars.size()];
+            p.barFrac = new float[bars.size()];
+        }
         for (int i = 0; i < bars.size(); i++) {
             Bar b = bars.get(i);
-            String key = b.label();
+            String key = b.label().equals(BAR_FORM_MORE) ? "anime_multiverse.weaponpage.bar.form" : b.label();
             p.barLabel[i] = b.arg().isEmpty() ? tr(key) : I18n.exists(key) ? I18n.get(key, b.arg()) : key;
-            p.barValue[i] = b.level() + "/" + b.max();
+            p.barValue[i] = more ? I18n.get("anime_multiverse.weaponpage.track.fmt", b.level() + "/" + b.max(), b.pct()) : b.level() + "/" + b.max();
             p.barFrac[i] = Math.max(0f, Math.min(1f, b.pct() / 100f));
         }
         List<Opt> opts = e.opts();

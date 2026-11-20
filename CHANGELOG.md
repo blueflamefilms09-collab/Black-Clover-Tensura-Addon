@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.63.0] — The weapon page shows more masteries, and the old Status screen has a Weapon tab
+Owner answer: "a mix": more mastery tracks and the page in the old status screen too.
+- NEW: more mastery bars on the Weapon page (Codex page, hub tab and the new Status tab read the same data): the hero weapon's other started forms, every other weapon's own bars ("Other masteries"), Saiyan form mastery, and the 4 skills of the mod closest to full. Each bar reads `level/max (percent)`.
+- NEW: a Weapon tab on the old Status screen, appended after the Beast Will tab (nothing reordered). It reuses the hub's body and the same packet.
+- NEW: client settings `[weaponpage] moreMastery` and `statusPage` (both true). `moreMastery = false` restores the old page exactly; `statusPage = false` hides the new tab.
+- CHANGED (bound only): `WeaponPageRules.MAX_BARS` 4 -> 8 for the extra form bars; sender checks, rate limit and packet count unchanged.
+- KEPT: the Codex page, the hub tab, the Beast Will page, every packet and rule.
+- COST: no new server work (one page build per accepted request, at most 1 per 10 ticks per player, at most 4 more bars, about 240 bytes). Client: one cook per sync, at most 24 tracks, about 130 draw calls worst case, no per-frame allocation.
+- CAVEATS: not seen in a game (previews are mock-ups); the tab placement on small windows is by eye; an older client rejects a hero page with more than 4 bars.
+
 ## [4.62.2] — Bosses no longer lose health to effects nobody cast
 Owner report: Goku was "taking random damage from some kind of effect"; check the other bosses too.
 - FIXED: every boss of the mod (Goku and the whole Zogratis family, the Black Clover, Midnight and dungeon bosses, anything `BossIdentity` counts as a boss) now takes none of the damage a harmful effect on it deals when nothing attacked: poison, wither, lingering clouds and the damage-over-time effects of other mods. A blow with an attacker (a spell, a weapon, a thrown potion with a named thrower) is untouched, and the void and `/kill` stay real.
