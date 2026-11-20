@@ -250,21 +250,41 @@ Source tags in the table: CANON = the wiki of the series says it; TBATE-KIN = a 
 - Worst case: no entity is spawned; at most 8 foes touched per use; both Integrate abilities used on cooldown at full mastery: 0.11 uses per second, at most 0.11 pictures per second to nearby players (the new kinds send at most 2 per use, the old kinds as before); particles go through the perf budgets.
 - Not checked: the look in a game (no model or texture was changed), the balance against other wills, and the canon beyond the pages listed above.
 
-### Fenrir Will (`fenrir_will`, rank S, MYTH)
+### Fenrir Will (`fenrir_will`, rank SS, DESIGN)
 
-- Source: Wikipedia (English, MediaWiki API): Fenrir
-- Canon fact: Son of Loki, grows rapidly; the gods bound him with Gleipnir and he bit off Tyr's right hand.
-- Canon fact: Foretold to kill Odin at Ragnarok and to be killed in turn by Vidar. Binding foes with the chain is a design twist.
-- First form unlocks at 15 % assimilation (was 10 %); second form asks 60 % mastery (was 50 %).
+- Source: Owner's design document (Fenrir as a TBATE-style SS-class Legacy Beast Will); no wiki was fetched for it
+- Canon fact: Owner's design: an SS-class (Asura-tier) Legacy Beast Will with Spatium (Space), Soul and Ice affinities; it is handed to a bonded companion, never taken from a core.
+- Canon fact: Acquire (The Loyal Hound): hyper-acute senses that track mana signatures and soul-trails, Jotunn-Hound strength, lunging speed and mana-hard skin, and Soul-Tether Perception.
+- Canon fact: Integrate (The Hel-Hound of Ragnarok): Realm Tear (spatial rifts that work as short portals), Fang of the Void (a bite that erases the space to the target), Helheim's Frost and Pack Guardian's Roar.
+- Canon fact: Drawback, the Garm Echo: a soulless body's hunger and rage; the design says a tamer who loses control risks a berserker state (built only as a high strain rate, no berserker state).
+- Note: not built: the third phase (Unbound Assimilation), Helheim's Frost, Pack Guardian's Roar, the armour-ignoring bite, redirecting projectiles and evacuating allies through a rift, the berserker state of the Garm Echo
+- REPLACED (canon layer only): the old canon Fenrir (Gleipnir myth: Sun-Chaser's Leap, Wolf Pounce, Jaws of Ragnarok, Gleipnir snare). The remade (`beast_will`, `canonRework = false`) and classic files are untouched, so those abilities still work there; their lang keys stay.
+- KEPT: id, name, beast, keywords, drop chance (0.6 %), EP need (26000), host races, assimilation and mastery seconds (the daily progress caps drop from 0.3 to 0.15, the Dragon's, because the validator asks it of a legendary will), tint, spirit look and form kind (no art change), core cooldown. Because the will is now SS, a core only works for a holder whose beast is rank SS (the creative core is SS); an S-rank wolf no longer drops it.
+- Owner phases: Acquire = Soul-Tether Perception (`dragon_sight`, foes glow) and Jotunn-Hound Lunge (`ambush`) plus the Jotunn-Hound stats (speed, knockback resistance, health, damage, armour); the hearing and scent senses are only text. Integrate = Realm Tear (`shadow_dash`, a short forward teleport along the ground, no damage) and Fang of the Void (`devour`, a heavy bite that heals a share; it uses the mod's balanced damage and does NOT skip armour).
+- Not built (no existing kind does it): Helheim's Frost (slow of spellcasting, numbness), Pack Guardian's Roar (shatter spells, bolster allies), armour-ignoring bite, projectile redirect and ally evacuation through rifts, the berserker state of the Garm Echo (only a higher strain rate: acquire 0.2/s, integrate 1.3/s), the third phase (Unbound Assimilation, as the Dragon's third phase is also not built).
+- Attunement: the affinity text reads as Ice and Death to `AttuneRules.elementsOf` ('spatium' is not one of its Space words); the will counts as legendary (level 3) like the other SS wills.
+- Cost: no entity is spawned. Per holder: Acquire at most 6 foes glow per 20 s and one lunge per 14 s; Integrate one teleport per 8 s and one bite per 16 s (0.21 uses per second at most, 0.28 pictures per second at most to nearby players, before the milestone cooldown cut). Nothing new is sent or scanned per tick.
+- First form unlocks at 20 % assimilation (was 10 %); second form asks 70 % mastery (was 50 %).
+- Changed: acquire stats: spd x0.06, kb +0.15, hp +3, atk +1.5, arm +1 (was spd x0.05, kb +0.15, hp +3, atk +1)
+- Changed: acquire drainPct 0.8 (was 0.6)
+- Changed: acquire strainPerSecond 0.2 (was 0.12)
+- Changed: integrate stats: atk +6, hp +8, spd x0.15, kb +0.45, aspd x0.1, jump x0.15, arm +4 (was atk +5.5, hp +7, spd x0.15, kb +0.45, aspd x0.1, jump x0.15)
+- Changed: integrate drainPct 2.2 (was 1.8)
+- Changed: integrate strainPerSecond 1.3 (was 1)
+- Changed: minRank SS (was S)
+- Changed: affinity Spatium / Soul / Ice (was Soul)
+- Changed: legendary True (was False)
+- Changed: assimilationDayCap 0.15 (was 0.3)
+- Changed: masteryDayCap 0.15 (was 0.3)
 
 | Form | Slot | Ability | Kind | Status | Numbers |
 |---|---|---|---|---|---|
-| Acquire | 1 | Sun-Chaser's Leap (`soul_light_leap`) | shadow_dash | KEPT  | cost 5 %, cd 80 t, strain 6, targets 1 |
-| Acquire | 2 | Wolf Pounce (`wolf_pounce`) | ambush | NEW replaces loyal_surge (mane_surge) | cost 6 %, cd 300 t, strain 8, targets 1 |
-| Integrate | 1 | Jaws of Ragnarok (`jaws_of_ragnarok`) | ambush | KEPT  | cost 14 %, cd 260 t, strain 22, targets 1 |
-| Integrate | 2 | Gleipnir, the Ribbon That Binds (`gleipnir_snare`) | restraining_vines | KEPT  | cost 16 %, cd 520 t, strain 26, targets 5 |
+| Acquire | 1 | Soul-Tether Perception (`soul_tether_sight`) | dragon_sight | NEW replaces soul_light_leap (shadow_dash) | cost 4 %, cd 400 t, strain 5, targets 6 |
+| Acquire | 2 | Jotunn-Hound Lunge (`jotunn_lunge`) | ambush | NEW replaces loyal_surge (mane_surge) | cost 6 %, cd 280 t, strain 8, targets 1 |
+| Integrate | 1 | Realm Tear (`realm_tear`) | shadow_dash | NEW replaces jaws_of_ragnarok (ambush) | cost 9 %, cd 160 t, strain 12, targets 1 |
+| Integrate | 2 | Fang of the Void (`fang_of_the_void`) | devour | NEW replaces gleipnir_snare (restraining_vines) | cost 12 %, cd 320 t, strain 18, targets 1 |
 
-- Worst case: no entity is spawned; at most 5 foes touched per use; both Integrate abilities used on cooldown at full mastery: 0.13 uses per second, at most 0.13 pictures per second to nearby players (the new kinds send at most 2 per use, the old kinds as before); particles go through the perf budgets.
+- Worst case: no entity is spawned; at most 6 foes touched per use; both Integrate abilities used on cooldown at full mastery: 0.21 uses per second, at most 0.28 pictures per second to nearby players (the new kinds send at most 2 per use, the old kinds as before); particles go through the perf budgets.
 - Not checked: the look in a game (no model or texture was changed), the balance against other wills, and the canon beyond the pages listed above.
 
 ### Hafgufa Will (`hafgufa_will`, rank S, MYTH)
@@ -520,11 +540,12 @@ Source tags in the table: CANON = the wiki of the series says it; TBATE-KIN = a 
 - English first (rule 10): TBATE Fandom wiki through its MediaWiki `api.php` (Beast Will, Beast Tamers, Mana Beasts, Elderwood Guardian, Curtis Glayder/Abilities, Arthur Leywin/Abilities, Sylvia, Sylvie Leywin and others) and English Wikipedia through its `api.php` (introductory extracts of the mythology pages named per will).
 - The Japanese wiki was not needed: every page above came back with enough text.
 - Not used: the Hippocampus page was fetched but no will uses it. No other series wiki was queried for this task, because the 27 wills come only from TBATE, myth and folklore.
+- Fenrir comes from the owner's own design document, not from a wiki: no wiki was fetched for it (rule 10), and nothing in its file claims a wiki source.
 - Details that the fetched text does not give are written as design: the kraken's ink, the minotaur's axe quake, the thunder of the chimera, the Gleipnir snare, the sphinx's stilled time, and the three elder beasts (flame serpent, ridge wolf, gale skimmer) that are relatives of TBATE beasts and not wiki creatures.
 
 ## Not built, not checked
 
-- Not built: a third phase for the dragon (Unleashed Realmheart), forged vs legacy insight, the Elderwood Guardian's mist illusions, the black-fanged wolf's fire-resistant fur (no allowed attribute), new models or textures (the looks are unchanged), and the separate `BeastSkillRules` skills.
+- Not built: a third phase for the dragon (Unleashed Realmheart) and for Fenrir (Unbound Assimilation), forged vs legacy insight, the Elderwood Guardian's mist illusions, the black-fanged wolf's fire-resistant fur (no allowed attribute), new models or textures (the looks are unchanged), and the separate `BeastSkillRules` skills.
 - Not checked in a game: the three new kinds, the milestone line and the new tooltips were written and covered by unit tests, source-scan tests and the CI self-test `beastcanon`, but not seen on a screen. The build was not compiled in the session that wrote it (no Gradle there); CI is the first compile.
 
 ## Tests

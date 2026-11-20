@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.32.0] — Fenrir Will reworked as the SS-class Hel-Hound (canon layer)
+- REPLACED (canon layer only, the default `canonRework` setting): the Fenrir Will is now an SS-class will with the affinity "Spatium / Soul / Ice", from the owner's design document (a Hel-Hound Fenrir). Acquire: Soul-Tether Perception (glow on nearby foes) and Jotunn-Hound Lunge (a lunge from behind), plus tougher stats. Integrate: Realm Tear (a short teleport along the ground) and Fang of the Void (a heavy bite that heals, the closest existing mechanic; it does not skip armour). The first form opens at 20% assimilation and the second at 70% mastery, like the Dragon will.
+- KEPT: the remade and classic Fenrir (`canonRework` false or `classicWills` true brings them back), the id, name, keywords, drop chance, EP need, spirit look and tint, and every other will.
+- Gameplay changes to know: only SS-rank beasts drop this will now (S-rank wolves no longer do), and the day caps are the Dragon's 15 percent because a legendary will must keep them low. The Fenrir creative core is rank SS.
+- NOT built: Phase 3 (Unbound Assimilation), Helheim's Frost, the Pack Guardian's Roar, rift projectile redirect and ally evacuation, the Garm-echo berserker state (only a higher strain rate), the hearing and scent senses (text only).
+- Cost: no entity is spawned; at most 6 foes glow per 20 s; Integrate about 0.21 uses per second and 0.28 pictures per second to nearby players; nothing new runs per tick.
+- Honest caveats: not seen in a game; no wiki was fetched for the design (the owner's document only); the EP need (26000) and the assimilation times are far below the other SS wills, the owner may want to raise them.
+
 ## [4.31.1] — Build fix: the smoke-list test no longer pins `goku.boss` right before `scaling`
 - FIXED (no gameplay change): the Goku boss smoke-list test required `goku.boss,scaling` side by side, which broke when the Berserk skill self-test `berserk.skills` was added between them. It now checks the order and the tail only. Everything from 4.30.0 (Berserk weapons built with a skill), 4.30.1 (remove/restore command) and 4.31.0 (Belial canon gameplay) ships in the first green build; none of those got a build of its own.
 

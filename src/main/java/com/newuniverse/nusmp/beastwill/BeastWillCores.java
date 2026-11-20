@@ -21,7 +21,7 @@ public final class BeastWillCores {
             new Entry("cu_sith_will", "Cu Sith, the Spectral Green Hound of the Moors", BeastRank.A),
             new Entry("dragon_will", "Mana Dragon", BeastRank.SS),
             new Entry("elderwood_guardian_will", "Elderwood Guardian", BeastRank.S),
-            new Entry("fenrir_will", "Fenrir, the chained wolf", BeastRank.S),
+            new Entry("fenrir_will", "Fenrir, the chained wolf", BeastRank.SS),
             new Entry("flame_serpent_will", "Flame-Serpent Elder", BeastRank.A),
             new Entry("hafgufa_will", "Hafgufa, the Island-Sized Sea Monster", BeastRank.S),
             new Entry("hydra_will", "Lernaean Hydra", BeastRank.A),

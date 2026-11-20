@@ -66,18 +66,38 @@ class BeastWillCanonDataTest {
             BeastWillDef c = load(id), b = BeastWillSchemaTest.load(id);
             assertEquals(b.name(), c.name(), id + ": the name is a lang key and a save-facing label");
             assertEquals(b.beast(), c.beast(), id);
-            assertEquals(b.affinity(), c.affinity(), id + ": the attunement reads the affinity text");
+            if (!id.equals("fenrir_will")) assertEquals(b.affinity(), c.affinity(), id + ": the attunement reads the affinity text");
             assertEquals(b.sources(), c.sources(), id);
             assertEquals(b.keywords(), c.keywords(), id);
             assertEquals(b.tint(), c.tint(), id + ": the core colour is the tint");
-            assertEquals(b.minRank(), c.minRank(), id);
-            assertEquals(b.legendary(), c.legendary(), id);
+            if (!id.equals("fenrir_will")) { assertEquals(b.minRank(), c.minRank(), id); assertEquals(b.legendary(), c.legendary(), id); }
             assertEquals(b.dropChance(), c.dropChance(), 1e-12, id);
             assertEquals(b.assimilationSeconds(), c.assimilationSeconds(), 1e-9, id);
             assertEquals(b.masterySeconds(), c.masterySeconds(), 1e-9, id);
             if (!id.equals("shadow_panther_will")) assertEquals(b.requireEp(), c.requireEp(), 1e-9, id + ": only the AA-class panther asks for more EP");
         }
         assertTrue(load("shadow_panther_will").requireEp() >= BeastWillSchemaTest.load("shadow_panther_will").requireEp(), "the AA panther asks at least as much as before");
+    }
+
+    @Test
+    void fenrirIsTheOwnersSsClassHelHoundAndOnlyTheCanonLayerChanged() throws Exception {
+        BeastWillDef c = load("fenrir_will"), b = BeastWillSchemaTest.load("fenrir_will");
+        assertEquals(BeastRank.SS, c.minRank());
+        assertTrue(c.minRank().atLeast(b.minRank()), "the remade will asked S; a core of rank SS still opens it with the rework off");
+        assertEquals("Spatium / Soul / Ice", c.affinity());
+        assertTrue(c.legendary(), "SS wills are legendary");
+        assertEquals(0.20, c.acquire().unlockAssimilation(), 1e-9);
+        assertEquals(0.70, c.integrate().unlockMastery(), 1e-9);
+        assertEquals(List.of("dragon_sight", "ambush"), c.acquire().abilities().stream().map(BeastWillDef.Ability::kind).toList());
+        assertEquals(List.of("shadow_dash", "devour"), c.integrate().abilities().stream().map(BeastWillDef.Ability::kind).toList());
+        assertEquals(List.of("soul_tether_sight", "jotunn_lunge", "realm_tear", "fang_of_the_void"), List.of(c.ability(BeastWillRules.ACQUIRE, 1).id(), c.ability(BeastWillRules.ACQUIRE, 2).id(), c.ability(BeastWillRules.INTEGRATE, 1).id(), c.ability(BeastWillRules.INTEGRATE, 2).id()));
+        assertTrue(c.integrate().drainPct() <= load("dragon_will").integrate().drainPct(), "Fenrir drains no more than the Dragon");
+        assertEquals("soul_light_leap", b.ability(BeastWillRules.ACQUIRE, 1).id(), "the remade Fenrir keeps its own abilities");
+        JsonObject o = json(CANON.resolve("fenrir_will.json"));
+        assertFalse(o.getAsJsonObject("canon").get("source").getAsString().toLowerCase().contains("wikipedia"), "no wiki was fetched for Fenrir");
+        assertEquals("DESIGN", o.get("designTag").getAsString());
+        assertEquals(json(BASE.resolve("fenrir_will.json")).get("spirit"), o.get("spirit"), "the look is unchanged");
+        assertTrue(o.getAsJsonObject("canon").getAsJsonArray("notes").toString().contains("Unbound Assimilation"), "the third phase is written down as not built");
     }
 
     @Test

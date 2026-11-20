@@ -150,7 +150,11 @@ def main():
     for wid, w in C.WILLS.items():
         o = old[wid]
         d = copy.deepcopy(o)
-        rank = o["minRank"]
+        rank = w.get("rank", o["minRank"])
+        d["minRank"] = rank
+        d["affinity"] = w.get("affinity", o["affinity"])
+        d["legendary"] = w.get("legendary", o["legendary"])
+        d.update(w.get("TOP", {}))
         for short, op, amount in w.get("passive", []):
             set_stat(d["passive"], short, op, amount)
         d["acquire"]["unlockAssimilation"] = C.ACQUIRE_UNLOCK[rank]
@@ -277,6 +281,8 @@ def write_doc(old, built):
             w("- Canon fact: " + f)
         for n in wl.get("notes", []):
             w("- Note: " + n)
+        for x in wl.get("extra", []):
+            w("- " + x)
         w("- First form unlocks at %d %% assimilation (was %d %%); second form asks %d %% mastery (was %d %%)." % (round(d["acquire"]["unlockAssimilation"] * 100), round(o["acquire"]["unlockAssimilation"] * 100), round(d["integrate"]["unlockMastery"] * 100), round(o["integrate"]["unlockMastery"] * 100)))
         changes = []
         if d["passive"] != o["passive"]:
@@ -287,6 +293,9 @@ def write_doc(old, built):
             for k in ("drainPct", "strainPerSecond", "regen"):
                 if d[ph][k] != o[ph][k]:
                     changes.append("%s %s %g (was %g)" % (ph, k, d[ph][k], o[ph][k]))
+        for k in ("minRank", "affinity", "legendary", "assimilationDayCap", "masteryDayCap"):
+            if d[k] != o[k]:
+                changes.append("%s %s (was %s)" % (k, d[k], o[k]))
         if d["requireEp"] != o["requireEp"]:
             changes.append("requireEp %g (was %g), a design value for the AA class" % (d["requireEp"], o["requireEp"]))
         for c in changes:
@@ -326,11 +335,12 @@ def write_doc(old, built):
     w("- English first (rule 10): TBATE Fandom wiki through its MediaWiki `api.php` (Beast Will, Beast Tamers, Mana Beasts, Elderwood Guardian, Curtis Glayder/Abilities, Arthur Leywin/Abilities, Sylvia, Sylvie Leywin and others) and English Wikipedia through its `api.php` (introductory extracts of the mythology pages named per will).")
     w("- The Japanese wiki was not needed: every page above came back with enough text.")
     w("- Not used: the Hippocampus page was fetched but no will uses it. No other series wiki was queried for this task, because the 27 wills come only from TBATE, myth and folklore.")
+    w("- Fenrir comes from the owner's own design document, not from a wiki: no wiki was fetched for it (rule 10), and nothing in its file claims a wiki source.")
     w("- Details that the fetched text does not give are written as design: the kraken's ink, the minotaur's axe quake, the thunder of the chimera, the Gleipnir snare, the sphinx's stilled time, and the three elder beasts (flame serpent, ridge wolf, gale skimmer) that are relatives of TBATE beasts and not wiki creatures.")
     w("")
     w("## Not built, not checked")
     w("")
-    w("- Not built: a third phase for the dragon (Unleashed Realmheart), forged vs legacy insight, the Elderwood Guardian's mist illusions, the black-fanged wolf's fire-resistant fur (no allowed attribute), new models or textures (the looks are unchanged), and the separate `BeastSkillRules` skills.")
+    w("- Not built: a third phase for the dragon (Unleashed Realmheart) and for Fenrir (Unbound Assimilation), forged vs legacy insight, the Elderwood Guardian's mist illusions, the black-fanged wolf's fire-resistant fur (no allowed attribute), new models or textures (the looks are unchanged), and the separate `BeastSkillRules` skills.")
     w("- Not checked in a game: the three new kinds, the milestone line and the new tooltips were written and covered by unit tests, source-scan tests and the CI self-test `beastcanon`, but not seen on a screen. The build was not compiled in the session that wrote it (no Gradle there); CI is the first compile.")
     w("")
     w("## Tests")

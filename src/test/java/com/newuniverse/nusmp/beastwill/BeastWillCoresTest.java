@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class BeastWillCoresTest {
     private static final File DIR = new File("src/main/resources/data/anime_multiverse/beast_will");
+    private static final File CANON_DIR = new File("src/main/resources/data/anime_multiverse/beast_will_canon");
 
     @Test
     void everyDataFileHasExactlyOneRowWithItsBeastAndItsOwnRank() throws Exception {
@@ -37,8 +38,13 @@ class BeastWillCoresTest {
             assertEquals(o.get("beast").getAsString(), e.beast(), e.will() + ": the beast name");
             BeastRank min = BeastRank.byName(o.get("minRank").getAsString());
             assertNotNull(min, e.will() + ": minRank");
-            assertEquals(min, e.rank(), e.will() + ": the core carries the will's own lowest rank");
-            assertTrue(e.rank().atLeast(min));
+            // the canon layer may raise a will's rank (Fenrir is SS there): the core carries the highest lowest-rank of the layers, so it opens the will in every one
+            JsonObject canon;
+            try (Reader r = new FileReader(new File(CANON_DIR, e.will() + ".json"))) { canon = JsonParser.parseReader(r).getAsJsonObject(); }
+            BeastRank canonMin = BeastRank.byName(canon.get("minRank").getAsString());
+            assertNotNull(canonMin, e.will() + ": canon minRank");
+            assertEquals(canonMin.atLeast(min) ? canonMin : min, e.rank(), e.will() + ": the core carries the will's own lowest rank");
+            assertTrue(e.rank().atLeast(min) && e.rank().atLeast(canonMin));
         }
     }
 
