@@ -264,7 +264,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
             float[] sf = ctx.firstPerson() && mesh.shieldFp != null && com.newuniverse.nusmp.visual.shields.ShieldFrame.firstPersonVanillaSize() ? mesh.shieldFp : mesh.shield;      // 4.36.2: in first person a shield is the size of vanilla's, not the 1.3-wide box (it filled the screen)
-            pose.translate(sf[1], sf[2], sf[3]);
+            pose.translate(sf[1], sf[2], sf[3] + com.newuniverse.nusmp.visual.shields.ShieldFrame.armGap());       // 4.71.2: a little off the arm
             pose.scale(sf[0], sf[0], sf[0]);
         } else if (wrap == null) {
             if (gripShift != null) pose.translate(gripShift[0], gripShift[1], gripShift[2]);       // 1.111.0 (docs/weapon_grip.md): the mesh's grip point lands on the hand (third person) / on a sword's hilt spot (first person)

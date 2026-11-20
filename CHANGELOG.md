@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.71.2] — The hero Shield sits a little off the arm
+Owner request: move the shield off the arm a bit.
+- REPLACED (client; `-Danime_multiverse.shieldSize=old` restores it together with the 4.71.0 size change): every shield mesh is drawn 0.14 blocks further along its front axis (`ShieldFrame.ARM_GAP`), away from the forearm when raised and from the hip when lowered. Facing and scale are unchanged.
+- KEPT: the vanilla display values, the fit box and depth limit of 4.71.0, every old model and setting.
+- COST: none (one added constant in the existing pose translate).
+- CAVEATS: software preview only (`docs/previews/shields/`), first-person tiles are drawn at the old size; not seen in a game.
+- Includes everything of 4.65.0 to 4.71.1 (see below): no release was published for those versions because of three outdated relic tests, fixed in 4.71.1.
+
 ## [4.71.1] — Build fix for 4.65.0 to 4.71.0 (the Devil Contract is a plain item)
 - Fix: three relic tests (`RelicHandCoverageTest`, `RelicThemesDataTest`, `Wave102DefsTest`) still expected `devil_contract` to be a relic def, which 4.65.0 turned into a plain craftable item; every build since 4.65.0 failed on them, so no release was published for 4.65.0 to 4.71.0. The tests now know that item. The Devil Contract itself is unchanged.
 - This release carries everything of 4.65.0 to 4.71.0 (see the sections below): infernal contract item, Sinbad armour fit and voices, reset scrolls, curse bow stave, Hub v2, style wave 2, the hero Shield (vanilla guard, reflect, size), any-target techniques, wings on the back, devil mastery and canon devil looks.

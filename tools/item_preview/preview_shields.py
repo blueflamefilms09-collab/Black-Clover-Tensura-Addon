@@ -183,13 +183,19 @@ def old_frame(place, quads):
 
 
 def new_frame(quads):
-    """ShieldFrame.fit: scale to the box, centre, front plane on the plate's front."""
+    """ShieldFrame.fit (4.71.2): scale into 1.1 x 1.0 blocks and at most 0.7 deep, centre, front plane on the plate's front, straps no lower than -0.25, then ARM_GAP (0.14) further along the front axis."""
     xs = [v for (_, p, _) in quads for v in p[:, 0]]
     ys = [v for (_, p, _) in quads for v in p[:, 1]]
     zs = [v for (_, p, _) in quads for v in p[:, 2]]
-    w, h = max(xs) - min(xs), max(ys) - min(ys)
-    k = min(1.3 / w, 1.2 / h)
-    return T(-k * (min(xs) + max(xs)) / 2, -k * (min(ys) + max(ys)) / 2, 2 / 16 - k * max(zs)) @ S(k, k, k)
+    w, h, d = max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs)
+    k = min(1.1 / w, 1.0 / h)
+    if d > 0 and k * d > 0.7:
+        k = 0.7 / d
+    tz = 2 / 16 - k * max(zs)
+    back = tz + k * min(zs)
+    if back < -0.25:
+        tz += -0.25 - back
+    return T(-k * (min(xs) + max(xs)) / 2, -k * (min(ys) + max(ys)) / 2, tz + 0.14) @ S(k, k, k)
 
 
 # ---------------------------------------------------------------- rendering

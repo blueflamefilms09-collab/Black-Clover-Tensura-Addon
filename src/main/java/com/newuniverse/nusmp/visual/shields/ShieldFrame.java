@@ -25,6 +25,10 @@ public final class ShieldFrame {
     public static float maxW() { return oldSize() ? OLD_MAX_W : MAX_W; }
     public static float maxH() { return oldSize() ? OLD_MAX_H : MAX_H; }
 
+    /** 4.71.2: how far a mesh is moved off the arm along the shield's front axis (blocks): away from the forearm when raised, away from the hip when lowered. 0 with {@code shieldSize=old}. */
+    public static final float ARM_GAP = 0.14f;
+    public static float armGap() { return oldSize() ? 0f : ARM_GAP; }
+
     /**
      * 4.36.2: the footprint box in FIRST person, in blocks: vanilla's own plate width (12 / 16) and the usual height. Vanilla's first-person display multiplies a shield by 1.25 and
      * holds it close to the camera, so the 1.3 wide box above filled the screen; this keeps a mod shield the size of a vanilla one in the hand.
