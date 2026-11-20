@@ -320,11 +320,52 @@ def rune_e(c, p):
         rune(c, C + math.cos(a) * 11.5, C + math.sin(a) * 11.5, 1.8, p["lt"], k, 0.8)
 
 
+def _tomoe(c, cx, cy, ang, r, col, ol):
+    """One comma of the Sharingan: a head and a curved tail that follows the ring."""
+    hx, hy = cx + math.cos(ang) * r, cy + math.sin(ang) * r
+    c.ell(hx, hy, 1.9, 1.9, col, ol, 0.3)
+    tail = []
+    for k in range(7):
+        a = ang + 0.15 + k * 0.11
+        rr = r - 0.2 * k
+        tail.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr))
+    back = [(x + (cx - x) * 0.18, y + (cy - y) * 0.18) for x, y in reversed(tail[:-1])]
+    c.poly([(hx, hy)] + tail + back, col, ol, 0.3)
+
+
+def sharingan_e(c, p):
+    """Kakashi's Sharingan: a red eye with a ring and three tomoe (the Naruto bar's emblem)."""
+    c.glow(lambda t: t.ell(C, C, 13, 13, WHITE), p["gl"], 2.6, 0.8)
+    c.grad_ell(C, C, 14, 14, shade(p["lt"], 1.1), shade(p["md"], 0.8))
+    c.d.ellipse([(C - 14) * 4, (C - 14) * 4, (C + 14) * 4, (C + 14) * 4], outline=p["dk"] + (255,), width=4)
+    c.d.ellipse([(C - 8.5) * 4, (C - 8.5) * 4, (C + 8.5) * 4, (C + 8.5) * 4], outline=p["dk"] + (255,), width=3)
+    for k in range(3):
+        _tomoe(c, C, C, math.radians(-90 + k * 120), 8.3, p["dk"], p["dk"])
+    c.ell(C, C, 2.4, 2.4, p["dk"])
+
+
+def mangekyo_e(c, p):
+    """Kakashi's Mangekyo (Kamui): the red eye with a three-armed whirl."""
+    c.glow(lambda t: t.ell(C, C, 13, 13, WHITE), p["gl"], 2.6, 0.8)
+    c.grad_ell(C, C, 14, 14, shade(p["lt"], 1.1), shade(p["md"], 0.8))
+    c.d.ellipse([(C - 14) * 4, (C - 14) * 4, (C + 14) * 4, (C + 14) * 4], outline=p["dk"] + (255,), width=4)
+    for k in range(3):
+        a0 = math.radians(-90 + k * 120)
+        pts = []
+        for j in range(12):
+            t = j / 11.0
+            a = a0 + t * 1.5
+            r = 2.0 + t * 10.5
+            pts.append((C + math.cos(a) * r, C + math.sin(a) * r))
+        c.line(pts, p["dk"], 2.4)
+    c.ell(C, C, 2.2, 2.2, p["dk"])
+
+
 EMBLEMS = [("wing", wing), ("thorn_crown", thorn_crown), ("skull", skull_e), ("flame", flame_e), ("snowflake", snowflake), ("bolt", bolt_e), ("void_eye", void_eye), ("leaf", leaf_e),
            ("wave", wave_e), ("blood_drop", blood_drop), ("gear", gear_e), ("mirror", mirror_e), ("root", root_e), ("gate", gate_e), ("horns", horns_e), ("crown_horns", crown_horns),
            ("dragon", dragon_e), ("feather", feather_e), ("halo", halo_e), ("lich", lich_e), ("broken_crown", broken_crown_e), ("ankh", ankh_e), ("plague", plague_e), ("triad", triad_e),
            ("eclipse", eclipse_e), ("sins", sins_e), ("spade", spade_e), ("knight", knight_e), ("labyrinth", labyrinth_e), ("crown", crown_e), ("scales", scales_e), ("anvil", anvil_e),
-           ("whirlpool", whirlpool_e), ("key", key_e), ("spirit", spirit_e), ("rune", rune_e)]
+           ("whirlpool", whirlpool_e), ("key", key_e), ("spirit", spirit_e), ("rune", rune_e), ("sharingan", sharingan_e), ("mangekyo", mangekyo_e)]
 NAMES = [n for n, _ in EMBLEMS]
 COLS = 8
 ROWS = (len(EMBLEMS) + COLS - 1) // COLS

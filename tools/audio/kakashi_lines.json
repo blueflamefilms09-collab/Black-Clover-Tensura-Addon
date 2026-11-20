@@ -1,0 +1,595 @@
+{
+ "voice": null,
+ "note": "Own set for the Kakashi Hatake boss. Audio: generated offline by the coordinator with the Kokoro tool (profile kakashi in tools/audio/offline_voice_profiles.json, main repo). Record offline, one file per id at the path in 'file' (mono, 44.1 kHz, Ogg Vorbis), then run tools/audio/kakashi_voice.py. A line without a file shows its subtitle only.",
+ "groups": {
+  "intro": "the fight starts",
+  "phase_pack": "phase 2 begins (75 percent): the pack",
+  "phase_mangekyo": "phase 3 begins (50 percent): the Mangekyo",
+  "phase_susanoo": "phase 4 begins (25 percent): the Perfect Susanoo",
+  "raikiri": "Raikiri wind-up",
+  "raikiri_miss": "Raikiri dodged, he overshoots",
+  "kunai": "Kunai Barrage",
+  "copy": "Sharingan Copy",
+  "beast_fang": "Lightning Beast Tracking Fang",
+  "water_dragon": "Water Dragon Bullet",
+  "ninken": "Ninken Pursuit",
+  "clones": "Shadow Clone Ambush",
+  "mist": "Hidden Mist",
+  "wall": "Earth Wall",
+  "kamui_step": "Kamui Step",
+  "kamui_raikiri": "Kamui Raikiri",
+  "kamui_shuriken": "Kamui Shuriken",
+  "kamui_vortex": "Kamui Vortex",
+  "kamui_phase": "he phases through a blow",
+  "kawarimi": "he swaps for a log",
+  "susanoo": "Perfect Susanoo rises",
+  "susanoo_break": "the Susanoo shield breaks",
+  "purple": "Purple Lightning wind-up",
+  "hurt": "he takes a heavy hit",
+  "low": "he is under 15 percent",
+  "kill": "a fighter falls",
+  "victory": "every fighter is down, he wins",
+  "idle": "idle taunt while the fight pauses",
+  "defeat": "he is beaten"
+ },
+ "lines": [
+  {
+   "id": "kakashi_intro_1",
+   "group": "intro",
+   "trigger": "the fight starts",
+   "text": "Maa, maa. I came to read in peace, but it seems you are not going to allow that.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_intro_1.ogg"
+  },
+  {
+   "id": "kakashi_intro_2",
+   "group": "intro",
+   "trigger": "the fight starts",
+   "text": "Sorry I am late. I got lost on the road of life.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "manga ch. 2 / anime ep. 1 (his first-meeting excuse), paraphrased; from memory, wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_intro_2.ogg"
+  },
+  {
+   "id": "kakashi_intro_3",
+   "group": "intro",
+   "trigger": "the fight starts",
+   "text": "You walk in like you own the road. Fine. Let me see what you carry.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_intro_3.ogg"
+  },
+  {
+   "id": "kakashi_intro_4",
+   "group": "intro",
+   "trigger": "the fight starts",
+   "text": "My eye is open. Do not make me use all of it.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_intro_4.ogg"
+  },
+  {
+   "id": "kakashi_phase_pack_1",
+   "group": "phase_pack",
+   "trigger": "phase 2 begins (75 percent): the pack",
+   "text": "Good. That was a real strike. Now let us make this a crowd.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_pack_1.ogg"
+  },
+  {
+   "id": "kakashi_phase_pack_2",
+   "group": "phase_pack",
+   "trigger": "phase 2 begins (75 percent): the pack",
+   "text": "Pakkun, everyone. Get out here, we have company.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_pack_2.ogg"
+  },
+  {
+   "id": "kakashi_phase_mangekyo_1",
+   "group": "phase_mangekyo",
+   "trigger": "phase 3 begins (50 percent): the Mangekyo",
+   "text": "I borrowed this eye from a friend. He would want me to use it well.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_mangekyo_1.ogg"
+  },
+  {
+   "id": "kakashi_phase_mangekyo_2",
+   "group": "phase_mangekyo",
+   "trigger": "phase 3 begins (50 percent): the Mangekyo",
+   "text": "Space bends where I look. Try to stand on the right side of it.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_mangekyo_2.ogg"
+  },
+  {
+   "id": "kakashi_phase_susanoo_1",
+   "group": "phase_susanoo",
+   "trigger": "phase 4 begins (25 percent): the Perfect Susanoo",
+   "text": "So this is what the last of it feels like. Then I will not hold back.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_susanoo_1.ogg"
+  },
+  {
+   "id": "kakashi_phase_susanoo_2",
+   "group": "phase_susanoo",
+   "trigger": "phase 4 begins (25 percent): the Perfect Susanoo",
+   "text": "Come out. Show them what a promise looks like when it has a sword.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_phase_susanoo_2.ogg"
+  },
+  {
+   "id": "kakashi_raikiri_1",
+   "group": "raikiri",
+   "trigger": "Raikiri wind-up",
+   "text": "Raikiri.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "jutsu call-out, name from the series (Raikiri, 'Lightning Cutter'); wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_raikiri_1.ogg"
+  },
+  {
+   "id": "kakashi_raikiri_2",
+   "group": "raikiri",
+   "trigger": "Raikiri wind-up",
+   "text": "Hold still. This will only take one breath.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_raikiri_2.ogg"
+  },
+  {
+   "id": "kakashi_raikiri_miss_1",
+   "group": "raikiri_miss",
+   "trigger": "Raikiri dodged, he overshoots",
+   "text": "Oh. You moved. That is annoying.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_raikiri_miss_1.ogg"
+  },
+  {
+   "id": "kakashi_raikiri_miss_2",
+   "group": "raikiri_miss",
+   "trigger": "Raikiri dodged, he overshoots",
+   "text": "Not bad. Do it again and I will be impressed.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_raikiri_miss_2.ogg"
+  },
+  {
+   "id": "kakashi_kunai_1",
+   "group": "kunai",
+   "trigger": "Kunai Barrage",
+   "text": "Little things first. They add up.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kunai_1.ogg"
+  },
+  {
+   "id": "kakashi_kunai_2",
+   "group": "kunai",
+   "trigger": "Kunai Barrage",
+   "text": "Watch the tags, not the knives.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kunai_2.ogg"
+  },
+  {
+   "id": "kakashi_copy_1",
+   "group": "copy",
+   "trigger": "Sharingan Copy",
+   "text": "I saw that. Thank you, I will keep it.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_copy_1.ogg"
+  },
+  {
+   "id": "kakashi_copy_2",
+   "group": "copy",
+   "trigger": "Sharingan Copy",
+   "text": "Mine now. Here, have it back.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_copy_2.ogg"
+  },
+  {
+   "id": "kakashi_beast_fang_1",
+   "group": "beast_fang",
+   "trigger": "Lightning Beast Tracking Fang",
+   "text": "Lightning Beast. Run it down.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_beast_fang_1.ogg"
+  },
+  {
+   "id": "kakashi_beast_fang_2",
+   "group": "beast_fang",
+   "trigger": "Lightning Beast Tracking Fang",
+   "text": "It follows. Find a wall.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_beast_fang_2.ogg"
+  },
+  {
+   "id": "kakashi_water_dragon_1",
+   "group": "water_dragon",
+   "trigger": "Water Dragon Bullet",
+   "text": "Water Dragon.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "jutsu call-out, Water Style: Water Dragon Bullet; wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_water_dragon_1.ogg"
+  },
+  {
+   "id": "kakashi_water_dragon_2",
+   "group": "water_dragon",
+   "trigger": "Water Dragon Bullet",
+   "text": "You are wet now. That matters, you will see why.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_water_dragon_2.ogg"
+  },
+  {
+   "id": "kakashi_ninken_1",
+   "group": "ninken",
+   "trigger": "Ninken Pursuit",
+   "text": "Hunting Fang. Bring them to the ground.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_ninken_1.ogg"
+  },
+  {
+   "id": "kakashi_ninken_2",
+   "group": "ninken",
+   "trigger": "Ninken Pursuit",
+   "text": "The pack never loses a scent.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_ninken_2.ogg"
+  },
+  {
+   "id": "kakashi_clones_1",
+   "group": "clones",
+   "trigger": "Shadow Clone Ambush",
+   "text": "One of me is bad enough. Three is rude, I know.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_clones_1.ogg"
+  },
+  {
+   "id": "kakashi_clones_2",
+   "group": "clones",
+   "trigger": "Shadow Clone Ambush",
+   "text": "Surround them.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_clones_2.ogg"
+  },
+  {
+   "id": "kakashi_mist_1",
+   "group": "mist",
+   "trigger": "Hidden Mist",
+   "text": "Fog. A very old trick, and still a good one.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_mist_1.ogg"
+  },
+  {
+   "id": "kakashi_mist_2",
+   "group": "mist",
+   "trigger": "Hidden Mist",
+   "text": "Breathe slowly. You cannot see me, but I can see you.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_mist_2.ogg"
+  },
+  {
+   "id": "kakashi_wall_1",
+   "group": "wall",
+   "trigger": "Earth Wall",
+   "text": "Earth Style. Nothing flies through this.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_wall_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_step_1",
+   "group": "kamui_step",
+   "trigger": "Kamui Step",
+   "text": "Behind you.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_step_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_step_2",
+   "group": "kamui_step",
+   "trigger": "Kamui Step",
+   "text": "The door is on the other side. Mind the draft.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_step_2.ogg"
+  },
+  {
+   "id": "kakashi_kamui_raikiri_1",
+   "group": "kamui_raikiri",
+   "trigger": "Kamui Raikiri",
+   "text": "Kamui. Raikiri.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "jutsu call-out, names from the series (Kamui Raikiri); wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_raikiri_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_raikiri_2",
+   "group": "kamui_raikiri",
+   "trigger": "Kamui Raikiri",
+   "text": "You will not feel where it comes from.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_raikiri_2.ogg"
+  },
+  {
+   "id": "kakashi_kamui_shuriken_1",
+   "group": "kamui_shuriken",
+   "trigger": "Kamui Shuriken",
+   "text": "Kamui Shuriken.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "jutsu call-out, name from the series; wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_shuriken_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_shuriken_2",
+   "group": "kamui_shuriken",
+   "trigger": "Kamui Shuriken",
+   "text": "Four doors. Stand in none of them.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_shuriken_2.ogg"
+  },
+  {
+   "id": "kakashi_kamui_vortex_1",
+   "group": "kamui_vortex",
+   "trigger": "Kamui Vortex",
+   "text": "Everything goes in. Hold on to something.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_vortex_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_vortex_2",
+   "group": "kamui_vortex",
+   "trigger": "Kamui Vortex",
+   "text": "Space turns. Let it take you, or fight it.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_vortex_2.ogg"
+  },
+  {
+   "id": "kakashi_kamui_phase_1",
+   "group": "kamui_phase",
+   "trigger": "he phases through a blow",
+   "text": "Too slow.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_phase_1.ogg"
+  },
+  {
+   "id": "kakashi_kamui_phase_2",
+   "group": "kamui_phase",
+   "trigger": "he phases through a blow",
+   "text": "Nothing there. You hit the air between worlds.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kamui_phase_2.ogg"
+  },
+  {
+   "id": "kakashi_kawarimi_1",
+   "group": "kawarimi",
+   "trigger": "he swaps for a log",
+   "text": "A log. Sorry, it was the closest thing to me.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kawarimi_1.ogg"
+  },
+  {
+   "id": "kakashi_kawarimi_2",
+   "group": "kawarimi",
+   "trigger": "he swaps for a log",
+   "text": "Ha. You hit the firewood.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kawarimi_2.ogg"
+  },
+  {
+   "id": "kakashi_susanoo_1",
+   "group": "susanoo",
+   "trigger": "Perfect Susanoo rises",
+   "text": "Susanoo.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "jutsu call-out, name from the series (Susanoo); wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_susanoo_1.ogg"
+  },
+  {
+   "id": "kakashi_susanoo_2",
+   "group": "susanoo",
+   "trigger": "Perfect Susanoo rises",
+   "text": "Stand behind me. All of you who have not run yet.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_susanoo_2.ogg"
+  },
+  {
+   "id": "kakashi_susanoo_break_1",
+   "group": "susanoo_break",
+   "trigger": "the Susanoo shield breaks",
+   "text": "It cracked. Good. I was getting tired of hiding behind it.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_susanoo_break_1.ogg"
+  },
+  {
+   "id": "kakashi_susanoo_break_2",
+   "group": "susanoo_break",
+   "trigger": "the Susanoo shield breaks",
+   "text": "Fair enough. That was a strong hit.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_susanoo_break_2.ogg"
+  },
+  {
+   "id": "kakashi_purple_1",
+   "group": "purple",
+   "trigger": "Purple Lightning wind-up",
+   "text": "Purple Lightning. This is the last of what I have.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_1.ogg"
+  },
+  {
+   "id": "kakashi_purple_2",
+   "group": "purple",
+   "trigger": "Purple Lightning wind-up",
+   "text": "Do not let it find your feet.",
+   "delivery": "a sharp shout, clipped, held for a beat",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_purple_2.ogg"
+  },
+  {
+   "id": "kakashi_hurt_1",
+   "group": "hurt",
+   "trigger": "he takes a heavy hit",
+   "text": "Heh. That one stung.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_hurt_1.ogg"
+  },
+  {
+   "id": "kakashi_hurt_2",
+   "group": "hurt",
+   "trigger": "he takes a heavy hit",
+   "text": "Good. Better than I expected.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_hurt_2.ogg"
+  },
+  {
+   "id": "kakashi_hurt_3",
+   "group": "hurt",
+   "trigger": "he takes a heavy hit",
+   "text": "Careful. I am still standing.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_hurt_3.ogg"
+  },
+  {
+   "id": "kakashi_hurt_4",
+   "group": "hurt",
+   "trigger": "he takes a heavy hit",
+   "text": "Those who abandon their comrades are worse than scum. Remember that.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "manga ch. 15 / anime ep. 24 (the 'scum' speech), shortened; from memory, wiki not reachable",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_hurt_4.ogg"
+  },
+  {
+   "id": "kakashi_low_1",
+   "group": "low",
+   "trigger": "he is under 15 percent",
+   "text": "My chakra is nearly gone. So is the time you have to finish this.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_low_1.ogg"
+  },
+  {
+   "id": "kakashi_low_2",
+   "group": "low",
+   "trigger": "he is under 15 percent",
+   "text": "One more exchange. Make it count.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_low_2.ogg"
+  },
+  {
+   "id": "kakashi_kill_1",
+   "group": "kill",
+   "trigger": "a fighter falls",
+   "text": "That is how it ends when you are careless. I am sorry.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kill_1.ogg"
+  },
+  {
+   "id": "kakashi_kill_2",
+   "group": "kill",
+   "trigger": "a fighter falls",
+   "text": "Do not follow them. Back up, breathe, begin again.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_kill_2.ogg"
+  },
+  {
+   "id": "kakashi_victory_1",
+   "group": "victory",
+   "trigger": "every fighter is down, he wins",
+   "text": "It is over. Next time, bring more than strength.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_victory_1.ogg"
+  },
+  {
+   "id": "kakashi_victory_2",
+   "group": "victory",
+   "trigger": "every fighter is down, he wins",
+   "text": "Remember this. Strength alone never protected anyone.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_victory_2.ogg"
+  },
+  {
+   "id": "kakashi_idle_1",
+   "group": "idle",
+   "trigger": "idle taunt while the fight pauses",
+   "text": "Take your time. I was late once, I know the feeling.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_idle_1.ogg"
+  },
+  {
+   "id": "kakashi_idle_2",
+   "group": "idle",
+   "trigger": "idle taunt while the fight pauses",
+   "text": "Maa, are you done catching your breath?",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "his 'maa, maa' verbal habit; line in his manner",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_idle_2.ogg"
+  },
+  {
+   "id": "kakashi_idle_3",
+   "group": "idle",
+   "trigger": "idle taunt while the fight pauses",
+   "text": "Your friends are watching your back. Do not waste that.",
+   "delivery": "low, focused, quiet intensity",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_idle_3.ogg"
+  },
+  {
+   "id": "kakashi_defeat_1",
+   "group": "defeat",
+   "trigger": "he is beaten",
+   "text": "Well. I read the whole book and you wrote the last page. Good ending.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_defeat_1.ogg"
+  },
+  {
+   "id": "kakashi_defeat_2",
+   "group": "defeat",
+   "trigger": "he is beaten",
+   "text": "You are strong. Look after each other, that is where it comes from.",
+   "delivery": "calm, lazy, a little amused, relaxed breathing",
+   "source": "in his manner (original wording, no wiki source)",
+   "file": "assets/anime_multiverse/sounds/kakashi/kakashi_defeat_2.ogg"
+  }
+ ]
+}

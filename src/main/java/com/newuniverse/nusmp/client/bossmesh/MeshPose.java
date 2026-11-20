@@ -22,7 +22,9 @@ public final class MeshPose {
     /** What the body is doing: picked from the renderer's clip by {@link #action}. */
     public static final int NONE = 0, SWING = 1, SLAM = 2, STOMP = 3, ROAR = 4, PUNCH = 5, HURL = 6, RISE = 7, DEATH = 8, FLINCH = 9,
             /** Wave 3 (appended): the staff levelled at a target (the God of Order's beam), a bow. */
-            BEAM = 10, BOW = 11;
+            BEAM = 10, BOW = 11,
+            /** Kakashi boss (docs/bosses/kakashi.md, appended): a low lunge with the right hand crackling, the hand seals, a throw, the eye hand, the arms spread over the Susanoo. */
+            RAIKIRI = 12, SEALS = 13, THROW = 14, KAMUI_EYE = 15, SUSANOO = 16;
 
     /** rx, ry, rz per role. */
     public final float[] rot = new float[ALL_ROLES * 3];
@@ -185,6 +187,48 @@ public final class MeshPose {
                 add(HEAD, 0, 0.25f * k);
                 add(ARM_L, 0, -0.3f * k);
                 add(ARM_R, 0, -0.3f * k);
+            }
+            case RAIKIRI -> {                                                 // crouch, the right hand drawn back at the hip, then driven forward at 0.8
+                float back = smooth(0f, 0.7f, t) * (1f - smooth(0.74f, 0.8f, t)), hit = smooth(0.74f, 0.8f, t) * (1f - smooth(0.86f, 1f, t));
+                add(ARM_R, 0, 0.5f * back - 1.5f * hit);
+                add(FOREARM_R, 0, -0.5f * back);
+                add(ARM_L, 0, -0.9f * back);
+                add(TORSO, 0, 0.3f * back + 0.25f * hit);
+                add(TORSO, 1, 0.3f * back - 0.4f * hit);
+                add(LEG_L, 0, -0.45f * back);
+                add(LEG_R, 0, 0.35f * back);
+                rootY -= 1.8f * back;
+            }
+            case SEALS -> {                                                   // both hands together in front of the chest, a small shake
+                float k = smooth(0f, 0.35f, t) * (1f - smooth(0.9f, 1f, t)), tremble = 0.04f * k * (float) Math.sin(age * 1.7f);
+                add(ARM_L, 0, -1.2f * k + tremble);
+                add(ARM_R, 0, -1.2f * k - tremble);
+                add(ARM_L, 2, 0.5f * k);
+                add(ARM_R, 2, -0.5f * k);
+                add(FOREARM_L, 0, -1.2f * k);
+                add(FOREARM_R, 0, -1.2f * k);
+                add(HEAD, 0, 0.12f * k);
+            }
+            case THROW -> {                                                   // the right arm back, then snapped forward at 0.8
+                float back = smooth(0f, 0.7f, t) * (1f - smooth(0.74f, 0.8f, t)), snap = smooth(0.74f, 0.8f, t) * (1f - smooth(0.86f, 1f, t));
+                add(ARM_R, 0, 0.9f * back - 1.7f * snap);
+                add(FOREARM_R, 0, -0.4f * back);
+                add(TORSO, 1, 0.35f * back - 0.45f * snap);
+                add(ARM_L, 0, -0.4f * back);
+            }
+            case KAMUI_EYE -> {                                               // a hand lifted to the brow, the head tilted
+                float k = smooth(0f, 0.3f, t) * (1f - smooth(0.9f, 1f, t));
+                add(ARM_L, 0, -1.9f * k);
+                add(FOREARM_L, 0, -1.1f * k);
+                add(HEAD, 2, 0.12f * k);
+                add(HEAD, 0, -0.1f * k);
+            }
+            case SUSANOO -> {                                                 // arms spread wide and held, chest out
+                float k = smooth(0f, 0.4f, t) * (1f - smooth(0.9f, 1f, t));
+                add(ARM_L, 2, -1.2f * k);
+                add(ARM_R, 2, 1.2f * k);
+                add(TORSO, 0, -0.14f * k);
+                add(HEAD, 0, -0.2f * k);
             }
             case FLINCH -> {
                 float k = 1f - t;

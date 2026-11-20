@@ -89,9 +89,11 @@ public final class BarStyleResolver {
         put(ENTITY, BarStyleIds.GOD_OF_ORDER, "god_of_order");
         put(ENTITY, BarStyleIds.ZAGRED, "zagred");
         put(ENTITY, BarStyleIds.WARDEN, "floor_warden", "labyrinth_guardian");
+        put(ENTITY, BarStyleIds.NARUTO, "kakashi_hatake");
 
         put(CHARACTER, BarStyleIds.MIDNIGHT_SUN, "fana", "patolli", "rades", "rhya");
         put(CHARACTER, BarStyleIds.ZAGRED, "zagred");
+        put(CHARACTER, BarStyleIds.NARUTO, "kakashi_hatake");
         put(CHARACTER, BarStyleIds.LUCIUS, "lucius_zogratis", "lucius");
         put(CHARACTER, BarStyleIds.SPADE_KINGDOM, "morris", "lucifero");
 

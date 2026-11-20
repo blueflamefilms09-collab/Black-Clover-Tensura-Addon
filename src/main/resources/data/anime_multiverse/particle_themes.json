@@ -2771,6 +2771,227 @@
     ]
    }
   },
+  "boss.kakashi.kunai": {
+   "particles": [
+    "glint",
+    "spark",
+    "ash_flake",
+    "mote_soft"
+   ],
+   "color": "#DDE6F5",
+   "dark": {
+    "particles": [
+     "ash_flake",
+     "cinder",
+     "blood_drop",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.copy": {
+   "particles": [
+    "rune_eye",
+    "glint",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#FF3A3A",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.raikiri": {
+   "particles": [
+    "electric_orb",
+    "rune_bolt",
+    "spark",
+    "smoke_wisp"
+   ],
+   "color": "#8FD8FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.fang": {
+   "particles": [
+    "electric_orb",
+    "spark",
+    "rune_bolt",
+    "mote_soft"
+   ],
+   "color": "#6AA8FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.purple": {
+   "particles": [
+    "electric_orb",
+    "rune_bolt",
+    "star4",
+    "nebula_puff"
+   ],
+   "color": "#B070FF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.water": {
+   "particles": [
+    "droplet",
+    "bubble",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#3F9FFF",
+   "dark": {
+    "particles": [
+     "ink_splat",
+     "droplet",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.ninken": {
+   "particles": [
+    "earth_chip",
+    "ash_flake",
+    "spark",
+    "smoke_wisp"
+   ],
+   "color": "#C8A870",
+   "dark": {
+    "particles": [
+     "ash_flake",
+     "cinder",
+     "blood_drop",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.clone": {
+   "particles": [
+    "smoke_wisp",
+    "mote",
+    "glint",
+    "mote_soft"
+   ],
+   "color": "#E8E8F0",
+   "dark": {
+    "particles": [
+     "feather_black",
+     "void_speck",
+     "soul_wisp",
+     "smoke_wisp"
+    ]
+   }
+  },
+  "boss.kakashi.mist": {
+   "particles": [
+    "mote_soft",
+    "smoke_wisp",
+    "droplet",
+    "mote"
+   ],
+   "color": "#D8E4F0",
+   "dark": {
+    "particles": [
+     "ink_splat",
+     "droplet",
+     "void_speck",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.earth": {
+   "particles": [
+    "earth_chip",
+    "sand_grain",
+    "shard_crystal",
+    "ash_flake"
+   ],
+   "color": "#9A7A4E",
+   "dark": {
+    "particles": [
+     "earth_chip",
+     "void_speck",
+     "cinder",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.kamui": {
+   "particles": [
+    "void_speck",
+    "nebula_puff",
+    "rune_eye",
+    "mana_mote"
+   ],
+   "color": "#8F5BFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "nebula_puff",
+     "rune_eye",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.susanoo": {
+   "particles": [
+    "mana_mote",
+    "glint",
+    "star4",
+    "mote_soft"
+   ],
+   "color": "#A89CFF",
+   "dark": {
+    "particles": [
+     "void_speck",
+     "soul_wisp",
+     "rune_luna",
+     "soot_puff"
+    ]
+   }
+  },
+  "boss.kakashi.log": {
+   "particles": [
+    "earth_chip",
+    "ash_flake",
+    "smoke_wisp",
+    "mote_soft"
+   ],
+   "color": "#A0784A",
+   "dark": {
+    "particles": [
+     "earth_chip",
+     "void_speck",
+     "cinder",
+     "soot_puff"
+    ]
+   }
+  },
   "dungeon": {
    "particles": [
     "mote",

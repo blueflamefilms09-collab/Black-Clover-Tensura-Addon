@@ -46,6 +46,7 @@ public final class ArcSystem {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.realm.BossRealmConfig.SPEC, "nusmp-boss-realm-server.toml");   // the boss realm (docs/boss_realm.md): its own server settings file
         com.newuniverse.nusmp.arc.realm.BossRealm.register(NeoForge.EVENT_BUS);                                 // grace, timeout, ride home, void rescue, login/death cleanup
         com.newuniverse.nusmp.arc.realm.BossRealmSelfTests.register();                                          // keys boss.realm.*
+        com.newuniverse.nusmp.arc.kakashi.KakashiBoot.init(modBus, modContainer);                             // the Kakashi boss: settings file, cleanup events, keys kakashi.boss.*, voice sounds
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

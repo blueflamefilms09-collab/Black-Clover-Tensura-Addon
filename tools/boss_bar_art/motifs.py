@@ -654,6 +654,39 @@ def scales_motif(x):
     g.glow(lambda t: t.line([(cx - 11, 24), (cx + 11, 24)], (255, 255, 255), 1.0), WHITE, 1.4, 0.7)
 
 
+def shuriken_row(x):
+    """Kakashi's bar: four-point throwing stars on the top bezel and a Sharingan-red gem at the cap (the glow layer pulses red)."""
+    p, f, g = x.pal, x.front, x.glow
+    for k, xx in enumerate((70, 122, 174, 226 - 6)):
+        pts = []
+        for j in range(8):
+            a = j * math.pi / 4 + (0.0 if k % 2 == 0 else math.pi / 8)
+            r = 3.4 if j % 2 == 0 else 1.1
+            pts.append((xx + math.cos(a) * r, BY0 - 2.4 + math.sin(a) * r))
+        f.poly(pts, p["lt"], p["dk"], 0.4)
+        f.ell(xx, BY0 - 2.4, 0.7, 0.7, p["dk"])
+        g.glow(lambda t, xx=xx: t.ell(xx, BY0 - 2.4, 1.2, 1.2, (255, 255, 255)), WHITE, 1.0, 0.7)
+    gem(f, BX1 - 10, 30, 3.0, p["gl"], p["hi"], p["dk"])
+    g.glow(lambda t: t.ell(BX1 - 10, 30, 2.4, 2.4, (255, 255, 255)), WHITE, 1.8, 0.9)
+
+
+def tomoe_ring(x):
+    """Three red comma marks and a thin ring round the portrait socket, and a lightning crackle under the bezel."""
+    p, f, g = x.pal, x.front, x.glow
+    cx, cy = 21, 21
+    f.d.ellipse([(cx - 19) * 4, (cy - 19) * 4, (cx + 19) * 4, (cy + 19) * 4], outline=p["lt"] + (255,), width=4)
+    for k in range(3):
+        a = math.radians(-90 + k * 120)
+        px, py = cx + math.cos(a) * 19, cy + math.sin(a) * 19
+        f.ell(px, py, 2.3, 2.3, p["gl"], p["dk"], 0.4)
+        g.glow(lambda t, px=px, py=py: t.ell(px, py, 1.7, 1.7, (255, 255, 255)), WHITE, 1.4, 0.9)
+    pts = [(BX0 + 14, BY1 + 2.2)]
+    for j in range(1, 14):
+        pts.append((BX0 + 14 + j * 14, BY1 + 2.2 + (1.6 if j % 2 else -0.6)))
+    f.line(pts, p["ac"], 0.5)
+    g.glow(lambda t: t.line(pts, (255, 255, 255), 0.6), WHITE, 1.1, 0.8)
+
+
 def embers_unused(x):
     pass
 
@@ -661,4 +694,4 @@ def embers_unused(x):
 MOTIFS = {k: v for k, v in list(globals().items()) if callable(v) and k in (
     "wings", "laurel", "thorns", "drips", "bones", "flames", "icicles", "crystals", "bolts", "void_tendrils", "stars", "vines", "waves", "shells", "fangs", "gears",
     "shards", "roots", "chains", "gate", "horns", "crown", "scales", "halo_small", "halo", "rays", "phylactery", "broken_crown", "tatters", "hieroglyph", "spores",
-    "tendrils", "triad", "eclipse", "sins", "spades", "knight_wings", "meander", "rivets", "embers_top", "whirl", "runes_motif", "orbs", "quills", "scales_motif")}
+    "tendrils", "triad", "eclipse", "sins", "spades", "knight_wings", "meander", "rivets", "embers_top", "whirl", "runes_motif", "orbs", "quills", "scales_motif", "shuriken_row", "tomoe_ring")}

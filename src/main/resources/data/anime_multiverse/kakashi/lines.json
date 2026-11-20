@@ -1,0 +1,311 @@
+{
+ "version": 1,
+ "groups": {
+  "intro": [
+   {
+    "id": "kakashi_intro_1",
+    "text": "Maa, maa. I came to read in peace, but it seems you are not going to allow that."
+   },
+   {
+    "id": "kakashi_intro_2",
+    "text": "Sorry I am late. I got lost on the road of life."
+   },
+   {
+    "id": "kakashi_intro_3",
+    "text": "You walk in like you own the road. Fine. Let me see what you carry."
+   },
+   {
+    "id": "kakashi_intro_4",
+    "text": "My eye is open. Do not make me use all of it."
+   }
+  ],
+  "phase_pack": [
+   {
+    "id": "kakashi_phase_pack_1",
+    "text": "Good. That was a real strike. Now let us make this a crowd."
+   },
+   {
+    "id": "kakashi_phase_pack_2",
+    "text": "Pakkun, everyone. Get out here, we have company."
+   }
+  ],
+  "phase_mangekyo": [
+   {
+    "id": "kakashi_phase_mangekyo_1",
+    "text": "I borrowed this eye from a friend. He would want me to use it well."
+   },
+   {
+    "id": "kakashi_phase_mangekyo_2",
+    "text": "Space bends where I look. Try to stand on the right side of it."
+   }
+  ],
+  "phase_susanoo": [
+   {
+    "id": "kakashi_phase_susanoo_1",
+    "text": "So this is what the last of it feels like. Then I will not hold back."
+   },
+   {
+    "id": "kakashi_phase_susanoo_2",
+    "text": "Come out. Show them what a promise looks like when it has a sword."
+   }
+  ],
+  "raikiri": [
+   {
+    "id": "kakashi_raikiri_1",
+    "text": "Raikiri."
+   },
+   {
+    "id": "kakashi_raikiri_2",
+    "text": "Hold still. This will only take one breath."
+   }
+  ],
+  "raikiri_miss": [
+   {
+    "id": "kakashi_raikiri_miss_1",
+    "text": "Oh. You moved. That is annoying."
+   },
+   {
+    "id": "kakashi_raikiri_miss_2",
+    "text": "Not bad. Do it again and I will be impressed."
+   }
+  ],
+  "kunai": [
+   {
+    "id": "kakashi_kunai_1",
+    "text": "Little things first. They add up."
+   },
+   {
+    "id": "kakashi_kunai_2",
+    "text": "Watch the tags, not the knives."
+   }
+  ],
+  "copy": [
+   {
+    "id": "kakashi_copy_1",
+    "text": "I saw that. Thank you, I will keep it."
+   },
+   {
+    "id": "kakashi_copy_2",
+    "text": "Mine now. Here, have it back."
+   }
+  ],
+  "beast_fang": [
+   {
+    "id": "kakashi_beast_fang_1",
+    "text": "Lightning Beast. Run it down."
+   },
+   {
+    "id": "kakashi_beast_fang_2",
+    "text": "It follows. Find a wall."
+   }
+  ],
+  "water_dragon": [
+   {
+    "id": "kakashi_water_dragon_1",
+    "text": "Water Dragon."
+   },
+   {
+    "id": "kakashi_water_dragon_2",
+    "text": "You are wet now. That matters, you will see why."
+   }
+  ],
+  "ninken": [
+   {
+    "id": "kakashi_ninken_1",
+    "text": "Hunting Fang. Bring them to the ground."
+   },
+   {
+    "id": "kakashi_ninken_2",
+    "text": "The pack never loses a scent."
+   }
+  ],
+  "clones": [
+   {
+    "id": "kakashi_clones_1",
+    "text": "One of me is bad enough. Three is rude, I know."
+   },
+   {
+    "id": "kakashi_clones_2",
+    "text": "Surround them."
+   }
+  ],
+  "mist": [
+   {
+    "id": "kakashi_mist_1",
+    "text": "Fog. A very old trick, and still a good one."
+   },
+   {
+    "id": "kakashi_mist_2",
+    "text": "Breathe slowly. You cannot see me, but I can see you."
+   }
+  ],
+  "wall": [
+   {
+    "id": "kakashi_wall_1",
+    "text": "Earth Style. Nothing flies through this."
+   }
+  ],
+  "kamui_step": [
+   {
+    "id": "kakashi_kamui_step_1",
+    "text": "Behind you."
+   },
+   {
+    "id": "kakashi_kamui_step_2",
+    "text": "The door is on the other side. Mind the draft."
+   }
+  ],
+  "kamui_raikiri": [
+   {
+    "id": "kakashi_kamui_raikiri_1",
+    "text": "Kamui. Raikiri."
+   },
+   {
+    "id": "kakashi_kamui_raikiri_2",
+    "text": "You will not feel where it comes from."
+   }
+  ],
+  "kamui_shuriken": [
+   {
+    "id": "kakashi_kamui_shuriken_1",
+    "text": "Kamui Shuriken."
+   },
+   {
+    "id": "kakashi_kamui_shuriken_2",
+    "text": "Four doors. Stand in none of them."
+   }
+  ],
+  "kamui_vortex": [
+   {
+    "id": "kakashi_kamui_vortex_1",
+    "text": "Everything goes in. Hold on to something."
+   },
+   {
+    "id": "kakashi_kamui_vortex_2",
+    "text": "Space turns. Let it take you, or fight it."
+   }
+  ],
+  "kamui_phase": [
+   {
+    "id": "kakashi_kamui_phase_1",
+    "text": "Too slow."
+   },
+   {
+    "id": "kakashi_kamui_phase_2",
+    "text": "Nothing there. You hit the air between worlds."
+   }
+  ],
+  "kawarimi": [
+   {
+    "id": "kakashi_kawarimi_1",
+    "text": "A log. Sorry, it was the closest thing to me."
+   },
+   {
+    "id": "kakashi_kawarimi_2",
+    "text": "Ha. You hit the firewood."
+   }
+  ],
+  "susanoo": [
+   {
+    "id": "kakashi_susanoo_1",
+    "text": "Susanoo."
+   },
+   {
+    "id": "kakashi_susanoo_2",
+    "text": "Stand behind me. All of you who have not run yet."
+   }
+  ],
+  "susanoo_break": [
+   {
+    "id": "kakashi_susanoo_break_1",
+    "text": "It cracked. Good. I was getting tired of hiding behind it."
+   },
+   {
+    "id": "kakashi_susanoo_break_2",
+    "text": "Fair enough. That was a strong hit."
+   }
+  ],
+  "purple": [
+   {
+    "id": "kakashi_purple_1",
+    "text": "Purple Lightning. This is the last of what I have."
+   },
+   {
+    "id": "kakashi_purple_2",
+    "text": "Do not let it find your feet."
+   }
+  ],
+  "hurt": [
+   {
+    "id": "kakashi_hurt_1",
+    "text": "Heh. That one stung."
+   },
+   {
+    "id": "kakashi_hurt_2",
+    "text": "Good. Better than I expected."
+   },
+   {
+    "id": "kakashi_hurt_3",
+    "text": "Careful. I am still standing."
+   },
+   {
+    "id": "kakashi_hurt_4",
+    "text": "Those who abandon their comrades are worse than scum. Remember that."
+   }
+  ],
+  "low": [
+   {
+    "id": "kakashi_low_1",
+    "text": "My chakra is nearly gone. So is the time you have to finish this."
+   },
+   {
+    "id": "kakashi_low_2",
+    "text": "One more exchange. Make it count."
+   }
+  ],
+  "kill": [
+   {
+    "id": "kakashi_kill_1",
+    "text": "That is how it ends when you are careless. I am sorry."
+   },
+   {
+    "id": "kakashi_kill_2",
+    "text": "Do not follow them. Back up, breathe, begin again."
+   }
+  ],
+  "victory": [
+   {
+    "id": "kakashi_victory_1",
+    "text": "It is over. Next time, bring more than strength."
+   },
+   {
+    "id": "kakashi_victory_2",
+    "text": "Remember this. Strength alone never protected anyone."
+   }
+  ],
+  "idle": [
+   {
+    "id": "kakashi_idle_1",
+    "text": "Take your time. I was late once, I know the feeling."
+   },
+   {
+    "id": "kakashi_idle_2",
+    "text": "Maa, are you done catching your breath?"
+   },
+   {
+    "id": "kakashi_idle_3",
+    "text": "Your friends are watching your back. Do not waste that."
+   }
+  ],
+  "defeat": [
+   {
+    "id": "kakashi_defeat_1",
+    "text": "Well. I read the whole book and you wrote the last page. Good ending."
+   },
+   {
+    "id": "kakashi_defeat_2",
+    "text": "You are strong. Look after each other, that is where it comes from."
+   }
+  ]
+ }
+}

@@ -53,6 +53,15 @@ public final class BossMeshRouting {
         } catch (RuntimeException | LinkageError ex) {
             LOG.error("[anime_multiverse] the Blender body of Lucifero could not be registered: {}", ex.toString());
         }
+        try {                                                                  // Kakashi Hatake (docs/bosses/kakashi.md): his own Blender body "kakashi"; the shared person body is the fallback
+            for (ArcEntities.Entry b : ArcEntities.bosses()) {
+                if (!"kakashi_hatake".equals(b.id())) continue;
+                @SuppressWarnings("unchecked") EntityType<ArcBoss> type = (EntityType<ArcBoss>) b.type().get();
+                e.registerEntityRenderer(type, ctx -> new MeshBossRenderer<ArcBoss>(ctx, new PlayerModelRenderer<>(ctx, new PlayerBodies.Arc()), en -> "kakashi", 0xFF2420, 2.0));
+            }
+        } catch (RuntimeException | LinkageError ex) {
+            LOG.error("[anime_multiverse] the Blender body of Kakashi could not be registered: {}", ex.toString());
+        }
         try {
             EntityType<GodOfOrder> type = OrderEntities.GOD_OF_ORDER.get();
             e.registerEntityRenderer(type, ctx -> new MeshBossRenderer<GodOfOrder>(ctx, new PlayerModelRenderer<>(ctx, new PlayerBodies.Order()),
@@ -75,6 +84,11 @@ public final class BossMeshRouting {
     static int actionOf(String moveId) {
         if (moveId == null) return MeshPose.SLAM;
         String id = moveId.toLowerCase(Locale.ROOT);
+        if (id.contains("raikiri") || id.contains("beast_fang") || id.contains("purple")) return MeshPose.RAIKIRI;          // Kakashi's moves (appended)
+        if (id.contains("kunai") || id.contains("shuriken")) return MeshPose.THROW;
+        if (id.contains("water_dragon") || id.contains("clone") || id.contains("mist") || id.contains("earth_wall") || id.contains("ninken")) return MeshPose.SEALS;
+        if (id.contains("sharingan") || id.contains("kamui_step") || id.contains("kamui_vortex")) return MeshPose.KAMUI_EYE;
+        if (id.contains("susanoo")) return MeshPose.SUSANOO;
         if (id.contains("bow") || id.contains("kneel")) return MeshPose.BOW;
         if (id.contains("beam") || id.contains("ray") || id.contains("lance") || id.contains("smite") || id.contains("judg")) return MeshPose.BEAM;
         if (id.contains("ledger") || id.contains("verdict") || id.contains("erase") || id.contains("law") || id.contains("roar")) return MeshPose.ROAR;

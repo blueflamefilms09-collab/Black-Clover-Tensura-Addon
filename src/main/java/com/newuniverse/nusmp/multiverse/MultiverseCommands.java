@@ -223,6 +223,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.sinweapons.SinCommand.node());                                       // 4.30.1: sin remove|restore <weapon|all> [player] (the Berserk weapon skills)
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
+        root.then(com.newuniverse.nusmp.arc.kakashi.KakashiCommand.node());                                    // kakashi_boss spawn|status|clear (op): the Kakashi boss
         root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.node());                                       // goku_boss spawn|status|clear (op): the Goku boss
         root.then(com.newuniverse.nusmp.arc.magi.SinbadBossCommand.node());                                     // sinbad_boss spawn|status|clear (op): the Sinbad boss
         root.then(bossNode);

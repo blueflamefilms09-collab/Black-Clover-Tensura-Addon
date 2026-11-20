@@ -68,6 +68,10 @@ public final class ArcSpawner {
             Outcome no = com.newuniverse.nusmp.arc.magi.SinbadBosses.gate(sl, at);
             if (no != null) return new Result(no, null, List.of());
         }
+        if (com.newuniverse.nusmp.arc.kakashi.KakashiBosses.owns(c.id())) {                     // the Kakashi boss: his own switch and a hard global cap, for every door (forced summonings too)
+            Outcome no = com.newuniverse.nusmp.arc.kakashi.KakashiBosses.gate(sl, at);
+            if (no != null) return new Result(no, null, List.of());
+        }
         if (com.newuniverse.nusmp.arc.world.ExistingBosses.owns(c.id())) return com.newuniverse.nusmp.arc.world.ExistingBossSpawner.summon(sl, c, at, yaw, party, force);   // 1.61.0: the seven older bosses are not ArcBosses; they are spawned by id
         EntityType<? extends ArcBoss> type = typeOf(c.id());
         if (type == null) return new Result(Outcome.NO_ENTITY, null, List.of());

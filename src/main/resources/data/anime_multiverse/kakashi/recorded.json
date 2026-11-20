@@ -1,0 +1,4 @@
+{
+  "note": "Ids of the Kakashi voice lines that have a recording (written by tools/audio/kakashi_voice.py from the .ogg files in assets/anime_multiverse/sounds/kakashi/). Empty: no audio has been recorded yet, every line shows its text only.",
+  "recorded": []
+}

@@ -49,5 +49,6 @@ public final class ArcCharacters {
         com.newuniverse.nusmp.arc.tier.TierBosses.registerAll();   // 3.33.0: the Tier List bosses of tiers F and D (light bosses of floors 1-20); appended last so the roster order of everything before stays
         com.newuniverse.nusmp.arc.goku.GokuBosses.registerAll();   // the Goku boss (docs/goku_boss.md): appended after the Tier List so the roster order of everything before stays
         com.newuniverse.nusmp.arc.magi.SinbadBosses.registerAll();   // the Sinbad boss (docs/sinbad_boss.md): appended after Goku so the roster order of everything before stays
+        com.newuniverse.nusmp.arc.kakashi.KakashiBosses.registerAll();   // the Kakashi Hatake boss (docs/bosses/kakashi.md): appended after Sinbad so the roster order of everything before stays
     }
 }

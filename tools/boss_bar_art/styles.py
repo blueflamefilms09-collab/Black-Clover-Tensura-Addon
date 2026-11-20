@@ -51,6 +51,7 @@ S("goliath", "boss", "anvil", ["rivets", "embers_top"], "#14161a", "#5a626e", "#
 S("charybdis", "boss", "whirlpool", ["waves", "whirl"], "#031428", "#0d4f8f", "#1e7fc0", "#c8ffff", "#7ff0ff", "#c8ffff", "#6ae0ff", "#0a3f8f", "wave", "rise", name="#E8FFFF", title="#5AB8E0")
 S("warden", "boss", "key", ["rivets", "runes_motif"], "#100c18", "#483a58", "#8a78a0", "#d0c0e8", "#a070ff", "#c8a8ff", "#b898f0", "#3a2a60", "runes", "slide", name="#F4ECFF", title="#A898C8")
 S("zagred", "boss", "rune", ["runes_motif", "quills"], "#0a0414", "#3a1a6a", "#8a5ad0", "#e0c8ff", "#b070ff", "#d8b0ff", "#c898ff", "#2a0e5a", "runes", "flash", name="#F4E8FF", title="#A880E0")
+S("naruto", "boss", "sharingan", ["tomoe_ring", "shuriken_row"], "#070a18", "#222a52", "#8a94b8", "#e8ecff", "#ff3030", "#8ad0ff", "#bfe6ff", "#1a3a9a", "sparks", "flash", "dissolve", name="#F0F4FF", title="#A8B4D8", shield="#A89CFF", seed=9)
 
 IDS = [s["id"] for s in STYLES]
 assert len(set(IDS)) == len(IDS)

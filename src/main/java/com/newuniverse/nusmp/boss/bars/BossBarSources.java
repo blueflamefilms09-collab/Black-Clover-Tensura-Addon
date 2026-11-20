@@ -33,6 +33,7 @@ public final class BossBarSources {
     /** The source of a boss: the entity itself, else the adapter of its family, else the generic one. */
     public static BossBarSource of(LivingEntity e) {
         if (e instanceof BossBarSource s) return s;
+        if (e instanceof com.newuniverse.nusmp.arc.kakashi.KakashiBoss k) return new com.newuniverse.nusmp.arc.kakashi.KakashiBarSource(k);
         if (e instanceof ZogratisBoss z) return new Zogratis(z);
         if (e instanceof LabyrinthGuardianEntity g) return new Guardian(g);
         if (e instanceof ZagredBossEntity z) return new OldZagred(z);

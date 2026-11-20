@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.43.0] — Kakashi Hatake boss
+Owner request: a Kakashi boss, the most powerful version, with all his abilities and his style, custom boss bar, own voice lines, original abilities.
+- NEW (server settings `nusmp-kakashi-boss-server.toml`; `enabled = false` turns him off): boss `kakashi_hatake` (28,000 health, 4 phases at 75/50/25, 15 moves each with a telegraph) with Kamui, Raikiri and Kamui Raikiri, Lightning Beast Fang, Susanoo, ninken, shadow-clone and Sharingan-copy moves, Purple Lightning (original, not canon). Blender-made body (2137 quad lines, 913 far), 5 new mesh poses, boss bar style `naruto`, 13 particle themes, a 62-line voice set with subtitles (no audio yet), `/multiverse kakashi_boss spawn|status|clear`. Smoke prefix `kakashi.boss`.
+- Not a dungeon boss (no floors); not yet connected to the boss realm; drops a Magic Stone, a gold coin and half the time a shinobi pouch or exam-scroll charm.
+- KEPT: everything existing; shared files only got appended lines.
+- Cost: no entities or block changes; at most 6 effect packets per move, 24 particles per call, 12 foes per move; the Beast Fang does one box query per tick for 44 ticks; client one mesh draw per boss.
+- Honest caveats: not compiled before CI and not seen in a game; canon from memory (wikis unreachable); the head looks a little cluttered in the three-quarter render; balance untried; no trophy item.
+
 ## [4.42.0] — 18 vassal weapon forms made in Blender (katana, mirror, instrument, projectile)
 - NEW: Blender-made 3D models with their own skin and glow skin for the forms of four vassal weapon families: the Katana (White Tiger, Soul Eater, Siderite, Sakura Stone), the Mirror shield (White Tiger Clone, Hetsu Kagami, Yata, Envious Glass, Green-Eyed, Mirror of Envy), the Instrument (Guitar, Humming Fairy Lyre, Grilled Fish Horn, Instrument Zero) and the Projectile dagger (Kunai, Chakram, Hatchet, Over Custom Arsenal). Each is at most 5000 quad lines and its skins at most 350 KB. Registered in the weapon class table, grip table and Better Combat inventory.
 - KEPT: the old models, skins and icons of every form; the forms fall back to them wherever no new mesh exists.

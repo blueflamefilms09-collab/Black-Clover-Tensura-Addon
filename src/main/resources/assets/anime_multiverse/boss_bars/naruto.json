@@ -1,0 +1,28 @@
+{
+  "id": "naruto",
+  "family": "boss",
+  "emblem": "sharingan",
+  "fx": "sparks",
+  "entrance": "flash",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#BFE6FF",
+    "fill_bottom": "#1A3A9A",
+    "glow": "#FF3030",
+    "accent": "#8AD0FF",
+    "ghost": "#FFFFFF",
+    "name": "#F0F4FF",
+    "title": "#A8B4D8",
+    "shadow": "#070A18",
+    "frame": "#FFFFFF",
+    "shield": "#A89CFF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#FF6A5A",
+    "lair": "#FFB347",
+    "marker": "#FFC0C0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}
