@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.40.2] — Build fix: the Berserk shape test no longer requires its shape to be the last
+- FIXED (test only): after the solid 3D weapon parts were added behind the Berserk effect shape, one Berserk test still demanded `SIN_WEAPON;` be the final entry. It now accepts later shapes. No game behaviour changes. Builds 4.39.0 and 4.40.x failed on this test; the 4.38.0 jar built and only its release step failed.
+
 ## [4.40.1] — Free offline voice tool for boss lines
 - NEW (tooling only, nothing in the jar changes): `tools/audio/offline_voice.py` and `offline_voice_profiles.json` make boss voice lines with the free Kokoro model (Piper as fallback) instead of ElevenLabs, with a profile per boss (goku, sinbad, kakashi, dark_lord). It converts to the same Ogg and sounds.json conventions as the Shishou voice. KEPT: the Shishou recordings and its converter.
 - Caveat: sample clips were made but not yet listened to; no real boss line has been generated yet.

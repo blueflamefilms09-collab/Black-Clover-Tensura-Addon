@@ -161,7 +161,7 @@ class SinAbilitiesTest {
         for (SinRules.Kind k : SinRules.Kind.values()) assertTrue(scenes.contains("\"sin_" + k.name().toLowerCase() + "_"), "a preview scene for " + k);
         for (int style = 0; style <= SinVfx.STEAL; style++) {
             String shape = read("vfx/VfxShape.java");
-            assertTrue(shape.contains("SIN_WEAPON;") && shape.indexOf("    GIANT_AVATAR,") < shape.indexOf("    SIN_WEAPON;"));
+            assertTrue(shape.contains("    SIN_WEAPON,") && shape.indexOf("    GIANT_AVATAR,") < shape.indexOf("    SIN_WEAPON,"), "other workers append their shapes after it");
         }
     }
 
