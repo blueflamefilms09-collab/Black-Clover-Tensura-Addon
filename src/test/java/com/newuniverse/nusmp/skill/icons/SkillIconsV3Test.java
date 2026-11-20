@@ -67,6 +67,7 @@ class SkillIconsV3Test {
         List<String> missing = new ArrayList<>();
         for (File f : files) {
             String id = f.getName().substring(0, f.getName().length() - 4);
+            if (id.startsWith("ws_")) continue; // weapon-skill icons come from tools/gen_weapon_skill_icons.py (docs/weapon_skills.md), not from this repaint
             if (!m.containsKey(id) && !LEGACY.contains(id)) missing.add(id);
         }
         assertTrue(missing.isEmpty(), "skill icons that are neither repainted nor legacy: " + missing);

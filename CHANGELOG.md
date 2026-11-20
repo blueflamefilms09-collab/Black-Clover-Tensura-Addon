@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.34.1] — Build fix: the skill-icon test knows the weapon-skill icons
+- FIXED (no gameplay change): `SkillIconsV3Test` failed the 4.33.0 and 4.34.0 builds because the 12 new weapon-skill icons (`ws_*`) are not part of the 121 repainted icons. The test now skips the `ws_` icons, which are drawn by their own tool. Everything from 4.33.0 and 4.34.0 ships in the first green build; neither got a build of its own.
+
 ## [4.34.0] — Belial scythe and bone set remade in Blender
 - REPLACED (models only): the Belial scythe mesh (4778 quads, apparent length 2.52, scutes, cracks, teal fuller, eight-pointed gold-teal star on the blade, deeper emblem ring with a teal dragon eye, cloth tassels) and its skin and glow textures; the 23 bone-set pieces re-baked (set total 6358 of the 6400-quad budget, atlas about 341 KB).
 - NEW: two extra bone-set pieces `arm2_l` and `arm2_r` (the second pair of arms, 118 and 117 quads), appended after the old pieces. They have no client anchor yet, so nothing draws them in game yet.
