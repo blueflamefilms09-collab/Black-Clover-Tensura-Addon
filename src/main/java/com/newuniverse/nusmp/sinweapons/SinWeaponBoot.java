@@ -36,6 +36,8 @@ public final class SinWeaponBoot {
         ITEMS.register(modBus);
         container.registerConfig(ModConfig.Type.SERVER, SinWeaponConfig.SPEC, "nusmp-sinweapons-server.toml");
         SinWeaponSelfTests.register();
+        SinSkillService.register(net.neoforged.neoforge.common.NeoForge.EVENT_BUS);            // the five weapon skills: the once-a-second binding look (skill.SinWeaponSkill, docs/berserk_weapons.md)
+        SinSkillSelfTests.register();                                                           // berserk.skills
     }
 
     /** The items drawn as 3D models in hand (client.WeaponRenderer). */

@@ -272,4 +272,16 @@ public final class NUSkills {
     // ---- 3.85.0: Lord of Gluttonous Greed (Ultimate), the skill of the Black Sword Greed (greed package). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, LordOfGluttonousGreedSkill> LORD_OF_GLUTTONOUS_GREED =
             SKILLS.register("lord_of_gluttonous_greed", LordOfGluttonousGreedSkill::new);
+
+    // ---- the five Berserk weapon skills (Ultimate, one class SinWeaponSkill; given once when the weapon binds, sinweapons.SinSkillService). Registered last so no older order changes ----
+    public static final DeferredHolder<ManasSkill, SinWeaponSkill> LORD_OF_SLOTHFUL_WEIGHT =
+            SKILLS.register("lord_of_slothful_weight", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.SLOTH));
+    public static final DeferredHolder<ManasSkill, SinWeaponSkill> LORD_OF_GREEN_EYED_ENVY =
+            SKILLS.register("lord_of_green_eyed_envy", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.ENVY));
+    public static final DeferredHolder<ManasSkill, SinWeaponSkill> LORD_OF_EMPTY_VANITY =
+            SKILLS.register("lord_of_empty_vanity", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.VANITY));
+    public static final DeferredHolder<ManasSkill, SinWeaponSkill> LORD_OF_THE_TWIN_RINGS =
+            SKILLS.register("lord_of_the_twin_rings", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.CHAKRAMS));
+    public static final DeferredHolder<ManasSkill, SinWeaponSkill> SEIFORT_HOLY_JUDGEMENT =
+            SKILLS.register("seifort_holy_judgement", () -> new SinWeaponSkill(com.newuniverse.nusmp.sinweapons.SinRules.Kind.HOLY));
 }

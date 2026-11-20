@@ -66,3 +66,43 @@ Old meshes `weapon_meshes/classic/black_sword_greed_{gauntlets,dual_blades}.txt`
 * `display_presets.py --apply` was run to fit first-person scale of the new long weapons; its other proposed changes (and its manifest rewrite) were reverted so unrelated items were not touched. The new ids are therefore not in `display_presets_manifest.json`.
 * The five items are not in `tools/relics/franchise_overrides.json` (the Black Sword Greed is not either); they are in the "berserk" creative tab through `FranchiseTabs`.
 * Better Combat: only its own presets and animations are used, no custom animations.
+
+## 8. The weapons are built with a skill (the Greed set-up for the other five)
+
+Owner request: "all the Berserk weapons should have the same type of set up as the first one, meaning being built with a skill". The first one is the Black Sword Greed and its Ultimate skill Lord of Gluttonous Greed. The other five now have the same kind of skill. Sources (rule 10): none needed, the skill names are this mod's design (the wiki lists the weapons and sins, not skills); the chakram sin is unnamed in canon, so the "Twin Rings" name is a placeholder.
+
+### NEW / REPLACED / KEPT (rule 5)
+
+* NEW: five Ultimate skills of one class `skill/SinWeaponSkill` (Lord class, like Greed's), registered at the end of `skill/NUSkills`: `lord_of_slothful_weight` (Black Axe of Sloth), `lord_of_green_eyed_envy` (Black Gunblade of Envy), `lord_of_empty_vanity` (Black Spear of Vanity), `lord_of_the_twin_rings` (Black Chakrams, placeholder name), `seifort_holy_judgement` (Seifort Holy Sword). New files: `sinweapons/SinSkillRules` (pure rules), `sinweapons/SinSkillService` (server work), `sinweapons/SinSkillSelfTests` (self-test `berserk.skills`), five 32 x 32 icons `textures/skill/<id>.png` (made by `tools/gen_sin_skill_icons.py`), lang `tools/lang/berserk_skills.json` (merged into `en_us.json`), server setting `soulBound`, tests `SinSkillRulesTest` and `SinSkillSourceScanTest`.
+* REPLACED: nothing. No old skill, item, model or behaviour was removed (rule 2).
+* KEPT: the five items, their ids, models, engravings, Better Combat files, every constant of `SinRules`, the right click and its cooldown, the plain hits (Sloth's slow, Envy's Covet, the Chakrams' twin blow) and `berserk.weapons`. No new data component: the owner is a tag in the stack's custom data.
+
+### The rules in plain words
+
+* A weapon binds to the first player who carries it. Once a second per player the server looks at the inventory (at most 41 slots, staggered by entity id): an unbound stack of one of the five weapons gets that player's UUID written in its custom data (`sin_owner`) and the player is given that weapon's skill. The skill is permanent, so the weapon can be forged again later. A player who already carries a bound stack of the same weapon does not bind a second one (one bound weapon per player per kind). Creative tab and `/give` still produce an unbound stack; the first carrier binds it.
+* A stack bound to another player keeps working as a plain melee weapon (hits, Better Combat swings, Sloth's slow, Covet); only its technique needs the owner. Server setting `soulBound` (in `nusmp-sinweapons-server.toml`, default true): false restores the old behaviour, anyone can use the technique. Another player's stack is never touched, taken or rebound.
+* The right click calls one shared check (`SinSkillService.mayUse`); a refused click shows one message and costs a one-second item cooldown so a held button does not repeat it. Everything else of the right click is unchanged.
+* The skill has two modes, cycled with the skill mode key like Greed's. **Technique**: the weapon of that kind in the main hand fires its technique exactly as the right click does (same gates, same item cooldown, same caps); if it is not in the main hand the player is told to hold it. **Manifest / Store**: if the player holds their own bound weapon in the main hand it is stored back into the skill (the stack is removed); else if they carry it anywhere in the inventory nothing happens; else a fresh bound stack is forged into the empty main hand, or into the inventory, with at least 100 ticks between forges (a store also starts that clock, so storing and forging again at once does not reset the weapon for free). With a full inventory and a busy hand nothing is forged and no cooldown is paid.
+* The new skills are Ultimates of the Lord class (`docs/ultimate_classes.md`): classified, so they take the Lord mastery and tier. They cost no magicule (like Greed's Secret Technique they do not pay through `NUSkill.pay`); the technique keeps its own cooldown.
+
+### Worst-case cost (rule 11)
+
+* Server, once a second per online player: two passes over at most 41 inventory slots (an item-class test each, an NBT read only for the five weapons), no world scan, no entity query, no chunk touched. One int compare per player per tick, the rest of the tick costs nothing. Inside a `PerfProbe` section (`s.sinskill.scan`) and `SafeCast.tick`.
+* Server, per use of a mode: Technique is exactly one right click (one box query of at most 24 entities, at most 8 hits, at most 30 particle packets through `Fx.spray`, nearby players only, cooldown 60 to 160 ticks). Manifest / Store: one inventory pass of at most 41 slots plus one stack created or removed, at most once per 100 ticks per weapon for a forge.
+* State: one long per player and weapon in the player's persistent data (the forge clock); nothing static, nothing to clean up at logout, death or dimension change.
+* Network: no packet of its own. The skill system's own sync of a newly learned skill, and one action-bar message to the one player.
+* Client: nothing new except five 32 x 32 icons.
+
+### Tests and registries that enumerate skills
+
+* `sinweapons/SinSkillRulesTest` (pure): owner, bind, technique gate, manifest decision, cooldown (at least 100 ticks, clock set back), staggered bounded look, every skill has its lang text and its own 32 x 32 icon. `sinweapons/SinSkillSourceScanTest`: no client class, no static player or map, bounded and staggered look, the right click goes through the shared check and the old technique lines are kept, config is a server setting, ids registered as the rules name them, the modes do what the right click does.
+* CI self-test `berserk.skills` (server only, stand-in players, no client class): five skills registered as Lord Ultimates with two modes, an unbound stack binds once and gives its skill, a second stack stays unbound, another player's stack is untouched and does not give the skill, the technique gate follows `soulBound`, Technique slows a zombie ahead and pays the item cooldown, Manifest stores, waits out its cooldown, forges one bound weapon and never a second while one is carried. **Add `berserk.skills` to `SMOKE_EXPECT` in `.github/workflows/smoke.yml`.**
+* Appended to existing registries: `skill/UltimateClassSelfTests` (the five skills are expected to be Lord class) and `skill/UltimateClassSourceScanTest` (`SinWeaponSkill` is LORD and is named in `docs/ultimate_classes.md`, which now lists it); `skill/icons/SkillIconsV3Test` (the five icon ids join the list of icons outside the repaint manifest, like `saiyan_prodigy`). `ResetGuard` protects every skill of `NUSkills.SKILLS` by itself.
+
+### Honest caveats
+
+* Nothing here was compiled with the game's classes or seen in a running game; the pure and source-scan tests were run with plain JUnit, the self-test and the skill classes only by CI. The skill key, the mode key and the messages are untested by a person.
+* The five skill names are the design's, not canon. The icons are simple original pictures drawn by script, not the animated icons of the older Ultimates (they are not in `skill_icons.json` and have no 8-frame strip, so they are static).
+* One bound weapon per player per kind is enforced for what the player carries (the 41 inventory slots). A bound stack kept in a chest or an ender chest is not counted, so a player can forge a second one while the first is stored away; and a bound weapon that drops on death can be picked up and used by anyone as a plain melee weapon (its technique needs the owner). The owner can always forge a new one.
+* A weapon stored by Manifest / Store loses its wear and any enchantments added by hand (it is forged fresh; the engravings are applied again by the existing once-a-second engraving pass). Nothing is stored in the skill.
+* `tools/skills/lang_fragment.json` was not regenerated (it was already stale for other skills and regenerating it would change unrelated entries); the new skill texts are in `tools/lang/berserk_skills.json` and `en_us.json`.

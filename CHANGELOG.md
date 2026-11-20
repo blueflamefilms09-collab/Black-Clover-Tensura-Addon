@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.30.0] — Berserk of Gluttony weapons are built with a skill, like the Black Sword Greed
+- NEW (server setting `soulBound` in `nusmp-sinweapons-server.toml`, default on): each Weapon of Mortal Sin now has its own Ultimate skill (Lord class): Black Axe of Sloth = Lord of Slothful Weight, Black Gunblade of Envy = Lord of Green-Eyed Envy, Black Spear of Vanity = Lord of Empty Vanity, Black Chakrams = Lord of the Twin Rings (placeholder name), Seifort Holy Sword = Seifort's Holy Judgement. The skill names are the mod's design, not canon.
+- NEW: the first player who carries an unbound weapon binds it (owner stored in the item) and learns its skill for good. Skill modes (cycled with the mode key): Technique (the weapon's right-click technique, same cooldown and caps) and Manifest / Store (store the held bound weapon back into the skill, or forge a fresh bound one into the hand or inventory, at least 100 ticks apart).
+- KEPT: the five items, models, engravings, Better Combat files and the right-click techniques. A weapon bound to someone else still works as a plain melee weapon, but its technique needs the owner (`soulBound` false = anyone, as before). Nothing is deleted from anyone's inventory.
+- Cost: one scan per player per second over at most 41 inventory slots, no world scan; no new packets beyond the skill system's own sync; self-test `berserk.skills`.
+- Honest caveats: not seen in a game, and the Java was only compiled by CI. A stored bound weapon in a chest does not block a second forge; a forged weapon starts without wear or hand-added enchantments; the five skill icons are simple script art.
+
 ## [4.29.2] — Fixes: hero-form geo names (startup errors), Grimoire page scroll no longer casts
 - FIXED: the Beast Will / Noelle-style form pieces asked for model files with capital letters (`..._arm_legR.geo.json`, `armL`, `legL`, ...), which Minecraft refuses as invalid resource paths. That logged "Invalid path" and GeckoLib "Couldn't load ..." plus `.geo.json_condition.json` errors for every piece, and could stall startup in big modpacks. The model path is now always lowercase (the files already were), in `GeoSpec`, so every piece of every form loads.
 - FIXED: scrolling to another Grimoire page while the skill key is held no longer casts that page when the key is let go. The page the key went down on is remembered; a release on a different page only ends the hold.

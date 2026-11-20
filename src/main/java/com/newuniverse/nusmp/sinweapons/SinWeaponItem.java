@@ -90,8 +90,19 @@ public class SinWeaponItem extends SwordItem {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide || !(player instanceof ServerPlayer sp) || !SinWeaponConfig.techniques() || sp.isSpectator()) return InteractionResultHolder.pass(stack);
         if (sp.getCooldowns().isOnCooldown(this)) return InteractionResultHolder.fail(stack);
+        if (!SinSkillService.mayUse(sp, stack)) {                                              // a weapon bound to another player is a plain melee weapon (setting soulBound)
+            SinSkillService.refuse(sp, this);
+            return InteractionResultHolder.fail(stack);
+        }
         if (technique(sp)) sp.getCooldowns().addCooldown(this, kind.cooldown);
         return InteractionResultHolder.sidedSuccess(stack, false);
+    }
+
+    /** The technique as the skill's Technique mode asks for it: the same gates, cooldown and caps as the right click, but the owner check is the skill's own. Returns whether it ran. */
+    public boolean fire(ServerPlayer sp) {
+        if (!SinWeaponConfig.techniques() || sp.isSpectator() || sp.getCooldowns().isOnCooldown(this)) return false;
+        if (technique(sp)) sp.getCooldowns().addCooldown(this, kind.cooldown);
+        return true;
     }
 
     /** Runs the kind's technique on the server. Returns whether it did anything (and so costs its cooldown). One box query at most; at most {@link SinRules#targetCap} creatures. */

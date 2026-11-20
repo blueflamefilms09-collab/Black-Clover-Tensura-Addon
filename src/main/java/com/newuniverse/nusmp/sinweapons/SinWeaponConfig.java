@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class SinWeaponConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue TECHNIQUES, COVET;
+    public static final ModConfigSpec.BooleanValue TECHNIQUES, COVET, SOUL_BOUND;
     public static final ModConfigSpec.IntValue DAMAGE_PERCENT;
 
     static {
@@ -16,6 +16,7 @@ public final class SinWeaponConfig {
         b.push("sinweapons");
         TECHNIQUES = b.comment("The right-click techniques (Dead Weight, Green-Eyed Shot, Vain Thrust, Spinning Ring, Grand Cross). false = plain melee weapons.").define("techniques", true);
         COVET = b.comment("The Black Gunblade of Envy takes one beneficial effect from a creature it hits (at most every 2 seconds) and lends it to its wielder for up to 10 seconds. false = no theft.").define("covet", true);
+        SOUL_BOUND = b.comment("A weapon binds to the first player who carries it (and gives them its skill); its right-click technique then needs its owner. false = anyone can use the technique, as before the skills.").define("soulBound", true);
         DAMAGE_PERCENT = b.comment("Strength of the techniques in percent (100 = as listed).").defineInRange("damagePercent", 100, 10, 1000);
         b.pop();
         SPEC = b.build();
@@ -25,5 +26,6 @@ public final class SinWeaponConfig {
 
     public static boolean techniques() { return TECHNIQUES.get(); }
     public static boolean covet() { return COVET.get(); }
+    public static boolean soulBound() { return SOUL_BOUND.get(); }
     public static double damagePercent() { return DAMAGE_PERCENT.get(); }
 }

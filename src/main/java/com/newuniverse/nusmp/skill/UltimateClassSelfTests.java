@@ -60,6 +60,11 @@ public final class UltimateClassSelfTests {
         want.put(NUSkills.KI, UltimateClass.LORD);
         want.put(NUSkills.SHISHOU, UltimateClass.LORD);
         want.put(NUSkills.LORD_OF_GLUTTONOUS_GREED, UltimateClass.LORD);
+        want.put(NUSkills.LORD_OF_SLOTHFUL_WEIGHT, UltimateClass.LORD);
+        want.put(NUSkills.LORD_OF_GREEN_EYED_ENVY, UltimateClass.LORD);
+        want.put(NUSkills.LORD_OF_EMPTY_VANITY, UltimateClass.LORD);
+        want.put(NUSkills.LORD_OF_THE_TWIN_RINGS, UltimateClass.LORD);
+        want.put(NUSkills.SEIFORT_HOLY_JUDGEMENT, UltimateClass.LORD);
         for (var e : want.entrySet()) {
             ManasSkill skill = SkillAPI.getSkillRegistry().get(e.getKey().getId());
             if (!(skill instanceof NUSkill s)) return Result.fail(e.getKey().getId() + " is not an NUSkill");

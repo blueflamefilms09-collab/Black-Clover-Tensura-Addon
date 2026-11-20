@@ -1,0 +1,22 @@
+{
+  "anime_multiverse.skill.lord_of_slothful_weight": "Lord of Slothful Weight",
+  "anime_multiverse.skill.lord_of_slothful_weight.description": "Ultimate. The skill of the Black Axe of Sloth, a Weapon of Mortal Sin. Modes: Technique (Dead Weight, the right click of the axe in your main hand) and Manifest / Store (the axe is built out of the skill: hold it to store it back, otherwise a bound one is forged).",
+  "anime_multiverse.skill.lord_of_green_eyed_envy": "Lord of Green-Eyed Envy",
+  "anime_multiverse.skill.lord_of_green_eyed_envy.description": "Ultimate. The skill of the Black Gunblade of Envy, a Weapon of Mortal Sin. Modes: Technique (Green-Eyed Shot, the right click of the gunblade in your main hand) and Manifest / Store (the gunblade is built out of the skill: hold it to store it back, otherwise a bound one is forged).",
+  "anime_multiverse.skill.lord_of_empty_vanity": "Lord of Empty Vanity",
+  "anime_multiverse.skill.lord_of_empty_vanity.description": "Ultimate. The skill of the Black Spear of Vanity, a Weapon of Mortal Sin. Modes: Technique (Vain Thrust, the right click of the spear in your main hand) and Manifest / Store (the spear is built out of the skill: hold it to store it back, otherwise a bound one is forged).",
+  "anime_multiverse.skill.lord_of_the_twin_rings": "Lord of the Twin Rings",
+  "anime_multiverse.skill.lord_of_the_twin_rings.description": "Ultimate. The skill of the Black Chakrams, a Weapon of Mortal Sin (the sin of the rings is unnamed in canon: the name is a placeholder). Modes: Technique (Spinning Ring, the right click of the chakrams in your main hand) and Manifest / Store (the chakrams are built out of the skill: hold them to store them back, otherwise a bound pair is forged).",
+  "anime_multiverse.skill.seifort_holy_judgement": "Seifort's Holy Judgement",
+  "anime_multiverse.skill.seifort_holy_judgement.description": "Ultimate. The skill of the holy sword Seifort. Modes: Technique (Grand Cross, the right click of the sword in your main hand) and Manifest / Store (the sword is built out of the skill: hold it to store it back, otherwise a bound one is forged).",
+  "anime_multiverse.skill.mode.sinskill.technique": "Technique",
+  "anime_multiverse.skill.mode.sinskill.manifest": "Manifest / Store",
+  "sinskill.msg.granted": "%s answers: its skill is yours.",
+  "sinskill.msg.not_yours": "The weapon does not answer you: it is bound to another.",
+  "sinskill.msg.hold": "Hold %s in your main hand.",
+  "sinskill.msg.stored": "%s returns into the skill.",
+  "sinskill.msg.forged": "%s is forged from the skill.",
+  "sinskill.msg.carried": "%s is already with you.",
+  "sinskill.msg.wait": "The skill is still gathering itself.",
+  "sinskill.msg.full": "There is no room to forge the weapon."
+}

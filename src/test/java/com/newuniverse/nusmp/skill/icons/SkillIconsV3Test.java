@@ -29,7 +29,9 @@ class SkillIconsV3Test {
     /** Icons of skills that were removed (3.44.0 / 4.3.0): kept as they were, not repainted (rule 2). */
     private static final Set<String> LEGACY = Set.of("black_wings", "gold_experience", "gold_experience_requiem", "instant_death", "limitless", "six_eyes", "vector_manipulation",
             // the Saiyan Prodigy (docs/saiyan_prodigy.md): its own painted icon, outside the repaint manifest
-            "saiyan_prodigy");
+            "saiyan_prodigy",
+            // the five Berserk weapon skills (docs/berserk_weapons.md): painted by tools/gen_sin_skill_icons.py, outside the repaint manifest like the Saiyan Prodigy
+            "lord_of_slothful_weight", "lord_of_green_eyed_envy", "lord_of_empty_vanity", "lord_of_the_twin_rings", "seifort_holy_judgement");
 
     private static Map<String, String[]> manifest() throws Exception {
         Map<String, String[]> m = new LinkedHashMap<>();
