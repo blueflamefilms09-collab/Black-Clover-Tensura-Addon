@@ -703,6 +703,7 @@ public final class DjinnEngine {
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 3.0f, 0.5f);
         DjinnFx.bar(p, 64, d.extreme().name(), d.glow());
         p.sendSystemMessage(Component.literal("Extreme Magic: " + d.extreme().name() + ". " + d.extreme().blurb() + " Three seconds.").withColor(d.color()));
+        if (d == Djinn.BELIAL && BelialCanon.on()) p.sendSystemMessage(Component.translatable("belial.chant.zauto").withColor(d.color()));                // the incantation of Belior Zauto
         com.newuniverse.nusmp.audio.voice.Voice.djinn(p, d.name(), "attack");                                                           // 1.110.0: the Djinn calls the first attack of the cast
         DjinnMagic.telegraph(p, r, 0);
     }

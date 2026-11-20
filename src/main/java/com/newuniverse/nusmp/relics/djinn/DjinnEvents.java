@@ -32,6 +32,8 @@ public final class DjinnEvents {
         bus.addListener(DjinnSources::onContainerOpen);
         com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponEvents.register(bus);                                  // the temporary Djinn weapons: enforcement, guards, the Brand mark
         BelialExile.register(bus);                                                                                     // Belial rework: the Exile state, its guards and its cleanup
+        BelialMind.register(bus);                                                                                      // Belial rework 2: Belior Zakera's forgotten minds, the dead weight, their cleanup
+        BelialGrip.register(bus);                                                                                      // Belial rework 2: the skeletal dragon's grip
         com.newuniverse.nusmp.relics.djinn.dark.DarkDjinn.register(bus);                  // the Dark Djinn: Holy Water cleanses it, Lucius may drop a shard
         DjinnSelfTests.register();                                                         // 1.93.0: the self-test djinn.core_rebuild (the server smoke test runs it)
         BelialSelfTests.register();                                                       // Belial rework: the self-tests belial.wiring, belial.sever, belial.exile

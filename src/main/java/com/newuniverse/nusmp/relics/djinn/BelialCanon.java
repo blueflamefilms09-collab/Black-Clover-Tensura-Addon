@@ -20,7 +20,7 @@ public final class BelialCanon {
     public static final Djinn.Trait TRAIT = new Djinn.Trait(Djinn.Special.SLICE, "minecraft:weakness", 60, 0, 0.30, 7.5,
             "Every blow is a thin pale cut: the foe's spirit bleeds and its strength fails.");
     public static final Djinn.Extreme EXTREME = new Djinn.Extreme("Belial Belior Zauto: Severance of the Spirit", Djinn.Shape.NOVA, 16.0, 30.0, "minecraft:weakness", 120, 1,
-            "The pale scythe sweeps once round you: everything within reach is cut loose from its spirit, whatever guards it.");
+            "The spirit of the pale scythe roars all round you: everything within reach is cut loose from its spirit whatever guards it, and every living creature loses its five senses for a few seconds.");
 
     private static volatile Boolean forced;
 

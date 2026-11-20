@@ -1,14 +1,16 @@
 package com.newuniverse.nusmp.relics.djinn.weapon;
 
 /**
- * The cooldowns of one bearer's two weapon acts, in absolute game ticks (pure). A clock whose ready time lies further ahead than any cooldown can be
+ * The cooldowns of one bearer's weapon acts (two, plus the two appended clock slots), in absolute game ticks (pure). A clock whose ready time lies further ahead than any cooldown can be
  * (the world's clock was set back) counts as ready, so a rewound level never locks a weapon.
  */
 public final class ActClock {
     /** No cooldown in the table is longer than this; a ready time further ahead than this is a clock that went backwards. */
     public static final int MAX_COOLDOWN = 1200;
 
-    private final long[] readyAt = new long[2];
+    /** Slots 0 and 1 are the two acts; 2 (Belior Zakera) and 3 (the dual cast of Zagan's act) were appended by the Belial rework. */
+    private static final int SLOTS = 4;
+    private final long[] readyAt = new long[SLOTS];
 
     public long readyAt(int act) { return readyAt[act]; }
 
@@ -25,5 +27,5 @@ public final class ActClock {
     public void start(int act, long now, int ticks) { readyAt[act] = now + Math.max(0, Math.min(MAX_COOLDOWN, ticks)); }
 
     /** Forgets both (the weapon was taken away: a new one starts fresh). */
-    public void clear() { readyAt[0] = 0; readyAt[1] = 0; }
+    public void clear() { java.util.Arrays.fill(readyAt, 0L); }
 }

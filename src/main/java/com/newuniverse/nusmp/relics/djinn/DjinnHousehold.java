@@ -30,7 +30,8 @@ public final class DjinnHousehold {
         DjinnLedger ledger = DjinnLedger.get(server);
         int members = d == null ? 0 : ledger.household(d).size();
         boolean already = d != null && ledger.isMember(d, ally.getUUID());
-        Verdict v = HouseholdRules.invite(d != null, owner == ally, members, already, Bonds.mask(ally), Bonds.multiBond(ally));
+        boolean dual = HouseholdRules.dualLink(BelialConfig.dual(), BelialDual.ownsCanon(ally), d);                      // Belial rework 2: a canon-Belial owner may also share Zagan
+        Verdict v = HouseholdRules.invite(d != null, owner == ally, members, already, HouseholdRules.allyMaskFor(Bonds.mask(ally), dual), Bonds.multiBond(ally));
         if (v != Verdict.OK) { owner.sendSystemMessage(Component.literal(shareText(v, ally)).withStyle(ChatFormatting.RED)); return; }
         long now = owner.level().getGameTime();
         PendingInvites.offer(ally.getUUID(), owner.getUUID(), now);
@@ -69,9 +70,15 @@ public final class DjinnHousehold {
             ally.sendSystemMessage(Component.literal(owner.getName().getString() + "'s Djinn has since drunk the black rukh and cannot be lent.").withStyle(ChatFormatting.GRAY));
             return;
         }
-        Verdict v = HouseholdRules.invite(true, false, ledger.household(d).size(), ledger.isMember(d, ally.getUUID()), Bonds.mask(ally), Bonds.multiBond(ally));
+        boolean dual = HouseholdRules.dualLink(BelialConfig.dual(), BelialDual.ownsCanon(ally), d);
+        Verdict v = HouseholdRules.invite(true, false, ledger.household(d).size(), ledger.isMember(d, ally.getUUID()), HouseholdRules.allyMaskFor(Bonds.mask(ally), dual), Bonds.multiBond(ally));
         if (v != Verdict.OK) { ally.sendSystemMessage(Component.literal(shareText(v, ally)).withStyle(ChatFormatting.RED)); return; }
         if (!ledger.addMember(d, ally.getUUID())) return;
+        if (dual) {                                                                                         // Belial rework 2: the ledger only; the ally keeps Belial as their one Djinn record
+            ally.sendSystemMessage(Component.literal("Zagan is shared with you beside your own Djinn: with Belial's scythe in hand, look straight down and right-click to cast Zagan's first act.").withColor(d.color()));
+            owner.sendSystemMessage(Component.literal(ally.getName().getString() + " accepts a fraction of " + d.displayName() + " beside their own Djinn.").withColor(d.color()));
+            return;
+        }
         DjinnState.of(ally).lend(owner.getUUID(), d);
         DjinnEngine.restore(ally);
         ally.sendSystemMessage(Component.literal("You share " + d.fullName() + " with " + owner.getName().getString() + ". Press the Djinn key (default J) for the Lesser Summon.").withColor(d.color()));
@@ -83,6 +90,10 @@ public final class DjinnHousehold {
         MinecraftServer server = p.getServer();
         DjinnState s = DjinnState.of(p);
         Djinn d = s.lentDjinn();
+        if (server != null && d == null && s.owns() && DjinnLedger.get(server).removeMember(Djinn.ZAGAN, p.getUUID())) {                      // Belial rework 2: the dual link is only a ledger entry
+            p.sendSystemMessage(Component.literal("You give Zagan back.").withColor(Djinn.ZAGAN.color()));
+            return;
+        }
         if (server == null || d == null) { p.sendSystemMessage(Component.literal("You share no Djinn.").withStyle(ChatFormatting.GRAY)); return; }
         DjinnLedger.get(server).removeMember(d, p.getUUID());
         DjinnEngine.dropLent(p);

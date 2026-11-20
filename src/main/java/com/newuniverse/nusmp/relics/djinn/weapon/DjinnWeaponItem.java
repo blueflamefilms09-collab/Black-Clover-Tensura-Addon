@@ -105,6 +105,10 @@ public class DjinnWeaponItem extends Item {
         tip.add(Component.translatable("djinn_weapon.act." + s.one().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
         tip.add(actLine(s, DjinnWeaponRules.ACT_TWO, "tooltip.anime_multiverse.djinn_weapon.act2", color));
         tip.add(Component.translatable("djinn_weapon.act." + s.two().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+        if (s.three() != null) {                                                                      // Belial rework 2: the canon scythe's third act (sprint + right-click)
+            tip.add(actLine(s, DjinnWeaponRules.ACT_THREE, "tooltip.anime_multiverse.djinn_weapon.act3", color));
+            tip.add(Component.translatable("djinn_weapon.act." + s.three().key() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+        }
         tip.add(Component.translatable("tooltip.anime_multiverse.djinn_weapon.onhit", djinn.trait().blurb()).withStyle(ChatFormatting.GRAY));
         tip.add(Component.translatable("tooltip.anime_multiverse.djinn_weapon.rules").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
     }

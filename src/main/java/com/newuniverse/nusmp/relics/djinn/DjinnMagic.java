@@ -300,6 +300,7 @@ final class DjinnMagic {
             int ticks = x.effectAmp() >= 2 ? BalanceLaw.controlTicks(t, x.effectTicks()) : x.effectTicks();
             DjinnFx.effect(t, x.effectId(), ticks, x.effectAmp());
         }
+        if (n == 0 && r.djinn == Djinn.BELIAL && BelialCanon.on()) BelialMind.devourSenses(p, t, r.dark);                                                         // Belior Zauto also devours the five senses (a few seconds; a boss none)
         return true;
     }
 

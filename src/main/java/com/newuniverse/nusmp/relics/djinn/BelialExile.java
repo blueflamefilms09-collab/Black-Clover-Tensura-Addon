@@ -105,7 +105,7 @@ public final class BelialExile {
 
     private static boolean bossLike(LivingEntity e) { return BalanceLaw.isBoss(e) || BossIdentity.isBoss(e); }
 
-    private static boolean vetoed(LivingEntity t, UUID caster) {
+    static boolean vetoed(LivingEntity t, UUID caster) {                                           // package-private: the bone dragon's grip (BelialGrip) asks the same guards
         if (t.getUUID().equals(caster)) return true;
         for (Predicate<LivingEntity> g : VETOES) if (g.test(t)) return true;
         if (t instanceof Player && t.level() instanceof ServerLevel l)                               // a player in a boss fight (a boss within 40 blocks) keeps the fight's own rules
@@ -119,6 +119,7 @@ public final class BelialExile {
         if (caster == null || t == null || !(t.level() instanceof ServerLevel level) || !t.isAlive()) return BelialSeverRules.Refusal.VETO;
         long now = level.getGameTime();
         UUID id = t.getUUID();
+        if (BelialGrip.isGripped(id)) return BelialSeverRules.Refusal.ALREADY;                           // a held mob already carries the flags: never two states on one mob
         BelialSeverRules.Kind kind = BelialSever.kindOf(t);
         boolean creative = t instanceof Player o && (o.isCreative() || o.isSpectator());
         Long imm = IMMUNE.get(id);

@@ -19647,10 +19647,10 @@
   "unique.msg.ops.own": "[Unique Guardian] %s was lost, and its own rules had already returned it to the loot pool.",
   "unique.msg.ops.forced": "[Unique Guardian] %s was returned to the loot pool by %s.",
   "unique.msg.ops.hero": "[Unique Guardian] The %s lost its holder (away for good) and is back with its normal source: it can be claimed again.",
-  "item.anime_multiverse.djinn_weapon_belial_scythe": "Belial's Scythe, Belior Goldorezza",
-  "item.anime_multiverse.djinn_weapon_belial_scythe_dark": "Belial's Black Scythe, Belior Goldorezza",
-  "djinn_weapon.act.spirit_sever": "Spirit Sever",
-  "djinn_weapon.act.spirit_sever.desc": "A wide pale cut that severs the spirit of every foe in front of you. Armour, resistance and shields do not count; a boss loses only a sliver, and no target takes more than a set share per second.",
+  "item.anime_multiverse.djinn_weapon_belial_scythe": "Belial's Scythe, Belior Goldoreza",
+  "item.anime_multiverse.djinn_weapon_belial_scythe_dark": "Belial's Black Scythe, Belior Goldoreza",
+  "djinn_weapon.act.spirit_sever": "Belior Goldoreza",
+  "djinn_weapon.act.spirit_sever.desc": "The Severing Funeral Scythe: a wide pale cut that leaves no wound and no blood. The spirit of every foe in front of you is cut loose, and what it struck goes numb and limp dead weight for 8 to 20 seconds (Slowness, Weakness, no normal healing; never on a boss). Armour, resistance and shields do not count; a boss loses only a sliver, and no target takes more than a set share per second.",
   "djinn_weapon.act.exile": "Exile",
   "djinn_weapon.act.exile.desc": "Sends the nearest foes (up to three) to another dimension for a few seconds: they cannot act or be hurt and come back where they stood. Never a boss; the rest of the cone takes a lighter sever.",
   "death.attack.anime_multiverse.spirit_sever": "%1$s had their spirit severed",
@@ -19676,5 +19676,10 @@
   "sinskill.msg.carried": "%s is already with you.",
   "sinskill.msg.wait": "The skill is still gathering itself.",
   "sinskill.msg.full": "There is no room to forge the weapon.",
-  "sinskill.msg.removed": "%s fades from you."
+  "sinskill.msg.removed": "%s fades from you.",
+  "djinn_weapon.act.belior_zakera": "Belior Zakera",
+  "djinn_weapon.act.belior_zakera.desc": "Memory Manipulation (sprint + right-click): up to six foes in front of you forget the fight. Mobs lose their target and may turn on each other; players get distorted senses (Nausea and Darkness). Reach 10 blocks in a Half Equip, 24 in a Full Equip. A raised shield or a barrier blocks it, but the defender still takes a small mental strain and a short Nausea and Darkness. A boss is never mind-controlled.",
+  "tooltip.anime_multiverse.djinn_weapon.act3": "Sprint + right-click: %s (%s%% of your Magoi, %s s)",
+  "belial.chant.zauto": "Spirit of Truth and Judgement — Assemble your power and bring to the earth the nothingness to judge everything!",
+  "belial.lore": "Belial, the 68th of the 72 Djinn, Djinn of Truth and Conviction (Shinjitsu / Danzai), of the 8th Type: Life Magic. His first owner is Hakuryuu Ren; his Metal Vessel is the left shoulder armor with Belial's eight-pointed star, and his Household Vessel was wielded by Seiryuu Ri. Belial can change size freely and, being Life Magic like Zagan, can be Dual-Equipped with Zagan without switching forms. Djinn Form: five eyes, gold jewelry, dragon bones on the upper arms and in the swept-back hair. Full Equip: long white-silver hair, two more eyes on the forehead, four arms, jagged black wings and a spectral skeletal dragon that lunges to grab, crush and restrain."
 }

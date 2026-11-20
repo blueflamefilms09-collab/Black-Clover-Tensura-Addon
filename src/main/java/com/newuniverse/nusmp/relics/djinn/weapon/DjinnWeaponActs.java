@@ -74,7 +74,9 @@ public final class DjinnWeaponActs {
             p.displayClientMessage(Component.translatable("djinn_weapon.msg.busy"), true);
             return false;
         }
-        int act = p.isShiftKeyDown() ? DjinnWeaponRules.ACT_TWO : DjinnWeaponRules.ACT_ONE;
+        boolean dualOpen = item.canon() && p.getXRot() >= DjinnWeaponRules.DUAL_PITCH && !p.isShiftKeyDown() && com.newuniverse.nusmp.relics.djinn.BelialDual.active(p);     // Belial rework 2: Zagan shared, looking down
+        int act = DjinnWeaponRules.pickAct(item.canon(), p.isShiftKeyDown(), p.isSprinting(), p.getXRot(), dualOpen);
+        boolean zagan = act == DjinnWeaponRules.ACT_DUAL;
         if (!DjinnWeaponRules.open(act, phase)) {
             p.displayClientMessage(Component.translatable("djinn_weapon.msg.locked", Component.translatable("djinn_weapon.act." + item.spec().two().key())), true);
             return false;
@@ -85,22 +87,23 @@ public final class DjinnWeaponActs {
         LAST_USE.put(p.getUUID(), tick);
         long now = p.level().getGameTime();
         ActClock clock = CLOCKS.computeIfAbsent(p.getUUID(), k -> new ActClock());
-        DjinnWeaponRules.Spec spec = item.spec();
+        DjinnWeaponRules.Spec spec = zagan ? DjinnWeaponRules.spec(Djinn.ZAGAN) : item.spec();
+        int sa = zagan ? DjinnWeaponRules.ACT_ONE : act;                                  // the act inside the spec (the dual cast is Zagan's first)
         int left = clock.left(act, now);
         if (left > 0) {
-            p.displayClientMessage(Component.translatable("djinn_weapon.msg.cooldown", Component.translatable("djinn_weapon.act." + spec.act(act).key()), String.format(java.util.Locale.ROOT, "%.1f", left / 20.0)), true);
+            p.displayClientMessage(Component.translatable("djinn_weapon.msg.cooldown", Component.translatable("djinn_weapon.act." + spec.act(sa).key()), String.format(java.util.Locale.ROOT, "%.1f", left / 20.0)), true);
             return false;
         }
-        if (!DjinnWeaponBridge.pay(p, DjinnWeaponRules.cost(spec, act, dark))) {
+        if (!DjinnWeaponBridge.pay(p, DjinnWeaponRules.cost(spec, sa, dark))) {
             p.displayClientMessage(Component.translatable("djinn_weapon.msg.magoi"), true);
             return false;
         }
-        clock.start(act, now, DjinnWeaponRules.cooldown(spec, act, phase));
-        Ctx c = new Ctx(p, d, spec, act, DjinnWeaponRules.power(spec, act, phase, dark), phase >= DjinnPhaseRules.FULL, dark);
+        clock.start(act, now, DjinnWeaponRules.cooldown(spec, sa, phase));
+        Ctx c = new Ctx(p, zagan ? Djinn.ZAGAN : d, spec, sa, DjinnWeaponRules.power(spec, sa, phase, dark) * (zagan ? DjinnWeaponRules.DUAL_POWER : 1.0), phase >= DjinnPhaseRules.FULL, dark);
         try {
             run(c);
         } catch (RuntimeException ex) {
-            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] Djinn weapon act {} failed", spec.act(act).key(), ex);
+            com.mojang.logging.LogUtils.getLogger().error("[anime_multiverse] Djinn weapon act {} failed", spec.act(sa).key(), ex);
         }
         return true;
     }
@@ -205,6 +208,7 @@ public final class DjinnWeaponActs {
             case "drowning_pull" -> drowningPull(c);
             case "spirit_sever" -> spiritSever(c);
             case "exile" -> exile(c);
+            case "belior_zakera" -> beliorZakera(c);
             default -> {
                 ActLibrary.Gen g = ActLibrary.gen(key);                                    // the acts of the 1.93.0 weapons are data (ActLibrary)
                 if (g != null) generic(c, g);
@@ -751,7 +755,8 @@ public final class DjinnWeaponActs {
     /** Belior Goldorezza's cut: the spirit of every foe in a wide cone is severed (BelialSever: bypasses defences, capped per hit and per second). */
     private static void spiritSever(Ctx c) {
         for (LivingEntity t : cone(c, c.range, 85.0)) {
-            com.newuniverse.nusmp.relics.djinn.BelialSever.sever(c.p, t, c.power, com.newuniverse.nusmp.relics.djinn.BelialSeverRules.ACT_FRAC);
+            float cut = com.newuniverse.nusmp.relics.djinn.BelialSever.sever(c.p, t, c.power, com.newuniverse.nusmp.relics.djinn.BelialSeverRules.ACT_FRAC);
+            if (cut > 0f) com.newuniverse.nusmp.relics.djinn.BelialMind.deadWeight(c.p, t, c.full);                       // Belior Goldoreza leaves no wound: the struck part goes numb (never a boss)
             DjinnWeaponBridge.tinted(c.l, c.glow, t.getX(), t.getY() + t.getBbHeight() * 0.5, t.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
         }
         arc(c, 3.0, 85, 24, DjinnWeaponBridge.particle(c.d), c.color);
@@ -775,6 +780,15 @@ public final class DjinnWeaponActs {
         }
         arc(c, c.range * 0.6, 60, 24, DjinnWeaponBridge.particle(c.d), c.glow);
         snd(c, SoundEvents.ENDERMAN_TELEPORT, 1.0f, 0.5f);
+    }
+
+    /** Belior Zakera: memory and sense illusion on up to six foes of a cone (10 blocks in a Half Equip, 24 in a Full Equip); BelialMind holds the rules. */
+    private static void beliorZakera(Ctx c) {
+        double range = com.newuniverse.nusmp.relics.djinn.BelialMindRules.zakeraRange(c.full);
+        com.newuniverse.nusmp.relics.djinn.BelialMind.zakera(c.p, cone(c, range, 45.0), c.power, c.full, c.dark);
+        arc(c, range * 0.35, 45, 20, DjinnWeaponBridge.particle(c.d), c.color);
+        arc(c, range * 0.75, 45, 24, DjinnWeaponBridge.particle(c.d), c.glow);
+        com.newuniverse.nusmp.relics.djinn.BelialMind.cue(c.l, c.p.blockPosition());
     }
 
     // ================================================================ the generic acts (ActLibrary): the weapons of 1.93.0

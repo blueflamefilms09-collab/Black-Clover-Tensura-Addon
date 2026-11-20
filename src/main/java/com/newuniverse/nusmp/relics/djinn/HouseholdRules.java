@@ -42,4 +42,14 @@ public final class HouseholdRules {
 
     /** Server ticks a Seal may go unseen (not in an inventory, not an item entity) before its Djinn sleeps again: 7 days of running time. */
     public static final long SEAL_LOST_AFTER = 7L * 24L * 3600L * 20L;
+
+    // ---------------------------------------------------------------- Dual Djinn (Belial rework 2): Belial and Zagan, both Life Magic
+    /**
+     * Is this a dual link: the ally owns the canon Belial and the Djinn lent is Zagan (the setting {@code belial.dualDjinn} on)? Then the ally keeps Belial as their one bond and is only
+     * added to Zagan's household in the ledger: no second Djinn record, no second engine state. The owner of Zagan still holds one Djinn and lends it as before.
+     */
+    public static boolean dualLink(boolean setting, boolean allyOwnsCanonBelial, Djinn lent) { return setting && allyOwnsCanonBelial && lent == Djinn.ZAGAN; }
+
+    /** The ally's held-bonds mask for {@link #invite}: a dual link does not count the ally's own Djinn as "already carries a Djinn" (a Spirit or a Devil still does). */
+    public static int allyMaskFor(int allyHeldMask, boolean dualLink) { return dualLink ? allyHeldMask & ~BondRules.DJINN : allyHeldMask; }
 }

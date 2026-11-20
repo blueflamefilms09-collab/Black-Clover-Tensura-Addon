@@ -81,3 +81,55 @@ players: Slowness 9 + Jump 128), is held at its spot every 4 ticks, cannot be hu
 * Extreme Magic / acts bypass "magic immunity" by design of the type tags; other mods' own immunity systems that cancel damage events are answered by the direct health fallback.
 * The old-Belial `DjinnSelfTests`/`DjinnTableTest` rows still hold with the setting off; with it on they test the engine, not the old row.
 * Nothing was seen in a game: look, sounds, particle density and the feel of the two acts are unjudged.
+
+---
+
+# Belial rework 2: mind magic, dead weight, five senses, the skeletal grip, Dual Djinn
+
+Source of every canon detail: **the owner's pasted notes** (authoritative). Wiki research (rule 10, English wiki first, Japanese wiki as fallback) was **not fetched** in this change; nothing here goes beyond the owner's text. Not covered: the dungeon parts (Illusionary Trials / Subjective Illusion Shifting, Manifestation of Inner Conflict, Punishment of Lies / Flesh Punishment of Lies), by the owner's word "not now".
+
+Lore facts (also in the lang key `belial.lore`): Belial is the 68th Djinn of the 72, the Djinn of Truth and Conviction (Shinjitsu / Danzai), 8th Type (Life Magic); first owner Hakuryuu Ren, his Metal Vessel is the left shoulder armor with Belial's eight-pointed star; his Household Vessel was wielded by Seiryuu Ri; he can change size freely and Dual-Equips with Zagan (both Life Magic) without switching forms. Djinn Form: five eyes, gold jewelry, dragon bones on the upper arms and in the swept-back hair. Full Equip: long white-silver hair, two extra eyes on the forehead, four arms, jagged black wings, a spectral skeletal dragon that lunges to grab, crush and restrain. (Look only; the 3D parts are the Blender TODO above.)
+
+All of it is behind the SERVER setting `belialCanon` and its own sub-setting (defaults on). Everything is server-side, keyed by UUID, cleaned up on logout, death and dimension change.
+
+## Plain-words rules
+
+| What | How it is used | Rule |
+|---|---|---|
+| **Belior Goldoreza** (act 1, `spirit_sever`, shown under this name now; id kept) | right-click | the sever as before, plus **dead weight**: the struck foe is numb and limp: Slowness I and Weakness I and **no normal healing** (regeneration, potions, food: the heal event is cancelled) for 18 s (mob) / 8 s (player), +2 s in a Full Equip, at most 20 s. A boss gets no dead weight, only the sever's boss caps (3% per hit, 6% per second). Setting `deadWeight`. |
+| **Belior Zakera** (NEW act 3, `belior_zakera`) | sprint + right-click, from the Half Equip | foes of a cone (at most **6**) forget the fight. **Reach 10 blocks in a Half Equip (the base Metal Vessel), 24 in a Full Equip.** A mob loses its target for 3-6 s and cannot pick a new one for the first 3 s, except the foe it was turned on (half the time another foe of the same cone). A player gets distorted senses: Nausea (4-6 s) and Darkness (3 s), then the balance law's control-time cap and diminishing returns. A boss is never mind-controlled: only Darkness 2 s and a small strain through the sever's boss caps. **Counterplay:** a target that holds a shield up, or carries a barrier effect, is not affected but takes a small bounded mental strain (25% of the act's power through `BelialSever`, hence `BalanceLaw.cap`) and a short Nausea (2 s) and Darkness (1.5 s). The mod has **no Borg model**; the shield and the barrier effect are the nearest things it reads. Setting `zakera`. |
+| **Belior Zauto** (Extreme Magic, changed) | the Extreme Magic key | as before (a sever, 12% of max health per strike), the cast now shows the chant **"Spirit of Truth and Judgement — Assemble your power and bring to the earth the nothingness to judge everything!"** (lang `belial.chant.zauto`), and the blurb says it is a roar: **every victim loses its five senses** for a bounded time: sight (Blindness), hearing (Nausea), touch (Slowness II), taste (Weakness), smell (Mining Fatigue). 5 s for a mob, 3 s for a player, +1 s for a dark Djinn, never more than 7 s; Blindness, Nausea and Slowness go through the control-time cap. A boss loses none (only the sever's caps). **The permanent loss and the soul sent to Ill Ilah's dimension are flavour text only**: the loss is time-limited by design. Setting `senses`. |
+| **Skeletal dragon grip** (NEW, passive) | in a Full Equip, the bearer's melee blow | the dragon grips the foe that was just struck and holds it where it stands for **2 s**; the victim stays hittable (a mob has no AI, a player is slowed to a stop and pulled back if shoved); **one victim per caster, 12 s cooldown per caster** (owner floor: 10 s), 16 holds on the server, the victim is immune for 5 s afterwards. Never a boss, a creative/spectator player, an ally, an exiled target, or anything `BelialExile.addVeto` guards (the exile's own guards, including the 40-block boss check for a player). Setting `boneGrip`. |
+| **Dual Djinn** (NEW) | look straight down (pitch 75 or more) + right-click with Belial's scythe | see below. Setting `dualDjinn`. |
+
+### Dual Djinn: what exists and what does not
+
+The mod has **one Djinn per player and one engine state** (`DjinnState` holds one `djinn`, one phase, one weapon loan; a household member holds a lent one only if they own none; the ledger has one owner per Djinn). A real second simultaneous equip would need a second engine state, a second vessel in the loan/overlay, a second Extreme clock and HUD sync: not done.
+
+The smallest safe version, what is built: the player owns the **canon Belial** and is **also a member of Zagan's household** (the ledger entry only, no second Djinn record). `/multiverse djinn share` and `accept` now allow that one case (`HouseholdRules.dualLink`: setting on, ally owns the canon Belial, the Djinn lent is Zagan; a Spirit or Devil still refuses; Zagan's household stays at two). While the link is live and the Belial Equip is Half or Full, a right-click with the scythe **looking straight down** casts **Zagan's first act (Bloom Heal) through Belial's weapon**, with its own cooldown slot (`ActClock` slot 3), Zagan's Magoi cost paid from the bearer's pool, at 85% of Zagan's power, Belial's Equip never changes. `/multiverse djinn leave` ends it; if Zagan's owner releases, the ledger clears the household and the link is gone. **Not done:** Zagan's second act, his Extreme Magic, his own weapon or his vessel item at the same time, and the other direction (a Zagan owner receiving Belial). The Metal Vessel item is not changed.
+
+## Files
+
+* **NEW:** `BelialMindRules`, `BelialMind` (Zakera, senses, dead weight, mind table and its events), `BelialGripRules`, `BelialGrip`, `BelialDual`; tests `BelialMindRulesTest`, `BelialGripRulesTest`, `BelialDualTest`; self-tests `belial.mind`, `belial.grip`; `tools/lang/belial_zakera.json`; the act `belior_zakera` (third act of the canon row, `Spec.three`, `ACT_THREE`, `ACT_DUAL`, `DjinnWeaponRules.pickAct`); settings `zakera`, `senses`, `dualDjinn`, `boneGrip`, `deadWeight`.
+* **REPLACED (text only):** the display name of act 1 (`Spirit Sever` -> `Belior Goldoreza`) and its description, the scythe item names (`Goldorezza` -> `Goldoreza`), the Extreme blurb of the canon Belial. Ids are all kept.
+* **KEPT:** the old Belial row, the two acts' ids and numbers, the exile, every other weapon (`Spec.three` is null for them, the selection is unchanged for them), all saved data.
+* **Shared files that only got appended lines or one-line hooks:** `DjinnWeaponRules` (constants, a record component with the old 7-argument constructor kept, `pickAct`), `ActClock` (slots 2 and 3), `DjinnWeaponActs` (act selection, dual path, `belior_zakera` case, dead weight call), `DjinnWeaponItem` (third tooltip line), `DjinnEvents` (two `register` lines), `DjinnMagic.hit` (one line, senses), `DjinnEngine` (one line, chant), `BelialExile` (`vetoed` made package-private, one line refusing a mob that is gripped), `BelialConfig`, `BelialCanon` (blurb), `HouseholdRules` and `DjinnHousehold` (the dual link), `BelialSelfTests`, `en_us.json`.
+
+## Worst-case cost (rules 9 and 11)
+
+* **Zakera:** one cone query (`Fx.foesAround`, at most 24 entities, radius at most 25.5) per cast; at most 6 targets; effects are vanilla (their own packets to tracking players); at most 6 small particle bursts and two arcs of 20-24 points per cast. Table: 48 forgotten mobs on the server, 12 per caster; a once-a-second sweep over at most 48 entries; no per-tick work while it is empty; the redirect picks from the same cone (no extra scan).
+* **Senses:** at most 24 victims per Extreme Magic (the burst's own cap), 5 effects each, once per victim and cast.
+* **Dead weight:** at most 128 entries on the server, swept once a second; the heal event does one map lookup, only while the map is not empty.
+* **Grip:** at most 16 holds; per tick a map iteration over those (one entity lookup and a few field writes each), a hold every 4 ticks, a puff every 10; at start for a player victim one 40-block boss query (the exile's guard), done only after the cooldown and busy checks. Packets: at most 5 hold teleports a second for 2 s once per 12 s per caster. The blow listener exits at its first line unless a player's melee blow.
+* **Dual:** one ledger lookup per right-click that looks down with the scythe in hand; nothing per tick.
+* No chunk load, no block change, no new packet type, no client class.
+
+## Not done / not verified
+
+* **Not compiled and not run** (no Gradle here); CI is the first compile. The new JUnit tests and the self-tests `belial.mind`, `belial.grip` (and the extended `belial.wiring`) are unrun. The smoke prefix `belial` was already in the list; no new token.
+* The heal block assumes `LivingHealEvent` is fired for vanilla `heal` (it is relied on elsewhere in the mod). The sever, direct `setHealth` heals and heals of other mods that bypass the event are not blocked. Totem of Undying is not affected.
+* Tensura's barrier *skills* are not read as a Borg (only a raised shield and a barrier-named effect are); a magician with a Tensura barrier skill is not blocked.
+* Zakera's mind effect cannot be seen in a game by this change: whether a mob's AI re-picks a target through a path that does not fire `LivingChangeTargetEvent` is unknown. Mobs that were turned on a foe keep it after the 3-6 s (vanilla).
+* Sprint + right-click and look down + right-click are the selectors because the weapon has no key for a third act; whether sprinting survives the right-click on every client is not tested.
+* The model, wings, four arms, extra eyes and skeletal dragon are still the Blender TODO of the first rework; the grip is only particles and sound.
+* Nothing was seen in a game; every number (2 s, 12 s, 8-20 s, ranges 10/24, the 85%) is a design number of this change, the owner's text names only the ranges, the 2 s, the 10 s floor and about 20 s.

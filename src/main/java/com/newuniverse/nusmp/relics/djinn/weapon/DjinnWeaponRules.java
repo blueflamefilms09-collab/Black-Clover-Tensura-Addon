@@ -18,6 +18,8 @@ public final class DjinnWeaponRules {
     private DjinnWeaponRules() {}
 
     public static final int ACT_ONE = 0, ACT_TWO = 1;
+    /** Appended (Belial rework 2): the third act of the canon Belial's scythe (Belior Zakera), and the dual-Djinn cast of Zagan's first act through Belial's weapon (a clock slot, not a spec act). */
+    public static final int ACT_THREE = 2, ACT_DUAL = 3;
     public static final int HALF = 2, FULL = 3;
 
     /** Stronger numbers in a Full Equip (power x1.35, cooldown x0.8) and for a dark Djinn (power x1.2, Magoi x1.25). */
@@ -32,9 +34,11 @@ public final class DjinnWeaponRules {
     /** One act: its lang key suffix, the Magoi share, the cooldown, the raw damage (or heal) and the reach in blocks. */
     public record Act(String key, double cost, int cooldown, double power, double range) {}
 
-    /** One weapon: the class of weapon (for the lang and the audit), melee damage and total attack speed, extra reach, and the two acts. */
-    public record Spec(Djinn djinn, String kind, double damage, double speed, double reach, Act one, Act two) {
-        public Act act(int which) { return which == ACT_TWO ? two : one; }
+    /** One weapon: the class of weapon (for the lang and the audit), melee damage and total attack speed, extra reach, and the two acts (the canon Belial's scythe has a third, {@code three}; null for the rest). */
+    public record Spec(Djinn djinn, String kind, double damage, double speed, double reach, Act one, Act two, Act three) {
+        public Spec(Djinn djinn, String kind, double damage, double speed, double reach, Act one, Act two) { this(djinn, kind, damage, speed, reach, one, two, null); }
+
+        public Act act(int which) { return which == ACT_TWO ? two : which == ACT_THREE && three != null ? three : one; }
     }
 
     private static final Map<Djinn, Spec> TABLE = new EnumMap<>(Djinn.class);
@@ -88,9 +92,9 @@ public final class DjinnWeaponRules {
     // ---------------------------------------------------------------- Belial rework: the canon scythe (owner notes), kept next to the old greatsword row
     /** The canon Belial's weapon (a scythe; its own item ids, see {@link #CANON_SUFFIX}). The old greatsword row stays in the table and is what {@link #spec(Djinn)} answers. */
     private static final Spec CANON_BELIAL = canonRow(Djinn.BELIAL, "scythe", 11.5, 1.05, 1.0,
-            new Act("spirit_sever", 0.035, 130, 10.0, 7.5), new Act("exile", 0.050, 300, 7.0, 9.0));
+            new Act("spirit_sever", 0.035, 130, 10.0, 7.5), new Act("exile", 0.050, 300, 7.0, 9.0), new Act("belior_zakera", 0.040, 200, 8.0, 10.0));
 
-    private static Spec canonRow(Djinn d, String kind, double damage, double speed, double reach, Act one, Act two) { return new Spec(d, kind, damage, speed, reach, one, two); }
+    private static Spec canonRow(Djinn d, String kind, double damage, double speed, double reach, Act one, Act two, Act three) { return new Spec(d, kind, damage, speed, reach, one, two, three); }
 
     /** The spec of a weapon: the canon scythe for Belial's canon item, the table's row otherwise. */
     public static Spec spec(Djinn d, boolean canon) { return canon && d == Djinn.BELIAL ? CANON_BELIAL : TABLE.get(d); }
@@ -99,7 +103,21 @@ public final class DjinnWeaponRules {
 
     // ---------------------------------------------------------------- the numbers of a use
     /** Is this act open in this phase? The first from the Half Equip, the second from the Full Equip. */
-    public static boolean open(int act, int phase) { return act == ACT_ONE ? phase >= HALF : phase >= FULL; }
+    public static boolean open(int act, int phase) { return act == ACT_ONE || act == ACT_THREE || act == ACT_DUAL ? phase >= HALF : phase >= FULL; }
+
+    /** Belial rework 2: pitch (degrees, 90 = straight down) from which a right-click is the dual cast of Zagan's act, and the share of its power Zagan's act keeps when Belial casts it. */
+    public static final double DUAL_PITCH = 75.0, DUAL_POWER = 0.85;
+
+    /**
+     * Which act a right-click is. Every weapon but the canon Belial's scythe: sneak = the second act, else the first (unchanged). The scythe adds, only when not sneaking: looking
+     * straight down with Zagan shared ({@code dualOpen}) = Zagan's first act, sprinting = Belior Zakera.
+     */
+    public static int pickAct(boolean canonBelial, boolean sneak, boolean sprint, double pitch, boolean dualOpen) {
+        if (sneak) return ACT_TWO;
+        if (!canonBelial) return ACT_ONE;
+        if (dualOpen && pitch >= DUAL_PITCH) return ACT_DUAL;
+        return sprint ? ACT_THREE : ACT_ONE;
+    }
 
     /** The raw damage (or heal) of an act in a phase, for a light or dark Djinn. */
     public static double power(Spec s, int act, int phase, boolean dark) {

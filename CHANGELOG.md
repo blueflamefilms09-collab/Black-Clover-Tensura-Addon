@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.31.0] — Belial follows the canon: Zakera, Goldoreza dead weight, Zauto's five senses, bone-dragon grip, Zagan link
+- NEW (settings in `BelialConfig`, all default on: `zakera`, `senses`, `dualDjinn`, `boneGrip`, `deadWeight`): third act Belior Zakera (memory manipulation), sprint + right-click from Half Equip. 10 blocks in Half Equip, 24 in Full, at most 6 targets. Mobs lose their target for 3-6 s, players get Nausea and Darkness (under the balance law's control cap), bosses only a short Darkness plus a little strain. A raised shield or barrier effect blocks it and the defender takes a small strain, as in canon.
+- NEW: Belior Goldoreza leaves the struck foe with dead weight (Slowness I, Weakness I, no normal healing) for 18 s on a mob, 8 s on a player, +2 s in Full Equip, 20 s at most. Never on a boss.
+- NEW: Belior Zauto now shows the owner's chant and devours five senses (Blindness, Nausea, Slowness II, Weakness, Mining Fatigue) for 5 s on a mob, 3 s on a player; bosses lose none.
+- NEW: skeletal dragon grip in Full Equip: a melee hit grips the foe for 2 s (one victim per caster, 12 s cooldown, 16 holds server-wide, 5 s immunity after; never a boss, ally, creative/spectator player or exiled target). Particles and sound only.
+- NEW (partial): Zagan link. A canon-Belial owner can be lent Zagan through `/multiverse djinn share|accept|leave`; while linked, looking straight down and right-clicking with the scythe casts Zagan's first act (Bloom Heal) at 85% power. Zagan's second act, Extreme Magic and a second vessel at once are not built (one Djinn state per player).
+- REPLACED (text only, ids kept): act `spirit_sever` is shown as "Belior Goldoreza"; "Goldorezza" spelling fixed on the scythe items; the Extreme blurb mentions the roar and five senses.
+- KEPT: both old acts, the exile, every other weapon.
+- Cost: no new entities or packets; grips capped at 16, one tick check per held victim; effects use vanilla potion effects with fixed durations.
+- Honest caveats: not seen in a game; CI is the first compile. Numbers other than the owner's (10/24 blocks, 2 s grip, 10 s floor) are design values. Heal block depends on `LivingHealEvent`. Model, wings, extra arms and dungeon are not part of this release.
+
 ## [4.30.1] — A way to remove the Berserk weapon skills
 - NEW: `/multiverse sin remove <sloth|envy|vanity|chakrams|holy|all> [player]` takes that Berserk weapon skill away (the skill is forgotten and the bound weapons you carry are unbound, so it is not granted again), and `/multiverse sin restore <...> [player]` allows it again (the next weapon you carry binds it as before). Without a player it acts on yourself; naming another player needs permission level 2.
 - KEPT: nothing is deleted. The weapons stay in the inventory as plain melee weapons; only the skill and the binding go. Removal is per player, saved on the player, and works on a dedicated server.
