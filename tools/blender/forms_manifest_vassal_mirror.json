@@ -1,0 +1,32 @@
+{
+ "vassal_mirror__envious_glass": {
+  "class": "shield",
+  "form": "envious_glass",
+  "weapon": "vassal_mirror"
+ },
+ "vassal_mirror__green_eyed_mirror": {
+  "class": "shield",
+  "form": "green_eyed_mirror",
+  "weapon": "vassal_mirror"
+ },
+ "vassal_mirror__hetsu_kagami": {
+  "class": "shield",
+  "form": "hetsu_kagami",
+  "weapon": "vassal_mirror"
+ },
+ "vassal_mirror__mirror_of_envy": {
+  "class": "shield",
+  "form": "mirror_of_envy",
+  "weapon": "vassal_mirror"
+ },
+ "vassal_mirror__white_tiger_clone_mirror": {
+  "class": "shield",
+  "form": "white_tiger_clone_mirror",
+  "weapon": "vassal_mirror"
+ },
+ "vassal_mirror__yata_mirror": {
+  "class": "shield",
+  "form": "yata_mirror",
+  "weapon": "vassal_mirror"
+ }
+}

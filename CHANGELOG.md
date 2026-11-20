@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.42.0] — 18 vassal weapon forms made in Blender (katana, mirror, instrument, projectile)
+- NEW: Blender-made 3D models with their own skin and glow skin for the forms of four vassal weapon families: the Katana (White Tiger, Soul Eater, Siderite, Sakura Stone), the Mirror shield (White Tiger Clone, Hetsu Kagami, Yata, Envious Glass, Green-Eyed, Mirror of Envy), the Instrument (Guitar, Humming Fairy Lyre, Grilled Fish Horn, Instrument Zero) and the Projectile dagger (Kunai, Chakram, Hatchet, Over Custom Arsenal). Each is at most 5000 quad lines and its skins at most 350 KB. Registered in the weapon class table, grip table and Better Combat inventory.
+- KEPT: the old models, skins and icons of every form; the forms fall back to them wherever no new mesh exists.
+- Cost: no packets; each model is within the existing per-weapon quad budget and the far LOD rules.
+- Honest caveats: seen only in software preview and contact sheets, never in a game; several skins were squeezed to 16-24 colours to fit the size cap; weakest forms: White Tiger Katana (faint stripes), White Tiger Clone Mirror (plain face), Over Custom Arsenal (detached charm), Hatchet (flat head); no wiki was fetched, so designs follow the form names and notes, not canon pages.
+
 ## [4.41.0] — Djinn designs no longer duplicated, ranks now use the relic grades
 Owner request: find Djinn with copied designs and rework them, make each match its concept, and make rankings use the existing relic ranks and stars.
 - FOUND: 9 light-bust pairs were the same picture, all 36 dark busts were one black figure with a different gem, tiny Vepar was a near copy of tiny Vinea and tiny Barbatos of tiny Zagan. Focalor (Wind) had a water Extreme damage concept.

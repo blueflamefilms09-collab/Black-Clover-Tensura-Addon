@@ -5735,12 +5735,76 @@
   "y": 13.635,
   "z": 0.195
  },
+ "vassal_instrument__grilled_fish_horn": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 0.0,
+  "y": 14.48,
+  "z": 0.0
+ },
+ "vassal_instrument__guitar": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": 1.516,
+  "y": -2.0,
+  "z": -0.815
+ },
+ "vassal_instrument__humming_fairy_lyre": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": -2.566,
+  "y": 12.715,
+  "z": 0.15
+ },
+ "vassal_instrument__instrument_zero": {
+  "class": "wand",
+  "fraction": 0.2,
+  "source": "class",
+  "x": -0.697,
+  "y": 8.983,
+  "z": 0.15
+ },
  "vassal_katana": {
   "class": "katana",
   "fraction": 0.125,
   "source": "directive",
   "x": 2.79,
   "y": 9.062,
+  "z": 0.0
+ },
+ "vassal_katana__sakura_stone_katana": {
+  "class": "katana",
+  "fraction": 0.236,
+  "source": "directive",
+  "x": 0.772,
+  "y": 6.73,
+  "z": -1.149
+ },
+ "vassal_katana__siderite_katana": {
+  "class": "katana",
+  "fraction": 0.234,
+  "source": "directive",
+  "x": 0.0,
+  "y": 10.998,
+  "z": -1.046
+ },
+ "vassal_katana__soul_eater_katana": {
+  "class": "katana",
+  "fraction": 0.279,
+  "source": "directive",
+  "x": 0.0,
+  "y": 7.865,
+  "z": 0.0
+ },
+ "vassal_katana__white_tiger_katana": {
+  "class": "katana",
+  "fraction": 0.317,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.259,
   "z": 0.0
  },
  "vassal_mirror": {
@@ -5751,6 +5815,54 @@
   "y": 37.165,
   "z": 0.0
  },
+ "vassal_mirror__envious_glass": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.928,
+  "y": 32.42,
+  "z": 0.0
+ },
+ "vassal_mirror__green_eyed_mirror": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.951,
+  "y": 34.631,
+  "z": 0.0
+ },
+ "vassal_mirror__hetsu_kagami": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 2.771,
+  "y": 28.719,
+  "z": 0.0
+ },
+ "vassal_mirror__mirror_of_envy": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.545,
+  "y": 35.718,
+  "z": 0.0
+ },
+ "vassal_mirror__white_tiger_clone_mirror": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 28.647,
+  "z": 0.0
+ },
+ "vassal_mirror__yata_mirror": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.068,
+  "y": 30.453,
+  "z": -0.297
+ },
  "vassal_projectile": {
   "class": "dagger",
   "fraction": 0.394,
@@ -5758,6 +5870,38 @@
   "x": 0.0,
   "y": 28.018,
   "z": 0.0
+ },
+ "vassal_projectile__chakram": {
+  "class": "dagger",
+  "fraction": 0.298,
+  "source": "directive",
+  "x": 0.0,
+  "y": 14.598,
+  "z": 0.0
+ },
+ "vassal_projectile__hatchet": {
+  "class": "dagger",
+  "fraction": 0.358,
+  "source": "directive",
+  "x": 0.0,
+  "y": 25.476,
+  "z": 0.0
+ },
+ "vassal_projectile__kunai": {
+  "class": "dagger",
+  "fraction": 0.303,
+  "source": "directive",
+  "x": 5.654,
+  "y": 15.136,
+  "z": -0.546
+ },
+ "vassal_projectile__over_custom_arsenal": {
+  "class": "dagger",
+  "fraction": 0.303,
+  "source": "directive",
+  "x": -8.194,
+  "y": 18.618,
+  "z": 0.456
  },
  "vassal_scythe": {
   "class": "scythe",

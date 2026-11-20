@@ -1,0 +1,22 @@
+{
+ "vassal_katana__sakura_stone_katana": {
+  "class": "katana",
+  "form": "sakura_stone_katana",
+  "weapon": "vassal_katana"
+ },
+ "vassal_katana__siderite_katana": {
+  "class": "katana",
+  "form": "siderite_katana",
+  "weapon": "vassal_katana"
+ },
+ "vassal_katana__soul_eater_katana": {
+  "class": "katana",
+  "form": "soul_eater_katana",
+  "weapon": "vassal_katana"
+ },
+ "vassal_katana__white_tiger_katana": {
+  "class": "katana",
+  "form": "white_tiger_katana",
+  "weapon": "vassal_katana"
+ }
+}

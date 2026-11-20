@@ -1,0 +1,22 @@
+{
+ "vassal_instrument__grilled_fish_horn": {
+  "class": "wand",
+  "form": "grilled_fish_horn",
+  "weapon": "vassal_instrument"
+ },
+ "vassal_instrument__guitar": {
+  "class": "wand",
+  "form": "guitar",
+  "weapon": "vassal_instrument"
+ },
+ "vassal_instrument__humming_fairy_lyre": {
+  "class": "wand",
+  "form": "humming_fairy_lyre",
+  "weapon": "vassal_instrument"
+ },
+ "vassal_instrument__instrument_zero": {
+  "class": "wand",
+  "form": "instrument_zero",
+  "weapon": "vassal_instrument"
+ }
+}

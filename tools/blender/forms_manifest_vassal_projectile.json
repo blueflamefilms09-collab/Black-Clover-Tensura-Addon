@@ -1,0 +1,22 @@
+{
+ "vassal_projectile__chakram": {
+  "class": "dagger",
+  "form": "chakram",
+  "weapon": "vassal_projectile"
+ },
+ "vassal_projectile__hatchet": {
+  "class": "dagger",
+  "form": "hatchet",
+  "weapon": "vassal_projectile"
+ },
+ "vassal_projectile__kunai": {
+  "class": "dagger",
+  "form": "kunai",
+  "weapon": "vassal_projectile"
+ },
+ "vassal_projectile__over_custom_arsenal": {
+  "class": "dagger",
+  "form": "over_custom_arsenal",
+  "weapon": "vassal_projectile"
+ }
+}
