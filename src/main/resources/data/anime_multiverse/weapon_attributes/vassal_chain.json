@@ -1,5 +1,5 @@
 {
-  "parent": "bettercombat:sword",
+  "parent": "bettercombat:mace",
   "attributes": {
     "range_bonus": 1.5
   }

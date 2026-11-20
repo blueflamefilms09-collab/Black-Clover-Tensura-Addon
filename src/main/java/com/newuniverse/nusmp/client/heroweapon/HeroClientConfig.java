@@ -20,6 +20,10 @@ public final class HeroClientConfig {
 
     /** 4.45.0 (docs/weapon_hold.md): a hero weapon is held so that no part of it passes through the forearm or the body, and a form is held by the hand of its item (look only). false = the placement of 4.44.x. */
     public static final ModConfigSpec.BooleanValue HOLD_FIT;
+    /** 4.48.0: whips, flails and morning stars whip, trail and lag behind the swing (client/motion). false = every mesh is drawn rigid. Looks only. */
+    public static final ModConfigSpec.BooleanValue WEAPON_MOTION;
+    /** 4.48.0: true draws the vassal axe, book and carriage forms with the models they had before the v2 remodel (weapon_meshes/classic_vassal). Looks only. */
+    public static final ModConfigSpec.BooleanValue CLASSIC_VASSAL_FORMS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -36,6 +40,12 @@ public final class HeroClientConfig {
                 .define("formModels", true);
         HOLD_FIT = b.comment("true = a hero weapon (Legendary, Seven Star, Vassal, every form) is held by the grip of the hand: a form uses its item's hand placement, and a part that would pass through the forearm or the body is moved clear. false = the placement of version 4.44.x. Looks only.")
                 .define("holdFit", true);
+        WEAPON_MOTION = b.comment("true = a whip, flail or morning star swings: its chain and lash bend and lag behind the swing and sway while held (only weapons near you, a few per frame). false = rigid models. Looks only.")
+                .define("weaponMotion", true);
+        b.pop();
+        b.push("vassalForms");
+        CLASSIC_VASSAL_FORMS = b.comment("true = draw the Vassal axe, book and carriage forms with the models they had before the 4.48.0 remodel. Only the look changes.")
+                .define("classic", false);
         b.pop();
         SPEC = b.build();
     }
@@ -56,6 +66,9 @@ public final class HeroClientConfig {
     public static boolean formModels() { return get(FORM_MODELS); }
 
     public static boolean holdFit() { return get(HOLD_FIT); }
+    public static boolean weaponMotion() { return get(WEAPON_MOTION); }
+
+    public static boolean classicVassalForms() { return get(CLASSIC_VASSAL_FORMS); }
 
     public static boolean hud() { return get(HUD); }
 

@@ -1121,16 +1121,16 @@
  },
  "vassal_axe__curse_axe": {
   "tp_left": {
-   "arm": 0.175,
+   "arm": 0.196,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.028
+   "float": 0.019
   },
   "tp_right": {
-   "arm": 0.175,
+   "arm": 0.196,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.028
+   "float": 0.019
   }
  },
  "vassal_axe__pipe_axe": {
@@ -1149,13 +1149,13 @@
  },
  "vassal_axe__shine_axe": {
   "tp_left": {
-   "arm": 0.247,
+   "arm": 0.257,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.032
   },
   "tp_right": {
-   "arm": 0.247,
+   "arm": 0.257,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.032
@@ -1163,13 +1163,13 @@
  },
  "vassal_axe__timber_axe": {
   "tp_left": {
-   "arm": 0.258,
+   "arm": 0.256,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.027
   },
   "tp_right": {
-   "arm": 0.258,
+   "arm": 0.256,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.027
@@ -1191,44 +1191,44 @@
  },
  "vassal_book__animal_needle_book": {
   "tp_left": {
-   "arm": 0.277,
+   "arm": 0.114,
    "body": 0.0,
-   "extra": 0.2,
-   "float": 0.006
+   "extra": 0.107,
+   "float": 0.044
   },
   "tp_right": {
-   "arm": 0.278,
+   "arm": 0.094,
    "body": 0.0,
-   "extra": 0.2,
-   "float": 0.049
+   "extra": 0.193,
+   "float": 0.03
   }
  },
  "vassal_book__library_tome": {
   "tp_left": {
-   "arm": 0.167,
+   "arm": 0.187,
    "body": 0.0,
-   "extra": 0.0,
-   "float": 0.007
+   "extra": 0.115,
+   "float": 0.032
   },
   "tp_right": {
-   "arm": 0.12,
+   "arm": 0.179,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.005
+   "float": 0.068
   }
  },
  "vassal_book__pipe_book": {
   "tp_left": {
-   "arm": 0.29,
+   "arm": 0.288,
    "body": 0.0,
    "extra": 0.2,
-   "float": 0.012
+   "float": 0.011
   },
   "tp_right": {
-   "arm": 0.28,
+   "arm": 0.277,
    "body": 0.0,
-   "extra": 0.124,
-   "float": 0.009
+   "extra": 0.147,
+   "float": 0.008
   }
  },
  "vassal_book__revised_edition": {
@@ -1236,13 +1236,13 @@
    "arm": 0.262,
    "body": 0.0,
    "extra": 0.2,
-   "float": 0.019
+   "float": 0.021
   },
   "tp_right": {
-   "arm": 0.142,
+   "arm": 0.137,
    "body": 0.0,
-   "extra": 0.123,
-   "float": 0.003
+   "extra": 0.13,
+   "float": 0.008
   }
  },
  "vassal_carriage": {
@@ -1261,30 +1261,30 @@
  },
  "vassal_carriage__filolial_carriage": {
   "tp_left": {
-   "arm": 0.319,
-   "body": 0.0,
-   "extra": 0.2,
-   "float": 0.01
-  },
-  "tp_right": {
    "arm": 0.315,
    "body": 0.0,
    "extra": 0.2,
-   "float": 0.018
+   "float": 0.012
+  },
+  "tp_right": {
+   "arm": 0.322,
+   "body": 0.0,
+   "extra": 0.2,
+   "float": 0.017
   }
  },
  "vassal_carriage__hourglass_sand_carriage": {
   "tp_left": {
-   "arm": 0.334,
+   "arm": 0.303,
    "body": 0.0,
-   "extra": 0.105,
-   "float": 0.035
+   "extra": 0.09,
+   "float": 0.027
   },
   "tp_right": {
-   "arm": 0.334,
+   "arm": 0.306,
    "body": 0.0,
-   "extra": 0.105,
-   "float": 0.035
+   "extra": 0.09,
+   "float": 0.027
   }
  },
  "vassal_carriage__queens_chariot": {
@@ -1306,13 +1306,13 @@
    "arm": 0.122,
    "body": 0.0,
    "extra": 0.098,
-   "float": 0.009
+   "float": 0.01
   },
   "tp_right": {
    "arm": 0.328,
    "body": 0.0,
    "extra": 0.098,
-   "float": 0.009
+   "float": 0.01
   }
  },
  "vassal_chain": {

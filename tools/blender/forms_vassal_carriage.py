@@ -53,6 +53,54 @@ def wheel(name, s0, sg, R, tyre, hub, spoke, *, spokes=10, hub_r=4.4, spoke_w=0.
     K.bl.lathe(name + "_hub", [(0.01, -2.2), (hub_r * 0.8, -2.0), (hub_r, -1.0), (hub_r, 1.6), (hub_r * 0.7, 2.6), (0.01, 3.0)], hub, sides=12, origin=ctr, axis="z", part=part + "_hub")
 
 
+def wheel2(name, s0, sg, R, tyre, hub, spoke, *, spokes=10, hub_r=4.6, rr=None, part="wheels", spoke_fn=None, band=None, rim_t=1.6, studs=20, stud_mat=None, nave_band=None, boss=None):
+    """The v2 wheel (wheel() stays for the classic builders): a tyre with a raised tread ridge between two shoulders, a felloe with a banded inner ring, turned spokes (they swell toward the
+    hub), a barrelled nave with two iron bands, a hex hub-nut with a linch-pin, and nail heads along the tyre (bands, nails and rings are baked into the skin, free). Same plane, same wheel
+    centre, same radius as wheel(); about 350 quads."""
+    ctr = tuple(Cc(WU, WF, s0))
+    K.bl.lathe(name + "_tyre", [(R - rim_t * 1.6, -2.2), (R - 0.2, -1.9), (R + 0.5, -0.6), (R + 0.5, 0.6), (R - 0.2, 1.9), (R - rim_t * 1.6, 2.2)], tyre, sides=22, origin=ctr, axis="z", part=part, caps=(False, False))
+    K.bl.lathe(name + "_felloe", [(R - rim_t * 1.6 - 0.1, -1.5), (R - rim_t * 2.9, -1.5), (R - rim_t * 2.9, 1.5), (R - rim_t * 1.6 - 0.1, 1.5)], spoke, sides=20, origin=ctr, axis="z", part=part, caps=(False, False))
+    K.bl.lathe(name + "_inband", [(R - rim_t * 2.9, -1.9), (R - rim_t * 2.9 - 0.7, -1.7), (R - rim_t * 2.9 - 0.7, 1.7), (R - rim_t * 2.9, 1.9)], band or hub, sides=20, origin=ctr, axis="z", part=part + "_band", caps=(False, False), detail=True)
+    for k in range(spokes):
+        a = TAU * k / spokes
+        if spoke_fn:
+            spoke_fn(name, k, a, ctr)
+            continue
+        c_, s_ = math.cos(a), math.sin(a)
+        r_in, r_out = hub_r * 0.8, R - rim_t * 2.8
+        K.tapered("%s_sp%d" % (name, k), [V(ctr[0] - r_in * c_, ctr[1] + r_in * s_, ctr[2]), V(ctr[0] - (r_in + r_out) * 0.5 * c_, ctr[1] + (r_in + r_out) * 0.5 * s_, ctr[2]), V(ctr[0] - r_out * c_, ctr[1] + r_out * s_, ctr[2])],
+                  1.2, 0.6, spoke, sides=5, sub=1, part=part)
+    h = hub_r
+    K.bl.lathe(name + "_hub", [(0.01, -3.0), (h * 0.8, -2.8), (h * 1.15, -0.6), (h * 1.15, 0.8), (h * 0.85, 3.0), (h * 0.4, 3.8), (0.01, 4.2)], hub, sides=10, origin=ctr, axis="z", part=part + "_hub")
+    for z in (-1.9, 2.0):
+        K.bl.lathe("%s_nb%d" % (name, int(z * 10)), [(h * 0.95, z - 0.45), (h * 1.28, z - 0.3), (h * 1.28, z + 0.3), (h * 0.95, z + 0.45)], nave_band or tyre, sides=10, origin=ctr, axis="z", part=part + "_hub", caps=(False, False), detail=True)
+    pts = []
+    for k in range(studs):
+        a = TAU * (k + 0.5) / studs
+        pts.append((Cc(WU, WF, s0) + V(-(R + 0.2) * math.cos(a), (R + 0.2) * math.sin(a), 0.0), V(-math.cos(a), math.sin(a), 0.0)))
+    K.rivets(name + "_nails", pts, stud_mat or hub, r=0.9, rng_=rr, detail=True)
+    for k in range(6):                                                                               # the hex nut's bolts, baked
+        a = TAU * k / 6
+        K.rivets("%s_nut%d" % (name, k), [(Cc(WU, WF, s0) + V(-h * 0.62 * math.cos(a), h * 0.62 * math.sin(a), 3.0 * sg), V(0, 0, sg))], boss or hub, r=0.8, rng_=rr, detail=True)
+
+
+def leaf_spring(name, sg, mat_, bolt_mat, part="springs", span=24.0, rise=7.0, base_u=15.0, s=28.4):
+    """A leaf spring on each side: a flat steel bow from the hull up to the axle and down again, with two U-bolt clamps at the axle (the v2 undercarriage), about 45 quads."""
+    path = [Cc(base_u + rise * (1.0 - ((i - 2) / 2.0) ** 2) * 0.9 + 1.0, WF + span * (i - 2) / 2.0, s * sg) for i in range(5)]
+    K.tube(name, path, 1.1, mat_, sides=4, sub=2, part=part)
+    for df in (-3.6, 3.6):
+        K.rivets("%s_clamp%d" % (name, int(df)), [(Cc(WU - 3.2, WF + df, s * sg), V(0, 0, sg))], bolt_mat, r=1.3, rng_=None, detail=True)
+
+
+def lantern(name, base, mat_, glass, post=14.0, part="lamps"):
+    """A carriage lamp on a short post: a cap, a glowing glass body between four uprights, a foot (u is up)."""
+    b = V(base)
+    K.tube(name + "_post", [b, b + V(-post, 0, 0)], 0.7, mat_, sides=5, sub=1, part=part)
+    top = b + V(-post, 0, 0)
+    K.blob(name + "_glass", top + V(-2.6, 0, 0), (2.0, 2.2, 2.0), glass, seed=3, lump=0.0, rings=4, segs=8, part=part + "_glass")
+    K.bl.lathe(name + "_cap", [(2.6, -5.0), (2.0, -6.0), (0.9, -7.4), (0.01, -8.0)], mat_, sides=8, origin=tuple(top), axis="x", part=part, caps=(False, True))
+
+
 def axle(P, mat_, s=30.0, r=1.9):
     K.bl.lathe("axle", [(r, -s), (r, s)], mat_, sides=8, origin=tuple(Cc(WU, WF, 0.0)), axis="z", caps=(False, False), part="axle")
 
@@ -81,20 +129,26 @@ def filolial_carriage(opts):
     rr = K.rng(7201)
     # wheels: light cream rims, slim spokes, a tuft of feathers on each hub, an axle
     for nm, s0, sg in (("wl", -33.0, -1), ("wr", 33.0, 1)):
-        wheel(nm, s0, sg, 19.4, P["gold"], P["gold"], P["cream"], spokes=10, spoke_w=0.7, rr=rr)
-        for k in range(6):
-            a = TAU * k / 6 + 0.3
+        wheel2(nm, s0, sg, 19.4, P["gold"], P["gold"], P["cream"], spokes=10, rr=rr, band=P["pink"], stud_mat=P["cream"])
+        for k in range(3):
+            a = TAU * k / 3 + 0.3
             ctr = Cc(WU, WF, s0 + 3.2 * sg)
             d = V(-math.cos(a), math.sin(a), 0.5 * sg)
             K.feather("%s_tuft%d" % (nm, k), ctr, d, 9.0, 3.6, P["f1"] if k % 2 else P["f2"], rows=5, serrate=0.15, facing=(0, 0, sg), part="tufts", seed=20 + k, thick=0.12, curl=0.8 * sg)
     axle(P, P["wood"])
+    for sg in (1, -1):
+        leaf_spring("spring%d" % sg, sg, P["gold"], P["wood"])
     # a slim hull: floor, two low swept sides with a gold edge, a rear back-rest and a dash
     slab("floor", 12.5, 14.4, 0.4, 86.0, -25.0, 25.0, P["wood"], "hull")
     top = [(0.0, 34.0), (10.0, 32.0), (22.0, 26.0), (34.0, 24.0), (48.0, 27.0), (62.0, 33.0), (76.0, 36.0), (87.1, 33.0)]
     for sg in (1, -1):
         outl = [(0.0, 12.3), (87.1, 12.3)] + [(f, u) for f, u in reversed(top)]
         side_plate("side%d" % sg, outl, 24.8 * sg, 26.6 * sg, P["cream"], "hull")
-        K.tube("sidetrim%d" % sg, [Cc(u + 0.6, f, 26.9 * sg) for f, u in top], 0.75, P["gold"], sides=6, sub=3, part="trim")
+        K.tube("sidetrim%d" % sg, [Cc(u + 0.6, f, 26.9 * sg) for f, u in top], 0.75, P["gold"], sides=5, sub=2, part="trim")
+        pan = [(-15.0, 22.0), (-15.0, 66.0), (-15.8, 68.0), (-21.0, 68.0), (-22.0, 66.0), (-22.0, 22.0), (-21.0, 20.0), (-15.8, 20.0)]            # a moulded panel on each side, two gold scrolls in it
+        K.stepped_plate("panel%d" % sg, pan, 26.6 * sg, P["cream"], steps=2, step_h=0.5, inset=0.7, part="hull_panel", up=sg, bevel_w=0.1)
+        for k, (cf, flip_) in enumerate(((34.0, 1), (54.0, -1))):
+            K.filigree("scroll%d_%d" % (sg, k), K.spiral((-18.5, cf), 0.8, 3.4, 1.5, start=0.6 * k, n=9, flip=flip_), P["gold"], w=0.38, h=0.3, z=28.0, side=sg, sub=1, taper=(1.0, 0.6), part="scrolls")
         for k, (f, u) in enumerate(top[3:5]):
             K.gem_setting("hl%d_%d" % (sg, k), Cc(u - 4.0, f, 27.0 * sg), 1.1, P["lit"], P["gold"], normal=(0, 0, sg), claws=4, sides=6, part="lamps", rng_=rr, bezel=False, claw_r=0.4)
     for nm, f0, f1, back in (("bench_front", 54.0, 70.0, 27.0), ("bench_rear", 9.6, 27.0, 33.0)):
@@ -102,7 +156,7 @@ def filolial_carriage(opts):
         slab(nm, 14.4, 19.0, f0, f1, -half, half, P["pink"], "seats", bevel=0.9)
         slab(nm + "_back", 17.0, back, f0 - 1.6, f0 + 0.8, -half, half, P["pink"], "seats", bevel=0.9)
     # roof of shingled feathers: rows from front to back, each side a layer of feathers lying outward and down, two layers deep
-    for r, f in enumerate((6.0, 18.0, 30.0, 42.0, 54.0, 66.0, 78.0)):
+    for r, f in enumerate((6.0, 19.0, 32.0, 45.0, 58.0, 71.0)):
         for sg in (1, -1):
             for layer in range(2):
                 base = Cc(64.0 - 2.0 * layer + 0.6 * (r % 2), f + 5.0 * layer, 0.5 * sg)
@@ -163,7 +217,7 @@ def war_carriage(opts):
     def spiked(name, k, a, ctr):                                                                    # a plank spoke carrying an iron blade at the rim
         K.bar("%s_sp%d" % (name, k), V(ctr[0] - 4.0 * math.cos(a), ctr[1] + 4.0 * math.sin(a), ctr[2]), V(ctr[0] - 15.5 * math.cos(a), ctr[1] + 15.5 * math.sin(a), ctr[2]), 1.5, 1.4, P["wood"], part="wheels", taper=0.8, bevel_w=0.0)
     for nm, s0, sg in (("wl", -33.0, -1), ("wr", 33.0, 1)):
-        wheel(nm, s0, sg, 19.4, P["iron"], P["iron"], P["wood"], spokes=8, hub_r=5.0, rr=rr, spoke_fn=spiked)
+        wheel2(nm, s0, sg, 19.4, P["iron"], P["iron"], P["wood"], spokes=8, hub_r=5.0, rr=rr, spoke_fn=spiked, band=P["plate"], stud_mat=P["brass"], nave_band=P["brass"])
         for k in range(8):                                                                          # long iron spikes on the rim
             a = TAU * k / 8 + 0.2
             p0 = Cc(WU, WF, s0) + V(-18.4 * math.cos(a), 18.4 * math.sin(a), 0.0)
@@ -173,6 +227,8 @@ def war_carriage(opts):
             p0 = Cc(WU, WF, s0 + 2.8 * sg)
             K.tapered("%s_hubblade%d" % (nm, k), [p0, p0 + V(-2.0 * math.cos(a), 2.0 * math.sin(a), 3.0 * sg), p0 + V(-3.0 * math.cos(a), 3.0 * math.sin(a), 7.5 * sg)], 1.4, 0.1, P["plate"], sides=4, sub=1, part="spikes")
     axle(P, P["iron"], r=2.4)
+    for sg in (1, -1):
+        leaf_spring("spring%d" % sg, sg, P["plate"], P["brass"], rise=5.0)
     # the hull: a plank floor, two iron-plated sloped sides in layers with rivets, arrow slits, a rear door
     slab("floor", 11.0, 13.6, 0.4, 86.0, -26.0, 26.0, P["wood"], "hull")
     slab("chassis", 5.0, 11.0, 0.4, 84.0, -22.0, 22.0, P["iron"], "hull")
@@ -188,6 +244,9 @@ def war_carriage(opts):
             slab("slitglow%d_%d" % (sg, k), u + 1.0, u + 6.0, f + 0.5, f + 1.7, 29.0 * sg - 0.1, 29.4 * sg + 0.1, P["ember"], "slit_glow", bevel=0.0)
         rivs = [(Cc(u, f, 29.6 * sg), (0, 0, sg)) for f in (4.0, 22.0, 38.0, 54.0, 70.0, 82.0) for u in (16.0, 27.0, 40.0)]
         K.rivets("hrv%d" % sg, rivs[:14], P["brass"], r=1.2, rng_=rr, jitter=0.2, detail=False)
+    for sg in (1, -1):                                                                              # crenellations along the roof edge
+        for k, f in enumerate((6.0, 20.0, 34.0, 48.0, 62.0, 76.0)):
+            slab("merlon%d_%d" % (sg, k), 50.4, 55.0, f, f + 6.5, 26.0 * sg - 1.3, 26.0 * sg + 1.3, P["plate"], "roof", bevel=0.2)
     # a planked, iron-strapped roof with a hatch
     slab("roof", 48.0, 50.4, 2.0, 86.0, -28.0, 28.0, P["wood"], "roof", bevel=0.4)
     for f in (10.0, 30.0, 50.0, 70.0):
@@ -204,11 +263,17 @@ def war_carriage(opts):
         p0 = Cc(16.0, 0, 0) + V(-13.0 * math.cos(a), 111.0, 13.0 * math.sin(a))
         K.tapered("ramspike%d" % k, [p0, p0 + V(-4.0 * math.cos(a), 3.0, 4.0 * math.sin(a)), p0 + V(-6.5 * math.cos(a), 9.0, 6.5 * math.sin(a))], 2.2, 0.15, P["plate"], sides=4, sub=1, part="spikes")
     K.blob("ram_ember", Cc(16.0, 124.0, 0.0), (4.4, 3.0, 4.4), P["ember"], seed=2, lump=0.2, rings=6, segs=10, part="embers")
+    for sg in (1, -1):                                                                              # a ram's great curled horns on the cap
+        K.tapered("ramhorn%d" % sg, [Cc(16.0, 104.0, 9.5 * sg), Cc(10.0, 100.0, 19.0 * sg), Cc(14.0, 108.0, 24.0 * sg), Cc(22.0, 112.0, 20.0 * sg)], 4.2, 0.4, P["plate"], sides=6, sub=3, part="ram_cap")
     for sg in (1, -1):                                                                              # struts from the hull to the ram
         K.tube("strut%d" % sg, [Cc(24.0, 78.0, 20.0 * sg), Cc(20.0, 90.0, 11.0 * sg), Cc(17.0, 100.0, 9.0 * sg)], 1.8, P["iron"], sides=6, sub=2, part="ram_bands")
     # chains swagged along both sides of the hull
     for sg in (1, -1):
-        K.chain("chain%d" % sg, [Cc(36.0, 10.0, 31.5 * sg), Cc(30.0, 28.0, 32.5 * sg), Cc(36.0, 46.0, 32.0 * sg), Cc(30.0, 64.0, 32.5 * sg), Cc(36.0, 80.0, 31.5 * sg)], 8.0, 5.0, 1.0, P["chain"], max_links=10, part="chains", up=(0, 0, 1))
+        K.chain("chain%d" % sg, [Cc(40.0, 10.0, 31.5 * sg), Cc(36.0, 28.0, 32.5 * sg), Cc(40.0, 46.0, 32.0 * sg), Cc(36.0, 64.0, 32.5 * sg), Cc(40.0, 80.0, 31.5 * sg)], 8.0, 5.0, 1.0, P["chain"], max_links=8, part="chains", up=(0, 0, 1), sides=4, segs=5)
+        for k, f in enumerate((14.0, 34.0, 54.0, 74.0)):                                            # round shields hung on the hull: a domed boss, a rim ring (baked), a cross of iron
+            sc = Cc(21.0, f, 29.4 * sg)
+            K.bl.lathe("shield%d_%d" % (sg, k), [(6.2, 0.0), (5.8, 0.5 * sg), (3.4, 1.0 * sg), (1.4, 1.8 * sg), (0.01, 2.2 * sg)], P["plate"] if k % 2 == 0 else P["iron"], sides=10, origin=tuple(sc), axis="z", part="shields", caps=(False, True))
+            K.bl.lathe("shield_rim%d_%d" % (sg, k), [(5.6, 0.0), (6.5, 0.1 * sg), (6.5, 0.7 * sg), (5.6, 0.8 * sg)], P["brass"], sides=10, origin=tuple(sc), axis="z", part="shields", caps=(False, False), detail=True)
     # a tattered banner on a pole at the rear corner
     K.tube("banner_pole", [Cc(50.0, 6.0, -22.0), Cc(74.0, 6.0, -22.0), Cc(92.0, 6.0, -22.0)], 1.0, P["iron"], sides=6, sub=2, part="banner")
     K.tapered("banner_tip", [Cc(91.0, 6.0, -22.0), Cc(96.0, 6.0, -22.0), Cc(99.0, 6.0, -22.0)], 1.4, 0.1, P["plate"], sides=4, sub=1, part="banner")
@@ -243,17 +308,19 @@ def hourglass_carriage(opts):
     def cog_spokes(name, k, a, ctr):
         K.bar("%s_sp%d" % (name, k), V(ctr[0] - 4.0 * math.cos(a), ctr[1] + 4.0 * math.sin(a), ctr[2]), V(ctr[0] - 14.6 * math.cos(a), ctr[1] + 14.6 * math.sin(a), ctr[2]), 0.8, 0.8, P["brass"], part="wheels", taper=0.7, bevel_w=0.0)
     for nm, s0, sg in (("wl", -33.0, -1), ("wr", 33.0, 1)):
-        wheel(nm, s0, sg, 17.0, P["brass"], P["brass"], P["brass"], spokes=6, hub_r=4.2, rr=rr, rim_t=1.2, spoke_fn=cog_spokes)
-        K.gear(nm + "_gear", Cc(WU, WF, s0 + 0.4 * sg), 21.0, 18.0, 14, 1.0, P["dark"], normal=(0, 0, 1), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
-        K.gear(nm + "_cog", Cc(WU, WF, s0 + 1.2 * sg), 11.0, 9.0, 8, 0.8, P["brass"], normal=(0, 0, 1), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
+        wheel2(nm, s0, sg, 17.0, P["brass"], P["brass"], P["brass"], spokes=6, hub_r=4.2, rr=rr, rim_t=1.2, spoke_fn=cog_spokes, band=P["dark"], studs=12)
+        K.gear(nm + "_gear", Cc(WU, WF, s0 + 0.4 * sg), 21.0, 18.0, 10, 1.0, P["dark"], normal=(0, 0, 1), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
+        K.gear(nm + "_cog", Cc(WU, WF, s0 + 1.2 * sg), 11.0, 9.0, 6, 0.8, P["brass"], normal=(0, 0, 1), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
         for k in range(12):
             a = TAU * k / 12
             q = Cc(WU, WF, s0 + 2.0 * sg) + V(-15.0 * math.cos(a), 15.0 * math.sin(a), 0)
-            K.rivets("%s_num%d" % (nm, k), [(q, (0, 0, sg))], P["sandglow"] if k % 3 == 0 else P["face"], r=1.1 if k % 3 == 0 else 0.8, sides=6, rng_=rr, detail=False)
+            K.rivets("%s_num%d" % (nm, k), [(q, (0, 0, sg))], P["sandglow"] if k % 3 == 0 else P["face"], r=1.3 if k % 3 == 0 else 0.9, sides=6, rng_=rr, detail=True)
         for ang, ln, w in ((20.0, 10.0, 0.7), (-70.0, 7.0, 0.9)):
             a = math.radians(ang)
             K.bar("%s_hand%d" % (nm, int(ang)), Cc(WU, WF, s0 + 3.2 * sg), Cc(WU, WF, s0 + 3.2 * sg) + V(-ln * math.cos(a), ln * math.sin(a), 0), w, 0.4, P["sandglow"], part="hands", taper=0.5, bevel_w=0.0)
     axle(P, P["brass"])
+    for sg in (1, -1):
+        leaf_spring("spring%d" % sg, sg, P["brass"], P["dark"], base_u=13.0, rise=6.0, s=25.6)
     # chassis: a brass beam deck, the draught pole with a gear collar, a yoke
     slab("deck", 12.0, 14.4, 0.4, 88.0, -24.0, 24.0, P["brass"], "frame", bevel=0.4)
     slab("beam", 6.0, 12.0, 0.4, 84.0, -8.0, 8.0, P["dark"], "frame", bevel=0.3)
@@ -262,11 +329,11 @@ def hourglass_carriage(opts):
     K.gear("pole_gear", Cc(18.0, 98.0, 0), 5.0, 3.6, 10, 0.8, P["dark"], normal=(0, 1, 0), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
     # the hourglass: two glass bulbs and a neck inside a brass cage of three twisted pillars between a toothed base and a crown
     prof_glass = [(0.01, 15.0), (8.0, 15.4), (16.5, 18.6), (21.4, 26.0), (22.0, 32.0), (18.0, 39.0), (10.0, 43.5), (4.0, 46.6), (2.6, 48.0), (4.0, 49.4), (10.0, 52.5), (18.0, 57.0), (22.0, 64.0), (21.4, 70.0), (16.5, 77.4), (8.0, 80.6), (0.01, 81.0)]
-    K.bl.lathe("glass", [(r, -u) for r, u in prof_glass], P["glass"], sides=16, origin=tuple(V(0, HF, 0)), axis="x", part="glass")
+    K.bl.lathe("glass", [(r, -u) for r, u in prof_glass], P["glass"], sides=22, origin=tuple(V(0, HF, 0)), axis="x", part="glass")
     sand_bot = [(0.01, 15.6), (6.0, 15.8), (14.0, 18.4), (18.0, 22.0), (15.0, 24.5), (9.0, 27.0), (3.0, 29.0), (0.01, 30.0)]
-    K.bl.lathe("sand_bottom", [(r, -u) for r, u in sand_bot], P["sand"], sides=14, origin=tuple(V(0, HF, 0)), axis="x", part="sand")
+    K.bl.lathe("sand_bottom", [(r, -u) for r, u in sand_bot], P["sand"], sides=18, origin=tuple(V(0, HF, 0)), axis="x", part="sand")
     sand_top = [(0.01, 77.0), (7.0, 76.0), (13.0, 71.0), (16.0, 66.0), (10.0, 60.0), (4.0, 54.0), (2.0, 51.0), (0.01, 50.0)]
-    K.bl.lathe("sand_top", [(r, -u) for r, u in sand_top], P["sand"], sides=14, origin=tuple(V(0, HF, 0)), axis="x", part="sand")
+    K.bl.lathe("sand_top", [(r, -u) for r, u in sand_top], P["sand"], sides=18, origin=tuple(V(0, HF, 0)), axis="x", part="sand")
     K.tube("stream", [Cc(52.0, HF, 0.0), Cc(40.0, HF + 0.4, 0.0), Cc(30.0, HF, 0.0)], 0.5, P["sandglow"], sides=5, sub=3, part="sand_stream")
     for sg_, ang in enumerate((0.0, 120.0, 240.0)):
         a0 = math.radians(ang + 30.0)
@@ -274,7 +341,7 @@ def hourglass_carriage(opts):
         K.tube("pillar%d" % sg_, pts, 1.3, P["brass"], sides=6, sub=2, part="frame")
     for u0, u1, rad in ((12.0, 14.6, 27.0), (80.6, 83.0, 27.0)):
         C.loft("plate_%d" % u0, [[V(-uu, HF + r * math.cos(a), r * math.sin(a)) for a in [TAU * k / 20 for k in range(20)]] for uu, r in ((u0, rad - 2.0), (u0, rad), (u1, rad), (u1, rad - 1.6))], P["brass"], "frame")
-    K.gear("base_gear", Cc(14.8, HF, 0.0), 27.0, 24.5, 16, 0.8, P["brass"], normal=(1, 0, 0), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
+    K.gear("base_gear", Cc(14.8, HF, 0.0), 27.0, 24.5, 12, 0.8, P["brass"], normal=(1, 0, 0), part="gears", rng_=rr, wear=0.03, bevel_w=0.0)
     K.bl.lathe("crown", [(14.0, -83.0), (8.0, -86.0), (3.0, -90.0), (0.01, -93.0)], P["brass"], sides=14, origin=tuple(V(0, HF, 0)), axis="x", part="crown", caps=(False, True))
     K.gem_setting("crown_gem", Cc(93.0, HF, 0.0), 2.6, P["portal"], P["brass"], normal=(-1, 0, 0), up=(0, 1, 0), claws=6, sides=8, part="crown", rng_=rr, claw_r=0.5)
     for sg in (1, -1):                                                                              # a velvet seat inside the lower bulb, lit by sand-light
@@ -290,6 +357,11 @@ def hourglass_carriage(opts):
         q = Cc(PU, PF - 1.6, 0.0) + V(-27.0 * math.cos(a), 0.0, 27.0 * math.sin(a))
         K.rivets("gate_stud%d" % k, [(q, (0, -1, 0))], P["sandglow"], r=1.3, sides=6, rng_=rr, detail=False)
     K.bar("gate_foot", Cc(10.0, PF, -9.0), Cc(10.0, PF, 9.0), 1.6, 3.4, P["dark"], part="gate", bevel_w=0.2)
+    for k in range(3):                                                                              # three claw feet grip the base plate; a pendulum swings under the beam
+        a = math.radians(90.0 + 120.0 * k)
+        K.tapered("claw%d" % k, [V(-14.0, HF + 25.0 * math.cos(a), 25.0 * math.sin(a)), V(-9.0, HF + 29.0 * math.cos(a), 29.0 * math.sin(a)), V(-3.0, HF + 26.0 * math.cos(a), 26.0 * math.sin(a))], 2.0, 0.4, P["brass"], sides=5, sub=2, part="frame")
+    K.tube("pendulum_rod", [Cc(6.0, 44.0, 0.0), Cc(-4.0, 44.0, 0.0)], 0.35, P["brass"], sides=4, sub=1, part="pendulum")
+    K.bl.lathe("pendulum_bob", [(0.01, 0.0), (3.4, 0.3), (3.4, 1.0), (0.01, 1.3)], P["brass"], sides=12, origin=tuple(Cc(-4.0, 44.0, 0.0)), axis="z", part="pendulum")
     return K.quad_estimate()
 
 
@@ -320,18 +392,24 @@ def queens_chariot(opts):
         K.feather("%s_fsp%d" % (name, k), V(ctr[0] - 3.4 * math.cos(a), ctr[1] + 3.4 * math.sin(a), ctr[2]), V(-math.cos(a), math.sin(a), 0), 14.6, 4.6, P["gold"] if k % 2 else P["f2"], rows=5, serrate=0.12, facing=(0, 0, sg),
                   part="wheels", seed=300 + k + (9 if sg < 0 else 0), thick=0.22, curl=0.8 * sg)
     for nm, s0, sg in (("wl", -33.0, -1), ("wr", 33.0, 1)):
-        wheel(nm, s0, sg, 19.4, P["gold"], P["gold"], P["gold"], spokes=8, hub_r=4.6, rr=rr, spoke_fn=wing_spokes)
+        wheel2(nm, s0, sg, 19.4, P["gold"], P["gold"], P["gold"], spokes=8, hub_r=4.6, rr=rr, spoke_fn=wing_spokes, band=P["gold2"], stud_mat=P["gem"])
         K.gem_setting("%s_jewel" % nm, Cc(WU, WF, s0 + 3.4 * sg), 2.5, P["gem"], P["gold"], normal=(0, 0, sg), claws=6, sides=8, part="gems", rng_=rr, claw_r=0.5)
     axle(P, P["gold2"])
+    for sg in (1, -1):
+        leaf_spring("spring%d" % sg, sg, P["gold2"], P["gold"], rise=6.0)
     # the open body: gold floor, a high swept prow, a tall rear back, sides scaled with golden armour plates
     slab("floor", 12.0, 14.4, 0.4, 88.0, -25.0, 25.0, P["gold2"], "hull", bevel=0.4)
     prow = [(0.0, 12.0), (88.0, 12.0), (92.0, 24.0), (88.0, 40.0), (80.0, 52.0), (66.0, 44.0), (50.0, 36.0), (36.0, 31.0), (20.0, 33.0), (6.0, 42.0), (0.0, 46.0)]
     for sg in (1, -1):
         side_plate("side%d" % sg, prow, 24.6 * sg, 26.6 * sg, P["white"], "hull")
         K.tube("rim%d" % sg, [Cc(u + 0.5, f, 27.0 * sg) for f, u in prow[2:-1]], 1.0, P["gold"], sides=6, sub=2, part="hull_rim")
-        for r_, (f, u) in enumerate(((60.0, 30.0), (46.0, 25.0), (32.0, 24.0), (18.0, 27.0), (72.0, 38.0), (8.0, 36.0))):
+        for r_, (f, u) in enumerate(((60.0, 30.0), (36.0, 25.0), (14.0, 28.0), (72.0, 38.0))):
             for k in range(2):
                 K.scale_plate("sc%d_%d_%d" % (sg, r_, k), Cc(u - 0.0, f, (27.2 + 0.4 * k) * sg), V(0, 0, sg), 4.4 - 0.4 * k, P["gold"] if (r_ + k) % 2 == 0 else P["f2"], up=(-1, 0, 0), thick=0.22, rows=3, part="plates", tilt=18.0, shape="round")
+    for sg in (1, -1):                                                                              # gold scroll-work on the prow plate and a lamp on a post at the rear corner
+        for k, (cu, cf, fl, rr_) in enumerate(((-26.0, 26.0, 1, 3.8), (-26.0, 46.0, -1, 3.8), (-33.0, 66.0, 1, 3.4))):
+            K.filigree("fil%d_%d" % (sg, k), K.spiral((cu, cf), 0.7, rr_, 1.6, start=0.5 * k, n=9, flip=fl), P["gold"], w=0.45, h=0.32, z=27.9, side=sg, sub=1, taper=(1.0, 0.6), part="filigree")
+        lantern("lamp%d" % sg, Cc(38.0, 8.0, 24.0 * sg), P["gold"], P["lit"], post=10.0)
     slab("seat", 14.4, 18.4, 8.0, 30.0, -16.0, 16.0, P["velvet"], "seat", bevel=0.9)
     slab("back", 16.0, 44.0, 2.0, 5.0, -22.0, 22.0, P["velvet"], "seat", bevel=1.0)
     for sg in (1, -1):
@@ -341,7 +419,7 @@ def queens_chariot(opts):
         for k in range(7):
             a = math.radians(-5.0 + 20.0 * k)
             d = V(-math.sin(a) * 0.9 - 0.1, -0.25 * math.cos(a), sg * math.cos(a))
-            K.feather("wing%d_%d" % (sg, k), Cc(40.0 + 1.5 * k, 8.0 + 1.0 * k, 22.0 * sg), d, 36.0 + 7.0 * (3 - abs(3 - k)), 11.0 - 0.5 * k, P["f1"] if k % 2 == 0 else P["f2"], rows=8, serrate=0.18, facing=(0, 0, sg), part="wings",
+            K.feather("wing%d_%d" % (sg, k), Cc(40.0 + 1.5 * k, 8.0 + 1.0 * k, 22.0 * sg), d, 36.0 + 7.0 * (3 - abs(3 - k)), 11.0 - 0.5 * k, P["f1"] if k % 2 == 0 else P["f2"], rows=6, serrate=0.18, facing=(0, 0, sg), part="wings",
                       seed=320 + k + (11 if sg < 0 else 0), thick=0.16, curl=1.5 * sg, bend=V(0, -2.0, 3.0 * sg))
         for k in range(4):
             K.feather("wingu%d_%d" % (sg, k), Cc(44.0, 8.0, 20.0 * sg), V(-0.7 - 0.1 * k, -0.35, sg * (0.3 + 0.18 * k)), 24.0 - 3.0 * k, 8.0, P["f2"] if k % 2 else P["f1"], rows=6, serrate=0.16, facing=(0, 0, sg), part="wings",

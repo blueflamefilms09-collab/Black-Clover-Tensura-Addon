@@ -1,0 +1,20 @@
+{
+  "_doc": "Swing rigs for tools/weaponmotion/build_swing.py. kind chain: chain_parts = the parts whose connected pieces are the links, root_y = the height of the chain's root (above the grip), anchor = the root point, main = number of links of the swinging chain (the rest rides on its end), group_step = links closer than this to the one before share a bone (braided chains). kind lash: bones slices along y from root_y, rigid_parts = parts whose connected pieces move rigidly with the lash. w = natural frequency (rad/s), zeta = damping ratio, max = degrees per bone, gain = how hard the swing drives it.",
+  "meshes": {
+    "vassal_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "w": 11.0, "zeta": 0.22, "max": 9.0},
+    "vassal_chain__tempered_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "w": 11.0, "zeta": 0.22, "max": 9.0},
+    "vassal_chain__hydra_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "main": 9, "w": 10.0, "zeta": 0.25, "max": 8.0},
+    "vassal_chain__orochi_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "main": 6, "w": 10.0, "zeta": 0.25, "max": 11.0},
+    "vassal_chain__idle_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "w": 9.0, "zeta": 0.3, "max": 8.0},
+    "vassal_chain__drowsy_chain": {"kind": "chain", "chain_parts": ["links"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "w": 9.5, "zeta": 0.28, "max": 11.0},
+    "vassal_chain__long_afternoon": {"kind": "chain", "chain_parts": ["chains"], "root_y": 64.0, "anchor": [0.0, 64.0, 0.0], "group_step": 9.0, "w": 10.0, "zeta": 0.25, "max": 10.0},
+    "vassal_whip__morning_star_whip": {"kind": "chain", "chain_parts": ["chain"], "root_y": 43.0, "anchor": [5.5, 43.0, 0.0], "w": 11.0, "zeta": 0.2, "max": 8.0},
+    "rems_morning_star": {"kind": "chain", "chain_parts": ["chain", "links"], "root_y": 62.0, "anchor": [0.5, 62.0, 0.0], "w": 13.0, "zeta": 0.22, "max": 4.5},
+    "vassal_whip": {"kind": "lash", "root_y": 46.0, "bones": 10, "w": 15.0, "zeta": 0.16, "max": 9.0},
+    "vassal_whip__vine_whip": {"kind": "lash", "root_y": 46.0, "bones": 10, "w": 14.0, "zeta": 0.18, "max": 9.0},
+    "vassal_whip__storm_whip": {"kind": "lash", "root_y": 46.0, "bones": 10, "w": 16.0, "zeta": 0.15, "max": 9.0},
+    "vassal_whip__hourglass_whip": {"kind": "lash", "root_y": 52.0, "bones": 12, "rigid_parts": ["glass", "sand_pile", "frame", "gate", "gate_glow"], "w": 14.0, "zeta": 0.2, "max": 7.0},
+    "starlight_whip": {"kind": "lash", "root_y": 24.0, "bones": 10, "w": 15.0, "zeta": 0.16, "max": 9.0},
+    "anheteps_sunscourge": {"kind": "lash", "root_y": 26.0, "bones": 8, "rigid_parts": ["sun_discs", "sun_hook", "tip_sun"], "w": 14.0, "zeta": 0.2, "max": 9.0}
+  }
+}

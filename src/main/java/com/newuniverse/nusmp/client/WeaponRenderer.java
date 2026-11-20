@@ -116,6 +116,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
+        com.newuniverse.nusmp.client.motion.SwingRuntime.init();                                            // 4.48.0: the cleanup tick and the logout clear of the whip / flail swing motion
         // docs/solid_cores.md: the flat icon of a Beast Will Core is neutral grey; this tints it with the colour of the core's will (the 3D orb is tinted in renderByItem)
         modBus.addListener((RegisterColorHandlersEvent.Item e) -> e.register((stack, tintIndex) -> tintIndex == 0 ? com.newuniverse.nusmp.beastwill.BeastCoreLook.iconArgb(coreWill(stack)) : 0xFFFFFFFF,
                 com.newuniverse.nusmp.beastwill.BeastWillItems.CORE.get()));
@@ -277,6 +278,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float hitTone = hitSpec == null ? 0f : com.newuniverse.nusmp.client.upgrade.HellblazeHits.tone(ctx, time, hitSpec.hitTicks);
         String coreWill = coreWill(stack);                                         // a Beast Will Core: its will's colour tints the body and the glow
         float spin = mesh.drillFrom == null ? 0f : drillAngle(ctx, time);                      // Valkyrie Drill Lance: the turn of the `drill*` part (0 and unused on every other mesh)
+        // 4.48.0 (docs/vassal_forms_v2.md): a whip / flail / morning star with a swing rig bends and lags behind the swing; false (no rig, no holder, far away, setting off) = drawn rigid as always
+        boolean skinned = mesh.rig != null && com.newuniverse.nusmp.client.motion.SwingRuntime.prepare(mesh.rig, ctx, com.newuniverse.nusmp.client.relics.item.HolderTracker.holderFor(ctx), time,
+                mc.getTimer().getGameTimeDeltaPartialTick(false), p.pose(), p.normal());
+        swingNow = skinned ? mesh.rig : null;
         emitLayer(pose, p, mesh, BODY, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()),
                 state.tint() ? VariantRules.BODY_TINT_5LEAF : coreWill == null ? 0xFFFFFFFF : com.newuniverse.nusmp.beastwill.BeastCoreLook.bodyArgb(coreWill), light, overlay, spin);
         if (!mesh.layers[VOID].isEmpty()) {
@@ -298,7 +303,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             emitLayer(pose, p, mesh, GLOW, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ExSingularityFx.glowTex(id, mesh))), 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY, spin);
             if (state.intensify()) {                                               // 1.25.0: a Genesis glow adds a translucent emissive pass on top
                 int a = VariantRules.emissiveAlpha(time);
-                emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
+                emitSwing(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh, GLOW, a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
             }
         }
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && com.newuniverse.nusmp.item.ElsdociaRules.isLegacyException(stack)) {   // 1.97.0: Elsdocia's Genesis halo: a wider, fainter copy of the glow that breathes against the main pulse
@@ -309,11 +314,12 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             pose.popPose();
         }
         if (state.socketRgb() != 0 && mesh.glowTex != null && !mesh.layers[GLOW].isEmpty())          // 1.30.0: a bound Spirit or Devil Core colours an emissive pass
-            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emitSwing(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh, GLOW, VariantRules.socketArgb(state.socketRgb(), time), 0xF000F0, OverlayTexture.NO_OVERLAY);
         if (ExSingularityFx.applies(id) && mesh.glowTex != null) ExSingularityFx.extras(pose, buffers, mesh, time);          // EX-Singularity: the blade veil and the orbiting shards
         if (SpiritBladesFx.applies(id) && mesh.glowTex != null) SpiritBladesFx.extras(pose, buffers, mesh, time);              // the Wind Spirit blades (Zephyr, Boreas): a few drifting leaves (client/SpiritBladesFx)
         if (upTier >= 0) GodMeleeBRender.extras(stack, state.meshId(), ctx, pose, buffers, mesh, upTier, time, light, overlay);       // 1.102.0: energy veins, halo shell, orbiting pieces, swing ghosts
         if (mesh.up != null) WeaponUpgrade.draw(mesh, pose, buffers, light, overlay, time, hitTone);                // 1.102.0: orbiting parts, flowing veins, halo shell of an upgraded weapon
+        swingNow = null;
         pose.popPose();
     }
 
@@ -368,12 +374,25 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     private static final Quaternionf DRILL_Q = new Quaternionf();
 
+    /** 4.48.0: the rig of the mesh being drawn when its swing pose was prepared this frame (set and cleared inside {@link #renderByItem}; render thread only), else null. */
+    private static com.newuniverse.nusmp.client.motion.SwingRig swingNow;
+
+    /** A layer drawn in one pass the way the swing pose says (skinned when the mesh is moving, plain when it is rigid); the extra emissive passes use it so they never lag behind the body. */
+    private static void emitSwing(PoseStack.Pose p, VertexConsumer vc, Mesh mesh, int layer, int argb, int light, int overlay) {
+        if (swingNow != null && swingNow == mesh.rig) com.newuniverse.nusmp.client.motion.SwingRuntime.emit(mesh.rig, layer, mesh.layers[layer], vc, p.pose(), p.normal(), argb, light, overlay);
+        else emit(p, vc, mesh.layers[layer], argb, light, overlay);
+    }
+
     /**
      * Valkyrie Drill Lance: a layer drawn in two parts when the mesh has `drill*` parts ({@code part drill} line: every quad from there on is the drill, the quads before it are rigid): the rigid part as it is,
      * the drill after a turn of {@code spinDeg} about the mesh's +y axis (the lance's axis, through x = z = 0). A mesh without a drill part is drawn by the plain {@link #emit} exactly as before.
      */
     private static void emitLayer(PoseStack pose, PoseStack.Pose p, Mesh mesh, int layer, VertexConsumer vc, int argb, int light, int overlay, float spinDeg) {
         List<float[]> verts = mesh.layers[layer];
+        if (swingNow != null && swingNow == mesh.rig) {                           // 4.48.0: the rigid head, then the skinned tail with this frame's bone matrices
+            com.newuniverse.nusmp.client.motion.SwingRuntime.emit(mesh.rig, layer, verts, vc, p.pose(), p.normal(), argb, light, overlay);
+            return;
+        }
         if (mesh.drillFrom == null) {
             emit(p, vc, verts, 0, verts.size(), argb, light, overlay);
             return;
@@ -403,8 +422,11 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     }
 
     static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int from, int to, int argb, int light, int overlay) {
-        Matrix4f m = p.pose();
-        Matrix3f nm = p.normal();
+        emitRange(p.pose(), p.normal(), vc, verts, from, to, argb, light, overlay);
+    }
+
+    /** {@link #emit} with the two matrices given (4.48.0: the swing rig draws its rigid head with the base pose and its skinned tail with the bone matrices). */
+    public static void emitRange(Matrix4f m, Matrix3f nm, VertexConsumer vc, List<float[]> verts, int from, int to, int argb, int light, int overlay) {
         int a = argb >>> 24, r = argb >> 16 & 255, g = argb >> 8 & 255, b = argb & 255;
         Vector3f q = SCRATCH_POS, n = SCRATCH_NORMAL;                              // 1.99.0: two scratch vectors for the whole pass (two new vectors per vertex before); same maths, same order
         for (int i = from; i < to; i++) {
@@ -432,6 +454,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         int glowRgb;
         ResourceLocation tex, glowTex;
         int[] drillFrom;                                                         // Valkyrie Drill Lance: per layer, the index of the first quad vertex of the `drill*` part (the part directive); null = no turning part
+        com.newuniverse.nusmp.client.motion.SwingRig rig;                        // 4.48.0: the swing rig of a whip / flail / morning star (`bone` and `skin` lines, client/motion); null = rigid mesh
         WeaponUpgrade.Data up;                                                   // 1.102.0: set on an upgraded mesh: its spec, orbiting groups, low-detail meshes (null on every shipped mesh)
         @SuppressWarnings("unchecked")
         final List<float[]>[] layers = new List[]{new ArrayList<>(), new ArrayList<>(), new ArrayList<>()};
@@ -453,12 +476,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         boolean lordClassic = com.newuniverse.nusmp.vfx.client.LordVfxConfig.classicModels();                 // lords.classicModels: the four remade Lord weapons draw their old meshes (weapon_meshes/classic)
         boolean solid = com.newuniverse.nusmp.vfx.HeroSolid.solid();                  // visual.heroSolidParts (docs/heroweapon/flat_parts.md): off = the old flat arrow / spear head meshes
         boolean hold = WeaponGrip.holdEnabled();                                       // 4.45.0: models.holdFit
-        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen || lordClassic != lordClassicSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        boolean classicVassal = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicVassalForms();      // 4.48.0: vassalForms.classic: the axe / book / carriage forms of before the v2 remodel
+        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen || lordClassic != lordClassicSeen || classicVassal != classicVassalSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
             greedClassicSeen = greedClassic;
             lordClassicSeen = lordClassic;
             solidSeen = solid;
             holdSeen = hold;
+            classicVassalSeen = classicVassal;
             MESHES.clear();
             WeaponGrip.clear();
             ItemStateVariants.clearCache();
@@ -469,13 +494,22 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             String skin = "textures/entity/weapon/classic/" + id.replaceAll("_pull[123]$", "");
             mesh = read(id, "weapon_meshes/classic/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
+        if (mesh == null && classicVassal && isRemodelledVassalForm(id)) {          // 4.48.0: the v2 remodel's old copies (tools/weaponmotion README, docs/vassal_forms_v2.md); a missing copy falls back to the new mesh
+            String skin = "textures/entity/weapon/classic_vassal/" + id;
+            mesh = read(id, "weapon_meshes/classic_vassal/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
+        }
         if (mesh == null && !solid && isClassicLegendary(id)) mesh = read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", null, null);       // the hairline arrow / paper-thin spear head of before the flat parts were made solid (null when this id was not changed)
         if (mesh == null) mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
         MESHES.put(id, mesh);
         return mesh;
     }
 
-    private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true;
+    private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen;
+
+    /** 4.48.0: the vassal axe, book and carriage forms remodelled in the v2 pass (their old meshes and skins are in the classic_vassal folders). */
+    static boolean isRemodelledVassalForm(String id) {
+        return id.startsWith("vassal_axe__") || id.startsWith("vassal_book__") || id.startsWith("vassal_carriage__");
+    }
 
     /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {
@@ -499,11 +533,19 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                 }
                 if (tex != null) mesh.tex = tex;
                 if (glowTex != null && mesh.glowTex != null) mesh.glowTex = glowTex;
+                float[] probe = mesh.rig == null ? null : probeVertex(mesh);                 // 4.48.0: the rig's pivots are in the file's own coordinates: a mesh the loader turns / mirrors below is drawn rigid
                 float[] info = modelInfo(id);                                            // 1.29.0: the third-person display scale and the manual marker of the model json
                 if (info[1] > 0f) mesh.manual = true;
                 applyOrient(mesh);
                 if (com.newuniverse.nusmp.visual.shields.ShieldSet.isShieldMesh(id)) { mesh.shield = shieldFit(mesh, false); mesh.shieldFp = shieldFit(mesh, true); }          // 1.110.0 (4.36.2: and the first-person fit): a shield is framed like vanilla's, not normalised like a weapon on the sprite diagonal
                 else if (!mesh.manual && !HandWrap.isWrapped(id)) normalise(id, mesh, info[0]);                 // a wrapped weapon keeps its modelled axes (client/relics/item/HandWrap)
+                if (mesh.rig != null) {
+                    int[] counts = {mesh.layers[0].size(), mesh.layers[1].size(), mesh.layers[2].size()};
+                    if (!mesh.rig.valid(counts) || !java.util.Arrays.equals(probe, probeVertex(mesh))) {
+                        LogUtils.getLogger().warn("[anime_multiverse] weapon mesh {}: its swing rig is invalid or the mesh was moved at load; it is drawn rigid", id);
+                        mesh.rig = null;
+                    }
+                }
                 mesh.length = Math.max(0f, (mesh.ymax - mesh.ymin) * mesh.scale);
                 float along = OversizeGuard.GRIP_FRACTION * mesh.length;
                 mesh.gripX = mesh.ox + along * (float) Math.cos(Math.toRadians(mesh.angle));
@@ -622,6 +664,17 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         mesh.ymax = maxY(mesh);
     }
 
+    /** The first vertex of the first non-empty layer (a fingerprint: it changes when the loader mirrors or turns the mesh). */
+    private static float[] probeVertex(Mesh mesh) {
+        for (List<float[]> layer : mesh.layers) {
+            if (!layer.isEmpty()) {
+                float[] v = layer.get(0);
+                return new float[]{v[0], v[1], v[2]};
+            }
+        }
+        return new float[3];
+    }
+
     private static float maxY(Mesh mesh) {
         float hi = -Float.MAX_VALUE;
         for (List<float[]> layer : mesh.layers) for (float[] v : layer) hi = Math.max(hi, v[1]);
@@ -715,6 +768,14 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             }
             case "part" -> {                                                         // Valkyrie Drill Lance: `part drill*` starts the turning part (it must come last: every quad after it turns); other part names are labels
                 if (v.length > 1 && v[1].startsWith("drill") && mesh.drillFrom == null) mesh.drillFrom = new int[]{mesh.layers[0].size(), mesh.layers[1].size(), mesh.layers[2].size()};
+            }
+            case "bone" -> {                                                         // 4.48.0: `bone <i> <parent> <pivot> <axis A> <axis B> <gain> <w> <zeta> <maxDeg>` (tools/weaponmotion/build_swing.py)
+                if (mesh.rig == null) mesh.rig = new com.newuniverse.nusmp.client.motion.SwingRig();
+                mesh.rig.addBone(v);
+            }
+            case "skin" -> {                                                         // 4.48.0: `skin <layer> <first vertex> <count> <code>...`: the bone (and blend) of every vertex of the animated tail of a layer
+                if (mesh.rig == null) mesh.rig = new com.newuniverse.nusmp.client.motion.SwingRig();
+                mesh.rig.addSkin(v);
             }
             case "orbit" -> WeaponUpgrade.addOrbit(mesh, v);                         // 1.102.0: `orbit <layer> <pivot xyz> <axis xyz> <degrees per tick> <phase> <glow 0|1>`
             default -> { }

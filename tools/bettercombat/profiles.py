@@ -170,5 +170,12 @@ FORCE_MELEE = {"black_sword_greed_gauntlets": ("fist", "greed_fists"), "black_sw
 # `katana` preset, the reach of the longsword it was (0.25), one-handed
 SPECIAL_PROFILES["hellblaze_katana"] = P("katana", 0.25)
 PROFILE_OVERRIDE = {"hellblaze_the_demon_sin": "hellblaze_katana"}
+# 4.48.0 (docs/vassal_forms_v2.md): a whip lashes (Better Combat's `cutlass` preset: two alternating horizontal slashes, no thrust, so the lash sweeps across and back instead of stabbing) and a flail is
+# swung round and brought down (the `mace` preset: horizontal slash right / left and an overhead slam). The reach of the class they were is kept (whip 1.5, coilwhip 1.25).
+SPECIAL_PROFILES["lash_whip"] = P("cutlass", 1.5)
+SPECIAL_PROFILES["lash_coilwhip"] = P("cutlass", 1.25)
+SPECIAL_PROFILES["flail"] = P("mace", 1.5)
+PROFILE_OVERRIDE.update({"anheteps_sunscourge": "lash_whip", "starlight_whip": "lash_whip", "white_whip_of_welting": "lash_whip",
+                         "junglethorn_whip": "lash_coilwhip", "viper_whip": "lash_coilwhip", "vassal_whip": "lash_coilwhip", "vassal_chain": "flail"})
 # table ids that are a mesh only, not an item (the left glove of the gauntlets): no file, listed as excluded
 MESH_ONLY = {"black_sword_greed_gauntlets_left": "mesh only: the left glove of the Black Sword Greed gauntlets, not an item"}

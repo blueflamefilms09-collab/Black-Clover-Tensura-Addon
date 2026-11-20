@@ -5729,11 +5729,11 @@
  },
  "vassal_axe__curse_axe": {
   "class": "battleaxe",
-  "fraction": 0.091,
+  "fraction": 0.098,
   "source": "directive",
-  "x": -0.112,
-  "y": 7.963,
-  "z": 0.049
+  "x": 0.951,
+  "y": 10.129,
+  "z": -1.248
  },
  "vassal_axe__pipe_axe": {
   "class": "battleaxe",
@@ -5741,22 +5741,22 @@
   "source": "directive",
   "x": 0.009,
   "y": 44.192,
-  "z": -0.002
+  "z": 0.0
  },
  "vassal_axe__shine_axe": {
   "class": "battleaxe",
-  "fraction": 0.251,
+  "fraction": 0.276,
   "source": "directive",
-  "x": 0.0,
-  "y": 44.499,
-  "z": -0.007
+  "x": 0.009,
+  "y": 52.987,
+  "z": 0.0
  },
  "vassal_axe__timber_axe": {
   "class": "battleaxe",
-  "fraction": 0.248,
+  "fraction": 0.247,
   "source": "directive",
   "x": 0.645,
-  "y": 42.436,
+  "y": 42.216,
   "z": 0.384
  },
  "vassal_book": {
@@ -5769,27 +5769,27 @@
  },
  "vassal_book__animal_needle_book": {
   "class": "handitem",
-  "fraction": 0.28,
+  "fraction": 0.02,
   "source": "override",
-  "x": 6.579,
-  "y": 16.768,
-  "z": 0.161
+  "x": 4.593,
+  "y": -1.147,
+  "z": 0.0
  },
  "vassal_book__library_tome": {
   "class": "handitem",
   "fraction": 0.14,
   "source": "override",
-  "x": 0.539,
+  "x": -5.67,
   "y": -3.648,
-  "z": 3.441
+  "z": 0.99
  },
  "vassal_book__pipe_book": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": -0.413,
+  "x": -0.938,
   "y": 18.2,
-  "z": 3.15
+  "z": 2.816
  },
  "vassal_book__revised_edition": {
   "class": "handitem",
@@ -5811,16 +5811,16 @@
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": -35.732,
+  "x": -35.632,
   "y": 51.948,
   "z": 0.841
  },
  "vassal_carriage__hourglass_sand_carriage": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -47.544,
-  "y": 54.64,
+  "fraction": 0.31,
+  "source": "override",
+  "x": -42.837,
+  "y": 31.065,
   "z": 0.0
  },
  "vassal_carriage__queens_chariot": {
@@ -5835,7 +5835,7 @@
   "class": "handitem",
   "fraction": 0.09,
   "source": "override",
-  "x": -50.71,
+  "x": -50.601,
   "y": 11.431,
   "z": 0.0
  },

@@ -13,7 +13,7 @@
     },
     "anheteps_sunscourge": {
       "class": "whip",
-      "profile": "whip",
+      "profile": "lash_whip",
       "source": "relic"
     },
     "anneal_blade": {
@@ -868,7 +868,7 @@
     },
     "junglethorn_whip": {
       "class": "coilwhip",
-      "profile": "coilwhip",
+      "profile": "lash_coilwhip",
       "source": "relic"
     },
     "katana_of_carnage": {
@@ -1283,7 +1283,7 @@
     },
     "starlight_whip": {
       "class": "whip",
-      "profile": "whip",
+      "profile": "lash_whip",
       "source": "relic"
     },
     "starsplitter_hammer": {
@@ -1448,7 +1448,7 @@
     },
     "vassal_chain": {
       "class": "whip",
-      "profile": "whip",
+      "profile": "flail",
       "source": "table"
     },
     "vassal_claw": {
@@ -1498,12 +1498,12 @@
     },
     "vassal_whip": {
       "class": "coilwhip",
-      "profile": "coilwhip",
+      "profile": "lash_coilwhip",
       "source": "table"
     },
     "viper_whip": {
       "class": "coilwhip",
-      "profile": "coilwhip",
+      "profile": "lash_coilwhip",
       "source": "relic"
     },
     "void_origin_katana": {
@@ -1563,7 +1563,7 @@
     },
     "white_whip_of_welting": {
       "class": "whip",
-      "profile": "whip",
+      "profile": "lash_whip",
       "source": "relic"
     },
     "willbreaker": {

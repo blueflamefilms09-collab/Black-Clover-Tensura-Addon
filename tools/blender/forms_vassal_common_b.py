@@ -186,13 +186,17 @@ def contact_sheet(mesh_ids, out_png):
     print("[sheet]", out_png)
 
 
-def run(only, trial, beauty, quick, samples):
+def run(only, trial, beauty, quick, samples, wb=None):
     for key in only:
         fn, mesh_id, form = BUILDERS[key]
         t0 = time.time()
         q = fn({"samples": samples})
         print("   parts:", K.quad_table(16))
         print("[%s] built geometry: ~%d body quads in %.1f s" % (mesh_id, q, time.time() - t0))
+        if wb:                                                      # fast Workbench stills of the geometry (no bake): the shape check before the long Cycles run
+            import forms_vassal_run as R
+            R.wb_preview(os.path.join(wb, key + ".png"))
+            print("[wb] wrote", os.path.join(wb, key + ".png"))
         if beauty:
             os.makedirs(beauty, exist_ok=True)
             for view in ("three_quarter", "front"):
@@ -210,6 +214,7 @@ def main(argv):
     ap.add_argument("--trial")
     ap.add_argument("--beauty")
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--wb", help="DIR: fast Workbench stills (front / three-quarter / side) of the geometry, no bake")
     ap.add_argument("--sheet", action="store_true", help="only write the contact sheet from the meshes already in the mod")
     ap.add_argument("--samples", type=int, default=24)
     ap.add_argument("--threads", type=int, default=2)
@@ -220,7 +225,9 @@ def main(argv):
     if a.sheet:
         contact_sheet([BUILDERS[k][1] for k in BUILDERS], os.path.join(K.ROOT, "docs", "heroweapon", "form_previews", CFG["sheet"] + ".png"))
         return
-    run(a.only.split(","), a.trial, a.beauty, a.quick, a.samples)
+    run(a.only.split(","), a.trial, a.beauty, a.quick or bool(a.wb), a.samples, a.wb)
+    if a.wb:
+        return
     if not a.trial and not a.quick and not a.beauty:
         contact_sheet([BUILDERS[k][1] for k in BUILDERS if os.path.exists(os.path.join(K.bl.MESH_DIR, BUILDERS[k][1] + ".txt"))],
                       os.path.join(K.ROOT, "docs", "heroweapon", "form_previews", CFG["sheet"] + ".png"))

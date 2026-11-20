@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.54.0] — Better vassal axes, books and carriages (12 forms remade in Blender), whips and flails swing
+Owner request: improve the axe, book and carriage forms, and animate the mace, flail and whip on attack.
+- REPLACED (old kept behind `vassalForms.classic`, default off): the mesh, skin and glow of 12 forms, same ids. Axes: timber, shine, pipe, curse. Books: pipe, animal needle, revised edition, library tome. Carriages: filolial, war, hourglass sand, queen's chariot. Shine and curse axes are strong changes; timber and pipe axes are modest ones. Old meshes and skins are kept in `weapon_meshes/classic_vassal` and `textures/entity/weapon/classic_vassal`.
+- NEW: whips, flails and morning stars swing: 15 rigged meshes (chains and whips, at most 8 bones each) bend and lag behind the swing and sway while held, with Better Combat profiles and 7 regenerated attribute files. Client setting `models.weaponMotion` (default on; off draws them rigid). The swing rigs were made by script (`tools/weaponmotion/build_swing.py`), not in a modelling app.
+- FIXED: the grip fractions of the animal needle book and the hourglass sand carriage were re-picked for the new meshes; the hold audit passes for every form.
+- COST: client only, no packets and no server work; each form at most 5000 quad lines and 350 KB skin; rigs at most 8 bones, only for weapons near you. Docs: `docs/vassal_forms_v2.md`.
+- MODELS: the 12 forms were made in Blender (bpy 5.3, headless); Blockbench was not used.
+- CAVEATS: nothing seen in a game; previews are low-sample Cycles stills; the animal needle book's apparent length is 0.964 against a printed range of 0.5 to 0.9, worth a look in game; the Python hold audit still lists 2 `NONE` notes (library tome, queen's chariot).
+
 ## [4.53.0] — The four Berserk sin weapons remade to Greed's standard, Greed and the Lords get new effects, drawbacks explained, mastery bars in the status menu
 Owner request: remake the Black Axe of Sloth, Black Gunblade of Envy, Black Spear and Send Forth Holy Sword to Greed's level, rework the Berserk weapon abilities with Time-Magic-quality effects, explain every drawback on equip, and add a Half-Starved mastery bar.
 - NEW: 8 weapon forms made in Blender (Sloth: titan, chains; Envy: rifle, coil; Vanity: mirror, peacock; Seifort: radiant, sent), each with skin, glow skin, icon, item model, weapon class, Better Combat file and engravings. Three forms per weapon, opened at mastery levels 3 and 6 (R key or skill mode 6).

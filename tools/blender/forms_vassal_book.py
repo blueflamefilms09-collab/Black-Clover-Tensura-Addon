@@ -39,6 +39,32 @@ def body(P, th=4.2, cover="cover", pages="paper", spine="spine", bands="gold", n
         C.loft("band%d" % i, [dsec(band_r, th + 0.9, y - 0.75), dsec(band_r, th + 0.9, y + 0.75)], P[bands], "spine_bands")
 
 
+def body2(P, th=4.2, cover="cover", pages="paper", spine="spine", bands="gold", n_bands=6, band_r=3.2, frame="gold", chamfer=2.0, frame_inset=2.3):
+    """The v2 book block (replaces body() in the remodelled forms; body() stays for the classic builders): cover boards with cut corners and a stepped edge, a raised frame bar
+    round each cover, a page block that bulges (a loft, not a slab) with its own head and tail dip, a rounded spine with raised bands, and a head cap and a tail cap on the spine."""
+    c = chamfer
+    outline = [(X0 + c, Y0), (X1 - c, Y0), (X1, Y0 + c), (X1, Y1 - c), (X1 - c, Y1), (X0 + c, Y1), (X0, Y1 - c), (X0, Y0 + c)]
+    for nm, sg in (("cover_front", 1), ("cover_back", -1)):
+        K.stepped_plate(nm, outline, (th - 0.9) * sg, P[cover], steps=2, step_h=0.45, inset=0.55, part="cover", up=sg, bevel_w=0.14)
+        a0, a1 = X0 + frame_inset, X1 - frame_inset
+        b0, b1 = Y0 + frame_inset, Y1 - frame_inset
+        zz = sorted(((th + 0.0) * sg, (th + 0.42) * sg))
+        for k, (p0, p1) in enumerate((((a0 - 0.4, b0 - 0.4), (a1 + 0.4, b0 + 0.4)), ((a1 - 0.4, b0 - 0.4), (a1 + 0.4, b1 + 0.4)), ((a0 - 0.4, b1 - 0.4), (a1 + 0.4, b1 + 0.4)), ((a0 - 0.4, b0 - 0.4), (a0 + 0.4, b1 + 0.4)))):
+            K.plate("%s_frame%d" % (nm, k), [(p0[0], p0[1]), (p1[0], p0[1]), (p1[0], p1[1]), (p0[0], p1[1])], zz[0], zz[1], P[frame], part="cover_frame")
+    hs = ((0.7, 0.86), (2.4, 0.96), (9.0, 1.0), (27.0, 1.0), (33.6, 0.96), (35.3, 0.86))
+    C.loft("pages", [C.ring_y(y, 12.4, (th - 0.8) * k, 1.3, cx=0.5) for y, k in hs], P[pages], "pages")
+
+    def dsec(r, w, y):
+        w = w - 0.5                                                                                  # stay just under the cover plane (no coplanar black faces)
+        return [V(-12.3 + r * math.cos(math.radians(a)), y, w * math.sin(math.radians(a))) for a in range(90, 271, 20)] + [V(-10.1, y, -w), V(-10.1, y, w)]
+    C.loft("spine", [dsec(2.6, th, 0.0), dsec(2.6, th, 36.0)], P[spine], "spine")
+    for i in range(n_bands):
+        y = 2.2 + (31.6 / max(n_bands - 1, 1)) * i
+        C.loft("band%d" % i, [dsec(band_r, th + 0.9, y - 0.75), dsec(band_r, th + 0.9, y + 0.75)], P[bands], "spine_bands")
+    for nm, y, d in (("head", 36.0, 1), ("tail", 0.0, -1)):                                          # a rolled head cap and tail cap on the spine
+        C.loft("cap_" + nm, [dsec(band_r * 0.9, th + 0.4, y), dsec(band_r * 0.7, th * 0.8, y + d * 0.9), dsec(band_r * 0.3, th * 0.4, y + d * 1.4)], P[bands], "spine_bands")
+
+
 def page(name, x, top, lean, tilt, P, ink, w=8.8, h=12.4, lines=5, part="loose_pages"):
     """A loose sheet standing out of the book (leaning `lean` deg about z, `tilt` deg about x), its top at y = top: paper + glowing script (bake-only)."""
     obs = [K.plate(name, [(-w / 2, 0.0), (w / 2, 0.0), (w / 2 - 0.4, h), (-w / 2 + 0.4, h - 0.5)], -0.12, 0.12, P["paper"], part=part, bevel_w=0.04)]
@@ -85,7 +111,7 @@ def pipe_book(opts):
     C.weights(cover=1.1, cage=1.2, chains=1.0, lock=1.2, pages=0.9, spine=0.9, spine_bands=0.8, flanges=0.8)
     P = pipe_palette()
     rr = K.rng(7101)
-    body(P, th=4.2, n_bands=6, bands="brass")
+    body2(P, th=4.2, n_bands=6, bands="brass", frame="brass", frame_inset=1.5)
     ZF = 5.6
     # the cage: a pipe frame round the front, three upright pipes and four cross pipes, each crossing clamped with a hex nut
     frame = [V(X0 + 1.4, Y0 + 1.4, ZF), V(X1 - 1.0, Y0 + 1.4, ZF), V(X1 - 1.0, Y1 - 1.4, ZF), V(X0 + 1.4, Y1 - 1.4, ZF), V(X0 + 1.4, Y0 + 1.4, ZF)]
@@ -117,6 +143,14 @@ def pipe_book(opts):
     # flanges where the cage meets the spine, and a pipe flange cap at the foot
     for y in (3.0, 33.0):
         C.loft("spine_fl%d" % y, [K.bl.ring(yy, K.bl.circle(r, 12)) for yy, r in ((y - 0.9, 0.01), (y - 0.9, 5.4), (y + 0.9, 5.4), (y + 0.9, 0.01))], P["pipe"], "flanges", caps=(False, False))
+    # a hand-wheel valve on the spine (a cog on a boss), two steam stacks on the head, rivet strips (baked) along the cover edges
+    K.gear("spine_wheel", V(-14.9, 18.0, 0.0), 6.2, 4.6, 8, 0.7, P["brass"], normal=(-1, 0, 0), part="valve", rng_=rr, wear=0.03, bevel_w=0.0)
+    K.tube("spine_spoke", [V(-15.8, 18.0, -3.8), V(-15.8, 18.0, 3.8)], 0.7, P["pipe"], sides=5, sub=1, part="valve")
+    K.tube("spine_spoke2", [V(-15.8, 14.2, 0.0), V(-15.8, 21.8, 0.0)], 0.7, P["pipe"], sides=5, sub=1, part="valve")
+    for k, sx in enumerate((-8.5, 9.0)):
+        K.bl.lathe("stack%d" % k, [(0.01, 0.0), (2.2, 0.0), (2.0, 2.6), (2.6, 3.0), (2.6, 4.0), (0.01, 4.4)], P["pipe"], sides=8, origin=(sx, 36.0, -1.4), axis="y", part="stacks", caps=(False, True))
+    for sg in (1, -1):
+        K.rivets("edge_rv%d" % sg, [(V(x, 0.0 + 0.6, (4.2 - 0.5) * sg), (0, -1, 0)) for x in (-10.0, -5.0, 0.0, 5.0, 10.0)] + [(V(x, 35.4, (4.2 - 0.5) * sg), (0, 1, 0)) for x in (-10.0, -5.0, 0.0, 5.0, 10.0)], P["brass"], r=0.7, rng_=rr, detail=True)
     # loose pages pinned under the top pipe, a ribbon of red cloth at the foot
     for i, (px, lean, tilt, top) in enumerate(((-6.4, 14.0, 8.0, 44.4), (0.8, -5.0, 12.0, 45.3), (7.0, -18.0, 6.0, 43.4))):
         page("pg%d" % i, px, top, lean, tilt, P, P["lit"])
@@ -147,7 +181,7 @@ def needle_book(opts):
     C.weights(cover=1.1, needles=1.2, feathers=1.2, talons=1.0, pages=0.9, spine=0.9, spine_bands=0.7, eye=1.0)
     P = needle_palette()
     rr = K.rng(7102)
-    body(P, th=4.2, spine="spine", bands="bone", n_bands=5, band_r=3.0)
+    body2(P, th=4.2, spine="spine", bands="bone", n_bands=5, band_r=3.0, frame="gold", frame_inset=1.6)
     # talons gripping the four corners (bone claws curling over the cover edge, front and back)
     for s, (ex, ey) in enumerate(((X0, Y0), (X1, Y0), (X1, Y1), (X0, Y1))):
         sx, sy = (1 if ex < 0 else -1), (1 if ey < 1 else -1)
@@ -161,29 +195,33 @@ def needle_book(opts):
     K.tapered("beak", [sk + V(1.0, 0.0, 0.0), sk + V(5.0, 0.2, 0.0), sk + V(8.4, -1.4, 0.0)], 1.9, 0.12, P["bone"], sides=6, sub=3, part="skull")
     for z in (1, -1):
         K.blob("eye%d" % z, sk + V(2.2, 2.4, 2.9 * z), (0.8, 0.8, 0.8), P["lit"], seed=z + 3, lump=0.0, rings=4, segs=6, part="eye")
-    # a feather emblem on the cover, and the plumage fan at the head of the spine
+    # a feather emblem on the cover, a glowing slit eye (the beast watching), stitched borders (baked), and the plumage at the head of the spine: smaller, thicker, with a real quill
     for s_ in (1, -1):
-        K.feather("emblem%d" % s_, V(-6.0, 7.0, 4.5 * s_), V(0.6, 0.8, 0.0), 22.0, 6.4, P["gold"], bend=V(3.0, 0.0, 0.0), curl=1.0 * s_, rows=8, facing=(0, 0, s_), part="emblem", thick=0.18, seed=4, serrate=0.12)
-    plume = [(-12.0, 28.0, 108.0, 24.0, 6.4), (-9.0, 30.0, 96.0, 28.0, 7.0), (-4.0, 32.0, 84.0, 31.0, 7.4), (2.0, 33.0, 72.0, 28.0, 7.0), (8.0, 32.0, 56.0, 24.0, 6.4), (12.0, 30.0, 40.0, 19.0, 5.6), (-14.0, 24.0, 124.0, 17.0, 5.6)]
+        K.feather("emblem%d" % s_, V(-6.5, 8.0, 4.7 * s_), V(0.6, 0.8, 0.0), 15.0, 5.2, P["gold"], bend=V(2.0, 0.0, 0.0), curl=1.0 * s_, rows=7, facing=(0, 0, s_), part="emblem", thick=0.28, seed=4, serrate=0.12, shaft_material=P["bone"])
+        K.gem_setting("beast_eye%d" % s_, (4.2, 24.0, 4.9 * s_), 3.1, P["lit"], P["bone"], normal=(0, 0, s_), claws=6, sides=8, part="eye", rng_=rr, claw_r=0.5)
+        z0, z1 = sorted((6.35 * s_, 6.75 * s_))
+        K.plate("beast_slit%d" % s_, [(3.7, 21.4), (4.7, 21.4), (5.0, 24.0), (4.7, 26.6), (3.7, 26.6), (3.4, 24.0)], z0, z1, P["spine"], part="eye_slit")
+        K.engrave_lines("stitch%d_" % s_, [[(X0 + 3.4 + 0.0, Y0 + 3.4), (X1 - 3.4, Y0 + 3.4), (X1 - 3.4, Y1 - 3.4), (X0 + 3.4, Y1 - 3.4), (X0 + 3.4, Y0 + 3.4)]], P["thread"], side=s_, z=4.7, w=0.09, part="stitch", detail=True)
+    plume = [(-12.0, 30.0, 108.0, 15.0, 4.6), (-9.0, 31.5, 96.0, 18.0, 5.0), (-4.0, 33.0, 84.0, 20.0, 5.4), (2.0, 33.5, 72.0, 18.0, 5.0), (8.0, 33.0, 56.0, 15.0, 4.6), (12.0, 31.5, 40.0, 12.0, 4.0), (-14.0, 27.0, 124.0, 11.0, 4.0)]
     for i, (x, y, ang, ln, wd) in enumerate(plume):
         a = math.radians(ang)
-        K.feather("plume%d" % i, V(x, y, 0.5 * (i % 2) - 0.25), V(math.cos(a), math.sin(a), 0.0), ln, wd, P["feather"] if i % 2 == 0 else P["feather2"], bend=V(-math.sin(a) * 1.6, math.cos(a) * 0.4, 0.0), curl=2.0 * (1 - 2 * (i % 2)),
-                  rows=9, serrate=0.2, part="feathers", seed=60 + i, thick=0.18)
-    # the needles: steel quills bristling from the spine edge and the top, each with an eye and a thread
-    needles = []
+        K.feather("plume%d" % i, V(x, y, 0.5 * (i % 2) - 0.25), V(math.cos(a), math.sin(a), 0.0), ln, wd, P["feather"] if i % 2 == 0 else P["feather2"], bend=V(-math.sin(a) * 1.2, math.cos(a) * 0.3, 0.0), curl=2.4 * (1 - 2 * (i % 2)),
+                  rows=8, serrate=0.2, part="feathers", seed=60 + i, thick=0.34, shaft_material=P["bone"])
+    # the needles: steel quills bristling from the spine edge and the top, each with an eye and a thread; shorter, with a fat shaft and a bone grip
     for i in range(16):
         ang = rr.uniform(20.0, 160.0) if i < 10 else rr.uniform(-30.0, 15.0)
         base = V(rr.uniform(-12.5, 10.0), rr.uniform(31.0, 36.0), rr.uniform(-1.0, 1.0)) if i < 10 else V(X1 + 0.2, rr.uniform(4.0, 30.0), rr.uniform(-2.5, 2.5))
         a = math.radians(ang)
         d = V(math.cos(a), math.sin(a), rr.uniform(-0.25, 0.25))
-        ln = rr.uniform(12.0, 21.0)
-        K.tapered("needle%d" % i, [base, base + d * ln * 0.5, base + d * ln], 0.45, 0.04, P["needle"], sides=4, sub=1, part="needles")
-        e = base + d * (ln * 0.2)
+        ln = rr.uniform(8.0, 13.0)
+        K.tapered("needle%d" % i, [base, base + d * ln * 0.5, base + d * ln], 0.6, 0.05, P["needle"], sides=4, sub=1, part="needles")
+        K.tapered("needle_grip%d" % i, [base, base + d * 1.5, base + d * 3.2], 0.9, 0.7, P["bone"], sides=5, sub=1, part="needles")
+        e = base + d * (ln * 0.3)
         K.bl.lathe("eye%d" % i, [(0.7, -0.15), (0.7, 0.15)], P["gold"], sides=6, origin=tuple(e), axis="z", part="needle_eyes", caps=(False, False))
         if i % 3 == 0:
             K.tube("thread%d" % i, [e, e + V(1.5, -2.5, 0.8), e + V(0.5, -5.5, 1.5)], 0.14, P["thread"], sides=4, sub=2, part="thread")
     for i, (px, lean, tilt, top) in enumerate(((-7.0, 20.0, 6.0, 40.0),)):
-        page("pg%d" % i, px, top, lean, tilt, P, P["lit"], w=7.8, h=10.5, lines=4)
+        page("pg%d" % i, px, top, lean, tilt, P, P["lit"], w=7.0, h=9.0, lines=4)
     return K.quad_estimate()
 
 
@@ -209,7 +247,7 @@ def revised_edition(opts):
     P = revised_palette()
     rr = K.rng(7103)
     th = 5.4
-    body(P, th=th, n_bands=6, band_r=3.4)
+    body2(P, th=th, n_bands=6, band_r=3.4, frame="gold_dark", frame_inset=1.1)
     # tall filigreed corner crowns, front and back, each with a real boss
     for s, (ex, ey) in enumerate(((X0, Y0), (X1, Y0), (X1, Y1), (X0, Y1))):
         corner_cap("cap%d" % s, ex, ey, P, P["gold"], size=9.0, th=th, rr=rr)
@@ -228,6 +266,8 @@ def revised_edition(opts):
             a = TAU * (k + 0.5) / 8
             K.rivets("seal_dot%d_%d" % (s, k), [(V(0.6 + 8.3 * math.cos(a), 19.0 + 8.3 * math.sin(a), (th + 1.9) * s), (0, 0, s))], P["lit"], r=0.7, sides=6, rng_=rr, detail=False)
         K.engrave_lines("title%d_" % s, [[(-7.0, 31.0), (8.2, 31.0)], [(-7.0, 6.0), (8.2, 6.0)]], P["lit"], side=s, z=th + 0.15, w=0.14, part="title", detail=True)
+        for yy, txt in ((29.6, K.RUNES[:7]), (4.4, K.RUNES[7:14])):                                  # runic title bands (baked), front and back
+            K.runes("rune%d_%d" % (s, int(yy)), txt, 1.5, P["lit"], (0.6, yy, (th + 0.3) * s), rot=(0, 0 if s > 0 else math.pi, 0), extrude=0.06, spacing=1.2, detail=True, font=K.FONT_RUNIC, part="title")
         C_ = V(0.6, 31.0, 0.0)
         C.loft("clasp_%d" % s, [C.ring_z(z, 2.4, 3.4, X1 + 1.0, 18.0, 0.8) for z in ((th + 0.6) * s, (th - 1.1) * s)], P["silver"], "clasp")
     path = K.bl.smooth_path([V(11.0, 18.0, th + 0.2), V(14.8, 18.0, th + 0.9), V(16.6, 18.0, 3.0), V(16.9, 18.0, 0.0), V(16.6, 18.0, -3.0), V(14.8, 18.0, -th - 0.9), V(11.0, 18.0, -th - 0.2)], 3)
@@ -267,7 +307,7 @@ def library_tome(opts):
     P = library_palette()
     rr = K.rng(7104)
     th = 8.0                                                                                      # a fat volume: twice as thick as the base
-    body(P, th=th, n_bands=3, band_r=3.4)
+    body2(P, th=th, n_bands=3, band_r=3.4, frame="gold", frame_inset=1.2)
     ZF = th + 0.1
     # ---- the front: a stone arch frame round a window full of shelves
     for s in (1, -1):
