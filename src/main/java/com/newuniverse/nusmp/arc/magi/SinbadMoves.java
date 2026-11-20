@@ -1,7 +1,10 @@
 package com.newuniverse.nusmp.arc.magi;
 
+import com.newuniverse.nusmp.arc.BossFx;
+import com.newuniverse.nusmp.arc.BossShapes;
 import com.newuniverse.nusmp.arc.sds.SdsaStrikes;
 import com.newuniverse.nusmp.entity.zogratis.Tells;
+import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.server.level.ServerLevel;
@@ -272,5 +275,180 @@ final class SinbadMoves {
                 });
             });
         }
+    }
+
+    // ------------------------------------------------------------------ made for this boss: the Rukh Orrery and the Kingdom Sigil (docs/boss_redesign_goku_sinbad.md)
+
+    /** The seven djinn in the order of the orrery's motes (the order of the rainbow he wears). */
+    static final SinbadDjinn[] SEVEN = {SinbadDjinn.BAAL, SinbadDjinn.VALEFOR, SinbadDjinn.ZEPAR, SinbadDjinn.FOCALOR, SinbadDjinn.VEPAR, SinbadDjinn.CROCELL, SinbadDjinn.FURFUR};
+    static final int ORRERY_SHOTS = 7, ORRERY_GAP = 4;
+    static final double SIGIL_RADIUS = 11.0;
+    static final int SIGIL_SECTORS = 6;
+
+    /** The element's own spark for a djinn (one packet of at most six particles). */
+    static FxOld sparkOf(SinbadDjinn d) {
+        return switch (d) {
+            case BAAL -> FxOld.ELECTRIC_SPARK;
+            case VALEFOR -> FxOld.SNOWFLAKE;
+            case ZEPAR -> FxOld.ENCHANT;
+            case FOCALOR -> FxOld.CLOUD;
+            case VEPAR -> FxOld.CRIT;
+            case CROCELL -> FxOld.END_ROD;
+            case FURFUR -> FxOld.SCULK_SOUL;
+            case NONE -> FxOld.END_ROD;
+        };
+    }
+
+    /** What a hit of the orrery or the sigil adds, by djinn: short and mild, each with its own element's feel (nothing lasts over 2 s). */
+    static void rider(SinbadBoss b, LivingEntity v, SinbadDjinn d) {
+        switch (d) {
+            case VALEFOR -> slow(v, b, 30, 1);
+            case ZEPAR -> v.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 40, 0), b);
+            case FOCALOR -> launch(v, v.position().subtract(b.position()), 0.3, 0.55);
+            case VEPAR -> v.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 0), b);
+            case FURFUR -> v.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 40, 0), b);
+            case BAAL -> slow(v, b, 12, 0);
+            default -> { }
+        }
+    }
+
+    /** {@code n} points of a straight line from {@code a} to {@code b}, relative to {@code a} (the caller draws it from {@code a}). */
+    static double[] lineRel(Vec3 a, Vec3 b, int n) {
+        n = Math.max(1, Math.min(BossShapes.MAX_POINTS, n));
+        double[] out = new double[n * 3];
+        for (int i = 0; i < n; i++) {
+            double k = (i + 1) / (double) (n + 1);
+            out[i * 3] = (b.x - a.x) * k;
+            out[i * 3 + 1] = (b.y - a.y) * k;
+            out[i * 3 + 2] = (b.z - a.z) * k;
+        }
+        return out;
+    }
+
+    private static int[] sevenRgb() {
+        int[] out = new int[SEVEN.length];
+        for (int i = 0; i < out.length; i++) out[i] = SEVEN[i].rgb();
+        return out;
+    }
+
+    // ---- Rukh Orrery: seven motes, one per djinn, orbit him; then each flies to its own marked spot, one every four ticks, in the rainbow's order.
+
+    static void orreryMark(SinbadBoss b, LivingEntity t) {
+        b.lockSpots(SinbadTable.RUKH_ORRERY, SdsaStrikes.spread(b, t, ORRERY_SHOTS, 3.2));
+    }
+
+    static void orreryTell(SinbadBoss b, ServerLevel sl, List<Vec3> spots, int left, int total) {
+        double spin = (total - left) * 0.17 * (1.0 + (total - left) / (double) Math.max(1, total));
+        double[] rel = new double[ORRERY_SHOTS * 3];
+        for (int i = 0; i < ORRERY_SHOTS; i++) System.arraycopy(BossShapes.orbit(i, ORRERY_SHOTS, 2.4, 2.3, spin, 0.25), 0, rel, i * 3, 3);
+        BossFx.pointsMulti(sl, b.position(), rel, sevenRgb(), 1.7f);
+        BossFx.points(sl, b.position().add(0, 2.3, 0), BossShapes.ring(2.4, 0.0, 14, -spin * 0.5), 0xE8D9A8, 0.8f);
+        for (int i = 0; i < spots.size() && i < ORRERY_SHOTS; i++) Tells.ring(sl, spots.get(i), 1.5, SEVEN[i].rgb(), 1.2f, 8);
+    }
+
+    static void orreryFire(SinbadBoss b, ServerLevel sl, LivingEntity t) {
+        List<Vec3> spots = b.takeSpots(SinbadTable.RUKH_ORRERY, t);
+        int n = Math.min(spots.size(), ORRERY_SHOTS);
+        for (int i = 0; i < n; i++) {
+            final int k = i;
+            b.later(i * ORRERY_GAP, () -> orreryShot(b, sl, k, spots.get(k)));
+        }
+    }
+
+    /** One mote lands: its trail, a ring and a column in the djinn's colour, the element's spark, and a hit with the djinn's rider. Returns the foes hit. */
+    static int orreryShot(SinbadBoss b, ServerLevel sl, int i, Vec3 p) {
+        SinbadDjinn d = SEVEN[Math.floorMod(i, SEVEN.length)];
+        Vec3 from = b.position().add(0.0, 2.3, 0.0);
+        BossFx.points(sl, from, lineRel(from, p.add(0.0, 0.4, 0.0), 10), d.rgb(), 1.2f);
+        BossFx.points(sl, p.add(0.0, 0.1, 0.0), BossShapes.ring(1.7, 0.0, 12, 0.0), d.rgb(), 1.5f);
+        BossFx.column(sl, p, 3.2, 8, d.rgb(), 1.3f);
+        BossFx.spark(sl, sparkOf(d), p.add(0.0, 0.6, 0.0), 5, 0.5, 0.2);
+        int hits = 0;
+        for (LivingEntity v : SdsaStrikes.foesInDisc(b, p, 1.8)) {
+            if (b.strike(v, SinbadTable.ORRERY_DAMAGE, true)) {
+                hits++;
+                rider(b, v, d);
+            }
+        }
+        SdsaStrikes.sound(sl, p, SoundEvents.BEACON_ACTIVATE, 0.9F, 0.8F + 0.12F * i);
+        return hits;
+    }
+
+    // ---- Kingdom Sigil: a six-sector circle draws itself round him (rim, then spokes, then the lit sectors); only the lit sectors erupt, the others are safe.
+
+    static void sigilMark(SinbadBoss b, LivingEntity t) {
+        Vec3 aim = face(b, t);
+        double phase = Math.atan2(aim.z, aim.x);
+        b.lockSpots(SinbadTable.KINGDOM_SIGIL, List.of(b.position(), new Vec3(b.getRandom().nextInt(2), phase, 0.0)));
+    }
+
+    static void sigilTell(SinbadBoss b, ServerLevel sl, List<Vec3> spots, int left, int total) {
+        if (spots.size() < 2) return;
+        Vec3 c = spots.get(0);
+        int pattern = (int) spots.get(1).x;
+        double phase = spots.get(1).y, k = (total - left) / (double) Math.max(1, total);
+        int rgb = b.equip().rgb();
+        BossFx.points(sl, c.add(0, 0.1, 0), BossShapes.ring(SIGIL_RADIUS, 0.0, 32, 0.0), rgb, 1.3f);
+        if (k > 0.33) {
+            double[] rel = new double[30 * 3];
+            for (int s = 0; s < SIGIL_SECTORS; s++) {
+                double a = phase + s * Math.PI * 2.0 / SIGIL_SECTORS;
+                for (int j = 0; j < 5; j++) {
+                    double r = SIGIL_RADIUS * (j + 1) / 6.0;
+                    rel[(s * 5 + j) * 3] = Math.cos(a) * r;
+                    rel[(s * 5 + j) * 3 + 1] = 0.1;
+                    rel[(s * 5 + j) * 3 + 2] = Math.sin(a) * r;
+                }
+            }
+            BossFx.points(sl, c, rel, 0xE8D9A8, 1.0f);
+        }
+        if (k > 0.66) {
+            for (int s = 0; s < SIGIL_SECTORS; s++) {
+                if (!BossShapes.lit(s, pattern)) continue;
+                BossFx.points(sl, c.add(0, 0.12, 0), BossShapes.sectorFill(SIGIL_RADIUS, SIGIL_SECTORS, s, phase, 10, 0.0), 0xFFD54F, 1.5f);
+                double[] mid = BossShapes.sectorMid(SIGIL_RADIUS * 0.75, SIGIL_SECTORS, s, phase);
+                BossFx.column(sl, c.add(mid[0], 0.05, mid[2]), 3.0, 6, rgb, 1.4f);
+            }
+        }
+    }
+
+    /** The foes standing in a lit sector of the sigil (the pure rule {@link BossShapes#sigilHit}). */
+    static List<LivingEntity> sigilFoes(SinbadBoss b, Vec3 c, double phase, int pattern) {
+        List<LivingEntity> out = new java.util.ArrayList<>();
+        for (LivingEntity v : SdsaStrikes.foesInDisc(b, c, SIGIL_RADIUS)) {
+            if (BossShapes.sigilHit(v.getX() - c.x, v.getZ() - c.z, SIGIL_RADIUS, SIGIL_SECTORS, phase, pattern)) out.add(v);
+        }
+        return out;
+    }
+
+    static void sigilFire(SinbadBoss b, ServerLevel sl, LivingEntity t) {
+        List<Vec3> spots = b.takeSpots(SinbadTable.KINGDOM_SIGIL, t);
+        if (spots.size() < 2) return;
+        sigilLand(b, sl, spots.get(0), spots.get(1).y, (int) spots.get(1).x);
+    }
+
+    /** The hit check is done at once; the lit sectors then erupt clockwise, one every three ticks (so no tick draws more than one sector). Returns the foes hit. */
+    static int sigilLand(SinbadBoss b, ServerLevel sl, Vec3 c, double phase, int pattern) {
+        SinbadDjinn d = b.equip();
+        int hits = 0;
+        for (LivingEntity v : sigilFoes(b, c, phase, pattern)) {
+            if (b.strike(v, SinbadTable.SIGIL_DAMAGE, true)) {
+                hits++;
+                rider(b, v, d);
+            }
+        }
+        int order = 0;
+        for (int s = 0; s < SIGIL_SECTORS; s++) {
+            if (!BossShapes.lit(s, pattern)) continue;
+            final int sec = s;
+            b.later(order++ * 3, () -> {
+                double[] mid = BossShapes.sectorMid(SIGIL_RADIUS * 0.7, SIGIL_SECTORS, sec, phase);
+                BossFx.points(sl, c.add(0, 0.15, 0), BossShapes.sectorFill(SIGIL_RADIUS, SIGIL_SECTORS, sec, phase, 24, 0.0), 0xFFFFFF, 1.7f);
+                BossFx.column(sl, c.add(mid[0], 0.05, mid[2]), 6.0, 12, d.rgb(), 1.7f);
+                BossFx.spark(sl, sparkOf(d), c.add(mid[0], 1.0, mid[2]), 6, 1.0, 0.3);
+            });
+        }
+        SdsaStrikes.sound(sl, c, SoundEvents.BEACON_ACTIVATE, 2.0F, 1.4F);
+        return hits;
     }
 }

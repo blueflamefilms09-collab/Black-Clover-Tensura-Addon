@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.arc.magi;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcCharacter;
+import com.newuniverse.nusmp.arc.lines.BossLines;
+import com.newuniverse.nusmp.arc.lines.BossSpeech;
 import com.newuniverse.nusmp.arc.sds.SdsaStrikes;
 import com.newuniverse.nusmp.entity.zogratis.Move;
 import com.newuniverse.nusmp.entity.zogratis.MoveScheduler;
@@ -56,6 +58,9 @@ public class SinbadBoss extends ArcBoss {
     /** The bosses of this class made on the server and not yet removed (the cap and the logout cleanup read it). A boss joins at construction, so a burst of summonings in one tick cannot pass the cap. */
     private static final Set<SinbadBoss> LIVE = ConcurrentHashMap.newKeySet();
 
+    /** The djinn he wears as a number (the {@link SinbadDjinn} ordinal, 0 = none), synced so every client can dress him in it (docs/boss_redesign_goku_sinbad.md). Appended; the server writes it, the client only reads. */
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> EQUIP_IDX = net.minecraft.network.syncher.SynchedEntityData.defineId(SinbadBoss.class, net.minecraft.network.syncher.EntityDataSerializers.INT);
+
     private SinbadDjinn equip = SinbadDjinn.NONE;
     private SinbadDjinn pendingDjinn;
     private long equipUntil, nextForesight;
@@ -98,6 +103,23 @@ public class SinbadBoss extends ArcBoss {
     public static void clearLive() { LIVE.clear(); }
 
     // ================================================================ the equip state
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder b) {
+        super.defineSynchedData(b);
+        b.define(EQUIP_IDX, 0);
+    }
+
+    /** The synced djinn number, clamped to the table (0 = none; a bad value from a mismatched version reads as none). Safe on the client. */
+    public int equipIdx() {
+        int i = entityData.get(EQUIP_IDX);
+        return i < 0 || i >= SinbadDjinn.values().length ? 0 : i;
+    }
+
+    /** Server only: writes the synced number from the state, only when it changed (no packet otherwise). */
+    private void syncEquip() {
+        if (!level().isClientSide && entityData.get(EQUIP_IDX) != equip.ordinal()) entityData.set(EQUIP_IDX, equip.ordinal());
+    }
+
     SinbadDjinn equip() { return equip; }
 
     /** The id of the djinn he wears ("none", "baal", ...), for the command and the self-test. */
@@ -109,11 +131,12 @@ public class SinbadBoss extends ArcBoss {
     void setEquip(ServerLevel sl, SinbadDjinn d, boolean announce) {
         if (d == equip) return;
         equip = d;
+        syncEquip();
         equipUntil = now() + SinbadEquip.equipTicks(gatesOpen());
         if (d != SinbadDjinn.NONE) {
             VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), d.argb, 30, 2.0F);
             sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, getSoundSource(), 1.0F, 1.4F);
-            if (announce) say((d.tribe.isEmpty() ? "" : "Spirit of " + d.tribe + ", ") + d.displayName + "! Dwell in my body - Djinn Equip!");
+            if (announce && !BossSpeech.say(this, BossLines.SINBAD, "equip_" + d.id)) say((d.tribe.isEmpty() ? "" : "Spirit of " + d.tribe + ", ") + d.displayName + "! Dwell in my body - Djinn Equip!");
         }
         refreshTitle(sl);
     }
@@ -166,9 +189,10 @@ public class SinbadBoss extends ArcBoss {
         if (!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && castingMoveOrNull() == null && t >= nextForesight && random.nextFloat() < SinbadTable.FORESIGHT_CHANCE) {
             nextForesight = t + SinbadTable.FORESIGHT_COOLDOWN;
             if (level() instanceof ServerLevel sl) SdsaStrikes.fx(sl, VfxShape.SPATIAL_RIFT, position().add(0.0, 1.0, 0.0), position().add(0.0, 1.5, 0.0), SinbadDjinn.NONE.rgb(), 10, 0.8F, true);
-            say("I already saw that coming.");
+            if (!BossSpeech.say(this, BossLines.SINBAD, "foresight")) say("I already saw that coming.");
             return 0.0F;
         }
+        if (amount >= getMaxHealth() * 0.06f) BossSpeech.say(this, BossLines.SINBAD, "hurt_big");
         return isMagic(source) ? amount * SinbadTable.MAGOI_MAGIC_TAKEN : amount;
     }
 
@@ -183,15 +207,41 @@ public class SinbadBoss extends ArcBoss {
         LIVE.add(this);
         if (!(level() instanceof ServerLevel sl) || isDeadOrDying()) return;
         try {
-            if (equip != SinbadDjinn.NONE && now() >= equipUntil && castingMoveOrNull() == null) setEquip(sl, SinbadDjinn.NONE, false);
+            if (equip != SinbadDjinn.NONE && now() >= equipUntil && castingMoveOrNull() == null) {
+                setEquip(sl, SinbadDjinn.NONE, false);
+                BossSpeech.say(this, BossLines.SINBAD, "unequip");
+            }
+            if (fightActive() && tickCount % 20 == 0) voiceTick();
             if (equip != SinbadDjinn.NONE && tickCount % 40 == 0) VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), equip.argb, 40, 1.0F);
         } catch (RuntimeException e) {
             LOG.warn("[anime_multiverse] Sinbad's tick failed: {}", e.toString());
         }
     }
 
+    private boolean lowSaid;
+
+    /** His own voice (BossSpeech), once a second in a fight: the death of a player, the low-health line once per fight and an idle taunt now and then. */
+    private void voiceTick() {
+        BossSpeech.watchDeaths(this, BossLines.SINBAD);
+        if (!lowSaid && getHealth() < getMaxHealth() * 0.15f) {
+            lowSaid = true;
+            BossSpeech.say(this, BossLines.SINBAD, "low_hp");
+        }
+        if (tickCount % 400 == 0 && castingMoveOrNull() == null) BossSpeech.say(this, BossLines.SINBAD, "taunt");
+    }
+
+    @Override
+    protected String openingLine() { return BossSpeech.text(this, BossLines.SINBAD, "intro", super.openingLine()); }
+
+    @Override
+    protected String deathLine() { return BossSpeech.text(this, BossLines.SINBAD, "defeat", super.deathLine()); }
+
+    @Override
+    protected String gatesLine() { return BossSpeech.text(this, BossLines.SINBAD, "gates", super.gatesLine()); }
+
     @Override
     protected void onFightStart() {
+        lowSaid = false;
         announce("Sinbad holds seven Metal Vessels, but he can wear only one Djinn Equip at a time. Watch his colour and the name on his bar: they tell which djinn's attacks are coming.");
     }
 
@@ -202,7 +252,10 @@ public class SinbadBoss extends ArcBoss {
 
     @Override
     protected void onFightEnd(boolean won) {
+        if (!won && BossSpeech.anyFighterDown(this)) BossSpeech.say(this, BossLines.SINBAD, "victory");
+        BossSpeech.forget(getUUID());
         equip = SinbadDjinn.NONE;
+        syncEquip();
         pendingDjinn = null;
         lockedSpots.clear();
         aimFor = "";
@@ -212,6 +265,7 @@ public class SinbadBoss extends ArcBoss {
     @Override
     public void remove(RemovalReason reason) {
         LIVE.remove(this);
+        BossSpeech.forget(getUUID());
         super.remove(reason);
     }
 
@@ -280,6 +334,7 @@ public class SinbadBoss extends ArcBoss {
         if (!(level() instanceof ServerLevel sl) || t == null) return;
         SinbadTable.Spec spec = SinbadTable.byId(id);
         boolean start = first(left, total);
+        if (start) BossSpeech.callout(this, BossLines.SINBAD, id);
         int rgb = (spec == null || spec.djinn() == SinbadDjinn.NONE ? equip : spec.djinn()).rgb();
         switch (id) {
             case SinbadTable.SWORD_SLASH -> {
@@ -308,7 +363,6 @@ public class SinbadBoss extends ArcBoss {
             case SinbadTable.INQERAD_SAIQA -> {
                 if (start) {
                     SinbadMoves.inqeradMark(this, t);
-                    say("Bararaq... Inqerad-Saiqa!");
                 }
                 if (pulse(left, total, 9)) {
                     for (Vec3 p : peekSpots(id)) {
@@ -336,10 +390,20 @@ public class SinbadBoss extends ArcBoss {
             case SinbadTable.GARUFOR_KIRESTAL, SinbadTable.RUKH_INTRUSION -> {
                 if (pulse(left, total, 6)) Tells.column(sl, t.position(), 2.5, rgb);
             }
+            case SinbadTable.RUKH_ORRERY -> {
+                if (start) SinbadMoves.orreryMark(this, t);
+                SinbadMoves.orreryTell(this, sl, peekSpots(id), left, total);
+            }
+            case SinbadTable.KINGDOM_SIGIL -> {
+                if (start) {
+                    SinbadMoves.sigilMark(this, t);
+                    announce("A golden circle of six sectors opens round Sinbad. Stand where it stays dark!");
+                }
+                SinbadMoves.sigilTell(this, sl, peekSpots(id), left, total);
+            }
             case SinbadTable.SEVEN_SEAS -> {
                 if (start) {
                     announce("Sinbad raises all seven Metal Vessels at once!");
-                    say("Seven Seas, answer your king!");
                 }
             }
             default -> { }
@@ -369,6 +433,8 @@ public class SinbadBoss extends ArcBoss {
             case SinbadTable.SABER_FLURRY -> (b, t) -> SinbadMoves.saberFlurry(this, (ServerLevel) level(), t);
             case SinbadTable.RENDING_DARKNESS -> (b, t) -> SinbadMoves.rendingDarkness(this, (ServerLevel) level(), takeAim(id, t));
             case SinbadTable.SEVEN_SEAS -> (b, t) -> SinbadMoves.sevenSeas(this, (ServerLevel) level(), t);
+            case SinbadTable.RUKH_ORRERY -> (b, t) -> SinbadMoves.orreryFire(this, (ServerLevel) level(), t);
+            case SinbadTable.KINGDOM_SIGIL -> (b, t) -> SinbadMoves.sigilFire(this, (ServerLevel) level(), t);
             default -> (b, t) -> { };
         };
     }
@@ -385,6 +451,7 @@ public class SinbadBoss extends ArcBoss {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         equip = SinbadDjinn.byId(tag.getString("SinbadEquip"));
+        syncEquip();
         equipUntil = tag.getLong("SinbadEquipUntil");
     }
 

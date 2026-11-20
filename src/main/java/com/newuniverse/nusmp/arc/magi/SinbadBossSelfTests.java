@@ -2,12 +2,17 @@ package com.newuniverse.nusmp.arc.magi;
 
 import com.newuniverse.nusmp.arc.ArcRoster;
 import com.newuniverse.nusmp.arc.ArcSpawner;
+import com.newuniverse.nusmp.arc.ArtTestFoe;
+import com.newuniverse.nusmp.arc.lines.BossLines;
+import com.newuniverse.nusmp.arc.lines.BossSpeech;
+import com.newuniverse.nusmp.arc.BossShapes;
 import com.newuniverse.nusmp.boss.BossBuffTable;
 import com.newuniverse.nusmp.boss.BossRegistry;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.phys.Vec3;
 
@@ -28,6 +33,7 @@ public final class SinbadBossSelfTests {
         SelfTests.register("sinbad.boss.data", SinbadBossSelfTests::data);
         SelfTests.register("sinbad.boss.spawn", SinbadBossSelfTests::spawn);
         SelfTests.register("sinbad.boss.cap", SinbadBossSelfTests::cap);
+        SelfTests.register("sinbad.boss.arts", SinbadBossSelfTests::arts);
     }
 
     private static SelfTests.Result data(MinecraftServer server) {
@@ -112,5 +118,72 @@ public final class SinbadBossSelfTests {
         if (SinbadBoss.liveCount() != 0) return SelfTests.Result.fail(SinbadBoss.liveCount() + " bosses are left after the clean-up");
         if (SinbadBosses.gate() != null) return SelfTests.Result.fail("the gate stays closed after the clean-up");
         return SelfTests.Result.ok("the cap of " + SinbadBossConfig.globalCap() + " holds and opens again after the clean-up");
+    }
+
+    /**
+     * Fires Sinbad's two new arts for real on the server and checks the djinn switch that the clients see (docs/boss_redesign_goku_sinbad.md): every djinn he puts on writes its number to the synced
+     * equip value (and 0 when it comes off), the Rukh Orrery's seven motes each land on their spot and hit a foe standing there, the Kingdom Sigil hits a foe in a lit sector and spares one in a dark
+     * one, and the seven riders run without error. The foe is a tamed wolf of a random owner with a huge health pool. Cost: two entities made and discarded in this tick.
+     */
+    private static SelfTests.Result arts(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!SinbadBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (SinbadBoss.liveCount() >= SinbadBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + SinbadBoss.liveCount() + " Sinbad bosses already stand");
+        SinbadBoss boss = null;
+        LivingEntity foe = null;
+        try {
+            Vec3 where = Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 8);
+            ArcSpawner.Result r = ArcSpawner.summon(level, SinbadBoss.CHARACTER, where, 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof SinbadBoss s)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = s;
+            List<String> bad = new ArrayList<>();
+            // the djinn switch is written to the value every client reads
+            for (SinbadDjinn d : SinbadDjinn.values()) {
+                s.equipForTest(level, d);
+                if (s.equipIdx() != d.ordinal()) bad.add("the synced equip is " + s.equipIdx() + " with " + d + " on");
+            }
+            s.equipForTest(level, SinbadDjinn.BAAL);
+            foe = ArtTestFoe.make(level, where.add(6, 0, 0), s.getEyePosition());
+            if (foe == null) return SelfTests.Result.ok("skipped: no test foe could be made");
+            if (!s.foesAround(foe.position(), 3.0).contains(foe)) return SelfTests.Result.ok("skipped: the test foe is not counted as a foe here");
+            // Rukh Orrery: the telegraph, then each of the seven motes on the foe's own spot
+            SinbadMoves.orreryMark(s, foe);
+            SinbadMoves.orreryTell(s, level, s.peekSpots(SinbadTable.RUKH_ORRERY), 40, 44);
+            int orrery = 0;
+            for (int i = 0; i < SinbadMoves.ORRERY_SHOTS; i++) {
+                foe.invulnerableTime = 0;          // the foe's hurt frames would swallow six of the seven hits in one tick
+                orrery += SinbadMoves.orreryShot(s, level, i, foe.position());
+            }
+            s.takeSpots(SinbadTable.RUKH_ORRERY, foe);
+            if (orrery < SinbadMoves.ORRERY_SHOTS) bad.add("the orrery landed " + orrery + " of " + SinbadMoves.ORRERY_SHOTS + " motes on the foe");
+            // Kingdom Sigil: a lit sector hits, a dark one does not
+            SinbadMoves.sigilMark(s, foe);
+            List<Vec3> spots = s.peekSpots(SinbadTable.KINGDOM_SIGIL);
+            if (spots.size() < 2) return SelfTests.Result.fail("the sigil locked " + spots.size() + " values");
+            SinbadMoves.sigilTell(s, level, spots, 50, 56);
+            SinbadMoves.sigilTell(s, level, spots, 10, 56);
+            Vec3 c = spots.get(0);
+            double phase = spots.get(1).y;
+            int sector = BossShapes.sector(foe.getX() - c.x, foe.getZ() - c.z, SinbadMoves.SIGIL_SECTORS, phase);
+            int lit = sector & 1, dark = lit ^ 1;
+            if (!SinbadMoves.sigilFoes(s, c, phase, dark).isEmpty()) bad.add("a foe in a dark sector is counted as hit");
+            foe.invulnerableTime = 0;
+            int sigil = SinbadMoves.sigilLand(s, level, c, phase, lit);
+            if (sigil < 1) bad.add("the sigil hit nothing in a lit sector");
+            s.takeSpots(SinbadTable.KINGDOM_SIGIL, foe);
+            for (SinbadDjinn d : SinbadMoves.SEVEN) SinbadMoves.rider(s, foe, d);
+            // his own voice: the Djinn Equip call of Baal is said once and then rests
+            if (!BossSpeech.say(s, BossLines.SINBAD, "equip_baal")) bad.add("his Baal equip call was not said");
+            if (BossSpeech.say(s, BossLines.SINBAD, "equip_baal")) bad.add("the equip call did not rest");
+            BossSpeech.forget(s.getUUID());
+            s.equipForTest(level, SinbadDjinn.NONE);
+            return bad.isEmpty() ? SelfTests.Result.ok("Sinbad's arts fired: orrery landed " + orrery + "/7, sigil hit " + sigil + ", the equip number follows the djinn")
+                    : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad));
+        } finally {
+            if (foe != null) foe.discard();
+            if (boss != null) boss.discard();
+        }
     }
 }

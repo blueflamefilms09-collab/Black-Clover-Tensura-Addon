@@ -2,11 +2,15 @@ package com.newuniverse.nusmp.arc.goku;
 
 import com.newuniverse.nusmp.arc.ArcRoster;
 import com.newuniverse.nusmp.arc.ArcSpawner;
+import com.newuniverse.nusmp.arc.ArtTestFoe;
+import com.newuniverse.nusmp.arc.lines.BossLines;
+import com.newuniverse.nusmp.arc.lines.BossSpeech;
 import com.newuniverse.nusmp.boss.BossRegistry;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.phys.Vec3;
 
@@ -25,6 +29,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.data", GokuBossSelfTests::data);
         SelfTests.register("goku.boss.spawn", GokuBossSelfTests::spawn);
         SelfTests.register("goku.boss.cap", GokuBossSelfTests::cap);
+        SelfTests.register("goku.boss.arts", GokuBossSelfTests::arts);
     }
 
     private static SelfTests.Result data(MinecraftServer server) {
@@ -107,5 +112,58 @@ public final class GokuBossSelfTests {
         if (GokuBoss.liveCount() != 0) return SelfTests.Result.fail(GokuBoss.liveCount() + " bosses are left after the clean-up");
         if (GokuBosses.gate() != null) return SelfTests.Result.fail("the gate stays closed after the clean-up");
         return SelfTests.Result.ok("the cap of " + GokuBossConfig.globalCap() + " holds and opens again after the clean-up");
+    }
+
+    /**
+     * Fires each of his three new arts for real on the server (docs/boss_redesign_goku_sinbad.md): the Zanzoken Cage (its telegraph twice, then the four streaks and the slam, run at once), the Solar
+     * Flare (a foe that faces him is blinded) and the Kienzan Boomerang (all 28 ticks of the flight, out and back). The foe is a tamed wolf of a random owner with a huge health pool. Each art must hit it,
+     * the cage must forget its centre once fired, and nothing may throw. Cost: two entities made and discarded in this tick, a few hundred budgeted particle packets to nobody.
+     */
+    private static SelfTests.Result arts(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!GokuBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (GokuBoss.liveCount() >= GokuBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + GokuBoss.liveCount() + " Goku bosses already stand");
+        GokuBoss boss = null;
+        LivingEntity foe = null;
+        try {
+            Vec3 where = Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 8);
+            ArcSpawner.Result r = ArcSpawner.summon(level, GokuBoss.CHARACTER, where, 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof GokuBoss g)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = g;
+            foe = ArtTestFoe.make(level, where.add(5, 0, 0), g.getEyePosition());
+            if (foe == null) return SelfTests.Result.ok("skipped: no test foe could be made");
+            if (!g.foesAround(foe.position(), 3.0).contains(foe)) return SelfTests.Result.ok("skipped: the test foe is not counted as a foe here");
+            List<String> bad = new ArrayList<>();
+            // the three are in his move list
+            for (String id : new String[]{GokuArts.CAGE, GokuArts.FLARE, GokuArts.DISC}) if (g.moveIndex(id) < 0) bad.add(id + " is not in his move list");
+            // Solar Flare: the foe looks at him, so it is blinded
+            int blinded = GokuArts.flareFire(g);
+            boolean sees = foe.hasLineOfSight(g);
+            if (sees && blinded < 1) bad.add("the Solar Flare blinded nobody although the foe faced him with a clear line");
+            // Zanzoken Cage
+            GokuArts.tellsForTest(g, foe);
+            foe.invulnerableTime = 0;
+            int cage = GokuArts.cageForTest(g, foe);
+            if (cage < 1) bad.add("the Zanzoken Cage hit nothing (" + cage + ")");
+            if (GokuArts.centreKept(g)) bad.add("the cage keeps its centre after firing");
+            // Kienzan Boomerang along the line to the foe
+            Vec3 o = g.position().add(0, 1.1, 0);
+            Vec3 dir = foe.position().subtract(g.position()).multiply(1, 0, 1).normalize();
+            foe.invulnerableTime = 0;
+            int disc = GokuArts.discForTest(g, o, dir, 12.0);
+            if (disc < 1) bad.add("the Kienzan Boomerang hit nothing (" + disc + ")");
+            if (foe.getHealth() >= foe.getMaxHealth()) bad.add("the foe lost no health");
+            // his own voice: the first line of the fight is said once and then rests (the chat text always goes out; a registered line is also sent as a sound)
+            if (!BossSpeech.say(g, BossLines.GOKU, "intro")) bad.add("his intro line was not said");
+            if (BossSpeech.say(g, BossLines.GOKU, "taunt") && BossSpeech.say(g, BossLines.GOKU, "taunt")) bad.add("the taunt group did not rest");
+            BossSpeech.forget(g.getUUID());
+            return bad.isEmpty() ? SelfTests.Result.ok("Goku's arts fired: flare blinded " + blinded + ", cage hit " + cage + ", disc hit " + disc)
+                    : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad));
+        } finally {
+            if (foe != null) foe.discard();
+            if (boss != null) boss.discard();
+        }
     }
 }

@@ -1,0 +1,419 @@
+{
+ "version": 1,
+ "note": "Goku and Sinbad boss player models (docs/boss_redesign_goku_sinbad.md), written by tools/bc_playermodels/gen_gs.py. Every id is 'gs_' + the spec id; nothing here replaces an older look.",
+ "looks": {
+  "gs_goku_base": {
+   "skin": "gs_goku_base",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_base",
+     "texture": "pmx_gs_goku_base",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_base_hair",
+     "texture": "pmx_gs_goku_base",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_base_hair_fine",
+     "texture": "pmx_gs_goku_base",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_blue": {
+   "skin": "gs_goku_blue",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_blue",
+     "texture": "pmx_gs_goku_blue",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_blue_hair",
+     "texture": "pmx_gs_goku_blue",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_blue_hair_fine",
+     "texture": "pmx_gs_goku_blue",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_god": {
+   "skin": "gs_goku_god",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_god",
+     "texture": "pmx_gs_goku_god",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_god_hair",
+     "texture": "pmx_gs_goku_god",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_god_hair_fine",
+     "texture": "pmx_gs_goku_god",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_mui": {
+   "skin": "gs_goku_mui",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_mui",
+     "texture": "pmx_gs_goku_mui",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_mui_fx",
+     "texture": "pmx_gs_goku_mui",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_goku_mui_hair",
+     "texture": "pmx_gs_goku_mui",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_mui_hair_fine",
+     "texture": "pmx_gs_goku_mui",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_ssj": {
+   "skin": "gs_goku_ssj",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_ssj",
+     "texture": "pmx_gs_goku_ssj",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj_hair",
+     "texture": "pmx_gs_goku_ssj",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj_hair_fine",
+     "texture": "pmx_gs_goku_ssj",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_ssj2": {
+   "skin": "gs_goku_ssj2",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_ssj2",
+     "texture": "pmx_gs_goku_ssj2",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj2_hair",
+     "texture": "pmx_gs_goku_ssj2",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj2_hair_fine",
+     "texture": "pmx_gs_goku_ssj2",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_ssj3": {
+   "skin": "gs_goku_ssj3",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_ssj3",
+     "texture": "pmx_gs_goku_ssj3",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj3_hair",
+     "texture": "pmx_gs_goku_ssj3",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ssj3_hair_fine",
+     "texture": "pmx_gs_goku_ssj3",
+     "glow": false
+    }
+   ]
+  },
+  "gs_goku_ui_sign": {
+   "skin": "gs_goku_ui_sign",
+   "slim": false,
+   "scale": 1.0,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_goku_ui_sign",
+     "texture": "pmx_gs_goku_ui_sign",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ui_sign_hair",
+     "texture": "pmx_gs_goku_ui_sign",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_goku_ui_sign_hair_fine",
+     "texture": "pmx_gs_goku_ui_sign",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_baal": {
+   "skin": "gs_sinbad_baal",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_baal",
+     "texture": "pmx_gs_sinbad_baal",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_baal_fx",
+     "texture": "pmx_gs_sinbad_baal",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_baal_hair",
+     "texture": "pmx_gs_sinbad_baal",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_baal_hair_fine",
+     "texture": "pmx_gs_sinbad_baal",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_base": {
+   "skin": "gs_sinbad_base",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_base",
+     "texture": "pmx_gs_sinbad_base",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_base_fx",
+     "texture": "pmx_gs_sinbad_base",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_base_hair",
+     "texture": "pmx_gs_sinbad_base",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_base_hair_fine",
+     "texture": "pmx_gs_sinbad_base",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_crocell": {
+   "skin": "gs_sinbad_crocell",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_crocell",
+     "texture": "pmx_gs_sinbad_crocell",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_crocell_fx",
+     "texture": "pmx_gs_sinbad_crocell",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_crocell_hair",
+     "texture": "pmx_gs_sinbad_crocell",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_crocell_hair_fine",
+     "texture": "pmx_gs_sinbad_crocell",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_focalor": {
+   "skin": "gs_sinbad_focalor",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_focalor",
+     "texture": "pmx_gs_sinbad_focalor",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_focalor_fx",
+     "texture": "pmx_gs_sinbad_focalor",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_focalor_hair",
+     "texture": "pmx_gs_sinbad_focalor",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_focalor_hair_fine",
+     "texture": "pmx_gs_sinbad_focalor",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_furfur": {
+   "skin": "gs_sinbad_furfur",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_furfur",
+     "texture": "pmx_gs_sinbad_furfur",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_furfur_fx",
+     "texture": "pmx_gs_sinbad_furfur",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_furfur_hair",
+     "texture": "pmx_gs_sinbad_furfur",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_furfur_hair_fine",
+     "texture": "pmx_gs_sinbad_furfur",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_valefor": {
+   "skin": "gs_sinbad_valefor",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_valefor",
+     "texture": "pmx_gs_sinbad_valefor",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_valefor_fx",
+     "texture": "pmx_gs_sinbad_valefor",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_valefor_hair",
+     "texture": "pmx_gs_sinbad_valefor",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_valefor_hair_fine",
+     "texture": "pmx_gs_sinbad_valefor",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_vepar": {
+   "skin": "gs_sinbad_vepar",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_vepar",
+     "texture": "pmx_gs_sinbad_vepar",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_vepar_fx",
+     "texture": "pmx_gs_sinbad_vepar",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_vepar_hair",
+     "texture": "pmx_gs_sinbad_vepar",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_vepar_hair_fine",
+     "texture": "pmx_gs_sinbad_vepar",
+     "glow": false
+    }
+   ]
+  },
+  "gs_sinbad_zepar": {
+   "skin": "gs_sinbad_zepar",
+   "slim": false,
+   "scale": 1.04,
+   "glow": true,
+   "extras": [
+    {
+     "model": "pmx_gs_sinbad_zepar",
+     "texture": "pmx_gs_sinbad_zepar",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_zepar_fx",
+     "texture": "pmx_gs_sinbad_zepar",
+     "glow": true
+    },
+    {
+     "model": "pmx_gs_sinbad_zepar_hair",
+     "texture": "pmx_gs_sinbad_zepar",
+     "glow": false
+    },
+    {
+     "model": "pmx_gs_sinbad_zepar_hair_fine",
+     "texture": "pmx_gs_sinbad_zepar",
+     "glow": false
+    }
+   ]
+  }
+ }
+}

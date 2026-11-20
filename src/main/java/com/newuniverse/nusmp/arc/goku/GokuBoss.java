@@ -3,6 +3,8 @@ package com.newuniverse.nusmp.arc.goku;
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcCharacter;
 import com.newuniverse.nusmp.arc.ArcSaga;
+import com.newuniverse.nusmp.arc.lines.BossLines;
+import com.newuniverse.nusmp.arc.lines.BossSpeech;
 import com.newuniverse.nusmp.avatar.TensuraBridge;
 import com.newuniverse.nusmp.boss.rules.BossHealGuard;
 import com.newuniverse.nusmp.entity.zogratis.Move;
@@ -107,6 +109,9 @@ public class GokuBoss extends ArcBoss {
     private long fightTicks, inForm, kaioUntil, staggerUntil, dodgeReadyAt, windowStart;
     private int pending = -1, windLeft, windowCount;
     private float bombDamage;
+    /** The move he was casting at the last tick (his call-out is said when a new one starts) and the line state of the voice (docs/boss_redesign_goku_sinbad.md). */
+    private String seenCast = "";
+    private boolean lowSaid;
     private Vec3 bombSpot;
 
     public GokuBoss(EntityType<? extends GokuBoss> type, Level level) {
@@ -221,6 +226,46 @@ public class GokuBoss extends ArcBoss {
         if (kaioUntil != 0 && tickCount >= kaioUntil) endKaio();
         if (tickCount % 4 == 0) fx(sl);
         if (bombDamage > 0f && !"spirit_bomb".equals(castId())) bombDamage = 0f;
+        voiceTick();
+    }
+
+    /** His own voice (BossSpeech): the call-out of a move when it starts, the low-health line once per fight, and the death of a player once a second. */
+    private void voiceTick() {
+        if (!fightActive()) { seenCast = ""; return; }
+        String c = castId();
+        if (!c.equals(seenCast)) {
+            seenCast = c;
+            if (!c.isEmpty()) BossSpeech.callout(this, BossLines.GOKU, c);
+        }
+        if (tickCount % 20 == 0) {
+            BossSpeech.watchDeaths(this, BossLines.GOKU);
+            if (tickCount % 400 == 0 && c.isEmpty()) BossSpeech.say(this, BossLines.GOKU, "taunt");
+            if (!lowSaid && getHealth() < getMaxHealth() * 0.15f) {
+                lowSaid = true;
+                BossSpeech.say(this, BossLines.GOKU, "low_hp");
+            }
+        }
+    }
+
+    @Override
+    protected String openingLine() { return BossSpeech.text(this, BossLines.GOKU, "intro", super.openingLine()); }
+
+    @Override
+    protected String deathLine() { return BossSpeech.text(this, BossLines.GOKU, "defeat", super.deathLine()); }
+
+    private static String formGroup(int idx) {
+        return switch (GokuLadder.step(idx).id()) {
+            case "super_saiyan" -> "form_ssj";
+            case "super_saiyan_2" -> "form_ssj2";
+            case "super_saiyan_3" -> "form_ssj3";
+            case "super_saiyan_god" -> "form_god";
+            case "super_saiyan_blue" -> "form_blue";
+            case "super_saiyan_blue_kaioken" -> "form_kaioken";
+            case "ultra_instinct_sign" -> "form_ui_sign";
+            case "perfected_ultra_instinct" -> "form_mui";
+            case "true_ultra_instinct" -> "form_tui";
+            default -> "";
+        };
     }
 
     private String castId() {
@@ -250,11 +295,15 @@ public class GokuBoss extends ArcBoss {
         inForm = 0;
         scanned = false;
         nextScan = 0L;
+        lowSaid = false;
+        seenCast = "";
     }
 
     @Override
     protected void onFightEnd(boolean won) {
         super.onFightEnd(won);
+        if (!won && BossSpeech.anyFighterDown(this)) BossSpeech.say(this, BossLines.GOKU, "victory");
+        BossSpeech.forget(getUUID());
         windLeft = 0;
         pending = -1;
         endKaio();
@@ -272,6 +321,7 @@ public class GokuBoss extends ArcBoss {
     @Override
     public void remove(RemovalReason reason) {
         LIVE.remove(this);
+        BossSpeech.forget(getUUID());
         if (!level().isClientSide) clearMods();
         super.remove(reason);
     }
@@ -332,7 +382,8 @@ public class GokuBoss extends ArcBoss {
         windLeft = GokuLadder.WINDUP;
         interruptCast();
         getNavigation().stop();
-        say(GokuLadder.step(to).line());
+        if (formGroup(to).isEmpty()) say(GokuLadder.step(to).line());
+        else BossSpeech.say(this, BossLines.GOKU, formGroup(to));
         sl.playSound(null, blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 3f, 1.4f);
     }
 
@@ -403,7 +454,7 @@ public class GokuBoss extends ArcBoss {
         kaioUntil = tickCount + Math.max(20, Math.min(200, ticks));
         setModifier(Attributes.ATTACK_DAMAGE, KAIO_DMG_ID, SaiyanForms.kaioDamageMul(2) - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         setModifier(Attributes.MOVEMENT_SPEED, KAIO_SPD_ID, SaiyanForms.KAIOKEN.speed(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-        say("Kaio-ken!");
+        BossSpeech.say(this, BossLines.GOKU, "kaioken_burst");           // said at the start of the cast; this one only speaks when he was not casting it
         if (level() instanceof ServerLevel sl) {
             GokuFx.burst(sl, position().add(0, getBbHeight() * 0.5, 0), 0xE03020, 14);
             sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 2f, 1.6f);
@@ -530,6 +581,7 @@ public class GokuBoss extends ArcBoss {
         float before = getHealth();
         boolean landed = super.hurt(source, amount);
         float dealt = before - getHealth();
+        if (landed && dealt >= getMaxHealth() * 0.06f) BossSpeech.say(this, BossLines.GOKU, "hurt_big");
         if (landed && dealt > 0f && "spirit_bomb".equals(castId())) {
             bombDamage += dealt;
             if (bombDamage >= getMaxHealth() * BOMB_INTERRUPT) interruptBomb();
@@ -542,7 +594,7 @@ public class GokuBoss extends ArcBoss {
         bombDamage = 0f;
         interruptCast();
         staggerUntil = tickCount + 60;
-        say("Nngh... the Spirit Bomb!");
+        BossSpeech.say(this, BossLines.GOKU, "spirit_bomb_broken");
         if (level() instanceof ServerLevel sl) {
             GokuFx.burst(sl, position().add(0, getBbHeight() * 0.9, 0), 0x8CD8FF, 12);
             sl.playSound(null, blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.HOSTILE, 2f, 0.4f);
@@ -572,6 +624,7 @@ public class GokuBoss extends ArcBoss {
             sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.2f, 1.8f);
         }
         if (source.getEntity() instanceof ServerPlayer p) p.displayClientMessage(net.minecraft.network.chat.Component.literal("Goku's body moved on its own."), true);
+        BossSpeech.say(this, BossLines.GOKU, "dodge");
         return true;
     }
 

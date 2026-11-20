@@ -687,6 +687,77 @@ def tomoe_ring(x):
     g.glow(lambda t: t.line(pts, (255, 255, 255), 0.6), WHITE, 1.1, 0.8)
 
 
+def dragon_balls(x):
+    """Seven orange balls with one to seven red stars along the lower edge of the bezel, and a crest of small ki flames along its top."""
+    p, f, g = x.pal, x.front, x.glow
+    for k in range(7):
+        cx, cy, r = BX0 + 22 + k * 28, BY1 + 2.2, 2.7
+        f.ell(cx, cy, r, r, mix(p["hi"], p["lt"], 0.4), p["dk"], 0.4)
+        f.ell(cx - 0.8, cy - 0.9, 0.9, 0.6, (255, 244, 200))
+        for j in range(k + 1):
+            a = -math.pi / 2 + j * math.pi * 2 / max(1, k + 1) if k > 0 else 0
+            rr = 1.2 if k > 0 else 0
+            f.ell(cx + math.cos(a) * rr, cy + 0.2 + math.sin(a) * rr, 0.36, 0.36, (214, 32, 24))
+        g.glow(lambda t, cx=cx, cy=cy, r=r: t.ell(cx, cy, r, r, (255, 255, 255)), WHITE, 1.3, 0.8)
+    for i in range(11):
+        fx = BX0 + 14 + i * 18
+        h = 5.5 + (i % 3) * 2.2
+        flame(f, fx, BY0 + 0.6, h, 6.0, p["lt"], inner=p["hi"])
+        g.glow(lambda t, fx=fx, h=h: flame(t, fx, BY0 + 0.6, h, 6.0, (255, 255, 255)), WHITE, 1.4, 0.7)
+
+
+def magi_vessels(x):
+    """The seven Metal Vessels as seven gems in the colours of the seven djinn, joined by a thin gold chain along the lower edge of the bezel; a gold crown of seven points on the right cap."""
+    p, f, g = x.pal, x.front, x.glow
+    djinn = ((91, 184, 255), (168, 230, 255), (215, 166, 255), (155, 240, 192), (192, 200, 216), (255, 242, 168), (140, 80, 190))
+    pts = [(BX0 + 14 + k * 30, BY1 + 2.4) for k in range(7)]
+    f.line([(a, b) for a, b in pts], p["lt"], 0.5)
+    for k, (cx, cy) in enumerate(pts):
+        gem(f, cx, cy, 2.5, djinn[k], mix(djinn[k], (255, 255, 255), 0.6), p["dk"])
+        g.glow(lambda t, cx=cx, cy=cy: t.ell(cx, cy, 2.5, 2.5, (255, 255, 255)), WHITE, 1.3, 0.85)
+    cx, cy = BX1 - 12, BY0 - 0.5
+    for k in range(7):
+        a = math.radians(-90 + (k - 3) * 17)
+        f.poly([(cx + math.cos(a - 0.12) * 4, cy + math.sin(a - 0.12) * 4), (cx + math.cos(a) * 9.5, cy + math.sin(a) * 9.5), (cx + math.cos(a + 0.12) * 4, cy + math.sin(a + 0.12) * 4)], p["lt"] if k % 2 else p["hi"], p["dk"], 0.4)
+    g.glow(lambda t: t.ell(cx, cy, 4, 3, (255, 255, 255)), WHITE, 1.6, 0.7)
+
+
+def rukh_swarm(x):
+    """A flock of white-gold Rukh birds (small chevrons) round the socket and along the plate."""
+    p, f, g = x.pal, x.front, x.glow
+    for bx, by, s in ((10, 2, 1.5), (26, 5, 1.1), (40, 1, 1.0), (BX1 - 44, 3, 1.2), (BX1 - 60, 6, 0.9), (BX1 - 26, 2, 1.0)):
+        for sgn in (-1, 1):
+            f.poly([(bx, by + 1.2 * s), (bx + sgn * 4.6 * s, by - 1.4 * s), (bx + sgn * 3.6 * s, by + 0.2 * s)], p["hi"], p["dk"], 0.3)
+        g.glow(lambda t, bx=bx, by=by, s=s: t.ell(bx, by, 4 * s, 1.5 * s, (255, 255, 255)), WHITE, 1.2, 0.6)
+
+
+def dragon_balls_clean(x):
+    """The calm version of dragon_balls (the first one stays for old reference): only the seven Dragon Balls, one to seven red stars, evenly spaced on the lower edge of the bezel; no flame crest, so the title plate stays clean."""
+    p, f, g = x.pal, x.front, x.glow
+    for k in range(7):
+        cx, cy, r = BX0 + 24 + k * 30, BY1 + 2.3, 2.6
+        f.ell(cx, cy, r + 0.5, r + 0.5, p["dk"])
+        f.ell(cx, cy, r, r, mix(p["hi"], p["lt"], 0.45), p["dk"], 0.3)
+        f.ell(cx - 0.8, cy - 0.9, 0.8, 0.5, (255, 244, 200))
+        for j in range(k + 1):
+            a = -math.pi / 2 + j * math.pi * 2 / max(1, k + 1) if k > 0 else 0
+            rr = 1.15 if k > 0 else 0
+            f.ell(cx + math.cos(a) * rr, cy + 0.2 + math.sin(a) * rr, 0.34, 0.34, (200, 28, 22))
+    g.glow(lambda t: t.ell(BX0 + 24 + 3 * 30, BY1 + 2.3, 2.6, 2.6, (255, 255, 255)), WHITE, 1.2, 0.5)
+
+
+def magi_chain_clean(x):
+    """The calm version of magi_vessels: seven gems in the djinn colours on a thin gold chain along the lower edge, each set in a gold ring; no crown, no birds."""
+    p, f, g = x.pal, x.front, x.glow
+    djinn = ((91, 184, 255), (168, 230, 255), (215, 166, 255), (155, 240, 192), (192, 200, 216), (255, 242, 168), (140, 80, 190))
+    pts = [(BX0 + 24 + k * 30, BY1 + 2.4) for k in range(7)]
+    f.line([(a, b) for a, b in pts], p["lt"], 0.45)
+    for k, (cx, cy) in enumerate(pts):
+        f.ell(cx, cy, 3.0, 3.0, p["lt"], p["dk"], 0.3)
+        gem(f, cx, cy, 2.1, djinn[k], mix(djinn[k], (255, 255, 255), 0.6), p["dk"])
+    g.glow(lambda t: t.ell(BX0 + 24 + 3 * 30, BY1 + 2.4, 2.4, 2.4, (255, 255, 255)), WHITE, 1.2, 0.5)
+
+
 def embers_unused(x):
     pass
 
@@ -694,4 +765,5 @@ def embers_unused(x):
 MOTIFS = {k: v for k, v in list(globals().items()) if callable(v) and k in (
     "wings", "laurel", "thorns", "drips", "bones", "flames", "icicles", "crystals", "bolts", "void_tendrils", "stars", "vines", "waves", "shells", "fangs", "gears",
     "shards", "roots", "chains", "gate", "horns", "crown", "scales", "halo_small", "halo", "rays", "phylactery", "broken_crown", "tatters", "hieroglyph", "spores",
-    "tendrils", "triad", "eclipse", "sins", "spades", "knight_wings", "meander", "rivets", "embers_top", "whirl", "runes_motif", "orbs", "quills", "scales_motif", "shuriken_row", "tomoe_ring")}
+    "tendrils", "triad", "eclipse", "sins", "spades", "knight_wings", "meander", "rivets", "embers_top", "whirl", "runes_motif", "orbs", "quills", "scales_motif", "shuriken_row", "tomoe_ring",
+    "dragon_balls", "magi_vessels", "rukh_swarm", "dragon_balls_clean", "magi_chain_clean")}

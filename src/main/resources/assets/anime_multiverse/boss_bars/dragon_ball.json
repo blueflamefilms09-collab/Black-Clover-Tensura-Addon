@@ -1,0 +1,28 @@
+{
+  "id": "dragon_ball",
+  "family": "boss",
+  "emblem": "dragon_ball",
+  "fx": "shimmer",
+  "entrance": "slide",
+  "death": "dissolve",
+  "colors": {
+    "fill_top": "#FFD84A",
+    "fill_bottom": "#F07210",
+    "glow": "#FFD24A",
+    "accent": "#4AA8FF",
+    "ghost": "#FFFFFF",
+    "name": "#FFF4D0",
+    "title": "#FFB030",
+    "shadow": "#1E0C04",
+    "frame": "#FFFFFF",
+    "shield": "#4AA8FF",
+    "invulnerable": "#9CD8FF",
+    "cast": "#4AA8FF",
+    "lair": "#4AA8FF",
+    "marker": "#FFE9A0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

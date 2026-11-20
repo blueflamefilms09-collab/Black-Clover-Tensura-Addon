@@ -7,7 +7,7 @@ import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Ambient;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Anchor;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.util.RandomSource;
 
 import java.util.HashMap;
@@ -37,7 +37,7 @@ final class DjinnAmbient {
 
     static void clear() { LAST.clear(); }
 
-    static void emit(ClientLevel level, AbstractClientPlayer p, Djinn d, Snap s, boolean dark) {
+    static void emit(ClientLevel level, LivingEntity p, Djinn d, Snap s, boolean dark) {
         float share = DjinnLook.phaseShare(s.phase());
         if (share <= 0f) return;
         Ambient a = DjinnLook.ambient(d.ordinal());
@@ -51,7 +51,7 @@ final class DjinnAmbient {
         DjinnRoster36Fx.emitPalette(level, p, d, s, dark);                               // 1.93.0: the dust of the 24 newer Djinn, in their own colours
     }
 
-    private static void spawn(ClientLevel level, RandomSource rnd, AbstractClientPlayer p, String key, int count, Anchor anchor, int rgb, boolean dark) {
+    private static void spawn(ClientLevel level, RandomSource rnd, LivingEntity p, String key, int count, Anchor anchor, int rgb, boolean dark) {
         boolean rukh = key.equals(DjinnLook.RUKH_KEY);
         if (count <= 0) return;
         double yaw = Math.toRadians(p.yBodyRot);

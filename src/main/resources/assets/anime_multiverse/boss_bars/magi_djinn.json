@@ -1,0 +1,28 @@
+{
+  "id": "magi_djinn",
+  "family": "boss",
+  "emblem": "vessel_star",
+  "fx": "shimmer",
+  "entrance": "slide",
+  "death": "shatter",
+  "colors": {
+    "fill_top": "#9AF8EE",
+    "fill_bottom": "#2A8AC8",
+    "glow": "#7AFFE8",
+    "accent": "#7AFFE8",
+    "ghost": "#FFFFFF",
+    "name": "#F4FFFF",
+    "title": "#E8C25A",
+    "shadow": "#0C0A1E",
+    "frame": "#FFFFFF",
+    "shield": "#7AFFE8",
+    "invulnerable": "#9CD8FF",
+    "cast": "#7AFFE8",
+    "lair": "#FFB347",
+    "marker": "#FFF6D0"
+  },
+  "shimmer": {
+    "speed": 1.0,
+    "strength": 0.5
+  }
+}

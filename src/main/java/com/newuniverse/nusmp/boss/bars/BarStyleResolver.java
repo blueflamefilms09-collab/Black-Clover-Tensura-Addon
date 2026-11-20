@@ -96,6 +96,8 @@ public final class BarStyleResolver {
         put(CHARACTER, BarStyleIds.NARUTO, "kakashi_hatake");
         put(CHARACTER, BarStyleIds.LUCIUS, "lucius_zogratis", "lucius");
         put(CHARACTER, BarStyleIds.SPADE_KINGDOM, "morris", "lucifero");
+        put(CHARACTER, BarStyleIds.DRAGON_BALL, "goku_boss");
+        put(CHARACTER, BarStyleIds.MAGI_DJINN, "sinbad_boss");
 
         put(SAGA, BarStyleIds.MAGIC_KNIGHTS, "elf_reincarnation", "allies");
         put(SAGA, BarStyleIds.SPADE_KINGDOM, "spade_raid");

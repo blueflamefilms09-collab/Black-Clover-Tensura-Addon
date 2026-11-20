@@ -1,0 +1,371 @@
+{
+ "boss": "goku",
+ "voice_profile": "goku",
+ "note": "Own line set of the Goku boss, in his Dragon Ball manner. Audio: tools/audio/offline_voice.py profile 'goku'. Text only until the files exist.",
+ "lines": [
+  {
+   "id": "goku_intro_1",
+   "group": "intro",
+   "text": "Hey! I'm Son Goku. Let's have a great fight!",
+   "delivery": "[cheerful, excited, eager for a fight]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_intro_2",
+   "group": "intro",
+   "text": "Wow, you look strong! This is going to be fun!",
+   "delivery": "[cheerful, excited, eager for a fight]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_intro_3",
+   "group": "intro",
+   "text": "I've been waiting for someone like you!",
+   "delivery": "[cheerful, excited, eager for a fight]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_form_ssj_1",
+   "group": "form_ssj",
+   "text": "HAAAAAA! Super Saiyan!",
+   "delivery": "[a roaring battle cry, then a grin]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ssj_2",
+   "group": "form_ssj",
+   "text": "Heh. Okay, now I'm serious.",
+   "delivery": "[a roaring battle cry, then a grin]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ssj2_1",
+   "group": "form_ssj2",
+   "text": "Super Saiyan 2! Feel this!",
+   "delivery": "[a sharper shout, confident]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ssj2_2",
+   "group": "form_ssj2",
+   "text": "Not bad! Now it gets real!",
+   "delivery": "[a sharper shout, confident]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ssj3_1",
+   "group": "form_ssj3",
+   "text": "AAAAAAARGH! Super Saiyan 3!",
+   "delivery": "[a long scream of effort, then low and steady]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ssj3_2",
+   "group": "form_ssj3",
+   "text": "Hah... this takes a lot out of me. Better end it fast!",
+   "delivery": "[a long scream of effort, then low and steady]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_god_1",
+   "group": "form_god",
+   "text": "A calm, divine power... Super Saiyan God.",
+   "delivery": "[calm, quiet, almost gentle]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_blue_1",
+   "group": "form_blue",
+   "text": "Super Saiyan Blue! Don't blink.",
+   "delivery": "[cool, focused, a small smile]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_kaioken_1",
+   "group": "form_kaioken",
+   "text": "Kaio-ken times ten, on top of Blue!",
+   "delivery": "[a hard shout, strained]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_kaioken_2",
+   "group": "form_kaioken",
+   "text": "Kaio-ken! My body can take it!",
+   "delivery": "[a hard shout, strained]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ui_sign_1",
+   "group": "form_ui_sign",
+   "text": "My body... is moving by itself.",
+   "delivery": "[surprised, then amazed]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_ui_sign_2",
+   "group": "form_ui_sign",
+   "text": "Whoa, what is this feeling? It's amazing!",
+   "delivery": "[surprised, then amazed]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_mui_1",
+   "group": "form_mui",
+   "text": "This is it. Perfected Ultra Instinct.",
+   "delivery": "[serene, quiet, then a happy laugh]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_mui_2",
+   "group": "form_mui",
+   "text": "No thinking. Just move.",
+   "delivery": "[serene, quiet, then a happy laugh]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_form_tui_1",
+   "group": "form_tui",
+   "text": "True Ultra Instinct. Come on, give me everything!",
+   "delivery": "[wide open, joyful, calling out]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_combo_1",
+   "group": "combo",
+   "text": "Hah! Hya! Take this!",
+   "delivery": "[quick grunts of effort]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_combo_2",
+   "group": "combo",
+   "text": "Here I come!",
+   "delivery": "[quick grunts of effort]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_kamehameha_1",
+   "group": "kamehameha",
+   "text": "Ka... me... ha... me... HAAAAA!",
+   "delivery": "[drawn out, building, then a huge release]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_kamehameha_2",
+   "group": "kamehameha",
+   "text": "Kamehameha!",
+   "delivery": "[drawn out, building, then a huge release]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_spirit_bomb_1",
+   "group": "spirit_bomb",
+   "text": "Everyone... lend me your energy!",
+   "delivery": "[reaching up, pleading, then determined]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_spirit_bomb_2",
+   "group": "spirit_bomb",
+   "text": "Just a little more... Spirit Bomb!",
+   "delivery": "[reaching up, pleading, then determined]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_spirit_bomb_broken_1",
+   "group": "spirit_bomb_broken",
+   "text": "Nngh... the Spirit Bomb!",
+   "delivery": "[a pained grunt, surprised]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_spirit_bomb_broken_2",
+   "group": "spirit_bomb_broken",
+   "text": "Ugh! It's coming apart!",
+   "delivery": "[a pained grunt, surprised]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_transmit_1",
+   "group": "transmit",
+   "text": "Instant Transmission!",
+   "delivery": "[a quick playful call]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_transmit_2",
+   "group": "transmit",
+   "text": "Too slow! Behind you!",
+   "delivery": "[a quick playful call]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_kaioken_burst_1",
+   "group": "kaioken_burst",
+   "text": "Kaio-ken!",
+   "delivery": "[a short hard shout]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_kaioken_burst_2",
+   "group": "kaioken_burst",
+   "text": "Kaio-ken times three!",
+   "delivery": "[a short hard shout]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_cage_1",
+   "group": "cage",
+   "text": "Zanzoken! Can you keep up with me?",
+   "delivery": "[confident, a challenge]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_cage_2",
+   "group": "cage",
+   "text": "Try to follow this!",
+   "delivery": "[confident, a challenge]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_flare_1",
+   "group": "flare",
+   "text": "Solar Flare!",
+   "delivery": "[a sharp shout, hands to the forehead]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_flare_2",
+   "group": "flare",
+   "text": "Taiyoken!",
+   "delivery": "[a sharp shout, hands to the forehead]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "goku_disc_1",
+   "group": "disc",
+   "text": "Here, catch! It comes right back!",
+   "delivery": "[focused, a little proud]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_disc_2",
+   "group": "disc",
+   "text": "Watch it spin!",
+   "delivery": "[focused, a little proud]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_hurt_big_1",
+   "group": "hurt_big",
+   "text": "Ow! That one hurt!",
+   "delivery": "[a wince, then a laugh]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_hurt_big_2",
+   "group": "hurt_big",
+   "text": "Heh, you got me good there!",
+   "delivery": "[a wince, then a laugh]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_dodge_1",
+   "group": "dodge",
+   "text": "Whoa, my body moved on its own!",
+   "delivery": "[surprised, light]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_dodge_2",
+   "group": "dodge",
+   "text": "Too slow!",
+   "delivery": "[surprised, light]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_low_hp_1",
+   "group": "low_hp",
+   "text": "Phew... I'm running low. But I'm not done yet!",
+   "delivery": "[breathing hard, still smiling]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_low_hp_2",
+   "group": "low_hp",
+   "text": "Haa... haa... this is the best part!",
+   "delivery": "[breathing hard, still smiling]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_taunt_1",
+   "group": "taunt",
+   "text": "Come on, show me more!",
+   "delivery": "[friendly, teasing]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_taunt_2",
+   "group": "taunt",
+   "text": "You're getting stronger! Great!",
+   "delivery": "[friendly, teasing]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_taunt_3",
+   "group": "taunt",
+   "text": "Don't hold back on me!",
+   "delivery": "[friendly, teasing]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_player_death_1",
+   "group": "player_death",
+   "text": "Oh no, did I go too far? Sorry!",
+   "delivery": "[worried, apologetic]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_player_death_2",
+   "group": "player_death",
+   "text": "Hey! You okay? Man, I overdid it.",
+   "delivery": "[worried, apologetic]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_victory_1",
+   "group": "victory",
+   "text": "That was a good fight! Come back when you're stronger!",
+   "delivery": "[kind, a little sheepish]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_victory_2",
+   "group": "victory",
+   "text": "Huh? Come on, get up! Let's go again later.",
+   "delivery": "[kind, a little sheepish]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "goku_defeat_1",
+   "group": "defeat",
+   "text": "Heh... that was a great fight. Thanks.",
+   "delivery": "[warm, out of breath, grateful]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_defeat_2",
+   "group": "defeat",
+   "text": "I haven't felt this alive in years!",
+   "delivery": "[warm, out of breath, grateful]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "goku_defeat_3",
+   "group": "defeat",
+   "text": "You win. Let's do this again sometime!",
+   "delivery": "[warm, out of breath, grateful]",
+   "source": "kept from the old boss"
+  }
+ ]
+}

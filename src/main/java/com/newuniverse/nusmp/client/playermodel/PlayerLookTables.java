@@ -29,7 +29,7 @@ public final class PlayerLookTables {
      * humanoid looks (the same {@code abyssal_<look>_p<phase>} ids, the same format): a builder of those bosses writes that file and the loader picks it up with no code change.
      * {@code looks_tier.json} (3.33.0) is the Tier List bosses' table, written by {@code tools/tier_bosses/gen_tier_looks.py} (id = the character's id). {@code looks_bc.json} (docs/bc_playermodels.md) holds the redesigned Black Clover looks, id {@code bc_<old look id>}, written by {@code tools/bc_playermodels/gen_bc.py}; the old looks stay where they are. {@code looks_bc_npc.json} (docs/npcs_bc.md) is the same for the Black Clover NPCs and the Midnight Sun (written by {@code specs_npc.py}), id {@code bc_<old look id>}, merged last.
      */
-    public static final List<String> FILES = List.of("playermodel/looks.json", "playermodel/looks_abyssal.json", "playermodel/looks_dungeon.json", "playermodel/looks_decennial.json", "playermodel/looks_tier.json", "playermodel/looks_bc.json", "playermodel/looks_bc_npc.json", "playermodel/looks_dv.json");
+    public static final List<String> FILES = List.of("playermodel/looks.json", "playermodel/looks_abyssal.json", "playermodel/looks_dungeon.json", "playermodel/looks_decennial.json", "playermodel/looks_tier.json", "playermodel/looks_bc.json", "playermodel/looks_bc_npc.json", "playermodel/looks_dv.json", "playermodel/looks_gs.json");
 
     /** The merged table and what went wrong while it was made (an unreadable file, a duplicate id). */
     public record Merged(Map<String, PlayerLook> looks, List<String> problems) {}

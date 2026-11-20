@@ -2,6 +2,9 @@ package com.newuniverse.nusmp.boss.bars;
 
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcCharacter;
+import com.newuniverse.nusmp.arc.goku.GokuBoss;
+import com.newuniverse.nusmp.arc.goku.GokuLadder;
+import com.newuniverse.nusmp.arc.magi.SinbadBoss;
 import com.newuniverse.nusmp.boss.bar.BossBarThemes;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.entity.zogratis.PowerCurve;
@@ -79,6 +82,17 @@ public final class BossBarSources {
     // ================================================================ the Zogratis family and the arcs
     private static final List<Integer> POWER_THRESHOLDS = List.of(85, 65, 45, 25);
 
+    /** Goku's bar shows seven phases (the bar draws at most six notches; the later forms share the seventh, whose name is the form's own): the notches sit at the health lines of the ladder (85, 72, 60, 50, 40, 30). */
+    private static final List<Integer> GOKU_THRESHOLDS = gokuThresholds();
+    /** Sinbad's bar names the djinn he wears (the synced equip number, 0 = none). */
+    private static final String[] SINBAD_DJINN = {"", "Baal", "Valefor", "Zepar", "Focalor", "Vepar", "Crocell", "Furfur"};
+
+    private static List<Integer> gokuThresholds() {
+        List<Integer> out = new ArrayList<>();
+        for (int i = 1; i < Math.min(GokuLadder.size(), 1 + BossBarState.MAX_THRESHOLDS); i++) out.add((int) Math.round(GokuLadder.step(i).hpBelow() * 100.0));
+        return List.copyOf(out);
+    }
+
     /** The Zogratis bosses (Dante, Vanica, Zenon, the Devil Avatar, Lucius, Goliath, Charybdis, the God of Order) and every character of the arcs. */
     public static final class Zogratis extends Generic {
         private final ZogratisBoss z;
@@ -106,13 +120,17 @@ public final class BossBarSources {
             return z.devil().displayName;
         }
 
-        @Override public int phase() { return PowerCurve.stage(z.power()) + 1; }
+        @Override public int phase() { return z instanceof GokuBoss g ? Math.min(GOKU_THRESHOLDS.size() + 1, g.formIdx() + 1) : PowerCurve.stage(z.power()) + 1; }
 
-        @Override public int phaseCount() { return 5; }
+        @Override public int phaseCount() { return z instanceof GokuBoss ? GOKU_THRESHOLDS.size() + 1 : 5; }
 
-        @Override public List<Integer> phaseThresholds() { return POWER_THRESHOLDS; }
+        @Override public List<Integer> phaseThresholds() { return z instanceof GokuBoss ? GOKU_THRESHOLDS : POWER_THRESHOLDS; }
 
-        @Override public String phaseName() { return z.gatesOpen() ? "@anime_multiverse.bossbar.gates_open" : z.power() + "%"; }
+        @Override public String phaseName() {
+            if (z instanceof GokuBoss g) return GokuBoss.formName(g.formIdx());
+            if (z instanceof SinbadBoss sb && sb.equipIdx() > 0 && sb.equipIdx() < SINBAD_DJINN.length) return "Djinn Equip: " + SINBAD_DJINN[sb.equipIdx()];
+            return z.gatesOpen() ? "@anime_multiverse.bossbar.gates_open" : z.power() + "%";
+        }
 
         @Override public boolean invulnerable() { return z.refilling() || z.transforming(); }
 

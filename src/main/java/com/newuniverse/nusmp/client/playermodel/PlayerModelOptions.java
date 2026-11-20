@@ -35,6 +35,8 @@ public final class PlayerModelOptions {
     public static final ModConfigSpec.BooleanValue GOD_OF_ORDER_PLAYER_MODEL;
     /** The contract devils on their own player-model looks (docs/devil_looks.md), key {@code bossLooks.devilPlayerModel}, CLIENT config (appended after the Black Clover option). */
     public static final ModConfigSpec.BooleanValue DEVIL_PLAYER_MODEL;
+    /** Goku and Sinbad (docs/boss_redesign_goku_sinbad.md), key {@code bossLooks.bossLookClassic}, CLIENT config (appended): true brings back their earlier geo-model look exactly. Default false. */
+    public static final ModConfigSpec.BooleanValue BOSS_LOOK_CLASSIC;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -66,6 +68,8 @@ public final class PlayerModelOptions {
                 + "Off (default) = the Blender body (or the kit's look when godOfOrderBlenderModel is off).").define("godOfOrderPlayerModel", false);
         DEVIL_PLAYER_MODEL = b.comment("The devils of the Devil Contract (the figure in the ritual, and the form a devil's contract gives its signer) on the anime player-model looks: painted face, layered cube hair, "
                 + "horns, wings, tails, bracers and glowing gems in each devil's colours (docs/devil_looks.md). Off = exactly the previous figures (the Blender meshes, or the generic horns and wings).").define("devilPlayerModel", true);
+        BOSS_LOOK_CLASSIC = b.comment("Draw the Goku and Sinbad bosses with their earlier look (the shared geo body in a skin) instead of the redesigned player model with its form hair, aura and the Djinn Equip armour "
+                + "(docs/boss_redesign_goku_sinbad.md). Off (default) = the redesigned look.").define("bossLookClassic", false);
         b.pop();
         SPEC = b.build();
     }
@@ -141,6 +145,15 @@ public final class PlayerModelOptions {
             return DEVIL_PLAYER_MODEL.get();
         } catch (IllegalStateException notLoaded) {
             return true;
+        }
+    }
+
+    /** True when Goku and Sinbad are drawn with their earlier look (the config value; false while it is not loaded: the redesigned look is the default). */
+    public static boolean bossLookClassic() {
+        try {
+            return BOSS_LOOK_CLASSIC.get();
+        } catch (IllegalStateException notLoaded) {
+            return false;
         }
     }
 

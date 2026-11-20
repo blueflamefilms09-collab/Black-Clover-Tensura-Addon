@@ -63,6 +63,7 @@ public final class VoiceCatalog {
         ids.addAll(com.newuniverse.nusmp.undine.UndineLines.ids());                                // the Undine's registered lines (the ones that have a voice file), after the base set
         ids.addAll(com.newuniverse.nusmp.sylph.SylphVoiceLines.ids());                             // Sylph's registered lines, after the Undine's
         ids.addAll(com.newuniverse.nusmp.shishou.ShishouVoiceLines.ids());                         // Shishou's registered lines (none until a voice is chosen and generated), after Sylph's
+        ids.addAll(com.newuniverse.nusmp.arc.lines.BossLines.registeredIds());                     // the own lines of the Goku and Sinbad bosses (none until their audio exists), after Shishou's
         IDS = Collections.unmodifiableList(ids);
         SET = Collections.unmodifiableSet(new LinkedHashSet<>(ids));
     }

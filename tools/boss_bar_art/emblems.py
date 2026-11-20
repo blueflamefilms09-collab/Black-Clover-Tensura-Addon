@@ -361,11 +361,30 @@ def mangekyo_e(c, p):
     c.ell(C, C, 2.2, 2.2, p["dk"])
 
 
+def dragon_ball_e(c, p):
+    """The four-star ball: an orange sphere with a highlight and four red stars."""
+    c.grad_ell(C, C, 13.5, 13.5, mix(p["hi"], p["lt"], 0.35), shade(p["md"], 0.95))
+    c.d.ellipse([(C - 13.5) * 4, (C - 13.5) * 4, (C + 13.5) * 4, (C + 13.5) * 4], outline=p["dk"] + (255,), width=4)
+    c.ell(C - 5, C - 6, 4.2, 2.6, (255, 244, 200))
+    for sx, sy in ((C - 4.6, C - 0.4), (C + 4.6, C - 0.4), (C - 4.6, C + 7.2), (C + 4.6, C + 7.2)):
+        star(c, sx, sy, 2.9, (214, 32, 24), points=5, inner=0.45)
+
+
+def vessel_star_e(c, p):
+    """The seven-pointed star of the seven Metal Vessels on a ring, a gem in the middle."""
+    c.d.ellipse([(C - 14.2) * 4, (C - 14.2) * 4, (C + 14.2) * 4, (C + 14.2) * 4], outline=p["lt"] + (255,), width=3)
+    star(c, C, C + 0.6, 13.0, shade(p["dk"], 1.0), points=7, inner=0.5)
+    star(c, C, C + 0.6, 11.6, p["lt"], points=7, inner=0.5)
+    star(c, C, C + 0.6, 7.4, p["hi"], points=7, inner=0.55)
+    gem(c, C, C + 0.6, 3.6, p["gl"], p["hi"], p["dk"])
+
+
 EMBLEMS = [("wing", wing), ("thorn_crown", thorn_crown), ("skull", skull_e), ("flame", flame_e), ("snowflake", snowflake), ("bolt", bolt_e), ("void_eye", void_eye), ("leaf", leaf_e),
            ("wave", wave_e), ("blood_drop", blood_drop), ("gear", gear_e), ("mirror", mirror_e), ("root", root_e), ("gate", gate_e), ("horns", horns_e), ("crown_horns", crown_horns),
            ("dragon", dragon_e), ("feather", feather_e), ("halo", halo_e), ("lich", lich_e), ("broken_crown", broken_crown_e), ("ankh", ankh_e), ("plague", plague_e), ("triad", triad_e),
            ("eclipse", eclipse_e), ("sins", sins_e), ("spade", spade_e), ("knight", knight_e), ("labyrinth", labyrinth_e), ("crown", crown_e), ("scales", scales_e), ("anvil", anvil_e),
-           ("whirlpool", whirlpool_e), ("key", key_e), ("spirit", spirit_e), ("rune", rune_e), ("sharingan", sharingan_e), ("mangekyo", mangekyo_e)]
+           ("whirlpool", whirlpool_e), ("key", key_e), ("spirit", spirit_e), ("rune", rune_e), ("sharingan", sharingan_e), ("mangekyo", mangekyo_e),
+           ("dragon_ball", dragon_ball_e), ("vessel_star", vessel_star_e)]
 NAMES = [n for n, _ in EMBLEMS]
 COLS = 8
 ROWS = (len(EMBLEMS) + COLS - 1) // COLS

@@ -26,13 +26,13 @@ class SinbadTableTest {
             assertTrue(s.windUpTicks() > 0 && s.cooldownTicks() >= 40 && s.weight() >= 1 && s.minPower() >= 0 && s.minPower() <= 100, s.id() + " numbers");
             assertTrue(s.manaCost() >= 0 && s.recovery() >= 0, s.id() + " mana/recovery");
         }
-        assertEquals(17, SinbadTable.specs().size(), "the move list is append-only (the client reads move names by index): update this number when a move is appended");
+        assertEquals(19, SinbadTable.specs().size(), "the move list is append-only (the client reads move names by index): update this number when a move is appended");
     }
 
     @Test
     void theMoveOrderIsKeptAppendOnly() {
         String[] first = {"sword_slash", "magoi_thrust", "djinn_equip", "bararaq", "bararaq_saiqa", "bararaq_inqerad_saiqa", "garufor_zairu", "garufor_kirestal", "stagnation",
-                "command_scream", "rukh_intrusion", "foraz_zora", "gale_step", "vepar_istella", "saber_flurry", "rending_darkness", "seven_seas_sovereign"};
+                "command_scream", "rukh_intrusion", "foraz_zora", "gale_step", "vepar_istella", "saber_flurry", "rending_darkness", "seven_seas_sovereign", "rukh_orrery", "kingdom_sigil"};
         for (int i = 0; i < first.length; i++) assertEquals(first[i], SinbadTable.specs().get(i).id(), "slot " + i);
     }
 

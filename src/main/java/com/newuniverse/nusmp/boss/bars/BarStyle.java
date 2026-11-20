@@ -22,7 +22,7 @@ public record BarStyle(String id, String family, String emblem, String fx, Strin
     /** The emblems of {@code emblems.png}, in cell order (8 per row). Appended only. */
     public static final List<String> EMBLEMS = List.of("wing", "thorn_crown", "skull", "flame", "snowflake", "bolt", "void_eye", "leaf", "wave", "blood_drop", "gear", "mirror", "root", "gate", "horns",
             "crown_horns", "dragon", "feather", "halo", "lich", "broken_crown", "ankh", "plague", "triad", "eclipse", "sins", "spade", "knight", "labyrinth", "crown", "scales", "anvil", "whirlpool",
-            "key", "spirit", "rune", "sharingan", "mangekyo");
+            "key", "spirit", "rune", "sharingan", "mangekyo", "dragon_ball", "vessel_star");
     /** The colours every style gives (all {@code #RRGGBB}). */
     public static final List<String> COLOR_KEYS = List.of("fill_top", "fill_bottom", "glow", "accent", "ghost", "name", "title", "shadow", "frame", "shield", "invulnerable", "cast", "lair", "marker");
 

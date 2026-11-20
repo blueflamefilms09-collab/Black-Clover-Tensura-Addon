@@ -52,6 +52,8 @@ S("charybdis", "boss", "whirlpool", ["waves", "whirl"], "#031428", "#0d4f8f", "#
 S("warden", "boss", "key", ["rivets", "runes_motif"], "#100c18", "#483a58", "#8a78a0", "#d0c0e8", "#a070ff", "#c8a8ff", "#b898f0", "#3a2a60", "runes", "slide", name="#F4ECFF", title="#A898C8")
 S("zagred", "boss", "rune", ["runes_motif", "quills"], "#0a0414", "#3a1a6a", "#8a5ad0", "#e0c8ff", "#b070ff", "#d8b0ff", "#c898ff", "#2a0e5a", "runes", "flash", name="#F4E8FF", title="#A880E0")
 S("naruto", "boss", "sharingan", ["tomoe_ring", "shuriken_row"], "#070a18", "#222a52", "#8a94b8", "#e8ecff", "#ff3030", "#8ad0ff", "#bfe6ff", "#1a3a9a", "sparks", "flash", "dissolve", name="#F0F4FF", title="#A8B4D8", shield="#A89CFF", seed=9)
+S("dragon_ball", "boss", "dragon_ball", ["dragon_balls_clean"], "#1e0c04", "#8a420c", "#e8902a", "#ffe9a0", "#ffd24a", "#4aa8ff", "#ffd84a", "#f07210", "shimmer", "slide", "dissolve", name="#FFF4D0", title="#FFB030", lair="#4aa8ff", shield="#4aa8ff", seed=7)
+S("magi_djinn", "boss", "vessel_star", ["magi_chain_clean"], "#0c0a1e", "#2a2468", "#e8c25a", "#fff6d0", "#7affe8", "#7affe8", "#9af8ee", "#2a8ac8", "shimmer", "slide", "shatter", name="#F4FFFF", title="#E8C25A", lair="#ffb347", shield="#7affe8", seed=11)
 
 IDS = [s["id"] for s in STYLES]
 assert len(set(IDS)) == len(IDS)

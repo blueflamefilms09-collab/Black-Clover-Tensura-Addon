@@ -39,6 +39,7 @@ public final class GokuMoves {
         out.add(Move.builder(KAIO, "Kaio-ken").minPower(0).windUp(18).cooldown(500).range(0, 48).weight(2).recovery(4).run((b, t) -> goku(b).startKaio(100)));
         out.add(Move.builder(BOMB, "Spirit Bomb").minPower(0).windUp(120).cooldown(900).range(0, 48).weight(3).ultimate().recovery(70)
                 .tell((b, t, left, total) -> bombTell(goku(b), t, left, total)).run((b, t) -> bomb(goku(b), t)));
+        out.addAll(GokuArts.build());       // appended: the three arts made for him (docs/boss_redesign_goku_sinbad.md)
         return out;
     }
 
@@ -79,7 +80,6 @@ public final class GokuMoves {
     }
 
     private static void bomb(GokuBoss g, LivingEntity target) {
-        g.say("Everyone... lend me your energy!");
         g.dropBomb(g.aimBomb(target, 0), BOMB_RADIUS, 5.0f, 0x8CD8FF);
     }
 }

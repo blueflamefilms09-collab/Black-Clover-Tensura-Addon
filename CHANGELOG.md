@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.49.0] — Goku and Sinbad redesigned from the owner's references, own voice lines, own boss bars
+- NEW: 16 boss looks built on the player-model kit (Goku 8 forms: base, Super Saiyan 1/2/3, God, Blue, Ultra Instinct sign, Mastered; Sinbad 8: base king plus the seven Djinn bodies Baal, Valefor, Zepar, Focalor, Vepar, Crocell, Furfur); Goku's form aura layer; Sinbad's Djinn Equip drawn on the boss through a synced equip index.
+- NEW: Goku arts Zanzoken Cage, Solar Flare, Kienzan Boomerang; Sinbad arts Rukh Orrery and Kingdom Sigil (self-tests `goku.boss.arts`, `sinbad.boss.arts`).
+- NEW: boss bars `dragon_ball` and `magi_djinn` with the emblems dragon_ball and vessel_star (appended after the Naruto bar and its emblems).
+- NEW: 117 own voice lines (Goku 52, Sinbad 65) with a per-boss line gate and speech hook; the audio files themselves are not generated yet, the subtitles and the line tables are in.
+- NEW: showcase images and comparison sheets (reference beside render) in `docs/boss_showcase/`, notes in `docs/boss_redesign_goku_sinbad.md`.
+- REPLACED (old look restorable with the client switch `bossLooks.bossLookClassic`): the earlier Goku and Sinbad boss looks; Sinbad's form switch, which used to exist on the server only; the hard-coded boss lines (the old text stays as fallback).
+- KEPT: all moves and numbers, every old bar and emblem, the old models and textures, all shared boss voice lines.
+- Cost: one look per boss through the existing renderer, Sinbad bodies about 240 to 320 main quads plus 70 to 100 hair quads, no new packets and no new server work; art cost is the existing per-boss move budget.
+- Not seen in a game: software renders only. Open choices for the owner: the player's Djinn armour is still drawn over Sinbad's new bodies and may clip; which reference image belongs to which Djinn was assumed (Valefor, Focalor, Vepar and Crocell had none).
+
 ## [4.48.0] — Devil Double Magic: devil plus grimoire, one-of-one devils, ranks, craftable contract
 - NEW: Double Magic arts (a devil art per attribute plus a double art that mixes the devil with the grimoire magic); One of One devils (a holder store keyed by player UUID; the lapse overrides are death, long absence and a bound duel; setting `devilDual.oneOfOne.enabled`); devil ranks from the relic grades (Low = Rare, Mid = Unique, High = Legend, Supreme = God; all 30 devils ranked in `rankings.json`); the Time devil version (Time counts from the grimoire, the devil, or both; no Time VFX file touched); ultimate skill Devil Magic and intrinsic skill Devil Bond; animated icons composed from emblems; devil magic cannot be adapted to and Law Domination has no effect on it (a tag plus an API); creeping screen corruption for body-part and sacrifice prices; a new Weg look (markings, swept horns, new horn and wing textures); a craftable Devil Contract (dark-magic ritual rule); the ritual layout image and how-to (`docs/devil_ritual_layout.png`, `_discord.png`, `docs/devil_ritual_howto.md`).
 - FIXED: the devil NPC faced away and could hang in the air; it now faces the player and stands on the ground.

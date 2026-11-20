@@ -16,12 +16,14 @@ public final class BarStyleIds {
             DRAGON = "dragon", ANGEL = "angel", ARCHON = "archon", LICH = "lich", FALLEN_KING = "fallen_king", POCKET_TOMB = "pocket_tomb", PLAGUE = "plague", ZOGRATIS = "zogratis",
             MIDNIGHT_SUN = "midnight_sun", SEVEN_SINS = "seven_sins", SPADE_KINGDOM = "spade_kingdom", MAGIC_KNIGHTS = "magic_knights", DANMACHI = "danmachi", LUCIUS = "lucius",
             GOD_OF_ORDER = "god_of_order", GOLIATH = "goliath", CHARYBDIS = "charybdis", WARDEN = "warden", ZAGRED = "zagred",
-            NARUTO = "naruto";
+            NARUTO = "naruto",
+            /** The bars made for Goku (Dragon Ball) and Sinbad (Magi), appended (docs/boss_redesign_goku_sinbad.md). */
+            DRAGON_BALL = "dragon_ball", MAGI_DJINN = "magi_djinn";
 
     /** Every style, in the order of the generator's table ({@code tools/boss_bar_art/styles.py}). */
     public static final List<String> ALL = List.of(HOLY, EVIL, UNDEAD, FIRE, ICE, STORM, VOID, FOREST, WATER, BLOOD, CLOCKWORK, MIRROR, UNDERWORLD, QLIPHOTH_GATE, DEVIL, SUPREME_DEVIL,
             DRAGON, ANGEL, ARCHON, LICH, FALLEN_KING, POCKET_TOMB, PLAGUE, ZOGRATIS, MIDNIGHT_SUN, SEVEN_SINS, SPADE_KINGDOM, MAGIC_KNIGHTS, DANMACHI, LUCIUS, GOD_OF_ORDER, GOLIATH,
-            CHARYBDIS, WARDEN, ZAGRED, NARUTO);
+            CHARYBDIS, WARDEN, ZAGRED, NARUTO, DRAGON_BALL, MAGI_DJINN);
 
     public static boolean known(String id) { return id != null && ALL.contains(id); }
 }

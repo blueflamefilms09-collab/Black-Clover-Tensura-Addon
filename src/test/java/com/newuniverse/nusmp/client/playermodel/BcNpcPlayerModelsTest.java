@@ -71,7 +71,7 @@ class BcNpcPlayerModelsTest {
     void theNpcTableIsMergedLastAndAddOnly() {
         List<String> f = PlayerLookTables.FILES;
         assertEquals("playermodel/looks.json", f.get(0));
-        assertTrue(f.indexOf("playermodel/looks_bc_npc.json") >= f.size() - 2, "appended near the end (only the devil table may follow): earlier files win a duplicate");
+        assertTrue(f.indexOf("playermodel/looks_bc_npc.json") >= f.size() - 3, "appended near the end (only the devil and the Goku-Sinbad tables may follow): earlier files win a duplicate");
         assertTrue(f.indexOf("playermodel/looks_bc_npc.json") > f.indexOf("playermodel/looks_bc.json"));
     }
 

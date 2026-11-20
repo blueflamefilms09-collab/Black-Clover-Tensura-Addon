@@ -30,11 +30,13 @@ final class SinbadTable {
     static final String SABER_FLURRY = "saber_flurry", RENDING_DARKNESS = "rending_darkness";
     // --- the final phase (invented, built on his canon rapid switching)
     static final String SEVEN_SEAS = "seven_seas_sovereign";
+    // --- made for this boss (docs/boss_redesign_goku_sinbad.md), appended: they take the colour and the spark of whichever djinn is on him
+    static final String RUKH_ORRERY = "rukh_orrery", KINGDOM_SIGIL = "kingdom_sigil";
 
     // damage (raw base)
     static final float SLASH_DAMAGE = 16f, THRUST_DAMAGE = 18f, BOLT_DAMAGE = 20f, SAIQA_DAMAGE = 30f, INQERAD_DAMAGE = 45f, ICE_PICK_DAMAGE = 9f, KIRESTAL_DAMAGE = 14f,
             SCREAM_DAMAGE = 6f, INTRUSION_DAMAGE = 8f, TORNADO_DAMAGE = 26f, GALE_DAMAGE = 12f, SWORD_RAIN_DAMAGE = 13f, SABER_DAMAGE = 11f, DARKNESS_DAMAGE = 20f,
-            SEVEN_SEAS_STEP_DAMAGE = 18f;
+            SEVEN_SEAS_STEP_DAMAGE = 18f, ORRERY_DAMAGE = 12f, SIGIL_DAMAGE = 24f;
 
     // equip rules
     static final int EQUIP_TICKS = 400;               // one djinn lasts 20 s
@@ -77,7 +79,10 @@ final class SinbadTable {
 
             new Spec(RENDING_DARKNESS,  "Rending Darkness",        SinbadDjinn.FURFUR,  60, 26, 180, 3.0, 22.0, 6, false, false, 16,  10),
 
-            new Spec(SEVEN_SEAS,        "Seven Seas Sovereign",    SinbadDjinn.NONE,    90, 60, 1200, 0.0, 30.0, 3, true,  true,  80, 150));
+            new Spec(SEVEN_SEAS,        "Seven Seas Sovereign",    SinbadDjinn.NONE,    90, 60, 1200, 0.0, 30.0, 3, true,  true,  80, 150),
+
+            new Spec(RUKH_ORRERY,       "Rukh Orrery",             SinbadDjinn.NONE,    20, 44, 300, 4.0, 30.0, 3, false, false, 20,  16),
+            new Spec(KINGDOM_SIGIL,     "Kingdom Sigil",           SinbadDjinn.NONE,    50, 56, 420, 0.0, 24.0, 3, false, true,  30,  20));
 
     static List<Spec> specs() { return SPECS; }
 

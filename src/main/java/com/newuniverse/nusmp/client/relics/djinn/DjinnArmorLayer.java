@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -63,8 +64,15 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
     private void render0(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, float limbSwing, float limbSwingAmount, float partial, float age, float yawHead, float pitch) {
         if (p.isInvisible() || p.isSpectator()) return;
+        draw(pose, buffers, light, p, getParentModel(), DjinnClientState.of(p.getId()), partial);
+    }
+
+    /**
+     * The whole Djinn Equip drawing of one body, for ANY humanoid on a {@link PlayerModel}: the player layer above reads the player's synced state, {@link DjinnBossLayer} gives a boss a state of its
+     * own (docs/boss_redesign_goku_sinbad.md). It is the same code and the same meshes, so a boss assembles, wears and shatters the set exactly as a player does.
+     */
+    static void draw(PoseStack pose, MultiBufferSource buffers, int light, LivingEntity p, PlayerModel<?> m, Snap s, float partial) {
         Minecraft mc = Minecraft.getInstance();
-        Snap s = DjinnClientState.of(p.getId());
         Djinn d = s.djinn();
         if (d == null || mc.level == null || mc.gameRenderer.getMainCamera() == null) return;
         boolean showsAnything = s.phase() > 0 || s.prev() > 0 || s.marked();
@@ -76,13 +84,12 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         DjinnLook.Style st = DjinnLook.style(d.ordinal());
         long gt = mc.level.getGameTime();
         float now = gt + partial;
-        PlayerModel<AbstractClientPlayer> m = getParentModel();
         HumanoidArm main = p.getMainArm();
         float glow = 0.85f + 0.15f * Mth.sin(now * 0.12f) + 0.6f * s.pulse(gt, partial) + (s.phase() >= 4 ? 0.35f : 0f);
 
         if (s.phase() >= 2 && dist2 < DjinnAmbient.RANGE2 && DjinnAmbient.due(p.getId(), gt)) DjinnAmbient.emit(mc.level, p, d, s, dark);
 
-        if ((s.phase() == 1 || (s.phase() == 0 && s.prev() == 1 && now - s.since() < 8)) && !com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnClient.replacesBust()) bust(pose, buffers, p, d, dark, s, gt, now, partial);   // 1.105.0: the tiny figure replaces the bust (config djinn.tinyModel false brings it back)
+        if ((s.phase() == 1 || (s.phase() == 0 && s.prev() == 1 && now - s.since() < 8)) && !com.newuniverse.nusmp.client.relics.djinn.tiny.TinyDjinnClient.replacesBust()) bust(pose, buffers, m, d, dark, s, gt, now, partial);   // 1.105.0: the tiny figure replaces the bust (config djinn.tinyModel false brings it back)
 
         // the pieces of the Half Equip set belong to the main-hand arm; the rest wait for the Maso
         boolean mainRight = main == HumanoidArm.RIGHT;
@@ -171,7 +178,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     }
 
     /** One piece on one model part, forged in from the direction (dx, dy, dz) in model pixels. */
-    private void part(PoseStack pose, MultiBufferSource buffers, ModelPart anchor, Djinn d, boolean dark, Piece piece, Snap s, int minPhase, int delay, float dx, float dy, float dz,
+    private static void part(PoseStack pose, MultiBufferSource buffers, ModelPart anchor, Djinn d, boolean dark, Piece piece, Snap s, int minPhase, int delay, float dx, float dy, float dz,
                       int light, float now, float glow) {
         float a = assembled(s, minPhase, delay, now);
         if (a == 0f) return;
@@ -192,7 +199,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     }
 
     // ================================================================ the back
-    private void wings(PoseStack pose, MultiBufferSource buffers, AbstractClientPlayer p, PlayerModel<AbstractClientPlayer> m, Djinn d, boolean dark, DjinnLook.Style st, float a,
+    private static void wings(PoseStack pose, MultiBufferSource buffers, LivingEntity p, PlayerModel<?> m, Djinn d, boolean dark, DjinnLook.Style st, float a,
                        int light, float now, float glow) {
         if (DjinnMeshes.get(d, Piece.WING_IN_L, dark).isEmpty() && DjinnMeshes.get(d, Piece.WING_OUT_L, dark).isEmpty()) return;
         boolean air = !p.onGround() && !p.isInWater();
@@ -215,7 +222,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         }
     }
 
-    private void tail(PoseStack pose, MultiBufferSource buffers, AbstractClientPlayer p, PlayerModel<AbstractClientPlayer> m, Djinn d, boolean dark, DjinnLook.Style st, float a,
+    private static void tail(PoseStack pose, MultiBufferSource buffers, LivingEntity p, PlayerModel<?> m, Djinn d, boolean dark, DjinnLook.Style st, float a,
                       int light, float now, float glow) {
         DjinnMeshes.Data seg = DjinnMeshes.get(d, Piece.TAIL_SEG, dark);
         if (seg.isEmpty()) return;
@@ -245,7 +252,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         pose.popPose();
     }
 
-    private void halo(PoseStack pose, MultiBufferSource buffers, PlayerModel<AbstractClientPlayer> m, Djinn d, boolean dark, DjinnLook.Style st, float a, int light, float now, float glow) {
+    private static void halo(PoseStack pose, MultiBufferSource buffers, PlayerModel<?> m, Djinn d, boolean dark, DjinnLook.Style st, float a, int light, float now, float glow) {
         DjinnMeshes.Data data = DjinnMeshes.get(d, Piece.HALO, dark);
         if (data.isEmpty()) return;
         float spin = data.kind == DjinnLook.BASE ? 2.2f : DjinnLook.haloSpin(st, dark);
@@ -261,7 +268,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     }
 
     /** The unique piece standing behind the back (a ring, an arch, a fan of bolts, a pair of extra arms): 2 px above the neck, 5.5 px behind the back. */
-    private void backdrop(PoseStack pose, MultiBufferSource buffers, PlayerModel<AbstractClientPlayer> m, Djinn d, boolean dark, DjinnLook.Style st, float a, int light, float now, float glow) {
+    private static void backdrop(PoseStack pose, MultiBufferSource buffers, PlayerModel<?> m, Djinn d, boolean dark, DjinnLook.Style st, float a, int light, float now, float glow) {
         if (DjinnMeshes.get(d, Piece.BACKDROP, dark).isEmpty()) return;
         float alpha = a > 0 ? a : 1f + a, out = a > 0 ? (1f - a) * (1f - a) : a * a * 1.4f;
         pose.pushPose();
@@ -280,7 +287,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
      * Puts the pose in the held item's own space at the sprite's handle, the blade running along +y (the display transform of a hand-held tool, third
      * person, then the model's centre; the same chain the vanilla item layer uses). Both the weapon and the shared sheath are drawn from here.
      */
-    private static void toItemSpace(PoseStack pose, PlayerModel<AbstractClientPlayer> m, HumanoidArm main) {
+    private static void toItemSpace(PoseStack pose, PlayerModel<?> m, HumanoidArm main) {
         boolean left = main == HumanoidArm.LEFT;
         m.translateToHand(main, pose);
         pose.mulPose(Axis.XP.rotationDegrees(-90.0F));
@@ -299,7 +306,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
      * The Djinn's own weapon (the WEAPON piece, item space): a solid weapon when the hand is empty, a translucent one laid over the item when the hand
      * holds something. It forges in with the Half Equip and fades out when it ends.
      */
-    private void weapon(PoseStack pose, MultiBufferSource buffers, AbstractClientPlayer p, PlayerModel<AbstractClientPlayer> m, Djinn d, boolean dark, DjinnLook.Style st, Snap s,
+    private static void weapon(PoseStack pose, MultiBufferSource buffers, LivingEntity p, PlayerModel<?> m, Djinn d, boolean dark, DjinnLook.Style st, Snap s,
                         HumanoidArm main, int light, float now, float glow) {
         float a = assembled(s, 2, 6, now);
         if (a == 0f) return;
@@ -319,7 +326,7 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
      * The shared rig's sheath: additive blades along the held item's blade. Its mesh was authored like the armour (y down, z back), the item space is y up,
      * so it is turned about x by a half turn (scale 1, -1, -1) to run along the blade instead of back into the arm.
      */
-    private void sheath(PoseStack pose, MultiBufferSource buffers, AbstractClientPlayer p, PlayerModel<AbstractClientPlayer> m, Djinn d, Snap s, HumanoidArm main, float now) {
+    private static void sheath(PoseStack pose, MultiBufferSource buffers, LivingEntity p, PlayerModel<?> m, Djinn d, Snap s, HumanoidArm main, float now) {
         float a = assembled(s, 2, 6, now);
         if (a <= 0f) return;
         pose.pushPose();
@@ -333,14 +340,14 @@ public class DjinnArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     // ================================================================ the Lesser Summon
     private static final Vector3f T = new Vector3f();
 
-    private void bust(PoseStack pose, MultiBufferSource buffers, AbstractClientPlayer p, Djinn d, boolean dark, Snap s, long gt, float now, float partial) {
+    private static void bust(PoseStack pose, MultiBufferSource buffers, PlayerModel<?> m, Djinn d, boolean dark, Snap s, long gt, float now, float partial) {
         Minecraft mc = Minecraft.getInstance();
         float in = Mth.clamp((now - s.since()) / 8f, 0f, 1f);
         float out = s.phase() == 1 ? Mth.clamp(s.leftNow(gt) / 10f, 0f, 1f) : Mth.clamp(1f - (now - s.since()) / 8f, 0f, 1f);
         float alpha = 0.85f * in * out;
         if (alpha <= 0.02f) return;
         pose.pushPose();
-        getParentModel().body.translateAndRotate(pose);
+        m.body.translateAndRotate(pose);
         pose.translate(-0.42f, -0.28f + 0.04f * Mth.sin(now * 0.12f), 0.0f);
         Matrix4f pm = pose.last().pose();
         pm.getTranslation(T);

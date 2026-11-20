@@ -1,0 +1,578 @@
+{
+ "gs_goku_base": {
+  "atlas_fill": 0.116,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 13,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 13,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_blue": {
+  "atlas_fill": 0.116,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 13,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 13,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_god": {
+  "atlas_fill": 0.116,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 13,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 13,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_mui": {
+  "atlas_fill": 0.13,
+  "atlas_glow": true,
+  "atlas_tiles": 26,
+  "bones": {
+   "fine": 0,
+   "fx": 2,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 1,
+   "hair": 24,
+   "hair_fine": 13,
+   "main": 6
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 2,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 2,
+   "hair": 64,
+   "hair_fine": 13,
+   "main": 36
+  },
+  "scale": 1.0
+ },
+ "gs_goku_ssj": {
+  "atlas_fill": 0.116,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 13,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 13,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_ssj2": {
+  "atlas_fill": 0.101,
+  "atlas_glow": false,
+  "atlas_tiles": 22,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 24,
+   "hair_fine": 10,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 64,
+   "hair_fine": 10,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_ssj3": {
+  "atlas_fill": 0.135,
+  "atlas_glow": false,
+  "atlas_tiles": 29,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 22,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 54,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 54,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_goku_ui_sign": {
+  "atlas_fill": 0.116,
+  "atlas_glow": false,
+  "atlas_tiles": 24,
+  "bones": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 1,
+   "hair_fine": 3,
+   "main": 2
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 22,
+   "hair_fine": 13,
+   "main": 4
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 0,
+   "hair": 62,
+   "hair_fine": 13,
+   "main": 24
+  },
+  "scale": 1.0
+ },
+ "gs_sinbad_baal": {
+  "atlas_fill": 0.293,
+  "atlas_glow": true,
+  "atlas_tiles": 66,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 73,
+   "main": 116
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 73,
+   "main": 316
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_base": {
+  "atlas_fill": 0.237,
+  "atlas_glow": true,
+  "atlas_tiles": 54,
+  "bones": {
+   "fine": 0,
+   "fx": 2,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 2,
+   "hair": 7,
+   "hair_fine": 67,
+   "main": 65
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 42,
+   "hair_fine": 67,
+   "main": 183
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_crocell": {
+  "atlas_fill": 0.248,
+  "atlas_glow": true,
+  "atlas_tiles": 53,
+  "bones": {
+   "fine": 0,
+   "fx": 3,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 7,
+   "hair_fine": 73,
+   "main": 91
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 8,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 8,
+   "hair": 42,
+   "hair_fine": 73,
+   "main": 256
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_focalor": {
+  "atlas_fill": 0.262,
+  "atlas_glow": true,
+  "atlas_tiles": 57,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 73,
+   "main": 80
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 73,
+   "main": 275
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_furfur": {
+  "atlas_fill": 0.319,
+  "atlas_glow": true,
+  "atlas_tiles": 71,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 17
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 95,
+   "main": 95
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 95,
+   "main": 240
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_valefor": {
+  "atlas_fill": 0.317,
+  "atlas_glow": true,
+  "atlas_tiles": 74,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 17
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 73,
+   "main": 121
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 73,
+   "main": 286
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_vepar": {
+  "atlas_fill": 0.278,
+  "atlas_glow": true,
+  "atlas_tiles": 62,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 73,
+   "main": 92
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 73,
+   "main": 287
+  },
+  "scale": 1.04
+ },
+ "gs_sinbad_zepar": {
+  "atlas_fill": 0.307,
+  "atlas_glow": true,
+  "atlas_tiles": 67,
+  "bones": {
+   "fine": 0,
+   "fx": 4,
+   "hair": 1,
+   "hair_fine": 24,
+   "main": 16
+  },
+  "cubes": {
+   "fine": 0,
+   "fx": 5,
+   "hair": 7,
+   "hair_fine": 95,
+   "main": 94
+  },
+  "glow": true,
+  "glow_quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 0,
+   "hair_fine": 0,
+   "main": 0
+  },
+  "hair_shell_px": 8.9,
+  "quads": {
+   "fine": 0,
+   "fx": 10,
+   "hair": 42,
+   "hair_fine": 95,
+   "main": 247
+  },
+  "scale": 1.04
+ }
+}

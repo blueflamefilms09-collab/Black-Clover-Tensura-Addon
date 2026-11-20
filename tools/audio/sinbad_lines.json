@@ -1,0 +1,462 @@
+{
+ "boss": "sinbad",
+ "voice_profile": "sinbad",
+ "note": "Own line set of the Sinbad boss, in his Magi manner (spell names as docs/sinbad_boss_lore.md writes them). Audio: tools/audio/offline_voice.py profile 'sinbad'. Text only until the files exist.",
+ "lines": [
+  {
+   "id": "sinbad_intro_1",
+   "group": "intro",
+   "text": "So, you came all this way to meet me. How flattering.",
+   "delivery": "[smooth, charming, a king at ease]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_intro_2",
+   "group": "intro",
+   "text": "Let me show you what the King of the Seven Seas can do.",
+   "delivery": "[smooth, charming, a king at ease]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_intro_3",
+   "group": "intro",
+   "text": "An adventure at last. Shall we begin?",
+   "delivery": "[smooth, charming, a king at ease]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_baal_1",
+   "group": "equip_baal",
+   "text": "Spirit of Wrath and Heroes, Baal! Dwell in my body: Djinn Equip!",
+   "delivery": "[commanding, resonant]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_baal_2",
+   "group": "equip_baal",
+   "text": "Come forth, Baal!",
+   "delivery": "[commanding, resonant]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_valefor_1",
+   "group": "equip_valefor",
+   "text": "Spirit of Falsehood and Confidence, Valefor! Dwell in my body!",
+   "delivery": "[sly, light, playful]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_valefor_2",
+   "group": "equip_valefor",
+   "text": "Valefor, lend me your cunning!",
+   "delivery": "[sly, light, playful]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_zepar_1",
+   "group": "equip_zepar",
+   "text": "Spirit of Spirit and Puppetry, Zepar! Dwell in my body!",
+   "delivery": "[low, controlled, a little dangerous]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_zepar_2",
+   "group": "equip_zepar",
+   "text": "Zepar, make them listen.",
+   "delivery": "[low, controlled, a little dangerous]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_focalor_1",
+   "group": "equip_focalor",
+   "text": "Spirit of Control and Obedience, Focalor! Dwell in my body!",
+   "delivery": "[crisp, bright]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_focalor_2",
+   "group": "equip_focalor",
+   "text": "Focalor, carry me on the wind!",
+   "delivery": "[crisp, bright]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_vepar_1",
+   "group": "equip_vepar",
+   "text": "Vepar! Dwell in my body, and draw every blade to me!",
+   "delivery": "[steady, cold, precise]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_vepar_2",
+   "group": "equip_vepar",
+   "text": "Vepar, rain steel on my enemies.",
+   "delivery": "[steady, cold, precise]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_crocell_1",
+   "group": "equip_crocell",
+   "text": "Crocell! Dwell in my body, and let your light cut through!",
+   "delivery": "[bright, lifting, sure]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_crocell_2",
+   "group": "equip_crocell",
+   "text": "Crocell, shine for me!",
+   "delivery": "[bright, lifting, sure]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_furfur_1",
+   "group": "equip_furfur",
+   "text": "Furfur! Dwell in my body, and tear the darkness open!",
+   "delivery": "[low, intense, almost a whisper]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_equip_furfur_2",
+   "group": "equip_furfur",
+   "text": "Furfur... come.",
+   "delivery": "[low, intense, almost a whisper]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_unequip_1",
+   "group": "unequip",
+   "text": "That is enough of that, for now.",
+   "delivery": "[easy, breath out]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_unequip_2",
+   "group": "unequip",
+   "text": "Rest, my djinn.",
+   "delivery": "[easy, breath out]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_sword_1",
+   "group": "sword",
+   "text": "Allow me.",
+   "delivery": "[calm, a flourish]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_sword_2",
+   "group": "sword",
+   "text": "A simple blade is enough for you.",
+   "delivery": "[calm, a flourish]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_magoi_1",
+   "group": "magoi",
+   "text": "Your magic means nothing to me. Magoi Manipulation.",
+   "delivery": "[quiet, certain]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_magoi_2",
+   "group": "magoi",
+   "text": "I will take that power from you.",
+   "delivery": "[quiet, certain]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_bararaq_1",
+   "group": "bararaq",
+   "text": "Bararaq Saiqa!",
+   "delivery": "[a sharp call, lightning-bright]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_bararaq_2",
+   "group": "bararaq",
+   "text": "Lightning, answer me! Bararaq!",
+   "delivery": "[a sharp call, lightning-bright]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_inqerad_1",
+   "group": "inqerad",
+   "text": "Bararaq... Inqerad-Saiqa!",
+   "delivery": "[grand, rising, a king speaking to the sky]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_inqerad_2",
+   "group": "inqerad",
+   "text": "Stand in the light, or be struck down!",
+   "delivery": "[grand, rising, a king speaking to the sky]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_garufor_1",
+   "group": "garufor",
+   "text": "Garufor Zairu!",
+   "delivery": "[cold, controlled]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_garufor_2",
+   "group": "garufor",
+   "text": "Garufor Kirestal! Freeze!",
+   "delivery": "[cold, controlled]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_stagnation_1",
+   "group": "stagnation",
+   "text": "Everything slows. Everything stops.",
+   "delivery": "[hushed, stretching the words]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_stagnation_2",
+   "group": "stagnation",
+   "text": "Be still.",
+   "delivery": "[hushed, stretching the words]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_scream_1",
+   "group": "scream",
+   "text": "Look away, if you value your mind!",
+   "delivery": "[a deep breath, then a sharp command]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_scream_2",
+   "group": "scream",
+   "text": "Sleep!",
+   "delivery": "[a deep breath, then a sharp command]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_foraz_1",
+   "group": "foraz",
+   "text": "Foraz Zora!",
+   "delivery": "[exultant, a sweeping gesture]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_foraz_2",
+   "group": "foraz",
+   "text": "Two storms, become one!",
+   "delivery": "[exultant, a sweeping gesture]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_vepar_istella_1",
+   "group": "vepar_istella",
+   "text": "Vepar Istella! A thousand swords!",
+   "delivery": "[sharp, a king's command]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_vepar_istella_2",
+   "group": "vepar_istella",
+   "text": "Fall, blades of steel!",
+   "delivery": "[sharp, a king's command]",
+   "source": "catchphrase"
+  },
+  {
+   "id": "sinbad_crocell_saber_1",
+   "group": "crocell_saber",
+   "text": "Three cuts, and not one you will see.",
+   "delivery": "[quick, light, a smile in the voice]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_crocell_saber_2",
+   "group": "crocell_saber",
+   "text": "Crocell's saber, hah!",
+   "delivery": "[quick, light, a smile in the voice]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_furfur_rend_1",
+   "group": "furfur_rend",
+   "text": "Rend the dark!",
+   "delivery": "[low, harsh, tearing]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_furfur_rend_2",
+   "group": "furfur_rend",
+   "text": "Darkness, open wide.",
+   "delivery": "[low, harsh, tearing]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_orrery_1",
+   "group": "orrery",
+   "text": "Seven djinn, seven lights. Fly, my Rukh!",
+   "delivery": "[playful, then ceremonial]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_orrery_2",
+   "group": "orrery",
+   "text": "The Rukh love me. Let them show you.",
+   "delivery": "[playful, then ceremonial]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_sigil_1",
+   "group": "sigil",
+   "text": "This circle is my kingdom. Choose where you stand.",
+   "delivery": "[solemn, drawing a circle]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_sigil_2",
+   "group": "sigil",
+   "text": "Only the dark is safe here.",
+   "delivery": "[solemn, drawing a circle]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_seven_seas_1",
+   "group": "seven_seas",
+   "text": "Seven Seas, answer your king!",
+   "delivery": "[soaring, full of confidence]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_seven_seas_2",
+   "group": "seven_seas",
+   "text": "All seven, together!",
+   "delivery": "[soaring, full of confidence]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_foresight_1",
+   "group": "foresight",
+   "text": "I already saw that coming.",
+   "delivery": "[amused, a knowing smile]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "sinbad_foresight_2",
+   "group": "foresight",
+   "text": "The flow of destiny never lies.",
+   "delivery": "[amused, a knowing smile]",
+   "source": "kept from the old boss"
+  },
+  {
+   "id": "sinbad_gates_1",
+   "group": "gates",
+   "text": "Enough games. I will use every djinn I have.",
+   "delivery": "[serious for once, deeper]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_gates_2",
+   "group": "gates",
+   "text": "Do not make me regret taking you seriously.",
+   "delivery": "[serious for once, deeper]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_hurt_big_1",
+   "group": "hurt_big",
+   "text": "Ha! Now that stung.",
+   "delivery": "[a short grunt, then a smile]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_hurt_big_2",
+   "group": "hurt_big",
+   "text": "Careful. A king bleeds too.",
+   "delivery": "[a short grunt, then a smile]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_low_hp_1",
+   "group": "low_hp",
+   "text": "Not yet. A king never kneels first.",
+   "delivery": "[strained, but proud]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_low_hp_2",
+   "group": "low_hp",
+   "text": "My Household would never forgive me for losing here.",
+   "delivery": "[strained, but proud]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_taunt_1",
+   "group": "taunt",
+   "text": "Is that all? Come, impress me.",
+   "delivery": "[teasing, flirtatious]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_taunt_2",
+   "group": "taunt",
+   "text": "You fight well. Almost as well as I sail.",
+   "delivery": "[teasing, flirtatious]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_taunt_3",
+   "group": "taunt",
+   "text": "Do not stop now. I am just warming up.",
+   "delivery": "[teasing, flirtatious]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_player_death_1",
+   "group": "player_death",
+   "text": "A pity. You had courage.",
+   "delivery": "[calm, almost regretful]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_player_death_2",
+   "group": "player_death",
+   "text": "Rest well. The sea remembers brave ones.",
+   "delivery": "[calm, almost regretful]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_victory_1",
+   "group": "victory",
+   "text": "The Seven Seas are mine. Try again someday.",
+   "delivery": "[easy, gracious]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_victory_2",
+   "group": "victory",
+   "text": "A fine fight. Go home and train.",
+   "delivery": "[easy, gracious]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_defeat_1",
+   "group": "defeat",
+   "text": "Well fought. The sea has taken me, this time.",
+   "delivery": "[warm, a little breathless, accepting]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_defeat_2",
+   "group": "defeat",
+   "text": "You are stronger than I judged. I will not forget it.",
+   "delivery": "[warm, a little breathless, accepting]",
+   "source": "in the character's manner"
+  },
+  {
+   "id": "sinbad_defeat_3",
+   "group": "defeat",
+   "text": "So this is how a king falls. Worth it.",
+   "delivery": "[warm, a little breathless, accepting]",
+   "source": "in the character's manner"
+  }
+ ]
+}

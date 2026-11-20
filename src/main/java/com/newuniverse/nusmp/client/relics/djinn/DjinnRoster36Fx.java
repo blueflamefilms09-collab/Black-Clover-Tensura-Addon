@@ -7,7 +7,7 @@ import com.newuniverse.nusmp.client.relics.djinn.DjinnLook.Anchor;
 import com.newuniverse.nusmp.client.relics.djinn.DjinnRoster36.Dust;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.util.RandomSource;
 
 /**
@@ -20,7 +20,7 @@ import net.minecraft.util.RandomSource;
 final class DjinnRoster36Fx {
     private DjinnRoster36Fx() {}
 
-    static void emitPalette(ClientLevel level, AbstractClientPlayer p, Djinn d, Snap s, boolean dark) {
+    static void emitPalette(ClientLevel level, LivingEntity p, Djinn d, Snap s, boolean dark) {
         Dust dust = DjinnRoster36.dustOf(DjinnRoster36.keyOf(d));
         if (dust == null) return;
         float share = DjinnLook.phaseShare(s.phase());
