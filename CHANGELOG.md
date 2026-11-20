@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.63.1] — Fix: the build test that blocked the 4.61.0 to 4.63.0 releases
+- FIXED: `UpgradeGodMeleeATest` compared the placement of the upgraded Kusanagi mesh with the base mesh, which the thin-katana rebuild (4.61.0) had changed on purpose; it now compares with the classic copy of the mesh the upgrade was authored against. No game change. This is the build that carries 4.61.0 (thin katanas), 4.62.0 (hub in the Coming Soon spot), 4.62.1 (old flat-part skins dropped), 4.62.2 (bosses ignore effect damage nobody cast) and 4.63.0 (weapon page v2).
+
 ## [4.63.0] — The weapon page shows more masteries, and the old Status screen has a Weapon tab
 Owner answer: "a mix": more mastery tracks and the page in the old status screen too.
 - NEW: more mastery bars on the Weapon page (Codex page, hub tab and the new Status tab read the same data): the hero weapon's other started forms, every other weapon's own bars ("Other masteries"), Saiyan form mastery, and the 4 skills of the mod closest to full. Each bar reads `level/max (percent)`.

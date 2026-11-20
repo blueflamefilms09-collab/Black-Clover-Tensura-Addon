@@ -118,7 +118,9 @@ class UpgradeGodMeleeATest {
             if (full.layers()[0] < 300 || full.layers()[2] < 20) bad.add(id + " body / glow quads " + full.layers()[0] + " / " + full.layers()[2]);
             if (full.place() == null) bad.add(id + " has no place line");
             // the placement of the old mesh is kept (same weapon size and orientation as before)
-            Mesh old = read(ASSETS.resolve("weapon_meshes/" + id + ".txt"));
+            // 4.63.1: a katana rebuilt thin (4.61.0) keeps the placement of its up mesh, so the comparison reads the classic copy of the mesh it came from
+            Path classic = ASSETS.resolve("weapon_meshes_sz/classic_vassal/" + id + ".txt");
+            Mesh old = read(java.nio.file.Files.exists(classic) ? classic : ASSETS.resolve("weapon_meshes/" + id + ".txt"));
             if (!old.place().equals(full.place())) bad.add(id + " place line differs from the shipped mesh: " + full.place() + " vs " + old.place());
         }
         assertEquals(List.of(), bad);
