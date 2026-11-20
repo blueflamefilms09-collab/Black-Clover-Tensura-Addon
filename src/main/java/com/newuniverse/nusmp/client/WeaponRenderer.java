@@ -530,18 +530,19 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.110.0: the shield frame fit of a mesh: its box over the body, void and glow layers (an orbiting piece of an upgraded mesh is not part of the shield). */
     private static float[] shieldFit(Mesh mesh, boolean firstPerson) {
-        float x0 = Float.MAX_VALUE, x1 = -Float.MAX_VALUE, y0 = Float.MAX_VALUE, y1 = -Float.MAX_VALUE, z1 = -Float.MAX_VALUE;
+        float x0 = Float.MAX_VALUE, x1 = -Float.MAX_VALUE, y0 = Float.MAX_VALUE, y1 = -Float.MAX_VALUE, z0 = Float.MAX_VALUE, z1 = -Float.MAX_VALUE;
         for (List<float[]> layer : mesh.layers) {
             for (float[] v : layer) {
                 x0 = Math.min(x0, v[0]);
                 x1 = Math.max(x1, v[0]);
                 y0 = Math.min(y0, v[1]);
                 y1 = Math.max(y1, v[1]);
+                z0 = Math.min(z0, v[2]);
                 z1 = Math.max(z1, v[2]);
             }
         }
-        return firstPerson ? com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_H)
-                : com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z1);
+        return firstPerson ? com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z0, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.FP_MAX_H)
+                : com.newuniverse.nusmp.visual.shields.ShieldFrame.fit(x0, x1, y0, y1, z0, z1, com.newuniverse.nusmp.visual.shields.ShieldFrame.MAX_W, com.newuniverse.nusmp.visual.shields.ShieldFrame.MAX_H);
     }
 
     /** The class table (resource, else the built-in one), read once per reload. */

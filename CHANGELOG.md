@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.44.1] — Shield placement fix (forms no longer float or sink into the arm)
+- FIXED: the nine form meshes of the Legendary Shield (Slime, Egg, Leaf, Light Metal, Needle, Orange Balloon, Soul Eater, Zombie, Chimera Viper) were placed like swords, so the shield hung in front of the player or went through the arm and hand. They now sit on vanilla's shield frame like every other shield, held by the strap.
+- FIXED: a deep shield (spikes, eggs, balloons) keeps its straps in the hand and grows forward; no shield is deeper than 0.85 blocks, so a spiked form is shrunk a little at most (only the Chimera Viper Shield is affected).
+- KEPT: every shield model, skin and glow is untouched, and all eight base shields land exactly where they did (a flat shield is placed by the same numbers as before). The Slime Shield mesh redone in 4.44.0 is put back to the original; the redo is in git history if you want it as a separate shield later.
+- Cost: no packets, no per-frame allocation (the fit is computed once per mesh load).
+- Not seen in a game: checked by numbers (face, back and strap depth of every shield mesh against vanilla's plate and handle), not by eye.
+
 ## [4.44.0] — 14 new vassal forms and 3 redone weapons, made in Blender
 - NEW: Blender-made 3D models with own skin and glow skin for Small Scythe, Demon Elephant Scythe, Scythe Zero; Silk Thread Set, Spider Wire Set, Ariadne's Thread; Focus Staff, Rune Staff, Mirror Staff, Archmage Staff; Vine Whip, Storm Whip, Morning Star Whip, Hourglass Whip. Each within 5000 quad lines and 350 KB of skins; registered in the class, grip and Better Combat tables.
 - REPLACED (the same mesh ids, as the owner asked for a redo; the old files are in git history): Demon Dragon Scythe (dragon-skull head, bone-wing blade, lava membrane), Slime Shield (gel dome in a claw cage with a bronze rim), Phoenix Sword (flame blade, plume wings, heart guard).

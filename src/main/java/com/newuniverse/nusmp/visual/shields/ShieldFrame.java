@@ -32,6 +32,25 @@ public final class ShieldFrame {
     /** {scale, tx, ty, tz}: a mesh point p goes to {@code t + scale * p}. */
     public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmax) { return fit(xmin, xmax, ymin, ymax, zmax, MAX_W, MAX_H); }
 
+    /** 4.44.1: the lowest the back (the straps) of a mesh may reach behind the plate; vanilla's handle ends at -5/16, the fist holding it fills about -4/16..0. */
+    public static final float BACK_MIN = -0.25f;
+    /** 4.44.1: the deepest a mesh may be (face to straps) after scaling: a spiked form is shrunk a little instead of sticking a block out in front of the player. */
+    public static final float MAX_DEPTH = 0.85f;
+
+    /**
+     * 4.44.1: the same fit, depth-aware. A flat shield (back above {@link #BACK_MIN} once its face is on the front plane) lands exactly as before; a deep one (the forms of the
+     * Legendary Shield: spikes, eggs, balloons) keeps its straps in the hand ({@code BACK_MIN}) and grows forward, so it is neither buried in the arm nor floating away from it.
+     */
+    public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax, float maxW, float maxH) {
+        float[] f = fit(xmin, xmax, ymin, ymax, zmax, maxW, maxH);
+        float d = zmax - zmin;
+        if (!(d > 0f) || Float.isNaN(zmin)) return f;
+        if (f[0] * d > MAX_DEPTH) f = fit(xmin, xmax, ymin, ymax, zmax, MAX_DEPTH / d * (xmax - xmin), MAX_DEPTH / d * (ymax - ymin));
+        float back = f[3] + f[0] * zmin;
+        if (back < BACK_MIN) f[3] += BACK_MIN - back;
+        return f;
+    }
+
     /** The same fit into a box of {@code maxW} x {@code maxH} blocks. */
     public static float[] fit(float xmin, float xmax, float ymin, float ymax, float zmax, float maxW, float maxH) {
         float w = xmax - xmin, h = ymax - ymin;

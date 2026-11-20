@@ -114,6 +114,8 @@ class ShieldModelsTest {
         assertEquals("calamity_wave_aegis", ShieldSet.baseId("calamity_wave_aegis_lod"));
         assertTrue(ShieldSet.isShieldMesh("legendary_shield_curse"));
         assertTrue(ShieldSet.isShieldMesh("calamity_wave_aegis_lod"));
+        assertTrue(ShieldSet.isShieldMesh("legendary_shield__slime_shield"), "a form mesh of a shield sits on the shield frame too");
+        assertFalse(ShieldSet.isShieldMesh("vassal_katana__ice_katana"));
         assertFalse(ShieldSet.isShieldMesh("demon_slasher_katana"));
         assertFalse(ShieldSet.isShieldMesh("vassal_mirror"));
         assertFalse(ShieldSet.isShieldItem(null));

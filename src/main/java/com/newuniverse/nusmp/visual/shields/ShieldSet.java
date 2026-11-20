@@ -30,6 +30,8 @@ public final class ShieldSet {
     /** The item id a mesh id belongs to ({@code legendary_shield_curse} -> {@code legendary_shield}). */
     public static String baseId(String meshId) {
         String id = meshId;
+        int form = id == null ? -1 : id.indexOf("__");                              // 4.44.1: a form mesh of a shield ({@code legendary_shield__slime_shield}) belongs to the item before the "__"
+        if (form > 0) id = id.substring(0, form);
         boolean again = true;
         while (again) {
             again = false;

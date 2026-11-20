@@ -66,12 +66,15 @@ class ShieldFrameTest {
             }
             if (Math.abs(place[2] - 90f) > 0.01f) bad.add(id + ": place angle " + place[2] + " (a shield mesh is upright, 90)");
             if (!(b[4] < 0f && b[5] > 0f)) bad.add(id + ": the mesh does not straddle z = 0 (face +z, handle -z)");
-            float[] fit = ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5]);
+            float[] fit = ShieldFrame.fit(b[0], b[1], b[2], b[3], b[4], b[5], ShieldFrame.MAX_W, ShieldFrame.MAX_H);
             float[] lo = ShieldFrame.apply(fit, b[0], b[2], b[4]), hi = ShieldFrame.apply(fit, b[1], b[3], b[5]);
             if (hi[0] - lo[0] > ShieldFrame.MAX_W + 1e-4f || hi[1] - lo[1] > ShieldFrame.MAX_H + 1e-4f) bad.add(id + ": bigger than the footprint box");
             if (Math.abs(hi[0] + lo[0]) > 1e-4f || Math.abs(hi[1] + lo[1]) > 1e-4f) bad.add(id + ": not centred on the plate");
-            if (Math.abs(hi[2] - ShieldFrame.FACE_Z) > 1e-5f) bad.add(id + ": the face is not on the plate's front plane (z = " + hi[2] + ")");
-            if (!(lo[2] < hi[2]) || lo[2] < -0.25f) bad.add(id + ": the back reaches " + lo[2] + " behind the plate");
+            boolean flat = ShieldFrame.FACE_Z - ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5])[0] * (b[5] - b[4]) >= ShieldFrame.BACK_MIN;      // such a mesh lands exactly as in 1.110.0
+            if (flat && Math.abs(hi[2] - ShieldFrame.FACE_Z) > 1e-5f) bad.add(id + ": the face is not on the plate's front plane (z = " + hi[2] + ")");
+            if (!flat && hi[2] < ShieldFrame.FACE_Z) bad.add(id + ": a deep mesh grows forward, never back into the arm");
+            if (hi[2] - lo[2] > ShieldFrame.MAX_DEPTH + 1e-4f) bad.add(id + ": deeper than " + ShieldFrame.MAX_DEPTH);
+            if (!(lo[2] < hi[2]) || lo[2] < ShieldFrame.BACK_MIN - 1e-4f) bad.add(id + ": the back reaches " + lo[2] + " behind the plate");
             float h = hi[1] - lo[1], w = hi[0] - lo[0];
             if (Math.max(h, w * 0.9f) < 0.7f) bad.add(id + ": smaller than 0.7 blocks (h " + h + ", w " + w + ")");
         }
@@ -108,12 +111,12 @@ class ShieldFrameTest {
             float[] place = new float[5];
             float[] b = box(p, place);
             if (!(b[1] > b[0]) || !(b[3] > b[2])) continue;
-            float[] fit = ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5], ShieldFrame.FP_MAX_W, ShieldFrame.FP_MAX_H);
+            float[] fit = ShieldFrame.fit(b[0], b[1], b[2], b[3], b[4], b[5], ShieldFrame.FP_MAX_W, ShieldFrame.FP_MAX_H);
             float[] lo = ShieldFrame.apply(fit, b[0], b[2], b[4]), hi = ShieldFrame.apply(fit, b[1], b[3], b[5]);
             String id = p.getFileName().toString();
             if (hi[0] - lo[0] > ShieldFrame.FP_MAX_W + 1e-4f || hi[1] - lo[1] > ShieldFrame.FP_MAX_H + 1e-4f) bad.add(id + ": bigger than the first-person box");
-            if (Math.abs(hi[2] - ShieldFrame.FACE_Z) > 1e-5f) bad.add(id + ": the face left the plate's front plane");
-            if (fit[0] > ShieldFrame.fit(b[0], b[1], b[2], b[3], b[5])[0] + 1e-6f) bad.add(id + ": the first-person fit is bigger than the normal one");
+            if (hi[2] < ShieldFrame.FACE_Z - 1e-5f) bad.add(id + ": the face went behind the plate's front plane");
+            if (fit[0] > ShieldFrame.fit(b[0], b[1], b[2], b[3], b[4], b[5], ShieldFrame.MAX_W, ShieldFrame.MAX_H)[0] + 1e-6f) bad.add(id + ": the first-person fit is bigger than the normal one");
         }
         assertEquals(List.of(), bad);
     }
