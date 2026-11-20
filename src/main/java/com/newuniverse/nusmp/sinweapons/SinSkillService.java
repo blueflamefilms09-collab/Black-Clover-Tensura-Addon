@@ -131,7 +131,7 @@ public final class SinSkillService {
         for (int i = 0; i < n; i++) {
             ItemStack s = inv.getItem(i);
             SinRules.Kind k = kindOf(s);
-            if (k == null || !SinSkillRules.shouldBind(ownerOf(s, p), (mine & (1 << k.ordinal())) != 0)) continue;
+            if (k == null || isOff(p, k) || !SinSkillRules.shouldBind(ownerOf(s, p), (mine & (1 << k.ordinal())) != 0)) continue;      // 4.30.1: a skill the player removed is not given again
             bindStack(s, p);
             mine |= 1 << k.ordinal();
             grant(p, k);
@@ -183,6 +183,37 @@ public final class SinSkillService {
                 say(p, "sinskill.msg.forged", "%s is forged from the skill.", ChatFormatting.DARK_PURPLE, name);
             }
         }
+    }
+
+    // ---------------------------------------------------------------- removing a skill (4.30.1)
+    private static final String OFF_KEY = "nusmp_sin_off_";
+
+    /** True when the player removed this weapon's skill (one byte in their persistent data): the scan then neither binds nor grants it. */
+    public static boolean isOff(ServerPlayer p, SinRules.Kind k) { return p.getPersistentData().getBoolean(OFF_KEY + k.id); }
+
+    /** Removes the weapon's skill from the player and keeps it from coming back by itself; the carried stacks they own are set free (unbound), nothing is taken. Returns true when anything changed. */
+    public static boolean remove(ServerPlayer p, SinRules.Kind k) {
+        boolean changed = !isOff(p, k);
+        p.getPersistentData().putBoolean(OFF_KEY + k.id, true);
+        Skills skills = skillsOf(p);
+        if (skills != null && skills.getSkill(holder(k).getId()).isPresent()) {
+            skills.forgetSkill(holder(k).getId(), Component.translatableWithFallback("sinskill.msg.removed", "%s fades from you.", holder(k).get().getName()).withStyle(ChatFormatting.GRAY));
+            changed = true;
+        }
+        Inventory inv = p.getInventory();
+        int n = SinSkillRules.slotsScanned(inv.getContainerSize());
+        for (int i = 0; i < n; i++) {
+            ItemStack s = inv.getItem(i);
+            if (isMine(s, p, k)) CustomData.update(DataComponents.CUSTOM_DATA, s, t -> t.remove(SinSkillRules.OWNER_TAG));
+        }
+        return changed;
+    }
+
+    /** Undoes {@link #remove}: the next look at the inventory binds a carried unbound weapon again and gives its skill. Returns true when the player had removed it. */
+    public static boolean restore(ServerPlayer p, SinRules.Kind k) {
+        boolean was = isOff(p, k);
+        p.getPersistentData().remove(OFF_KEY + k.id);
+        return was;
     }
 
     /** The persistent-data key of one weapon's forge clock (the self-test resets it). */

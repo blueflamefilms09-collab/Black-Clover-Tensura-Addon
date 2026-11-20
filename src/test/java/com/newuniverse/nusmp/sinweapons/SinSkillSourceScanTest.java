@@ -95,6 +95,7 @@ class SinSkillSourceScanTest {
         assertTrue(c.contains("SinSkillRules.manifest(holds, carries, now, p.getPersistentData().getLong(key))"), "Manifest decides through the pure rule");
         assertTrue(c.contains("bindStack(fresh, p)") && c.contains("SinSkillRules.nextForgeAt(now)"), "a forged stack is bound and starts the cooldown");
         assertTrue(c.contains("p.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY)"), "a stored stack is removed from the hand");
-        assertFalse(c.contains("forgetSkill") || c.contains(".discard()") || c.contains("shrink("), "no skill is taken away and no other player's item is removed");
+        assertFalse(c.contains(".discard()") || c.contains("shrink("), "no other player's item is removed");
+        assertTrue(c.contains("forgetSkill") && c.contains("OFF_KEY") && c.contains("isOff(p, k)"), "4.30.1: the skill is taken away only by remove(), and a removed skill is not granted again by the scan");
     }
 }

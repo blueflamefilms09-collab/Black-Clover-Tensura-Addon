@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.30.1] — A way to remove the Berserk weapon skills
+- NEW: `/multiverse sin remove <sloth|envy|vanity|chakrams|holy|all> [player]` takes that Berserk weapon skill away (the skill is forgotten and the bound weapons you carry are unbound, so it is not granted again), and `/multiverse sin restore <...> [player]` allows it again (the next weapon you carry binds it as before). Without a player it acts on yourself; naming another player needs permission level 2.
+- KEPT: nothing is deleted. The weapons stay in the inventory as plain melee weapons; only the skill and the binding go. Removal is per player, saved on the player, and works on a dedicated server.
+- Cost: one command, no packets, no scan beyond the existing one-per-second check (which now skips removed skills). Test: `SinSkillSourceScanTest` updated.
+- Honest caveats: not seen in a game; the Java is compiled first by CI.
+
 ## [4.30.0] — Berserk of Gluttony weapons are built with a skill, like the Black Sword Greed
 - NEW (server setting `soulBound` in `nusmp-sinweapons-server.toml`, default on): each Weapon of Mortal Sin now has its own Ultimate skill (Lord class): Black Axe of Sloth = Lord of Slothful Weight, Black Gunblade of Envy = Lord of Green-Eyed Envy, Black Spear of Vanity = Lord of Empty Vanity, Black Chakrams = Lord of the Twin Rings (placeholder name), Seifort Holy Sword = Seifort's Holy Judgement. The skill names are the mod's design, not canon.
 - NEW: the first player who carries an unbound weapon binds it (owner stored in the item) and learns its skill for good. Skill modes (cycled with the mode key): Technique (the weapon's right-click technique, same cooldown and caps) and Manifest / Store (store the held bound weapon back into the skill, or forge a fresh bound one into the hand or inventory, at least 100 ticks apart).

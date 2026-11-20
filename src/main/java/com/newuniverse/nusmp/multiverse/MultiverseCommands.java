@@ -220,6 +220,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.unique.UniqueCommand.node());                                             // unique list|status|release (op only: a 1-of-1 back into the loot pool)
         root.then(com.newuniverse.nusmp.shishou.ShishouCommand.node());                                       // shishou spawn|status|reset|recover|level|skills|broadcast|stomach (op for the admin ones)
         root.then(com.newuniverse.nusmp.greed.GreedCommand.node());                                           // greed status|give|reset (op), form|recover|vault (the wielder)
+        root.then(com.newuniverse.nusmp.sinweapons.SinCommand.node());                                       // 4.30.1: sin remove|restore <weapon|all> [player] (the Berserk weapon skills)
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
         root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.node());                                       // goku_boss spawn|status|clear (op): the Goku boss

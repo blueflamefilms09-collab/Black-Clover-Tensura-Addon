@@ -19675,5 +19675,6 @@
   "sinskill.msg.forged": "%s is forged from the skill.",
   "sinskill.msg.carried": "%s is already with you.",
   "sinskill.msg.wait": "The skill is still gathering itself.",
-  "sinskill.msg.full": "There is no room to forge the weapon."
+  "sinskill.msg.full": "There is no room to forge the weapon.",
+  "sinskill.msg.removed": "%s fades from you."
 }
