@@ -65,7 +65,10 @@ class RelicExclusivityTest {
     @Test
     void noRecipeMakesOrUsesARelic() throws IOException {
         TreeSet<String> ids = relicIds();
-        for (Path p : files(RECIPES, ".json")) assertEquals(List.of(), mentions(read(p), ids), "a recipe names a relic: " + p);
+        for (Path p : files(RECIPES, ".json")) {
+            if (unix(p).endsWith("/recipe/devil_contract.json")) continue;   // 4.48.0: the owner's craftable Devil Contract, behind the server setting devil.contractCraftable (docs/devil_double_magic.md)
+            assertEquals(List.of(), mentions(read(p), ids), "a recipe names a relic: " + p);
+        }
     }
 
     @Test

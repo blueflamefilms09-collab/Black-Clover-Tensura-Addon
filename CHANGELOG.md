@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.50.1] — Build fix: devil magic no longer drains food, the craftable Devil Contract is a named exception
+- FIXED: the `devil_magic` damage type had exhaustion 0.1, which drains food on every hit (the global no-hunger rule); it is 0.0 now.
+- FIXED: `RelicExclusivityTest` rejected the craftable Devil Contract recipe of 4.48.0; that one recipe (behind `devil.contractCraftable`) is now an explicit exception in the test.
+- KEPT: everything else; no other gameplay change.
+
 ## [4.50.0] — Weapons are held in the hand: hero forms find their hold, no floating, no clipping through arm or body
 - FIXED: hero form meshes (`<item>__<form>`) had no model display block, so the grip point was the cube centre (about 0.22 blocks off the hand in third person, no display at all in first person). Forms now use the display of their item. Audit of 127 hero meshes: 34 badly held before (float 25, arm 14, body 6, low in first person 8), 0 now (numbers only, not seen in a game).
 - NEW: `HoldFit` (moves a weapon out of the torso and out of the forearm by at most 0.20, never so far that the grip floats), `tools/weapon_grip/hold_audit.py` with `hold_golden.json`, `HoldAuditTest`, `docs/weapon_hold.md`, client setting `models.holdFit` (default on; `-Danime_multiverse.weaponHold=off` too).
