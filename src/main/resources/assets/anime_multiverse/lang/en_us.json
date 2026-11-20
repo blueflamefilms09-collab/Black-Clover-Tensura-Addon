@@ -20367,5 +20367,7 @@
   "anime_multiverse.hub.settings.intro": "Replay the intro",
   "anime_multiverse.hub.settings.intro.queued": "next open",
   "anime_multiverse.hub.settings.size": "GUI size",
-  "anime_multiverse.hub.settings.move": "GUI move"
+  "anime_multiverse.hub.settings.move": "GUI move",
+  "anime_multiverse.hub.slot.hint": "Click, or press %s",
+  "anime_multiverse.hub.slot.tip": "Multiverse Hub: every menu is in here"
 }

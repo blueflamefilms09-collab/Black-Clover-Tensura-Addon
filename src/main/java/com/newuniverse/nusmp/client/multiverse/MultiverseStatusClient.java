@@ -144,7 +144,7 @@ public final class MultiverseStatusClient {
         if (l != null) {                                              // the label: "Four Kingdoms", scaled into the old text's box
             GuiGraphics g = event.getGuiGraphics();
             var font = Minecraft.getInstance().font;
-            String label = "Four Kingdoms";
+            String label = com.newuniverse.nusmp.client.hub.HubEmblem.on() ? Component.translatable("anime_multiverse.hub.title").getString() : "Four Kingdoms";      // 4.62.0: the hub's name in the old text's place
             float sc = Math.min(1f, Math.min(l[2] / (float) font.width(label), l[3] / (float) font.lineHeight));
             boolean hover = inside(l, event.getMouseX(), event.getMouseY());
             if (com.newuniverse.nusmp.client.ui.theme.UiTheme.anime())              // 1.27.0: a glass chip behind the label, brighter on hover
@@ -159,8 +159,10 @@ public final class MultiverseStatusClient {
         int[] r = PANELS.get(event.getScreen());
         if (r == null) return;
         GuiGraphics g = event.getGuiGraphics();
-        MultiverseStatusScreen.drawCompact(g, Minecraft.getInstance().font, r[0], r[1], r[2], r[3], status,
-                inside(r, event.getMouseX(), event.getMouseY()));
+        boolean hover = inside(r, event.getMouseX(), event.getMouseY());
+        if (com.newuniverse.nusmp.client.hub.HubEmblem.on())                                                  // 4.62.0: the hub card takes the placeholder's place (ui.hub=false: the old compact status)
+            com.newuniverse.nusmp.client.hub.HubEmblem.drawCard(g, Minecraft.getInstance().font, r[0], r[1], r[2], r[3], hover);
+        else MultiverseStatusScreen.drawCompact(g, Minecraft.getInstance().font, r[0], r[1], r[2], r[3], status, hover);
     }
 
     private static void onScreenClick(ScreenEvent.MouseButtonPressed.Pre event) {

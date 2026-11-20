@@ -58,7 +58,8 @@ public final class FourKingdomsSlot {
             ResourceLocation cs = comingSoon();
             if (cs == null || !cs.equals(tex) || !onTensuraScreen()) return false;
             int w = x2 - x1, h = y2 - y1;
-            g.blit(FourKingdomsScreen.LOGO, x1, y1, w, h, 0, 0, 256, 256, 256, 256);
+            if (com.newuniverse.nusmp.client.hub.HubEmblem.on()) com.newuniverse.nusmp.client.hub.HubEmblem.draw(g, x1, y1, w, h, false);       // 4.62.0: the hub's own ring sits in the slot (ui.hub=false: the old logo)
+            else g.blit(FourKingdomsScreen.LOGO, x1, y1, w, h, 0, 0, 256, 256, 256, 256);
             org.joml.Matrix4f m = g.pose().last().pose();
             org.joml.Vector4f a = m.transform(new org.joml.Vector4f(x1, y1, 0, 1)), b = m.transform(new org.joml.Vector4f(x2, y2, 0, 1));
             SLOTS.put(Minecraft.getInstance().screen, new int[]{(int) Math.min(a.x(), b.x()), (int) Math.min(a.y(), b.y()),
@@ -88,6 +89,7 @@ public final class FourKingdomsSlot {
                     com.newuniverse.nusmp.client.ui.theme.UiTheme.GOLD, 0.9f, com.newuniverse.nusmp.client.ui.theme.MagicCircle.STANDARD, 1f);
         } else
         g.fill(r[0], r[1], r[0] + r[2], r[1] + r[3], 0x30FFFFFF);          // hover highlight
-        g.renderTooltip(Minecraft.getInstance().font, Component.literal("Four Kingdoms: every menu is in here"), e.getMouseX(), e.getMouseY());
+        g.renderTooltip(Minecraft.getInstance().font, com.newuniverse.nusmp.client.hub.HubEmblem.on() ? Component.translatable("anime_multiverse.hub.slot.tip")
+                : Component.literal("Four Kingdoms: every menu is in here"), e.getMouseX(), e.getMouseY());
     }
 }

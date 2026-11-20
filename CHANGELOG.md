@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.62.0] — The Multiverse Hub sits in the "Coming Soon" spot
+Owner request: the new hub should go in the Coming Soon spot, placed the same way the existing menu is.
+- REPLACED (looks only, behind `ui.hub`): on Tensura's magic categories screen the slot that showed the Four Kingdoms logo now shows the hub's own emblem (a slowly turning ring with the eight tab nodes in their colours around a core); hovering gives the gold ring, the magic circle and the tooltip "Multiverse Hub: every menu is in here". On the status screen the placeholder area now shows a hub card (emblem, "Multiverse Hub", "Click, or press F7") instead of the compact status panel, and the small label that replaces the placeholder text reads "Multiverse Hub" instead of "Four Kingdoms". Same positions, same click (opens the hub), found the same way as before.
+- KEPT: `ui.hub = false` restores the Four Kingdoms logo, label, tooltip and the compact status panel exactly. The compact drawing code, the Four Kingdoms screen and the Codex are untouched.
+- NEW: `client/hub/HubEmblem.java`, 2 lang keys (`anime_multiverse.hub.slot.hint`, `.slot.tip`), mock-up script `tools/ui_preview/preview_slot.py`, preview `docs/previews/ui_hub_slot/hub_slot.png`.
+- COST: client only, drawn only while one of those two screens is open: one dotted ring (at most 48 fills), 8 small octagons and one magic circle (at most 8 textured quads) per frame; no packet, no tick work, no allocation per frame.
+- CAVEATS: not seen in a game; the preview is a PIL mock-up, not a screenshot; the old compact status rows are no longer visible in that spot while `ui.hub` is on (they are in the hub's Status tab).
+
 ## [4.61.0] — Katanas rebuilt thin, so they look like real katanas
 Owner request: katanas must be shaped like katanas and not look so thick, for every katana in the mod.
 - ROOT CAUSE: the old script meshes were already thin, but the 1.110.0 size rule swapped in thickened copies (blade about 1/7 to 1/11 of its length wide) and the renderer preferred those. The fix is new thin meshes plus taking the katanas out of the size rule.
