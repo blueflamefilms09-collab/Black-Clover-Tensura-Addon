@@ -40,6 +40,7 @@ public final class GokuBossCommand {
 
     private static int spawn(CommandContext<CommandSourceStack> ctx, Vec3 at) {
         ServerLevel sl = ctx.getSource().getLevel();
+        if (at == null && ctx.getSource().getPlayer() != null && com.newuniverse.nusmp.arc.realm.BossRealm.open(ctx.getSource().getPlayer(), GokuBoss.CHARACTER)) return 1;   // the boss realm; an explicit position still spawns in place
         Vec3 pos = at != null ? at : ctx.getSource().getPosition();
         ArcSpawner.Result r = ArcSpawner.summon(sl, GokuBoss.CHARACTER, pos, ctx.getSource().getRotation().y, List.of(), true);
         return switch (r.outcome()) {

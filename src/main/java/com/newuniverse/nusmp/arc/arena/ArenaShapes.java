@@ -40,6 +40,8 @@ public final class ArenaShapes {
         if (c == null) return STONE_RING;
         ArenaShape named = byId(c.arena());
         if (named != null) return named;
+        ArenaShape realm = RealmShapes.forCharacter(c);                                       // the boss realm's own arenas (Goku, Sinbad); null when the setting is off or the character has none
+        if (realm != null) return realm;
         return switch (c.saga()) {
             case ELF_REINCARNATION -> MIDNIGHT_SUN_RUINS;
             case SPADE_RAID -> SPADE_THRONE;

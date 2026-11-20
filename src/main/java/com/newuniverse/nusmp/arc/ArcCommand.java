@@ -151,6 +151,7 @@ public final class ArcCommand {
         ArcCharacter c = find(ctx, "id");
         if (c == null) return 0;
         ServerLevel level = ctx.getSource().getLevel();
+        if (pos == null && c.isBoss() && ctx.getSource().getPlayer() != null && com.newuniverse.nusmp.arc.realm.BossRealm.open(ctx.getSource().getPlayer(), c)) return 1;   // no explicit position: the boss realm (an explicit position still summons in place)
         ArcSpawner.Result r = ArcSpawner.summon(level, c, spot(ctx, pos), 0f, List.of(), true);
         switch (r.outcome()) {
             case SPAWNED -> {

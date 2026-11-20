@@ -47,6 +47,10 @@ public class ArcSpawnEggItem extends Item {
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
         Vec3 at = Vec3.atBottomCenterOf(pos);
         float yaw = player == null ? 0f : player.getYRot() + 180f;
+        if (c.isBoss() && player instanceof net.minecraft.server.level.ServerPlayer sp && com.newuniverse.nusmp.arc.realm.BossRealm.open(sp, c)) {   // a boss with no dungeon floor is fought in the boss realm, not where the egg was used
+            if (!player.getAbilities().instabuild) stack.shrink(1);
+            return InteractionResult.CONSUME;
+        }
         boolean made = c.isBoss()
                 ? ArcSpawner.summon(sl, c, at, yaw, List.of(), true).outcome() == ArcSpawner.Outcome.SPAWNED
                 : ArcSpawner.spawnNpc(sl, c, at, yaw) != null;

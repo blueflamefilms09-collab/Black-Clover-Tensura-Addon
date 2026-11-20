@@ -185,7 +185,8 @@ public final class ArcArenaDirector {
         ArenaState st = save.state(slot);
         Entity e = save.bossId(slot) == null ? null : sl.getEntity(save.bossId(slot));
         boolean alive = e instanceof LivingEntity le && le.isAlive();
-        ArenaState.Watch w = st.tickFighting(STEP, players.size(), alive);
+        int present = com.newuniverse.nusmp.arc.realm.BossRealm.presentWithGrace(slot, save.characterAt(slot), players.size(), now);   // a realm site waits a while for a party that fell or disconnected; a story arena answers the real count
+        ArenaState.Watch w = st.tickFighting(STEP, present, alive);
         if (w == ArenaState.Watch.ABANDONED) {
             clearStrays(sl, slot);
             save.bossId(slot, null);

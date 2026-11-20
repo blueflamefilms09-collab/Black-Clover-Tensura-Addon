@@ -43,6 +43,9 @@ public final class ArcSystem {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.magi.SinbadBossConfig.SPEC, "nusmp-sinbad-boss-server.toml");   // the Sinbad boss: its own server settings file
         com.newuniverse.nusmp.arc.magi.SinbadBossEvents.register(NeoForge.EVENT_BUS);                         // he forgets a player on logout, death, dimension change and server stop
         com.newuniverse.nusmp.arc.magi.SinbadBossSelfTests.register();                                        // keys sinbad.boss.*
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.realm.BossRealmConfig.SPEC, "nusmp-boss-realm-server.toml");   // the boss realm (docs/boss_realm.md): its own server settings file
+        com.newuniverse.nusmp.arc.realm.BossRealm.register(NeoForge.EVENT_BUS);                                 // grace, timeout, ride home, void rescue, login/death cleanup
+        com.newuniverse.nusmp.arc.realm.BossRealmSelfTests.register();                                          // keys boss.realm.*
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

@@ -31,20 +31,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArenaShapesTest {
     private static final Path VANILLA = Path.of("tools/labyrinth/vanilla_block_states_1_21_1.json");
 
-    private static List<ArenaShape> shapes() { return ArenaShapes.all(); }
+    /** The six story arenas and the boss realm's two (RealmShapes): every invariant below holds for all eight. */
+    private static List<ArenaShape> shapes() {
+        List<ArenaShape> all = new ArrayList<>(ArenaShapes.all());
+        all.addAll(RealmShapes.all());
+        return all;
+    }
 
     @Test
     void theRegistryHoldsSixArenasWithDistinctIdsAndTheRingLast() {
-        assertEquals(6, shapes().size());
+        assertEquals(6, ArenaShapes.all().size());
         Set<String> ids = new HashSet<>();
-        for (ArenaShape s : shapes()) {
+        for (ArenaShape s : ArenaShapes.all()) {
             assertTrue(ids.add(s.id()), "duplicate arena id " + s.id());
             assertTrue(s.id().matches("[a-z][a-z0-9_]*"), s.id());
             assertTrue(!s.title().isEmpty() && s.radius() > 10, s.id());
             assertSame(s, ArenaShapes.byId(s.id()));
             assertSame(s, ArenaShapes.byId(s.id().toUpperCase() + " "));
         }
-        assertEquals("stone_ring", shapes().get(5).id());
+        assertEquals("stone_ring", ArenaShapes.all().get(5).id());
         assertNull(ArenaShapes.byId("zogratis_arena"), "the Final Hour's arena belongs to the Hourglass, not to this registry");
         assertNull(ArenaShapes.byId(""));
         assertNull(ArenaShapes.byId(null));

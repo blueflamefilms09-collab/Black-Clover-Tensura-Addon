@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.40.0] — A boss realm for Goku and Sinbad (and the "they keep dying" hardening)
+Owner request: a cool custom place to fight Sinbad, Goku and the other non-dungeon bosses, and fix them dying as if they were dungeon bosses.
+- NEW (server setting file `nusmp-boss-realm-server.toml`, section `bossRealm`; `enabled = false` restores the old behaviour): two realm arenas in the existing arena dimension, a palm island in a prismarine sea for Sinbad and a quartz tournament ring in a terracotta wasteland for Goku. The spawn egg and the summon commands carry the party (you plus nearby players, cap and radius in the config) into the boss's own arena; a fight waits 20 s (not 2 s) when the party is away, a boss that falls out of the world is put back, a fight that nobody ends stops after 30 minutes, and people still inside are carried home 45 s after the arena rests. Self-test prefix `boss.realm`.
+- FOUND: Goku and Sinbad are not dungeon bosses in the code (no floor, no spawner, no scaler, no despawn path). No single kill path was found; the likely causes were the story-arena referee giving up after 2 s with nobody inside, falling out of the void arena, and the open-world reset. The realm closes all of them. This is hardening, not a proven single fix (docs/boss_realm.md).
+- REPLACED (only while the realm is on): the egg, `/multiverse arc summon`, and the Goku and Sinbad spawn commands without a position now open the realm instead of spawning in place; an explicit position still spawns in place.
+- KEPT: every story arena, the dimension, builder, referee and Return Book, the Final Hour, all dungeon bosses, both bosses' configs and gates.
+- Cost: one pass per second that exits at once when idle; a door does one box look and at most 16 teleports; no new packets. Honest caveats: the arenas were never looked at in a game; the NeoForge-facing code was not compiled before CI.
+
 ## [4.39.0] — Spear tips and bow arrows are solid 3D, not flat
 Owner request: make the parts that should be 3D (the tip of the spear, the arrows of the bow) really 3D.
 - FIXED (client setting `heroSolidParts` in `nusmp-flatprops-client.toml`, default on; `false` restores the old look exactly): an audit found 85 flat or paper-thin parts (`tools/heroweapon/flat_parts_audit.py`), now 0. The in-hand spear heads, the harpoon barbs and the 33 Legendary Bow pull meshes were rebuilt with real thickness, and the flying arrow of light and flying spear tip (11 plus 6 server call sites, plus the hero thrust) are solid models on a glow trail instead of a glow streak.
