@@ -80,7 +80,7 @@ public final class NUItems {
     public static final DeferredItem<RelicItem> ANTI_BIRD_CHARM = relic("anti_bird_charm", RelicItem.Kind.ANTI_BIRD, Rarity.COMMON);
     public static final DeferredItem<RelicItem> RECOVERY_SALVE = relic("recovery_salve", RelicItem.Kind.RECOVERY_SALVE, Rarity.UNCOMMON);
     public static final DeferredItem<RelicItem> WRITTEN_CONSENT = relic("written_consent", RelicItem.Kind.CONSENT, Rarity.COMMON);
-    public static final DeferredItem<RelicItem> DEVIL_CONTRACT = relic("devil_contract", RelicItem.Kind.DEVIL_CONTRACT, Rarity.EPIC);
+    public static final DeferredItem<Item> DEVIL_CONTRACT = ITEMS.register("devil_contract", () -> new DevilContractItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));      // 4.65.0: a plain craftable item, no longer a relic
     public static final DeferredItem<RelicItem> GAUCHE_MIRROR = relic("gauches_hand_mirror", RelicItem.Kind.GAUCHE_MIRROR, Rarity.RARE);   // 0.34
     // 0.52: Zagred's drops (see BossRelics)
     public static final DeferredItem<RelicItem> SHROUD_OF_MARGINS = relic("shroud_of_margins", RelicItem.Kind.MARGINS, Rarity.EPIC);

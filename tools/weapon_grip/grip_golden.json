@@ -929,11 +929,11 @@
  },
  "devil_contract": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 23.02,
-  "y": 26.99,
-  "z": 0.689
+  "fraction": 0.555,
+  "source": "gripxyz",
+  "x": -3.4,
+  "y": 30.0,
+  "z": 0.0
  },
  "devil_contract_book": {
   "class": "handitem",

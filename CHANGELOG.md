@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.65.0] — The Infernal Contract is a plain craftable item, held by its rod
+Owner request: the double / Infernal Contract still showed as a relic; it should be an item you craft, and sit in the player's hand.
+- REPLACED (owner asked): the Infernal Contract is no longer a relic: no relic grade, no relic acts, no relic card, not in the Relics catalogue (`item/DevilContractItem`, a plain item). The relic definition in `Wave0` was removed. Same id `anime_multiverse:devil_contract`, so worlds, recipes and advancements keep working.
+- KEPT: the recipe and its setting `devil.contractCraftable`; using it still offers the three prices of the old bargain and (through the use hook) the four contracts and the devil worlds; signing still works through `/infernalpact`.
+- FIXED: the held contract was held by the middle of the scroll (empty air, the rod 26 units away). The mesh now states its grip (`gripxyz`, the rod) and a new tilt: the hold audit shows no body clip and no camera clip for the right hand, first and third person (the left hand still clips the body as before).
+- CAVEATS: not seen in a game; the contract mesh generator (`tools/relics/wave0_models.py`) would overwrite the new grip line if it is re-run.
+
 ## [4.64.1] — Removing a Sin weapon skill also removes its side bar
 Owner report: removing the Berserk skill should remove the level bar on the side.
 - FIXED: `/multiverse sin remove <weapon>` now also hides that weapon's Lord mastery bar (the bar at the bottom left) at once, and it stays hidden while the skill is removed. `/multiverse sin restore` brings it back.

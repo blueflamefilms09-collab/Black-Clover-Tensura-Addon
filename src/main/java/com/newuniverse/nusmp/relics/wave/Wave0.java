@@ -117,14 +117,7 @@ public final class Wave0 {
                 .act(Act.of("mage_hand", "Mage Hand", Wave0Acts::mageHand).cooldown(80))
                 .act(Act.of("mage_hand_lay", "Mage Hand: Lay on Hands", Wave0Acts::mageHandLay).cooldown(240).mana(3)));
 
-        out.accept(RelicDef.of("devil_contract", "Infernal Contract", Grade.LEGEND, RelicSlot.CONSUMABLE)
-                .adopt(NUItems.DEVIL_CONTRACT).vessel()
-                .palette(0xC9A872, 0xB01820, 0xFF3030).look(Look.TOME)
-                .desc("Signed in blood, forever binding, one at a time: the old bargain with a devil, or a Contract of Blood, Riches, Knowledge or Power. Whoever signs is Damned: death takes the soul into a crystal.")
-                .act(Act.of("sign_blood", "Sign: Contract of Blood", c -> Wave0Acts.sign(c, Wave0Contract.Kind.BLOOD)))
-                .act(Act.of("sign_riches", "Sign: Contract of Riches", c -> Wave0Acts.sign(c, Wave0Contract.Kind.RICHES)))
-                .act(Act.of("sign_knowledge", "Sign: Contract of Knowledge", c -> Wave0Acts.sign(c, Wave0Contract.Kind.KNOWLEDGE)))
-                .act(Act.of("sign_power", "Sign: Contract of Power", c -> Wave0Acts.sign(c, Wave0Contract.Kind.POWER))));
+        // 4.65.0: the Infernal Contract is a plain craftable item now (item/DevilContractItem), not a relic: its relic definition was removed at the owner's request
 
         out.accept(RelicDef.of("prism_blade", "Prism Blade", Grade.RARE, RelicSlot.MAIN_HAND)
                 .adopt(NUItems.PRISM_BLADE).attune()
