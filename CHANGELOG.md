@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.40.1] — Free offline voice tool for boss lines
+- NEW (tooling only, nothing in the jar changes): `tools/audio/offline_voice.py` and `offline_voice_profiles.json` make boss voice lines with the free Kokoro model (Piper as fallback) instead of ElevenLabs, with a profile per boss (goku, sinbad, kakashi, dark_lord). It converts to the same Ogg and sounds.json conventions as the Shishou voice. KEPT: the Shishou recordings and its converter.
+- Caveat: sample clips were made but not yet listened to; no real boss line has been generated yet.
+
 ## [4.40.0] — A boss realm for Goku and Sinbad (and the "they keep dying" hardening)
 Owner request: a cool custom place to fight Sinbad, Goku and the other non-dungeon bosses, and fix them dying as if they were dungeon bosses.
 - NEW (server setting file `nusmp-boss-realm-server.toml`, section `bossRealm`; `enabled = false` restores the old behaviour): two realm arenas in the existing arena dimension, a palm island in a prismarine sea for Sinbad and a quartz tournament ring in a terracotta wasteland for Goku. The spawn egg and the summon commands carry the party (you plus nearby players, cap and radius in the config) into the boss's own arena; a fight waits 20 s (not 2 s) when the party is away, a boss that falls out of the world is put back, a fight that nobody ends stops after 30 minutes, and people still inside are carried home 45 s after the arena rests. Self-test prefix `boss.realm`.

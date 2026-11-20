@@ -1,0 +1,45 @@
+{
+ "goku": {
+  "note": "heroic, bright, upbeat young hero (character-flavoured, NOT the anime actor)",
+  "engine": "kokoro", "voice": {"am_liam": 0.5, "am_puck": 0.3, "am_fenrir": 0.2}, "lang": "en-us",
+  "speed": 1.08, "pitch": 0.6, "formant": "preserved",
+  "eq": [[3200, 1.0, 3], [180, 0.8, -2]],
+  "compressor": ["-20dB", 3, 3],
+  "reverb": {"seconds": 0.3, "wet": 0.07, "damp": 0.5}
+ },
+ "sinbad": {
+  "note": "regal, warm, confident king with a slightly hall-like voice",
+  "engine": "kokoro", "voice": {"bm_george": 0.6, "bm_lewis": 0.4}, "lang": "en-gb",
+  "speed": 0.94, "pitch": -1.0, "formant": "shifted",
+  "eq": [[200, 0.8, 2.5], [4500, 1.0, 1.5]],
+  "compressor": ["-22dB", 3, 3],
+  "chorus": 20,
+  "reverb": {"seconds": 0.9, "wet": 0.2, "damp": 0.6}
+ },
+ "kakashi": {
+  "note": "calm, dry, laid-back, a little breathy and low",
+  "engine": "kokoro", "voice": {"am_michael": 0.5, "am_adam": 0.5}, "lang": "en-us",
+  "speed": 0.92, "pitch": -0.5, "formant": "preserved",
+  "lowpass": 7500,
+  "eq": [[2500, 1.0, -1.5], [8000, 1.0, 2]],
+  "compressor": ["-24dB", 2.5, 4],
+  "reverb": {"seconds": 0.35, "wet": 0.06, "damp": 0.5}
+ },
+ "dark_lord": {
+  "note": "a huge, slow, echoing villain / demon-lord voice",
+  "engine": "kokoro", "voice": {"am_onyx": 0.6, "bm_lewis": 0.4}, "lang": "en-us",
+  "speed": 0.88, "pitch": -2.5, "formant": "shifted",
+  "eq": [[120, 0.8, 4], [3000, 1.0, -2]],
+  "compressor": ["-22dB", 4, 4],
+  "chorus": 30,
+  "reverb": {"seconds": 1.4, "wet": 0.28, "damp": 0.65},
+  "echo": {"delays": [90, 180], "decays": [0.28, 0.14]}
+ },
+ "piper_joe": {
+  "note": "Piper en_US joe (CC0 dataset), plain mature narrator; fully offline fallback with no Kokoro",
+  "engine": "piper", "voice": "en_US-joe-medium",
+  "speed": 1.0, "pitch": -0.5, "formant": "preserved",
+  "eq": [[250, 0.8, 1.5]],
+  "reverb": {"seconds": 0.4, "wet": 0.08, "damp": 0.5}
+ }
+}
