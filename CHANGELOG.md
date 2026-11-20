@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.75.0] — Straps on the arm for every shield
+Owner request: add straps that wrap around the player's arm.
+- NEW (client): every shield mesh is drawn with two leather rings round the forearm, a grip bar over the hand and two strap tabs to the plate, with metal buckles in each shield's accent colour (`visual/shields/ShieldStraps`, `shield_straps.json`, `shield_straps.png`). Client option `visual.shieldStraps` (true; false draws exactly what 4.71.2 drew). First person shows only the grip bar and two mounts. Self-test `visual.shields.straps`.
+- KEPT: every shield mesh, skin, fit, the 0.14 arm gap, blocking and all display values. REPLACED: nothing.
+- COST: client drawing only, 114 quads per shield (budget 150), cached lists, nothing beyond 24 blocks, no packet, no server work.
+- CAVEATS: the arm placement is read from the game's hand layer and checked against a Python model, not seen in a game; slim (Alex) arms leave the rings looser; the model was made by a script fallback (`tools/blockbench/gen_shield_straps.py`) and the `.bbmodel` has not been opened in Blockbench.
+
 ## [4.74.0] — The six hero katanas are rebuilt as true katanas
 Owner request (earlier): the katanas should read as real katanas.
 - REPLACED (same ids): the Vassal White Tiger, Soul Eater, Siderite and Sakura Stone katanas, the Wind King katana and Hellblaze the Demon Sin (katana, lod and a new saya): single-edged curved blade, hamon, shinogi, kissaki, a thin tsuba with cut-outs, habaki, wrapped grip, kashira and menuki; the lore sits on that silhouette (tiger stripes, rib arcs and skull menuki, star tsuba, petals, feathers, sin eyes). Blade width is about 1/30 of the length. Built with scripted Blender (`tools/blender/hero_katanas.py`, `hero_hellblaze.py`), not hand-modelled.

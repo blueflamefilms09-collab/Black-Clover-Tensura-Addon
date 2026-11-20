@@ -22,6 +22,7 @@ public final class FlatPropsConfig {
     private static final ModConfigSpec.BooleanValue HERO_SOLID_PARTS;
     private static final ModConfigSpec.BooleanValue BIG_BOWS;
     private static final ModConfigSpec.DoubleValue BOW_SCALE;
+    private static final ModConfigSpec.BooleanValue SHIELD_STRAPS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -36,6 +37,8 @@ public final class FlatPropsConfig {
                 .define("bigBows", true);
         BOW_SCALE = b.comment("A multiplier on top of visual.bigBows (0.5 to 2.0, default 1.0) to tune the bow size without a rebuild. In first person a bow never grows past what the camera allows. Ignored while bigBows is off.")
                 .defineInRange("bowScale", 1.0, 0.5, 2.0);
+        SHIELD_STRAPS = b.comment("Draw leather straps on the arm of whoever holds a shield: two bands round the forearm, a grip bar and two tabs to the plate (docs/visual_upgrade/shield_fix.md). Off = the shields are drawn without them, as before 4.72.0.")
+                .define("shieldStraps", true);
         b.pop();
         SPEC = b.build();
     }
@@ -54,5 +57,6 @@ public final class FlatPropsConfig {
         try { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(HERO_SOLID_PARTS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(true); }
         try { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(BIG_BOWS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(true); }
         try { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(BOW_SCALE.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(1.0); }
+        try { com.newuniverse.nusmp.visual.shields.ShieldStraps.setEnabled(SHIELD_STRAPS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.shields.ShieldStraps.setEnabled(true); }
     }
 }

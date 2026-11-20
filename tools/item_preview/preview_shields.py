@@ -11,6 +11,14 @@ for the lowered shield and the raised one, in third person (right hand and left 
 The hand chain is the game's: LivingEntityRenderer, the arm of the humanoid model with the ITEM / BLOCK arm pose, ItemInHandLayer's turn to the grip, ItemTransform#apply;
 first person is ItemInHandRenderer's applyItemArmTransform. The runtime normaliser's scale-up of the old placement and the oversize guard are not simulated (both only
 matter for the old look). Rasteriser: preview_weapons.py. Output: docs/previews/shields/<id>.png and shields_sheet.png.
+
+    STRAP_CP=<classes + gson> python3 -B tools/item_preview/preview_shields.py --straps [ids...]
+
+4.72.0 (docs/visual_upgrade/shield_fix.md, "Straps"): draws the shield WITHOUT (before) and WITH (after) its arm straps, in third person (right and left hand, lowered and raised, seen from
+the player's inner side, where the straps are, and from the usual front-outer camera) and in first person, into docs/previews/shield_straps/<id>.png and shields_sheet.png. The strap
+geometry is not re-implemented here: `visual.shields.ShieldStrapsDump` (src/test) runs the real ShieldStraps.build over the real meshes and writes the quads, this script only draws
+them through the same hand chain. STRAP_CP is a java classpath holding the compiled main + test classes and gson; or pass STRAP_DUMP=<file written by ShieldStrapsDump>.
+A software mock-up of the game's chain: nothing here was seen in a game.
 """
 import json
 import math
@@ -382,5 +390,118 @@ def main(ids):
         print("wrote", os.path.relpath(out, ROOT))
 
 
+# ---------------------------------------------------------------- 4.72.0: straps
+STRAP_IDS = IDS + ["hylian_hero_shield"]
+STRAP_OUT = os.path.join(ROOT, "docs", "previews", "shield_straps")
+LEATHER_RGB = (0x4A, 0x34, 0x26)
+
+
+def strap_dump(ids):
+    """{(mesh id, ctx): ([quads], trim rgb)} from the Java dump (the real ShieldStraps geometry); quads are (layer 0, 4x5 points + uv, normal)."""
+    import subprocess
+    import tempfile
+    path = os.environ.get("STRAP_DUMP")
+    if not path:
+        cp = os.environ.get("STRAP_CP")
+        if not cp:
+            raise SystemExit("set STRAP_CP (java classpath with the compiled main + test classes and gson) or STRAP_DUMP (a file from ShieldStrapsDump)")
+        path = os.path.join(tempfile.mkdtemp(), "straps.txt")
+        subprocess.run(["java", "-cp", cp, "com.newuniverse.nusmp.visual.shields.ShieldStrapsDump", path] + ids, cwd=ROOT, check=True)
+    out, cur = {}, None
+    for line in open(path):
+        v = line.split()
+        if v[0] == "S":
+            cur = (v[1], int(v[2]))
+            out[cur] = ([], int(v[3], 16), [])
+        elif v[0] == "V":
+            out[cur][2].append((int(v[1]), np.array([float(x) for x in v[2:5]]), np.array([float(x) for x in v[5:8]])))
+    res = {}
+    for key, (_, trim, verts) in out.items():
+        quads = []
+        for i in range(0, len(verts), 4):
+            part = verts[i][0]
+            pts = np.array([[*verts[i + k][1], 0, 0] for k in range(4)])          # the uv is looked up in the palette when the shield is drawn
+            quads.append((0, pts, verts[i][2], part))
+        res[key] = (quads, trim)
+    return res
+
+
+def strap_one(item_id, dump):
+    global TILE
+    place, glow, raw = load_raw(item_id)
+    d = os.path.join(ASSETS, "textures", "entity", "weapon")
+    skin = PW.tex(os.path.join(d, item_id + ".png"))
+    glowtex = PW.tex(os.path.join(d, item_id + "_glow.png"))
+    k = skin.shape[1] / 128.0
+    raw = [(ly, np.concatenate([p[:, :3], p[:, 3:5] * k], axis=1), n) for (ly, p, n) in raw]
+    model_id = item_id.split("__")[0]
+    new_model = {s: json.load(open(os.path.join(ASSETS, "models", "item", model_id + s + ".json")))["display"] for s in ("", "_blocking")}
+    trim = dump[(item_id, 0)][1]
+    PAL["leather"], PAL["trim"] = LEATHER_RGB, ((trim >> 16) & 255, (trim >> 8) & 255, trim & 255)
+    PAL_NAMES[:] = list(PAL)
+    skins = {"mod": skin, "pal": palette_skin()}
+    # strap quads carry uv of the palette, re-looked-up after the palette changed
+    def straps(ctx):
+        return [(ly, np.concatenate([p[:, :3], np.tile(uv_of("trim" if part else "leather"), (4, 1))], axis=1), n) for (ly, p, n, part) in dump[(item_id, ctx)][0]]
+    new_q = transform(raw, new_frame(raw))
+    rows = []
+    for title, left, blocking, fp in (("3rd right, lowered", False, False, False), ("3rd right, raised", False, True, False), ("3rd left, lowered", True, False, False),
+                                      ("3rd left, raised", True, True, False), ("1st right, lowered", False, False, True), ("1st right, raised", False, True, True)):
+        suf = "_blocking" if blocking else ""
+        ctx = 4 if fp else (2 if left else 0) + (1 if blocking else 0)
+        disp = new_model[suf]
+        dd = pick(disp, ("firstperson_" if fp else "thirdperson_") + ("left" if left else "right") + "hand")
+        m = first_person(dd, left) if fp else third_person(dd, left, blocking)
+        tiles = []
+        for label, with_straps, view in (("before", False, "inner"), ("after", True, "inner"), ("after", True, "detail"), ("after", True, "outer")):
+            world = with_skin(transform(new_q, m), skins["mod"])
+            if with_straps:
+                world += with_skin(transform(straps(ctx), m), skins["pal"])
+            if fp:
+                # the game's camera (the lower part of the shield is cut off by the screen, as with vanilla's), and a view tilted down to show what is below
+                if view == "outer":
+                    tiles.append(np.zeros((TILE, TILE, 3), np.float32) + [0.2, 0.2, 0.25])
+                    continue
+                look_at = {"inner": (0, 0, -1), "detail": (0.15, -0.55, -1)}[view]
+                cam, fov, allq = look((0, 0, 0), look_at), (95 if view == "detail" else 70), world
+                name = {"inner": "game view", "detail": "tilted down"}[view]
+            else:
+                target = (m @ np.array([0, 0, 0.0, 1.0]))[:3]
+                inward = (1 if not left else -1)                       # the player's inner side: +x for the right hand (the body is at x = 0), -x for the left
+                off = {"inner": np.array([0.95 * inward, 0.35, 1.5]), "outer": np.array([-0.95 * inward, 0.35, 1.5]), "detail": np.array([0.7 * inward, 0.6, -1.1]) * 1.7}[view]
+                cam, fov = look(target + off, target), 38
+                arm = arm_quad(left, blocking) + other_arm(left)
+                allq = with_skin((arm if view == "detail" else player_quads() + arm), skins["pal"]) + world
+                name = {"inner": "inner side", "detail": "from behind, no body", "outer": "front"}[view]
+            img = render(allq, skins, cam, fov, glowtex, glow)
+            tiles.append(tile_label(img, label + " | " + title + " | " + name))
+        rows.append(np.concatenate(tiles, 1))
+    return np.concatenate(rows, 0)
+
+
+def main_straps(ids):
+    global TILE
+    TILE = 240
+    PW.W = PW.H = TILE
+    PW.STARS = np.zeros((TILE, TILE, 3), np.float32)
+    ids = ids or STRAP_IDS
+    dump = strap_dump(ids)
+    os.makedirs(STRAP_OUT, exist_ok=True)
+    sheets = []
+    for i in ids:
+        img = strap_one(i, dump)
+        path = os.path.join(STRAP_OUT, i + ".png")
+        Image.fromarray((img * 255).astype(np.uint8)).save(path)
+        print("wrote", os.path.relpath(path, ROOT))
+        sheets.append(img)
+    if len(ids) > 1:
+        out = os.path.join(STRAP_OUT, "shields_sheet.png")
+        Image.fromarray((np.concatenate(sheets, 1) * 255).astype(np.uint8)).save(out)
+        print("wrote", os.path.relpath(out, ROOT))
+
+
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if sys.argv[1:2] == ["--straps"]:
+        main_straps(sys.argv[2:])
+    else:
+        main(sys.argv[1:])

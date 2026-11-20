@@ -54,6 +54,7 @@ public final class ShieldBoot {
         SelfTests.register("visual.shields.items", ShieldBoot::items);
         SelfTests.register("visual.shields.use", ShieldBoot::use);
         SelfTests.register("visual.shields.models", ShieldBoot::models);
+        SelfTests.register("visual.shields.straps", ShieldBoot::straps);          // 4.72.0
     }
 
     private static void onShieldBlock(LivingShieldBlockEvent e) {
@@ -118,6 +119,24 @@ public final class ShieldBoot {
         List<String> bad = new ArrayList<>();
         for (String id : ShieldSet.IDS) bad.addAll(ShieldModelCheck.problems(id, json("/assets/anime_multiverse/models/item/" + id + ".json"), json("/assets/anime_multiverse/models/item/" + id + "_blocking.json")));
         return result(bad, ShieldSet.IDS.size() + " shield models carry vanilla's display and the blocking override");
+    }
+
+    /** 4.72.0: the arm straps' data file and texture are inside the jar, parse, and every hand state stays inside the quad budget (pure geometry; the drawing is client only). */
+    private static SelfTests.Result straps(MinecraftServer server) {
+        List<String> bad = new ArrayList<>();
+        try (InputStream in = ShieldBoot.class.getResourceAsStream("/assets/anime_multiverse/shield_straps.json")) {
+            if (in == null) return SelfTests.Result.fail("shield_straps.json is not in the jar");
+            com.newuniverse.nusmp.visual.shields.ShieldStraps.Data d = com.newuniverse.nusmp.visual.shields.ShieldStraps.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+            for (int ctx = 0; ctx < com.newuniverse.nusmp.visual.shields.ShieldStraps.CONTEXTS; ctx++) {
+                int q = com.newuniverse.nusmp.visual.shields.ShieldStraps.quads(com.newuniverse.nusmp.visual.shields.ShieldStraps.build(d, ctx, 0.2f));
+                if (q <= 0 || q > com.newuniverse.nusmp.visual.shields.ShieldStraps.MAX_QUADS) bad.add("ctx " + ctx + " builds " + q + " quads");
+            }
+        } catch (Exception ex) {
+            bad.add("shield_straps.json: " + ex);
+        }
+        if (ShieldBoot.class.getResource("/assets/anime_multiverse/textures/entity/weapon/shield_straps.png") == null) bad.add("shield_straps.png is not in the jar");
+        for (String id : ShieldSet.IDS) if (com.newuniverse.nusmp.visual.shields.ShieldStraps.trimRgb(id) == com.newuniverse.nusmp.visual.shields.ShieldStraps.DEFAULT_TRIM_RGB) bad.add(id + " has no trim colour");
+        return result(bad, "the shield straps build inside " + com.newuniverse.nusmp.visual.shields.ShieldStraps.MAX_QUADS + " quads in every hand state");
     }
 
     private static JsonObject json(String path) {

@@ -1,0 +1,286 @@
+{
+ "version": 1,
+ "note": "arm frame, blocks; written by tools/blockbench/gen_shield_straps.py (script fallback, not made in Blockbench or Blender)",
+ "arm_half": 0.125,
+ "cubes": [
+  {
+   "name": "upper_ring_front",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.2775,
+    0.14
+   ],
+   "to": [
+    0.17,
+    0.3475,
+    0.17
+   ]
+  },
+  {
+   "name": "upper_ring_back",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.2775,
+    -0.17
+   ],
+   "to": [
+    0.17,
+    0.3475,
+    -0.14
+   ]
+  },
+  {
+   "name": "upper_ring_left",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.2775,
+    -0.14
+   ],
+   "to": [
+    -0.14,
+    0.3475,
+    0.14
+   ]
+  },
+  {
+   "name": "upper_ring_right",
+   "part": "leather",
+   "from": [
+    0.14,
+    0.2775,
+    -0.14
+   ],
+   "to": [
+    0.17,
+    0.3475,
+    0.14
+   ]
+  },
+  {
+   "name": "upper_buckle",
+   "part": "trim",
+   "from": [
+    -0.05,
+    0.2675,
+    0.17
+   ],
+   "to": [
+    0.05,
+    0.3575,
+    0.185
+   ]
+  },
+  {
+   "name": "lower_ring_front",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.515,
+    0.14
+   ],
+   "to": [
+    0.17,
+    0.585,
+    0.17
+   ]
+  },
+  {
+   "name": "lower_ring_back",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.515,
+    -0.17
+   ],
+   "to": [
+    0.17,
+    0.585,
+    -0.14
+   ]
+  },
+  {
+   "name": "lower_ring_left",
+   "part": "leather",
+   "from": [
+    -0.17,
+    0.515,
+    -0.14
+   ],
+   "to": [
+    -0.14,
+    0.585,
+    0.14
+   ]
+  },
+  {
+   "name": "lower_ring_right",
+   "part": "leather",
+   "from": [
+    0.14,
+    0.515,
+    -0.14
+   ],
+   "to": [
+    0.17,
+    0.585,
+    0.14
+   ]
+  },
+  {
+   "name": "lower_buckle",
+   "part": "trim",
+   "from": [
+    -0.05,
+    0.505,
+    0.17
+   ],
+   "to": [
+    0.05,
+    0.595,
+    0.185
+   ]
+  },
+  {
+   "name": "grip_bar",
+   "part": "leather",
+   "from": [
+    -0.12,
+    0.636,
+    0.17
+   ],
+   "to": [
+    0.12,
+    0.676,
+    0.21
+   ]
+  },
+  {
+   "name": "grip_cap_left",
+   "part": "trim",
+   "from": [
+    -0.14,
+    0.631,
+    0.165
+   ],
+   "to": [
+    -0.12,
+    0.681,
+    0.215
+   ]
+  },
+  {
+   "name": "grip_cap_right",
+   "part": "trim",
+   "from": [
+    0.12,
+    0.631,
+    0.165
+   ],
+   "to": [
+    0.14,
+    0.681,
+    0.215
+   ]
+  },
+  {
+   "name": "bracket_left",
+   "part": "leather",
+   "from": [
+    -0.1,
+    0.57,
+    0.17
+   ],
+   "to": [
+    -0.06,
+    0.676,
+    0.21
+   ]
+  },
+  {
+   "name": "bracket_right",
+   "part": "leather",
+   "from": [
+    0.06,
+    0.57,
+    0.17
+   ],
+   "to": [
+    0.1,
+    0.676,
+    0.21
+   ]
+  }
+ ],
+ "attach": [
+  {
+   "name": "upper",
+   "at": [
+    0,
+    0.3125,
+    0.185
+   ]
+  },
+  {
+   "name": "lower",
+   "at": [
+    0,
+    0.656,
+    0.21
+   ]
+  }
+ ],
+ "tab": {
+  "width": 0.07,
+  "thick": 0.03,
+  "rivet": 0.05,
+  "rivet_thick": 0.02,
+  "overlap": 0.03
+ },
+ "firstPerson": [
+  {
+   "name": "fp_bar",
+   "part": "leather",
+   "from": [
+    -0.025,
+    -0.44,
+    -0.12
+   ],
+   "to": [
+    0.025,
+    -0.2,
+    -0.08
+   ]
+  },
+  {
+   "name": "fp_mount_low",
+   "part": "trim",
+   "from": [
+    -0.045,
+    -0.44,
+    -0.12
+   ],
+   "to": [
+    0.045,
+    -0.4,
+    0.02
+   ]
+  },
+  {
+   "name": "fp_mount_high",
+   "part": "trim",
+   "from": [
+    -0.045,
+    -0.24,
+    -0.12
+   ],
+   "to": [
+    0.045,
+    -0.2,
+    0.02
+   ]
+  }
+ ]
+}

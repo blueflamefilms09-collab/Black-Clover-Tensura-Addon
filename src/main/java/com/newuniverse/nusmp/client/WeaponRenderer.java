@@ -120,7 +120,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         // docs/solid_cores.md: the flat icon of a Beast Will Core is neutral grey; this tints it with the colour of the core's will (the 3D orb is tinted in renderByItem)
         modBus.addListener((RegisterColorHandlersEvent.Item e) -> e.register((stack, tintIndex) -> tintIndex == 0 ? com.newuniverse.nusmp.beastwill.BeastCoreLook.iconArgb(coreWill(stack)) : 0xFFFFFFFF,
                 com.newuniverse.nusmp.beastwill.BeastWillItems.CORE.get()));
-        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; WeaponGrip.clear(); ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
+        modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); ShieldStrapRenderer.clear(); classes = null; WeaponGrip.clear(); ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ShieldClient::registerBlocking));      // 1.110.0: the same predicate on every shield-class item (below it stays for the Magebane Shield as before)
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(() -> ItemProperties.register(NUItems.MAGEBANE_SHIELD.get(),
@@ -272,6 +272,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         }
         if (wrap == null && mesh.shield != null) {                                 // 1.110.0: a shield sits on vanilla's shield frame (visual/shields/ShieldFrame), so vanilla's display values turn it the vanilla way
             float[] sf = ctx.firstPerson() && mesh.shieldFp != null && com.newuniverse.nusmp.visual.shields.ShieldFrame.firstPersonVanillaSize() ? mesh.shieldFp : mesh.shield;      // 4.36.2: in first person a shield is the size of vanilla's, not the 1.3-wide box (it filled the screen)
+            ShieldStrapRenderer.draw(pose.last(), buffers, mesh, ctx, sf, stack, light, overlay);       // 4.72.0: the arm straps, on the item frame before the mesh is fitted (visual.shieldStraps; they are not part of the fit)
             pose.translate(sf[1], sf[2], sf[3] + com.newuniverse.nusmp.visual.shields.ShieldFrame.armGap());       // 4.71.2: a little off the arm
             pose.scale(sf[0], sf[0], sf[0]);
         } else if (wrap == null) {
@@ -476,6 +477,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float ox, oy, angle, scale, ymin, glowSpeed, glowMin, glowMax;
         float ymax = -Float.MAX_VALUE, length, gripX, gripY;                     // 1.25.0: for the oversize guard (client/relics/item/OversizeGuard)
         float[] shieldFp;                                                        // 4.36.2: the same fit into vanilla's plate-sized box, used in first person (ShieldFrame.FP_MAX_W); null on every other mesh
+        List<float[]>[][] straps;                                                // 4.72.0: the arm straps per hand state, built on first use (client/ShieldStrapRenderer); null on every other mesh
         float[] shield;                                                          // 1.110.0: {scale, tx, ty, tz} of a shield mesh on vanilla's shield frame (ShieldFrame.fit); null on every other mesh
         String id;                                                               // 1.111.0: the mesh id (the model json and the grip table are found by it)
         GripState grip;                                                          // 1.111.0: where the hand holds this mesh and the shifts that put it there (docs/weapon_grip.md); null = placed the old way
