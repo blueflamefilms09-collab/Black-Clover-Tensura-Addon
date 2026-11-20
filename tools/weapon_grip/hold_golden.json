@@ -32,13 +32,13 @@
    "arm": 0.326,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.326,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__arrow_shower_pull2": {
@@ -46,13 +46,13 @@
    "arm": 0.299,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.299,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__arrow_shower_pull3": {
@@ -60,13 +60,13 @@
    "arm": 0.286,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.286,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__bind_arrow": {
@@ -102,27 +102,27 @@
    "arm": 0.318,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.013
   },
   "tp_right": {
    "arm": 0.318,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.013
   }
  },
  "legendary_bow__bind_arrow_pull3": {
   "tp_left": {
-   "arm": 0.348,
+   "arm": 0.344,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.018
   },
   "tp_right": {
-   "arm": 0.348,
+   "arm": 0.344,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.018
   }
  },
  "legendary_bow__bird_hunting": {
@@ -144,13 +144,13 @@
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__bird_hunting_pull2": {
@@ -158,27 +158,27 @@
    "arm": 0.3,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.3,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__bird_hunting_pull3": {
   "tp_left": {
-   "arm": 0.286,
+   "arm": 0.284,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
-   "arm": 0.286,
+   "arm": 0.284,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__eagle_piercer": {
@@ -200,13 +200,13 @@
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   }
  },
  "legendary_bow__eagle_piercer_pull2": {
@@ -214,13 +214,13 @@
    "arm": 0.301,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.301,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   }
  },
  "legendary_bow__eagle_piercer_pull3": {
@@ -228,13 +228,13 @@
    "arm": 0.287,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.287,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.016
+   "float": 0.009
   }
  },
  "legendary_bow__frozen_rain": {
@@ -256,13 +256,13 @@
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.008
+   "float": 0.007
   },
   "tp_right": {
    "arm": 0.327,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.008
+   "float": 0.007
   }
  },
  "legendary_bow__frozen_rain_pull2": {
@@ -270,27 +270,27 @@
    "arm": 0.3,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.007
   },
   "tp_right": {
    "arm": 0.3,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.007
   }
  },
  "legendary_bow__frozen_rain_pull3": {
   "tp_left": {
-   "arm": 0.286,
+   "arm": 0.284,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.007
   },
   "tp_right": {
-   "arm": 0.286,
+   "arm": 0.284,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.014
+   "float": 0.007
   }
  },
  "legendary_bow__hunters_bow": {
@@ -312,13 +312,13 @@
    "arm": 0.325,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.325,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__hunters_bow_pull2": {
@@ -326,27 +326,27 @@
    "arm": 0.299,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.299,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__hunters_bow_pull3": {
   "tp_left": {
-   "arm": 0.284,
+   "arm": 0.282,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
-   "arm": 0.284,
+   "arm": 0.282,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__meteor_bow": {
@@ -382,27 +382,27 @@
    "arm": 0.285,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.013
   },
   "tp_right": {
    "arm": 0.285,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.013
   }
  },
  "legendary_bow__meteor_bow_pull3": {
   "tp_left": {
-   "arm": 0.284,
+   "arm": 0.28,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.013
   },
   "tp_right": {
-   "arm": 0.285,
+   "arm": 0.28,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.013
   }
  },
  "legendary_bow__sagittarius": {
@@ -449,16 +449,16 @@
  },
  "legendary_bow__sagittarius_pull3": {
   "tp_left": {
-   "arm": 0.316,
+   "arm": 0.312,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.012
+   "float": 0.013
   },
   "tp_right": {
-   "arm": 0.316,
+   "arm": 0.312,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.012
+   "float": 0.013
   }
  },
  "legendary_bow__scouts_bow": {
@@ -480,13 +480,13 @@
    "arm": 0.325,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
    "arm": 0.325,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow__scouts_bow_pull2": {
@@ -505,16 +505,16 @@
  },
  "legendary_bow__scouts_bow_pull3": {
   "tp_left": {
-   "arm": 0.286,
+   "arm": 0.282,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   },
   "tp_right": {
-   "arm": 0.286,
+   "arm": 0.282,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.015
+   "float": 0.009
   }
  },
  "legendary_bow_curse": {
@@ -550,13 +550,13 @@
    "arm": 0.243,
    "body": 0.118,
    "extra": 0.0,
-   "float": 0.009
+   "float": 0.008
   },
   "tp_right": {
    "arm": 0.243,
    "body": 0.135,
    "extra": 0.0,
-   "float": 0.009
+   "float": 0.008
   }
  },
  "legendary_bow_curse_pull3": {
@@ -564,13 +564,13 @@
    "arm": 0.245,
    "body": 0.094,
    "extra": 0.0,
-   "float": 0.009
+   "float": 0.008
   },
   "tp_right": {
    "arm": 0.245,
    "body": 0.179,
    "extra": 0.0,
-   "float": 0.009
+   "float": 0.008
   }
  },
  "legendary_bow_pull1": {
@@ -578,13 +578,13 @@
    "arm": 0.312,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   },
   "tp_right": {
    "arm": 0.312,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   }
  },
  "legendary_bow_pull2": {
@@ -592,13 +592,13 @@
    "arm": 0.286,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   },
   "tp_right": {
    "arm": 0.286,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   }
  },
  "legendary_bow_pull3": {
@@ -606,13 +606,13 @@
    "arm": 0.274,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   },
   "tp_right": {
    "arm": 0.274,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.01
+   "float": 0.007
   }
  },
  "legendary_shield": {

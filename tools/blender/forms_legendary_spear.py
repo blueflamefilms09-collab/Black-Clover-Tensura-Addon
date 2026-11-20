@@ -25,6 +25,13 @@ import forms_kit as K  # noqa: E402
 from forms_kit import V, rgb, TAU  # noqa: E402
 
 bl = K.bl
+# 4.55.0 (docs/heroweapon/flat_parts_blender.md): the head blade is modelled SOLID (solidify_heads below); --classic-flat builds the old thin head (originals: weapon_meshes/flat_parts_old)
+SOLID = "--classic-flat" not in sys.argv
+HEAD_SCALE = 0.011765            # blocks per unit: the place line of the family (every form keeps the base spear's)
+HEAD_TARGET = 0.098              # blocks: the thinnest extent of the head blades after solidify_heads (the audit asks 2 % of the length = 0.08)
+HEAD_MAX_FACTOR = 2.6            # a blade is never stretched more than this
+BLADE_PARTS = ("head_blade",)
+PRONG_R = 1.75 if SOLID else 1.0  # the Triaina's gold prong arms: a thicker tube, so the arm is not a wire beside the fat blades (the audit asks 2 % of the length)
 BASE = "legendary_spear"
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = os.path.join(HERE, "forms_manifest_legendary_spear.json")
@@ -48,6 +55,39 @@ def begin(samples):
     sc.render.threads_mode = "FIXED"
     sc.render.threads = 2
     return sc
+
+
+def solidify_heads(target=None):
+    """Makes the head blades solid: measures the thinnest principal extent of every `head_blade` object, stretches those points along that axis about the head's centre until it
+    is `target` blocks (at most HEAD_MAX_FACTOR), and carries the other head parts (studs, claws, sparks: part names `head_*` / `fork_*`) outward by the same share of their
+    offset, so they keep sitting ON the surface instead of sinking into the fatter blade. -> (factor, before blocks, after blocks)."""
+    target = HEAD_TARGET if target is None else target
+    obs = [o for o in bpy.context.scene.collection.objects if o.type == "MESH"]
+    blades = [o for o in obs if o.get("part") in BLADE_PARTS]
+    if not blades:
+        return 1.0, 0.0, 0.0
+    P = np.array([tuple(v.co) for o in blades if not o.get("detail") for v in o.data.vertices])
+    c = P.mean(axis=0)
+    a = np.linalg.eigh(np.cov((P - c).T))[1][:, 0]
+    t = (P - c) @ a
+    thick = (t.max() - t.min()) * HEAD_SCALE
+    if thick >= target * 0.97:
+        return 1.0, thick, thick
+    f = min(HEAD_MAX_FACTOR, target / thick)
+    av = np.array(a)
+    for o in obs:
+        part = o.get("part", "")
+        if o in blades:
+            for v in o.data.vertices:
+                p = np.array(tuple(v.co))
+                v.co = tuple(p + av * (((p - c) @ av) * (f - 1.0)))
+        elif part.startswith(("head_", "fork_")):
+            ctr = np.mean([tuple(v.co) for v in o.data.vertices], axis=0)
+            d = av * (((ctr - c) @ av) * (f - 1.0))
+            for v in o.data.vertices:
+                v.co = tuple(np.array(tuple(v.co)) + d)
+        o.data.update()
+    return f, thick, thick * f
 
 
 def lathe(name, prof, mat, part, sides=10, angle=42.0, squash=1.0, caps=(True, True), origin=(0, 0, 0), axis="y"):
@@ -960,7 +1000,7 @@ def triaina_spear(opts):
     # ---------------------------------------------------------------- the two curved prongs: gold arms out and up, each ending in its own pearl blade; sapphire studs along the arm
     for sx in (1, -1):
         arm = [(sx * 3.5, 255.0, 0.0), (sx * 11.0, 262.0, 0.0), (sx * 18.0, 276.0, 0.0), (sx * 20.5, 292.0, 0.0), (sx * 19.0, 306.0, 0.0)]
-        K.tapered("prong%d" % sx, arm, 2.1, 1.1, P["gold"], sides=7, sub=3, part="head_prongs", bulge=lambda t: 1.0 + 0.12 * math.sin(t * 12.0))
+        K.tapered("prong%d" % sx, arm, 2.1 * PRONG_R, 1.1 * PRONG_R, P["gold"], sides=7, sub=3, part="head_prongs", bulge=lambda t: 1.0 + 0.12 * math.sin(t * 12.0))
         off_blade("prong_blade%d" % sx, P["blade"], 36.0 + (2.0 if sx > 0 else 0.0), [(0, 2.2), (12, 4.2), (24, 3.4), (33, 1.6), (38, 0.3)], 70 + sx, "head_blade", at=(sx * 19.0, 304.0, 0.0), rot=(0, 0, -sx * 5.0),
                   thick=1.5, nl=[(18, 0.6, 2.0, "chip")] if sx > 0 else [(22, 0.6, 2.0, "step")], nr=[(14, 0.6, 2.0, "step")] if sx > 0 else [(16, 0.6, 2.0, "chip")], res=5.0, angle=40.0)
         ring_band("prong_ring%d" % sx, 276.0, 0.0, 0.0, P["pearl"], "head_prongs", 6) if False else None
@@ -1194,6 +1234,8 @@ def run(only, trial, quick, samples, bake, skin, shape=None, full=False):
         fn, mesh_id, form = BUILDERS[key]
         t0 = time.time()
         q = fn({"samples": samples})
+        if SOLID:
+            print("   solid head: factor %.2f, thinnest extent %.4f -> %.4f blocks" % solidify_heads())
         print("   parts:", K.quad_table(14))
         ge, gt = glow_estimate()
         print("   glow-material quads: %d  %s" % (ge, gt))

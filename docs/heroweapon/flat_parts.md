@@ -63,3 +63,8 @@ Grip: the thicker arrow moved the automatic grip point of 30 bow pull meshes (z 
 - Nothing was seen in a game. The previews are the repo's own software renderer; the flying arrow / tip layer, the aim direction and the look of the glow on top were not seen in-engine, and no Gradle compile was run (CI compiles). The pure tests were run with javac and the JUnit launcher.
 - Found but not changed: the scythe blades (thin by design), the harpoon throw (`LIGHTNING_SPEAR`).
 - `flat_parts_old/` adds about 42 MB of resources to the jar. Delete it only if the owner drops the old look (rule 2).
+
+## Update (4.55.0)
+
+The Blender caveat above is closed: the 44 meshes were rebuilt in Blender, see `docs/heroweapon/flat_parts_blender.md` and the full audit in `docs/heroweapon/flat_parts_audit.md`.
+The old flat meshes in `flat_parts_old/` now draw with their own skins from `textures/entity/weapon/flat_parts_old/`.

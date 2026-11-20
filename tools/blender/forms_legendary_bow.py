@@ -29,6 +29,10 @@ MANIFEST = os.path.join(HERE, "forms_manifest_legendary_bow.json")
 sys.path.insert(0, os.path.join(K.ROOT, "tools", "relics"))
 import ranged_meshes as rm  # noqa: E402
 
+# 4.55.0 (docs/heroweapon/flat_parts_blender.md): the arrow of the draw stages is modelled SOLID; --classic-flat builds the old hairline arrow (the shipped originals: weapon_meshes/flat_parts_old)
+SOLID = "--classic-flat" not in sys.argv
+LEAN_ABOVE = 4350                # scene quad estimate (before the arrow) above which the solid arrow is built lean (bind_arrow: the rest bow alone is 4916 of the 5000 quad lines)
+
 HALF = 84.239                       # tip to tip is 2 x HALF, the length of the base bow
 DRAW, FLEX, FAR = 32.0, 8.0, 400.0  # the draw rig of legendary.py
 G = 1.12                            # the place line grown about the grip: 168.5 cm x 0.007978 = 1.344 blocks
@@ -150,8 +154,38 @@ def string(sh, mat, r=0.4, part="string", sag=0.0):
     return K._finish_obj(ob, part, True, 55.0)
 
 
+def arrow_solid(sh, shaft_mat, head_mat, fletch_mat, z, kind="broad", cap_mat=None, glow_mat=None):
+    """The arrow of the draw stages, SOLID (4.55.0): an octagonal shaft (2.1 units = 0.017 blocks of radius) with a nock collar and a neck, a hexagonal broadhead flattened to a leaf (squash 0.55)
+    (ridge, half width 4.6 units, half thickness about 2) by `kind`, three crossed vanes 1.1 units thick and 5.4 high. Same length as the old arrow (tip at x0 + 76)."""
+    x0 = (bow_x(HALF, sh) + bow_x(-HALF, sh)) / 2
+    zz = z + FAR
+    lean = K.quad_estimate() > LEAN_ABOVE       # a bow that already uses nearly all of the 5000 quad lines gets a hexagonal shaft and no socket collar (the form: ~70 quads instead of ~125)
+    sides = 6 if lean else 8
+    if lean:
+        cap_mat = None
+    print("   solid arrow: %s (scene estimate %d)" % ("lean" if lean else "full", K.quad_estimate()))
+    sh_ob = bl.lathe("arrow_stem", [(2.8, x0 - 2.6), (2.8, x0 + 1.6), (2.0, x0 + 3.0), (2.1, x0 + 40.0), (2.1, x0 + 61.5), (2.7, x0 + 62.4)] if not lean else [(2.8, x0 - 2.6), (2.8, x0 + 1.6), (2.0, x0 + 3.0), (2.1, x0 + 61.5), (2.7, x0 + 62.4)], shaft_mat, sides=sides, axis="x", origin=(0, 0, zz), part="arrow_stem")
+    K._finish_obj(sh_ob, "arrow_stem", True, 55.0)
+    hx = x0 + 62.0
+    prof = {"broad": [(1.8, hx), (4.8, hx + 3.2), (4.2, hx + 6.6), (0.05, hx + 14.0)],
+            "bodkin": [(1.8, hx), (3.4, hx + 3.0), (3.1, hx + 8.0), (0.05, hx + 14.0)],
+            "barb": [(1.8, hx), (4.0, hx + 2.6), (2.2, hx + 5.2), (4.8, hx + 8.2), (0.05, hx + 14.0)]}[kind]
+    hd = bl.lathe("arrow_head", prof, head_mat, sides=6, squash=0.55, axis="x", origin=(0, 0, zz), caps=(True, False), part="arrow_head")
+    K._finish_obj(hd, "arrow_head", True, 40.0)
+    if cap_mat is not None:
+        bl.lathe("arrow_socket", [(2.0, hx - 3.0), (3.0, hx - 2.4), (3.0, hx - 0.6), (2.0, hx - 0.1)], cap_mat, sides=8, axis="x", origin=(0, 0, zz), part="arrow_head")
+    for k in range(3):                                       # fletching: three thick vanes crossed at 120 degrees
+        v = bl.plate("arrow_fletch%d" % k, [(x0 - 0.4, 0.9), (x0 + 15.0, 0.9), (x0 + 15.0, 5.4), (x0 + 5.0, 4.6)], -0.55, 0.55, fletch_mat, part="arrow_fletch")
+        bl.move(v, rot=(120 * k, 0, 0))
+        bl.move(v, (0, 0, zz))
+    if glow_mat is not None:
+        K.blob("arrow_core", (x0 + 33.0, 0, zz), (31.0, 0.9, 0.9), glow_mat, seed=1, lump=0.0, rings=5, segs=6, part="arrow_stem")
+
+
 def arrow(sh, shaft_mat, head_mat, fletch_mat, z, kind="broad", cap_mat=None, glow_mat=None):
     """The arrow of the draw stages (baked FAR off in z, brought back by the stage writer). A shaft with a nock, a head by `kind`, three thick cambered vanes."""
+    if SOLID:
+        return arrow_solid(sh, shaft_mat, head_mat, fletch_mat, z, kind, cap_mat, glow_mat)
     x0 = (bow_x(HALF, sh) + bow_x(-HALF, sh)) / 2
     zz = z + FAR
     sh_ob = bl.lathe("arrow_stem", [(0.7, x0 - 1.7), (0.5, x0 - 1.0), (0.42, x0 + 1.0), (0.46, x0 + 40.0), (0.42, x0 + 66.0)], shaft_mat, sides=7, axis="x", origin=(0, 0, zz), part="arrow_stem")

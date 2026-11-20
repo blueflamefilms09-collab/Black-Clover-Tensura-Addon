@@ -2338,7 +2338,7 @@
  "legendary_bow__meteor_bow_pull1": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "class",
+  "source": "gripxyz",
   "x": 32.386,
   "y": 1.553,
   "z": -0.008
@@ -2346,7 +2346,7 @@
  "legendary_bow__meteor_bow_pull2": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "class",
+  "source": "gripxyz",
   "x": 14.386,
   "y": 1.553,
   "z": -0.008
@@ -2354,7 +2354,7 @@
  "legendary_bow__meteor_bow_pull3": {
   "class": "bow",
   "fraction": 0.5,
-  "source": "class",
+  "source": "gripxyz",
   "x": 4.387,
   "y": 1.553,
   "z": -0.008
@@ -2588,7 +2588,7 @@
   "fraction": 0.357,
   "source": "directive",
   "x": 0.0,
-  "y": 123.081,
+  "y": 123.082,
   "z": 0.0
  },
  "legendary_spear__clockwork_spear": {

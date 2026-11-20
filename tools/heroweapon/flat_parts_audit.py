@@ -12,6 +12,11 @@ Pure Python 3 + numpy; no Blender.
     python3 tools/heroweapon/flat_parts_audit.py --all      # every mesh
     python3 tools/heroweapon/flat_parts_audit.py --json     # machine readable
     python3 tools/heroweapon/flat_parts_audit.py --check    # exit 1 when a must-be-solid part is flat or thin (the unit test runs this)
+    python3 tools/heroweapon/flat_parts_audit.py --md docs/heroweapon/flat_parts_audit.md   # the full list of every mesh with a flat part (4.55.0), with counts
+
+4.55.0: `--md` also measures the ORIGINAL meshes kept in weapon_meshes/flat_parts_old (the before), tells a mesh the Blender builders made solid from one the Blender-less
+solidify script patched (a Blender build carries a `# blender-solid` header line), and lists every other part of every mesh that is a sheet (thinner than SHEET_BLOCKS
+and wider than SHEET_WIDE), split into thin by design (strings, fullers, rivets, ...) and candidates.
 """
 import argparse
 import glob
@@ -87,6 +92,99 @@ def audit_mesh(path):
     return rows
 
 
+SHEET_BLOCKS, SHEET_WIDE = 0.004, 0.02      # a part thinner than this and wider than that is a sheet (a card); thinner and narrower is a hairline
+# parts that are thin on purpose (a string, a fuller groove, a rivet head, an edge line): reported, not asked for a redo
+BY_DESIGN = re.compile(r"^(string|strings|fuller_[fb]|head_fuller_[fb]|riser_rivets-?\d*|blade_edge|blade_ribs|edge_line.*|limb_blades|paper|portal|pg_studs|wisp_[ab]_wings|pinwheel|vane_\d+)$")
+
+
+def sheets(path):
+    """-> [(part, quads, thickness blocks, width blocks)] of the sheet-like parts of one mesh (absolute thickness, no ratio: curved rims and rings are not sheets)."""
+    scale, parts, quads = read_mesh(path)
+    out = []
+    for name, (first, count) in parts.items():
+        body = [q[1] for q in quads[first:first + count] if q[0] == 0] or [q[1] for q in quads[first:first + count]]
+        if not body:
+            continue
+        t, m, _ = thickness(np.vstack(body))
+        if t * scale < SHEET_BLOCKS and m * scale >= SHEET_WIDE:
+            out.append((name, len(body), round(float(t * scale), 4), round(float(m * scale), 3)))
+    return out
+
+
+def made_by(path):
+    """'Blender' when the mesh carries the `# blender-solid` line the installer (tools/heroweapon/install_solid_meshes.py) writes after a Blender build, else 'script' (the Blender-less
+    solidify script of 4.5x, or an original)."""
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("# blender-solid"):
+                return "Blender"
+            if line.startswith(("q ", "qn ")):
+                break
+    return "script"
+
+
+def write_md(out):
+    """The audit as a document: the 44 meshes with must-be-solid parts (before / now / who made them) and every other sheet-like part of every mesh."""
+    old_dir = os.path.join(MESHES, "flat_parts_old")
+    all_paths = sorted(glob.glob(os.path.join(MESHES, "*.txt")))
+    nparts = 0
+    for p in all_paths:
+        nparts += len(read_mesh(p)[1])
+    fam = []                                                    # (id, before rows, now rows, maker)
+    for p in sorted(glob.glob(os.path.join(old_dir, "*.txt"))):
+        mid = os.path.splitext(os.path.basename(p))[0]
+        cur = os.path.join(MESHES, mid + ".txt")
+        b = [r for r in audit_mesh(p) if r["must_be_solid"]]
+        n = [r for r in audit_mesh(cur) if r["must_be_solid"]]
+        fam.append((mid, b, n, made_by(cur)))
+    bad_before = [f for f in fam if any(r["flat"] or r["thin"] for r in f[1])]
+    bad_now = [f for f in fam if any(r["flat"] or r["thin"] for r in f[2])]
+    script = [f for f in fam if f[3] == "script"]
+    sh_rows = []
+    for p in all_paths:
+        mid = os.path.splitext(os.path.basename(p))[0]
+        for r in sheets(p):
+            sh_rows.append((mid,) + r)
+    design = [r for r in sh_rows if BY_DESIGN.match(r[1])]
+    cand = [r for r in sh_rows if not BY_DESIGN.match(r[1])]
+    L = ["# Flat-part audit (every weapon mesh)", "",
+         "Made by `python3 tools/heroweapon/flat_parts_audit.py --md docs/heroweapon/flat_parts_audit.md` (pure Python 3 + numpy). Each named part of each mesh is measured along its thinnest principal axis",
+         "(PCA of the body-layer quads, times the `place` scale, so the numbers are blocks). Two rules:", "",
+         "- **must be solid** (the heads of spears and harpoons, the arrow of every bow draw stage): FLAT below %.3f blocks or below %.0f %% of the part's second extent, THIN below %.0f %% of the weapon's length;" % (FLAT_BLOCKS, 100 * FLAT_RATIO, 100 * MIN_FRACTION),
+         "- **sheet** (every other part): thinner than %.3f blocks and wider than %.2f blocks. Thinner and narrower is a hairline (strings, rivet heads)." % (SHEET_BLOCKS, SHEET_WIDE), "",
+         "## Counts", "",
+         "| What | Count |", "| --- | --- |",
+         "| meshes measured | %d |" % len(all_paths), "| named parts measured | %d |" % nparts,
+         "| meshes with a must-be-solid part (spear / harpoon head, bow arrow) | %d |" % len(fam),
+         "| of those, flat or paper-thin in the ORIGINAL (`flat_parts_old`) | %d |" % len(bad_before),
+         "| of those, flat or paper-thin NOW | %d |" % len(bad_now),
+         "| of those, patched by the Blender-less script (no `# blender-solid` line), not modelled in Blender | %d |" % len(script),
+         "| of those, rebuilt solid in Blender | %d |" % (len(fam) - len(script)),
+         "| other sheet-like parts, thin by design (strings, fullers, rivets, edge lines, ...) | %d parts in %d meshes |" % (len(design), len({r[0] for r in design})),
+         "| other sheet-like parts, candidates for a later redo | %d parts in %d meshes |" % (len(cand), len({r[0] for r in cand})), "",
+         "## The 44 meshes with a must-be-solid part", "",
+         "| Mesh | Part | Original: thickness (blocks) / share of length | Now | Made by |", "| --- | --- | --- | --- | --- |"]
+    for mid, b, n, who in fam:
+        for rb, rn in zip(b, n):
+            L.append("| `%s` | %s | %.4f / %.1f %% | %.4f / %.1f %% | %s |" % (mid, rb["part"], rb["thickness_blocks"], 100 * rb["share_of_length"], rn["thickness_blocks"], 100 * rn["share_of_length"], who))
+    L += ["", "## Other sheet-like parts: candidates", "", "These are parts of other meshes (not the arrow / spear head families) that are thinner than a quarter of a pixel and wider than a card: bow limb panels, fins and",
+          "streamers, a shield ring. Not redone in this pass; the Blender builders of those bows would need a thicker section.", "",
+          "| Mesh | Part | Quads | Thickness (blocks) | Width (blocks) |", "| --- | --- | --- | --- | --- |"]
+    for r in cand:
+        L.append("| `%s` | %s | %d | %.4f | %.3f |" % r)
+    L += ["", "## Other sheet-like parts: thin by design", "", "Strings, fuller grooves, rivet heads, edge lines and the like. A string that is a pixel thick is correct; listed so the count is honest.", "",
+          "| Part kind | Parts | Meshes |", "| --- | --- | --- |"]
+    kinds = {}
+    for r in design:
+        k = re.sub(r"-?\d+$", "", r[1])
+        kinds.setdefault(k, []).append(r[0])
+    for k, v in sorted(kinds.items(), key=lambda kv: -len(kv[1])):
+        L.append("| %s | %d | %d |" % (k, len(v), len(set(v))))
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(L) + "\n")
+    print("wrote %s: %d meshes with the families (%d flat before, %d now, %d script-made), %d candidates, %d by design" % (out, len(fam), len(bad_before), len(bad_now), len(script), len(cand), len(design)))
+
+
 def hero_meshes(all_meshes=False):
     out = sorted(glob.glob(os.path.join(MESHES, "*.txt")))
     if all_meshes:
@@ -109,7 +207,11 @@ def main(argv=None):
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--flat-only", action="store_true")
+    ap.add_argument("--md", metavar="OUT", help="write the full audit (before / now / who made it, every sheet-like part) as a markdown file")
     a = ap.parse_args(argv)
+    if a.md:
+        write_md(a.md)
+        return 0
     report, bad = {}, []
     for p in hero_meshes(a.all):
         mid = os.path.splitext(os.path.basename(p))[0]

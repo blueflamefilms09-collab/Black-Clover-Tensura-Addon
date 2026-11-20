@@ -13,6 +13,10 @@ import bl_lib as bl  # noqa: E402
 from bl_lib import rgb  # noqa: E402
 
 CLASSIC = os.path.join(bl.MESH_DIR, "classic")
+# 4.55.0 (docs/heroweapon/flat_parts_blender.md): the spear head and the arrow of the draw stages are modelled SOLID. --classic-flat builds the old thin head / hairline arrow (the shipped
+# originals are in weapon_meshes/flat_parts_old); SOLID_HEAD scales the head's half thickness, the arrow numbers are in blocks / scale of the bow (1 unit = 0.007123 blocks)
+SOLID = "--classic-flat" not in sys.argv
+SOLID_HEAD = 1.95
 RUNE_FONTS = ["/usr/share/fonts/truetype/freefont/FreeMono.ttf", "/usr/share/fonts/opentype/unifont/unifont.otf"]      # fonts with the runic block
 RUNES = "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ"
 
@@ -377,7 +381,7 @@ def spear(out, curse=False):
     bl.lathe("head_collar", [(3.2, 248.8), (4.0, 249.8), (4.0, 253.6), (3.2, 254.8)], M["gold"], sides=10, caps=(False, False))
     # ---- the head: a broad leaf with a blued, rune-lit core
     st = [(252, 4.0, 2.2), (256, 9.2, 2.2), (262, 12.4, 2.2), (270, 13.3, 2.2), (284, 11.6, 2.2), (298, 8.6, 2.2), (310, 5.8, 1.8), (320, 3.2, 1.2), (326, 1.5, 0.7), (330, 0.1, 0.08)]
-    st = [(y, w * kw, t) for y, w, t in st]
+    st = [(y, w * kw, t * (SOLID_HEAD if SOLID else 1.0)) for y, w, t in st]
     bl.loft("spearhead", [bl.ring(y, bl.lozenge(w, t, flat=w * 0.4)) for y, w, t in st], M["steel"])
     core_inlay(st, [258, 262, 270, 284, 296], 306, 2.2, 0.8, M["blued"], M["gold_line"], rune, RUNES[3:9], 3.6 if curse else 4.6, 277.0, flat=0.4, spacing=1.5)
     # ---- wings below the head and lugs beside it: swept blades, a steel edge on a gold root
@@ -515,12 +519,21 @@ def bow(out, curse=False):
     # ---- string and the arrow of light (the arrow is drawn only in the draw stages)
     bl.sweep("string", [(BW_CURL, BW_HALF - 2.0 * BW_HALF * i / 12, 0.0) for i in range(13)], bl.circle(0.24, 4), light)
     x0, z = BW_CURL, BW_ARROW_Z + BW_FAR
-    bl.lathe("arrow_shaft", [(0.62, x0 - 1.5), (0.4, x0), (0.4, x0 + 68.0)], light, sides=6, axis="x", origin=(0, 0, z))
-    bl.lathe("arrow_head", [(0.5, x0 + 67.6), (1.15, x0 + 70.6), (0.01, x0 + 74.0)], light, sides=6, axis="x", origin=(0, 0, z), caps=(True, False))
-    for k in range(3):
-        v = bl.plate("vane%d" % k, [(x0 + 1.4, 0.35), (x0 + 12.0, 0.35), (x0 + 12.0, 2.0 if curse else 2.2), (x0 + 4.0, 1.75 if curse else 1.9)], -0.07, 0.07, light, part="arrow_fletch")
-        bl.move(v, rot=(120 * k, 0, 0))
-        bl.move(v, (0, 0, z))
+    if SOLID:
+        # a real arrow: an octagonal shaft with a nock collar and a neck, a flattened hexagonal broadhead with a ridge, three thick crossed vanes (2.3 units = 0.016 blocks of radius)
+        bl.lathe("arrow_shaft", [(3.0, x0 - 2.6), (3.0, x0 + 1.6), (2.2, x0 + 3.0), (2.3, x0 + 40.0), (2.3, x0 + 61.5), (2.9, x0 + 62.4)], light, sides=8, axis="x", origin=(0, 0, z), part="arrow_shaft")
+        bl.lathe("arrow_head", [(1.9, x0 + 62.0), (4.9, x0 + 65.5), (4.4, x0 + 69.0), (0.05, x0 + 76.0)], light, sides=6, squash=0.55, axis="x", origin=(0, 0, z), caps=(True, False), part="arrow_head")
+        for k in range(3):
+            v = bl.plate("vane%d" % k, [(x0 - 0.5, 0.9), (x0 + 15.0, 0.9), (x0 + 15.0, 5.4), (x0 + 5.0, 4.6)], -0.55, 0.55, light, part="arrow_fletch")
+            bl.move(v, rot=(120 * k, 0, 0))
+            bl.move(v, (0, 0, z))
+    else:
+        bl.lathe("arrow_shaft", [(0.62, x0 - 1.5), (0.4, x0), (0.4, x0 + 68.0)], light, sides=6, axis="x", origin=(0, 0, z))
+        bl.lathe("arrow_head", [(0.5, x0 + 67.6), (1.15, x0 + 70.6), (0.01, x0 + 74.0)], light, sides=6, axis="x", origin=(0, 0, z), caps=(True, False))
+        for k in range(3):
+            v = bl.plate("vane%d" % k, [(x0 + 1.4, 0.35), (x0 + 12.0, 0.35), (x0 + 12.0, 2.0 if curse else 2.2), (x0 + 4.0, 1.75 if curse else 1.9)], -0.07, 0.07, light, part="arrow_fletch")
+            bl.move(v, rot=(120 * k, 0, 0))
+            bl.move(v, (0, 0, z))
     kw = dict(out)
     preview = kw.pop("preview", None)
     kw["write"] = False

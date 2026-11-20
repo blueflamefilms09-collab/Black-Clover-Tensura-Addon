@@ -18,6 +18,7 @@ from mathutils import Vector  # noqa: E402
 
 FAST = False
 HEADERS = bl.MESH_DIR
+SOLID = "--classic-flat" not in sys.argv
 
 
 # ================================================================ helpers
@@ -447,10 +448,13 @@ def harpoon(out):
     rope = bl.mat("h_rope", rgb(214, 172, 92), rough=0.7, bump="wrap", bscale=1.6, bstr=0.9, groove=rgb(110, 76, 30), gamount=0.9, bevel=0.0)
     ha = bl.mat("h_ha", rgb(248, 252, 255), metallic=1.0, rough=0.1, bevel=0.0)
     # ---- head: a broad leaf blade with a lightning core
+    # 4.55.0 (docs/heroweapon/flat_parts_blender.md): the head is SOLID: its half thickness x3.2 (0.028 -> 0.09 blocks), the barbs' x3.5 (--classic-flat builds the old thin head)
+    hth, bth = (3.2, 3.5) if SOLID else (1.0, 1.0)
     st = [(248.4, 4.4, 1.38), (252, 7.6, 1.38), (256.5, 9.8, 1.38), (262, 9.2, 1.38), (268, 7.0, 1.3), (273.5, 4.2, 0.9), (277, 1.9, 0.5), (279.0, 0.1, 0.08)]
+    st = [(y, w, t * hth) for y, w, t in st]
     bl.loft("head_blade", [bl.ring(y, bl.lozenge(w, t, flat=w * 0.34)) for y, w, t in st], steel)
     for s in (1, -1):
-        z = 1.38 * s
+        z = 1.38 * hth * s
         bl.plate("h_core%d" % s, [(-1.3, 249.5), (-2.9, 256.5), (-2.6, 262.5), (0, 269.5), (2.6, 262.5), (2.9, 256.5), (1.3, 249.5)], min(z - 0.03 * s, z + 0.04 * s), max(z - 0.03 * s, z + 0.04 * s), core, detail=True)
         zig = [(-0.5, 250), (0.9, 253.5), (-0.9, 256.2), (1.1, 259.5), (-0.6, 262.5), (0.5, 265.2), (0, 268.2)]
         fr = frames([(x, y, 0) for x, y in zig])
@@ -462,8 +466,8 @@ def harpoon(out):
             sheet("h_ha%d%d" % (s, sx), rows, ha, s=s)
     # the barbs: a great pair swept back, a smaller pair under them
     unit = bl.lozenge(1.0, 1.0, flat=0.3)
-    for nm, pts, w, t in (("barb_a", [(3.6, 247.5), (10, 256.4), (16.6, 258.0), (21.0, 251), (21.75, 237), (20.3, 221)], 3.4, 0.9),
-                          ("barb_b", [(3.6, 241), (8.5, 244.5), (12.6, 240.5), (13.4, 231.5), (12.4, 224)], 2.3, 0.8)):
+    for nm, pts, w, t in (("barb_a", [(3.6, 247.5), (10, 256.4), (16.6, 258.0), (21.0, 251), (21.75, 237), (20.3, 221)], 3.4, 0.9 * bth),
+                          ("barb_b", [(3.6, 241), (8.5, 244.5), (12.6, 240.5), (13.4, 231.5), (12.4, 224)], 2.3, 0.8 * bth)):
         p = bl.smooth_path([(x, y, 0) for x, y in pts], 3)
         ob = bl.sweep(nm, p, unit, steel, scale=lambda u, w=w, t=t: (w * (1 - u) ** 0.7 + 0.1, t * (1 - u) ** 0.6 + 0.08), part="head_barbs")
         bl.mirror(ob, "x")
@@ -471,7 +475,7 @@ def harpoon(out):
             if nm == "barb_a":
                 fr = frames([(sx * q.x, q.y, 0) for q in p[2:-4]])
                 for s in (1, -1):
-                    band("h_barbline%d%d" % (sx, s), fr, -0.3, 0.3, 0.9 * s - 0.25 * s, 0.9 * s - 0.05 * s, bolt)
+                    band("h_barbline%d%d" % (sx, s), fr, -0.3, 0.3, 0.9 * bth * s - 0.25 * s, 0.9 * bth * s - 0.05 * s, bolt)
     # ---- neck with the stone on its face, socket and bands
     bl.lathe("head_neck", [(4.2, 236.2), (5.6, 238.5), (5.8, 243), (5.4, 247.5), (4.0, 249.8)], dark, sides=12)
     bl.lathe("gem_bezel", [(2.9, 0.0), (3.5, 0.9), (4.1, 0.9), (4.4, 0.0), (2.9, 0.0)], M["gold"], sides=12, origin=(0, 243.0, 5.4), axis="z", caps=(False, False), part="head_neck")

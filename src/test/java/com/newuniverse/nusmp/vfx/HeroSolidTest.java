@@ -110,6 +110,27 @@ class HeroSolidTest {
         }
     }
 
+    /** 4.55.0 (docs/heroweapon/flat_parts_blender.md): the flat-part meshes were rebuilt in Blender; the skin each old mesh was laid out for is kept next to it. */
+    @Test
+    void theSolidMeshesAreBlenderBuildsAndTheOldSkinsAreKept() throws IOException {
+        Path old = MESHES.resolve("flat_parts_old");
+        Path oldSkins = ROOT.resolve("src/main/resources/assets/anime_multiverse/textures/entity/weapon/flat_parts_old");
+        int rebuilt = 0;
+        try (var s = Files.list(old)) {
+            for (Path p : (Iterable<Path>) s.filter(f -> f.toString().endsWith(".txt"))::iterator) {
+                String id = p.getFileName().toString().replace(".txt", "");
+                String now = Files.readString(MESHES.resolve(id + ".txt"));
+                if (!now.contains("# blender-solid")) continue;
+                rebuilt++;
+                String base = id.replaceAll("_pull[123]$", "");
+                assertTrue(Files.exists(oldSkins.resolve(base + ".png")) && Files.exists(oldSkins.resolve(base + "_glow.png")), id + ": the skin of the old mesh is kept");
+                assertTrue(now.lines().filter(l -> l.startsWith("q ") || l.startsWith("qn ")).count() <= 5000, id + " is inside the quad-line budget");
+            }
+        }
+        assertTrue(rebuilt >= 1, "at least one mesh is a Blender build");
+        assertTrue(read("src/main/java/com/newuniverse/nusmp/client/WeaponRenderer.java").contains("readFlatOld(id)"), "the old meshes are drawn with their own skins");
+    }
+
     @Test
     void theSmokeListAndTheRegistrationHaveTheSelfTest() throws IOException {
         assertTrue(read(".github/workflows/smoke.yml").contains("visual.flat_props,visual.hero_solid,"));

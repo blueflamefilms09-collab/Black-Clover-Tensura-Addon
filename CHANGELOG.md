@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.57.0] — Spear heads, harpoon head and bow arrows rebuilt solid in Blender
+- REPLACED: the 44 script-patched meshes that had flat or hairline parts: 33 bow pull stages and 11 bow rest meshes (new solid arrow: octagonal shaft, nock collar, hexagonal broadhead, three crossed vanes), 10 spears (head thickened in the builder or stretched solid) and the vassal harpoon (head and barbs). Skins and glow skins of 21 weapons were re-baked. Bows, spears and the harpoon keep ids, place lines, grips and Better Combat files.
+- NEW: `tools/heroweapon/flat_parts_audit.py --md` (audit of all parts, doc `docs/heroweapon/flat_parts_audit.md`), `install_solid_meshes.py`, preview stills `docs/previews/flat_parts_v2/` (before and after for all 44), doc `docs/heroweapon/flat_parts_blender.md`. 44 of 44 must-be-solid parts are solid now; 24 sheet-like parts (bow limb panels, fins, streamers) are listed but not redone.
+- KEPT: the earlier flat meshes in `weapon_meshes/flat_parts_old/` with their old skins, drawn when `visual.heroSolidParts = false`; the `classic/` models; every id and grip.
+- COST: client only; largest mesh 4995 quad lines (cap 5000), 99 to 338 KB skins per weapon; no server change.
+- CAVEATS: built with scripted Blender (bpy), no Blender window; stills are software-rasteriser previews, not Cycles; nothing seen in a game; spear heads are fat diamonds that just clear the 2 % audit rule.
+- OWNER DECISION: keep the 6 MB of old skins for the `heroSolidParts = false` setting?
+
 ## [4.56.1] — Fix: two sounds tests counted the new Goku and Sinbad voice lines
 - FIXED: `SalamanderSoundsTest` and `SylphSoundsTest` count the older spoken lines; they now also leave out the new `voice.goku_*` and `voice.sinbad_*` lines (4.55.0), so the two older tests pass again. This is the build that carries 4.55.0 (Goku, Sinbad and Kakashi voices) and 4.56.0 (Weapon page). No game change.
 

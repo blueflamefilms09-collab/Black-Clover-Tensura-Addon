@@ -4,7 +4,7 @@
 Uses the rasteriser of tools/item_preview/preview_weapons.py (the way WeaponRenderer draws a mesh: skin, item lighting, glow layer additive) with a camera
 aimed at the part. A pull-stage mesh without a skin of its own uses the skin of its rest mesh, as the game does.
 
-    python3 -B tools/heroweapon/flat_parts_preview.py <mesh id> <part> <out.png> [--mesh-dir <dir>] [--dist 0.5]
+    python3 -B tools/heroweapon/flat_parts_preview.py <mesh id> <part> <out.png> [--mesh-dir <dir>] [--skin-dir <dir>] [--dist 0.5]
 
 The picture is five views of the part (front, three-quarter, side, top-ish, back), 220 px each.
 """
@@ -38,6 +38,7 @@ def main(argv=None):
     ap.add_argument("part")
     ap.add_argument("out")
     ap.add_argument("--mesh-dir", default=os.path.join(pw.ASSETS, "weapon_meshes"))
+    ap.add_argument("--skin-dir", default=os.path.join(pw.ASSETS, "textures", "entity", "weapon"), help="where the skin is read (4.55.0: textures/entity/weapon/flat_parts_old for the old meshes)")
     ap.add_argument("--dist", type=float, default=0.45)
     ap.add_argument("--no-glow", action="store_true", help="skin only: the additive glow layer of a white part saturates the shading")
     a = ap.parse_args(argv)
@@ -48,7 +49,7 @@ def main(argv=None):
     quads, glow = load(path)
     sel = [quads[i] for i in ids]
     base = re.sub(r"_(pull[123]|charged|spent)$", "", a.mesh_id)
-    d = os.path.join(pw.ASSETS, "textures", "entity", "weapon")
+    d = a.skin_dir
     skin = next((pw.tex(os.path.join(d, n + ".png")) for n in (a.mesh_id, base) if pw.tex(os.path.join(d, n + ".png")) is not None), None)
     glowtex = next((pw.tex(os.path.join(d, n + "_glow.png")) for n in (a.mesh_id, base) if pw.tex(os.path.join(d, n + "_glow.png")) is not None), None)
     if a.no_glow:

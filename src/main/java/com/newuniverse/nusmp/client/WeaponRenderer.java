@@ -498,10 +498,23 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             String skin = "textures/entity/weapon/classic_vassal/" + id;
             mesh = read(id, "weapon_meshes/classic_vassal/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
-        if (mesh == null && !solid && isClassicLegendary(id)) mesh = read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", null, null);       // the hairline arrow / paper-thin spear head of before the flat parts were made solid (null when this id was not changed)
+        if (mesh == null && !solid && isClassicLegendary(id)) mesh = readFlatOld(id);       // the hairline arrow / paper-thin spear head of before the flat parts were made solid (null when this id was not changed)
         if (mesh == null) mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
         MESHES.put(id, mesh);
         return mesh;
+    }
+
+    /**
+     * 4.55.0: an old flat-part mesh (weapon_meshes/flat_parts_old) drawn with the skin it was laid out for. The Blender rebuild of the solid arrows and spear heads bakes the skin again, so the
+     * skin of before is kept in textures/entity/weapon/flat_parts_old; an id without such a copy (its skin did not change) uses the normal skin. Null when this id has no old mesh.
+     */
+    private static Mesh readFlatOld(String id) {
+        String base = id.replaceAll("_pull[123]$", "");
+        net.minecraft.server.packs.resources.ResourceManager rm = Minecraft.getInstance().getResourceManager();
+        ResourceLocation skin = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + ".png");
+        ResourceLocation glow = DemonSlayerRenderer.rl("textures/entity/weapon/flat_parts_old/" + base + "_glow.png");
+        boolean own = rm.getResource(skin).isPresent();
+        return read(id, "weapon_meshes/flat_parts_old/" + id + ".txt", own ? skin : null, own && rm.getResource(glow).isPresent() ? glow : null);
     }
 
     private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen;
