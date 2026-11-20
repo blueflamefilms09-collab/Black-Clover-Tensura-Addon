@@ -2514,7 +2514,7 @@
  "legendary_shield__light_metal_shield": {
   "class": "shield",
   "fraction": 0.5,
-  "source": "class",
+  "source": "gripxyz",
   "x": 0.0,
   "y": 0.0,
   "z": 2.112
@@ -5594,7 +5594,7 @@
  "vassal_axe": {
   "class": "battleaxe",
   "fraction": 0.264,
-  "source": "directive",
+  "source": "gripxyz",
   "x": 0.0,
   "y": 45.948,
   "z": 0.0
@@ -5634,7 +5634,7 @@
  "vassal_book": {
   "class": "handitem",
   "fraction": 0.5,
-  "source": "class",
+  "source": "gripxyz",
   "x": 0.833,
   "y": 18.186,
   "z": 1.415
@@ -5649,24 +5649,24 @@
  },
  "vassal_book__library_tome": {
   "class": "handitem",
-  "fraction": 0.14,
+  "fraction": 0.04,
   "source": "override",
-  "x": -5.67,
-  "y": -3.648,
-  "z": 0.99
+  "x": -0.581,
+  "y": 1.8,
+  "z": 0.0
  },
  "vassal_book__pipe_book": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
+  "fraction": 0.526,
+  "source": "gripxyz",
   "x": -0.938,
   "y": 18.2,
   "z": 2.816
  },
  "vassal_book__revised_edition": {
   "class": "handitem",
-  "fraction": 0.25,
-  "source": "override",
+  "fraction": 0.22,
+  "source": "gripxyz",
   "x": -0.974,
   "y": 0.088,
   "z": 0.5
@@ -5770,7 +5770,7 @@
  "vassal_claw": {
   "class": "shortsword",
   "fraction": 0.11,
-  "source": "directive",
+  "source": "gripxyz",
   "x": 0.0,
   "y": 20.013,
   "z": 0.0
@@ -5785,8 +5785,8 @@
  },
  "vassal_gauntlet": {
   "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
+  "fraction": 0.501,
+  "source": "gripxyz",
   "x": 1.743,
   "y": 41.279,
   "z": 1.235
@@ -6058,15 +6058,15 @@
  "vassal_staff": {
   "class": "staff",
   "fraction": 0.381,
-  "source": "directive",
+  "source": "gripxyz",
   "x": 0.0,
   "y": 103.89,
   "z": 0.0
  },
  "vassal_staff__archmage_staff": {
   "class": "staff",
-  "fraction": 0.4,
-  "source": "class",
+  "fraction": 0.404,
+  "source": "gripxyz",
   "x": 0.011,
   "y": 125.352,
   "z": 0.0
@@ -6089,8 +6089,8 @@
  },
  "vassal_staff__rune_staff": {
   "class": "staff",
-  "fraction": 0.4,
-  "source": "class",
+  "fraction": 0.408,
+  "source": "gripxyz",
   "x": 0.011,
   "y": 128.426,
   "z": 0.0

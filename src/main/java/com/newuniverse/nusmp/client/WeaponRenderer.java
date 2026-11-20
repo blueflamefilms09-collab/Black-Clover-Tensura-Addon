@@ -477,13 +477,15 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         boolean solid = com.newuniverse.nusmp.vfx.HeroSolid.solid();                  // visual.heroSolidParts (docs/heroweapon/flat_parts.md): off = the old flat arrow / spear head meshes
         boolean hold = WeaponGrip.holdEnabled();                                       // 4.45.0: models.holdFit
         boolean classicVassal = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicVassalForms();      // 4.48.0: vassalForms.classic: the axe / book / carriage forms of before the v2 remodel
-        if (classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen || lordClassic != lordClassicSeen || classicVassal != classicVassalSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+        boolean classicStyle = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicStyleWave2();      // vassalForms.classicStyleWave2: the 14 weapons restyled in style wave 2 draw the meshes of before (weapon_meshes/classic_style)
+        if (classicStyle != classicStyleSeen || classic != classicSeen || greedClassic != greedClassicSeen || solid != solidSeen || hold != holdSeen || lordClassic != lordClassicSeen || classicVassal != classicVassalSeen) {           // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
             classicSeen = classic;
             greedClassicSeen = greedClassic;
             lordClassicSeen = lordClassic;
             solidSeen = solid;
             holdSeen = hold;
             classicVassalSeen = classicVassal;
+            classicStyleSeen = classicStyle;
             MESHES.clear();
             WeaponGrip.clear();
             ItemStateVariants.clearCache();
@@ -497,6 +499,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (mesh == null && classicVassal && isRemodelledVassalForm(id)) {          // 4.48.0: the v2 remodel's old copies (tools/weaponmotion README, docs/vassal_forms_v2.md); a missing copy falls back to the new mesh
             String skin = "textures/entity/weapon/classic_vassal/" + id;
             mesh = read(id, "weapon_meshes/classic_vassal/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
+        }
+        if (mesh == null && classicStyle && isStyleWave2(id)) {                  // style wave 2: the old copies; a missing copy falls back to the new mesh
+            String skin = "textures/entity/weapon/classic_style/" + id;
+            mesh = read(id, "weapon_meshes/classic_style/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
         }
         if (mesh == null && !solid && isClassicLegendary(id)) mesh = readFlatOld(id);       // the hairline arrow / paper-thin spear head of before the flat parts were made solid (null when this id was not changed)
         if (mesh == null) mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
@@ -537,7 +543,15 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     /** 4.65.0: the bows whose previous (shared-stave) look is archived in weapon_meshes/shared_stave and shown when visual.heroSolidParts is off. */
     private static final java.util.Set<String> SHARED_STAVE_BOWS = java.util.Set.of("legendary_bow_curse");
 
-    private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen;
+    private static boolean classicSeen, greedClassicSeen, lordClassicSeen, solidSeen = true, holdSeen = true, classicVassalSeen, classicStyleSeen;
+
+    /** Style wave 2: the ids whose look was rebuilt (docs/heroweapon/style/wave2.md); their old meshes and skins are in the classic_style folders. */
+    private static final java.util.Set<String> STYLE_WAVE2 = java.util.Set.of("vassal_hammer", "vassal_claw", "vassal_axe", "vassal_whip", "vassal_staff", "vassal_gauntlet", "vassal_projectile", "vassal_book",
+            "vassal_staff__rune_staff", "vassal_staff__archmage_staff", "vassal_book__pipe_book", "vassal_book__revised_edition", "vassal_book__library_tome", "legendary_shield__light_metal_shield");
+
+    static boolean isStyleWave2(String id) {
+        return STYLE_WAVE2.contains(id);
+    }
 
     /** 4.48.0: the vassal axe, book and carriage forms remodelled in the v2 pass (their old meshes and skins are in the classic_vassal folders). */
     static boolean isRemodelledVassalForm(String id) {

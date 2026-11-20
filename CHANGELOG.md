@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.70.0] — Style wave 2: fourteen weapons lose the gold-and-navy look
+Owner request (weapons that look alike get their own style): this wave restyles the Seven Star base weapons and a few forms.
+- REPLACED (same ids, place lines and length classes; old looks kept): `vassal_hammer`, `vassal_axe`, `vassal_staff`, `vassal_claw`, `vassal_gauntlet`, `vassal_whip`, `vassal_projectile`, `vassal_staff__rune_staff`, `vassal_staff__archmage_staff`, `vassal_book` (base), `vassal_book__pipe_book`, `vassal_book__revised_edition`, `vassal_book__library_tome`, `legendary_shield__light_metal_shield`. Each has three base materials plus one named accent, one hero feature and uneven spacing instead of the shared gold, navy and glowing-gem recipe. Profile sameness before to after: hammer 46.5 to 24.2, axe 42.6 to 28.8, claw 35.2 to 17.0, rune staff 59.1 to 23.9, revised edition 70.1 to 40.0, vassal book 75.0 to 48.1; the gauntlet, books, library tome and light-metal shield stay above the 45 target because their hand and size class keep one outline.
+- NEW (client option `vassalForms.classicStyleWave2`, default off): draws the previous look of those fourteen (`weapon_meshes/classic_style`, `textures/entity/weapon/classic_style`). `classicHeroWeaponModels` still wins first.
+- KEPT: ids, lore, engravings, Better Combat files, all older looks and builders. Grips were re-pinned for ten meshes; `vassal_book__library_tome` hold fraction 0.14 to 0.04.
+- COST: client drawing only; every mesh is under 5000 quad lines (largest 2646, the shield); total over the fourteen fell from about 41.8k to 17.3k quad lines. Classic copies add about 11 MB to the jar and load only when the option is on.
+- CAVEATS: scripted Blender builds (no Blender window, no Blockbench); software-rasteriser previews only; nothing seen in a game; the new toggle in `WeaponRenderer` was not compiled before CI.
+
 ## [4.69.0] — Hub v2: the Codex lives inside the hub, custom icons, a smaller framed window, a posing player
 Owner request: fully rework the Codex into the new hub (with the player doing animations), give status / weapons / skills and the rest custom icons, and make the menu smaller instead of filling the screen.
 - REPLACED (behind `ui.hub`, which still switches the whole hub off): the hub's Codex node is a native hub page. Every Codex page (status, weapons, relics, bestiary, spirit lords, guides, spellbooks, blocks, entities, magic, effects, beast wills, rules, wiki, and any page registered later) is hosted behind a left rail grouped You / Collection / Magic / World / Reference; the Multiverse rows, the wiki entry and the Multiverse Status key open the hub on the right page. Esc closes the hub, Backspace returns to the ring.

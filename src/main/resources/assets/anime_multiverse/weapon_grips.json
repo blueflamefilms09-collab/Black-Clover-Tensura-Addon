@@ -95,7 +95,7 @@
  },
  "holdFractions": {
   "vassal_book__animal_needle_book": 0.02,
-  "vassal_book__library_tome": 0.14,
+  "vassal_book__library_tome": 0.04,
   "vassal_book__revised_edition": 0.25,
   "vassal_carriage__hourglass_sand_carriage": 0.31,
   "vassal_carriage__queens_chariot": 0.68,

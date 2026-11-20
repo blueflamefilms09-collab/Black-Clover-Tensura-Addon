@@ -59,7 +59,7 @@ HOLD_FIXES = {
     "vassal_mirror": 0.216, "vassal_mirror__envious_glass": 0.262, "vassal_mirror__green_eyed_mirror": 0.317, "vassal_mirror__mirror_of_envy": 0.259,
     "vassal_mirror__white_tiger_clone_mirror": 0.272, "vassal_mirror__yata_mirror": 0.313,        # the `grip` line of each mesh: the middle of its handle
     "vassal_mirror__hetsu_kagami": 0.27,                          # no `grip` line: the thin stretch of its profile (16 to 38 percent of the length) has its middle there
-    "vassal_book__animal_needle_book": 0.02, "vassal_book__library_tome": 0.14, "vassal_book__revised_edition": 0.25,      # 4.52.1: the middle of the span of grips the hold audit passes (swept 0 to 1 in steps of 0.02)
+    "vassal_book__animal_needle_book": 0.02, "vassal_book__library_tome": 0.04, "vassal_book__revised_edition": 0.25,      # 4.52.1: the middle of the span of grips the hold audit passes (swept 0 to 1 in steps of 0.02)
     "vassal_carriage__queens_chariot": 0.68, "vassal_carriage__war_carriage": 0.09, "vassal_carriage__hourglass_sand_carriage": 0.31,      # 4.53.1: re-picked after the v2 remodel of the book and carriage meshes
 }
 POINT_OVERRIDES = {"demon_slayer_sword": (0.0, -12.0, 0.0)}      # the middle of the cloth grip (hilt() of DemonSlayerMesh: y -22 to -2)
