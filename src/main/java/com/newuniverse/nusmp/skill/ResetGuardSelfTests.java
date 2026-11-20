@@ -34,7 +34,10 @@ public final class ResetGuardSelfTests {
         BlockPos at = sl.getSharedSpawnPos().above(3);
         FakePlayer p = SelfTests.standIn(sl, "reset_guard", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
         var skills = SkillAPI.getSkillsFrom(p);
-        ResourceLocation ours = NUSkills.HERCULES.getId();
+        // 4.67.0: with the soul-only rule (default) the skill that must survive is a grimoire book; Hercules is an ordinary skill of ours and is reset like any other
+        boolean soulOnly = ResetGuard.soulOnly();
+        var test = soulOnly ? NUSkills.BOOK_FIRE : NUSkills.HERCULES;
+        ResourceLocation ours = test.getId();
         ResourceLocation control = controlSkill();
         StringBuilder sb = new StringBuilder();
         try {
@@ -42,7 +45,7 @@ public final class ResetGuardSelfTests {
             if (control != null) skills.forgetSkill(control);
 
             // 1. this mod's own removal still works (it is not a scroll call)
-            if (!skills.learnSkill(NUSkills.HERCULES.get().createDefaultInstance()))
+            if (!skills.learnSkill(test.get().createDefaultInstance()))
                 return Result.ok("hook registered; NOT EXERCISED: the stand-in cannot hold a skill of this mod in this environment (the sandalphon/israfil/jibril/solomon/hercules .skill self-tests meet the same limit), so no scroll reset was run");
             skills.forgetSkill(ours);
             if (skills.getSkill(ours).isPresent()) return Result.fail("a removal by this mod's own code was refused (the guard must only refuse the scrolls)");
@@ -53,8 +56,9 @@ public final class ResetGuardSelfTests {
             String[] names = {"skill reset", "skill reset (all)", "full reset"};
             List<Consumer<ServerPlayer>> calls = List.of(pl -> ResetScrollItem.resetSkill(pl), pl -> ResetScrollItem.resetSkill(pl, true), pl -> ResetScrollItem.resetEverything(pl));
             for (int i = 0; i < calls.size(); i++) {
-                skills.learnSkill(NUSkills.HERCULES.get().createDefaultInstance());
+                skills.learnSkill(test.get().createDefaultInstance());
                 if (skills.getSkill(ours).isEmpty()) return Result.fail("the stand-in could not learn the test skill again");
+                skills.getSkill(ours).ifPresent(inst -> inst.setToggled(true));
                 boolean controlLearned = control != null && skills.learnSkill(control);
                 String note;
                 try {
@@ -65,7 +69,8 @@ public final class ResetGuardSelfTests {
                     note = "threw " + e.getClass().getSimpleName();
                 }
                 if (skills.getSkill(ours).isEmpty()) return Result.fail("Tensura's " + names[i] + " removed a skill of this mod (" + note + ")");
-                sb.append(names[i]).append(" ").append(note).append(", ours kept");
+                if (soulOnly && "ran".equals(note) && skills.getSkill(ours).map(inst -> inst.isToggled()).orElse(false)) return Result.fail("Tensura's " + names[i] + " kept the soul-tied skill but did not switch it off");
+                sb.append(names[i]).append(" ").append(note).append(", ours kept").append(soulOnly ? " and off" : "");
                 if (controlLearned) sb.append(", control ").append(control.getPath()).append(skills.getSkill(control).isPresent() ? " kept" : " removed");
                 sb.append("; ");
                 skills.forgetSkill(ours);

@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.67.0] — Reset scrolls take your skills like normal; only soul-bound skills stay (and fall silent)
+Owner request: a character reset scroll or any reset scroll of the base Tensura mod should remove the skills of this mod like normal; only the grimoires, which are tied to the soul, and other soul-tied abilities should stay, and they should be switched off automatically when a reset happens.
+- REPLACED (behind `guard.resetSoulOnly`, default on; `false` restores the 3.42.0 rule that every skill of this mod survives a scroll): a Tensura Reset Scroll (skill reset, skill reset all, full reset) now removes every skill of this mod like any Tensura skill. The soul-tied ones stay: all grimoire books and their pages, the per-magic grimoire skills, the retired merged books, Forbidden Magic, the devil contract's Devil Bond and Devil Magic, and the Spirit Lord skills that grow out of a grimoire. Each kept skill is switched off at the reset (its off-hook runs, so a floating grimoire, an aura or a form ends) and the player sees "What is bound to your soul stays, but it falls silent."
+- KEPT: `guard.resetScrollGuard` (master switch, default on), the remove-skill hook, this mod's own removals (grimoire swap, `/multiverse ... take`) and the admin command `/tensura reset`, which are never blocked; Tensura's `NO_RESET` list now carries only the soul-tied ids while the new rule is on.
+- COST: no per-tick work, no packets. A removal of an ordinary skill of ours now returns before the stack walk; only a soul-tied removal walks the stack (rare, once per removal).
+- CAVEATS: nothing tried in a game; the new Java was not compiled before CI. "Soul-tied" is read as the grimoire family plus the devil contract and Spirit Lord skills; if you want another skill kept (for example a race skill), tell me which.
+
 ## [4.66.0] — Sinbad's armour fits his look; Goku and Sinbad voices polished
 Owner: "do what you think is best" on the Goku/Sinbad armour overlap and the Kokoro voice quality.
 - FIXED (client, behind `bossLooks.bossArmorFit`, default on): the bodies of Goku and Sinbad do not clip (checked cube by cube); the overlap came from the player's Djinn Equip pieces drawn over Sinbad's own crown, collar, belt, cuffs, shoulders and sandals. Those pieces now forge in and dissolve into the look; wings, tail, halo, gauntlets, mantle and weapon stay. A player's own Djinn Equip is untouched. `false` restores the old drawing.

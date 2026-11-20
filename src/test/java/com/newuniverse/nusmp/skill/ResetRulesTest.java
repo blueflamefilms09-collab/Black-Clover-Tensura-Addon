@@ -58,6 +58,36 @@ class ResetRulesTest {
         assertFalse(ResetRules.refuses(true, null, true));
     }
 
+    @Test
+    void soulTiedSkillsAreTheGrimoireFamily() {
+        for (String id : new String[]{"book_fire", "book_time", "grimoire_flame", "grimoire_magic", "page_chrono_stasis", "merged_07", "forbidden_magic",
+                "devil_bond", "devil_magic", "anti_magic_spirit_lord", "spirit_lord"})
+            assertTrue(ResetRules.soulTied(id), id);
+        for (String id : new String[]{"hercules", "shishou", "nen", "ki", "book_maker", "the_almighty", "all_fiction", "", null})
+            assertFalse(ResetRules.soulTied(id), String.valueOf(id));
+    }
+
+    @Test
+    void soulOnlyDecisionTable() {
+        // new default: the grimoire stays, an ordinary skill of ours is reset like any other
+        assertTrue(ResetRules.refuses(true, true, "anime_multiverse", "book_fire", true));
+        assertFalse(ResetRules.refuses(true, true, "anime_multiverse", "hercules", true));
+        // old behaviour behind soulOnly=false: every skill of ours stays
+        assertTrue(ResetRules.refuses(true, false, "anime_multiverse", "hercules", true));
+        // never a removal that is not from a scroll, never with the guard off, never somebody else's skill
+        assertFalse(ResetRules.refuses(true, true, "anime_multiverse", "book_fire", false));
+        assertFalse(ResetRules.refuses(false, true, "anime_multiverse", "book_fire", true));
+        assertFalse(ResetRules.refuses(true, true, "tensura", "book_fire", true));
+    }
+
+    @Test
+    void theSoulRuleIsWiredAndSwitchedOff() throws IOException {
+        String g = code("src/main/java/com/newuniverse/nusmp/skill/ResetGuard.java");
+        assertTrue(g.contains("ResetRules.soulTied(") && g.contains("setToggled(false)") && g.contains("onToggleOff("), "a soul-tied skill is kept and switched off");
+        assertTrue(g.contains("soulOnly()"), "the setting is read");
+        assertTrue(code("src/main/java/com/newuniverse/nusmp/multiverse/MultiverseConfig.java").contains("\"resetSoulOnly\""), "a server setting restores the 3.42.0 behaviour");
+    }
+
     // ---------------------------------------------------------------- source rules
     @Test
     void theHookIsServerSafeAndCancelsThroughTheEvent() throws IOException {

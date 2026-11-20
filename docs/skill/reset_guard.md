@@ -35,3 +35,13 @@ Server config `world/serverconfig/nusmp-multiverse-server.toml`, section `guard`
 - **Nothing was seen in a game.** It rests on two assumptions read from the Tensura and ManasCore stubs: the scrolls remove skills through `Skills.forgetSkill`, which fires `REMOVE_SKILL`; and `NO_RESET` means "skills a scroll does not reset". If Tensura removes skills some other way (writing the storage directly), the event never fires and a scroll could still reset them: the CI self-test is meant to show that, and the result line says whether the Tensura reset calls ran at all.
 - **CI result of 3.42.0:** the smoke stand-in cannot hold any skill of this mod (the five `*.skill` Ultimate self-tests meet the same limit), so `skill.reset_guard` reported FAIL "could not learn the test skill" and nothing was exercised. 3.43.0 changes the self-test: it fails only if the hook was not registered (`ResetGuard.hooked()`), and says `NOT EXERCISED` when the stand-in cannot hold a skill. Tensura's `NO_RESET` list is immutable (logged), so only the event layer protects the skills.
 - A scroll that resets the *race* (not a skill reset) is out of scope: it only removes race-bound skills through Tensura's race rules; if any of those are ours the same event guard applies.
+
+
+## 4.67.0: only the soul-tied skills are guarded
+
+Owner request: "using a character reset scroll or any reset scrolls from the base mod should remove my skills like normal ... the only one that shouldn't is probably like the grimoires, as they are tied to the soul. Any other abilities that would be tied to the soul also shouldn't be removed. But they should also automatically be deactivated if a player uses like a character resetter."
+
+- **Replacement** of the 3.42.0 rule "no skill of this mod can be reset" (kept behind the setting): with `guard.resetSoulOnly = true` (default) a scroll resets every skill of this mod like a Tensura skill, except the soul-tied ones (`ResetRules.soulTied`, by id: `grimoire_*`, `book_*` except `book_maker`, `page_*`, `merged_*`, `forbidden_magic`, `devil_bond`, `devil_magic`, `anti_magic_spirit_lord`, `spirit_lord`).
+- A soul-tied skill is kept (the removal is cancelled) and switched off (`setToggled(false)` plus its off-hook), with one action-bar line. `resetSoulOnly = false` restores the 3.42.0 behaviour; `resetScrollGuard = false` switches the whole guard off.
+- Worst case: one stack walk per soul-tied removal, none for an ordinary skill; no packets beyond the action-bar line; no per-tick work; no state.
+- Tests: `ResetRulesTest` (soul-tied ids, decision tables, wiring), self-test `skill.reset_guard` now uses a grimoire book as the survivor and checks it is switched off (still reports NOT EXERCISED where the stand-in cannot hold our skills).

@@ -38,7 +38,7 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.IntValue SQUAD_MAX_SIZE;
     public static final ModConfigSpec.BooleanValue SQUAD_CAPTAIN_PROMOTES_VICE, SQUAD_GOLD_FEEDS_SCORE, SQUAD_BLACK_REDUCES_SCORE, SQUAD_OFFLINE_COUNT;
     // spirit lord
-    public static final ModConfigSpec.BooleanValue GRIMOIRE_GUARD, RESET_SCROLL_GUARD;
+    public static final ModConfigSpec.BooleanValue GRIMOIRE_GUARD, RESET_SCROLL_GUARD, RESET_SOUL_ONLY;
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
     public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC, WIZARD_MODE, SUMMONS_NEED_BOTH, ALL_MAGICS;
@@ -131,6 +131,8 @@ public final class MultiverseConfig {
                 "(/multiverse grimoire give | canon, the ceremony, the Tower Wizard, an awakening). Anything else is cancelled or taken back.").define("grimoireGuard", true);
         RESET_SCROLL_GUARD = b.comment("3.42.0: Tensura's Reset Scrolls (skill reset, full reset) cannot remove any skill of this mod (namespace anime_multiverse).",
                 "false = the scrolls reset them like any other skill. The admin command /tensura reset is never blocked.").define("resetScrollGuard", true);
+        RESET_SOUL_ONLY = b.comment("4.67.0: only the skills tied to the soul (the grimoires and their pages, the Spirit Lord skills, the devil contract's bond and Forbidden Magic) survive a Tensura Reset Scroll, and they are switched off by it.",
+                "Every other skill of this mod is reset like a Tensura skill. false = the 3.42.0 behaviour (every skill of this mod survives). Only has an effect while resetScrollGuard is true.").define("resetSoulOnly", true);
         b.pop();
 
         b.push("spirit_lord");

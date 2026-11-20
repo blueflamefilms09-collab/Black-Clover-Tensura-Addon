@@ -39,6 +39,9 @@ public final class ResetGuard {
 
     public static boolean enabled() { return MultiverseConfig.get(MultiverseConfig.RESET_SCROLL_GUARD); }
 
+    /** 4.67.0: true (default) = only soul-tied skills survive a scroll (and are switched off); false = every skill of ours survives, as in 3.42.0. */
+    public static boolean soulOnly() { return MultiverseConfig.get(MultiverseConfig.RESET_SOUL_ONLY); }
+
     /** Set once the remove-skill event took the hook (the self-test reads it). */
     private static volatile boolean hooked;
 
@@ -59,21 +62,36 @@ public final class ResetGuard {
     static EventResult onRemove(ManasSkillInstance inst, LivingEntity who, Changeable<MutableComponent> message) {
         try {
             if (!(who instanceof ServerPlayer p) || inst == null || !ResetRules.isOurs(inst.getSkillId().getNamespace()) || !enabled()) return EventResult.pass();
+            boolean soulOnly = soulOnly();
+            String ns = inst.getSkillId().getNamespace(), path = inst.getSkillId().getPath();
+            if (soulOnly && !ResetRules.soulTied(path)) return EventResult.pass();                 // 4.67.0: a plain skill of ours is reset like any other, no stack walk
             boolean scroll = StackWalker.getInstance().walk(s -> s.anyMatch(f -> ResetRules.isScrollClass(f.getClassName())));
-            if (!ResetRules.refuses(true, inst.getSkillId().getNamespace(), scroll)) return EventResult.pass();
-            tell(p);
+            if (!ResetRules.refuses(true, soulOnly, ns, path, scroll)) return EventResult.pass();
+            if (soulOnly) switchOff(inst, p);
+            tell(p, soulOnly);
             return EventResult.interruptFalse();
         } catch (RuntimeException ignored) {
             return EventResult.pass();
         }
     }
 
-    private static void tell(ServerPlayer p) {
+    /** 4.67.0: the soul-tied skill stays but is switched off (its off-hook runs, so a floating grimoire, a form or an aura ends). */
+    static void switchOff(ManasSkillInstance inst, ServerPlayer p) {
+        try {
+            if (!inst.isToggled()) return;
+            inst.setToggled(false);
+            inst.onToggleOff(p);
+        } catch (RuntimeException e) {
+            LOGGER.warn("Reset guard: could not switch {} off ({}).", inst.getSkillId(), e.toString());
+        }
+    }
+
+    private static void tell(ServerPlayer p, boolean soulOnly) {
         long now = p.serverLevel().getGameTime();
         Long last = TOLD.get(p.getUUID());
         if (last != null && now - last < 40L) return;
         TOLD.put(p.getUUID(), now);
-        p.displayClientMessage(Component.literal("The skills of this world cannot be reset by a scroll.").withStyle(ChatFormatting.DARK_PURPLE), true);
+        p.displayClientMessage(Component.literal(soulOnly ? "What is bound to your soul stays, but it falls silent." : "The skills of this world cannot be reset by a scroll.").withStyle(ChatFormatting.DARK_PURPLE), true);
     }
 
     // ---------------------------------------------------------------- layer two: Tensura's own list
@@ -85,7 +103,9 @@ public final class ResetGuard {
             if (!(list instanceof List<?> raw)) return;
             List<ResourceLocation> no = (List<ResourceLocation>) raw;
             int added = 0;
+            boolean soulOnly = soulOnly();
             for (var h : NUSkills.SKILLS.getEntries()) {
+                if (soulOnly && !ResetRules.soulTied(h.getId().getPath())) continue;               // 4.67.0: only the soul-tied ones are on Tensura's no-reset list
                 if (!no.contains(h.getId())) {
                     no.add(h.getId());
                     added++;
