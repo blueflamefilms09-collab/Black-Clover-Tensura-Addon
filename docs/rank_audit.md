@@ -20,10 +20,10 @@ The relic card itself (`UnifiedTooltipRules.banner`, `RelicTooltip`) builds the 
 | every item of the mod with a rank (Djinn weapons and seals, Genesis weapons, rules) | `relics/Rankings.java`, `rankings.json` | `tooltip/RankTooltip.java:55` (one line under the name) | "Rank: God Grade #4" (no stars) | unchanged: item, Djinn order, rule, weapon table |
 | Beast rank C B A S SS | `beastwill/BeastRank.java:7` | Beast Will Core tooltip `beastwill/BeastWillCoreItem.java:50`; Beast Will panel `client/beastwill/BeastWillClient.java:178` (own line, grade colour) | "From a rank S beast: Lion", "Rank S" | beast table below |
 | Devil tier LOW MID HIGH SUPREME | `devil/DevilTier.java:7` | Devil panel `client/devil/DevilClient.java:245` and `:270` (own line, grade colour) | "Low Devil" only (kept as the title; the grade is the new line) | devil table |
-| Saiyan rank six steps | `saiyan/SaiyanRules.java:22` | Saiyan panel `client/saiyan/SaiyanClient.java:307` and `:345` (own line, grade colour) | "Low-Class" ... (kept as the title) | saiyan table |
+| Saiyan rank six steps (`SaiyanRules.Rank`) | `saiyan/SaiyanRules.java:22` | Saiyan panel `client/saiyan/SaiyanClient.java:307` and `:345` (own line, grade colour) | "Low-Class" ... (kept as the title) | saiyan table |
 | Magic Knight rank | `multiverse/KnightRank.java:4` | status screen `client/multiverse/MultiverseStatusScreen.java:119` | "3rd Class Senior Magic Knight" (kept, the card is added under it) | knight table |
 | Loot rarity common to legendary | `labyrinth/loot/LootRarity.java:12` | loot gear tooltip `labyrinth/loot/GearTooltip.java:30` (under the header) | "Epic (depth 4)" in the rarity colour | loot table |
-| Aptitude rarity | `avatar/aptitude/Aptitude.java:29` | Soul Forge aptitude slot tooltip `client/avatar/AptitudesPage.java:265` | name in a rarity colour only | aptitude table |
+| Aptitude rarity (`Aptitude.Rarity`) | `avatar/aptitude/Aptitude.java:29` | Soul Forge aptitude slot tooltip `client/avatar/AptitudesPage.java:265` | name in a rarity colour only | aptitude table |
 | Mana Core rank E D C B A AA S SS | `manacore/ManaCoreRules.java:19` | Mana Core tooltip `manacore/RankCoreItem.java:43` | "SS-Class Beast" | mana table |
 
 ### The mapping (old rank to relic grade; place where one grade holds two ranks)

@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.45.1] — Build fix
+- FIXED: the smoke list had `boss.realm` after `scaling`, and `docs/rank_audit.md` had lost the names `SaiyanRules.Rank` and `Aptitude.Rarity` that nine source-scan tests pin; both are back as the tests expect. No game change.
+
 ## [4.45.0] — Shishou rework: a real pet AI, canon skills, borrowed skills
 - NEW: Shishou pet mode (setting `pet.mode`, default on): the thrown sword follows the owner, hunts hostile mobs, and attacks what the owner punched or what attacked the owner. It never attacks tamed animals, allies, players or peaceful creatures, retreats at low mana and avoids walls. Orders: `/multiverse shishou order follow|stay|attack`, or Telekinesis mode plus sneak while he is thrown.
 - NEW: seven skills appended: Self-Repair, High-Speed Self-Repair, Self-Evolution, Telekinetic Grasp (canon) and Akashic Index, Blades of the Record, Akashic Sanctuary (original). Setting `canon.skills` (default on).
