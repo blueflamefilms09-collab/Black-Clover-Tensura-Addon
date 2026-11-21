@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.84.2] — Fix: the relic scan test knows the Infinity Stones carrier kit
+- FIXED: `RelicWearDataTest` failed the build since 4.82.0 because the Nano Gauntlet is defined in `stones/CarrierKit` (outside the relic wave sources); the test now lists that file as a known place (the gauntlet is tagged in `curios/tags/item/hands.json` and checked by the carrier self-tests).
+- KEPT: every item, rule and number; tests only.
+
 ## [4.84.1] — Fix: the power-per-mana figures of 4.84.0
 - FIXED: the figures in the 4.84.0 notes and in docs/grimoire_leaf_power.md said power per mana would be about x1.7, x2.9, x3.7 and x4.2; with the covers' own cost numbers it is x1.7, x2.8, x3.6 and x4.7 (as the chart shows). Text only, no game change.
 - KEPT: every rule and number.
