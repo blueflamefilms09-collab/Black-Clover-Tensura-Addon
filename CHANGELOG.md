@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.86.0] — Canon leaves: what each grimoire cover means
+- NEW: every cover has a short meaning line (tooltip, Tower Wizard result, `/anime_multiverse grimoire cover <player>`): three leaves are Faith, Hope and Love; the fourth leaf is Luck; the fifth leaf is the Devil's. Black Magic and God-Tier say they are mod-only.
+- NEW: the four-leaf and the Five-Sided Diamond are luck covers: a spell hit sometimes lands lucky (default 6% chance, x1.5).
+- CHANGED (by default): the five-leaf is devil-bound. The altar, the ceremony and the Tower Wizard no longer hand it out (a five from the Wizard becomes a four-leaf); it comes from despair or a devil contract. While wielded it costs a share of your mana (about x1.11 per spell) and, when you are nearly out of mana, a little health (never lethal, at most once a second).
+- NEW: mana and level matter. A cover far above your level costs up to x1.5 more mana per spell, and a veteran with a lower cover gets up to +12% spell damage.
+- NEW: server settings `canonLeaves` (master; off restores 4.85 exactly), `luckChance`, `luckMult`, `devilMaxManaShare`, `overreachMaxCost`, `masteryMaxBonus`; self-test `canon`; docs `docs/grimoire_canon_leaves.md` (canon facts from memory, the wiki could not be reached).
+- KEPT: every cover, the leaf power and leaf cost of 4.84, `give`, `roll`, `setcover`, the old rolls with the setting off.
+
 ## [4.85.0] — The long Tower Wizard questionnaire: 30 questions in five parts, answers that matter
 - NEW: the Tower Wizard asks 30 questions in five parts (Nature 12, Hearth 4, Blood 4, Origin 4, Resolve 6) from a pool of 99 (66 new questions appended); the screen shows "Part 2 of 5: Hearth (3/4)".
 - NEW: the answers matter. The leaf count now comes from six resolve questions plus a 0 or 1 luck roll (random answers: about 78% three leaves, 19% four, 3% five; the best answers: four or five). Ties in nature, kingdom, blood and class are broken by the later answers. The result shows a summary ("Nature: Wind (clear), with a pull towards Fire") without numbers of unchosen options.

@@ -1,0 +1,19 @@
+{
+  "anime_multiverse.grimoire.meaning.three_leaf": "Three leaves: Faith, Hope and Love. The grimoire of almost every mage.",
+  "anime_multiverse.grimoire.meaning.four_leaf": "Four leaves: the fourth leaf is Luck, Good Fortune. Rare, a sign of being chosen (as with Yuno).",
+  "anime_multiverse.grimoire.meaning.five_leaf": "Five leaves: the Devil's leaf. A forbidden, devil-bound grimoire (as with Asta's anti-magic book).",
+  "anime_multiverse.grimoire.meaning.spade": "Spade Kingdom suit cover: three-leaf rank, common (Faith, Hope, Love).",
+  "anime_multiverse.grimoire.meaning.double_spade": "Spade Kingdom suit cover: four-leaf rank, rare, the luck leaf.",
+  "anime_multiverse.grimoire.meaning.triple_spade": "Spade Kingdom suit cover: five-leaf rank, forbidden and devil-bound.",
+  "anime_multiverse.grimoire.meaning.heart": "Heart Kingdom suit cover: three-leaf rank, common (Faith, Hope, Love).",
+  "anime_multiverse.grimoire.meaning.two_heart": "Heart Kingdom suit cover: four-leaf rank, rare, the luck leaf.",
+  "anime_multiverse.grimoire.meaning.cracked_heart": "Heart Kingdom suit cover: three-leaf rank, common (Faith, Hope, Love).",
+  "anime_multiverse.grimoire.meaning.diamond": "Diamond Kingdom suit cover: three-leaf rank, common (Faith, Hope, Love).",
+  "anime_multiverse.grimoire.meaning.five_sided": "Diamond Kingdom suit cover: four-leaf rank, rare, the luck leaf.",
+  "anime_multiverse.grimoire.meaning.cracked_diamond": "Diamond Kingdom suit cover: three-leaf rank, common (Faith, Hope, Love).",
+  "anime_multiverse.grimoire.meaning.black_magic": "Mod-only, not canon: a black grimoire written by the devil Liebe's power, above the five-leaf.",
+  "anime_multiverse.grimoire.meaning.god_tier": "Mod-only, not canon: a legendary gold grimoire above every leaf, not devil-bound.",
+  "anime_multiverse.canon.luck": "Luck: %s%% of spell hits deal x%s",
+  "anime_multiverse.canon.devil": "Devil's price: it holds %s%% of your mana, and takes a little health when you are nearly dry",
+  "anime_multiverse.canon.fifth_leaf": "The fifth leaf is not handed out. It is earned through despair, or a devil."
+}

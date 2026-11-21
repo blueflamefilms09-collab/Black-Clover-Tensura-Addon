@@ -264,7 +264,7 @@ public abstract class GrimoireBook extends Skill {
         if (p == null) return 0;
         double pct = p.costPercent(), floor = p.costFloor();
         if (com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isAbilityPage(p.id())) { double[] sc = com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.cost(this, entity, p.id()); pct = sc[0]; floor = sc[1]; }      // 3.0.0: an ability page asks the price of the spirit's ability
-        double c = BalanceLaw.cost(entity, pct, floor) * cover(instance).cost * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.costFactor(cover(instance));      // 4.84.0: a higher cover asks more mana
+        double c = BalanceLaw.cost(entity, pct, floor) * cover(instance).cost * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.costFactor(cover(instance)) * com.newuniverse.nusmp.grimoire.CanonLeaves.costFactor(cover(instance), entity);      // 4.84.0: a higher cover asks more mana; canon leaves: the level overreach and the devil's share (x1 when off)
         if (pct <= 0 && floor <= 0) return 0;                       // e.g. Anti-Magic costs nothing
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && pct >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
@@ -424,6 +424,7 @@ public abstract class GrimoireBook extends Skill {
             instance.setCoolDown(com.newuniverse.nusmp.NUSMP.ticksToSeconds(ticks), mode);
         }
         addMasteryPoint(instance, player);
+        com.newuniverse.nusmp.grimoire.CanonLeaves.afterCast(player, cover(instance));      // canon leaves: a five-leaf or higher cover's devil takes a little health when the cast leaves the mana low
         if (com.newuniverse.nusmp.NUConfig.gfCastEvent()) net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new GrimoireCastEvent.Post(this, player, instance, p, mode));      // guide P2 #6: the features that follow a cast listen (GrimoireCastListeners)
         else GrimoireCastListeners.afterCast(this, player, instance, p, mode);      // the old direct calls (SERVER guide_fixes.grimoireCastEvent = false)
         exhaustion(player);
@@ -474,7 +475,8 @@ public abstract class GrimoireBook extends Skill {
         float r = raw * (float) cover(i).damage * (float) com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(cover(i)) * (inUnion(i, caster) ? 1.1f : 1f)     // 4.83.0: leaf power, the cover changes the power a lot
                 * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)      // fire casting: Leopold's charged spiral (1 for every other caster)
                 * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
-                * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
+                * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic)
+                * (float) com.newuniverse.nusmp.grimoire.CanonLeaves.hitFactor(cover(i), caster);      // canon leaves: the luck cover's lucky hit and the mastery bonus (x1 when off)
         // Dark Magic is Arcane Stage: strong against devils and devil-tainted mages.
         if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;

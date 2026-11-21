@@ -60,7 +60,7 @@ public final class NUGameRules {
     public static boolean griefBlocks(Level l) { return NUConfig.GRIEF.get() || rule(l, GRIEF_BLOCKS, false); }
     public static boolean worldTreeTreesStay(Level l) { return NUConfig.WORLD_TREE_PERMANENT.get() || rule(l, WORLD_TREE_TREES_STAY, false); }
     public static boolean godTierAffectsPlayers(Level l) { return NUConfig.GOD_TIER_AFFECTS_PLAYERS.get() || rule(l, GOD_TIER_AFFECTS_PLAYERS, false); }
-    public static boolean forbiddenStart(Level l) { return NUConfig.ALLOW_FORBIDDEN_START.get() || rule(l, FORBIDDEN_START, false); }
+    public static boolean forbiddenStart(Level l) { return !com.newuniverse.nusmp.grimoire.CanonLeaves.on() && (NUConfig.ALLOW_FORBIDDEN_START.get() || rule(l, FORBIDDEN_START, false)); }   // canon leaves: the five-leaf is devil-bound, never a starting roll
     public static boolean announceThreeLeaf(Level l) { return NUConfig.ANNOUNCE_THREE_LEAF.get() || rule(l, ANNOUNCE_THREE_LEAF, false); }
 
     // ---------------------------------------------------------------- on by default: config AND gamerule

@@ -213,6 +213,8 @@ public final class WizardSystem {
                     : "Together they are " + r.primary().displayName + ".").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
         }
         p.sendSystemMessage(Component.literal("Your magic: " + (r.born() && !split ? bornName + " Magic" : first.displayName + (split ? " + Star Magic" : "")) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        if (com.newuniverse.nusmp.grimoire.CanonLeaves.on()) p.sendSystemMessage(Component.translatableWithFallback(com.newuniverse.nusmp.grimoire.GrimoireMeaning.key(cover), com.newuniverse.nusmp.grimoire.GrimoireMeaning.text(cover)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));      // canon leaves: what the cover means
+        if (com.newuniverse.nusmp.grimoire.CanonLeaves.on() && cover.tier == 4) p.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.canon.fifth_leaf", "The fifth leaf is not handed out. It is earned through despair, or a devil.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));      // canon leaves: a Wizard five is capped at four
         p.sendSystemMessage(Component.literal("No two wizards' magic is the same. Yours is called " + signature + ": " + com.newuniverse.nusmp.mana.Signature.describe(p)
                 + ". Its Signature Spell is the last page of your grimoire.").withStyle(ChatFormatting.AQUA));
         var sct = Heritage.socialTrait(r.social());

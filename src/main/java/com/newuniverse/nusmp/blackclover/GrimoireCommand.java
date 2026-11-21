@@ -49,6 +49,14 @@ public final class GrimoireCommand {
                             ctx.getSource().sendSuccess(() -> Component.literal(text), false);
                             return 1;
                         })))
+                        .then(Commands.literal("cover").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {      // canon leaves: cover, meaning, leaf power, cost, luck, devil share
+                            ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+                            var g = GrimoirePages.grimoireOf(p);
+                            if (g.isEmpty()) { ctx.getSource().sendFailure(Component.literal(p.getName().getString() + " has no grimoire.")); return 0; }
+                            String text = com.newuniverse.nusmp.grimoire.CanonLeaves.describe(p, GrimoirePages.coverOf(g.get()));
+                            ctx.getSource().sendSuccess(() -> Component.literal(text), false);
+                            return 1;
+                        })))
                         .then(Commands.literal("roll").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                             ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
                             int leaves = GrimoireAcceptance.roll(p, NightmareSouls.soulTypeOf(p));

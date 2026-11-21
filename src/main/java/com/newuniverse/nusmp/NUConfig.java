@@ -61,6 +61,8 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue LATE_GAME_SCALING;                    // 3.90: mod damage grows with the caster's max magicule (balance.LateGameScaling); false = the old damage
     public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT, LEAF_FOUR, LEAF_FIVE, LEAF_BLACK, LEAF_GOD, COST_FOUR, COST_FIVE, COST_BLACK, COST_GOD;
     public static final ModConfigSpec.BooleanValue LEAF_POWER;
+    public static final ModConfigSpec.BooleanValue CANON_LEAVES;                           // canon leaves (docs/grimoire_canon_leaves.md): meaning text, luck cover, devil-bound five-leaf, level matters; false = the 4.84.2 behaviour
+    public static final ModConfigSpec.DoubleValue CANON_LUCK_CHANCE, CANON_LUCK_MULT, CANON_DEVIL_SHARE, CANON_OVERREACH, CANON_MASTERY;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     public static final ModConfigSpec.BooleanValue WEAPON_DRAINS_TARGET;     // 1.113.0: Elsdocia and the Demon Dweller take magicules from whoever they hit (the old behaviour); default false = they only charge
@@ -198,6 +200,13 @@ public final class NUConfig {
         COST_FIVE = b.comment("Leaf cost: the five-leaf and the Triple Spade.").defineInRange("leafCostFive", 2.5, 1.0, 20.0);
         COST_BLACK = b.comment("Leaf cost: the Black Magic cover.").defineInRange("leafCostBlack", 3.2, 1.0, 20.0);
         COST_GOD = b.comment("Leaf cost: the God-Tier cover.").defineInRange("leafCostGod", 3.8, 1.0, 20.0);
+        CANON_LEAVES = b.comment("Canon leaves (docs/grimoire_canon_leaves.md): the covers mean what they mean in Black Clover. Four-leaf and five-sided diamond are luck covers, the five-leaf is devil-bound (it is no longer given by the altar or the ceremony; despair, devil contracts and admin commands still give it) and carries the devil's price, and the level of the wielder matters. false = exactly the behaviour of 4.84.2.")
+                .define("canonLeaves", true);
+        CANON_LUCK_CHANCE = b.comment("Canon leaves: chance (0-1) that a spell hit of a luck cover (Four-Leaf, Five-Sided Diamond) is a lucky hit. 0 = never. Needs canonLeaves.").defineInRange("luckChance", 0.06, 0.0, 1.0);
+        CANON_LUCK_MULT = b.comment("Canon leaves: damage multiplier of a lucky hit.").defineInRange("luckMult", 1.5, 1.0, 10.0);
+        CANON_DEVIL_SHARE = b.comment("Canon leaves: the share (0-0.5) of the wielder's max mana the devil of a five-leaf or higher cover holds (not the God-Tier). Done as extra cost per spell, 1/(1-share). 0 = off. A cast that leaves the wielder under 15% mana also costs 2% of max health, at most once a second, never lethal.").defineInRange("devilMaxManaShare", 0.10, 0.0, 0.5);
+        CANON_OVERREACH = b.comment("Canon leaves: the most (factor) the mana cost rises when the cover is above the wielder's level (EP band). 1 = off.").defineInRange("overreachMaxCost", 1.5, 1.0, 3.0);
+        CANON_MASTERY = b.comment("Canon leaves: the most (0.12 = +12%) a lower cover gains in damage when the wielder is far above its level. 0 = off.").defineInRange("masteryMaxBonus", 0.12, 0.0, 1.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 

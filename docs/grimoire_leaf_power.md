@@ -51,3 +51,7 @@ No extra work: one multiplication per hit, no packets, nothing per tick.
 
 Spell cost does not change with the leaf. The legacy `GrimoireMagicSkill` and `GrimoirePageSkill` hits were not changed (they do not go through
 `GrimoireBook`). Not tuned in a game: the numbers are a first proposal for the owner to judge.
+
+## Canon leaves
+
+Added on top of the leaf power and the leaf cost: the covers get their canon meaning, the four-leaf and the five-sided diamond a small luck effect, the five-leaf is devil-bound (the altar, ceremony and Wizard never give it any more; despair, devil contracts and admin commands still do) and carries the devil's price, and the wielder's EP band changes cost and damage a little. One master setting `canonLeaves` (default true); false = the behaviour of 4.84.2. Details, settings and worst-case cost: `docs/grimoire_canon_leaves.md`.

@@ -126,6 +126,8 @@ public final class Ceremony {
         double c = MultiverseConfig.get(MultiverseConfig.WEIGHT_COMMON), u = MultiverseConfig.get(MultiverseConfig.WEIGHT_UNCOMMON);
         double r = MultiverseConfig.get(MultiverseConfig.WEIGHT_RARE), b = MultiverseConfig.get(MultiverseConfig.WEIGHT_BLACK);
         double g = MultiverseConfig.get(MultiverseConfig.WEIGHT_GOD);
+        double[] w = com.newuniverse.nusmp.grimoire.CanonLeaves.tierWeights(c, u, r, b, g, com.newuniverse.nusmp.grimoire.CanonLeaves.on());      // canon leaves: the five-leaf is devil-bound, its weight moves to the four-leaf
+        c = w[0]; u = w[1]; r = w[2]; b = w[3]; g = w[4];
         double x = p.getRandom().nextDouble() * Math.max(1e-6, c + u + r + b + g);
         if (x < c) return Tier.COMMON;
         if (x < c + u) return Tier.UNCOMMON;

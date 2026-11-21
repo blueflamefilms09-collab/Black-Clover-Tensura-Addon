@@ -273,6 +273,7 @@ public class GrimoireItem extends Item {
         }
         tooltip.add(Component.literal(cover.kingdom.displayName).withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.literal(cover.lore).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+        if (com.newuniverse.nusmp.grimoire.CanonLeaves.on()) com.newuniverse.nusmp.grimoire.CanonTooltip.add(tooltip, cover);      // canon leaves: what the cover means, its luck or its devil's price
         tooltip.add(Component.literal(String.format("Spell power x%.2f, cost x%.2f", cover.damage * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(cover), cover.cost * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.costFactor(cover))).withStyle(ChatFormatting.DARK_GRAY));
         BookLook look = look(stack);
         if (look.canon() != null) tooltip.add(Component.literal("The grimoire of " + look.canon().owner).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));

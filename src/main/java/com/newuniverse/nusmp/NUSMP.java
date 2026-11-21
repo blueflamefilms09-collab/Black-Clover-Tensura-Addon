@@ -188,6 +188,7 @@ public class NUSMP {
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
+        com.newuniverse.nusmp.grimoire.CanonLeavesSelfTests.register(NeoForge.EVENT_BUS);                    // canon leaves: self-tests canon.* (meaning, luck, price, mastery; docs/grimoire_canon_leaves.md) and the devil price cleanup on logout
         com.newuniverse.nusmp.balance.DamageScaleSelfTests.register();                                      // damage scale-down: self-tests dmgscale.* (Djinn band, hit ceilings, rank table; docs/damage_scale_down.md)
         com.newuniverse.nusmp.balance.DamageScaleEvents.register(NeoForge.EVENT_BUS);                        // damage scale-down: the last word on one hit (10,000; 15,000 for the apex weapon; Djinn band)
         com.newuniverse.nusmp.tooltip.RankTooltip.register(NeoForge.EVENT_BUS);                              // rankings: the "Rank: X" line under the name of every item of the mod (docs/rankings.md)
