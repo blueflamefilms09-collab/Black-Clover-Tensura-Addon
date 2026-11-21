@@ -103,8 +103,12 @@ public final class StoneCommand {
 
     // ---------------------------------------------------------------- the Soul Stone's trial
     /** The reason the trial cannot be taken now, or null. */
-    private static String trialRefusal(ServerPlayer p) {
+    private static String trialRefusal(ServerPlayer p) { return trialRefusal(p, false); }
+
+    /** {@code atAltar}: the caller is the altar block itself (so the altar-near rule is met). With the setting {@code altarRequired} on, the command works only within six blocks of a Vormir altar. */
+    static String trialRefusal(ServerPlayer p, boolean atAltar) {
         if (!StoneConfig.enabled()) return "The Infinity Stones are switched off on this server.";
+        if (!atAltar && StoneConfig.altarRequired() && !VormirAltarBlock.near(p)) return "The offer is made at an altar of Vormir: stand within six blocks of one.";
         if (!StoneSlot.gateOk(p)) return "The altar does not answer: you need " + StoneActs.short_(StoneConfig.epGate()) + " base maximum EP.";
         if (p.getServer() != null && UniqueLedger.liveIds(p.getServer()).contains(InfinityStone.SOUL.relicId())) return "The Soul Stone already has a keeper.";
         return null;

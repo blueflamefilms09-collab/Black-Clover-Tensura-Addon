@@ -2815,6 +2815,14 @@
   "y": 50.889,
   "z": 0.0
  },
+ "lokis_scepter": {
+  "class": "staff",
+  "fraction": 0.442,
+  "source": "directive",
+  "x": 0.0,
+  "y": 65.416,
+  "z": 0.0
+ },
  "luck_blade": {
   "class": "shortsword",
   "fraction": 0.145,

@@ -18,6 +18,7 @@ public final class StoneBoot {
         done = true;
         container.registerConfig(ModConfig.Type.SERVER, StoneConfig.SPEC, "nusmp-stones-server.toml");
         StoneEvents.register(NeoForge.EVENT_BUS);
+        CarrierEvents.register(NeoForge.EVENT_BUS);
         StoneSelfTests.register();
     }
 }

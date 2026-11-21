@@ -422,13 +422,13 @@ public final class RelicEngine {
             tell(p, act.displayName() + ": no uses left today (they return at dawn).", ChatFormatting.GRAY);
             return false;
         }
-        String stoneRefusal = com.newuniverse.nusmp.stones.StoneKit.refuse(p, def, act);            // Infinity Stone slot: a slot act of a stone not worn in the slot (or under the EP gate) costs nothing
+        String stoneRefusal = com.newuniverse.nusmp.stones.StoneKit.refuse(p, stack, def, act);            // Infinity Stone slot: a slot act of a stone not worn in the slot (or under the EP gate) costs nothing
         if (stoneRefusal != null) { tell(p, stoneRefusal, ChatFormatting.GRAY); return false; }
         if (!pay(p, act, Tiers.multiplier(stack, def, TierRules.Stat.COST) * com.newuniverse.nusmp.stones.StoneKit.costFactor(p))) return false;          // 1.29.0: a raised relic spends less (the Power Stone in the slot: 15% less)
         if (act.toggles()) flip(p, def, act);
         if (act.usesPerDay() > 0) recordUse(stack, act, now);
         if (act.cooldownTicks() > 0) {
-            int cd = Math.max(1, (int) Math.round(act.cooldownTicks() * Tiers.multiplier(stack, def, TierRules.Stat.COOLDOWN) * com.newuniverse.nusmp.stones.StoneKit.cooldownFactor(p)));     // 1.29.0: a raised relic recovers sooner (the Power and Time stones in the slot: 20% and 25% sooner)
+            int cd = Math.max(1, (int) Math.round(act.cooldownTicks() * Tiers.multiplier(stack, def, TierRules.Stat.COOLDOWN) * com.newuniverse.nusmp.stones.StoneKit.cooldownFactor(p, stack, act)));     // 1.29.0: a raised relic recovers sooner (the Power and Time stones in the slot: 20% and 25% sooner)
             long until = UseRules.readyAt(now, cd);
             setCooldown(p, def, act, until);
             if (def.acts().size() == 1 && !def.isAdopted() && !def.isRanged() && def.slot().isHand()) p.getCooldowns().addCooldown(stack.getItem(), cd);

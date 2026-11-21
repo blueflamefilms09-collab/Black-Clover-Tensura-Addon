@@ -946,6 +946,11 @@
       "profile": "spear",
       "source": "relic"
     },
+    "lokis_scepter": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
     "luck_blade": {
       "class": "shortsword",
       "profile": "shortsword",

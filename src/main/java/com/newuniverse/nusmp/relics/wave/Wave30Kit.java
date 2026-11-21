@@ -216,10 +216,12 @@ final class Wave30Kit {
         for (int i = 0; i < inv.getContainerSize(); i++) {
             RelicDef d = Relics.defOf(inv.getItem(i));
             if (d != null) out.add(d.id());
+            com.newuniverse.nusmp.stones.CarrierKit.addSocketed(inv.getItem(i), out);          // Infinity Stones Phase B: a stone socketed in a carrier is still on the player
         }
         for (ItemStack s : CuriosLink.equipped(p)) {
             RelicDef d = Relics.defOf(s);
             if (d != null) out.add(d.id());
+            com.newuniverse.nusmp.stones.CarrierKit.addSocketed(s, out);
         }
         return out;
     }

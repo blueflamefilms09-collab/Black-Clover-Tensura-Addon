@@ -70,7 +70,7 @@ class StoneSourceScanTest {
         assertTrue(read("relics/RelicCurioEquip.java").contains("StoneKit.slotFor("));
         String engine = code(read("relics/RelicEngine.java"));
         assertTrue(engine.contains("StoneKit.refuse(") && engine.indexOf("StoneKit.refuse(") < engine.indexOf("pay(p, act"), "a refused slot act costs nothing");
-        assertTrue(engine.contains("StoneKit.costFactor(p)") && engine.contains("StoneKit.cooldownFactor(p)"));
+        assertTrue(engine.contains("StoneKit.costFactor(p)") && engine.contains("StoneKit.cooldownFactor(p, stack, act)"));       // Phase B: the carrier circuit needs the stack and the act
         assertTrue(read("NUSMP.java").contains("stones.StoneBoot.init("));
         assertTrue(read("multiverse/MultiverseCommands.java").contains("stones.StoneCommand.node()"));
         assertTrue(read("relics/order/UniqueLedger.java").contains("loseAway("), "the away rule goes through the Order's ledger (no second registry)");

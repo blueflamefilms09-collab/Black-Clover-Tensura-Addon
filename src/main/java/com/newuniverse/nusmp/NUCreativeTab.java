@@ -77,6 +77,7 @@ public final class NUCreativeTab {
                 for (var sw : com.newuniverse.nusmp.sinweapons.SinWeaponBoot.creativeItems()) o.apply(G.WEAPONS).accept(sw.get());                // the five other Berserk weapons (creative only)
                 for (var lf : com.newuniverse.nusmp.lords.LordItems.renderables()) o.apply(G.WEAPONS).accept(lf.get());                // the new forms of the four Lord weapons (creative only; a bare stack becomes THE weapon only if none exists)
                 o.apply(G.GRIM).accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
+                o.apply(G.RELICS).accept(com.newuniverse.nusmp.block.NUBlocks.VORMIR_ALTAR_ITEM.get());                                  // Infinity Stones Phase B: the altar of Vormir (creative only)
                 for (net.minecraft.world.item.ItemStack bw : com.newuniverse.nusmp.beastwill.BeastWillItems.creativeStacks()) o.apply(G.RELICS).accept(bw);             // 3.45.0: one Beast Will core per shipped will
                 for (net.minecraft.world.item.ItemStack mc : com.newuniverse.nusmp.manacore.ManaCoreItems.creativeStacks()) o.apply(G.RELICS).accept(mc);              // 3.51.0: the 24 rank Mana Cores
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(o.apply(G.DUNGEON));                                       // 1.35.0: the Labyrinth's blocks and items

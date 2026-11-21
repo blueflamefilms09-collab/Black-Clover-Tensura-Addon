@@ -27,6 +27,12 @@ public final class StoneSelfTests {
         SelfTests.register("stones.defs", s -> defs());
         SelfTests.register("stones.state", s -> state());
         SelfTests.register("stones.ledger", s -> ledger());
+        SelfTests.register("stones.carrier.rules", s -> CarrierSelfTests.rules());
+        SelfTests.register("stones.carrier.defs", s -> CarrierSelfTests.defs());
+        SelfTests.register("stones.carrier.data", s -> CarrierSelfTests.data());
+        SelfTests.register("stones.carrier.state", s -> CarrierSelfTests.state());
+        SelfTests.register("stones.carrier.snap", s -> CarrierSelfTests.snap());
+        SelfTests.register("stones.carrier.altar", s -> CarrierSelfTests.altar());
     }
 
     private static Result rules() {
@@ -57,11 +63,11 @@ public final class StoneSelfTests {
                 String n = a.displayName().toLowerCase(java.util.Locale.ROOT);
                 if (n.contains("dominion") || n.contains("dominate") || n.contains("charm") || n.contains("control")) return Result.fail(s.id() + " has a controlling act: " + a.displayName());
             }
-            if (slotActs != 2) return Result.fail(s.id() + " has " + slotActs + " slot acts, not 2");
+            if (slotActs != CarrierRules.slotActs(s)) return Result.fail(s.id() + " has " + slotActs + " slot acts, not " + CarrierRules.slotActs(s));
             if (d.acts().size() < 3) return Result.fail(s.id() + " lost its old acts");
         }
         if (StonePassives.count(InfinityStone.SPACE) < 1) return Result.fail("the Space Stone has no attribute passive");
-        return Result.ok("six stones, two slot acts each, old acts kept, no controlling act");
+        return Result.ok("six stones, their slot acts (two each, four for Mind), old acts kept, no controlling act");
     }
 
     private static Result state() {

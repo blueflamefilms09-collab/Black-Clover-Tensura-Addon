@@ -29,10 +29,11 @@ final class StoneActs {
 
     private static final int MOVE_CAP = 12;
 
-    private static double scale(ActCtx c) { return StoneSlot.scale(c.player()); }
+    /** The stone scale of the bearer times the circuit boost of the carrier the act is cast through (1.0 from the slot). */
+    static double scale(ActCtx c) { return StoneSlot.scale(c.player()) * CarrierState.boost(); }
 
     /** The nearest foe inside a narrow cone of the player's look (the foes list is nearest first and capped at 24). */
-    private static LivingEntity aim(ServerPlayer p, double range) {
+    static LivingEntity aim(ServerPlayer p, double range) {
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         for (LivingEntity e : Fx.foesAround(p, range)) {
             Vec3 to = e.getEyePosition().subtract(eye);
@@ -43,7 +44,7 @@ final class StoneActs {
     }
 
     /** A stone hit: through the balance law as a GOD-class hit (total scale capped at x36, not the unclassified x72), a player never loses more than 30% of their health, never a creative or spectator one. */
-    private static void hit(ServerPlayer p, LivingEntity t, float raw) {
+    static void hit(ServerPlayer p, LivingEntity t, float raw) {
         if (t == null || t == p || !t.isAlive() || t.isAlliedTo(p)) return;
         if (t instanceof Player o && (o.isCreative() || o.isSpectator())) return;
         float dmg = BalanceLaw.damage(p, t, raw, 0.6, UltimateClass.GOD);
@@ -51,7 +52,7 @@ final class StoneActs {
         t.hurt(p.damageSources().indirectMagic(p, p), Math.min(dmg, 400f));
     }
 
-    private static void flash(ServerPlayer p, InfinityStone s, Vec3 at, double radius) {
+    static void flash(ServerPlayer p, InfinityStone s, Vec3 at, double radius) {
         ServerLevel l = p.serverLevel();
         Fx.ring(l, at, radius, s.rgb());
         Fx.burst(l, at, s.rgb());

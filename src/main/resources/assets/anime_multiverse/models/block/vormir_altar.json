@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "anime_multiverse:block/vormir_altar_top",
+    "side": "anime_multiverse:block/vormir_altar_side"
+  }
+}

@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.82.0] — Infinity Stones Phase B: socketed gauntlets, a new Snap, Loki's Scepter
+Owner request: the open Phase B work of the Infinity Stones (see docs/infinity_stones_phase_b.md).
+- NEW: the Infinity Gauntlet and a new Nano Gauntlet hold up to 6 socketed stones. A stone leaves the pack only after the gauntlet read it back, and the Order ledger still sees it. Socket and Unsocket acts, one act per stone, a synergy circuit (+25% effect, -15% cooldown), a non-lethal socket surge (double on the Nano Gauntlet) and the Mend and Rift combos.
+- REPLACED (the Snap): hold 5 s, 8% EP, four modes: Restore, Purge, Grant, Erase. It never touches players, hits at most 40 targets within 48 blocks, a boss loses a tenth, named and owned mobs are spared, it has a toll, a 7-game-day cooldown and a "burned arm" for 1 h on the Nano Gauntlet. Erase (the lethal mode) is OFF by default.
+- NEW: Loki's Scepter (GOD staff) holding the Mind Stone, with Blast and Barrier, Tensura engravings, a Better Combat file and a 832-quad 3D model.
+- NEW: Mind Stone leftovers: Telekinesis (lift, auto-throw after 3 s) and Mind Link (up to 4 allies, no chaining), plus a mastery bonus. There is no mind control anywhere.
+- NEW: the Vormir Altar block (with loot, textures and clickable offer lines into the existing trial); `altarRequired` is off by default.
+- NEW (server settings, `nusmp-stones-server.toml`, section `infinityStonesB`): carriers, socketSurge, synergyCircuit, combos, snap, snapErase (false), snapToll, snapCooldownDays (7), scepter, telekinesis, maxLifts (24), mindLink, maxLinks (24), masteryBonus, altar, altarRequired (false). All others on; turning a setting off restores the old behaviour of that part.
+- KEPT: the stones, the Order ledger, the existing trial, every older act. Not built: Iron Man Mark LXXXV / Ultron, Vision / Death / Ego, astral scouting, world sources of stones, altar world generation, a global real-day Snap limit, interrupting the Snap hold.
+- COST: server only for the acts. A Snap affects at most 40 targets once per 7 game days per player; Telekinesis at most 24 lifts and Mind Link at most 24 links server-wide; no per-tick world scan; per-player tables are dropped on logout. Packets: only the existing act and effect packets, to nearby players.
+- CAVEATS: nothing ran in a game, the CI smoke test (`stones.carrier.*`) is the first real run. The Scepter model is a script-built mesh (Blender was not available), not made in Blender. The Nano Gauntlet is a sprite plus the existing hand look. Telekinesis auto-throws and the mastery bonus is time based.
+
 ## [4.81.1] — Fix: a test pinned the end of the smoke list
 - FIXED: a Stones test required the smoke list to end exactly with `tier`, so the new `visual.grimoire_revamp` entry of 4.81.0 failed the build and no 4.81.0 release was made. The test now only requires that the old tail is still there. No game change; 4.81.1 carries the grimoire revamp of 4.81.0 (see below).
 - KEPT: every rule, number and asset.
