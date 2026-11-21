@@ -73,6 +73,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
     public static final ModConfigSpec.BooleanValue NEN_ENABLED, ALL_FICTION_REBUILT, NEN_VFX;          // 3.46.0
     public static final ModConfigSpec.BooleanValue NEN_VFX_V2;          // 3.57.0
+    public static final ModConfigSpec.BooleanValue STARTER_WIKI;                                                                // 4.78.0: new players start with the Wiki book
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.BooleanValue BEAST_SKILLS_ENABLED, BEAST_SKILL_GRANT_ON_MASTERY;   // 3.59.0
     public static final ModConfigSpec.BooleanValue ENGRAVING_LOCK;                                       // engravings are locked to their weapon (item.EngravingLock)
@@ -238,6 +239,10 @@ public final class NUConfig {
         NEN_VFX = b.comment("Nen's own effects (3.48.5: flowing aura, En sphere, Gyo eyes, hatsu impact and bolt). false = the particle puffs Nen had before.").define("nenVfx", true);
         NEN_VFX_V2 = b.comment("Nen's remade effects (3.57.0: layered flame aura, Ren burst, En lattice sphere, Gyo eyes, fist, homing bullets, chains, needle, field). false = the 3.48.5 look (nenVfx must be true for either).").define("nenVfxV2", true);
         ALL_FICTION_REBUILT = b.comment("All Fiction rebuild (3.46.0, ten modes). false = the old two modes only (Undo and Fiction) and the old death-refusal; the new modes refuse.").define("allFictionRebuilt", true);
+        b.pop();
+
+        b.push("starter");
+        STARTER_WIKI = b.comment("A player who joins this world for the first time is given the Multiverse Wiki book once (right-click opens the Codex on its Wiki tab). false = no starting book (the book can still be crafted).").define("starterWiki", true);
         b.pop();
 
         b.push("ultimates_3_47");

@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.78.0] — New players start with the Wiki book
+Owner request: "Make my wiki a book the player spawn in with".
+- NEW: a player who logs in and has not been stamped yet gets one Multiverse Wiki book (`anime_multiverse:multiverse_wiki`, right-click opens the Codex on its Wiki tab) once. It goes into the inventory, or is dropped at the feet if the inventory is full. The stamp is kept in the player's data, so it is never given twice, also not after death. Players who already played get it once too, the next time they log in.
+- NEW (server setting): `starter.starterWiki` in the main server config (default true). false = nobody is given the book (it can still be crafted).
+- KEPT: the Wiki book item, its crafting recipe and its Codex page are unchanged.
+- COST: server only, one data-flag check per login, no ticking, no packets.
+- CAVEATS: not run in a game; the pure rule is covered by `StarterWikiTest`.
+
 ## [4.77.0] — `/multiverse sin purge`
 Owner request (offered earlier): one command that takes the Berserk weapon skill and the weapon itself.
 - NEW: `/multiverse sin purge <sloth|envy|vanity|chakrams|holy|all> [player]` does what `remove` does (skill forgotten, side bar gone, kept from coming back) and also deletes every stack of that weapon from the player's inventory, armour and off hand. An operator may name a player. `restore` still lets the skill come back, but a deleted weapon has to be made again.

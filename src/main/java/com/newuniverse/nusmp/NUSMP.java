@@ -198,6 +198,7 @@ public class NUSMP {
         com.newuniverse.nusmp.core.xform.TransformGuard.register(NeoForge.EVENT_BUS);                        // forms end on death and nothing resumes (setting transformations.resetOnDeath; docs/transformation_fixes.md)
         com.newuniverse.nusmp.core.xform.XformGuardSelfTests.register();                                    // self-tests xformguard.* (docs/transformation_fixes.md)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.skill.NUSkill::onLogin);                       // Ultimate classes: earned mastery moves to the class's max at the same fraction
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.compat.StarterWiki::onLogin);                 // 4.78.0: a new player gets the Wiki book once (starter.starterWiki)
         modEventBus.addListener(com.newuniverse.nusmp.anim.SwordDrawPayload::register);
         modEventBus.addListener(com.newuniverse.nusmp.anim.CastAnimPayload::register);                      // 0.54: casting body animations                      // 0.52: the grimoire sword draw
         modEventBus.addListener(com.newuniverse.nusmp.entity.ZagredStatePayload::register);                 // 0.48: Zagred's state, word and reticle
