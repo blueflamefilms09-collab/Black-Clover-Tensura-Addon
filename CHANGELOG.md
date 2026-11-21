@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.95.2] — CurseForge changelog for 4.0.0 to 4.95.1
+Docs only, no game change.
+- NEW: `docs/curseforge_changelog_4.0.0_to_4.95.1.md`, a player-facing changelog of everything since 3.105.0 with a short version for the CurseForge box. Spoiler-type details (exact wish words, one-of-one item names and sources, unlock steps, debug tools) are left out on purpose.
+- NEW (compat note): Tensura No Index 0.133.0 was seen loading with the built-in compat pack without errors; the pack's ids were only checked against 0.71.0, and the deeper skill/damage bridge still needs the 0.133.0 jar.
+- KEPT: all game code, content and settings.
+
 ## [4.95.1] — A damage log for the bosses that lose health by themselves
 Owner report: Goku and Kakashi lose health on their own when you enter their arena (the Black Clover end-game boss and the Word Soul boss do not). The 4.94.0 log shows Goku "adapting to other damage" and saying "that one hurt" about 2-3 seconds after the fight starts, but it contains no "anonymous damage" line, so the hits carry an attacker the rule cannot tell from a real blow. Nothing in the log names it.
 - NEW: setting `bossRules.logDamageBosses` (default Goku and Kakashi; empty = off). The first time a listed boss takes a new kind of hit, one line `damage-probe:` names the damage type, the attacker, the striking entity, the amount, the effects count and the place. At most 24 lines per run, the same kind is never written twice. It only reads; no hit is changed.
