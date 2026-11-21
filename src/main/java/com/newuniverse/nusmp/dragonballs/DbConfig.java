@@ -12,7 +12,9 @@ public final class DbConfig {
     private DbConfig() {}
 
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue ENABLED, AUTO_SCATTER, SAIYAN_WISH;
+    private static final ModConfigSpec.BooleanValue ENABLED, AUTO_SCATTER, SAIYAN_WISH, OVERPOWERED, OP_ULTIMATES, OP_GENESIS;
+    private static final ModConfigSpec.IntValue OP_EARTH_WISHES, OP_SUPER_WISHES, OP_SKILLS, OP_LOCK;
+    private static final ModConfigSpec.EnumValue<SkillRules.Tier> OP_EARTH_TIER;
     private static final ModConfigSpec.IntValue COUNT, EARTH_WISHES, SUPER_WISHES, LOCK_MINUTES, SESSION_SECONDS, GATHER_RADIUS, SCATTER_MIN, SCATTER_MAX, SCATTER_SEP, RADAR_RANGE, POWER_CAP, REVIVE_MINUTES, WINDOW_SECONDS;
     private static final ModConfigSpec.ConfigValue<List<? extends String>> EARTH_PHRASES, SUPER_PHRASES;
 
@@ -37,6 +39,15 @@ public final class DbConfig {
         POWER_CAP = b.comment("Lifetime ceiling of the permanent power wish, in levels (one level = +1 heart and +0.5 attack damage; Earth gives 1 level per wish, Super 2).").defineInRange("powerCapLevels", WishRules.POWER_CAP_DEFAULT, 1, WishRules.POWER_CAP_MAX);
         REVIVE_MINUTES = b.comment("The revive wish reaches a player who died at most this many minutes ago.").defineInRange("reviveMinutes", 60, 1, 1440);
         SAIYAN_WISH = b.comment("Allow the 'turn me into a Saiyan' wish (it calls the Saiyan race switch). false = the wish is refused.").define("saiyanWish", true);
+        OVERPOWERED = b.comment("OVERPOWERED WISHES (docs/dragon_balls_overpowered.md). true: pick any race, skill, rank, item or relic by name, more wishes per summoning, bigger power / coins / revive, and the balls scatter the moment the first wish is granted. false = the old wish tables, caps and scatter timing exactly.")
+                .define("overpowered", true);
+        OP_EARTH_WISHES = b.comment("Overpowered mode: wishes Shenron grants per summoning (1..10). The old setting earthWishes is used when overpowered is false.").defineInRange("overpoweredEarthWishes", 3, 1, WishRules.MAX_WISHES_OVERPOWERED);
+        OP_SUPER_WISHES = b.comment("Overpowered mode: wishes Super Shenron grants per summoning (1..10). The old setting superWishes is used when overpowered is false.").defineInRange("overpoweredSuperWishes", 5, 1, WishRules.MAX_WISHES_OVERPOWERED);
+        OP_SKILLS = b.comment("Overpowered mode: skills one Super Shenron skill wish teaches (Shenron teaches one). 1..5.").defineInRange("overpoweredSkillsPerWish", 3, 1, 5);
+        OP_ULTIMATES = b.comment("Overpowered mode: may Super Shenron teach Ultimate skills (it always reaches Unique). false = Unique at most.").define("overpoweredUltimateSkills", true);
+        OP_EARTH_TIER = b.comment("Overpowered mode: the highest skill tier Shenron (Earth) teaches: RESISTANCE, COMMON, EXTRA, UNIQUE or ULTIMATE. Default EXTRA keeps Earth below Super.").defineEnum("overpoweredEarthSkillTier", SkillRules.Tier.EXTRA);
+        OP_GENESIS = b.comment("Overpowered mode: may the weapon wish give Genesis and EX-Singularity (Akashic) relics? Default false: God grade is the top.").define("overpoweredGenesisRelics", false);
+        OP_LOCK = b.comment("Overpowered mode: real minutes the balls stay stone after the first granted wish (0 = no lock). The old lockMinutes is used when overpowered is false.").defineInRange("overpoweredLockMinutes", 60, 0, (int) DbRules.MAX_LOCK_MINUTES);
         EARTH_PHRASES = b.comment("The words that call Shenron (whole words, case and punctuation ignored). Canon: the Namekian words are an assumption of the owner (the wiki gives the Porunga words 'Takkaraputo Popurunga Pupirittoparo'); the Japanese call is 'Ideyo Shenron'.")
                 .defineListAllowEmpty("earthPhrases", BallSet.EARTH.defaultPhrases(), () -> "", o -> o instanceof String);
         SUPER_PHRASES = b.comment("The words that call Super Shenron. English wiki (Super Shenron): 'Come forth, Dragon of the Gods, and grant my wish pretty peas!' ('Divine Dragon' / 'peas and carrots' in the dub).")
@@ -50,8 +61,31 @@ public final class DbConfig {
     public static int count() { try { return DbRules.clampCount(COUNT.get()); } catch (Throwable t) { return DbRules.CANON_COUNT; } }
 
     public static int wishes(BallSet s) {
-        try { return WishRules.wishCount(s, s == BallSet.SUPER ? SUPER_WISHES.get() : EARTH_WISHES.get()); } catch (Throwable t) { return s.defaultWishes(); }
+        try {
+            if (overpowered()) return WishRules.wishCount(s, s == BallSet.SUPER ? OP_SUPER_WISHES.get() : OP_EARTH_WISHES.get(), true);
+            return WishRules.wishCount(s, s == BallSet.SUPER ? SUPER_WISHES.get() : EARTH_WISHES.get());
+        } catch (RuntimeException | LinkageError t) { return overpowered() ? (s == BallSet.SUPER ? 5 : 3) : s.defaultWishes(); }
     }
+
+    // ---------------------------------------------------------------- overpowered mode (docs/dragon_balls_overpowered.md)
+    public static boolean overpowered() { try { return OVERPOWERED.get(); } catch (RuntimeException | LinkageError t) { return true; } }
+
+    public static int skillsPerWish(BallSet s) { try { return SkillRules.perWish(s, OP_SKILLS.get()); } catch (RuntimeException | LinkageError t) { return SkillRules.perWish(s, 3); } }
+
+    public static boolean ultimateSkills() { try { return OP_ULTIMATES.get(); } catch (RuntimeException | LinkageError t) { return true; } }
+
+    public static SkillRules.Tier earthSkillTier() { try { return OP_EARTH_TIER.get(); } catch (RuntimeException | LinkageError t) { return SkillRules.Tier.EXTRA; } }
+
+    public static boolean genesisRelics() { try { return OP_GENESIS.get(); } catch (RuntimeException | LinkageError t) { return false; } }
+
+    /** The highest skill tier the dragon of this set teaches right now. */
+    public static SkillRules.Tier skillCeiling(BallSet s) { return SkillRules.ceiling(s, earthSkillTier(), ultimateSkills()); }
+
+    /** Minutes of the stone lock after a granted wish: the overpowered setting while overpowered, else {@link #lockMinutes}. */
+    public static int lockMinutesNow() { try { return overpowered() ? OP_LOCK.get() : LOCK_MINUTES.get(); } catch (RuntimeException | LinkageError t) { return 60; } }
+
+    /** The lifetime power ceiling in effect: the configured cap, or the hard maximum while overpowered. */
+    public static int powerCapNow() { return WishRules.powerCap(powerCap(), overpowered()); }
 
     public static int lockMinutes() { try { return LOCK_MINUTES.get(); } catch (Throwable t) { return 60; } }
 

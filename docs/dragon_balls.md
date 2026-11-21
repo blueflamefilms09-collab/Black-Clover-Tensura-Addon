@@ -39,6 +39,7 @@ Shenron skins are painted by the same script with PIL. A Blender pass for Shenro
 3. Say the words in chat (see below). If the balls are all there, the sky darkens near you and the dragon rises.
 4. Make the wish by typing it, by clicking one in the menu, or by `/dragonwish <wish>`. Say `cancel` (or `never mind`, `farewell`, `goodbye`) to send the dragon away.
 5. After the last wish the dragon leaves and the whole set turns to stone for `lockMinutes` (real time, 60 by default) and scatters again.
+6. The words and the wish can also be **said into the microphone** with Simple Voice Chat (or relayed by any voice-to-text tool with `/multiverse dragonballs say`): see `docs/dragon_balls_voice.md`.
 
 ## The ritual words
 
@@ -160,3 +161,4 @@ Client (`nusmp-dragonballs-client.toml`): `dragonBalls.skyDarkening` (default tr
 * No hidden-structure placement for the balls (they lie on the surface), overworld only.
 * A ball created in creative mode (no generation tag) is accepted as current.
 * The Super weapon is the existing Ruyi Power Pole, not a new weapon.
+* Overpowered wishes (any race, skill, rank, item or relic by name, anime scatter at the first granted wish, setting `dragonBalls.overpowered`): see `docs/dragon_balls_overpowered.md`.

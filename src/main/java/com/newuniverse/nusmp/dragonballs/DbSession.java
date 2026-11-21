@@ -37,6 +37,8 @@ public final class DbSession {
     UUID dragon;
     private long lastSkyTick;
     private boolean ended;
+    /** The anime scatter already happened in this ritual (overpowered mode): the end of the ritual must not scatter or lock again. */
+    boolean scattered;
 
     private DbSession(ServerPlayer p, BallSet set, Vec3 at) {
         this.set = set;
@@ -94,10 +96,10 @@ public final class DbSession {
     // ================================================================ the menu (clickable wishes)
     static void menu(ServerPlayer p, DbSession s) {
         MutableComponent line = Component.empty();
-        for (WishRules.Wish w : WishRules.forSet(s.set)) {
+        for (WishRules.Wish w : WishRules.forSet(s.set, DbConfig.overpowered())) {
             line.append(Component.literal("[" + Character.toUpperCase(w.id().charAt(0)) + w.id().substring(1) + "] ")
                     .withStyle(Style.EMPTY.withColor(ChatFormatting.GOLD).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dragonwish " + w.id()))
-                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(DbMsg.P + "wish." + w.id() + "." + s.set.id())))));
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(DbMsg.P + "wish." + w.id() + "." + s.set.id() + (DbConfig.overpowered() ? ".op" : ""))))));
         }
         p.sendSystemMessage(line);
     }
@@ -108,6 +110,17 @@ public final class DbSession {
             String name = WishRules.skillName(id);
             line.append(Component.literal("[" + name + "] ")
                     .withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dragonwish skill " + name))));
+        }
+        p.sendSystemMessage(line);
+    }
+
+    /** A clickable list of up to {@code max} names of a runtime list ({@code /dragonwish <wish> <name>}), for the overpowered race and skill wishes. One chat line, never more than {@code max} buttons. */
+    static void listMenu(ServerPlayer p, java.util.List<WishNames.Entry> entries, String wish, ChatFormatting color, int max) {
+        java.util.List<String> cmd = WishNames.commandNames(entries);
+        MutableComponent line = Component.empty();
+        for (int i = 0; i < entries.size() && i < max; i++) {
+            line.append(Component.literal("[" + entries.get(i).name() + "] ")
+                    .withStyle(Style.EMPTY.withColor(color).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dragonwish " + wish + " " + cmd.get(i)))));
         }
         p.sendSystemMessage(line);
     }
@@ -125,7 +138,7 @@ public final class DbSession {
             p.sendSystemMessage(DbMsg.say(set, "refuse"));
             return;
         }
-        WishRules.Wish w = WishRules.match(set, t);
+        WishRules.Wish w = WishRules.match(set, t, DbConfig.overpowered());
         if (w == null) {
             p.sendSystemMessage(DbMsg.say(set, "unknown"));
             menu(p, this);
@@ -137,6 +150,10 @@ public final class DbSession {
         wishesGranted++;
         wishesLeft--;
         DbManager.LOG.info("[dragonballs] wish granted: player={} uuid={} dragon={} wish={} text='{}' ({} left)", summonerName, summoner, set.dragonName(), w.id(), t.length() > 80 ? t.substring(0, 80) : t, wishesLeft);
+        if (WishRules.scatterNow(DbConfig.overpowered(), wishesGranted, scattered)) {          // the anime scatter: the whole set flies off the moment the first wish is granted
+            scattered = true;
+            DbManager.animeScatter(p.getServer(), set, p.serverLevel(), at);
+        }
         if (wishesLeft <= 0) end(p.getServer(), "wishes granted", true);
         else p.sendSystemMessage(DbMsg.say(set, "another", wishesLeft));
     }
@@ -176,8 +193,9 @@ public final class DbSession {
             level.playSound(null, at.x, at.y, at.z, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 6.0f, 1.2f);
             level.sendParticles(ParticleTypes.END_ROD, at.x, at.y + 6, at.z, 30, 3.0, 5.0, 3.0, 0.05); // fx-allow: one 30-mote burst per ritual end
         }
-        DbManager.finish(s, set, wishesGranted > 0);
-        DbManager.LOG.info("[dragonballs] {} ritual of {} (uuid {}) ended: {} ({} wish(es) granted, locked={})", set.id(), summonerName, summoner, why, wishesGranted, wishesGranted > 0 && DbConfig.lockMinutes() > 0);
+        if (scattered) DbManager.closeAfterEarlyScatter(s, set);
+        else DbManager.finish(s, set, wishesGranted > 0);
+        DbManager.LOG.info("[dragonballs] {} ritual of {} (uuid {}) ended: {} ({} wish(es) granted, locked={})", set.id(), summonerName, summoner, why, wishesGranted, wishesGranted > 0 && DbConfig.lockMinutesNow() > 0);
     }
 
     static void endAll(MinecraftServer s, String why) {

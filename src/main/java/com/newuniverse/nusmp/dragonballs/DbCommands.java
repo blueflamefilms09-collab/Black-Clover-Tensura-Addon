@@ -7,6 +7,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import com.newuniverse.nusmp.dragonballs.voice.DbVoiceConfig;
+import com.newuniverse.nusmp.dragonballs.voice.SpeechBridge;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,6 +64,16 @@ public final class DbCommands {
                             DbManager.setLock(c.getSource().getServer(), s, m);
                             c.getSource().sendSuccess(() -> Component.literal("The " + s.id() + " balls are stone for " + m + " more minute(s)."), true);
                             return 1;
+                        }))))
+                // the relay for any voice-to-text mod, plugin or command block: the words count as if the player had said them (docs/dragon_balls_voice.md)
+                .then(Commands.literal("say").then(Commands.argument("player", EntityArgument.player())
+                        .then(Commands.argument("words", StringArgumentType.greedyString()).executes(c -> {
+                            ServerPlayer target = EntityArgument.getPlayer(c, "player");
+                            if (!DbVoiceConfig.enabled()) { c.getSource().sendFailure(Component.translatable("anime_multiverse.dbvoice.cmd.off")); return 0; }
+                            String words = StringArgumentType.getString(c, "words");
+                            if (!SpeechBridge.heard(target.getUUID(), words)) { c.getSource().sendFailure(Component.translatable("anime_multiverse.dbvoice.cmd.fail", target.getDisplayName())); return 0; }
+                            c.getSource().sendSuccess(() -> Component.translatable("anime_multiverse.dbvoice.cmd.ok", target.getDisplayName(), words), true);
+                            return 1;
                         }))));
     }
 
@@ -86,8 +99,8 @@ public final class DbCommands {
     public static void registerWish(RegisterCommandsEvent e) {
         CommandDispatcher<CommandSourceStack> d = e.getDispatcher();
         d.register(Commands.literal("dragonwish")
-                .then(Commands.argument("wish", StringArgumentType.word()).executes(c -> wish(c.getSource(), StringArgumentType.getString(c, "wish")))
-                        .then(Commands.argument("words", StringArgumentType.greedyString()).executes(c -> wish(c.getSource(), StringArgumentType.getString(c, "wish") + " " + StringArgumentType.getString(c, "words"))))));
+                .then(Commands.argument("wish", StringArgumentType.word()).suggests(DbWishSuggest::wishes).executes(c -> wish(c.getSource(), StringArgumentType.getString(c, "wish")))
+                        .then(Commands.argument("words", StringArgumentType.greedyString()).suggests(DbWishSuggest::words).executes(c -> wish(c.getSource(), StringArgumentType.getString(c, "wish") + " " + StringArgumentType.getString(c, "words"))))));
     }
 
     private static int wish(CommandSourceStack src, String text) {

@@ -29,6 +29,15 @@ public final class DbChat {
         p.getServer().execute(() -> handle(p, raw));
     }
 
+    /**
+     * A line that was not typed in chat but spoken (dragonballs/voice/SpeechBridge): it goes through exactly the same {@link #handle} as a chat line, with the same length cap, and is not shown in chat.
+     * Server thread only; the caller has checked that the player is online and alive.
+     */
+    public static void acceptLine(ServerPlayer p, String raw) {
+        if (!DbConfig.enabled() || raw == null || raw.length() > 256) return;
+        handle(p, raw);
+    }
+
     static void handle(ServerPlayer p, String raw) {
         DbSession mine = DbSession.byPlayer(p.getUUID());
         if (mine != null) {

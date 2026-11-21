@@ -2,6 +2,10 @@ package com.newuniverse.nusmp.dragonballs;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -321,6 +325,39 @@ public final class DbManager {
         d.setDirty();
     }
 
+    /**
+     * The anime scatter (overpowered mode only): the moment the FIRST wish of a ritual is granted the whole set rises in a small flash and is scattered at once with the normal scatter rules (new pending rows,
+     * the generation counter rises so any stray copy crumbles, the balls come as stones). The stone lock starts now ({@code overpoweredLockMinutes}) and the ritual is marked not active, so a restart in the
+     * middle of the remaining wishes loses nothing: the balls are already placed. The caller ({@link DbSession}) guards it to once per ritual. Nothing needs searching for: the balls were taken at the summoning
+     * ({@link #trySummon}), so there are no ground, bag or chest copies to collect. Cost: one scatter (at most 8 rows), at most {@link WishRules#FLASH_PER_BALL} particles per ball through the particle budget, one message per player nearby, no chunk load, no world scan.
+     */
+    static void animeScatter(MinecraftServer s, BallSet set, ServerLevel level, Vec3 at) {
+        DbData d = data(s);
+        int o = set.ordinal(), n = DbConfig.count();
+        boolean stone = DbConfig.lockMinutesNow() > 0;
+        scatter(s, set, stone);
+        if (stone) d.lockedUntil[o] = DbRules.lockUntil(System.currentTimeMillis(), DbConfig.lockMinutesNow());
+        d.active[o] = false;
+        d.setDirty();
+        if (level == null) return;
+        for (int i = 0; i < n; i++) {                                                          // each ball rises from a ring under the dragon with a small flash
+            double a = Math.PI * 2 * i / n, x = at.x + Math.cos(a) * 3.0, z = at.z + Math.sin(a) * 3.0, y = at.y - 5.0;
+            com.newuniverse.nusmp.perf.PerfParticles.send(level, ParticleTypes.END_ROD, x, y, z, 12, 0.15, 1.2, 0.15, 0.12);   // fx-allow: 12 motes per ball, the ritual's one flash, budgeted
+            com.newuniverse.nusmp.perf.PerfParticles.send(level, ParticleTypes.FLASH, x, y + 1.5, z, 1, 0, 0, 0, 0);            // fx-allow: one flash per ball
+            com.newuniverse.nusmp.perf.PerfParticles.send(level, ParticleTypes.GLOW, x, y + 2.5, z, 3, 0.3, 0.6, 0.3, 0.02);     // fx-allow: three glows per ball
+        }
+        level.playSound(null, at.x, at.y, at.z, SoundEvents.BEACON_DEACTIVATE, SoundSource.AMBIENT, 6.0f, 1.6f);
+        for (ServerPlayer q : level.players()) if (q.distanceToSqr(at.x, at.y, at.z) < DbNet.RANGE * DbNet.RANGE) q.sendSystemMessage(DbMsg.info("scatter_now", set.ballName()));
+        LOG.info("[dragonballs] anime scatter: the {} set was scattered at the first granted wish, locked={}", set.id(), stone);
+    }
+
+    /** The ritual ended after the anime scatter already placed (and locked) the set: only the active mark is cleared, nothing is scattered or locked a second time. */
+    static void closeAfterEarlyScatter(MinecraftServer s, BallSet set) {
+        DbData d = data(s);
+        d.active[set.ordinal()] = false;
+        d.setDirty();
+    }
+
     // ================================================================ deaths (revive wish)
     public static void onDeath(LivingDeathEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
@@ -338,7 +375,7 @@ public final class DbManager {
     /** The death of a player if it is inside the revive window, else null. */
     static Death death(UUID id) {
         Death d = DEATHS.get(id);
-        return d != null && System.currentTimeMillis() - d.atMs() <= DbConfig.reviveMinutes() * 60_000L ? d : null;
+        return d != null && WishRules.reviveInWindow(DbConfig.overpowered(), System.currentTimeMillis() - d.atMs(), DbConfig.reviveMinutes()) ? d : null;
     }
 
     static void forgetDeath(UUID id) { DEATHS.remove(id); }

@@ -88,7 +88,8 @@ class WishRulesTest {
     void wishIdsAreUnique() {
         Set<String> ids = new HashSet<>();
         for (WishRules.Wish w : WishRules.ALL) assertTrue(ids.add(w.id()), w.id());
-        assertEquals(WishRules.Kind.values().length, WishRules.ALL.size(), "one row per kind");
+        assertEquals(WishRules.Kind.values().length, WishRules.ALL.size() + WishRules.OVERPOWERED_ONLY.size(), "one row per kind");
+        for (WishRules.Wish w : WishRules.OVERPOWERED_ONLY) assertTrue(ids.add(w.id()), w.id());
     }
 
     @Test

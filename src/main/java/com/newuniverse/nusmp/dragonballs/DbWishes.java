@@ -54,9 +54,11 @@ public final class DbWishes {
             case POWER -> power(p, set);
             case COINS -> coins(p, set);
             case SKILL -> skill(p, set, text, s);
-            case ITEM -> item(p, set);
-            case WEAPON -> weapon(p, set);
+            case ITEM -> item(p, set, text);
+            case WEAPON -> DbConfig.overpowered() ? DbWishesPlus.weapon(p, set, text) : weapon(p, set);
             case SAIYAN -> saiyan(p, set);
+            case RACE -> DbConfig.overpowered() ? DbWishesPlus.race(p, set, text) : no(set, "unknown");
+            case RANK -> DbConfig.overpowered() ? DbWishesPlus.rank(p, set, text) : no(set, "unknown");
         };
     }
 
@@ -77,7 +79,7 @@ public final class DbWishes {
             ServerPlayer t = named == null ? p : named;
             if (DbManager.death(t.getUUID()) != null && t.isAlive()) targets.add(t);
         }
-        if (targets.isEmpty()) return no(set, "revive_none", DbConfig.reviveMinutes());
+        if (targets.isEmpty()) return no(set, DbConfig.overpowered() ? "revive_none_op" : "revive_none", DbConfig.reviveMinutes());
         int done = 0;
         for (ServerPlayer t : targets) {
             DbManager.Death d = DbManager.death(t.getUUID());
@@ -98,25 +100,26 @@ public final class DbWishes {
             if (t != p) t.sendSystemMessage(DbMsg.say(set, "revived_you"));
             done++;
         }
-        if (done == 0) return no(set, "revive_none", DbConfig.reviveMinutes());
+        if (done == 0) return no(set, DbConfig.overpowered() ? "revive_none_op" : "revive_none", DbConfig.reviveMinutes());
         return yes(set, "revived", done);
     }
 
     // ================================================================ permanent power
-    private static CompoundTag state(ServerPlayer p) { return p.getPersistentData().getCompound(KEY); }
+    static CompoundTag state(ServerPlayer p) { return p.getPersistentData().getCompound(KEY); }
 
     public static int powerLevels(ServerPlayer p) { return state(p).getInt("power"); }
 
     private static Outcome power(ServerPlayer p, BallSet set) {
         int cur = powerLevels(p);
-        int add = WishRules.addable(cur, WishRules.powerLevels(set), DbConfig.powerCap());
+        boolean op = DbConfig.overpowered();
+        int add = WishRules.addable(cur, WishRules.powerLevels(set, op), DbConfig.powerCapNow());
         if (add <= 0) return no(set, "power_cap");
         CompoundTag st = state(p);
         st.putInt("power", cur + add);
         p.getPersistentData().put(KEY, st);
         applyPower(p);
         p.setHealth(p.getMaxHealth());
-        return yes(set, "power", add, cur + add, DbConfig.powerCap());
+        return yes(set, "power", add, cur + add, DbConfig.powerCapNow());
     }
 
     /** Puts the two permanent modifiers of the player's power level on (or off at level 0). Idempotent: the old ones are removed first. */
@@ -147,12 +150,17 @@ public final class DbWishes {
     // ================================================================ coins, items, weapon
     private static Outcome coins(ServerPlayer p, BallSet set) {
         if (!CoinWallet.available()) return no(set, "coins_none");
-        long n = WishRules.coins(set);
+        long n = WishRules.coins(set, DbConfig.overpowered());
         new CoinWallet().give(p, n);
         return yes(set, "coins", n / 10_000L);
     }
 
-    private static Outcome item(ServerPlayer p, BallSet set) {
+    private static Outcome item(ServerPlayer p, BallSet set, String text) {
+        return DbConfig.overpowered() ? DbWishesPlus.item(p, set, text) : itemClassic(p, set);
+    }
+
+    /** The old item wish: one gift of the curated table, at random. */
+    static Outcome itemClassic(ServerPlayer p, BallSet set) {
         List<WishRules.Gift> table = WishRules.items(set);
         for (int tries = 0; tries < 6; tries++) {
             WishRules.Gift g = WishRules.pick(table, RNG);
@@ -181,12 +189,17 @@ public final class DbWishes {
         return yes(set, "weapon", stack.getHoverName());
     }
 
-    private static void give(ServerPlayer p, ItemStack st) {
+    static void give(ServerPlayer p, ItemStack st) {
         if (!p.getInventory().add(st) && !st.isEmpty()) p.drop(st, false);
     }
 
     // ================================================================ skill, race
     private static Outcome skill(ServerPlayer p, BallSet set, String text, DbSession s) {
+        return DbConfig.overpowered() ? DbWishesPlus.skill(p, set, text, s) : skillClassic(p, set, text, s);
+    }
+
+    /** The old skill wish: Earth a random skill of its short list, Super names one of its list. */
+    static Outcome skillClassic(ServerPlayer p, BallSet set, String text, DbSession s) {
         List<String> list = WishRules.skills(set);
         String named = WishRules.namedSkill(list, text);
         if (set == BallSet.SUPER && named == null) {                                             // Super Shenron lets the summoner choose: show the list, the wish is not used up

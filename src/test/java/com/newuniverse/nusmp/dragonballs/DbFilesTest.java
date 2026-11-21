@@ -56,6 +56,7 @@ class DbFilesTest {
     @Test
     void langFileIsFlatAndHasEveryKeyTheCodeAsksFor() throws IOException {
         JsonObject lang = JsonParser.parseString(Files.readString(Path.of("tools/lang/dragonballs.json"))).getAsJsonObject();
+        for (var e : JsonParser.parseString(Files.readString(Path.of("tools/lang/dbwish.json"))).getAsJsonObject().entrySet()) lang.add(e.getKey(), e.getValue());   // the overpowered wishes' fragment
         for (var e : lang.entrySet()) {
             assertTrue(e.getKey().startsWith("anime_multiverse.") || e.getKey().startsWith("item.anime_multiverse.") || e.getKey().startsWith("entity.anime_multiverse."), e.getKey());
             assertTrue(e.getValue().isJsonPrimitive(), "flat: " + e.getKey());
@@ -104,7 +105,7 @@ class DbFilesTest {
     @Test
     void theServerNeverLoadsChunksOrScansTheWholeWorld() throws IOException {
         for (Path f : dbSources()) {
-            if (f.getFileName().toString().equals("DbSelfTests.java")) continue;       // a self-test may load a chunk of its own scratch world
+            if (f.getFileName().toString().equals("DbSelfTests.java") || f.getFileName().toString().equals("DbWishSelfTests.java")) continue;      // a self-test may load a chunk of its own scratch world
             String code = Files.readString(f).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\\n]*", "");
             assertFalse(code.contains(".getChunk("), f + " may load a chunk (use getChunkNow)");
             assertFalse(code.contains("getAllEntities") || code.contains("EntityTypeTest.forClass(Entity.class)"), f + " scans every entity");

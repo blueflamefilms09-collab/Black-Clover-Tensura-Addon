@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.dragonballs;
 
 import com.newuniverse.nusmp.NUSMP;
+import com.newuniverse.nusmp.dragonballs.voice.DbVoice;
+import com.newuniverse.nusmp.dragonballs.voice.DbVoiceConfig;
+import com.newuniverse.nusmp.dragonballs.voice.DbVoiceSelfTests;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -36,6 +39,8 @@ public final class DbBoot {
         container.registerConfig(ModConfig.Type.SERVER, DbConfig.SPEC, "nusmp-dragonballs-server.toml");
         modBus.addListener(DbNet::registerPayloads);
         DbSaiyanBridge.install();
+        WishCatalog.install();
+        DbVoice.setVocabularySource(WishRules::spokenVocabulary);                                      // 4.93.0: the voice recogniser knows the wish words (races, skills, items, relics)
         NeoForge.EVENT_BUS.addListener(DbManager::onServerTick);
         NeoForge.EVENT_BUS.addListener(DbManager::onServerStarted);
         NeoForge.EVENT_BUS.addListener(DbManager::onServerStopping);
@@ -49,5 +54,12 @@ public final class DbBoot {
         NeoForge.EVENT_BUS.addListener(DbWishes::onClone);
         NeoForge.EVENT_BUS.addListener(DbCommands::registerWish);
         DbSelfTests.register();
+        // spoken words (Simple Voice Chat / the say relay): nusmp-dbvoice-server.toml, the gate job, the self-tests dbvoice.* (docs/dragon_balls_voice.md)
+        container.registerConfig(ModConfig.Type.SERVER, DbVoiceConfig.SPEC, "nusmp-dbvoice-server.toml");
+        NeoForge.EVENT_BUS.addListener(DbVoice::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(DbVoice::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(DbVoice::onServerTick);
+        NeoForge.EVENT_BUS.addListener(DbVoice::onLogout);
+        DbVoiceSelfTests.register();
     }
 }

@@ -30,6 +30,7 @@ public final class DbSelfTests {
         SelfTests.register("dragonballs.rules", DbSelfTests::rules);
         SelfTests.register("dragonballs.scatter", DbSelfTests::scatter);
         SelfTests.register("dragonballs.ritual", DbSelfTests::ritual);
+        DbWishSelfTests.register();                                                            // dbwish.*: the overpowered wishes
     }
 
     private static Result rules(MinecraftServer server) {
@@ -43,7 +44,7 @@ public final class DbSelfTests {
         if (count < DbRules.MIN_COUNT || count > DbRules.MAX_COUNT) bad.add("count " + count);
         for (BallSet s : BallSet.values()) {
             int w = DbConfig.wishes(s);
-            if (w < 1 || w > WishRules.MAX_WISHES) bad.add("wishes " + s + "=" + w);
+            if (w < 1 || w > (DbConfig.overpowered() ? WishRules.MAX_WISHES_OVERPOWERED : WishRules.MAX_WISHES)) bad.add("wishes " + s + "=" + w);
             if (!DbRules.matchesAny("Everyone! " + s.defaultPhrases().get(0).toUpperCase() + "!!", s.defaultPhrases())) bad.add("the first phrase of " + s + " does not match itself");
         }
         if (!DbRules.contains("Takkaradoppo, Pakkoradoppo -- YAIKANAAN!", "takkaradoppo pakkoradoppo yaikanaan")) bad.add("the Namekian phrase does not match through punctuation");

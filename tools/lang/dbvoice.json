@@ -1,0 +1,6 @@
+{
+  "anime_multiverse.dbvoice.heard": "Heard: %s",
+  "anime_multiverse.dbvoice.cmd.ok": "%s said: %s",
+  "anime_multiverse.dbvoice.cmd.off": "Voice input is switched off (nusmp-dbvoice-server.toml, voice.enabled).",
+  "anime_multiverse.dbvoice.cmd.fail": "%s cannot be heard right now (not online, dead, in spectator mode, or the words were empty)."
+}
