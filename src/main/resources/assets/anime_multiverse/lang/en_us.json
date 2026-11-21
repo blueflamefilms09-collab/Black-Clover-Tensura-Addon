@@ -20465,5 +20465,6 @@
   "item.anime_multiverse.sigil_of_the_second_book.tip2": "Needs a four-leaf grimoire or better and one book only. Right-click to be warned, then sneak + right-click. Your first book stays; the Tower Wizard's questions pick a different magic for the second.",
   "anime_multiverse.ui.slot.inv.title": "Grimoire Slot",
   "anime_multiverse.ui.slot.inv.empty": "No grimoire is bound. Click with your own grimoire to place it here.",
-  "anime_multiverse.ui.slot.inv.hint": "Click: take or swap. Shift-click: to the inventory."
+  "anime_multiverse.ui.slot.inv.hint": "Click: take or swap. Shift-click: to the inventory.",
+  "attune.msg.devil_busy": "That devil cannot take over now: push the active devil back first."
 }

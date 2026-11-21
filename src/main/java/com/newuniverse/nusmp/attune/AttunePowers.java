@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.devil.DevilContract;
 import com.newuniverse.nusmp.devil.DevilRules;
 import com.newuniverse.nusmp.devil.DevilStore;
 import com.newuniverse.nusmp.devil.WorldDevil;
+import com.newuniverse.nusmp.devil.phase2.Phase2;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import com.newuniverse.nusmp.relics.djinn.DjinnAttachments;
 import com.newuniverse.nusmp.relics.djinn.DjinnPhaseRules;
@@ -41,6 +42,14 @@ public final class AttunePowers {
         if (d != null) out.add(new View(djinnPower(p, d), d.displayName()));
         DevilContract c = DevilStore.peek(p);
         if (c != null && c.hasContract()) out.add(new View(devil(c), devilLabel(c)));
+        if (c != null && c.hasContract()) {                                                                         // 4.92.1: every other devil the player holds a contract with, not only the active one
+            Set<String> seen = new java.util.HashSet<>();
+            seen.add(devil(c).id());
+            for (WorldDevil w : Phase2.held(p)) {
+                AttuneRules.Power pw = heldDevil(w);
+                if (seen.add(pw.id())) out.add(new View(pw, w.name()));
+            }
+        }
         for (SpiritHandle h : SpiritControl.eligible(p)) out.add(new View(spirit(h), h.display()));
         return out.size() > AttuneRules.MAX_OWNED ? new ArrayList<>(out.subList(0, AttuneRules.MAX_OWNED)) : out;
     }
@@ -89,6 +98,11 @@ public final class AttunePowers {
     static AttuneRules.Power devil(DevilContract c) {
         String name = c.devil == null || c.devil.isEmpty() ? c.attribute.key() : c.devil;
         return new AttuneRules.Power("devil:" + clean(name), AttuneRules.DEVIL, AttuneRules.elementsOf(c.attribute.name()), Math.max(1, c.tier.ordinal()));
+    }
+
+    /** 4.92.1: a held devil that is not the active one (same id rule as {@link #devil}: the devil's id). */
+    static AttuneRules.Power heldDevil(WorldDevil w) {
+        return new AttuneRules.Power("devil:" + clean(w.id()), AttuneRules.DEVIL, AttuneRules.elementsOf(w.attribute().name()), Math.max(1, w.tier().ordinal()));
     }
 
     private static String devilLabel(DevilContract c) {

@@ -33,9 +33,12 @@ public final class GokuLadder {
     public static final double MAX_REDUCTION = 0.6;
 
     /** The skin textures (textures/entity/arc_goku*.png), in {@link Step#skin()} order. */
-    public static final List<String> SKINS = List.of("arc_goku", "arc_goku_ssj", "arc_goku_god", "arc_goku_blue", "arc_goku_ui");
+    public static final List<String> SKINS = List.of("arc_goku", "arc_goku_ssj", "arc_goku_god", "arc_goku_blue", "arc_goku_ui", "arc_goku_mui");
 
-    /** Index 0 is Base; the last index is True Ultra Instinct. Append-only. */
+    /** The id of the step after True Ultra Instinct (Omega mode only). */
+    public static final String MASTERED = "mastered_ultra_instinct";
+
+    /** Index 0 is Base; index 9 is True Ultra Instinct and the last index (10, Goku Omega) is Mastered Ultra Instinct. Append-only. */
     public static final List<Step> STEPS = List.of(
             new Step("base", 2.0, 0.00, 1.0, 0, "Alright. Let's see what you've got!"),
             new Step("super_saiyan", 0.85, 0.10, 50.0, 1, "HAAAAAA! Super Saiyan!"),
@@ -46,7 +49,32 @@ public final class GokuLadder {
             new Step("super_saiyan_blue_kaioken", 0.30, 0.60, 10.0, 3, "Kaio-ken times ten, on top of Blue!"),
             new Step("ultra_instinct_sign", 0.20, 0.70, 0.0, 4, "My body... is moving by itself."),
             new Step("perfected_ultra_instinct", 0.10, 0.82, 0.0, 4, "This is it. Perfected Ultra Instinct."),
-            new Step("true_ultra_instinct", 0.04, 0.95, 0.0, 4, "True Ultra Instinct. Come on, give me everything!"));
+            new Step("true_ultra_instinct", 0.04, 0.95, 0.0, 4, "True Ultra Instinct. Come on, give me everything!"),
+            // Goku Omega (docs/goku_omega.md): appended. Reached only when the Omega mode is on ({@link #CLASSIC_LAST} is the old top); it has no row in the Saiyan chart, its numbers are {@link #EXTRAS}.
+            new Step(MASTERED, 0.02, 0.98, 0.0, 5, "Mastered Ultra Instinct. My body knows. Now, let's finish this."));
+
+    /** The top of the ladder before Goku Omega: True Ultra Instinct. With Omega off he never goes above it. */
+    public static final int CLASSIC_LAST = 9;
+
+    /** The numbers of a step that is not a row of the Saiyan chart: damage bonus, defence, speed bonus and the aura colour (0xRRGGBB). */
+    public record Extra(double damage, double defense, double speed, int rgb) {}
+
+    /** Steps without a chart row. Mastered Ultra Instinct: a little above True Ultra Instinct in damage and defence, silver-white. */
+    private static final java.util.Map<String, Extra> EXTRAS = java.util.Map.of(MASTERED, new Extra(2.9, 1.10, 0.32, 0xEAF0FF));
+
+    private static double dmgOf(Step s) {
+        SaiyanForms.Form f = s.form();
+        if (f != null) return f.damage();
+        Extra e = EXTRAS.get(s.id());
+        return e == null ? 0.0 : e.damage();
+    }
+
+    private static double defOf(Step s) {
+        SaiyanForms.Form f = s.form();
+        if (f != null) return f.defense();
+        Extra e = EXTRAS.get(s.id());
+        return e == null ? 0.0 : e.defense();
+    }
 
     public static int size() { return STEPS.size(); }
 
@@ -75,8 +103,13 @@ public final class GokuLadder {
 
     /** The step he is in after this tick: at most one step up, only after {@link #MIN_DWELL} ticks in the current one, never down. */
     public static int next(int current, double hpFraction, long fightTicks, long enrageTicks, long ticksInForm) {
+        return next(current, hpFraction, fightTicks, enrageTicks, ticksInForm, last());
+    }
+
+    /** The same with a top: he never steps above {@code top} (Omega off: {@link #CLASSIC_LAST}). */
+    public static int next(int current, double hpFraction, long fightTicks, long enrageTicks, long ticksInForm, int top) {
         int cur = clamp(current);
-        if (cur >= last() || ticksInForm < MIN_DWELL) return cur;
+        if (cur >= clamp(top) || ticksInForm < MIN_DWELL) return cur;
         return wanted(hpFraction, fightTicks, enrageTicks) > cur ? cur + 1 : cur;
     }
 
@@ -87,26 +120,23 @@ public final class GokuLadder {
      */
     public static double damageMul(int idx, double strength) {
         double best = 0.0;
-        for (int i = 1; i <= clamp(idx); i++) {
-            SaiyanForms.Form f = STEPS.get(i).form();
-            if (f != null) best = Math.max(best, f.damage());
-        }
+        for (int i = 1; i <= clamp(idx); i++) best = Math.max(best, dmgOf(STEPS.get(i)));
         return 1.0 + best * Math.max(0.0, strength);
     }
 
     /** The speed multiplier of a step (chart's speed bonus x strength; Super Saiyan 3 is slower in the chart and stays so). */
     public static double speedMul(int idx, double strength) {
-        SaiyanForms.Form f = step(idx).form();
-        return f == null ? 1.0 : Math.max(0.5, 1.0 + f.speed() * Math.max(0.0, strength));
+        Step st = step(idx);
+        SaiyanForms.Form f = st.form();
+        Extra e = EXTRAS.get(st.id());
+        double speed = f != null ? f.speed() : e != null ? e.speed() : 0.0;
+        return Math.max(0.5, 1.0 + speed * Math.max(0.0, strength));
     }
 
     /** The chart's defence of a step (0 for Base), never below an earlier step's. */
     public static double defense(int idx) {
         double best = 0.0;
-        for (int i = 1; i <= clamp(idx); i++) {
-            SaiyanForms.Form f = STEPS.get(i).form();
-            if (f != null) best = Math.max(best, f.defense());
-        }
+        for (int i = 1; i <= clamp(idx); i++) best = Math.max(best, defOf(STEPS.get(i)));
         return best;
     }
 
@@ -115,14 +145,16 @@ public final class GokuLadder {
 
     /** 0xRRGGBB of the step's aura (a pale blue for Base). */
     public static int rgb(int idx) {
-        SaiyanForms.Form f = step(idx).form();
-        return f == null ? 0x9FD8FF : f.rgb() & 0xFFFFFF;
+        Step st = step(idx);
+        SaiyanForms.Form f = st.form();
+        Extra e = EXTRAS.get(st.id());
+        return f != null ? f.rgb() & 0xFFFFFF : e != null ? e.rgb() : 0x9FD8FF;
     }
 
     /** Does the step have crackling lightning (Super Saiyan 2 and 3, Blue Kaio-ken and the Ultra Instinct forms)? */
     public static boolean electric(int idx) {
         int i = clamp(idx);
-        return i == 2 || i == 3 || i == 6 || i == 8 || i == 9;
+        return i == 2 || i == 3 || i == 6 || i == 8 || i == 9 || i == 10;
     }
 
     /** The cumulative canon power of a step over Base (a ratio of 0 counts as x1). Informational: the doc prints it. */

@@ -30,11 +30,12 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.spawn", GokuBossSelfTests::spawn);
         SelfTests.register("goku.boss.cap", GokuBossSelfTests::cap);
         SelfTests.register("goku.boss.arts", GokuBossSelfTests::arts);
+        GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
     private static SelfTests.Result data(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (GokuLadder.STEPS.size() != 10) bad.add("the ladder has " + GokuLadder.STEPS.size() + " steps");
+        if (GokuLadder.STEPS.size() != 11) bad.add("the ladder has " + GokuLadder.STEPS.size() + " steps");
         GokuBossMath.Reading r = GokuBossMath.resolve(true, 0.0, 0.0, GokuBossConfig.preset());
         if (!(r.ep() > 0.0) || r.source() != GokuBossMath.Source.PRESET) bad.add("the fallback chain gives " + r);
         GokuBossMath.Params p = GokuBossConfig.params();

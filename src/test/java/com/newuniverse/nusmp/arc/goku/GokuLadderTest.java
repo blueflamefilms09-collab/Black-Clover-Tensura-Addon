@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /** The Goku boss's form schedule: canon order, no skipped step, never down, forms read from the owner's chart, monotone strength, and the skins exist. Pure: no game type is started. */
 class GokuLadderTest {
     private static final String[] CANON = {"base", "super_saiyan", "super_saiyan_2", "super_saiyan_3", "super_saiyan_god", "super_saiyan_blue", "super_saiyan_blue_kaioken",
-            "ultra_instinct_sign", "perfected_ultra_instinct", "true_ultra_instinct"};
+            "ultra_instinct_sign", "perfected_ultra_instinct", "true_ultra_instinct", "mastered_ultra_instinct"};
 
     @Test
     void theStepsAreTheCanonOrderAndEveryFormIsInTheChart() {
@@ -24,7 +24,7 @@ class GokuLadderTest {
             assertEquals(CANON[i], s.id(), "step " + i);
             assertTrue(seen.add(s.id()), "duplicate " + s.id());
             if (i == 0) assertNull(s.form(), "Base is the absence of a form");
-            else assertNotNull(SaiyanForms.byId(s.id()), s.id() + " is not a form of the Saiyan chart");
+            else if (!GokuLadder.MASTERED.equals(s.id())) assertNotNull(SaiyanForms.byId(s.id()), s.id() + " is not a form of the Saiyan chart");   // Mastered (Goku Omega) has no chart row: GokuLadder.EXTRAS
             assertFalse(s.line().isBlank(), "every form has a line");
             assertEquals(i, GokuLadder.indexOf(s.id()));
         }

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""The five skins of the Goku boss, cut from the shared body arc_npc_default by the Tier List skin tool (tools/tier_bosses/gen_tier_skins.py).
+"""The six skins of the Goku boss (the sixth, arc_goku_mui, is Mastered Ultra Instinct of Goku Omega), cut from the shared body arc_npc_default by the Tier List skin tool (tools/tier_bosses/gen_tier_skins.py).
 
     python tools/goku_boss/gen_goku_skins.py
 
-Writes assets/anime_multiverse/textures/entity/arc_goku.png, arc_goku_ssj.png, arc_goku_god.png, arc_goku_blue.png, arc_goku_ui.png and their _glow.png (the belt buckle only).
-The boss swaps between them with his form (GokuLadder.SKINS). Only these ten files are written. The body is the shared one: no new 3D model (see docs/goku_boss.md).
+Writes assets/anime_multiverse/textures/entity/arc_goku.png, arc_goku_ssj.png, arc_goku_god.png, arc_goku_blue.png, arc_goku_ui.png, arc_goku_mui.png and their _glow.png (the belt buckle only).
+The boss swaps between them with his form (GokuLadder.SKINS). Only these twelve files are written. The body is the shared one: no new 3D model (see docs/goku_boss.md).
 """
 import sys
 from pathlib import Path
@@ -19,6 +19,7 @@ g.PALETTES = {
     "goku_god":  dict(hair=0xD0262B, skin=0xF2C9A4, outfit=ORANGE,   pants=ORANGE,   accent=0xFF8A80),   # Super Saiyan God: red hair
     "goku_blue": dict(hair=0x39A9F0, skin=0xF2C9A4, outfit=ORANGE,   pants=ORANGE,   accent=0x9FE0FF),   # Blue and Blue Kaio-ken: blue hair
     "goku_ui":   dict(hair=0xD8DEE6, skin=0xF2C9A4, outfit=0x2A2F3A, pants=0x2A2F3A, accent=0xC9D6E8),   # Ultra Instinct: silver hair, a dark gi
+    "goku_mui":  dict(hair=0xF4F8FF, skin=0xF2C9A4, outfit=0x9AA6BC, pants=0x7C879C, accent=0xFFFFFF),   # Mastered Ultra Instinct (Goku Omega, appended): white-silver hair, a silver gi, white glow
 }
 
 if __name__ == "__main__":

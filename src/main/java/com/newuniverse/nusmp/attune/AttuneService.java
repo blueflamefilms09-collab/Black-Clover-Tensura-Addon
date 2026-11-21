@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.attune;
 
 import com.newuniverse.nusmp.NUGameRules;
+import com.newuniverse.nusmp.devil.DevilContract;
+import com.newuniverse.nusmp.devil.DevilStore;
+import com.newuniverse.nusmp.devil.phase2.Phase2;
 import com.newuniverse.nusmp.power.PowerConfig;
 import com.newuniverse.nusmp.power.PowerEvents;
 import net.minecraft.ChatFormatting;
@@ -135,10 +138,23 @@ public final class AttuneService {
         w.slots.addAll(ids);
         w.lastChange = Math.max(1L, now);
         SESSIONS.remove(p.getUUID());
+        activateChosenDevil(p, ids);
         int pairs = AttuneRules.resonatingPairs(chosen);
         int bonus = (int) Math.round((AttuneRules.resonance(pairs, AttuneConfig.resonance()) - 1.0) * 100);
         say(p, "attune.msg.done", "Attuned: %s power(s), resonance +%s%%.", ChatFormatting.GOLD, ids.size(), bonus);
         return Verdict.DONE;
+    }
+
+    /** 4.92.1: an attuned devil that is held but not the active one becomes the active devil (the one whose power acts); one that cannot swap right now (let in, in the union) is told so. */
+    private static void activateChosenDevil(ServerPlayer p, List<String> ids) {
+        for (String id : ids) {
+            if (id == null || !id.startsWith("devil:")) continue;
+            String devil = id.substring("devil:".length());
+            DevilContract c = DevilStore.peek(p);
+            if (c != null && AttunePowers.devil(c).id().equals(id)) return;                                      // already the active one
+            if (!Phase2.activateByMeditation(p, devil)) say(p, "attune.msg.devil_busy", "That devil cannot take over now: push the active devil back first.", ChatFormatting.YELLOW);
+            return;
+        }
     }
 
     private static String labelOf(Map<String, AttunePowers.View> byId, AttuneRules.Power pw) {

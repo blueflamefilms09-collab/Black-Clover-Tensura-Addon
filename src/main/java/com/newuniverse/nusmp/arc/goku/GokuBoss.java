@@ -117,6 +117,8 @@ public class GokuBoss extends ArcBoss {
     private String seenCast = "";
     private boolean lowSaid;
     private Vec3 bombSpot;
+    /** Goku Omega (docs/goku_omega.md): the level, the hacks and the experience of the fight. Every call into it is guarded by {@code GokuBossConfig.omega()}. */
+    private final GokuOmega omega = new GokuOmega(this);
 
     public GokuBoss(EntityType<? extends GokuBoss> type, Level level) {
         super(type, level);
@@ -200,7 +202,7 @@ public class GokuBoss extends ArcBoss {
 
     @Override protected boolean refillOnGates() { return false; }
 
-    @Override public String barTitle() { return bossName() + " - " + formName(formIdx()); }
+    @Override public String barTitle() { return bossName() + (omega.on() ? " Lv." + omega.level() : "") + " - " + formName(formIdx()); }
 
     /** He brawls up close. */
     @Override protected double preferredRange(double suggested) { return Math.min(suggested, 6.0); }
@@ -229,6 +231,7 @@ public class GokuBoss extends ArcBoss {
         }
         if (kaioUntil != 0 && tickCount >= kaioUntil) endKaio();
         if (farewellAt != 0L && tickCount >= farewellAt) finishFarewell(sl);
+        omega.tick(sl);
         if (tickCount % 4 == 0) fx(sl);
         if (bombDamage > 0f && !"spirit_bomb".equals(castId())) bombDamage = 0f;
         voiceTick();
@@ -302,11 +305,13 @@ public class GokuBoss extends ArcBoss {
         nextScan = 0L;
         lowSaid = false;
         seenCast = "";
+        omega.fightStart();
     }
 
     @Override
     protected void onFightEnd(boolean won) {
         super.onFightEnd(won);
+        omega.fightEnd(won);
         if (!won && BossSpeech.anyFighterDown(this)) BossSpeech.say(this, BossLines.GOKU, "victory");
         BossSpeech.forget(getUUID());
         windLeft = 0;
@@ -327,6 +332,7 @@ public class GokuBoss extends ArcBoss {
     public void remove(RemovalReason reason) {
         LIVE.remove(this);
         BossSpeech.forget(getUUID());
+        omega.clear();
         if (!level().isClientSide) clearMods();
         super.remove(reason);
     }
@@ -346,7 +352,7 @@ public class GokuBoss extends ArcBoss {
             if (s != null && s.saiyan) topBp = Math.max(topBp, s.battlePower);
         }
         GokuBossMath.Params params = GokuBossConfig.params();
-        GokuBossMath.Reading r = GokuBossMath.resolve(useEp, topEp, topBp, params.preset());
+        GokuBossMath.Reading r = omega.boost(GokuBossMath.resolve(useEp, topEp, topBp, params.preset()));
         boolean first = !scanned;
         if (first || !fightActive()) {                          // before a fight he may follow the party both ways; in a fight he only ever grows
             reading = r;
@@ -360,8 +366,8 @@ public class GokuBoss extends ArcBoss {
     }
 
     private void applyScaling(GokuBossMath.Params params) {
-        healthFactor = GokuBossMath.healthFactor(reading, players, params);
-        damageFactor = GokuBossMath.damageFactor(reading, players, params);
+        healthFactor = omega.health(GokuBossMath.healthFactor(reading, players, params));
+        damageFactor = omega.damage(GokuBossMath.damageFactor(reading, players, params));
         pace = GokuBossMath.paceFactor(reading, params);
         AttributeInstance max = getAttribute(Attributes.MAX_HEALTH);
         if (max == null) return;
@@ -378,7 +384,7 @@ public class GokuBoss extends ArcBoss {
     private void stepForm(ServerLevel sl) {
         double hp = getHealth() / Math.max(1f, getMaxHealth());
         long enrage = GokuBossMath.enrageTicks(GokuBossConfig.enrageMinutes(), pace);
-        int next = GokuLadder.next(formIdx(), hp, fightTicks, enrage, inForm);
+        int next = GokuLadder.next(formIdx(), hp, fightTicks, enrage, inForm, omega.ladderTop());
         if (next != formIdx()) beginChange(sl, next);
     }
 
@@ -415,6 +421,7 @@ public class GokuBoss extends ArcBoss {
                 Vec3 away = f.position().subtract(position()).multiply(1, 0, 1);
                 if (away.lengthSqr() > 1e-4) f.knockback(0.7, -away.x, -away.z);
             }
+            omega.onFormChanged();
         }
     }
 
@@ -480,6 +487,7 @@ public class GokuBoss extends ArcBoss {
         if (idx == 0 && !kaio) return;
         GokuFx.aura(sl, this, kaio && idx <= KAIO_UP_TO ? 0xE03020 : GokuLadder.rgb(idx), GokuLadder.electric(idx) || kaio);
         if (idx >= DODGE_FROM && tickCount % 20 == 0 && tickCount >= dodgeReadyAt) GokuFx.shimmer(sl, this, 4);   // the dodge is ready: the players can see it
+        if (idx == GokuLadder.last() && tickCount % 20 == 0) GokuFx.ring(sl, position(), 1.6, GokuLadder.rgb(idx), 10);   // Mastered Ultra Instinct: a silver halo on the ground
     }
 
     // ================================================================ his attacks
@@ -488,13 +496,16 @@ public class GokuBoss extends ArcBoss {
     public boolean strike(LivingEntity victim, float baseDamage, boolean magic) {
         if (victim == null || !victim.isAlive() || isFamily(victim)) return false;
         DamageSource src = magic ? damageSources().indirectMagic(this, this) : damageSources().mobAttack(this);
-        float dealt = bossDamage(victim, baseDamage);
+        boolean om = omega.on() && victim instanceof Player;
+        float dealt = om ? omega.hit(victim, baseDamage) : bossDamage(victim, baseDamage);       // Omega: no 40% law cap in between, only the Omega cap below
         if (victim instanceof Player) {
-            double share = GokuBossConfig.maxHitPercent();
+            double share = GokuBossConfig.hitShare();
             if (src.scalesWithDifficulty() && level().getDifficulty() == Difficulty.HARD) share /= 1.5;     // the game multiplies a mob's damage on Hard after the cap
             dealt = GokuBossMath.capHit(dealt, victim.getMaxHealth(), share);
         }
-        return victim.hurt(src, dealt);
+        boolean landed = victim.hurt(src, dealt);
+        if (landed) omega.onStrike(victim);
+        return landed;
     }
 
     /**
@@ -583,10 +594,15 @@ public class GokuBoss extends ArcBoss {
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);
         if (farewellAt != 0L && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;       // 4.90.0: he is already on his way out
-        if (tryDodge(source, amount)) return false;
+        if (tryDodge(source, amount)) {
+            omega.onDodged(source);
+            return false;
+        }
+        if (omega.on() && omega.onIncoming(source, amount)) return false;
         float before = getHealth();
         boolean landed = super.hurt(source, amount);
         float dealt = before - getHealth();
+        if (landed && omega.on()) omega.onHurt(source, dealt);
         if (landed && dealt >= getMaxHealth() * 0.06f) BossSpeech.say(this, BossLines.GOKU, "hurt_big");
         if (landed && dealt > 0f && "spirit_bomb".equals(castId())) {
             bombDamage += dealt;
@@ -615,16 +631,33 @@ public class GokuBoss extends ArcBoss {
         int idx = formIdx();
         if (idx < DODGE_FROM || windLeft > 0 || !(amount > 0f) || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
         if (state() == STATE_CASTING || exposed() || staggerUntil > tickCount) return false;
-        SaiyanForms.Dodge d = SaiyanForms.dodge(GokuLadder.step(idx).id(), 1.0);
-        if (d == null || tickCount < dodgeReadyAt) return false;
-        if (tickCount - windowStart > d.window()) {
+        String stepId = GokuLadder.step(idx).id();
+        boolean om = omega.on();
+        double formChance, cap = GokuBossConfig.dodgeCap();
+        int cool, per, win;
+        if (om && GokuLadder.MASTERED.equals(stepId)) {            // Mastered Ultra Instinct: no chart row, near-perfect
+            formChance = GokuOmegaMath.MASTERED_CHANCE;
+            cool = GokuOmegaMath.MASTERED_COOLDOWN;
+            per = GokuOmegaMath.MASTERED_PER_WINDOW;
+            win = GokuOmegaMath.MASTERED_WINDOW;
+        } else {
+            SaiyanForms.Dodge d = SaiyanForms.dodge(stepId, 1.0);
+            if (d == null) return false;
+            formChance = d.chance();
+            cool = om ? Math.max(20, d.cooldown()) : Math.max(40, d.cooldown());
+            per = d.perWindow();
+            win = d.window();
+        }
+        if (tickCount < dodgeReadyAt) return false;
+        if (tickCount - windowStart > win) {
             windowStart = tickCount;
             windowCount = 0;
         }
-        if (windowCount >= d.perWindow()) return false;
-        if (getRandom().nextDouble() >= GokuBossMath.dodgeChance(d.chance(), GokuBossConfig.uiDodgeCap())) return false;
+        if (windowCount >= per) return false;
+        double chance = om ? GokuOmegaMath.dodgeChance(formChance, cap) : GokuBossMath.dodgeChance(formChance, cap);
+        if (getRandom().nextDouble() >= chance) return false;
         windowCount++;
-        dodgeReadyAt = tickCount + Math.max(40, d.cooldown());
+        dodgeReadyAt = tickCount + cool;
         if (level() instanceof ServerLevel sl) {
             GokuFx.shimmer(sl, this, 12);
             sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.2f, 1.8f);
@@ -640,6 +673,7 @@ public class GokuBoss extends ArcBoss {
         float a = super.mitigate(source, amount);
         a *= (float) (1.0 - GokuLadder.reduction(formIdx()) * 0.5);
         if (kaioActive()) a *= 1.10f;
+        if (omega.on()) a *= omega.resistMul(source);                  // Great Sage: what he has learned of this kind of damage
         return a;
     }
 
@@ -720,6 +754,18 @@ public class GokuBoss extends ArcBoss {
     private void give(String ns, String path, int n) {
         Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(ns, path));
         if (item != null && item != Items.AIR) spawnAtLocation(new ItemStack(item, n));
+    }
+
+    // ================================================================ Goku Omega glue (package-private)
+    GokuOmega omega() { return omega; }
+
+    /** The damage scale of the framework chain (his damage factor, divided by the framework's tuning), for the Omega hit. */
+    float damageScalePublic() { return damageScale(); }
+
+    /** A small scripted heal (the Second Wind): a deliberate, capped exception to the boss rule 'no heal in combat', like the Gates refill. */
+    void healQuiet(float amount) {
+        if (!(amount > 0f)) return;
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(Math.min(getMaxHealth(), getHealth() + amount))));
     }
 
     // ================================================================ test seams (package-private, never used by the game)

@@ -226,6 +226,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
         root.then(com.newuniverse.nusmp.arc.kakashi.KakashiCommand.node());                                    // kakashi_boss spawn|status|clear (op): the Kakashi boss
         root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.node());                                       // goku_boss spawn|status|clear (op): the Goku boss
+        root.then(com.newuniverse.nusmp.arc.goku.GokuBossCommand.omegaNode());                                  // goku level [set N] (op): Goku Omega's level
         root.then(com.newuniverse.nusmp.arc.magi.SinbadBossCommand.node());                                     // sinbad_boss spawn|status|clear (op): the Sinbad boss
         root.then(bossNode);
         root.then(com.newuniverse.nusmp.skill.DbSkills.node());                                          // 3.56.0: dragonball give|list

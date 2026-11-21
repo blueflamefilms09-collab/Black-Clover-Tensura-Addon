@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.arc.goku;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -25,7 +26,42 @@ public final class GokuBossCommand {
                 .then(Commands.literal("spawn").executes(ctx -> spawn(ctx, null))
                         .then(Commands.argument("pos", Vec3Argument.vec3()).executes(ctx -> spawn(ctx, Vec3Argument.getVec3(ctx, "pos")))))
                 .then(Commands.literal("status").executes(GokuBossCommand::status))
-                .then(Commands.literal("clear").executes(GokuBossCommand::clear));
+                .then(Commands.literal("clear").executes(GokuBossCommand::clear))
+                .then(levelNode());
+    }
+
+    /** {@code /multiverse goku level [set N]} (operators): Goku Omega's level, his experience, what he trained and what he has unlocked; {@code set N} puts him at the start of level N. Same as {@code goku_boss level}. */
+    public static LiteralArgumentBuilder<CommandSourceStack> omegaNode() {
+        return Commands.literal("goku").requires(s -> s.hasPermission(2)).then(levelNode());
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> levelNode() {
+        return Commands.literal("level").executes(GokuBossCommand::level)
+                .then(Commands.literal("set").then(Commands.argument("n", IntegerArgumentType.integer(1, GokuOmegaMath.HARD_MAX_LEVEL)).executes(ctx -> setLevel(ctx, IntegerArgumentType.getInteger(ctx, "n")))));
+    }
+
+    private static int level(CommandContext<CommandSourceStack> ctx) {
+        GokuWorld w = GokuWorld.get(ctx.getSource().getServer());
+        GokuOmegaMath.Progress p = w.progress;
+        int cap = GokuBossConfig.omegaLevelCap(), lv = p.level(cap);
+        ok(ctx, "Goku Omega is " + (GokuBossConfig.omega() ? "ON" : "OFF (setting goku_boss.omega.enabled)") + ": level " + lv + "/" + cap + ", " + p.xp + " experience"
+                + (lv < cap ? ", " + (GokuOmegaMath.totalXpFor(lv + 1) - p.xp) + " to the next" : ", at the cap") + ".");
+        ok(ctx, "Trained today " + p.trainToday + "/" + GokuBossConfig.get(GokuBossConfig.OMEGA_TRAINING_DAILY) + " (training " + (GokuBossConfig.omegaTraining() ? "on" : "off")
+                + "), fights today " + p.fightToday + "/" + GokuBossConfig.get(GokuBossConfig.OMEGA_FIGHT_DAILY) + "; he beat players in " + p.wins + " fight(s), took his bow " + p.farewells + " time(s), " + p.survived + " fight(s) ended with nobody left.");
+        StringBuilder sb = new StringBuilder();
+        for (GokuOmegaMath.Hack h : GokuOmegaMath.Hack.values()) sb.append(sb.length() > 0 ? ", " : "").append(h.name().toLowerCase(java.util.Locale.ROOT)).append(h.unlocked(lv) ? "" : " (level " + h.unlock + ")");
+        return ok(ctx, "Hacks: " + sb + ".");
+    }
+
+    private static int setLevel(CommandContext<CommandSourceStack> ctx, int n) {
+        GokuWorld w = GokuWorld.get(ctx.getSource().getServer());
+        w.progress.setLevel(n);
+        w.setDirty();
+        for (GokuBoss b : GokuBoss.live()) {
+            b.omega().refreshLevel();
+            b.rescanSoon();
+        }
+        return ok(ctx, "Goku is now at the start of level " + w.level() + (n > GokuBossConfig.omegaLevelCap() ? " (the setting goku_boss.omega.levelCap holds him at " + GokuBossConfig.omegaLevelCap() + ")" : "") + ".");
     }
 
     private static int fail(CommandContext<CommandSourceStack> ctx, String text) {

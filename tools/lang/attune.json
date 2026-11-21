@@ -20,5 +20,6 @@
  "attune.msg.devil_spirit": "A Devil and a Spirit cannot be attuned together.",
  "attune.msg.limit": "Only two powers at once. Meditate (/meditate) to choose which two.",
  "attune.msg.limit_devil_spirit": "A Devil and a Spirit will not work together. Meditate (/meditate) to choose one.",
- "attune.screen.devil_spirit": "A Devil and a Spirit cannot be held together."
+ "attune.screen.devil_spirit": "A Devil and a Spirit cannot be held together.",
+ "attune.msg.devil_busy": "That devil cannot take over now: push the active devil back first."
 }

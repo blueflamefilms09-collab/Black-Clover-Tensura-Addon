@@ -461,6 +461,32 @@ public final class Phase2 {
         return true;
     }
 
+    /** 4.92.1: the devils this player holds a contract with (a copy, at most 16; empty with phase 2 off), so the meditation screen can list all of them, not only the active one. */
+    public static List<WorldDevil> held(ServerPlayer p) {
+        if (!on() || p.getServer() == null) return List.of();
+        List<WorldDevil> out = new java.util.ArrayList<>();
+        for (DevilLedger.Pact pa : ledger(p.getServer()).pacts(p.getUUID())) {
+            WorldDevil w = WorldDevil.byId(pa.devil());
+            if (w != null) out.add(w);
+        }
+        return out;
+    }
+
+    /**
+     * 4.92.1: meditation makes a held devil the active one. Same checks as {@link #use} (held, not already active, not let in or in the union) but without the one-minute swap wait
+     * (the attunement has its own cooldown) and without chat. True when {@code devilId} is the active devil afterwards.
+     */
+    public static boolean activateByMeditation(ServerPlayer p, String devilId) {
+        DevilContract c = DevilStore.peek(p);
+        WorldDevil d = WorldDevil.byId(devilId);
+        if (!on() || d == null || c == null || p.getServer() == null) return false;
+        if (d.id().equals(c.devil)) return true;
+        if (ledger(p.getServer()).pact(p.getUUID(), d.id()) == null || c.inUnion() || c.assimilating) return false;
+        c.lastSwap = now(p.getServer());
+        DevilContracts.activate(p, c, d);
+        return true;
+    }
+
     /** {@code /devil pact list}: your contracts, their kind and your share, and the devils you were severed from. */
     public static void list(ServerPlayer p) {
         DevilLedger l = ledger(p.getServer());
