@@ -132,6 +132,14 @@ public final class WizardSystem {
         PacketDistributor.sendToPlayer(p, new WizardNet.OpenPayload(sheet.toTag()));
     }
 
+    /** True when a time limit is set (minutes, 0 = none) and the sheet is older than it. */
+    static boolean expired(long now, long at, int limitMinutes) { return limitMinutes > 0 && now - at > limitMinutes * 1200L; }
+
+    /** A player who leaves forgets their open sheet (no time limit, so nothing else would clear it). */
+    public static void onLogout(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent e) {
+        PENDING.remove(e.getEntity().getUUID());
+    }
+
     private static void say(ServerPlayer p, String msg) {
         p.sendSystemMessage(Component.literal("[Tower Wizard] ").withStyle(ChatFormatting.DARK_PURPLE).append(Component.literal(msg).withStyle(ChatFormatting.WHITE)));
     }
@@ -139,7 +147,8 @@ public final class WizardSystem {
     /** The answers come back. */
     public static void answer(ServerPlayer p, int[] answers) {
         Pending pend = PENDING.remove(p.getUUID());
-        if (pend == null || p.level().getGameTime() - pend.at() > 6000 || p.position().distanceToSqr(pend.where()) > 20 * 20) { say(p, "You took too long. Speak to me again."); return; }
+        int limit = MultiverseConfig.get(MultiverseConfig.ANSWER_LIMIT_MINUTES);                                  // 4.89.1: 0 = no time limit (was a fixed 5 minutes)
+        if (pend == null || expired(p.level().getGameTime(), pend.at(), limit) || p.position().distanceToSqr(pend.where()) > 20 * 20) { say(p, pend != null && expired(p.level().getGameTime(), pend.at(), limit) ? "You took too long. Speak to me again." : "Speak to me again."); return; }
         if (GrimoirePages.grimoireOf(p).isPresent() && !com.newuniverse.nusmp.rebirth.RebirthWizardHooks.pending(p)) return;
         var pool = MultiverseConfig.get(MultiverseConfig.ALL_MAGICS) ? MagicFlavors.pool() : GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p));   // 1.16.0: every magic
         var r = Questionnaire.result(pend.sheet(), answers, com.newuniverse.nusmp.rebirth.RebirthWizardHooks.poolFor(p, pool), NUGameRules.forbiddenStart(p.level()),

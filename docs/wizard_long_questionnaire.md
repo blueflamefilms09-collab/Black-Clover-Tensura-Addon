@@ -69,3 +69,7 @@ Honest note: the aim was 78 / 18 / 4 for random and "mostly four, sometimes five
 - No second kind of questionnaire for non-grimoire paths; the resolve score has no reader yet (the rebirth feature).
 - The five-leaf share for random answers is 2.9%, not 4% (see the note above).
 - No preview image (no new visual).
+
+## No answer time limit (4.89.1)
+
+Owner report: the 30 questions took too long, because the wizard threw the sheet away after a fixed 5 minutes ("You took too long"). Now there is no time limit: server setting `answerLimitMinutes` (multiverse config, default 0 = none). A value above 0 restores a limit in minutes (5 = the old one). The wizard still wants you within 20 blocks of him. An open sheet is dropped when the player logs out (one small entry per player, no per-tick work, no packets). The number of questions is unchanged (30); a smaller sheet is a separate decision.

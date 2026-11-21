@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.89.1] — Fix: no time limit on the Tower Wizard's questions
+Owner report: the questions for the Grimoire Tower take way too long; fix the time limit, without adding a real one.
+- FIXED: the wizard threw your sheet away after a fixed 5 minutes ("You took too long"), which is too short for 30 questions. There is now no time limit: think as long as you like.
+- NEW (server setting): `answerLimitMinutes` (default 0 = no limit); a value above 0 brings a limit back (5 = the old one).
+- KEPT: the 30 questions, the leaf rule, and the rule that you stay within 20 blocks of the wizard.
+- NEW: an open sheet is forgotten when the player logs out (nothing else would clear it now). Cost: one small entry per player, no per-tick work, no packets.
+- CAVEATS: not tried in a game. The question count is unchanged; say if you also want it cut.
+
 ## [4.89.0] — Grimoire slot rework: a slot in your own inventory, and no more lag
 Owner report: "fix the grimoire slot to be something different and rework its UI because it's really laggy and buggy."
 - NEW: the grimoire slot is drawn in your own inventory screen (a gold-framed box above the off-hand: click to take, place, swap; shift-click moves the book to or from your inventory). Tooltip and hover highlight included.
