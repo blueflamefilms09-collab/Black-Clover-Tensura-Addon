@@ -53,7 +53,10 @@ public final class DbBoot {
         NeoForge.EVENT_BUS.addListener(DbWishes::onRespawn);
         NeoForge.EVENT_BUS.addListener(DbWishes::onClone);
         NeoForge.EVENT_BUS.addListener(DbCommands::registerWish);
+        NeoForge.EVENT_BUS.addListener(DbTeach::onPickup);                                             // 4.95.0: the words are taught ball by ball
+        NeoForge.EVENT_BUS.addListener(DbTeach::registerCommand);
         DbSelfTests.register();
+        DbWordsSelfTests.register();                                                                   // dbwords.*: the lessons
         // spoken words (Simple Voice Chat / the say relay): nusmp-dbvoice-server.toml, the gate job, the self-tests dbvoice.* (docs/dragon_balls_voice.md)
         container.registerConfig(ModConfig.Type.SERVER, DbVoiceConfig.SPEC, "nusmp-dbvoice-server.toml");
         NeoForge.EVENT_BUS.addListener(DbVoice::onServerStarted);

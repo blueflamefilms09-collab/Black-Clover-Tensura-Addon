@@ -12,7 +12,8 @@ import java.util.Locale;
 public enum BallSet {
     /** The Earth Dragon Balls: orange, red stars, Shenron. Default phrases: the owner's Namekian words and the "come forth" lines (Japanese wiki: Ideyo Shenron). */
     EARTH("earth", "Dragon Ball", "Shenron", 0xF08A20, 1,
-            List.of("takkaradoppo pakkoradoppo yaikanaan", "come forth shenron", "arise shenron", "ideyo shenron", "detekoi shenron")),
+            List.of("takkaradoppo pakkoradoppo yaikanaan", "come forth shenron", "arise shenron", "ideyo shenron", "detekoi shenron",
+                    "takkaraputo popporunga pupiritto paro", "takkarapto popporunga pupiritto paro", "eternal dragon by your name i summon you forth shenron")),
     /** The Super Dragon Balls (the World Dragon Balls of the Dragon God Zalama): violet and gold, Super Shenron. English wiki: "Come forth, Dragon of the Gods, and grant my wish, pretty peas!" */
     SUPER("super", "Super Dragon Ball", "Super Shenron", 0xB25CF0, 2,
             List.of("come forth dragon of the gods and grant my wish pretty peas", "come forth divine dragon and grant my wish peas and carrots", "come forth dragon of the gods", "come forth divine dragon"));

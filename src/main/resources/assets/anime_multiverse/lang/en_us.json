@@ -20708,5 +20708,17 @@
   "key.anime_multiverse.doubles_prev": "Real Double: previous double",
   "key.anime_multiverse.doubles_pick": "Real Double: pick the double you aim at",
   "gui_move.element.doubles_stack": "Real Double stack",
-  "anime_multiverse.gui_scale.gui.doubles_stack": "Real Double stack"
+  "anime_multiverse.gui_scale.gui.doubles_stack": "Real Double stack",
+  "anime_multiverse.dragonballs.words.learn": "Ball %1$s of %2$s. Listen: \"%3$s\".",
+  "anime_multiverse.dragonballs.words.stir": "Ball %1$s of %2$s. I stir, but there are no new words yet. Find the rest.",
+  "anime_multiverse.dragonballs.words.complete": "Ball %1$s of %2$s: you have found them all. You know every word now. Gather the whole set and say them in chat.",
+  "anime_multiverse.dragonballs.words.known": "You have found %1$s of %2$s balls. This is what you know:",
+  "anime_multiverse.dragonballs.words.sofar": "The words so far: \"%1$s\"",
+  "anime_multiverse.dragonballs.words.copy": "[Copy]",
+  "anime_multiverse.dragonballs.words.copy.hover": "Copy these words to your clipboard, then paste them into chat (Ctrl+V).",
+  "anime_multiverse.dragonballs.words.chat": "[Put in chat]",
+  "anime_multiverse.dragonballs.words.chat.hover": "Fill your chat box with these words. Press Enter to say them.",
+  "anime_multiverse.dragonballs.words.none": "You have not found any Dragon Ball yet, so there are no words to learn.",
+  "anime_multiverse.dragonballs.words.off": "The words are not taught on this server.",
+  "anime_multiverse.dragonballs.words.player_only": "Only a player can learn the words."
 }

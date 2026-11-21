@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.95.0] — The words of the Dragon Balls are taught ball by ball
+Owner request: players should be taught the words as they get each Dragon Ball and be given a prompt to copy and paste into chat; and "give me the summoning phrases".
+- NEW: the first time a player holds a ball, the dragon whispers the next piece of that set's call in chat, then a line with everything known so far and two buttons: Copy (clipboard) and Put in chat (fills the chat box). The last ball completes the phrase. `/dragonwords [earth|super]` shows it again for any player. Setting `dragonBalls.teachWords` (default true; false = nothing is taught or sent).
+- NEW: two canon calls are accepted for the Earth set on new servers: the Namekian chant `Takkaraputo Popporunga Pupiritto Paro` and the DBZ dub line `Eternal Dragon, by your name I summon you forth, Shenron`. Existing config files keep their lists (delete the two phrase lines to get the new defaults).
+- KEPT: summoning, every old phrase, wishes, the radar, the lock; nothing is required of the player (the words only help).
+- COST: a bit test per ball per five seconds; one saved row per player (at most 4096); two chat lines per new ball; no packets, entities or scans. Details and the phrase table with sources in `docs/dragon_ball_words.md`.
+- CAVEATS: not seen in a game. The Dragon Ball wiki could not be reached from the build session; the phrases were checked by web search only (Namekian and the Earth dub lines confirmed, the exact Super Shenron line and the Japanese lines not). The lesson teaches the first phrase of each list: the owner's Earth words, and the long Super line.
+
 ## [4.94.0] — Worthwhile boss drops, weapons no longer block hold-and-use items, Real Doubles UI
 Three owner requests in one release.
 

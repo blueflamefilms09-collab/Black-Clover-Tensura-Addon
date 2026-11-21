@@ -210,6 +210,7 @@ public final class DbManager {
             return;
         }
         if (star > DbConfig.count()) return;
+        DbTeach.teach(p, set, star);                                                                   // 4.95.0: the first time a player holds this ball the dragon teaches the next words
         DbData.Ball b = ball(d, set, star);
         if (b == null) b = d.balls[set.ordinal()][star - 1] = new DbData.Ball();
         String dim = level.dimension().location().toString();

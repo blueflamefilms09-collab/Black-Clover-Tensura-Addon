@@ -12,7 +12,7 @@ public final class DbConfig {
     private DbConfig() {}
 
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue ENABLED, AUTO_SCATTER, SAIYAN_WISH, OVERPOWERED, OP_ULTIMATES, OP_GENESIS;
+    private static final ModConfigSpec.BooleanValue ENABLED, AUTO_SCATTER, SAIYAN_WISH, OVERPOWERED, OP_ULTIMATES, OP_GENESIS, TEACH_WORDS;
     private static final ModConfigSpec.IntValue OP_EARTH_WISHES, OP_SUPER_WISHES, OP_SKILLS, OP_LOCK;
     private static final ModConfigSpec.EnumValue<SkillRules.Tier> OP_EARTH_TIER;
     private static final ModConfigSpec.IntValue COUNT, EARTH_WISHES, SUPER_WISHES, LOCK_MINUTES, SESSION_SECONDS, GATHER_RADIUS, SCATTER_MIN, SCATTER_MAX, SCATTER_SEP, RADAR_RANGE, POWER_CAP, REVIVE_MINUTES, WINDOW_SECONDS;
@@ -52,6 +52,8 @@ public final class DbConfig {
                 .defineListAllowEmpty("earthPhrases", BallSet.EARTH.defaultPhrases(), () -> "", o -> o instanceof String);
         SUPER_PHRASES = b.comment("The words that call Super Shenron. English wiki (Super Shenron): 'Come forth, Dragon of the Gods, and grant my wish pretty peas!' ('Divine Dragon' / 'peas and carrots' in the dub).")
                 .defineListAllowEmpty("superPhrases", BallSet.SUPER.defaultPhrases(), () -> "", o -> o instanceof String);
+        TEACH_WORDS = b.comment("Teach the words that call the dragon as a player finds each ball (the dragon whispers the next piece in chat, with Copy / Put in chat buttons; /dragonwords shows it again). It only helps: summoning is unchanged. false = nothing is taught or sent (docs/dragon_ball_words.md).")
+                .define("teachWords", true);
         b.pop();
         SPEC = b.build();
     }
@@ -110,6 +112,8 @@ public final class DbConfig {
     public static int reviveMinutes() { try { return REVIVE_MINUTES.get(); } catch (Throwable t) { return 60; } }
 
     public static boolean saiyanWish() { try { return SAIYAN_WISH.get(); } catch (Throwable t) { return true; } }
+
+    public static boolean teachWords() { try { return TEACH_WORDS.get(); } catch (RuntimeException | LinkageError t) { return true; } }
 
     public static List<? extends String> phrases(BallSet s) {
         try { return s == BallSet.SUPER ? SUPER_PHRASES.get() : EARTH_PHRASES.get(); } catch (Throwable t) { return s.defaultPhrases(); }
