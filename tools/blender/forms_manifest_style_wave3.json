@@ -1,0 +1,32 @@
+{
+ "legendary_sword__phoenix_sword": {
+  "class": "longsword",
+  "form": "phoenix_sword",
+  "weapon": "legendary_sword"
+ },
+ "vassal_carriage__queens_chariot": {
+  "class": "handitem",
+  "form": "queens_chariot",
+  "weapon": "vassal_carriage"
+ },
+ "vassal_carriage__war_carriage": {
+  "class": "handitem",
+  "form": "war_carriage",
+  "weapon": "vassal_carriage"
+ },
+ "vassal_katana__siderite_katana": {
+  "class": "katana",
+  "form": "siderite_katana",
+  "weapon": "vassal_katana"
+ },
+ "vassal_katana__white_tiger_katana": {
+  "class": "katana",
+  "form": "white_tiger_katana",
+  "weapon": "vassal_katana"
+ },
+ "vassal_mirror__yata_mirror": {
+  "class": "shield",
+  "form": "yata_mirror",
+  "weapon": "vassal_mirror"
+ }
+}

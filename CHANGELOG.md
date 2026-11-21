@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.88.0] — Style wave 3: ten more weapons rebuilt in their own look
+- REPLACED (same ids, same grip, engravings and Better Combat files): Legendary Spear (and its Curse form), Portal Spear, Dragon Minute Hand, Siderite Katana, White Tiger Katana, War Carriage, Queen's Chariot, Yata Mirror and Phoenix Sword. Each has three base materials plus one named accent, unequal spacing and one hero feature, and gold only where the lore says gold. The white tiger's paw guard stays within the katana outline rule of 4.61.0 (1/16 across).
+- NEW (client option): `vassalForms.classicStyleWave3` (default off) brings back the previous look of these ten; the old meshes and skins are kept in `classic_style3/`.
+- CHANGED: the hold audit now flags nothing (the Queen's Chariot grip is fixed).
+- Modelling: scripted Blender builds and bakes (no Blender GUI, no Blockbench); the previews in `docs/previews/style_wave3/` are software-rasteriser stills, not game screenshots. Details in `docs/heroweapon/style/wave3.md`.
+- COST: unchanged; every weapon stays within the mesh budget (at most 2909 quad lines, 340 KB skin plus glow).
+- CAVEATS: not seen in a game; the sameness scores of the siderite, white tiger and queen's chariot are still above the target.
+
 ## [4.87.0] — Rebirth: reset your grimoire, or take a second book
 - NEW: the Sigil of Rebirth. Use it (sneak and click a second time to confirm) to erase your grimoire skills, your own grimoire items and your Signature and go back to the Tower Wizard to be asked again, so you can get a new magic type. Cooldown 7 days by default.
 - NEW: the Sigil of the Second Book. After a rite and the Wizard you keep your first grimoire and get a second one of another magic type, like Yuno's two books. It needs at least four leaves and a resolve score of 3 (settings `secondBookMinLeaves`, `secondBookMinResolve`).

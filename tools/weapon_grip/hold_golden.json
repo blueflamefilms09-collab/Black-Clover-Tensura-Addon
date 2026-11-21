@@ -771,16 +771,16 @@
  },
  "legendary_spear": {
   "tp_left": {
-   "arm": 0.24,
+   "arm": 0.251,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.023
   },
   "tp_right": {
-   "arm": 0.24,
+   "arm": 0.251,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.023
   }
  },
  "legendary_spear__bruenack": {
@@ -830,13 +830,13 @@
    "arm": 0.245,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.023
   },
   "tp_right": {
    "arm": 0.245,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.023
   }
  },
  "legendary_spear__filolial_spear": {
@@ -886,13 +886,13 @@
    "arm": 0.257,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.016
   },
   "tp_right": {
    "arm": 0.257,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.011
+   "float": 0.016
   }
  },
  "legendary_spear__triaina": {
@@ -911,16 +911,16 @@
  },
  "legendary_spear_curse": {
   "tp_left": {
-   "arm": 0.259,
+   "arm": 0.245,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.022
   },
   "tp_right": {
-   "arm": 0.259,
+   "arm": 0.245,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.025
+   "float": 0.022
   }
  },
  "legendary_sword": {
@@ -995,16 +995,16 @@
  },
  "legendary_sword__phoenix_sword": {
   "tp_left": {
-   "arm": 0.273,
+   "arm": 0.275,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.006
+   "float": 0.008
   },
   "tp_right": {
-   "arm": 0.273,
+   "arm": 0.275,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.006
+   "float": 0.008
   }
  },
  "legendary_sword__spirit_tortoise_sword": {
@@ -1275,13 +1275,13 @@
  },
  "vassal_carriage__queens_chariot": {
   "tp_left": {
-   "arm": 0.0,
+   "arm": 0.128,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.028
   },
   "tp_right": {
-   "arm": 0.0,
+   "arm": 0.128,
    "body": 0.0,
    "extra": 0.0,
    "float": 0.028
@@ -1289,16 +1289,16 @@
  },
  "vassal_carriage__war_carriage": {
   "tp_left": {
-   "arm": 0.122,
+   "arm": 0.121,
    "body": 0.0,
-   "extra": 0.098,
-   "float": 0.01
+   "extra": 0.084,
+   "float": 0.047
   },
   "tp_right": {
-   "arm": 0.328,
+   "arm": 0.125,
    "body": 0.0,
-   "extra": 0.098,
-   "float": 0.01
+   "extra": 0.084,
+   "float": 0.045
   }
  },
  "vassal_chain": {
@@ -1541,16 +1541,16 @@
  },
  "vassal_katana__siderite_katana": {
   "tp_left": {
-   "arm": 0.246,
+   "arm": 0.231,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.031
+   "float": 0.024
   },
   "tp_right": {
-   "arm": 0.246,
+   "arm": 0.231,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.031
+   "float": 0.024
   }
  },
  "vassal_katana__soul_eater_katana": {
@@ -1572,13 +1572,13 @@
    "arm": 0.254,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.03
+   "float": 0.024
   },
   "tp_right": {
    "arm": 0.254,
    "body": 0.0,
    "extra": 0.0,
-   "float": 0.03
+   "float": 0.024
   }
  },
  "vassal_mirror": {

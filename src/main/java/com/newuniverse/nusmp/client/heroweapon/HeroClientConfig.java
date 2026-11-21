@@ -26,6 +26,7 @@ public final class HeroClientConfig {
     public static final ModConfigSpec.BooleanValue CLASSIC_VASSAL_FORMS;
     /** Style wave 2 (docs/heroweapon/style/wave2.md): true draws the 14 weapons restyled in that pass (Seven Star base weapons, vassal staff / book forms, light metal shield) with the models they had before it (weapon_meshes/classic_style). Looks only. */
     public static final ModConfigSpec.BooleanValue CLASSIC_STYLE_WAVE2;
+    public static final ModConfigSpec.BooleanValue CLASSIC_STYLE_WAVE3;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -50,6 +51,8 @@ public final class HeroClientConfig {
                 .define("classic", false);
         CLASSIC_STYLE_WAVE2 = b.comment("true = draw the weapons restyled in style wave 2 (Seven Star hammer, axe, staff, claw, gauntlet, whip, projectile; Vassal staff and book with their forms; light metal shield) with the models they had before. Only the look changes.")
                 .define("classicStyleWave2", false);
+        CLASSIC_STYLE_WAVE3 = b.comment("true = draw the weapons restyled in style wave 3 (Legendary spear and its curse look, Portal spear, Dragon Minute Hand; Siderite and White Tiger katana; War carriage and Queen's chariot; Yata mirror; Phoenix sword) with the models they had before. Only the look changes.")
+                .define("classicStyleWave3", false);
         b.pop();
         SPEC = b.build();
     }
@@ -75,6 +78,8 @@ public final class HeroClientConfig {
     public static boolean classicVassalForms() { return get(CLASSIC_VASSAL_FORMS); }
 
     public static boolean classicStyleWave2() { return get(CLASSIC_STYLE_WAVE2); }
+
+    public static boolean classicStyleWave3() { return get(CLASSIC_STYLE_WAVE3); }
 
     public static boolean hud() { return get(HUD); }
 
