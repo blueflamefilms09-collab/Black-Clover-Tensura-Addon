@@ -158,6 +158,7 @@ public final class HeroRules {
         if (!HeroConfig.enabled() || !HeroConfig.holyRejectsOthers() || p.isCreative() || p.isSpectator()) return WeaponClass.NONE;
         HeroKind kind = HeroBonds.kindOf(p);
         if (kind == null || !kind.heroClass().rejectsOthers()) return WeaponClass.NONE;
+        if (held != null && held.getItem() instanceof RelicBearer rb && GenesisExempt.exempt(rb.relic().grade(), HeroConfig.genesisRelicsAllowed())) return WeaponClass.NONE;   // 4.88.1: the primordial relics
         WeaponClass c = classOf(held);
         return WeaponClassifier.rejects(kind, c) ? c : WeaponClass.NONE;
     }

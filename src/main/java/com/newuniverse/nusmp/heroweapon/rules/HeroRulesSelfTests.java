@@ -53,6 +53,9 @@ public final class HeroRulesSelfTests {
         // 3.72.0: giving up your own weapon needs a question and a confirmation inside the window
         if (HeroAbandonRules.confirmed(null, 5L) || !HeroAbandonRules.confirmed(5L, 5L + HeroAbandonRules.CONFIRM_TICKS) || HeroAbandonRules.confirmed(5L, 6L + HeroAbandonRules.CONFIRM_TICKS))
             return fail("the abandon confirmation window is wrong");
+        // 4.88.1: the primordial (Genesis and EX-Singularity) relics are exempt from the class rejection while the setting is on
+        if (!GenesisExempt.exempt(com.newuniverse.nusmp.relics.Grade.GENESIS, true) || !GenesisExempt.exempt(com.newuniverse.nusmp.relics.Grade.AKASHIC, true) || GenesisExempt.exempt(com.newuniverse.nusmp.relics.Grade.GOD, true) || GenesisExempt.exempt(com.newuniverse.nusmp.relics.Grade.GENESIS, false))
+            return fail("the primordial relic exemption is wrong");
         if (!HeroConfig.enabled()) return ok("skipped: heroweapon.enabled is false in the config");
         ServerLevel level = server.overworld();
         FakePlayer a = SelfTests.player(level, "hero_core_r1", 0.5, 100, 0.5);

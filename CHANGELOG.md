@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.88.1] — Fix: a hero weapon no longer locks out the primordial relics
+Owner report: "with a hero weapon u cant use the primordial relics either".
+- FIXED: a Holy or Vassal Weapon rejected (shocked) every weapon of another class, and the Genesis-grade relics (Primordial Hearth Blade, Starforged Aeon Bow, Void Origin Katana, Sword of the First Dawn, Starsplitter Hammer, Blackrazor and the other Genesis weapons) counted as ordinary swords, bows and hammers. Relics of the Genesis and EX-Singularity grades are now never rejected.
+- NEW (server setting): `heroweapon.genesisRelicsAllowed` (default true); false = the old rejection of them.
+- KEPT: every other rejection rule, the shock, `castingRelicsAllowed`, the tag `hero_allowed`, all grades below Genesis.
+- COST: one grade comparison per attack or use check of a hero wielder; nothing per tick, no packets.
+- CAVEATS: "primordial relics" was read as the Genesis grade (the primordial set is all of them); not tested in a game. Tell me if you meant a different set.
+
 ## [4.88.0] — Style wave 3: ten more weapons rebuilt in their own look
 - REPLACED (same ids, same grip, engravings and Better Combat files): Legendary Spear (and its Curse form), Portal Spear, Dragon Minute Hand, Siderite Katana, White Tiger Katana, War Carriage, Queen's Chariot, Yata Mirror and Phoenix Sword. Each has three base materials plus one named accent, unequal spacing and one hero feature, and gold only where the lore says gold. The white tiger's paw guard stays within the katana outline rule of 4.61.0 (1/16 across).
 - NEW (client option): `vassalForms.classicStyleWave3` (default off) brings back the previous look of these ten; the old meshes and skins are kept in `classic_style3/`.
