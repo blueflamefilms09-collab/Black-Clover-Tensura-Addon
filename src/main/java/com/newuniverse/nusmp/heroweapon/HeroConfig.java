@@ -19,7 +19,7 @@ public final class HeroConfig {
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
     public static final ModConfigSpec.BooleanValue TRACKER_SHOW_NAMES;
-    public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN;
+    public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN, RAISE_SHARE;
     /** The Legendary Bow's real arrows (section [heroweapon.bow]): see docs/heroweapon/bow_arrows.md. */
     public static final ModConfigSpec.BooleanValue BOW_REAL_ARROWS;
     public static final ModConfigSpec.IntValue BOW_ARROWS_PER_PLAYER, BOW_ARROWS_GLOBAL;
@@ -107,6 +107,9 @@ public final class HeroConfig {
                 .defineInRange("animeLevelBonus", 1.0, 0.0, 20.0);
         ANIME_TAKEN = b.comment("3.73.0: one more factor on all damage a bound wielder takes, on top of damageTakenFactor / shieldDamageTakenFactor (0.75 = a quarter less again; 1.0 = off).")
                 .defineInRange("animeDamageTakenFactor", 0.75, 0.0, 1.0);
+        RAISE_SHARE = b.comment("4.90.1 NERF: how much of the damage raise of a hero / vassal weapon is kept. The raise of a blow is the buff x the anime factor (here) x the vassal / legendary factor (nusmp-power-server.toml), which stacked to thousands per blow.",
+                "Each of the two hooks keeps only this share of its raise: factor = 1 + (factor - 1) * share. 0.02 = a fiftieth of the raise (a Legendary blow of about 140 base ends near 180 at level 0 and 350 at level 100). 1.0 = the old, unreduced raise.")
+                .defineInRange("raiseShare", 0.02, 0.0, 1.0);
         b.pop();
         b.push("bow");
         BOW_REAL_ARROWS = b.comment("The Legendary Bow looses REAL arrow entities (normal arrow physics, a physical hit plus a magic hit, a magic effect by bow form), also in Arrow Rain, the other rains and the Arrow Squall. Off: the old hitscan lines and instant rain waves, exactly as before.")

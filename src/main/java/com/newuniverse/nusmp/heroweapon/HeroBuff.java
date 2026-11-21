@@ -14,7 +14,17 @@ public final class HeroBuff {
     /** 3.73.0: the damage factor at a given weapon level: the buff above times the anime factor, which grows with the level (all through the config). */
     public static double damageFactor(HeroKind kind, int level) {
         if (!on()) return 1.0;
-        return damageFactor(kind) * anime(HeroConfig.get(HeroConfig.ANIME_DAMAGE), HeroConfig.get(HeroConfig.ANIME_LEVEL_BONUS), level);
+        return squash(damageFactor(kind) * anime(HeroConfig.get(HeroConfig.ANIME_DAMAGE), HeroConfig.get(HeroConfig.ANIME_LEVEL_BONUS), level), raiseShare());
+    }
+
+    /** 4.90.1: the share of a hero / vassal damage raise that is kept (config {@code raiseShare}; 1 = all, the old behaviour). */
+    public static double raiseShare() { return HeroConfig.get(HeroConfig.RAISE_SHARE); }
+
+    /** 4.90.1: keeps only {@code share} of the raise: {@code 1 + (factor - 1) * share}. A factor of 1 or less, or a bad number, comes back as 1; the share is held between 0 and 1. */
+    public static double squash(double factor, double share) {
+        if (!(factor > 1.0)) return 1.0;
+        double sh = Double.isNaN(share) ? 1.0 : Math.max(0.0, Math.min(1.0, share));
+        return 1.0 + (factor - 1.0) * sh;
     }
 
     /** The anime factor alone: {@code base * (1 + bonus * level / 100)}, the level held between 0 and 100. */

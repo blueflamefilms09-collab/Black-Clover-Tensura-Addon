@@ -36,4 +36,25 @@ class HeroBuffTest {
         assertEquals(2.0, HeroBuff.anime(2.0, 1.0, -9), 1e-9);
         assertEquals(2.0, HeroBuff.anime(2.0, 0.0, 100), 1e-9);
     }
+
+    @Test void squashKeepsOnlyAShareOfTheRaise() {
+        assertEquals(1.0, HeroBuff.squash(1.0, 0.02), 1e-12);
+        assertEquals(1.0, HeroBuff.squash(0.3, 0.02), 1e-12);
+        assertEquals(1.0, HeroBuff.squash(Double.NaN, 0.02), 1e-12);
+        assertEquals(1.22, HeroBuff.squash(12.0, 0.02), 1e-9);
+        assertEquals(12.0, HeroBuff.squash(12.0, 1.0), 1e-9, "share 1 = the old behaviour");
+        assertEquals(12.0, HeroBuff.squash(12.0, 7.0), 1e-9, "a share above 1 is held at 1");
+        assertEquals(1.0, HeroBuff.squash(12.0, -3.0), 1e-9);
+    }
+
+    /** The owner's report: a hero weapon hit for about 10 000 at its base. With the default share a Legendary blow (base ~142) stays in the low hundreds. */
+    @Test void aLegendaryBlowIsNoLongerThousands() {
+        double share = 0.02, base = 142.0;
+        double lvl0 = base * HeroBuff.squash(4.0 * 1.5 * HeroBuff.anime(2.0, 1.0, 0), share) * HeroBuff.squash(com.newuniverse.nusmp.power.PowerRules.ramp(25.0 * 1.5, 0, 0.05), share);
+        double lvl100 = base * HeroBuff.squash(4.0 * 1.5 * HeroBuff.anime(2.0, 1.0, 100), share) * HeroBuff.squash(com.newuniverse.nusmp.power.PowerRules.ramp(25.0 * 1.5, 100, 0.05), share);
+        assertTrue(lvl0 < 250, "level 0 blow " + lvl0);
+        assertTrue(lvl100 < 500 && lvl100 > lvl0, "level 100 blow " + lvl100);
+        double old0 = base * (4.0 * 1.5 * HeroBuff.anime(2.0, 1.0, 0)) * com.newuniverse.nusmp.power.PowerRules.ramp(25.0 * 1.5, 0, 0.05);
+        assertTrue(old0 > 4000, "the old level 0 blow was " + old0);
+    }
 }

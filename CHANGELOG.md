@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.90.1] — Fix: hero and vassal weapons no longer hit for thousands
+Owner report: the hero weapons still deal about 10,000 at their base; nerf them a lot.
+- FIXED: a blow with a hero or vassal weapon was the weapon's base damage (about 60 to 175 by grade) times three raises stacked on top of each other: the hero buff (x4, x1.5 more for the four Legendary Weapons), the anime factor (x2, up to x4 with level) and the vassal / legendary factor (x25, x37.5 for Legendary). That came to thousands per blow at level 0 and over a hundred thousand at level 100.
+- NEW (server setting): `raiseShare` in the hero weapon settings (default 0.02, range 0 to 1). Each of the two raise hooks keeps only that share of its raise (`1 + (factor - 1) x share`). A Legendary blow of about 142 base now ends near 180 at level 0 and about 350 at level 100 instead of about 4,800 and 128,000; a vassal weapon ends near 125 and 210. The Legendary Weapons still stay ahead of the Vassal Weapons. It is a new setting name, so it also applies to worlds that already have a settings file. 1.0 gives the old numbers back.
+- KEPT: every other setting (`damageFactor`, `holyExtraFactor`, `animeDamageFactor`, `vassalFactor`, `legendaryMargin`, the level ramp), the boss damage cap, the PvP hit cap, the Djinn and Beast Will factors, the weapons' base damage and tooltips.
+- COST: none (two multiplications per blow of a hero wielder; nothing per tick, no packets).
+- CAVEATS: not tried in a game. If you want them stronger or weaker, change `raiseShare` (0.05 = about two and a half times the damage now).
+
 ## [4.90.0] — Goku bows out instead of dying; no more random damage on him
 Owner reports: Goku is "taking random tick damage" in the dimensions; and "instead of actually killing him, he gets knocked, says adios, I'll see you next time when I'm stronger, disappears and drops a few items".
 - NEW: Goku's farewell. Beaten, he is not killed: knocked up, cannot be hurt for 3.5 s, says his goodbye in chat, flashes away and drops his loot; the fight counts as won (credit, loot, story). Setting `goku_boss.farewell` (default true); false = he dies as before.
