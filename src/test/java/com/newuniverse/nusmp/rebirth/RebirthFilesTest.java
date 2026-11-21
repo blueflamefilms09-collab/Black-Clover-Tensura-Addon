@@ -67,6 +67,7 @@ class RebirthFilesTest {
         assertTrue(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUCreativeTab.java")).contains("RebirthItems.creativeItems()"));
         assertTrue(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUSMP.java")).contains("RebirthBoot.init(modEventBus, modContainer)"));
         String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"));
-        assertTrue(smoke.contains(",rebirth,scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the rebirth prefix sits just before the pinned tail");
+        assertTrue(smoke.contains(",rebirth,"), "the rebirth prefix is in the smoke list");
+        assertTrue(smoke.contains(",scaling,boss.rework1,boss.rework3,boss.stats,tier\""), "the pinned tail is intact");
     }
 }

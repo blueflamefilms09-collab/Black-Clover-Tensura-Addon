@@ -1,0 +1,5 @@
+{
+  "anime_multiverse.ui.slot.inv.title": "Grimoire Slot",
+  "anime_multiverse.ui.slot.inv.empty": "No grimoire is bound. Click with your own grimoire to place it here.",
+  "anime_multiverse.ui.slot.inv.hint": "Click: take or swap. Shift-click: to the inventory."
+}

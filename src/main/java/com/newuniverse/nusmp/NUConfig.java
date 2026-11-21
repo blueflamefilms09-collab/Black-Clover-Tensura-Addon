@@ -63,6 +63,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue LEAF_POWER;
     public static final ModConfigSpec.BooleanValue CANON_LEAVES;                           // canon leaves (docs/grimoire_canon_leaves.md): meaning text, luck cover, devil-bound five-leaf, level matters; false = the 4.84.2 behaviour
     public static final ModConfigSpec.DoubleValue CANON_LUCK_CHANCE, CANON_LUCK_MULT, CANON_DEVIL_SHARE, CANON_OVERREACH, CANON_MASTERY;
+    public static final ModConfigSpec.BooleanValue GRIMOIRE_SLOT_INVENTORY;                // docs/grimoire_slot_rework.md: the Grimoire Slot is a slot in the inventory screen (E); false = the old separate window
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     public static final ModConfigSpec.BooleanValue WEAPON_DRAINS_TARGET;     // 1.113.0: Elsdocia and the Demon Dweller take magicules from whoever they hit (the old behaviour); default false = they only charge
@@ -208,6 +209,8 @@ public final class NUConfig {
         CANON_OVERREACH = b.comment("Canon leaves: the most (factor) the mana cost rises when the cover is above the wielder's level (EP band). 1 = off.").defineInRange("overreachMaxCost", 1.5, 1.0, 3.0);
         CANON_MASTERY = b.comment("Canon leaves: the most (0.12 = +12%) a lower cover gains in damage when the wielder is far above its level. 0 = off.").defineInRange("masteryMaxBonus", 0.12, 0.0, 1.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
+        GRIMOIRE_SLOT_INVENTORY = b.comment("Grimoire Slot (docs/grimoire_slot_rework.md): the slot is drawn and used inside the player's own inventory screen (E), next to the offhand, with a gold frame; the key, the status-screen button and /multiverse slot open the inventory screen. false = exactly the old separate Grimoire Slot window. Clients learn this at login.")
+                .define("grimoireSlotInventory", true);
         b.pop();
 
         b.push("magic");
@@ -355,6 +358,8 @@ public final class NUConfig {
     public static boolean summonerRework() { return live(SUMMONER_REWORK); }
     public static boolean summonerCanon() { return live(SUMMONER_CANON) && live(SUMMONER_REWORK); }
     public static double summonerMasteryPercent() { return Math.max(0.0, Math.min(5.0, live(SUMMONER_MASTERY_PERCENT))); }
+    /** The Grimoire Slot lives in the inventory screen (default on, also before the SERVER config is loaded). */
+    public static boolean grimoireSlotInventory() { return live(GRIMOIRE_SLOT_INVENTORY); }
     public static boolean gfCastEvent() { return live(GF_CAST_EVENT); }
     public static boolean gfDirtyOnChange() { return live(GF_DIRTY_ON_CHANGE); }
     public static boolean ucFlatCosts() { return live(UC_FLAT_COSTS); }

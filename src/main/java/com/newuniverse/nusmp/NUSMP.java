@@ -188,6 +188,7 @@ public class NUSMP {
         com.newuniverse.nusmp.engraving.codex.EngravingCodexSelfTests.register();                            // 1.99.0: self-test item.engraving_codex (the book of every engraving: data, entries, filter, item)
         com.newuniverse.nusmp.client.elite.hub.DungeonMapSelfTests.register();                               // 1.105.0: self-test ui.dungeon_map (the map's pan / zoom / backdrop maths, no client class)
         com.newuniverse.nusmp.balance.ScalingSelfTests.register();                                          // 3.90: self-tests scaling.* (late-game damage scaling, grimoire damage buff)
+        com.newuniverse.nusmp.blackclover.GrimoireSlotSelfTests.register();                                // self-tests slot.* (the Grimoire Slot rules, round trip and inventory scan)
         com.newuniverse.nusmp.grimoire.CanonLeavesSelfTests.register(NeoForge.EVENT_BUS);                    // canon leaves: self-tests canon.* (meaning, luck, price, mastery; docs/grimoire_canon_leaves.md) and the devil price cleanup on logout
         com.newuniverse.nusmp.balance.DamageScaleSelfTests.register();                                      // damage scale-down: self-tests dmgscale.* (Djinn band, hit ceilings, rank table; docs/damage_scale_down.md)
         com.newuniverse.nusmp.balance.DamageScaleEvents.register(NeoForge.EVENT_BUS);                        // damage scale-down: the last word on one hit (10,000; 15,000 for the apex weapon; Djinn band)
@@ -615,6 +616,7 @@ public class NUSMP {
         // Grimoire Slot (0.22): the bound book lives here, dormant at the hip
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onLogout);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onLogin);            // tells the client which slot mode the server runs
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onRespawn);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onDimension);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireSlot::onStartTracking);

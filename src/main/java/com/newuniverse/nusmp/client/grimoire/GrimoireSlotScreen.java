@@ -32,6 +32,9 @@ public class GrimoireSlotScreen extends AbstractContainerScreen<GrimoireSlot.Men
     }
 
     private final SageBlock sage = new SageBlock();
+    /** What the readout was built from: the text is rebuilt (and the typing restarted) only when one of these changes, never per frame. */
+    private CompoundTag readStatus;
+    private boolean readHas, readBuilt;
 
     @Override
     protected void renderBg(GuiGraphics g, float partial, int mouseX, int mouseY) {
@@ -74,18 +77,25 @@ public class GrimoireSlotScreen extends AbstractContainerScreen<GrimoireSlot.Men
             }
             if (hover) UiPanel.hover(g, sx + 1, sy + 1, 16, 16, 1f, s.index == 0 ? UiTheme.GOLD : UiTheme.CYAN);
         }
-        // the Great-Sage readout under the window
-        CompoundTag gr = MultiverseStatusClient.status().getCompound("Grimoire");
-        String head, body, result = "";
-        if (book.hasItem()) {
-            head = UiLang.get(UiLang.ANALYSIS_COMPLETE);
-            body = UiLang.get("anime_multiverse.ui.slot.bound");
-            if (gr.getInt("Pages") > 0) result = UiLang.get(UiLang.RESULT, UiLang.get("anime_multiverse.ui.slot.pages", gr.getInt("Unlocked"), gr.getInt("Pages")));
-        } else {
-            head = UiLang.get(UiLang.ANALYZING);
-            body = UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.slot.empty"));
+        // the Great-Sage readout under the window: built only when the slot content or the status message changed (no lang lookups, no string building per frame)
+        boolean has = book.hasItem();
+        CompoundTag status = MultiverseStatusClient.status();
+        if (!readBuilt || has != readHas || status != readStatus) {
+            readBuilt = true;
+            readHas = has;
+            readStatus = status;
+            CompoundTag gr = status.getCompound("Grimoire");
+            String head, body, result = "";
+            if (has) {
+                head = UiLang.get(UiLang.ANALYSIS_COMPLETE);
+                body = UiLang.get("anime_multiverse.ui.slot.bound");
+                if (gr.getInt("Pages") > 0) result = UiLang.get(UiLang.RESULT, UiLang.get("anime_multiverse.ui.slot.pages", gr.getInt("Unlocked"), gr.getInt("Pages")));
+            } else {
+                head = UiLang.get(UiLang.ANALYZING);
+                body = UiLang.get(UiLang.NOTICE, UiLang.get("anime_multiverse.ui.slot.empty"));
+            }
+            sage.set(font, head, body, result, imageWidth - 16, UiTheme.now());
         }
-        sage.set(font, head, body, result, imageWidth - 16, now);
         int ph = sage.height(font) + 10, py = y + imageHeight + 5;
         UiPanel.panel(g, x, py, imageWidth, ph, UiTheme.CYAN, 0.5f, 1f);
         sage.draw(g, font, x + 8, py + 5, now, 1f);

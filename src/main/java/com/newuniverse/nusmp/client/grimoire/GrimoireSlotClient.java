@@ -41,6 +41,7 @@ public final class GrimoireSlotClient {
             }
         });
         NeoForge.EVENT_BUS.addListener(GrimoireSlotClient::onNameTag);
+        GrimoireSlotInventoryClient.init();                                              // the slot inside the inventory screen (setting grimoireSlotInventory)
     }
 
     /** Asks the server to open the Grimoire Slot. */

@@ -608,4 +608,23 @@ class PerfSourceScanTest {
         assertTrue(paint.contains("MAX_PLAYERS_PER_FRAME") && paint.contains("RANGE_BLOCKS") && paint.contains("meshTails()"), "the mesh tail's crowd cap, range or setting is gone");
         assertFalse(code(read("beastwill/BeastTailRules.java")).contains("net.minecraft"), "BeastTailRules must stay pure");
     }
+
+    /** Grimoire Slot rework (docs/grimoire_slot_rework.md): the per-tick handler copies and deep-compares nothing outside the once-a-second scan branch, and the old window builds its readout only when it changed. */
+    @Test
+    void theGrimoireSlotTickIsAChangeSignalPlusAStaggeredScan() throws IOException {
+        String tick = code(method("blackclover/GrimoireSlot.java", "onPlayerTick0").body());
+        assertFalse(tick.contains(".copy()"), "the slot tick copies a stack");
+        int scan = tick.indexOf("scanDue(");
+        int compare = tick.indexOf("ItemStack.matches(");
+        assertTrue(scan > 0 && compare > scan, "the deep compare must sit behind the once-a-second scan gate");
+        assertTrue(tick.contains("SlotClickRules.phase(") && tick.contains("signal.dirty()"), "the UUID stagger or the change signal is gone");
+        String all = code(read("blackclover/GrimoireSlot.java"));
+        assertFalse(all.contains("List.of(inv.items"), "the inventory scan allocates a list again");
+        assertTrue(all.contains("PerfProbe.section(\"s.book.grimoire_slot\")"), "the slot probe was dropped");
+        assertFalse(code(read("blackclover/SlotClickRules.java")).contains("net.minecraft"), "SlotClickRules must stay pure");
+        String screen = code(read("client/grimoire/GrimoireSlotScreen.java"));
+        assertTrue(screen.contains("readStatus") && screen.contains("readBuilt"), "the old window's readout cache is gone");
+        int build = screen.indexOf("UiLang.get(UiLang.ANALYSIS_COMPLETE)");
+        assertTrue(build > screen.indexOf("if (!readBuilt"), "the readout is built outside its cache check");
+    }
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.89.0] — Grimoire slot rework: a slot in your own inventory, and no more lag
+Owner report: "fix the grimoire slot to be something different and rework its UI because it's really laggy and buggy."
+- NEW: the grimoire slot is drawn in your own inventory screen (a gold-framed box above the off-hand: click to take, place, swap; shift-click moves the book to or from your inventory). Tooltip and hover highlight included.
+- NEW (server setting): `black_clover.grimoireSlotInventory` (default true); false = the old separate window, with the lag fixes below. Clients learn the mode at login; a click against the wrong mode is refused and answered with the right one.
+- NEW: every click is checked on the server (mode, sender alive, own inventory menu, button, at most 8 clicks per second per player). The key, the status-screen button and `/multiverse slot` open the inventory in the new mode.
+- FIXED (lag): the slot no longer compares and copies stacks every tick. It uses a change counter, a scan every 20 ticks staggered per player, and one deep compare per second as a net. The old window's Great-Sage text is rebuilt only when the content changes, not every frame.
+- FIXED (bugs): `setChanged` now signals the hip book; `removeItem` no longer copies twice or leaves an empty stack; `setItem` no longer copies; `canTakeItemForPickAll` cannot pull from the slot; the open packet is rate limited; a new book is no longer stuck in the inventory when the slot held a book of a vanished magic (inventory mode).
+- NEW: after you take the book out on purpose, the slot scan pauses 10 seconds so it does not pull the book straight back (inventory mode only).
+- KEPT: the `grimoire_slot` attachment (same id, copy on death), the old menu, container and screen, the key, the button, the command, the hip-book sync and every public method.
+- COST: per player per tick one attachment lookup and one integer compare; per second one scan of 37 slots; no per-tick allocation; click packets at most 8 per second per player; client draws one 20x20 box and one item per frame.
+- CAVEATS: not seen in a game (box placement at other GUI scales, with the recipe book open, or next to other mods' buttons is unchecked); the creative inventory does not show the box. Details in `docs/grimoire_slot_rework.md`.
+
 ## [4.88.2] — Audit follow-up: narrower and logged catches
 Follows the 4.80.1 audit ("the other broad catches and the empty catches were not touched").
 - CHANGED: 60 catch sites in 37 files. 16 empty catches now catch only runtime and linkage errors (the event hooks also log once); 31 silent reads of Tensura data keep their exact fall-back value but no longer swallow out-of-memory or other fatal errors; 10 data-file loaders that fell back silently now log the first failure once (`core/CatchLog`, at most 64 keys).

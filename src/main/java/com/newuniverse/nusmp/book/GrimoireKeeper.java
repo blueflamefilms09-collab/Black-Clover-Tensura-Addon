@@ -34,6 +34,16 @@ public final class GrimoireKeeper {
         var inv = p.getInventory();
         var skills = SkillAPI.getSkillsFrom(p);
         if (com.newuniverse.nusmp.blackclover.GrimoireSlot.holdsOwn(p, book.magic)) return;               // already in the Grimoire Slot
+        if (com.newuniverse.nusmp.blackclover.GrimoireSlot.inventoryMode()) {                                // slot rework: a book of a vanished magic in the slot is replaced there, not left blocking the new one
+            ItemStack slotted = com.newuniverse.nusmp.blackclover.GrimoireSlot.get(p);
+            if (GrimoireItem.isOwnedBy(slotted, p.getUUID())) {
+                var slotMagic = com.newuniverse.nusmp.blackclover.MagicType.byName(GrimoireItem.data(slotted).getString("Magic"));
+                if (slotMagic != book.magic && skills.getSkill(NUSkills.grimoireSkillFor(slotMagic).getRegistryName()).isEmpty()) {
+                    com.newuniverse.nusmp.blackclover.GrimoireSlot.set(p, GrimoireItem.create(p, cover, book.magic, devil));
+                    return;
+                }
+            }
+        }
         int orphan = -1;
         for (int slot = 0; slot < inv.getContainerSize(); slot++) {
             ItemStack s = inv.getItem(slot);
