@@ -141,6 +141,9 @@ public final class GokuBossMath {
         return Math.max(1f, Math.min(after, health * (after / before)));
     }
 
+    /** 4.96.0: the factor on his health when every form has its own bar: {@code share} when the bars are on, else 1. */
+    public static double barFactor(boolean bars, double share) { return bars ? Math.max(0.05, Math.min(1.0, share)) : 1.0; }
+
     /** The enrage time in ticks: minutes x 1200 x the pace factor, at least 600. */
     public static long enrageTicks(double minutes, double pace) {
         return Math.max(600L, Math.round(Math.max(1.0, minutes) * 1200.0 * Math.max(0.3, Math.min(1.0, pace))));

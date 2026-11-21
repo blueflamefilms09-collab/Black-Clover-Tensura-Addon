@@ -10,13 +10,13 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class GokuBossConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL;
+    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL, FORM_BARS;
     /** Goku Omega (docs/goku_omega.md), section {@code [goku_boss.omega]}. */
     public static final ModConfigSpec.BooleanValue OMEGA_ENABLED, OMEGA_EP_SKILLS, OMEGA_HACKS, OMEGA_SECOND_WIND, OMEGA_TRAINING;
     public static final ModConfigSpec.DoubleValue OMEGA_HEALTH, OMEGA_DAMAGE, OMEGA_MAX_HIT, OMEGA_DODGE_CAP;
     public static final ModConfigSpec.IntValue OMEGA_LEVEL_CAP, OMEGA_XP_PER_HOUR, OMEGA_TRAINING_DAILY, OMEGA_FIGHT_DAILY;
     public static final ModConfigSpec.ConfigValue<String> DIFFICULTY;
-    public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, EP_WEIGHT, EP_CAP, PER_PLAYER_BONUS, MAX_HIT_PERCENT, UI_DODGE_CAP;
+    public static final ModConfigSpec.DoubleValue FORM_BAR_SHARE, HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, EP_WEIGHT, EP_CAP, PER_PLAYER_BONUS, MAX_HIT_PERCENT, UI_DODGE_CAP;
     public static final ModConfigSpec.IntValue PLAYER_CAP, GLOBAL_CAP, ENRAGE_MINUTES;
 
     /** The defaults, also read by the tests. */
@@ -40,6 +40,10 @@ public final class GokuBossConfig {
                 .define("epScaling", true);
         FAREWELL = b.comment("4.90.0: when Goku is beaten he is not killed: he is knocked down, says goodbye (\"I'll see you next time, when I'm stronger!\"), flashes away and drops his loot. The fight counts as won. False = he dies as before.")
                 .define("farewell", true);
+        FORM_BARS = b.comment("4.96.0: every form has its own health bar, like Lucifero's phases: the bar runs down to 0, he cannot be hurt while he powers up, and the next, stronger form comes back with a FULL bar. He only dies (bows out) at the end of his last form. False = the old single bar where the form follows the health.")
+                .define("formBars", true);
+        FORM_BAR_SHARE = b.comment("4.96.0: with formBars, the size of ONE form bar as a share of the old single bar (the fight has one bar per form, so a small share keeps it from taking ten times as long). 1.0 = every bar as big as the old whole bar.")
+                .defineInRange("formBarShare", 0.4, 0.05, 1.0);
         EP_WEIGHT = b.comment("How strongly EP raises him: health x (1 + epWeight x (EP curve - 1)); damage takes half of it. 0 = EP changes nothing.")
                 .defineInRange("epWeight", DEFAULT_EP_WEIGHT, 0.0, 5.0);
         EP_CAP = b.comment("The highest value of the EP curve that counts (the curve is 1 at 1,000 EP and +2.5 per decade of EP: 5 is reached at about 40,000 EP and 8 at about 630,000 EP). Lower = he stops growing earlier.")
@@ -119,6 +123,10 @@ public final class GokuBossConfig {
     public static boolean epScaling() { return get(EP_SCALING); }
 
     public static boolean farewell() { return get(FAREWELL); }
+
+    public static boolean formBars() { return get(FORM_BARS); }
+
+    public static double formBarShare() { return get(FORM_BAR_SHARE); }
 
     // ------------------------------------------------------------------ Goku Omega
     public static boolean omega() { return get(OMEGA_ENABLED); }

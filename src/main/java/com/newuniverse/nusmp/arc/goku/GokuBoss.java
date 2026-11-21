@@ -112,6 +112,8 @@ public class GokuBoss extends ArcBoss {
     /** 4.90.0 the farewell: the tick he leaves at (0 = not leaving), the blow that beat him (for the credit) and whether the chat line is held back while the framework finishes the fight. */
     private long farewellAt;
     private boolean farewellDone, hushSay;
+    /** 4.96.0: his bar just ran out and he is powering up into the next form; he cannot be hurt and the bar is refilled when the form takes hold (saved, so a reload cannot leave him at 1 health). */
+    private boolean barBreak;
     private DamageSource farewellSource;
     /** The move he was casting at the last tick (his call-out is said when a new one starts) and the line state of the voice (docs/boss_redesign_goku_sinbad.md). */
     private String seenCast = "";
@@ -366,7 +368,7 @@ public class GokuBoss extends ArcBoss {
     }
 
     private void applyScaling(GokuBossMath.Params params) {
-        healthFactor = omega.health(GokuBossMath.healthFactor(reading, players, params));
+        healthFactor = omega.health(GokuBossMath.healthFactor(reading, players, params)) * GokuBossMath.barFactor(GokuBossConfig.formBars(), GokuBossConfig.formBarShare());
         damageFactor = omega.damage(GokuBossMath.damageFactor(reading, players, params));
         pace = GokuBossMath.paceFactor(reading, params);
         AttributeInstance max = getAttribute(Attributes.MAX_HEALTH);
@@ -382,7 +384,8 @@ public class GokuBoss extends ArcBoss {
 
     // ================================================================ the forms
     private void stepForm(ServerLevel sl) {
-        double hp = getHealth() / Math.max(1f, getMaxHealth());
+        if (barBreak && windLeft <= 0 && pending < 0) refillBar();                 // loaded in the middle of a change: finish it
+        double hp = GokuBossConfig.formBars() ? 1.0 : getHealth() / Math.max(1f, getMaxHealth());       // with form bars only the form's own bar ends a form (and the enrage clock)
         long enrage = GokuBossMath.enrageTicks(GokuBossConfig.enrageMinutes(), pace);
         int next = GokuLadder.next(formIdx(), hp, fightTicks, enrage, inForm, omega.ladderTop());
         if (next != formIdx()) beginChange(sl, next);
@@ -422,7 +425,28 @@ public class GokuBoss extends ArcBoss {
                 if (away.lengthSqr() > 1e-4) f.knockback(0.7, -away.x, -away.z);
             }
             omega.onFormChanged();
+            if (barBreak) refillBar();
         }
+    }
+
+    /** 4.96.0: the next form comes back with a full bar. Not a heal in the boss rules' sense: the one scripted refill, like the gates. */
+    private void refillBar() {
+        barBreak = false;
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(getMaxHealth())));
+        if (level() instanceof ServerLevel sl) {
+            GokuFx.ring(sl, position(), 3.0, GokuLadder.rgb(formIdx()), 16);
+            sl.playSound(null, blockPosition(), SoundEvents.TOTEM_USE, SoundSource.HOSTILE, 1.6f, 1.5f);
+        }
+    }
+
+    /** 4.96.0: the bar of this form is empty: he stays at 1 health, powers up into the next form and comes back full. False when this was his last form (the farewell or death runs). */
+    private boolean breakBar() {
+        if (!GokuBossConfig.formBars() || farewellDone || farewellAt != 0L || barBreak || windLeft > 0 || pending >= 0) return false;
+        if (formIdx() >= omega.ladderTop() || !(level() instanceof ServerLevel sl)) return false;
+        barBreak = true;
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(1f)));
+        beginChange(sl, formIdx() + 1);
+        return true;
     }
 
     /** Puts the form's damage, speed and armour on him as transient modifiers (replacing the last form's). */
@@ -594,6 +618,7 @@ public class GokuBoss extends ArcBoss {
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);
         if (farewellAt != 0L && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;       // 4.90.0: he is already on his way out
+        if (barBreak && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;               // 4.96.0: powering up into the next form
         if (tryDodge(source, amount)) {
             omega.onDodged(source);
             return false;
@@ -683,6 +708,7 @@ public class GokuBoss extends ArcBoss {
         super.addAdditionalSaveData(tag);
         tag.putInt("GokuForm", formIdx());
         tag.putLong("GokuFight", fightTicks);
+        tag.putBoolean("GokuBarBreak", barBreak);
     }
 
     @Override
@@ -690,6 +716,7 @@ public class GokuBoss extends ArcBoss {
         super.readAdditionalSaveData(tag);
         entityData.set(FORM_IDX, GokuLadder.clamp(tag.getInt("GokuForm")));
         fightTicks = Math.max(0L, tag.getLong("GokuFight"));
+        barBreak = tag.getBoolean("GokuBarBreak");
         modsApplied = false;                                    // the transient modifiers are not saved: applied again on the first tick
         scanned = false;
     }
@@ -698,6 +725,7 @@ public class GokuBoss extends ArcBoss {
     /** Beaten, he is not killed: health stays at 1, he cannot be hurt any more, he is knocked up and says goodbye; {@link #finishFarewell} then lets the framework end the fight (loot, story credit) while he flashes away. */
     @Override
     public void die(DamageSource source) {
+        if (!level().isClientSide && breakBar()) return;                        // 4.96.0: only the bar of this form ran out
         if (level().isClientSide || farewellDone || !GokuBossConfig.farewell()) { super.die(source); return; }
         if (farewellAt != 0L) return;                                           // already leaving
         farewellSource = source;
@@ -795,6 +823,13 @@ public class GokuBoss extends ArcBoss {
 
     /** Takes the form modifiers off, as a death or a removal does. */
     void clearModsForTest() { clearMods(); }
+
+    /** 4.96.0 tests: runs the whole windup after the bar broke. */
+    void finishChangeForTest() {
+        if (level() instanceof ServerLevel sl) while (windLeft > 0) tickWindup(sl);
+    }
+
+    boolean barBreakForTest() { return barBreak; }
 
     /** Starts a change to {@code idx} and runs the whole windup at once. */
     void changeNowForTest(int idx) {

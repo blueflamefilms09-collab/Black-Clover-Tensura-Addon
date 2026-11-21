@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.97.0] — Goku has a health bar for every form
+Like Lucifero's phases: each Goku form now has its own bar. The bar runs down to 0, he cannot be hurt for the length of the power-up, and the next, stronger form comes back with a FULL bar (a burst and a sound mark it). Only the end of his last form is his farewell/death, as before.
+- NEW: `goku_boss.formBars` (default on): the bar of a form empties -> `GokuBoss.breakBar()` keeps him at 1 health, starts the next form's windup, blocks damage during it, and refills the bar when the form takes hold. Saved in the entity (`GokuBarBreak`), so a reload in the middle of a change cannot leave him at 1 health.
+- NEW: `goku_boss.formBarShare` (default 0.4, 0.05 to 1.0): the size of ONE bar as a share of the old single bar, so ten bars do not make the fight ten times longer. Each form is still stronger (the old per-form scaling is untouched).
+- CHANGED (with formBars on): the form no longer follows the health; it advances when the bar of the form is empty, or by the enrage clock as before.
+- KEPT: set `formBars` to false for the old single bar and health-driven forms; the farewell, the enrage clock, the energy/damage rules of 4.96.0.
+- Cost: no new tick work; one extra boolean per Goku, one burst packet set per form change (at most the ladder length per fight).
+- Tests: `GokuFormBarTest` (pure + wiring), self-test `goku.boss.formbar` (empty bar, 1 health, untouchable, next form full).
+
 ## [4.96.0] — The bosses stop killing themselves, and a creative tab for every verse
 The log of the owner's next run named it: Goku took `tensura.energy_drain` (900.0) with no attacker, exactly when the fight began. That is Tensura's own "energy lost" rule: a creature with 0 magicule that sits in sleep mode is hurt for its full max health with no attacker. Goku and Kakashi spend Ki (magicule), run dry, and Tensura starves them. Lucifero is fine because `LuciusProfile` keeps his pools full. The 4.90.0 anonymous-damage rule never saw it because that damage type is flagged "bypasses invulnerability".
 - FIXED: every boss of the mod now has its magicule and aura topped up about once a second (`boss/rules/BossPools`, the same idea as Lucifero's pool fill), and Tensura's attackerless `tensura:energy_drain` damage is cancelled on a boss. A real Energy Drain skill (it has an attacker) still hurts. Setting `bossRules.keepPoolsFull` (default on; off = the old behaviour).

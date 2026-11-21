@@ -31,6 +31,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.cap", GokuBossSelfTests::cap);
         SelfTests.register("goku.boss.arts", GokuBossSelfTests::arts);
         SelfTests.register("goku.boss.pools", GokuBossSelfTests::pools);
+        SelfTests.register("goku.boss.formbar", GokuBossSelfTests::formbar);
         GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
@@ -113,6 +114,37 @@ public final class GokuBossSelfTests {
             boolean on = com.newuniverse.nusmp.boss.rules.BossRulesConfig.KEEP_POOLS_FULL.get() && com.newuniverse.nusmp.boss.rules.BossRulesConfig.ENVIRONMENT_IMMUNE.get();
             if (on && !hit.isCanceled()) return SelfTests.Result.fail("Tensura's attackerless energy-drain damage was not cancelled on Goku");
             return SelfTests.Result.ok("pool refilled to " + Math.round(ex.getMagicule()) + " of " + Math.round(max) + (on ? ", starvation damage cancelled" : ", rules off"));
+        } finally {
+            if (boss != null) boss.discard();
+        }
+    }
+
+    /**
+     * 4.96.0: a form's bar runs out. Summons Goku in Base, kills his bar with the real die() call, checks he stays alive at 1 health, cannot be hurt, then (windup run at once) is in the next form with a
+     * FULL bar. Cost: one entity made and discarded in this tick.
+     */
+    private static SelfTests.Result formbar(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!GokuBossConfig.enabled() || !GokuBossConfig.formBars()) return SelfTests.Result.ok("skipped: the boss or the form bars are switched off");
+        if (GokuBoss.liveCount() >= GokuBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + GokuBoss.liveCount() + " Goku bosses already stand");
+        GokuBoss boss = null;
+        try {
+            ArcSpawner.Result r = ArcSpawner.summon(level, GokuBoss.CHARACTER, Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 24), 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof GokuBoss g)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = g;
+            g.scanNow();
+            int before = g.formIdx();
+            g.setHealth(0f);
+            g.die(g.damageSources().generic());
+            if (!g.isAlive() || g.getHealth() < 0.5f || g.getHealth() > 1.5f) return SelfTests.Result.fail("the empty bar did not leave him at 1 health: " + g.getHealth());
+            if (!g.barBreakForTest() || !g.windingUp()) return SelfTests.Result.fail("the power-up did not start");
+            if (g.hurt(g.damageSources().generic(), 50f)) return SelfTests.Result.fail("he could be hurt while powering up");
+            g.finishChangeForTest();
+            if (g.formIdx() != before + 1) return SelfTests.Result.fail("the next form did not take hold (" + g.formIdx() + ")");
+            if (g.getHealth() < g.getMaxHealth() - 0.5f) return SelfTests.Result.fail("the new form's bar is not full: " + g.getHealth() + " of " + g.getMaxHealth());
+            return SelfTests.Result.ok("form " + before + " -> " + g.formIdx() + " with a full bar of " + Math.round(g.getMaxHealth()));
         } finally {
             if (boss != null) boss.discard();
         }
