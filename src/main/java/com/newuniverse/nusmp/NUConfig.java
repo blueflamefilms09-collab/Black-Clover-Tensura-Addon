@@ -59,7 +59,8 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue EP_NEEDS_MASTERY;                     // the EP part of addon damage grows in with the skill's mastery (balance.EpMastery); false = the old damage
     public static final ModConfigSpec.BooleanValue LATE_GAME_SCALING;                    // 3.90: mod damage grows with the caster's max magicule (balance.LateGameScaling); false = the old damage
-    public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT;
+    public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT, LEAF_FOUR, LEAF_FIVE, LEAF_BLACK, LEAF_GOD;
+    public static final ModConfigSpec.BooleanValue LEAF_POWER;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
     public static final ModConfigSpec.BooleanValue WEAPON_DRAINS_TARGET;     // 1.113.0: Elsdocia and the Demon Dweller take magicules from whoever they hit (the old behaviour); default false = they only charge
@@ -187,6 +188,12 @@ public final class NUConfig {
         LATE_GAME_CAP = b.comment("Late-game scaling: the largest factor (reached at baseline x 10,000 with the defaults). 1 = no scaling.").defineInRange("lateGameScalingCap", 6.0, 1.0, 100.0);
         GRIMOIRE_DAMAGE_MULT = b.comment("Grimoire spell damage multiplier (every page that hits through GrimoireBook.hurt), on top of the late-game scaling. 1.0 = the old damage.")
                 .defineInRange("grimoireDamageMultiplier", 1.75, 0.0, 10.0);
+        LEAF_POWER = b.comment("Leaf power (docs/grimoire_leaf_power.md): the cover of a grimoire now changes its spell power a lot, like in the anime (a three-leaf is the baseline, a four-leaf is far stronger, a five-leaf far stronger again). false = the old covers, only 1.00 to 1.15.")
+                .define("leafPower", true);
+        LEAF_FOUR = b.comment("Leaf power: spell power multiplier of the tier-4 covers (Four-Leaf, Double Spade, Two-Heart, Five-Sided Diamond). Three-leaf and the other tier-3 covers are x1.").defineInRange("leafPowerFour", 2.5, 1.0, 50.0);
+        LEAF_FIVE = b.comment("Leaf power: spell power multiplier of the five-leaf and the Triple Spade.").defineInRange("leafPowerFive", 6.0, 1.0, 50.0);
+        LEAF_BLACK = b.comment("Leaf power: spell power multiplier of the Black Magic cover.").defineInRange("leafPowerBlack", 10.0, 1.0, 100.0);
+        LEAF_GOD = b.comment("Leaf power: spell power multiplier of the God-Tier cover.").defineInRange("leafPowerGod", 14.0, 1.0, 100.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 

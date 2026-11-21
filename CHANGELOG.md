@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.83.0] — Grimoire leaf power: a four-leaf is far stronger than a three-leaf
+Owner request: "the power difference from a 3 leaf to a 4 leaf and so on should have a massive difference just like the anime" (the longer Wizard questionnaire follows in the next release).
+- NEW: the cover of a grimoire multiplies every spell: three-leaf (and every tier-3 cover) x1, four-leaf / Double Spade / Two-Heart / Five-Sided Diamond x2.5, five-leaf / Triple Spade x6, Black Magic x10, God-Tier x14. With the cover's own number that is about x1.0, x2.6, x6.6, x11.5 and x16.1. A mid page hit at 10,000 EP goes from about 74 / 77 / 81 / 85 / 85 to 74 / 193 / 485 / 845 / 1,183. Chart: docs/previews/grimoire_leaf_power_chart.png.
+- NEW (server settings): `leafPower` (true; false = the old covers, only 1.00 to 1.15), `leafPowerFour` 2.5, `leafPowerFive` 6.0, `leafPowerBlack` 10.0, `leafPowerGod` 14.0.
+- REPLACED (by default): the step between covers, which was 5% per leaf. The item tooltip shows the new total.
+- KEPT: every cover, the cover's own damage and cost numbers, spell costs, the late-game scaling, the player-versus-player hit cap (a player still takes at most the pvp cap of their health per hit), the mob and boss rules, Time Magic. The legacy `GrimoireMagicSkill` hits are not changed.
+- COST: one multiplication per hit; no packets, nothing per tick.
+- CAVEATS: not tuned in a game; the numbers are a first proposal. The Tensura-style bolts had a 28 hit cap that is now lifted by the same factor so the difference shows.
+
 ## [4.82.1] — Fix: the new smoke entry sits before the pinned tail
 - FIXED: 4.81.0 appended its self-test prefix `visual.grimoire_revamp` after `tier` in the smoke list, which 15 older tests forbid (they pin `scaling ... tier` as the end of the list). The prefix now sits just before `scaling`. This is the release that carries the Grimoire revamp (4.81.0) and Infinity Stones Phase B (4.82.0); 4.81.0 to 4.82.0 never got a release of their own because their builds were red.
 - KEPT: every rule, number and asset.

@@ -17,6 +17,7 @@ public final class ScalingSelfTests {
     public static void register() {
         SelfTests.register("scaling.rules", s -> rules());
         SelfTests.register("scaling.live", ScalingSelfTests::live);
+        SelfTests.register("scaling.leaf", s -> leaf());
     }
 
     private static Result rules() {
@@ -27,6 +28,18 @@ public final class ScalingSelfTests {
         double a = LateGameScaling.factor(on, base * 10, base, cap), b = LateGameScaling.factor(on, base * 1e9, base, cap);
         if (a < 1.0 || b < a || b > cap) return Result.fail("the curve is not rising and capped: " + a + " / " + b);
         return Result.ok("lateGameScaling=" + on + ", x" + a + " at baseline x10, x" + b + " at the top (cap " + cap + ")");
+    }
+
+    /** 4.83.0 leaf power: the ladder on the live SERVER settings is rising (three-leaf x1, four, five, black, god) and never below x1. */
+    private static Result leaf() {
+        double three = com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(com.newuniverse.nusmp.blackclover.GrimoireCover.THREE_LEAF);
+        double four = com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(com.newuniverse.nusmp.blackclover.GrimoireCover.FOUR_LEAF);
+        double five = com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(com.newuniverse.nusmp.blackclover.GrimoireCover.FIVE_LEAF);
+        double black = com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(com.newuniverse.nusmp.blackclover.GrimoireCover.BLACK_MAGIC);
+        double god = com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(com.newuniverse.nusmp.blackclover.GrimoireCover.GOD_TIER);
+        if (three != 1.0) return Result.fail("the three-leaf is not x1: " + three);
+        if (!(four >= 1.0 && five >= four && black >= five && god >= black)) return Result.fail("the ladder does not rise: " + four + " / " + five + " / " + black + " / " + god);
+        return Result.ok("leafPower=" + NUConfig.LEAF_POWER.get() + ": x" + three + " / x" + four + " / x" + five + " / x" + black + " / x" + god);
     }
 
     private static Result live(MinecraftServer server) {

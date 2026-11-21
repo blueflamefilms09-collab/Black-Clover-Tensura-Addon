@@ -273,7 +273,7 @@ public class GrimoireItem extends Item {
         }
         tooltip.add(Component.literal(cover.kingdom.displayName).withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.literal(cover.lore).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
-        tooltip.add(Component.literal(String.format("Spell power x%.2f, cost x%.2f", cover.damage, cover.cost)).withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.literal(String.format("Spell power x%.2f, cost x%.2f", cover.damage * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(cover), cover.cost)).withStyle(ChatFormatting.DARK_GRAY));
         BookLook look = look(stack);
         if (look.canon() != null) tooltip.add(Component.literal("The grimoire of " + look.canon().owner).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
         tooltip.add(Component.literal("Cover ornament: " + look.motif().displayName()).withStyle(ChatFormatting.DARK_GRAY));

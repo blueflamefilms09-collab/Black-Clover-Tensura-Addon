@@ -471,7 +471,7 @@ public abstract class GrimoireBook extends Skill {
      * magic, the magic gear, the Dark / Shadow bonus against devils, the grimoire buff, then the balance law and its caps. Remembers the hit for Copy Memory. The amount is unchanged.
      */
     private float pageDamage(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw) {
-        float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
+        float r = raw * (float) cover(i).damage * (float) com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(cover(i)) * (inUnion(i, caster) ? 1.1f : 1f)     // 4.83.0: leaf power, the cover changes the power a lot
                 * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)      // fire casting: Leopold's charged spiral (1 for every other caster)
                 * ArmourState.spellBoost(caster, magic)                                       // 1.99.0: a worn armour of this magic lends the spell half of its attack bonus (it never equips)
                 * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);

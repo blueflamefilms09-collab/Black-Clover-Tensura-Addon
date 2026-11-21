@@ -63,10 +63,11 @@ public final class TensuraShots {
     public static boolean fire(GrimoireBook book, ManasSkillInstance i, ServerPlayer p, int mode, Shot shot,
                                float damage, float speed, float knock, int burnTicks) {
         TensuraFlyingProjectile pr = create(shot, p.level(), p);
-        float dmg = damage * (float) GrimoireBook.cover(i).damage * (float) MagicGear.damageMult(p, book.magic)
+        float leaf = (float) com.newuniverse.nusmp.grimoire.GrimoireLeafPower.factor(GrimoireBook.cover(i));      // 4.83.0: leaf power
+        float dmg = damage * (float) GrimoireBook.cover(i).damage * leaf * (float) MagicGear.damageMult(p, book.magic)
                 * (GrimoireBook.inUnion(i, p) ? 1.1f : 1f) * GrimoireBook.size(i, p);
         pr.setSkill(p, i, book, mode);
-        pr.setDamage(Math.min(dmg, 28f));          // balance law: never above 14 hearts
+        pr.setDamage(Math.min(dmg, 28f * leaf));     // balance law: never above 14 hearts (a higher cover lifts the cap by its leaf power)
         if (knock > 0) pr.setKnockForce(knock);
         if (burnTicks > 0) pr.setBurnTicks(burnTicks);
         pr.setSpeed(speed);
