@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.81.1] — Fix: a test pinned the end of the smoke list
+- FIXED: a Stones test required the smoke list to end exactly with `tier`, so the new `visual.grimoire_revamp` entry of 4.81.0 failed the build and no 4.81.0 release was made. The test now only requires that the old tail is still there. No game change; 4.81.1 carries the grimoire revamp of 4.81.0 (see below).
+- KEPT: every rule, number and asset.
+
 ## [4.81.0] — Grimoire revamp: a thicker book and a living cast effect
 Owner request: new grimoires so the owner can review and give tips.
 - NEW: the held and floating grimoire is a thicker 3D book made in Blender (layered cover, metal corner caps, rounded spine with five bands, ribbon, page block, a raised emblem plate per magic). Asta's tattered five-leaf has a worn variant on the same layout.
