@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.85.0] — The long Tower Wizard questionnaire: 30 questions in five parts, answers that matter
+- NEW: the Tower Wizard asks 30 questions in five parts (Nature 12, Hearth 4, Blood 4, Origin 4, Resolve 6) from a pool of 99 (66 new questions appended); the screen shows "Part 2 of 5: Hearth (3/4)".
+- NEW: the answers matter. The leaf count now comes from six resolve questions plus a 0 or 1 luck roll (random answers: about 78% three leaves, 19% four, 3% five; the best answers: four or five). Ties in nature, kingdom, blood and class are broken by the later answers. The result shows a summary ("Nature: Wind (clear), with a pull towards Fire") without numbers of unchosen options.
+- NEW: the resolve score is stored per player. Setting `wizard.longQuestionnaire` (server, default on); off restores the old 12-question sheet and the old leaf rule exactly.
+- NEW: self-test `wizard.longq`, tests `LeafRollTest`, `QuestionnaireLongTest`, doc `docs/wizard_long_questionnaire.md`.
+- KEPT: every old question and rule, the old pools, the heritage (social class) effects.
+
 ## [4.84.2] — Fix: the relic scan test knows the Infinity Stones carrier kit
 - FIXED: `RelicWearDataTest` failed the build since 4.82.0 because the Nano Gauntlet is defined in `stones/CarrierKit` (outside the relic wave sources); the test now lists that file as a known place (the gauntlet is tagged in `curios/tags/item/hands.json` and checked by the carrier self-tests).
 - KEPT: every item, rule and number; tests only.

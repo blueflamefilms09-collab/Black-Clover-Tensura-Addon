@@ -115,18 +115,44 @@ public final class Questionnaire {
     private static final int[] DRAW = {6, 2, 2, 1, 1};     // 1.16.0: six questions about your nature now reach every magic, the rest as before
     private static final String[][][] POOLS = {NATURE, HEARTH, BLOOD, RESOLVE, SOCIAL};
 
+    // ---------------------------------------------------------------- the long sheet (setting wizard.longQuestionnaire)
+    /** Questions per section of the long sheet, in POOLS order (nature, hearth, blood, resolve, social): 12 + 4 + 4 + 6 + 4 = 30. Capped by the pool size. */
+    static final int[] DRAW_LONG = {12, 4, 4, 6, 4};
+    /** The section of each pool, in POOLS order. */
+    private static final String[] CATS = {SheetSections.NATURE, SheetSections.HEARTH, SheetSections.BLOOD, SheetSections.RESOLVE, SheetSections.ORIGIN};
+    /** The old questions first, the new ones appended: old sheets still read, and the old pools are untouched. */
+    private static final String[][][] LONG_POOLS = {cat(NATURE, LongQuestions.NATURE), cat(HEARTH, LongQuestions.HEARTH), cat(BLOOD, LongQuestions.BLOOD),
+            cat(RESOLVE, LongQuestions.RESOLVE), cat(SOCIAL, LongQuestions.SOCIAL)};
+
+    private static String[][] cat(String[][] a, String[][] b) {
+        String[][] r = new String[a.length + b.length][];
+        System.arraycopy(a, 0, r, 0, a.length);
+        System.arraycopy(b, 0, r, a.length, b.length);
+        return r;
+    }
+
+    /** The pool sizes of the long sheet (nature, hearth, blood, resolve, social), for tests and the doc. */
+    static String[][][] longPools() { return LONG_POOLS; }
+
     // ---------------------------------------------------------------- one questionnaire
-    /** The questions as shown (random order), kept on the server to read the answers back. */
-    public record Sheet(List<String> texts, List<List<String>> shownOptions, List<List<String>> tokens) {
+    /**
+     * The questions as shown, kept on the server to read the answers back. {@code cats} holds the section id of each question (see {@link SheetSections}) on the long sheet and is empty on the
+     * old one; {@code longMode} says which leaf and tie rules {@link #result} applies, so a sheet is always read the way it was drawn.
+     */
+    public record Sheet(List<String> texts, List<List<String>> shownOptions, List<List<String>> tokens, List<String> cats, boolean longMode) {
+        public Sheet(List<String> texts, List<List<String>> shownOptions, List<List<String>> tokens) { this(texts, shownOptions, tokens, List.of(), false); }
+
         public CompoundTag toTag() {
             CompoundTag t = new CompoundTag();
             ListTag qs = new ListTag();
+            boolean sections = cats.size() == texts.size();
             for (int i = 0; i < texts.size(); i++) {
                 CompoundTag q = new CompoundTag();
                 q.putString("T", texts.get(i));
                 ListTag o = new ListTag();
                 for (String s : shownOptions.get(i)) o.add(StringTag.valueOf(s));
                 q.put("O", o);
+                if (sections) q.putString("C", cats.get(i));                 // optional: an old sheet has none and the screen then shows no sections
                 qs.add(q);
             }
             t.put("Q", qs);
@@ -134,32 +160,42 @@ public final class Questionnaire {
         }
     }
 
-    public static Sheet draw(RandomSource rng) {
-        List<String> texts = new ArrayList<>();
+    public static Sheet draw(RandomSource rng) { return draw(rng, false); }
+
+    /** {@code longSheet} false = the old 12-question sheet, exactly as it always was; true = the 30-question sheet in ordered sections. */
+    public static Sheet draw(RandomSource rng, boolean longSheet) {
+        String[][][] pools = longSheet ? LONG_POOLS : POOLS;
+        int[] draw = longSheet ? DRAW_LONG : DRAW;
+        List<String> texts = new ArrayList<>(), cats = new ArrayList<>();
         List<List<String>> shown = new ArrayList<>(), toks = new ArrayList<>();
-        for (int p = 0; p < POOLS.length; p++) {
-            List<String[]> pool = new ArrayList<>(List.of(POOLS[p]));
+        for (int p = 0; p < pools.length; p++) {
+            List<String[]> pool = new ArrayList<>(List.of(pools[p]));
             Collections.shuffle(pool, new java.util.Random(rng.nextLong()));
-            for (int i = 0; i < Math.min(DRAW[p], pool.size()); i++) {
+            for (int i = 0; i < Math.min(draw[p], pool.size()); i++) {
                 String[] q = pool.get(i);
                 List<String[]> opts = new ArrayList<>();
                 for (int k = 1; k < q.length; k++) opts.add(q[k].split("\\|", 2));
                 Collections.shuffle(opts, new java.util.Random(rng.nextLong()));
                 texts.add(q[0]);
+                cats.add(CATS[p]);
                 List<String> s = new ArrayList<>(), t = new ArrayList<>();
                 for (String[] o : opts) { s.add(o[0]); t.add(o[1]); }
                 shown.add(s);
                 toks.add(t);
             }
         }
-        // the questions themselves come in a shuffled order too, so the "kind" of a question never gives itself away
         List<Integer> order = new ArrayList<>();
         for (int i = 0; i < texts.size(); i++) order.add(i);
-        Collections.shuffle(order, new java.util.Random(rng.nextLong()));
-        List<String> t2 = new ArrayList<>();
+        if (longSheet) {
+            order.sort((a, b) -> Integer.compare(SheetSections.ORDER.indexOf(cats.get(a)), SheetSections.ORDER.indexOf(cats.get(b))));   // stable: inside a section the draw order (random) stays
+        } else {
+            // the questions themselves come in a shuffled order too, so the "kind" of a question never gives itself away
+            Collections.shuffle(order, new java.util.Random(rng.nextLong()));
+        }
+        List<String> t2 = new ArrayList<>(), c2 = new ArrayList<>();
         List<List<String>> s2 = new ArrayList<>(), k2 = new ArrayList<>();
-        for (int i : order) { t2.add(texts.get(i)); s2.add(shown.get(i)); k2.add(toks.get(i)); }
-        return new Sheet(t2, s2, k2);
+        for (int i : order) { t2.add(texts.get(i)); c2.add(cats.get(i)); s2.add(shown.get(i)); k2.add(toks.get(i)); }
+        return longSheet ? new Sheet(t2, s2, k2, c2, true) : new Sheet(t2, s2, k2);
     }
 
     // ---------------------------------------------------------------- the result
@@ -167,46 +203,97 @@ public final class Questionnaire {
      * What the questionnaire decided. {@code primary} is the attribute of the grimoire that is granted. When two attributes were nearly
      * tied they fuse instead of coming as two grimoires: {@code parentA} and {@code parentB} are the pair (both null for a single
      * attribute), {@code primary} is the attribute they blend into if the game has one (Fire and Water give Glass), and {@code born} says
-     * they have no blend in the game: a new magic is born of the pair (see grimoire.BornMagic).
+     * they have no blend in the game: a new magic is born of the pair (see grimoire.BornMagic). {@code detail} says how clear each answer was (for the summary the wizard speaks).
      */
-    public record Result(MagicType primary, MagicType parentA, MagicType parentB, boolean born, Kingdom kingdom, Race blood, int leaves, SocialClass social) {
+    public record Result(MagicType primary, MagicType parentA, MagicType parentB, boolean born, Kingdom kingdom, Race blood, int leaves, SocialClass social, Detail detail) {
+        public Result(MagicType primary, MagicType parentA, MagicType parentB, boolean born, Kingdom kingdom, Race blood, int leaves, SocialClass social) {
+            this(primary, parentA, parentB, born, kingdom, blood, leaves, social, null);
+        }
         public boolean fused() { return parentA != null && parentB != null; }
+    }
+
+    /** {@code resolve} of {@code resolveMax} is the total of the resolve answers (not the luck); the words are clear / leaning / narrow; {@code pull} is the runner-up nature when it came close. */
+    public record Detail(int resolve, int resolveMax, String natureWord, MagicType pull, String kingdomWord, String bloodWord, String socialWord) {}
+
+    /** The total resolve of the chosen answers. */
+    public static int resolveOf(Sheet sheet, int[] answers) {
+        int sum = 0;
+        for (int i = 0; i < answers.length; i++) sum += tokenResolve(sheet.tokens().get(i).get(answers[i]));
+        return sum;
+    }
+
+    /** The best total the sheet's resolve questions allow (the best option of each question). */
+    public static int resolveMax(Sheet sheet) {
+        int sum = 0;
+        for (List<String> opts : sheet.tokens()) {
+            boolean any = false;
+            int best = Integer.MIN_VALUE;
+            for (String o : opts) { if (o.contains("T:")) any = true; best = Math.max(best, tokenResolve(o)); }
+            if (any) sum += best;
+        }
+        return sum;
+    }
+
+    /** For each question the option with the most resolve (the first one on a question without resolve): the path of a player who always takes the best resolve answer. */
+    public static int[] bestResolveAnswers(Sheet sheet) {
+        int[] a = new int[sheet.texts().size()];
+        for (int i = 0; i < a.length; i++) {
+            int bestV = Integer.MIN_VALUE;
+            List<String> opts = sheet.tokens().get(i);
+            for (int k = 0; k < opts.size(); k++) if (tokenResolve(opts.get(k)) > bestV) { bestV = tokenResolve(opts.get(k)); a[i] = k; }
+        }
+        return a;
+    }
+
+    private static int tokenResolve(String optionTokens) {
+        int s = 0;
+        for (String tok : optionTokens.split(",")) {
+            String[] p = tok.split(":");
+            if (p.length >= 2 && p[0].equals("T")) s += Integer.parseInt(p[p.length - 1]);
+        }
+        return s;
     }
 
     /** Reads the answers (the index of the chosen shown option for each question). Null if they do not fit the sheet. */
     public static Result result(Sheet sheet, int[] answers, List<MagicType> pool, boolean allowFive, double dualChance, RandomSource rng) {
         if (answers == null || answers.length != sheet.texts().size()) return null;
-        Map<MagicType, Integer> magic = new EnumMap<>(MagicType.class);
-        Map<MagicFlavors.Flavor, Integer> flavor = new EnumMap<>(MagicFlavors.Flavor.class);
-        Map<Kingdom, Integer> kingdom = new EnumMap<>(Kingdom.class);
-        Map<Race, Integer> blood = new EnumMap<>(Race.class);
-        Map<SocialClass, Integer> social = new EnumMap<>(SocialClass.class);
+        boolean lng = sheet.longMode();
+        double eps = lng ? 1e-3 : 0;                                                   // long sheet: a tie is broken by the later answers (weight grows with the question's place), not at random
+        Map<MagicType, Double> magic = new EnumMap<>(MagicType.class), lateMagic = new EnumMap<>(MagicType.class);
+        Map<MagicFlavors.Flavor, Double> flavor = new EnumMap<>(MagicFlavors.Flavor.class), lateFlavor = new EnumMap<>(MagicFlavors.Flavor.class);
+        Map<Kingdom, Double> kingdom = new EnumMap<>(Kingdom.class), lateKingdom = new EnumMap<>(Kingdom.class);
+        Map<Race, Double> blood = new EnumMap<>(Race.class), lateBlood = new EnumMap<>(Race.class);
+        Map<SocialClass, Double> social = new EnumMap<>(SocialClass.class), lateSocial = new EnumMap<>(SocialClass.class);
         int resolve = 0;
         for (int i = 0; i < answers.length; i++) {
             if (answers[i] < 0 || answers[i] >= sheet.tokens().get(i).size()) return null;
+            double w = (i + 1) / (double) answers.length;
             for (String tok : sheet.tokens().get(i).get(answers[i]).split(",")) {
                 String[] p = tok.split(":");
                 int pts = Integer.parseInt(p[p.length - 1]);
                 try {
                     switch (p[0]) {
-                        case "E" -> magic.merge(MagicType.valueOf(p[1]), pts, Integer::sum);                       // a magic by name (old sheets)
-                        case "F" -> flavor.merge(MagicFlavors.Flavor.valueOf(p[1]), pts, Integer::sum);          // a flavor (1.16.0)
-                        case "K" -> kingdom.merge(Kingdom.valueOf(p[1]), pts, Integer::sum);
-                        case "R" -> blood.merge(Race.valueOf(p[1]), pts, Integer::sum);
-                        case "S" -> social.merge(SocialClass.valueOf(p[1]), pts, Integer::sum);
+                        case "E" -> { add(magic, MagicType.valueOf(p[1]), pts); add(lateMagic, MagicType.valueOf(p[1]), pts * w); }               // a magic by name (old sheets)
+                        case "F" -> { add(flavor, MagicFlavors.Flavor.valueOf(p[1]), pts); add(lateFlavor, MagicFlavors.Flavor.valueOf(p[1]), pts * w); }   // a flavor (1.16.0)
+                        case "K" -> { add(kingdom, Kingdom.valueOf(p[1]), pts); add(lateKingdom, Kingdom.valueOf(p[1]), pts * w); }
+                        case "R" -> { add(blood, Race.valueOf(p[1]), pts); add(lateBlood, Race.valueOf(p[1]), pts * w); }
+                        case "S" -> { add(social, SocialClass.valueOf(p[1]), pts); add(lateSocial, SocialClass.valueOf(p[1]), pts * w); }
                         case "T" -> resolve += pts;
                         default -> { }
                     }
                 } catch (IllegalArgumentException ignored) { }
             }
         }
-        List<MagicType> ranked = rank(pool, magic, flavor, rng);
-        MagicType primary = ranked.get(0), grimoire = primary, pa = null, pb = null;
+        java.util.function.ToDoubleFunction<MagicType> sc = m -> score(m, magic, flavor) + eps * score(m, lateMagic, lateFlavor);
+        List<MagicType> ranked = rank(pool, sc, rng);
+        MagicType primary = ranked.get(0), grimoire = primary, pa = null, pb = null, pullCand = null;
         boolean born = false;
-        double top = score(primary, magic, flavor);
+        double top = sc.applyAsDouble(primary), second = 0;
         for (MagicType m : ranked) {                                                   // the best attribute that shares nothing with the first
             if (m == primary || MagicFlavors.shares(primary, m)) continue;
-            if (score(m, magic, flavor) >= Math.max(1.5, 0.6 * top) && rng.nextDouble() < dualChance) {
+            pullCand = m;
+            second = sc.applyAsDouble(m);
+            if (second >= Math.max(1.5, 0.6 * top) && rng.nextDouble() < dualChance) {
                 pa = primary;
                 pb = m;
                 MagicType blend = MagicFlavors.blendOf(MagicFlavors.main(primary), MagicFlavors.main(m));
@@ -214,39 +301,81 @@ public final class Questionnaire {
             }
             break;
         }
-        Kingdom k = best(kingdom, Kingdom.values(), rng);
-        Race r = best(blood, Race.values(), rng);
+        Kingdom k = best(kingdom, lateKingdom, eps, Kingdom.values(), rng);
+        Race r = best(blood, lateBlood, eps, Race.values(), rng);
         if (r == Race.DEVIL) r = Race.HUMAN;
-        int score = resolve + rng.nextInt(3);                                          // 0..6: practice counts, a little fortune too
-        int leaves = score >= 5 ? 5 : score >= 3 ? 4 : 3;
+        int luck = rng.nextInt(lng ? LeafRoll.LUCK_SIDES : 3);                         // old sheet: practice + fortune 0..2; long sheet: the answers decide, fortune is 0 or 1
+        int leaves = lng ? LeafRoll.leaves(resolve, luck) : LeafRoll.oldLeaves(resolve, luck);
         if (leaves >= 5 && !allowFive) leaves = 4;
-        return new Result(grimoire, pa, pb, born, k, r, leaves, best(social, SocialClass.values(), rng));
+        SocialClass sc2 = best(social, lateSocial, eps, SocialClass.values(), rng);
+        MagicType pull = pa == null && pullCand != null && top > 0 && second >= 0.5 * top ? pullCand : null;
+        Detail detail = new Detail(resolve, resolveMax(sheet), word(top, second), pull, marginWord(kingdom, k), marginWord(blood, r), marginWord(social, sc2));
+        return new Result(grimoire, pa, pb, born, k, r, leaves, sc2, detail);
     }
 
+    // ---------------------------------------------------------------- the summary the wizard speaks
+    /** How clear a win was: the gap to the runner-up. Words only, never the numbers of options that were not chosen. */
+    static String word(double top, double second) {
+        double gap = top - second;
+        return gap >= Math.max(2, 0.4 * top) ? "clear" : gap >= 1 ? "leaning" : "narrow";
+    }
+
+    private static <E extends Enum<E>> String marginWord(Map<E, Double> pts, E winner) {
+        double top = pts.getOrDefault(winner, 0.0), second = 0;
+        for (Map.Entry<E, Double> e : pts.entrySet()) if (e.getKey() != winner) second = Math.max(second, e.getValue());
+        return word(top, second);
+    }
+
+    private static String shortName(MagicType m) { return m.displayName.replace(" Magic", ""); }
+
+    /**
+     * The lines the wizard shows after the last answer (long sheet only; empty when the result has no detail): one per category, the winner and how clear it was, never a number of an option
+     * that was not chosen. Pure, so a test can read it.
+     */
+    public static List<String> summary(Result r) {
+        Detail d = r.detail();
+        if (d == null) return List.of();
+        List<String> out = new ArrayList<>();
+        if (r.fused()) {
+            out.add("Nature: " + shortName(r.parentA()) + " and " + shortName(r.parentB()) + ", fused " + (r.born() ? "into a magic of their own" : "into " + shortName(r.primary())) + " (finely balanced)");
+        } else {
+            out.add("Nature: " + shortName(r.primary()) + " (" + d.natureWord() + ")" + (d.pull() != null ? ", with a pull towards " + shortName(d.pull()) : ""));
+        }
+        out.add("Hearth: " + r.kingdom().displayName.replace(" Kingdom", "") + " (" + d.kingdomWord() + ")");
+        out.add("Blood: " + r.blood().displayName + " (" + d.bloodWord() + ")");
+        out.add("Origin: " + r.social().displayName + " (" + d.socialWord() + ")");
+        String[] n = {"", "", "", "a three-leaf", "a four-leaf", "a five-leaf"};
+        out.add("Resolve: " + d.resolve() + " of " + d.resolveMax() + ", " + n[Math.max(3, Math.min(5, r.leaves()))] + " grimoire");
+        return out;
+    }
+
+    private static <E> void add(Map<E, Double> m, E key, double v) { m.merge(key, v, Double::sum); }
+
     /** An attribute's score: the points of its flavors (shared out, so a two-flavor attribute needs both) and any points given by name, tilted by rarity. */
-    private static double score(MagicType m, Map<MagicType, Integer> direct, Map<MagicFlavors.Flavor, Integer> flavor) {
+    private static double score(MagicType m, Map<MagicType, Double> direct, Map<MagicFlavors.Flavor, Double> flavor) {
         MagicFlavors.Flavor[] fl = MagicFlavors.flavors(m);
-        double s = direct.getOrDefault(m, 0);
+        double s = direct.getOrDefault(m, 0.0);
         if (fl.length > 0) {
             double f = 0;
-            for (MagicFlavors.Flavor x : fl) f += flavor.getOrDefault(x, 0);
+            for (MagicFlavors.Flavor x : fl) f += flavor.getOrDefault(x, 0.0);
             s += f / Math.sqrt(fl.length);
         }
         return s * MagicFlavors.rarity(m);
     }
 
-    private static List<MagicType> rank(List<MagicType> pool, Map<MagicType, Integer> direct, Map<MagicFlavors.Flavor, Integer> flavor, RandomSource rng) {
+    private static List<MagicType> rank(List<MagicType> pool, java.util.function.ToDoubleFunction<MagicType> sc, RandomSource rng) {
         List<MagicType> l = new ArrayList<>(pool);
         Collections.shuffle(l, new java.util.Random(rng.nextLong()));                    // ties break at random
-        l.sort((x, y) -> Double.compare(score(y, direct, flavor), score(x, direct, flavor)));
+        l.sort((x, y) -> Double.compare(sc.applyAsDouble(y), sc.applyAsDouble(x)));
         return l;
     }
 
-    private static <E extends Enum<E>> E best(Map<E, Integer> score, E[] all, RandomSource rng) {
+    /** The highest score wins; a tie is broken by the later answers on the long sheet (eps > 0), at random otherwise or when still tied. */
+    private static <E extends Enum<E>> E best(Map<E, Double> score, Map<E, Double> late, double eps, E[] all, RandomSource rng) {
         List<E> l = new ArrayList<>(List.of(all));
         Collections.shuffle(l, new java.util.Random(rng.nextLong()));
         E best = l.get(0);
-        for (E e : l) if (score.getOrDefault(e, 0) > score.getOrDefault(best, 0)) best = e;
+        for (E e : l) if (score.getOrDefault(e, 0.0) + eps * late.getOrDefault(e, 0.0) > score.getOrDefault(best, 0.0) + eps * late.getOrDefault(best, 0.0)) best = e;
         return best;
     }
 }

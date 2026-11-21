@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.client.ui.theme.UiBar;
 import com.newuniverse.nusmp.client.ui.theme.UiLang;
 import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
+import com.newuniverse.nusmp.wizard.SheetSections;
 import com.newuniverse.nusmp.wizard.WizardNet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -29,6 +30,7 @@ import java.util.List;
 public class QuestionnaireScreen extends Screen {
     private final List<String> texts = new ArrayList<>();
     private final List<List<String>> options = new ArrayList<>();
+    private final List<String> cats = new ArrayList<>();          // the section id of each question (long sheet), "" on an old sheet
     private final int[] answers;
     private int index;
     private final SageBlock sage = new SageBlock();
@@ -42,6 +44,7 @@ public class QuestionnaireScreen extends Screen {
         for (int i = 0; i < qs.size(); i++) {
             CompoundTag q = qs.getCompound(i);
             texts.add(q.getString("T"));
+            cats.add(q.contains("C", Tag.TAG_STRING) ? q.getString("C") : "");
             List<String> o = new ArrayList<>();
             ListTag ol = q.getList("O", Tag.TAG_STRING);
             for (int k = 0; k < ol.size(); k++) o.add(ol.getString(k));
@@ -93,7 +96,14 @@ public class QuestionnaireScreen extends Screen {
     public void render(GuiGraphics g, int mx, int my, float partial) {
         super.render(g, mx, my, partial);                      // background + sheet, then the answer buttons
         int w = Math.min(360, width - 20), x = (width - w) / 2, top = height / 2 - 100;
-        g.drawCenteredString(font, "The Tower Wizard asks  (" + (index + 1) + " / " + texts.size() + ")", width / 2, top + 6, UiDraw.goldInk());
+        String part = SheetSections.progress(cats, index);            // "Part 2 of 5: Hearth (3/4)"; empty on an old sheet
+        if (part.isEmpty()) {
+            g.drawCenteredString(font, "The Tower Wizard asks  (" + (index + 1) + " / " + texts.size() + ")", width / 2, top + 6, UiDraw.goldInk());
+        } else {
+            g.drawCenteredString(font, part, width / 2, top + 6, UiDraw.goldInk());
+            String all = (index + 1) + " / " + texts.size();
+            g.drawString(font, all, x + w - 12 - font.width(all), top + 6, UiDraw.ink(), false);
+        }
         UiDraw.wrapped(g, font, texts.get(index), x + 12, top + 22, w - 24, UiDraw.ink());
         if (UiTheme.anime()) {                                                  // 1.27.0: progress and the Great Sage's line
             float now = UiTheme.now();

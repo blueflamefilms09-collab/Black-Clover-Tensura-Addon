@@ -125,7 +125,7 @@ public final class WizardSystem {
         if (!Ceremony.hasEnoughEp(p)) { say(p, "Your soul is still too small for a grimoire. Come back with " + MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP) + " EP."); return; }
         if (!Ceremony.isEligible(p)) { say(p, "The grimoires have not called you."); return; }
         if (!summoned(p) && !p.hasPermissions(2)) { say(p, "You come without a summons. Grow a little more, and one will find you."); return; }
-        var sheet = Questionnaire.draw(p.getRandom());
+        var sheet = Questionnaire.draw(p.getRandom(), MultiverseConfig.get(MultiverseConfig.LONG_QUESTIONNAIRE));        // false = the old 12-question sheet
         PENDING.put(p.getUUID(), new Pending(sheet, p.level().getGameTime(), wizard.position()));
         say(p, "Answer honestly, child. The grimoire reads the heart.");
         p.displayClientMessage(Component.literal("Click an answer for each question. (Sneak and right-click the wizard to leave.)").withStyle(ChatFormatting.GRAY), true);
@@ -152,6 +152,10 @@ public final class WizardSystem {
         ServerLevel sl = p.serverLevel();
         VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFFFFD86B, 90, 1.8f);
         say(p, "Yes... I see it. Your grimoire comes.");
+        if (r.detail() != null) {                                                                                  // long sheet: what the answers said, in words
+            ResolveScore.set(p, r.detail().resolve(), r.detail().resolveMax());
+            if (pend.sheet().longMode()) for (String line : Questionnaire.summary(r)) p.sendSystemMessage(Component.literal("  " + line).withStyle(ChatFormatting.GRAY));
+        }
         ItemStack visual = GrimoireItem.create(p, cover, r.primary(), devil);
         flight(sl, p, pend.where().add(0, 1.6, 0), visual, () -> arrive(p, r, cover, devil));
     }
