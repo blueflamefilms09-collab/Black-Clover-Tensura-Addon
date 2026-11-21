@@ -34,6 +34,8 @@ public final class BossRulesHooks {
     private BossRulesHooks() {}
 
     public static final int SWEEP_TICKS = 100;
+    /** 4.96.0: how often the tracked bosses' magicule and aura pools are topped up (once a second). */
+    public static final int POOL_TICKS = 20;
 
     private static boolean done;
     private static final Map<UUID, LivingEntity> TRACKED = new HashMap<>();
@@ -59,12 +61,13 @@ public final class BossRulesHooks {
     }
 
     /** 1.68.0: a boss shrugs off the world's own damage (see {@link BossEnvironment}). */
-    static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
+    public static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
         try {
             if (e.getEntity().level().isClientSide() || !BossRulesConfig.ENVIRONMENT_IMMUNE.get()) return;
             if (!BossIdentity.isBoss(e.getEntity())) return;
             probe(e);
-            if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())) { e.setCanceled(true); return; }
+            if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())
+                    || BossRulesConfig.KEEP_POOLS_FULL.get() && BossEnvironment.energyStarvation(e.getSource())) { e.setCanceled(true); return; }
             String csv = BossRulesConfig.ANONYMOUS_DAMAGE_BOSSES.get();
             if (!csv.isEmpty() && BossEnvironment.listed(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(e.getEntity().getType()).toString(), csv) && BossEnvironment.anonymousDamage(e.getEntity(), e.getSource())) {
                 com.newuniverse.nusmp.core.CatchLog.note("anonymous-damage:" + e.getSource().getMsgId(), "a boss (" + e.getEntity().getType().getDescriptionId() + ") took anonymous damage of type '" + e.getSource().getMsgId()
@@ -98,6 +101,7 @@ public final class BossRulesHooks {
         if (!(ent instanceof LivingEntity le) || !BossIdentity.isBoss(ent)) return;
         TRACKED.put(ent.getUUID(), le);
         clean(le);
+        if (BossRulesConfig.KEEP_POOLS_FULL.get()) BossPools.topUp(le);
     }
 
     static void onLeave(EntityLeaveLevelEvent e) {
@@ -107,10 +111,14 @@ public final class BossRulesHooks {
     static void onStopping(ServerStoppingEvent e) { TRACKED.clear(); }
 
     static void onTick(ServerTickEvent.Post e) {
-        if (TRACKED.isEmpty() || e.getServer().getTickCount() % SWEEP_TICKS != 0) return;
+        if (TRACKED.isEmpty()) return;
+        int tick = e.getServer().getTickCount();
+        boolean pools = tick % POOL_TICKS == 0 && BossRulesConfig.KEEP_POOLS_FULL.get(), sweep = tick % SWEEP_TICKS == 0;
+        if (!pools && !sweep) return;
         for (LivingEntity b : new ArrayList<>(TRACKED.values())) {
             if (b.isRemoved() || !b.isAlive()) { TRACKED.remove(b.getUUID(), b); continue; }
-            clean(b);
+            if (pools) BossPools.topUp(b);                  // 4.96.0: no empty pool, so no sleep mode and no Tensura starvation damage
+            if (sweep) clean(b);
         }
     }
 

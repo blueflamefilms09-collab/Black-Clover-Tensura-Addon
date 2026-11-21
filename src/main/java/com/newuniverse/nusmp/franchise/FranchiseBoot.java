@@ -24,6 +24,7 @@ public final class FranchiseBoot {
         NeoForge.EVENT_BUS.addListener(FranchiseEvents::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(FranchiseEvents::onLogout);
         NeoForge.EVENT_BUS.addListener(FranchiseEvents::onServerStopping);
+        NeoForge.EVENT_BUS.addListener(VerseReport::register);
         FranchiseSelfTests.register();
     }
 }

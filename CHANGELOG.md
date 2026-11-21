@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.96.0] — The bosses stop killing themselves, and a creative tab for every verse
+The log of the owner's next run named it: Goku took `tensura.energy_drain` (900.0) with no attacker, exactly when the fight began. That is Tensura's own "energy lost" rule: a creature with 0 magicule that sits in sleep mode is hurt for its full max health with no attacker. Goku and Kakashi spend Ki (magicule), run dry, and Tensura starves them. Lucifero is fine because `LuciusProfile` keeps his pools full. The 4.90.0 anonymous-damage rule never saw it because that damage type is flagged "bypasses invulnerability".
+- FIXED: every boss of the mod now has its magicule and aura topped up about once a second (`boss/rules/BossPools`, the same idea as Lucifero's pool fill), and Tensura's attackerless `tensura:energy_drain` damage is cancelled on a boss. A real Energy Drain skill (it has an attacker) still hurts. Setting `bossRules.keepPoolsFull` (default on; off = the old behaviour).
+- NEW: the verse tabs. One creative tab per verse (28 more: Dragon Ball, Shield Hero, DanMachi, Seven Deadly Sins, Naruto, Bleach, One Piece, Hunter x Hunter, JoJo, Solo Leveling, D&D, Re:Zero, Fate, Overlord, KonoSuba, Mushoku Tensei, Eminence in Shadow, Tower of God, Fullmetal Alchemist, SAO and Log Horizon, Jujutsu Kaisen, Frieren, Delicious in Dungeon, Made in Abyss, Tomb Raider King, Yu-Gi-Oh, Exiled Heavy Knight, Reincarnated as a Sword). A verse with nothing yet still shows its tab with one note item, so the gaps are visible. Client option `visual.verseTabs` (default on).
+- NEW: `/multiverse verses` (operators) counts the items of every franchise and verse tab and says EMPTY / thin / ok / heavy, plus how many items are in no tab. The CI self-test `item.franchise_tabs` prints the same table to the log.
+- IMPROVED: all franchise tabs now share one fill of the creative menu (one pass instead of one per tab).
+- KEPT: the seven older tabs and their items (Shield Hero items are in Hero Weapons and in Shield Hero; the Saiyan alloy set is in Other Anime Worlds and Dragon Ball), all boss rules, the damage-probe log.
+
 ## [4.95.2] — CurseForge changelog for 4.0.0 to 4.95.1
 Docs only, no game change.
 - NEW: `docs/curseforge_changelog_4.0.0_to_4.95.1.md`, a player-facing changelog of everything since 3.105.0 with a short version for the CurseForge box. Spoiler-type details (exact wish words, one-of-one item names and sources, unlock steps, debug tools) are left out on purpose.

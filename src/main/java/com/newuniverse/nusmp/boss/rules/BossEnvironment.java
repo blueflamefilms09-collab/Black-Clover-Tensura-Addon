@@ -58,6 +58,19 @@ public final class BossEnvironment {
         return (a == null && d == null) || a == boss;
     }
 
+    /**
+     * 4.96.0: Tensura's own "energy lost" damage. When a creature's magicule is 0 and it is already in sleep mode, or its EP is negative, Tensura hurts it for its FULL max health with the damage type
+     * {@code tensura:energy_drain} and no attacker (ExistenceStorage.handleSleepMode / handleEnergyRegen). A boss that spends Ki or magicule (Goku, Kakashi) runs dry at the start of a fight, so it
+     * lost health "randomly". That type is flagged "bypasses invulnerability", which is why {@link #anonymousDamage} never caught it. With an attacker (a real Energy Drain skill) it is a real blow.
+     */
+    public static boolean energyStarvation(DamageSource source) {
+        if (source == null || source.getEntity() != null || source.getDirectEntity() != null) return false;
+        return isEnergyStarvationType(source.typeHolder().unwrapKey().map(k -> k.location().toString()).orElse(""));
+    }
+
+    /** The pure half of {@link #energyStarvation}: is this damage type id Tensura's energy drain? */
+    public static boolean isEnergyStarvationType(String typeId) { return "tensura:energy_drain".equals(typeId); }
+
     /** Is {@code id} in the comma separated list (whitespace and case ignored)? */
     public static boolean listed(String id, String csv) {
         if (id == null || csv == null || csv.isBlank()) return false;

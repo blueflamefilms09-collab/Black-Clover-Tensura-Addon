@@ -21,6 +21,12 @@ public final class FranchiseMap {
 
     /** The parsed file. */
     public record Map2(Map<String, String> items, Map<String, String> prefixes) {
+        /** The first item path the file lists for a franchise (a tab icon), or null. */
+        public String firstItemOf(String franchise) {
+            for (Map.Entry<String, String> e : items.entrySet()) if (e.getValue().equals(franchise)) return e.getKey();
+            return null;
+        }
+
         /** The franchise id of an item path, or null. */
         public String franchiseOf(String path) {
             if (path == null || path.isEmpty()) return null;

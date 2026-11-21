@@ -13,6 +13,45 @@ public final class FranchiseTabs {
     /** Tab ids, in display order. Each has the lang key {@code itemGroup.anime_multiverse.franchise_<id>}. */
     public static final List<String> TABS = List.of("black_clover", "tensura", "berserk", "fairy_tail", "magi", "hero_weapons", "anime_worlds");
 
+    /**
+     * 4.96.0: one more tab per verse (anime world), so the owner can see which verse has too many items and which has too few. Appended after {@link #TABS}; the lang key is
+     * {@code itemGroup.anime_multiverse.franchise_<id>}. An item can be in its older tab and its verse tab. Dragon Ball and Shield Hero come first.
+     */
+    public static final List<String> VERSES = List.of("dragon_ball", "shield_hero", "danmachi", "seven_deadly_sins", "naruto", "bleach", "one_piece", "hunter_x_hunter", "jojo",
+            "solo_leveling", "dnd", "rezero", "fate", "overlord", "konosuba", "mushoku_tensei", "eminence_in_shadow", "tower_of_god", "fullmetal_alchemist", "sao_log_horizon",
+            "jujutsu_kaisen", "frieren", "delicious_in_dungeon", "made_in_abyss", "tomb_raider_king", "yu_gi_oh", "exiled_heavy_knight", "reincarnated_as_a_sword");
+
+    /** Item counts (distinct items) that the report calls thin / heavy. */
+    public static final int THIN = 15, HEAVY = 200;
+
+    /** The report word for a verse with {@code items} distinct items. */
+    public static String status(int items) {
+        if (items <= 0) return "EMPTY: needs content";
+        if (items < THIN) return "thin: needs more";
+        if (items > HEAVY) return "heavy: a lot already";
+        return "ok";
+    }
+
+    /** Dragon Ball by id: the balls, the radar and the Saiyan alloy set (the older tabs know nothing about Dragon Ball). */
+    public static boolean dragonBall(String path) {
+        return path != null && (path.startsWith("dragon_ball_") || path.equals("dragon_radar") || path.startsWith("saiyan_alloy"));
+    }
+
+    /** The verse tab of an item (a member of {@link #VERSES}), or null. */
+    public static String verseOf(String path, String franchise) {
+        if (dragonBall(path)) return "dragon_ball";
+        return franchise != null && VERSES.contains(franchise) ? franchise : null;
+    }
+
+    /** Every tab the item is shown in: its older franchise tab ({@link #tabOf}) and its verse tab. Empty when it has none. */
+    public static List<String> tabsOf(String path, String franchise) {
+        String primary = tabOf(path, franchise);
+        String verse = verseOf(path, franchise);
+        if (primary == null && verse == null) return List.of();
+        if (verse == null || verse.equals(primary)) return List.of(primary);
+        return primary == null ? List.of(verse) : List.of(primary, verse);
+    }
+
     private static final Pattern BOSS_CORE = Pattern.compile("core_(aegis|striker|ascendant|wellspring_(magicule|aura|ki|nihility))|(aegis|striker|ascendant|wellspring_(magicule|aura|ki|nihility))_(helmet|chestplate|leggings|boots)");
 
     /** The boss drop framework (bossdrops): the 23 boss trophies, the Trophy Plate armour and Lucifero's armour. */

@@ -30,6 +30,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.spawn", GokuBossSelfTests::spawn);
         SelfTests.register("goku.boss.cap", GokuBossSelfTests::cap);
         SelfTests.register("goku.boss.arts", GokuBossSelfTests::arts);
+        SelfTests.register("goku.boss.pools", GokuBossSelfTests::pools);
         GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
@@ -80,6 +81,38 @@ public final class GokuBossSelfTests {
             g.clearModsForTest();
             if (g.hasFormModifiers()) return SelfTests.Result.fail("modifiers stay after the clean-up");
             return SelfTests.Result.ok("Goku summoned: read " + Math.round(g.reading().ep()) + " EP (" + g.reading().source().name().toLowerCase(java.util.Locale.ROOT) + "), health " + (int) g.getMaxHealth() + ", form change and clean-up work");
+        } finally {
+            if (boss != null) boss.discard();
+        }
+    }
+
+    /**
+     * 4.96.0 (the "he kills himself" bug): Tensura hurts a creature with an empty magicule pool for its full max health (damage type tensura:energy_drain, no attacker). Summons Goku, empties his pool,
+     * checks that the top-up refills it and that the real damage handler cancels an attackerless energy-drain hit on him. Cost: one entity made and discarded in this tick.
+     */
+    private static SelfTests.Result pools(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!GokuBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (GokuBoss.liveCount() >= GokuBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + GokuBoss.liveCount() + " Goku bosses already stand");
+        GokuBoss boss = null;
+        try {
+            ArcSpawner.Result r = ArcSpawner.summon(level, GokuBoss.CHARACTER, Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 16), 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof GokuBoss g)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = g;
+            var ex = io.github.manasmods.tensura.storage.TensuraStorages.getExistenceFrom(g);
+            if (ex == null) return SelfTests.Result.ok("skipped: no Tensura data on the boss");
+            double max = io.github.manasmods.tensura.util.EnergyHelper.getMaxMagicule(g);
+            ex.setMagicule(0.0);
+            com.newuniverse.nusmp.boss.rules.BossPools.topUp(g);
+            if (max > 0.0 && ex.getMagicule() < max * 0.9) return SelfTests.Result.fail("the empty pool was not refilled: " + ex.getMagicule() + " of " + max);
+            net.minecraft.world.damagesource.DamageSource starve = io.github.manasmods.tensura.damage.TensuraDamageTypes.getDamageSource(level, io.github.manasmods.tensura.damage.TensuraDamageTypes.ENERGY_DRAIN);
+            var hit = new net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent(g, new net.neoforged.neoforge.common.damagesource.DamageContainer(starve, g.getMaxHealth()));
+            com.newuniverse.nusmp.boss.rules.BossRulesHooks.onIncomingDamage(hit);
+            boolean on = com.newuniverse.nusmp.boss.rules.BossRulesConfig.KEEP_POOLS_FULL.get() && com.newuniverse.nusmp.boss.rules.BossRulesConfig.ENVIRONMENT_IMMUNE.get();
+            if (on && !hit.isCanceled()) return SelfTests.Result.fail("Tensura's attackerless energy-drain damage was not cancelled on Goku");
+            return SelfTests.Result.ok("pool refilled to " + Math.round(ex.getMagicule()) + " of " + Math.round(max) + (on ? ", starvation damage cancelled" : ", rules off"));
         } finally {
             if (boss != null) boss.discard();
         }

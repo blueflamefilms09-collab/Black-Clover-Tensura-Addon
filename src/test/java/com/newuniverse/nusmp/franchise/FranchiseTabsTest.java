@@ -52,4 +52,38 @@ class FranchiseTabsTest {
             assertTrue(src.contains("tab(\"" + id + "\""), "old tab gone: " + id);
         assertTrue(Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUSMP.java")).contains("\"nusmp-franchise-tabs-client.toml\""), "client option not registered");
     }
+
+    @Test
+    void verseTabsCoverEveryEngravingFranchiseAndHaveTitles() throws Exception {
+        String lang = Files.readString(Path.of("src/main/resources/assets/anime_multiverse/lang/en_us.json"));
+        String src = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUCreativeTab.java"));
+        assertTrue(src.contains("FranchiseTabs.VERSES"), "verse tabs are not registered");
+        for (String id : FranchiseTabs.VERSES) assertTrue(lang.contains("\"itemGroup.anime_multiverse.franchise_" + id + "\""), "no title for verse " + id);
+        int seen = 0;
+        for (FranchiseData.Franchise f : FranchiseData.table().franchises()) {
+            seen++;
+            assertTrue(FranchiseTabs.TABS.contains(f.id()) || FranchiseTabs.VERSES.contains(f.id()), "franchise without a tab: " + f.id());
+        }
+        assertTrue(seen >= 30, "franchise list not read: " + seen);
+    }
+
+    @Test
+    void dragonBallAndShieldHeroGetTheirOwnTabsAndKeepTheOldOnes() {
+        assertEquals(java.util.List.of("dragon_ball"), FranchiseTabs.tabsOf("dragon_ball_earth_4", null));
+        assertEquals(java.util.List.of("dragon_ball"), FranchiseTabs.tabsOf("dragon_radar", null));
+        assertEquals(java.util.List.of("anime_worlds", "dragon_ball"), FranchiseTabs.tabsOf("saiyan_alloy_helmet", null));
+        assertEquals(java.util.List.of("hero_weapons", "shield_hero"), FranchiseTabs.tabsOf("legendary_shield", "shield_hero"));
+        assertEquals(java.util.List.of("anime_worlds", "jujutsu_kaisen"), FranchiseTabs.tabsOf("sukunas_finger", "jujutsu_kaisen"));
+        assertEquals(java.util.List.of("berserk"), FranchiseTabs.tabsOf("black_sword_greed", null));
+        assertEquals(java.util.List.of("hero_weapons"), FranchiseTabs.tabsOf("calling_gem", null));
+        assertTrue(FranchiseTabs.tabsOf("demon_slayer", null).isEmpty());
+    }
+
+    @Test
+    void theReportCallsEmptyThinAndHeavyVerses() {
+        assertTrue(FranchiseTabs.status(0).startsWith("EMPTY"));
+        assertTrue(FranchiseTabs.status(3).startsWith("thin"));
+        assertEquals("ok", FranchiseTabs.status(50));
+        assertTrue(FranchiseTabs.status(356).startsWith("heavy"));
+    }
 }

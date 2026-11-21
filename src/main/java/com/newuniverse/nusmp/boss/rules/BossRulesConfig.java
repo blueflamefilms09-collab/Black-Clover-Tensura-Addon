@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class BossRulesConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue STRIP_REGENERATION, BAN_UNIQUE_ULTIMATE, LUCIUS_COMBO_AI, REFILL_AT_GATES,
-            LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL, ENVIRONMENT_IMMUNE, EFFECT_IMMUNE;
+            LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL, ENVIRONMENT_IMMUNE, EFFECT_IMMUNE, KEEP_POOLS_FULL;
     public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS, ANONYMOUS_DAMAGE_BOSSES, LOG_DAMAGE_BOSSES;
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
     /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
@@ -45,6 +45,8 @@ public final class BossRulesConfig {
                 .define("environmentImmune", true);
         EFFECT_IMMUNE = b.comment("4.62.2: a boss of the mod takes none of the damage a harmful effect on it deals (poison, wither, damage-over-time effects of other mods) when nothing attacked: that damage read as the boss losing health 'randomly'. A blow with an attacker is untouched. false = the old behaviour.")
                 .define("effectImmune", true);
+        KEEP_POOLS_FULL = b.comment("4.96.0: keep the magicule and aura of every boss of the mod full (about once a second), and ignore Tensura's attackerless energy-loss damage on a boss. Without it a boss that spends Ki or magicule (Goku, Kakashi) runs dry, falls into Tensura's sleep mode and is hurt for its full max health, which looked like the boss killing itself. Off = the old behaviour.")
+                .define("keepPoolsFull", true);
         ANONYMOUS_DAMAGE_BOSSES = b.comment("4.90.0: bosses (entity ids, comma separated) that take NO damage at all unless something attacked them: no attacker means no damage, whatever the damage type (a dimension's own tick damage, an unknown mod's zone, burning, anything). A blow with an attacker, the void and /kill stay real. Default: Goku. Empty = off (the old rules only). The first anonymous damage type met is written to the server log once, so the real source can be found.")
                 .define("anonymousDamageBosses", "anime_multiverse:goku_boss");
         LOG_DAMAGE_BOSSES = b.comment("4.95.1: bosses (entity ids, comma separated) whose damage is written to the server log: the FIRST time one of them takes a new kind of hit (damage type, attacker, striking entity) one line names it, at most 24 lines per run. Only a diagnostic: it changes nothing in the fight. Default: Goku and Kakashi (the 'they hurt themselves' report). Empty = off.")

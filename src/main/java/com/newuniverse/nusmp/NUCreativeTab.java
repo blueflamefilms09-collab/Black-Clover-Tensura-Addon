@@ -123,14 +123,55 @@ public final class NUCreativeTab {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNGEON = tab("dungeon", G.DUNGEON, () -> new ItemStack(com.newuniverse.nusmp.dungeon.DungeonFood.RAW_MONSTER_MEAT.get()));
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MISC = tab("misc", G.MISC, () -> new ItemStack(com.newuniverse.nusmp.compat.CompatItems.WIKI.get()));
 
-    /** 3.88.0: the franchise tabs. Each one re-runs the whole fill and keeps the items its franchise owns (FranchiseTabs), so the older tabs stay as they were and an item can be in both. Empty (= hidden) when the client option is off. */
-    private static void fillFranchise(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, String id) {
-        if (!com.newuniverse.nusmp.franchise.FranchiseTabsConfig.enabled()) return;
+    /** One fill of the whole mod sorted into the franchise and verse tabs (4.96.0): the stacks per tab, and the distinct item ids per tab (for the report). */
+    public static final class Buckets {
+        public final java.util.Map<String, java.util.List<ItemStack>> stacks = new java.util.HashMap<>();
+        public final java.util.Map<String, java.util.Set<String>> ids = new java.util.HashMap<>();
+        /** Items of the mod that are in no franchise or verse tab. */
+        public final java.util.Set<String> none = new java.util.TreeSet<>();
+    }
+
+    /** Runs the fill once and sorts every item of the mod into its tabs. */
+    public static Buckets collect(CreativeModeTab.ItemDisplayParameters params) {
+        Buckets b = new Buckets();
         fill(params, (stack, vis) -> {
             net.minecraft.resources.ResourceLocation key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-            if (key != null && NUSMP.MODID.equals(key.getNamespace())
-                    && id.equals(com.newuniverse.nusmp.franchise.FranchiseTabs.tabOf(key.getPath(), com.newuniverse.nusmp.franchise.FranchiseMap.franchiseOf(key.getPath())))) output.accept(stack, vis);
+            if (key == null || !NUSMP.MODID.equals(key.getNamespace())) return;
+            java.util.List<String> tabs = com.newuniverse.nusmp.franchise.FranchiseTabs.tabsOf(key.getPath(), com.newuniverse.nusmp.franchise.FranchiseMap.franchiseOf(key.getPath()));
+            if (tabs.isEmpty()) { b.none.add(key.getPath()); return; }
+            for (String t : tabs) {
+                b.stacks.computeIfAbsent(t, k -> new java.util.ArrayList<>()).add(stack);
+                b.ids.computeIfAbsent(t, k -> new java.util.HashSet<>()).add(key.getPath());
+            }
         }, null);
+        return b;
+    }
+
+    // One fill is shared by all the franchise tabs of one menu rebuild (the game passes the same params object to every tab), so 40 tabs cost one fill, not 40. Weak: the params hold the world's registries.
+    private static java.lang.ref.WeakReference<CreativeModeTab.ItemDisplayParameters> cacheKey = new java.lang.ref.WeakReference<>(null);
+    private static Buckets cache;
+
+    private static synchronized Buckets buckets(CreativeModeTab.ItemDisplayParameters params) {
+        if (cache == null || cacheKey.get() != params) {
+            cache = collect(params);
+            cacheKey = new java.lang.ref.WeakReference<>(params);
+        }
+        return cache;
+    }
+
+    /** 3.88.0 / 4.96.0: the franchise tabs. They keep the items their franchise owns (FranchiseTabs), so the older tabs stay as they were and an item can be in both. Empty (= hidden) when the client option is off. */
+    private static void fillFranchise(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, String id) {
+        boolean verse = com.newuniverse.nusmp.franchise.FranchiseTabs.VERSES.contains(id);
+        if (verse ? !com.newuniverse.nusmp.franchise.FranchiseTabsConfig.verses() : !com.newuniverse.nusmp.franchise.FranchiseTabsConfig.enabled()) return;
+        java.util.List<ItemStack> list = buckets(params).stacks.get(id);
+        if (list != null) for (ItemStack st : list) output.accept(st.copy());
+        else if (verse) {
+            // a verse with nothing yet still shows its tab, with one note, so the gap is visible
+            ItemStack note = new ItemStack(Items.PAPER);
+            note.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("itemGroup.anime_multiverse.verse_empty", "Nothing from %s yet: this verse needs content",
+                    Component.translatable("itemGroup.anime_multiverse.franchise_" + id)));
+            output.accept(note);
+        }
     }
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> franchiseTab(String id, java.util.function.Supplier<ItemStack> icon) {
@@ -150,4 +191,24 @@ public final class NUCreativeTab {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> F_ANIME_WORLDS = franchiseTab("anime_worlds", () -> new ItemStack(Items.NETHER_STAR));
 
     private NUCreativeTab() {}
+
+    // 4.96.0: one tab per verse, appended after the franchise tabs. Registered in a loop; the icon is the verse's own item when it has one.
+    static {
+        for (String v : com.newuniverse.nusmp.franchise.FranchiseTabs.VERSES) franchiseTab(v, () -> verseIcon(v));
+    }
+
+    private static ItemStack verseIcon(String v) {
+        try {
+            if (v.equals("dragon_ball")) return new ItemStack(com.newuniverse.nusmp.dragonballs.DbItems.ball(com.newuniverse.nusmp.dragonballs.BallSet.values()[0], 4));
+            if (v.equals("shield_hero")) return com.newuniverse.nusmp.heroweapon.HeroItems.stack(com.newuniverse.nusmp.heroweapon.HeroKind.SHIELD);
+            String first = com.newuniverse.nusmp.franchise.FranchiseMap.map().firstItemOf(v);
+            if (first != null) {
+                Item it = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, first));
+                if (it != Items.AIR) return new ItemStack(it);
+            }
+        } catch (RuntimeException | LinkageError iconNotReady) {
+            // fall through to the plain book
+        }
+        return new ItemStack(Items.BOOK);
+    }
 }

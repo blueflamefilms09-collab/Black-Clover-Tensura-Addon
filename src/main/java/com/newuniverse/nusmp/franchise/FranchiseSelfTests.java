@@ -37,6 +37,21 @@ public final class FranchiseSelfTests {
         if (registered) return;
         registered = true;
         SelfTests.register("item.franchise_engravings", FranchiseSelfTests::run);
+        SelfTests.register("item.franchise_tabs", FranchiseSelfTests::tabs);
+    }
+
+    /** 4.96.0: the verse tabs on a real server: the fill runs, Dragon Ball and Shield Hero are not empty, every Shield Hero item is also in Hero Weapons, and the table goes to the log. */
+    private static SelfTests.Result tabs(MinecraftServer server) {
+        VerseReport.Report r = VerseReport.build(server);
+        for (String line : VerseReport.lines(r)) com.mojang.logging.LogUtils.getLogger().info("[anime_multiverse] verse-tabs: {}", line);
+        java.util.Map<String, Integer> n = new java.util.HashMap<>();
+        for (VerseReport.Row row : r.rows()) n.put(row.id(), row.items());
+        if (n.size() != FranchiseTabs.TABS.size() + FranchiseTabs.VERSES.size()) return SelfTests.Result.fail("the report misses tabs: " + n.size());
+        if (n.get("dragon_ball") < 17) return SelfTests.Result.fail("Dragon Ball tab has only " + n.get("dragon_ball") + " items");
+        if (n.get("shield_hero") < 20) return SelfTests.Result.fail("Shield Hero tab has only " + n.get("shield_hero") + " items");
+        if (n.get("hero_weapons") < n.get("shield_hero")) return SelfTests.Result.fail("the older Hero Weapons tab lost items");
+        if (n.get("berserk") < 1 || n.get("black_clover") < 1 || n.get("tensura") < 1) return SelfTests.Result.fail("an older franchise tab is empty");
+        return SelfTests.Result.ok(String.join("; ", n.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).sorted().toList()));
     }
 
     private static SelfTests.Result run(MinecraftServer server) {
