@@ -22,7 +22,7 @@ public final class FlatPropsConfig {
     private static final ModConfigSpec.BooleanValue HERO_SOLID_PARTS;
     private static final ModConfigSpec.BooleanValue BIG_BOWS;
     private static final ModConfigSpec.DoubleValue BOW_SCALE;
-    private static final ModConfigSpec.BooleanValue SHIELD_STRAPS;
+    private static final ModConfigSpec.BooleanValue SHIELD_STRAPS, CODEX_CONTENTS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -39,6 +39,8 @@ public final class FlatPropsConfig {
                 .defineInRange("bowScale", 1.0, 0.5, 2.0);
         SHIELD_STRAPS = b.comment("Draw leather straps on the arm of whoever holds a shield: two bands round the forearm, a grip bar and two tabs to the plate (docs/visual_upgrade/shield_fix.md). Off = the shields are drawn without them, as before 4.72.0.")
                 .define("shieldStraps", true);
+        CODEX_CONTENTS = b.comment("Put a clickable table of contents at the top of the long Codex pages (the Wiki, the Rules, any page with 8 or more entries): click a title to jump to it, and \"^ Contents\" on each entry jumps back. Off = the pages are drawn as before 4.80.0.")
+                .define("codexContents", true);
         b.pop();
         SPEC = b.build();
     }
@@ -57,6 +59,7 @@ public final class FlatPropsConfig {
         try { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(HERO_SOLID_PARTS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.vfx.HeroSolid.setSolid(true); }
         try { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(BIG_BOWS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setBig(true); }
         try { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(BOW_SCALE.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.sizes.BowSize.setScale(1.0); }
+        try { com.newuniverse.nusmp.client.ui.codex.EntryListPage.setContentsOn(CODEX_CONTENTS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.client.ui.codex.EntryListPage.setContentsOn(true); }
         try { com.newuniverse.nusmp.visual.shields.ShieldStraps.setEnabled(SHIELD_STRAPS.get()); } catch (IllegalStateException notLoaded) { com.newuniverse.nusmp.visual.shields.ShieldStraps.setEnabled(true); }
     }
 }

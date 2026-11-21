@@ -26,6 +26,9 @@ public interface CodexPage {
     /** The page can be switched off by a client setting (looks only): a hidden page is left out of the tabs. Default: shown. */
     default boolean hidden() { return false; }
 
+    /** 4.80.0: a click on a table-of-contents line asks the screen to scroll to this offset (pixels); read once, then forgotten. -1 = no request. Default: never asks. */
+    default int takeScrollTo() { return -1; }
+
     /** A click inside the spread (returns true if it was used). */
     default boolean click(CodexContext ctx, double mouseX, double mouseY, int button, int x, int y, int w, int h) { return false; }
 }

@@ -178,7 +178,12 @@ public class CodexScreen extends Screen {
         int t = tabAt(mx, my);
         if (t >= 0) { go(t); return true; }
         if (flipAge < 0f && mx >= innerX() && mx <= innerX() + innerW() && my >= innerY() && my <= innerY() + innerH()) {
-            if (pages().get(index).click(ctx, mx, my, button, innerX(), innerY(), innerW(), innerH())) { dragging = index == 0; return true; }
+            if (pages().get(index).click(ctx, mx, my, button, innerX(), innerY(), innerW(), innerH())) {
+                dragging = index == 0;
+                int to = pages().get(index).takeScrollTo();                                     // 4.80.0: a contents line asks for a jump
+                if (to >= 0) scrollTarget = Mth.clamp(to, 0f, maxScroll(index));
+                return true;
+            }
         }
         if (mx < bx + 14 && my > by + bh - 20) { go(index - 1); return true; }                 // the page corners
         if (mx > bx + bw - 14 && my > by + bh - 20) { go(index + 1); return true; }

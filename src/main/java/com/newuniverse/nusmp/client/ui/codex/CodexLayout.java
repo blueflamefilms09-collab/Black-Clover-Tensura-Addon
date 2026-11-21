@@ -24,4 +24,17 @@ public final class CodexLayout {
         }
         return new Placement(col, y, Math.max(used[0], used[1]));
     }
+
+    /** 4.80.0: the table of contents is a two-column list read down the left column, then down the right one. Rows per column for n entries. */
+    public static int tocRows(int n) { return (Math.max(0, n) + 1) / 2; }
+
+    /** The entry under a point of the contents list (x, y relative to the list's top-left, below its header), or -1. col1X is where the right column starts, lineH one line's height. */
+    public static int tocIndexAt(int n, int x, int y, int col1X, int lineH) {
+        if (n <= 0 || x < 0 || y < 0 || lineH <= 0 || col1X <= 0) return -1;
+        int rows = tocRows(n);
+        int r = y / lineH;
+        if (r >= rows) return -1;
+        int i = (x >= col1X ? rows : 0) + r;
+        return i < n ? i : -1;
+    }
 }

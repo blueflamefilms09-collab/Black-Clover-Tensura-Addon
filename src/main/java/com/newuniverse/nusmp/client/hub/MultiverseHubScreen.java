@@ -306,6 +306,8 @@ public final class MultiverseHubScreen extends Screen {
                     if (codexPage) {
                         hit = codex.click(sx, sy, button, body);
                         figureDrag = hit && overviewOpen();
+                        int to = hit ? codex.takeScrollTo() : -1;                                  // 4.80.0: a contents line asks for a jump
+                        if (to >= 0) scrollTarget = Mth.clamp(to, 0f, maxScroll());
                     } else {
                         double lx = sx - body.x(), ly = sy - body.y() + scroll;
                         hit = weaponsPage ? weapons.click(font, body.w(), lx, ly) : list != null && list.click(lx, ly);

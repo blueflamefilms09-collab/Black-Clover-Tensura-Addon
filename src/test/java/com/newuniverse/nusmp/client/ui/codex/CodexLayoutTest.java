@@ -46,4 +46,18 @@ class CodexLayoutTest {
         assertEquals("3", CodexRuleValue.number(3, "", true));
         assertEquals("0.12", CodexRuleValue.trim(0.123456));
     }
+
+    @Test
+    void contentsListIsReadDownTheLeftColumnThenTheRight() {
+        assertEquals(19, CodexLayout.tocRows(37));
+        assertEquals(0, CodexLayout.tocRows(0));
+        assertEquals(0, CodexLayout.tocIndexAt(37, 5, 3, 100, 11));        // top of the left column
+        assertEquals(1, CodexLayout.tocIndexAt(37, 5, 12, 100, 11));       // second line
+        assertEquals(19, CodexLayout.tocIndexAt(37, 105, 0, 100, 11));     // top of the right column
+        assertEquals(36, CodexLayout.tocIndexAt(37, 105, 17 * 11, 100, 11));
+        assertEquals(-1, CodexLayout.tocIndexAt(37, 105, 18 * 11, 100, 11)); // the right column is one entry shorter
+        assertEquals(-1, CodexLayout.tocIndexAt(37, -1, 0, 100, 11));
+        assertEquals(-1, CodexLayout.tocIndexAt(37, 5, 19 * 11, 100, 11));
+        assertEquals(-1, CodexLayout.tocIndexAt(0, 5, 0, 100, 11));
+    }
 }

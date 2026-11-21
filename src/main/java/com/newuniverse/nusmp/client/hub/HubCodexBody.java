@@ -186,6 +186,12 @@ final class HubCodexBody {
         }
     }
 
+    /** 4.80.0: the scroll offset a contents click asked for (-1 = none); read once. */
+    int takeScrollTo() {
+        if (!ready() || failed[page]) return -1;
+        try { return pages.get(page).takeScrollTo(); } catch (RuntimeException | LinkageError e) { return -1; }
+    }
+
     // ---------------------------------------------------------------- the rail
     /**
      * Draws the rail into {@link HubLayout#SUBRAIL}: a well, then the visible rows. {@code clip} is the rail in screen coordinates (the caller computes it from the view), because a scissor takes screen units.

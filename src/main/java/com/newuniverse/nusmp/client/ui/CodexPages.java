@@ -56,7 +56,7 @@ public final class CodexPages {
         for (CodexPage p : PAGES) if (!p.hidden()) out.add(p);                                               // a page a client setting switched off is not a tab
         for (String section : CodexData.get().sections().keySet()) {
             String title = CodexSources.sectionTitle(section);
-            out.add(DATA_PAGES.computeIfAbsent(section + "|" + title, k -> new EntryListPage(title, CodexData.glyph(title), 40, () -> CodexSources.section(section))));
+            out.add(DATA_PAGES.computeIfAbsent(section + "|" + title, k -> new EntryListPage(title, CodexData.glyph(title), 40, () -> CodexSources.section(section), true)));
         }
         return out;
     }

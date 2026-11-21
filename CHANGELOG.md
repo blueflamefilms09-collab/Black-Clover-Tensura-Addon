@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.80.0] — A table of contents for the Wiki (jump to any page)
+Owner request: "Players should be able to skip around the pages and not have to go page by page. So make a table of contents or something for it".
+- NEW: the Wiki page (and every other Codex page made from data files with 8 or more entries, such as Rules) starts with a **Contents** list: every entry title in two columns, numbered. Click a title and the page scrolls straight to that entry. Every entry has a small **^ Contents** link at its top right that jumps back to the list. Works in the Multiverse Hub and in the old Codex book; the Home key also still returns to the top.
+- NEW (client option): `visual.codexContents` (default true). false = the pages are drawn as before 4.80.0.
+- KEPT: the Codex pages, tabs, the scroll wheel and arrow keys, the hub rail, the discovery rule (an entry you have not found stays `???` in the list too).
+- COST: client only, no packets; the list is one extra line per entry (at most a few dozen) drawn only while the page is open; no per-frame allocation beyond the existing page drawing.
+- CAVEATS: not seen in a game; the click geometry is covered by a test (`CodexLayoutTest`), the drawing is not.
+
 ## [4.79.0] — The Wiki book brought up to date (power, rarity, everything since 4.60)
 Owner request: "update the wiki power to match everything so far and how strong, the rarity, etc" (the Wiki book).
 - NEW: eleven Wiki pages: Power scale, Rarity and grades, Hero weapons (Legendary, Seven Star, Vassal), Hero bows / arrow rain / meteors, Saiyans (Battle Power and the 17 forms), Devils (contracts, mastery, rank), Djinns and Beast Wills strength, Berserk weapons and the Black Sword Greed, Bosses (tiers, damage cap, Black Clover), Grimoires / spells / Ultimate classes, and What is new (4.60 to 4.78).
