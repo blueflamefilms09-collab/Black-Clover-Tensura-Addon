@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.89.2] — Fix: the grimoire book is solid, not see-through
+Owner report (with two screenshots): "fix the grimoire as it is see-through right now". Held and floating, only the corner caps and the glow ring showed; the world was visible through the pages and boards.
+- FIXED: the book model is now drawn with a solid (cut-out, both sides) render type instead of the default translucent, back-face-culled item type, so the big faces (pages, boards) can no longer vanish or show the world through them. Applies to every grimoire look (revamp and classic) and to the two Codex books that share the model.
+- KEPT: the book's shape, textures, tints, the glow halo and rune ring, the setting `visual.classicGrimoires`.
+- COST: none; the same quads, one render type.
+- CAVEATS: found by reading the code, not by seeing it in a game; if the book still looks thin in front of the green ring, the ring/halo transparency is the next thing to tune (tell me).
+
 ## [4.89.1] — Fix: no time limit on the Tower Wizard's questions
 Owner report: the questions for the Grimoire Tower take way too long; fix the time limit, without adding a real one.
 - FIXED: the wizard threw your sheet away after a fixed 5 minutes ("You took too long"), which is too short for 30 questions. There is now no time limit: think as long as you like.

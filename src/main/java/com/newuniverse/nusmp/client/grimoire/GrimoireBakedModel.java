@@ -50,6 +50,9 @@ public final class GrimoireBakedModel implements BakedModel {
         }
     }
 
+    /** 4.89.2: the book is solid. The default item render type is translucent with back-face culling, which made the big faces (pages, boards) vanish or show the world through them; this one is opaque (cut-out) and draws both sides. */
+    private static final java.util.List<net.minecraft.client.renderer.RenderType> SOLID = java.util.List.of(net.minecraft.client.renderer.RenderType.entityCutoutNoCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS));
+
     // ---- the shell itself (what a plain getQuads() caller sees): the default look
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
@@ -62,6 +65,7 @@ public final class GrimoireBakedModel implements BakedModel {
     @Override public TextureAtlasSprite getParticleIcon() { return particle; }
     @Override public ItemTransforms getTransforms() { return transforms; }
     @Override public ItemOverrides getOverrides() { return overrides; }
+    @Override public java.util.List<net.minecraft.client.renderer.RenderType> getRenderTypes(net.minecraft.world.item.ItemStack stack, boolean fabulous) { return SOLID; }
 
     /** One resolved book. */
     private final class View implements BakedModel {
@@ -96,6 +100,7 @@ public final class GrimoireBakedModel implements BakedModel {
         @Override public TextureAtlasSprite getParticleIcon() { return particle; }
         @Override public ItemTransforms getTransforms() { return transforms; }
         @Override public ItemOverrides getOverrides() { return ItemOverrides.EMPTY; }
+        @Override public java.util.List<net.minecraft.client.renderer.RenderType> getRenderTypes(net.minecraft.world.item.ItemStack stack, boolean fabulous) { return SOLID; }
     }
 
     private final class Overrides extends ItemOverrides {
