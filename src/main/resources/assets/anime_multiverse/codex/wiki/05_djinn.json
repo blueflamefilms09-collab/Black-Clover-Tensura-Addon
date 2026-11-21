@@ -1,5 +1,5 @@
 {
   "title": "Djinns and Djinn Seals",
-  "text": "Djinns are sleeping spirit-beings you bind with their Seal. Seals come from floor bosses, vault chests, trading, Dark Rukh Shards and admin grants, and clearing a pocket rift has a 6% chance (rift.djinnSealChance) to give a Seal to a random player inside. The status menu shows your Djinn, its phase and trust. Djinn weapons are 3D weapons with their own effects.",
+  "text": "Djinns are sleeping spirit-beings you bind with their Seal. Seals come from floor bosses, vault chests, trading, Dark Rukh Shards and admin grants, and clearing a pocket rift has a 6% chance (rift.djinnSealChance) to give a Seal to a random player inside. The status menu shows your Djinn, its phase and trust. Djinn weapons are 3D weapons with their own effects. There are 36 Djinns, ranked 1 to 36 (top 3 Genesis, then God, Legend, Unique). A Djinn weapon hits between 4,000 and 8,000 by rank, and a Djinn that is out makes you hit x25 and take half damage. Only a Legend relic or better can carry one. See Djinns and Beast Wills: strength.",
   "order": 5
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.79.0] — The Wiki book brought up to date (power, rarity, everything since 4.60)
+Owner request: "update the wiki power to match everything so far and how strong, the rarity, etc" (the Wiki book).
+- NEW: eleven Wiki pages: Power scale, Rarity and grades, Hero weapons (Legendary, Seven Star, Vassal), Hero bows / arrow rain / meteors, Saiyans (Battle Power and the 17 forms), Devils (contracts, mastery, rank), Djinns and Beast Wills strength, Berserk weapons and the Black Sword Greed, Bosses (tiers, damage cap, Black Clover), Grimoires / spells / Ultimate classes, and What is new (4.60 to 4.78).
+- CHANGED (text only, order unchanged): fourteen older pages got a short up-to-date paragraph (start, menu, grimoire, Djinn, devil, Beast Will, cores, Ultimates, Shishou, relics, weapons, bosses, commands, settings). Three stale sentences were fixed: Shishou has 38 skills (was 31), the Devil Union needs mastery, and the Ultimates page no longer says "newest pair".
+- KEPT: every older page and sentence otherwise; the book item, recipe and Codex page code are unchanged.
+- COST: data only, no code, no packets; the wiki is read once when the book is opened.
+- CAVEATS: the numbers come from the code and docs (config defaults, `SinRules`, `SaiyanForms`, ...), not from a game. Left out because they could not be confirmed: Genesis weapon base damage, per-form hero weapon unlock levels, the lowest boss tiers, the Metal Vessel drop (off by default), Saiyan Zenkai thresholds. Berserk technique numbers are the `SinRules` base values and may differ after the 4.53 remake.
+
 ## [4.78.0] — New players start with the Wiki book
 Owner request: "Make my wiki a book the player spawn in with".
 - NEW: a player who logs in and has not been stamped yet gets one Multiverse Wiki book (`anime_multiverse:multiverse_wiki`, right-click opens the Codex on its Wiki tab) once. It goes into the inventory, or is dropped at the feet if the inventory is full. The stamp is kept in the player's data, so it is never given twice, also not after death. Players who already played get it once too, the next time they log in.

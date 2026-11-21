@@ -1,5 +1,5 @@
 {
   "title": "Commands (players and admins)",
-  "text": "Players: /multiverse mana info, /multiverse mana affinity <loved|normal|hated>, /devilpact accept <price>. Admins: /manacore give|list, /devil status|grant|level|sacrifice|cooldown|clear, /veldanava skill <name>, /multiverse mega regen <id>, /multiverse mana stage|stone|corruption. Gameplay settings are server configs (nusmp-*-server.toml); looks are client configs.",
+  "text": "Players: /multiverse mana info, /multiverse mana affinity <loved|normal|hated>, /devilpact accept <price>. Admins: /manacore give|list, /devil status|grant|level|sacrifice|cooldown|clear, /veldanava skill <name>, /multiverse mega regen <id>, /multiverse mana stage|stone|corruption. Gameplay settings are server configs (nusmp-*-server.toml); looks are client configs. More: /multiverse sin remove|restore|purge <sloth|envy|vanity|chakrams|holy|all> (purge also deletes the weapon), /meditate (attune up to two powers), /saiyan status|forms|form <id>, /devil terms, /multiverse weapons (hero weapon tracker), /multiverse shishou order follow|stay|attack, /multiverse relic tier <player> up|set (admins).",
   "order": 20
 }

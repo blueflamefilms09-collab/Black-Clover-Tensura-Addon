@@ -1,5 +1,5 @@
 {
   "title": "Settings and performance",
-  "text": "Server configs (gameplay): nusmp-manacore-server.toml, nusmp-beastwill-server.toml and the others; the multiverse, rift and mega sections hold minEp, djinnSealChance, autoRetries. Client settings change looks only, such as the Beast Will side panel (hud, off by default) and nenVfx. Every effect is capped per player and sent only to nearby players so a public server stays smooth.",
+  "text": "Server configs (gameplay): nusmp-manacore-server.toml, nusmp-beastwill-server.toml and the others; the multiverse, rift and mega sections hold minEp, djinnSealChance, autoRetries. Client settings change looks only, such as the Beast Will side panel (hud, off by default) and nenVfx. Every effect is capped per player and sent only to nearby players so a public server stays smooth. Power numbers live in nusmp-damage-server.toml (hit caps), nusmp-power-server.toml (x25 raises), nusmp-heroweapon-server.toml (durationScale 2.0, anyTarget, bows), nusmp-boss-rules-server.toml, nusmp-boss-budget-server.toml, nusmp-saiyan-server.toml, nusmp-lords-server.toml, nusmp-attune-server.toml and nusmp-devil-phase2-server.toml; starter.starterWiki is in the main server config. The Hub is switched by ui.hub in nusmp-ui-client.toml.",
   "order": 21
 }

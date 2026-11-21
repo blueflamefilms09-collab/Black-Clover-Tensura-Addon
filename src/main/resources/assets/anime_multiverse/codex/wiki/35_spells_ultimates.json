@@ -1,0 +1,5 @@
+{
+  "title": "Grimoires, spells and Ultimate classes",
+  "text": "Grimoire spells hit x1.75 harder than their base (grimoireDamageMultiplier). A rare leaf grimoire is rolled with these chances: three-leaf 10%, four-leaf 2%, five-leaf 1% (with a devil). A grimoire calls only souls of at least 20,000 EP (multiverse.minEp). Magic Knight gear adds a bonus, such as the Spade war coat +15% damage and the Diamond coat 15% shorter cooldowns. Ultimate skills have a class that sets their power and price: Lord (EP boost up to x8, costs 2% of your magicules), King (x10, 3%), God (x12, 5%) and Dragon (x12, 4%). An Ultimate can never cost less than its own flat price. Examples: the Berserk weapon skills, Nen, Ki, Shishou and the Beast Will Ultimates are Lord; Gate of Babylon and Hell Conqueror are King; The Almighty, The Visionary and All Fiction are God. Mana Cores: ranks E to SS, a core needs 0 to 500,000 EP of its holder (E 0, D 300, C 1,000, B 5,000, A 20,000, AA 50,000, S 100,000, SS 500,000) and drops from wild kills with a chance from 3% (E) down to 0.1% (SS).",
+  "order": 35
+}

@@ -1,0 +1,5 @@
+{
+  "title": "Hero bows, arrow rain and meteors",
+  "text": "The Legendary Bow and its forms now shoot real arrows (heroweapon.bow.realArrows, on): a normal hit plus a magic hit worth 25 to 40% of it (by bow form, magicShareScale 1.0), with an effect such as poison, root, fire burst or ice slow. Arrow Rain, Frozen Rain, Starfall Volley and Arrow Squall spawn real arrows too, so they can miss a moving target. A player may have 24 arrows out at once and the whole server 256. Meteors are now one real falling meteor, used by the Meteor Sword, Meteor Swarm, Black Comet, Merlin's Starfall and the Meteor Bow (meteor.realMeteors, on): at most 4 in the air per caster and 24 on the server. All bows are drawn larger in the hand. Set realArrows or realMeteors to false to get the old instant effects back.",
+  "order": 29
+}

@@ -1,5 +1,5 @@
 {
   "title": "Weapons and engravings",
-  "text": "Every weapon of the mod is a 3D model in hand and carries Tensura engravings that fit its lore (severance, barrier piercing, holy weapon, magic interference and more). Genesis weapons (like the Demon-Slayer) are the top of the visual and power scale. Bows are held like the vanilla bow. Better Combat attack animations are supported.",
+  "text": "Every weapon of the mod is a 3D model in hand and carries Tensura engravings that fit its lore (severance, barrier piercing, holy weapon, magic interference and more). Genesis weapons (like the Demon-Slayer) are the top of the visual and power scale. Bows are held like the vanilla bow. Better Combat attack animations are supported. Weapon damage follows the grade (Normal 20-30 up to Genesis 260-350) and every hit from the mod is capped at 10,000 (Elsdocia 15,000). Hero, Vassal, Berserk and Genesis weapons are explained in their own entries. Open the Weapons tab of the Multiverse Hub for upgrade options and mastery bars of the weapon in your hand; /multiverse weapons lists which hero weapons are free, taken or yours.",
   "order": 12
 }

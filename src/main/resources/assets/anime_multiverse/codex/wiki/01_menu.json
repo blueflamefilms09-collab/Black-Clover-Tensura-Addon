@@ -1,5 +1,5 @@
 {
   "title": "The Multiverse menu",
-  "text": "The Multiverse status key opens one menu with tabs: Status (soul, EP, mana, Djinn, grimoire need), Weapons, Relics, Bestiary, Spirit Lords, Beast Will, Rules and this Wiki. Turn pages with A and D or the tabs. GUI Move and GUI Size let you drag and resize every panel. Keep your screen clean: the menu replaces most pop-up windows.",
+  "text": "The Multiverse status key opens one menu with tabs: Status (soul, EP, mana, Djinn, grimoire need), Weapons, Relics, Bestiary, Spirit Lords, Beast Will, Rules and this Wiki. Turn pages with A and D or the tabs. GUI Move and GUI Size let you drag and resize every panel. Keep your screen clean: the menu replaces most pop-up windows. Since 4.59 this menu is the Multiverse Hub: press F7 (rebindable) or the Multiverse status key. It has eight tabs (Status, Weapons, Skills, Quests, Attunement, Multiverse, Codex, Settings) and every Codex page, this wiki included, sits inside its Codex tab. The Weapons tab shows upgrade options and mastery bars for the weapon you hold. ui.hub = false in nusmp-ui-client.toml brings the old Codex book back.",
   "order": 1
 }

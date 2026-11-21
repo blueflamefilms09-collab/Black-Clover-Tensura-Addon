@@ -1,5 +1,5 @@
 {
   "title": "How to read this wiki",
-  "text": "This is the in-game wiki of Multiverse of Anime in Tensura. One entry per system, in the order a new player meets them. Open it with the Multiverse Wiki book (craft it: book + amethyst shard + ender pearl) or from the Wiki tab of the Multiverse menu. Things you have not found yet still show as ??? in the other tabs; this tab is plain help and is always readable.",
+  "text": "This is the in-game wiki of Multiverse of Anime in Tensura. One entry per system, in the order a new player meets them. Open it with the Multiverse Wiki book (craft it: book + amethyst shard + ender pearl) or from the Wiki tab of the Multiverse menu. Things you have not found yet still show as ??? in the other tabs; this tab is plain help and is always readable. New players start with this book in their inventory (server setting starter.starterWiki, on by default). Newer entries (Power scale, Rarity and grades, Hero weapons, Saiyans, Devils, Bosses, What is new) give the real numbers and say which are server settings with their defaults.",
   "order": 0
 }

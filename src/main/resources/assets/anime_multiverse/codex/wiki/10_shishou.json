@@ -1,5 +1,5 @@
 {
   "title": "Shishou, the Akashic sword",
-  "text": "Shishou is a relic sword that talks, flies and levels up. It has 31 skills, a top grade called EX-Singularity, a hunter mode and a fast flurry (server setting flurryFast). The Reset Scroll resets it, with a guard against misuse.",
+  "text": "Shishou is a relic sword that talks, flies and levels up. It has 38 skills (31 original and 7 added in 4.45), a top grade called EX-Singularity, a hunter mode and a fast flurry (server setting flurryFast). The Reset Scroll resets it, with a guard against misuse. Thrown, it follows you and fights hostile mobs as a pet (setting pet.mode); give orders with /multiverse shishou order follow|stay|attack.",
   "order": 10
 }

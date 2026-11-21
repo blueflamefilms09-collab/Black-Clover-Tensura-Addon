@@ -1,0 +1,5 @@
+{
+  "title": "Djinns and Beast Wills: strength",
+  "text": "Djinns: 36 Djinns are ranked 1 (strongest) to 36. Ranks 1-3 are Genesis, 4-12 God, 13-24 Legend, 25-36 Unique. Their weapon hit and Extreme Magic are held between 4,000 (rank 36) and 8,000 (rank 1), and a full swing never lands under 4,000 against mobs (djinnFloor). While your Djinn is out you hit x25 and take half damage. Beast Wills: a will carries the rank of the beast it came from, by Existence Points: C from 1,000, B 5,000, A 20,000, S 100,000, SS 500,000 (settings rankEpC and so on). Holding a will (Acquire or Integrate) gives x25 damage and half damage taken. Together: the meditation screen (/meditate) attunes up to two powers of Beast Wills, Djinns, Devils and Spirits at once (30 s between changes). A Devil never goes with a Spirit, and powers of clashing elements reject each other. A Devil or Spirit attuned this way hits x12; each resonating pair adds 10%, up to +30%. Settings: nusmp-attune-server.toml.",
+  "order": 32
+}
