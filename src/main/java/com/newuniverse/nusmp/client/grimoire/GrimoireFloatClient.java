@@ -11,6 +11,7 @@ import com.newuniverse.nusmp.core.magic.grimoire.GrimoireShelfLayout;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
+import com.newuniverse.nusmp.grimoire.GrimoireRevampMath;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
@@ -74,7 +75,7 @@ public final class GrimoireFloatClient {
     private static final ResourceLocation[] RUNE_TEXTURES = new ResourceLocation[MagicType.values().length];
     private static int runeEpoch = -1;
 
-    private static ResourceLocation runeTexture(ItemStack stack) {
+    static ResourceLocation runeTexture(ItemStack stack) {
         MagicType magic = MagicType.byName(GrimoireItem.data(stack).getString("Magic"));
         int epoch = com.newuniverse.nusmp.perf.PerfEpoch.get();
         if (epoch != runeEpoch) {
@@ -114,13 +115,20 @@ public final class GrimoireFloatClient {
     /** Page flips by entity id: {start game time, reverse ? 1 : 0}. */
     private static final Map<Integer, long[]> FLIPS = new HashMap<>();
     private static final RandomSource RNG = RandomSource.create();
+    /** Cheap classic-model copies of the stacks of distant owners (revamp level of detail), by stack identity; bounded and cleared on logout. */
+    private static final Map<ItemStack, ItemStack> LOD = new java.util.IdentityHashMap<>();
+
+    private static ItemStack lod(ItemStack stack) {
+        if (LOD.size() > 96) LOD.clear();
+        return LOD.computeIfAbsent(stack, GrimoireItem::withClassicView);
+    }
 
     private GrimoireFloatClient() {}
 
     public static void init() {
         NeoForge.EVENT_BUS.addListener(GrimoireFloatClient::onRender);
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { FLOATING.clear(); HIP.clear(); FLIPS.clear(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { FLOATING.clear(); HIP.clear(); FLIPS.clear(); LOD.clear(); GrimoireRevampFx.clear(); });
     }
 
     /** The local view of a player's Grimoire Slot (EMPTY if unknown). */
@@ -157,7 +165,7 @@ public final class GrimoireFloatClient {
 
     private static void tick() {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null) { FLOATING.clear(); HIP.clear(); FLIPS.clear(); return; }
+        if (mc.level == null) { FLOATING.clear(); HIP.clear(); FLIPS.clear(); LOD.clear(); GrimoireRevampFx.clear(); return; }
         long now = mc.level.getGameTime();
         Iterator<Map.Entry<Integer, Entry>> it = FLOATING.entrySet().iterator();
         while (it.hasNext()) {
@@ -229,6 +237,10 @@ public final class GrimoireFloatClient {
                 p = sneak ? GrimoireCarry.HIP_SNEAK : GrimoireCarry.HIP;
                 stack = hipStack;
             }
+            // revamp level of detail: 24-64 blocks away the owner's book is the cheap classic model with no effects, further it is not drawn (docs/grimoire_revamp.md)
+            GrimoireRevampMath.Tier tier = self ? GrimoireRevampMath.Tier.FULL : GrimoireRevampMath.tier(owner.distanceToSqr(cam));
+            if (tier == GrimoireRevampMath.Tier.CULL) continue;
+            if (tier == GrimoireRevampMath.Tier.LOD) stack = lod(stack);
             // with nothing in the slot (book lost while out) the stowed book fades instead of landing at the hip
             float fade = e != null && e.vanishAt >= 0 && hipStack.isEmpty() ? 1f - GrimoireCarry.travel(back - GrimoireCarry.CLOSE_TICKS) : 1f;
             float bob = GrimoireShelfLayout.bob(0, age, arrived);
@@ -281,6 +293,7 @@ public final class GrimoireFloatClient {
             if (arrived >= 1f) {
                 // summoned: the in-hand context makes the model glow; step > 0 draws the open V
                 mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, light, OverlayTexture.NO_OVERLAY, pose, buffers, mc.level, id);
+                if (tier == GrimoireRevampMath.Tier.FULL) GrimoireRevampFx.draw(mc, pose, buffers, cam, id, stack, step, now);      // the revamp's glow halo, rune ring and particles (nothing with visual.classicGrimoires)
             } else {
                 // dormant or travelling: same placement as the in-hand transform, without the glow
                 pose.pushPose();
@@ -325,7 +338,7 @@ public final class GrimoireFloatClient {
     }
 
     /** The grimoire model's third-person right-hand display transform (models/item/grimoire.json), then the item renderer's centring. */
-    private static void handTransform(PoseStack pose) {
+    static void handTransform(PoseStack pose) {
         pose.translate(0f, 3f / 16f, 1.5f / 16f);
         pose.scale(0.7f, 0.7f, 0.7f);
         pose.translate(-0.5f, -0.5f, -0.5f);

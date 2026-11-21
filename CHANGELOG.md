@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.81.0] — Grimoire revamp: a thicker book and a living cast effect
+Owner request: new grimoires so the owner can review and give tips.
+- NEW: the held and floating grimoire is a thicker 3D book made in Blender (layered cover, metal corner caps, rounded spine with five bands, ribbon, page block, a raised emblem plate per magic). Asta's tattered five-leaf has a worn variant on the same layout.
+- NEW: effects while a grimoire floats open: a glow halo, two counter-turning rune rings in the magic's colour, a page mote every 8 ticks, 14 motes when it opens and a flare on every cast (4 / 8 / 12 motes for chant / release / signature).
+- NEW (client option): `visual.classicGrimoires` in `nusmp-grimoire-client.toml` (default false). true restores the old book and the old look.
+- REPLACED (by default): the look of the held and floating grimoire. Item ids, hold and hover anchors and inventory icons are the same.
+- KEPT: the old book plan and its textures (used for the classic option and for far owners), every per-magic bespoke effect, Time Magic, all item ids and data components. Codices and charter books are not changed.
+- COST: client only, zero packets, zero server work. Closed book at most 420 quads (about 310 real, the old one was 94); open book at most 760 drawn quads; 6 effect quads per frame per floating book; at most 12 particles per cast, 14 on summon. Full detail within 24 blocks (your own book always), the old model from 24 to 64 blocks, nothing beyond 64.
+- CAVEATS: not seen in a game; previews come from a software rasteriser without bloom or particles. The open book shows small dark notches at the hinge in the preview. The far-distance old copy relies on a flag on the stack. The model was made in Blender; the previews were not.
+
 ## [4.80.1] — Audit follow-ups: no leftover state, narrower catches
 Owner request: "finish up everything else" (the open audit follow-ups).
 - FIXED: the four-second position history of Forbidden Magic is no longer kept for players who left the server (it was cleaned only on a restart). It is pruned once a second together with the sampling, at most one entry per online player.

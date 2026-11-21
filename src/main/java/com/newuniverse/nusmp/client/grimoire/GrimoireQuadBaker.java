@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.grimoire;
 
 import com.newuniverse.nusmp.grimoire.BookLook;
 import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
+import com.newuniverse.nusmp.grimoire.GrimoireRevampPlan;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
@@ -18,8 +19,9 @@ final class GrimoireQuadBaker {
 
     private GrimoireQuadBaker() {}
 
-    static List<BakedQuad> bake(BookLook.Key key, Map<String, TextureAtlasSprite> sprites) {
-        List<GrimoireBookPlan.Quad> plan = GrimoireBookPlan.build(key);
+    /** @param classic true = the old box-built plan (visual.classicGrimoires, and distant owners), false = the Blender-made one (the old plan if its mesh file is missing). */
+    static List<BakedQuad> bake(BookLook.Key key, Map<String, TextureAtlasSprite> sprites, boolean classic) {
+        List<GrimoireBookPlan.Quad> plan = classic ? GrimoireBookPlan.build(key) : GrimoireRevampPlan.build(key);
         List<BakedQuad> out = new ArrayList<>(plan.size());
         for (GrimoireBookPlan.Quad q : plan) out.add(bake(q, sprites.get(q.texture())));
         return Collections.unmodifiableList(out);

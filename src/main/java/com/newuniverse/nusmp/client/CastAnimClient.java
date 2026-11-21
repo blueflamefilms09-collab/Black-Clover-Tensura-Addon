@@ -60,6 +60,7 @@ public final class CastAnimClient {
         // 1.27.0: naming the clip that already plays (a held or mashed cast key) must not restart it; a looping clip that was fading out is brought back
         CastAnimGate.Decision decision = CastAnimGate.decide(s.clip, current != null && current.loop, s.start, s.stopAt, clip, now);
         if (decision == CastAnimGate.Decision.IGNORE) return;
+        com.newuniverse.nusmp.client.grimoire.GrimoireClient.onCastClip(entityId, clip);                                  // grimoire revamp: a chant / release flares the owner's open book (no new packet)
         if (decision == CastAnimGate.Decision.RESUME) {
             s.resumeFrom = 1f - Mth.clamp((now - s.stopAt) / FADE_OUT, 0f, 1f);
             s.resumeAt = now;

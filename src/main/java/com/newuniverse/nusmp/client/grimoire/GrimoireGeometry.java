@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.client.grimoire;
 
 import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
+import com.newuniverse.nusmp.grimoire.GrimoireRevampPlan;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -34,6 +35,7 @@ public final class GrimoireGeometry implements IUnbakedGeometry<GrimoireGeometry
                            ModelState modelState, ItemOverrides overrides) {
         Map<String, TextureAtlasSprite> sprites = new HashMap<>();
         for (String t : GrimoireBookPlan.textures()) sprites.put(t, spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, texture(t))));
+        for (String t : GrimoireRevampPlan.textures()) sprites.put(t, spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, texture(t))));      // the revamped book's baked atlases
         return new GrimoireBakedModel(sprites, context.getTransforms());
     }
 }

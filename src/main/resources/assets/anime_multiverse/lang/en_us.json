@@ -20429,5 +20429,7 @@
   "entity.anime_multiverse.hero_arrow": "Hero Arrow",
   "entity.anime_multiverse.meteor": "Meteor",
   "anime_multiverse.configuration.devilCanonClassic": "Classic devil models",
-  "anime_multiverse.configuration.devilCanonClassic.tooltip": "On: the 26 devils are drawn as they were in version 4.71.0 (before the polish pass: plainer sheets, thinner horns, curtain wings). Off (default): the polished models. Only matters while Devils drawn as themselves is on."
+  "anime_multiverse.configuration.devilCanonClassic.tooltip": "On: the 26 devils are drawn as they were in version 4.71.0 (before the polish pass: plainer sheets, thinner horns, curtain wings). Off (default): the polished models. Only matters while Devils drawn as themselves is on.",
+  "anime_multiverse.grimoire_revamp.option": "Classic grimoires",
+  "anime_multiverse.grimoire_revamp.option.tooltip": "Off (default): grimoires are the revamped 3D book (thick layered cover, metal corners, spine bands, ribbon, page block, emblem plate) with a rune ring, glow halo, page flutter and a flare on every cast. On: the older box book and the older summon look. Client setting visual.classicGrimoires in nusmp-grimoire-client.toml."
 }

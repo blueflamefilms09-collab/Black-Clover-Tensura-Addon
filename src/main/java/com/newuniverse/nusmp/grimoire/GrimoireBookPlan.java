@@ -100,7 +100,7 @@ public final class GrimoireBookPlan {
      * design is two layers: its background shading tinted to the cover colour, then its ornament in the art's own colours, which
      * glows while the book is held. The canon specials (tattered, straps) are one trim-tinted overlay as before.
      */
-    private static void design(List<Quad> out, Face face, float x0, float y0, float x1, float y1, float z, int dir, BookLook.Key key) {
+    static void design(List<Quad> out, Face face, float x0, float y0, float x1, float y1, float z, int dir, BookLook.Key key) {
         BookMotif m = key.motif();
         if (m.isArt()) {
             quad(out, face, x0, y0, x1, y1, z + dir * 0.015f, m.base(), BookLook.TINT_COVER, false);
@@ -170,8 +170,13 @@ public final class GrimoireBookPlan {
 
     /** A single quad facing SOUTH or NORTH at depth z over [x0,x1] x [y0,y1], full texture. */
     private static void quad(List<Quad> out, Face face, float x0, float y0, float x1, float y1, float z, String texture, int tint, boolean emissive) {
+        out.add(quadOf(face, x0, y0, x1, y1, z, texture, tint, emissive));
+    }
+
+    /** The same quad as a value (the revamped plan lays its overlays with it). */
+    static Quad quadOf(Face face, float x0, float y0, float x1, float y1, float z, String texture, int tint, boolean emissive) {
         float[] pos = corners(face, x0, y0, z, x1, y1, z);
-        out.add(new Quad(pos, new float[]{0, 0, 0, 16, 16, 16, 16, 0}, texture, tint, emissive, face));
+        return new Quad(pos, new float[]{0, 0, 0, 16, 16, 16, 16, 0}, texture, tint, emissive, face);
     }
 
     /** A box; each listed face is textured over its own size (leather and metal tile naturally). */

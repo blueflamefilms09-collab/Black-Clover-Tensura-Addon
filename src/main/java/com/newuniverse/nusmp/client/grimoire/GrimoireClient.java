@@ -21,6 +21,9 @@ public final class GrimoireClient {
 
     private GrimoireClient() {}
 
+    /** A body animation clip started on an entity: the revamped grimoire flares if that owner has a book open (client/grimoire/GrimoireRevampFx). */
+    public static void onCastClip(int entityId, String clip) { GrimoireRevampFx.onClip(entityId, clip); }
+
     public static void init(IEventBus modBus) {
         modBus.addListener(GrimoireClient::registerLoaders);
         modBus.addListener(GrimoireClient::registerColors);

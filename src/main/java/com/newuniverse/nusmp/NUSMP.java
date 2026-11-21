@@ -299,6 +299,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig.SPEC, "nusmp-multiverse-client.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compat.maps.MapsClientConfig.SPEC, "nusmp-compat-maps-client.toml");      // compat-maps: minimap size / avoidance
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.compass3d.CompassVisualConfig.SPEC, "nusmp-compass3d-client.toml");      // 3D Compass Magic: visual.compass3d (the old flat effects when off)
+            modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.grimoire.GrimoireRevampConfig.SPEC, "nusmp-grimoire-client.toml");      // grimoire revamp: visual.classicGrimoires (the old book model and look when on)
             com.newuniverse.nusmp.client.scalecast.ScaleHud.init(modEventBus, modContainer);                                  // Scale casting: the weight readout (nusmp-scale-casting-client.toml: visual.scale3d, visual.scaleReadout)
             // 0.102: the Tensura-style Spirit Lords are small floating orbs (SpiritLordEntity); the exclusive Black Clover ones have bodies (below)
             modEventBus.addListener(com.newuniverse.nusmp.client.SpiritOrbRenderer::register);
@@ -547,6 +548,7 @@ public class NUSMP {
         com.newuniverse.nusmp.visual.demonslayer.DsSelfTests.register();                                            // 1.108.0: self-test visual.demon_slayer (assets of the upgraded Genesis Demon-Slayer, the old model kept, the fracture / resonance maths)
         com.newuniverse.nusmp.vfx.HeroSolidSelfTests.register();                                                  // self-test visual.hero_solid (solid arrow / spear tip: aim, frame budget, shapes, meshes; pure)
         com.newuniverse.nusmp.vfx.FlatPropsSelfTests.register();                                              // self-test visual.flat_props (the flat list, the gate decision, the solid sheet; pure)
+        com.newuniverse.nusmp.grimoire.GrimoireRevampSelfTests.register();                                        // self-test visual.grimoire_revamp (the Blender mesh and atlases are in the jar, every look under the quad budget, the LOD tiers; pure)
         com.newuniverse.nusmp.vfx.SafeAdditiveSelfTests.register();                                               // 1.110.0: self-test visual.safe_additive (the blend maths, the halo card sheet, Elsdocia's card caps)
         com.newuniverse.nusmp.mesh.MeshPackSelfTests.register();                                                  // 3.32.0: self-test mesh.pack (real meshes packed in memory read back identically through MeshText)
         com.newuniverse.nusmp.visual.grip.WeaponGripSelfTests.register();                                          // 1.111.0: self-test item.weapon_grip (the hand holds the grip of every weapon: grip table, finder, hand maths; docs/weapon_grip.md)

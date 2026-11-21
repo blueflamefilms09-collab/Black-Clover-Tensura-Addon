@@ -112,6 +112,23 @@ public class GrimoireItem extends Item {
         return memo[0] == d ? (Integer) memo[2] : 0;
     }
 
+    /** Client render copies only: draw this copy with the classic (cheap) book model. The floating-book renderer uses it for distant owners (level of detail). */
+    public static final String CLASSIC_VIEW = "ClassicView";
+
+    public static boolean classicView(ItemStack stack) {
+        CustomData d = stack.get(DataComponents.CUSTOM_DATA);
+        return d != null && d.contains(CLASSIC_VIEW);
+    }
+
+    /** A render-only copy of a grimoire drawn with the classic model. */
+    public static ItemStack withClassicView(ItemStack stack) {
+        ItemStack copy = stack.copy();
+        CompoundTag t = data(copy);
+        t.putBoolean(CLASSIC_VIEW, true);
+        copy.set(DataComponents.CUSTOM_DATA, CustomData.of(t));
+        return copy;
+    }
+
     /** A render-only copy of a grimoire showing opening step {@code step}. */
     public static ItemStack withOpenView(ItemStack stack, int step) {
         ItemStack copy = stack.copy();
