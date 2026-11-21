@@ -140,6 +140,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     private Move casting;
     private UUID castTarget;
     private double bandLo = 1.5, bandHi = 4;
+    /** Boss AI engage rule: the tick of the last move started (or of the fight's start); a long quiet makes the boss close in and strike. */
+    private long lastCast;
     /** Leon study fixes #4 and #2 (docs/boss_leon_combat.md): the reactive guard (null until the first hit of an opted-in boss) and the swing in progress. */
     private ReactiveGuard guard;
     private final AttackTimeline.Runner swingRunner = new AttackTimeline.Runner();
@@ -385,11 +387,23 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new Positioning(this));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 24f));
-        goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        goalSelector.addGoal(7, com.newuniverse.nusmp.boss.ai.BossEngageGoal.lookAt(this, 24f));         // boss AI engage rule: the look goals stand down while it has a target
+        goalSelector.addGoal(8, com.newuniverse.nusmp.boss.ai.BossEngageGoal.lookAround(this));
+        attachEngage();
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
+
+    /** Boss AI engage rule (docs/boss_ai_engage.md): a player within the notice range is its target at once, no hit and (close) no line of sight needed. A boss that is only a judge overrides {@link #engagesOnSight}. */
+    protected final void attachEngage() {
+        if (engagesOnSight()) targetSelector.addGoal(0, com.newuniverse.nusmp.boss.ai.BossEngageGoal.create(this, this::mayPickTarget, p -> p.distanceToSqr(arenaCenter()) <= 88.0 * 88.0));   // 88: inside the 90-block leash of upkeep()
+    }
+
+    /** False for a boss that only answers a provocation by design (the God of Order). */
+    protected boolean engagesOnSight() { return true; }
+
+    /** A subclass that cannot take a target right now (a boss rising out of its well) says no. */
+    protected boolean mayPickTarget() { return true; }
 
     /** Keeps the distance the ready moves want: closes in, backs off, or circles the target. Does nothing while it casts. */
     private static final class Positioning extends Goal {
@@ -419,7 +433,8 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
             repath = 5;
             double d = boss.distanceTo(t);
             if (d > boss.bandHi) {
-                boss.getNavigation().moveTo(t, 1.0);
+                // a path can fail (a big hitbox, a void arena, a target beyond the follow range): with the engage rule on it then walks straight at the target
+                if (!boss.getNavigation().moveTo(t, 1.0) && com.newuniverse.nusmp.boss.rules.BossRulesConfig.aggroOnSight()) boss.getMoveControl().setWantedPosition(t.getX(), t.getY(), t.getZ(), 1.0);
             } else if (d < boss.bandLo) {
                 Vec3 away = boss.position().subtract(t.position()).multiply(1, 0, 1);
                 if (away.lengthSqr() < 1e-4) away = new Vec3(1, 0, 0);
@@ -660,6 +675,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         fightEnded = false;
         emptySeconds = 0;
         scheduler.reset(t);
+        lastCast = t;
         nextThink = t + 20;
         setState(STATE_COMBAT);
         say(openingLine());
@@ -819,7 +835,13 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         MoveScheduler.Situation s = situation(target, t);
         updateBand(bk, t);
         int idx = chooseMove(bk, s, t);
-        if (idx >= 0) beginCast(sl, idx, bk.get(idx), target, s, t);
+        if (idx >= 0) {
+            lastCast = t;
+            beginCast(sl, idx, bk.get(idx), target, s, t);
+        } else if (com.newuniverse.nusmp.boss.rules.BossRulesConfig.aggroOnSight() && com.newuniverse.nusmp.boss.ai.BossEngage.rush(t, lastCast)) {
+            bandLo = 1.5;                                                             // no move has been usable for four seconds: close in and melee instead of waiting
+            bandHi = 3.5;
+        }
     }
 
     /**

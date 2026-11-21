@@ -156,8 +156,9 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0, true));
         goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.8));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 16f));
-        goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        goalSelector.addGoal(7, com.newuniverse.nusmp.boss.ai.BossEngageGoal.lookAt(this, 16f));          // boss AI engage rule: the look goals stand down while it has a target
+        goalSelector.addGoal(8, com.newuniverse.nusmp.boss.ai.BossEngageGoal.lookAround(this));
+        targetSelector.addGoal(0, com.newuniverse.nusmp.boss.ai.BossEngageGoal.create(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }

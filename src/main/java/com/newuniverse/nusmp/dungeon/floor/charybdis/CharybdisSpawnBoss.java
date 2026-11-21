@@ -138,6 +138,7 @@ public class CharybdisSpawnBoss extends ZogratisBoss {
     /** No walking goal and no floating goal (which would push it up): it only picks a target; it is steered by {@link #bossTick}. */
     @Override
     protected void registerGoals() {
+        targetSelector.addGoal(0, com.newuniverse.nusmp.boss.ai.BossEngageGoal.create(this, () -> !rising(), p -> p.distanceToSqr(arenaCenter()) <= 88.0 * 88.0));       // boss AI engage rule
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true) {
             @Override public boolean canUse() { return !rising() && super.canUse(); }

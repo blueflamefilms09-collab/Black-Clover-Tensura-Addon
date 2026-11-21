@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.91.0] — Bosses fight back the minute a player is near
+Owner report: "fix all my bosses' AI so they actually fight back the minute a player is there, and they don't just stand there and watch or look at the player."
+- FIXED (cause): a boss only starts fighting when it has a target, and it got one only from vanilla's "nearest player" goal (needs line of sight, shrinks for sneaking or invisible players, rolls one in ten, drops the target after 60 unseen ticks) or after being hit. With no target it only turned its head to the nearest player. Casters that keep their distance also stood still when their move list gave nothing or the path was too long.
+- NEW: every framework boss (and the legacy Zagred, the Floor Warden / Labyrinth Guardian and Charybdis) takes a player as its target as soon as one is within range (default 32 blocks): no hit and no line of sight needed within 12 blocks. Spectators, creative and invulnerable players and Peaceful difficulty are respected; nothing is engaged in the Sanctuary Hub.
+- NEW: a boss whose move list gives nothing for 4 seconds walks up and melees; when the path fails it walks straight at its target. The head-turning goals stand down while it has a target.
+- NEW (server settings, `bossRules`): `aggroOnSight` (default true; false = the old behaviour exactly) and `aggroRange` (32, 8 to 96).
+- KEPT: every old goal, priority and move list; the God of Order stays a judge and does not hunt (say if it should); Lucius's levitating act, dungeon creatures and the Devil Trial duel are unchanged.
+- COST: per boss one box query every 10 ticks, and only while it has no target; at most 10 players read, 10 line-of-sight rays and one path search per 40 ticks. No packets, no spawns.
+- CAVEATS: found by reading the code, nothing was seen in a game; bosses now also notice sneaking and invisible players on purpose; huge hitboxes and void arenas rely on the straight-walk fallback. Details in `docs/boss_ai_engage.md`.
+
 ## [4.90.1] — Fix: hero and vassal weapons no longer hit for thousands
 Owner report: the hero weapons still deal about 10,000 at their base; nerf them a lot.
 - FIXED: a blow with a hero or vassal weapon was the weapon's base damage (about 60 to 175 by grade) times three raises stacked on top of each other: the hero buff (x4, x1.5 more for the four Legendary Weapons), the anime factor (x2, up to x4 with level) and the vassal / legendary factor (x25, x37.5 for Legendary). That came to thousands per blow at level 0 and over a hundred thousand at level 100.

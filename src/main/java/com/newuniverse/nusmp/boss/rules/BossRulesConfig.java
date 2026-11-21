@@ -27,6 +27,9 @@ public final class BossRulesConfig {
     /** Leon study fixes #4 and #2 (docs/boss_leon_combat.md): the reactive guard of the opted-in sword bosses and the per-attack hit timeline. */
     public static final ModConfigSpec.BooleanValue REACTIVE_GUARD, ATTACK_TIMELINE;
     public static final ModConfigSpec.DoubleValue GUARD_BLOCK_CHANCE, GUARD_DODGE_CHANCE;
+    /** Boss AI engage rule (docs/boss_ai_engage.md): a boss fights the minute a player is in range, without a hit and without line of sight when close. */
+    public static final ModConfigSpec.BooleanValue AGGRO_ON_SIGHT;
+    public static final ModConfigSpec.IntValue AGGRO_RANGE;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -75,6 +78,11 @@ public final class BossRulesConfig {
                 .define("bossRework3Moves", true);
         REWORK3_DECENNIAL = b.comment("Boss rework wave 3: the extra move of each decennial boss family (read when a boss is built). false = their old moves. The visual signatures are client looks.")
                 .define("bossRework3DecennialMoves", true);
+        AGGRO_ON_SIGHT = b.comment("Boss AI engage rule: any alive survival or adventure player within aggroRange blocks of a boss becomes its target at once, no hit needed and no line of sight needed within 12 blocks, and the boss starts the fight and chases and melees when no move is usable.",
+                        "The Sanctuary Hub is never engaged. The God of Order stays a judge who only answers provokers. false = the old behaviour exactly (they wait for a hit or for a clear line of sight).")
+                .define("aggroOnSight", true);
+        AGGRO_RANGE = b.comment("How far (blocks) a boss notices a player when aggroOnSight is on. 8 to 96, default 32. A framework boss also ignores a player more than 88 blocks from its arena (its own leash).")
+                .defineInRange("aggroRange", 32, 8, 96);
         b.pop();
         b.push("dungeonBosses");
         DUNGEON_REWORK = b.comment("Dungeon-boss rework: the master switch of the new Floor Warden move set (Hammer Slam, Chain Lash, Shadow Step, Seal Pulse, the Key Toll, three phases, an enrage timer) and the creatures' signature moves.",
@@ -144,6 +152,12 @@ public final class BossRulesConfig {
     private static <T> T get(ModConfigSpec.ConfigValue<T> v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
+
+    /** Boss AI engage rule: bosses engage a player in range at once (false = the old behaviour). */
+    public static boolean aggroOnSight() { return get(AGGRO_ON_SIGHT); }
+
+    /** Boss AI engage rule: the notice range in blocks, 8 to 96. */
+    public static int aggroRange() { return Math.max(8, Math.min(96, get(AGGRO_RANGE))); }
 
     /** Boss rework wave 1: are the appended moves in the move lists? */
     public static boolean reworkMoves() { return get(REWORK_MOVES); }

@@ -154,6 +154,9 @@ public class GodOfOrder extends ZogratisBoss {
         targetSelector.removeAllGoals(g -> g instanceof NearestAttackableTargetGoal);
     }
 
+    /** A judge, not a hunter (boss AI engage rule, docs/boss_ai_engage.md): it answers a provocation only. */
+    @Override protected boolean engagesOnSight() { return false; }
+
     // ================================================================ damage
     @Override
     public boolean hurt(DamageSource source, float amount) {
