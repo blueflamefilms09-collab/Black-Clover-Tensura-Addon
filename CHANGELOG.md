@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.95.1] — A damage log for the bosses that lose health by themselves
+Owner report: Goku and Kakashi lose health on their own when you enter their arena (the Black Clover end-game boss and the Word Soul boss do not). The 4.94.0 log shows Goku "adapting to other damage" and saying "that one hurt" about 2-3 seconds after the fight starts, but it contains no "anonymous damage" line, so the hits carry an attacker the rule cannot tell from a real blow. Nothing in the log names it.
+- NEW: setting `bossRules.logDamageBosses` (default Goku and Kakashi; empty = off). The first time a listed boss takes a new kind of hit, one line `damage-probe:` names the damage type, the attacker, the striking entity, the amount, the effects count and the place. At most 24 lines per run, the same kind is never written twice. It only reads; no hit is changed.
+- KEPT: every damage rule (environment, effect, anonymous), the boss fights and all settings.
+- NOT FIXED YET: the cause is still unknown, so no gameplay guess was added. Send the next `latest.log` and the `damage-probe:` lines will name the source.
+- COST: one string compare per hit on a boss; nothing for other entities; at most 24 log lines per run.
+
 ## [4.95.0] — The words of the Dragon Balls are taught ball by ball
 Owner request: players should be taught the words as they get each Dragon Ball and be given a prompt to copy and paste into chat; and "give me the summoning phrases".
 - NEW: the first time a player holds a ball, the dragon whispers the next piece of that set's call in chat, then a line with everything known so far and two buttons: Copy (clipboard) and Put in chat (fills the chat box). The last ball completes the phrase. `/dragonwords [earth|super]` shows it again for any player. Setting `dragonBalls.teachWords` (default true; false = nothing is taught or sent).

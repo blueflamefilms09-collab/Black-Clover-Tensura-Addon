@@ -63,6 +63,7 @@ public final class BossRulesHooks {
         try {
             if (e.getEntity().level().isClientSide() || !BossRulesConfig.ENVIRONMENT_IMMUNE.get()) return;
             if (!BossIdentity.isBoss(e.getEntity())) return;
+            probe(e);
             if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())) { e.setCanceled(true); return; }
             String csv = BossRulesConfig.ANONYMOUS_DAMAGE_BOSSES.get();
             if (!csv.isEmpty() && BossEnvironment.listed(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(e.getEntity().getType()).toString(), csv) && BossEnvironment.anonymousDamage(e.getEntity(), e.getSource())) {
@@ -73,6 +74,22 @@ public final class BossRulesHooks {
         } catch (RuntimeException | LinkageError ignored) {
             // the rule must never reach the server loop: a boss that cannot be judged takes the damage as before
         }
+    }
+
+    /** 4.95.1 diagnostic ({@code bossRules.logDamageBosses}): names the first hit of each new kind on a listed boss. Reads only; the hit is never changed. */
+    private static void probe(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent e) {
+        String csv = BossRulesConfig.LOG_DAMAGE_BOSSES.get();
+        if (csv.isEmpty()) return;
+        LivingEntity boss = e.getEntity();
+        String id = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(boss.getType()).toString();
+        if (!BossEnvironment.listed(id, csv)) return;
+        var src = e.getSource();
+        Entity a = src.getEntity(), d = src.getDirectEntity();
+        String attacker = a == null ? "none" : a == boss ? "SELF" : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(a.getType()).toString();
+        String striker = d == null ? "none" : d == boss ? "SELF" : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(d.getType()).toString();
+        if (!DamageProbe.first(id, src.getMsgId(), attacker, striker)) return;
+        com.mojang.logging.LogUtils.getLogger().info("[anime_multiverse] damage-probe: {} took '{}' ({}) from attacker={} striker={}, effects={}, in {} at {} (the first of this kind; bossRules.logDamageBosses)",
+                id, src.getMsgId(), e.getAmount(), attacker, striker, boss.getActiveEffects().size(), boss.level().dimension().location(), boss.blockPosition().toShortString());
     }
 
     static void onJoin(EntityJoinLevelEvent e) {

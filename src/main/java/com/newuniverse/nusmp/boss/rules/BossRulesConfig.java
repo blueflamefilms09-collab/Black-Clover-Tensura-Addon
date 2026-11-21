@@ -14,7 +14,7 @@ public final class BossRulesConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue STRIP_REGENERATION, BAN_UNIQUE_ULTIMATE, LUCIUS_COMBO_AI, REFILL_AT_GATES,
             LUCIUS_ANIME_ARC, LUCIUS_TIME_REVERSAL, ENVIRONMENT_IMMUNE, EFFECT_IMMUNE;
-    public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS, ANONYMOUS_DAMAGE_BOSSES;
+    public static final ModConfigSpec.ConfigValue<String> FORBIDDEN_WORDS, ANONYMOUS_DAMAGE_BOSSES, LOG_DAMAGE_BOSSES;
     public static final ModConfigSpec.DoubleValue BLACK_CLOVER_STATS;
     /** Boss rework wave 1 (docs/bosses/rework_wave1.md): the appended moves, and the per-boss shaped effects. */
     public static final ModConfigSpec.BooleanValue REWORK_MOVES, REWORK_VFX, REWORK3_MOVES, REWORK3_DECENNIAL;
@@ -47,6 +47,8 @@ public final class BossRulesConfig {
                 .define("effectImmune", true);
         ANONYMOUS_DAMAGE_BOSSES = b.comment("4.90.0: bosses (entity ids, comma separated) that take NO damage at all unless something attacked them: no attacker means no damage, whatever the damage type (a dimension's own tick damage, an unknown mod's zone, burning, anything). A blow with an attacker, the void and /kill stay real. Default: Goku. Empty = off (the old rules only). The first anonymous damage type met is written to the server log once, so the real source can be found.")
                 .define("anonymousDamageBosses", "anime_multiverse:goku_boss");
+        LOG_DAMAGE_BOSSES = b.comment("4.95.1: bosses (entity ids, comma separated) whose damage is written to the server log: the FIRST time one of them takes a new kind of hit (damage type, attacker, striking entity) one line names it, at most 24 lines per run. Only a diagnostic: it changes nothing in the fight. Default: Goku and Kakashi (the 'they hurt themselves' report). Empty = off.")
+                .define("logDamageBosses", "anime_multiverse:goku_boss,anime_multiverse:kakashi_hatake");
         LUCIUS_COMBO_AI = b.comment("Lucius chains distinct spells (spatial, offensive, defensive or control, then one heavy magic cast) under cooldowns. false = his old move chooser.")
                 .define("luciusComboAi", true);
         REFILL_AT_GATES = b.comment("The Gates (100% mode) refill a Zogratis boss's health bar once. The one deliberate exception to 'no second wind'; false removes it.")
