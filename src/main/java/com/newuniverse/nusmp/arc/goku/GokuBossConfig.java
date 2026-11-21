@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class GokuBossConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING;
+    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL;
     public static final ModConfigSpec.ConfigValue<String> DIFFICULTY;
     public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, EP_WEIGHT, EP_CAP, PER_PLAYER_BONUS, MAX_HIT_PERCENT, UI_DODGE_CAP;
     public static final ModConfigSpec.IntValue PLAYER_CAP, GLOBAL_CAP, ENRAGE_MINUTES;
@@ -32,6 +32,8 @@ public final class GokuBossConfig {
                 .defineInRange("damageMultiplier", 1.0, 0.1, 20.0);
         EP_SCALING = b.comment("His health, damage and form pace follow the Tensura Existence Points of the strongest players near him (read at spawn and then every 100 ticks). False: Battle Power, then the preset's fixed value.")
                 .define("epScaling", true);
+        FAREWELL = b.comment("4.90.0: when Goku is beaten he is not killed: he is knocked down, says goodbye (\"I'll see you next time, when I'm stronger!\"), flashes away and drops his loot. The fight counts as won. False = he dies as before.")
+                .define("farewell", true);
         EP_WEIGHT = b.comment("How strongly EP raises him: health x (1 + epWeight x (EP curve - 1)); damage takes half of it. 0 = EP changes nothing.")
                 .defineInRange("epWeight", DEFAULT_EP_WEIGHT, 0.0, 5.0);
         EP_CAP = b.comment("The highest value of the EP curve that counts (the curve is 1 at 1,000 EP and +2.5 per decade of EP: 5 is reached at about 40,000 EP and 8 at about 630,000 EP). Lower = he stops growing earlier.")
@@ -81,4 +83,6 @@ public final class GokuBossConfig {
     }
 
     public static boolean epScaling() { return get(EP_SCALING); }
+
+    public static boolean farewell() { return get(FAREWELL); }
 }

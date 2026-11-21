@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.90.0] — Goku bows out instead of dying; no more random damage on him
+Owner reports: Goku is "taking random tick damage" in the dimensions; and "instead of actually killing him, he gets knocked, says adios, I'll see you next time when I'm stronger, disappears and drops a few items".
+- NEW: Goku's farewell. Beaten, he is not killed: knocked up, cannot be hurt for 3.5 s, says his goodbye in chat, flashes away and drops his loot; the fight counts as won (credit, loot, story). Setting `goku_boss.farewell` (default true); false = he dies as before.
+- NEW (server setting): `bossRules.anonymousDamageBosses` (default Goku): a listed boss takes no damage when nothing attacked it, whatever the damage type; the void, `/kill` and blows with an attacker stay real. The first such damage type is logged once, so the real source can be found.
+- KEPT: his moves, forms, scaling, loot table, voice lines, the other bosses' rules (4.62.2 effect rule, 1.68.0 world rule).
+- COST: one list check per damage event on a boss; nothing per tick.
+- CAVEATS: the cause of the random damage was not found by reading the code, so this stops every kind for him instead; check the server log for the "anonymous damage of type" line to learn the source. The farewell line is text only (no voice clip). Not seen in a game.
+
 ## [4.89.3] — The Dragon Radar costs more to craft
 Owner report: the Dragon Radar was too easy to craft.
 - REPLACED: the recipe. Before: 4 glass panes, 4 redstone and a compass. Now: 4 gold ingots, an ender eye, 2 diamonds, a compass and a redstone block (same shape and result).

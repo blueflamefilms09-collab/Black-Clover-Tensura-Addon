@@ -23,4 +23,10 @@ public final class CatchLog {
         if (SEEN.size() >= MAX_KEYS || !SEEN.add(what)) return;
         LOG.warn("[anime_multiverse] {} failed (only the first failure is logged): {}", what, t.toString(), t);
     }
+
+    /** Logs an information line once per key (same cap as {@link #once}); for a rule that fired and the owner may need to know why. */
+    public static void note(String key, String message) {
+        if (SEEN.size() >= MAX_KEYS || !SEEN.add(key)) return;
+        LOG.info("[anime_multiverse] {} (only the first is logged)", message);
+    }
 }

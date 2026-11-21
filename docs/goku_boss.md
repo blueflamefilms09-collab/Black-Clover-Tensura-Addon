@@ -196,3 +196,9 @@ self-test prefix `goku.boss` in the smoke list.
 
 **KEPT:** everything else, unchanged. Edits to shared files are additions only: one gate block in `ArcSpawner.summon`, one line in `ArcCharacters.bootstrap`, three lines in `ArcSystem.init`, one line in
 `MultiverseCommands`, one skin hook in `ArcBossRenderer`, one token in `smoke.yml`, one key appended to `en_us.json`. `SaiyanForms`, the Saiyan engine and the Time Magic effects are untouched.
+
+## 4.90.0: he is not killed, and he takes no anonymous damage
+
+**The farewell.** Beaten (his health would reach 0), Goku is not killed: his health stays at 1, he cannot be hurt for 3.5 seconds, he is knocked up, and says "Haha... you got me! Adios! I'll see you next time, when I'm stronger!" (chat text, no voice clip). Then he flashes away (light, a teleport sound, invisible) and the framework's own death runs at that moment: his loot drops, the story credit and the end of the fight happen as for a win, with no second line. Setting `goku_boss.farewell` (default true); false = he dies as before. Cost: one tick counter, one flash and one sound; no packets beyond the existing particle ones.
+
+**Random damage.** Setting `bossRules.anonymousDamageBosses` (default `anime_multiverse:goku_boss`): a listed boss takes no damage at all when nothing attacked it, whatever the damage type (a dimension's own damage, an unknown mod's zone, burning, a blow he dealt himself). A blow with an attacker, the void and `/kill` stay real. The first anonymous damage type met is written once to the server log ("a boss ... took anonymous damage of type ..."), so the real source can be found. Not seen in a game: the cause of the damage is not known, this stops every kind of it for him.

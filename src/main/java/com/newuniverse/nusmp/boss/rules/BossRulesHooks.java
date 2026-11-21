@@ -63,7 +63,13 @@ public final class BossRulesHooks {
         try {
             if (e.getEntity().level().isClientSide() || !BossRulesConfig.ENVIRONMENT_IMMUNE.get()) return;
             if (!BossIdentity.isBoss(e.getEntity())) return;
-            if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())) e.setCanceled(true);
+            if (BossEnvironment.shrugsOff(e.getEntity(), e.getSource()) || BossRulesConfig.EFFECT_IMMUNE.get() && BossEnvironment.effectDamage(e.getEntity(), e.getSource())) { e.setCanceled(true); return; }
+            String csv = BossRulesConfig.ANONYMOUS_DAMAGE_BOSSES.get();
+            if (!csv.isEmpty() && BossEnvironment.listed(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(e.getEntity().getType()).toString(), csv) && BossEnvironment.anonymousDamage(e.getEntity(), e.getSource())) {
+                com.newuniverse.nusmp.core.CatchLog.note("anonymous-damage:" + e.getSource().getMsgId(), "a boss (" + e.getEntity().getType().getDescriptionId() + ") took anonymous damage of type '" + e.getSource().getMsgId()
+                        + "' (" + e.getAmount() + ") in " + e.getEntity().level().dimension().location() + " and ignored it (bossRules.anonymousDamageBosses)");
+                e.setCanceled(true);
+            }
         } catch (RuntimeException | LinkageError ignored) {
             // the rule must never reach the server loop: a boss that cannot be judged takes the damage as before
         }

@@ -47,4 +47,21 @@ public final class BossEnvironment {
             if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) return true;
         return false;
     }
+
+    /**
+     * 4.90.0: damage nothing attacked with, of any type: no attacker, no direct source, not the void or {@code /kill}. A blow whose attacker is the victim itself counts too (a boss must never hurt itself).
+     * Used only for the bosses listed in {@code bossRules.anonymousDamageBosses}.
+     */
+    public static boolean anonymousDamage(LivingEntity boss, DamageSource source) {
+        if (source == null || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
+        net.minecraft.world.entity.Entity a = source.getEntity(), d = source.getDirectEntity();
+        return (a == null && d == null) || a == boss;
+    }
+
+    /** Is {@code id} in the comma separated list (whitespace and case ignored)? */
+    public static boolean listed(String id, String csv) {
+        if (id == null || csv == null || csv.isBlank()) return false;
+        for (String t : csv.split(",")) if (t.trim().equalsIgnoreCase(id)) return true;
+        return false;
+    }
 }

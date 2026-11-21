@@ -109,6 +109,10 @@ public class GokuBoss extends ArcBoss {
     private long fightTicks, inForm, kaioUntil, staggerUntil, dodgeReadyAt, windowStart;
     private int pending = -1, windLeft, windowCount;
     private float bombDamage;
+    /** 4.90.0 the farewell: the tick he leaves at (0 = not leaving), the blow that beat him (for the credit) and whether the chat line is held back while the framework finishes the fight. */
+    private long farewellAt;
+    private boolean farewellDone, hushSay;
+    private DamageSource farewellSource;
     /** The move he was casting at the last tick (his call-out is said when a new one starts) and the line state of the voice (docs/boss_redesign_goku_sinbad.md). */
     private String seenCast = "";
     private boolean lowSaid;
@@ -224,6 +228,7 @@ public class GokuBoss extends ArcBoss {
             else stepForm(sl);
         }
         if (kaioUntil != 0 && tickCount >= kaioUntil) endKaio();
+        if (farewellAt != 0L && tickCount >= farewellAt) finishFarewell(sl);
         if (tickCount % 4 == 0) fx(sl);
         if (bombDamage > 0f && !"spirit_bomb".equals(castId())) bombDamage = 0f;
         voiceTick();
@@ -577,6 +582,7 @@ public class GokuBoss extends ArcBoss {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);
+        if (farewellAt != 0L && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;       // 4.90.0: he is already on his way out
         if (tryDodge(source, amount)) return false;
         float before = getHealth();
         boolean landed = super.hurt(source, amount);
@@ -652,6 +658,53 @@ public class GokuBoss extends ArcBoss {
         fightTicks = Math.max(0L, tag.getLong("GokuFight"));
         modsApplied = false;                                    // the transient modifiers are not saved: applied again on the first tick
         scanned = false;
+    }
+
+    // ================================================================ the farewell (4.90.0)
+    /** Beaten, he is not killed: health stays at 1, he cannot be hurt any more, he is knocked up and says goodbye; {@link #finishFarewell} then lets the framework end the fight (loot, story credit) while he flashes away. */
+    @Override
+    public void die(DamageSource source) {
+        if (level().isClientSide || farewellDone || !GokuBossConfig.farewell()) { super.die(source); return; }
+        if (farewellAt != 0L) return;                                           // already leaving
+        farewellSource = source;
+        farewellAt = tickCount + 70L;
+        staggerUntil = farewellAt + 5L;
+        interruptCast();
+        windLeft = 0;
+        pending = -1;
+        endKaio();
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(1f)));
+        setDeltaMovement(getDeltaMovement().add(0.0, 0.45, 0.0));
+        hurtMarked = true;
+        say("Haha... you got me! Adios! I'll see you next time, when I'm stronger!");
+        if (level() instanceof ServerLevel sl) {
+            GokuFx.burst(sl, position().add(0, getBbHeight() * 0.5, 0), 0xFFD84A, 14);
+            sl.playSound(null, blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 2f, 0.6f);
+        }
+    }
+
+    /** He flashes away (light, a sound, invisible) and the framework's own death runs now: the loot, the credit and the end of the fight, without a second line. */
+    private void finishFarewell(ServerLevel sl) {
+        farewellDone = true;
+        farewellAt = 0L;
+        GokuFx.burst(sl, position().add(0, getBbHeight() * 0.5, 0), 0xFFFFFF, 24);
+        sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 2f, 1.4f);
+        setInvisible(true);
+        setSilent(true);
+        DamageSource src = farewellSource != null ? farewellSource : damageSources().generic();
+        farewellSource = null;
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(0f)));
+        hushSay = true;
+        try {
+            super.die(src);
+        } finally {
+            hushSay = false;
+        }
+    }
+
+    @Override
+    public void say(String line) {
+        if (!hushSay) super.say(line);
     }
 
     // ================================================================ the drop
