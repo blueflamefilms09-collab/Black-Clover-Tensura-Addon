@@ -59,7 +59,7 @@ public final class NUConfig {
     public static final ModConfigSpec.DoubleValue BAL_MOB_DAMAGE_MULT;
     public static final ModConfigSpec.BooleanValue EP_NEEDS_MASTERY;                     // the EP part of addon damage grows in with the skill's mastery (balance.EpMastery); false = the old damage
     public static final ModConfigSpec.BooleanValue LATE_GAME_SCALING;                    // 3.90: mod damage grows with the caster's max magicule (balance.LateGameScaling); false = the old damage
-    public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT, LEAF_FOUR, LEAF_FIVE, LEAF_BLACK, LEAF_GOD;
+    public static final ModConfigSpec.DoubleValue LATE_GAME_BASELINE, LATE_GAME_CAP, GRIMOIRE_DAMAGE_MULT, LEAF_FOUR, LEAF_FIVE, LEAF_BLACK, LEAF_GOD, COST_FOUR, COST_FIVE, COST_BLACK, COST_GOD;
     public static final ModConfigSpec.BooleanValue LEAF_POWER;
     public static final ModConfigSpec.BooleanValue GRIEF;
     public static final ModConfigSpec.BooleanValue WORLD_TREE_PERMANENT;   // 0.45
@@ -194,6 +194,10 @@ public final class NUConfig {
         LEAF_FIVE = b.comment("Leaf power: spell power multiplier of the five-leaf and the Triple Spade.").defineInRange("leafPowerFive", 6.0, 1.0, 50.0);
         LEAF_BLACK = b.comment("Leaf power: spell power multiplier of the Black Magic cover.").defineInRange("leafPowerBlack", 10.0, 1.0, 100.0);
         LEAF_GOD = b.comment("Leaf power: spell power multiplier of the God-Tier cover.").defineInRange("leafPowerGod", 14.0, 1.0, 100.0);
+        COST_FOUR = b.comment("Leaf cost: a higher cover asks more mana per spell, so the power has a price (docs/grimoire_leaf_power.md). Tier-4 covers. Three-leaf and the other tier-3 covers are x1. Needs leafPower.").defineInRange("leafCostFour", 1.6, 1.0, 20.0);
+        COST_FIVE = b.comment("Leaf cost: the five-leaf and the Triple Spade.").defineInRange("leafCostFive", 2.5, 1.0, 20.0);
+        COST_BLACK = b.comment("Leaf cost: the Black Magic cover.").defineInRange("leafCostBlack", 3.2, 1.0, 20.0);
+        COST_GOD = b.comment("Leaf cost: the God-Tier cover.").defineInRange("leafCostGod", 3.8, 1.0, 20.0);
         GRIMOIRE_UNIQUE_LOOKS = b.comment("Each owner's grimoire gets its own cosmetic variation (cover, trim metal, thickness, clasp, colour drift). Off = every grimoire of a type looks identical.").define("uniqueLooks", true);
         b.pop();
 

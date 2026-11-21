@@ -14,6 +14,7 @@ public final class GrimoireLeafPower {
     private GrimoireLeafPower() {}
 
     public static final double DEFAULT_FOUR = 2.5, DEFAULT_FIVE = 6.0, DEFAULT_BLACK = 10.0, DEFAULT_GOD = 14.0;
+    public static final double DEFAULT_COST_FOUR = 1.6, DEFAULT_COST_FIVE = 2.5, DEFAULT_COST_BLACK = 3.2, DEFAULT_COST_GOD = 3.8;
 
     /** The multiplier of a cover; 1 when off, for tier-3 covers and for a null cover. NaN or non-positive numbers read as 1. */
     public static double factor(GrimoireCover c, boolean enabled, double four, double five, double black, double god) {
@@ -33,6 +34,19 @@ public final class GrimoireLeafPower {
             return factor(c, NUConfig.LEAF_POWER.get(), NUConfig.LEAF_FOUR.get(), NUConfig.LEAF_FIVE.get(), NUConfig.LEAF_BLACK.get(), NUConfig.LEAF_GOD.get());
         } catch (IllegalStateException notLoaded) {
             return factor(c, true, DEFAULT_FOUR, DEFAULT_FIVE, DEFAULT_BLACK, DEFAULT_GOD);
+        }
+    }
+
+    /** The extra mana a cover asks per spell (the price of the power): the same ladder with its own numbers; 1 when off or for tier-3 covers. Always below the power step, so a higher cover is still far more efficient. */
+    public static double costFactor(GrimoireCover c, boolean enabled, double four, double five, double black, double god) {
+        return factor(c, enabled, four, five, black, god);
+    }
+
+    public static double costFactor(GrimoireCover c) {
+        try {
+            return costFactor(c, NUConfig.LEAF_POWER.get(), NUConfig.COST_FOUR.get(), NUConfig.COST_FIVE.get(), NUConfig.COST_BLACK.get(), NUConfig.COST_GOD.get());
+        } catch (IllegalStateException notLoaded) {
+            return costFactor(c, true, DEFAULT_COST_FOUR, DEFAULT_COST_FIVE, DEFAULT_COST_BLACK, DEFAULT_COST_GOD);
         }
     }
 }

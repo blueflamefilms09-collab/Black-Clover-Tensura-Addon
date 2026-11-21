@@ -47,4 +47,20 @@ class GrimoireLeafPowerTest {
         assertEquals(1.0, GrimoireLeafPower.factor(GrimoireCover.FOUR_LEAF, true, Double.NaN, 6.0, 10.0, 14.0));
         assertEquals(1.0, GrimoireLeafPower.factor(GrimoireCover.FOUR_LEAF, true, 0.2, 6.0, 10.0, 14.0));
     }
+
+    @Test
+    void theCostRisesButStaysBelowThePowerSoAHigherCoverIsMoreEfficient() {
+        GrimoireCover[] ladder = {GrimoireCover.THREE_LEAF, GrimoireCover.FOUR_LEAF, GrimoireCover.FIVE_LEAF, GrimoireCover.BLACK_MAGIC, GrimoireCover.GOD_TIER};
+        double lastCost = 0, lastEff = 0;
+        for (GrimoireCover c : ladder) {
+            double cost = GrimoireLeafPower.costFactor(c, true, 1.6, 2.5, 3.2, 3.8);
+            assertTrue(cost > lastCost, c.name());
+            double eff = f(c) / cost;                  // power per mana
+            assertTrue(eff >= lastEff, c.name());
+            lastCost = cost;
+            lastEff = eff;
+        }
+        assertEquals(1.0, GrimoireLeafPower.costFactor(GrimoireCover.THREE_LEAF, true, 1.6, 2.5, 3.2, 3.8));
+        assertEquals(1.0, GrimoireLeafPower.costFactor(GrimoireCover.GOD_TIER, false, 1.6, 2.5, 3.2, 3.8));
+    }
 }

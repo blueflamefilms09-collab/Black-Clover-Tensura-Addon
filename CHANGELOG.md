@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.84.0] — Leaf power with a price: stronger covers ask more mana
+Owner request: "make the power scaling make sense".
+- NEW: a higher cover also costs more mana per spell: four-leaf x1.6, five-leaf x2.5, Black Magic x3.2, God-Tier x3.8 (three-leaf and the other tier-3 covers x1). It stays below the power step, so power per mana still rises with the cover (about x1.7, x2.9, x3.7, x4.2): stronger and hungrier, never free.
+- NEW (server settings): `leafCostFour` 1.6, `leafCostFive` 2.5, `leafCostBlack` 3.2, `leafCostGod` 3.8; they follow `leafPower` (false = the old covers, no extra cost). The item tooltip shows the cost.
+- KEPT: the 4.83 power ladder, every cover's own numbers, the late-game scaling, the pvp hit cap, Time Magic.
+- COST: one multiplication per spell cost; no packets, nothing per tick.
+- CAVEATS: not tuned in a game. The chart docs/previews/grimoire_leaf_power_chart.png shows power, cost and power per mana.
+
 ## [4.83.0] — Grimoire leaf power: a four-leaf is far stronger than a three-leaf
 Owner request: "the power difference from a 3 leaf to a 4 leaf and so on should have a massive difference just like the anime" (the longer Wizard questionnaire follows in the next release).
 - NEW: the cover of a grimoire multiplies every spell: three-leaf (and every tier-3 cover) x1, four-leaf / Double Spade / Two-Heart / Five-Sided Diamond x2.5, five-leaf / Triple Spade x6, Black Magic x10, God-Tier x14. With the cover's own number that is about x1.0, x2.6, x6.6, x11.5 and x16.1. A mid page hit at 10,000 EP goes from about 74 / 77 / 81 / 85 / 85 to 74 / 193 / 485 / 845 / 1,183. Chart: docs/previews/grimoire_leaf_power_chart.png.

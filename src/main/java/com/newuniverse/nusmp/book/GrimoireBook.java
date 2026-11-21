@@ -264,7 +264,7 @@ public abstract class GrimoireBook extends Skill {
         if (p == null) return 0;
         double pct = p.costPercent(), floor = p.costFloor();
         if (com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isAbilityPage(p.id())) { double[] sc = com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.cost(this, entity, p.id()); pct = sc[0]; floor = sc[1]; }      // 3.0.0: an ability page asks the price of the spirit's ability
-        double c = BalanceLaw.cost(entity, pct, floor) * cover(instance).cost;
+        double c = BalanceLaw.cost(entity, pct, floor) * cover(instance).cost * com.newuniverse.nusmp.grimoire.GrimoireLeafPower.costFactor(cover(instance));      // 4.84.0: a higher cover asks more mana
         if (pct <= 0 && floor <= 0) return 0;                       // e.g. Anti-Magic costs nothing
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && pct >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
