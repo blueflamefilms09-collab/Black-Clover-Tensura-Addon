@@ -123,9 +123,9 @@ public final class Wave7Events {
     }
 
     // Tensura stats (0 when Tensura's storages are absent)
-    private static double maxEp(LivingEntity e) { try { return EnergyHelper.getMaxEP(e); } catch (Throwable none) { return 0; } }
-    private static double maxMagicule(LivingEntity e) { try { return EnergyHelper.getMaxMagicule(e); } catch (Throwable none) { return 0; } }
-    private static double maxAura(LivingEntity e) { try { return EnergyHelper.getMaxAura(e); } catch (Throwable none) { return 0; } }
+    private static double maxEp(LivingEntity e) { try { return EnergyHelper.getMaxEP(e); } catch (RuntimeException | LinkageError none) { return 0; } }
+    private static double maxMagicule(LivingEntity e) { try { return EnergyHelper.getMaxMagicule(e); } catch (RuntimeException | LinkageError none) { return 0; } }
+    private static double maxAura(LivingEntity e) { try { return EnergyHelper.getMaxAura(e); } catch (RuntimeException | LinkageError none) { return 0; } }
 
     /** The wearer's Rogue training (maximum aura against the gate), as the last pass stored it. */
     private static double rogue(CompoundTag d) { return d.contains(K_ROGUE) ? d.getDouble(K_ROGUE) : 1.0; }

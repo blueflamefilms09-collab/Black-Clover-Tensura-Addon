@@ -219,6 +219,7 @@ public final class ForbiddenMagic {
             q.addLast(p.position());
             while (q.size() > 5) q.removeFirst();
         }
+        HISTORY.keySet().removeIf(id -> e.getServer().getPlayerList().getPlayer(id) == null);        // 4.80.1: a player who left takes their history with them
     }
 
     /** Where this player stood ~4 seconds ago. */

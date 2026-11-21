@@ -37,7 +37,7 @@ final class SaiyanRitual {
     static void end(ServerPlayer p) { ACTIVE.remove(p.getUUID()); }
 
     private static double existencePoints(ServerPlayer p) {
-        try { return EnergyHelper.getMaxEP(p); } catch (Throwable ignored) { return 0.0; }
+        try { return EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { return 0.0; }
     }
 
     /** True if this Saiyan may start the ritual now (said to the player when not). */

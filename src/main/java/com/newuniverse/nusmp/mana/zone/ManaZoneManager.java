@@ -226,7 +226,7 @@ public final class ManaZoneManager {
         ManaZoneRules rules = ManaZoneData.rules();
         ManaZoneRules.Zone zr = rules.zone();
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(p); } catch (Throwable ignored) { /* no Tensura data */ }
+        try { ep = EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { /* no Tensura data */ }
         double cap = Math.min(ManaZoneConfig.maxRadius(), ManaZoneMath.capRadius(ep, ManaZoneGate.needEp(rules.gate(), ManaZoneConfig.strictness()), zr));
         if (free) cap = Math.max(cap, Math.min(ManaZoneConfig.maxRadius(), 24.0));
         int tint = 0xFF8A7CFF, style = ManaZoneStyle.ARCANE;

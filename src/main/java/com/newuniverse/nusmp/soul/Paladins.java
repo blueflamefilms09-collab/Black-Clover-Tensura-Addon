@@ -129,7 +129,7 @@ public final class Paladins {
     }
 
     private static double ep(LivingEntity e) {
-        try { return Math.max(0, EnergyHelper.getMaxEP(e)); } catch (Throwable unknown) { return 0; }
+        try { return Math.max(0, EnergyHelper.getMaxEP(e)); } catch (RuntimeException | LinkageError unknown) { return 0; }
     }
 
     /** Tensura's magic resistance as 0..1 (the attribute may be a fraction or a percent: above 1 it is read as a percent). */

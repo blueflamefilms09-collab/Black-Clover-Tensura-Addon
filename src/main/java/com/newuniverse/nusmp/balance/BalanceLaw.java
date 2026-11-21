@@ -28,7 +28,7 @@ public final class BalanceLaw {
      */
     public static double epScale(LivingEntity caster) {
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (RuntimeException | LinkageError ignored) {}
         return Math.min(12, 1 + Math.max(0, Math.log10(Math.max(1, ep)) - 3) * 2.5);
     }
 
@@ -44,7 +44,7 @@ public final class BalanceLaw {
     public static double lateGameScale(LivingEntity caster) {
         if (!(caster instanceof Player)) return 1.0;      // players only: a boss or mob caster keeps its old damage
         double mm = 0;
-        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (RuntimeException | LinkageError ignored) {}
         return LateGameScaling.factor(NUConfig.LATE_GAME_SCALING.get(), mm, NUConfig.LATE_GAME_BASELINE.get(), NUConfig.LATE_GAME_CAP.get());
     }
 
@@ -73,7 +73,7 @@ public final class BalanceLaw {
     public static double epScale(LivingEntity caster, UltimateClass cls) {
         if (cls == null) return epScale(caster);
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (RuntimeException | LinkageError ignored) {}
         return UltimateClass.epScale(ep, NUConfig.ucEpCap(cls));
     }
 
@@ -83,10 +83,10 @@ public final class BalanceLaw {
      */
     public static double classScale(LivingEntity caster, UltimateClass cls) {
         double ep = 0, late = 1.0;
-        try { ep = EnergyHelper.getMaxEP(caster); } catch (Throwable ignored) {}
+        try { ep = EnergyHelper.getMaxEP(caster); } catch (RuntimeException | LinkageError ignored) {}
         if (caster instanceof Player) {
             double mm = 0;
-            try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+            try { mm = EnergyHelper.getMaxMagicule(caster); } catch (RuntimeException | LinkageError ignored) {}
             late = LateGameScaling.factor(NUConfig.LATE_GAME_SCALING.get(), mm, NUConfig.LATE_GAME_BASELINE.get(), NUConfig.LATE_GAME_CAP.get());
         }
         return UltimateClass.totalScale(ep, NUConfig.ucEpCap(cls), late, NUConfig.ucLateShare());
@@ -134,7 +134,7 @@ public final class BalanceLaw {
      */
     public static double classCost(LivingEntity caster, UltimateClass cls, double flat) {
         double mm = 0;
-        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (Throwable ignored) {}
+        try { mm = EnergyHelper.getMaxMagicule(caster); } catch (RuntimeException | LinkageError ignored) {}
         return cls == null ? UltimateClass.price(flat, mm, NUConfig.ucPlainCostPct(), NUConfig.ucPlainCostRef())
                 : UltimateClass.price(flat, mm, NUConfig.ucCostPct(cls), NUConfig.ucCostRef(cls));
     }

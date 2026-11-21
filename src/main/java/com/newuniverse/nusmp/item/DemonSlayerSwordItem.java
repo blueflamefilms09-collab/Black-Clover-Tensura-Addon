@@ -410,7 +410,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
             if (t instanceof ServerPlayer sp)
                 sp.displayClientMessage(Component.literal("Void Severance: 10% of your max EP is cut away for 60 s.").withStyle(ChatFormatting.DARK_RED), true);
         } else {
-            try { EnergyHelper.multiplyMaxEP(t, 0.9); } catch (Throwable ignored) {}
+            try { EnergyHelper.multiplyMaxEP(t, 0.9); } catch (RuntimeException | LinkageError ignored) {}
         }
     }
 

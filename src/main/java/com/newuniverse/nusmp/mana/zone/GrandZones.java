@@ -173,7 +173,7 @@ public final class GrandZones {
     /** The player's harm and boon in a region (before the edge fade). */
     public static Exposure exposure(ServerPlayer p, GrandZoneRegion r) {
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(p); } catch (Throwable ignored) { /* no Tensura data */ }
+        try { ep = EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { /* no Tensura data */ }
         return GrandZoneMath.exposure(ep, r.recommendedEp(), r.density(), r.has(Effect.CALM), ManaZoneManager.active(p));
     }
 

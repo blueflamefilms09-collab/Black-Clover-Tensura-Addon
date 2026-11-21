@@ -25,9 +25,9 @@ public final class TensuraBridge {
 
     /** Sets maximum and current EP, magicule and aura. Any pool that cannot be written is skipped. */
     public static void setEnergy(LivingEntity e, double ep, double magicule, double aura) {
-        try { EnergyHelper.setBaseMaxEP(e, ep); } catch (Throwable t) { warn("max EP", t); }
-        try { EnergyHelper.setMaxMagicule(e, magicule); } catch (Throwable t) { warn("max magicule", t); }
-        try { EnergyHelper.setMaxAura(e, aura); } catch (Throwable t) { warn("max aura", t); }
+        try { EnergyHelper.setBaseMaxEP(e, ep); } catch (RuntimeException | LinkageError t) { warn("max EP", t); }
+        try { EnergyHelper.setMaxMagicule(e, magicule); } catch (RuntimeException | LinkageError t) { warn("max magicule", t); }
+        try { EnergyHelper.setMaxAura(e, aura); } catch (RuntimeException | LinkageError t) { warn("max aura", t); }
         try {
             var ex = TensuraStorages.getExistenceFrom(e);
             if (ex != null) {
@@ -89,12 +89,12 @@ public final class TensuraBridge {
 
     /** The entity's maximum EP, or 0 when Tensura does not know it. */
     public static double maxEp(LivingEntity e) {
-        try { return EnergyHelper.getMaxEP(e); } catch (Throwable t) { return 0.0; }
+        try { return EnergyHelper.getMaxEP(e); } catch (RuntimeException | LinkageError t) { return 0.0; }
     }
 
     /** The base maximum EP (what a naming surge multiplies). */
     public static double baseMaxEp(LivingEntity e) {
-        try { return EnergyHelper.getBaseMaxEP(e); } catch (Throwable t) { return 0.0; }
+        try { return EnergyHelper.getBaseMaxEP(e); } catch (RuntimeException | LinkageError t) { return 0.0; }
     }
 
     /** Marks the entity as nameable by Tensura's own naming and records who owns it (or clears the owner with null). */
@@ -184,7 +184,7 @@ public final class TensuraBridge {
 
     /** The entity's maximum magicule, or 0 when Tensura does not know it. */
     public static double maxMagicule(LivingEntity e) {
-        try { return EnergyHelper.getMaxMagicule(e); } catch (Throwable t) { return 0.0; }
+        try { return EnergyHelper.getMaxMagicule(e); } catch (RuntimeException | LinkageError t) { return 0.0; }
     }
 
     private static void warn(String what, Throwable t) {

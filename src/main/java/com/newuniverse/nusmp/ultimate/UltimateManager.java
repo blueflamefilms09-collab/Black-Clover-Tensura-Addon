@@ -134,7 +134,7 @@ public final class UltimateManager {
     public static UltimateGate.Progress progress(ServerPlayer p, GrimoireBook book, ManasSkillInstance inst) {
         double mastery = 0, ep = 0;
         try { mastery = book == null || inst == null ? 0 : book.masteryFrac(inst); } catch (Throwable ignored) { /* no skill data */ }
-        try { ep = EnergyHelper.getMaxEP(p); } catch (Throwable ignored) { /* a stand-in player has no Tensura data */ }
+        try { ep = EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { /* a stand-in player has no Tensura data */ }
         int step = 0;
         boolean king = false;
         try { step = MultiverseProfile.step(p); } catch (Throwable ignored) { /* no rank data */ }

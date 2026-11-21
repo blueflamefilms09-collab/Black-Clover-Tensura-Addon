@@ -210,7 +210,7 @@ public final class MagebaneShieldArts {
     /** A caster: a player, anything with a buff on it, or a being with a pool of magicules. */
     private static boolean caster(LivingEntity t) {
         if (t instanceof Player || hasBuff(t)) return true;
-        try { return TensuraStorages.getExistenceFrom(t) != null && EnergyHelper.getMaxMagicule(t) > 100; } catch (Throwable noPool) { return false; }
+        try { return TensuraStorages.getExistenceFrom(t) != null && EnergyHelper.getMaxMagicule(t) > 100; } catch (RuntimeException | LinkageError noPool) { return false; }
     }
 
     /** The nearest caster within 14 blocks, or null. */

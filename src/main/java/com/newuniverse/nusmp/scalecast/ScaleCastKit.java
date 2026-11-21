@@ -121,7 +121,7 @@ public final class ScaleCastKit {
      */
     public static double weightOf(LivingEntity e) {
         double ep = 0, mp = 0, maxMp = 0;
-        try { ep = EnergyHelper.getMaxEP(e); } catch (Throwable ignored) { }
+        try { ep = EnergyHelper.getMaxEP(e); } catch (RuntimeException | LinkageError ignored) { }
         try {
             var ex = TensuraStorages.getExistenceFrom(e);
             if (ex != null) mp = ex.getMagicule();

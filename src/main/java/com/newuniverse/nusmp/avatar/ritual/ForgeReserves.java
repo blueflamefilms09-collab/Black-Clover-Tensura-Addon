@@ -29,6 +29,6 @@ public final class ForgeReserves {
 
     /** The creator's maximum magicule (0 when Tensura does not know it). */
     public static double maxMagicule(ServerPlayer p) {
-        try { return Math.max(0.0, EnergyHelper.getMaxMagicule(p)); } catch (Throwable t) { return 0.0; }
+        try { return Math.max(0.0, EnergyHelper.getMaxMagicule(p)); } catch (RuntimeException | LinkageError t) { return 0.0; }
     }
 }

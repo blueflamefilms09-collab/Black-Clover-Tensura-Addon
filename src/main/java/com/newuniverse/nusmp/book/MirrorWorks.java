@@ -65,7 +65,7 @@ public final class MirrorWorks {
     /** The caster's mirror power from EP (log), plus armour: 0.8 .. ~2.4. */
     public static float power(LivingEntity e) {
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(e); } catch (Throwable ignored) {}
+        try { ep = EnergyHelper.getMaxEP(e); } catch (RuntimeException | LinkageError ignored) {}
         float p = 0.8f + (float) Math.max(0, Math.log10(Math.max(1, ep)) - 1.5) * 0.24f + e.getArmorValue() / 60f;
         return Mth.clamp(p, 0.8f, 2.4f);
     }

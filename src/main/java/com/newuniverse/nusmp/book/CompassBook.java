@@ -77,7 +77,7 @@ public class CompassBook extends GrimoireBook {
         Vec3 eye = p.getEyePosition(), look = p.getViewVector(1f);
         return around(p, p.position(), range).stream()
                 .filter(t -> t.getBoundingBox().getCenter().subtract(eye).normalize().dot(look) > 0.7)
-                .max(Comparator.comparingDouble(t -> { try { return EnergyHelper.getMaxEP(t); } catch (Throwable x) { return t.getMaxHealth(); } }))
+                .max(Comparator.comparingDouble(t -> { try { return EnergyHelper.getMaxEP(t); } catch (RuntimeException | LinkageError x) { return t.getMaxHealth(); } }))
                 .orElse(target(p, range));
     }
 

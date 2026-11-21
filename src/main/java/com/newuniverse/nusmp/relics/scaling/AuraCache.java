@@ -43,7 +43,7 @@ public final class AuraCache {
 
     private static Snapshot read(ServerPlayer p, long now) {
         double pool = 0;
-        try { pool = EnergyHelper.getMaxMagicule(p); } catch (Throwable ignored) { /* no Tensura data: no pool bonus */ }
+        try { pool = EnergyHelper.getMaxMagicule(p); } catch (RuntimeException | LinkageError ignored) { /* no Tensura data: no pool bonus */ }
         Awakening aw = Awakening.NONE;
         try {
             var ex = TensuraStorages.getExistenceFrom(p);

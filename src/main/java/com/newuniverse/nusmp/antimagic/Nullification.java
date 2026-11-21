@@ -140,6 +140,6 @@ public final class Nullification {
 
     /** Max EP, 0 without Tensura data. */
     public static double maxEP(LivingEntity e) {
-        try { return EnergyHelper.getMaxEP(e); } catch (Throwable ignored) { return 0; }
+        try { return EnergyHelper.getMaxEP(e); } catch (RuntimeException | LinkageError ignored) { return 0; }
     }
 }

@@ -70,7 +70,7 @@ public final class ManaZonePlayer {
     /** The player's progress against the gate. Server thread. */
     public static Progress progress(ServerPlayer p) {
         double ep = 0;
-        try { ep = EnergyHelper.getMaxEP(p); } catch (Throwable ignored) { /* no Tensura data (a stand-in player): no EP */ }
+        try { ep = EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { /* no Tensura data (a stand-in player): no EP */ }
         double grimoire = 0, reinforcement = 0;
         try {
             var g = GrimoirePages.grimoireOf(p);

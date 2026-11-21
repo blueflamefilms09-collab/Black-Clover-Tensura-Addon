@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.80.1] — Audit follow-ups: no leftover state, narrower catches
+Owner request: "finish up everything else" (the open audit follow-ups).
+- FIXED: the four-second position history of Forbidden Magic is no longer kept for players who left the server (it was cleaned only on a restart). It is pruned once a second together with the sampling, at most one entry per online player.
+- FIXED: the self-test stand-in players (`StandIn`) are forgotten when the server stops; on a single-player world they held on to the old level.
+- CHANGED: the 29 places that read a player's maximum EP from Tensura caught every `Throwable` (also out-of-memory and stack errors). They now catch only runtime errors and linkage errors, which is what a missing Tensura value can really throw; the fall-back value is the same as before.
+- KEPT: every rule and number; nothing else changes.
+- COST: no extra cost; one removal check per online player per second.
+- CAVEATS: not run in a game. The other broad catches of the mod and the empty catches were not touched (they are not tied to Tensura's EP call and each needs its own look).
+
 ## [4.80.0] — A table of contents for the Wiki (jump to any page)
 Owner request: "Players should be able to skip around the pages and not have to go page by page. So make a table of contents or something for it".
 - NEW: the Wiki page (and every other Codex page made from data files with 8 or more entries, such as Rules) starts with a **Contents** list: every entry title in two columns, numbered. Click a title and the page scrolls straight to that entry. Every entry has a small **^ Contents** link at its top right that jumps back to the list. Works in the Multiverse Hub and in the old Codex book; the Home key also still returns to the top.
