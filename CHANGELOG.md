@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.89.3] — The Dragon Radar costs more to craft
+Owner report: the Dragon Radar was too easy to craft.
+- REPLACED: the recipe. Before: 4 glass panes, 4 redstone and a compass. Now: 4 gold ingots, an ender eye, 2 diamonds, a compass and a redstone block (same shape and result).
+- KEPT: the radar's range, behaviour, model and id; radars already crafted keep working.
+- COST: none (data file only).
+- CAVEATS: not tried in a game; say if you want it dearer still (for example a nether star in the middle).
+
 ## [4.89.2] — Fix: the grimoire book is solid, not see-through
 Owner report (with two screenshots): "fix the grimoire as it is see-through right now". Held and floating, only the corner caps and the glow ring showed; the world was visible through the pages and boards.
 - FIXED: the book model is now drawn with a solid (cut-out, both sides) render type instead of the default translucent, back-face-culled item type, so the big faces (pages, boards) can no longer vanish or show the world through them. Applies to every grimoire look (revamp and classic) and to the two Codex books that share the model.

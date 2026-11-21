@@ -16,7 +16,7 @@ setting governs both sets.
 | Part | Where |
 |---|---|
 | 16 ball items: `dragon_ball_earth_1..8`, `dragon_ball_super_1..8`, own 32x32 textures (orange / red stars and violet / gold stars) with a grey stone variant each | `dragonballs/DbItems`, `DragonBallItem`, `textures/item/dragon_ball_*` |
-| Dragon Radar (craftable, optional) | `DragonRadarItem`, recipe `dragon_radar.json` |
+| Dragon Radar (craftable, optional; since 4.89.3: 4 gold ingots, an ender eye, 2 diamonds, a compass and a redstone block) | `DragonRadarItem`, recipe `dragon_radar.json` |
 | Server registry, scatter, stone lock | `DbData` (SavedData `nusmp_dragonballs`), `DbManager`, `DbRules` |
 | Spoken ritual (chat) | `DbChat`, `DbRules` |
 | Shenron / Super Shenron entity (non-living, not saved) and the session | `ShenronEntity`, `DbSession` |
