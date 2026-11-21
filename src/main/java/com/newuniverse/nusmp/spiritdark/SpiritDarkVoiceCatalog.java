@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.spiritdark;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -70,6 +71,7 @@ public final class SpiritDarkVoiceCatalog {
         try (InputStream in = SpiritDarkVoiceCatalog.class.getResourceAsStream("/assets/anime_multiverse/spirit_dark_voice.json")) {
             if (in != null) set(parse(new String(in.readAllBytes(), StandardCharsets.UTF_8)));
         } catch (Exception broken) {
+            CatchLog.once("spirit_dark_voice.json", broken);
             set(Collections.emptyMap());
         }
     }

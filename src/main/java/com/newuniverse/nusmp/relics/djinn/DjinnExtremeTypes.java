@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.relics.djinn;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -32,6 +33,7 @@ public final class DjinnExtremeTypes {
             }
         } catch (Exception ignored) {
             // an unreadable table leaves the old damage types in place
+            CatchLog.once("djinn_extreme_types.json", ignored);
         }
         loaded = true;
     }

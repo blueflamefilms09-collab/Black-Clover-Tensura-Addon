@@ -262,7 +262,7 @@ public final class AvatarPartyManager extends SavedData {
             if (old != null && Math.abs(old.amount() + tax) < 1.0e-9) return;
             inst.removeModifier(TAX_ID);
             inst.addTransientModifier(new AttributeModifier(TAX_ID, -tax, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-        } catch (Throwable soft) {
+        } catch (RuntimeException | LinkageError soft) {
             // no Tensura attribute on this build: the party simply costs nothing
         }
     }

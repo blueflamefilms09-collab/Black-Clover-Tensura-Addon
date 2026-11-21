@@ -47,7 +47,7 @@ public final class Nullification {
 
     private static int jam(LivingEntity t, int seconds, float chance, float misfire, boolean ultimateOnly) {
         Skills skills;
-        try { skills = SkillAPI.getSkillsFrom(t); } catch (Throwable noSkills) { return 0; }
+        try { skills = SkillAPI.getSkillsFrom(t); } catch (RuntimeException | LinkageError noSkills) { return 0; }
         if (skills == null) return 0;
         int n = 0;
         for (ManasSkillInstance i : new ArrayList<>(skills.getLearnedSkills())) {
@@ -106,7 +106,7 @@ public final class Nullification {
     /** Toggles off every barrier skill of 't' (Multilayer Barrier, Ranged Barrier, ...). */
     static int barrierSkillsOff(LivingEntity t) {
         Skills skills;
-        try { skills = SkillAPI.getSkillsFrom(t); } catch (Throwable noSkills) { return 0; }
+        try { skills = SkillAPI.getSkillsFrom(t); } catch (RuntimeException | LinkageError noSkills) { return 0; }
         if (skills == null) return 0;
         int n = 0;
         for (ManasSkillInstance i : new ArrayList<>(skills.getLearnedSkills())) {
@@ -135,7 +135,7 @@ public final class Nullification {
     public static boolean playerSide(LivingEntity t) {
         if (t instanceof Player) return true;
         if (t instanceof OwnableEntity o && o.getOwnerUUID() != null) return true;
-        try { return io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (Throwable ignored) { return false; }
+        try { return io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (RuntimeException | LinkageError ignored) { return false; }
     }
 
     /** Max EP, 0 without Tensura data. */

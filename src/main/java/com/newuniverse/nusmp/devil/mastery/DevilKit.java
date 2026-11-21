@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.devil.mastery;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -62,6 +63,7 @@ public final class DevilKit {
         try (InputStream in = DevilKit.class.getResourceAsStream("/assets/anime_multiverse/devil_kits.json")) {
             t = in == null ? new Table(Map.of(), List.of()) : parse(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (Exception unreadable) {
+            CatchLog.once("devil_kits.json", unreadable);
             t = new Table(Map.of(), List.of());
         }
         table = t;

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.enc;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -37,8 +38,9 @@ public final class WandererGuard {
             if (w == null) return;
             if (next.getUUID().equals(w.mind.approvedTarget())) return;
             e.setCanceled(true);
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             // a guard that fails lets the target through: the Director's pass releases it within half a second
+            CatchLog.once("wanderer guard (target)", t);
         }
     }
 
@@ -46,8 +48,9 @@ public final class WandererGuard {
         try {
             if (!(e.getEntity() instanceof Mob mob) || !mob.getTags().contains(WandererDirector.TAG)) return;
             if (mob.getLastHurtByMob() != null && mob.tickCount - mob.getLastHurtByMobTimestamp() < COMBAT_TICKS) e.setCanceled(true);
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             // never throw into the heal
+            CatchLog.once("wanderer guard (heal)", t);
         }
     }
 
@@ -60,8 +63,9 @@ public final class WandererGuard {
                 ItemEntity item = it.next();
                 if (SHADOW_KEY.equals(BuiltInRegistries.ITEM.getKey(item.getItem().getItem()).toString())) it.remove();
             }
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             // never throw into the drops
+            CatchLog.once("wanderer guard (drops)", t);
         }
     }
 }

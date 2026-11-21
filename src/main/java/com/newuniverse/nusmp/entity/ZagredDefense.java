@@ -50,7 +50,7 @@ public final class ZagredDefense {
     static boolean isSummon(net.minecraft.world.entity.Entity e) {
         if (!(e instanceof LivingEntity) || e instanceof net.minecraft.world.entity.player.Player || e instanceof ZagredBossEntity) return false;
         if (e instanceof net.minecraft.world.entity.OwnableEntity o && o.getOwnerUUID() != null) return true;
-        try { return io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon((LivingEntity) e); } catch (Throwable ignored) { return false; }
+        try { return io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon((LivingEntity) e); } catch (RuntimeException | LinkageError ignored) { return false; }
     }
 
     static Kind classify(DamageSource s, String element) {

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.relics;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -162,6 +163,7 @@ public final class Rankings {
         try (InputStream in = Rankings.class.getResourceAsStream("/assets/anime_multiverse/rankings.json")) {
             t = in == null ? new Table() : parse(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (Exception ignored) {
+            CatchLog.once("rankings.json", ignored);
             t = new Table();
         }
         loaded = t;

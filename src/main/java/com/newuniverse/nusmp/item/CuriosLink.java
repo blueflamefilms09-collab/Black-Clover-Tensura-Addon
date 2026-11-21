@@ -249,7 +249,7 @@ public final class CuriosLink {
             List<RenderFlag> f = flags(e);
             for (RenderFlag r : f) if (r.stack() == stack) return r.render();
             for (RenderFlag r : f) if (ItemStack.matches(r.stack(), stack)) return r.render();
-        } catch (Throwable ignored) {
+        } catch (RuntimeException | LinkageError ignored) {
             // draw it
         }
         return true;

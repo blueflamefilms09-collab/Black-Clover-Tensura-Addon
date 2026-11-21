@@ -52,7 +52,7 @@ final class RestMana {
             ex.setMagicule(max * Math.max(0.0, Math.min(1.0, share)));
             ex.markDirty();
             return true;
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             return false;
         }
     }
@@ -64,7 +64,7 @@ final class RestMana {
             if (ex == null) return -1.0;
             double max = EnergyHelper.getMaxMagicule(p);
             return max <= 0.0 ? -1.0 : Math.max(0.0, Math.min(1.0, ex.getMagicule() / max));
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             return -1.0;
         }
     }

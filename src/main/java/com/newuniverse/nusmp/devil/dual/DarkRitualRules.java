@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.devil.dual;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -54,6 +55,7 @@ public final class DarkRitualRules {
         try (InputStream in = DarkRitualRules.class.getResourceAsStream("/assets/anime_multiverse/devil_dark_magic.json")) {
             t = in == null ? parse(null) : parse(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (Exception unreadable) {
+            CatchLog.once("devil_dark_magic.json", unreadable);
             t = parse(null);
         }
         table = t;

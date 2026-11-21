@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.labyrinth.mega.guard;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -127,6 +128,7 @@ public final class AbyssalLooks {
                 return parse(JsonParser.parseReader(r).getAsJsonObject());
             }
         } catch (Exception e) {
+            CatchLog.once("abyssal looks table", e);
             return Map.of();
         }
     }

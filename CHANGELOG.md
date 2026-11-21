@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.88.2] — Audit follow-up: narrower and logged catches
+Follows the 4.80.1 audit ("the other broad catches and the empty catches were not touched").
+- CHANGED: 60 catch sites in 37 files. 16 empty catches now catch only runtime and linkage errors (the event hooks also log once); 31 silent reads of Tensura data keep their exact fall-back value but no longer swallow out-of-memory or other fatal errors; 10 data-file loaders that fell back silently now log the first failure once (`core/CatchLog`, at most 64 keys).
+- NEW: `BroadCatchScanTest` fails the build if a file gets more `catch (Throwable` than `docs/broad_catch_allow.txt` allows (each count can only go down), or anything catches OutOfMemoryError or StackOverflowError; report in `docs/audit_catches.md`.
+- KEPT: every success path and every fall-back value; 196 broad catches that are self-tests, logged firewalls or reflection into optional mods stay (listed with a reason); 49 silent reads are marked for a next pass.
+- RISK: an unusual Error from another mod's code in a narrowed spot (for example `ShishouBorrow`, `TensuraCaster`, `UltimateManager`) now reaches the server's own error handling instead of being swallowed.
+- CAVEATS: not run in a game.
+
 ## [4.88.1] — Fix: a hero weapon no longer locks out the primordial relics
 Owner report: "with a hero weapon u cant use the primordial relics either".
 - FIXED: a Holy or Vassal Weapon rejected (shocked) every weapon of another class, and the Genesis-grade relics (Primordial Hearth Blade, Starforged Aeon Bow, Void Origin Katana, Sword of the First Dawn, Starsplitter Hammer, Blackrazor and the other Genesis weapons) counted as ordinary swords, bows and hammers. Relics of the Genesis and EX-Singularity grades are now never rejected.

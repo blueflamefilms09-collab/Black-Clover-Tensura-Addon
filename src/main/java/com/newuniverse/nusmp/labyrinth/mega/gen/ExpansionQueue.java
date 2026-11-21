@@ -385,8 +385,8 @@ public final class ExpansionQueue implements Expander {
                     Sector s = data.sector(current.sectorId);
                     if (s != null) fail(data, s, "internal error: " + t);
                 }
-            } catch (Throwable ignored) {
-                // the tick must never throw
+            } catch (RuntimeException | LinkageError ignored) {
+                // the tick must never throw (the first failure was logged just above)
             }
             current = null;
         }

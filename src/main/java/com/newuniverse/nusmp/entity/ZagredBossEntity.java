@@ -576,7 +576,7 @@ public class ZagredBossEntity extends Monster implements com.newuniverse.nusmp.b
             if (!f.onGround() && !f.isInWater() && (f instanceof Player pl && (pl.getAbilities().flying || pl.isFallFlying()) || f.getY() - getY() > 4)) flying++;
             if (f.isInvisible()) hidden++;
             for (var e : f.getActiveEffects()) if (e.getEffect().value().isBeneficial()) buffs++;
-            try { if (io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(f)) summons++; } catch (Throwable ignored) {}
+            try { if (io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(f)) summons++; } catch (RuntimeException | LinkageError ignored) { /* no Tensura: not counted as a summon */ }
             if (f instanceof Player && com.newuniverse.nusmp.antimagic.Nullification.maxEP(f) > 100_000) casters++;
         }
         boolean shots = !sl.getEntitiesOfClass(Projectile.class, getBoundingBox().inflate(10), pr -> pr.getOwner() != this).isEmpty();

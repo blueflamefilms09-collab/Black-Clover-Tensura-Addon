@@ -179,7 +179,7 @@ public final class BossBuffEngine {
             try {
                 if (AntiMagic.isUser(pl)) continue;
                 Nullification.interfere(pl, p.auraJamSeconds(), (float) p.auraChance(), 0.15f);
-            } catch (Throwable noSkills) { /* nothing to jam */ }
+            } catch (RuntimeException | LinkageError noSkills) { /* nothing to jam */ }
         }
     }
 

@@ -25,7 +25,7 @@ public final class GenericFallbackFx {
             VfxSpawn.send(level, profile.castShape(), eye.add(0, -0.3, 0), at, color, 18, 0.9f);
             VfxSpawn.send(level, profile.burstShape(), at, at.add(0, 1, 0), color, 20, 1.0f);
             Fx.spray(level, profile.themeKey(), Fx.toneOf(profile.particle()), at.x, at.y + 0.4, at.z, 14, 0.4, 0.4, 0.4, 0.02);
-        } catch (Throwable ignored) {
+        } catch (RuntimeException | LinkageError ignored) {
             // the fallback must never fault: nothing more to fall back to
         }
         return true;

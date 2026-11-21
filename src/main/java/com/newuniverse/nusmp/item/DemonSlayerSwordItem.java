@@ -133,7 +133,7 @@ public class DemonSlayerSwordItem extends MagicWeaponItem {
             double max = EnergyHelper.getMaxMagicule(by);
             var ex = TensuraStorages.getExistenceFrom(by);
             if (ex != null && max > 0) deficiency = 1 - Mth.clamp(ex.getMagicule() / max, 0, 1);
-        } catch (Throwable ignored) {}
+        } catch (RuntimeException | LinkageError ignored) { /* no Tensura pool: no deficiency bonus */ }
         return (float) (base * affinity(by) * (1 + 0.25 * deficiency) * NUGameRules.spellDamage(t.level()));
     }
 

@@ -214,7 +214,7 @@ public final class ManaCoreRuntime {
                 ex.setMagicule(next);
                 ex.markDirty();
             }
-        } catch (Throwable t) { /* Tensura storage unavailable: no regeneration, nothing else to do */ }
+        } catch (RuntimeException | LinkageError t) { /* Tensura storage unavailable: no regeneration, nothing else to do */ }
     }
 
     private static void pullItems(ServerPlayer p, double radius) {

@@ -238,9 +238,9 @@ public final class ManaZoneManager {
                 style = ManaZoneStyle.of(GrimoirePages.magicOf(g.get()).soulType());
             }
             reinforcement = ManaZonePlayer.progress(p).reinforcementMastery();
-        } catch (Throwable ignored) { /* a stand-in player has no grimoire: the arcane look */ }
+        } catch (RuntimeException | LinkageError ignored) { /* a stand-in player has no grimoire: the arcane look */ }
         boolean king = false;
-        try { king = WizardKing.isKing(p); } catch (Throwable ignored) { /* no king data */ }
+        try { king = WizardKing.isKing(p); } catch (RuntimeException | LinkageError ignored) { /* no king data */ }
         long serial = ++serialCounter;
         long end = free ? now + Math.max(20, forcedTicks) : now + zr.maxDurationTicks();
         Zone z = new Zone(p.getUUID(), p.getId(), serial, now, end, sl.dimension(), cap, style, tint, free || king, p.isPassenger(), reinforcement);

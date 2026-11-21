@@ -133,12 +133,12 @@ public final class UltimateManager {
     /** The player's progress against the gate of the page: the mastery of THIS book, the rank step, the EP. */
     public static UltimateGate.Progress progress(ServerPlayer p, GrimoireBook book, ManasSkillInstance inst) {
         double mastery = 0, ep = 0;
-        try { mastery = book == null || inst == null ? 0 : book.masteryFrac(inst); } catch (Throwable ignored) { /* no skill data */ }
+        try { mastery = book == null || inst == null ? 0 : book.masteryFrac(inst); } catch (RuntimeException | LinkageError ignored) { /* no skill data */ }
         try { ep = EnergyHelper.getMaxEP(p); } catch (RuntimeException | LinkageError ignored) { /* a stand-in player has no Tensura data */ }
         int step = 0;
         boolean king = false;
-        try { step = MultiverseProfile.step(p); } catch (Throwable ignored) { /* no rank data */ }
-        try { king = WizardKing.isKing(p); } catch (Throwable ignored) { /* no king data */ }
+        try { step = MultiverseProfile.step(p); } catch (RuntimeException | LinkageError ignored) { /* no rank data */ }
+        try { king = WizardKing.isKing(p); } catch (RuntimeException | LinkageError ignored) { /* no king data */ }
         return new UltimateGate.Progress(mastery, step, ep, king);
     }
 
@@ -201,8 +201,8 @@ public final class UltimateManager {
     /** The caster's kingdom for the animation: the one they hail from (Heritage), else the kingdom of their grimoire's cover. Null when neither is known (a stand-in player, a grimoire without a cover). */
     static Kingdom kingdomOf(ServerPlayer p, ManasSkillInstance inst) {
         Kingdom heritage = null, cover = null;
-        try { heritage = Heritage.kingdom(p); } catch (Throwable ignored) { /* no heritage data */ }
-        try { cover = inst == null ? null : GrimoireBook.cover(inst).kingdom; } catch (Throwable ignored) { /* no cover data */ }
+        try { heritage = Heritage.kingdom(p); } catch (RuntimeException | LinkageError ignored) { /* no heritage data */ }
+        try { cover = inst == null ? null : GrimoireBook.cover(inst).kingdom; } catch (RuntimeException | LinkageError ignored) { /* no cover data */ }
         return UltimateAnim.resolveKingdom(heritage, cover);
     }
 
@@ -281,7 +281,7 @@ public final class UltimateManager {
     private static boolean sealed(ServerPlayer p, long now) {
         try {
             return com.newuniverse.nusmp.entity.zogratis.SpellSeal.sealed(p) || p.getPersistentData().getLong("nusmp_sealed_until") > now;
-        } catch (Throwable ignored) {
+        } catch (RuntimeException | LinkageError ignored) {
             return false;
         }
     }
@@ -396,7 +396,7 @@ public final class UltimateManager {
         UltimatePlayer.setCooldownUntil(p, now + cd);
         try {
             if (s.instance != null && s.mode >= 0) s.instance.setCoolDown(NUSMP.ticksToSeconds(cd), s.mode);      // the grimoire's own cooldown display
-        } catch (Throwable ignored) { /* the instance may be gone */ }
+        } catch (RuntimeException | LinkageError ignored) { /* the instance may be gone */ }
         CastAnim.play(p, s.clips.release());      // the release clip of the caster's kingdom (the Signature finisher for the default)
         Vec3 c = new Vec3(s.cx, s.cy, s.cz);
         send(sl, s, VfxShape.MAGIC_CIRCLE_EXPLOSION, c.add(0, 0.1, 0), c.add(0, 1.1, 0), 30, (float) (s.radius / 5.0));
@@ -405,7 +405,7 @@ public final class UltimateManager {
         sl.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 5.0f, 0.5f);
         p.displayClientMessage(Component.literal(s.def.name()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
         if (UltimateConfig.exhaustAfter() && !s.creative) {
-            try { ManaLaw.exhaust(p); } catch (Throwable ignored) { /* the mana law is optional for a stand-in */ }
+            try { ManaLaw.exhaust(p); } catch (RuntimeException | LinkageError ignored) { /* the mana law is optional for a stand-in */ }
         }
     }
 
@@ -436,7 +436,7 @@ public final class UltimateManager {
 
     private static void afflict(Session s, LivingEntity t, Vec3 c) {
         boolean boss = false;
-        try { boss = BalanceLaw.isBoss(t); } catch (Throwable ignored) { /* no balance data */ }
+        try { boss = BalanceLaw.isBoss(t); } catch (RuntimeException | LinkageError ignored) { /* no balance data */ }
         UltimateDef d = s.def;
         for (Debuff db : d.debuffs()) {
             Holder<MobEffect> eff = effect(db.effect());

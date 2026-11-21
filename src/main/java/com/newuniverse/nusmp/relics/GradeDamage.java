@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.relics;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -115,6 +116,7 @@ public final class GradeDamage {
             }
         } catch (Exception ignored) {
             // the keyword guess still works
+            CatchLog.once("weapon_classes.json (grade damage)", ignored);
         }
         c = new WeaponClasses(null, ids);
         classes = c;

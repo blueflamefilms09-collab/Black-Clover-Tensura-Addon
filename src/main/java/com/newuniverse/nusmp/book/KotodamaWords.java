@@ -515,7 +515,7 @@ public final class KotodamaWords {
         double r = 12 + 6 * pw;
         for (LivingEntity t : foes(c, c.position(), r)) {
             boolean summon;
-            try { summon = io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (Throwable ignored) { summon = false; }
+            try { summon = io.github.manasmods.tensura.storage.ep.ExistenceStorage.isSummon(t); } catch (RuntimeException | LinkageError ignored) { summon = false; }
             if (summon && !(t instanceof Player) && !(c instanceof com.newuniverse.nusmp.entity.ZagredBossEntity)) {   // 0.53: Zagred only shoves summons, he no longer sends them away
                 VfxSpawn.send((ServerLevel) c.level(), VfxShape.KOTO_SHATTER, t.getBoundingBox().getCenter(), t.position(), VIOLET, 24, 1f);
                 t.discard();

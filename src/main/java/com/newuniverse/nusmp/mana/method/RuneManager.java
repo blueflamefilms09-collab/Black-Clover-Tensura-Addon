@@ -362,7 +362,7 @@ public final class RuneManager {
         if (!(t instanceof Player pl)) return false;
         try {
             return AntiMagic.isUser(pl);
-        } catch (Throwable unknown) {
+        } catch (RuntimeException | LinkageError unknown) {
             return true;
         }
     }
@@ -372,7 +372,7 @@ public final class RuneManager {
         try {
             var holder = level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.withDefaultNamespace(kind.path)));
             return new DamageSource(holder, caster, caster);
-        } catch (Throwable unknown) {
+        } catch (RuntimeException | LinkageError unknown) {
             return null;
         }
     }
@@ -414,7 +414,7 @@ public final class RuneManager {
         try {
             AttributeInstance a = e.getAttribute(TensuraAttributes.MAGIC_RESISTANCE);
             return a == null ? 0.0 : RuneRules.resistanceOf(a.getValue());
-        } catch (Throwable unknown) {
+        } catch (RuntimeException | LinkageError unknown) {
             return 0.0;
         }
     }

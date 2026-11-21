@@ -211,7 +211,7 @@ public final class MirrorWorks {
                 if (d == null) return;
                 d.moveTo(at.x, at.y, at.z, p.getYRot() + 180f, 0);
                 d.setup(p, pw, lifeTicks);
-                try { io.github.manasmods.tensura.entity.human.CloneEntity.copyEffects(p, d); } catch (Throwable ignored) {}
+                try { io.github.manasmods.tensura.entity.human.CloneEntity.copyEffects(p, d); } catch (RuntimeException | LinkageError ignored) { /* no Tensura: the double just has no copied effects */ }
                 level.addFreshEntity(d);
                 for (Mob m : level.getEntitiesOfClass(Mob.class, p.getBoundingBox().inflate(16)))
                     if (m.getTarget() == p && level.getRandom().nextBoolean()) m.setTarget(d);   // half of them go for the double

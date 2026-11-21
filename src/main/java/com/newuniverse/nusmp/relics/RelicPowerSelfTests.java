@@ -141,7 +141,7 @@ public final class RelicPowerSelfTests {
                 boolean ran = false;
                 try {
                     ran = RelicEngine.activate(fp, act, melee, melee.acts().get(0), false, 0);
-                } catch (Throwable ignored) {
+                } catch (RuntimeException | LinkageError ignored) {
                     // a refusal that could not tell the stand-in is still a refusal
                 }
                 if (ran) bad.add("an act of the unattuned " + melee.id() + " ran: the works gate is gone");

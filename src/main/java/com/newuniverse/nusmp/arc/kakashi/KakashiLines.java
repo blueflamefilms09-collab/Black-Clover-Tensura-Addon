@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.arc.kakashi;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,6 +40,7 @@ public final class KakashiLines {
             if (in == null) return new JsonObject();
             return JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (Exception e) {
+            CatchLog.once("kakashi lines file " + path, e);
             return new JsonObject();
         }
     }

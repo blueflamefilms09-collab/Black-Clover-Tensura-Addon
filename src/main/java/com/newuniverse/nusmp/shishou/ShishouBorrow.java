@@ -185,7 +185,7 @@ public final class ShishouBorrow {
             }
             TensuraCaster.ensureMana(e, POOL);
             return TensuraCaster.cast(e, t, List.of(id), en.hold()) != null;
-        } catch (Throwable broken) {
+        } catch (RuntimeException | LinkageError broken) {
             return false;                                                                       // never a crash of the tick: the next entry is tried next time
         }
     }

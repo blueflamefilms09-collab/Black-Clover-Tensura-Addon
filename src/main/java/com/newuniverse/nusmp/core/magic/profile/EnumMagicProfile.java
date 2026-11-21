@@ -31,7 +31,7 @@ public final class EnumMagicProfile implements MagicProfile {
     }
 
     private static boolean isWikiAttribute(MagicType t) {
-        try { return com.newuniverse.nusmp.book.WikiBooks.isNewAttribute(t); } catch (Throwable e) { return false; }
+        try { return com.newuniverse.nusmp.book.WikiBooks.isNewAttribute(t); } catch (RuntimeException | LinkageError e) { return false; }
     }
 
     private static Aura auraOf(String id) {
@@ -67,7 +67,7 @@ public final class EnumMagicProfile implements MagicProfile {
         try {
             var book = com.newuniverse.nusmp.skill.NUSkills.bookFor(type);
             if (book != null) { c = book.color | 0xFF000000; color = c; return c; }
-        } catch (Throwable ignored) { /* registries not ready yet: use the palette this time, ask again later */ }
+        } catch (RuntimeException | LinkageError ignored) { /* registries not ready yet: use the palette this time, ask again later */ }
         return MagicProfile.super.color();
     }
 

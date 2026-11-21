@@ -1,0 +1,101 @@
+# Files that may still contain `catch (Throwable`, with how many. Checked by BroadCatchScanTest.
+# Format: <path under src/main/java/com/newuniverse/nusmp>:<max count>  # reason
+# The count is a ceiling: a file may have fewer (then lower it), never more. A file that is not listed may have none.
+# New code catches RuntimeException | LinkageError (or the specific checked exception); never Throwable, because that also
+# swallows OutOfMemoryError and StackOverflowError. Add a line here only with a real reason; "NEXT PASS" lines are debt to remove.
+arc/ArcSelfTests.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+arc/early/EarlyMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+arc/midnight/MidnightFx.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+arc/sds/SdsaStrikes.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+arc/sds/kit/FourSinsKit.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+arc/spade/SpadeFx.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+arc/zagred/ZagredDecrees.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+avatar/AvatarEntity.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+avatar/TensuraBridge.java:16  # mixed: 8 logged firewall(s) kept; 8 silent read(s) are NEXT PASS (narrow to RuntimeException | LinkageError)
+avatar/evolution/AvatarEvolution.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+avatar/naming/TensuraNamingEngine.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+avatar/naming/TensuraNamingInterceptor.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+avatar/ritual/ForgeSkillResolver.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+blackclover/GrimoireGuard.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+blackclover/NightmareSouls.java:1  # reflection into an optional mod: the checked reflective exceptions are caught with the rest; the failure is remembered or logged
+book/ext/AttributeEvents.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+boss/BossBuffConfig.java:3  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+boss/BossBuffEngine.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+boss/BossSkills.java:4  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+boss/LuciusProfile.java:4  # mixed: 1 logged firewall(s) kept; 3 silent read(s) are NEXT PASS (narrow to RuntimeException | LinkageError)
+boss/rules/BossSkillRules.java:4  # mixed: 1 logged firewall(s) kept; 3 silent read(s) are NEXT PASS (narrow to RuntimeException | LinkageError)
+charter/CharterMirror.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+client/avatar/ForgeIcons.java:5  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+client/dragonballs/DbClient.java:1  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+client/gui/bossbar/VanillaBossBars.java:2  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+client/hub/HubCards.java:1  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+client/manazone/ZoneCastClient.java:1  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+client/ui/CodexPages.java:2  # client rendering/lookup fallback, not server state; skipped by this pass (client-only draw code)
+compat/create/ContraptionGuard.java:1  # reflection into an optional mod: the checked reflective exceptions are caught with the rest; the failure is remembered or logged
+compat/create/TrapBuilder.java:1  # reflection into an optional mod: the checked reflective exceptions are caught with the rest; the failure is remembered or logged
+core/magic/profile/MagicAuditRuntime.java:5  # mixed: 4 logged firewall(s) kept; 1 silent read(s) are NEXT PASS (narrow to RuntimeException | LinkageError)
+core/magic/profile/MagicProfiles.java:2  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+core/magic/profile/SafeRunner.java:3  # the magic safety net: records the fault and rethrows VirtualMachineError itself
+dragonballs/DbConfig.java:16  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+dragonballs/DbSaiyanBridge.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+dungeon/DungeonFood.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+dungeon/MealSkills.java:3  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+dungeon/floor/charybdis/CharybdisMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+dungeon/floor/goliath/GoliathMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/TensuraCaster.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/avatar/AvatarFx.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/DanteMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/LuciusCapabilities.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+entity/zogratis/LuciusFx.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/SpellSeal.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/TowerSpells.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/VanicaMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/ZenonMoves.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+entity/zogratis/ZogratisBoss.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+fairytail/storm/StormField.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+heroweapon/weapon/bow/BowSelfTest.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/glassworld/GlassSelfTest.java:3  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/kit/WeaponSelfTest.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/shield/ShieldSelfTest.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/spear/SpearSelfTest.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/strike/StrikeSelfTest.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/sword/SwordSelfTest.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+heroweapon/weapon/vassalkit/WeaponSelfTest.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+item/CuriosLink.java:3  # reflection into an optional mod: the checked reflective exceptions are caught with the rest; the failure is remembered or logged
+item/CuriosProbe.java:4  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+item/MagebaneShieldArts.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/SelfTests.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+labyrinth/mega/admin/AdminSelfTests.java:4  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+labyrinth/mega/crucible/SpiritRules.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/enc/DepthMobs.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/enc/EncounterDirector.java:5  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/enc/NoiseEvents.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/enc/WandererDirector.java:4  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/gen/ClearanceCarver.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/gen/CoreSelfTests.java:1  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+labyrinth/mega/gen/ExpansionQueue.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/gen/GeometryCheck.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+labyrinth/mega/gen/MegaGenRegistry.java:3  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/gen/SectorPlacer.java:3  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/macro/SanctuaryGenerator.java:4  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/mechanics/MechanicsDirector.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/puzzle/PuzzleDirector.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/safe/RestMana.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/mega/travel/MegaTravel.java:3  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/squad/SquadEvents.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+labyrinth/squad/SquadManager.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+mana/method/ManaMethodPages.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+mana/method/RuneManager.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+mana/zone/GrandZones.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+mana/zone/TrueMagic.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+multiverse/KnightConduct.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+multiverse/MissionBoard.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+multiverse/MissionStars.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+multiverse/StarAwards.java:1  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+quests/NusmpEvents.java:7  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+relics/wave/Wave7Events.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+shishou/ShishouSelfTests.java:2  # self-test / diagnostic: a throw is reported as a failed check, so it must see every exception
+skill/AllFictionSkill.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+skill/ResetGuard.java:2  # logged firewall: the failure is logged (or recorded) and the tick, event or scheduled effect carries on; kept deliberately
+soul/Paladins.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)
+spiritcontrol/SpiritControlPages.java:1  # NEXT PASS: silent read of Tensura/config data with a fixed fall-back; narrow to RuntimeException | LinkageError (left only because of the 60-site cap)

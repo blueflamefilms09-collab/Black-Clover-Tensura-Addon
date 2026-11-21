@@ -77,12 +77,12 @@ public final class ManaZonePlayer {
             if (g.isPresent() && g.get().getSkill() instanceof GrimoireBook b) grimoire = b.masteryFrac(g.get());
             var r = SkillAPI.getSkillsFrom(p).getSkill(NUSkills.BOOK_REINFORCEMENT.getId());
             if (r.isPresent() && r.get().getSkill() instanceof GrimoireBook rb) reinforcement = rb.masteryFrac(r.get());
-        } catch (Throwable ignored) { /* no skills: no mastery */ }
+        } catch (RuntimeException | LinkageError ignored) { /* no skills: no mastery */ }
         int kills = 0, floor = 0;
-        try { kills = NusmpEvents.count(p, "boss.defeated", null); } catch (Throwable ignored) { /* the quest counters are optional */ }
-        try { floor = QuestService.data(p).maxFloor(); } catch (Throwable ignored) { /* no dungeon data */ }
+        try { kills = NusmpEvents.count(p, "boss.defeated", null); } catch (RuntimeException | LinkageError ignored) { /* the quest counters are optional */ }
+        try { floor = QuestService.data(p).maxFloor(); } catch (RuntimeException | LinkageError ignored) { /* no dungeon data */ }
         boolean king = false;
-        try { king = WizardKing.isKing(p); } catch (Throwable ignored) { /* no king data */ }
+        try { king = WizardKing.isKing(p); } catch (RuntimeException | LinkageError ignored) { /* no king data */ }
         return new Progress(ep, MultiverseProfile.step(p), grimoire, reinforcement, kills, floor, (int) attuneSeconds(p), king);
     }
 }

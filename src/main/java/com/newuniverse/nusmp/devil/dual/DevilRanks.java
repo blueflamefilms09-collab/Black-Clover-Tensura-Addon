@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.devil.dual;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.newuniverse.nusmp.devil.DevilTier;
@@ -41,6 +42,7 @@ public final class DevilRanks {
         try (InputStream in = DevilRanks.class.getResourceAsStream("/assets/anime_multiverse/rankings.json")) {
             t = in == null ? new Rankings.Table() : parse(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (Exception unreadable) {
+            CatchLog.once("rankings.json (devil ranks)", unreadable);
             t = new Rankings.Table();
         }
         table = t;

@@ -51,10 +51,10 @@ public final class AuraCache {
                 if (ex.isTrueDemonLord() || ex.isTrueHero()) aw = Awakening.AWAKENED;
                 else if (ex.isDemonLordSeed() || ex.isHeroEgg()) aw = Awakening.SEEDED;
             }
-        } catch (Throwable ignored) { /* same */ }
+        } catch (RuntimeException | LinkageError ignored) { /* same */ }
         if (crownAwakened(p)) aw = Awakening.AWAKENED;                              // the Wizard King's crown is a third path to the same state
         boolean zone = false;
-        try { zone = ManaLaw.zoneActive(p); } catch (Throwable ignored) { /* same */ }
+        try { zone = ManaLaw.zoneActive(p); } catch (RuntimeException | LinkageError ignored) { /* same */ }
         return new Snapshot(now, aw, zone, pool, AuraScaling.compute(aw, zone, pool, false), AuraScaling.compute(aw, zone, pool, true));
     }
 

@@ -57,7 +57,7 @@ public final class TensuraCaster {
                 }
             }
             skills.markDirty();
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             LogUtils.getLogger().warn("[anime_multiverse] could not teach Tensura skills to {}: {}", e.getName().getString(), t.toString());
         }
         return out;
@@ -69,7 +69,7 @@ public final class TensuraCaster {
             if (EnergyHelper.getMaxMagicule(e) < maxMagicule) EnergyHelper.setMaxMagicule(e, maxMagicule);
             var ex = TensuraStorages.getExistenceFrom(e);
             if (ex != null && ex.getMagicule() < maxMagicule * 0.5) { ex.setMagicule(EnergyHelper.getMaxMagicule(e)); ex.markDirty(); }
-        } catch (Throwable ignored) {}
+        } catch (RuntimeException | LinkageError ignored) { /* no Tensura pool: the caster simply has no mana */ }
     }
 
     /**

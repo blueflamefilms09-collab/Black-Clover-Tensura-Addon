@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.avatar.item;
 import com.newuniverse.nusmp.avatar.AvatarConfig;
 import com.newuniverse.nusmp.avatar.AvatarPlayerData;
 import com.newuniverse.nusmp.avatar.AvatarSystem;
+import com.newuniverse.nusmp.core.CatchLog;
 import com.newuniverse.nusmp.quests.QuestHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -45,8 +46,9 @@ public final class GenesisCoreDrops {
             LivingEntity dead = e.getEntity();
             if (dead.level().isClientSide || !AvatarConfig.enabled() || !isDungeonBoss(dead)) return;
             for (ServerPlayer p : QuestHooks.participants(dead, e.getSource())) maybeGive(p);
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             // a drop must never disturb a boss death
+            CatchLog.once("Genesis Core drop", t);
         }
     }
 

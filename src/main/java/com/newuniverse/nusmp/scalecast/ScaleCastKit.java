@@ -126,7 +126,7 @@ public final class ScaleCastKit {
             var ex = TensuraStorages.getExistenceFrom(e);
             if (ex != null) mp = ex.getMagicule();
             maxMp = EnergyHelper.getMaxMagicule(e);
-        } catch (Throwable ignored) { }
+        } catch (RuntimeException | LinkageError ignored) { /* no Tensura pool: the weight falls back to max health */ }
         return ScaleCastRules.weight(ep, e.getMaxHealth(), mp, maxMp);
     }
 

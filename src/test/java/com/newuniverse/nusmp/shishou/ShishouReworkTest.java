@@ -292,7 +292,7 @@ class ShishouReworkTest {
         }
         String b = code("shishou/ShishouBorrow.java");
         assertTrue(b.contains("ModList.get().isLoaded(") && b.contains("getSkillRegistry().get("), "optional skills are looked up by id, behind the mod list");
-        assertTrue(b.contains("catch (Throwable"), "a skill of another mod that throws never breaks the tick");
+        assertTrue(b.contains("catch (RuntimeException | LinkageError"), "a skill of another mod that throws never breaks the tick (narrowed from Throwable by the catch audit: an OutOfMemoryError is not swallowed)");
         assertFalse(b.contains("Minecraft.getInstance"), "server side only");
     }
 

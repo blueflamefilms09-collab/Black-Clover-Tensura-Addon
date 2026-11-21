@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.quests;
 
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
+import com.newuniverse.nusmp.core.CatchLog;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,8 +48,9 @@ public final class QuestWorldEvents {
             if (floor != null) NusmpEvents.fireAll(who, "dungeon.floor_boss", floor);
             if (path.equals("floor_warden") && !dead.getTags().contains("nusmp_wanderer")) NusmpEvents.fireAll(who, "labyrinth.warden_defeated", null);   // a wandering Warden is not the floor's Warden
             if (peak) NusmpEvents.fireAll(who, "labyrinth.seal_opened", "boss");
-        } catch (Throwable t) {
+        } catch (RuntimeException | LinkageError t) {
             // a quest hook must never disturb a boss death
+            CatchLog.once("quest hook (boss death)", t);
         }
     }
 
@@ -57,8 +59,9 @@ public final class QuestWorldEvents {
         try {
             if (e.getEntity() instanceof ServerPlayer p && p.tickCount % 20 == 3
                     && p.level().dimension().location().equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(NusmpEvents.MODID, "zogratis_arena"))) QuestHooks.arenaWatch(p);
-        } catch (Throwable t) {
-            // ignore
+        } catch (RuntimeException | LinkageError t) {
+            // the arena watch is best effort: never disturb the player tick
+            CatchLog.once("quest hook (arena watch)", t);
         }
     }
 
@@ -71,8 +74,9 @@ public final class QuestWorldEvents {
             String name = path.substring("convergence/".length());
             if (name.startsWith("stage_")) NusmpEvents.fire(p, "convergence.stage", name.substring("stage_".length()));
             else NusmpEvents.fire(p, "convergence.anomaly", name);
-        } catch (Throwable t) {
-            // ignore
+        } catch (RuntimeException | LinkageError t) {
+            // the advancement mirror is best effort: never disturb the advancement
+            CatchLog.once("quest hook (convergence advancement)", t);
         }
     }
 }

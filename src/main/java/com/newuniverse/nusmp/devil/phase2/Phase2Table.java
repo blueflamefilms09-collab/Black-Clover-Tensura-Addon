@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.devil.phase2;
 
+import com.newuniverse.nusmp.core.CatchLog;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -88,6 +89,7 @@ public final class Phase2Table {
         try (InputStream in = Phase2Table.class.getResourceAsStream("/assets/anime_multiverse/devil_phase2.json")) {
             t = in == null ? defaults() : parse(JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (Exception unreadable) {
+            CatchLog.once("devil_phase2.json", unreadable);
             t = defaults();
         }
         cached = t;
