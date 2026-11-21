@@ -1,8 +1,12 @@
 # Changelog
 
+## [4.84.1] — Fix: the power-per-mana figures of 4.84.0
+- FIXED: the figures in the 4.84.0 notes and in docs/grimoire_leaf_power.md said power per mana would be about x1.7, x2.9, x3.7 and x4.2; with the covers' own cost numbers it is x1.7, x2.8, x3.6 and x4.7 (as the chart shows). Text only, no game change.
+- KEPT: every rule and number.
+
 ## [4.84.0] — Leaf power with a price: stronger covers ask more mana
 Owner request: "make the power scaling make sense".
-- NEW: a higher cover also costs more mana per spell: four-leaf x1.6, five-leaf x2.5, Black Magic x3.2, God-Tier x3.8 (three-leaf and the other tier-3 covers x1). It stays below the power step, so power per mana still rises with the cover (about x1.7, x2.9, x3.7, x4.2): stronger and hungrier, never free.
+- NEW: a higher cover also costs more mana per spell: four-leaf x1.6, five-leaf x2.5, Black Magic x3.2, God-Tier x3.8 (three-leaf and the other tier-3 covers x1). It stays below the power step, so power per mana still rises with the cover (about x1.7, x2.8, x3.6, x4.7): stronger and hungrier, never free.
 - NEW (server settings): `leafCostFour` 1.6, `leafCostFive` 2.5, `leafCostBlack` 3.2, `leafCostGod` 3.8; they follow `leafPower` (false = the old covers, no extra cost). The item tooltip shows the cost.
 - KEPT: the 4.83 power ladder, every cover's own numbers, the late-game scaling, the pvp hit cap, Time Magic.
 - COST: one multiplication per spell cost; no packets, nothing per tick.

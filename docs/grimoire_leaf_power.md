@@ -22,7 +22,7 @@ x1.75 and the EP scale x3.5: three-leaf 74, four-leaf 193, five-leaf 485, Black 
 
 Power with no price would make the three-leaf pointless. A higher cover now also asks more mana per spell (on top of the cover's own cost number):
 four-leaf x1.6, five-leaf x2.5, Black Magic x3.2, God-Tier x3.8 (three-leaf and the other tier-3 covers x1). It stays below the power step, so a higher
-cover is always more efficient (power per mana: about x1.7, x2.9, x3.7, x4.2), just not free. Settings: `leafCostFour` 1.6, `leafCostFive` 2.5, `leafCostBlack` 3.2,
+cover is always more efficient (power per mana: about x1.7, x2.8, x3.6, x4.7), just not free. Settings: `leafCostFour` 1.6, `leafCostFive` 2.5, `leafCostBlack` 3.2,
 `leafCostGod` 3.8 (all need `leafPower`). Applied in `GrimoireBook` where the page cost is computed; the tooltip shows the cost too.
 
 ## Where it applies
