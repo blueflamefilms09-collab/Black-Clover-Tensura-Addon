@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.82.1] — Fix: the new smoke entry sits before the pinned tail
+- FIXED: 4.81.0 appended its self-test prefix `visual.grimoire_revamp` after `tier` in the smoke list, which 15 older tests forbid (they pin `scaling ... tier` as the end of the list). The prefix now sits just before `scaling`. This is the release that carries the Grimoire revamp (4.81.0) and Infinity Stones Phase B (4.82.0); 4.81.0 to 4.82.0 never got a release of their own because their builds were red.
+- KEPT: every rule, number and asset.
+
 ## [4.82.0] — Infinity Stones Phase B: socketed gauntlets, a new Snap, Loki's Scepter
 Owner request: the open Phase B work of the Infinity Stones (see docs/infinity_stones_phase_b.md).
 - NEW: the Infinity Gauntlet and a new Nano Gauntlet hold up to 6 socketed stones. A stone leaves the pack only after the gauntlet read it back, and the Order ledger still sees it. Socket and Unsocket acts, one act per stone, a synergy circuit (+25% effect, -15% cooldown), a non-lethal socket surge (double on the Nano Gauntlet) and the Mend and Rift combos.
