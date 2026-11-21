@@ -14,7 +14,7 @@ public final class HeroConfig {
     public static final ModConfigSpec SPEC;
 
     public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES, ABANDON_ALLOWED;
-    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST, ANY_TARGET, SHIELD_VANILLA_GUARD, SHIELD_REFLECTS, GENESIS_RELICS_ALLOWED;
+    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST, ANY_TARGET, SHIELD_VANILLA_GUARD, SHIELD_REFLECTS, GENESIS_RELICS_ALLOWED, UTILITY_ITEMS_ALWAYS_WORK;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
@@ -44,6 +44,8 @@ public final class HeroConfig {
                 .define("castingRelicsAllowed", true);
         GENESIS_RELICS_ALLOWED = b.comment("4.88.1: relics of the Genesis and EX-Singularity grades (the primordial relics) are never rejected by restriction one, so a Holy or Vassal Weapon's wielder can still use them. Off: they count as ordinary weapons of their class again (the old behaviour).")
                 .define("genesisRelicsAllowed", true);
+        UTILITY_ITEMS_ALWAYS_WORK = b.comment("4.89.4: items that are held and right-clicked (the Hourglass of the Final Hour, the Chronicle Sigil, the Calling Gem, the Dragon Radar, books and the like: tag anime_multiverse:hold_use_items) are never rejected or shocked by a weapon rule, and a weapon in the main hand hands the use key to such an item in the off hand. Off: the old behaviour (their bow-like use animation counts as a bow, the weapon takes every click).")
+                .define("utilityItemsAlwaysWork", true);
         CONSUMABLES_FIRST = b.comment("3.63.0: a hero weapon in the main hand lets the use key go to a food (when hungry) or a potion in the OFF hand, so consumables can be used while holding the Shield, Bow, Sword or Spear. Sneak + use is still the weapon's own gesture. Off: the weapon takes every click (the old behaviour).")
                 .define("consumablesFirst", true);
         ANY_TARGET = b.comment("4.71.0: the techniques of the hero and vassal weapons work on ANY living target (passive animals, villagers, neutral mobs, other players the wielder may harm), not only hostile monsters. Allies, the wielder's own pets and summons, other people's tamed pets, armour stands and creative or spectator players are still spared. Off: only hostile monsters, mobs hunting the wielder or an ally, bosses and harmable players (the old behaviour).")
@@ -150,6 +152,7 @@ public final class HeroConfig {
     public static boolean holyRejectsOthers() { return get(HOLY_REJECTS_OTHERS); }
     public static boolean castingRelicsAllowed() { return get(CASTING_RELICS_ALLOWED); }
     public static boolean genesisRelicsAllowed() { return get(GENESIS_RELICS_ALLOWED); }
+    public static boolean utilityItemsAlwaysWork() { return get(UTILITY_ITEMS_ALWAYS_WORK); }
     public static boolean consumablesFirst() { return get(CONSUMABLES_FIRST); }
     public static boolean anyTarget() { return get(ANY_TARGET); }
     public static boolean shieldVanillaGuard() { return get(SHIELD_VANILLA_GUARD); }

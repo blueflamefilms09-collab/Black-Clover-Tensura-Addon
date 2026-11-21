@@ -15,7 +15,10 @@ import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.tensura.item.weapon.SimpleScytheItem;
 import io.github.manasmods.tensura.item.weapon.SimpleSpearItem;
 import io.github.manasmods.tensura.item.weapon.custom.VortexSpearItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import com.newuniverse.nusmp.greed.GreedItem;
+import com.newuniverse.nusmp.sinweapons.SinWeaponItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -57,7 +60,7 @@ import java.util.UUID;
 public final class HeroRules {
     private HeroRules() {}
 
-    private static final TagKey<Item> ALLOWED = tag("anime_multiverse", "hero_allowed");
+    private static final TagKey<Item> ALLOWED = tag("anime_multiverse", "hero_allowed"), HOLD_USE = tag("anime_multiverse", "hold_use_items");
     private static final TagKey<Item> C_SPEAR = tag("c", "tools/spear"), C_BOW = tag("c", "tools/bow"), C_CROSSBOW = tag("c", "tools/crossbow"),
             C_SHIELD = tag("c", "tools/shield"), C_MACE = tag("c", "tools/mace");
 
@@ -83,17 +86,39 @@ public final class HeroRules {
         if (stack == null || stack.isEmpty()) return WeaponClass.NONE;
         Item item = stack.getItem();
         int flags = 0;
-        if (stack.is(ALLOWED)) flags |= WeaponClassifier.ALLOWED;
+        if (stack.is(ALLOWED) || UtilityItems.exempt(HeroConfig.utilityItemsAlwaysWork(), stack.is(HOLD_USE))) flags |= WeaponClassifier.ALLOWED;
         WeaponClass declared = declared(item);
         UseAnim use = stack.getUseAnimation();
-        if (item instanceof ShieldItem || use == UseAnim.BLOCK || stack.is(C_SHIELD)) flags |= WeaponClassifier.SHIELD;
-        if (item instanceof ProjectileWeaponItem || use == UseAnim.BOW || use == UseAnim.CROSSBOW || stack.is(C_BOW) || stack.is(C_CROSSBOW)) flags |= WeaponClassifier.BOW;
-        if (item instanceof TridentItem || use == UseAnim.SPEAR || stack.is(C_SPEAR)) flags |= WeaponClassifier.SPEAR;
+        // 4.89.4: a hold-and-use utility (the hourglass, a sigil, a gem) answers UseAnim.BOW for the channel animation; that is not a bow
+        boolean anim = use == UseAnim.BLOCK || use == UseAnim.BOW || use == UseAnim.CROSSBOW || use == UseAnim.SPEAR;
+        boolean ignoreAnim = anim && UtilityItems.ignoreUseAnimation(HeroConfig.utilityItemsAlwaysWork(), utility(stack), declared != null, item instanceof RelicBearer, attackBonus(stack));
+        if (item instanceof ShieldItem || (!ignoreAnim && use == UseAnim.BLOCK) || stack.is(C_SHIELD)) flags |= WeaponClassifier.SHIELD;
+        if (item instanceof ProjectileWeaponItem || (!ignoreAnim && (use == UseAnim.BOW || use == UseAnim.CROSSBOW)) || stack.is(C_BOW) || stack.is(C_CROSSBOW)) flags |= WeaponClassifier.BOW;
+        if (item instanceof TridentItem || (!ignoreAnim && use == UseAnim.SPEAR) || stack.is(C_SPEAR)) flags |= WeaponClassifier.SPEAR;
         if (item instanceof SwordItem || stack.is(ItemTags.SWORDS)) flags |= WeaponClassifier.SWORD;
         if (item instanceof AxeItem || stack.is(ItemTags.AXES)) flags |= WeaponClassifier.AXE;
         if (item instanceof MaceItem || stack.is(C_MACE)) flags |= WeaponClassifier.BLUNT;
         if (item instanceof DiggerItem) flags |= WeaponClassifier.TOOL;
         return WeaponClassifier.classify(new WeaponClassifier.Facts(declared, flags, attackBonus(stack)));
+    }
+
+    /** 4.89.4: is this stack in {@code #anime_multiverse:hold_use_items} (the data-driven list of items that are held and right-clicked)? */
+    public static boolean utilityTagged(ItemStack stack) { return stack != null && !stack.isEmpty() && stack.is(HOLD_USE); }
+
+    /** 4.89.4: a hold-and-use utility: in the tag, or an item of this mod whose registry name has a utility word ({@link UtilityItems#nameIsUtility}). */
+    public static boolean utility(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return false;
+        if (stack.is(HOLD_USE)) return true;
+        ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        return UtilityItems.nameIsUtility(id.getNamespace(), id.getPath());
+    }
+
+    /** 4.89.4: is the stack a weapon of the mod or any item that hits hard enough to be one (what a main-hand click would be spent on)? */
+    public static boolean weaponLike(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return false;
+        Item it = stack.getItem();
+        return it instanceof HeroWeaponItem || it instanceof RelicBearer || it instanceof MagicWeaponItem || it instanceof DjinnWeaponItem || it instanceof SinWeaponItem
+                || it instanceof GreedItem || classOf(stack) != WeaponClass.NONE || attackBonus(stack) > 0.0;
     }
 
     /**
@@ -158,6 +183,7 @@ public final class HeroRules {
         if (!HeroConfig.enabled() || !HeroConfig.holyRejectsOthers() || p.isCreative() || p.isSpectator()) return WeaponClass.NONE;
         HeroKind kind = HeroBonds.kindOf(p);
         if (kind == null || !kind.heroClass().rejectsOthers()) return WeaponClass.NONE;
+        if (UtilityItems.exempt(HeroConfig.utilityItemsAlwaysWork(), utilityTagged(held))) return WeaponClass.NONE;                 // 4.89.4: a hold-and-use utility is never rejected
         if (held != null && held.getItem() instanceof RelicBearer rb && GenesisExempt.exempt(rb.relic().grade(), HeroConfig.genesisRelicsAllowed())) return WeaponClass.NONE;   // 4.88.1: the primordial relics
         WeaponClass c = classOf(held);
         return WeaponClassifier.rejects(kind, c) ? c : WeaponClass.NONE;

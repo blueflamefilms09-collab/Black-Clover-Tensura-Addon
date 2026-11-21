@@ -1,0 +1,165 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "anime_multiverse:zogratis_hourglass",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:chronicle_sigil",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_radar",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dungeon_map",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:grimoire",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:grimoire_summons",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:multiverse_wiki",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:compat_codex",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:engraving_codex",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:devil_contract",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:release_crystal",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:purification_charm",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:calling_gem",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:shishou",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:beast_will_core",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:genesis_core",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:mana_core",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:shadow_core",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:shadow_key",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:magic_key",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:sigil_of_rebirth",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:sigil_of_the_second_book",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:paint_brush",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:paint_palette",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:spirit_lord_skill",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:magic_stone",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_1",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_2",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_3",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_4",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_5",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_6",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_earth_7",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_1",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_2",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_3",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_4",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_5",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_6",
+      "required": false
+    },
+    {
+      "id": "anime_multiverse:dragon_ball_super_7",
+      "required": false
+    }
+  ]
+}

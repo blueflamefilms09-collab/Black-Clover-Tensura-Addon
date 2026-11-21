@@ -1,0 +1,58 @@
+{
+  "boss": "big_mom",
+  "tier": "high",
+  "signature": {
+    "chance": 1.0,
+    "min": 1,
+    "max": 1,
+    "boon": [
+      {
+        "effect": "minecraft:health_boost",
+        "seconds": 600,
+        "amplifier": 1
+      },
+      {
+        "effect": "minecraft:regeneration",
+        "seconds": 600,
+        "amplifier": 0
+      },
+      {
+        "effect": "minecraft:strength",
+        "seconds": 600,
+        "amplifier": 0
+      }
+    ]
+  },
+  "extras": [
+    {
+      "item": "anime_multiverse:magic_stone",
+      "chance": 1.0,
+      "min": 8,
+      "max": 14
+    },
+    {
+      "item": "minecraft:diamond",
+      "chance": 0.6,
+      "min": 1,
+      "max": 3
+    },
+    {
+      "item": "minecraft:experience_bottle",
+      "chance": 0.8,
+      "min": 6,
+      "max": 12
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "chance": 0.35,
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "minecraft:sweet_berries",
+      "chance": 0.8,
+      "min": 6,
+      "max": 12
+    }
+  ]
+}

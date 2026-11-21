@@ -62,3 +62,5 @@ vupgrade/GodBSelfTests.java
 wizard/WizardNet.java
 mana/method/ManaMethodBoot.java
 mana/method/RuneNet.java
+# Real Double stack packets: the client handler is named only inside a lambda that runs when a packet arrives on a client (like avatar/net/AvatarNet.java)
+doublesui/DoublesUiNet.java

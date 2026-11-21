@@ -1,0 +1,10 @@
+{
+  "anime_multiverse.doubles.header": "Real Doubles",
+  "anime_multiverse.doubles.label": "Double %s",
+  "anime_multiverse.doubles.more": "+%s more",
+  "key.anime_multiverse.doubles_next": "Real Double: next double",
+  "key.anime_multiverse.doubles_prev": "Real Double: previous double",
+  "key.anime_multiverse.doubles_pick": "Real Double: pick the double you aim at",
+  "gui_move.element.doubles_stack": "Real Double stack",
+  "anime_multiverse.gui_scale.gui.doubles_stack": "Real Double stack"
+}

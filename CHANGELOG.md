@@ -1,5 +1,32 @@
 # Changelog
 
+## [4.94.0] — Worthwhile boss drops, weapons no longer block hold-and-use items, Real Doubles UI
+Three owner requests in one release.
+
+### Every boss drops something worth having
+Owner: "all the bosses in my mod should actually have worthwhile boss drops, like custom drops, one-of-one drops".
+- Audit (`docs/boss_drops_audit.md`): of 54 bosses, 28 dropped nothing worthwhile, 24 were thin, 2 were fine.
+- NEW: all 54 bosses (and a fallback table) pay a Signature item named after the boss, with its own icon, a rarity by tier and a right-click boon of 4 to 15 minutes. Every fighter also rolls personal extras (Magic Stones, diamonds, experience bottles, golden apples, netherite scrap, one themed material, sometimes a Tensura gold coin).
+- NEW: 19 one-of-ones (Meliodas: Hellblaze; Escanor: Noon Cleaver; Ban: Mammon's Vault Ring; Diane: Hammer of Thunderbolts; King: Fairy Glitter Gauntlets; Gowther: Pandora's Actor Mask; Merlin: Astralis; Minotaur: Labrys; Lucifero: Godking Crown; Dante: Starsplitter Hammer; Vanica: Staff of Blood Magic; Zenon: Gate of Babylon Crest; Lucius: Time hammer; Devil Avatar: Incinerator Arm; Zagred: Serie's Ancient Grimoire; Goku: Ruyi Power Pole; Kakashi: Perfect Susanoo Plate; Sinbad: Leviathan's Crown Trident; God of Order: Administrator's Authority Key), issued through the existing relic ledger: the first kill gives it to the top-damage fighter, later kills an Echo of it. Fighters are everyone who dealt 2% of the boss's health, capped at 5; at most 12 pieces a kill. `/multiverse bossdrops list` (everyone), `where` and `give` (operators). Setting `bossDrops.worthwhile` (default true; false = the old drops).
+- KEPT: every old drop (Charter grimoire, trophies, Lucifero's armour, Goku's loot, Floor Warden, dungeon relics and cores); the new rows are paid on top.
+- COST: nothing per tick; two cheap checks per hit on a non-player; one plan of at most 12 pieces per kill; no packets.
+- CAVEATS: signature icons are Pillow sprites, not Blender / Blockbench models; item names invented from canon (no wiki fetched); boons and balance are first guesses; a relic already rolled from a chest pays an Echo instead (consider removing the 19 from chest pools); offline players are not paid.
+
+### Weapons no longer block hold-and-right-click items
+Owner: weapons like the vassal and hero ones "shouldn't be counteracting items that require you to hold and right click, like the Hourglass".
+- FIXED (causes): the Hourglass of the Final Hour, Chronicle Sigil and Calling Gem use the bow animation, so a Holy-Weapon-bound player's weapon rule classed them as a bow, cancelled the channel and shocked the player. Also a main-hand weapon answered the use key before an off-hand utility got its turn.
+- NEW: tag `anime_multiverse:hold_use_items` (hourglass, sigil, gem, radar, dragon balls, maps, grimoire items, codices, keys, cores...) is never treated as a weapon; with a weapon in the main hand and a ready utility in the off hand (not sneaking) the weapon's click passes to the off hand. Sneak + use stays the weapon's own gesture. Setting `heroweapon.utilityItemsAlwaysWork` (default true; false = old behaviour).
+- KEPT: a Holy Sword wielder is still shocked by a real bow, shield or axe.
+- CAVEATS: Better Combat answers an empty off hand behind a two-handed weapon; an off-hand hourglass there still fails (put it in the main hand). Not tried in a game.
+
+### Real Doubles: a list and a way to choose
+Owner: "fix the UI for when players have more than one double, being able to either switch or stack them".
+- Read as Gauche's Mirror Real Double (1 to 3 per cast), which had no UI at all. Say if you meant Avatars; they have a per-Avatar menu and were not touched.
+- NEW: a HUD stack under the System window: one card per double (name, distance, time left, health bar and time bar), the selected one on top with a gold edge, extra ones folded into "+N more" (moveable and scalable with GUI Move / GUI Size).
+- NEW: keys (numpad 9 next, numpad 8 previous, numpad 0 pick the double you aim at; rebind them on a laptop). The selected double is the one a sneak-cast of Real Double trades places with; "none" gives the old nearest rule back. Settings: client `doublesUi.doublesStackedUi`, `maxRows` (4); server `doublesUi.enabled`, `selectedDoubleTrades`.
+- COST: one counter per tick; every 10 ticks a check of at most 16 entities for owners only; a packet of about 30 bytes per double to the owner only, on change.
+- CAVEATS: not seen in a game (the preview image is a mock-up); the default position is unverified.
+
 ## [4.93.0] — Dragon Balls: overpowered wishes, and speaking the wish into the voice chat
 Owner requests: wishes that are really overpowered (change race / rate, pick any race or skill, the balls fly across the world the moment a wish is made, as in the anime; Super Dragon Balls can grant unique and ultimate skills from every Tensura mod); and voice chat support so players can say the ritual words and wishes into the microphone.
 - NEW (one server setting `dragonBalls.overpowered`, default true; false = the old wishes, caps and scatter exactly as before): race wish (any race registered in the game right now, other mods included, Saiyan and Devil too), rank wish (Magic Knight rank: Earth up to Senior 1st class, Super up to Grand, never the Wizard King), skill wish (any typed Tensura skill from the live registry, so every Tensura addon is covered; Earth up to the tier set by `overpoweredEarthSkillTier`, default Extra; Super up to Unique AND Ultimate, up to 3 skills a wish), item wish (any item, one stack, never admin-only items), weapon wish (any relic up to God grade, once a week; Genesis only with `overpoweredGenesisRelics`), bigger power (+2 Earth, +4 Super, up to level 20), 100 / 1000 gold coins, revive with no time window. Earth 3 wishes, Super 5. Names are matched loosely (case, spaces, partial words); `/dragonwish race|skill|rank|item <name>` and tab completion.

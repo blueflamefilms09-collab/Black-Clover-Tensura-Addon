@@ -1,0 +1,445 @@
+{
+  "_comment": "The order is the custom_model_data of every signature stack (1-based) and the order of bossdrops2/BossSigCatalog.java: append only.",
+  "bosses": [
+    {
+      "id": "meliodas",
+      "tier": "apex",
+      "shape": "flame",
+      "color": "7A1432",
+      "accent": "FF5E6E",
+      "relic": "hellblaze_the_demon_sin"
+    },
+    {
+      "id": "escanor",
+      "tier": "apex",
+      "shape": "orb",
+      "color": "E8A317",
+      "accent": "FFE680",
+      "relic": "noon_cleaver"
+    },
+    {
+      "id": "ban",
+      "tier": "high",
+      "shape": "fang",
+      "color": "3C9E6B",
+      "accent": "D9E8A0",
+      "relic": "mammons_vault_ring"
+    },
+    {
+      "id": "diane",
+      "tier": "high",
+      "shape": "medal",
+      "color": "E8832A",
+      "accent": "FFD27A",
+      "relic": "hammer_of_thunderbolts"
+    },
+    {
+      "id": "king",
+      "tier": "high",
+      "shape": "shard",
+      "color": "6BBF4E",
+      "accent": "FFD76A",
+      "relic": "fairy_glitter_gauntlets"
+    },
+    {
+      "id": "gowther",
+      "tier": "high",
+      "shape": "orb",
+      "color": "E0559B",
+      "accent": "FFC4E8",
+      "relic": "pandoras_actor_mask"
+    },
+    {
+      "id": "merlin",
+      "tier": "apex",
+      "shape": "shard",
+      "color": "7A5CFF",
+      "accent": "FFD86B",
+      "relic": "astralis_the_eye_of_the_universe"
+    },
+    {
+      "id": "fana",
+      "tier": "mid",
+      "shape": "flame",
+      "color": "E8421A",
+      "accent": "FFB347",
+      "relic": ""
+    },
+    {
+      "id": "rhya",
+      "tier": "mid",
+      "shape": "orb",
+      "color": "8E7BE0",
+      "accent": "FFD35A",
+      "relic": ""
+    },
+    {
+      "id": "rades_spirito",
+      "tier": "high",
+      "shape": "medal",
+      "color": "4A5578",
+      "accent": "9AA6C8",
+      "relic": ""
+    },
+    {
+      "id": "patolli",
+      "tier": "high",
+      "shape": "medal",
+      "color": "FFE3A0",
+      "accent": "FFFFFF",
+      "relic": ""
+    },
+    {
+      "id": "heath_grice",
+      "tier": "mid",
+      "shape": "shard",
+      "color": "7FD0FF",
+      "accent": "EAF8FF",
+      "relic": ""
+    },
+    {
+      "id": "lotus_whomalt",
+      "tier": "mid",
+      "shape": "medal",
+      "color": "7A6E94",
+      "accent": "C9C0DC",
+      "relic": ""
+    },
+    {
+      "id": "mars",
+      "tier": "mid",
+      "shape": "shard",
+      "color": "A48CE8",
+      "accent": "E6F4FF",
+      "relic": ""
+    },
+    {
+      "id": "revchi_salik",
+      "tier": "lesser",
+      "shape": "medal",
+      "color": "6E7A8C",
+      "accent": "D4DCE8",
+      "relic": ""
+    },
+    {
+      "id": "vetto",
+      "tier": "mid",
+      "shape": "fang",
+      "color": "D9622B",
+      "accent": "FFC27A",
+      "relic": ""
+    },
+    {
+      "id": "minotaur",
+      "tier": "high",
+      "shape": "fang",
+      "color": "B4522E",
+      "accent": "F0B070",
+      "relic": "minotaur_kings_labrys"
+    },
+    {
+      "id": "black_goliath",
+      "tier": "high",
+      "shape": "flame",
+      "color": "E0502A",
+      "accent": "FFB060",
+      "relic": ""
+    },
+    {
+      "id": "amphisbaena",
+      "tier": "high",
+      "shape": "fang",
+      "color": "4AB0FF",
+      "accent": "FF6A5A",
+      "relic": ""
+    },
+    {
+      "id": "udaeus",
+      "tier": "high",
+      "shape": "medal",
+      "color": "9A8AFF",
+      "accent": "E8E2CC",
+      "relic": ""
+    },
+    {
+      "id": "morris_libardirt",
+      "tier": "high",
+      "shape": "orb",
+      "color": "FF9B58",
+      "accent": "FFD9B0",
+      "relic": ""
+    },
+    {
+      "id": "lucifero",
+      "tier": "apex",
+      "shape": "shard",
+      "color": "5B2A8C",
+      "accent": "B58CFF",
+      "relic": "godking_crown"
+    },
+    {
+      "id": "dante_zogratis",
+      "tier": "apex",
+      "shape": "orb",
+      "color": "4B2D8A",
+      "accent": "C9A7FF",
+      "relic": "starsplitter_hammer"
+    },
+    {
+      "id": "vanica_zogratis",
+      "tier": "apex",
+      "shape": "flame",
+      "color": "9B1230",
+      "accent": "FF8FA3",
+      "relic": "staff_of_blood_magic"
+    },
+    {
+      "id": "zenon_zogratis",
+      "tier": "apex",
+      "shape": "medal",
+      "color": "1C7C8C",
+      "accent": "8CF2FF",
+      "relic": "gate_of_babylon_crest"
+    },
+    {
+      "id": "lucius_zogratis",
+      "tier": "apex",
+      "shape": "orb",
+      "color": "D9B43A",
+      "accent": "F2E6B0",
+      "relic": "time_hammer"
+    },
+    {
+      "id": "devil_avatar",
+      "tier": "apex",
+      "shape": "flame",
+      "color": "2A2024",
+      "accent": "FF6A1A",
+      "relic": "incinerator_arm"
+    },
+    {
+      "id": "goliath",
+      "tier": "high",
+      "shape": "orb",
+      "color": "6B5A3C",
+      "accent": "E3C98A",
+      "relic": ""
+    },
+    {
+      "id": "charybdis_spawn",
+      "tier": "high",
+      "shape": "orb",
+      "color": "1D4F9C",
+      "accent": "9AD8FF",
+      "relic": ""
+    },
+    {
+      "id": "zagred",
+      "tier": "apex",
+      "shape": "shard",
+      "color": "8A4CFF",
+      "accent": "F2194D",
+      "relic": "series_ancient_grimoire"
+    },
+    {
+      "id": "zagred_legacy",
+      "tier": "high",
+      "shape": "flame",
+      "color": "5A2FA8",
+      "accent": "D03A5A",
+      "relic": ""
+    },
+    {
+      "id": "goku_boss",
+      "tier": "apex",
+      "shape": "orb",
+      "color": "F08A24",
+      "accent": "4FA8FF",
+      "relic": "ruyi_power_pole"
+    },
+    {
+      "id": "kakashi_hatake",
+      "tier": "apex",
+      "shape": "scroll",
+      "color": "8C96A8",
+      "accent": "4FA8FF",
+      "relic": "perfect_susanoo_plate"
+    },
+    {
+      "id": "sinbad_boss",
+      "tier": "apex",
+      "shape": "shard",
+      "color": "5B3A8C",
+      "accent": "FFD54F",
+      "relic": "leviathans_crown_trident"
+    },
+    {
+      "id": "light_yagami",
+      "tier": "lesser",
+      "shape": "scroll",
+      "color": "1F7A74",
+      "accent": "E9E7E0",
+      "relic": ""
+    },
+    {
+      "id": "charlos",
+      "tier": "lesser",
+      "shape": "medal",
+      "color": "E0C050",
+      "accent": "F4F0D8",
+      "relic": ""
+    },
+    {
+      "id": "zetsu",
+      "tier": "lesser",
+      "shape": "orb",
+      "color": "2E7D32",
+      "accent": "E8F5E9",
+      "relic": ""
+    },
+    {
+      "id": "yammy_llargo",
+      "tier": "lesser",
+      "shape": "shard",
+      "color": "8D6E63",
+      "accent": "FFCCBC",
+      "relic": ""
+    },
+    {
+      "id": "sogou_nobuyuki",
+      "tier": "lesser",
+      "shape": "scroll",
+      "color": "FFD54F",
+      "accent": "B3E5FC",
+      "relic": ""
+    },
+    {
+      "id": "mr_2_bon_clay",
+      "tier": "lesser",
+      "shape": "scroll",
+      "color": "F8BBD0",
+      "accent": "FFFFFF",
+      "relic": ""
+    },
+    {
+      "id": "kurozumi_orochi",
+      "tier": "lesser",
+      "shape": "fang",
+      "color": "7B1FA2",
+      "accent": "E1BEE7",
+      "relic": ""
+    },
+    {
+      "id": "malty_melromarc",
+      "tier": "mid",
+      "shape": "medal",
+      "color": "C62828",
+      "accent": "FFCDD2",
+      "relic": ""
+    },
+    {
+      "id": "rachel",
+      "tier": "mid",
+      "shape": "orb",
+      "color": "80DEEA",
+      "accent": "FFFFFF",
+      "relic": ""
+    },
+    {
+      "id": "jugram_haschwalth",
+      "tier": "high",
+      "shape": "medal",
+      "color": "ECEFF1",
+      "accent": "90CAF9",
+      "relic": ""
+    },
+    {
+      "id": "big_mom",
+      "tier": "high",
+      "shape": "orb",
+      "color": "F06292",
+      "accent": "FFE082",
+      "relic": ""
+    },
+    {
+      "id": "code",
+      "tier": "mid",
+      "shape": "shard",
+      "color": "455A64",
+      "accent": "80DEEA",
+      "relic": ""
+    },
+    {
+      "id": "bertholdt_hoover",
+      "tier": "high",
+      "shape": "flame",
+      "color": "BF360C",
+      "accent": "FFCCBC",
+      "relic": ""
+    },
+    {
+      "id": "axe_hand_morgan",
+      "tier": "lesser",
+      "shape": "medal",
+      "color": "78909C",
+      "accent": "FFE0B2",
+      "relic": ""
+    },
+    {
+      "id": "foxy",
+      "tier": "lesser",
+      "shape": "medal",
+      "color": "B0BEC5",
+      "accent": "FF8A65",
+      "relic": ""
+    },
+    {
+      "id": "shou_tucker",
+      "tier": "mid",
+      "shape": "scroll",
+      "color": "8D6E63",
+      "accent": "C5E1A5",
+      "relic": ""
+    },
+    {
+      "id": "ao",
+      "tier": "mid",
+      "shape": "orb",
+      "color": "4FC3F7",
+      "accent": "FFFFFF",
+      "relic": ""
+    },
+    {
+      "id": "floor_warden",
+      "tier": "lesser",
+      "shape": "medal",
+      "color": "7A7A8A",
+      "accent": "D8C070",
+      "relic": ""
+    },
+    {
+      "id": "labyrinth_guardian",
+      "tier": "high",
+      "shape": "shard",
+      "color": "3B3B52",
+      "accent": "B58CFF",
+      "relic": ""
+    },
+    {
+      "id": "god_of_order",
+      "tier": "apex",
+      "shape": "scroll",
+      "color": "F2E6B0",
+      "accent": "FFFFFF",
+      "relic": "administrators_authority_key"
+    },
+    {
+      "id": "default",
+      "tier": "mid",
+      "shape": "orb",
+      "color": "8C8C9C",
+      "accent": "D8C070",
+      "relic": ""
+    }
+  ]
+}

@@ -36,6 +36,8 @@ public final class HeroCore {
         HeroCombat.register(NeoForge.EVENT_BUS);
         com.newuniverse.nusmp.heroweapon.weapon.shield.ShieldReflect.init();           // 4.71.0: a raised hero Shield turns dangerous shots from the front back
         HeroRuleEvents.register(NeoForge.EVENT_BUS);
+        com.newuniverse.nusmp.heroweapon.rules.UtilityYieldEvents.register(NeoForge.EVENT_BUS);   // 4.89.4: a weapon in the main hand hands the use key to a hold-and-use item in the off hand
+        com.newuniverse.nusmp.heroweapon.rules.UtilityKeepSelfTests.register();                   // key utilkeep.rules
         HeroBondSelfTests.register();                    // keys hero.bond, hero.use, hero.rules (the smoke test expects the prefix "hero")
         HeroUseSelfTests.register();
         com.newuniverse.nusmp.heroweapon.skill.HeroDurSelfTests.register();              // key hero.durations

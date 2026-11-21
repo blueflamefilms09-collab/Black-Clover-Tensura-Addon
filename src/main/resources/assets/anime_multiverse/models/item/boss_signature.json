@@ -1,0 +1,338 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "anime_multiverse:item/boss_signature"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "anime_multiverse:item/sig/meliodas"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "anime_multiverse:item/sig/escanor"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "anime_multiverse:item/sig/ban"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4
+      },
+      "model": "anime_multiverse:item/sig/diane"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5
+      },
+      "model": "anime_multiverse:item/sig/king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 6
+      },
+      "model": "anime_multiverse:item/sig/gowther"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 7
+      },
+      "model": "anime_multiverse:item/sig/merlin"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 8
+      },
+      "model": "anime_multiverse:item/sig/fana"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9
+      },
+      "model": "anime_multiverse:item/sig/rhya"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 10
+      },
+      "model": "anime_multiverse:item/sig/rades_spirito"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 11
+      },
+      "model": "anime_multiverse:item/sig/patolli"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 12
+      },
+      "model": "anime_multiverse:item/sig/heath_grice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 13
+      },
+      "model": "anime_multiverse:item/sig/lotus_whomalt"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 14
+      },
+      "model": "anime_multiverse:item/sig/mars"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 15
+      },
+      "model": "anime_multiverse:item/sig/revchi_salik"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 16
+      },
+      "model": "anime_multiverse:item/sig/vetto"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 17
+      },
+      "model": "anime_multiverse:item/sig/minotaur"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 18
+      },
+      "model": "anime_multiverse:item/sig/black_goliath"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 19
+      },
+      "model": "anime_multiverse:item/sig/amphisbaena"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 20
+      },
+      "model": "anime_multiverse:item/sig/udaeus"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 21
+      },
+      "model": "anime_multiverse:item/sig/morris_libardirt"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22
+      },
+      "model": "anime_multiverse:item/sig/lucifero"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 23
+      },
+      "model": "anime_multiverse:item/sig/dante_zogratis"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 24
+      },
+      "model": "anime_multiverse:item/sig/vanica_zogratis"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 25
+      },
+      "model": "anime_multiverse:item/sig/zenon_zogratis"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 26
+      },
+      "model": "anime_multiverse:item/sig/lucius_zogratis"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 27
+      },
+      "model": "anime_multiverse:item/sig/devil_avatar"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 28
+      },
+      "model": "anime_multiverse:item/sig/goliath"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 29
+      },
+      "model": "anime_multiverse:item/sig/charybdis_spawn"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 30
+      },
+      "model": "anime_multiverse:item/sig/zagred"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 31
+      },
+      "model": "anime_multiverse:item/sig/zagred_legacy"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 32
+      },
+      "model": "anime_multiverse:item/sig/goku_boss"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 33
+      },
+      "model": "anime_multiverse:item/sig/kakashi_hatake"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 34
+      },
+      "model": "anime_multiverse:item/sig/sinbad_boss"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 35
+      },
+      "model": "anime_multiverse:item/sig/light_yagami"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 36
+      },
+      "model": "anime_multiverse:item/sig/charlos"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 37
+      },
+      "model": "anime_multiverse:item/sig/zetsu"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 38
+      },
+      "model": "anime_multiverse:item/sig/yammy_llargo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 39
+      },
+      "model": "anime_multiverse:item/sig/sogou_nobuyuki"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 40
+      },
+      "model": "anime_multiverse:item/sig/mr_2_bon_clay"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 41
+      },
+      "model": "anime_multiverse:item/sig/kurozumi_orochi"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 42
+      },
+      "model": "anime_multiverse:item/sig/malty_melromarc"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 43
+      },
+      "model": "anime_multiverse:item/sig/rachel"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 44
+      },
+      "model": "anime_multiverse:item/sig/jugram_haschwalth"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 45
+      },
+      "model": "anime_multiverse:item/sig/big_mom"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 46
+      },
+      "model": "anime_multiverse:item/sig/code"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 47
+      },
+      "model": "anime_multiverse:item/sig/bertholdt_hoover"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 48
+      },
+      "model": "anime_multiverse:item/sig/axe_hand_morgan"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 49
+      },
+      "model": "anime_multiverse:item/sig/foxy"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 50
+      },
+      "model": "anime_multiverse:item/sig/shou_tucker"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 51
+      },
+      "model": "anime_multiverse:item/sig/ao"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 52
+      },
+      "model": "anime_multiverse:item/sig/floor_warden"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 53
+      },
+      "model": "anime_multiverse:item/sig/labyrinth_guardian"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 54
+      },
+      "model": "anime_multiverse:item/sig/god_of_order"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 55
+      },
+      "model": "anime_multiverse:item/sig/default"
+    }
+  ]
+}

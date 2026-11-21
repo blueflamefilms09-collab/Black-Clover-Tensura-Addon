@@ -1,0 +1,79 @@
+{
+  "boss": "dante_zogratis",
+  "tier": "apex",
+  "signature": {
+    "chance": 1.0,
+    "min": 1,
+    "max": 1,
+    "boon": [
+      {
+        "effect": "minecraft:resistance",
+        "seconds": 900,
+        "amplifier": 1
+      },
+      {
+        "effect": "minecraft:strength",
+        "seconds": 900,
+        "amplifier": 0
+      },
+      {
+        "effect": "minecraft:slow_falling",
+        "seconds": 900,
+        "amplifier": 0
+      }
+    ]
+  },
+  "extras": [
+    {
+      "item": "anime_multiverse:magic_stone",
+      "chance": 1.0,
+      "min": 12,
+      "max": 24
+    },
+    {
+      "item": "minecraft:diamond",
+      "chance": 0.8,
+      "min": 2,
+      "max": 5
+    },
+    {
+      "item": "minecraft:netherite_scrap",
+      "chance": 0.5,
+      "min": 1,
+      "max": 2
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple",
+      "chance": 0.12,
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "anime_multiverse:devil_horn",
+      "chance": 0.5,
+      "min": 1,
+      "max": 2
+    }
+  ],
+  "one_of_one": {
+    "relic": "starsplitter_hammer",
+    "echo_chance": 0.2,
+    "echo_boon": [
+      {
+        "effect": "minecraft:resistance",
+        "seconds": 1800,
+        "amplifier": 2
+      },
+      {
+        "effect": "minecraft:strength",
+        "seconds": 1800,
+        "amplifier": 1
+      },
+      {
+        "effect": "minecraft:slow_falling",
+        "seconds": 1800,
+        "amplifier": 1
+      }
+    ]
+  }
+}

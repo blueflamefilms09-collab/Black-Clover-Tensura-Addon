@@ -1,0 +1,41 @@
+{
+  "boss": "default",
+  "tier": "mid",
+  "signature": {
+    "chance": 1.0,
+    "min": 1,
+    "max": 1,
+    "boon": [
+      {
+        "effect": "minecraft:strength",
+        "seconds": 360,
+        "amplifier": 0
+      },
+      {
+        "effect": "minecraft:resistance",
+        "seconds": 360,
+        "amplifier": 0
+      }
+    ]
+  },
+  "extras": [
+    {
+      "item": "anime_multiverse:magic_stone",
+      "chance": 1.0,
+      "min": 4,
+      "max": 8
+    },
+    {
+      "item": "minecraft:emerald",
+      "chance": 0.6,
+      "min": 2,
+      "max": 5
+    },
+    {
+      "item": "minecraft:experience_bottle",
+      "chance": 0.6,
+      "min": 3,
+      "max": 6
+    }
+  ]
+}

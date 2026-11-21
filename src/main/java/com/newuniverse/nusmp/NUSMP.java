@@ -78,6 +78,10 @@ public class NUSMP {
         com.newuniverse.nusmp.quests.QuestsSetup.init(modEventBus, modContainer);                                       // 1.49.0: advancements trigger, quest pack installer
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarAiConfig.SPEC, "nusmp-avatar-ai-server.toml");
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.net.AvatarNetConfig.SPEC, "nusmp-avatar-net-server.toml");
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.doublesui.DoublesUiConfig.SPEC, "nusmp-doubles-ui-server.toml");   // Real Double stack: doublesUi.* (docs/doubles_ui.md)
+        modEventBus.addListener(com.newuniverse.nusmp.doublesui.DoublesUiNet::registerPayloads);                                      // Real Double stack: roster + select packets
+        com.newuniverse.nusmp.doublesui.DoublesRoster.registerEvents(NeoForge.EVENT_BUS);                                            // Real Double stack: roster sync, forgets on logout / death / dimension change
+        com.newuniverse.nusmp.doublesui.DoublesUiSelfTests.register();                                                                // self-tests doublesui.* (docs/doubles_ui.md)
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarSoulForgeConfig.SPEC, "nusmp-avatar-soulforge-server.toml");   // 1.58.0: the Soul Forge ritual, aptitudes, chosen skills
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.MobRelicsConfig.SPEC, "nusmp-mobrelics-server.toml");   // 1.50.0: named mobs carry relics
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.relics.RelicPowerConfig.SPEC, "nusmp-relicpower-server.toml");   // 1.104.0: relics.attuneLock, relics.unattunedPower
@@ -128,7 +132,8 @@ public class NUSMP {
         com.newuniverse.nusmp.devil.DevilBoot.init(modEventBus, modContainer);                                          // 3.48.0: Devil Contract system: tiers, assimilation key, Devil Union + 24 h cooldown, sacrifices, nusmp-devil-server.toml, the packets, /devil, self-tests devil.*
         com.newuniverse.nusmp.manacore.ManaCoreBoot.init(modEventBus, modContainer);                                    // 3.51.0: the 24 rank Mana Cores (E to SS, standard / beast / ancient), nusmp-manacore-server.toml, /manacore, self-tests manacore.*
         com.newuniverse.nusmp.beastwill.BeastWillBoot.init(modEventBus, modContainer);                                  // 3.45.0: Beast Will (TBATE-inspired): data-driven wills, cores, assimilation, Acquire / Integrate forms, nusmp-beastwill-server.toml, the packets, the events, /beastwill, self-tests beastwill.*
-        com.newuniverse.nusmp.bossdrops.BossDropBoot.init(modEventBus, modContainer);                                    // 3.x: data-driven boss drops, 23 trophies, Trophy Plate and Lucifero armour, nusmp-bossdrops-server.toml, self-tests bossdrops.* (docs/bosses/boss_drops.md)
+        com.newuniverse.nusmp.bossdrops2.BossSigBoot.init(modEventBus, modContainer);                                   // worthwhile boss drops: a signature per boss, personal rolls, one-of-ones, nusmp-bossdrops2-server.toml, self-tests bossdrops2.* (docs/boss_drops_worthwhile.md)
+        com.newuniverse.nusmp.bossdrops.BossDropBoot.init(modEventBus, modContainer);                                   // 3.x: data-driven boss drops, 23 trophies, Trophy Plate and Lucifero armour, nusmp-bossdrops-server.toml, self-tests bossdrops.* (docs/bosses/boss_drops.md)
         com.newuniverse.nusmp.saiyan.SaiyanBoot.init(modEventBus, modContainer);                                        // 3.63.0: Saiyan race (Stage 1): Ki = magicule, stamina, Battle Power, Ki Blast / Barrage, nusmp-saiyan-server.toml, the packets, the events, /saiyan, self-tests saiyan.*
         com.newuniverse.nusmp.adaptability.AdaptabilityBoot.init(modEventBus, modContainer);                           // 3.70.0: Adaptability (Unique toggle skill): nusmp-adaptability-server.toml, the damage and resistance-learning hooks, self-test adaptability.rules
         com.newuniverse.nusmp.power.PowerBoot.init(modEventBus, modContainer);                                         // 3.74.0: Djinns, Beast Wills and Vassal Weapons x25 (nusmp-power-server.toml), on the damage event only
@@ -209,6 +214,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.skilltree.SkillBookClient.init(modEventBus);                                       // 1.96.0: the Skill Book cover, tooltip and banner, the Black Market screen
             com.newuniverse.nusmp.client.dragonballs.DbClient.init(modEventBus, modContainer);                              // the Dragon Balls: the Shenron renderer, the dark sky of a summoning, nusmp-dragonballs-client.toml
             com.newuniverse.nusmp.client.heroweapon.HeroClient.init(modEventBus);                                         // 1.62.0: hero weapon keys, HUD, forms book, curse screen
+            com.newuniverse.nusmp.client.doublesui.DoublesClient.init(modEventBus, modContainer);                           // Real Double stack: keys, HUD stack, nusmp-doubles-ui-client.toml (docs/doubles_ui.md)
             com.newuniverse.nusmp.client.arc.ArcClient.init(modEventBus);                                                   // 1.58.0: renderers of the arc characters, spawn egg colours
             com.newuniverse.nusmp.vfx.client.VfxClientEvents.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireClient.init(modEventBus);

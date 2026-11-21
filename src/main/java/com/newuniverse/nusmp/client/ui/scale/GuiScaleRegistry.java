@@ -69,6 +69,7 @@ public final class GuiScaleRegistry {
         layer("beastwill_hud", "beastwill_hud", GuiScaleMath.Anchor.CENTER_LEFT, "Beast Will HUD");
         layer("devil_hud", "devil_hud", GuiScaleMath.Anchor.CENTER_RIGHT, "Devil Contract HUD");
         layer("saiyan_hud", "saiyan_hud", GuiScaleMath.Anchor.BOTTOM_RIGHT, "Saiyan HUD");
+        layer("doubles_stack", "doubles_stack", GuiScaleMath.Anchor.TOP_LEFT, "Real Double stack");
         // HUD overlays that apply the scale themselves (they already have their own position, anchor or size)
         site("system_hud", GuiScaleMath.Anchor.TOP_LEFT, "System window");
         site("hero_hud", GuiScaleMath.Anchor.BOTTOM_LEFT, "Hero weapon HUD");

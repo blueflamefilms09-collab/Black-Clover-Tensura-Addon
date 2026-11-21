@@ -1,0 +1,41 @@
+{
+  "boss": "light_yagami",
+  "tier": "lesser",
+  "signature": {
+    "chance": 1.0,
+    "min": 1,
+    "max": 1,
+    "boon": [
+      {
+        "effect": "minecraft:luck",
+        "seconds": 240,
+        "amplifier": 0
+      },
+      {
+        "effect": "minecraft:night_vision",
+        "seconds": 240,
+        "amplifier": 0
+      }
+    ]
+  },
+  "extras": [
+    {
+      "item": "anime_multiverse:magic_stone",
+      "chance": 1.0,
+      "min": 2,
+      "max": 4
+    },
+    {
+      "item": "minecraft:emerald",
+      "chance": 0.5,
+      "min": 1,
+      "max": 3
+    },
+    {
+      "item": "minecraft:apple",
+      "chance": 0.7,
+      "min": 1,
+      "max": 2
+    }
+  ]
+}

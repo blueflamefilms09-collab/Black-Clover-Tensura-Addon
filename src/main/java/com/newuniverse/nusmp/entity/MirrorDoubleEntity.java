@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
  * </ul>
  */
 public class MirrorDoubleEntity extends TamableAnimal {
-    private int life = 1200, rayCooldown = 40;
+    private int life = 1200, lifeMax = 1200, rayCooldown = 40;
     private float power = 1f;
 
     public MirrorDoubleEntity(EntityType<? extends TamableAnimal> type, Level level) {
@@ -62,6 +62,7 @@ public class MirrorDoubleEntity extends TamableAnimal {
     public void setup(ServerPlayer owner, float power, int lifeTicks) {
         this.power = power;
         this.life = lifeTicks;
+        this.lifeMax = Math.max(1, lifeTicks);
         tame(owner);
         var hp = getAttribute(Attributes.MAX_HEALTH);
         if (hp != null) hp.setBaseValue(Math.max(10, owner.getMaxHealth() * 0.5 * power));
@@ -73,6 +74,24 @@ public class MirrorDoubleEntity extends TamableAnimal {
         setDropChance(EquipmentSlot.MAINHAND, 0f);
         setCustomName(owner.getName().copy().append(" (Real Double)"));
         setCustomNameVisible(false);
+    }
+
+    /** Ticks this double has left, and the time it was given: the owner's double stack (docs/doubles_ui.md) draws them as a time bar. */
+    public int lifeLeft() { return Math.max(0, life); }
+
+    public int lifeMax() { return Math.max(1, lifeMax); }
+
+    /** The owner's roster (docs/doubles_ui.md) learns of the double when it enters a ticking level and forgets it when it leaves; nothing scans the world. */
+    @Override
+    public void onAddedToLevel() {
+        super.onAddedToLevel();
+        com.newuniverse.nusmp.doublesui.DoublesRoster.register(this);
+    }
+
+    @Override
+    public void onRemovedFromLevel() {
+        com.newuniverse.nusmp.doublesui.DoublesRoster.unregister(this);
+        super.onRemovedFromLevel();
     }
 
     @Override
@@ -154,6 +173,7 @@ public class MirrorDoubleEntity extends TamableAnimal {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("DoubleLife", life);
+        tag.putInt("DoubleLifeMax", lifeMax);
         tag.putFloat("DoublePower", power);
     }
 
@@ -161,6 +181,7 @@ public class MirrorDoubleEntity extends TamableAnimal {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         life = tag.contains("DoubleLife") ? tag.getInt("DoubleLife") : 0;
+        lifeMax = Math.max(life, tag.contains("DoubleLifeMax") ? tag.getInt("DoubleLifeMax") : 1200);
         power = tag.contains("DoublePower") ? tag.getFloat("DoublePower") : 1f;
     }
 }

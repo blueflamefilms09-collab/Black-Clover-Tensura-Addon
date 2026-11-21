@@ -175,7 +175,8 @@ public final class MirrorWorks {
         ServerLevel level = p.serverLevel();
         List<MirrorDoubleEntity> out = doubles(p);
         if (p.isShiftKeyDown() && !out.isEmpty()) {                                     // trade places
-            MirrorDoubleEntity d = out.stream().min((x, y) -> Double.compare(x.distanceToSqr(p), y.distanceToSqr(p))).get();
+            MirrorDoubleEntity d = com.newuniverse.nusmp.doublesui.DoublesRoster.chosen(p.getUUID(), p.level());         // the double picked on the stack (docs/doubles_ui.md); none picked: the nearest, as before
+            if (d == null || !out.contains(d)) d = out.stream().min((x, y) -> Double.compare(x.distanceToSqr(p), y.distanceToSqr(p))).get();
             Vec3 me = p.position(), it = d.position();
             mirror(p, me.add(0, 1, 0), me.add(p.getLookAngle()).add(0, 1, 0), 14, 1.3f);
             mirror(p, it.add(0, 1, 0), it.add(d.getLookAngle()).add(0, 1, 0), 14, 1.3f);
