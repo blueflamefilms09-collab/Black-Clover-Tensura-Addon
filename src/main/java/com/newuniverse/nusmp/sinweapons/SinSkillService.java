@@ -244,6 +244,18 @@ public final class SinSkillService {
         return changed;
     }
 
+    /** Why (4.77.0): {@code /multiverse sin purge}: {@link #remove} plus the weapon itself. Deletes every stack of that Berserk weapon from the player's main inventory, armour and off hand; returns how many stacks went. */
+    public static int purgeItems(ServerPlayer p, SinRules.Kind k) {
+        Inventory inv = p.getInventory();
+        int gone = 0;
+        int n = SinSkillRules.slotsScanned(inv.getContainerSize());
+        for (int i = 0; i < n; i++) {
+            ItemStack s = inv.getItem(i);
+            if (s.getItem() instanceof SinWeaponItem w && w.kind() == k) { inv.setItem(i, ItemStack.EMPTY); gone++; }
+        }
+        return gone;
+    }
+
     /** Undoes {@link #remove}: the next look at the inventory binds a carried unbound weapon again and gives its skill. Returns true when the player had removed it. */
     public static boolean restore(ServerPlayer p, SinRules.Kind k) {
         boolean was = isOff(p, k);

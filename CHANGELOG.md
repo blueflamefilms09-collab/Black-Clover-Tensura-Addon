@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.77.0] — `/multiverse sin purge`
+Owner request (offered earlier): one command that takes the Berserk weapon skill and the weapon itself.
+- NEW: `/multiverse sin purge <sloth|envy|vanity|chakrams|holy|all> [player]` does what `remove` does (skill forgotten, side bar gone, kept from coming back) and also deletes every stack of that weapon from the player's inventory, armour and off hand. An operator may name a player. `restore` still lets the skill come back, but a deleted weapon has to be made again.
+- KEPT: `remove` and `restore` work as before and delete nothing.
+- COST: server only, one pass over at most one inventory per kind when the command is typed, nothing per tick, no packets.
+- CAVEATS: not run in a game; the Black Sword of Greed is not one of the five kinds and is not touched.
+
 ## [4.76.0] — The 26 canon devils polished, and the 4.73.0 build fix
 Owner request: "just fix them a bit" (the devil models).
 - REPLACED (same names): the 26 canon devil models, animations and sheets are polished: leaf-shaped ears pointing up and out, reshaped horns that are no longer cut off, wider overlapping wing panels, bigger layered eyes, edge shading, cloth folds, scales and panel lines baked into the textures, new insect wings and four new extras (back spikes, mandibles, cloak, tongue). Liebe is white with dark markings, Lucifero has three horns, Megicula is tall, Astaroth and Sebastian wear gloves and have red eyes (as the owner's brief said). Made by script (`tools/blockbench/gen_devil_canon.py`), not opened in Blockbench.
