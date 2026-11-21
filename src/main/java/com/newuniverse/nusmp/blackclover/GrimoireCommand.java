@@ -165,8 +165,7 @@ public final class GrimoireCommand {
                                         }))))
                         .then(Commands.literal("reset").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                             ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
-                            for (var id : NUSkills.allGrimoireSkillIds()) SkillAPI.getSkillsFrom(p).forgetSkill(id);
-                            GrimoireAcceptance.markRolled(p, false);
+                            com.newuniverse.nusmp.rebirth.GrimoireErasure.skills(p);                          // the same erasure the Sigil of Rebirth starts from
                             ctx.getSource().sendSuccess(() -> Component.literal("Reset " + p.getName().getString() + "'s grimoire."), true);
                             return 1;
                         })))));

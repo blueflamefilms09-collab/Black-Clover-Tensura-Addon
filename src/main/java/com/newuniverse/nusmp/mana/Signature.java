@@ -154,4 +154,12 @@ public final class Signature {
         if (!has(p)) return "";
         return name(p) + ": " + trait(p, "A").label + " and " + trait(p, "B").label + ", a " + shape(p).label();
     }
+
+    /** The Rebirth rite (docs/rebirth.md): forgets this wizard's signature and frees its name for the next one. Nothing else changes. */
+    public static void clear(ServerPlayer p) {
+        MinecraftServer server = p.getServer();
+        Registry reg = server == null ? null : Registry.get(server);
+        if (reg != null && reg.taken.values().removeIf(u -> u.equals(p.getUUID()))) reg.setDirty();
+        root(p).remove(KEY);
+    }
 }

@@ -20456,5 +20456,11 @@
   "anime_multiverse.grimoire.meaning.god_tier": "Mod-only, not canon: a legendary gold grimoire above every leaf, not devil-bound.",
   "anime_multiverse.canon.luck": "Luck: %s%% of spell hits deal x%s",
   "anime_multiverse.canon.devil": "Devil's price: it holds %s%% of your mana, and takes a little health when you are nearly dry",
-  "anime_multiverse.canon.fifth_leaf": "The fifth leaf is not handed out. It is earned through despair, or a devil."
+  "anime_multiverse.canon.fifth_leaf": "The fifth leaf is not handed out. It is earned through despair, or a devil.",
+  "item.anime_multiverse.sigil_of_rebirth": "Sigil of Rebirth",
+  "item.anime_multiverse.sigil_of_rebirth.tip1": "Be reborn: your grimoire(s), their pages and magic types are erased.",
+  "item.anime_multiverse.sigil_of_rebirth.tip2": "Right-click to be warned, then sneak + right-click within the time limit. You keep your race, EP and every skill that is not a grimoire's. A fresh Grimoire Summons follows.",
+  "item.anime_multiverse.sigil_of_the_second_book": "Sigil of the Second Book",
+  "item.anime_multiverse.sigil_of_the_second_book.tip1": "Like Yuno, ask for a second grimoire beside your first.",
+  "item.anime_multiverse.sigil_of_the_second_book.tip2": "Needs a four-leaf grimoire or better and one book only. Right-click to be warned, then sneak + right-click. Your first book stays; the Tower Wizard's questions pick a different magic for the second."
 }

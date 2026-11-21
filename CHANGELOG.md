@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.87.0] — Rebirth: reset your grimoire, or take a second book
+- NEW: the Sigil of Rebirth. Use it (sneak and click a second time to confirm) to erase your grimoire skills, your own grimoire items and your Signature and go back to the Tower Wizard to be asked again, so you can get a new magic type. Cooldown 7 days by default.
+- NEW: the Sigil of the Second Book. After a rite and the Wizard you keep your first grimoire and get a second one of another magic type, like Yuno's two books. It needs at least four leaves and a resolve score of 3 (settings `secondBookMinLeaves`, `secondBookMinResolve`).
+- NEW: own server file `nusmp-rebirth-server.toml` with `rebirth` (master), `cooldownDays`, `confirmSeconds`, `xpLevelCost`, `twoBooksOnFusion` (default off); self-test `rebirth`; docs/rebirth.md; two crafting recipes; both sigils in the grimoire creative tab.
+- KEPT: every grimoire rule; the admin `grimoire reset` has the same effect as before; ender chests are not touched; devil-bound five-leaf books stay single books.
+
 ## [4.86.0] — Canon leaves: what each grimoire cover means
 - NEW: every cover has a short meaning line (tooltip, Tower Wizard result, `/anime_multiverse grimoire cover <player>`): three leaves are Faith, Hope and Love; the fourth leaf is Luck; the fifth leaf is the Devil's. Black Magic and God-Tier say they are mod-only.
 - NEW: the four-leaf and the Five-Sided Diamond are luck covers: a spell hit sometimes lands lucky (default 6% chance, x1.5).

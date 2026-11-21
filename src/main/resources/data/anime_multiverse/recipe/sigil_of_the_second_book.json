@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:nether_star" },
+    { "item": "minecraft:emerald_block" },
+    { "item": "minecraft:emerald_block" },
+    { "item": "minecraft:book" },
+    { "item": "minecraft:gold_block" },
+    { "item": "minecraft:azalea_leaves" },
+    { "item": "minecraft:azalea_leaves" },
+    { "item": "minecraft:azalea_leaves" },
+    { "item": "minecraft:azalea_leaves" }
+  ],
+  "result": {
+    "id": "anime_multiverse:sigil_of_the_second_book",
+    "count": 1
+  }
+}

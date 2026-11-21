@@ -562,6 +562,7 @@ public class NUSMP {
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         com.newuniverse.nusmp.book.SpiritDiveBoot.init(modContainer);                                              // Spirit Dive remake: server config nusmp-spiritdive-server.toml, Fuegoleon's arm events, self-tests magic.spirit_dive_looks / magic.fuegoleon_arm
         com.newuniverse.nusmp.star.StarBoot.init(modContainer);                                                   // Star nodes: server config nusmp-star-server.toml, cleanup events, self-test magic.star_nodes
+        com.newuniverse.nusmp.rebirth.RebirthBoot.init(modEventBus, modContainer);                                // Sigil of Rebirth + Sigil of the Second Book: items, server config nusmp-rebirth-server.toml, cleanup events, self-test rebirth.rules (docs/rebirth.md)
         com.newuniverse.nusmp.vfx.StarV2SelfTests.register();                                                     // Star V2 look: self-test magic.star_nodes_look (shapes, quad caps, textures, options; pure, runs on the server)
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
         com.newuniverse.nusmp.vfx.WindMcSelfTests.register();                                                     // Wind pixel look: self-test magic.wind_mc (shapes, quad caps, 32 textures, option, tint choice; pure, runs on the server)

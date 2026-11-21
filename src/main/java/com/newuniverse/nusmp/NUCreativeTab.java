@@ -73,6 +73,7 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.companion.sample.CompanionEntities.spawnEggs()) o.apply(G.EGGS).accept(egg.get());                       // companions: the sample companion's spawn egg (Charmy)
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) o.apply(G.WEAPONS).accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) o.apply(G.WEAPONS).accept(vl.get());                // the Valkyrie Drill Lance (creative only)
+                for (var rs : com.newuniverse.nusmp.rebirth.RebirthItems.creativeItems()) o.apply(G.GRIM).accept(rs.get());                                  // the Sigil of Rebirth and the Sigil of the Second Book
                 for (var db : com.newuniverse.nusmp.dragonballs.DbItems.creativeItems()) o.apply(G.MISC).accept(db.get());                                  // the Dragon Balls (2 sets x 8 stars) and the Dragon Radar
                 for (var sw : com.newuniverse.nusmp.sinweapons.SinWeaponBoot.creativeItems()) o.apply(G.WEAPONS).accept(sw.get());                // the five other Berserk weapons (creative only)
                 for (var lf : com.newuniverse.nusmp.lords.LordItems.renderables()) o.apply(G.WEAPONS).accept(lf.get());                // the new forms of the four Lord weapons (creative only; a bare stack becomes THE weapon only if none exists)

@@ -116,14 +116,14 @@ public final class WizardSystem {
     /** The player speaks to the wizard. */
     public static void talk(ServerPlayer p, TowerWizardEntity wizard) {
         if (WizardLibrary.inLibrary(p) && p.isShiftKeyDown()) { say(p, "Go, then. The door is always open."); WizardLibrary.leave(p); return; }
-        if (GrimoirePages.grimoireOf(p).isPresent()) {
+        if (GrimoirePages.grimoireOf(p).isPresent() && !com.newuniverse.nusmp.rebirth.RebirthWizardHooks.pending(p)) {
             say(p, "You already carry a grimoire. Go, and use it well.");
             if (WizardLibrary.inLibrary(p)) WizardLibrary.leave(p);
             return;
         }
         if (!MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) { say(p, "The tower chooses its mages in the old way now: pray at the altar."); return; }
         if (!Ceremony.hasEnoughEp(p)) { say(p, "Your soul is still too small for a grimoire. Come back with " + MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP) + " EP."); return; }
-        if (!Ceremony.isEligible(p)) { say(p, "The grimoires have not called you."); return; }
+        if (!Ceremony.isEligible(p) && !com.newuniverse.nusmp.rebirth.RebirthWizardHooks.pending(p)) { say(p, "The grimoires have not called you."); return; }
         if (!summoned(p) && !p.hasPermissions(2)) { say(p, "You come without a summons. Grow a little more, and one will find you."); return; }
         var sheet = Questionnaire.draw(p.getRandom(), MultiverseConfig.get(MultiverseConfig.LONG_QUESTIONNAIRE));        // false = the old 12-question sheet
         PENDING.put(p.getUUID(), new Pending(sheet, p.level().getGameTime(), wizard.position()));
@@ -140,14 +140,14 @@ public final class WizardSystem {
     public static void answer(ServerPlayer p, int[] answers) {
         Pending pend = PENDING.remove(p.getUUID());
         if (pend == null || p.level().getGameTime() - pend.at() > 6000 || p.position().distanceToSqr(pend.where()) > 20 * 20) { say(p, "You took too long. Speak to me again."); return; }
-        if (GrimoirePages.grimoireOf(p).isPresent()) return;
+        if (GrimoirePages.grimoireOf(p).isPresent() && !com.newuniverse.nusmp.rebirth.RebirthWizardHooks.pending(p)) return;
         var pool = MultiverseConfig.get(MultiverseConfig.ALL_MAGICS) ? MagicFlavors.pool() : GrimoireAcceptance.starterPool(NightmareSouls.soulTypeOf(p));   // 1.16.0: every magic
-        var r = Questionnaire.result(pend.sheet(), answers, pool, NUGameRules.forbiddenStart(p.level()),
+        var r = Questionnaire.result(pend.sheet(), answers, com.newuniverse.nusmp.rebirth.RebirthWizardHooks.poolFor(p, pool), NUGameRules.forbiddenStart(p.level()),
                 MultiverseConfig.get(MultiverseConfig.DUAL_ATTRIBUTE_CHANCE), p.getRandom());
         if (r == null) { say(p, "That is not an answer I asked for."); return; }
         GrimoireCover cover = r.kingdom().coverFor(r.leaves());
         Devil devil = cover.isForbidden() ? GrimoireAcceptance.randomDevil(p.getRandom()) : null;
-        Heritage.set(p, r.kingdom(), r.blood());
+        if (!com.newuniverse.nusmp.rebirth.RebirthWizardHooks.isSecond(p)) Heritage.set(p, r.kingdom(), r.blood());   // the Second Book rite adds a book and leaves kingdom and blood alone
         com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "wizard.questionnaire");
         ServerLevel sl = p.serverLevel();
         VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, p, p.position().add(0, 0.08, 0), 0xFFFFD86B, 90, 1.8f);
@@ -185,9 +185,11 @@ public final class WizardSystem {
     }
 
     private static void arrive(ServerPlayer p, Questionnaire.Result r, GrimoireCover cover, Devil devil) {
+        if (com.newuniverse.nusmp.rebirth.RebirthWizardHooks.onArrive(p, r)) return;                       // rebirth rites (docs/rebirth.md): the Second Book rite ends here, the Rebirth mark is cleared
         // Star nodes (server setting star.dualMode, default FUSION = exactly the code below): with SECOND_GRIMOIRE a tie that involves Star gives two real grimoires, the other attribute's and a Star one
         com.newuniverse.nusmp.star.StarRules.DualPlan dual = cover.isForbidden() ? new com.newuniverse.nusmp.star.StarRules.DualPlan(r.primary().name(), null, r.fused())
                 : com.newuniverse.nusmp.star.StarRules.dualPlan(com.newuniverse.nusmp.star.StarConfig.dualMode(), r.primary().name(), r.parentA() == null ? null : r.parentA().name(), r.parentB() == null ? null : r.parentB().name());
+        dual = com.newuniverse.nusmp.rebirth.RebirthWizardHooks.twinPlan(dual, r, cover);                // setting twoBooksOnFusion (default off): a strong fused result becomes two real grimoires
         boolean split = dual.extra() != null;
         com.newuniverse.nusmp.blackclover.MagicType first = split ? com.newuniverse.nusmp.blackclover.MagicType.valueOf(dual.first()) : r.primary();
         GrimoireAcceptance.grantExact(p, cover, first, devil);
@@ -196,7 +198,8 @@ public final class WizardSystem {
         // blend in the game, a magic of its own born of them
         String bornName = !split && r.born() ? BornMagic.nameOf(r.parentA(), r.parentB()) : null;
         String signature = GrimoireAcceptance.applyFusion(p, first, split ? null : r.parentA(), split ? null : r.parentB(), bornName);
-        if (split) GrimoireAcceptance.grantExtra(p, cover, com.newuniverse.nusmp.blackclover.MagicType.STAR);      // the real second grimoire: Star, with the same cover (a Spade mage can become the Grinberryall heir)
+        if (split && "STAR".equals(dual.extra())) GrimoireAcceptance.grantExtra(p, cover, com.newuniverse.nusmp.blackclover.MagicType.STAR);      // the real second grimoire: Star, with the same cover (a Spade mage can become the Grinberryall heir)
+        else if (split) GrimoireAcceptance.grantExtra(p, cover, com.newuniverse.nusmp.blackclover.MagicType.valueOf(dual.extra()));                  // twoBooksOnFusion (rebirth): the second attribute of the pair
         for (int i = 0; i < p.getInventory().getContainerSize(); i++)                  // the summons has done its work
             if (p.getInventory().getItem(i).is(NUItems.GRIMOIRE_SUMMONS.get())) p.getInventory().setItem(i, ItemStack.EMPTY);
         MultiverseProfile.setSocialClass(p, r.social());
@@ -205,14 +208,14 @@ public final class WizardSystem {
         var kt = Heritage.kingdomTrait(r.kingdom());
         var bt = Heritage.bloodTrait(r.blood());
         if (split) {
-            p.sendSystemMessage(Component.literal("Two attributes answered you: " + first.displayName + " and Star Magic. You carry two grimoires.").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+            p.sendSystemMessage(Component.literal("Two attributes answered you: " + first.displayName + " and " + com.newuniverse.nusmp.blackclover.MagicType.valueOf(dual.extra()).displayName + ". You carry two grimoires.").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
         } else if (r.fused()) {
             p.sendSystemMessage(Component.literal("Two attributes answered you: " + r.parentA().displayName + " and " + r.parentB().displayName + ". They have fused into one grimoire.")
                     .withStyle(ChatFormatting.LIGHT_PURPLE));
             p.sendSystemMessage(Component.literal(r.born() ? "A magic that did not exist before is born: " + bornName + " Magic."
                     : "Together they are " + r.primary().displayName + ".").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
         }
-        p.sendSystemMessage(Component.literal("Your magic: " + (r.born() && !split ? bornName + " Magic" : first.displayName + (split ? " + Star Magic" : "")) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        p.sendSystemMessage(Component.literal("Your magic: " + (r.born() && !split ? bornName + " Magic" : first.displayName + (split ? " + " + com.newuniverse.nusmp.blackclover.MagicType.valueOf(dual.extra()).displayName : "")) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
         if (com.newuniverse.nusmp.grimoire.CanonLeaves.on()) p.sendSystemMessage(Component.translatableWithFallback(com.newuniverse.nusmp.grimoire.GrimoireMeaning.key(cover), com.newuniverse.nusmp.grimoire.GrimoireMeaning.text(cover)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));      // canon leaves: what the cover means
         if (com.newuniverse.nusmp.grimoire.CanonLeaves.on() && cover.tier == 4) p.sendSystemMessage(Component.translatableWithFallback("anime_multiverse.canon.fifth_leaf", "The fifth leaf is not handed out. It is earned through despair, or a devil.").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));      // canon leaves: a Wizard five is capped at four
         p.sendSystemMessage(Component.literal("No two wizards' magic is the same. Yours is called " + signature + ": " + com.newuniverse.nusmp.mana.Signature.describe(p)

@@ -3,7 +3,7 @@
  "comment": "Written by tools/relics/franchise_map.py (re-run it after a wave changes; manual choices are in tools/relics/franchise_overrides.json). An id that is not here has no franchise.",
  "franchises": {
   "berserk": 11,
-  "black_clover": 80,
+  "black_clover": 82,
   "danmachi": 3,
   "delicious_in_dungeon": 20,
   "dnd": 354,
@@ -737,7 +737,9 @@
   "shishou": "reincarnated_as_a_sword",
   "shroud_of_the_sixth_layer": "made_in_abyss",
   "sidras_swearing_sword": "dnd",
+  "sigil_of_rebirth": "black_clover",
   "sigil_of_the_faint_flame": "dnd",
+  "sigil_of_the_second_book": "black_clover",
   "silver_circlet": "dnd",
   "silver_eagle_cloak": "black_clover",
   "silver_eagle_cloak_boots": "black_clover",

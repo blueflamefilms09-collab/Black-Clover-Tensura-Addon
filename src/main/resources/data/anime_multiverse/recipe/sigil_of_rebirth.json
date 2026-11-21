@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:nether_star" },
+    { "item": "minecraft:totem_of_undying" },
+    { "item": "minecraft:enchanted_golden_apple" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:amethyst_shard" }
+  ],
+  "result": {
+    "id": "anime_multiverse:sigil_of_rebirth",
+    "count": 1
+  }
+}
