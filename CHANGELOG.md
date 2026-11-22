@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.106.1] — Summoner creatures: the models remade from the reference pack
+- REPLACED (fully remade): Hayate (white lion-maned wolf with the forehead gem, black socks and claws), Cerorin (three snarling heads, spiked mane), Rocanel (horned stone knight with the studded ring shield), Mira (the big cracked stone knight and slab sword), Hatch (upright queen hornet: huge black manga eyes, white thorax, striped abdomen curled forward under her, hooked sting, big wings), Ellie (slim porcelain girl: long wavy olive-gold hair parted in the middle and swept round her face, big teal eyes, black bows with white ear ribbons, black choker bow on the frilled V bib, navy dress with puff sleeves), Okiyosan (white kimono with crossed lapels and grey obi knot, candle headband with burning flames, long black hair, half-lidded fanged smile, the nail), Dradra (bulky four-legged horned dragon: fanged wedge head with brow and cheek horns, black spine blades, black claws, pale belly plates, wings, spiked tail), Merus (curly golden hair, halo, brow gem, abs, collar gem, gold-and-black bracers, white wrap, big feathered wings with barbs).
+- FINE-TUNED (kept, improved): Tsubame (white wing bars, fanned primaries, barred forked tail, eyed head), Solarin (rounder potato body, lashed face, dark headband, thin pale limbs), Genbu (domed shell with lime hexagon scutes and rim, drooping eyes, beard, lime-edged flippers).
+- NEW (tools only): the preview script has a zoom view (`ZOOM=1`), the painter has a decal system, a 512 sheet and more materials (stone, feather, hair, chitin, membrane).
+- KEPT: species ids, clip names (idle / walk / attack / ability), hit boxes, health, damage, speed, every setting (`summonerCreatures`) and all game logic; only the models and their textures changed.
+- Cost: no new entities, packets or ticks. Each model is 24-102 cubes (at most 612 quads) on one sheet; same draw path as 4.106.0.
+- Not included: Blockbench or Blender were not available in the session, so the models are still script-written (Blockbench sources included); the previews are software mock-ups and the models were not seen in a real game.
+
 ## [4.106.0] — Summoner: the real Hell Mode creatures
 - NEW: the Summoner's cards call custom GeckoLib creatures of the anime: Hayate and Cerorin (Beast / Legion), Rocanel and Mira (Stone), Ellie and Okiyosan (Wraith). One entity type `anime_multiverse:summon_beast`, twelve species, a glow mask each.
 - NEW: every cast shows its creature for 3-4 s: Hatch (Insect), Genbu (Fish), Ellie (Spirit), Dradra (Dragon), Merus (the Angel), Tsubame (Bird pulse), Solarin (Grass pulse). Harmless, one per owner, outside the summon cap.

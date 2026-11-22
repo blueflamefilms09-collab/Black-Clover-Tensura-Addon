@@ -1,60 +1,60 @@
 [
  {
   "id": "hayate",
-  "bones": 11,
-  "cubes": 45,
-  "quads": 270,
-  "density": 2.0,
-  "top_px": 40.0,
-  "height_blocks": 2.5,
-  "lit_texels": 30
+  "bones": 10,
+  "cubes": 72,
+  "quads": 432,
+  "density": 3.0,
+  "top_px": 31.0,
+  "height_blocks": 1.94,
+  "lit_texels": 244
  },
  {
   "id": "cerorin",
-  "bones": 15,
-  "cubes": 68,
-  "quads": 408,
-  "density": 2.0,
-  "top_px": 37.0,
-  "height_blocks": 2.31,
-  "lit_texels": 72
+  "bones": 14,
+  "cubes": 78,
+  "quads": 468,
+  "density": 3.0,
+  "top_px": 36.0,
+  "height_blocks": 2.25,
+  "lit_texels": 90
  },
  {
   "id": "rocanel",
   "bones": 11,
-  "cubes": 29,
-  "quads": 174,
-  "density": 2.0,
-  "top_px": 45.5,
-  "height_blocks": 2.84,
-  "lit_texels": 130
+  "cubes": 44,
+  "quads": 264,
+  "density": 3.0,
+  "top_px": 39.0,
+  "height_blocks": 2.44,
+  "lit_texels": 8
  },
  {
   "id": "mira",
-  "bones": 10,
-  "cubes": 27,
-  "quads": 162,
-  "density": 2.0,
-  "top_px": 41.5,
-  "height_blocks": 2.59,
-  "lit_texels": 364
+  "bones": 12,
+  "cubes": 47,
+  "quads": 282,
+  "density": 3.0,
+  "top_px": 49.9,
+  "height_blocks": 3.12,
+  "lit_texels": 24
  },
  {
   "id": "hatch",
-  "bones": 16,
-  "cubes": 29,
-  "quads": 174,
-  "density": 2.0,
-  "top_px": 44.0,
-  "height_blocks": 2.75,
+  "bones": 17,
+  "cubes": 47,
+  "quads": 282,
+  "density": 3.0,
+  "top_px": 50.0,
+  "height_blocks": 3.12,
   "lit_texels": 0
  },
  {
   "id": "tsubame",
   "bones": 10,
-  "cubes": 20,
-  "quads": 120,
-  "density": 2.0,
+  "cubes": 39,
+  "quads": 234,
+  "density": 3.0,
   "top_px": 20.0,
   "height_blocks": 1.25,
   "lit_texels": 0
@@ -62,61 +62,61 @@
  {
   "id": "solarin",
   "bones": 7,
-  "cubes": 15,
-  "quads": 90,
-  "density": 2.0,
+  "cubes": 24,
+  "quads": 144,
+  "density": 3.0,
   "top_px": 30.0,
   "height_blocks": 1.88,
-  "lit_texels": 16
+  "lit_texels": 0
  },
  {
   "id": "genbu",
   "bones": 11,
-  "cubes": 20,
-  "quads": 120,
-  "density": 1.75,
+  "cubes": 36,
+  "quads": 216,
+  "density": 2.5,
   "top_px": 26.0,
   "height_blocks": 1.62,
-  "lit_texels": 2090
+  "lit_texels": 7072
  },
  {
   "id": "ellie",
   "bones": 9,
-  "cubes": 24,
-  "quads": 144,
-  "density": 2.0,
-  "top_px": 24.5,
-  "height_blocks": 1.53,
-  "lit_texels": 6
+  "cubes": 70,
+  "quads": 420,
+  "density": 3.0,
+  "top_px": 31.0,
+  "height_blocks": 1.94,
+  "lit_texels": 63
  },
  {
   "id": "okiyosan",
   "bones": 9,
-  "cubes": 30,
-  "quads": 180,
-  "density": 2.0,
-  "top_px": 24.5,
-  "height_blocks": 1.53,
-  "lit_texels": 174
+  "cubes": 46,
+  "quads": 276,
+  "density": 3.0,
+  "top_px": 34.0,
+  "height_blocks": 2.12,
+  "lit_texels": 644
  },
  {
   "id": "dradra",
-  "bones": 17,
-  "cubes": 44,
-  "quads": 264,
-  "density": 1.75,
-  "top_px": 52.0,
-  "height_blocks": 3.25,
-  "lit_texels": 218
+  "bones": 16,
+  "cubes": 102,
+  "quads": 612,
+  "density": 2.5,
+  "top_px": 56.0,
+  "height_blocks": 3.5,
+  "lit_texels": 908
  },
  {
   "id": "merus",
   "bones": 13,
-  "cubes": 46,
-  "quads": 276,
-  "density": 2.0,
-  "top_px": 46.0,
-  "height_blocks": 2.88,
-  "lit_texels": 542
+  "cubes": 73,
+  "quads": 438,
+  "density": 3.0,
+  "top_px": 48.0,
+  "height_blocks": 3.0,
+  "lit_texels": 2264
  }
 ]

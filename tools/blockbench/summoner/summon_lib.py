@@ -24,6 +24,18 @@ ANIM_DIR = os.path.join(ASSETS, "animations", "entity")
 TEX_DIR = os.path.join(ASSETS, "textures", "entity")
 BB_DIR = HERE
 
+T.SHEET = 512          # 4x the texels of the first pass: faces, armour seams and hair strands need them (the Java side reads any sheet size)
+
+
+def _fit_density():
+    for k in (3.0, 2.5, 2.0, 1.75, 1.5, 1.25, 1.0):
+        pos = T.pack(k)
+        if pos is not None:
+            return k, pos
+    raise SystemExit("the cubes do not fit the sheet at density 1")
+
+
+T.fit_density = _fit_density
 BONES, CUBES = T.BONES, T.CUBES
 bone, cube, pair = T.bone, T.cube, T.pair
 hexrgb, mix, tones = T.hexrgb, T.mix, T.tones
@@ -132,10 +144,91 @@ def paint_face(entry, face, fw, fh, seed):
     elif kind == "cloth":
         img[0::2, :] *= 0.93
         img[:, 0::4] *= 0.95
+    elif kind == "stone":
+        for _ in range(max(1, fw * fh // 90)):
+            cx, cy = int(rs.rand() * fw), int(rs.rand() * fh)
+            for _s in range(3 + int(rs.rand() * 4)):
+                if 0 <= cx < fw and 0 <= cy < fh:
+                    img[cy, cx] *= 0.55
+                cx += int(rs.randint(-1, 2))
+                cy += 1
+        if fw > 5 and fh > 5:
+            img[1, 1:-1] *= 1.16
+            img[:, 0] *= 0.82
+    elif kind == "feather":
+        for x in range(0, fw, 2):
+            img[:, x] *= 0.9 + 0.14 * rs.rand()
+        img[fh // 2:, :] *= 0.97
+        if fw > 4:
+            img[:, fw // 2] *= 0.82
+    elif kind == "hair":
+        for x in range(fw):
+            img[:, x] *= 0.86 + 0.28 * rs.rand()
+        for _ in range(max(1, fw // 3)):
+            x = int(rs.rand() * fw)
+            img[:, x] *= 1.18
+    elif kind == "chitin":
+        img[: max(1, fh // 4), :] *= 1.18
+        img[-max(1, fh // 5):, :] *= 0.85
+        if fw > 4 and fh > 4:
+            img[1, 1:-1] *= 1.2
+    elif kind == "membrane":
+        for x in range(0, fw, max(2, fw // 5)):
+            img[:, x] *= 0.78
+        img[:, :] *= 0.95
     elif kind == "porcelain":
         img *= 1.0
         img[0, :] *= 0.97
     return np.clip(img, 0, 255), glow
+
+
+# ---------------------------------------------------------------- decals: painted details per cube (faces, seams, strands), looked up by the cube's paint name
+DECALS = {}
+
+
+def decal(name):
+    def reg(fn):
+        DECALS[name] = fn
+        return fn
+    return reg
+
+
+def rgb(c):
+    return np.array(hexrgb(c) if isinstance(c, str) else c, np.float32)
+
+
+def box(img, fw, fh, u0, v0, u1, v1, col, glow=None, g=0, blend=1.0):
+    """Fills the box (u0,v0)-(u1,v1), given as fractions of the face, with a colour; glow marks the texels the glow layer lights."""
+    x0, x1 = int(round(u0 * fw)), int(round(u1 * fw))
+    y0, y1 = int(round(v0 * fh)), int(round(v1 * fh))
+    x1, y1 = max(x1, x0 + 1), max(y1, y0 + 1)
+    x0, y0, x1, y1 = max(0, x0), max(0, y0), min(fw, x1), min(fh, y1)
+    if x1 <= x0 or y1 <= y0:
+        return
+    img[y0:y1, x0:x1] = img[y0:y1, x0:x1] * (1 - blend) + rgb(col) * blend
+    if glow is not None and g:
+        glow[y0:y1, x0:x1] = g
+
+
+def line(img, fw, fh, u0, v0, u1, v1, col, thick=1, glow=None, g=0):
+    """A straight line between two points given as fractions of the face."""
+    x0, y0, x1, y1 = u0 * fw, v0 * fh, u1 * fw, v1 * fh
+    n = int(max(abs(x1 - x0), abs(y1 - y0)) * 2) + 1
+    c = rgb(col)
+    for i in range(n + 1):
+        t = i / float(n)
+        x, y = x0 + (x1 - x0) * t, y0 + (y1 - y0) * t
+        for dy in range(thick):
+            for dx in range(thick):
+                xx, yy = int(x) + dx, int(y) + dy
+                if 0 <= xx < fw and 0 <= yy < fh:
+                    img[yy, xx] = c
+                    if glow is not None and g:
+                        glow[yy, xx] = g
+
+
+def mirror_u(u):
+    return 1.0 - u
 
 
 def draw_eyes(img, glow, fw, fh, kind, pal):
@@ -176,14 +269,18 @@ def paint_sheet(pal, k, pos):
         entry = pal["m"][c["mat"]]
         for face, (u, v, fw, fh) in T.face_rects(c, k, pos[i]).items():
             img, g = paint_face(entry, face, fw, fh, (c["name"], face))
-            if c["paint"] and face == "north":
+            if c["paint"] in DECALS:
+                DECALS[c["paint"]](img, g, face, fw, fh, pal)
+            elif c["paint"] and face == "north":
                 draw_eyes(img, g, fw, fh, c["paint"], pal)
             rgba = np.concatenate([img, np.full((fh, fw, 1), 255, np.float32)], axis=2)
             base[v:v + fh, u:u + fw] = rgba
             gcol = np.zeros((fh, fw, 4), np.float32)
             src = np.array(hexrgb(color_of(entry)), np.float32) if kind_of(entry) == "glow" else gl_rgb
-            if c["paint"] and face == "north":
+            if c["paint"] and c["paint"] not in DECALS and face == "north":
                 src = np.array(hexrgb(pal["eye"]), np.float32)
+            elif c["paint"] in DECALS:
+                src = np.array(hexrgb(pal.get("eye", "#ffffff")), np.float32) if pal.get("glow_eye", True) else src
             gcol[..., :3] = src
             gcol[..., 3] = g
             glow[v:v + fh, u:u + fw] = gcol

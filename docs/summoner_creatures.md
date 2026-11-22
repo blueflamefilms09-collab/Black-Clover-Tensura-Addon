@@ -39,3 +39,6 @@ Script-written, **not made in Blockbench or Blender** (neither app runs in this 
 
 ## Not included
 The Allen boss and his seven forms, the other 31 summons, Griff, Summon Cards / Grimoire drops and the Hell Mode race line (designs stay in the owner's master file for later releases).
+
+## Second pass (4.106.1): models remade
+Nine models were remade from the reference pack and three fine-tuned (list in the changelog): Hayate, Cerorin, Rocanel, Mira, Hatch, Ellie, Okiyosan, Dradra and Merus replace the first-pass models; Tsubame, Solarin and Genbu were refined. The painter now has decals (faces, seams, bibs, bracers, feathers), a 512 sheet and stone / feather / hair / chitin / membrane materials. Species ids, clip names, hit boxes and stats are unchanged. Worst-case draw cost: 612 quads per creature (Dradra), one creature per cast and one performer per owner, so the budget of 4.106.0 still holds. Still script-written, not made in an app; the in-game look is unchecked.
