@@ -69,7 +69,40 @@ public final class ShishouAbilities {
             }
         }
         sound(c.level(), at, SoundEvents.ENDERMAN_TELEPORT, 0.7f, 1.4f);
+        if (ShishouConfig.tkAttacks() && c.wielder() != null) {                              // 4.104.0: after the lift he hurls them where the wielder looks (one scheduled call, at most four creatures)
+            final ServerPlayer w = c.wielder();
+            final ServerLevel sl = c.level();
+            final List<Mob> lifted = new java.util.ArrayList<>(list);
+            SpellRuntime.later(sl, ShishouCanon.GRASP_LIFT_TICKS, () -> {
+                if (SpellRuntime.gone(w, sl)) return;
+                hurl(c, lifted, w.getLookAngle(), dmg);
+            });
+        }
         return ShishouSpells.Result.of(ShishouSkill.TELEKINETIC_GRASP.manaCost(), ShishouSkill.TELEKINETIC_GRASP.cooldown());
+    }
+
+    /** The hurl: each lifted creature that is still alive flies along the look direction and takes a hard hit; a moment later the creatures near where it came down take a share of that hit. */
+    private static void hurl(ShishouSpells.Caster c, List<Mob> lifted, Vec3 look, double dmg) {
+        ServerLevel sl = c.level();
+        Vec3 dir = look.lengthSqr() < 1.0e-4 ? new Vec3(0, 0, 1) : look.normalize();
+        for (Mob m : lifted) {
+            if (!m.isAlive()) continue;
+            m.removeEffect(MobEffects.LEVITATION);
+            m.setDeltaMovement(dir.scale(ShishouCanon.GRASP_HURL_SPEED).add(0.0, 0.15, 0.0));
+            m.hurtMarked = true;
+            m.fallDistance = 0.0f;
+            ShishouSpells.hit(c, m, dmg * ShishouCanon.GRASP_HURL_HIT);
+            final int id = m.getId();
+            SpellRuntime.later(sl, ShishouCanon.GRASP_HURL_FLIGHT, () -> {
+                net.minecraft.world.entity.Entity e = sl.getEntity(id);
+                if (!(e instanceof Mob landed) || !landed.isAlive() || c.wielder() == null) return;
+                for (Mob other : ShishouTargets.hostilesNear(sl, c.wielder(), landed.position(), ShishouCanon.GRASP_IMPACT_RADIUS, ShishouCanon.GRASP_TARGETS)) {
+                    if (other != landed) ShishouSpells.hit(c, other, dmg * ShishouCanon.GRASP_HURL_HIT * ShishouCanon.GRASP_IMPACT_SHARE);
+                }
+                dot(sl, light(), landed.getX(), landed.getY() + 0.5, landed.getZ());
+            });
+        }
+        sound(sl, c.wielder() == null ? lifted.get(0).position() : c.wielder().position(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, 0.9f, 0.6f);
     }
 
     // ================================================================ Akashic Index

@@ -29,7 +29,7 @@ public final class GoliathEntities {
 
     /** The spawn egg: pale stone with amber cracks. */
     public static final DeferredItem<DeferredSpawnEggItem> GOLIATH_EGG = NUItems.ITEMS.register("goliath_spawn_egg",
-            () -> new DeferredSpawnEggItem(GOLIATH, 0x9C998C, 0xFFAA33, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(GOLIATH, 0x9C998C, 0xFFAA33, new Item.Properties().rarity(net.minecraft.world.item.Rarity.RARE)));
 
     /** The egg, for the creative tab. */
     public static List<DeferredItem<DeferredSpawnEggItem>> spawnEggs() { return List.of(GOLIATH_EGG); }

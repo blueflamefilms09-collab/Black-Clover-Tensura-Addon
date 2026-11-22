@@ -14,7 +14,7 @@ public final class StoneConfig {
     public static final ModConfigSpec.IntValue AWAY_DAYS;
     public static final ModConfigSpec.ConfigValue<String> ON_DEATH;
     // ---- Phase B (docs/infinity_stones_phase_b.md)
-    public static final ModConfigSpec.BooleanValue CARRIERS, CARRIER_SURGE, SYNERGY, COMBOS, SNAP, SNAP_ERASE, SNAP_TOLL, SCEPTER, TELEKINESIS, MIND_LINK, MASTERY_BONUS, ALTAR, ALTAR_REQUIRED;
+    public static final ModConfigSpec.BooleanValue CARRIERS, CARRIER_SURGE, SYNERGY, COMBOS, SNAP, SNAP_ERASE, SNAP_TOLL, SCEPTER, TELEKINESIS, TK_SWEEP, MIND_LINK, MASTERY_BONUS, ALTAR, ALTAR_REQUIRED;
     public static final ModConfigSpec.IntValue SNAP_COOLDOWN_DAYS, MAX_LIFTS, MAX_LINKS;
 
     static {
@@ -40,6 +40,7 @@ public final class StoneConfig {
         SNAP_COOLDOWN_DAYS = b.comment("In-game days before the same player can Snap again (one game day is 20 real minutes).").defineInRange("snapCooldownDays", 7, 1, 365);
         SCEPTER = b.comment("Loki's Scepter (a weapon that holds the Mind Stone): energy blast, barrier, and the Mind Stone's telekinesis and Mind Link. No mind control. false = the item still exists but its acts refuse.").define("scepter", true);
         TELEKINESIS = b.comment("Mind Stone telekinesis: lift one mob for three seconds and hurl it. Never a player or a boss.").define("telekinesis", true);
+        TK_SWEEP = b.comment("4.104.0: the thrown mob is a missile: it flies along your look and hurts every mob its path crosses (up to six, never a player or a boss) and bursts where it ends. false: only the thrown mob is hurt, as before.").define("telekinesisSweep", true);
         MAX_LIFTS = b.comment("Most things lifted by telekinesis on the whole server at once.").defineInRange("maxLifts", 24, 1, 200);
         MIND_LINK = b.comment("Mind Link: for 30 seconds the bearer's good effects are shared with up to four allied players or own pets nearby.").define("mindLink", true);
         MAX_LINKS = b.comment("Most Mind Links open on the whole server at once.").defineInRange("maxLinks", 24, 1, 200);
@@ -91,6 +92,8 @@ public final class StoneConfig {
     public static boolean scepter() { return enabled() && get(SCEPTER); }
 
     public static boolean telekinesis() { return get(TELEKINESIS); }
+
+    public static boolean telekinesisSweep() { return get(TK_SWEEP); }
 
     public static int maxLifts() { return get(MAX_LIFTS); }
 

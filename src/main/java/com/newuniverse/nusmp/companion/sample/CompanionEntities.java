@@ -31,7 +31,7 @@ public final class CompanionEntities {
 
     /** Charmy's cream and biscuit colours (the same two as her roster record). */
     public static final DeferredItem<DeferredSpawnEggItem> CHARMY_EGG = ITEMS.register("companion_charmy_spawn_egg",
-            () -> new DeferredSpawnEggItem(CHARMY, 0xF4EAD0, 0xF0B070, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(CHARMY, 0xF4EAD0, 0xF0B070, new Item.Properties().rarity(net.minecraft.world.item.Rarity.UNCOMMON)));
 
     public static void init(IEventBus modBus) {
         TYPES.register(modBus);

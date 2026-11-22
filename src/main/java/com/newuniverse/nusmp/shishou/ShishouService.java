@@ -405,6 +405,10 @@ public final class ShishouService {
             if (t != 0L) give(p, t);
             return false;
         }
+        if (ShishouConfig.tkAttacks()) {                                                       // 4.104.0: he flies at once at what the wielder is looking at (one box query)
+            net.minecraft.world.entity.Mob aimed = ShishouTargets.aimedPrey(p, e, look);
+            if (aimed != null) e.setTarget(aimed);
+        }
         ShishouLive.COOLDOWNS.start(p.getUUID(), ShishouSkill.TELEKINESIS, now, ShishouSkill.TELEKINESIS.cooldown());
         ShishouSpells.fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), at, 6, 0.3);
         d.touch();

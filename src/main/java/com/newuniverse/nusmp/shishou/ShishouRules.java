@@ -155,7 +155,7 @@ public final class ShishouRules {
     public static double attackBonus(int level, int scalePercent) {
         int over = Math.max(0, clampLevel(level) - START_LEVEL);
         double b = (ATTACK_PER_LEVEL * over + ATTACK_PER_LEVEL_SQ * over * over) * Math.max(0, Math.min(1000, scalePercent)) / 100.0;
-        return Math.min(ATTACK_BONUS_CAP, b);
+        return Math.min(ATTACK_BONUS_CAP * Math.max(1.0, scalePercent / 100.0), b);
     }
 
     /** The attack damage the sword shows: 8.5 (a low magisteel sword) plus the level's growth. Level 10: 8.5, level 30: 21.9, level 50: 38.1, level 70: 57.1, level 100: 78.5. */

@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ArcConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES, LIGHT_DEATH_NOTE_LETHAL, TIER_POWERS;
+    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES, LIGHT_DEATH_NOTE_LETHAL, TIER_POWERS, EGG_RARITY;
     public static final ModConfigSpec.DoubleValue FLOOR_BOSS_CHANCE, TIER_POWER_SCALE;
     public static final ModConfigSpec.IntValue NPC_WANDER, TALK_COOLDOWN, TIER_BOSS_MAX;
 
@@ -44,6 +44,8 @@ public final class ArcConfig {
                 .define("tierPowers", true);
         TIER_POWER_SCALE = b.comment("3.39.0: multiplies the STRENGTH of every boss trait (radius, damage cut, percentages; never a duration). 1.0 = as designed (docs/bosses/tier_powers.md), 0.5 = half as strong, 2.0 = twice as strong.")
                 .defineInRange("tierPowerScale", 1.0, 0.5, 2.0);
+        EGG_RARITY = b.comment("4.104.0: a character's spawn egg takes its rarity from the character: a friendly character COMMON, a boss by tier (1 UNCOMMON, 2 and 3 RARE, 4 and 5 EPIC). false: every egg keeps the plain COMMON name.")
+                .define("eggRarityByTier", true);
         b.pop();
         SPEC = b.build();
     }
@@ -54,6 +56,8 @@ public final class ArcConfig {
     public static <T> T get(ModConfigSpec.ConfigValue<T> v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
     }
+
+    public static boolean eggRarity() { return get(EGG_RARITY); }
 
     public static boolean enabled() { return get(ENABLED); }
 

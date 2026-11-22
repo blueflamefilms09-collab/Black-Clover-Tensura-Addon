@@ -41,6 +41,8 @@ public final class ArcItems {
     public static ItemStack eggFor(String characterId) {
         ItemStack s = new ItemStack(SPAWN_EGG.get());
         s.set(CHARACTER.get(), characterId);
+        ArcCharacter c = ArcRoster.byId(characterId);
+        if (c != null && ArcConfig.eggRarity()) s.set(net.minecraft.core.component.DataComponents.RARITY, ArcEggRarity.of(c.isBoss(), c.tier()));   // 4.104.0: the egg's name colour follows the character
         return s;
     }
 

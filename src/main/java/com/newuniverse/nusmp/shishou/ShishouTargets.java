@@ -79,4 +79,20 @@ public final class ShishouTargets {
     public static List<Mob> hostilesNear(ServerLevel level, Player wielder, Vec3 center, double radius, int cap) {
         return near(level, Mob.class, center, radius, cap, m -> hostileFor(wielder, m));
     }
+
+    /** The creature nearest to the wielder's look line within 32 blocks that the sword may hunt, or null. */
+    public static net.minecraft.world.entity.Mob aimedPrey(net.minecraft.server.level.ServerPlayer p, ShishouEntity sword, Vec3 look) {
+        net.minecraft.world.phys.AABB box = p.getBoundingBox().expandTowards(look.scale(32.0)).inflate(3.0);
+        Vec3 eye = p.getEyePosition();
+        net.minecraft.world.entity.Mob best = null;
+        double bestAngle = 0.12;                                                              // about seven degrees off the crosshair
+        for (net.minecraft.world.entity.Mob m : p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box, m -> m.isAlive() && sword.isValidTarget(m) && !sword.isIgnored(m))) {
+            Vec3 to = m.position().add(0.0, m.getBbHeight() * 0.5, 0.0).subtract(eye);
+            double len = to.length();
+            if (len < 1.0e-3 || len > 32.0) continue;
+            double angle = Math.acos(Math.max(-1.0, Math.min(1.0, to.dot(look) / len)));
+            if (angle < bestAngle) { bestAngle = angle; best = m; }
+        }
+        return best;
+    }
 }

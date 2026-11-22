@@ -120,7 +120,7 @@ class ShishouSourceScanTest {
         int scans = 0;
         Matcher m = Pattern.compile("getEntitiesOfClass\\(").matcher(s);
         while (m.find()) scans++;
-        assertTrue(scans <= 3, "entity box queries stay in ShishouTargets.near, the clone cleanup and the hunt's one scan (ShishouGoals.scan): " + scans);
+        assertTrue(scans <= 4, "entity box queries stay in ShishouTargets.near, the clone cleanup, the hunt's one scan (ShishouGoals.scan) and the one aimed look of a throw (ShishouTargets.aimedPrey): " + scans);
         assertTrue(code(read("shishou/ShishouTargets.java")).contains("cap"), "the scan helper is capped");
         // the only chunk load is the rare recovery
         Matcher c = Pattern.compile("getChunk\\(").matcher(s);

@@ -24,6 +24,9 @@ public final class ShishouCanon {
 
     // ---------------------------------------------------------------- Telekinetic Grasp (Nennou): he lifts up to four creatures
     public static final double GRASP_RANGE = 22.0, GRASP_SPLASH = 3.5;
+    /** 4.104.0: the hurl after the lift: speed, share of the strike the hurled creature takes, the splash where it lands (a share of the hit, a radius). */
+    public static final double GRASP_HURL_SPEED = 1.7, GRASP_HURL_HIT = 2.0, GRASP_IMPACT_RADIUS = 2.5, GRASP_IMPACT_SHARE = 0.5;
+    public static final int GRASP_HURL_FLIGHT = 8;
     public static final int GRASP_TARGETS = 4, GRASP_LIFT_TICKS = 30, GRASP_LIFT_AMP = 3, GRASP_SLOW_TICKS = 60;
 
     // ---------------------------------------------------------------- Akashic Index: the record names its victims

@@ -49,7 +49,7 @@ public class DjinnWeaponItem extends Item {
 
     public static Properties props(Djinn d, boolean dark, boolean canon) {
         DjinnWeaponRules.Spec s = DjinnWeaponRules.spec(d, canon);
-        return new Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant().component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+        return new Properties().stacksTo(1).rarity(com.newuniverse.nusmp.relics.djinn.DjinnRarity.of(d)).fireResistant().component(DataComponents.UNBREAKABLE, new Unbreakable(false))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.withDefaultNamespace("base_attack_damage"),
                                 com.newuniverse.nusmp.relics.WeaponGrades.djinn(s.kind(), dark).damage() - 1.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

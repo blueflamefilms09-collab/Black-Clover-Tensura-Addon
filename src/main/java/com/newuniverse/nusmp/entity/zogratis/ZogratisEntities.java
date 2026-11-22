@@ -43,13 +43,13 @@ public final class ZogratisEntities {
 
     // ---------------------------------------------------------------- spawn eggs (bosses only)
     public static final DeferredItem<DeferredSpawnEggItem> DANTE_EGG = NUItems.ITEMS.register("dante_zogratis_spawn_egg",
-            () -> new DeferredSpawnEggItem(DANTE, 0x16141A, 0xD9A81E, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(DANTE, 0x16141A, 0xD9A81E, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final DeferredItem<DeferredSpawnEggItem> VANICA_EGG = NUItems.ITEMS.register("vanica_zogratis_spawn_egg",
-            () -> new DeferredSpawnEggItem(VANICA, 0x2A0A0E, 0xC4161C, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(VANICA, 0x2A0A0E, 0xC4161C, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final DeferredItem<DeferredSpawnEggItem> ZENON_EGG = NUItems.ITEMS.register("zenon_zogratis_spawn_egg",
-            () -> new DeferredSpawnEggItem(ZENON, 0xCFC8B6, 0x2B3B8F, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(ZENON, 0xCFC8B6, 0x2B3B8F, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final DeferredItem<DeferredSpawnEggItem> LUCIUS_EGG = NUItems.ITEMS.register("lucius_zogratis_spawn_egg",
-            () -> new DeferredSpawnEggItem(LUCIUS, 0xF2E6B0, 0xC8960C, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(LUCIUS, 0xF2E6B0, 0xC8960C, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
 
     /** The four eggs, for the creative tab. */
     public static List<DeferredItem<DeferredSpawnEggItem>> spawnEggs() { return List.of(DANTE_EGG, VANICA_EGG, ZENON_EGG, LUCIUS_EGG); }

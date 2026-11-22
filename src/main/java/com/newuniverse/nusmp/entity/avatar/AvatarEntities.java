@@ -37,7 +37,7 @@ public final class AvatarEntities {
             () -> EntityType.Builder.<DevilAvatarBoss>of(DevilAvatarBoss::new, MobCategory.MONSTER).sized(0.9f, 3.2f).fireImmune().clientTrackingRange(24).updateInterval(1).build("devil_avatar"));
 
     public static final DeferredItem<DeferredSpawnEggItem> DEVIL_AVATAR_EGG = NUItems.ITEMS.register("devil_avatar_spawn_egg",
-            () -> new DeferredSpawnEggItem(DEVIL_AVATAR, 0x120D1C, 0x8A4DE0, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(DEVIL_AVATAR, 0x120D1C, 0x8A4DE0, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
 
     /** The egg, for the creative tab. */
     public static List<DeferredItem<DeferredSpawnEggItem>> spawnEggs() { return List.of(DEVIL_AVATAR_EGG); }

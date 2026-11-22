@@ -23,7 +23,7 @@ public final class DjinnItems {
 
     static {
         for (Djinn d : Djinn.values())
-            SEALS.put(d, NUItems.ITEMS.register("djinn_seal_" + d.id(), () -> new DjinnSealItem(d, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant())));
+            SEALS.put(d, NUItems.ITEMS.register("djinn_seal_" + d.id(), () -> new DjinnSealItem(d, new Item.Properties().stacksTo(1).rarity(DjinnRarity.of(d)).fireResistant())));
     }
 
     /** The Dark Rukh Shard (relics.djinn.dark): black rukh that turns a bound Djinn dark. Registered after the Seals; art by tools/relics/dark_item_icon.py. */

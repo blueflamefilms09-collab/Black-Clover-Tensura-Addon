@@ -37,7 +37,7 @@ public final class CharybdisEntities {
 
     // ---------------------------------------------------------------- spawn egg
     public static final DeferredItem<DeferredSpawnEggItem> CHARYBDIS_SPAWN_EGG = NUItems.ITEMS.register("charybdis_spawn_egg",
-            () -> new DeferredSpawnEggItem(CHARYBDIS_SPAWN, 0x0E4A5C, 0x4FF2E6, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(CHARYBDIS_SPAWN, 0x0E4A5C, 0x4FF2E6, new Item.Properties().rarity(net.minecraft.world.item.Rarity.RARE)));
 
     /** The egg, for the creative tab. */
     public static List<DeferredItem<DeferredSpawnEggItem>> spawnEggs() { return List.of(CHARYBDIS_SPAWN_EGG); }

@@ -12,11 +12,11 @@ import java.util.Map;
  */
 public final class ShishouConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, VOICE, NATURAL, MINION_EATS_LOOT, MINION_AUTOCAST, HELD_AUTOCAST, ALLOW_BROADCAST, SENSE_NEUTRALS, PATROL, FEED, GRANT_SKILL, BOUNCE, FLURRY_FAST;
+    public static final ModConfigSpec.BooleanValue TK_ATTACKS, ENABLED, VOICE, NATURAL, MINION_EATS_LOOT, MINION_AUTOCAST, HELD_AUTOCAST, ALLOW_BROADCAST, SENSE_NEUTRALS, PATROL, FEED, GRANT_SKILL, BOUNCE, FLURRY_FAST;
     /** Rework: the pet mode of the thrown sword, the canon passives of the new skills, and the compat switches (borrowed skills of other mods). */
     public static final ModConfigSpec.BooleanValue PET_MODE, CANON_PASSIVES, COMPAT, COMPAT_TENSURA, COMPAT_NIGHTMARES, COMPAT_MYSTICISM, COMPAT_MULTIVERSE;
     public static final ModConfigSpec.IntValue BORROW_GAP;
-    public static final ModConfigSpec.DoubleValue NATURAL_CHANCE, STRIKE_CAP, VIBRATION_PCT, FLAME_CAP, LIGHTNING_CAP, DIVINE_CAP;
+    public static final ModConfigSpec.DoubleValue NATURAL_CHANCE, STRIKE_CAP, VIBRATION_PCT, FLAME_CAP, LIGHTNING_CAP, DIVINE_CAP, POWER_BOOST;
     public static final ModConfigSpec.IntValue DORMANT_KILLS, DORMANT_DAYS, RESERVE_DAYS, STEAL_SCALE, STORAGE_ROWS, MINION_LEASH,
             HUNT_RADIUS, HUNT_SCAN_TICKS, HUNT_EXAMINED, CHARGE_PERCENT, START_LEVEL, EXP_PERCENT, DAMAGE_PERCENT, FEED_PER_CLICK, FEED_GAP;
     private static final Map<ShishouSkill, ModConfigSpec.BooleanValue> SKILLS = new EnumMap<>(ShishouSkill.class);
@@ -50,6 +50,8 @@ public final class ShishouConfig {
         b.pop();
         b.push("combat");
         DAMAGE_PERCENT = b.comment("How steeply his attack and strike grow with the level, in percent (100 = as listed: 8.5 at the start, about 38 at level 50, 78.5 at 100). The start (a low magisteel sword) does not change.").defineInRange("damageScalePercent", 100, 0, 500);
+        TK_ATTACKS = b.comment("4.104.0: Telekinesis attacks. Telekinetic Grasp lifts up to four creatures and then hurls them forward (each hit hard, the others near where it lands are hurt too); a sword thrown out at once goes for the creature you are looking at. false: Grasp only lifts, and a thrown sword waits to find prey, as before.").define("telekinesisAttacks", true);
+        POWER_BOOST = b.comment("4.104.0: how much stronger Shishou hits than before, on top of damageScalePercent and strikeCap: his growth of attack with the level, the cap of that growth and the cap of a strike are all multiplied by this. 1.0 = exactly as before 4.104.0 (8.5 at the start, 78.5 at level 100); the start does not change.").defineInRange("powerBoost", 1.75, 1.0, 5.0);
         STRIKE_CAP = b.comment("Most damage of one telekinetic strike (2.0.0: 60).").defineInRange("strikeCap", ShishouRules.STRIKE_CAP, 1.0, 1000.0);
         VIBRATION_PCT = b.comment("Vibration Magic: the share of a hit that bypasses armour as extra damage (never above this).").defineInRange("vibrationShare", 0.2, 0.0, 0.5);
         FLAME_CAP = b.comment("Black Flame: most damage of one pulse (every half second for five seconds).").defineInRange("blackFlamePulseCap", 5.0, 0.5, 50.0);
@@ -116,7 +118,12 @@ public final class ShishouConfig {
     public static int dormantKills() { return get(DORMANT_KILLS); }
     public static int dormantDays() { return get(DORMANT_DAYS); }
     public static int reserveDays() { return get(RESERVE_DAYS); }
-    public static double strikeCap() { return get(STRIKE_CAP); }
+    public static boolean tkAttacks() { return get(TK_ATTACKS); }
+
+    public static double powerBoost() { return get(POWER_BOOST); }
+
+    /** The cap of one strike, lifted by the power boost. */
+    public static double strikeCap() { return get(STRIKE_CAP) * powerBoost(); }
     public static double vibrationShare() { return get(VIBRATION_PCT); }
     public static double flameCap() { return get(FLAME_CAP); }
     public static double lightningCap() { return get(LIGHTNING_CAP); }
@@ -156,7 +163,8 @@ public final class ShishouConfig {
     public static int chargePercent() { return get(CHARGE_PERCENT); }
     public static int startLevel() { return Math.max(ShishouRules.START_LEVEL, get(START_LEVEL)); }
     public static int expPercent() { return get(EXP_PERCENT); }
-    public static int damagePercent() { return get(DAMAGE_PERCENT); }
+    /** The damage scale in percent, lifted by the power boost (the attack growth is the part that scales). */
+    public static int damagePercent() { return (int) Math.min(1000, Math.round(get(DAMAGE_PERCENT) * powerBoost())); }
     public static int feedPerClick() { return get(FEED_PER_CLICK); }
     public static int feedGap() { return get(FEED_GAP); }
     public static int storageRows() { return ShishouStorageRules.rows(get(STORAGE_ROWS)); }

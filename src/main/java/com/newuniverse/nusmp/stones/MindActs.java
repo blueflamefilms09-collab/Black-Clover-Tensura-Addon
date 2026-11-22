@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -64,7 +65,31 @@ final class MindActs {
         t.fallDistance = 0;
         StoneActs.hit(p, t, (float) (CarrierRules.THROW_DAMAGE * StoneSlot.scale(p)));
         StoneActs.flash(p, InfinityStone.MIND, t.position(), 2.0);
+        if (StoneConfig.telekinesisSweep()) sweep(p, t, look);
     }
+
+    /** 4.104.0: what the missile crosses. Mobs within 1.6 blocks of the 14-block line ahead of the thrown one take 60% of the throw (at most six, never a player, a boss or an ally), the end of the line bursts. One box query. */
+    private static void sweep(ServerPlayer p, LivingEntity thrown, Vec3 look) {
+        Vec3 from = thrown.position().add(0.0, thrown.getBbHeight() * 0.5, 0.0);
+        Vec3 to = from.add(look.scale(SWEEP_LENGTH));
+        AABB box = new AABB(from, to).inflate(SWEEP_WIDTH);
+        int hits = 0;
+        for (LivingEntity m : p.serverLevel().getEntitiesOfClass(LivingEntity.class, box, e -> e != thrown && e != p && e.isAlive() && !(e instanceof Player) && !SnapActs.isBoss(e) && !e.isAlliedTo(p))) {
+            if (hits >= SWEEP_MAX) break;
+            Vec3 c = m.position().add(0.0, m.getBbHeight() * 0.5, 0.0);
+            Vec3 d = to.subtract(from);
+            double along = Math.max(0.0, Math.min(1.0, c.subtract(from).dot(d) / d.lengthSqr()));
+            if (c.distanceTo(from.add(d.scale(along))) > SWEEP_WIDTH) continue;
+            StoneActs.hit(p, m, (float) (CarrierRules.THROW_DAMAGE * SWEEP_SHARE * StoneSlot.scale(p)));
+            m.setDeltaMovement(look.scale(0.9).add(0.0, 0.25, 0.0));
+            m.hurtMarked = true;
+            hits++;
+        }
+        StoneActs.flash(p, InfinityStone.MIND, to, 2.5);
+    }
+
+    private static final double SWEEP_LENGTH = 14.0, SWEEP_WIDTH = 1.6, SWEEP_SHARE = 0.6;
+    private static final int SWEEP_MAX = 6;
 
     /** Once a tick for each open lift (at most the cap): keep the thing before the bearer's eyes, throw it at the end, drop it if anything is wrong. */
     static void tickLift(MinecraftServer server, UUID owner) {

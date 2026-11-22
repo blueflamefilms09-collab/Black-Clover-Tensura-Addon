@@ -31,7 +31,7 @@ public final class OrderEntities {
                     .build("god_of_order"));
 
     public static final DeferredItem<DeferredSpawnEggItem> GOD_OF_ORDER_EGG = NUItems.ITEMS.register("god_of_order_spawn_egg",
-            () -> new DeferredSpawnEggItem(GOD_OF_ORDER, 0xF3EBD2, 0xC9A227, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(GOD_OF_ORDER, 0xF3EBD2, 0xC9A227, new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
 
     /** The paper the God hands over. */
     public static final DeferredItem<NoticeOfOrderItem> NOTICE = NUItems.ITEMS.register("notice_of_order",

@@ -59,7 +59,7 @@ public final class SealRegistry {
             () -> EntityType.Builder.<FloorWardenEntity>of(FloorWardenEntity::new, MobCategory.MONSTER).sized(1.4F, 3.2F).fireImmune().clientTrackingRange(10).build("floor_warden"));
 
     public static final DeferredItem<DeferredSpawnEggItem> FLOOR_WARDEN_EGG = NUItems.ITEMS.register("floor_warden_spawn_egg",
-            () -> new DeferredSpawnEggItem(FLOOR_WARDEN, 0x1A1026, 0x8A4DE0, new Item.Properties()));
+            () -> new DeferredSpawnEggItem(FLOOR_WARDEN, 0x1A1026, 0x8A4DE0, new Item.Properties().rarity(net.minecraft.world.item.Rarity.RARE)));
 
     public static void init(IEventBus modBus) {
         BLOCKS.register(modBus);
