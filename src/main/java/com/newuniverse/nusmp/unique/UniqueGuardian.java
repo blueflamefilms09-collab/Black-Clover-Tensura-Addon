@@ -36,6 +36,7 @@ import java.util.UUID;
  * normal sources (the loot pool) through the kind's own door and logs it. Event driven and bounded: a holder's belongings are looked at once a second per online player (inventory, ender chest, Curios, the cursor, the
  * open menu, one level into shulker boxes and bundles); a dropped unique is made indestructible and lifted out of the void; a destroyed item entity starts a short confirm clock; a copy that is simply not accounted for
  * starts the full grace clock; a sighting anywhere cancels either. Theft (another player now holds it) is a sighting, not a loss. It never scans the world, never loads a chunk and never creates an item.
+ * 4.103.2: with {@code floorOnly} (the default) only a dropped copy that is destroyed on the floor goes back; nothing else (a backpack, a storage mod, an absent holder, a removed container) counts as lost. Cost: it removes work.
  * Worst case: per player-second one pass over at most about 200 stacks (a few instanceof checks each) and over the tracked records (a few hundred at most); per tick at most 16 entity look-ups (64 every fourth tick), one
  * pass over the records a second, one verification pass a minute; nothing is sent over the network. Server thread only.
  */
@@ -141,6 +142,7 @@ public final class UniqueGuardian {
         if (!p.isAlive()) return;
         UUID me = p.getUUID();
         UniqueData d = sd.data();
+        if (UniqueConfig.floorOnly()) return;                                                      // 4.103.2: not seeing a copy (a backpack, a storage mod) is never a loss
         for (UniqueRecord r : d.all()) {
             if (r.state == UniqueState.HELD && me.equals(r.holder) && !FOUND.contains(r.id) && d.markMissing(r.id, c.tick, false)) {
                 sd.setDirty();
@@ -291,7 +293,7 @@ public final class UniqueGuardian {
         List<UniqueRecord> due = null;
         for (UniqueRecord r : sd.data().all()) {
             if (only != null && !only.equals(r.id)) continue;
-            if (UniqueRules.verdict(r, nowTick, grace) == UniqueRules.Verdict.RELEASE) {
+            if (UniqueRules.verdict(r, nowTick, grace, UniqueConfig.floorOnly()) == UniqueRules.Verdict.RELEASE) {
                 if (due == null) due = new ArrayList<>(2);
                 due.add(r);
             }
@@ -312,6 +314,8 @@ public final class UniqueGuardian {
             UniqueKind k = UniqueKinds.kindOfId(r.id);
             if (k == null || !k.exists(sv, r.id)) {
                 giveBack(sv, r, "", true);
+            } else if (UniqueConfig.floorOnly()) {
+                continue;                                                                          // 4.103.2: only a destroyed floor drop returns a unique
             } else if (UniqueRules.absent(r, r.holder != null && sv.getPlayerList().getPlayer(r.holder) != null, ms, absence)) {
                 giveBack(sv, r, "its holder has been away for " + UniqueConfig.absenceDays() + " days", false);
             } else if (r.state == UniqueState.CONTAINED && r.block != UniqueRecord.NO_BLOCK) {

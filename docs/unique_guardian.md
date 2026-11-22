@@ -89,3 +89,6 @@ Everything is on the server, nothing is sent to clients (no packets), nothing ru
 * Boss drops, the sin weapons, and the Hero projection items are not 1-of-1s in this sense and are not covered.
 * The Order's own rule that marks a relic as lost the moment its item entity is destroyed stays as it was; the guardian then retires its record without a second return.
 * The mod could not be compiled or played in the session that wrote this. The pure rules are unit tested; the glue code that touches the game has not been built or run yet, so CI (build plus the server smoke test) is its first check.
+
+## Floor only (4.103.2)
+`unique.floorOnly` (default true): a unique goes back into the pool only when its dropped item entity is destroyed on the floor (killed, or lost in the void). A copy that is not seen in the holder's inventory, ender chest, Curios or open menu (a Sophisticated Backpack, a storage or drawer mod, a vault) is never counted as lost; holder absence and a removed container no longer free it. `floorOnly` false restores the 4.23.0 clocks. The Holy Weapons' bond rule is unchanged. Cost: removes work.

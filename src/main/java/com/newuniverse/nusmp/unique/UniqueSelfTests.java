@@ -146,6 +146,7 @@ public final class UniqueSelfTests {
         UniqueKinds.addForTest(k);
         long grace = UniqueRules.graceTicks(UniqueConfig.graceSeconds());
         try {
+            UniqueConfig.testFloorOnly = false;                                                   // the 4.23.0 clocks first
             a.getInventory().clearContent();
             b.getInventory().clearContent();
             // a carries the unique: it is tracked as held by a, and a scan that finds it leaves it accounted for
@@ -190,8 +191,25 @@ public final class UniqueSelfTests {
             d.markMissing(TestKind.ID, t2, true);
             UniqueGuardian.confirmPass(server, t2 + UniqueRules.CONFIRM_TICKS, TestKind.ID);
             if (k.released != 2) return Result.fail("a confirmed destroyed copy did not go back into the pool");
-            return Result.ok("held, theft, grace, destroyed once, tracked again and the confirm clock hold");
+            // 4.103.2 floorOnly: a copy that is just not seen (a backpack) never goes back; only a destroyed floor drop does
+            UniqueConfig.testFloorOnly = true;
+            k.alive = true;
+            b.getInventory().clearContent();
+            b.getInventory().add(k.stack());
+            UniqueGuardian.scan(b, null);
+            b.getInventory().clearContent();                                                      // into a backpack the scan cannot see
+            long t3 = level.getGameTime();
+            UniqueGuardian.scan(b, null);
+            if (d.get(TestKind.ID).missing()) return Result.fail("floorOnly: a copy that is not seen was counted as missing");
+            d.markMissing(TestKind.ID, t3, false);
+            UniqueGuardian.confirmPass(server, t3 + grace * 5, TestKind.ID);
+            if (k.released != 2) return Result.fail("floorOnly: an unconfirmed copy went back into the pool");
+            d.markMissing(TestKind.ID, t3, true);
+            UniqueGuardian.confirmPass(server, t3 + UniqueRules.CONFIRM_TICKS, TestKind.ID);
+            if (k.released != 3) return Result.fail("floorOnly: a destroyed floor drop did not go back into the pool");
+            return Result.ok("held, theft, grace, destroyed once, tracked again, the confirm clock and floor-only hold");
         } finally {
+            UniqueConfig.testFloorOnly = null;
             UniqueKinds.removeForTest(k);
             d.remove(TestKind.ID);
             sd.setDirty();

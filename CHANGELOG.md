@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.103.2] — Unique Guardian: only a destroyed floor drop goes back into the pool
+- FIXED: a 1-of-1 that was not seen in its holder's inventory, ender chest, Curios or open menu started a grace clock and, after five minutes, went back into the loot pool (a duplicate could then appear). An item in a Sophisticated Backpack, a storage or drawer mod, a vault or any other modded container was counted as lost. Now (`nusmp-unique-server.toml`, `unique.floorOnly`, on): the only way a unique returns is when its dropped item is destroyed on the floor (removed from the world, lost in the void). Not seeing it never counts, a holder who stays away never frees it, and a removed container never frees it.
+- KEPT: `floorOnly` false restores the 4.23.0 clocks (`graceSeconds`, `absenceDays`, container check) exactly; dropped uniques are still indestructible and lifted out of the void; old copies after a return still dissolve; the Holy Weapons' bond rule (holder away for good) is unchanged; the `/multiverse unique release` operator door.
+- Cost: removes work (no per-player missing check, no minute-pass absence or container check). Not seen in a real game with a backpack mod; the self-test runs both the old clocks and the floor-only rule.
+
 ## [4.103.1] — Goku's EP is gentle: 1 to 10 billion, never above 100 billion
 - REPLACED: Goku's default EP ladder, 1 trillion in Base to 500 trillion in his last form, was far too high for servers that keep Tensura's EP scaling on. It is now 1 billion to 10 billion (`goku_boss.epStart`, `epEnd`).
 - NEW: `goku_boss.epTame` (on): the climb from Base to his last form is held to `epMaxClimb` (10x) and his last form never goes above `epCeiling` (100 billion), whatever the numbers or the players say. The ladder is slid down, never squashed, and it also pulls down an old config that still says 1 trillion / 500 trillion. The players still raise his Base (smart spawn) and the one-hundredth floor stays, both only up to the ceiling.

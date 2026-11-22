@@ -26,6 +26,12 @@ public final class UniqueRules {
         return nowTick - r.missingSince >= wait ? Verdict.RELEASE : Verdict.NONE;
     }
 
+    /** 4.103.2: with {@code floorOnly} only a copy whose item entity was destroyed on the floor ({@code confirmed}) is ever gone; an unaccounted-for copy (a backpack, a storage mod) never is. */
+    public static Verdict verdict(UniqueRecord r, long nowTick, long graceTicks, boolean floorOnly) {
+        if (floorOnly && (r == null || !r.confirmed)) return Verdict.NONE;
+        return verdict(r, nowTick, graceTicks);
+    }
+
     /** The holder of a HELD copy has not been seen for {@code absenceMs} (0 = rule off) and is not online: the copy is gone for good. */
     public static boolean absent(UniqueRecord r, boolean holderOnline, long nowMs, long absenceMs) {
         return r != null && absenceMs > 0 && r.state == UniqueState.HELD && r.holder != null && !holderOnline && r.seenMs > 0 && nowMs - r.seenMs >= absenceMs;
