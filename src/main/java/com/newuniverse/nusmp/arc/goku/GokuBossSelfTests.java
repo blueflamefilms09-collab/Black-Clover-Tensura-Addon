@@ -32,6 +32,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.arts", GokuBossSelfTests::arts);
         SelfTests.register("goku.boss.pools", GokuBossSelfTests::pools);
         SelfTests.register("goku.boss.formbar", GokuBossSelfTests::formbar);
+        SelfTests.register("goku.boss.truehit", GokuBossSelfTests::truehit);
         GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
@@ -236,6 +237,42 @@ public final class GokuBossSelfTests {
             if (BossSpeech.say(g, BossLines.GOKU, "taunt") && BossSpeech.say(g, BossLines.GOKU, "taunt")) bad.add("the taunt group did not rest");
             BossSpeech.forget(g.getUUID());
             return bad.isEmpty() ? SelfTests.Result.ok("Goku's arts fired: flare blinded " + blinded + ", cage hit " + cage + ", disc hit " + disc)
+                    : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad));
+        } finally {
+            if (foe != null) foe.discard();
+            if (boss != null) boss.discard();
+        }
+    }
+
+    /** 4.107.0: the true part of a blow really takes health (also with the foe inside its hit-immunity), the damage tags are real, and the power-up multiplies. */
+    private static SelfTests.Result truehit(net.minecraft.server.MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        if (level == null) return SelfTests.Result.ok("skipped: no overworld");
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!GokuBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (GokuBoss.liveCount() >= GokuBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + GokuBoss.liveCount() + " Goku bosses already stand");
+        GokuBoss boss = null;
+        LivingEntity foe = null;
+        try {
+            Vec3 where = Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 8);
+            ArcSpawner.Result r = ArcSpawner.summon(level, GokuBoss.CHARACTER, where, 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof GokuBoss g)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = g;
+            foe = ArtTestFoe.make(level, where.add(5, 0, 0), g.getEyePosition());
+            if (foe == null) return SelfTests.Result.ok("skipped: no test foe could be made");
+            List<String> bad = new ArrayList<>();
+            foe.invulnerableTime = 20;                                   // inside its hit-immunity: the true part must still count
+            float lost = g.trueForTest(foe, 1.0f);
+            if (!(lost > 0.5f)) bad.add("1 true damage inside hit-immunity took " + lost);
+            var types = level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE);
+            var key = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("anime_multiverse", "goku_true"));
+            var holder = types.getHolder(key);
+            if (holder.isEmpty()) bad.add("the damage type goku_true is not registered");
+            else for (var tag : new net.minecraft.tags.TagKey[]{net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR, net.minecraft.tags.DamageTypeTags.BYPASSES_SHIELD, net.minecraft.tags.DamageTypeTags.BYPASSES_COOLDOWN, net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY})
+                if (!holder.get().is(tag)) bad.add("goku_true is not in " + tag.location());
+            if (GokuBossMath.powered(1.0, 1.5, true, 100.0) != 1.5) bad.add("the power-up does not multiply");
+            return bad.isEmpty() ? SelfTests.Result.ok("true damage took " + lost + " health inside hit-immunity; tags and power-up are real")
                     : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad));
         } finally {
             if (foe != null) foe.discard();

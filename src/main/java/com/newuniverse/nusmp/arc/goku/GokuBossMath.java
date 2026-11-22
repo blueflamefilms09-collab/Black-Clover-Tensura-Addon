@@ -187,4 +187,40 @@ public final class GokuBossMath {
         float tp = (float) (d * t), sp = (float) (d * s);
         return new float[] {d - tp - sp, tp, sp};
     }
+
+    // ------------------------------------------------------------------ 4.107.0: true damage that always counts
+    /** The most of a victim's health the guaranteed floor of the true part may be (a blow's true part never takes more than this share of max health on top of the blow). */
+    public static final double MAX_TRUE_FLOOR = 0.10;
+
+    /**
+     * The true part of one blow: the share of the blow ({@code share} x {@code k}), but at least {@code floor} x {@code k} of the victim's MAXIMUM health, so a victim with a huge EP (whose normal
+     * blow is cut to almost nothing) still feels the true damage. Bad numbers read as 0; the floor is held to {@link #MAX_TRUE_FLOOR}. {@code floor} 0 = the plain share (the 4.103.0 behaviour).
+     */
+    public static float trueAmount(float dealt, double share, double k, float victimMaxHealth, double floor) {
+        float d = Float.isNaN(dealt) || dealt < 0f ? 0f : dealt;
+        double sh = Double.isNaN(share) ? 0.0 : Math.max(0.0, Math.min(0.8, share));
+        double kk = Double.isNaN(k) ? 0.0 : Math.max(0.0, Math.min(1.0, k));
+        double fl = Double.isNaN(floor) ? 0.0 : Math.max(0.0, Math.min(MAX_TRUE_FLOOR, floor));
+        float mh = Float.isNaN(victimMaxHealth) || victimMaxHealth < 0f ? 0f : victimMaxHealth;
+        return (float) Math.max(d * sh * kk, mh * fl * kk);
+    }
+
+    /** How much of an intended true hit another mod (or a rule) ate: intended minus the health really lost, never negative; losses within 5% count as full. */
+    public static float missing(float intended, float lost) {
+        if (Float.isNaN(intended) || intended <= 0f) return 0f;
+        float l = Float.isNaN(lost) || lost < 0f ? 0f : lost;
+        float m = intended - l;
+        return m <= intended * 0.05f ? 0f : m;
+    }
+
+    /** 4.107.0: his punch gap with the power-up: 20% shorter, never below 6 ticks. */
+    public static int quickGap(int gap, boolean powerUp) {
+        return powerUp ? Math.max(6, (int) Math.round(gap * 0.8)) : gap;
+    }
+
+    /** 4.107.0: a factor with the power-up: x{@code mul} when on (bad mul reads as 1), then held to {@code max}. */
+    public static double powered(double factor, double mul, boolean on, double max) {
+        double m = Double.isNaN(mul) || mul <= 0.0 ? 1.0 : mul;
+        return Math.min(max, on ? factor * m : factor);
+    }
 }

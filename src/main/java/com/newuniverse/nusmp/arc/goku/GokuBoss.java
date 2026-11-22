@@ -23,6 +23,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -267,7 +268,9 @@ public class GokuBoss extends ArcBoss {
         nextPunchAt = tickCount + GokuBossConfig.punchGap();
         getLookControl().setLookAt(t, 60f, 60f);
         swing((tickCount / GokuBossConfig.punchGap()) % 2 == 0 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+        Vec3 fist = position().add(0, getBbHeight() * 0.7, 0);
         if (strike(t, base() * 0.7f, false)) {
+            GokuFx.trail(sl, fist, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()));
             Vec3 away = t.position().subtract(position()).multiply(1, 0, 1);
             if (away.lengthSqr() > 1e-4) t.knockback(0.7, -away.x, -away.z);
             GokuFx.burst(sl, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()), 5);
@@ -418,8 +421,10 @@ public class GokuBoss extends ArcBoss {
     }
 
     private void applyScaling(GokuBossMath.Params params) {
-        healthFactor = omega.health(GokuBossMath.healthFactor(reading, players, params)) * GokuBossMath.barFactor(GokuBossConfig.formBars(), GokuBossConfig.formBarShare());
-        damageFactor = omega.damage(GokuBossMath.damageFactor(reading, players, params));
+        boolean up = GokuBossConfig.powerUp();           // 4.107.0: the power-up multipliers, after the preset / EP / player scaling and still under the factor caps
+        healthFactor = GokuBossMath.powered(omega.health(GokuBossMath.healthFactor(reading, players, params)), GokuBossConfig.powerHealth(), up, GokuBossMath.MAX_HEALTH_FACTOR * 2.0)
+                * GokuBossMath.barFactor(GokuBossConfig.formBars(), GokuBossConfig.formBarShare());
+        damageFactor = GokuBossMath.powered(omega.damage(GokuBossMath.damageFactor(reading, players, params)), GokuBossConfig.powerDamage(), up, GokuBossMath.MAX_DAMAGE_FACTOR * 2.0);
         pace = GokuBossMath.paceFactor(reading, params);
         AttributeInstance max = getAttribute(Attributes.MAX_HEALTH);
         if (max == null) return;
@@ -457,10 +462,12 @@ public class GokuBoss extends ArcBoss {
         int rgb = GokuLadder.rgb(pending);
         Vec3 mid = position().add(0, getBbHeight() * 0.5, 0);
         if (windLeft % 4 == 0) GokuFx.gather(sl, mid, 1.6, rgb, 8);
+        if (windLeft % 2 == 0) GokuFx.helix(sl, position(), getBbHeight() + 0.6, 1.1, rgb, windLeft);
         if (windLeft % 10 == 0) GokuFx.ring(sl, position(), 2.0 + (GokuLadder.WINDUP - windLeft) * 0.1, rgb, 14);
         if (windLeft == GokuLadder.WINDUP / 2) {
             entityData.set(FORM_IDX, pending);                  // the skin changes in the middle of the power-up
             GokuFx.burst(sl, mid, rgb, 16);
+            GokuFx.shockwave(sl, position(), rgb, 3.0);
             sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 2.5f, 1.3f);
         }
         if (windLeft <= 0) {
@@ -469,6 +476,7 @@ public class GokuBoss extends ArcBoss {
             pending = -1;
             GokuFx.burst(sl, mid, rgb, 20);
             GokuFx.ring(sl, position(), 6.0, rgb, 20);
+            GokuFx.shockwave(sl, position(), rgb, 6.0);
             sl.playSound(null, blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 3f, 0.7f);
             for (LivingEntity f : foes(6.0)) {                  // the shock of the power-up shoves, never hurts
                 Vec3 away = f.position().subtract(position()).multiply(1, 0, 1);
@@ -701,17 +709,52 @@ public class GokuBoss extends ArcBoss {
         if (!GokuBossConfig.splitDamage() || dealt <= 0f) return victim.hurt(normal, dealt);
         int top = GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST;
         double k = GokuBossMath.splitScale(formIdx(), top);
+        boolean guarantee = GokuBossConfig.trueGuarantee();
         float[] p = GokuBossMath.split(dealt, GokuBossConfig.trueShare() * k, GokuBossConfig.spiritShare() * k);
-        if (!victim.hurt(normal, p[0])) return false;                             // dodged or blocked: the rest goes with it
-        if (p[1] > 0f) {
-            victim.invulnerableTime = 0;
-            victim.hurt(own("goku_true"), p[1]);
-        }
-        if (p[2] > 0f) {
+        if (guarantee) p[1] = Math.max(p[1], GokuBossMath.trueAmount(dealt, 0.0, k, victim.getMaxHealth(), GokuBossConfig.trueFloor()));   // 4.107.0: never less than the floor, whatever the EP cut the blow to
+        boolean landed = victim.hurt(normal, p[0]);
+        if (!landed && !guarantee) return false;                                  // 4.103.0: dodged or blocked, the rest goes with it
+        boolean truth = p[1] > 0f && trueHit(victim, p[1], guarantee);
+        if (p[2] > 0f && (landed || guarantee)) {
             victim.invulnerableTime = 0;
             victim.hurt(own("goku_spirit"), p[2]);
         }
-        return true;
+        return landed || truth;
+    }
+
+    /** 4.107.0: delivers the true part. With the guarantee it also measures the health really lost and takes what another mod's rules ate directly (a lethal rest goes through the game's own death route). */
+    private boolean trueHit(LivingEntity victim, float amount, boolean guarantee) {
+        if (victim instanceof Player pl && (pl.isCreative() || pl.isSpectator())) return false;     // bypassing invulnerability must never reach a creative player
+        float before = victim.getHealth() + victim.getAbsorptionAmount();
+        victim.invulnerableTime = 0;
+        DamageSource src = own("goku_true");
+        victim.hurt(src, amount);
+        float lost = before - (victim.getHealth() + victim.getAbsorptionAmount());
+        if (guarantee && victim.isAlive()) {
+            float miss = GokuBossMath.missing(amount, lost);
+            if (miss > 0f) {
+                if (victim.getHealth() - miss > 0.5f) victim.setHealth(victim.getHealth() - miss);
+                else { victim.invulnerableTime = 0; victim.hurt(src, Float.MAX_VALUE); }
+                lost = before - (victim.getHealth() + victim.getAbsorptionAmount());
+            }
+        }
+        if (lost > 0f && GokuBossConfig.trueFeedback() && level() instanceof ServerLevel sl) trueFeedback(sl, victim, lost);
+        return lost > 0f || !victim.isAlive();
+    }
+
+    /** One flash and one action-bar line per victim per second (the map holds at most 16 victims and is cleared of the old ones). */
+    private final java.util.Map<java.util.UUID, Long> trueSeen = new java.util.HashMap<>();
+
+    private void trueFeedback(ServerLevel sl, LivingEntity victim, float lost) {
+        long now = sl.getGameTime();
+        Long last = trueSeen.get(victim.getUUID());
+        if (last != null && now - last < 20L) return;
+        if (trueSeen.size() >= 16) trueSeen.values().removeIf(t -> now - t > 40L);
+        if (trueSeen.size() >= 16) trueSeen.clear();
+        trueSeen.put(victim.getUUID(), now);
+        GokuFx.trueHit(sl, victim);
+        if (victim instanceof net.minecraft.server.level.ServerPlayer sp)
+            sp.displayClientMessage(Component.literal("True damage  -" + Math.round(lost * 10f) / 10f).withStyle(net.minecraft.ChatFormatting.AQUA, net.minecraft.ChatFormatting.BOLD), true);
     }
 
     private DamageSource own(String type) {
@@ -982,6 +1025,13 @@ public class GokuBoss extends ArcBoss {
 
     /** The damage scale of the framework chain (his damage factor, divided by the framework's tuning), for the Omega hit. */
     float damageScalePublic() { return damageScale(); }
+
+    /** For the self-test: delivers {@code amount} of guaranteed true damage and returns the health the victim really lost. */
+    float trueForTest(LivingEntity victim, float amount) {
+        float before = victim.getHealth() + victim.getAbsorptionAmount();
+        trueHit(victim, amount, true);
+        return before - (victim.getHealth() + victim.getAbsorptionAmount());
+    }
 
     /** A small scripted heal (the Second Wind): a deliberate, capped exception to the boss rule 'no heal in combat', like the Gates refill. */
     void healQuiet(float amount) {

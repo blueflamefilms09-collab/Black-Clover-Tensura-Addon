@@ -26,6 +26,9 @@ public final class GokuBossConfig {
     public static final ModConfigSpec.BooleanValue EP_LADDER, EP_TAME;
     public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_CEILING, EP_MAX_CLIMB, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
     public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
+    /** 4.107.0: stronger Goku, guaranteed true damage and the new VFX. */
+    public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH;
+    public static final ModConfigSpec.DoubleValue POWER_HEALTH, POWER_DAMAGE, TRUE_FLOOR;
     public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
     public static final ModConfigSpec.DoubleValue COUNTER_DAMAGE;
     public static final ModConfigSpec.BooleanValue SMART_FORMS;
@@ -62,6 +65,20 @@ public final class GokuBossConfig {
                 .defineInRange("trueShare", 0.30, 0.0, 0.8);
         SPIRIT_SHARE = b.comment("4.103.0: the share of a blow that is spiritual damage in his top form (about 40% of it in Base, rising evenly). 0..0.8; the two shares together are held to 0.9.")
                 .defineInRange("spiritShare", 0.20, 0.0, 0.8);
+        TRUE_GUARANTEE = b.comment("4.107.0: the true part of a blow ALWAYS lands: it is delivered even when the normal part is blocked or dodged, it ignores hit-immunity and shields, and if another mod's rules ate part of it the missing health is taken directly. False = the 4.103.0 delivery (the true part goes with a refused blow).")
+                .define("trueGuarantee", true);
+        TRUE_FLOOR = b.comment("4.107.0: the true part of a blow is at least this share of the victim's MAX health (scaled by his form like trueShare), so a victim with a huge EP still feels it. 0.03 = 3% in his top form, 1.2% in Base. 0 = only trueShare of the blow (the old way). Held to 0.10.")
+                .defineInRange("trueFloor", 0.03, 0.0, GokuBossMath.MAX_TRUE_FLOOR);
+        TRUE_FEEDBACK = b.comment("4.107.0: a white-blue flash on the victim and a short action-bar line when true damage lands (at most one line per second per victim).")
+                .define("trueFeedback", true);
+        POWER_UP = b.comment("4.107.0: Goku is stronger: his health and damage get the two multipliers below, on top of the preset, EP scaling and your own multipliers, and his free punches come 20% faster. False = exactly the Goku of 4.106.")
+                .define("powerUp", true);
+        POWER_HEALTH = b.comment("4.107.0: the power-up's health multiplier (1.5 = half as much again). Counts only with powerUp.")
+                .defineInRange("powerUpHealth", 1.5, 1.0, 10.0);
+        POWER_DAMAGE = b.comment("4.107.0: the power-up's damage multiplier (1.35). One hit on a player still ends at the hit caps. Counts only with powerUp.")
+                .defineInRange("powerUpDamage", 1.35, 1.0, 10.0);
+        FX_RICH = b.comment("4.107.0: the richer ki visuals (layered aura, flames, form-change shockwave, beam with a core, true-hit flash). Every particle still goes through the shared particle budget. False = the plain 4.106 visuals.")
+                .define("richFx", true);
         COUNTER_MODS = b.comment("4.103.0: namespaces of mods whose skills attack a fighter's strength (comma separated). The default is the Devil x Slime / High School DxD mod: Divine Dividing, Albion's poison, Compression Divider... Add any other mod's namespace.")
                 .define("counterMods", GokuCounters.DEFAULT_MODS);
         COUNTER_EFFECTS = b.comment("4.103.0: harmful effects of the counterMods do not take hold on him, and attribute changes those mods put on him are purged every half second. False = he can be Divided like anyone.")
@@ -180,7 +197,7 @@ public final class GokuBossConfig {
 
     public static double punchShare() { return get(PUNCH_SHARE); }
 
-    public static int punchGap() { return get(PUNCH_GAP); }
+    public static int punchGap() { return GokuBossMath.quickGap(get(PUNCH_GAP), powerUp()); }
 
     public static double formBarShare() { return get(FORM_BAR_SHARE); }
 
@@ -224,6 +241,20 @@ public final class GokuBossConfig {
     public static int maxFormSkip() { return smartForms() ? get(MAX_FORM_SKIP) : 0; }
 
     public static boolean splitDamage() { return get(SPLIT_DAMAGE); }
+
+    public static boolean trueGuarantee() { return get(TRUE_GUARANTEE); }
+
+    public static double trueFloor() { return get(TRUE_FLOOR); }
+
+    public static boolean trueFeedback() { return get(TRUE_FEEDBACK); }
+
+    public static boolean powerUp() { return get(POWER_UP); }
+
+    public static double powerHealth() { return get(POWER_HEALTH); }
+
+    public static double powerDamage() { return get(POWER_DAMAGE); }
+
+    public static boolean richFx() { return get(FX_RICH); }
 
     public static double trueShare() { return get(TRUE_SHARE); }
 
