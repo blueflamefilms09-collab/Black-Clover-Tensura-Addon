@@ -20783,5 +20783,6 @@
   "death.attack.anime_multiverse.goku_true": "%1$s was hit by a force nothing could block",
   "death.attack.anime_multiverse.goku_true.player": "%1$s was hit by a force nothing could block, from %2$s",
   "death.attack.anime_multiverse.goku_spirit": "%1$s had their spirit shaken apart",
-  "death.attack.anime_multiverse.goku_spirit.player": "%1$s had their spirit shaken apart by %2$s"
+  "death.attack.anime_multiverse.goku_spirit.player": "%1$s had their spirit shaken apart by %2$s",
+  "tooltip.anime_multiverse.weapon_hit": "Weapon hit %s"
 }

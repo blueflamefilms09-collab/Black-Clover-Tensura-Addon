@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.103.3] — One grade on an item's tooltip, not two
+- FIXED: an item that has a rank of its own showed two grades that could disagree. Black Sword Greed read "★★★★☆☆☆☆ Unique Grade" in the banner (the guess from its category and vanilla rarity) and "★★★★★★★ Genesis Grade" in a second line (its rank in `rankings.json`). The banner now shows the item's own rank (stars, grade and place) and the second rank line is gone; the banner colour, name colour and frame follow the same grade. A Djinn weapon keeps its per-hit number on a short "Weapon hit N" line.
+- KEPT: `rankDisplay.rankDisplayClassic` true keeps the plain "Rank: ..." text line (and the banner shows the plain grade); relic tooltips, categories, the Type row, the footer, every rank in the table.
+- Cost: client tooltip text only; one table lookup per item when its style is first built (then cached). No packet, no server work. Not seen in a game; the unit test covers the style swap.
+
 ## [4.103.2] — Unique Guardian: only a destroyed floor drop goes back into the pool
 - FIXED: a 1-of-1 that was not seen in its holder's inventory, ender chest, Curios or open menu started a grace clock and, after five minutes, went back into the loot pool (a duplicate could then appear). An item in a Sophisticated Backpack, a storage or drawer mod, a vault or any other modded container was counted as lost. Now (`nusmp-unique-server.toml`, `unique.floorOnly`, on): the only way a unique returns is when its dropped item is destroyed on the floor (removed from the world, lost in the void). Not seeing it never counts, a holder who stays away never frees it, and a removed container never frees it.
 - KEPT: `floorOnly` false restores the 4.23.0 clocks (`graceSeconds`, `absenceDays`, container check) exactly; dropped uniques are still indestructible and lifted out of the void; old copies after a return still dissolve; the Holy Weapons' bond rule (holder away for good) is unchanged; the `/multiverse unique release` operator door.

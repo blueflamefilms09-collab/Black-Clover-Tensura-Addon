@@ -131,4 +131,16 @@ class UnifiedTooltipRulesTest {
             assertTrue(s.rgb() != 0, id);
         }
     }
+
+    @Test void anItemWithARankShowsThatGradeInTheBannerNotTheRarityGuess() {   // 4.103.3: Black Sword Greed read Unique in the banner and Genesis in a second line
+        Style guess = UnifiedTooltipRules.style(Category.WEAPON, 3, null);
+        assertEquals(Grade.UNIQUE, guess.grade());
+        Style ranked = UnifiedTooltipRules.withRank(guess, Grade.GENESIS, Grade.GENESIS.stars() + "  Genesis Grade");
+        assertEquals(Grade.GENESIS, ranked.grade());
+        assertEquals(Grade.GENESIS.stars() + "  Genesis Grade", ranked.banner());
+        assertEquals(guess.typeLine(), ranked.typeLine());
+        assertEquals(guess.footer(), ranked.footer());
+        assertEquals(UnifiedTooltipRules.banner(Grade.GENESIS), UnifiedTooltipRules.withRank(guess, Grade.GENESIS, null).banner());   // classic: the plain grade banner
+        assertEquals(guess, UnifiedTooltipRules.withRank(guess, null, "x"));
+    }
 }

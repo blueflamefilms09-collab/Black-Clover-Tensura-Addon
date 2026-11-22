@@ -157,6 +157,15 @@ public final class UnifiedTooltipRules {
         return new Style(c, g, banner(g), typeLine(label), footer(label));
     }
 
+    /**
+     * 4.103.3: the banner of an item that has a rank of its own (the {@code rankings.json} table) shows THAT grade, not the one its category and vanilla rarity give, so the item shows one grade, not two
+     * that disagree (Black Sword Greed read Unique in the banner and Genesis in the rank line). {@code card} is the banner text ("stars  God Grade #4"); a null card keeps the plain grade banner.
+     */
+    public static Style withRank(Style s, Grade rankGrade, String card) {
+        if (s == null || rankGrade == null) return s;
+        return new Style(s.category(), rankGrade, card == null || card.isBlank() ? banner(rankGrade) : card, s.typeLine(), s.footer());
+    }
+
     /** "stars  Rare Grade", the same words as a relic's grade row. */
     public static String banner(Grade g) { return g.stars() + "  " + g.label(); }
 

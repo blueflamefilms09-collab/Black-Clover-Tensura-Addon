@@ -80,10 +80,23 @@ public final class RankTooltip {
         return Component.translatableWithFallback("tooltip.anime_multiverse.rank", "Rank: %s", label).withStyle(r.grade().colour());
     }
 
+    /** The Djinn weapon's per-hit number on a line of its own (the banner carries the rank), or null for any other item. */
+    static Component hitLine(ItemStack stack) {
+        if (!(stack.getItem() instanceof DjinnWeaponItem w)) return null;
+        int rank = Rankings.djinnRank(w.djinn().id());
+        if (rank <= 0) return null;
+        var l = DamageScaleConfig.limits();
+        String hit = String.format(Locale.ROOT, "%,.0f", DamageScale.djinnHit(rank, Rankings.djinnCount(), l.djinnMin(), l.djinnMax()));
+        Rankings.Rank r = rankOf(stack);
+        return Component.translatableWithFallback("tooltip.anime_multiverse.weapon_hit", "Weapon hit %s", hit).withStyle(r == null ? net.minecraft.ChatFormatting.GRAY : r.grade().colour());
+    }
+
     static void onTooltip(ItemTooltipEvent e) {
         try {
             List<Component> tip = e.getToolTip();
-            Component l = line(e.getItemStack());
+            ItemStack st = e.getItemStack();
+            // 4.103.3: the banner already says the rank (stars, grade, place); a second rank line made two. Only a Djinn weapon's hit number is still added.
+            Component l = !RankDisplayConfig.classic() && UnifiedTooltipItems.applies(st) ? hitLine(st) : line(st);
             if (l != null && !tip.isEmpty()) tip.add(1, l);
         } catch (RuntimeException ignored) {
             // a tooltip line is never worth a crash

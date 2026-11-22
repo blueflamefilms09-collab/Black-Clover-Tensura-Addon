@@ -49,6 +49,8 @@ public final class UnifiedTooltipItems {
         UnifiedTooltipRules.Style s = k.styles[r];
         if (s == null || !java.util.Objects.equals(k.labels[r], categoryLabel)) {              // first use, or the language changed
             s = UnifiedTooltipRules.style(k.category, r, categoryLabel);
+            com.newuniverse.nusmp.relics.Rankings.Rank t = com.newuniverse.nusmp.relics.Rankings.of(RankTooltip.pathOf(stack));   // 4.103.3: the item's own rank wins over the rarity's guess
+            if (t != null) s = UnifiedTooltipRules.withRank(s, t.grade(), RankDisplayConfig.classic() ? null : t.card());
             k.styles[r] = s;
             k.labels[r] = categoryLabel;
         }
