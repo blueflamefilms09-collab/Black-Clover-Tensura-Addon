@@ -541,3 +541,6 @@ for arc, slot, ttl, what in FUTURE:
 
 import spec_arc  # noqa: E402,F401  1.61.0: the characters of the arcs (tools/quests/arc_roster.txt)
 spec_arc.build(S)
+
+import adv_layout  # noqa: E402  4.101.0: split the one tall tree over themed tabs (ADV_LAYOUT=classic keeps the old single tree)
+adv_layout.apply(S)

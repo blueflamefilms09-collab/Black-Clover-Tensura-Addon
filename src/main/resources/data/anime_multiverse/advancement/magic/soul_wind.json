@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:magic/awakening",
+  "parent": "anime_multiverse:tab/souls_elements",
   "display": {
     "icon": {
       "id": "minecraft:feather"

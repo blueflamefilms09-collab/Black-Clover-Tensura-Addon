@@ -21,7 +21,7 @@ import spec_adv  # noqa: E402
 OUT = os.path.join(L.RES, "data", "anime_multiverse", "advancement")
 LANG_OUT = os.path.join(L.HERE, "lang", "qst.lang.json")
 OWNED_DIRS = {"start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon", "spirits", "squads", "world", "challenges",
-              "future", "arc"}
+              "future", "arc", "tab"}
 FRAMES = {"task", "goal", "challenge"}
 
 
@@ -63,8 +63,10 @@ def validate(spec):
     known = L.known_items()
     paths = set(spec.by_path)
     roots = [a for a in spec.advs if a.parent is None]
-    if len(roots) != 1 or roots[0].path != "root":
-        errors.append("exactly one root named 'root' expected")
+    if "root" not in [a.path for a in roots] or any(a.path != "root" and not a.path.startswith("tab/") for a in roots):
+        errors.append("the roots must be 'root' and the tab heads under tab/")
+    if any(not a.background for a in roots):
+        errors.append("every root (tab head) needs the background texture")
     for a in spec.advs:
         if a.parent is not None and a.parent not in paths:
             errors.append("%s: unknown parent %s" % (a.path, a.parent))

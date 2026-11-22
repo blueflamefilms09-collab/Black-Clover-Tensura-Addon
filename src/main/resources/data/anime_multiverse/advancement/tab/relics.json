@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:bag_of_holding"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.tab.relics.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.tab.relics.desc"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "anime_multiverse:textures/gui/advancements/multiverse_weave.png"
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "anime_multiverse:grimoire"
+    },
+    "title": {
+      "translate": "advancement.anime_multiverse.tab.magic.title"
+    },
+    "description": {
+      "translate": "advancement.anime_multiverse.tab.magic.desc"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "anime_multiverse:textures/gui/advancements/multiverse_weave.png"
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ]
+}

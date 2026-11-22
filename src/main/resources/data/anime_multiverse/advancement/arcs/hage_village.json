@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:root",
+  "parent": "anime_multiverse:tab/story",
   "display": {
     "icon": {
       "id": "anime_multiverse:grimoire"

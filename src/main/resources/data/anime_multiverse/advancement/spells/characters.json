@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:spells/signature",
+  "parent": "anime_multiverse:tab/character_pages",
   "display": {
     "icon": {
       "id": "minecraft:player_head"

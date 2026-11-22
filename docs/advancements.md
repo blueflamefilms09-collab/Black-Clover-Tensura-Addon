@@ -8,13 +8,25 @@ Nothing was run in Minecraft. See "Unverified in the game".
 
 - `tools/quests/spec_adv.py` is the single source of truth (ids, titles, descriptions, parents, icons, criteria). `python tools/quests/gen_advancements.py` writes `src/main/resources/data/anime_multiverse/advancement/**` and the lang fragment `tools/quests/lang/qst.lang.json`; `--check` fails if anything is out of date.
 - The lang fragment must be merged into `assets/anime_multiverse/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). `AdvancementDataTest` fails while a key is missing.
-- `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, one root, no cycle, translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every criterion is used by a requirement.
+- `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, the roots are `root` and the `tab/*` heads (each with the background), no cycle, translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every criterion is used by a requirement.
 
-## The tree (452 advancements)
+## The tabs (4.101.0)
+
+Why: the game lays an advancement out only from the SHAPE of its tree (no x/y exists in 1.21): siblings stack in rows, depth is columns. One root meant one tab of about 333 rows that nobody could move around in. Now the same tree is cut into 15 tabs of 14 to 30 rows each, with the same shared background (`multiverse_weave.png`, unchanged).
+
+- Each tab head is a display advancement under `advancement/tab/` that completes on the first tick (`minecraft:tick`, no toast, no chat, no reward), so it is always open and every branch below it shows. Ids, criteria, rewards, quest-book links and saved progress of the existing advancements are untouched; only the `parent` line of the branch heads changed.
+- The tabs: Multiverse of Anime (`root`: start, world, spirits, squads, arcs and the rest), Magic Awakening, Soul Elements (Flame, Water, Wind, Light), Soul Earth, Soul Space/Time/Empty, Soul Battle/Darkness, Soul Fantasy, Spells, Character Pages, Bosses and Challenges, Relics and Weapons, Dungeon, Story, More Sagas, Faces 1 and 2 (the `arc/met_*` characters, 16 per tab).
+- Why not chains of rows: the game shows an unfinished advancement only when its parent or grandparent is done, so chaining children into rows would hide later members. Why not make the soul hubs roots: their real criteria would hide the tab until earned.
+- `tools/quests/adv_layout.py` holds the tab list and is applied at the end of `spec_adv.py`. `ADV_LAYOUT=classic python tools/quests/gen_advancements.py` regenerates the old single tree (the setting that restores the old behaviour). `devil/contract_crafted` was a stray root without a background; it now hangs under `spirits/devil_contract`.
+- `AdvancementLayoutTest` fails when a tab is taller than 32 rows or wider than 16 columns, when there are more than 20 tabs, when a tab lacks the shared background, or when an advancement ends outside every tab.
+- Cost: data only (one tick criterion per tab head); no tick work, entity, packet or client draw beyond the extra tab icons. The Earth Soul (25 rows) and Battle/Darkness (30 rows) tabs are still tall because their hubs are flat lists; the game gives no way to place them differently.
+
+## The tree (468 advancements, 15 of them tab heads)
 
 | Branch (folder) | Advancements | What is in it |
 | --- | --- | --- |
-| `root` | 1 | the tab root; granted on the first tick |
+| `root` | 1 | the first tab root; granted on the first tick |
+| `tab` | 15 | the tab heads of 4.101.0 (see above) |
 | `start` | 15 | grimoire, ceremony, wizard, first spell, pages, mastery |
 | `magic` | 162 | awakening, one hub per soul type (11), one advancement per magic family (105), a signature and an all-magics challenge per soul type, per quest branch (9) and the distinct-magics ladder |
 | `spells` | 42 | signature casts, merging, engraving, the twenty canon pages, the special arts (butoh, song, corpse, paladin, rouge, thread, shadow, time, unite) |

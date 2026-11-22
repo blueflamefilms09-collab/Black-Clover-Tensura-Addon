@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.101.0] — The advancement screen is split into 15 organised tabs
+- FIXED: every advancement hung under one root, so the screen was one column about 333 rows tall that players could not move around in. The same tree is now cut into 15 tabs (Multiverse of Anime, Magic Awakening, the Soul tabs, Spells, Character Pages, Bosses and Challenges, Relics and Weapons, Dungeon, Story, More Sagas, Faces 1 and 2), 14 to 30 rows each. The tab background is unchanged.
+- NEW: 15 tab-head advancements under `advancement/tab/` (they complete on the first tick, no toast, no reward), `tools/quests/adv_layout.py`, `AdvancementLayoutTest`, `docs/advancements.md` section "The tabs".
+- NEW: `ADV_LAYOUT=classic` on the generator restores the old single tree.
+- REPLACED: only the `parent` of 55 branch heads (to their tab head); `devil/contract_crafted` got a parent (it was a stray root without a background).
+- KEPT: every advancement id, criterion, reward, quest-book link and saved progress; the background texture; the Time Magic VFX.
+- Cost: data only, no tick work, packet or entity. Not seen in a real game; the Earth Soul (25 rows) and Battle/Darkness (30 rows) tabs are still tall because the game gives no other way to place their flat lists.
+
 ## [4.100.0] — Hero and vassal weapons can be enchanted (table, anvil, Tensura skills)
 - FIXED: the enchanting table, the anvil and Tensura's Researcher screen (the Researcher, Great Sage and the other enchanting skills) took the weapon away within a moment, the table refused it because it already carried engravings, and a weapon that was put away and summoned again forgot what it was enchanted with. All three are fixed.
 - NEW: the four Legendary Weapons can be enchanted too (Sword and Spear like the vassals, Shield with the weapon enchantments, Bow with the bow enchantments).

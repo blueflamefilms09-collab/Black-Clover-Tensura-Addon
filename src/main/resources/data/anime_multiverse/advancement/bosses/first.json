@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:root",
+  "parent": "anime_multiverse:tab/bosses",
   "display": {
     "icon": {
       "id": "minecraft:iron_sword"

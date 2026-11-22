@@ -30,7 +30,7 @@ class AdvancementDataTest {
     private static final Path JAVA = Path.of("src/main/java");
 
     /** The folders the generator owns; convergence/ holds the older hidden advancements and is only checked for parsing. */
-    private static final Set<String> OWNED = Set.of("start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon",
+    private static final Set<String> OWNED = Set.of("tab", "start", "magic", "spells", "arcs", "bosses", "relics", "weapons", "dungeon",
             "spirits", "squads", "world", "challenges", "future", "arc");
 
     private static final Set<String> VANILLA_TRIGGERS = Set.of("minecraft:tick", "minecraft:impossible", "minecraft:inventory_changed",
@@ -144,7 +144,7 @@ class AdvancementDataTest {
     }
 
     @Test
-    void parentsExistAndThereIsExactlyOneRootAndNoCycle() throws IOException {
+    void parentsExistAndTheRootsAreTheTabHeadsAndNoCycle() throws IOException {
         Map<String, String> parent = new HashMap<>();
         Set<String> all = new HashSet<>();
         for (Path p : files()) all.add(id(p));
@@ -155,14 +155,14 @@ class AdvancementDataTest {
             String par = (String) adv.get("parent");
             if (par == null) {
                 roots++;
-                assertEquals("anime_multiverse:root", id(p), "only anime_multiverse:root may have no parent");
-                assertTrue(map(adv.get("display")).containsKey("background"), "the root needs a background texture");
+                assertTrue(id(p).equals("anime_multiverse:root") || id(p).startsWith("anime_multiverse:tab/"), "only the root and the tab heads may have no parent: " + id(p));
+                assertTrue(map(adv.get("display")).containsKey("background"), "every tab head needs a background texture");
             } else {
                 assertTrue(all.contains(par), id(p) + " has the missing parent " + par);
                 parent.put(id(p), par);
             }
         }
-        assertEquals(1, roots, "exactly one root");
+        assertTrue(roots >= 1, "the root is there");
         for (String start : parent.keySet()) {
             String cur = start;
             int guard = 0;
@@ -170,7 +170,7 @@ class AdvancementDataTest {
                 cur = parent.get(cur);
                 assertTrue(++guard < 10_000, "parent cycle at " + start);
             }
-            assertEquals("anime_multiverse:root", cur, start + " does not lead back to anime_multiverse:root");
+            assertTrue(cur.equals("anime_multiverse:root") || cur.startsWith("anime_multiverse:tab/"), start + " does not lead back to the root or a tab head");
         }
     }
 

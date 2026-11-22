@@ -1,4 +1,5 @@
 {
+  "parent": "anime_multiverse:spirits/devil_contract",
   "neoforge:conditions": [
     { "type": "anime_multiverse:config", "key": "devil.contractCraftable" }
   ],

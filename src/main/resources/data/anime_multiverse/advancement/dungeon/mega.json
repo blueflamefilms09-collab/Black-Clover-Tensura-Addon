@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:root",
+  "parent": "anime_multiverse:tab/dungeon",
   "display": {
     "icon": {
       "id": "anime_multiverse:labyrinth_gate"

@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:root",
+  "parent": "anime_multiverse:tab/relics",
   "display": {
     "icon": {
       "id": "anime_multiverse:bag_of_holding"

@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:root",
+  "parent": "anime_multiverse:tab/spells",
   "display": {
     "icon": {
       "id": "minecraft:nether_star"

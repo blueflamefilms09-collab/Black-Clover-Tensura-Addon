@@ -1,5 +1,5 @@
 {
-  "parent": "anime_multiverse:arc/root",
+  "parent": "anime_multiverse:tab/sagas_more",
   "display": {
     "icon": {
       "id": "minecraft:written_book"
