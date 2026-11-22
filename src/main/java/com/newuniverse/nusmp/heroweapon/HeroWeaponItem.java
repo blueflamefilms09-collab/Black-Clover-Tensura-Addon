@@ -52,7 +52,7 @@ public class HeroWeaponItem extends Item {
     public HeroKind kind() { return kind; }
 
     /** Vassal weapons (docs/vassal_enchanting.md) can be enchanted at the table, with books and on the anvil. The item tags under data/minecraft/tags/item/enchantable list them; the rest of the hero weapons stay as they were. */
-    public static boolean enchantable(HeroKind kind) { return kind.enchantable(); }
+    public static boolean enchantable(HeroKind kind) { return kind.enchantable() || HeroConfig.enchantHoly(); }   // 4.100.0: the Legendary Weapons too (setting enchantHoly)
 
     @Override
     public boolean isEnchantable(ItemStack stack) { return enchantable(kind) && stack.getCount() == 1; }

@@ -7,6 +7,7 @@ import com.newuniverse.nusmp.heroweapon.HeroKind;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -14,8 +15,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.ArrayList;
@@ -179,6 +184,39 @@ public final class HeroBondSelfTests {
             a.inventoryMenu.getCraftSlots().setItem(0, HeroItems.stack(kind));
             HeroLoan.scanMenu(a);
             if (!a.inventoryMenu.getCraftSlots().getItem(0).isEmpty()) bad.add("a hero weapon in a crafting grid was not removed");
+
+            // ---- enchanting (4.100.0): the table takes an engraved weapon, the menu keeps the projection, the enchantments survive a rebuild and a put-away
+            if (HeroConfig.enchantMenus()) {
+                if (!HeroSummon.isSummoned(a)) HeroSummon.summon(a);
+                ItemStack proj = HeroSummon.stack(a);
+                var sharp = a.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.SHARPNESS);
+                if (!proj.isEnchantable()) bad.add("the enchanting table would refuse the engraved Hammer (ItemStack.isEnchantable is false)");
+                AbstractContainerMenu saved = a.containerMenu;
+                EnchantmentMenu table = new EnchantmentMenu(97, inv, ContainerLevelAccess.NULL);
+                try {
+                    int homeSlot = inv.items.indexOf(proj);
+                    if (homeSlot >= 0) inv.items.set(homeSlot, ItemStack.EMPTY);
+                    a.containerMenu = table;
+                    table.getSlot(0).set(proj);
+                    HeroLoan.scanMenu(a);
+                    if (table.getSlot(0).getItem().isEmpty()) bad.add("the player's own weapon was taken out of the enchanting table");
+                    HeroLoan.reconcile(a);
+                    if (projections(a) != 0) bad.add("a second projection was made while the table held the weapon (" + projections(a) + ")");
+                    proj.enchant(sharp, 2);
+                    HeroLoan.reconcile(a);
+                    table.getSlot(0).set(ItemStack.EMPTY);
+                    a.containerMenu = saved;
+                    inv.items.set(5, proj);                                                   // put back by the menu in a slot that is not home
+                    HeroLoan.reconcile(a);
+                    ItemStack back2 = HeroSummon.stack(a);
+                    if (projections(a) != 1 || back2.getEnchantments().getLevel(sharp) != 2) bad.add("the weapon lost its enchantment when it came back from the table");
+                    HeroSummon.dismiss(a);
+                    HeroSummon.summon(a);
+                    if (HeroSummon.stack(a).getEnchantments().getLevel(sharp) != 2) bad.add("the weapon lost its enchantment when it was put away and summoned again");
+                } finally {
+                    a.containerMenu = saved;
+                }
+            }
 
             // ---- a release
             if (!HeroBonds.release(a)) bad.add("a release found no bond");

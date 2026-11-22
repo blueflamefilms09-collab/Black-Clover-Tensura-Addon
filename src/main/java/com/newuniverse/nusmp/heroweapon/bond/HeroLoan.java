@@ -144,6 +144,11 @@ public final class HeroLoan {
             // a form that cannot be read leaves the base look; the forms system corrects it on its refresh
         }
         try {
+            HeroEnchants.apply(p, b, st);                                                   // 4.100.0: what the weapon was enchanted with comes back
+        } catch (RuntimeException unreadable) {
+            // kept enchantments that cannot be read leave the weapon as the table made it
+        }
+        try {
             WeaponEngravings.engrave(st, p.registryAccess());
         } catch (RuntimeException noEngravings) {
             // the engraving table or Tensura's enchantments are not there: the weapon is still a weapon
@@ -297,6 +302,12 @@ public final class HeroLoan {
     static void end(ServerPlayer p, boolean keepFlag) {
         HeroBond b = HeroBonds.of(p);
         HeroUse.cancelPending(p, p.isAlive());
+        try {
+            HeroEnchants.capture(p, b);                                                     // 4.100.0: keep the enchantments of the projection that is about to go
+        } catch (RuntimeException unreadable) {
+            // the weapon is still put away; it just comes back as it was last kept
+        }
+        HeroEnchants.wipeMenu(p);
         WeaponLoan<ItemStack> loan = load(p, b);
         List<ItemStack> over = loan.release(new InvSlots(p));
         clearRecord(b);
@@ -308,6 +319,7 @@ public final class HeroLoan {
     /** The bond is being released: the weapon goes away, for good. */
     public static void onReleased(ServerPlayer p) {
         end(p, false);
+        HeroEnchants.forget(HeroBonds.of(p));
         ADOPT.remove(p.getUUID());
     }
 
@@ -353,7 +365,13 @@ public final class HeroLoan {
             return;
         }
         if (b.summoned()) {
+            ItemStack inMenu = HeroEnchants.inMenu(p, b);
+            if (!inMenu.isEmpty()) {                                                         // 4.100.0: the projection is on the enchanting table / anvil / Researcher screen: no second one is made; its enchantments are kept as it changes
+                HeroEnchants.capture(p, b);
+                return;
+            }
             if (isWhole(p, b)) return;
+            HeroEnchants.capture(p, b);                                                      // 4.100.0: a projection that strayed (put back by the menu in another slot) is rebuilt with what it carried
             WeaponLoan<ItemStack> loan = load(p, b);
             loan.summon(new InvSlots(p), p.getInventory().selected, () -> make(p, b), st -> current(p, b.kind(), st));
             save(p, b, loan);
@@ -442,6 +460,8 @@ public final class HeroLoan {
             if (s.container == inv) continue;
             ItemStack st = s.getItem();
             if (!st.isEmpty() && st.getItem() instanceof HeroWeaponItem) {
+                if (HeroEnchants.allowsMenu(p) && isProjection(st) && st.getItem() instanceof HeroWeaponItem hw
+                        && HeroWeaponItem.enchantable(hw.kind()) && p.getUUID().toString().equals(HeroComponents.owner(st))) continue;   // 4.100.0: the player's own weapon may sit on an enchanting menu
                 s.set(ItemStack.EMPTY);
                 any = true;
             }

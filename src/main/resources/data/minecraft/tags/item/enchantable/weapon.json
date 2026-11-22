@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "anime_multiverse:legendary_shield",
+    "anime_multiverse:legendary_sword",
+    "anime_multiverse:legendary_spear",
     "anime_multiverse:vassal_hammer",
     "anime_multiverse:vassal_claw",
     "anime_multiverse:vassal_axe",

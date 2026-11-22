@@ -8,7 +8,8 @@
     "LevelGuardMixin",
     "LevelChunkGuardMixin",
     "ResourceLocationMixin",
-    "HumanRaceEvolutionMixin"
+    "HumanRaceEvolutionMixin",
+    "HeroWeaponEnchantableMixin"
   ],
   "client": [
     "client.ComingSoonTextMixin",

@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.100.0] — Hero and vassal weapons can be enchanted (table, anvil, Tensura skills)
+- FIXED: the enchanting table, the anvil and Tensura's Researcher screen (the Researcher, Great Sage and the other enchanting skills) took the weapon away within a moment, the table refused it because it already carried engravings, and a weapon that was put away and summoned again forgot what it was enchanted with. All three are fixed.
+- NEW: the four Legendary Weapons can be enchanted too (Sword and Spear like the vassals, Shield with the weapon enchantments, Bow with the bow enchantments).
+- NEW: server settings `heroweapon.enchantMenus` and `heroweapon.enchantHoly` (both on; off restores the old behaviour). Docs: `docs/heroweapon/enchanting_menus.md`.
+- KEPT: every form, skill and engraving; the engraving lock; the loan rules for all other menus and containers.
+- Not seen at a real table or Tensura screen by a person; the server self-test drives a real enchanting menu.
+
 ## [4.99.2] — One big CurseForge changelog, 3.85.0 to 4.99.2
 Docs only, no game change.
 - NEW: `docs/curseforge_changelog_3.85.0_to_4.99.2.md`, a player-facing changelog of everything since 3.85.0 with a short version for the CurseForge box. Unfinished content is left out on purpose, as are spoiler-type details.

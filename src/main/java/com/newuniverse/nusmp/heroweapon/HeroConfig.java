@@ -18,6 +18,8 @@ public final class HeroConfig {
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
+    /** 4.100.0: the enchanting menus (docs/heroweapon/enchanting_menus.md). */
+    public static final ModConfigSpec.BooleanValue ENCHANT_MENUS, ENCHANT_HOLY;
     public static final ModConfigSpec.BooleanValue TRACKER_SHOW_NAMES;
     public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN, RAISE_SHARE;
     /** The Legendary Bow's real arrows (section [heroweapon.bow]): see docs/heroweapon/bow_arrows.md. */
@@ -92,6 +94,12 @@ public final class HeroConfig {
                         + "1.0 = exactly the old lengths, 0.25 = a quarter. Wind-ups, pulse intervals, parry windows and cooldowns are never changed by it. Hard control still obeys the balance law "
                         + "(3 seconds on a player, 5 on a mob, 1 on a boss), no repeating task runs longer than 20 seconds and nothing lasts more than 20 minutes.")
                 .defineInRange("durationScale", 2.0, 0.25, 6.0);
+        ENCHANT_MENUS = b.comment("4.100.0: a hero or vassal weapon can be put into the enchanting table, the anvil and the Researcher enchanting screen of Tensura (the Researcher, Great Sage and the other enchanting skills) and keeps what it is enchanted with when it is put away and summoned again. "
+                        + "A stack that already carries engravings is accepted by the table. Off: the old behaviour (the weapon is taken out of every menu slot except the player's own inventory).")
+                .define("enchantMenus", true);
+        ENCHANT_HOLY = b.comment("4.100.0: the four Legendary (Holy) Weapons can be enchanted too (they were the only ones that could not be). Off: only the 17 Seven Star and Vassal Weapons accept enchantments, as in 4.33.0. "
+                        + "The item tags under data/minecraft/tags/item/enchantable list the Legendary Weapons either way; this switch is what the table and the menus obey.")
+                .define("enchantHoly", true);
         b.push("buff");
         BUFF_ENABLED = b.comment("3.55.0 master switch of the hero weapon buffs below. Off: every weapon behaves exactly as before 3.55.0.").define("enabled", true);
         BUFF_DAMAGE = b.comment("Factor on EVERY point of damage a bound wielder deals while their hero weapon is out (blows, techniques, arrows). Bosses still obey the boss damage cap.")
@@ -154,6 +162,8 @@ public final class HeroConfig {
     public static boolean genesisRelicsAllowed() { return get(GENESIS_RELICS_ALLOWED); }
     public static boolean utilityItemsAlwaysWork() { return get(UTILITY_ITEMS_ALWAYS_WORK); }
     public static boolean consumablesFirst() { return get(CONSUMABLES_FIRST); }
+    public static boolean enchantMenus() { return get(ENCHANT_MENUS); }
+    public static boolean enchantHoly() { return get(ENCHANT_HOLY); }
     public static boolean anyTarget() { return get(ANY_TARGET); }
     public static boolean shieldVanillaGuard() { return get(SHIELD_VANILLA_GUARD); }
     public static boolean shieldReflects() { return get(SHIELD_REFLECTS); }
