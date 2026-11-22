@@ -240,3 +240,6 @@ The Devil x Slime mod (`dxdtensura`, High School DxD) attacks a fighter's streng
 * **The flare** (`counterFlare`): each time he shrugs one off he flares his ki: a ring in his form's colour and a shove of the players within 5 blocks (never a hurt), at most once per 5 seconds.
 * The list is open: add any mod's namespace to `counterMods` to give it the same answers. `counterEffects` false switches the effect and attribute answers and the damage cut off.
 * Cost: nothing per tick beyond the six-attribute purge every 10 ticks; one entity query per flare (at most one per 5 s per Goku). Tests: `GokuCountersTest`. Not seen in a real game with the DxD mod loaded; whether its Divide skill writes attributes or an effect was read from the class strings, not run.
+
+## Gentle EP (4.103.1)
+The 4.102.0 ladder (1 trillion to 500 trillion) is replaced by 1 billion to 10 billion, and `goku_boss.epTame` (on) keeps it there: the climb is at most `epMaxClimb` (10x), the last form at most `epCeiling` (100 billion). `GokuEp.tamed` slides the whole ladder down (never squashes it), so an old config that still says 1 trillion / 500 trillion ends on the ceiling with a 10x climb. Players still lift Base (smart spawn) and the `epPlayerShare` floor stays, both capped by the ceiling. `epTame` false = the 4.102.0 ladder as the numbers say. Cost: arithmetic once per form change.

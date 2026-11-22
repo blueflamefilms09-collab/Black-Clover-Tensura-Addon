@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.103.1] — Goku's EP is gentle: 1 to 10 billion, never above 100 billion
+- REPLACED: Goku's default EP ladder, 1 trillion in Base to 500 trillion in his last form, was far too high for servers that keep Tensura's EP scaling on. It is now 1 billion to 10 billion (`goku_boss.epStart`, `epEnd`).
+- NEW: `goku_boss.epTame` (on): the climb from Base to his last form is held to `epMaxClimb` (10x) and his last form never goes above `epCeiling` (100 billion), whatever the numbers or the players say. The ladder is slid down, never squashed, and it also pulls down an old config that still says 1 trillion / 500 trillion. The players still raise his Base (smart spawn) and the one-hundredth floor stays, both only up to the ceiling.
+- KEPT: `epTame` false restores the 4.102.0 ladder exactly as `epStart`/`epEnd` say; the 1% form floor, smart forms, smart spawn of the other bosses, moves, health, forms, Time Magic VFX.
+- Cost: pure arithmetic once per form change; no new entity or packet. Not seen in a real game.
+
 ## [4.103.0] — Goku hits with true and spiritual damage and answers the DxD mod's Divine Dividing
 - NEW: every blow Goku lands is split into a normal part, a TRUE part (ignores armour, enchantments, resistance and barriers) and a SPIRITUAL part (Tensura's spiritual type: passes barriers and dodges). 30% true and 20% spiritual in his top form, 40% of that in Base, rising with each form. Settings `goku_boss.splitDamage`, `trueShare`, `spiritShare`.
 - NEW: the damage types `anime_multiverse:goku_true` and `goku_spirit` with their tags (Minecraft `bypasses_*`, Tensura `is_spiritual`, `bypass_barrier`, `bypass_dodge`, `bypass_protection_enchantment`) and death messages.

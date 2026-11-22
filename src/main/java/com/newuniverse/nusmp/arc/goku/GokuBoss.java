@@ -505,7 +505,10 @@ public class GokuBoss extends ArcBoss {
         int cur = formIdx();
         if (plain != cur + 1 || playerEp <= 0.0) return plain;                    // only a one-step change is made smarter
         int top = omega.ladderTop();
-        double mine = GokuEp.ep(cur, GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST, GokuBossConfig.epStart(), GokuBossConfig.epEnd());
+        int lastIdx = GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST;
+        double mine = GokuBossConfig.epTame()
+                ? GokuEp.tamed(cur, lastIdx, GokuBossConfig.epStart(), GokuBossConfig.epEnd(), spawnBase(), GokuBossConfig.epCeiling(), GokuBossConfig.epMaxClimb())
+                : GokuEp.ep(cur, lastIdx, GokuBossConfig.epStart(), GokuBossConfig.epEnd());
         return Math.max(plain, GokuLadder.target(cur, top, playerEp, mine, GokuBossConfig.maxFormSkip()));
     }
 
@@ -538,7 +541,10 @@ public class GokuBoss extends ArcBoss {
     private void applyEp(int idx) {
         if (!GokuBossConfig.epLadder() || level().isClientSide) return;
         int top = GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST;
-        double v = GokuEp.withPlayers(GokuEp.lifted(idx, top, GokuBossConfig.epStart(), GokuBossConfig.epEnd(), spawnBase()), playerEp, GokuBossConfig.epPlayerShare());
+        double v = GokuBossConfig.epTame()
+                ? GokuEp.withPlayersCapped(GokuEp.tamed(idx, top, GokuBossConfig.epStart(), GokuBossConfig.epEnd(), spawnBase(), GokuBossConfig.epCeiling(), GokuBossConfig.epMaxClimb()),
+                        playerEp, GokuBossConfig.epPlayerShare(), GokuBossConfig.epCeiling())
+                : GokuEp.withPlayers(GokuEp.lifted(idx, top, GokuBossConfig.epStart(), GokuBossConfig.epEnd(), spawnBase()), playerEp, GokuBossConfig.epPlayerShare());
         if (v == lastEpWritten) return;                                           // the scan runs every 5 s: write only when the number changed
         lastEpWritten = v;
         try {

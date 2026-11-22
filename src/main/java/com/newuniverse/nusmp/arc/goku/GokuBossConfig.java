@@ -23,14 +23,14 @@ public final class GokuBossConfig {
     /** The defaults, also read by the tests. */
     public static final double DEFAULT_EP_WEIGHT = 0.6, DEFAULT_EP_CAP = 8.0, DEFAULT_PER_PLAYER_BONUS = 0.35, DEFAULT_MAX_HIT = 0.30, DEFAULT_DODGE_CAP = 0.35;
     /** 4.102.0: his OWN Tensura Existence Points climb from {@code epStart} in Base to {@code epEnd} in his last form (docs/boss_vfx_goku_kakashi_sinbad.md). */
-    public static final ModConfigSpec.BooleanValue EP_LADDER;
-    public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
+    public static final ModConfigSpec.BooleanValue EP_LADDER, EP_TAME;
+    public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_CEILING, EP_MAX_CLIMB, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
     public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
     public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
     public static final ModConfigSpec.DoubleValue COUNTER_DAMAGE;
     public static final ModConfigSpec.BooleanValue SMART_FORMS;
     public static final ModConfigSpec.IntValue MAX_FORM_SKIP;
-    public static final double DEFAULT_EP_START = 1.0e12, DEFAULT_EP_END = 5.0e14, DEFAULT_EP_PLAYER_SHARE = 0.01;
+    public static final double DEFAULT_EP_START = 1.0e9, DEFAULT_EP_END = 1.0e10, DEFAULT_EP_CEILING = 1.0e11, DEFAULT_EP_CLIMB = 10.0, DEFAULT_EP_PLAYER_SHARE = 0.01;
     public static final int DEFAULT_GLOBAL_CAP = 2, DEFAULT_ENRAGE_MINUTES = 12;
     public static final double DEFAULT_OMEGA_HEALTH = 2.5, DEFAULT_OMEGA_DAMAGE = 1.5, DEFAULT_OMEGA_MAX_HIT = 0.5, DEFAULT_OMEGA_DODGE = 0.85;
     public static final int DEFAULT_XP_PER_HOUR = 60, DEFAULT_TRAINING_DAILY = 1500;
@@ -42,8 +42,12 @@ public final class GokuBossConfig {
                 .define("enabled", true);
         EP_LADDER = b.comment("Goku's own Tensura Existence Points follow his forms: epStart in Base, rising by a fixed factor per form to epEnd in his last form. False: his EP is left as the game gives it (the behaviour before 4.102.0).")
                 .define("epLadder", true);
-        EP_START = b.comment("His Existence Points in Base (1 trillion).").defineInRange("epStart", DEFAULT_EP_START, 1.0, 1.0e18);
-        EP_END = b.comment("His Existence Points in his last form (500 trillion).").defineInRange("epEnd", DEFAULT_EP_END, 1.0, 1.0e18);
+        EP_START = b.comment("His Existence Points in Base (1 billion; 1 trillion before 4.104.0).").defineInRange("epStart", DEFAULT_EP_START, 1.0, 1.0e18);
+        EP_END = b.comment("His Existence Points in his last form (10 billion; 500 trillion before 4.104.0).").defineInRange("epEnd", DEFAULT_EP_END, 1.0, 1.0e18);
+        EP_TAME = b.comment("4.104.0: keeps the ladder gentle: the climb from Base to his last form is held to epMaxClimb and his last form never goes above epCeiling, even if epStart/epEnd (or an old config) say more, or the players are stronger. False = the 4.102.0 ladder exactly as the numbers above say (1 trillion to 500 trillion by default there).")
+                .define("epTame", true);
+        EP_CEILING = b.comment("4.104.0: the most Existence Points he can ever have (100 billion). Counts only with epTame.").defineInRange("epCeiling", DEFAULT_EP_CEILING, 1.0, 1.0e18);
+        EP_MAX_CLIMB = b.comment("4.104.0: the most his EP can multiply from Base to his last form (10x). Counts only with epTame.").defineInRange("epMaxClimb", DEFAULT_EP_CLIMB, 1.0, 1000.0);
         EP_PLAYER_SHARE = b.comment("4.102.0: his EP never falls below this share of the strongest player's EP near him (0.01 = one hundredth). The ladder above is the floor and this only raises it; 0 = off.")
                 .defineInRange("epPlayerShare", DEFAULT_EP_PLAYER_SHARE, 0.0, 10.0);
         FORM_FLOOR = b.comment("4.102.0: with formBars, the share of his health he is held at when a form's bar runs out: he cannot be hurt below it, powers up into the next form and comes back with a full bar (0.01 = 1%; 0 = the old 1 health).")
@@ -204,6 +208,12 @@ public final class GokuBossConfig {
     public static double epStart() { return get(EP_START); }
 
     public static double epEnd() { return get(EP_END); }
+
+    public static boolean epTame() { return get(EP_TAME); }
+
+    public static double epCeiling() { return get(EP_CEILING); }
+
+    public static double epMaxClimb() { return get(EP_MAX_CLIMB); }
 
     public static double epPlayerShare() { return get(EP_PLAYER_SHARE); }
 
