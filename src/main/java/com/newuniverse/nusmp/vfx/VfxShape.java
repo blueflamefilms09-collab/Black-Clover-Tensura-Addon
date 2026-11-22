@@ -555,7 +555,15 @@ public enum VfxShape {
     LORD_ENVY,
     LORD_VANITY,
     LORD_HOLY,
-    LORD_GREED;
+    LORD_GREED,
+    // ---- Magi (docs/boss_sinbad_phases.md), appended after LORD_GREED: drawn by vfx.client.layer.MagoiLayer, sent by the Sinbad boss and by the player's Djinn (relics.djinn.DjinnFx). MAGI_EQUIP the Djinn Equip forging
+    // (from = the feet, follows, power = body height scale); MAGI_AURA the Magoi aura (follows); MAGI_RUKH a flock of Rukh from -> to (power = size); MAGI_EXTREME the Extreme Magic (from = to = the centre on the ground,
+    // power = radius); MAGI_PHASE the break of a phase (from = the body centre). The colour is the Djinn's. The server settings sinbad_boss.magiVfx and djinn.magiVfx = false send none of them. Other workers append after this block.
+    MAGI_EQUIP,
+    MAGI_AURA,
+    MAGI_RUKH,
+    MAGI_EXTREME,
+    MAGI_PHASE;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

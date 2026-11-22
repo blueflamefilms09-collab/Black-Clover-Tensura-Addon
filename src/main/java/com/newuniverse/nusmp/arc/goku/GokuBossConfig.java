@@ -22,6 +22,12 @@ public final class GokuBossConfig {
 
     /** The defaults, also read by the tests. */
     public static final double DEFAULT_EP_WEIGHT = 0.6, DEFAULT_EP_CAP = 8.0, DEFAULT_PER_PLAYER_BONUS = 0.35, DEFAULT_MAX_HIT = 0.30, DEFAULT_DODGE_CAP = 0.35;
+    /** 4.102.0: his OWN Tensura Existence Points climb from {@code epStart} in Base to {@code epEnd} in his last form (docs/boss_vfx_goku_kakashi_sinbad.md). */
+    public static final ModConfigSpec.BooleanValue EP_LADDER;
+    public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_PLAYER_SHARE, FORM_FLOOR;
+    public static final ModConfigSpec.BooleanValue SMART_FORMS;
+    public static final ModConfigSpec.IntValue MAX_FORM_SKIP;
+    public static final double DEFAULT_EP_START = 1.0e12, DEFAULT_EP_END = 5.0e14, DEFAULT_EP_PLAYER_SHARE = 0.01;
     public static final int DEFAULT_GLOBAL_CAP = 2, DEFAULT_ENRAGE_MINUTES = 12;
     public static final double DEFAULT_OMEGA_HEALTH = 2.5, DEFAULT_OMEGA_DAMAGE = 1.5, DEFAULT_OMEGA_MAX_HIT = 0.5, DEFAULT_OMEGA_DODGE = 0.85;
     public static final int DEFAULT_XP_PER_HOUR = 60, DEFAULT_TRAINING_DAILY = 1500;
@@ -31,6 +37,18 @@ public final class GokuBossConfig {
         b.push("goku_boss");
         ENABLED = b.comment("The Goku boss may be summoned (command, spawn egg, arc summon). False: he does not spawn and everything else stays as it was.")
                 .define("enabled", true);
+        EP_LADDER = b.comment("Goku's own Tensura Existence Points follow his forms: epStart in Base, rising by a fixed factor per form to epEnd in his last form. False: his EP is left as the game gives it (the behaviour before 4.102.0).")
+                .define("epLadder", true);
+        EP_START = b.comment("His Existence Points in Base (1 trillion).").defineInRange("epStart", DEFAULT_EP_START, 1.0, 1.0e18);
+        EP_END = b.comment("His Existence Points in his last form (500 trillion).").defineInRange("epEnd", DEFAULT_EP_END, 1.0, 1.0e18);
+        EP_PLAYER_SHARE = b.comment("4.102.0: his EP never falls below this share of the strongest player's EP near him (0.01 = one hundredth). The ladder above is the floor and this only raises it; 0 = off.")
+                .defineInRange("epPlayerShare", DEFAULT_EP_PLAYER_SHARE, 0.0, 10.0);
+        FORM_FLOOR = b.comment("4.102.0: with formBars, the share of his health he is held at when a form's bar runs out: he cannot be hurt below it, powers up into the next form and comes back with a full bar (0.01 = 1%; 0 = the old 1 health).")
+                .defineInRange("formFloor", GokuLadder.DEFAULT_FLOOR, 0.0, 0.5);
+        SMART_FORMS = b.comment("4.102.0: he reads the strongest player near him; against a player far above his own EP he may skip forms when he changes instead of going in order. False = always the next form.")
+                .define("smartForms", true);
+        MAX_FORM_SKIP = b.comment("4.102.0: the most forms he skips in one change (0 = never; one is skipped per doubling of the player's EP over his).")
+                .defineInRange("maxFormSkip", 3, 0, 9);
         DIFFICULTY = b.comment("The preset: normal (half health and damage, 60% of the form bonuses), overpowered (the default) or anime (double health, 1.6x damage, 130% of the form bonuses). Unknown words mean overpowered.")
                 .define("difficulty", "overpowered");
         HEALTH_MULTIPLIER = b.comment("Multiplies his health on top of the preset and the EP scaling.")
@@ -163,4 +181,18 @@ public final class GokuBossConfig {
 
     /** The dodge chance cap: the classic one, or the Omega one (never lower than the classic) while Omega is on. */
     public static double dodgeCap() { return omega() ? Math.max(uiDodgeCap(), get(OMEGA_DODGE_CAP)) : uiDodgeCap(); }
+
+    public static boolean epLadder() { return get(EP_LADDER); }
+
+    public static double epStart() { return get(EP_START); }
+
+    public static double epEnd() { return get(EP_END); }
+
+    public static double epPlayerShare() { return get(EP_PLAYER_SHARE); }
+
+    public static double formFloor() { return get(FORM_FLOOR); }
+
+    public static boolean smartForms() { return get(SMART_FORMS); }
+
+    public static int maxFormSkip() { return smartForms() ? get(MAX_FORM_SKIP) : 0; }
 }

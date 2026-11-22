@@ -101,6 +101,13 @@ public class GokuBoss extends ArcBoss {
             KAIO_DMG_ID = id("kaio_damage"), KAIO_SPD_ID = id("kaio_speed");
 
     private List<Move> book;
+    /** 4.102.0: the strongest player's EP at the last scan, for the EP floor (server only, not saved: the next scan reads it again). */
+    private double playerEp = 0.0;
+    /** 4.102.0 smart spawn: the strongest player's EP and the player count of his whole dimension, read once at his first scan (server only). */
+    private double dimEp = 0.0;
+    private int dimPlayers = 0;
+    private boolean dimRead = false;
+    private double lastEpWritten = -1.0;
     private GokuBossMath.Reading reading = new GokuBossMath.Reading(GokuBossMath.Preset.OVERPOWERED.floorEp(), GokuBossMath.Source.PRESET);
     private int players = 1;
     private boolean scanned, modsApplied;
@@ -372,18 +379,28 @@ public class GokuBoss extends ArcBoss {
     private void scan(ServerLevel sl) {
         nextScan = tickCount + GokuBossMath.RESCAN_TICKS;
         boolean useEp = GokuBossConfig.epScaling();
-        double topEp = 0.0, topBp = 0.0;
+        double topEp = 0.0, topBp = 0.0, share = GokuBossConfig.epPlayerShare();
+        double topPlayerEp = 0.0;
+        boolean smart = GokuBossConfig.maxFormSkip() > 0;
         int n = 0;
         for (Player p : sl.getEntitiesOfClass(Player.class, getBoundingBox().inflate(SCAN_RADIUS), pl -> pl.isAlive() && !pl.isCreative() && !pl.isSpectator())) {
             if (n >= SCAN_MAX) break;
             n++;
-            if (useEp) topEp = Math.max(topEp, TensuraBridge.maxEp(p));
+            double pe = useEp || share > 0.0 || smart ? TensuraBridge.maxEp(p) : 0.0;
+            if (useEp) topEp = Math.max(topEp, pe);
+            topPlayerEp = Math.max(topPlayerEp, pe);
             SaiyanState s = SaiyanStore.peek(p);
             if (s != null && s.saiyan) topBp = Math.max(topBp, s.battlePower);
         }
         GokuBossMath.Params params = GokuBossConfig.params();
         GokuBossMath.Reading r = omega.boost(GokuBossMath.resolve(useEp, topEp, topBp, params.preset()));
         boolean first = !scanned;
+        if (!dimRead) {                                          // 4.102.0: smart spawn, the players of his dimension are read once
+            dimRead = true;
+            double[] d = com.newuniverse.nusmp.boss.rules.BossEpScale.readPlayers(sl);
+            dimEp = d[0];
+            dimPlayers = (int) d[1];
+        }
         if (first || !fightActive()) {                          // before a fight he may follow the party both ways; in a fight he only ever grows
             reading = r;
             players = Math.max(1, n);
@@ -393,6 +410,10 @@ public class GokuBoss extends ArcBoss {
         }
         scanned = true;
         applyScaling(params);
+        if (first || ((share > 0.0 || smart) && (!fightActive() || topPlayerEp > playerEp))) {   // before a fight he follows the party; in a fight he only grows
+            playerEp = topPlayerEp;
+            if (modsApplied && (share > 0.0 || first)) applyEp(formIdx());                                  // one write per scan (every few seconds), never per tick
+        }
     }
 
     private void applyScaling(GokuBossMath.Params params) {
@@ -416,7 +437,7 @@ public class GokuBoss extends ArcBoss {
         double hp = GokuBossConfig.formBars() ? 1.0 : getHealth() / Math.max(1f, getMaxHealth());       // with form bars only the form's own bar ends a form (and the enrage clock)
         long enrage = GokuBossMath.enrageTicks(GokuBossConfig.enrageMinutes(), pace);
         int next = GokuLadder.next(formIdx(), hp, fightTicks, enrage, inForm, omega.ladderTop());
-        if (next != formIdx()) beginChange(sl, next);
+        if (next != formIdx()) beginChange(sl, smartTarget(next));
     }
 
     private void beginChange(ServerLevel sl, int to) {
@@ -472,9 +493,34 @@ public class GokuBoss extends ArcBoss {
         if (!GokuBossConfig.formBars() || farewellDone || farewellAt != 0L || barBreak || windLeft > 0 || pending >= 0) return false;
         if (formIdx() >= omega.ladderTop() || !(level() instanceof ServerLevel sl)) return false;
         barBreak = true;
-        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(1f)));
-        beginChange(sl, formIdx() + 1);
+        float floor = GokuLadder.floorHp(getMaxHealth(), GokuBossConfig.formFloor());
+        dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(floor)));
+        beginChange(sl, smartTarget(formIdx() + 1));
         return true;
+    }
+
+    /** 4.102.0: the form he really changes into: {@code plain} (the next one), or further up when the strongest player is far above his own EP. Never above the top, never down. */
+    private int smartTarget(int plain) {
+        int cur = formIdx();
+        if (plain != cur + 1 || playerEp <= 0.0) return plain;                    // only a one-step change is made smarter
+        int top = omega.ladderTop();
+        double mine = GokuEp.ep(cur, GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST, GokuBossConfig.epStart(), GokuBossConfig.epEnd());
+        return Math.max(plain, GokuLadder.target(cur, top, playerEp, mine, GokuBossConfig.maxFormSkip()));
+    }
+
+    /** 4.102.0 smart spawn: his Base EP from the players (heaviest share of all bosses), never below his own start. */
+    private double spawnBase() {
+        double top = Math.max(dimEp, playerEp);
+        if (!com.newuniverse.nusmp.boss.rules.BossRulesConfig.epFromPlayers()) return GokuBossConfig.epStart();
+        return com.newuniverse.nusmp.boss.rules.BossEpScale.base(GokuBossConfig.epStart(), top, Math.max(Math.max(1, dimPlayers), players),
+                com.newuniverse.nusmp.boss.rules.BossEpScale.GOKU, com.newuniverse.nusmp.boss.rules.BossRulesConfig.epStrictness(), com.newuniverse.nusmp.boss.rules.BossRulesConfig.epPerPlayer());
+    }
+
+    /** 4.102.0: a hit that would take the bar of this form below the floor stops AT the floor (he cannot go lower) and starts the change. Server thread only, only with form bars. */
+    private void holdAtFloor() {
+        if (!GokuBossConfig.formBars() || barBreak || windLeft > 0 || pending >= 0 || farewellAt != 0L || farewellDone) return;
+        if (formIdx() >= omega.ladderTop() || getHealth() > GokuLadder.floorHp(getMaxHealth(), GokuBossConfig.formFloor())) return;
+        breakBar();
     }
 
     /** Puts the form's damage, speed and armour on him as transient modifiers (replacing the last form's). */
@@ -483,7 +529,20 @@ public class GokuBoss extends ArcBoss {
         setModifier(Attributes.ATTACK_DAMAGE, DMG_ID, GokuLadder.damageMul(idx, strength) - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         setModifier(Attributes.MOVEMENT_SPEED, SPD_ID, GokuLadder.speedMul(idx, strength) - 1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         setModifier(Attributes.ARMOR, DEF_ID, GokuLadder.defense(idx) * 10.0, AttributeModifier.Operation.ADD_VALUE);
+        applyEp(idx);
         modsApplied = true;
+    }
+
+    /** 4.102.0: his own Tensura Existence Points follow the form (once per form change, never per tick; see {@link GokuEp}). A creature without Tensura data is left alone. */
+    private void applyEp(int idx) {
+        if (!GokuBossConfig.epLadder() || level().isClientSide) return;
+        int top = GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST;
+        double v = GokuEp.withPlayers(GokuEp.lifted(idx, top, GokuBossConfig.epStart(), GokuBossConfig.epEnd(), spawnBase()), playerEp, GokuBossConfig.epPlayerShare());
+        if (v == lastEpWritten) return;                                           // the scan runs every 5 s: write only when the number changed
+        lastEpWritten = v;
+        try {
+            io.github.manasmods.tensura.util.EnergyHelper.setBaseMaxEP(this, v);
+        } catch (RuntimeException | LinkageError noTensuraData) { /* no Tensura data on this creature: the ladder is simply not shown */ }
     }
 
     private void setModifier(Holder<Attribute> attr, ResourceLocation modId, double amount, AttributeModifier.Operation op) {
@@ -656,6 +715,7 @@ public class GokuBoss extends ArcBoss {
         if (omega.on() && omega.onIncoming(source, amount)) return false;
         float before = getHealth();
         boolean landed = super.hurt(source, amount);
+        if (landed && isAlive()) holdAtFloor();                                  // 4.102.0: held at 1% (the floor), then the change
         float dealt = before - getHealth();
         if (landed && omega.on()) omega.onHurt(source, dealt);
         if (landed && dealt >= getMaxHealth() * 0.06f) BossSpeech.say(this, BossLines.GOKU, "hurt_big");
@@ -860,6 +920,7 @@ public class GokuBoss extends ArcBoss {
     }
 
     boolean barBreakForTest() { return barBreak; }
+    int omegaTopForTest() { return omega.ladderTop(); }
 
     /** Starts a change to {@code idx} and runs the whole windup at once. */
     void changeNowForTest(int idx) {

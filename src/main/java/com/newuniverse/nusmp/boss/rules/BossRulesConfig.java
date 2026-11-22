@@ -30,6 +30,9 @@ public final class BossRulesConfig {
     /** Boss AI engage rule (docs/boss_ai_engage.md): a boss fights the minute a player is in range, without a hit and without line of sight when close. */
     public static final ModConfigSpec.BooleanValue AGGRO_ON_SIGHT;
     public static final ModConfigSpec.IntValue AGGRO_RANGE;
+    /** 4.102.0: a boss's base EP follows the players of its dimension when it spawns (docs/boss_ep_spawn.md). */
+    public static final ModConfigSpec.BooleanValue EP_FROM_PLAYERS;
+    public static final ModConfigSpec.DoubleValue EP_STRICTNESS, EP_PER_PLAYER;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -53,6 +56,12 @@ public final class BossRulesConfig {
                 .define("anonymousDamageBosses", "anime_multiverse:goku_boss");
         LOG_DAMAGE_BOSSES = b.comment("4.95.1: bosses (entity ids, comma separated) whose damage is written to the server log: the FIRST time one of them takes a new kind of hit (damage type, attacker, striking entity) one line names it, at most 24 lines per run. Only a diagnostic: it changes nothing in the fight. Default: Goku and Kakashi (the 'they hurt themselves' report). Empty = off.")
                 .define("logDamageBosses", "anime_multiverse:goku_boss,anime_multiverse:kakashi_hatake");
+        EP_FROM_PLAYERS = b.comment("4.102.0: smart spawn. When a boss of the mod spawns, its base Existence Points (EP) are raised to a share of the strongest player's EP in its dimension (more for a bigger group). Goku takes the heaviest share, Sinbad the middle, Kakashi the lightest. It only raises, never lowers. false = the bosses keep the EP they were made with.")
+                .define("epFromPlayers", true);
+        EP_STRICTNESS = b.comment("4.102.0: multiplies every boss's share of the player EP (see BossEpScale: Goku 1.0, Sinbad 0.6, other bosses 0.4, Kakashi 0.3 before this). 0 = off.")
+                .defineInRange("epStrictness", 1.0, 0.0, 5.0);
+        EP_PER_PLAYER = b.comment("4.102.0: extra share per player beyond the first (at most 10 count): 0.25 = +25% each.")
+                .defineInRange("epPerPlayer", 0.25, 0.0, 2.0);
         LUCIUS_COMBO_AI = b.comment("Lucius chains distinct spells (spatial, offensive, defensive or control, then one heavy magic cast) under cooldowns. false = his old move chooser.")
                 .define("luciusComboAi", true);
         REFILL_AT_GATES = b.comment("The Gates (100% mode) refill a Zogratis boss's health bar once. The one deliberate exception to 'no second wind'; false removes it.")
@@ -207,4 +216,10 @@ public final class BossRulesConfig {
 
     /** Leon study fix #2: melee damage on the hit tick of a per-attack timeline (false = the old fixed cooldown). */
     public static boolean attackTimeline() { return get(ATTACK_TIMELINE); }
+
+    public static boolean epFromPlayers() { return get(EP_FROM_PLAYERS); }
+
+    public static double epStrictness() { return get(EP_STRICTNESS); }
+
+    public static double epPerPlayer() { return get(EP_PER_PLAYER); }
 }

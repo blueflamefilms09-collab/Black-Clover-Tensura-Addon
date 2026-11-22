@@ -166,4 +166,28 @@ public final class GokuLadder {
 
     /** The skin texture name of a step. */
     public static String skin(int idx) { return SKINS.get(Math.max(0, Math.min(SKINS.size() - 1, step(idx).skin()))); }
+
+    // ------------------------------------------------------------------ 4.102.0: the 1% floor and the smart jump
+    /** The share of his health he is held at when a form's bar runs out (the owner: 1%). */
+    public static final double DEFAULT_FLOOR = 0.01;
+
+    /** The health he is held at: {@code share} of the maximum, never below 1 and never above the maximum. A bad share reads as 1%; 0 = the old 1 health. */
+    public static float floorHp(float max, double share) {
+        double s = Double.isNaN(share) ? DEFAULT_FLOOR : Math.max(0.0, Math.min(0.5, share));
+        return (float) Math.max(1.0, Math.min(Math.max(1.0, max), max * s));
+    }
+
+    /**
+     * How many forms he skips over when he changes: one per doubling of the strongest player's EP over his own EP (his EP climbs about 2x per form), at most {@code maxSkip}. 0 when the player
+     * is not above him, when a number is bad, or when the smart choice is off ({@code maxSkip} 0). Pure.
+     */
+    public static int skip(double playerEp, double gokuEp, int maxSkip) {
+        if (maxSkip <= 0 || !(playerEp > 0.0) || !(gokuEp > 0.0) || Double.isInfinite(playerEp) || Double.isInfinite(gokuEp) || playerEp <= gokuEp) return 0;
+        return (int) Math.max(0, Math.min(Math.min(maxSkip, 9), Math.floor(Math.log(playerEp / gokuEp) / Math.log(2.0))));
+    }
+
+    /** The form he changes into from {@code current}: the next one plus the smart skip, never above {@code top}. */
+    public static int target(int current, int top, double playerEp, double gokuEp, int maxSkip) {
+        return Math.min(clamp(top), clamp(current) + 1 + skip(playerEp, gokuEp, maxSkip));
+    }
 }

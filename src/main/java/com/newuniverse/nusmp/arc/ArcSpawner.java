@@ -84,6 +84,7 @@ public final class ArcSpawner {
         boss.moveTo(at.x, at.y, at.z, yaw, 0f);
         boss.setArena(BlockPos.containing(at));
         if (!sl.addFreshEntity(boss)) return new Result(Outcome.FAILED, null, List.of());
+        if (!com.newuniverse.nusmp.arc.goku.GokuBosses.owns(c.id())) com.newuniverse.nusmp.boss.rules.BossEpScale.applyAtSpawn(sl, boss, c.id());   // 4.102.0: smart spawn (Goku does it in his own ladder)
         VfxSpawn.send(sl, VfxShape.DEVIL_CIRCLE, at.add(0, 0.05, 0), at.add(0, 1, 0), 0xFF000000 | boss.styleColor(), 60, 3f);
         sl.playSound(null, boss.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.6f);
         return new Result(Outcome.SPAWNED, boss, List.of());

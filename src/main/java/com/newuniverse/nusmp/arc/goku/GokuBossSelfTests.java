@@ -138,11 +138,21 @@ public final class GokuBossSelfTests {
             int before = g.formIdx();
             g.setHealth(0f);
             g.die(g.damageSources().generic());
-            if (!g.isAlive() || g.getHealth() < 0.5f || g.getHealth() > 1.5f) return SelfTests.Result.fail("the empty bar did not leave him at 1 health: " + g.getHealth());
+            float floor = GokuLadder.floorHp(g.getMaxHealth(), GokuBossConfig.formFloor());                  // 4.102.0: held at the floor (1% by default), not at 1 health
+            if (!g.isAlive() || g.getHealth() < floor - 0.5f || g.getHealth() > floor + 0.5f) return SelfTests.Result.fail("the empty bar did not leave him at the floor of " + floor + ": " + g.getHealth());
             if (!g.barBreakForTest() || !g.windingUp()) return SelfTests.Result.fail("the power-up did not start");
             if (g.hurt(g.damageSources().generic(), 50f)) return SelfTests.Result.fail("he could be hurt while powering up");
             g.finishChangeForTest();
-            if (g.formIdx() != before + 1) return SelfTests.Result.fail("the next form did not take hold (" + g.formIdx() + ")");
+            if (g.formIdx() < before + 1 || g.formIdx() > before + 1 + GokuBossConfig.maxFormSkip()) return SelfTests.Result.fail("the next form did not take hold (" + g.formIdx() + ")");
+            g.setHealth(g.getMaxHealth());                                                                  // 4.102.0: a hit far above his bar stops AT the floor and starts the next change
+            if (g.formIdx() < g.omegaTopForTest()) {
+                int now = g.formIdx();
+                if (g.hurt(g.damageSources().generic(), g.getMaxHealth() * 3f)) {
+                    if (!g.isAlive() || g.getHealth() < floor - 0.5f) return SelfTests.Result.fail("a heavy hit took him below the floor: " + g.getHealth());
+                    if (!g.barBreakForTest() || g.formIdx() != now) return SelfTests.Result.fail("the heavy hit did not start the change at the floor");
+                    g.finishChangeForTest();
+                }
+            }
             if (g.getHealth() < g.getMaxHealth() - 0.5f) return SelfTests.Result.fail("the new form's bar is not full: " + g.getHealth() + " of " + g.getMaxHealth());
             return SelfTests.Result.ok("form " + before + " -> " + g.formIdx() + " with a full bar of " + Math.round(g.getMaxHealth()));
         } finally {

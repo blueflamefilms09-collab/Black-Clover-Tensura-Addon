@@ -1,0 +1,355 @@
+{
+ "_comment": "Magi (MagoiLayer): the five MAGI_* shapes Sinbad and the Djinn send (docs/boss_sinbad_phases.md). A dusk sky so the golden Magoi and white Rukh read as in the anime; figure = the Djinn user (1.8 tall); colours are the Djinn table's (Baal blue, Zepar red, Furfur purple, Focalor green).",
+ "magi_equip_baal": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_EQUIP",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 40,
+  "color": "FF3C8CFF",
+  "ages": [
+   3,
+   9,
+   15,
+   24,
+   32
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "magi_equip_zepar": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_EQUIP",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 40,
+  "color": "FFD43A3A",
+  "ages": [
+   6,
+   14,
+   22,
+   28,
+   36
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "magi_aura_furfur": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_AURA",
+  "from": [
+   0,
+   0.05,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "color": "FFB77BFF",
+  "ages": [
+   4,
+   10,
+   16,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "magi_rukh": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_RUKH",
+  "from": [
+   0,
+   1.3,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   12
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "color": "FFFFE9A8",
+  "ages": [
+   4,
+   9,
+   14,
+   19
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    12,
+    1.8
+   ]
+  ]
+ },
+ "magi_extreme_baal": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_EXTREME",
+  "from": [
+   0,
+   0.05,
+   6
+  ],
+  "to": [
+   0,
+   0.05,
+   6
+  ],
+  "power": 8.0,
+  "duration": 60,
+  "color": "FF3C8CFF",
+  "ages": [
+   8,
+   20,
+   31,
+   38,
+   50
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ]
+  ]
+ },
+ "magi_phase": {
+  "layer": "MagoiLayer",
+  "sky": [
+   0.1,
+   0.12,
+   0.22
+  ],
+  "horizon": [
+   0.3,
+   0.3,
+   0.42
+  ],
+  "floor": [
+   0.2,
+   0.19,
+   0.24
+  ],
+  "cam": [
+   -5,
+   2.6,
+   -3
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "shape": "MAGI_PHASE",
+  "from": [
+   0,
+   1.0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3.0,
+  "duration": 36,
+  "color": "FFFFD54F",
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

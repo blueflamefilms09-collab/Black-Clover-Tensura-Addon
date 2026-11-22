@@ -309,6 +309,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.LordLayer());
         // Hero weapon projectiles (flat parts made solid): HERO_ARROW and HERO_SPEAR, appended after GIANT_AVATAR; visual.heroSolidParts = false draws the old starlight streak for them.
         register(new com.newuniverse.nusmp.vfx.client.layer.HeroProjectileLayer());
+        // Magi (Sinbad and the Djinn): MAGI_EQUIP, MAGI_AURA, MAGI_RUKH, MAGI_EXTREME, MAGI_PHASE, appended after LORD_GREED; the server settings sinbad_boss.magiVfx / djinn.magiVfx = false send none of them.
+        register(new com.newuniverse.nusmp.vfx.client.layer.MagoiLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.102.0] — Goku: 1 to 500 trillion EP from the players, held at 1% between forms, smart form skipping, smart spawn for all bosses
+- NEW: Goku's own EP climbs with his forms, 1 trillion in Base to 500 trillion in his last form (settings `goku_boss.epLadder`, `epStart`, `epEnd`).
+- NEW: he scales to one hundredth of the player he fights (`goku_boss.epPlayerShare`, 0.01): his EP is never below 1/100 of the strongest player's EP near him.
+- NEW: every form change now happens with Goku held at 1% of his health (`goku_boss.formFloor`); he cannot be hurt below it, so the change is forced. Before: held at 1 health when the bar ran out.
+- NEW: smart forms (`goku_boss.smartForms`, `maxFormSkip` 3): against a player far above his EP he skips forms instead of going in order, one per doubling of the player's EP, never above his top form.
+- NEW: smart spawn for all bosses of the mod: when one spawns, its base EP is raised to a share of the strongest player's EP in its dimension (more for a group): Goku 1.0 (heaviest), Sinbad 0.6, other bosses 0.4, Kakashi 0.3 (lightest). Goku's whole EP ladder is lifted by it. Settings `bossRules.epFromPlayers`, `epStrictness`, `epPerPlayer`. Only raises, never lowers. The seven older bosses (ExistingBossSpawner) are not covered yet.
+- NEW (groundwork, not used yet): the Magi/Magoi VFX layer shapes `MAGI_EQUIP/AURA/RUKH/EXTREME/PHASE` and `tools/vfx_preview/scenes.d/magi.json`.
+- REPLACED: the form-bar hold of 1 health became the 1% floor (`formFloor` 0 restores it).
+- KEPT: his moves, health scaling, form table, trigger lines, Omega mode, farewell, every other setting; the Time Magic VFX.
+- Cost: no new entity or packet; one EP write per form change and per 5 s scan. Not seen in a real game; effects of 500 trillion EP on Tensura damage and on Saiyan Battle Power are untested.
+
 ## [4.101.0] — The advancement screen is split into 15 organised tabs
 - FIXED: every advancement hung under one root, so the screen was one column about 333 rows tall that players could not move around in. The same tree is now cut into 15 tabs (Multiverse of Anime, Magic Awakening, the Soul tabs, Spells, Character Pages, Bosses and Challenges, Relics and Weapons, Dungeon, Story, More Sagas, Faces 1 and 2), 14 to 30 rows each. The tab background is unchanged.
 - NEW: 15 tab-head advancements under `advancement/tab/` (they complete on the first tick, no toast, no reward), `tools/quests/adv_layout.py`, `AdvancementLayoutTest`, `docs/advancements.md` section "The tabs".
