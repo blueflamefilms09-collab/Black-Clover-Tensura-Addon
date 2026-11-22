@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class BossRealmConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED;
+    public static final ModConfigSpec.BooleanValue ENABLED, RETURN_ONLY_AFTER_WIN, TIMEOUT_EVICTS;
     public static final ModConfigSpec.IntValue PARTY_CAP, MAX_ACTIVE_SITES, EMPTY_GRACE_SECONDS, RETURN_SECONDS, FIGHT_TIMEOUT_MINUTES, DOOR_COOLDOWN_SECONDS;
     public static final ModConfigSpec.DoubleValue PARTY_RADIUS;
 
@@ -33,6 +33,10 @@ public final class BossRealmConfig {
                 .defineInRange("returnSeconds", DEFAULT_RETURN, 0, 600);
         FIGHT_TIMEOUT_MINUTES = b.comment("Longest a realm fight may last; then the boss withdraws and everyone is carried home. 0 = no limit.")
                 .defineInRange("fightTimeoutMinutes", DEFAULT_TIMEOUT, 0, 240);
+        RETURN_ONLY_AFTER_WIN = b.comment("4.98.0: people in a realm arena are carried home on their own only after the boss was BEATEN. A fight that was only abandoned (the boss vanished, a bug) no longer throws them out; the lodestone still takes them home when no boss fights. False = the old behaviour (carried home after any end of the fight).")
+                .define("returnOnlyAfterWin", true);
+        TIMEOUT_EVICTS = b.comment("4.98.0: when the fight lasts longer than fightTimeoutMinutes the boss withdraws and everyone is carried home. Off by default: a long fight (Goku now has a bar for every form) must never throw the players out. True = the old behaviour.")
+                .define("timeoutEvicts", false);
         DOOR_COOLDOWN_SECONDS = b.comment("Seconds a player must wait between two uses of a door (stops a spam of travels).")
                 .defineInRange("doorCooldownSeconds", DEFAULT_DOOR_COOLDOWN, 0, 120);
         b.pop();
@@ -47,6 +51,10 @@ public final class BossRealmConfig {
     }
 
     public static boolean enabled() { return get(ENABLED); }
+
+    public static boolean returnOnlyAfterWin() { return get(RETURN_ONLY_AFTER_WIN); }
+
+    public static boolean timeoutEvicts() { return get(TIMEOUT_EVICTS); }
 
     public static int partyCap() { return get(PARTY_CAP); }
 

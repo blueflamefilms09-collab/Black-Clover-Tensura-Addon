@@ -45,6 +45,7 @@ public final class EnergyBridge {
 
     /** Energy Drain: takes frac of the target's max magicules and gives what was taken to 'to' (may be null). Returns the amount. */
     public static double drain(LivingEntity from, LivingEntity to, double frac) {
+        if (to != null && com.newuniverse.nusmp.boss.rules.BossRulesConfig.noPoolTheft() && com.newuniverse.nusmp.boss.rules.BossIdentity.isBoss(to) && from instanceof net.minecraft.world.entity.player.Player) return 0;   // 4.98.0: a boss takes nothing from a player
         var ex = TensuraStorages.getExistenceFrom(from);
         if (ex == null || com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(from)) return 0;      // 3.18.0: Infinite Grimoire is immune to mana depletion
         double take = Math.min(ex.getMagicule(), EnergyHelper.getMaxMagicule(from) * frac);

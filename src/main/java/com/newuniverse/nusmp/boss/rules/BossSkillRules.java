@@ -54,7 +54,7 @@ public final class BossSkillRules {
 
     /** Is this skill forbidden to bosses by the current config? */
     public static boolean forbidden(ManasSkill s) {
-        return s != null && BossSkillPolicy.isForbidden(idOf(s), categoryOf(s), BossRulesConfig.settings());
+        return s != null && (BossSkillPolicy.isForbidden(idOf(s), categoryOf(s), BossRulesConfig.settings()) || BossRulesConfig.noPoolTheft() && BossSkillPolicy.stealsPools(idOf(s)));
     }
 
     /** Is the skill with this registry id forbidden to bosses? An id the registry does not know is judged by its name alone. */

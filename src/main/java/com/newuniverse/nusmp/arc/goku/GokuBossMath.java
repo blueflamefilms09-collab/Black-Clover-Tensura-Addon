@@ -144,6 +144,16 @@ public final class GokuBossMath {
     /** 4.96.0: the factor on his health when every form has its own bar: {@code share} when the bars are on, else 1. */
     public static double barFactor(boolean bars, double share) { return bars ? Math.max(0.05, Math.min(1.0, share)) : 1.0; }
 
+    /** 4.98.0: the damage of one physical blow: {@code base} times the punch multiplier (1 when punches are off or the blow is magic). */
+    public static float punchDamage(float base, boolean punches, boolean magic, double mul) {
+        return punches && !magic ? (float) (base * Math.max(1.0, Math.min(50.0, mul))) : base;
+    }
+
+    /** 4.98.0: the share of the victim's health one blow may take: the higher of the normal share and the punch share for a physical blow of the punch kind. */
+    public static double hitShare(double normal, boolean punches, boolean magic, double punchShare) {
+        return punches && !magic ? Math.max(normal, punchShare) : normal;
+    }
+
     /** The enrage time in ticks: minutes x 1200 x the pace factor, at least 600. */
     public static long enrageTicks(double minutes, double pace) {
         return Math.max(600L, Math.round(Math.max(1.0, minutes) * 1200.0 * Math.max(0.3, Math.min(1.0, pace))));

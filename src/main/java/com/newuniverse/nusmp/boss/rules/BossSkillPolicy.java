@@ -32,6 +32,17 @@ public final class BossSkillPolicy {
         }
     }
 
+    /** 4.98.0: words that mark a skill as one that takes magicule, aura or skills from someone (a boss may not use these on players). */
+    private static final List<String> THEFT_WORDS = List.of("drain", "steal", "siphon", "absorb", "leech", "plunder");
+
+    /** Does this skill id say it takes from its target (drain, steal, siphon, absorb, leech, plunder)? Pure. */
+    public static boolean stealsPools(String skillId) {
+        if (skillId == null || skillId.isBlank()) return false;
+        String id = normalise(skillId);
+        for (String w : THEFT_WORDS) if (id.contains(w)) return true;
+        return false;
+    }
+
     /** The default value of the config's {@code forbiddenWords}. */
     public static final String DEFAULT_WORDS = "regenerat,heal,recover,revive,resurrect";
 

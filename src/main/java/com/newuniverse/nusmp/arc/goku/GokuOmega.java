@@ -252,6 +252,7 @@ final class GokuOmega {
     /** Called after a blow of his landed: an Energy Drain, else a Skill Seal, whichever is ready (never both on one blow). */
     void onStrike(LivingEntity victim) {
         if (!(victim instanceof Player) || !victim.isAlive() || !g.fightActive()) return;
+        if (com.newuniverse.nusmp.boss.rules.BossRulesConfig.noPoolTheft()) return;          // 4.98.0: no boss drains or seals a player (bossRules.noPoolTheft)
         int[] row = row(victim.getUUID());
         if (row == null) return;
         if (hasSkill(GokuOmegaMath.Hack.ENERGY_DRAIN) && ready(GokuOmegaMath.Hack.ENERGY_DRAIN) && row[GokuOmegaMath.Hack.ENERGY_DRAIN.ordinal()] < GokuOmegaMath.Hack.ENERGY_DRAIN.perPlayer) {

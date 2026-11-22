@@ -205,3 +205,6 @@ self-test prefix `goku.boss` in the smoke list.
 
 ## Form bars (4.97.0)
 Each form has its own health bar, like Lucifero's phases. When the bar of a form runs out, `breakBar()` (called first from `die`) keeps Goku at 1 health, starts the windup into the next form and makes him untouchable during it; when the form takes hold the bar is refilled to full (`refillBar`). The last form still ends with the farewell/death. Settings: `goku_boss.formBars` (default true; false = the old single bar) and `goku_boss.formBarShare` (default 0.4, the size of one bar as a share of the old whole bar). Worst case cost: one extra refill and one ring burst per form change; no new per-tick work.
+
+## Punches, no theft, no eviction (4.98.0)
+`goku_boss.punches` (default true): `punchTick` runs between moves, runs at the target and punches every `punchGapTicks`; physical blows are multiplied by `punchMultiplier` (4.0) and may take up to `punchHitShare` (0.75) of a player's health. Worst case: one blow per 14 ticks and one path request per 10 ticks per Goku. `bossRules.noPoolTheft` stops Omega's Energy Drain and Skill Seal and every boss use of the energy-drain helper. The realm only carries people home after a win (`bossRealm.returnOnlyAfterWin`) and no longer evicts on the 30-minute timeout unless `bossRealm.timeoutEvicts`.

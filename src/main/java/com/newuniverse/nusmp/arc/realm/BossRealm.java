@@ -233,7 +233,7 @@ public final class BossRealm {
             clock.fight(fighting, now);
             if (fighting) {
                 keepBossOnItsFloor(arena, save, c, slot);
-                if (clock.timedOut(now, BossRealmConfig.timeoutTicks())) {
+                if (BossRealmConfig.timeoutEvicts() && clock.timedOut(now, BossRealmConfig.timeoutTicks())) {
                     ArcArenaDirector.reset(server, slot);                                          // the boss goes, the site is ready again ...
                     save.state(slot).abandon(now);                                                  // ... and rests, so nobody starts the same fight again in the same breath
                     save.setDirty();
@@ -244,7 +244,7 @@ public final class BossRealm {
                     st = save.state(slot);
                 }
             }
-            boolean resting = st != null && st.phase() == ArenaState.Phase.COOLDOWN;
+            boolean resting = st != null && st.phase() == ArenaState.Phase.COOLDOWN && (st.defeated() || !BossRealmConfig.returnOnlyAfterWin());   // 4.98.0: only a beaten boss sends people home on its own
             if (clock.returnDue(resting, in.size(), now, BossRealmConfig.returnTicks())) {
                 for (ServerPlayer p : in) ArcArenaTravel.leave(p);
             }

@@ -111,6 +111,8 @@ public class GokuBoss extends ArcBoss {
     private float bombDamage;
     /** 4.90.0 the farewell: the tick he leaves at (0 = not leaving), the blow that beat him (for the credit) and whether the chat line is held back while the framework finishes the fight. */
     private long farewellAt;
+    /** 4.98.0: the tick of his next free punch. */
+    private long nextPunchAt;
     private boolean farewellDone, hushSay;
     /** 4.96.0: his bar just ran out and he is powering up into the next form; he cannot be hurt and the bar is refilled when the form takes hold (saved, so a reload cannot leave him at 1 health). */
     private boolean barBreak;
@@ -233,10 +235,36 @@ public class GokuBoss extends ArcBoss {
         }
         if (kaioUntil != 0 && tickCount >= kaioUntil) endKaio();
         if (farewellAt != 0L && tickCount >= farewellAt) finishFarewell(sl);
+        punchTick(sl);
         omega.tick(sl);
         if (tickCount % 4 == 0) fx(sl);
         if (bombDamage > 0f && !"spirit_bomb".equals(castId())) bombDamage = 0f;
         voiceTick();
+    }
+
+    /**
+     * 4.98.0: he fights with his fists too. Between two moves (nothing cast, no power-up, not leaving) he runs at the target and, within reach, punches once every {@code punchGapTicks}: alternate hands, a
+     * shove, a spark. Bounded: one blow per gap per Goku (at most the Goku cap stand at once), one path request per 10 ticks, no entity made.
+     */
+    private void punchTick(ServerLevel sl) {
+        if (!GokuBossConfig.punches() || !fightActive() || windLeft > 0 || barBreak || farewellAt != 0L || castingMoveOrNull() != null) return;
+        LivingEntity t = getTarget();
+        if (t == null || !t.isAlive() || isFamily(t)) return;
+        double d = distanceTo(t);
+        if (d > 3.0) {
+            if (d < 40.0 && tickCount % 10 == 0) getNavigation().moveTo(t, 1.5);
+            return;
+        }
+        if (tickCount < nextPunchAt) return;
+        nextPunchAt = tickCount + GokuBossConfig.punchGap();
+        getLookControl().setLookAt(t, 60f, 60f);
+        swing((tickCount / GokuBossConfig.punchGap()) % 2 == 0 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+        if (strike(t, base() * 0.7f, false)) {
+            Vec3 away = t.position().subtract(position()).multiply(1, 0, 1);
+            if (away.lengthSqr() > 1e-4) t.knockback(0.7, -away.x, -away.z);
+            GokuFx.burst(sl, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()), 5);
+            sl.playSound(null, t.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.4f, 0.7f);
+        }
     }
 
     /** His own voice (BossSpeech): the call-out of a move when it starts, the low-health line once per fight, and the death of a player once a second. */
@@ -520,10 +548,12 @@ public class GokuBoss extends ArcBoss {
     public boolean strike(LivingEntity victim, float baseDamage, boolean magic) {
         if (victim == null || !victim.isAlive() || isFamily(victim)) return false;
         DamageSource src = magic ? damageSources().indirectMagic(this, this) : damageSources().mobAttack(this);
+        boolean pn = GokuBossConfig.punches();
+        baseDamage = GokuBossMath.punchDamage(baseDamage, pn, magic, GokuBossConfig.punchMul());          // 4.98.0: fists hit far harder
         boolean om = omega.on() && victim instanceof Player;
         float dealt = om ? omega.hit(victim, baseDamage) : bossDamage(victim, baseDamage);       // Omega: no 40% law cap in between, only the Omega cap below
         if (victim instanceof Player) {
-            double share = GokuBossConfig.hitShare();
+            double share = GokuBossMath.hitShare(GokuBossConfig.hitShare(), pn, magic, GokuBossConfig.punchShare());
             if (src.scalesWithDifficulty() && level().getDifficulty() == Difficulty.HARD) share /= 1.5;     // the game multiplies a mob's damage on Hard after the cap
             dealt = GokuBossMath.capHit(dealt, victim.getMaxHealth(), share);
         }

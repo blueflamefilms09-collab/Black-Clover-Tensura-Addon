@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.98.0] — Goku punches, nobody throws you out mid-fight, bosses take nothing from you
+- FIXED: the realm no longer carries people home during or after a fight that was not won. The 30-minute fight timeout now only applies with `bossRealm.timeoutEvicts` (default off; a long fight with Goku's form bars must not end it), and a fight that was merely abandoned (the boss vanished) no longer starts the automatic trip home (`bossRealm.returnOnlyAfterWin`, default on). Winning, the lodestone and the Chronicle Sigil still take you home. Setting both back restores the old behaviour.
+- NEW: Goku fights with his fists (`goku_boss.punches`, default on). Between his moves he runs at the target and punches every `punchGapTicks` (14); every physical blow of his (the plain hit, the Meteor Combination, the punches) hits `punchMultiplier` (4.0) times harder, up to `punchHitShare` (75 percent) of a player's health per blow. Beams and the Spirit Bomb keep their own caps. Off = the old blows.
+- NEW: `bossRules.noPoolTheft` (default on): no boss absorbs, drains or steals a player's magicule, aura or skills. Goku Omega's Energy Drain and Skill Seal stop, the shared energy-drain helper gives a boss nothing, and a boss cannot use a skill whose id says drain, steal, siphon, absorb, leech or plunder. Off = the old behaviour.
+- KEPT: the form bars, the pool top-up, the verse tabs, the lodestone and the Sigil as ways home.
+- Cost: one punch per 14 ticks and one path request per 10 ticks per Goku; no entities, no packets beyond the swing and a spark.
+- Tests: `GokuPunchTest`.
+
 ## [4.97.0] — Goku has a health bar for every form
 Like Lucifero's phases: each Goku form now has its own bar. The bar runs down to 0, he cannot be hurt for the length of the power-up, and the next, stronger form comes back with a FULL bar (a burst and a sound mark it). Only the end of his last form is his farewell/death, as before.
 - NEW: `goku_boss.formBars` (default on): the bar of a form empties -> `GokuBoss.breakBar()` keeps him at 1 health, starts the next form's windup, blocks damage during it, and refills the bar when the form takes hold. Saved in the entity (`GokuBarBreak`), so a reload in the middle of a change cannot leave him at 1 health.

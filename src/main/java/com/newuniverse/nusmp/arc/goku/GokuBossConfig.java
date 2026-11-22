@@ -10,13 +10,14 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class GokuBossConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL, FORM_BARS;
+    public static final ModConfigSpec.IntValue PUNCH_GAP;
+    public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL, FORM_BARS, PUNCHES;
     /** Goku Omega (docs/goku_omega.md), section {@code [goku_boss.omega]}. */
     public static final ModConfigSpec.BooleanValue OMEGA_ENABLED, OMEGA_EP_SKILLS, OMEGA_HACKS, OMEGA_SECOND_WIND, OMEGA_TRAINING;
     public static final ModConfigSpec.DoubleValue OMEGA_HEALTH, OMEGA_DAMAGE, OMEGA_MAX_HIT, OMEGA_DODGE_CAP;
     public static final ModConfigSpec.IntValue OMEGA_LEVEL_CAP, OMEGA_XP_PER_HOUR, OMEGA_TRAINING_DAILY, OMEGA_FIGHT_DAILY;
     public static final ModConfigSpec.ConfigValue<String> DIFFICULTY;
-    public static final ModConfigSpec.DoubleValue FORM_BAR_SHARE, HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, EP_WEIGHT, EP_CAP, PER_PLAYER_BONUS, MAX_HIT_PERCENT, UI_DODGE_CAP;
+    public static final ModConfigSpec.DoubleValue PUNCH_MUL, PUNCH_SHARE, FORM_BAR_SHARE, HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, EP_WEIGHT, EP_CAP, PER_PLAYER_BONUS, MAX_HIT_PERCENT, UI_DODGE_CAP;
     public static final ModConfigSpec.IntValue PLAYER_CAP, GLOBAL_CAP, ENRAGE_MINUTES;
 
     /** The defaults, also read by the tests. */
@@ -42,6 +43,14 @@ public final class GokuBossConfig {
                 .define("farewell", true);
         FORM_BARS = b.comment("4.96.0: every form has its own health bar, like Lucifero's phases: the bar runs down to 0, he cannot be hurt while he powers up, and the next, stronger form comes back with a FULL bar. He only dies (bows out) at the end of his last form. False = the old single bar where the form follows the health.")
                 .define("formBars", true);
+        PUNCHES = b.comment("4.98.0: Goku fights with his fists too: between his moves he runs at the target and punches (a blow every punchGapTicks), and every blow of his hand hits punchMultiplier times harder than before, up to punchHitShare of the victim's health. False = the old, weaker plain blows.")
+                .define("punches", true);
+        PUNCH_MUL = b.comment("4.98.0: how much harder every physical blow of Goku (his plain hit, the Meteor Combination, the new punches) hits. 1 = as before.")
+                .defineInRange("punchMultiplier", 4.0, 1.0, 50.0);
+        PUNCH_SHARE = b.comment("4.98.0: one punch of his takes at most this share of a player's maximum health (replaces maxHitPercent for his fists when higher; magic and beams keep their own cap).")
+                .defineInRange("punchHitShare", 0.75, 0.05, 0.95);
+        PUNCH_GAP = b.comment("4.98.0: ticks between two of his free punches (20 = one per second).")
+                .defineInRange("punchGapTicks", 14, 6, 80);
         FORM_BAR_SHARE = b.comment("4.96.0: with formBars, the size of ONE form bar as a share of the old single bar (the fight has one bar per form, so a small share keeps it from taking ten times as long). 1.0 = every bar as big as the old whole bar.")
                 .defineInRange("formBarShare", 0.4, 0.05, 1.0);
         EP_WEIGHT = b.comment("How strongly EP raises him: health x (1 + epWeight x (EP curve - 1)); damage takes half of it. 0 = EP changes nothing.")
@@ -125,6 +134,14 @@ public final class GokuBossConfig {
     public static boolean farewell() { return get(FAREWELL); }
 
     public static boolean formBars() { return get(FORM_BARS); }
+
+    public static boolean punches() { return get(PUNCHES); }
+
+    public static double punchMul() { return get(PUNCH_MUL); }
+
+    public static double punchShare() { return get(PUNCH_SHARE); }
+
+    public static int punchGap() { return get(PUNCH_GAP); }
 
     public static double formBarShare() { return get(FORM_BAR_SHARE); }
 
