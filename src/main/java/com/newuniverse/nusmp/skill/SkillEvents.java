@@ -53,5 +53,6 @@ public final class SkillEvents {
     public static void onServerStopping() {
         SkillZones.clearAll();
         Summons.clearLedger();
+        Summons.clearPerformers();
     }
 }

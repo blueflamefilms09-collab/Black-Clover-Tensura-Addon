@@ -107,6 +107,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue SUMMONER_REWORK;
     public static final ModConfigSpec.DoubleValue SUMMONER_MASTERY_PERCENT;
     public static final ModConfigSpec.BooleanValue SUMMONER_CANON;
+    public static final ModConfigSpec.BooleanValue SUMMONER_CREATURES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -325,6 +326,8 @@ public final class NUConfig {
                 .defineInRange("summonerMasteryPercent", 0.5, 0.0, 5.0);
         SUMMONER_CANON = b.comment("Summoner canon pass (Hell Mode wiki): modes open with Allen's Summoning levels (Insect and Beast 1, Synthesis and Bird 2, Strengthening and Grass 3, Stone and Storage 4, Fish 5, Awakening and Spirit 6, Dragon and Deputize 7), the Insect, Fish, Spirit, Dragon, Angel, Awakening, Deputize and Storage modes exist, Strengthening stays on the summon, cards are named Beast H / Wally, the owner always takes the buffs of the summons he keeps. false = the 4.5.0 Summoner (nine modes, guessed unlock order). Needs summonerRework.")
                 .define("summonerCanon", true);
+        SUMMONER_CREATURES = b.comment("Summoner creatures (4.106.0, docs/summoner_creatures.md): the cards call the Hell Mode creatures (Hayate, Cerorin, Rocanel, Mira, Ellie, Okiyosan) as custom GeckoLib models instead of a vanilla wolf, iron golem or vex, and the Insect, Fish, Spirit, Dragon, Angel, Bird and Grass casts show their creature (Hatch, Genbu, Ellie, Dradra, Merus, Tsubame, Solarin) for a few seconds. The Unique's creatures are Soldier-grade, the Ultimate's twice as strong. false = the vanilla creatures of 4.105.0 and no performers. Applies to creatures called after the change.")
+                .define("summonerCreatures", true);
         b.push("ultimates_fiction_god");
         ALL_FICTION_GOD = b.comment("All Fiction god-class rework (sixteen modes: Deny Skill, Overwrite Rule, Reversal, Mass Fiction, Nothing Sticks, Rewrite Time, the Retcon passive) and Book Maker's lead-in modes (Equalize, Glimpse of the Fiction). false = the ten-mode All Fiction and the two-mode Book Maker of 3.46.0 (needs allFictionRebuilt for All Fiction).").define("allFictionGod", true);
         ALL_FICTION_CANON = b.comment("All Fiction / Book Maker canon pass (Medaka Box wiki, docs/all_fiction_rework.md): All Fiction cannot erase another Minus (a player holding Book Maker or any Ultimate), Undo and Erase Effects refuse when there is nothing to erase, new modes Erase Presence and April Fiction (a timed erase); Book Maker's screw does almost no damage and drags the target's attack and armour down toward yours for a few seconds, plus the mastered mode Leg Eating Forest. false = the guess-era behaviour of allFictionGod (needs allFictionGod).").define("allFictionCanon", true);
@@ -356,6 +359,7 @@ public final class NUConfig {
     public static boolean shinraRework() { return live(SHINRA_REWORK); }
     public static boolean shinraCanon() { return live(SHINRA_REWORK) && live(SHINRA_CANON); }
     public static boolean summonerRework() { return live(SUMMONER_REWORK); }
+    public static boolean summonerCreatures() { return live(SUMMONER_CREATURES) && live(SUMMONER_REWORK); }
     public static boolean summonerCanon() { return live(SUMMONER_CANON) && live(SUMMONER_REWORK); }
     public static double summonerMasteryPercent() { return Math.max(0.0, Math.min(5.0, live(SUMMONER_MASTERY_PERCENT))); }
     /** The Grimoire Slot lives in the inventory screen (default on, also before the SERVER config is loaded). */

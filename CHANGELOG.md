@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.106.0] — Summoner: the real Hell Mode creatures
+- NEW: the Summoner's cards call custom GeckoLib creatures of the anime: Hayate and Cerorin (Beast / Legion), Rocanel and Mira (Stone), Ellie and Okiyosan (Wraith). One entity type `anime_multiverse:summon_beast`, twelve species, a glow mask each.
+- NEW: every cast shows its creature for 3-4 s: Hatch (Insect), Genbu (Fish), Ellie (Spirit), Dradra (Dragon), Merus (the Angel), Tsubame (Bird pulse), Solarin (Grass pulse). Harmless, one per owner, outside the summon cap.
+- NEW: very strong: creature health and damage are the card's numbers times a species factor times the tier power (Unique 1, mastered 1.25, Ultimate 2, mastered Ultimate 2.5).
+- NEW: setting `summonerCreatures` (default on; off = the vanilla wolf, golem and vex of 4.105.0). Self-test `summoner.creatures`.
+- KEPT: the ledger, cap, expiry, steering, Strengthening, Deputize, Synthesis, every mode and its unlock; the vanilla creatures behind the setting.
+- Not included: the Allen boss, the other 31 summons, Summon Cards / Grimoire drops, the Hell Mode race. Models are script-written (Blockbench sources included), not made in an app; not seen in a real game; numbers are guesses. See `docs/summoner_creatures.md`.
+
 ## [4.105.0] — Sinbad: three phases, more health, the Magi look, anime drops
 - NEW: Sinbad fights in three phases: King of Sindria, Djinn Master (from power 60: a break with Rukh feathers, a second health bar, equips 16 s, switches faster) and the Seven Seas (the Gates, as before). Settings `sinbad_boss.phases` (false: the old fight), `sinbad_boss.healthFactor` (2.5: his 3200 health times this; 1.0 keeps it).
 - NEW: Sinbad and the player's Djinn use the Magi VFX layer: golden vessel sigil on Djinn Equip, Magoi aura, Rukh flocks along his beams, the Extreme Magic's sky sigil and shockwave, the phase break. Settings `sinbad_boss.magiVfx` and `djinnLook.magiVfx` (false: the old circle and effects only).

@@ -20784,5 +20784,18 @@
   "death.attack.anime_multiverse.goku_true.player": "%1$s was hit by a force nothing could block, from %2$s",
   "death.attack.anime_multiverse.goku_spirit": "%1$s had their spirit shaken apart",
   "death.attack.anime_multiverse.goku_spirit.player": "%1$s had their spirit shaken apart by %2$s",
-  "tooltip.anime_multiverse.weapon_hit": "Weapon hit %s"
+  "tooltip.anime_multiverse.weapon_hit": "Weapon hit %s",
+  "entity.anime_multiverse.summon_beast": "Summon",
+  "anime_multiverse.summoner.creatures.hayate": "Hayate",
+  "anime_multiverse.summoner.creatures.cerorin": "Cerorin",
+  "anime_multiverse.summoner.creatures.rocanel": "Rocanel",
+  "anime_multiverse.summoner.creatures.mira": "Mira",
+  "anime_multiverse.summoner.creatures.hatch": "Hatch",
+  "anime_multiverse.summoner.creatures.tsubame": "Tsubame",
+  "anime_multiverse.summoner.creatures.solarin": "Solarin",
+  "anime_multiverse.summoner.creatures.genbu": "Genbu",
+  "anime_multiverse.summoner.creatures.ellie": "Ellie",
+  "anime_multiverse.summoner.creatures.okiyosan": "Okiyosan",
+  "anime_multiverse.summoner.creatures.dradra": "Dradra",
+  "anime_multiverse.summoner.creatures.merus": "Merus"
 }

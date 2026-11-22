@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skill;
 
 import com.newuniverse.nusmp.skill.rules.SummonRules.Card;
+import com.newuniverse.nusmp.skill.rules.SummonSpecies;
 import com.newuniverse.nusmp.skill.rules.SummonerRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -44,6 +45,7 @@ final class SummonerCanon {
             SkillFx.burst(p.serverLevel(), f.position().add(0, f.getBbHeight() * 0.5, 0), true, 6, 0.4);
         }
         if (!foes.isEmpty()) SkillFx.ring(p.serverLevel(), p.position(), range, GREEN);
+        if (!foes.isEmpty()) Summons.perform(p, SummonSpecies.HATCH, tier);          // 4.106.0: Hatch shows the cast
         return foes.size();
     }
 
@@ -59,6 +61,7 @@ final class SummonerCanon {
             SkillFx.burst(p.serverLevel(), a.position().add(0, a.getBbHeight() * 0.5, 0), false, 4, 0.3);
         }
         SkillFx.ring(p.serverLevel(), p.position(), SummonerRules.fishRange(), BLUE);
+        Summons.perform(p, SummonSpecies.GENBU, tier);                              // 4.106.0: Genbu shows the cast
         return allies.size();
     }
 
@@ -81,6 +84,7 @@ final class SummonerCanon {
             }
             SkillFx.ring(p.serverLevel(), t.position(), 5.0, VIOLET);
         }
+        Summons.perform(p, SummonSpecies.ELLIE, tier);                              // 4.106.0: Ellie shows the cast
         return 1;
     }
 
@@ -92,6 +96,7 @@ final class SummonerCanon {
             SkillFx.burst(p.serverLevel(), f.position().add(0, f.getBbHeight() * 0.5, 0), false, 8, 0.5);
         }
         if (!foes.isEmpty()) SkillFx.ring(p.serverLevel(), p.position(), SummonerRules.dragonRange(tier) * 0.5, RED);
+        if (!foes.isEmpty()) Summons.perform(p, SummonSpecies.DRADRA, tier);        // 4.106.0: Dradra shows the cast
         return foes.size();
     }
 
@@ -114,6 +119,7 @@ final class SummonerCanon {
             f.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 60, 3));
         }
         if (n > 0) SkillFx.ring(level, p.position(), 16.0, GOLD);
+        if (n > 0) Summons.perform(p, SummonSpecies.MERUS, tier);                   // 4.106.0: Merus, the one angel, shows the cast
         return n;
     }
 

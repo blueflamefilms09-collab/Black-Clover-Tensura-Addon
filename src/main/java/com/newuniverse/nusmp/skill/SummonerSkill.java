@@ -166,6 +166,7 @@ public class SummonerSkill extends NUSkill {
         SkillUtil.actionbar(player, now ? SkillMsg.t("toggle.on", "%s: ON", name).withStyle(ChatFormatting.GREEN)
                 : SkillMsg.t("toggle.off", "%s: OFF", name).withStyle(ChatFormatting.GRAY));
         if (!now && mode == BIRD) HawkEyeSkill.clearSight(player);
+        if (now) Summons.perform(player, mode == BIRD ? com.newuniverse.nusmp.skill.rules.SummonSpecies.TSUBAME : com.newuniverse.nusmp.skill.rules.SummonSpecies.SOLARIN, tier(instance, player));   // 4.106.0: Tsubame (Bird) / Solarin (Grass) appear when the pulse turns on
     }
 
     @Override

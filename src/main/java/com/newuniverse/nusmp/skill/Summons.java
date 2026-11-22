@@ -3,6 +3,9 @@ package com.newuniverse.nusmp.skill;
 import com.newuniverse.nusmp.NUConfig;
 import com.newuniverse.nusmp.skill.rules.SummonRules;
 import com.newuniverse.nusmp.skill.rules.SummonRules.Card;
+import com.newuniverse.nusmp.skill.rules.SummonSpecies;
+import com.newuniverse.nusmp.skill.summon.SummonBeast;
+import com.newuniverse.nusmp.skill.summon.SummonEntities;
 import com.newuniverse.nusmp.skill.rules.SummonerRules;
 import com.newuniverse.nusmp.skill.rules.Tier;
 import net.minecraft.ChatFormatting;
@@ -98,7 +101,8 @@ final class Summons {
     /** The same with a Synthesis rank (0 = a plain card): health and damage grow by {@link SummonerRules#rankFactor}. */
     static Mob create(ServerPlayer owner, Card card, Tier tier, int rank) {
         ServerLevel level = owner.serverLevel();
-        Mob mob = switch (card) {
+        SummonSpecies species = NUConfig.summonerCreatures() ? SummonSpecies.forCard(card, rank) : null;   // 4.106.0: the Hell Mode creature of the card (docs/summoner_creatures.md); off = the vanilla one below
+        Mob mob = species != null ? beast(level, species) : switch (card) {
             case BEAST, LEGION -> {
                 Wolf wolf = EntityType.WOLF.create(level);
                 if (wolf != null) wolf.tame(owner);
@@ -119,10 +123,13 @@ final class Summons {
 
         double factor = SummonerRules.rankFactor(rank);
         net.minecraft.network.chat.MutableComponent label = canonLabel(card, rank);
-        mob.setCustomName((label != null ? label : rank > 0 ? name(card).append(" +" + rank) : name(card)).withStyle(color(card)));
+        net.minecraft.network.chat.MutableComponent shown = label != null ? label : rank > 0 ? name(card).append(" +" + rank) : name(card);
+        if (species != null) shown = Component.translatable("anime_multiverse.summoner.creatures." + species.id).append(" · ").append(shown);   // "Hayate · Beast H"
+        mob.setCustomName(shown.withStyle(color(card)));
         mob.setCustomNameVisible(false);
-        setBase(mob, Attributes.MAX_HEALTH, SummonRules.health(card, tier) * factor);
-        setBase(mob, Attributes.ATTACK_DAMAGE, SummonRules.damage(card, tier) * factor);
+        double hpMul = species == null ? 1.0 : species.hpMul * SummonSpecies.power(tier), dmgMul = species == null ? 1.0 : species.dmgMul * SummonSpecies.power(tier);
+        setBase(mob, Attributes.MAX_HEALTH, SummonRules.health(card, tier) * factor * hpMul);
+        setBase(mob, Attributes.ATTACK_DAMAGE, SummonRules.damage(card, tier) * factor * dmgMul);
         double scale = SummonRules.scale(card, tier);
         if (scale != 1.0) setBase(mob, Attributes.SCALE, scale);
         mob.setHealth(mob.getMaxHealth());
@@ -136,6 +143,50 @@ final class Summons {
         if (rank > 0) data.putInt(RANK, rank);
         mob.setPersistenceRequired();
         return mob;
+    }
+
+    /** One Hell Mode creature of the species (not yet added to the world), or null if its entity type could not be made. */
+    private static Mob beast(ServerLevel level, SummonSpecies species) {
+        SummonBeast b = SummonEntities.BEAST.get().create(level);
+        if (b != null) b.setSpecies(species);
+        return b;
+    }
+
+    // ---------------------------------------------------------------- performers: the creature a cast shows
+    /** The performer of each owner (at most one, a new cast replaces it), by UUID; entries are tiny and removed when the performer is. */
+    private static final java.util.Map<UUID, UUID> PERFORMERS = new java.util.HashMap<>();
+
+    static void clearPerformers() { PERFORMERS.clear(); }
+
+    /**
+     * Shows the creature of a cast in front of the caster for a few seconds (Hatch for Insect, Genbu for Fish, Ellie for Spirit, Dradra for Dragon, Merus for the Angel, Tsubame and Solarin for the
+     * Bird and Grass pulses): harmless, invulnerable, outside the summon cap, gone after {@link SummonSpecies#performerTicks}. One per owner: a new one replaces the old. Does nothing with the setting off.
+     */
+    static void perform(ServerPlayer owner, SummonSpecies species, Tier tier) {
+        if (!NUConfig.summonerCreatures()) return;
+        ServerLevel level = owner.serverLevel();
+        UUID old = PERFORMERS.remove(owner.getUUID());
+        if (old != null) {
+            net.minecraft.world.entity.Entity e = level.getEntity(old);
+            if (e != null) e.discard();
+        }
+        SummonBeast b = SummonEntities.BEAST.get().create(level);
+        if (b == null) return;
+        b.setSpecies(species);
+        float scale = SummonSpecies.performerScale(tier);
+        if (scale != 1.0f) setBase(b, Attributes.SCALE, scale);
+        b.makePerformer(owner.getUUID(), SummonSpecies.performerTicks(tier));
+        Vec3 look = owner.getViewVector(1.0F);
+        Vec3 flat = new Vec3(look.x, 0, look.z);
+        Vec3 fwd = flat.lengthSqr() < 1.0e-4 ? new Vec3(0, 0, 1) : flat.normalize();
+        double out = 2.4 + species.width * 0.8 * scale;
+        Vec3 spot = owner.position().add(fwd.scale(out));
+        b.moveTo(spot.x, owner.getY() + (species.flying ? 1.0 : 0.0), spot.z, owner.getYRot(), 0.0F);
+        if (!level.noCollision(b)) b.moveTo(owner.getX() - fwd.x * 1.5, owner.getY() + (species.flying ? 1.0 : 0.0), owner.getZ() - fwd.z * 1.5, owner.getYRot(), 0.0F);
+        if (level.addFreshEntity(b)) {
+            PERFORMERS.put(owner.getUUID(), b.getUUID());
+            SkillFx.burst(level, b.position().add(0, b.getBbHeight() * 0.5, 0), tier.ultimate(), 8, 0.4);
+        }
     }
 
     private static void setBase(Mob mob, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attr, double value) {

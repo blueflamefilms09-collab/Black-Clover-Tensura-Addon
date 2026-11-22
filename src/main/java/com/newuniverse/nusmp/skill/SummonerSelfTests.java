@@ -28,6 +28,7 @@ public final class SummonerSelfTests {
         SelfTests.register("summoner.rules", s -> rules());
         SelfTests.register("summoner.skills", SummonerSelfTests::skills);
         SelfTests.register("summoner.canon", s -> canon());
+        SelfTests.register("summoner.creatures", SummonerSelfTests::creatures);                  // 4.106.0: the Hell Mode creatures (docs/summoner_creatures.md)
     }
 
     private static Result rules() {
@@ -68,6 +69,27 @@ public final class SummonerSelfTests {
         if (SummonerRules.nextCommand(SummonerRules.CMD_NONE, SummonerRules.MAX_GENERALS, 0, true) != -1) return Result.fail("a fourth General was allowed");
         if (SummonerRules.awakeningCooldown(SummonerRules.CMD_KING) >= SummonerRules.awakeningCooldown(SummonerRules.CMD_GENERAL)) return Result.fail("a King must wake faster than a General");
         return Result.ok("canon=" + NUConfig.summonerCanon() + ", modes " + SummonerRules.MODES_CANON);
+    }
+
+    /** 4.106.0: the creature type is registered, every species has its model files in the jar, a creature takes its species' box, and a performer is harmless, invulnerable and short-lived. */
+    private static Result creatures(MinecraftServer server) {
+        var type = com.newuniverse.nusmp.skill.summon.SummonEntities.BEAST;
+        if (!type.isBound()) return Result.fail("anime_multiverse:summon_beast is not registered");
+        for (com.newuniverse.nusmp.skill.rules.SummonSpecies sp : com.newuniverse.nusmp.skill.rules.SummonSpecies.values()) {
+            for (String f : new String[]{"geo/entity/summon_" + sp.id + ".geo.json", "animations/entity/summon_" + sp.id + ".animation.json", "textures/entity/summon_" + sp.id + ".png", "textures/entity/summon_" + sp.id + "_glowmask.png"}) {
+                if (SummonerSelfTests.class.getResource("/assets/anime_multiverse/" + f) == null) return Result.fail("missing asset " + f);
+            }
+        }
+        var level = server.overworld();
+        var b = type.get().create(level);
+        if (b == null) return Result.fail("the creature could not be made");
+        b.setSpecies(com.newuniverse.nusmp.skill.rules.SummonSpecies.DRADRA);
+        if (b.species() != com.newuniverse.nusmp.skill.rules.SummonSpecies.DRADRA) return Result.fail("the species did not stick");
+        if (Math.abs(b.getBbWidth() - com.newuniverse.nusmp.skill.rules.SummonSpecies.DRADRA.width) > 0.01f) return Result.fail("the box did not follow the species: " + b.getBbWidth());
+        b.makePerformer(java.util.UUID.randomUUID(), 60);
+        if (!b.isPerformer() || !b.isInvulnerable()) return Result.fail("a performer must be invulnerable");
+        if (b.hurt(level.damageSources().generic(), 5f)) return Result.fail("a performer was hurt");
+        return Result.ok("creatures=" + NUConfig.summonerCreatures() + ", species " + com.newuniverse.nusmp.skill.rules.SummonSpecies.values().length);
     }
 
     private static Result skills(MinecraftServer server) {
