@@ -20779,5 +20779,9 @@
   "advancement.anime_multiverse.tab.faces_1.title": "Faces of the Arcs 1",
   "advancement.anime_multiverse.tab.faces_1.desc": "The characters of the arcs you have met (page 1 of 2).",
   "advancement.anime_multiverse.tab.faces_2.title": "Faces of the Arcs 2",
-  "advancement.anime_multiverse.tab.faces_2.desc": "The characters of the arcs you have met (page 2 of 2)."
+  "advancement.anime_multiverse.tab.faces_2.desc": "The characters of the arcs you have met (page 2 of 2).",
+  "death.attack.anime_multiverse.goku_true": "%1$s was hit by a force nothing could block",
+  "death.attack.anime_multiverse.goku_true.player": "%1$s was hit by a force nothing could block, from %2$s",
+  "death.attack.anime_multiverse.goku_spirit": "%1$s had their spirit shaken apart",
+  "death.attack.anime_multiverse.goku_spirit.player": "%1$s had their spirit shaken apart by %2$s"
 }

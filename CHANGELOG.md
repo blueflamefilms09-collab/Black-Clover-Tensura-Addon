@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.103.0] — Goku hits with true and spiritual damage and answers the DxD mod's Divine Dividing
+- NEW: every blow Goku lands is split into a normal part, a TRUE part (ignores armour, enchantments, resistance and barriers) and a SPIRITUAL part (Tensura's spiritual type: passes barriers and dodges). 30% true and 20% spiritual in his top form, 40% of that in Base, rising with each form. Settings `goku_boss.splitDamage`, `trueShare`, `spiritShare`.
+- NEW: the damage types `anime_multiverse:goku_true` and `goku_spirit` with their tags (Minecraft `bypasses_*`, Tensura `is_spiritual`, `bypass_barrier`, `bypass_dodge`, `bypass_protection_enchantment`) and death messages.
+- NEW: Goku answers the Devil x Slime (DxD) mod and any mod in `goku_boss.counterMods`: its harmful effects (Divided, Reduced, Compressed...) do not take hold on him, attribute changes it puts on him are purged twice a second, its damage is halved against him (`counterDamage`), and each shrugged-off debuff makes him flare his ki (a ring and a shove, no damage). Settings `counterMods`, `counterEffects`, `counterDamage`, `counterFlare`.
+- REPLACED: nothing; `splitDamage` false gives the single plain hit back. The hit cap still limits the whole blow.
+- KEPT: his moves, form table, EP ladder, hit cap, Omega mode; the Time Magic VFX.
+- Cost: at most two extra hits per landed blow. Not seen in a real game; how Tensura's resistances treat the spiritual type is untested.
+
 ## [4.102.0] — Goku: 1 to 500 trillion EP from the players, held at 1% between forms, smart form skipping, smart spawn for all bosses
 - NEW: Goku's own EP climbs with his forms, 1 trillion in Base to 500 trillion in his last form (settings `goku_boss.epLadder`, `epStart`, `epEnd`).
 - NEW: he scales to one hundredth of the player he fights (`goku_boss.epPlayerShare`, 0.01): his EP is never below 1/100 of the strongest player's EP near him.

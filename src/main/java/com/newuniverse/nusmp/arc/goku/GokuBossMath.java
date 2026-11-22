@@ -167,4 +167,24 @@ public final class GokuBossMath {
         double cx = ax + dx * t - px, cy = ay + dy * t - py, cz = az + dz * t - pz;
         return Math.sqrt(cx * cx + cy * cy + cz * cz);
     }
+
+    // ------------------------------------------------------------------ 4.103.0: true and spiritual damage
+    /** How much of the split settings applies in a form: 40% in Base, rising evenly to 100% in the top form. */
+    public static double splitScale(int idx, int top) {
+        double t = top <= 0 ? 1.0 : Math.max(0.0, Math.min(1.0, idx / (double) top));
+        return 0.4 + 0.6 * t;
+    }
+
+    /**
+     * Splits one blow into {@code {normal, true, spiritual}}: the true and spiritual shares (each 0 to 0.8, together at most 0.9, bad numbers read as 0) are taken off, the rest stays a normal blow.
+     * The three always add up to the blow (to float rounding), so the hit cap that came before still holds for the sum.
+     */
+    public static float[] split(float dealt, double trueShare, double spiritShare) {
+        float d = Float.isNaN(dealt) || dealt < 0f ? 0f : dealt;
+        double t = Double.isNaN(trueShare) ? 0.0 : Math.max(0.0, Math.min(0.8, trueShare));
+        double s = Double.isNaN(spiritShare) ? 0.0 : Math.max(0.0, Math.min(0.8, spiritShare));
+        if (t + s > 0.9) { double k = 0.9 / (t + s); t *= k; s *= k; }
+        float tp = (float) (d * t), sp = (float) (d * s);
+        return new float[] {d - tp - sp, tp, sp};
+    }
 }

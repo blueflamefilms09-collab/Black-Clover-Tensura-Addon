@@ -24,7 +24,10 @@ public final class GokuBossConfig {
     public static final double DEFAULT_EP_WEIGHT = 0.6, DEFAULT_EP_CAP = 8.0, DEFAULT_PER_PLAYER_BONUS = 0.35, DEFAULT_MAX_HIT = 0.30, DEFAULT_DODGE_CAP = 0.35;
     /** 4.102.0: his OWN Tensura Existence Points climb from {@code epStart} in Base to {@code epEnd} in his last form (docs/boss_vfx_goku_kakashi_sinbad.md). */
     public static final ModConfigSpec.BooleanValue EP_LADDER;
-    public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_PLAYER_SHARE, FORM_FLOOR;
+    public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
+    public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
+    public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
+    public static final ModConfigSpec.DoubleValue COUNTER_DAMAGE;
     public static final ModConfigSpec.BooleanValue SMART_FORMS;
     public static final ModConfigSpec.IntValue MAX_FORM_SKIP;
     public static final double DEFAULT_EP_START = 1.0e12, DEFAULT_EP_END = 5.0e14, DEFAULT_EP_PLAYER_SHARE = 0.01;
@@ -49,6 +52,20 @@ public final class GokuBossConfig {
                 .define("smartForms", true);
         MAX_FORM_SKIP = b.comment("4.102.0: the most forms he skips in one change (0 = never; one is skipped per doubling of the player's EP over his).")
                 .defineInRange("maxFormSkip", 3, 0, 9);
+        SPLIT_DAMAGE = b.comment("4.103.0: part of every blow he lands on a creature is TRUE damage (ignores armour, enchantments and resistance) and part is SPIRITUAL damage (Tensura's spiritual type: shakes the soul, passes barriers and dodges); the rest is the normal blow. The hit cap still limits the whole blow. False = every blow is the plain blow as before.")
+                .define("splitDamage", true);
+        TRUE_SHARE = b.comment("4.103.0: the share of a blow that is true damage in his top form (about 40% of it in Base, rising evenly). 0..0.8.")
+                .defineInRange("trueShare", 0.30, 0.0, 0.8);
+        SPIRIT_SHARE = b.comment("4.103.0: the share of a blow that is spiritual damage in his top form (about 40% of it in Base, rising evenly). 0..0.8; the two shares together are held to 0.9.")
+                .defineInRange("spiritShare", 0.20, 0.0, 0.8);
+        COUNTER_MODS = b.comment("4.103.0: namespaces of mods whose skills attack a fighter's strength (comma separated). The default is the Devil x Slime / High School DxD mod: Divine Dividing, Albion's poison, Compression Divider... Add any other mod's namespace.")
+                .define("counterMods", GokuCounters.DEFAULT_MODS);
+        COUNTER_EFFECTS = b.comment("4.103.0: harmful effects of the counterMods do not take hold on him, and attribute changes those mods put on him are purged every half second. False = he can be Divided like anyone.")
+                .define("counterEffects", true);
+        COUNTER_DAMAGE = b.comment("4.103.0: the damage of the counterMods' damage types is multiplied by this against him (0.5 = half; 1 = off).")
+                .defineInRange("counterDamage", 0.5, 0.05, 1.0);
+        COUNTER_FLARE = b.comment("4.103.0: each time he shrugs off one of their debuffs he flares his ki (a ring and a shove of the players near him, no damage), at most every 5 seconds.")
+                .define("counterFlare", true);
         DIFFICULTY = b.comment("The preset: normal (half health and damage, 60% of the form bonuses), overpowered (the default) or anime (double health, 1.6x damage, 130% of the form bonuses). Unknown words mean overpowered.")
                 .define("difficulty", "overpowered");
         HEALTH_MULTIPLIER = b.comment("Multiplies his health on top of the preset and the EP scaling.")
@@ -195,4 +212,18 @@ public final class GokuBossConfig {
     public static boolean smartForms() { return get(SMART_FORMS); }
 
     public static int maxFormSkip() { return smartForms() ? get(MAX_FORM_SKIP) : 0; }
+
+    public static boolean splitDamage() { return get(SPLIT_DAMAGE); }
+
+    public static double trueShare() { return get(TRUE_SHARE); }
+
+    public static double spiritShare() { return get(SPIRIT_SHARE); }
+
+    public static String counterMods() { return get(COUNTER_MODS); }
+
+    public static boolean counterEffects() { return get(COUNTER_EFFECTS); }
+
+    public static double counterDamage() { return get(COUNTER_DAMAGE); }
+
+    public static boolean counterFlare() { return get(COUNTER_FLARE); }
 }

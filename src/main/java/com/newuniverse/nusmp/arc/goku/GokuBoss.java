@@ -245,6 +245,7 @@ public class GokuBoss extends ArcBoss {
         punchTick(sl);
         omega.tick(sl);
         if (tickCount % 4 == 0) fx(sl);
+        if (tickCount % 10 == 0) purgeForeign(sl);
         if (bombDamage > 0f && !"spirit_bomb".equals(castId())) bombDamage = 0f;
         voiceTick();
     }
@@ -616,9 +617,101 @@ public class GokuBoss extends ArcBoss {
             if (src.scalesWithDifficulty() && level().getDifficulty() == Difficulty.HARD) share /= 1.5;     // the game multiplies a mob's damage on Hard after the cap
             dealt = GokuBossMath.capHit(dealt, victim.getMaxHealth(), share);
         }
-        boolean landed = victim.hurt(src, dealt);
+        boolean landed = deliver(victim, src, dealt);
         if (landed) omega.onStrike(victim);
         return landed;
+    }
+
+    // ================================================================ 4.103.0: answers to the DxD mod and its like
+    private List<String> counterMods = List.of();
+    private String counterModsRaw = null;
+    private long lastFlare = -1000L;
+
+    private List<String> counterList() {
+        String raw = GokuBossConfig.counterMods();
+        if (!raw.equals(counterModsRaw)) {
+            counterModsRaw = raw;
+            counterMods = GokuCounters.parse(raw);
+        }
+        return counterMods;
+    }
+
+    /** Harmful effects of the listed mods (Divine Dividing's Divided, Reduced, Compressed ...) never take hold on him; each one he shrugs off flares his ki. */
+    @Override
+    public boolean canBeAffected(net.minecraft.world.effect.MobEffectInstance effect) {
+        if (!level().isClientSide && GokuBossConfig.counterEffects() && effect.getEffect().value().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+            var key = effect.getEffect().unwrapKey();
+            if (key.isPresent() && GokuCounters.listed(counterList(), key.get().location().toString())) {
+                if (level() instanceof ServerLevel sl) flare(sl);
+                return false;
+            }
+        }
+        return super.canBeAffected(effect);
+    }
+
+    private static final List<Holder<Attribute>> PURGED = List.of(Attributes.ATTACK_DAMAGE, Attributes.MOVEMENT_SPEED, Attributes.MAX_HEALTH, Attributes.ARMOR, Attributes.ATTACK_SPEED, Attributes.KNOCKBACK_RESISTANCE);
+
+    /** Attribute changes a listed mod put on him directly (a skill that halves attack or speed without an effect) are removed twice a second. Reads six attributes, allocates nothing unless one is found. */
+    private void purgeForeign(ServerLevel sl) {
+        if (!GokuBossConfig.counterEffects() || counterList().isEmpty()) return;
+        boolean found = false;
+        for (Holder<Attribute> a : PURGED) {
+            AttributeInstance inst = getAttribute(a);
+            if (inst == null) continue;
+            java.util.ArrayList<ResourceLocation> drop = null;
+            for (AttributeModifier m : inst.getModifiers()) {
+                if (GokuCounters.listed(counterList(), m.id().toString())) {
+                    if (drop == null) drop = new java.util.ArrayList<>(2);
+                    drop.add(m.id());
+                }
+            }
+            if (drop != null) {
+                for (ResourceLocation id : drop) inst.removeModifier(id);
+                found = true;
+            }
+        }
+        if (found) flare(sl);
+    }
+
+    /** The answer: a ring of his form's colour and a shove of the players close to him (never a hurt), at most every {@link GokuCounters#FLARE_GAP} ticks. */
+    private void flare(ServerLevel sl) {
+        if (!GokuBossConfig.counterFlare() || !GokuCounters.mayFlare(tickCount, lastFlare)) return;
+        lastFlare = tickCount;
+        int rgb = GokuLadder.rgb(formIdx());
+        GokuFx.ring(sl, position(), 4.0, rgb, 16);
+        sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 1.6f, 1.6f);
+        for (LivingEntity f : foes(5.0)) {
+            Vec3 away = f.position().subtract(position()).multiply(1, 0, 1);
+            if (away.lengthSqr() > 1e-4) f.knockback(0.5, -away.x, -away.z);
+        }
+    }
+
+    /**
+     * 4.103.0: one blow lands as up to three hits in the same tick: the normal one, a TRUE one (his own damage type {@code goku_true}: armour, enchantments, resistance and barriers do not count) and a
+     * SPIRITUAL one ({@code goku_spirit}, in Tensura's spiritual tag: passes barriers and dodges). The extra hits reset the target's hit-immunity so they all count; the shares grow with his form and the
+     * hit cap already limited the whole blow. Off ({@code splitDamage} false): one plain hit.
+     */
+    private boolean deliver(LivingEntity victim, DamageSource normal, float dealt) {
+        if (!GokuBossConfig.splitDamage() || dealt <= 0f) return victim.hurt(normal, dealt);
+        int top = GokuBossConfig.omega() ? GokuLadder.last() : GokuLadder.CLASSIC_LAST;
+        double k = GokuBossMath.splitScale(formIdx(), top);
+        float[] p = GokuBossMath.split(dealt, GokuBossConfig.trueShare() * k, GokuBossConfig.spiritShare() * k);
+        if (!victim.hurt(normal, p[0])) return false;                             // dodged or blocked: the rest goes with it
+        if (p[1] > 0f) {
+            victim.invulnerableTime = 0;
+            victim.hurt(own("goku_true"), p[1]);
+        }
+        if (p[2] > 0f) {
+            victim.invulnerableTime = 0;
+            victim.hurt(own("goku_spirit"), p[2]);
+        }
+        return true;
+    }
+
+    private DamageSource own(String type) {
+        var key = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("anime_multiverse", type));
+        return level().registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolder(key)
+                .map(h -> new DamageSource(h, this, this)).orElseGet(() -> damageSources().indirectMagic(this, this));
     }
 
     /**
@@ -708,6 +801,10 @@ public class GokuBoss extends ArcBoss {
         if (level().isClientSide) return super.hurt(source, amount);
         if (farewellAt != 0L && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;       // 4.90.0: he is already on his way out
         if (barBreak && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;               // 4.96.0: powering up into the next form
+        if (GokuBossConfig.counterEffects()) {                                                           // 4.103.0: the listed mods' damage types hit him at the set factor
+            var dk = source.typeHolder().unwrapKey();
+            if (dk.isPresent()) amount *= GokuCounters.damageFactor(GokuCounters.listed(counterList(), dk.get().location().toString()), GokuBossConfig.counterDamage());
+        }
         if (tryDodge(source, amount)) {
             omega.onDodged(source);
             return false;
