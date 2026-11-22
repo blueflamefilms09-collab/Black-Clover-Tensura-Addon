@@ -12,19 +12,19 @@
         "amplifier": 0
       },
       {
-        "effect": "minecraft:dolphins_grace",
+        "effect": "minecraft:conduit_power",
         "seconds": 900,
-        "amplifier": 1
+        "amplifier": 0
       },
       {
         "effect": "minecraft:luck",
         "seconds": 900,
-        "amplifier": 1
+        "amplifier": 2
       },
       {
         "effect": "minecraft:strength",
         "seconds": 900,
-        "amplifier": 0
+        "amplifier": 1
       }
     ]
   },
@@ -32,30 +32,36 @@
     {
       "item": "anime_multiverse:magic_stone",
       "chance": 1.0,
-      "min": 12,
-      "max": 24
+      "min": 16,
+      "max": 32
     },
     {
-      "item": "minecraft:diamond",
-      "chance": 0.8,
-      "min": 2,
-      "max": 5
+      "item": "minecraft:gold_block",
+      "chance": 1.0,
+      "min": 4,
+      "max": 8
     },
     {
-      "item": "minecraft:netherite_scrap",
-      "chance": 0.5,
+      "item": "minecraft:emerald_block",
+      "chance": 0.7,
       "min": 1,
-      "max": 2
+      "max": 3
     },
     {
-      "item": "minecraft:enchanted_golden_apple",
-      "chance": 0.12,
+      "item": "minecraft:amethyst_shard",
+      "chance": 0.9,
+      "min": 7,
+      "max": 14
+    },
+    {
+      "item": "minecraft:heart_of_the_sea",
+      "chance": 0.35,
       "min": 1,
       "max": 1
     },
     {
-      "item": "minecraft:nautilus_shell",
-      "chance": 0.6,
+      "item": "minecraft:netherite_scrap",
+      "chance": 0.5,
       "min": 1,
       "max": 2
     }

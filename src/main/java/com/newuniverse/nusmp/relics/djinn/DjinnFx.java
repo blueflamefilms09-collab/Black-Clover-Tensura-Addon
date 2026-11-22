@@ -128,6 +128,18 @@ final class DjinnFx {
         VfxSpawn.send(l, s, from, end, 0xFF000000 | (d.color() & 0xFFFFFF), DjinnLook.ticks(m), (float) Mth.clamp(power, 0.5, 16.0));
     }
 
+    /** 4.105.0: the Magi layer's Djinn Equip forging, following the bearer (one packet, to the players near). Nothing with `djinnLook.magiVfx` off. */
+    static void magiEquip(ServerPlayer p, Djinn d) {
+        if (p == null || d == null || !DjinnBindConfig.magiVfx() || !(p.level() instanceof ServerLevel l)) return;
+        VfxSpawn.sendFollowing(l, VfxShape.MAGI_EQUIP, p, p.position(), 0xFF000000 | (d.color() & 0xFFFFFF), 40, 1.0F);
+    }
+
+    /** 4.105.0: the Magi layer's Extreme Magic (sky sigil, shafts, pillar, shockwave) at the cast's centre, radius 10 (one packet). */
+    static void magiExtreme(ServerLevel l, Vec3 centre, Djinn d) {
+        if (l == null || centre == null || d == null || !DjinnBindConfig.magiVfx()) return;
+        VfxSpawn.send(l, VfxShape.MAGI_EXTREME, centre, centre, 0xFF000000 | (d.color() & 0xFFFFFF), 60, 10.0F);
+    }
+
     /** A ring of dust lying on the ground: {@code points} particles (clamped to 8..96). */
     static void ring(ServerLevel l, Vec3 at, double radius, int rgb, int points, double lift) {
         int n = Mth.clamp(points, 8, 96);

@@ -34,6 +34,7 @@ public final class SinbadBossSelfTests {
         SelfTests.register("sinbad.boss.spawn", SinbadBossSelfTests::spawn);
         SelfTests.register("sinbad.boss.cap", SinbadBossSelfTests::cap);
         SelfTests.register("sinbad.boss.arts", SinbadBossSelfTests::arts);
+        SelfTests.register("sinbad.boss.phases", SinbadBossSelfTests::phases);
     }
 
     private static SelfTests.Result data(MinecraftServer server) {
@@ -125,6 +126,33 @@ public final class SinbadBossSelfTests {
      * equip value (and 0 when it comes off), the Rukh Orrery's seven motes each land on their spot and hit a foe standing there, the Kingdom Sigil hits a foe in a lit sector and spares one in a dark
      * one, and the seven riders run without error. The foe is a tamed wolf of a random owner with a huge health pool. Cost: two entities made and discarded in this tick.
      */
+    /** 4.105.0: the health factor is written once and keeps the share of health, and the phase starts at 0 with nothing broken. One entity, made and discarded in the same tick. */
+    private static SelfTests.Result phases(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!SinbadBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (SinbadBoss.liveCount() >= SinbadBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + SinbadBoss.liveCount() + " Sinbad bosses already stand");
+        SinbadBoss boss = null;
+        try {
+            ArcSpawner.Result r = ArcSpawner.summon(level, SinbadBoss.CHARACTER, Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 10), 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof SinbadBoss s)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = s;
+            float before = s.getMaxHealth();
+            float share = s.getHealth() / before;
+            s.applyHealthForTest();
+            s.applyHealthForTest();
+            double f = SinbadBossConfig.healthFactor();
+            if (Math.abs(s.getMaxHealth() - before * f) > 1.0F + before * f * 1.0e-4) return SelfTests.Result.fail("max health " + s.getMaxHealth() + " is not " + before + " x " + f + " (twice applied?)");
+            if (Math.abs(s.getHealth() / s.getMaxHealth() - share) > 0.01F) return SelfTests.Result.fail("the share of health changed: " + share + " -> " + s.getHealth() / s.getMaxHealth());
+            if (s.phaseBrokenForTest()) return SelfTests.Result.fail("the phase is broken before any fight");
+            if (s.phase() != 0) return SelfTests.Result.fail("the phase starts at " + s.phase());
+            return SelfTests.Result.ok("Sinbad: health x" + f + " (" + (int) s.getMaxHealth() + "), share kept, phase 0");
+        } finally {
+            if (boss != null) boss.discard();
+        }
+    }
+
     private static SelfTests.Result arts(MinecraftServer server) {
         ServerLevel level = server.overworld();
         BlockPos at = level.getSharedSpawnPos();

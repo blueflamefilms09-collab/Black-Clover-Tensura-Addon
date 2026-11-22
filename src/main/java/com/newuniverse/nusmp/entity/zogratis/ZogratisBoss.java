@@ -737,6 +737,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
 
     /** Nobody is left: it heals, falls back to 20% power, forgets the fight, and the world is put back. */
     private void resetFight(ServerLevel sl) {
+        laterEpoch++;
         fightActive = false;
         fighters.clear();
         clearPartyScale();                                                                    // Leon study fix 5: the next fight reads its own party
@@ -1069,10 +1070,14 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         for (ServerPlayer p : sl.players()) if (p.distanceToSqr(this) < 64 * 64 || fighters.contains(p.getUUID())) p.sendSystemMessage(c);
     }
 
-    /** Runs 'r' after 'ticks' ticks on the server, unless the boss is gone by then. */
+    /** 4.105.0: bumped when a fight is reset, so the steps a move queued for the fight that ended do not fire into the next one (a Seven Seas chain, a flurry). */
+    private int laterEpoch;
+
+    /** Runs 'r' after 'ticks' ticks on the server, unless the boss is gone or the fight was reset by then. */
     public void later(int ticks, Runnable r) {
         if (!(level() instanceof ServerLevel sl)) return;
-        SpellRuntime.later(sl, Math.max(0, ticks), () -> { if (isAlive() && !isRemoved()) r.run(); });
+        final int epoch = laterEpoch;
+        SpellRuntime.later(sl, Math.max(0, ticks), () -> { if (isAlive() && !isRemoved() && epoch == laterEpoch) r.run(); });
     }
 
     /** A safe blink: moves the boss to 'to' if its body fits there. */

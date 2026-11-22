@@ -12,6 +12,26 @@ final class SinbadEquip {
     /** Ticks one equip lasts: 20 s, 12 s once the Gates are open. */
     static int equipTicks(boolean gatesOpen) { return gatesOpen ? SinbadTable.EQUIP_TICKS_GATES : SinbadTable.EQUIP_TICKS; }
 
+    /** 4.105.0: ticks one equip lasts in a phase (0 King of Sindria, 1 Djinn Master, 2 the Gates): 20 s, 16 s, 12 s. {@code phase} 0 gives the old numbers. */
+    static int equipTicks(boolean gatesOpen, int phase) {
+        if (gatesOpen) return SinbadTable.EQUIP_TICKS_GATES;
+        return phase >= 1 ? SinbadTable.EQUIP_TICKS_PHASE2 : SinbadTable.EQUIP_TICKS;
+    }
+
+    /** 4.105.0: the phase of a power: 2 once the Gates are open, 1 from {@link SinbadTable#PHASE2_POWER}, else 0. */
+    static int phaseOf(int power, boolean gatesOpen) {
+        return gatesOpen ? 2 : power >= SinbadTable.PHASE2_POWER ? 1 : 0;
+    }
+
+    /** 4.105.0: the last ticks of an equip in which a direct switch may be chosen, by phase. */
+    static int switchWindow(int phase) { return phase >= 1 ? SinbadTable.SWITCH_WINDOW_PHASE2 : SinbadTable.SWITCH_WINDOW; }
+
+    /** 4.105.0: {@link #allowed(SinbadTable.Spec, SinbadDjinn, boolean, long)} with the phase's own switch window. */
+    static boolean allowed(SinbadTable.Spec spec, SinbadDjinn equip, boolean gatesOpen, long ticksLeft, int phase) {
+        if (spec != null && SinbadTable.DJINN_EQUIP.equals(spec.id())) return equip == SinbadDjinn.NONE || ticksLeft < switchWindow(phase);
+        return allowed(spec, equip, gatesOpen, ticksLeft);
+    }
+
     /**
      * May this move be chosen now? The plain sword moves always; the equip move when nothing is on or the equip is about to run out; the finale only once the Gates are open; any
      * other move only while its own djinn is the equipped one.

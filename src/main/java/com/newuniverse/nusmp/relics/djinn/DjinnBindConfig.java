@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DjinnBindConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue COMMAND_BIND, GUI_BIND, TYPED_VFX;
+    public static final ModConfigSpec.BooleanValue COMMAND_BIND, GUI_BIND, TYPED_VFX, MAGI_VFX;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -22,6 +22,9 @@ public final class DjinnBindConfig {
         TYPED_VFX = b.comment("3.75.0: a Djinn's magic is drawn in its own element (embers and fire pillars for Heat, sparks and bolts for Lightning, droplets for Water, gales for Wind, leaves and roots for Life,",
                 "rock for Strength, sound rings for Sound, rays for Light). false: every Djinn is drawn with the white-gold Rukh, as before 3.75.0.")
                 .define("typedVfx", true);
+        MAGI_VFX = b.comment("4.105.0: a Djinn Equip (Full) and an Extreme Magic also draw the Magi layer (the golden vessel sigil with Magoi and Rukh; the Extreme Magic's sky sigil, shafts and shockwave), in the Djinn's colour, next to the effects above.",
+                "false: only the effects above, as before 4.105.0.")
+                .define("magiVfx", true);
         b.pop();
         SPEC = b.build();
     }
@@ -38,5 +41,9 @@ public final class DjinnBindConfig {
 
     public static boolean typedVfx() {
         try { return TYPED_VFX.get(); } catch (RuntimeException notLoaded) { return true; }
+    }
+
+    public static boolean magiVfx() {
+        try { return MAGI_VFX.get(); } catch (RuntimeException notLoaded) { return true; }
     }
 }

@@ -61,6 +61,8 @@ public class SinbadBoss extends ArcBoss {
     /** The djinn he wears as a number (the {@link SinbadDjinn} ordinal, 0 = none), synced so every client can dress him in it (docs/boss_redesign_goku_sinbad.md). Appended; the server writes it, the client only reads. */
     private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> EQUIP_IDX = net.minecraft.network.syncher.SynchedEntityData.defineId(SinbadBoss.class, net.minecraft.network.syncher.EntityDataSerializers.INT);
 
+    private boolean healthApplied, phaseBroken;
+
     private SinbadDjinn equip = SinbadDjinn.NONE;
     private SinbadDjinn pendingDjinn;
     private long equipUntil, nextForesight;
@@ -132,9 +134,9 @@ public class SinbadBoss extends ArcBoss {
         if (d == equip) return;
         equip = d;
         syncEquip();
-        equipUntil = now() + SinbadEquip.equipTicks(gatesOpen());
+        equipUntil = now() + SinbadEquip.equipTicks(gatesOpen(), phase());
         if (d != SinbadDjinn.NONE) {
-            VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), d.argb, 30, 2.0F);
+            if (!SinbadFx.equip(sl, this, d)) VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), d.argb, 30, 2.0F);
             sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, getSoundSource(), 1.0F, 1.4F);
             if (announce && !BossSpeech.say(this, BossLines.SINBAD, "equip_" + d.id)) say((d.tribe.isEmpty() ? "" : "Spirit of " + d.tribe + ", ") + d.displayName + "! Dwell in my body - Djinn Equip!");
         }
@@ -212,7 +214,12 @@ public class SinbadBoss extends ArcBoss {
                 BossSpeech.say(this, BossLines.SINBAD, "unequip");
             }
             if (fightActive() && tickCount % 20 == 0) voiceTick();
-            if (equip != SinbadDjinn.NONE && tickCount % 40 == 0) VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), equip.argb, 40, 1.0F);
+            if (!healthApplied) applyHealth();
+            if (equip != SinbadDjinn.NONE) {
+                if (SinbadBossConfig.magiVfx()) {
+                    if (tickCount % SinbadFx.AURA_EVERY == 0) SinbadFx.aura(sl, this, equip);
+                } else if (tickCount % 40 == 0) VfxSpawn.sendFollowing(sl, VfxShape.MAGIC_CIRCLE, this, position(), equip.argb, 40, 1.0F);
+            }
         } catch (RuntimeException e) {
             LOG.warn("[anime_multiverse] Sinbad's tick failed: {}", e.toString());
         }
@@ -254,6 +261,7 @@ public class SinbadBoss extends ArcBoss {
     protected void onFightEnd(boolean won) {
         if (!won && BossSpeech.anyFighterDown(this)) BossSpeech.say(this, BossLines.SINBAD, "victory");
         BossSpeech.forget(getUUID());
+        phaseBroken = false;
         equip = SinbadDjinn.NONE;
         syncEquip();
         pendingDjinn = null;
@@ -269,9 +277,31 @@ public class SinbadBoss extends ArcBoss {
         super.remove(reason);
     }
 
+    /** The phase now: 0 King of Sindria, 1 Djinn Master (power 60 and over), 2 the Gates (Seven Seas). Always 0 with `sinbad_boss.phases` off. */
+    public int phase() { return SinbadBossConfig.phases() ? SinbadEquip.phaseOf(power(), gatesOpen()) : 0; }
+
+    /** Writes the health factor once (see {@link SinbadHealth}). Server thread. */
+    private void applyHealth() {
+        healthApplied = true;
+        SinbadHealth.apply(this, SinbadBossConfig.healthFactor());
+    }
+
+    /** The power rose: at 60 the Djinn Master phase begins with a break (rays and feathers) and a second health bar, once per fight. */
+    @Override
+    protected void onPowerChanged(int old, int now) {
+        if (!SinbadBossConfig.phases() || phaseBroken || old >= SinbadTable.PHASE2_POWER || now < SinbadTable.PHASE2_POWER || now >= 100) return;
+        if (!(level() instanceof ServerLevel sl)) return;
+        phaseBroken = true;
+        if (!SinbadFx.phase(sl, this, equip == SinbadDjinn.NONE ? SinbadDjinn.BAAL : equip, 3.0F))
+            VfxSpawn.send(sl, VfxShape.MAGIC_CIRCLE, position(), position().add(0.0, 1.0, 0.0), SinbadDjinn.NONE.argb, 40, 2.5F);
+        announce("Sinbad breaks his seal: the Djinn Master. His equips are shorter and he switches faster. A second bar fills.");
+        BossSpeech.say(this, BossLines.SINBAD, "gates");
+        refillForMode("magi_phase_2");
+    }
+
     @Override
     public String barTitle() {
-        return CHARACTER.name() + (equip == SinbadDjinn.NONE ? "" : " [" + equip.displayName + "]") + " " + power() + "%" + (gatesOpen() ? " - Gates open" : "");
+        return CHARACTER.name() + (equip == SinbadDjinn.NONE ? "" : " [" + equip.displayName + "]") + " " + power() + "%" + (gatesOpen() ? " - Gates open" : phase() == 1 ? " - Djinn Master" : "");
     }
 
     @Override
@@ -289,7 +319,7 @@ public class SinbadBoss extends ArcBoss {
         long left = equipUntil - now();
         boolean gates = gatesOpen();
         List<Move> ok = new ArrayList<>(bk.size());
-        for (Move m : bk) if (SinbadEquip.allowed(SinbadTable.byId(m.id()), equip, gates, left)) ok.add(m);
+        for (Move m : bk) if (SinbadEquip.allowed(SinbadTable.byId(m.id()), equip, gates, left, phase())) ok.add(m);
         int i = super.chooseMove(ok, s, t);
         return i < 0 ? -1 : bk.indexOf(ok.get(i));
     }
@@ -445,6 +475,7 @@ public class SinbadBoss extends ArcBoss {
         super.addAdditionalSaveData(tag);
         tag.putString("SinbadEquip", equip.id);
         tag.putLong("SinbadEquipUntil", equipUntil);
+        tag.putBoolean("SinbadPhaseBroken", phaseBroken);
     }
 
     @Override
@@ -453,6 +484,7 @@ public class SinbadBoss extends ArcBoss {
         equip = SinbadDjinn.byId(tag.getString("SinbadEquip"));
         syncEquip();
         equipUntil = tag.getLong("SinbadEquipUntil");
+        phaseBroken = tag.getBoolean("SinbadPhaseBroken");
     }
 
     // ================================================================ test seams (package-private, never used by the game)
@@ -463,6 +495,11 @@ public class SinbadBoss extends ArcBoss {
     boolean allowsForTest(String moveId) {
         return SinbadEquip.allowed(SinbadTable.byId(moveId), equip, gatesOpen(), equipUntil - now());
     }
+
+    /** The self-test applies the health factor and reads the phase break. */
+    void applyHealthForTest() { applyHealth(); }
+
+    boolean phaseBrokenForTest() { return phaseBroken; }
 
     /** How many sets of spots are still locked (they must be empty after a fight ends). */
     int lockedForTest() { return lockedSpots.size(); }

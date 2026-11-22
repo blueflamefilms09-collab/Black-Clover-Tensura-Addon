@@ -41,6 +41,9 @@ final class SinbadTable {
     // equip rules
     static final int EQUIP_TICKS = 400;               // one djinn lasts 20 s
     static final int EQUIP_TICKS_GATES = 240;         // 12 s once the Gates are open
+    static final int EQUIP_TICKS_PHASE2 = 320;        // 4.105.0: 16 s in the Djinn Master phase (from power 60)
+    static final int SWITCH_WINDOW_PHASE2 = 120;      // 4.105.0: the last 6 s of an equip may already switch directly
+    static final int PHASE2_POWER = 60;               // the power at which the second phase (and its second bar) begins
     static final int SWITCH_WINDOW = 60;              // the last 3 s of an equip: a direct switch to the next djinn may be chosen
     static final int FORESIGHT_COOLDOWN = 200;        // the "flow of destiny" sidestep at most every 10 s
     static final float FORESIGHT_CHANCE = 0.12f;

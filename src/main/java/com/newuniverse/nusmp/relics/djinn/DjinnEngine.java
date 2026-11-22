@@ -414,6 +414,7 @@ public final class DjinnEngine {
                 com.newuniverse.nusmp.relics.djinn.weapon.DjinnWeaponService.apply(p);                                                       // the Half Equip's weapon stays: the Full Equip opens its second act
                 DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
                 DjinnFx.ring(l, p.position(), 3.5, d.glow(), 48, 0.2);
+                DjinnFx.magiEquip(p, d);
                 l.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 2.0f, 0.7f);
                 l.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, SoundSource.PLAYERS, 1.6f, 1.2f);
                 DjinnFx.bar(p, 48, p.getName().getString() + " becomes " + d.formName() + ".", d.glow());
@@ -723,6 +724,7 @@ public final class DjinnEngine {
         s.setExtremeReadyAt(now + DjinnPhaseRules.EXTREME_COOLDOWN);
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, DjinnPhaseRules.EXTREME_CHARGE + 4, 4, true, false));
         DjinnMagic.flare(p, d, DjinnFx.particle(d.affinity()));
+        DjinnFx.magiExtreme(p.serverLevel(), r.centre, d);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 3.0f, 0.5f);
         DjinnFx.bar(p, 64, d.extreme().name(), d.glow());
         p.sendSystemMessage(Component.literal("Extreme Magic: " + d.extreme().name() + ". " + d.extreme().blurb() + " Three seconds.").withColor(d.color()));

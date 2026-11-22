@@ -1,0 +1,1 @@
+[22Nov2026 18:46:19.412] [nusmp-dbvoice-recogniser/WARN] [com.newuniverse.nusmp.dragonballs.voice.BoundedEngine/]: [dbvoice] the recogniser failed on one utterance: java.lang.IllegalStateException: boom

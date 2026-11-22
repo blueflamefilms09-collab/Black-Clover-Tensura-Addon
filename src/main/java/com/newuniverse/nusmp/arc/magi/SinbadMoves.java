@@ -95,6 +95,7 @@ final class SinbadMoves {
         Vec3 end = SdsaStrikes.clipEnd(sl, b, from, from.add(aim.scale(28.0)));
         for (LivingEntity v : SdsaStrikes.foesInStrip(b, from, aim, from.distanceTo(end), 1.6)) b.strike(v, SinbadTable.SAIQA_DAMAGE, true);
         VfxSpawn.send(sl, VfxShape.LIGHTNING_SPEAR, from, end, SinbadDjinn.BAAL.argb, 16, 2.0F);
+        SinbadFx.rukh(sl, from, end, SinbadDjinn.BAAL, 1.2F);
         SdsaStrikes.sound(sl, from, SoundEvents.LIGHTNING_BOLT_IMPACT, 2.5F, 0.9F);
     }
 
@@ -107,6 +108,7 @@ final class SinbadMoves {
     static void inqeradFire(SinbadBoss b, ServerLevel sl, LivingEntity t) {
         List<Vec3> safe = b.takeSpots(SinbadTable.INQERAD_SAIQA, t);
         VfxSpawn.send(sl, VfxShape.LIGHTNING_GOD, b.position().add(0.0, 20.0, 0.0), b.position(), SinbadDjinn.BAAL.argb, 30, 4.0F);
+        SinbadFx.extreme(sl, b.position(), SinbadDjinn.BAAL, 14.0F);
         for (LivingEntity v : SdsaStrikes.foesInDisc(b, b.position(), 22.0)) {
             boolean covered = false;
             for (Vec3 p : safe) {
@@ -271,6 +273,8 @@ final class SinbadMoves {
                 Tells.ring(sl, p, 3.0, d.rgb(), 1.3f, 16);
                 b.later(10, () -> {
                     VfxSpawn.send(sl, VfxShape.STORM_BOLT, p.add(0.0, 10.0, 0.0), p, d.argb, 10, 1.5F);
+                    SinbadFx.rukh(sl, b.position().add(0.0, 2.0, 0.0), p, d, 1.0F);
+                    if (d == SinbadDjinn.FURFUR) SinbadFx.extreme(sl, p, d, 16.0F);
                     for (LivingEntity v : SdsaStrikes.foesInDisc(b, p, 3.0)) b.strike(v, SinbadTable.SEVEN_SEAS_STEP_DAMAGE, true);
                 });
             });

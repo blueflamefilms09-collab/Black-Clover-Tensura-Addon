@@ -11,6 +11,8 @@ public final class SinbadBossConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED;
     public static final ModConfigSpec.IntValue GLOBAL_CAP;
+    public static final ModConfigSpec.BooleanValue PHASES, MAGI_VFX;
+    public static final ModConfigSpec.DoubleValue HEALTH_FACTOR;
 
     public static final int DEFAULT_GLOBAL_CAP = 2;
 
@@ -21,6 +23,13 @@ public final class SinbadBossConfig {
                 .define("enabled", true);
         GLOBAL_CAP = b.comment("How many Sinbad bosses may stand in the whole server at once (a hard cap so it cannot lag).")
                 .defineInRange("globalCap", DEFAULT_GLOBAL_CAP, 1, 4);
+        PHASES = b.comment("4.105.0: Sinbad fights in three phases: King of Sindria (power 20-40), Djinn Master (from power 60: a second health bar, shorter equips, a wider switch window), Seven Seas (the Gates, as before).",
+                        "false: the fight of 4.104.x (one bar until the Gates, the health of the table).")
+                .define("phases", true);
+        HEALTH_FACTOR = b.comment("4.105.0: Sinbad's health is the table's 3200 times this while `phases` is on (the second bar and the Gates bar come on top). 1.0 keeps 3200.")
+                .defineInRange("healthFactor", 2.5, 1.0, 20.0);
+        MAGI_VFX = b.comment("4.105.0: Sinbad's Djinn Equip, Extreme Magic, Rukh flights, aura and phase breaks are drawn with the Magi layer (golden vessel sigil, Magoi, Rukh). false: the old magic circle only.")
+                .define("magiVfx", true);
         b.pop();
         SPEC = b.build();
     }
@@ -35,4 +44,10 @@ public final class SinbadBossConfig {
     public static boolean enabled() { return get(ENABLED); }
 
     public static int globalCap() { return get(GLOBAL_CAP); }
+
+    public static boolean phases() { return get(PHASES); }
+
+    public static double healthFactor() { return phases() ? get(HEALTH_FACTOR) : 1.0; }
+
+    public static boolean magiVfx() { return get(MAGI_VFX); }
 }

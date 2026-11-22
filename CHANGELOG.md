@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.105.0] — Sinbad: three phases, more health, the Magi look, anime drops
+- NEW: Sinbad fights in three phases: King of Sindria, Djinn Master (from power 60: a break with Rukh feathers, a second health bar, equips 16 s, switches faster) and the Seven Seas (the Gates, as before). Settings `sinbad_boss.phases` (false: the old fight), `sinbad_boss.healthFactor` (2.5: his 3200 health times this; 1.0 keeps it).
+- NEW: Sinbad and the player's Djinn use the Magi VFX layer: golden vessel sigil on Djinn Equip, Magoi aura, Rukh flocks along his beams, the Extreme Magic's sky sigil and shockwave, the phase break. Settings `sinbad_boss.magiVfx` and `djinnLook.magiVfx` (false: the old circle and effects only).
+- REPLACED: Sinbad's drop table (boon: water breathing, conduit power, luck, strength; gold and emerald blocks, amethyst shards, heart of the sea, magic stones, netherite scrap). The one-of-one stays; the old table is kept in `docs/classic_drops/`.
+- FIXED: the steps a boss move queued with `later` (Seven Seas chain, saber flurry, cage chain) no longer fire into the next fight after a reset (an epoch counter in the boss framework).
+- KEPT: every move and its order, the one-djinn rule, Magoi Manipulation, foresight, the old magic circle, the Time Magic VFX.
+- Cost: no new entity; an aura packet every 25 ticks per Sinbad while a djinn is worn, one packet per ranged move, at most 4 Sinbads. Not seen in a real game; the numbers are first guesses. The shared Index-style boss frame is not part of this release.
+
 ## [4.104.1] — Deku and Luffy design pack filed (docs only)
 - NEW: `docs/deku_luffy/` with the owner's master design (7-form Deku and 7-form Luffy bosses, drops, hidden races) and the two lore files. No game change; the reference images are not shipped.
 
