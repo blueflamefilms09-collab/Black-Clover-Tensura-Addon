@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.99.0] — Spirit Dive no longer needs a Tensura Lord level
+- CHANGED: the Spirit Dive page of the Wind, Fire, Water and Earth grimoires opened only for a Lord of that spirit in Tensura's own spirit data, so most mages never saw it. By default it now opens for any wielder of the book (`spiritDive.requireLordLevel`, default false). Still required: the spirit answers you, it is not bonded to another mage, the first dive costs a Spirit Charm, and the magicule upkeep. `true` restores the old gate exactly.
+- KEPT: every dive look, tier and form; Light, Dark and Space still have no dive.
+- Cost: none (one boolean read where the gate was already checked).
+- Tests: `SpiritDiveGateTest`.
+
 ## [4.98.0] — Goku punches, nobody throws you out mid-fight, bosses take nothing from you
 - FIXED: the realm no longer carries people home during or after a fight that was not won. The 30-minute fight timeout now only applies with `bossRealm.timeoutEvicts` (default off; a long fight with Goku's form bars must not end it), and a fight that was merely abandoned (the boss vanished) no longer starts the automatic trip home (`bossRealm.returnOnlyAfterWin`, default on). Winning, the lodestone and the Chronicle Sigil still take you home. Setting both back restores the old behaviour.
 - NEW: Goku fights with his fists (`goku_boss.punches`, default on). Between his moves he runs at the target and punches every `punchGapTicks` (14); every physical blow of his (the plain hit, the Meteor Combination, the punches) hits `punchMultiplier` (4.0) times harder, up to `punchHitShare` (75 percent) of a player's health per blow. Beams and the Spirit Bomb keep their own caps. Off = the old blows.

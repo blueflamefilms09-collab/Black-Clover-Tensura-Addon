@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class SpiritDiveConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue CHARACTER_TIER, FUEGOLEON_ARM, FORGE_SOUND;
+    public static final ModConfigSpec.BooleanValue CHARACTER_TIER, FUEGOLEON_ARM, FORGE_SOUND, REQUIRE_LORD;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -24,6 +24,9 @@ public final class SpiritDiveConfig {
                 "false = the arm is never switched on.").define("fuegoleonArm", true);
         FORGE_SOUND = b.comment("The sound of the Spirit Dive forging on, ending and upgrading (vanilla sounds sent from the server, as the Djinn Full Equip does: one or two sounds, at most once a second per player).",
                 "false = the dive is silent.").define("forgeSound", true);
+        REQUIRE_LORD = b.comment("The old gate of the Spirit Dive page: the diver must be a Lord of the book's spirit in Tensura's own spirit data.",
+                "false (default) = a grimoire of Wind, Fire, Water or Earth can dive without that level (the spirit must still answer, not be bonded to another mage, and the first dive costs a Spirit Charm).",
+                "true = the old gate, exactly as before.").define("requireLordLevel", false);
         b.pop();
         SPEC = b.build();
     }
@@ -39,4 +42,6 @@ public final class SpiritDiveConfig {
     public static boolean fuegoleonArm() { return get(FUEGOLEON_ARM); }
 
     public static boolean forgeSound() { return get(FORGE_SOUND); }
+
+    public static boolean requireLord() { return get(REQUIRE_LORD); }
 }

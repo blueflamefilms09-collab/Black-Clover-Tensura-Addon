@@ -571,7 +571,7 @@ public abstract class GrimoireBook extends Skill {
         Element el = spiritElement();
         if (el == null) return false;
         var spirit = TensuraStorages.getSpiritFrom(p);
-        if (spirit == null || spirit.getSpiritLevel(el) != SpiritualMagic.SpiritLevel.LORD) return false;
+        if (SpiritDiveConfig.requireLord() && (spirit == null || spirit.getSpiritLevel(el) != SpiritualMagic.SpiritLevel.LORD)) return false;   // 4.99.0: the Lord level is only required with spiritDive.requireLordLevel
         var owner = SpiritSlots.get(p.getServer()).owner(spiritName());
         return owner == null || owner.equals(p.getUUID());
     }

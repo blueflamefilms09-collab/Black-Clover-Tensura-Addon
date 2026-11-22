@@ -17,7 +17,7 @@ public final class SpiritDiveUpkeep {
         public String reason() {
             return switch (this) {
                 case HOLD -> "holding";
-                case GATE_CLOSED -> "gate closed (spirit level is not Lord for the element, or another mage owns the spirit)";
+                case GATE_CLOSED -> "gate closed (the spirit level is not Lord with spiritDive.requireLordLevel on, or another mage owns the spirit)";
                 case NO_MAGICULE -> "not enough magicule for the upkeep";
             };
         }
