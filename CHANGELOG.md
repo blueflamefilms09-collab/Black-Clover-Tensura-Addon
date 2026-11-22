@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.107.1] — Goku VFX preview mock-up (tools and docs only, no game change)
+- NEW (tools): `tools/goku_vfx_preview/preview.py` replays Goku's emitters (`GokuFx`, 4.107.0 richFx) tick by tick and draws a software mock-up; the sheets and GIFs are in `docs/previews/goku_vfx/`. Script-made, not the game.
+- Finding: the particle-only visuals do not yet match the anime (flame auras, thick Kamehameha, solid Spirit Bomb need client-drawn meshes); waiting for the owner's reference images before the Ki-layer build.
+- KEPT: everything in the game is unchanged from 4.107.0.
+
 ## [4.107.0] — Goku: true damage that always lands, a stronger Goku, richer ki visuals
 - NEW (true damage, `trueGuarantee`): the true part of every blow now ALWAYS lands. It is delivered even when the normal part is blocked or dodged, `anime_multiverse:goku_true` joined the vanilla "ignores hit-immunity / shield / cooldown / invulnerability" tags and Tensura's `bypass_dodge`, and the health really lost is measured: if another mod's rules ate part of it, the missing health is taken directly (a lethal rest goes through the game's own death route, so totems still count). Never touches creative or spectator players.
 - NEW (`trueFloor`, 0.03): the true part is at least 3% of the victim's MAX health in his top form (1.2% in Base), so a victim with a huge EP, whose normal blow is cut to almost nothing, still feels it.
