@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.99.1] — CurseForge changelog for 4.96.0 to 4.99.1
+Docs only, no game change.
+- NEW: `docs/curseforge_changelog_4.96.0_to_4.99.1.md`, a player-facing changelog of everything since 4.95.1 with a short version for the CurseForge box. Spoiler-type details are left out on purpose.
+- KEPT: all game code, content and settings.
+
 ## [4.99.0] — Spirit Dive no longer needs a Tensura Lord level
 - CHANGED: the Spirit Dive page of the Wind, Fire, Water and Earth grimoires opened only for a Lord of that spirit in Tensura's own spirit data, so most mages never saw it. By default it now opens for any wielder of the book (`spiritDive.requireLordLevel`, default false). Still required: the spirit answers you, it is not bonded to another mage, the first dive costs a Spirit Charm, and the magicule upkeep. `true` restores the old gate exactly.
 - KEPT: every dive look, tier and form; Light, Dark and Space still have no dive.
