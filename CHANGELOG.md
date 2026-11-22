@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.104.1] — Deku and Luffy design pack filed (docs only)
+- NEW: `docs/deku_luffy/` with the owner's master design (7-form Deku and 7-form Luffy bosses, drops, hidden races) and the two lore files. No game change; the reference images are not shipped.
+
 ## [4.104.0] — Rarities that make sense, a stronger Shishou, telekinesis that attacks
 - NEW: character spawn eggs take their rarity from the character: friendly characters COMMON, bosses by tier (1 UNCOMMON, 2-3 RARE, 4-5 EPIC). The fixed eggs are set too: Zogratis x4, God of Order, Devil Avatar EPIC; Goliath, Charybdis, Floor Warden RARE; Charmy UNCOMMON; the quest giver and merchant stay COMMON. Setting `arc.eggRarityByTier` (applies to eggs given or taken from the creative tab; the fixed eggs have no switch).
 - NEW: Djinn Seals and Djinn weapons take their rarity from the Djinn: the main cast of Magi (Baal, Amon, Vinea, Focalor, Zagan, Zepar, Furfur, Paimon, Agares, Belial) EPIC; the others RARE if their Extreme Magic hits as hard as the roster median or harder, UNCOMMON if softer. Fixed when the item is registered, so no setting; the old single EPIC grade is in this changelog's KEPT note only as history.
