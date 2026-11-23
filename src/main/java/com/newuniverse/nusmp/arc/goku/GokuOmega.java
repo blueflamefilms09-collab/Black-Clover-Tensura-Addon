@@ -60,6 +60,8 @@ final class GokuOmega {
     private final int[] uses = new int[GokuOmegaMath.Hack.values().length];
     private final Map<UUID, int[]> perPlayer = new HashMap<>();
     private final boolean[] adaptSaid = new boolean[GokuOmegaMath.KINDS];
+    /** 5.1.1 (mahoragaAdapt): hits taken and the stage already announced, per damage kind. */
+    private final int[] mHits = new int[GokuOmegaMath.KINDS], mStageSaid = new int[GokuOmegaMath.KINDS];
     private int kills, peakFighters, mirroredForm = -1;
     private float healed, burst;
     private long burstStart;
@@ -166,6 +168,8 @@ final class GokuOmega {
 
     private void resetFight() {
         adapt.clear();
+        java.util.Arrays.fill(mHits, 0);
+        java.util.Arrays.fill(mStageSaid, 0);
         java.util.Arrays.fill(readyAt, 0L);
         java.util.Arrays.fill(uses, 0);
         java.util.Arrays.fill(adaptSaid, false);
@@ -204,7 +208,7 @@ final class GokuOmega {
             peakFighters = Math.max(peakFighters, Math.min(GokuOmegaMath.MAX_FIGHTERS, g.fighters().size()));
             if (has(GokuOmegaMath.Hack.KI_SENSE)) kiSense(sl);
         }
-        if (t % 200 == 0) adapt.decay();
+        if (t % 200 == 0 && !GokuBossConfig.mahoragaAdapt()) adapt.decay();   // Mahoraga does not forget inside a fight
     }
 
     // ================================================================ ready / use
@@ -375,13 +379,22 @@ final class GokuOmega {
     /** The multiplier of a hit he took: 1 - what he has learned of its kind (Great Sage), 1 when the hack is not unlocked. */
     float resistMul(DamageSource src) {
         if (!has(GokuOmegaMath.Hack.ADAPTATION)) return 1.0f;
+        if (GokuBossConfig.mahoragaAdapt()) return (float) GokuAdaptMath.multiplier(mHits[kind(src)], GokuBossConfig.ADAPT_BASE.get(), GokuBossConfig.ADAPT_HITS_PER.get(), adaptCapPct());
         return (float) (1.0 - adapt.resist(kind(src), GokuOmegaMath.adaptCap(level)));
     }
 
     /** A hit landed: it teaches him (once per kind he says so), and a burst of damage makes him skip through time behind whoever did it. */
     void onHurt(DamageSource src, float dealt) {
         if (!g.fightActive() || !(dealt > 0f)) return;
-        if (has(GokuOmegaMath.Hack.ADAPTATION)) {
+        if (has(GokuOmegaMath.Hack.ADAPTATION) && GokuBossConfig.mahoragaAdapt()) {
+            int k = kind(src);
+            mHits[k] = Math.min(GokuAdaptMath.MAX_HITS, mHits[k] + 1);
+            int st = GokuAdaptMath.stage(mHits[k]);
+            if (st > mStageSaid[k]) {
+                mStageSaid[k] = st;
+                g.announce("Goku adapts to " + KIND_NAMES[k] + " damage (stage " + st + ").");
+            }
+        } else if (has(GokuOmegaMath.Hack.ADAPTATION)) {
             int k = kind(src);
             adapt.hit(k);
             if (!adaptSaid[k] && adapt.resist(k, GokuOmegaMath.adaptCap(level)) > 0.0) {
@@ -441,5 +454,10 @@ final class GokuOmega {
 
     float healedForTest() { return healed; }
 
-    double adaptHitsForTest(int kind) { return adapt.hits(kind); }
+    double adaptHitsForTest(int kind) { return GokuBossConfig.mahoragaAdapt() ? mHits[kind] : adapt.hits(kind); }
+
+    /** The reduction limit in percent: the mastered one in Mastered Ultra Instinct. */
+    private double adaptCapPct() {
+        return GokuLadder.MASTERED.equals(GokuLadder.step(g.formIdx()).id()) ? GokuBossConfig.ADAPT_MAX_MASTERED.get() : GokuBossConfig.ADAPT_MAX.get();
+    }
 }

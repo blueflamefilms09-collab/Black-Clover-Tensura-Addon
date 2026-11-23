@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.1] — Goku no longer becomes undamageable: Mahoraga-style adaptation
+
+- FIXED: Goku Omega's adaptation could take up to 75% off one kind of damage (melee after about 16 hits), on top of his form's defence and armour, so a player who kept hitting him did next to nothing. It now works like Adaptability / Divine General Mahoraga of Tensura More Skills (read from the mod's jar): he learns each damage kind (melee, projectile, magic, fire, explosion, lightning, other) in stages 1-5 (1 to 5 hits), takes 1% less of it from the first hit, +1% per 3 further hits, at most 25% less (50% in Mastered Ultra Instinct). He never becomes immune: no setting lifts it above 90%. He does not forget inside a fight; every fight starts from nothing.
+- New server settings in `goku_boss`: `mahoragaAdapt` (default true; false = the old Great Sage curve, 6% per hit from the 4th, 75% cap, with the decay), `adaptBasePercent` 1, `adaptHitsPerPercent` 3, `adaptMaxPercent` 25, `adaptMaxMasteredPercent` 50.
+- NEW: `GokuAdaptMath`, `GokuAdaptMathTest`. Cost: one int array of 7 per fight, no tick work.
+- NOT changed and not proven: his other defences (form defence up to 30% off, the armour part of it, the Ki Barrier, the Ultra Instinct dodge, the framework's per-second damage budget) are as before; if he still takes almost nothing from your hits after this, tell me which form and which weapon and I will read those next. Nothing was seen in a game.
+
 ## [5.1.0] — Goku boss drawn with the Dragon Ball Ki layer
 
 - NEW (`goku_boss.kiVfx`, server setting, default true; false = the particle-only look of 5.0): Goku's Kamehameha (`KI_BEAM`), the Kamehameha charge in his hands (`KI_CHARGE`, every 10 ticks of the telegraph), the Spirit Bomb gathering over his head (`KI_SPHERE`, every 20 ticks) and its landing, the form power-up shocks (`KI_SHOCKWAVE`), his fast punches (`KI_STRIKE`) and the Ultra Instinct dodge (`KI_AFTERIMAGE`) now also send the same Ki effects the Saiyan race uses, in the colour of his form. The particles stay and the client switch `saiyan.classicVfx` still turns the Ki layer off.

@@ -27,7 +27,8 @@ public final class GokuBossConfig {
     public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_CEILING, EP_MAX_CLIMB, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
     public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
     /** 4.107.0: stronger Goku, guaranteed true damage and the new VFX. */
-    public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH, KI_VFX;
+    public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH, KI_VFX, MAHORAGA_ADAPT;
+    public static ModConfigSpec.IntValue ADAPT_BASE, ADAPT_HITS_PER, ADAPT_MAX, ADAPT_MAX_MASTERED;
     public static final ModConfigSpec.DoubleValue POWER_HEALTH, POWER_DAMAGE, TRUE_FLOOR;
     public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
     public static final ModConfigSpec.DoubleValue COUNTER_DAMAGE;
@@ -81,6 +82,16 @@ public final class GokuBossConfig {
                 .define("richFx", true);
         KI_VFX = b.comment("5.1.0: Goku's Kamehameha, Spirit Bomb charge and drop, power-up shock, fast blows and dodge are drawn with the Dragon Ball Ki layer (the same effects the Saiyan race uses), on top of the particles. One small effect packet per technique, to players within 96 blocks, through the effect budget. False = particles only (5.0).")
                 .define("kiVfx", true);
+        MAHORAGA_ADAPT = b.comment("5.1.1: Omega's adaptation works like Adaptability / Divine General Mahoraga of Tensura More Skills: he learns each kind of damage (melee, projectile, magic, fire, explosion, lightning, other) in stages 1-5 and takes a little LESS of it, never none (see the four numbers below). False = the old Great Sage adaptation (6% per hit from the 4th hit, up to 75% less, forgetting 10% every 10 s).")
+                .define("mahoragaAdapt", true);
+        ADAPT_BASE = b.comment("5.1.1: percent less damage of a kind after the first hit of it (Mahoraga: 1). Counts only with mahoragaAdapt.")
+                .defineInRange("adaptBasePercent", 1, 0, 90);
+        ADAPT_HITS_PER = b.comment("5.1.1: further hits of a kind for each extra 1% (Mahoraga: 3). Lower = he adapts faster. Counts only with mahoragaAdapt.")
+                .defineInRange("adaptHitsPerPercent", 3, 1, 1000);
+        ADAPT_MAX = b.comment("5.1.1: the most percent less damage of one kind (Mahoraga unmastered: 25). Held to 90, he is never immune. Counts only with mahoragaAdapt.")
+                .defineInRange("adaptMaxPercent", 25, 0, 90);
+        ADAPT_MAX_MASTERED = b.comment("5.1.1: the same limit while he is in Mastered Ultra Instinct (Mahoraga mastered: 50). Counts only with mahoragaAdapt.")
+                .defineInRange("adaptMaxMasteredPercent", 50, 0, 90);
         COUNTER_MODS = b.comment("4.103.0: namespaces of mods whose skills attack a fighter's strength (comma separated). The default is the Devil x Slime / High School DxD mod: Divine Dividing, Albion's poison, Compression Divider... Add any other mod's namespace.")
                 .define("counterMods", GokuCounters.DEFAULT_MODS);
         COUNTER_EFFECTS = b.comment("4.103.0: harmful effects of the counterMods do not take hold on him, and attribute changes those mods put on him are purged every half second. False = he can be Divided like anyone.")
@@ -259,6 +270,8 @@ public final class GokuBossConfig {
     public static boolean richFx() { return get(FX_RICH); }
 
     public static boolean kiVfx() { return get(KI_VFX); }
+
+    public static boolean mahoragaAdapt() { return get(MAHORAGA_ADAPT); }
 
     public static double trueShare() { return get(TRUE_SHARE); }
 
