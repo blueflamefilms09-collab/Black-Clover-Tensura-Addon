@@ -68,6 +68,8 @@ import java.util.UUID;
 public final class CarriageEntity extends LivingEntity implements OwnableEntity {
     private static final EntityDataAccessor<Optional<UUID>> DATA_OWNER = SynchedEntityData.defineId(CarriageEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     private static final EntityDataAccessor<Byte> DATA_FLAGS = SynchedEntityData.defineId(CarriageEntity.class, EntityDataSerializers.BYTE);
+    /** 5.0.0: the form of the wielder's weapon (the form id, "base" when none): the renderer draws the carriage of that form, so the carriage matches the item. */
+    private static final EntityDataAccessor<String> DATA_FORM = SynchedEntityData.defineId(CarriageEntity.class, EntityDataSerializers.STRING);
     private static final int FLAG_BOOST = 1, FLAG_BARRIER = 2, FLAG_CHARGE = 4, FLAG_HASTE = 8;
 
     /** What a running ram does. */
@@ -103,6 +105,7 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
         super.defineSynchedData(builder);
         builder.define(DATA_OWNER, Optional.empty());
         builder.define(DATA_FLAGS, (byte) 0);
+        builder.define(DATA_FORM, "base");
     }
 
     // ================================================================ identity and set-up
@@ -114,6 +117,35 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
     /** Like a tamed pet the carriage belongs to its wielder: the weapons' foe filters (and the rest of the mod) then leave it, and its owner's team, alone. */
     @Override
     public UUID getOwnerUUID() { return ownerUuid(); }
+
+    /** The form id the carriage is drawn in (known to both sides). */
+    public String form() { return entityData.get(DATA_FORM); }
+
+    void setForm(String form) {
+        String f = form == null || form.isEmpty() ? "base" : form;
+        if (f.length() > 64) f = "base";                                   // an id is short; never let a long string into the synced data
+        if (!f.equals(entityData.get(DATA_FORM))) entityData.set(DATA_FORM, f);
+    }
+
+    /**
+     * 5.0.0 (client only): the owners whose carriage stands in the world right now, with the game time of its last client tick. The weapon renderer does not draw the carriage item in the
+     * hand of such an owner (the carriage is in the world, not in the hand). Bounded: pruned when it grows past 64 owners.
+     */
+    private static final java.util.Map<UUID, Long> STANDING = new java.util.HashMap<>();
+
+    /** True while a carriage of {@code owner} has ticked on this client within the last 3 ticks. Client side only. */
+    public static boolean standingFor(UUID owner, long gameTime) {
+        Long t = owner == null ? null : STANDING.get(owner);
+        return t != null && gameTime - t <= 3;
+    }
+
+    private void markStanding() {
+        UUID o = ownerUuid();
+        if (o == null) return;
+        long now = level().getGameTime();
+        if (STANDING.size() > 64) STANDING.values().removeIf(t -> now - t > 3);
+        STANDING.put(o, now);
+    }
 
     /** Applies a chassis: health, speed and seats. */
     void configure(CarriageNumbers.Chassis chassis) {
@@ -176,6 +208,11 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
         if (level().isClientSide) return InteractionResult.sidedSuccess(true);
         if (player instanceof ServerPlayer sp) {
             if (sp.getVehicle() == this) return InteractionResult.sidedSuccess(false);          // the second hand of the same click
+            if (sp.isShiftKeyDown() && sp.getUUID().equals(ownerUuid())) {                       // 5.0.0: the owner's sneak + right click picks the carriage up: it leaves the world and the weapon is in the hand again
+                dismiss();
+                sp.displayClientMessage(Component.literal("The carriage is back in your hand"), true);
+                return InteractionResult.CONSUME;
+            }
             if (!mayBoard(sp)) {
                 boolean full = getPassengers().size() >= seats;
                 UUID ownerId = ownerUuid();
@@ -219,6 +256,7 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
         }
         super.tick();
         if (!level().isClientSide) serverTick();
+        else markStanding();
     }
 
     private boolean stillCalled(ServerPlayer owner) {
@@ -246,9 +284,12 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
 
     private void serverTickChecked() {
         ServerPlayer owner = ownerPlayer();
-        if (tickCount % 10 == 0 && !stillCalled(owner)) {
-            dismiss();
-            return;
+        if (tickCount % 10 == 0) {
+            if (!stillCalled(owner)) {
+                dismiss();
+                return;
+            }
+            setForm(HeroBonds.of(owner).form());                              // the carriage follows the form of the weapon: switch the form and the carriage changes with it
         }
         absence.tick(owner != null && hasPassenger(owner));
         if (absence.expired(CarriageNumbers.ABSENT_LIMIT)) {
@@ -488,11 +529,12 @@ public final class CarriageEntity extends LivingEntity implements OwnableEntity 
 
     // ================================================================ spawning
     /** Makes the wielder's carriage at {@code spot} facing {@code yaw}, registers it (the caller has sent any older one away) and returns it, or null. */
-    static CarriageEntity summon(ServerLevel level, ServerPlayer owner, CarriageNumbers.Chassis chassis, Vec3 spot, float yaw) {
+    static CarriageEntity summon(ServerLevel level, ServerPlayer owner, CarriageNumbers.Chassis chassis, Vec3 spot, float yaw, String form) {
         CarriageEntity e = CarriageEntities.CARRIAGE.get().create(level);
         if (e == null) return null;
         e.setOwner(owner.getUUID());
         e.configure(chassis);
+        e.setForm(form);
         e.moveTo(spot.x, spot.y, spot.z, yaw, 0.0f);
         e.setYHeadRot(yaw);
         if (!level.addFreshEntity(e)) return null;

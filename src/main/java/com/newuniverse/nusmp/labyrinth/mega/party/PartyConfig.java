@@ -14,7 +14,8 @@ public final class PartyConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.ConfigValue<String> MODE;
     public static final ModConfigSpec.IntValue MAX_PARTIES;
-    public static final ModConfigSpec.BooleanValue USE_FTB_TEAMS, GUARD, OPS_BYPASS, TEAM_INHERITS_LANE;
+    public static final ModConfigSpec.BooleanValue USE_FTB_TEAMS, GUARD, OPS_BYPASS, TEAM_INHERITS_LANE, LEADER_LEVEL, SHARE_LOOT;
+    public static final ModConfigSpec.IntValue SHARE_RADIUS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -36,6 +37,15 @@ public final class PartyConfig {
         TEAM_INHERITS_LANE = b.comment("A new team takes over the lane of one of its members who explored alone before (the owner first), so founding a party does not leave the floors of the founder behind.",
                         "false: a new team always starts on a fresh lane.")
                 .define("teamInheritsLane", true);
+        LEADER_LEVEL = b.comment("5.0.0: a party member who goes through a gate (and does not sneak) arrives at the Landing the FTB team's LEADER (the team owner) would arrive at, so the whole party starts on the leader's",
+                        "floor, deeper or shallower than the member's own record. The leader's own record is read while the leader is online; without an online leader the member's own record is used.",
+                        "false = every player arrives at their own deepest Landing, as before 5.0.0.")
+                .define("leaderLevel", true);
+        SHARE_LOOT = b.comment("5.0.0: what a monster of the dungeon drops when a player of an FTB team kills it is split EVENLY between the team members who are alive, in the same dimension and near the kill",
+                        "(every stack is divided as equally as it can be and the remainders rotate, so over many kills everybody gets the same). Each member gets a chat line with the split.",
+                        "false = the loot falls where the monster died, as before 5.0.0. A player without a team (or alone near the kill) is not affected.")
+                .define("shareLoot", true);
+        SHARE_RADIUS = b.comment("Blocks round the kill within which a team member takes part in the loot split (5.0.0).").defineInRange("shareRadius", 48, 8, 128);
         b.pop();
         SPEC = b.build();
     }

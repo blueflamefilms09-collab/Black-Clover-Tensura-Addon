@@ -82,6 +82,9 @@ public final class GreedClient {
             RenderSystem.disableBlend();
         }
         String text = line;
-        if (!text.isEmpty()) g.drawString(mc.font, text, 6, g.guiHeight() - 12, starving ? 0xFFFF4040 : 0xFFE0E0E0, true);
+        if (!text.isEmpty()) {
+            int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.LEFT, g.guiWidth(), g.guiHeight(), mc.font.width(text), 10, new int[]{6, g.guiHeight() - 12});      // 5.0.0: the shared left column
+            g.drawString(mc.font, text, spot[0], spot[1], starving ? 0xFFFF4040 : 0xFFE0E0E0, true);
+        }
     }
 }

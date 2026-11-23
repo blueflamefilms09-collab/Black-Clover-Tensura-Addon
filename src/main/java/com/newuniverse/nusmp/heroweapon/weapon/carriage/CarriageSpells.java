@@ -119,7 +119,7 @@ final class CarriageSpells {
         }
         CarriageEntity old = mine(c);                                               // one carriage at a time: a carriage already out is brought here as a fresh one
         if (old != null) old.dismiss();
-        CarriageEntity car = CarriageEntity.summon(c.level, c.player, chassis(c), spot, c.player.getYRot());
+        CarriageEntity car = CarriageEntity.summon(c.level, c.player, chassis(c), spot, c.player.getYRot(), c.form.id());
         if (car == null) {
             c.say("The carriage could not be called");
             return false;

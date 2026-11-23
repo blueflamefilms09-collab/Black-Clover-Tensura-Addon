@@ -119,7 +119,8 @@ public final class RelicActKeys {
             line += "  charging " + pct + "%";
         }
         int w = mc.font.width(line);
-        int x = g.guiWidth() - w - 8, y = g.guiHeight() - 14;
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.RIGHT, g.guiWidth(), g.guiHeight(), w + 8, 14, new int[]{g.guiWidth() - w - 12, g.guiHeight() - 14 - 3});      // 5.0.0: the shared right column (the chip's own padding is 4 left, 3 above)
+        int x = spot[0] + 4, y = spot[1] + 3;
         com.newuniverse.nusmp.client.ui.move.GuiMove.report("relic_keys", x - 4, y - 3, w + 8, 14);       // GUI Move: where the line is drawn (the layer hook moves it)
         if (com.newuniverse.nusmp.client.ui.theme.UiTheme.anime())                                    // 1.27.0: a glass chip with a grade-coloured edge
             com.newuniverse.nusmp.client.ui.theme.UiPanel.panel(g, x - 4, y - 3, w + 8, 14, 0xFF000000 | en.def().grade().rgb(), 0.45f, 1f);

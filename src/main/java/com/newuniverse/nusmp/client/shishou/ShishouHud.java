@@ -43,7 +43,8 @@ public final class ShishouHud {
         ShishouSkill sel = s == null || s.selected() < 0 || s.selected() >= ShishouSkill.values().length ? null : ShishouSkill.values()[s.selected()];
         ShishouModes.Mode mode = sel == null ? null : ShishouModes.modeOf(sel);
         int h = PAD + (ROW + 3) + (BAR + 2) + (BAR + 4) + (ROW - 2) + (mode != null ? ROW - 2 : 0) + ROW + (flagsOf(s) > 0 ? ROW : 0) + (lines.isEmpty() ? 0 : 4 + lines.size() * ROW) + PAD;   // the sum of the rows drawn below
-        int px = g.guiWidth() - W - 6, py = g.guiHeight() - h - 40;
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.RIGHT, g.guiWidth(), g.guiHeight(), W, h, new int[]{g.guiWidth() - W - 6, g.guiHeight() - h - 40});      // 5.0.0: the shared right column
+        int px = spot[0], py = spot[1];
         boolean moved = GuiMove.begin(g, MOVE_ID, px, py, W, h, px + W, py + h);
         g.pose().pushPose();
         g.pose().translate(px, py, 0.0);

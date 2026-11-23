@@ -47,6 +47,19 @@ final class PartySelfTests {
         SelfTests.register("party.resolve", PartySelfTests::resolve);
         SelfTests.register("party.guard", PartySelfTests::guard);
         SelfTests.register("party.chains", PartySelfTests::chains);
+        SelfTests.register("party.loot", PartySelfTests::loot);
+    }
+
+    /** 5.0.0: the even split adds up and is even, and the leader rule picks the leader's level only when there is one. Pure, so it also runs on a dedicated server. */
+    private static SelfTests.Result loot(net.minecraft.server.MinecraftServer server) {
+        for (int n = 2; n <= PartyLoot.MAX_MEMBERS; n++) {
+            int[] parts = PartyLoot.split(37, n, 5);
+            int sum = 0, min = Integer.MAX_VALUE, max = 0;
+            for (int p : parts) { sum += p; min = Math.min(min, p); max = Math.max(max, p); }
+            if (sum != 37 || max - min > 1) return fail("37 among " + n + " was split " + java.util.Arrays.toString(parts));
+        }
+        if (PartyLeader.pick(6, -1) != 6 || PartyLeader.pick(6, 2) != 2) return fail("the leader rule picked the wrong level");
+        return ok("even split of 37 among 2..8 and the leader's level rule");
     }
 
     private static SelfTests.Result fail(String detail) { return SelfTests.Result.fail(detail); }

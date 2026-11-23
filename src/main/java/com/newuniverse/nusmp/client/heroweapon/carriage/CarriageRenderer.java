@@ -35,16 +35,17 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
 
     @Override
     public void render(CarriageEntity entity, float entityYaw, float partialTick, PoseStack pose, MultiBufferSource buffers, int light) {
-        MeshBake.Baked mesh = CarriageMesh.get();
+        CarriageMesh.Look look = CarriageMesh.get(entity.form());                  // 5.0.0: the carriage of the weapon's form
+        MeshBake.Baked mesh = look.mesh();
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(-entityYaw));                        // the model's +z (its nose) turns to the way the carriage faces
         PoseStack.Pose p = pose.last();
-        emit(p, buffers.getBuffer(RenderType.entityCutoutNoCull(mesh.fallback ? CarriageMesh.FALLBACK_SKIN : CarriageMesh.SKIN)), mesh.body, 0xFFFFFFFF, light, OverlayTexture.NO_OVERLAY);
+        emit(p, buffers.getBuffer(RenderType.entityCutoutNoCull(mesh.fallback ? CarriageMesh.FALLBACK_SKIN : look.skin())), mesh.body, 0xFFFFFFFF, light, OverlayTexture.NO_OVERLAY);
         if (!mesh.glow.isEmpty()) {
             float time = entity.tickCount + partialTick;
             float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, 1.0f);
             int r = VariantRules.channel(mesh.glowRgb >> 16 & 255, k), g = VariantRules.channel(mesh.glowRgb >> 8 & 255, k), b = VariantRules.channel(mesh.glowRgb & 255, k);
-            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(CarriageMesh.GLOW)), mesh.glow, 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(look.glow())), mesh.glow, 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
         }
         pose.popPose();
         super.render(entity, entityYaw, partialTick, pose, buffers, light);

@@ -1,0 +1,7 @@
+# Dungeon parties on FTB Teams (5.0.0)
+
+* **Leader decides the level.** `[party] leaderLevel` (server, default true). The leader is the owner of the player's FTB team (`QuestTeams.ownerOf`). `MegaTravel.choose` asks `PartyLeader.pick(own, leaderLevel)`: the leader's deepest Landing chain index (clamped to the party's newest finished floor by `LandingRule`, as always) replaces the member's own record. Sneaking still picks the first Landing. Leader offline, no team, FTB Teams absent, `useFtbTeams` off, or the player is the leader: the player's own record.
+* **Loot split evenly.** `[party] shareLoot` / `shareRadius` (server). `PartyLoot` listens to `LivingDropsEvent` at lowest priority; for a dungeon dimension kill by a player with at least one more living team member in the same dimension within the radius, the drops are cancelled and divided (`split`: equal parts, the remainder to the members after a rotating per-team cursor). Items go to the inventories (`ItemHandlerHelper.giveItemToPlayer`); every member gets one chat line.
+* **Worst case per kill:** at most 8 members and 64 stacks, one chat line per member, one map entry per team (cleared at 256 and when the server stops). No tick work, no scan, no packet beyond the chat lines.
+* **Not built:** a popup to pick items by hand; chests / vault pedestals / boss trophies; reading an offline leader's depth.
+* Tests: `PartyLootTest`, in-game `party.loot` (CI smoke prefix `party`).

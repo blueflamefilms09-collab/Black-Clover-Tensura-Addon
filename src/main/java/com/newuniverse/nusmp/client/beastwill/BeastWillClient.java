@@ -233,7 +233,8 @@ public final class BeastWillClient {
         if (l == null || now - l.builtAt() >= 10 || now < l.builtAt()) lines = l = build(s, i, now);
         Font font = mc.font;
         int h = height(l);
-        int x = 6, y = Math.max(4, (g.guiHeight() - h) / 2);
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.LEFT, g.guiWidth(), g.guiHeight(), W, h, new int[]{6, Math.max(4, (g.guiHeight() - h) / 2)});      // 5.0.0: the shared left column
+        int x = spot[0], y = spot[1];
         GuiMove.report("beastwill_hud", x, y, W, h);                                   // GUI Move / GUI Size: where the panel is drawn (the layer hook moves it)
         paint(g, font, x, y, l, s, i);
     }

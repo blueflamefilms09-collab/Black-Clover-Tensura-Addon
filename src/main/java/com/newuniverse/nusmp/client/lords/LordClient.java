@@ -111,12 +111,15 @@ public final class LordClient {
     private static void draw(GuiGraphics g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui) return;
-        int row = 0;
+        int row = 0, count = 0;
+        for (LordNet.Hud st : STATE) if (st != null) count++;
+        if (count == 0) return;
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.LEFT, g.guiWidth(), g.guiHeight(), 82, count * 22, null);       // 5.0.0: one block in the shared left column (null = the dock is off: the old place)
         for (int i = 0; i < STATE.length; i++) {
             LordNet.Hud s = STATE[i];
             if (s == null) continue;
             LordRules.Sin sin = LordRules.Sin.values()[i];
-            int x = 6, y = g.guiHeight() - 30 - row * 22;
+            int x = spot == null ? 6 : spot[0], y = spot == null ? g.guiHeight() - 30 - row * 22 : spot[1] + row * 22 + 10;
             boolean strained = (s.flags() & LordNet.Hud.F_STRAINED) != 0, over = (s.flags() & LordNet.Hud.F_OVERLOAD) != 0, half = (s.flags() & LordNet.Hud.F_HALF) != 0;
             int rgb = 0xFF000000 | sin.rgb;
             g.drawString(mc.font, LINE[i] == null ? "" : LINE[i], x, y - 9, over ? 0xFFFF4040 : 0xFFE0E0E0, true);

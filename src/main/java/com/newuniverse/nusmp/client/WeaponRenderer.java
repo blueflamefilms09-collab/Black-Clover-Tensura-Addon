@@ -213,10 +213,25 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         return joined;
     }
 
+    /** True for a Vassal Carriage item in a hand whose owner's carriage stands in the world: nothing is drawn (the item stays in the slot and the inventory). One map read per frame. */
+    private static boolean carriageStands(ItemStack stack, ItemDisplayContext ctx, Minecraft mc) {
+        if (ctx != ItemDisplayContext.FIRST_PERSON_RIGHT_HAND && ctx != ItemDisplayContext.FIRST_PERSON_LEFT_HAND && ctx != ItemDisplayContext.THIRD_PERSON_RIGHT_HAND && ctx != ItemDisplayContext.THIRD_PERSON_LEFT_HAND) return false;
+        if (mc.level == null || !(stack.getItem() instanceof com.newuniverse.nusmp.heroweapon.HeroWeaponItem) || com.newuniverse.nusmp.heroweapon.HeroItems.kindOf(stack) != com.newuniverse.nusmp.heroweapon.HeroKind.CARRIAGE) return false;
+        if (!com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.carriageInWorld()) return false;
+        String owner = com.newuniverse.nusmp.heroweapon.HeroComponents.owner(stack);
+        if (owner.isEmpty()) return false;
+        try {
+            return com.newuniverse.nusmp.heroweapon.weapon.carriage.CarriageEntity.standingFor(java.util.UUID.fromString(owner), mc.level.getGameTime());
+        } catch (IllegalArgumentException badOwner) {
+            return false;
+        }
+    }
+
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         Minecraft mc = Minecraft.getInstance();
         String id = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+        if (carriageStands(stack, ctx, mc)) return;                                       // 5.0.0: the carriage is in the world, so the item is not in the hand (vassalForms.carriageInWorld)
         if (ctx == ItemDisplayContext.GUI && GodMeleeBRender.gui(id, pose, buffers, light, overlay)) return;                // 1.102.0: visual.guiModel (off by default): the upgraded model in the slot
         // 1.25.0: the draw / load stage of a bow or crossbow and the Genesis / five-leaf variants pick the mesh (client/relics/item)
         ItemStateVariants.Result state = ctx == ItemDisplayContext.GUI ? null

@@ -110,7 +110,10 @@ public final class NUCreativeTab {
         return TABS.register(id, () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.anime_multiverse." + id))
                 .icon(icon)
-                .displayItems((params, output) -> fill(params, output, g))
+                .displayItems((params, output) -> {
+                    if (com.newuniverse.nusmp.franchise.FranchiseTabsConfig.compact()) { if (g == G.MISC) fillOther(params, output); return; }   // 4.108.0: the compact menu keeps only Misc (what no franchise owns); the other type tabs stay empty (= hidden)
+                    fill(params, output, g);
+                })
                 .build());
     }
 
@@ -129,6 +132,8 @@ public final class NUCreativeTab {
         public final java.util.Map<String, java.util.Set<String>> ids = new java.util.HashMap<>();
         /** Items of the mod that are in no franchise or verse tab. */
         public final java.util.Set<String> none = new java.util.TreeSet<>();
+        /** 4.108.0: the stacks of {@link #none} (the compact Misc tab) and the stacks that only have a verse tab (the compact Anime Worlds tab). */
+        public final java.util.List<ItemStack> noneStacks = new java.util.ArrayList<>(), verseOnly = new java.util.ArrayList<>();
     }
 
     /** Runs the fill once and sorts every item of the mod into its tabs. */
@@ -138,7 +143,8 @@ public final class NUCreativeTab {
             net.minecraft.resources.ResourceLocation key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
             if (key == null || !NUSMP.MODID.equals(key.getNamespace())) return;
             java.util.List<String> tabs = com.newuniverse.nusmp.franchise.FranchiseTabs.tabsOf(key.getPath(), com.newuniverse.nusmp.franchise.FranchiseMap.franchiseOf(key.getPath()));
-            if (tabs.isEmpty()) { b.none.add(key.getPath()); return; }
+            if (tabs.isEmpty()) { b.none.add(key.getPath()); b.noneStacks.add(stack); return; }
+            if (com.newuniverse.nusmp.franchise.FranchiseTabs.tabOf(key.getPath(), com.newuniverse.nusmp.franchise.FranchiseMap.franchiseOf(key.getPath())) == null) b.verseOnly.add(stack);
             for (String t : tabs) {
                 b.stacks.computeIfAbsent(t, k -> new java.util.ArrayList<>()).add(stack);
                 b.ids.computeIfAbsent(t, k -> new java.util.HashSet<>()).add(key.getPath());
@@ -162,16 +168,25 @@ public final class NUCreativeTab {
     /** 3.88.0 / 4.96.0: the franchise tabs. They keep the items their franchise owns (FranchiseTabs), so the older tabs stay as they were and an item can be in both. Empty (= hidden) when the client option is off. */
     private static void fillFranchise(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, String id) {
         boolean verse = com.newuniverse.nusmp.franchise.FranchiseTabs.VERSES.contains(id);
+        boolean compact = com.newuniverse.nusmp.franchise.FranchiseTabsConfig.compact();
+        if (verse && compact) return;                                                      // 4.108.0: the 28 verse tabs are hidden in the compact menu (their items are in Anime Worlds)
         if (verse ? !com.newuniverse.nusmp.franchise.FranchiseTabsConfig.verses() : !com.newuniverse.nusmp.franchise.FranchiseTabsConfig.enabled()) return;
         java.util.List<ItemStack> list = buckets(params).stacks.get(id);
         if (list != null) for (ItemStack st : list) output.accept(st.copy());
-        else if (verse) {
+        if (compact && id.equals("anime_worlds")) for (ItemStack st : buckets(params).verseOnly) output.accept(st.copy());   // Dragon Ball and any verse item with no franchise tab
+        if (list != null) return;
+        if (verse) {
             // a verse with nothing yet still shows its tab, with one note, so the gap is visible
             ItemStack note = new ItemStack(Items.PAPER);
             note.set(DataComponents.CUSTOM_NAME, Component.translatableWithFallback("itemGroup.anime_multiverse.verse_empty", "Nothing from %s yet: this verse needs content",
                     Component.translatable("itemGroup.anime_multiverse.franchise_" + id)));
             output.accept(note);
         }
+    }
+
+    /** 4.108.0: the compact Misc tab: every item of the mod that no franchise tab owns, so nothing is lost when the other type tabs are hidden. */
+    private static void fillOther(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output) {
+        for (ItemStack st : buckets(params).noneStacks) output.accept(st.copy());
     }
 
     private static DeferredHolder<CreativeModeTab, CreativeModeTab> franchiseTab(String id, java.util.function.Supplier<ItemStack> icon) {

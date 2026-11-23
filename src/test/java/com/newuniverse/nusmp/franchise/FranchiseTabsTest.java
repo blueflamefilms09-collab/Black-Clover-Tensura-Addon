@@ -86,4 +86,13 @@ class FranchiseTabsTest {
         assertEquals("ok", FranchiseTabs.status(50));
         assertTrue(FranchiseTabs.status(356).startsWith("heavy"));
     }
+
+    @Test
+    void compactMenuKeepsTheFranchiseTabsAndMiscAndHasAWayBack() throws Exception {
+        String src = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/NUCreativeTab.java"));
+        String cfg = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/franchise/FranchiseTabsConfig.java"));
+        assertTrue(cfg.contains("\"compactTabs\", true"), "the compact menu setting is missing or not the default");
+        assertTrue(src.contains("FranchiseTabsConfig.compact()") && src.contains("fillOther") && src.contains("verseOnly"), "the compact fill is missing");
+        assertTrue(src.contains("if (verse && compact) return;"), "verse tabs are not hidden in the compact menu");
+    }
 }

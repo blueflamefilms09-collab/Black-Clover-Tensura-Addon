@@ -333,7 +333,8 @@ public final class SaiyanClient {
         if (l == null || now - l.builtAt() >= 10 || now < l.builtAt()) lines = l = build(s, now);
         SaiyanNet.Ping pg = ping;
         int h = height(l, pg != null);
-        int x = g.guiWidth() - W - 6, y = g.guiHeight() - h - 6;
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.RIGHT, g.guiWidth(), g.guiHeight(), W, h, new int[]{g.guiWidth() - W - 6, g.guiHeight() - h - 6});      // 5.0.0: the shared right column
+        int x = spot[0], y = spot[1];
         GuiMove.report("saiyan_hud", x, y, W, h);                                       // GUI Move / GUI Size: where the panel is drawn (the layer hook moves it)
         paint(g, mc.font, x, y, l, s, pg, mc.player.getYRot());
     }

@@ -32,6 +32,7 @@ public final class HeroClient {
     public static void init(IEventBus modBus) {
         HeroWeaponSystem.modContainer().registerConfig(ModConfig.Type.CLIENT, HeroClientConfig.SPEC, "nusmp-heroweapon-client.toml");
         modBus.addListener(HeroKeysClient::register);
+        modBus.addListener((RegisterGuiLayersEvent e) -> e.registerBelowAll(ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "hud_dock_begin"), (g, d) -> com.newuniverse.nusmp.client.hud.HudDock.begin()));   // 5.0.0: the panel column starts empty every frame
         modBus.addListener((RegisterGuiLayersEvent e) -> e.registerAboveAll(ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "hero_hud"), HeroHud::render));
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(HeroClient::registerPredicates));
         NeoForge.EVENT_BUS.addListener(HeroKeysClient::onClientTick);

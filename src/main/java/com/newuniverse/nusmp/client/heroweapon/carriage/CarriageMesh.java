@@ -25,41 +25,70 @@ final class CarriageMesh {
     static final ResourceLocation SKIN = rl("textures/entity/weapon/vassal_carriage.png"), GLOW = rl("textures/entity/weapon/vassal_carriage_glow.png"),
             FALLBACK_SKIN = ResourceLocation.withDefaultNamespace("textures/block/spruce_planks.png");
 
-    private static MeshBake.Baked cached;
-    private static boolean loaded;
-
     static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("anime_multiverse", path); }
 
-    /** Forgets the baked model (a resource reload re-reads the mesh). */
-    static void clear() {
-        cached = null;
-        loaded = false;
-    }
+    /** One carriage look: the baked mesh with the skin and glow of its form. */
+    record Look(MeshBake.Baked mesh, ResourceLocation skin, ResourceLocation glow) {}
 
-    /** The baked model, read on first use (never null). */
-    static MeshBake.Baked get() {
-        if (!loaded) {
-            loaded = true;
-            cached = load();
+    /** The looks read so far, by "classic:form" (a form id comes from the server, so the map is bounded and cleared when it grows). */
+    private static final java.util.HashMap<String, Look> LOOKS = new java.util.HashMap<>();
+
+    /** Forgets the baked models (a resource reload re-reads the meshes). */
+    static void clear() { LOOKS.clear(); }
+
+    /** The baked model, read on first use (never null). The plain carriage. */
+    static MeshBake.Baked get() { return get("base").mesh(); }
+
+    /**
+     * 5.0.0: the carriage of a weapon form, the same mesh and skin the item in the hand uses ({@code weapon_meshes/vassal_carriage__<form>.txt}, {@code textures/entity/weapon/vassal_carriage__<form>.png}
+     * and {@code _glow}); a form with no mesh of its own (or the setting {@code formModels} off) gets the plain carriage. With {@code vassalForms.classic} on the pre-remodel meshes are used where they exist.
+     */
+    static Look get(String form) {
+        boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicVassalForms();
+        boolean forms = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.formModels();
+        String f = !forms || form == null || form.isEmpty() ? "base" : form;
+        String key = (classic ? "c:" : "n:") + f;
+        Look look = LOOKS.get(key);
+        if (look == null) {
+            if (LOOKS.size() > 64) LOOKS.clear();
+            look = loadLook(f, classic);
+            LOOKS.put(key, look);
         }
-        return cached;
+        return look;
     }
 
-    private static MeshBake.Baked load() {
+    private static Look loadLook(String form, boolean classic) {
+        String id = "base".equals(form) ? "vassal_carriage" : "vassal_carriage__" + form;
+        if (classic) {
+            Look old = tryLook("weapon_meshes/classic_vassal/" + id + ".txt", "textures/entity/weapon/classic_vassal/" + id);
+            if (old != null) return old;
+        }
+        Look own = tryLook("weapon_meshes/" + id + ".txt", "textures/entity/weapon/" + id);
+        if (own != null) return own;
+        if (!"base".equals(form)) return loadLook("base", classic);
+        MeshBake.Baked fb = MeshBake.fallback();
+        return new Look(fb, FALLBACK_SKIN, GLOW);
+    }
+
+    private static Look tryLook(String meshPath, String skinBase) {
         try {
-            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("weapon_meshes/vassal_carriage.txt"));
-            if (res.isPresent()) {
-                List<String> lines = new ArrayList<>();
-                try (BufferedReader in = MeshText.reader(res.get())) {
-                    String line;
-                    while ((line = in.readLine()) != null) lines.add(line);
-                }
-                MeshBake.Baked baked = MeshBake.bake(lines, CarriageNumbers.MODEL_LENGTH);
-                if (baked != null) return baked;
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl(meshPath));
+            if (res.isEmpty()) return null;
+            List<String> lines = new ArrayList<>();
+            try (BufferedReader in = MeshText.reader(res.get())) {
+                String line;
+                while ((line = in.readLine()) != null) lines.add(line);
             }
+            MeshBake.Baked baked = MeshBake.bake(lines, CarriageNumbers.MODEL_LENGTH);
+            if (baked == null) return null;
+            ResourceLocation skin = rl(skinBase + ".png");
+            if (Minecraft.getInstance().getResourceManager().getResource(skin).isEmpty()) skin = SKIN;
+            ResourceLocation glow = rl(skinBase + "_glow.png");
+            if (Minecraft.getInstance().getResourceManager().getResource(glow).isEmpty()) glow = GLOW;
+            return new Look(baked, skin, glow);
         } catch (Exception ex) {
-            LogUtils.getLogger().error("[anime_multiverse] the carriage mesh failed to load; a plain wagon is drawn instead", ex);
+            LogUtils.getLogger().error("[anime_multiverse] a carriage mesh failed to load: " + meshPath, ex);
+            return null;
         }
-        return MeshBake.fallback();
     }
 }

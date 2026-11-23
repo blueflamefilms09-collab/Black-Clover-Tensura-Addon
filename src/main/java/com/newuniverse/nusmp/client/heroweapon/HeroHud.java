@@ -55,6 +55,8 @@ public final class HeroHud {
         float scale = HeroClientConfig.scale();
         int px = HeroClientConfig.x(), pyBottom = g.guiHeight() - HeroClientConfig.y();
         int dw = Math.round(W * scale), dh = Math.round(h * scale);
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.LEFT, g.guiWidth(), g.guiHeight(), dw, dh, null);      // 5.0.0: the shared left column (null = the dock is off: the config's place)
+        if (spot != null) { px = spot[0]; pyBottom = spot[1] + dh; }
         // GUI Move + GUI Size: not moved, the panel grows from its bottom-left corner as before; moved, it is drawn at the saved place (this config's x/y/scale stay the default)
         boolean moved = GuiMove.begin(g, MOVE_ID, px, pyBottom - dh, dw, dh, px, pyBottom);
         g.pose().pushPose();

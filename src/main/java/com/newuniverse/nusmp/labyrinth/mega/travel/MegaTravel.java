@@ -163,7 +163,11 @@ public final class MegaTravel {
         int[] playable = new int[chain.size()];
         int n = 0;
         for (Sector s : chain) if (SectorGenerator.playable(s)) playable[n++] = s.chainIndex;
-        int idx = LandingRule.choose(MegaConfig.get(MegaConfig.LAST_LANDING), sneaking, deepest(data, p, road), Arrays.copyOf(playable, n));
+        int own = deepest(data, p, road);
+        net.minecraft.server.level.ServerPlayer leader = com.newuniverse.nusmp.labyrinth.mega.party.PartyConfig.get(com.newuniverse.nusmp.labyrinth.mega.party.PartyConfig.LEADER_LEVEL) && PartyService.instanced()
+                ? com.newuniverse.nusmp.labyrinth.mega.party.PartyLeader.leaderOf(p) : null;      // 5.0.0: the party leader's depth decides where the party arrives
+        int level = com.newuniverse.nusmp.labyrinth.mega.party.PartyLeader.pick(own, leader == null ? -1 : deepest(data, leader, road));
+        int idx = LandingRule.choose(MegaConfig.get(MegaConfig.LAST_LANDING), sneaking, level, Arrays.copyOf(playable, n));
         return idx < 0 ? null : data.chainSector(party, road, idx);
     }
 

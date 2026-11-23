@@ -299,7 +299,8 @@ public final class DevilClient {
         Font font = mc.font;
         int accent = accent(s.tier());
         int h = 8 + 11 + (l.card().isEmpty() ? 0 : 11) + 11 + 8 + 11 + 11 + 11 + (l.warn().isEmpty() ? 0 : 10) + (l.sacrifices().isEmpty() ? 0 : 10) + (l.mastery().isEmpty() ? 0 : 8 + 11 + 11);
-        int x = Math.max(4, g.guiWidth() - W - 6), y = Math.max(4, (g.guiHeight() - h) / 2);
+        int[] spot = com.newuniverse.nusmp.client.hud.HudDock.take(com.newuniverse.nusmp.client.hud.HudDock.Side.RIGHT, g.guiWidth(), g.guiHeight(), W, h, new int[]{Math.max(4, g.guiWidth() - W - 6), Math.max(4, (g.guiHeight() - h) / 2)});      // 5.0.0: the shared right column
+        int x = spot[0], y = spot[1];
         GuiMove.report("devil_hud", x, y, W, h);                                                         // GUI Move / GUI Size: where the panel is drawn
         float time = UiTheme.now();
         boolean union = (s.flags() & DevilNet.F_UNION) != 0;
