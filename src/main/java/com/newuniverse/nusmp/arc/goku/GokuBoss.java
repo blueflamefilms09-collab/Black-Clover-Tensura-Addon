@@ -271,6 +271,7 @@ public class GokuBoss extends ArcBoss {
         Vec3 fist = position().add(0, getBbHeight() * 0.7, 0);
         if (strike(t, base() * 0.7f, false)) {
             GokuFx.trail(sl, fist, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()));
+            GokuFx.kiStrike(sl, fist, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()));
             Vec3 away = t.position().subtract(position()).multiply(1, 0, 1);
             if (away.lengthSqr() > 1e-4) t.knockback(0.7, -away.x, -away.z);
             GokuFx.burst(sl, t.position().add(0, t.getBbHeight() * 0.6, 0), GokuLadder.rgb(formIdx()), 5);
@@ -468,6 +469,7 @@ public class GokuBoss extends ArcBoss {
             entityData.set(FORM_IDX, pending);                  // the skin changes in the middle of the power-up
             GokuFx.burst(sl, mid, rgb, 16);
             GokuFx.shockwave(sl, position(), rgb, 3.0);
+            GokuFx.kiShock(sl, position(), rgb, 3f);
             sl.playSound(null, blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 2.5f, 1.3f);
         }
         if (windLeft <= 0) {
@@ -477,6 +479,7 @@ public class GokuBoss extends ArcBoss {
             GokuFx.burst(sl, mid, rgb, 20);
             GokuFx.ring(sl, position(), 6.0, rgb, 20);
             GokuFx.shockwave(sl, position(), rgb, 6.0);
+            GokuFx.kiShock(sl, position(), rgb, 6f);
             sl.playSound(null, blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 3f, 0.7f);
             for (LivingEntity f : foes(6.0)) {                  // the shock of the power-up shoves, never hurts
                 Vec3 away = f.position().subtract(position()).multiply(1, 0, 1);
@@ -776,6 +779,7 @@ public class GokuBoss extends ArcBoss {
         BlockHitResult hit = sl.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
         Vec3 end = hit.getType() == HitResult.Type.MISS ? to : hit.getLocation();
         GokuFx.beam(sl, from, end, rgb);
+        GokuFx.kiBeam(sl, from, end, rgb, (float) radius * 0.5f);
         swing(InteractionHand.MAIN_HAND);
         int hits = 0;
         float dmg = base() * mul;
@@ -814,6 +818,7 @@ public class GokuBoss extends ArcBoss {
         bombSpot = null;
         GokuFx.burst(sl, at.add(0, 1, 0), rgb, 24);
         GokuFx.ring(sl, at, radius, rgb, 24);
+        GokuFx.kiShock(sl, at, rgb, (float) radius);
         sl.playSound(null, BlockPos.containing(at), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 4f, 0.5f);
         crater(BlockPos.containing(at), 2);
         return hits;
@@ -921,6 +926,7 @@ public class GokuBoss extends ArcBoss {
         dodgeReadyAt = tickCount + cool;
         if (level() instanceof ServerLevel sl) {
             GokuFx.shimmer(sl, this, 12);
+            GokuFx.kiAfterimage(sl, position(), position().add(getLookAngle().scale(-2.0)), 0xDDEEFF);
             sl.playSound(null, blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.2f, 1.8f);
         }
         if (source.getEntity() instanceof ServerPlayer p) p.displayClientMessage(net.minecraft.network.chat.Component.literal("Goku's body moved on its own."), true);

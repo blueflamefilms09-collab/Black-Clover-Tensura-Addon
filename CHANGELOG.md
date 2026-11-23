@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0] — Goku boss drawn with the Dragon Ball Ki layer
+
+- NEW (`goku_boss.kiVfx`, server setting, default true; false = the particle-only look of 5.0): Goku's Kamehameha (`KI_BEAM`), the Kamehameha charge in his hands (`KI_CHARGE`, every 10 ticks of the telegraph), the Spirit Bomb gathering over his head (`KI_SPHERE`, every 20 ticks) and its landing, the form power-up shocks (`KI_SHOCKWAVE`), his fast punches (`KI_STRIKE`) and the Ultra Instinct dodge (`KI_AFTERIMAGE`) now also send the same Ki effects the Saiyan race uses, in the colour of his form. The particles stay and the client switch `saiyan.classicVfx` still turns the Ki layer off.
+- Worst case: one effect packet per technique (Kamehameha once per shot; charge 1 per 10 ticks; Spirit Bomb 1 per 20 ticks; punch 1 per punch gap; dodge once per dodge), at most 4 Goku bosses (global cap), each packet to players within 96 blocks and through the per-tick effect budget; quads per effect are the layer's own (<= 75, engine cap 100).
+- NEW: self-test `goku.boss.kifx`.
+- NOT built: a new Ki aura shape (flame spikes and lightning round the body); the aura stays particles for now. Nothing was seen in a real game.
+
 ## [5.0.0] — Version line reset, compact creative menu, one HUD column, the Carriage follows its form, dungeon parties follow their leader and share loot
 - FIXED (versions): the number had run to 4.107.x. It rolls over now: 5.0.0 is the next major, and no part passes 99 again (CLAUDE.md rule 4). Older changelog entries keep their numbers.
 - FIXED: the creative menu had about 43 mod tabs (7 type tabs, 7 franchise tabs, 28 verse tabs, Dungeon Loot). The default is now the compact menu: the 7 franchise tabs, "Misc" (every item no franchise owns, so nothing is lost) and Dungeon Loot. Dragon Ball and the other verse-only items sit in Anime Worlds.

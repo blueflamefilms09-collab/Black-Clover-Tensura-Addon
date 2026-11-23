@@ -27,7 +27,7 @@ public final class GokuBossConfig {
     public static final ModConfigSpec.DoubleValue EP_START, EP_END, EP_CEILING, EP_MAX_CLIMB, EP_PLAYER_SHARE, FORM_FLOOR, TRUE_SHARE, SPIRIT_SHARE;
     public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
     /** 4.107.0: stronger Goku, guaranteed true damage and the new VFX. */
-    public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH;
+    public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH, KI_VFX;
     public static final ModConfigSpec.DoubleValue POWER_HEALTH, POWER_DAMAGE, TRUE_FLOOR;
     public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
     public static final ModConfigSpec.DoubleValue COUNTER_DAMAGE;
@@ -79,6 +79,8 @@ public final class GokuBossConfig {
                 .defineInRange("powerUpDamage", 1.35, 1.0, 10.0);
         FX_RICH = b.comment("4.107.0: the richer ki visuals (layered aura, flames, form-change shockwave, beam with a core, true-hit flash). Every particle still goes through the shared particle budget. False = the plain 4.106 visuals.")
                 .define("richFx", true);
+        KI_VFX = b.comment("5.1.0: Goku's Kamehameha, Spirit Bomb charge and drop, power-up shock, fast blows and dodge are drawn with the Dragon Ball Ki layer (the same effects the Saiyan race uses), on top of the particles. One small effect packet per technique, to players within 96 blocks, through the effect budget. False = particles only (5.0).")
+                .define("kiVfx", true);
         COUNTER_MODS = b.comment("4.103.0: namespaces of mods whose skills attack a fighter's strength (comma separated). The default is the Devil x Slime / High School DxD mod: Divine Dividing, Albion's poison, Compression Divider... Add any other mod's namespace.")
                 .define("counterMods", GokuCounters.DEFAULT_MODS);
         COUNTER_EFFECTS = b.comment("4.103.0: harmful effects of the counterMods do not take hold on him, and attribute changes those mods put on him are purged every half second. False = he can be Divided like anyone.")
@@ -255,6 +257,8 @@ public final class GokuBossConfig {
     public static double powerDamage() { return get(POWER_DAMAGE); }
 
     public static boolean richFx() { return get(FX_RICH); }
+
+    public static boolean kiVfx() { return get(KI_VFX); }
 
     public static double trueShare() { return get(TRUE_SHARE); }
 

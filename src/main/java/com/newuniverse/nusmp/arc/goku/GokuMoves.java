@@ -67,6 +67,7 @@ public final class GokuMoves {
         if (!(g.level() instanceof ServerLevel sl)) return;
         Vec3 hands = g.position().add(g.getLookAngle().scale(0.8)).add(0, g.getBbHeight() * 0.65, 0);
         GokuFx.gather(sl, hands, 0.5 + (total - left) * 0.02, 0x5EC8FF, 6);
+        if (left % 10 == 0) GokuFx.kiCharge(sl, g, hands, 0x5EC8FF, (total - left) / (float) Math.max(1, total));
         if (left % 9 == 0) GokuFx.beam(sl, g.getEyePosition(), target.position().add(0, target.getBbHeight() * 0.5, 0), 0x9FD8FF);
     }
 
@@ -75,6 +76,7 @@ public final class GokuMoves {
         if (!(g.level() instanceof ServerLevel sl)) return;
         double grow = 0.6 + 2.4 * (total - left) / (double) Math.max(1, total);
         GokuFx.gather(sl, g.position().add(0, g.getBbHeight() + 2.5, 0), grow, 0x8CD8FF, 8);
+        if (left % 20 == 0) GokuFx.kiSphere(sl, g, g.position().add(0, g.getBbHeight() + 2.5, 0), 0x8CD8FF, (float) grow);
         Vec3 spot = g.aimBomb(target, left);
         if (left % 12 == 0) GokuFx.ring(sl, spot, BOMB_RADIUS, 0x8CD8FF, 16);
     }

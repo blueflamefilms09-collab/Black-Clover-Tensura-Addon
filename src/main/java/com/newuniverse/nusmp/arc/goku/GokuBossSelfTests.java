@@ -33,6 +33,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.pools", GokuBossSelfTests::pools);
         SelfTests.register("goku.boss.formbar", GokuBossSelfTests::formbar);
         SelfTests.register("goku.boss.truehit", GokuBossSelfTests::truehit);
+        SelfTests.register("goku.boss.kifx", GokuBossSelfTests::kifx);
         GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
@@ -245,6 +246,18 @@ public final class GokuBossSelfTests {
     }
 
     /** 4.107.0: the true part of a blow really takes health (also with the foe inside its hit-immunity), the damage tags are real, and the power-up multiplies. */
+    /** 5.1.0: every Ki route of the boss sends through VfxSpawn on a dedicated server without throwing (to nobody in CI), and the setting exists. */
+    private static SelfTests.Result kifx(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        if (level == null) return SelfTests.Result.ok("skipped: no overworld");
+        Vec3 at = Vec3.atCenterOf(level.getSharedSpawnPos()).add(0, 2, 0);
+        GokuFx.kiBeam(level, at, at.add(0, 0, 8), 0x9FD8FF, 1f);
+        GokuFx.kiShock(level, at, 0x8CD8FF, 6f);
+        GokuFx.kiStrike(level, at, at.add(0, 0, 2), 0xFFFFFF);
+        GokuFx.kiAfterimage(level, at, at.add(0, 0, -2), 0xDDEEFF);
+        return SelfTests.Result.ok("Goku Ki routes sent (kiVfx " + GokuBossConfig.kiVfx() + ")");
+    }
+
     private static SelfTests.Result truehit(net.minecraft.server.MinecraftServer server) {
         ServerLevel level = server.overworld();
         if (level == null) return SelfTests.Result.ok("skipped: no overworld");

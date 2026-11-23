@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.arc.goku;
 
 import com.newuniverse.nusmp.perf.PerfBudgets;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -82,6 +84,38 @@ final class GokuFx {
     static void shimmer(ServerLevel sl, LivingEntity e, int count) {
         int n = take(sl, count);
         if (n > 0) Fx.spray(sl, FxThemes.WORLD, FxOld.END_ROD, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), n, 0.5, 0.8, 0.5, 0.05);
+    }
+
+    // ------------------------------------------------------------------ 5.1.0: the Dragon Ball Ki layer (setting kiVfx). One effect packet per call through VfxSpawn (effect budget, players within 96 blocks).
+
+    /** The Kamehameha: the Ki beam from his hands to where it ended (power = half-width). Once per shot. */
+    static void kiBeam(ServerLevel sl, Vec3 from, Vec3 to, int rgb, float halfWidth) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.send(sl, VfxShape.KI_BEAM, from, to, rgb, 30, Math.max(0.6f, Math.min(2f, halfWidth)));
+    }
+
+    /** The charge in his hands (re-sent every 10 ticks by the caller, 14 ticks long, follows him); {@code charge} 0..1. */
+    static void kiCharge(ServerLevel sl, LivingEntity e, Vec3 hands, int rgb, float charge) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.sendFollowing(sl, VfxShape.KI_CHARGE, e, hands, rgb, 14, Math.max(0f, Math.min(1f, charge)));
+    }
+
+    /** The Spirit Bomb gathering over his head (re-sent every 20 ticks by the caller, 24 ticks long); {@code radius} in blocks. */
+    static void kiSphere(ServerLevel sl, LivingEntity e, Vec3 over, int rgb, float radius) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.sendFollowing(sl, VfxShape.KI_SPHERE, e, over, rgb, 24, Math.max(0.5f, Math.min(8f, radius)));
+    }
+
+    /** A landing blast / the power-up shock at {@code at}; {@code radius} in blocks. */
+    static void kiShock(ServerLevel sl, Vec3 at, int rgb, float radius) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.send(sl, VfxShape.KI_SHOCKWAVE, at, at, rgb, 20, Math.max(1f, Math.min(12f, radius)));
+    }
+
+    /** A fast blow: a Rock punch flash from his fist to the foe. */
+    static void kiStrike(ServerLevel sl, Vec3 from, Vec3 to, int rgb) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.send(sl, VfxShape.KI_STRIKE, from, to, rgb, 12, 1f);
+    }
+
+    /** The dodge: he leaves an afterimage where he stood. */
+    static void kiAfterimage(ServerLevel sl, Vec3 feet, Vec3 other, int rgb) {
+        if (GokuBossConfig.kiVfx()) VfxSpawn.send(sl, VfxShape.KI_AFTERIMAGE, feet, other, rgb, 12, 1f);
     }
 
     // ------------------------------------------------------------------ 4.107.0: the richer ki visuals (setting richFx; each call still goes through the particle budget)
