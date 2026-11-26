@@ -25,6 +25,7 @@ public final class PerfConfig {
 
     private static final ModConfigSpec.ConfigValue<String> CLIENT_QUALITY;
     private static final ModConfigSpec.IntValue CLIENT_PARTICLES;
+    private static final ModConfigSpec.DoubleValue CLIENT_BOSS_CULL;
     private static final ModConfigSpec.BooleanValue CLIENT_PROBE;
 
     static {
@@ -69,6 +70,8 @@ public final class PerfConfig {
         c.push("vfx");
         CLIENT_QUALITY = c.comment("This machine's effect quality: 'auto' follows nusmp-performance-common.toml, or 'low', 'medium', 'high'.")
                 .define("vfxQuality", "auto", o -> o instanceof String s && (s.trim().equalsIgnoreCase("auto") || VfxQuality.byName(s, null) != null));
+        CLIENT_BOSS_CULL = c.comment("5.3.1: blocks added round a boss's culling box so Sodium and entity-culling mods keep drawing its wings, aura and weapons while its body is just off screen. 0 = the plain hitbox, as before 5.3.1.")
+                .defineInRange("bossCullGrowth", PerfSettings.DEFAULT_BOSS_CULL_GROWTH, 0.0, 16.0);
         c.pop();
         c.push("budgets");
         CLIENT_PARTICLES = c.comment("Ambient particles the budgeted client emitters may spawn per tick in total. 0 = no limit.")
@@ -108,6 +111,7 @@ public final class PerfConfig {
             String q = CLIENT_QUALITY.get();
             PerfSettings.setClientQuality(q == null || q.trim().equalsIgnoreCase("auto") ? null : VfxQuality.byName(q, null));
             PerfSettings.setClientParticlesPerTick(CLIENT_PARTICLES.get());
+            PerfSettings.setBossCullGrowth(CLIENT_BOSS_CULL.get());
             boolean clientOn = CLIENT_PROBE.get();
             if (clientOn != clientProbeSeen) {
                 clientProbeSeen = clientOn;

@@ -120,6 +120,10 @@ public final class PortalClient implements SpatialPortalLayer.Client {
             broken = true;                                            // once: from now on the plain translucent path is used
             LogUtils.getLogger().error("[anime_multiverse] portal shader draw failed; the plain translucent portal is used instead", e);
             RenderSystem.defaultBlendFunc();
+            RenderSystem.disableBlend();
+            RenderSystem.enableCull();
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
             return false;
         }
     }
@@ -179,6 +183,7 @@ public final class PortalClient implements SpatialPortalLayer.Client {
         if (mesh != null) BufferUploader.drawWithShader(mesh);
         sh.safeGetUniform("PortalMode").set(0.0f);
         mvs.popMatrix(); RenderSystem.applyModelViewMatrix();
+        RenderSystem.enableCull();
         RenderSystem.enableDepthTest();
     }
 

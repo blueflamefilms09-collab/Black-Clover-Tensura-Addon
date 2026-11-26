@@ -18,6 +18,7 @@ public final class PerfSettings {
     public static final int DEFAULT_AURA_LOD_FAR = 96;
     public static final int DEFAULT_AURA_MID_COUNT = 2;
     public static final int DEFAULT_CLIENT_PARTICLES_PER_TICK = 400;
+    public static final double DEFAULT_BOSS_CULL_GROWTH = 3.0;
 
     private static volatile VfxQuality commonQuality = VfxQuality.HIGH;
     private static volatile VfxQuality clientQuality;                        // null = follow the common file
@@ -30,6 +31,7 @@ public final class PerfSettings {
     private static volatile int auraLodFar = DEFAULT_AURA_LOD_FAR;
     private static volatile int auraMidCount = DEFAULT_AURA_MID_COUNT;
     private static volatile int clientParticlesPerTick = DEFAULT_CLIENT_PARTICLES_PER_TICK;
+    private static volatile double bossCullGrowth = DEFAULT_BOSS_CULL_GROWTH;
     private static volatile boolean probeInConfig;
 
     // ---------------------------------------------------------------- readers (hot paths)
@@ -66,6 +68,8 @@ public final class PerfSettings {
     /** The client's allowance of ambient particles per tick across the budgeted client emitters; 0 = unlimited. */
     public static int clientParticlesPerTick() { return clientParticlesPerTick; }
 
+    public static double bossCullGrowth() { return bossCullGrowth; }
+
     public static boolean probeInConfig() { return probeInConfig; }
 
     // ---------------------------------------------------------------- writers (the config loader, tests)
@@ -95,6 +99,8 @@ public final class PerfSettings {
 
     public static void setClientParticlesPerTick(int v) { clientParticlesPerTick = Math.max(0, v); }
 
+    public static void setBossCullGrowth(double v) { bossCullGrowth = Math.max(0.0, Math.min(16.0, v)); }
+
     public static void setProbeInConfig(boolean v) { probeInConfig = v; }
 
     /** Back to the defaults (tests). */
@@ -110,6 +116,7 @@ public final class PerfSettings {
         auraLodFar = DEFAULT_AURA_LOD_FAR;
         auraMidCount = DEFAULT_AURA_MID_COUNT;
         clientParticlesPerTick = DEFAULT_CLIENT_PARTICLES_PER_TICK;
+        bossCullGrowth = DEFAULT_BOSS_CULL_GROWTH;
         probeInConfig = false;
     }
 }

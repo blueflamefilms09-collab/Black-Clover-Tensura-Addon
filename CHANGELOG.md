@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.3.1] — Invisible-entity checks: boss culling box and portal render state
+
+- CHECKED (brief item 3, from the code, not in a game): no mixin of the mod touches entity tracking or sync (`LevelGuardMixin`, `LevelChunkGuardMixin`, `OverlordUndeadHandlerMixin` only guard dungeon block sets and a handler); the render-state code in `FxRenderer`, `VfxVertexBuffer`, `VfxBlend` and `ManaZoneClient` sets and restores depth, cull, blend and the shader colour; every `RenderLevelStageEvent` user draws its own meshes and ends its own buffer batch; none advances an animation inside `render()`.
+- FIXED (`vfx.bossCullGrowth`, client setting in `nusmp-performance-client.toml`, default on, 0 = the plain hitbox as before): the Zogratis-family bosses are drawn far larger than their hitbox, and Sodium / Entity Culling decide with `getBoundingBoxForCulling()`, so a boss could vanish when its small box left the view while its body still showed. `ZogratisBoss.getBoundingBoxForCulling` now returns the hitbox grown by that many blocks. Pure maths test `BossCullGrowthTest`.
+- FIXED: the portal warp pass left face culling off for the rest of the frame, and a failed portal shader draw left blend, cull and depth-mask state behind; both now restore it (`PortalClient`).
+- Worst case: one box per boss per frame, nothing per tick, no packet, no entity, no particle.
+- KEPT: everything else; the only behaviour change is the larger culling box (setting restores the old one).
+- The owner's 15-minute test for a still-invisible entity: (1) F3+B: if the hitbox shows but the model does not, it is a render problem; no hitbox = the entity is not sent. (2) Press K (Iris shaders off), then on again; if the entity shows only with shaders off, set `allowUnknownShaders=true` in `config/iris.properties`. (3) Video Settings: turn entity culling off, and toggle the Entity Culling mod. (4) Swap the jar back to 4.107.1 for one session to see if it is this mod. (5) Remove ImmediatelyFast, EMF, ETF and Veil-based mods one at a time. (6) Halve the other non-library mods and bisect.
+- Not seen in a game. Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.3.1.jar` in `mods`, replacing the old jar.
+
 ## [5.3.0] — Idle dungeon lanes can be reclaimed (setting, off by default)
 
 - NEW (`party.laneCleanup`, server setting, `OFF` default = 5.2.0 behaviour, or `ARCHIVE` or `DELETE`; `party.laneIdleHours`, default 168): a dungeon lane (the floors of one solo player or FTB team) that nobody of its party has entered for that many hours of server running time is freed at server start: its party leaves the book, its floors are forgotten and its number stays reserved. At the NEXT start, before the dungeon dimension loads, its region, entities and poi files are moved to `world/dungeon_archive/lane-<n>/` (ARCHIVE, saves no disk, nothing lost) or deleted (DELETE, frees the disk); only then is the number given out again. Lane 0 (the shared lane) is never freed, and a lane with no recorded use (an older world) is stamped at the first start so nothing is taken at once.

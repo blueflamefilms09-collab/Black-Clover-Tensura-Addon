@@ -87,6 +87,12 @@ import java.util.UUID;
  * {@link #onFightStart}, {@link #onFightEnd}.
  */
 public abstract class ZogratisBoss extends Monster implements com.newuniverse.nusmp.boss.budget.BudgetedBoss {
+    @Override
+    public net.minecraft.world.phys.AABB getBoundingBoxForCulling() {
+        double g = com.newuniverse.nusmp.perf.PerfSettings.bossCullGrowth();
+        return g <= 0.0 ? super.getBoundingBoxForCulling() : getBoundingBox().inflate(g, g * 0.6, g);
+    }
+
     public static final int FORM_BASE = 0, FORM_HYBRID = 1, FORM_DIVINE = 2;
     public static final int STATE_IDLE = 0, STATE_COMBAT = 1, STATE_CASTING = 2, STATE_TRANSFORMING = 3, STATE_RECOVERING = 4, STATE_DEAD = 5;
 
