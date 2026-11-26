@@ -235,6 +235,7 @@ public class GokuBoss extends ArcBoss {
         if (!(level() instanceof ServerLevel sl) || isDeadOrDying()) return;
         if (tickCount >= nextScan) scan(sl);
         if (!modsApplied) applyForm(formIdx());
+        unstick();
         if (fightActive()) {
             fightTicks++;
             inForm++;
@@ -439,6 +440,10 @@ public class GokuBoss extends ArcBoss {
     }
 
     // ================================================================ the forms
+    private void unstick() {
+        if (barBreak && windLeft <= 0 && pending < 0) refillBar();
+    }
+
     private void stepForm(ServerLevel sl) {
         if (barBreak && windLeft <= 0 && pending < 0) refillBar();                 // loaded in the middle of a change: finish it
         double hp = GokuBossConfig.formBars() ? 1.0 : getHealth() / Math.max(1f, getMaxHealth());       // with form bars only the form's own bar ends a form (and the enrage clock)
@@ -940,8 +945,9 @@ public class GokuBoss extends ArcBoss {
         float a = super.mitigate(source, amount);
         a *= (float) (1.0 - GokuLadder.reduction(formIdx()) * 0.5);
         if (kaioActive()) a *= 1.10f;
-        if (omega.on()) a *= omega.resistMul(source);                  // Great Sage: what he has learned of this kind of damage
-        return a;
+        if (omega.on()) a *= omega.resistMul(source);
+        float floor = (float) GokuBossConfig.minHitShare();
+        return floor > 0f ? Math.max(a, amount * floor) : a;
     }
 
     // ================================================================ save data
@@ -1079,6 +1085,18 @@ public class GokuBoss extends ArcBoss {
     }
 
     boolean barBreakForTest() { return barBreak; }
+
+    void stuckForTest() {
+        barBreak = true;
+        windLeft = 0;
+        pending = -1;
+    }
+
+    void unstickForTest() { unstick(); }
+
+    void refillForTest() { dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(getMaxHealth()))); }
+
+    void setFormForTest(int idx) { entityData.set(FORM_IDX, GokuLadder.clamp(idx)); applyForm(formIdx()); }
     int omegaTopForTest() { return omega.ladderTop(); }
 
     /** Starts a change to {@code idx} and runs the whole windup at once. */

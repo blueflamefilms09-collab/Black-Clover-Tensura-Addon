@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.2.0] — Goku can always be hurt: stuck form-bar fixed, a hit never deals less than a share
+
+- FIXED: after an abandoned fight or a reload Goku could be left inside the form-bar change (`barBreak`) with no wind-up running, which kept him locked (the bar was never refilled and hits stayed at 0). Every tick now clears that state when no wind-up and no pending form are running (`unstick`). It is the first thing checked in the brief's Goku item.
+- NEW (`goku_boss.minHitShare`, server setting, default 0.35, range 0-1, 0 = the 5.1.1 behaviour): every hit that reaches Goku deals at least this share of its damage after all of his reductions (form defence, armour, Kaio, the Omega adaptation and the Ultra Instinct damage mix), so stacked reductions can no longer bring a melee hit to nothing. The Ki Barrier, the dodge and the framework's per-second damage budget are as before.
+- NEW: self-test `goku.boss.melee40`. It clears a stuck form bar, then for every one of the form ladder's steps sets the form and lands 40 melee hits; it fails if no hit lands or his health never drops. Pure maths in `GokuAdaptMath` stays covered by `GokuAdaptMathTest`.
+- Worst case: no new tick work (one boolean test per tick per boss, at most 4 bosses), no packet, no entity, no particle.
+- KEPT: everything else of 5.1.1 (Mahoraga-style adaptation and its settings, the Ki layer routing, forms, moves).
+- NOT changed and not proven: the Ultra Instinct dodge rate in the Mastered form, the Ki Barrier against true damage and the per-second budget with several players; they are untouched and nothing was seen in a game.
+- Build and install: JDK 21, `./gradlew build` (Windows `gradlew.bat build`), take `build/libs/multiverse-of-anime-5.2.0.jar` into the `mods` folder of a NeoForge 1.21.1 instance, replacing the old jar; the new setting appears in the server config on first start.
+
 ## [5.1.1] — Goku no longer becomes undamageable: Mahoraga-style adaptation
 
 - FIXED: Goku Omega's adaptation could take up to 75% off one kind of damage (melee after about 16 hits), on top of his form's defence and armour, so a player who kept hitting him did next to nothing. It now works like Adaptability / Divine General Mahoraga of Tensura More Skills (read from the mod's jar): he learns each damage kind (melee, projectile, magic, fire, explosion, lightning, other) in stages 1-5 (1 to 5 hits), takes 1% less of it from the first hit, +1% per 3 further hits, at most 25% less (50% in Mastered Ultra Instinct). He never becomes immune: no setting lifts it above 90%. He does not forget inside a fight; every fight starts from nothing.

@@ -34,6 +34,7 @@ public final class GokuBossSelfTests {
         SelfTests.register("goku.boss.formbar", GokuBossSelfTests::formbar);
         SelfTests.register("goku.boss.truehit", GokuBossSelfTests::truehit);
         SelfTests.register("goku.boss.kifx", GokuBossSelfTests::kifx);
+        SelfTests.register("goku.boss.melee40", GokuBossSelfTests::melee40);
         GokuOmegaSelfTests.register();                                  // keys gokuomega.* (Goku Omega)
     }
 
@@ -247,6 +248,46 @@ public final class GokuBossSelfTests {
 
     /** 4.107.0: the true part of a blow really takes health (also with the foe inside its hit-immunity), the damage tags are real, and the power-up multiplies. */
     /** 5.1.0: every Ki route of the boss sends through VfxSpawn on a dedicated server without throwing (to nobody in CI), and the setting exists. */
+    private static SelfTests.Result melee40(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        if (level == null) return SelfTests.Result.ok("skipped: no overworld");
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!GokuBossConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (GokuBoss.liveCount() >= GokuBossConfig.globalCap()) return SelfTests.Result.ok("skipped: " + GokuBoss.liveCount() + " Goku bosses already stand");
+        GokuBoss boss = null;
+        LivingEntity foe = null;
+        try {
+            Vec3 where = Vec3.atBottomCenterOf(at.above(2)).add(0, 0, 8);
+            ArcSpawner.Result r = ArcSpawner.summon(level, GokuBoss.CHARACTER, where, 0f, List.of(), true);
+            if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof GokuBoss g)) return SelfTests.Result.fail("summoning gave " + r.outcome());
+            boss = g;
+            foe = ArtTestFoe.make(level, where.add(5, 0, 0), g.getEyePosition());
+            if (foe == null) return SelfTests.Result.ok("skipped: no test foe could be made");
+            List<String> bad = new ArrayList<>();
+            g.stuckForTest();
+            g.unstickForTest();
+            if (g.barBreakForTest()) bad.add("a power-up flag left over from a reload was not cleared");
+            var src = level.damageSources().mobAttack(foe);
+            for (int idx = 0; idx < GokuLadder.STEPS.size(); idx++) {
+                g.setFormForTest(idx);
+                float before = g.getHealth();
+                int landed = 0;
+                for (int i = 0; i < 40; i++) {
+                    g.invulnerableTime = 0;
+                    if (g.hurt(src, 2.0f)) landed++;
+                }
+                if (landed == 0 || !(g.getHealth() < before)) bad.add("form " + idx + ": " + landed + " of 40 melee hits landed, health " + before + " -> " + g.getHealth());
+                g.refillForTest();
+            }
+            return bad.isEmpty() ? SelfTests.Result.ok("40 melee hits in each of " + GokuLadder.STEPS.size() + " forms all hurt him, and a stuck power-up flag is cleared")
+                    : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad.subList(0, Math.min(5, bad.size()))));
+        } finally {
+            if (foe != null) foe.discard();
+            if (boss != null) boss.discard();
+        }
+    }
+
     private static SelfTests.Result kifx(MinecraftServer server) {
         ServerLevel level = server.overworld();
         if (level == null) return SelfTests.Result.ok("skipped: no overworld");

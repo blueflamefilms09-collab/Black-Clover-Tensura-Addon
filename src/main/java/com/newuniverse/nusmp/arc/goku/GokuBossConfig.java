@@ -28,6 +28,7 @@ public final class GokuBossConfig {
     public static final ModConfigSpec.BooleanValue SPLIT_DAMAGE, COUNTER_EFFECTS, COUNTER_FLARE;
     /** 4.107.0: stronger Goku, guaranteed true damage and the new VFX. */
     public static final ModConfigSpec.BooleanValue POWER_UP, TRUE_GUARANTEE, TRUE_FEEDBACK, FX_RICH, KI_VFX, MAHORAGA_ADAPT;
+    public static ModConfigSpec.DoubleValue MIN_HIT_SHARE;
     public static ModConfigSpec.IntValue ADAPT_BASE, ADAPT_HITS_PER, ADAPT_MAX, ADAPT_MAX_MASTERED;
     public static final ModConfigSpec.DoubleValue POWER_HEALTH, POWER_DAMAGE, TRUE_FLOOR;
     public static final ModConfigSpec.ConfigValue<String> COUNTER_MODS;
@@ -84,6 +85,8 @@ public final class GokuBossConfig {
                 .define("kiVfx", true);
         MAHORAGA_ADAPT = b.comment("5.1.1: Omega's adaptation works like Adaptability / Divine General Mahoraga of Tensura More Skills: he learns each kind of damage (melee, projectile, magic, fire, explosion, lightning, other) in stages 1-5 and takes a little LESS of it, never none (see the four numbers below). False = the old Great Sage adaptation (6% per hit from the 4th hit, up to 75% less, forgetting 10% every 10 s).")
                 .define("mahoragaAdapt", true);
+        MIN_HIT_SHARE = b.comment("5.2.0: a hit that lands on Goku always deals at least this share of what it would have dealt before his form defence, adaptation and Kaio-ken strain (0.35 = a third and a bit). 0 = no floor (5.1.1).")
+                .defineInRange("minHitShare", 0.35, 0.0, 1.0);
         ADAPT_BASE = b.comment("5.1.1: percent less damage of a kind after the first hit of it (Mahoraga: 1). Counts only with mahoragaAdapt.")
                 .defineInRange("adaptBasePercent", 1, 0, 90);
         ADAPT_HITS_PER = b.comment("5.1.1: further hits of a kind for each extra 1% (Mahoraga: 3). Lower = he adapts faster. Counts only with mahoragaAdapt.")
@@ -272,6 +275,8 @@ public final class GokuBossConfig {
     public static boolean kiVfx() { return get(KI_VFX); }
 
     public static boolean mahoragaAdapt() { return get(MAHORAGA_ADAPT); }
+
+    public static double minHitShare() { return get(MIN_HIT_SHARE); }
 
     public static double trueShare() { return get(TRUE_SHARE); }
 
