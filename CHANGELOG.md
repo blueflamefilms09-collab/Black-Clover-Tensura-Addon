@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.3.0] — Idle dungeon lanes can be reclaimed (setting, off by default)
+
+- NEW (`party.laneCleanup`, server setting, `OFF` default = 5.2.0 behaviour, or `ARCHIVE` or `DELETE`; `party.laneIdleHours`, default 168): a dungeon lane (the floors of one solo player or FTB team) that nobody of its party has entered for that many hours of server running time is freed at server start: its party leaves the book, its floors are forgotten and its number stays reserved. At the NEXT start, before the dungeon dimension loads, its region, entities and poi files are moved to `world/dungeon_archive/lane-<n>/` (ARCHIVE, saves no disk, nothing lost) or deleted (DELETE, frees the disk); only then is the number given out again. Lane 0 (the shared lane) is never freed, and a lane with no recorded use (an older world) is stamped at the first start so nothing is taken at once.
+- NEW: `/multiverse mega party lanes` (every lane with last use, size on disk, players inside) and `/multiverse mega party free <n>` (free one by hand; refused while the setting is OFF).
+- FIXED/CHECKED: lanes were already given out only at the gate and by admin teleports, never on joining or in the Hub. Sector ids are no longer reused after a lane is freed (`MegaData.nextSectorId`), so old references cannot land on another party's floor. A player who logged out inside a freed lane is sent out at login.
+- A returning player keeps their deepest-Landing record but starts at the first Landing; the floors are built again as they walk. The brief assumed the deepest Landing would be rebuilt at once: it is not.
+- Worst case: start: one pass over the book and a listing of three folders; running: a loop over the players inside the dungeon once per 60 s, at most one save per lane per 10 minutes, one check per login; no packet, no entity, no chunk load.
+- NEW: `LaneReclaim`, `LanePurge`, `PartyReclaim`, `LaneReclaimTest`, self-test `party.reclaim` (prefix `party` is in the smoke list). KEPT: every other dungeon rule, lane maths, settings and saves (the book gains two optional tags).
+- NOT built: mob caps per lane, arena-only chunk loading, spread floor building, the shared boss-realm cells. Not run on a real server.
+- Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.3.0.jar` in `mods`, replacing the old jar. To use it: in `world/serverconfig/nusmp-labyrinth-mega-party-server.toml` set `laneCleanup = "ARCHIVE"` (or `"DELETE"`), restart once to free idle lanes, restart again to move or delete their files. Back the world up first.
+
 ## [5.2.0] — Goku can always be hurt: stuck form-bar fixed, a hit never deals less than a share
 
 - FIXED: after an abandoned fight or a reload Goku could be left inside the form-bar change (`barBreak`) with no wind-up running, which kept him locked (the bar was never refilled and hits stayed at 0). Every tick now clears that state when no wind-up and no pending form are running (`unstick`). It is the first thing checked in the brief's Goku item.

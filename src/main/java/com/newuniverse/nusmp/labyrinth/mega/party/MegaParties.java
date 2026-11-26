@@ -22,6 +22,8 @@ public final class MegaParties extends SavedData {
     public static final String NAME = "nusmp_mega_parties";
 
     private final PartyIndex book = new PartyIndex();
+    private final java.util.TreeSet<Integer> retired = new java.util.TreeSet<>();
+    private final java.util.TreeMap<Integer, Long> used = new java.util.TreeMap<>();
 
     public MegaParties() {}
 
@@ -31,6 +33,30 @@ public final class MegaParties extends SavedData {
 
     /** The book, to READ (use the methods below to change it, so the file is saved). */
     public PartyIndex index() { return book; }
+
+    public java.util.Set<Integer> retired() { return java.util.Collections.unmodifiableSet(retired); }
+
+    public java.util.Map<Integer, Long> used() { return java.util.Collections.unmodifiableMap(used); }
+
+    public void touch(int index, long now, long minGap) {
+        Long old = used.get(index);
+        if (old != null && now - old < minGap && now >= old) return;
+        used.put(index, now);
+        setDirty();
+    }
+
+    public int retire(int index) {
+        int forgotten = 0;
+        for (PartyIndex.Entry e : book.holders(index)) if (book.forget(e.key())) forgotten++;
+        used.remove(index);
+        retired.add(index);
+        setDirty();
+        return forgotten;
+    }
+
+    public void clearRetired(java.util.Collection<Integer> done) {
+        if (retired.removeAll(done)) setDirty();
+    }
 
     /** {@link PartyIndex#allocate}, saved. */
     public PartyIndex.Allocation allocate(PartyKey key, String label, int maxParties, Set<Integer> reserved, List<UUID> inheritFrom) {
@@ -71,6 +97,15 @@ public final class MegaParties extends SavedData {
             list.add(t);
         }
         tag.put("parties", list);
+        tag.putIntArray("retired", retired.stream().mapToInt(Integer::intValue).toArray());
+        ListTag u = new ListTag();
+        for (java.util.Map.Entry<Integer, Long> e : used.entrySet()) {
+            CompoundTag t = new CompoundTag();
+            t.putInt("i", e.getKey());
+            t.putLong("t", e.getValue());
+            u.add(t);
+        }
+        tag.put("used", u);
         return tag;
     }
 
@@ -83,6 +118,9 @@ public final class MegaParties extends SavedData {
             if (key == null) continue;                                         // a damaged entry is dropped, the rest of the book is kept
             out.book.restore(new PartyIndex.Entry(key.id(), key.team(), t.getInt("index"), t.getString("label")));
         }
+        for (int r : tag.getIntArray("retired")) out.retired.add(r);
+        ListTag u = tag.getList("used", Tag.TAG_COMPOUND);
+        for (int i = 0; i < u.size(); i++) out.used.put(u.getCompound(i).getInt("i"), u.getCompound(i).getLong("t"));
         return out;
     }
 }

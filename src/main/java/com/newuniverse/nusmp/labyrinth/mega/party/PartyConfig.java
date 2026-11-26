@@ -15,7 +15,8 @@ public final class PartyConfig {
     public static final ModConfigSpec.ConfigValue<String> MODE;
     public static final ModConfigSpec.IntValue MAX_PARTIES;
     public static final ModConfigSpec.BooleanValue USE_FTB_TEAMS, GUARD, OPS_BYPASS, TEAM_INHERITS_LANE, LEADER_LEVEL, SHARE_LOOT;
-    public static final ModConfigSpec.IntValue SHARE_RADIUS;
+    public static final ModConfigSpec.IntValue SHARE_RADIUS, LANE_IDLE_HOURS;
+    public static final ModConfigSpec.ConfigValue<String> LANE_CLEANUP;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -46,6 +47,13 @@ public final class PartyConfig {
                         "false = the loot falls where the monster died, as before 5.0.0. A player without a team (or alone near the kill) is not affected.")
                 .define("shareLoot", true);
         SHARE_RADIUS = b.comment("Blocks round the kill within which a team member takes part in the loot split (5.0.0).").defineInRange("shareRadius", 48, 8, 128);
+        LANE_CLEANUP = b.comment("5.2.0: what happens to the lane of a party that has not been in the dungeon for laneIdleHours (party 0, the shared lane, is never touched).",
+                        "\"OFF\" (default): nothing, lanes are kept for ever as before. \"ARCHIVE\": the party is taken out of the book, its floors are forgotten and its region, entities and poi files are MOVED to",
+                        "<world>/dungeon_archive/lane-<n>/ at the next server start, before the dungeon dimension loads. \"DELETE\": the same, but the files are deleted (frees the disk). The lane number stays reserved until the files are gone.",
+                        "The player keeps their deepest-Landing record; their floors are built again from the first Landing as they walk.")
+                .define("laneCleanup", "OFF");
+        LANE_IDLE_HOURS = b.comment("5.2.0: hours of server running time without anyone of the party in the dungeon before laneCleanup takes the lane (168 = a week of uptime; a stopped server does not count).")
+                .defineInRange("laneIdleHours", 168, 1, 8760);
         b.pop();
         SPEC = b.build();
     }
@@ -59,6 +67,8 @@ public final class PartyConfig {
 
     /** The configured mode ({@code party} unless the file says {@code shared}). */
     public static PartyPolicy.Mode mode() { return PartyPolicy.Mode.parse(get(MODE)); }
+
+    public static LaneReclaim.Mode laneCleanup() { return LaneReclaim.Mode.parse(get(LANE_CLEANUP)); }
 
     /** The most parties, kept inside the range the lane maths knows. */
     public static int maxParties() { return Math.max(1, Math.min(MegaGrid.MAX_PARTIES, get(MAX_PARTIES))); }

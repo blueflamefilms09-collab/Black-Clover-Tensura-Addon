@@ -31,6 +31,7 @@ public final class MegaData extends SavedData {
     /** The sectors looked at last by {@link #sectorAt}: the same few players ask the same few sectors every tick, so the answer is almost always one of these. Never saved. */
     private final Sector[] recent = new Sector[4];
     private int recentNext;
+    private int idFloor;
 
     public MegaData() {}
 
@@ -113,6 +114,30 @@ public final class MegaData extends SavedData {
         return null;
     }
 
+    public int nextSectorId() {
+        Sector latest = latest();
+        return Math.max(idFloor, latest == null ? 0 : latest.id + 1);
+    }
+
+    public int removeParty(int party) {
+        int top = idFloor;
+        int removed = 0;
+        for (java.util.Iterator<Sector> it = sectors.iterator(); it.hasNext();) {
+            Sector s = it.next();
+            if (s.party != party) continue;
+            top = Math.max(top, s.id + 1);
+            it.remove();
+            removed++;
+        }
+        java.util.Arrays.fill(recent, null);
+        recentNext = 0;
+        if (removed > 0) {
+            idFloor = top;
+            setDirty();
+        }
+        return removed;
+    }
+
     public void add(Sector s) {
         sectors.add(s);
         setDirty();
@@ -122,6 +147,7 @@ public final class MegaData extends SavedData {
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         tag.putLong("seed", seed);
         tag.putInt("level", expansionLevel);
+        tag.putInt("idFloor", idFloor);
         ListTag l = new ListTag();
         for (Sector s : sectors) l.add(s.save());
         tag.put("sectors", l);
@@ -132,6 +158,7 @@ public final class MegaData extends SavedData {
         MegaData d = new MegaData();
         d.seed = tag.getLong("seed");
         d.expansionLevel = tag.getInt("level");
+        d.idFloor = tag.getInt("idFloor");
         ListTag l = tag.getList("sectors", Tag.TAG_COMPOUND);
         for (int i = 0; i < l.size(); i++) d.sectors.add(Sector.load(l.getCompound(i)));
         return d;

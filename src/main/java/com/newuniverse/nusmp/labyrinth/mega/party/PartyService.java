@@ -126,6 +126,7 @@ public final class PartyService {
                 book.relabel(r.key().id(), r.label());
             }
             store(p, a.index());
+            book.touch(a.index(), server.overworld().getGameTime(), 0L);
             return a.index();
         } catch (RuntimeException e) {
             LOG.error("[anime_multiverse] The party of {} could not be decided: {}", p.getGameProfile().getName(), e.toString(), e);
@@ -140,6 +141,7 @@ public final class PartyService {
     static Set<Integer> reservedLanes(MinecraftServer server, MegaParties book) {
         Set<Integer> reserved = new HashSet<>();
         for (int party : MegaData.get(server).parties()) if (party != 0 && !book.index().holds(party)) reserved.add(party);
+        reserved.addAll(book.retired());
         return reserved;
     }
 
@@ -184,6 +186,36 @@ public final class PartyService {
         String name = e == null ? "?" : PartyLines.clean(e.label());
         int inside = server == null ? 0 : onlineIn(server, party).size();
         return PartyText.text("entry.team", "Your party %s has floors of its own. %s of you are in the dungeon now.", name, inside);
+    }
+
+    // ================================================================================================================ idle lanes
+
+    public record Freed(boolean ok, String why, int sectors, int keys) {
+        static Freed refused(String why) { return new Freed(false, why, 0, 0); }
+    }
+
+    public static Freed retire(MinecraftServer server, int index) {
+        if (server == null) return Freed.refused("no server");
+        if (PartyConfig.laneCleanup() == LaneReclaim.Mode.OFF) return Freed.refused("party.laneCleanup is OFF");
+        if (index <= 0 || index >= MegaGrid.MAX_PARTIES) return Freed.refused("lane " + index + " cannot be freed (lane 0 is the shared lane)");
+        MegaParties book = MegaParties.get(server);
+        if (book.retired().contains(index)) return Freed.refused("lane " + index + " is already freed");
+        if (!onlineIn(server, index).isEmpty()) return Freed.refused("somebody of that party is inside the dungeon");
+        int keys = book.retire(index);
+        int sectors = MegaData.get(server).removeParty(index);
+        LOG.info("[anime_multiverse] Lane {} was freed ({} party keys, {} sectors forgotten); its files are handled at the next server start (party.laneCleanup).", index, keys, sectors);
+        return new Freed(true, null, sectors, keys);
+    }
+
+    public static void touchOnline(MinecraftServer server) {
+        ServerLevel mega = MegaDungeon.level(server);
+        if (mega == null || mega.players().isEmpty() || !instanced()) return;
+        MegaParties book = MegaParties.get(server);
+        long now = server.overworld().getGameTime();
+        for (ServerPlayer q : mega.players()) {
+            int party = partyOf(q);
+            if (party > 0) book.touch(party, now, 12_000L);
+        }
     }
 
     // ================================================================================================================ the admin's hand

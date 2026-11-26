@@ -36,6 +36,7 @@ public final class PartyRegistry {
     public static void register(IEventBus gameBus) {
         PartyGuard.register(gameBus);
         PartyLoot.register(gameBus);                                  // 5.0.0: the dungeon's loot is shared evenly inside an FTB team
+        PartyReclaim.register(gameBus);
         gameBus.addListener(PartyRegistry::onServerStarted);
     }
 

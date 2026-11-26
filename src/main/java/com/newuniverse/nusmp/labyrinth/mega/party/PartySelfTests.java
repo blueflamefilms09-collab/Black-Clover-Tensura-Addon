@@ -48,6 +48,42 @@ final class PartySelfTests {
         SelfTests.register("party.guard", PartySelfTests::guard);
         SelfTests.register("party.chains", PartySelfTests::chains);
         SelfTests.register("party.loot", PartySelfTests::loot);
+        SelfTests.register("party.reclaim", PartySelfTests::reclaim);
+    }
+
+    private static SelfTests.Result reclaim(net.minecraft.server.MinecraftServer server) {
+        java.nio.file.Path root = null;
+        try {
+            MegaParties scratch = new MegaParties();
+            scratch.touch(5, 1234L, 0L);
+            scratch.retire(9);
+            MegaParties read = MegaParties.load(scratch.save(new CompoundTag(), server.registryAccess()), server.registryAccess());
+            if (!read.retired().contains(9) || !Long.valueOf(1234L).equals(read.used().get(5))) return fail("the retired lanes or the last-used times did not survive the book's file format");
+            root = java.nio.file.Files.createTempDirectory("lane-reclaim");
+            java.nio.file.Path region = net.minecraft.world.level.dimension.DimensionType.getStorageFolder(com.newuniverse.nusmp.labyrinth.Labyrinth.MEGA_DIMENSION, root).resolve("region");
+            java.nio.file.Files.createDirectories(region);
+            int zOwn = Math.floorDiv(MegaGrid.laneZ(Polarity.HOLY, 9), 512), zOther = Math.floorDiv(MegaGrid.laneZ(Polarity.HOLY, 10), 512), zZero = 0;
+            for (int z : new int[] {zOwn, zOther, zZero}) java.nio.file.Files.writeString(region.resolve("r.0." + z + ".mca"), "x");
+            java.util.Set<Integer> off = LanePurge.run(root, LaneReclaim.Mode.OFF, java.util.Set.of(9));
+            if (!off.isEmpty() || !java.nio.file.Files.exists(region.resolve("r.0." + zOwn + ".mca"))) return fail("laneCleanup OFF touched a file");
+            java.util.Set<Integer> done = LanePurge.run(root, LaneReclaim.Mode.ARCHIVE, java.util.Set.of(9, 0));
+            if (!done.contains(9)) return fail("the archive of lane 9 was not reported done");
+            if (java.nio.file.Files.exists(region.resolve("r.0." + zOwn + ".mca"))) return fail("the region of lane 9 was not moved");
+            if (!java.nio.file.Files.exists(root.resolve("dungeon_archive").resolve("lane-9").resolve("region").resolve("r.0." + zOwn + ".mca"))) return fail("the region of lane 9 is not in the archive");
+            if (!java.nio.file.Files.exists(region.resolve("r.0." + zOther + ".mca")) || !java.nio.file.Files.exists(region.resolve("r.0." + zZero + ".mca"))) return fail("a region of another lane (or of lane 0) was taken");
+            java.util.Map<Integer, Long> sizes = LanePurge.sizes(root);
+            if (sizes.getOrDefault(10, 0L) != 1L || sizes.containsKey(9)) return fail("the lane sizes were wrong: " + sizes);
+            return ok("retired lanes and last-used times are saved, an archive moves only the freed lane's regions, OFF touches nothing, lane 0 is never taken");
+        } catch (java.io.IOException | RuntimeException e) {
+            return fail(e.toString());
+        } finally {
+            if (root != null) {
+                try (var walk = java.nio.file.Files.walk(root)) {
+                    walk.sorted(java.util.Comparator.reverseOrder()).forEach(f -> f.toFile().delete());
+                } catch (java.io.IOException ignored) {
+                }
+            }
+        }
     }
 
     /** 5.0.0: the even split adds up and is even, and the leader rule picks the leader's level only when there is one. Pure, so it also runs on a dedicated server. */

@@ -154,7 +154,7 @@ public final class ExpansionQueue implements Expander {
             data.setDirty();
         }
         Sector latest = data.latest();
-        int id = latest == null ? 0 : latest.id + 1;
+        int id = data.nextSectorId();
         int per = FloorMap.floorsPerSector(FloorsConfig.get(FloorsConfig.PER_SECTOR));
         SectorDraft draft = SectorDraft.first(data.seed, id, road, per, party);
         SectorPlanner.Plan plan;
@@ -227,7 +227,7 @@ public final class ExpansionQueue implements Expander {
     static Sector draftFloor(MegaData data, Sector from) {
         int idx = from.chainIndex + 1;
         Sector latest = data.latest();
-        int id = latest == null ? 0 : latest.id + 1;
+        int id = data.nextSectorId();
         RegionTheme forced = FloorMap.startsDecade(idx, from.perRegion) ? MegaDungeon.themeOverride(from) : null;
         SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, idx, from.perRegion, from.theme, forced, from.party);
         Request.Floor spec = FloorPlan.spec(from.polarity, idx, MegaConfig.get(MegaConfig.FLOOR_ROOMS));
@@ -273,7 +273,7 @@ public final class ExpansionQueue implements Expander {
      */
     static Sector draft(MegaData data, Sector from, SectorPlanner.Next n) {
         Sector latest = data.latest();
-        int id = latest == null ? 0 : latest.id + 1;
+        int id = data.nextSectorId();
         SectorDraft d = SectorDraft.of(data.seed, id, from.polarity, from.chainIndex + 1, from.perRegion, from.theme, MegaDungeon.themeOverride(from), from.party);
         Sector s = create(d);
         s.seed = d.seed();
