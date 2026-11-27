@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.5.0] — Dungeon replay value: weekly twists and first-clear prizes
+
+Checked against the Mega-Dungeon first: room pools and room variants (`RoomVariants`), rare props (`RareStands`) and the leader-set landing already exist, so they are KEPT as they are. What did not exist, and is NEW:
+
+- NEW (`weekly.enabled`, server setting in `nusmp-labyrinth-mega-weekly-server.toml`, default on, false = as before): every real-world week (changes Thursday 00:00 UTC, the same for the whole server) the hostile creatures of the deeper floors get 1 to 3 twists: thick hide (+25% health), swift foes (+15% speed), savage blows (+20% damage), armoured (+6 armour), keen senses (+40% sight range). Floors 30 / 70 / 100 give one / two / three twists (`weekly.floorOne`, `floorTwo`, `floorThree`); `weekly.strengthPercent` scales all of them (100 = as listed, 0 = none). A week's list is a fixed shuffle by the week number, so every player and restart agree and the same twist is never listed twice in a week.
+- NEW: `/multiverse mega weekly` shows this week's twists per depth band (any player).
+- NEW (`weekly.firstClear`, default on; `weekly.firstClearItem`, default `minecraft:diamond`): the first time a player is standing in a sector when its Guardian falls they get experience levels (1 + floor/10, at most 30) and a few of the item (1 + floor/20, at most 16), once per player and sector, remembered in the player's own saved data (cap 512 sectors per player). Every later kill of that sector pays nothing extra.
+- NEW pure tests `WeeklyRulesTest` (thresholds, week shuffle, strength scale, first-clear record and prize) and self-test `dungeon.weekly.apply` (added to the smoke list): a zombie gets 3 twists on a deep floor once, none stack, none on floor 0.
+- NOT built (kept for later): par-time bonus, rare rooms of 5-10%, level-10 boss variants, a pity counter. Rare props and room variants already exist.
+- Worst case: one floor lookup and at most three attribute writes per hostile creature joining the dungeon, once; one pass over the players of the dungeon per Guardian death; no entity, no packet, no particle, nothing per tick; the week is read from the clock once a minute.
+- KEPT: everything else; both parts have a setting that restores the old behaviour.
+- Not seen in a game. Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.5.0.jar` in `mods`, replacing the old jar.
+
 ## [5.4.0] — Goku's adaptation cue (ring + chime) and Kakashi's Raikiri miss stagger
 
 The Kakashi brief list was checked against his 29 existing moves first: kunai, Kawarimi (log swap on a 6% hit, once per 13 s), earth wall, ninken root (2.2 s), Sharingan copy of the strongest hit, Water Dragon, Kamui vortex and the per-phase charge limits already exist, so only the missing mechanic was added.
