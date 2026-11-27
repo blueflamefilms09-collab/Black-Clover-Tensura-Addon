@@ -169,7 +169,12 @@ def main(ids):
         skin, glowtex = tex(os.path.join(d, item_id + ".png")), tex(os.path.join(d, item_id + "_glow.png"))
         k = skin.shape[1] / 128.0                                           # 1.3.0: the skins are raised to 512 / 1024; the mesh UVs stay in 128 space
         quads = [(ly, np.concatenate([pts[:, :3], pts[:, 3:5] * k], axis=1), n) for (ly, pts, n) in quads]
-        tiles = [icon(item_id)] + [render(quads, skin, glowtex, glow, view(yw, p)) for (yw, p) in ((0, 0), (35, 20), (88, 5), (180, 0))]
+        allp = np.concatenate([pts[:, :3] for (_, pts, _) in quads]) if quads else np.zeros((1, 3))
+        lo, hi = allp.min(0), allp.max(0)
+        ctr, dist = (lo + hi) / 2, max(1.9, float((hi - lo).max()) * 2.1)   # 5.6.1: tall weapons (axes, spears) are framed whole; short ones keep the old camera
+        if dist <= 1.9:
+            ctr = (0.5, 0.5, 0.5)
+        tiles = [icon(item_id)] + [render(quads, skin, glowtex, glow, view(yw, p, dist=dist, target=ctr)) for (yw, p) in ((0, 0), (35, 20), (88, 5), (180, 0))]
         rows.append(np.concatenate(tiles, 1))
     os.makedirs(OUT, exist_ok=True)
     out = os.path.join(OUT, "weapons.png")

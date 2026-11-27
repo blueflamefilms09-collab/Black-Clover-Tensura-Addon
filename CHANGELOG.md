@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.6.1] — Weapon preview tool frames tall weapons whole (tools only, no game change)
+
+- FIXED (`tools/item_preview/preview_weapons.py`): the preview camera was set for sword-sized weapons and cut the heads off the Black Axe of Sloth and the Black Spear of Vanity; it now fits the camera to the weapon's size (short weapons keep the old camera). The game models, textures and Better Combat files are unchanged.
+- Worst case: none in game; the change is a developer tool only.
+- KEPT: everything else.
+- Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.6.1.jar` in `mods`, replacing the old jar (the game is the same as 5.6.0).
+
 ## [5.6.0] — Dungeon par time
 
 - NEW (`weekly.parMinutes`, server setting, default 15, 0 = off): a first clear of a Guardian made within 15 minutes of stepping onto its floor pays half as many experience levels again (rounded up, never past 30) and the action-bar line says "Par time!". The floor entry time is one long in the player's own saved data, written only when the floor changes (the existing floor-entered event, no tick scan).
