@@ -909,7 +909,7 @@ public class GokuBoss extends ArcBoss {
         if (om && GokuLadder.MASTERED.equals(stepId)) {            // Mastered Ultra Instinct: no chart row, near-perfect
             formChance = GokuOmegaMath.MASTERED_CHANCE;
             cool = GokuOmegaMath.MASTERED_COOLDOWN;
-            per = GokuOmegaMath.MASTERED_PER_WINDOW;
+            per = Math.min(GokuOmegaMath.MASTERED_PER_WINDOW, GokuBossConfig.masteredDodges());
             win = GokuOmegaMath.MASTERED_WINDOW;
         } else {
             SaiyanForms.Dodge d = SaiyanForms.dodge(stepId, 1.0);

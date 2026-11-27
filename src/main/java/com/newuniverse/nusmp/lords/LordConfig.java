@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class LordConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, BURDEN, INACTIVITY_RELEASE, HUNGER_OF_THE_BLADE, NEW_VFX;
-    public static final ModConfigSpec.IntValue DAMAGE_PERCENT, BURDEN_PERCENT, MASTERY_PERCENT;
+    public static final ModConfigSpec.IntValue DAMAGE_PERCENT, BURDEN_PERCENT, MASTERY_PERCENT, HALF_UNLOCK_PERCENT;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -27,6 +27,8 @@ public final class LordConfig {
         DAMAGE_PERCENT = b.comment("Strength of the arts and decrees in percent (100 = as listed).").defineInRange("damagePercent", 100, 10, 1000);
         BURDEN_PERCENT = b.comment("How fast the burden builds, in percent (100 = as listed).").defineInRange("burdenPercent", 100, 0, 1000);
         MASTERY_PERCENT = b.comment("How fast the mastery tracks grow, in percent (100 = as listed; the Half-Starved Mastery of Greed too).").defineInRange("masteryPercent", 100, 0, 1000);
+        HALF_UNLOCK_PERCENT = b.comment("Half-Starvation (the second mode of Lord of Gluttonous Greed) can be switched ON once the skill's own mastery reaches this many percent (canon: Fate had unlocked half of his Gluttony skill). Switching it OFF is always allowed. 0 = always available, as before.")
+                .defineInRange("halfStarvedUnlockPercent", 50, 0, 100);
         b.pop();
         SPEC = b.build();
     }
@@ -39,5 +41,6 @@ public final class LordConfig {
     public static boolean themedVfx() { return NEW_VFX.get(); }
     public static double damage() { return DAMAGE_PERCENT.get() / 100.0; }
     public static double burdenScale() { return BURDEN_PERCENT.get() / 100.0; }
+    public static int halfUnlockPercent() { return HALF_UNLOCK_PERCENT.get(); }
     public static double masteryScale() { return MASTERY_PERCENT.get() / 100.0; }
 }

@@ -156,7 +156,7 @@ final class SinbadMoves {
 
     // ------------------------------------------------------------------ Zepar: sound
 
-    /** Command Scream: anyone LOOKING at him when it lands is put to "sleep" for 2 s (blind and rooted); the others only get nausea. The tell says: look away. */
+    /** Command Scream: anyone LOOKING at him when it lands is put to "sleep" for 2 s (blind and slowed, never fully rooted); the others only get nausea. The tell says: look away. */
     static void commandScream(SinbadBoss b, ServerLevel sl) {
         Vec3 head = b.getEyePosition();
         for (LivingEntity v : SdsaStrikes.foesInDisc(b, b.position(), 16.0)) {
@@ -164,7 +164,7 @@ final class SinbadMoves {
             Vec3 toBoss = head.subtract(v.getEyePosition()).normalize();
             if (v.getViewVector(1.0F).dot(toBoss) > 0.5) {
                 v.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0), b);
-                slow(v, b, 40, 9);
+                slow(v, b, 40, SinbadBossConfig.screamSlowAmp());
             } else {
                 v.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 80, 0), b);
             }

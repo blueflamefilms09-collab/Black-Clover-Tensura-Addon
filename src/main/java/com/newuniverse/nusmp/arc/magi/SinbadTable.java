@@ -64,7 +64,7 @@ final class SinbadTable {
 
             new Spec(BARARAQ,           "Bararaq",                 SinbadDjinn.BAAL,    10, 30, 140, 4.0, 32.0, 5, false, true,  14,  10),
             new Spec(BARARAQ_SAIQA,     "Bararaq Saiqa",           SinbadDjinn.BAAL,    30, 34, 200, 5.0, 28.0, 4, false, false, 20,  14),
-            new Spec(INQERAD_SAIQA,     "Bararaq Inqerad-Saiqa",   SinbadDjinn.BAAL,    80, 70, 900, 0.0, 40.0, 3, true,  true,  60,  60),
+            new Spec(INQERAD_SAIQA,     "Bararaq Inqerad-Saiqa",   SinbadDjinn.BAAL,    80, 80, 900, 0.0, 40.0, 3, true,  true,  60,  60),
 
             new Spec(GARUFOR_ZAIRU,     "Garufor Zairu",           SinbadDjinn.VALEFOR, 10, 22, 120, 4.0, 26.0, 5, false, false, 12,   8),
             new Spec(GARUFOR_KIRESTAL,  "Garufor Kirestal",        SinbadDjinn.VALEFOR, 30, 28, 260, 0.0, 18.0, 3, false, false, 18,  12),

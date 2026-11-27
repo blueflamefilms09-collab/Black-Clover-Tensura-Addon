@@ -144,4 +144,15 @@ class LordRulesTest {
         assertEquals(8, LordRules.ULTIMATE_LEVEL);
         assertEquals(14L * 24 * 3600 * 1000, LordRules.INACTIVITY_MS, "14 days");
     }
+
+    @Test
+    void halfStarvationUnlocksAtHalfMasteryAndAlwaysSwitchesOff() {
+        assertFalse(LordRules.halfMayToggle(false, 49, 50));
+        assertTrue(LordRules.halfMayToggle(false, 50, 50));
+        assertTrue(LordRules.halfMayToggle(true, 0, 50), "switching off is never refused");
+        assertTrue(LordRules.halfMayToggle(false, 0, 0), "0 = the old behaviour, no gate");
+        assertEquals(50, LordRules.masteryPercent(500, 1000));
+        assertEquals(0, LordRules.masteryPercent(5, 0));
+        assertEquals(100, LordRules.masteryPercent(2000, 1000));
+    }
 }

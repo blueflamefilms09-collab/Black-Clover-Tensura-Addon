@@ -10,7 +10,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class SinbadBossConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED;
-    public static final ModConfigSpec.IntValue GLOBAL_CAP;
+    public static final ModConfigSpec.IntValue GLOBAL_CAP, SCREAM_SLOW_AMP;
     public static final ModConfigSpec.BooleanValue PHASES, MAGI_VFX;
     public static final ModConfigSpec.DoubleValue HEALTH_FACTOR;
 
@@ -30,6 +30,8 @@ public final class SinbadBossConfig {
                 .defineInRange("healthFactor", 2.5, 1.0, 20.0);
         MAGI_VFX = b.comment("4.105.0: Sinbad's Djinn Equip, Extreme Magic, Rukh flights, aura and phase breaks are drawn with the Magi layer (golden vessel sigil, Magoi, Rukh). false: the old magic circle only.")
                 .define("magiVfx", true);
+        SCREAM_SLOW_AMP = b.comment("5.3.2: the Slowness level of Zepar's Command Scream on anyone who looks at him (2 s). 4 = slowed by three quarters, never a full stun (brief). 9 = the old full root.")
+                .defineInRange("screamSlowAmp", 4, 0, 9);
         b.pop();
         SPEC = b.build();
     }
@@ -48,6 +50,8 @@ public final class SinbadBossConfig {
     public static boolean phases() { return get(PHASES); }
 
     public static double healthFactor() { return phases() ? get(HEALTH_FACTOR) : 1.0; }
+
+    public static int screamSlowAmp() { return get(SCREAM_SLOW_AMP); }
 
     public static boolean magiVfx() { return get(MAGI_VFX); }
 }

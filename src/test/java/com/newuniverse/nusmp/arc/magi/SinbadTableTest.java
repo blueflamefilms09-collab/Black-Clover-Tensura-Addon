@@ -46,6 +46,8 @@ class SinbadTableTest {
         List<String> ult = SinbadTable.specs().stream().filter(SinbadTable.Spec::ultimate).map(SinbadTable.Spec::id).toList();
         assertEquals(List.of(SinbadTable.INQERAD_SAIQA, SinbadTable.SEVEN_SEAS), ult);
         assertTrue(spec(SinbadTable.INQERAD_SAIQA).minPower() >= SinbadTable.unlockPower(SinbadDjinn.BAAL), "Extreme Magic needs Baal");
+        assertTrue(spec(SinbadTable.INQERAD_SAIQA).windUpTicks() >= 80, "the giant lightning blade winds up for 4 s");
+        assertTrue(spec(SinbadTable.INQERAD_SAIQA).recovery() >= 40, "and leaves a punish window");
         assertTrue(spec(SinbadTable.RENDING_DARKNESS).minPower() >= SinbadTable.unlockPower(SinbadDjinn.FURFUR), "no Furfur move before Furfur unlocks");
         assertTrue(spec(SinbadTable.VEPAR_ISTELLA).minPower() >= SinbadTable.unlockPower(SinbadDjinn.VEPAR), "no Vepar move before Vepar unlocks");
     }

@@ -332,6 +332,8 @@ public final class GreedService {
     }
 
     /** Mode 1: Half-Starvation (double devouring, 1.5 times the stats, hunger 2.5 times as fast). */
+    public static boolean halfOn(ServerPlayer p) { return GreedData.bound() && GreedStore.of(p).half; }
+
     public static void toggleHalf(ServerPlayer p) {
         if (!GreedData.bound() || !data().isOwner(p.getUUID())) return;
         GreedState st = GreedStore.of(p);

@@ -196,6 +196,12 @@ public final class LordRules {
     /** The stat multiplier of Half-Starvation: 1.5, mastery adds 1% per level (1.6 at the top). */
     public static double halfStats(int halfLevel) { return 1.5 + 0.01 * Math.max(0, Math.min(MAX_LEVEL, halfLevel)); }
 
+    /** May Half-Starvation be switched now? Switching off is always allowed; switching on needs the skill's mastery (percent of its maximum) to reach {@code needPercent}; 0 = no gate. */
+    public static boolean halfMayToggle(boolean currentlyOn, int masteryPercent, int needPercent) { return currentlyOn || needPercent <= 0 || masteryPercent >= needPercent; }
+
+    /** The skill's mastery in percent of its maximum (0 for a bad maximum). */
+    public static int masteryPercent(double mastery, double max) { return max <= 0.0 ? 0 : (int) Math.max(0, Math.min(100, Math.floor(mastery * 100.0 / max))); }
+
     /** The share of the devoured bonuses the blade lets the wielder use: all when fed, 70% while ravenous, none while dormant. */
     public static double bonusShare(float satiation) { return satiation <= 0.0f ? 0.0 : satiation < RAVENOUS_BELOW ? 0.7 : 1.0; }
 

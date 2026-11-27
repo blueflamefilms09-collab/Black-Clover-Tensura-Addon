@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.3.2] — Brief check: Half-Starvation unlocks at half mastery, Sinbad's scream and ultimate, Goku's dodge limit
+
+Brief items 4-8 were checked against the code first. Most of what the brief asked to build already exists, so this release only tunes (nothing new is built).
+
+- CHECKED, NOT CHANGED: the Black Axe of Sloth and Black Spear of Vanity are separate Lord weapons, not forms of Greed, and were already rebuilt in Blender (3.9x, `tools/blender/lord_weapons.py`, three forms each); the axe has a crescent head with a beard spike, the spear a leaf head and a fan. Greed's own forms are the sword, bow, scythe, shield, staff, gauntlets, dual blades and spear. Previews drawn the way the game draws them: `docs/berserk_weapons_previews/`. The grimoire already has the hip, travel and open states with attribute emblems and glowing runes (`docs/floating_grimoire_spec.md`, `docs/grimoire_revamp.md`). Sinbad already has three phases, telegraphs, safe spots for his Extreme Magic and a punish recovery, and Leraje is not used. The dungeon bosses were reworked in waves 1-3 (`docs/dungeon_bosses_audit.md`). Weekly modifiers, room pools, first-clear rewards and Kakashi are new features and were not built.
+- NEW (`lords.halfStarvedUnlockPercent`, server setting in `nusmp-lords-server.toml`, default 50, 0 = always available as before): Half-Starvation (the second mode of Lord of Gluttonous Greed) can be switched ON once that skill's own mastery reaches 50% (canon: Fate had unlocked half of his Gluttony skill, chapter 169). A refused switch makes a low heartbeat sound, no chat line. Switching it off is always allowed. The Half-Starved Mastery bar was not used for the gate: it only grows while the state is on, so it could never be reached.
+- NEW (`sinbad_boss.screamSlowAmp`, default 4, range 0-9, 9 = the old root): Zepar's Command Scream gave anyone looking at him Slowness 10 (a full root) for 2 s; it is now Slowness 5 (slowed by three quarters), still with the 2 s blindness.
+- CHANGED: Sinbad's Bararaq Inqerad-Saiqa (the giant lightning blade) winds up for 4 s instead of 3.5 s (table value; his safe spots and 3 s recovery stay). Pure test `SinbadTableTest` pins both.
+- NEW (`goku_boss.omega.masteredDodgesPerWindow`, default 3, range 1-8, 8 = the old limit): Mastered Ultra Instinct dodged up to 8 hits per 6 s with a 92% chance, so a melee player lost about four hits in five; it is now 3 per 6 s.
+- CHECKED, NOT CHANGED: the Ki Barrier already has a 30 s cooldown and 6 uses per fight, and the 4.107.0 true damage lands even when the normal part is turned away. The per-second damage budget is a ceiling (6% of maximum health), not a reduction, so a group is not slowed by it and a solo player is not under it; scaling it with player count would only let a group kill faster, so it stays.
+- Worst case: no new tick work, no packet, no entity, no particle; one extra comparison per Goku dodge check and one comparison per Half-Starvation press.
+- KEPT: everything else; every change has a setting that restores the old value.
+- Not seen in a game. Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.3.2.jar` in `mods`, replacing the old jar.
+
 ## [5.3.1] — Invisible-entity checks: boss culling box and portal render state
 
 - CHECKED (brief item 3, from the code, not in a game): no mixin of the mod touches entity tracking or sync (`LevelGuardMixin`, `LevelChunkGuardMixin`, `OverlordUndeadHandlerMixin` only guard dungeon block sets and a handler); the render-state code in `FxRenderer`, `VfxVertexBuffer`, `VfxBlend` and `ManaZoneClient` sets and restores depth, cull, blend and the shader colour; every `RenderLevelStageEvent` user draws its own meshes and ends its own buffer batch; none advances an animation inside `render()`.

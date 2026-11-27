@@ -43,8 +43,18 @@ public class LordOfGluttonousGreedSkill extends NUSkill {
         if (!(entity instanceof ServerPlayer p) || !p.isAlive()) return;
         switch (Math.floorMod(mode, IDS.length)) {
             case 0 -> GreedService.secretTechnique(p);
-            case 1 -> GreedService.toggleHalf(p);
+            case 1 -> toggleHalfGated(p, instance);
             default -> GreedService.offer(p);
         }
+    }
+
+    private static void toggleHalfGated(ServerPlayer p, ManasSkillInstance instance) {
+        int pct = com.newuniverse.nusmp.lords.LordRules.masteryPercent(instance.getMastery(), instance.getMaxMastery());
+        boolean on = GreedService.halfOn(p);
+        if (!com.newuniverse.nusmp.lords.LordRules.halfMayToggle(on, pct, com.newuniverse.nusmp.lords.LordConfig.halfUnlockPercent())) {
+            p.serverLevel().playSound(null, p.blockPosition(), net.minecraft.sounds.SoundEvents.WARDEN_HEARTBEAT, net.minecraft.sounds.SoundSource.PLAYERS, 0.8f, 0.6f);
+            return;
+        }
+        GreedService.toggleHalf(p);
     }
 }
