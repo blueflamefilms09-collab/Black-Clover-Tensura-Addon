@@ -11,7 +11,9 @@ public final class WeeklyBoot {
     public static void init(ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, WeeklyConfig.SPEC, "nusmp-labyrinth-mega-weekly-server.toml");
         WeeklyEvents.register(NeoForge.EVENT_BUS);
-        com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.addListener(new FirstClearListener());
+        FirstClearListener first = new FirstClearListener();
+        com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.addListener(first);
+        com.newuniverse.nusmp.labyrinth.mega.MegaDungeon.addFloorListener(first);
         WeeklySelfTests.register();
     }
 }

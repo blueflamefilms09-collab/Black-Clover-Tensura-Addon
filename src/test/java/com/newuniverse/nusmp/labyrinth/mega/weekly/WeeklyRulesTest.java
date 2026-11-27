@@ -83,4 +83,15 @@ class WeeklyRulesTest {
         assertEquals(1, FirstClearRules.items(5));
         assertEquals(16, FirstClearRules.items(100000));
     }
+
+    @Test
+    void parTimeBonus() {
+        assertTrue(FirstClearRules.withinPar(100, 1000, 900));
+        assertFalse(FirstClearRules.withinPar(100, 1001, 900));
+        assertFalse(FirstClearRules.withinPar(-1, 10, 900), "unknown entry time never earns the bonus");
+        assertFalse(FirstClearRules.withinPar(100, 200, 0), "par 0 = off");
+        assertFalse(FirstClearRules.withinPar(500, 100, 900), "a clock that went backwards never earns it");
+        assertEquals(2, FirstClearRules.parLevels(0));
+        assertEquals(30, FirstClearRules.parLevels(100000));
+    }
 }

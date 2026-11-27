@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.6.0] — Dungeon par time
+
+- NEW (`weekly.parMinutes`, server setting, default 15, 0 = off): a first clear of a Guardian made within 15 minutes of stepping onto its floor pays half as many experience levels again (rounded up, never past 30) and the action-bar line says "Par time!". The floor entry time is one long in the player's own saved data, written only when the floor changes (the existing floor-entered event, no tick scan).
+- NEW pure test `parTimeBonus` in `WeeklyRulesTest` (unknown entry time, par 0, a backwards clock never earn it).
+- Worst case: one long write per player per floor change, one comparison per first clear; no entity, packet or particle.
+- KEPT: everything else; `parMinutes = 0` restores 5.5.0.
+- Not seen in a game. Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.6.0.jar` in `mods`, replacing the old jar.
+
 ## [5.5.0] — Dungeon replay value: weekly twists and first-clear prizes
 
 Checked against the Mega-Dungeon first: room pools and room variants (`RoomVariants`), rare props (`RareStands`) and the leader-set landing already exist, so they are KEPT as they are. What did not exist, and is NEW:

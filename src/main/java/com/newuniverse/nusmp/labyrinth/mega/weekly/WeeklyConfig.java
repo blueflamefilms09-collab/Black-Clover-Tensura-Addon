@@ -10,7 +10,7 @@ public final class WeeklyConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, FIRST_CLEAR;
     public static final ModConfigSpec.ConfigValue<String> FIRST_CLEAR_ITEM;
-    public static final ModConfigSpec.IntValue FLOOR_ONE, FLOOR_TWO, FLOOR_THREE, STRENGTH;
+    public static final ModConfigSpec.IntValue FLOOR_ONE, FLOOR_TWO, FLOOR_THREE, STRENGTH, PAR_MINUTES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -27,6 +27,8 @@ public final class WeeklyConfig {
                 .defineInRange("strengthPercent", 100, 0, 400);
         FIRST_CLEAR = b.comment("5.5.0: the first time a player sees a dungeon Guardian fall (while standing in its sector) they get experience levels and a few of firstClearItem, once per player and sector, growing with the floor. False: no prize, as before.")
                 .define("firstClear", true);
+        PAR_MINUTES = b.comment("5.6.0: a first clear made within this many minutes of entering the floor pays half as many levels again (par time). 0 = no par bonus.")
+                .defineInRange("parMinutes", 15, 0, 240);
         FIRST_CLEAR_ITEM = b.comment("The item id of the first-clear prize (an unknown id falls back to minecraft:diamond).")
                 .define("firstClearItem", "minecraft:diamond");
         b.pop();

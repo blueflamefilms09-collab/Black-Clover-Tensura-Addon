@@ -28,4 +28,12 @@ public final class FirstClearRules {
 
     /** How many of the prize item: 1 at the first floors, +1 per 20 floors, at most 16. */
     public static int items(int floor) { return Math.max(1, Math.min(16, 1 + Math.max(0, floor) / 20)); }
+
+    /** Is a clear inside the par time? {@code enteredAt} is the game time the floor was entered (a negative value = unknown), {@code parTicks} 0 or less turns the bonus off. */
+    public static boolean withinPar(long enteredAt, long now, long parTicks) {
+        return parTicks > 0 && enteredAt >= 0 && now >= enteredAt && now - enteredAt <= parTicks;
+    }
+
+    /** The levels paid when the clear was inside the par time: half as many again (rounded up), never past the cap of 30. */
+    public static int parLevels(int floor) { return Math.min(30, levels(floor) + (levels(floor) + 1) / 2); }
 }
