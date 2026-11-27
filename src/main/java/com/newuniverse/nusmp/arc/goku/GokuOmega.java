@@ -338,6 +338,17 @@ final class GokuOmega {
     }
 
     // ================================================================ taking a hit
+    /** The colour of the ring that shows which damage kind he adapted to (melee, projectile, magic, fire, explosion, lightning, other). */
+    static final int[] KIND_RGB = {0xFF6A5A, 0xFFD27A, 0xB58CFF, 0xFF8A2A, 0xFFE08A, 0xFFF27A, 0xC0C0C0};
+
+    /** A new adaptation stage: a ring in the damage kind's colour (bigger per stage) and a sound that rises per stage; the old chat line only when {@code adaptCue} is off. */
+    private void adaptCue(int kind, int stage, String chat) {
+        if (!GokuBossConfig.adaptCue()) { g.announce(chat); return; }
+        if (!(g.level() instanceof ServerLevel sl)) return;
+        GokuFx.ring(sl, g.position().add(0, 0.1, 0), 1.8 + 0.35 * Math.max(1, stage), KIND_RGB[Math.floorMod(kind, KIND_RGB.length)], 16);
+        sl.playSound(null, g.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 1.6f, 0.7f + 0.15f * Math.max(1, stage));
+    }
+
     /** The kind of a damage source, for the adaptation. */
     static int kind(DamageSource s) {
         if (s.is(DamageTypeTags.IS_FIRE)) return GokuOmegaMath.FIRE;
@@ -392,14 +403,14 @@ final class GokuOmega {
             int st = GokuAdaptMath.stage(mHits[k]);
             if (st > mStageSaid[k]) {
                 mStageSaid[k] = st;
-                g.announce("Goku adapts to " + KIND_NAMES[k] + " damage (stage " + st + ").");
+                adaptCue(k, st, "Goku adapts to " + KIND_NAMES[k] + " damage (stage " + st + ").");
             }
         } else if (has(GokuOmegaMath.Hack.ADAPTATION)) {
             int k = kind(src);
             adapt.hit(k);
             if (!adaptSaid[k] && adapt.resist(k, GokuOmegaMath.adaptCap(level)) > 0.0) {
                 adaptSaid[k] = true;
-                g.announce("Goku is adapting to " + KIND_NAMES[k] + " damage.");
+                adaptCue(k, 1, "Goku is adapting to " + KIND_NAMES[k] + " damage.");
             }
         }
         long now = g.tickCount;

@@ -940,6 +940,16 @@ public class KakashiBoss extends ArcBoss {
 
     void staggerForTest(int ticks) { staggerUntil = tickCount + ticks; }
 
+    boolean staggeredForTest() { return staggerUntil > tickCount; }
+
+    /** A Raikiri dash that found nothing leaves him wide open for {@code ticks} (the brief: the Lightning Cutter staggers him on a miss); never shortens an existing stagger. */
+    void missStagger(int ticks) {
+        if (ticks <= 0 || !KakashiConfig.missStagger()) return;
+        long now = tickCount;
+        staggerUntil = Math.max(staggerUntil, now + ticks);
+        brokenUntil = Math.max(brokenUntil, now + ticks);
+    }
+
     float shieldForTest() { return susanooShield; }
 
     void setShieldForTest(float s) { susanooShield = s; }

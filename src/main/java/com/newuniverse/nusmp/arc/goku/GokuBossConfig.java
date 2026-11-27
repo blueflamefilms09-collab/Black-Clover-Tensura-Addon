@@ -11,6 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class GokuBossConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.IntValue PUNCH_GAP, MASTERED_DODGES;
+    public static ModConfigSpec.BooleanValue ADAPT_CUE;
     public static final ModConfigSpec.BooleanValue ENABLED, BLOCK_DAMAGE, EP_SCALING, FAREWELL, FORM_BARS, PUNCHES;
     /** Goku Omega (docs/goku_omega.md), section {@code [goku_boss.omega]}. */
     public static final ModConfigSpec.BooleanValue OMEGA_ENABLED, OMEGA_EP_SKILLS, OMEGA_HACKS, OMEGA_SECOND_WIND, OMEGA_TRAINING;
@@ -162,6 +163,8 @@ public final class GokuBossConfig {
                 .defineInRange("uiDodgeCap", DEFAULT_OMEGA_DODGE, 0.0, 0.95);
         MASTERED_DODGES = b.comment("5.3.2: how many hits Mastered Ultra Instinct may dodge per 6 seconds (the window). 3 leaves a melee player most of their swings; 8 = the old limit (a melee player lost about four hits in five).")
                 .defineInRange("masteredDodgesPerWindow", 3, 1, 8);
+        ADAPT_CUE = b.comment("5.4.0: a new adaptation stage is shown as a ring around Goku in the colour of the damage kind (melee red, projectile gold, magic violet, fire orange, explosion yellow, lightning pale yellow) and a chime that rises with the stage. false = the old chat line.")
+                .define("adaptCue", true);
         OMEGA_LEVEL_CAP = b.comment("Omega: the highest level he can reach (hard maximum 200).")
                 .defineInRange("levelCap", GokuOmegaMath.DEFAULT_LEVEL_CAP, 1, GokuOmegaMath.HARD_MAX_LEVEL);
         OMEGA_TRAINING = b.comment("Omega: he trains by himself while nobody fights him (pure arithmetic once an in-game hour and at the start of a fight; no entity, no chunk).")
@@ -236,6 +239,8 @@ public final class GokuBossConfig {
     public static double hitShare() { return GokuOmegaMath.hitShare(omega(), maxHitPercent(), get(OMEGA_MAX_HIT)); }
 
     /** The dodge chance cap: the classic one, or the Omega one (never lower than the classic) while Omega is on. */
+    public static boolean adaptCue() { return get(ADAPT_CUE); }
+
     public static int masteredDodges() { return get(MASTERED_DODGES); }
 
     public static double dodgeCap() { return omega() ? Math.max(uiDodgeCap(), get(OMEGA_DODGE_CAP)) : uiDodgeCap(); }

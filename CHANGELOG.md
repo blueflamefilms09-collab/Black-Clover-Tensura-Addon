@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.4.0] — Goku's adaptation cue (ring + chime) and Kakashi's Raikiri miss stagger
+
+The Kakashi brief list was checked against his 29 existing moves first: kunai, Kawarimi (log swap on a 6% hit, once per 13 s), earth wall, ninken root (2.2 s), Sharingan copy of the strongest hit, Water Dragon, Kamui vortex and the per-phase charge limits already exist, so only the missing mechanic was added.
+
+- NEW (`goku_boss.adaptCue`, server setting, default on, false = the old chat line): when Goku adapts to a kind of damage (melee, projectile, magic, fire, explosion, lightning, other) a coloured ring grows from his feet (colour per kind, bigger per stage) and an amethyst chime rises in pitch with the stage, instead of a chat line. The ring uses the existing `GokuFx.ring` and the shared particle budget.
+- NEW (`kakashi_boss.missStagger`, server setting, default on; `missStaggerTicks`, default 36 = 1.8 s, 0-100): a Raikiri, Kamui Raikiri or Lightning Cutter dash that hits nobody leaves him staggered and broken (open to every blow, no Kamui), the way the brief and the anime show a missed Chidori. A hit still costs him nothing. False = a miss costs nothing, as before.
+- NEW self-test `kakashi.boss.miss` (covered by the existing `kakashi.boss` smoke prefix); `KakashiSourceScanTest` lists it.
+- CHECKED, NOT CHANGED: the Kamui pocket arena of the brief is the existing Kamui Vortex (pulls the foe in, bounded, 3 per phase).
+- Worst case: Goku cue = 1 ring (at most 16 particles through the budget) + 1 sound per adaptation, at most one per adaptation stage; Kakashi = 2 field writes per missed dash, no packet, no entity.
+- KEPT: everything else; both changes have a setting that restores the old behaviour.
+- Not seen in a game. Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.4.0.jar` in `mods`, replacing the old jar.
+
 ## [5.3.2] — Brief check: Half-Starvation unlocks at half mastery, Sinbad's scream and ultimate, Goku's dodge limit
 
 Brief items 4-8 were checked against the code first. Most of what the brief asked to build already exists, so this release only tunes (nothing new is built).

@@ -33,6 +33,7 @@ public final class KakashiSelfTests {
         SelfTests.register("kakashi.boss.moves", KakashiSelfTests::moves);
         SelfTests.register("kakashi.boss.kamui", KakashiSelfTests::kamui);
         SelfTests.register("kakashi.boss.cap", KakashiSelfTests::cap);
+        SelfTests.register("kakashi.boss.miss", KakashiSelfTests::miss);
     }
 
     private static SelfTests.Result result(List<String> bad, String ok) {
@@ -191,5 +192,26 @@ public final class KakashiSelfTests {
         if (KakashiBoss.liveCount() != 0) return SelfTests.Result.fail(KakashiBoss.liveCount() + " bosses are left after the clean-up");
         if (KakashiBosses.gate() != null) return SelfTests.Result.fail("the gate stays closed after the clean-up");
         return SelfTests.Result.ok("the cap of " + KakashiConfig.globalCap() + " holds and opens again after the clean-up");
+    }
+
+    /** A missed Raikiri dash staggers him for the configured time; with the setting off it does not. */
+    private static SelfTests.Result miss(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        if (!KakashiConfig.enabled()) return SelfTests.Result.ok("skipped: the boss is switched off");
+        if (KakashiBoss.liveCount() >= KakashiConfig.globalCap()) return SelfTests.Result.ok("skipped: " + KakashiBoss.liveCount() + " Kakashi bosses already stand");
+        KakashiBoss boss = null;
+        try {
+            boss = make(level, 24);
+            if (boss == null) return SelfTests.Result.fail("could not summon him");
+            if (!KakashiConfig.missStagger()) return SelfTests.Result.ok("the missStagger setting is off: a miss costs him nothing");
+            boss.missStagger(KakashiConfig.missStaggerTicks());
+            if (KakashiConfig.missStaggerTicks() > 0 && !boss.staggeredForTest()) return SelfTests.Result.fail("a missed Raikiri did not stagger him");
+            boss.clearForTest();
+            return SelfTests.Result.ok("a missed Raikiri leaves him staggered for " + KakashiConfig.missStaggerTicks() + " ticks");
+        } finally {
+            if (boss != null) boss.discard();
+        }
     }
 }

@@ -9,9 +9,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class KakashiConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK, CANON_KIT;
+    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK, CANON_KIT, MISS_STAGGER;
     public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, MAX_HIT_PERCENT;
-    public static final ModConfigSpec.IntValue GLOBAL_CAP;
+    public static final ModConfigSpec.IntValue GLOBAL_CAP, MISS_STAGGER_TICKS;
 
     public static final double DEFAULT_MAX_HIT = 0.30;
     public static final int DEFAULT_GLOBAL_CAP = 2;
@@ -38,6 +38,10 @@ public final class KakashiConfig {
         CANON_KIT = b.comment("The canon kit pass (docs/bosses/kakashi.md): the fourteen extra moves (Lightning Cutter, Lightning Clone, the Purple Electricity modes, Distant Warp, Earth Fang, Eight Gates, "
                 + "Kubikiribocho, the Chakra Sabre, the kunai wire, Flying Thunder God, Great Fireball, the Six Paths awakening), the observe-first and counter behaviour, the Sharingan strain and the "
                 + "charge limits. False: exactly the first fifteen moves and the behaviour before the pass.").define("canonKit", true);
+        MISS_STAGGER = b.comment("5.4.0: a Raikiri / Lightning Cutter dash that hits nobody staggers him (open to every blow, no Kamui) for missStaggerTicks. False: a miss costs him nothing, as before.")
+                .define("missStagger", true);
+        MISS_STAGGER_TICKS = b.comment("How long a missed Raikiri leaves him staggered (20 ticks = 1 s).")
+                .defineInRange("missStaggerTicks", 36, 0, 100);
         GLOBAL_CAP = b.comment("How many Kakashi bosses may stand in the whole server at once (a hard cap so it cannot lag).")
                 .defineInRange("globalCap", DEFAULT_GLOBAL_CAP, 1, 4);
         b.pop();
@@ -60,6 +64,10 @@ public final class KakashiConfig {
     public static boolean copy() { return get(COPY); }
 
     public static boolean speak() { return get(SPEAK); }
+
+    public static boolean missStagger() { return get(MISS_STAGGER); }
+
+    public static int missStaggerTicks() { return get(MISS_STAGGER_TICKS); }
 
     public static boolean canonKit() { return get(CANON_KIT); }
 

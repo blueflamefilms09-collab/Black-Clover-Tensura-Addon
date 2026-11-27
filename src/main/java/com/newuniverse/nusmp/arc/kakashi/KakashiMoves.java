@@ -184,7 +184,7 @@ public final class KakashiMoves {
             boolean hit = false;
             for (LivingEntity f : b.lane(b.position(), dir, 3.4, 1.2)) hit |= b.lightning(f, kamui ? 2.7f : 2.3f);
             sl.playSound(null, b.blockPosition(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 1.8f, 1.8f);
-            if (!hit) b.speak("raikiri_miss", false);
+            if (!hit) { b.speak("raikiri_miss", false); b.missStagger(KakashiConfig.missStaggerTicks()); }
         });
     }
 
@@ -498,7 +498,7 @@ public final class KakashiMoves {
             boolean hit = false;
             for (LivingEntity f : b.lane(b.position(), dir, 4.2, 1.6)) hit |= b.lightning(f, 3.1f);
             sl.playSound(null, b.blockPosition(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.HOSTILE, 2.0f, 2.0f);
-            if (!hit) b.speak("raikiri_miss", false);
+            if (!hit) { b.speak("raikiri_miss", false); b.missStagger(KakashiConfig.missStaggerTicks()); }
         });
     }
 

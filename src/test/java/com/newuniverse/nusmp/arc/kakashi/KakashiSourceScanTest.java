@@ -109,7 +109,7 @@ class KakashiSourceScanTest {
     void theSelfTestPrefixIsInTheSmokeListAndTheKeysExist() throws IOException {
         assertTrue(read(".github/workflows/smoke.yml").contains(",kakashi.boss,"));
         String tests = code(PKG.resolve("KakashiSelfTests.java"));
-        for (String key : new String[]{"kakashi.boss.data", "kakashi.boss.voice", "kakashi.boss.spawn", "kakashi.boss.moves", "kakashi.boss.kamui", "kakashi.boss.cap"}) {
+        for (String key : new String[]{"kakashi.boss.data", "kakashi.boss.voice", "kakashi.boss.spawn", "kakashi.boss.moves", "kakashi.boss.kamui", "kakashi.boss.cap", "kakashi.boss.miss"}) {
             assertTrue(tests.contains("\"" + key + "\""), key);
         }
     }
