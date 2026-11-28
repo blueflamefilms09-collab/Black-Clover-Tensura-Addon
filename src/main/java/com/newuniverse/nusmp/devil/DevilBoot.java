@@ -34,6 +34,7 @@ public final class DevilBoot {
         com.newuniverse.nusmp.devil.phase2.Phase2.register(NeoForge.EVENT_BUS);              // phase 2: login, logout, death, dimension and blows between holders
         com.newuniverse.nusmp.devil.phase2.Phase2SelfTests.register();                       // phase 2: devil.phase2.*
         com.newuniverse.nusmp.devil.mastery.Mastery.register(NeoForge.EVENT_BUS);             // Devil Awakening: mastery, blows, kills (docs/devil_mastery.md)
+        DevilCalling.register(NeoForge.EVENT_BUS);                                           // 5.7.0: a devil may ask a player for a contract (2 percent)
         DevilSelfTests.register();
         DevilHitFx.registerSelfTests();                                                      // VFX wave 2: the devil hits in their anime style: devil.vfx
     }

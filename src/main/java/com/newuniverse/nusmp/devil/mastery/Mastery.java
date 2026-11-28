@@ -89,7 +89,7 @@ public final class Mastery {
         double e = Math.min(eff, MasteryRules.capLeft(c.masteryUsed, DevilConfig.masteryDailyMinutes()));
         if (e <= 0) return;
         c.masteryUsed += (float) e;
-        float before = of(c), after = MasteryRules.gain(before, e, DevilConfig.masteryRate(), DevilConfig.masteryMax());
+        float before = of(c), after = MasteryRules.gain(before, e, DevilConfig.masteryRateEffective(), DevilConfig.masteryMax());
         if (after <= before) return;
         c.mastery = after;
         int t0 = MasteryRules.tier(before), t1 = MasteryRules.tier(after);

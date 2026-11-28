@@ -19,6 +19,7 @@ public record ConfigCondition(String key) implements ICondition {
 
     /** The answer for a key; false for a key nobody knows. */
     public static boolean value(String key) {
+        if ("arc.arenas".equals(key)) return com.newuniverse.nusmp.arc.world.ArcWorldConfig.arenas();      // 5.7.0: the Chronicle Sigil recipe exists only while the story arenas do
         return "devil.contractCraftable".equals(key) && DevilConfig.contractCraftable();
     }
 

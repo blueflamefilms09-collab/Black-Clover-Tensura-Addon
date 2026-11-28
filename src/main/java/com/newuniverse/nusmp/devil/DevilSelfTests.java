@@ -34,7 +34,39 @@ public final class DevilSelfTests {
         SelfTests.register("devil.rules.bounds", DevilSelfTests::rules);
         SelfTests.register("devil.store.roundtrip", DevilSelfTests::store);
         SelfTests.register("devil.worlds", DevilSelfTests::worlds);                                  // 3.76.0
+        SelfTests.register("devil.scroll", DevilSelfTests::scroll);                                  // 5.7.0: the scroll of the devil and the faster mastery
+        SelfTests.register("devil.calling", DevilSelfTests::calling);                                // 5.7.0: a devil asks for a contract (2 percent)
         SelfTests.register("devil.npc", DevilSelfTests::npc);                                        // 3.97.0: the devil's figure (docs/devil_forms.md)
+    }
+
+    private static Result scroll(MinecraftServer server) {
+        for (int i = 0; i < WorldDevil.count(); i++) {
+            WorldDevil d = WorldDevil.at(i);
+            net.minecraft.world.item.ItemStack st = DevilScroll.stack(d);
+            net.minecraft.world.item.component.WrittenBookContent bk = st.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);
+            if (bk == null) return Result.fail(d.id() + ": the scroll has no book content");
+            if (bk.pages().size() < 2 || bk.pages().size() > com.newuniverse.nusmp.devil.mastery.DevilScrollRules.MAX_PAGES) return Result.fail(d.id() + ": the scroll has " + bk.pages().size() + " pages");
+            if (bk.title().raw().length() > 32) return Result.fail(d.id() + ": the scroll title is too long");
+            StringBuilder all = new StringBuilder();
+            for (var pg : bk.pages()) all.append(pg.raw().getString()).append('\n');
+            if (!all.toString().contains("Mastery 100%") || !all.toString().contains("Mastery 10%")) return Result.fail(d.id() + ": the scroll does not list the requirements");
+        }
+        double r = DevilConfig.masteryRateEffective();
+        if (r < 0.1 || r > 10.0) return Result.fail("the effective mastery rate left its range: " + r);
+        float slow = com.newuniverse.nusmp.devil.mastery.MasteryRules.gain(10f, 60, 1.0), fast = com.newuniverse.nusmp.devil.mastery.MasteryRules.gain(10f, 60, Math.max(1.0, r));
+        if (fast < slow) return Result.fail("the boost made mastery slower");
+        return Result.ok(WorldDevil.count() + " scrolls built; effective mastery rate x" + r + ", scroll=" + DevilConfig.scrollOn());
+    }
+
+    private static Result calling(MinecraftServer server) {
+        double p = DevilConfig.callingPercent();
+        int m = DevilConfig.callingMinutes();
+        if (p < 0 || p > 100 || m < 1 || m > DevilCallingRules.MAX_INTERVAL_MINUTES) return Result.fail("the calling settings left their bounds: " + p + "% / " + m + " min");
+        if (DevilCallingRules.wins(0.0, 0.0) || !DevilCallingRules.wins(100.0, 0.999999) || !DevilCallingRules.wins(2.0, 0.0199) || DevilCallingRules.wins(2.0, 0.02)) return Result.fail("the 2 percent roll is not 2 percent");
+        int free = 0;
+        for (int i = 0; i < WorldDevil.count(); i++) if (WorldDevil.at(i).tier() != DevilTier.SUPREME) free++;
+        if (free == 0) return Result.fail("no devil can make an offer");
+        return Result.ok("calling=" + DevilConfig.callingOn() + ", " + p + "% every " + m + " min, " + free + " devils may ask");
     }
 
     private static Result registry(MinecraftServer server) {

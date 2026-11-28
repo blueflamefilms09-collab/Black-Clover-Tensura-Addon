@@ -104,6 +104,8 @@ fights or rests, and when the arenas are switched off. **The lectern** lists the
 waits for, a click-to-choose button on the ones that may be chosen, and a button for the next saga. A boss may be chosen only when open to that player (`ArcStory.unlocked`) unless
 `arc.storyGate` is off; a defeated one only while `arc.arenaReplay` is on; a stale choice falls back to the next boss of the story. All of it is pure and tested; the item and the lectern only turn rows into chat lines and clicks into calls.
 
+**Recipe (5.7.0):** shaped `GNG / ABA / DED` = gold ingot, nether star, amethyst shard, book, diamond, eye of ender (`recipe/chronicle_sigil.json`, only while `arc.arenas` is on).
+
 The item is a real 3D model in hand (`tools/gen_weapon_models.py chronicle_sigil`, drawn by `client/WeaponRenderer`, previewed with `tools/item_preview/preview_weapons.py chronicle_sigil`) with its 16x16 sprite kept
 as the inventory icon (`tools/gen_chronicle_assets.py`); it is a hand item, not a weapon, so it has no engravings and is excluded from the Better Combat manifest like the Hourglass.
 

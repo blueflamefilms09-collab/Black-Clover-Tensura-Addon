@@ -88,6 +88,7 @@ public final class DevilContracts {
         applySacrifices(p, c);
         applyStats(p, c);
         syncNow(p, c);
+        DevilScroll.givePact(p, c);                                                          // 5.7.0: the scroll of the grimoire devil
     }
 
     /** A pact that was made before 3.48.0 has no contract data: it gets one once, with the tier its price buys. */

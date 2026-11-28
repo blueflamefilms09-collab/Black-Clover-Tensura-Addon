@@ -131,3 +131,11 @@ The full table with every canon line is `devil_kits.json` (regenerate: `python3 
 5. Should an art cost health or a "burden" instead of magicules?
 6. 25 to 40 hours is the active-to-light range; the default `gainRate` can be moved by the server.
 7. The strict reading of "temporary demon lord awakening" has no aftermath under level 20; say if the fatigue should start earlier.
+
+
+## 5.7.0: faster mastery, the Scroll of the Devil, devils that ask
+
+- `devil.mastery.gainBoost` (3.0, 1 to 10) multiplies `gainRate`: about 10 hours of active play to 100 % (1.0 = the 26 to 40 hours above). The daily cap is unchanged.
+- `/devil requirements` and the scroll list the steps: 10 % first art and passive; 20 % horns; 25 % second art; 50 % wings and flight, third art, second passive; 75 % fourth art, third passive; 100 % the Devil Union, the union passives and fusions.
+- `devil.scroll.enabled` (true): a written book "Scroll of <Devil>" when a contract is signed; `/devil scroll` again.
+- `devil.calling.enabled` (true), `chancePercent` (2), `intervalMinutes` (20): a devil speaks to a player with no contract and offers one (30 seconds, [Sign] / [Refuse]); never Supreme, never a held devil.

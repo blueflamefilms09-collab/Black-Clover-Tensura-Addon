@@ -19,7 +19,9 @@ public final class DevilConfig {
     private static final ModConfigSpec.IntValue NPC_MAX, NPC_LIFE;
     private static final ModConfigSpec.BooleanValue LEGACY, M_ENABLED, M_ARTS, M_PASSIVES, M_FUSIONS;
     private static final ModConfigSpec.IntValue M_START, M_MAX, M_DAILY;
-    private static final ModConfigSpec.DoubleValue M_RATE;
+    private static final ModConfigSpec.DoubleValue M_RATE, M_BOOST, CALL_PERCENT;
+    private static final ModConfigSpec.BooleanValue SCROLL_ON, CALL_ON;
+    private static final ModConfigSpec.IntValue CALL_MINUTES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -75,10 +77,23 @@ public final class DevilConfig {
         M_START = b.comment("The mastery (percent of the devil's power) a new contract starts with.").defineInRange("startPercent", 10, 1, 50);
         M_MAX = b.comment("The highest mastery that can be reached (100 = the Devil Union can open).").defineInRange("maxPercent", 100, 10, 100);
         M_RATE = b.comment("Multiplier on how fast mastery grows (1 = about 30 hours of active play to reach 100 percent).").defineInRange("gainRate", 1.0, 0.1, 10.0);
+        M_BOOST = b.comment("5.7.0: a second multiplier on how fast mastery grows, on top of gainRate (it is the owner's 'faster devil mastery'). 3 = three times as fast as before 5.7.0 (about 10 hours of active play to 100 percent instead of 30). 1 = the old speed.")
+                .defineInRange("gainBoost", 3.0, 1.0, 10.0);
         M_DAILY = b.comment("The most mastery-earning use one player can count a real (UTC) day, in minutes of effective use.").defineInRange("dailyCapMinutes", 360, 10, 1440);
         M_ARTS = b.comment("The arts of the devil's kit (skill modes 2 to 5).").define("arts", true);
         M_PASSIVES = b.comment("The passives of the devil's kit while the devil is let in.").define("passives", true);
         M_FUSIONS = b.comment("Double unions: in the Devil Union, a second devil you hold adds its fusion passives (kits file, 'fusions').").define("fusions", true);
+        b.pop();
+        b.push("scroll");
+        SCROLL_ON = b.comment("5.7.0: a player who gets a devil receives a Scroll of the Devil (a written book) that explains how the devil works and what each step of mastery needs. One per devil; /devil scroll gives it again. false = no scroll.")
+                .define("enabled", true);
+        b.pop();
+        b.push("calling");
+        CALL_ON = b.comment("5.7.0: now and then a devil speaks to a player who has no contract and offers one (the offer lasts 30 seconds; /devil sign or /devil refuse answers it). The ritual's cost items are not taken, the contract's price is. false = devils only come when called.")
+                .define("enabled", true);
+        CALL_PERCENT = b.comment("The chance of one offer, in percent, each time a player is rolled (2 = the owner's number).").defineInRange("chancePercent", DevilCallingRules.DEFAULT_PERCENT, 0.0, 100.0);
+        CALL_MINUTES = b.comment("How many real minutes pass between two rolls for the same player. One roll is a few comparisons, once a minute for the whole server.")
+                .defineInRange("intervalMinutes", DevilCallingRules.DEFAULT_INTERVAL_MINUTES, 1, DevilCallingRules.MAX_INTERVAL_MINUTES);
         b.pop();
         b.pop();
         SPEC = b.build();
@@ -120,6 +135,13 @@ public final class DevilConfig {
     public static float masteryStart() { return whole(M_START, 10, 1, 50); }
     public static float masteryMax() { return whole(M_MAX, 100, 10, 100); }
     public static double masteryRate() { return num(M_RATE, 1.0, 0.1, 10.0); }
+    public static double masteryBoost() { return num(M_BOOST, 3.0, 1.0, 10.0); }
+    /** What the curve uses: gainRate times gainBoost, kept in the curve's own 0.1 to 10 range. */
+    public static double masteryRateEffective() { return DevilRules.clampD(masteryRate() * masteryBoost(), 0.1, 10.0); }
+    public static boolean scrollOn() { return on(SCROLL_ON, true); }
+    public static boolean callingOn() { return on(CALL_ON, true); }
+    public static double callingPercent() { return num(CALL_PERCENT, DevilCallingRules.DEFAULT_PERCENT, 0.0, 100.0); }
+    public static int callingMinutes() { return whole(CALL_MINUTES, DevilCallingRules.DEFAULT_INTERVAL_MINUTES, 1, DevilCallingRules.MAX_INTERVAL_MINUTES); }
     public static int masteryDailyMinutes() { return whole(M_DAILY, 360, 10, 1440); }
     public static boolean kitArts() { return on(M_ARTS, true); }
     public static boolean kitPassives() { return on(M_PASSIVES, true); }

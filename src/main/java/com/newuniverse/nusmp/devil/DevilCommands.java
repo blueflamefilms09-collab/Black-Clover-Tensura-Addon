@@ -58,6 +58,8 @@ public final class DevilCommands {
                 .then(Commands.literal("sign").executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException()) ? 1 : 0)
                         .then(Commands.argument("kind", StringArgumentType.word()).suggests(KINDS)                                         // phase 2: submit, even or dominate
                                 .executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "kind")) ? 1 : 0)))
+                .then(Commands.literal("scroll").executes(c -> scroll(c)))                                                              // 5.7.0: the scroll of the devil again
+                .then(Commands.literal("requirements").executes(c -> requirements(c)))                                                  // 5.7.0: what each step of mastery needs
                 .then(Commands.literal("terms").executes(c -> { com.newuniverse.nusmp.devil.phase2.Phase2.explain(c.getSource().getPlayerOrException()); return 1; }))
                 .then(Commands.literal("pact")
                         .then(Commands.literal("list").executes(c -> { com.newuniverse.nusmp.devil.phase2.Phase2.list(c.getSource().getPlayerOrException()); return 1; }))
@@ -179,6 +181,17 @@ public final class DevilCommands {
                             .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal(fx.blurb()))))
                     .append(Component.literal(d.title() + ": " + d.tier().key() + ", " + d.attribute().key().replace('_', ' ')).withStyle(net.minecraft.ChatFormatting.GRAY)));
         }
+        return 1;
+    }
+
+    private static int scroll(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        String no = DevilScroll.again(c.getSource().getPlayerOrException());
+        return no == null ? 1 : fail(c, no);
+    }
+
+    private static int requirements(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer p = c.getSource().getPlayerOrException();
+        for (String line : DevilScroll.requirements(p)) p.sendSystemMessage(Component.literal(line).withStyle(net.minecraft.ChatFormatting.GRAY));
         return 1;
     }
 

@@ -47,7 +47,7 @@ class DevilSourceScanTest {
 
     @Test
     void thePureClassesNameNoMinecraftType() throws IOException {
-        for (String f : List.of("DevilRules.java", "DevilTier.java", "DevilAttribute.java", "Sacrifice.java", "DevilNpcRules.java", "DevilFormRules.java", "DevilNpcLines.java"))
+        for (String f : List.of("DevilRules.java", "DevilTier.java", "DevilAttribute.java", "Sacrifice.java", "DevilNpcRules.java", "DevilFormRules.java", "DevilNpcLines.java", "DevilCallingRules.java"))
             assertFalse(Pattern.compile("(?m)^import (net\\.minecraft|net\\.neoforged|com\\.mojang)").matcher(common(f)).find(), f + " must stay pure (it is unit tested without a game)");
     }
 

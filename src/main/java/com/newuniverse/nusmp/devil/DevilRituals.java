@@ -313,7 +313,7 @@ public final class DevilRituals {
     }
 
     // ---------------------------------------------------------------- the offer
-    private static String priceText(WorldDevil d) {
+    static String priceText(WorldDevil d) {
         int m = d.priceMask();
         if (m == 0) return d.world().price;
         StringBuilder sb = new StringBuilder();
@@ -353,6 +353,21 @@ public final class DevilRituals {
         line.append(Component.literal("[Refuse]").withStyle(s -> s.withColor(ChatFormatting.GRAY).withBold(true).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/devil refuse"))));
         line.append(Component.literal("   (30 seconds)").withStyle(ChatFormatting.DARK_GRAY));
         p.sendSystemMessage(line);
+    }
+
+    /**
+     * 5.7.0: a devil speaks to a player on its own ({@link DevilCalling}): the same offer a ritual ends with (the 30 second window, [Sign] and [Refuse], or the terms panel), without the ritual and its cost items.
+     * False when the system is off. The contract's own price is still taken on signing, and every gate of {@link #sign} still applies.
+     */
+    static boolean callOffer(ServerPlayer p, WorldDevil d) {
+        if (!on()) return false;
+        DevilContract c = DevilStore.of(p);
+        Vec3 at = p.position().add(0, 0.05, 0);
+        shape(p, VfxShape.BOSS_DEVIL_SIGIL, at, at.add(0, 1, 0), d.color(), 40, 1.5);
+        sound(p, SoundEvents.WITHER_AMBIENT, 0.6f, 0.7f);
+        p.sendSystemMessage(Component.literal(cap(d.name()) + " speaks from the dark: \"I have watched you. Make a contract with me.\"").withColor(d.color() | 0x404040).withStyle(ChatFormatting.ITALIC));
+        offer(p, c, d);
+        return true;
     }
 
     /** Phase 2: the trial fight reached "impressed" or "won": the devil makes its offer (again) where it stands. */
@@ -415,6 +430,7 @@ public final class DevilRituals {
         sound(p, SoundEvents.WITHER_SPAWN, 0.7f, 1.2f);
         p.sendSystemMessage(Component.literal("The contract is signed. " + cap(d.name()) + " is yours, and you are its.").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
         say(p, "Let it in with the Devil key (N by default); /devil status shows the contract.", ChatFormatting.GRAY);
+        DevilScroll.give(p, d);                                                              // 5.7.0: the scroll that explains this devil
         try {
             com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "spirit.contract", "devil");
         } catch (RuntimeException ignored) {

@@ -44,7 +44,7 @@ class MasterySourceScanTest {
 
     @Test
     void thePureClassesNameNoMinecraftType() throws IOException {
-        for (String f : new String[] {"devil/mastery/MasteryRules.java", "devil/mastery/DevilKit.java"})
+        for (String f : new String[] {"devil/mastery/MasteryRules.java", "devil/mastery/DevilKit.java", "devil/mastery/DevilScrollRules.java"})
             assertFalse(Pattern.compile("(?m)^import (net\\.minecraft|net\\.neoforged|com\\.mojang)").matcher(code(f)).find(), f + " must stay pure (it is unit tested without a game)");
     }
 
