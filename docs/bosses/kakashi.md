@@ -153,3 +153,19 @@ Everything below is not verified in a game or against the wikis:
 * The phase markers are tomoe on the new bar (`naruto_leaf`); the first bar (`naruto`) keeps its standard notches.
 * No new item, trophy or drops table was made (`BossDropAssetsTest` pins the table count); he drops Magic Stone, a gold coin and, half the time, the existing `shinobi_smoke_pellet_pouch` or `chunin_exam_scroll_case_charm`.
 * `kakashi_lines.json` is the single source of truth for line ids and sources.
+
+
+## 5.8.0: the eye-rip mini-game and the Sharingan (unique skill)
+
+- Three windows a fight: entering phase 2, 3 and 4 (75 / 50 / 25 percent health) stuns him for `kakashi_boss.eyeWindowTicks` (160).
+- Right-click him within 4 blocks to grip the eye, then right-click again while the `|` marker is inside the `=====` zone; `eyePulls` (3) clean pulls rip the eye out, a bad pull hurts (`eyeBacklash` 4) and resets.
+- The reward is the unique skill `anime_multiverse:sharingan` (Sharingan Eyes, Read). Its planned evolution is the Rinnegan (not built).
+- Settings: `eyeRip`, `eyeWindowTicks`, `eyePulls`, `eyeBacklash`, `eyeSessions`.
+
+### Research that would help the Sharingan and its Rinnegan evolution (owner to supply, English wiki first, Japanese wiki fallback)
+1. The abilities you want the Sharingan to have (copy a technique? see through illusions? slow motion read? genjutsu?) and which of them first.
+2. The Rinnegan: its abilities (Six Paths, Shinra Tensei, Bansho Tenin, Chibaku Tensei...) and how it should be earned (a quest, a boss, a mastery level).
+3. Whether the eye should copy Kakashi's own techniques (Raikiri, Kamui) and with what limits.
+4. Art: a real 3D or painted icon for the eye, plus a short sound or particle theme for the Sharingan and the rip.
+5. How hard the mini-game should feel (marker speed, window length) after you have played it.
+6. Whether the skill should have mastery levels, tomoe stages (1, 2, 3) or a Mangekyo step before the Rinnegan.

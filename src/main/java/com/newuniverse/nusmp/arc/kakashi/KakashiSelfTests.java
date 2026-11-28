@@ -34,6 +34,7 @@ public final class KakashiSelfTests {
         SelfTests.register("kakashi.boss.kamui", KakashiSelfTests::kamui);
         SelfTests.register("kakashi.boss.cap", KakashiSelfTests::cap);
         SelfTests.register("kakashi.boss.miss", KakashiSelfTests::miss);
+        SelfTests.register("kakashi.boss.eyerip", KakashiSelfTests::eyeRip);          // 5.8.0
     }
 
     private static SelfTests.Result result(List<String> bad, String ok) {
@@ -213,5 +214,21 @@ public final class KakashiSelfTests {
         } finally {
             if (boss != null) boss.discard();
         }
+    }
+
+    /** The eye-rip rules and the skill registration (no player: the mini-game itself is checked by the pure tests). */
+    private static SelfTests.Result eyeRip(MinecraftServer server) {
+        if (!com.newuniverse.nusmp.skill.NUSkills.SHARINGAN.isBound()) return SelfTests.Result.fail("the Sharingan skill is not registered");
+        int n = 0;
+        for (long t = 0; t < EyeRipRules.PERIOD * 2L; t++) {
+            int m = EyeRipRules.marker(t);
+            if (m < 0 || m >= EyeRipRules.WIDTH) return SelfTests.Result.fail("the marker left the bar: " + m);
+            n += EyeRipRules.inZone(m, EyeRipRules.zoneStart(7L, 0)) ? 1 : 0;
+        }
+        if (n == 0) return SelfTests.Result.fail("the zone is never reached");
+        for (int phase = 0; phase <= 3; phase++) if (EyeRipRules.windowFor(phase) != (phase >= 1)) return SelfTests.Result.fail("windowFor(" + phase + ") is wrong");
+        EyeRipRules.Pull bad = EyeRipRules.pull(0, EyeRipRules.WIDTH - EyeRipRules.ZONE, 2, 3), good = EyeRipRules.pull(EyeRipRules.WIDTH - 1, EyeRipRules.WIDTH - EyeRipRules.ZONE, 2, 3);
+        if (bad.progress() != 0 || bad.clean() || !good.ripped()) return SelfTests.Result.fail("a bad pull must reset and the third clean pull must rip");
+        return SelfTests.Result.ok("Sharingan registered; windows=" + EyeRipRules.WINDOWS + ", eyeRip=" + KakashiConfig.eyeRip() + ", pulls=" + KakashiConfig.eyePulls());
     }
 }

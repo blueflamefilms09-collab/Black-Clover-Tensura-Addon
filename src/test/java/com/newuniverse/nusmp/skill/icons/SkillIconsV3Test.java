@@ -27,7 +27,7 @@ class SkillIconsV3Test {
     private static final Path ASSETS = Path.of("src/main/resources/assets/anime_multiverse");
     private static final Path TEX = ASSETS.resolve("textures/skill");
     /** Icons of skills that were removed (3.44.0 / 4.3.0): kept as they were, not repainted (rule 2). */
-    private static final Set<String> LEGACY = Set.of("black_wings", "gold_experience", "gold_experience_requiem", "instant_death", "limitless", "six_eyes", "vector_manipulation",
+    private static final Set<String> LEGACY = Set.of("sharingan", "black_wings", "gold_experience", "gold_experience_requiem", "instant_death", "limitless", "six_eyes", "vector_manipulation",
             // the Saiyan Prodigy (docs/saiyan_prodigy.md): its own painted icon, outside the repaint manifest
             "saiyan_prodigy",
             // the five Berserk weapon skills (docs/berserk_weapons.md): painted by tools/gen_sin_skill_icons.py, outside the repaint manifest like the Saiyan Prodigy

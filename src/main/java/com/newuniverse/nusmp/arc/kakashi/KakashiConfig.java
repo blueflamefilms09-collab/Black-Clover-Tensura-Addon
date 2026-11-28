@@ -9,9 +9,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class KakashiConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK, CANON_KIT, MISS_STAGGER;
-    public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, MAX_HIT_PERCENT;
-    public static final ModConfigSpec.IntValue GLOBAL_CAP, MISS_STAGGER_TICKS;
+    public static final ModConfigSpec.BooleanValue ENABLED, KAMUI, SUSANOO, COPY, SPEAK, CANON_KIT, MISS_STAGGER, EYE_RIP;
+    public static final ModConfigSpec.DoubleValue HEALTH_MULTIPLIER, DAMAGE_MULTIPLIER, MAX_HIT_PERCENT, EYE_BACKLASH;
+    public static final ModConfigSpec.IntValue GLOBAL_CAP, MISS_STAGGER_TICKS, EYE_TICKS, EYE_PULLS, EYE_CAP;
 
     public static final double DEFAULT_MAX_HIT = 0.30;
     public static final int DEFAULT_GLOBAL_CAP = 2;
@@ -42,6 +42,12 @@ public final class KakashiConfig {
                 .define("missStagger", true);
         MISS_STAGGER_TICKS = b.comment("How long a missed Raikiri leaves him staggered (20 ticks = 1 s).")
                 .defineInRange("missStaggerTicks", 36, 0, 100);
+        EYE_RIP = b.comment("5.8.0: each time he enters a new phase (three times a fight) he is stunned for eyeWindowTicks and a player who runs up and right-clicks him can try the eye-rip mini-game; ripping out his eye gives the unique skill Sharingan. False: no windows, as before 5.8.0.")
+                .define("eyeRip", true);
+        EYE_TICKS = b.comment("How long the stun window of one eye-rip opportunity lasts (20 ticks = 1 s).").defineInRange("eyeWindowTicks", 160, 40, 600);
+        EYE_PULLS = b.comment("How many clean pulls (a right click while the marker is in the zone) rip the eye out.").defineInRange("eyePulls", 3, 1, 6);
+        EYE_BACKLASH = b.comment("The damage a player takes for a bad pull (the pulls start again). 0 = none.").defineInRange("eyeBacklash", 4.0, 0.0, 20.0);
+        EYE_CAP = b.comment("The most players who may play the mini-game at once on one Kakashi.").defineInRange("eyeSessions", 4, 1, 8);
         GLOBAL_CAP = b.comment("How many Kakashi bosses may stand in the whole server at once (a hard cap so it cannot lag).")
                 .defineInRange("globalCap", DEFAULT_GLOBAL_CAP, 1, 4);
         b.pop();
@@ -64,6 +70,16 @@ public final class KakashiConfig {
     public static boolean copy() { return get(COPY); }
 
     public static boolean speak() { return get(SPEAK); }
+
+    public static boolean eyeRip() { return get(EYE_RIP); }
+
+    public static int eyeWindowTicks() { return get(EYE_TICKS); }
+
+    public static int eyePulls() { return get(EYE_PULLS); }
+
+    public static double eyeBacklash() { return get(EYE_BACKLASH); }
+
+    public static int eyeSessions() { return get(EYE_CAP); }
 
     public static boolean missStagger() { return get(MISS_STAGGER); }
 

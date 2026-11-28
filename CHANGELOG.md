@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.8.0] — Kakashi: rip out his eye (mini-game, three chances) and gain the Sharingan unique skill
+
+Checked first: the mod had no Sharingan skill (only Kakashi's own copy and Mangekyo moves as boss behaviour) and no stun window that a player can use, so everything below is NEW. His existing stagger (`staggerUntil`) is reused.
+
+- NEW eye-rip mini-game (`kakashi_boss.eyeRip`, server setting, default on; false = exactly 5.7.0): each time Kakashi enters a new phase (75 / 50 / 25 percent: three times a fight) he is stunned for `eyeWindowTicks` (default 160 = 8 s, 40 to 600). A player within 4 blocks right-clicks him to grip the eye; the action bar then shows a bar `[----|=====---]` where a marker sweeps back and forth over a zone; a right click with the marker in the zone is a clean pull, `eyePulls` (default 3, 1 to 6) clean pulls in a row rip the eye out; a click outside the zone is a bad pull: `eyeBacklash` damage (default 4, 0 = none) and the pulls start again. Clicks closer than 6 ticks are ignored. `eyeSessions` (default 4) players can play at once. The server decides everything; the client only sends the normal right click.
+- NEW unique skill Sharingan (`skill/SharinganSkill`, id `anime_multiverse:sharingan`, UNIQUE type), learned once by the player who rips the eye out (never given twice; a player who has it cannot start the game). Modes: Sharingan Eyes (30 s of night vision, Speed I and a one-in-five chance to read and dodge a melee or arrow blow; 90 s rest) and Read. It is the first stage: its evolution, the Rinnegan, is NOT built yet (decided by the owner, to be added later).
+- NEW icon `textures/skill/sharingan.png` (drawn by `tools/gen_sharingan_icon.py` with PIL: a placeholder, not hand-painted art).
+- NEW pure test `EyeRipRulesTest` (three windows, the marker stays on the bar, the zone is on the bar and moves, bad pull resets, who may begin, click gap, the bar text), self-test `kakashi.boss.eyerip` (covered by the existing `kakashi.boss` smoke prefix), `KakashiSourceScanTest` lists it.
+- Worst case: only while a window is open (8 s, three times a fight): at most 4 players, one action-bar packet each every second tick (about 40 small packets a second at the very most), one sound or burst per click; nothing per tick outside a window; no entity, no world scan; all state lives in the boss and is cleared when the fight ends.
+- NOT built: the Rinnegan (the evolution), copying techniques with the Sharingan, an animated rip scene or custom 3D eye, Kakashi's voice lines for the rip (the messages are plain chat text), a lang file entry (English text in code).
+- KEPT: everything else; `eyeRip = false` restores 5.7.0.
+- Not seen in a game: the feel of the marker speed (period 48 ticks, zone 6 of 21 cells) and the 8 s window are guesses to tune after a play test; use `eyeWindowTicks` and `eyePulls` to adjust.
+- Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.8.0.jar` in `mods`, replacing the old jar.
+
 ## [5.7.0] — Devils: faster mastery with a requirements list, a Scroll of the Devil, and devils that ask for a contract
 
 Checked against what the mod already has first: the mastery curve, the 10/25/50/75/100 tiers, the kits, the ritual offer ([Sign]/[Refuse], 30 seconds) and `/devil status` all exist and are KEPT. There was no way to read the requirements in one place, no scroll, and no devil that speaks first. So:

@@ -95,6 +95,7 @@ public class KakashiBoss extends ArcBoss {
     private final Map<UUID, Long> wet = new LinkedHashMap<>();
     private boolean modsApplied;
     private int lastCast = -1;
+    private final KakashiEyeRip eye = new KakashiEyeRip();                              // 5.8.0: the eye-rip mini-game (three windows a fight)
     private long staggerUntil, kawarimiReadyAt, intangibleUntil, susanooUntil, brokenUntil, nextSlash, earthWallUntil, mistUntil, susanooReadyAt;
     private float susanooShield;
     // ---- aim locks and move state (one move at a time, so one set of fields)
@@ -212,6 +213,7 @@ public class KakashiBoss extends ArcBoss {
             int want = KakashiMath.phaseOf(getHealth() / Math.max(1f, getMaxHealth()), phaseIdx());
             if (want > phaseIdx()) enterPhase(sl, want);
             noteCast();
+            eye.tick(this, sl, now);
             if (fangLeft > 0) tickFang(sl);
             if (vortexLeft > 0) tickVortex(sl);
             if (susanooUntil != 0L) tickSusanoo(sl, now);
@@ -456,6 +458,7 @@ public class KakashiBoss extends ArcBoss {
     }
 
     private void resetStates() {
+        eye.reset();
         fangLeft = 0;
         vortexLeft = 0;
         susanooUntil = 0L;
@@ -504,6 +507,13 @@ public class KakashiBoss extends ArcBoss {
         dpsBudget().bypass(() -> BossHealGuard.allow(() -> setHealth(to)));
     }
 
+    /** 5.8.0: a right click on him while his guard is open is a pull of the eye-rip mini-game (server side only; the client just sends the click). */
+    @Override
+    protected net.minecraft.world.InteractionResult mobInteract(Player player, net.minecraft.world.InteractionHand hand) {
+        if (hand == net.minecraft.world.InteractionHand.MAIN_HAND && !level().isClientSide && player instanceof ServerPlayer sp && eye.interact(this, sp, tickCount)) return net.minecraft.world.InteractionResult.SUCCESS;
+        return super.mobInteract(player, hand);
+    }
+
     // ================================================================ speech
     /** Says a line of a group (text in chat, plus the recorded sound if that line has one). Paced by the boss's own gate; {@code force} lines are always heard. */
     void speak(String group, boolean force) {
@@ -522,6 +532,10 @@ public class KakashiBoss extends ArcBoss {
         interruptCast();
         getNavigation().stop();
         staggerUntil = tickCount + 30;
+        if (eye.stunTicks() > 0 && EyeRipRules.windowFor(to)) {                    // 5.8.0: his guard opens: a window to rip the eye out
+            staggerUntil = Math.max(staggerUntil, tickCount + eye.stunTicks());
+            eye.open(this, sl, to, tickCount);
+        }
         Vec3 mid = position().add(0, getBbHeight() * 0.6, 0);
         switch (to) {
             case KakashiMath.PACK -> {

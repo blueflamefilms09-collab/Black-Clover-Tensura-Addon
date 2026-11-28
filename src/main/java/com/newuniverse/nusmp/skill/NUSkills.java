@@ -293,4 +293,6 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, DevilBondSkill> DEVIL_BOND = SKILLS.register("devil_bond", DevilBondSkill::new);
     // ---- Devil Awakening (docs/devil_mastery.md): the extra skill a devil contract gives, with its own mastery. Registered last ----
     public static final DeferredHolder<ManasSkill, DevilAwakeningSkill> DEVIL_AWAKENING = SKILLS.register("devil_awakening", DevilAwakeningSkill::new);
+    // ---- 5.8.0: the unique skill torn from Kakashi's eye (arc/kakashi/KakashiEyeRip). Registered last ----
+    public static final DeferredHolder<ManasSkill, SharinganSkill> SHARINGAN = SKILLS.register("sharingan", SharinganSkill::new);
 }
