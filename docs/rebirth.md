@@ -61,3 +61,11 @@ Pure `RebirthRulesTest` (checks, cooldown, window, marks, second-book magic, fus
 - `nusmp_resolve` is read from the player's persistent data (root, or the wizard's section); the other worker's writer was not available, so its location and 0..6 scale are assumed (the questionnaire's own `leaves` score is 0..6).
 - Not models: the icons are 16x16 PNG sprites drawn with PIL (no in-hand 3D model; not weapons, so no Better Combat file and no engravings). The old `Ceremony` (altar) path after a rebirth with the wizard setting off was not exercised.
 - The new longer questionnaire of the other worker may change `Questionnaire.result`; the rebirth hooks use only its public pool parameter and `Result` accessors.
+
+## How leaves work, and why a three-leaf cannot call a second book (5.8.1)
+The number of leaves is rolled once, when the grimoire is given, and then never changes: there is NO way to grow a three-leaf into a four-leaf or five-leaf by using it, levelling it or by mastery (mastery opens pages, not leaves). The roll (`wizard/LeafRoll`, long questionnaire): the total of the six resolve answers plus a luck of 0 or 1; 15 or more = four leaves, 18 or more = five leaves, otherwise three. The old 12-question sheet: resolve plus 0 to 2, 3 = four, 5 = five. The five-leaf also needs the forbidden-start rule; the Wizard otherwise caps at four.
+Ways to change the number of leaves that exist today:
+- Sigil of Rebirth: erases the grimoire and asks the questions again, so a better set of answers can roll four or five leaves (cooldown 7 game days, one sigil).
+- The devil pact (Forbidden Magic): the cover darkens to five-leaf (Triple Spade for a Spade mage); this is the "five-leaf is earned through despair or a devil" rule.
+- Admin: `/anime_multiverse grimoire give ... <leaves 3-5>`.
+So the Sigil of the Second Book (needs four leaves by default) is out of reach of a three-leaf unless the owner lowers `secondBookMinLeaves` to 3. Since 5.8.1 the refusal says so in chat (with the book's leaves and the options), not only on the action bar.

@@ -118,4 +118,17 @@ public final class RebirthRules {
     public static boolean twoBooksOnFusion(boolean setting, boolean fused, int leaves, boolean forbiddenCover) {
         return setting && fused && leaves >= 4 && !forbiddenCover;
     }
+
+    // ---------------------------------------------------------------- the refusal text (5.8.1)
+    /**
+     * Why a book of {@code have} leaves is turned away by a rite that needs {@code need}: said in chat as well as on the action bar, because the bar line is gone in two seconds and a
+     * three-leaf mage was left thinking the sigil was broken. Empty when the book is good enough.
+     */
+    public static String tierHint(int have, int need) {
+        int n = minLeaves(need);
+        if (have >= n) return "";
+        return "Your grimoire has " + Math.max(0, have) + " leaves; the Second Book needs " + n + ". A grimoire's leaves are fixed when it is given (the Tower Wizard's questionnaire: "
+                + "careful, resolute answers earn a four-leaf or five-leaf), they do not grow with use. To try again for more leaves, use the Sigil of Rebirth (it erases your grimoire and asks the questions anew); "
+                + "the server owner can also lower this rule (secondBookMinLeaves, 3 to 5).";
+    }
 }

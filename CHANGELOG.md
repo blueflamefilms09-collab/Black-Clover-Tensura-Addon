@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.8.1] — Fixes: the floating grimoire no longer jumps when you crouch; the Second Book sigil says why it refuses
+
+Reported with a third-person screenshot: the open grimoire floating low in front of the waist and "glitching". Found by reading the draw code (`client/grimoire/GrimoireFloatClient`): the book (summoned or at the hip) picked its standing or crouching place from a plain yes / no every frame, so the moment shift was pressed or released it jumped 0.2 blocks (the hip belt 0.16), and the pose hung at the low crouch place for as long as shift was held. Shift is also the key that cycles skills and stows the book, so it was pressed all the time.
+
+- REPLACED (looks only, client setting `visual.smoothSneak` in `config/nusmp-grimoire-client.toml`, default on; false = exactly the old instant jump): the book, its belt and its strap glide between the standing and the crouching place over 4 ticks (`GrimoireCarry.hand(sneak)`, `hip(sneak)`, `trip(..., float sneak)`, `sneakStep`). The trip from hip to hand and back uses the same smooth amount.
+- NEW pure test `GrimoireCarryTest.crouchGlidesInsteadOfJumping` (the ends equal the old poses, the boolean trip equals the 0 / 1 case, a crouch moves in steps of at most a quarter, never overshoots, a bad or huge time gap snaps to the target).
+- Worst case: one two-float array per player that has a book (cleaned up every 40 ticks and on logout), a few float operations per owner per frame, no new packet, no server work.
+- KEPT: every pose number (HIP, HIP_SNEAK, HAND, HAND_SNEAK), the models, the glow halo, the rune ring, the page flip and all server code.
+- Not seen in a game, and I could not confirm this is the only cause: the screenshot shows the book at the low crouch place, which fits, but other things (the body turning after the head, swimming or crawling poses where the book keeps its standing height) are untouched. If it still looks wrong, send a second screenshot or say what the book does (flickers, jumps, clips into the body, double image).
+- REPLACED (text only, no setting needed): the Sigil of the Second Book (and every rite refusal) now also writes the reason in chat; before it was only a two-second action-bar line, and a three-leaf mage who clicked it was left thinking the sigil did nothing. A too-low book gets a second line with its leaf count, what is needed, and the ways to get more (`RebirthRules.tierHint`, pure test `tierHintExplainsTheRefusal`).
+- NEW doc section in `docs/rebirth.md`: how leaves work. Leaves are rolled once when the grimoire is given (resolve 15 = four, 18 = five) and never grow; today only the Sigil of Rebirth (re-roll), the devil pact (five-leaf) and the admin command change them. The second-book rule `secondBookMinLeaves` (default 4, 3 to 5) is unchanged: set it to 3 to let three-leaf mages use the sigil.
+- Worst case of the sigil text: two chat lines per refused click, no tick work. Not seen in a game; I found no code fault in the sigil flow itself (checks, window, mark, wizard hook), so if the sigil still misbehaves for you, tell me exactly what it says or does.
+- Build and install: JDK 21, `./gradlew build`, put `build/libs/multiverse-of-anime-5.8.1.jar` in `mods`, replacing the old jar.
+
 ## [5.8.0] — Kakashi: rip out his eye (mini-game, three chances) and gain the Sharingan unique skill
 
 Checked first: the mod had no Sharingan skill (only Kakashi's own copy and Mangekyo moves as boss behaviour) and no stun window that a player can use, so everything below is NEW. His existing stagger (`staggerUntil`) is reused.

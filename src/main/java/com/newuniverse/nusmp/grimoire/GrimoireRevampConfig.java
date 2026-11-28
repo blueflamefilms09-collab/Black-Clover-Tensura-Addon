@@ -11,6 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class GrimoireRevampConfig {
     public static final ModConfigSpec SPEC;
     private static final ModConfigSpec.BooleanValue CLASSIC;
+    private static final ModConfigSpec.BooleanValue SMOOTH_SNEAK;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -18,11 +19,19 @@ public final class GrimoireRevampConfig {
         CLASSIC = b.comment("Draw the classic grimoires: the old box-built book model and the old summon / cast look, without the revamp's rune ring, glow halo, page flutter and cast flare. "
                 + "Off (the default) = the revamped grimoire. Takes effect at once, no restart.")
                 .define("classicGrimoires", false);
+        SMOOTH_SNEAK = b.comment("A floating or hip grimoire glides between its standing and crouching place over about 4 ticks instead of jumping the moment you crouch (5.8.1). "
+                + "Off = the old instant jump. Takes effect at once, no restart.")
+                .define("smoothSneak", true);
         b.pop();
         SPEC = b.build();
     }
 
     private GrimoireRevampConfig() {}
+
+    /** {@code visual.smoothSneak}; true while the file is not loaded. */
+    public static boolean smoothSneak() {
+        try { return SMOOTH_SNEAK.get(); } catch (IllegalStateException notLoaded) { return true; }
+    }
 
     /** {@code visual.classicGrimoires}; false while the file is not loaded (the safe default is the new look). */
     public static boolean classic() {

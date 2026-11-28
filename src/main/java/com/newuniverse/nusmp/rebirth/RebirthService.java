@@ -78,6 +78,8 @@ public final class RebirthService {
             case OK -> "";
         };
         p.displayClientMessage(Component.literal(msg).withStyle(ChatFormatting.GRAY), true);
+        say(p, msg, ChatFormatting.GRAY);                                                    // 5.8.1: the action-bar line vanishes in two seconds, so the reason is also in chat
+        if (v == RebirthRules.Verdict.TIER_TOO_LOW) say(p, RebirthRules.tierHint(GrimoireErasure.bestTier(p), RebirthConfig.secondMinLeaves()), ChatFormatting.GRAY);
         RebirthState.forget(p.getUUID());
     }
 

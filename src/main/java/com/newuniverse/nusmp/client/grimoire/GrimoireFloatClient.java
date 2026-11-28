@@ -11,6 +11,7 @@ import com.newuniverse.nusmp.core.magic.grimoire.GrimoireShelfLayout;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.grimoire.CanonBook;
 import com.newuniverse.nusmp.grimoire.GrimoireBookPlan;
+import com.newuniverse.nusmp.grimoire.GrimoireRevampConfig;
 import com.newuniverse.nusmp.grimoire.GrimoireRevampMath;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -114,6 +115,8 @@ public final class GrimoireFloatClient {
     private static final Map<Integer, ItemStack> HIP = new HashMap<>();
     /** Page flips by entity id: {start game time, reverse ? 1 : 0}. */
     private static final Map<Integer, long[]> FLIPS = new HashMap<>();
+    /** Smoothed crouch amount by entity id: {amount 0..1, game time of the last update} (5.8.1; one two-float array per owner, dropped with the owner). */
+    private static final Map<Integer, float[]> SNEAK = new HashMap<>();
     private static final RandomSource RNG = RandomSource.create();
     /** Cheap classic-model copies of the stacks of distant owners (revamp level of detail), by stack identity; bounded and cleared on logout. */
     private static final Map<ItemStack, ItemStack> LOD = new java.util.IdentityHashMap<>();
@@ -128,7 +131,7 @@ public final class GrimoireFloatClient {
     public static void init() {
         NeoForge.EVENT_BUS.addListener(GrimoireFloatClient::onRender);
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> tick());
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { FLOATING.clear(); HIP.clear(); FLIPS.clear(); LOD.clear(); GrimoireRevampFx.clear(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { FLOATING.clear(); HIP.clear(); FLIPS.clear(); SNEAK.clear(); LOD.clear(); GrimoireRevampFx.clear(); });
     }
 
     /** The local view of a player's Grimoire Slot (EMPTY if unknown). */
@@ -165,7 +168,7 @@ public final class GrimoireFloatClient {
 
     private static void tick() {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null) { FLOATING.clear(); HIP.clear(); FLIPS.clear(); LOD.clear(); GrimoireRevampFx.clear(); return; }
+        if (mc.level == null) { FLOATING.clear(); HIP.clear(); FLIPS.clear(); SNEAK.clear(); LOD.clear(); GrimoireRevampFx.clear(); return; }
         long now = mc.level.getGameTime();
         Iterator<Map.Entry<Integer, Entry>> it = FLOATING.entrySet().iterator();
         while (it.hasNext()) {
@@ -175,7 +178,10 @@ public final class GrimoireFloatClient {
             if (ent == null || !ent.isAlive() || (e.vanishAt >= 0 && now - e.vanishAt > GrimoireCarry.CLOSE_TICKS + GrimoireCarry.TRAVEL_TICKS + 1)) it.remove();
         }
         FLIPS.entrySet().removeIf(f -> now - f.getValue()[0] > GrimoireCarry.flipDuration() + 2);
-        if (now % 40 == 0) HIP.keySet().removeIf(id -> mc.level.getEntity(id) == null);
+        if (now % 40 == 0) {
+            HIP.keySet().removeIf(id -> mc.level.getEntity(id) == null);
+            SNEAK.keySet().removeIf(id -> !HIP.containsKey(id) && !FLOATING.containsKey(id));
+        }
     }
 
     // ---------------------------------------------------------------- rendering
@@ -205,6 +211,7 @@ public final class GrimoireFloatClient {
             Entry e = FLOATING.get(id);
             ItemStack hipStack = HIP.getOrDefault(id, ItemStack.EMPTY);
             boolean sneak = owner.isCrouching();
+            float sn = sneakAmount(id, sneak, mc.level.getGameTime() + partial);     // 5.8.1: 0..1, glides instead of jumping when shift is pressed
             boolean self = firstPerson && owner == mc.getCameraEntity();
 
             GrimoireCarry.Pose p;
@@ -216,7 +223,7 @@ public final class GrimoireFloatClient {
             if (e != null && e.vanishAt < 0) {
                 age = now - e.start;
                 arrived = GrimoireCarry.travel(age);
-                p = GrimoireCarry.trip(true, age, sneak);
+                p = GrimoireCarry.trip(true, age, sn);
                 step = GrimoireCarry.openStep(age);
                 stack = e.view(step);
             } else if (e != null) {
@@ -224,17 +231,17 @@ public final class GrimoireFloatClient {
                 step = GrimoireCarry.closeStep(back);
                 if (step > 0) {                              // closing up in front of the hand first
                     arrived = 1;
-                    p = sneak ? GrimoireCarry.HAND_SNEAK : GrimoireCarry.HAND;
+                    p = GrimoireCarry.hand(sn);
                     age = now - e.start;
                 } else {
                     arrived = 0;
-                    p = GrimoireCarry.trip(false, back - GrimoireCarry.CLOSE_TICKS, sneak);
+                    p = GrimoireCarry.trip(false, back - GrimoireCarry.CLOSE_TICKS, sn);
                 }
                 stack = e.view(step);
             } else {
                 if (hipStack.isEmpty() || self) continue;
                 arrived = 0;
-                p = sneak ? GrimoireCarry.HIP_SNEAK : GrimoireCarry.HIP;
+                p = GrimoireCarry.hip(sn);
                 stack = hipStack;
             }
             // revamp level of detail: 24-64 blocks away the owner's book is the cheap classic model with no effects, further it is not drawn (docs/grimoire_revamp.md)
@@ -287,7 +294,7 @@ public final class GrimoireFloatClient {
                 }
                 juliusCylinder(pose, buffers, now, arrived, step, light);   // 0.38: no page flip, his pages never need turning
                 pose.popPose();
-                if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, null, lightAt(owner, partial));
+                if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sn, null, lightAt(owner, partial));
                 continue;
             }
             if (arrived >= 1f) {
@@ -305,11 +312,21 @@ public final class GrimoireFloatClient {
             }
             if (flip != null && step == GrimoireCarry.OPEN_STEPS) pages(pose, buffers, cam, stack, now - flip[0], flip[1] == 1, light);
             pose.popPose();
-            if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sneak, strapTop, lightAt(owner, partial));
+            if (!self && !hipStack.isEmpty()) belt(buffers, owner, partial, cam, sn, strapTop, lightAt(owner, partial));
         }
         buffers.endBatch();
         modelView.popMatrix();
         RenderSystem.applyModelViewMatrix();
+    }
+
+    /** The owner's smoothed crouch amount (0 standing .. 1 crouching); with {@code visual.smoothSneak} off it is the plain yes / no of before 5.8.1. Called once per owner per frame. */
+    private static float sneakAmount(int id, boolean sneak, float now) {
+        if (!GrimoireRevampConfig.smoothSneak()) return sneak ? 1f : 0f;
+        float[] s = SNEAK.get(id);
+        if (s == null) { SNEAK.put(id, new float[]{sneak ? 1f : 0f, now}); return sneak ? 1f : 0f; }
+        s[0] = GrimoireCarry.sneakStep(s[0], sneak, now - s[1]);
+        s[1] = now;
+        return s[0];
     }
 
     private static void renderZagredBook(Minecraft mc, MultiBufferSource.BufferSource buffers, PoseStack pose, Vec3 camera, float partial) {
@@ -433,12 +450,12 @@ public final class GrimoireFloatClient {
      * The belt: a leather band round the owner's waist with a brass buckle in front, and the hanging strap from the right hip to
      * the book. Drawn on top of the player like a cosmetic layer, so it never takes an armour slot. World space, camera-relative.
      */
-    private static void belt(MultiBufferSource buffers, Player owner, float partial, Vec3 cam, boolean sneak, Vector3f strapTop, int light) {
+    private static void belt(MultiBufferSource buffers, Player owner, float partial, Vec3 cam, float sneak, Vector3f strapTop, int light) {
         PoseStack.Pose last = new PoseStack().last();
         double yaw = Math.toRadians(Mth.rotLerp(partial, owner.yBodyRotO, owner.yBodyRot));
         Vector3f fwd = new Vector3f((float) -Math.sin(yaw), 0, (float) Math.cos(yaw)), right = new Vector3f((float) -Math.cos(yaw), 0, (float) -Math.sin(yaw));
         Vec3 pos = owner.getPosition(partial).subtract(cam);
-        Vector3f c = new Vector3f((float) pos.x, (float) pos.y + (sneak ? 0.62f : 0.78f), (float) pos.z);
+        Vector3f c = new Vector3f((float) pos.x, (float) pos.y + Mth.lerp(sneak, 0.78f, 0.62f), (float) pos.z);
         float hw = 0.27f, hd = 0.155f, hh = 0.05f;
         VertexConsumer leather = buffers.getBuffer(RenderType.entityCutoutNoCull(HARNESS_LEATHER));
         float[][] corners = {{-1, 1}, {1, 1}, {1, -1}, {-1, -1}};          // (side, front) round the waist: front, right, back, left

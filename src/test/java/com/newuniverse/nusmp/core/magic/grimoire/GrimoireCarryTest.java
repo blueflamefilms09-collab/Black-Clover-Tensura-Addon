@@ -127,4 +127,27 @@ class GrimoireCarryTest {
         assertEquals("textures/skill/icons/water_buff.png", SpellArchetype.iconPath("WATER", SpellArchetype.packSeed(3, SpellArchetype.DEFENSE)));
         assertEquals("textures/skill/grimoire/water.png", SpellArchetype.iconPath("WATER", 3));
     }
+
+    @Test
+    void crouchGlidesInsteadOfJumping() {
+        assertEquals(GrimoireCarry.HAND, GrimoireCarry.hand(0f));
+        assertEquals(GrimoireCarry.HAND_SNEAK, GrimoireCarry.hand(1f));
+        assertEquals(GrimoireCarry.HIP, GrimoireCarry.hip(-3f));
+        assertEquals(GrimoireCarry.HIP_SNEAK, GrimoireCarry.hip(9f));
+        // the boolean overload is the 0 / 1 case of the smooth one
+        assertEquals(GrimoireCarry.trip(true, 5f, true), GrimoireCarry.trip(true, 5f, 1f));
+        assertEquals(GrimoireCarry.trip(false, 5f, false), GrimoireCarry.trip(false, 5f, 0f));
+        // a crouch takes SNEAK_TICKS in small steps, never one jump; it never overshoots, and a bad or huge gap snaps
+        float v = 0f, last = 0f;
+        for (int i = 0; i < 20; i++) {
+            v = GrimoireCarry.sneakStep(v, true, 1f);
+            assertTrue(v - last <= 1f / GrimoireCarry.SNEAK_TICKS + EPS && v <= 1f);
+            last = v;
+        }
+        assertEquals(1f, v, EPS);
+        assertEquals(0.75f, GrimoireCarry.sneakStep(1f, false, 1f), EPS);
+        assertEquals(0f, GrimoireCarry.sneakStep(0.5f, false, 100f), EPS);
+        assertEquals(1f, GrimoireCarry.sneakStep(0f, true, -1f), EPS);
+        assertEquals(0f, GrimoireCarry.sneakStep(1f, false, Float.NaN), EPS);
+    }
 }

@@ -54,6 +54,39 @@ public final class GrimoireCarry {
         return toHand ? blend(hip, hand, t) : blend(hand, hip, t);
     }
 
+    // ---------------------------------------------------------------- smooth crouch (5.8.1)
+    /** Ticks a crouch takes to move a floating book between its standing and crouching pose (before 5.8.1 it jumped at once, which read as glitching when shift is used as a modifier key). */
+    public static final float SNEAK_TICKS = 4f;
+
+    /** Straight blend of two poses ({@code t} 0 = a, 1 = b), no lift. */
+    public static Pose mix(Pose a, Pose b, float t) {
+        return new Pose(lerp(a.right, b.right, t), lerp(a.up, b.up, t), lerp(a.forward, b.forward, t),
+                lerp(a.yaw, b.yaw, t), lerp(a.pitch, b.pitch, t), lerp(a.roll, b.roll, t), lerp(a.scale, b.scale, t));
+    }
+
+    /** The dormant pose for a crouch amount 0 (standing) .. 1 (crouching). */
+    public static Pose hip(float sneak) { return mix(HIP, HIP_SNEAK, clamp01(sneak)); }
+
+    /** The summoned pose for a crouch amount 0 (standing) .. 1 (crouching). */
+    public static Pose hand(float sneak) { return mix(HAND, HAND_SNEAK, clamp01(sneak)); }
+
+    /** {@link #trip(boolean, float, boolean)} with a smooth crouch amount (0..1) instead of a yes / no. */
+    public static Pose trip(boolean toHand, float age, float sneak) {
+        Pose hip = hip(sneak), hand = hand(sneak);
+        float t = travel(age);
+        return toHand ? blend(hip, hand, t) : blend(hand, hip, t);
+    }
+
+    /** Moves a crouch amount towards 1 (crouching) or 0 over {@link #SNEAK_TICKS}; {@code dt} is the ticks since the last call, a bad or huge gap snaps to the target. */
+    public static float sneakStep(float current, boolean sneaking, float dt) {
+        float target = sneaking ? 1f : 0f;
+        if (!(dt > 0f) || dt > 3f * SNEAK_TICKS) return target;
+        float step = dt / SNEAK_TICKS;
+        return current < target ? Math.min(target, current + step) : Math.max(target, current - step);
+    }
+
+    private static float clamp01(float v) { return v < 0f ? 0f : Math.min(v, 1f); }
+
     static float lerp(float a, float b, float t) { return a + (b - a) * t; }
 
     // ---------------------------------------------------------------- opening into the V (0.23)

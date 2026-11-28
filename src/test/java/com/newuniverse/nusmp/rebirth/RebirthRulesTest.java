@@ -124,4 +124,14 @@ class RebirthRulesTest {
         RebirthState.forget(b);
         assertEquals(before, RebirthState.size());
     }
+
+    @Test
+    void tierHintExplainsTheRefusal() {
+        assertEquals("", RebirthRules.tierHint(4, 4));
+        assertEquals("", RebirthRules.tierHint(5, 4));
+        String h = RebirthRules.tierHint(3, 4);
+        assertTrue(h.contains("3 leaves") && h.contains("needs 4") && h.contains("Sigil of Rebirth") && h.contains("secondBookMinLeaves"), h);
+        assertTrue(RebirthRules.tierHint(3, 99).contains("needs 5"), "the need is clamped like the setting");
+        assertTrue(RebirthRules.tierHint(-2, 4).contains("0 leaves"));
+    }
 }
